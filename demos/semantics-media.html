@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html id="semanticsmedia-html-1" lang="en" data-theme="dark">
+<head id="semanticsmedia-head-2">
+  <meta id="semanticsmedia-meta-3" charset="UTF-8">
+  <meta id="semanticsmedia-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="semanticsmedia-title-5">Semantic Media Demo</title>
+  <link id="semanticsmedia-link-6" rel="stylesheet" href="/src/styles/themes.css">
+  <link id="semanticsmedia-link-7" rel="stylesheet" href="/src/styles/components.css">
+  <style id="semanticsmedia-style-8">
+    body { 
+      padding: 2rem; 
+      background: var(--bg-color); 
+      color: var(--text-primary);
+      font-family: system-ui, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.5rem;
+    }
+    h1 { margin: 0; border: none; padding: 0; }
+    h2 { 
+      margin: 3rem 0 1.5rem; 
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .demo-section {
+      background: var(--bg-secondary);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+    }
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      align-items: start;
+    }
+  </style>
+</head>
+<body id="semanticsmedia-body-9">
+  <header id="semanticsmedia-header-10">
+    <h1 id="semanticsmedia-h1-11">🎬 Semantic Media Demo</h1>
+    <div id="semanticsmedia-div-12" data-wb="themecontrol"></div>
+  </header>
+  <p id="semanticsmedia-p-13">Enhanced media elements using standard HTML tags.</p>
+
+  <!-- AUDIO -->
+  <h2 id="semanticsmedia-h2-14">Audio <code id="semanticsmedia-code-15">&lt;audio&gt;</code></h2>
+  <div id="semanticsmedia-div-16" class="demo-section">
+    <div id="semanticsmedia-div-17" class="demo-grid">
+      <div id="semanticsmedia-div-18">
+        <h3 id="semanticsmedia-h3-19">Standard Player</h3>
+        <audio id="semanticsmedia-audio-20" data-wb="audio" controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+      </div>
+      <div id="semanticsmedia-div-21">
+        <h3 id="semanticsmedia-h3-22">Studio EQ Player</h3>
+        <p id="semanticsmedia-p-23">With 15-band graphic equalizer</p>
+        <div id="semanticsmedia-div-24" 
+          data-wb="audio" 
+          data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" 
+          data-show-eq="true"
+          data-volume="0.7">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <h2 id="semanticsmedia-h2-25">Video <code id="semanticsmedia-code-26">&lt;video&gt;</code></h2>
+  <div id="semanticsmedia-div-27" class="demo-section">
+    <div id="semanticsmedia-div-28" class="demo-grid">
+      <div id="semanticsmedia-div-29">
+        <h3 id="semanticsmedia-h3-30">Standard Video</h3>
+        <video id="semanticsmedia-video-31" 
+          data-wb="video" 
+          controls 
+          src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+          poster="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
+          style="width: 100%; border-radius: 8px;">
+        </video>
+      </div>
+      <div id="semanticsmedia-div-32">
+        <h3 id="semanticsmedia-h3-33">Background Video (Muted Loop)</h3>
+        <video id="semanticsmedia-video-34" 
+          data-wb="video" 
+          src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+          data-autoplay="true"
+          data-muted="true"
+          data-loop="true"
+          data-controls="false"
+          style="width: 100%; border-radius: 8px; opacity: 0.6;">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE -->
+  <h2 id="semanticsmedia-h2-35">Image <code id="semanticsmedia-code-36">&lt;img&gt;</code></h2>
+  <div id="semanticsmedia-div-37" class="demo-section">
+    <div id="semanticsmedia-div-38" class="demo-grid">
+      <div id="semanticsmedia-div-39">
+        <h3 id="semanticsmedia-h3-40">Zoomable Image (Lightbox)</h3>
+        <img id="semanticsmedia-img-41" 
+          data-wb="image" 
+          src="https://picsum.photos/id/1018/800/600" 
+          data-zoomable="true" 
+          alt="Nature Scene"
+          style="width: 100%; border-radius: 8px;">
+      </div>
+      <div id="semanticsmedia-div-42">
+        <h3 id="semanticsmedia-h3-43">Lazy Loaded with Aspect Ratio</h3>
+        <img id="semanticsmedia-img-44" 
+          data-wb="image" 
+          src="https://picsum.photos/id/1015/800/600" 
+          data-lazy="true" 
+          data-aspect-ratio="4/3"
+          alt="River"
+          style="width: 100%; border-radius: 8px;">
+      </div>
+    </div>
+  </div>
+
+  <!-- FIGURE -->
+  <h2 id="semanticsmedia-h2-45">Figure <code id="semanticsmedia-code-46">&lt;figure&gt;</code></h2>
+  <div id="semanticsmedia-div-47" class="demo-section">
+    <div id="semanticsmedia-div-48" class="demo-grid">
+      <div id="semanticsmedia-div-49">
+        <h3 id="semanticsmedia-h3-50">Standard Figure</h3>
+        <figure id="semanticsmedia-figure-51" data-wb="figure" data-zoom="true">
+          <img id="semanticsmedia-img-52" src="https://picsum.photos/id/1016/800/600" alt="Canyon" style="width: 100%;">
+          <figcaption id="semanticsmedia-figcaption-53">A beautiful canyon view</figcaption>
+        </figure>
+      </div>
+      <div id="semanticsmedia-div-54">
+        <h3 id="semanticsmedia-h3-55">Overlay Caption</h3>
+        <figure id="semanticsmedia-figure-56" data-wb="figure" data-caption-position="overlay" data-lightbox="true">
+          <img id="semanticsmedia-img-57" src="https://picsum.photos/id/1019/800/600" alt="Technology" style="width: 100%;">
+          <figcaption id="semanticsmedia-figcaption-58">Technology and Nature</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load WB -->
+  <script id="semanticsmedia-script-59" type="module">
+    import WB from '/src/core/wb.js';
+    window.WB = WB;
+    WB.init();
+  </script>
+</body>
+</html>

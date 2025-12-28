@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "behavior": "fireworks",
+  "properties": {
+    "count": {
+      "type": "number",
+      "title": "Particle Count",
+      "default": 30,
+      "description": "Number of particles per burst"
+    },
+    "showButtons": {
+      "type": "boolean",
+      "title": "Show Button",
+      "default": true,
+      "description": "Whether to render a trigger button"
+    },
+    "repeat": {
+      "type": "boolean",
+      "title": "Repeat Animation",
+      "default": false,
+      "description": "Loop the animation indefinitely"
+    },
+    "delay": {
+      "type": "string",
+      "title": "Delay",
+      "default": "0s",
+      "description": "Delay before starting (e.g. 1s, 500ms)"
+    },
+    "duration": {
+      "type": "string",
+      "title": "Duration",
+      "default": "1.5s",
+      "description": "Length of the animation cycle"
+    }
+  },
+  "compliance": {
+    "baseClass": "wb-fireworks-trigger"
+  },
+  "test": {
+    "setup": ["<button data-wb=\"fireworks\">Fireworks</button>"]
+  }
+}

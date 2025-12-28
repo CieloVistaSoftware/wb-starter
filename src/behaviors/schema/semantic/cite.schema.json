@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cite.schema.json",
+  "title": "Cite Semantic Element",
+  "description": "Attribution for a quotation or reference. Author name, work title, source.",
+  
+  "$inheritance": {
+    "extends": "_element.base.schema.json",
+    "reason": "Cite IS-A element with all base properties"
+  },
+  
+  "htmlTag": "cite",
+  "role": "none (inline element)",
+  
+  "semanticMeaning": {
+    "description": "Reference to a creative work - title of work, author name",
+    "examples": ["Author attribution", "Book title", "Article title", "Movie name"],
+    "whenToUse": "When crediting a source - typically with blockquote"
+  },
+  
+  "type": "object",
+  "properties": {
+    "author": {
+      "type": "string",
+      "description": "Author name - ALWAYS canvas editable",
+      "canvasEditable": true,
+      "default": ""
+    },
+    "role": {
+      "type": "string",
+      "description": "Author's role/title - canvas editable",
+      "canvasEditable": true,
+      "default": ""
+    },
+    "source": {
+      "type": "string",
+      "description": "Source work title",
+      "canvasEditable": true,
+      "default": ""
+    },
+    "url": {
+      "type": "string",
+      "description": "Link to source",
+      "canvasEditable": false
+    }
+  },
+  
+  "textProperties": {
+    "description": "Canvas-editable text",
+    "list": ["author", "role", "source"]
+  },
+  
+  "structure": {
+    "template": "<cite>{{author}}</cite>",
+    "withRole": "<cite>{{author}}, {{role}}</cite>"
+  },
+  
+  "wbComponents": {
+    "description": "WB components that use cite",
+    "list": ["cardtestimonial"]
+  }
+}

@@ -1,0 +1,500 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Expandable",
+  "description": "Expandable card with collapsible content. INHERITS from card.base (IS-A card), CONTAINS expand behavior (HAS-A expandable content, expand button).",
+  "behavior": "cardexpandable",
+  
+  "$extends": "card.base.schema.json",
+  "$inheritance": {
+    "type": "IS-A",
+    "parent": "card",
+    "inherits": [
+      "semantic.element",
+      "semantic.structure.header",
+      "semantic.structure.main",
+      "semantic.structure.footer",
+      "compliance.containerTag",
+      "accessibility"
+    ]
+  },
+  
+  "$containment": [
+    {
+      "type": "HAS-A",
+      "name": "expandableContent",
+      "element": "MAIN.wb-card__expandable-content",
+      "description": "Content area that expands/collapses"
+    },
+    {
+      "type": "HAS-A",
+      "name": "expandButton",
+      "element": "FOOTER > BUTTON.wb-card__expand-btn",
+      "description": "Button to toggle expand/collapse state"
+    }
+  ],
+  
+  "properties": {
+    
+    "title": {
+      "type": "string",
+      "description": "Card title in header",
+      "required": true,
+      "mapsTo": "header",
+      "default": "Expandable Card",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["Expandable Card", "Click to Expand", "Details"],
+        "assertions": {
+          "Expandable Card": {
+            "selector": "header h3.wb-card__title",
+            "checks": { "exists": true, "textContains": "Expandable Card", "tagName": "H3" }
+          }
+        }
+      }
+    },
+    "content": {
+      "type": "string",
+      "description": "The expandable content (can be HTML)",
+      "required": true,
+      "containedIn": "expandableContent",
+      "mapsTo": "main",
+      "default": "This content can be expanded or collapsed. Add any content you want here.",
+      "inputType": "textarea",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": [
+          "Short content",
+          "This is longer content that demonstrates the expand/collapse functionality. It contains multiple sentences to show how the card handles larger amounts of text.",
+          "<p>HTML content</p><ul><li>Item 1</li><li>Item 2</li></ul>"
+        ],
+        "assertions": {
+          "Short content": {
+            "selector": "main.wb-card__expandable-content",
+            "checks": { "exists": true, "textContains": "Short content" }
+          }
+        }
+      }
+    },
+    "expanded": {
+      "type": "boolean",
+      "description": "Initial expanded state",
+      "default": false,
+      "inputType": "checkbox",
+      "permutations": {
+        "type": "BOOLEAN",
+        "assertions": {
+          "true": {
+            "selector": "element",
+            "checks": { "hasClass": "wb-card--expanded" }
+          },
+          "false": {
+            "selector": "element",
+            "checks": { "notHasClass": "wb-card--expanded" }
+          }
+        }
+      }
+    },
+    "maxHeight": {
+      "type": "string",
+      "description": "Maximum height when collapsed (CSS value)",
+      "default": "100px",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["50px", "100px", "150px", "200px"],
+        "assertions": {
+          "100px": {
+            "selector": "main.wb-card__expandable-content",
+            "checks": { 
+              "style": { "maxHeight": "100px" }
+            }
+          }
+        }
+      }
+    },
+    "elevated": {
+      "type": "boolean",
+      "description": "Has shadow/elevation effect",
+      "default": false
+    }
+  },
+  
+  "compliance": {
+    "$inherits": "card.base.schema.json#compliance",
+    "baseClass": "wb-card",
+    "additionalClasses": ["wb-card--expandable"],
+    "containerTag": {
+      "preferred": "ARTICLE",
+      "allowed": ["ARTICLE", "SECTION", "DIV"]
+    },
+    "requiredChildren": {
+      "header.wb-card__header": {
+        "description": "Header with title",
+        "tagName": "HEADER",
+        "required": true,
+        "children": {
+          "h3.wb-card__title": { "tagName": "H3", "required": true }
+        }
+      },
+      "main.wb-card__expandable-content": {
+        "description": "Expandable content area",
+        "tagName": "MAIN",
+        "required": true,
+        "relationship": "HAS-A",
+        "style": {
+          "overflow": "hidden",
+          "transition": "max-height 0.3s ease"
+        }
+      },
+      "footer.wb-card__footer": {
+        "description": "Footer with expand button",
+        "tagName": "FOOTER",
+        "required": true,
+        "children": {
+          "button.wb-card__expand-btn": {
+            "tagName": "BUTTON",
+            "required": true,
+            "relationship": "HAS-A",
+            "children": {
+              ".wb-card__expand-icon": { "required": true },
+              ".wb-card__expand-text": { "required": true }
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      "button.wb-card__expand-btn": {
+        "type": "button",
+        "clickable": true,
+        "focusable": true,
+        "click": {
+          "action": "Toggle expanded state",
+          "togglesClass": "wb-card--expanded",
+          "event": "wb:cardexpandable:toggle"
+        }
+      }
+    },
+    "keyboard": {
+      "Enter": { 
+        "target": "button.wb-card__expand-btn", 
+        "action": "Toggle expanded state" 
+      },
+      "Space": { 
+        "target": "button.wb-card__expand-btn", 
+        "action": "Toggle expanded state" 
+      }
+    },
+    "states": {
+      "collapsed": {
+        "class": "",
+        "mainStyle": { "maxHeight": "from maxHeight property" },
+        "buttonIcon": "▼",
+        "buttonText": "Show More",
+        "ariaExpanded": "false"
+      },
+      "expanded": {
+        "class": "wb-card--expanded",
+        "mainStyle": { "maxHeight": "scrollHeight" },
+        "buttonIcon": "▲",
+        "buttonText": "Show Less",
+        "ariaExpanded": "true"
+      }
+    }
+  },
+  
+  "accessibility": {
+    "$inherits": "card.base.schema.json#accessibility",
+    "expandButton": {
+      "ariaExpanded": "true|false based on state",
+      "ariaControls": "id of expandable content"
+    }
+  },
+  
+  "events": {
+    "wb:cardexpandable:toggle": {
+      "source": "button.wb-card__expand-btn",
+      "bubbles": true,
+      "detail": { "expanded": "boolean" },
+      "firesWhen": "Expand button is clicked"
+    }
+  },
+  
+  "api": {
+    "element.wbCardExpandable": {
+      "expand": { "description": "Expand the card", "returns": "void" },
+      "collapse": { "description": "Collapse the card", "returns": "void" },
+      "toggle": { "description": "Toggle expanded state", "returns": "void" },
+      "expanded": { "description": "Get current expanded state", "returns": "boolean" }
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<article data-wb=\"cardexpandable\" data-title=\"Test Card\">Test content here</article>",
+      "<article data-wb=\"cardexpandable\" data-title=\"Expanded\" data-expanded>Already expanded content</article>",
+      "<article data-wb=\"cardexpandable\" data-title=\"Custom Height\" data-max-height=\"150px\">Custom max height</article>"
+    ],
+    
+    "matrix": {
+      "description": "Test all property combinations",
+      "combinations": [
+        { "title": "Basic", "content": "Basic content" },
+        { "title": "Expanded", "content": "Content", "expanded": true },
+        { "title": "Collapsed", "content": "Content", "expanded": false },
+        { "title": "Custom", "content": "Content", "maxHeight": "50px" },
+        { "title": "Custom", "content": "Content", "maxHeight": "150px" },
+        { "title": "Long Content", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.", "maxHeight": "100px" },
+        { "title": "HTML Content", "content": "<p>Paragraph</p><ul><li>Item</li></ul>" },
+        { "title": "Full", "content": "Full test", "expanded": false, "maxHeight": "80px", "elevated": true }
+      ]
+    },
+    
+    "functional": {
+      "semantic": [
+        {
+          "name": "Container should be ARTICLE (inherited from card.base)",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "expect": { "selector": "element", "tagName": "ARTICLE" }
+        },
+        {
+          "name": "Title should be in HEADER with H3 (inherited)",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "expect": { "selector": "header.wb-card__header h3.wb-card__title", "tagName": "H3" }
+        },
+        {
+          "name": "Content should be in MAIN (HAS-A expandableContent)",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "expect": { "selector": "main.wb-card__expandable-content", "tagName": "MAIN" }
+        },
+        {
+          "name": "Expand button should be in FOOTER (HAS-A expandButton)",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "expect": { "selector": "footer.wb-card__footer button.wb-card__expand-btn", "tagName": "BUTTON" }
+        }
+      ],
+      
+      "rendering": [
+        {
+          "name": "Default state is collapsed",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "expect": { 
+            "selector": "element", 
+            "checks": { "notHasClass": "wb-card--expanded" }
+          }
+        },
+        {
+          "name": "data-expanded starts card expanded",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\" data-expanded>Content</article>",
+          "expect": { 
+            "selector": "element", 
+            "checks": { "hasClass": "wb-card--expanded" }
+          }
+        },
+        {
+          "name": "Collapsed shows 'Show More' button text",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "expect": { 
+            "selector": ".wb-card__expand-text", 
+            "checks": { "textContains": "Show More" }
+          }
+        },
+        {
+          "name": "Expanded shows 'Show Less' button text",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\" data-expanded>Content</article>",
+          "expect": { 
+            "selector": ".wb-card__expand-text", 
+            "checks": { "textContains": "Show Less" }
+          }
+        },
+        {
+          "name": "maxHeight property applied to collapsed content",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\" data-max-height=\"75px\">Content</article>",
+          "expect": { 
+            "selector": "main.wb-card__expandable-content", 
+            "checks": { "style": { "maxHeight": "75px" } }
+          }
+        }
+      ],
+      
+      "interactions": [
+        {
+          "name": "Click expand button toggles to expanded",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "click", "selector": "button.wb-card__expand-btn" }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "hasClass": "wb-card--expanded" }
+          }
+        },
+        {
+          "name": "Click expand button again toggles to collapsed",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\" data-expanded>Content</article>",
+          "steps": [
+            { "action": "click", "selector": "button.wb-card__expand-btn" }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "notHasClass": "wb-card--expanded" }
+          }
+        },
+        {
+          "name": "Button text changes on toggle",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "click", "selector": "button.wb-card__expand-btn" }
+          ],
+          "expect": { 
+            "selector": ".wb-card__expand-text", 
+            "checks": { "textContains": "Show Less" }
+          }
+        },
+        {
+          "name": "Button icon rotates on expand",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "click", "selector": "button.wb-card__expand-btn" }
+          ],
+          "expect": { 
+            "selector": ".wb-card__expand-icon", 
+            "checks": { "style": { "transform": "rotate(180deg)" } }
+          }
+        },
+        {
+          "name": "Dispatches toggle event with expanded state",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "click", "selector": "button.wb-card__expand-btn" }
+          ],
+          "expect": { 
+            "event": "wb:cardexpandable:toggle",
+            "detail": { "expanded": true }
+          }
+        }
+      ],
+      
+      "keyboard": [
+        {
+          "name": "Enter key on button toggles state",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "focus", "selector": "button.wb-card__expand-btn" },
+            { "action": "keypress", "key": "Enter" }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "hasClass": "wb-card--expanded" }
+          }
+        },
+        {
+          "name": "Space key on button toggles state",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "focus", "selector": "button.wb-card__expand-btn" },
+            { "action": "keypress", "key": " " }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "hasClass": "wb-card--expanded" }
+          }
+        }
+      ],
+      
+      "api": [
+        {
+          "name": "wbCardExpandable.expand() expands the card",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "call", "method": "element.wbCardExpandable.expand" }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "hasClass": "wb-card--expanded" }
+          }
+        },
+        {
+          "name": "wbCardExpandable.collapse() collapses the card",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\" data-expanded>Content</article>",
+          "steps": [
+            { "action": "call", "method": "element.wbCardExpandable.collapse" }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "notHasClass": "wb-card--expanded" }
+          }
+        },
+        {
+          "name": "wbCardExpandable.toggle() toggles state",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "call", "method": "element.wbCardExpandable.toggle" }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "hasClass": "wb-card--expanded" }
+          }
+        },
+        {
+          "name": "wbCardExpandable.expanded returns current state",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\" data-expanded>Content</article>",
+          "steps": [
+            { "action": "call", "method": "element.wbCardExpandable.expanded" }
+          ],
+          "expect": { "returns": true }
+        }
+      ],
+      
+      "accessibility": [
+        {
+          "name": "Button has aria-expanded false when collapsed",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\">Content</article>",
+          "expect": { 
+            "selector": "button.wb-card__expand-btn", 
+            "checks": { "attribute": { "aria-expanded": "false" } }
+          }
+        },
+        {
+          "name": "Button has aria-expanded true when expanded",
+          "setup": "<article data-wb=\"cardexpandable\" data-title=\"Test\" data-expanded>Content</article>",
+          "expect": { 
+            "selector": "button.wb-card__expand-btn", 
+            "checks": { "attribute": { "aria-expanded": "true" } }
+          }
+        }
+      ]
+    }
+  },
+  
+  "builder": {
+    "category": "Cards",
+    "icon": "➕",
+    "name": "Card Expandable",
+    "description": "Card with expandable/collapsible content",
+    "defaults": {
+      "title": "Expandable Card",
+      "content": "This content can be expanded or collapsed. Click the button below to toggle.",
+      "maxHeight": "100px",
+      "expanded": false
+    },
+    "propertyPanel": {
+      "groups": [
+        {
+          "name": "Content",
+          "properties": ["title", "content"]
+        },
+        {
+          "name": "Behavior",
+          "properties": ["expanded", "maxHeight"]
+        },
+        {
+          "name": "Style",
+          "properties": ["elevated", "hoverable"]
+        }
+      ]
+    }
+  }
+}

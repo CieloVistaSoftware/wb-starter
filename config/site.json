@@ -1,0 +1,57 @@
+{
+  "site": {
+    "name": "My Awesome Site",
+    "tagline": "Built with WB Behaviors",
+    "logo": "🚀",
+    "favicon": "assets/favicon.ico",
+    "theme": "dark",
+    "version": "1.0.0",
+    "autoInject": false
+  },
+  
+  "nav": [
+    { "id": "home", "label": "Home", "icon": "🏠", "page": "home" },
+    { "id": "builder", "label": "Page Builder", "icon": "🎨", "page": "builder" },
+    { "id": "schema-viewer", "label": "Schema Viewer", "icon": "📋", "page": "schema-viewer" },
+    { "id": "features", "label": "Features", "icon": "✨", "page": "features" },
+    { "id": "components", "label": "Components", "icon": "🧩", "page": "components" },
+    { "id": "hero-variants", "label": "Hero Variants", "icon": "🦸", "page": "hero-variants" },
+    { "id": "docs", "label": "Docs", "icon": "📖", "page": "docs" },
+    { "id": "about", "label": "About", "icon": "ℹ️", "page": "about" },
+    { "id": "contact", "label": "Contact", "icon": "📧", "page": "contact" }
+  ],
+  
+  "header": {
+    "showLogo": true,
+    "showThemeSwitcher": true,
+    "showSearch": false,
+    "sticky": true
+  },
+  
+  "footer": {
+    "copyright": "© 2025 Your Company. All rights reserved.",
+    "showSocial": true,
+    "social": [
+      { "name": "GitHub", "icon": "🐙", "url": "https://github.com" },
+      { "name": "Twitter", "icon": "🐦", "url": "https://twitter.com" },
+      { "name": "LinkedIn", "icon": "💼", "url": "https://linkedin.com" }
+    ],
+    "links": [
+      { "label": "Privacy Policy", "page": "privacy" },
+      { "label": "Terms of Service", "page": "terms" }
+    ]
+  },
+  
+  "layout": {
+    "navPosition": "left",
+    "navWidth": "240px",
+    "navCollapsible": true,
+    "navDefaultCollapsed": false
+  },
+  
+  "seo": {
+    "title": "My Awesome Site - Built with WB",
+    "description": "A modern website starter kit powered by WB Behaviors",
+    "keywords": ["website", "starter", "wb-behaviors", "components"]
+  }
+}

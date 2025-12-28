@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Skeleton Loader",
+  "description": "Glassmorphism loading skeleton with shimmer animation. Multiple variants for different content types.",
+  "behavior": "skeleton",
+  
+  "properties": {
+    "variant": {
+      "type": "string",
+      "description": "Type of skeleton to display",
+      "enum": ["text", "circle", "rect", "card"],
+      "default": "text",
+      "permutations": {
+        "type": "ALL_ENUM",
+        "assertions": {
+          "text": {
+            "selector": ".wb-skeleton__line",
+            "checks": { "exists": true }
+          },
+          "circle": {
+            "selector": ".wb-skeleton__circle",
+            "checks": { "exists": true }
+          },
+          "rect": {
+            "selector": ".wb-skeleton__rect",
+            "checks": { "exists": true }
+          },
+          "card": {
+            "selector": ".wb-skeleton__line",
+            "checks": { "exists": true }
+          }
+        }
+      }
+    },
+    "lines": {
+      "type": "number",
+      "description": "Number of text lines (for text variant)",
+      "default": 1,
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": [1, 2, 3, 5],
+        "assertions": {
+          "1": {
+            "selector": ".wb-skeleton__line",
+            "checks": { "count": 1 }
+          },
+          "3": {
+            "selector": ".wb-skeleton__line",
+            "checks": { "count": 3 }
+          }
+        }
+      }
+    },
+    "width": {
+      "type": "string",
+      "description": "Width of the skeleton",
+      "default": "100%",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["100%", "50%", "200px"],
+        "assertions": {}
+      }
+    },
+    "height": {
+      "type": "string",
+      "description": "Height of the skeleton (for rect variant)",
+      "default": "100px",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["100px", "200px"],
+        "assertions": {}
+      }
+    }
+  },
+  
+  "compliance": {
+    "baseClass": "wb-skeleton",
+    "requiredChildren": {},
+    "optionalChildren": {
+      ".wb-skeleton__line": {
+        "description": "Text line skeleton",
+        "createdWhen": "variant is text or card"
+      },
+      ".wb-skeleton__circle": {
+        "description": "Circular skeleton",
+        "createdWhen": "variant is circle"
+      },
+      ".wb-skeleton__rect": {
+        "description": "Rectangular skeleton",
+        "createdWhen": "variant is rect"
+      }
+    },
+    "styles": {
+      "display": {
+        "required": true,
+        "value": "block"
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {},
+    "keyboard": {}
+  },
+  
+  "accessibility": {
+    "element": {
+      "description": "Skeleton loaders indicate content is loading"
+    }
+  },
+  
+  "events": {},
+  
+  "test": {
+    "setup": [
+      "<div data-wb=\"skeleton\"></div>",
+      "<div data-wb=\"skeleton\" data-variant=\"text\" data-lines=\"3\"></div>",
+      "<div data-wb=\"skeleton\" data-variant=\"circle\" data-width=\"50px\"></div>",
+      "<div data-wb=\"skeleton\" data-variant=\"rect\" data-width=\"100%\" data-height=\"150px\"></div>",
+      "<div data-wb=\"skeleton\" data-variant=\"card\"></div>"
+    ],
+    
+    "matrix": {
+      "combinations": [
+        {},
+        { "variant": "text" },
+        { "variant": "text", "lines": 1 },
+        { "variant": "text", "lines": 3 },
+        { "variant": "text", "lines": 5 },
+        { "variant": "circle" },
+        { "variant": "circle", "width": "50px" },
+        { "variant": "circle", "width": "80px" },
+        { "variant": "rect" },
+        { "variant": "rect", "width": "100%", "height": "100px" },
+        { "variant": "rect", "width": "200px", "height": "150px" },
+        { "variant": "card" }
+      ]
+    },
+    
+    "functional": {
+      "buttons": [],
+      "interactions": [],
+      "keyboard": [],
+      
+      "visual": [
+        {
+          "name": "skeleton has shimmer animation",
+          "setup": "<div data-wb=\"skeleton\"></div>",
+          "checks": [
+            { "selector": ".wb-skeleton__line", "style": "animation", "notEmpty": true }
+          ]
+        },
+        {
+          "name": "text skeleton creates correct number of lines",
+          "setup": "<div data-wb=\"skeleton\" data-variant=\"text\" data-lines=\"3\"></div>",
+          "expect": {
+            "selector": "element",
+            "hasClass": ["wb-skeleton", "wb-skeleton--text"]
+          }
+        },
+        {
+          "name": "circle skeleton is circular",
+          "setup": "<div data-wb=\"skeleton\" data-variant=\"circle\" data-width=\"50px\"></div>",
+          "checks": [
+            { "selector": ".wb-skeleton__circle", "style": "borderRadius", "pattern": "50%" }
+          ]
+        }
+      ]
+    }
+  }
+}

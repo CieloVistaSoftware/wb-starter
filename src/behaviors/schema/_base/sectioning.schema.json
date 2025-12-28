@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "_base/sectioning.schema.json",
+  "title": "Sectioning Content",
+  "description": "Base schema for sectioning elements: article, section, nav, aside, header, footer, main, address. These define document outline and landmark regions.",
+  
+  "allOf": [
+    { "$ref": "html-element.schema.json" }
+  ],
+  
+  "type": "object",
+  
+  "properties": {
+    "_sectioning": {
+      "title": "Sectioning",
+      "type": "object",
+      "description": "Properties specific to sectioning content",
+      "properties": {}
+    }
+  },
+  
+  "_semanticElements": {
+    "article": {
+      "description": "Self-contained composition - blog post, news article, comment, widget",
+      "implicitRole": "article",
+      "outline": true,
+      "usage": ["Cards", "Blog posts", "Comments", "Widgets", "Forum posts"]
+    },
+    "section": {
+      "description": "Thematic grouping of content with a heading",
+      "implicitRole": "region (when named)",
+      "outline": true,
+      "usage": ["Page sections", "Chapters", "Tabbed content"]
+    },
+    "nav": {
+      "description": "Navigation links section",
+      "implicitRole": "navigation",
+      "outline": true,
+      "usage": ["Main nav", "Breadcrumbs", "Table of contents", "Pagination"]
+    },
+    "aside": {
+      "description": "Content tangentially related to surrounding content",
+      "implicitRole": "complementary",
+      "outline": true,
+      "usage": ["Sidebars", "Pull quotes", "Ads", "Related links"]
+    },
+    "header": {
+      "description": "Introductory content or navigational aids",
+      "implicitRole": "banner (when top-level)",
+      "outline": false,
+      "usage": ["Page header", "Article header", "Card header"]
+    },
+    "footer": {
+      "description": "Footer for nearest sectioning content or root",
+      "implicitRole": "contentinfo (when top-level)",
+      "outline": false,
+      "usage": ["Page footer", "Article footer", "Card footer"]
+    },
+    "main": {
+      "description": "Dominant content of the document body",
+      "implicitRole": "main",
+      "outline": false,
+      "usage": ["Main content area (one per page)"],
+      "restrictions": ["Only one per document", "Not inside article/aside/footer/header/nav"]
+    },
+    "address": {
+      "description": "Contact information for nearest article or body",
+      "implicitRole": "group",
+      "outline": false,
+      "usage": ["Author contact", "Business address", "Portfolio contact"]
+    }
+  },
+  
+  "_metadata": {
+    "extends": "html-element",
+    "category": "sectioning",
+    "components": ["card", "cardimage", "cardprofile", "cardpricing", "hero", "sidebar", "nav", "breadcrumb"]
+  }
+}

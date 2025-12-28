@@ -1,0 +1,1381 @@
+{
+  "$schema": "./propertyconfig.schema.json",
+  "version": "1.0.0",
+  "updated": "2024-12-20",
+  
+  "uiTypes": {
+    "text": { "component": "input", "inputType": "text" },
+    "number": { "component": "input", "inputType": "number" },
+    "range": { "component": "input", "inputType": "range" },
+    "url": { "component": "input", "inputType": "url", "placeholder": "https://..." },
+    "email": { "component": "input", "inputType": "email", "placeholder": "email@example.com" },
+    "tel": { "component": "input", "inputType": "tel", "placeholder": "+1 555-1234" },
+    "color": { "component": "input", "inputType": "color" },
+    "date": { "component": "input", "inputType": "date" },
+    "time": { "component": "input", "inputType": "time" },
+    "datetime": { "component": "input", "inputType": "datetime-local" },
+    "checkbox": { "component": "checkbox" },
+    "select": { "component": "select" },
+    "textarea": { "component": "textarea", "rows": 3 },
+    "file": { "component": "file", "accept": "*/*" },
+    "image": { "component": "file", "accept": "image/*", "preview": true },
+    "audio": { "component": "file", "accept": "audio/*", "preview": true },
+    "video": { "component": "file", "accept": "video/*", "preview": true },
+    "icon": { "component": "iconPicker" },
+    "json": { "component": "textarea", "rows": 5, "monospace": true },
+    "cssValue": { "component": "input", "inputType": "text", "placeholder": "e.g., 100px, 2rem, 50%" },
+    "canvasEditable": { "component": "none", "editOnCanvas": true }
+  },
+
+  "properties": {
+    "title": {
+      "label": "Title",
+      "ui": "canvasEditable",
+      "default": "Title",
+      "description": "Main heading text (double-click on canvas to edit)",
+      "category": "content"
+    },
+    "subtitle": {
+      "label": "Subtitle",
+      "ui": "canvasEditable",
+      "default": "Subtitle text",
+      "description": "Secondary heading text (double-click on canvas to edit)",
+      "category": "content"
+    },
+    "footer": {
+      "label": "Footer",
+      "ui": "canvasEditable",
+      "default": "",
+      "description": "Footer text (double-click on canvas to edit)",
+      "category": "content"
+    },
+    "content": {
+      "label": "Content",
+      "ui": "canvasEditable",
+      "default": "",
+      "description": "Main content text (double-click on canvas to edit)",
+      "category": "content"
+    },
+    "text": {
+      "label": "Text",
+      "ui": "canvasEditable",
+      "default": "Text",
+      "description": "Text content (double-click on canvas to edit)",
+      "category": "content"
+    },
+    "message": {
+      "label": "Message",
+      "ui": "canvasEditable",
+      "default": "Message",
+      "description": "Message text (double-click on canvas to edit)",
+      "category": "content"
+    },
+    "quote": {
+      "label": "Quote",
+      "ui": "canvasEditable",
+      "default": "Quote text here...",
+      "description": "Quote text (double-click on canvas to edit)",
+      "category": "content"
+    },
+    "description": {
+      "label": "Description",
+      "ui": "canvasEditable",
+      "default": "",
+      "description": "Description text (double-click on canvas to edit)",
+      "category": "content"
+    },
+    "name": {
+      "label": "Name",
+      "ui": "canvasEditable",
+      "default": "Name",
+      "description": "Name text (double-click on canvas to edit)",
+      "category": "content"
+    },
+    "label": {
+      "label": "Label",
+      "ui": "text",
+      "default": "Label",
+      "description": "Label text for the element",
+      "category": "content"
+    },
+    "placeholder": {
+      "label": "Placeholder",
+      "ui": "text",
+      "default": "Enter text...",
+      "description": "Placeholder text shown when empty",
+      "category": "content"
+    },
+
+    "src": {
+      "label": "Source URL",
+      "ui": "url",
+      "default": "",
+      "description": "URL to media file (image, audio, video)",
+      "category": "media",
+      "componentOverrides": {
+        "audio": { "ui": "audio", "default": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+        "video": { "ui": "video", "default": "" },
+        "cardvideo": { "ui": "video", "default": "https://www.w3schools.com/html/mov_bbb.mp4" },
+        "image": { "ui": "image", "default": "https://picsum.photos/400/300" },
+        "avatar": { "ui": "image", "default": "https://i.pravatar.cc/80?img=1" }
+      }
+    },
+    "image": {
+      "label": "Image",
+      "ui": "image",
+      "default": "https://picsum.photos/400/300",
+      "description": "Image file or URL",
+      "category": "media"
+    },
+    "avatar": {
+      "label": "Avatar",
+      "ui": "image",
+      "default": "https://i.pravatar.cc/80?img=1",
+      "description": "Avatar/profile image",
+      "category": "media"
+    },
+    "cover": {
+      "label": "Cover Image",
+      "ui": "image",
+      "default": "",
+      "description": "Cover/banner image",
+      "category": "media"
+    },
+    "poster": {
+      "label": "Video Poster",
+      "ui": "image",
+      "default": "",
+      "description": "Thumbnail image shown before video plays",
+      "category": "media"
+    },
+    "background": {
+      "label": "Background",
+      "ui": "image",
+      "default": "",
+      "description": "Background image URL",
+      "category": "media"
+    },
+    "cosmicBg": {
+      "label": "Cosmic Background",
+      "ui": "image",
+      "default": "",
+      "description": "Custom space/cosmic background image",
+      "category": "media"
+    },
+
+    "href": {
+      "label": "Link URL",
+      "ui": "url",
+      "default": "#",
+      "description": "Destination URL when clicked",
+      "category": "link"
+    },
+    "primaryHref": {
+      "label": "Primary Button URL",
+      "ui": "url",
+      "default": "#",
+      "description": "URL for primary action button",
+      "category": "link"
+    },
+    "secondaryHref": {
+      "label": "Secondary Button URL",
+      "ui": "url",
+      "default": "",
+      "description": "URL for secondary action button",
+      "category": "link"
+    },
+    "ctaHref": {
+      "label": "CTA URL",
+      "ui": "url",
+      "default": "#",
+      "description": "Call-to-action button destination",
+      "category": "link"
+    },
+    "target": {
+      "label": "Link Target",
+      "ui": "select",
+      "default": "_self",
+      "options": [
+        { "value": "_self", "label": "Same Window" },
+        { "value": "_blank", "label": "New Tab" }
+      ],
+      "description": "Where to open the link",
+      "category": "link"
+    },
+    "offset": {
+      "label": "Scroll Offset",
+      "ui": "number",
+      "default": "0",
+      "description": "Pixel offset when scrolling to anchor",
+      "category": "link"
+    },
+
+    "type": {
+      "label": "Type",
+      "ui": "select",
+      "default": "info",
+      "options": [
+        { "value": "info", "label": "ℹ️ Info", "color": "#3b82f6" },
+        { "value": "success", "label": "✅ Success", "color": "#22c55e" },
+        { "value": "warning", "label": "⚠️ Warning", "color": "#eab308" },
+        { "value": "error", "label": "❌ Error", "color": "#ef4444" }
+      ],
+      "description": "Alert/message type",
+      "category": "appearance",
+      "componentOverrides": {
+        "cardfile": {
+          "options": [
+            { "value": "pdf", "label": "📄 PDF" },
+            { "value": "doc", "label": "📝 Document" },
+            { "value": "image", "label": "🖼️ Image" },
+            { "value": "video", "label": "🎬 Video" },
+            { "value": "audio", "label": "🎵 Audio" },
+            { "value": "zip", "label": "📦 Archive" },
+            { "value": "code", "label": "💻 Code" },
+            { "value": "spreadsheet", "label": "📊 Spreadsheet" }
+          ],
+          "default": "pdf"
+        }
+      }
+    },
+    "variant": {
+      "label": "Variant",
+      "ui": "select",
+      "default": "default",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "minimal", "label": "Minimal" },
+        { "value": "split", "label": "Split" },
+        { "value": "particles", "label": "Particles" },
+        { "value": "diagonal", "label": "Diagonal" },
+        { "value": "waves", "label": "Waves" },
+        { "value": "grid", "label": "Grid" },
+        { "value": "spotlight", "label": "Spotlight" },
+        { "value": "aurora", "label": "Aurora" },
+        { "value": "mesh", "label": "Mesh" },
+        { "value": "card", "label": "Card" },
+        { "value": "cosmic", "label": "🌌 Cosmic" }
+      ],
+      "description": "Visual style variant",
+      "category": "appearance",
+      "componentOverrides": {
+        "badge": {
+          "options": [
+            { "value": "default", "label": "Default" },
+            { "value": "pill", "label": "Pill" },
+            { "value": "outline", "label": "Outline" },
+            { "value": "dot", "label": "Dot" }
+          ]
+        },
+        "clock": {
+          "options": [
+            { "value": "digital", "label": "Digital" },
+            { "value": "led", "label": "LED" },
+            { "value": "minimal", "label": "Minimal" },
+            { "value": "analog", "label": "Analog" }
+          ]
+        }
+      }
+    },
+    "size": {
+      "label": "Size",
+      "ui": "select",
+      "default": "md",
+      "options": [
+        { "value": "xs", "label": "Extra Small" },
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" },
+        { "value": "xl", "label": "Extra Large" }
+      ],
+      "description": "Component size",
+      "category": "appearance"
+    },
+    "align": {
+      "label": "Alignment",
+      "ui": "select",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "⬅️ Left" },
+        { "value": "center", "label": "↔️ Center" },
+        { "value": "right", "label": "➡️ Right" }
+      ],
+      "description": "Horizontal alignment",
+      "category": "layout",
+      "componentOverrides": {
+        "container": {
+          "options": [
+            { "value": "start", "label": "Start" },
+            { "value": "center", "label": "Center" },
+            { "value": "end", "label": "End" },
+            { "value": "stretch", "label": "Stretch" }
+          ],
+          "default": "stretch"
+        }
+      }
+    },
+    "valign": {
+      "label": "Vertical Align",
+      "ui": "select",
+      "default": "center",
+      "options": [
+        { "value": "top", "label": "⬆️ Top" },
+        { "value": "center", "label": "↕️ Center" },
+        { "value": "bottom", "label": "⬇️ Bottom" }
+      ],
+      "description": "Vertical alignment",
+      "category": "layout"
+    },
+    "justify": {
+      "label": "Justify",
+      "ui": "select",
+      "default": "start",
+      "options": [
+        { "value": "start", "label": "Start" },
+        { "value": "center", "label": "Center" },
+        { "value": "end", "label": "End" },
+        { "value": "space-between", "label": "Space Between" },
+        { "value": "space-around", "label": "Space Around" },
+        { "value": "space-evenly", "label": "Space Evenly" }
+      ],
+      "description": "Content justification",
+      "category": "layout"
+    },
+    "direction": {
+      "label": "Direction",
+      "ui": "select",
+      "default": "column",
+      "options": [
+        { "value": "column", "label": "↓ Column (Vertical)" },
+        { "value": "row", "label": "→ Row (Horizontal)" }
+      ],
+      "description": "Layout direction",
+      "category": "layout"
+    },
+    "position": {
+      "label": "Position",
+      "ui": "select",
+      "default": "bottom",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" },
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" },
+        { "value": "center", "label": "Center" }
+      ],
+      "description": "Content position",
+      "category": "layout"
+    },
+    "columns": {
+      "label": "Columns",
+      "ui": "select",
+      "default": "3",
+      "options": [
+        { "value": "1", "label": "1 Column" },
+        { "value": "2", "label": "2 Columns" },
+        { "value": "3", "label": "3 Columns" },
+        { "value": "4", "label": "4 Columns" },
+        { "value": "5", "label": "5 Columns" },
+        { "value": "6", "label": "6 Columns" }
+      ],
+      "description": "Number of grid columns",
+      "category": "layout"
+    },
+    "gap": {
+      "label": "Gap",
+      "ui": "cssValue",
+      "default": "1rem",
+      "description": "Space between items",
+      "category": "layout"
+    },
+    "padding": {
+      "label": "Padding",
+      "ui": "cssValue",
+      "default": "1rem",
+      "description": "Inner spacing",
+      "category": "layout"
+    },
+    "width": {
+      "label": "Width",
+      "ui": "cssValue",
+      "default": "auto",
+      "description": "Element width",
+      "category": "layout"
+    },
+    "minWidth": {
+      "label": "Min Width",
+      "ui": "cssValue",
+      "default": "",
+      "description": "Minimum width",
+      "category": "layout"
+    },
+    "maxWidth": {
+      "label": "Max Width",
+      "ui": "cssValue",
+      "default": "",
+      "description": "Maximum width",
+      "category": "layout"
+    },
+    "height": {
+      "label": "Height",
+      "ui": "cssValue",
+      "default": "auto",
+      "description": "Element height",
+      "category": "layout"
+    },
+    "maxHeight": {
+      "label": "Max Height",
+      "ui": "cssValue",
+      "default": "100px",
+      "description": "Maximum height (when collapsed)",
+      "category": "layout"
+    },
+    "minHeight": {
+      "label": "Min Height",
+      "ui": "cssValue",
+      "default": "",
+      "description": "Minimum height",
+      "category": "layout"
+    },
+    "aspect": {
+      "label": "Aspect Ratio",
+      "ui": "select",
+      "default": "16/9",
+      "options": [
+        { "value": "16/9", "label": "16:9 (Widescreen)" },
+        { "value": "4/3", "label": "4:3 (Standard)" },
+        { "value": "1/1", "label": "1:1 (Square)" },
+        { "value": "3/2", "label": "3:2 (Photo)" },
+        { "value": "21/9", "label": "21:9 (Ultrawide)" },
+        { "value": "9/16", "label": "9:16 (Portrait)" }
+      ],
+      "description": "Width to height ratio",
+      "category": "layout"
+    },
+    "fit": {
+      "label": "Object Fit",
+      "ui": "select",
+      "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Cover (fill, crop)" },
+        { "value": "contain", "label": "Contain (fit inside)" },
+        { "value": "fill", "label": "Fill (stretch)" },
+        { "value": "none", "label": "None (original)" },
+        { "value": "scale-down", "label": "Scale Down" }
+      ],
+      "description": "How media fills container",
+      "category": "layout"
+    },
+    "layout": {
+      "label": "Layout",
+      "ui": "select",
+      "default": "row",
+      "options": [
+        { "value": "row", "label": "→ Row" },
+        { "value": "column", "label": "↓ Column" },
+        { "value": "space-between", "label": "↔ Space Between" }
+      ],
+      "description": "Button/element layout",
+      "category": "layout"
+    },
+    "wrap": {
+      "label": "Wrap Items",
+      "ui": "checkbox",
+      "default": true,
+      "description": "Wrap items to next line",
+      "category": "layout"
+    },
+
+    "elevated": {
+      "label": "Elevated",
+      "ui": "checkbox",
+      "default": false,
+      "description": "Add drop shadow effect",
+      "category": "style"
+    },
+    "clickable": {
+      "label": "Clickable",
+      "ui": "checkbox",
+      "default": false,
+      "description": "Make entire card clickable (requires Link URL)",
+      "category": "style"
+    },
+    "gradient": {
+      "label": "Gradient Overlay",
+      "ui": "checkbox",
+      "default": true,
+      "description": "Add gradient overlay on image",
+      "category": "style"
+    },
+    "overlay": {
+      "label": "Overlay",
+      "ui": "checkbox",
+      "default": true,
+      "description": "Show overlay effect",
+      "category": "style"
+    },
+    "featured": {
+      "label": "Featured",
+      "ui": "checkbox",
+      "default": false,
+      "description": "Highlight as featured/recommended",
+      "category": "style"
+    },
+    "color": {
+      "label": "Color",
+      "ui": "color",
+      "default": "#3b82f6",
+      "description": "Primary color",
+      "category": "style"
+    },
+    "badgeColor": {
+      "label": "Badge Color",
+      "ui": "color",
+      "default": "",
+      "description": "Badge background color",
+      "category": "style"
+    },
+
+    "autoplay": {
+      "label": "Autoplay",
+      "ui": "checkbox",
+      "default": false,
+      "description": "Start playing automatically",
+      "category": "media"
+    },
+    "muted": {
+      "label": "Muted",
+      "ui": "checkbox",
+      "default": false,
+      "description": "Start with audio muted",
+      "category": "media"
+    },
+    "loop": {
+      "label": "Loop",
+      "ui": "checkbox",
+      "default": false,
+      "description": "Loop playback",
+      "category": "media"
+    },
+    "controls": {
+      "label": "Show Controls",
+      "ui": "checkbox",
+      "default": true,
+      "description": "Display media controls",
+      "category": "media"
+    },
+    "showEq": {
+      "label": "Show Equalizer",
+      "ui": "checkbox",
+      "default": false,
+      "description": "Display 15-band audio equalizer",
+      "category": "media"
+    },
+    "volume": {
+      "label": "Volume",
+      "ui": "range",
+      "default": "0.8",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "description": "Audio volume (0-1)",
+      "category": "media"
+    },
+    "bass": {
+      "label": "Bass",
+      "ui": "range",
+      "default": "0",
+      "min": -10,
+      "max": 10,
+      "step": 1,
+      "description": "Bass adjustment",
+      "category": "media"
+    },
+    "treble": {
+      "label": "Treble",
+      "ui": "range",
+      "default": "0",
+      "min": -10,
+      "max": 10,
+      "step": 1,
+      "description": "Treble adjustment",
+      "category": "media"
+    },
+
+    "constrain": {
+      "label": "Constrain To",
+      "ui": "select",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "No Constraint" },
+        { "value": "parent", "label": "Parent Element" },
+        { "value": "viewport", "label": "Viewport" }
+      ],
+      "description": "Limit drag area",
+      "category": "behavior"
+    },
+    "axis": {
+      "label": "Drag Axis",
+      "ui": "select",
+      "default": "both",
+      "options": [
+        { "value": "both", "label": "↔↕ Both" },
+        { "value": "x", "label": "↔ Horizontal Only" },
+        { "value": "y", "label": "↕ Vertical Only" }
+      ],
+      "description": "Restrict drag direction",
+      "category": "behavior"
+    },
+    "snapToGrid": {
+      "label": "Snap to Grid",
+      "ui": "checkbox",
+      "default": false,
+      "description": "Snap position to grid when dragging",
+      "category": "behavior"
+    },
+    "expanded": {
+      "label": "Start Expanded",
+      "ui": "checkbox",
+      "default": false,
+      "description": "Start in expanded state",
+      "category": "behavior"
+    },
+    "multiple": {
+      "label": "Multiple Selection",
+      "ui": "checkbox",
+      "default": false,
+      "description": "Allow multiple items open",
+      "category": "behavior"
+    },
+    "dismissible": {
+      "label": "Dismissible",
+      "ui": "checkbox",
+      "default": true,
+      "description": "Can be closed/dismissed",
+      "category": "behavior"
+    },
+    "downloadable": {
+      "label": "Downloadable",
+      "ui": "checkbox",
+      "default": true,
+      "description": "Allow file download",
+      "category": "behavior"
+    },
+    "showBadge": {
+      "label": "Show Badge",
+      "ui": "checkbox",
+      "default": false,
+      "description": "Display badge",
+      "category": "behavior"
+    },
+    "showSeconds": {
+      "label": "Show Seconds",
+      "ui": "checkbox",
+      "default": true,
+      "description": "Display seconds in clock",
+      "category": "behavior"
+    },
+
+    "primary": {
+      "label": "Primary Button",
+      "ui": "text",
+      "default": "Primary",
+      "description": "Primary button label",
+      "category": "buttons"
+    },
+    "secondary": {
+      "label": "Secondary Button",
+      "ui": "text",
+      "default": "",
+      "description": "Secondary button label",
+      "category": "buttons"
+    },
+    "cta": {
+      "label": "CTA Button",
+      "ui": "text",
+      "default": "Get Started",
+      "description": "Call-to-action button text",
+      "category": "buttons"
+    },
+
+    "filename": {
+      "label": "Filename",
+      "ui": "file",
+      "default": "document.pdf",
+      "description": "Select or enter filename",
+      "category": "file",
+      "fileConfig": {
+        "accept": "*/*",
+        "uploadPath": "/uploads/files/",
+        "showUpload": true,
+        "showUrl": true
+      }
+    },
+    "fileSize": {
+      "label": "File Size",
+      "ui": "text",
+      "default": "2.4 MB",
+      "description": "Display file size",
+      "category": "file"
+    },
+    "date": {
+      "label": "Date",
+      "ui": "date",
+      "default": "",
+      "description": "Date value",
+      "category": "file"
+    },
+
+    "plan": {
+      "label": "Plan Name",
+      "ui": "text",
+      "default": "Pro",
+      "description": "Pricing plan name",
+      "category": "pricing"
+    },
+    "price": {
+      "label": "Price",
+      "ui": "text",
+      "default": "$29",
+      "description": "Price display",
+      "category": "pricing"
+    },
+    "originalPrice": {
+      "label": "Original Price",
+      "ui": "text",
+      "default": "",
+      "description": "Strikethrough price (for sales)",
+      "category": "pricing"
+    },
+    "period": {
+      "label": "Billing Period",
+      "ui": "select",
+      "default": "/month",
+      "options": [
+        { "value": "/month", "label": "Monthly" },
+        { "value": "/year", "label": "Yearly" },
+        { "value": "/week", "label": "Weekly" },
+        { "value": "", "label": "One-time" },
+        { "value": "/user/month", "label": "Per User/Month" }
+      ],
+      "description": "Billing period",
+      "category": "pricing"
+    },
+    "features": {
+      "label": "Features",
+      "ui": "textarea",
+      "default": "Feature 1,Feature 2,Feature 3",
+      "description": "Comma-separated feature list",
+      "category": "pricing"
+    },
+
+    "items": {
+      "label": "Items",
+      "ui": "textarea",
+      "default": "Item 1,Item 2,Item 3",
+      "description": "Comma-separated list items",
+      "category": "data"
+    },
+    "separator": {
+      "label": "Separator",
+      "ui": "text",
+      "default": "/",
+      "description": "Character between items",
+      "category": "data"
+    },
+    "source": {
+      "label": "Data Source",
+      "ui": "json",
+      "default": "[]",
+      "description": "JSON array of options",
+      "category": "data"
+    },
+    "headers": {
+      "label": "Headers",
+      "ui": "text",
+      "default": "Name,Email",
+      "description": "Comma-separated column headers",
+      "category": "data"
+    },
+    "rows": {
+      "label": "Rows",
+      "ui": "json",
+      "default": "[]",
+      "description": "JSON array of row data",
+      "category": "data"
+    },
+    "data": {
+      "label": "JSON Data",
+      "ui": "json",
+      "default": "{}",
+      "description": "JSON data object",
+      "category": "data"
+    },
+    "code": {
+      "label": "Code",
+      "ui": "textarea",
+      "default": "console.log('Hello');",
+      "description": "Code content",
+      "category": "data",
+      "monospace": true
+    },
+    "language": {
+      "label": "Language",
+      "ui": "select",
+      "default": "javascript",
+      "options": [
+        { "value": "javascript", "label": "JavaScript" },
+        { "value": "typescript", "label": "TypeScript" },
+        { "value": "python", "label": "Python" },
+        { "value": "html", "label": "HTML" },
+        { "value": "css", "label": "CSS" },
+        { "value": "json", "label": "JSON" },
+        { "value": "sql", "label": "SQL" },
+        { "value": "bash", "label": "Bash" },
+        { "value": "powershell", "label": "PowerShell" },
+        { "value": "csharp", "label": "C#" },
+        { "value": "java", "label": "Java" },
+        { "value": "php", "label": "PHP" },
+        { "value": "ruby", "label": "Ruby" },
+        { "value": "go", "label": "Go" },
+        { "value": "rust", "label": "Rust" }
+      ],
+      "description": "Programming language",
+      "category": "data"
+    },
+    "markdown": {
+      "label": "Markdown",
+      "ui": "textarea",
+      "default": "# Heading",
+      "description": "Markdown content",
+      "category": "data",
+      "rows": 6
+    },
+    "mask": {
+      "label": "Input Mask",
+      "ui": "text",
+      "default": "(XXX) XXX-XXXX",
+      "description": "Input mask pattern (X = digit)",
+      "category": "data"
+    },
+    "minLength": {
+      "label": "Min Length",
+      "ui": "number",
+      "default": "1",
+      "description": "Minimum characters before autocomplete",
+      "category": "data"
+    },
+
+    "company": {
+      "label": "Company",
+      "ui": "text",
+      "default": "",
+      "description": "Company name",
+      "category": "contact"
+    },
+    "location": {
+      "label": "Location",
+      "ui": "text",
+      "default": "",
+      "description": "Location/address",
+      "category": "contact"
+    },
+    "email": {
+      "label": "Email",
+      "ui": "email",
+      "default": "",
+      "description": "Email address",
+      "category": "contact"
+    },
+    "phone": {
+      "label": "Phone",
+      "ui": "tel",
+      "default": "",
+      "description": "Phone number",
+      "category": "contact"
+    },
+    "website": {
+      "label": "Website",
+      "ui": "url",
+      "default": "",
+      "description": "Website URL",
+      "category": "contact"
+    },
+    "linkedin": {
+      "label": "LinkedIn",
+      "ui": "url",
+      "default": "",
+      "description": "LinkedIn profile URL",
+      "category": "contact"
+    },
+    "twitter": {
+      "label": "Twitter/X",
+      "ui": "url",
+      "default": "",
+      "description": "Twitter/X profile URL",
+      "category": "contact"
+    },
+    "github": {
+      "label": "GitHub",
+      "ui": "url",
+      "default": "",
+      "description": "GitHub profile URL",
+      "category": "contact"
+    },
+    "bio": {
+      "label": "Bio",
+      "ui": "textarea",
+      "default": "",
+      "description": "Biography text",
+      "category": "contact"
+    },
+    "role": {
+      "label": "Role",
+      "ui": "text",
+      "default": "",
+      "description": "Job title/role",
+      "category": "contact"
+    },
+    "author": {
+      "label": "Author",
+      "ui": "text",
+      "default": "",
+      "description": "Author name",
+      "category": "contact"
+    },
+
+    "rating": {
+      "label": "Rating",
+      "ui": "range",
+      "default": "3",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "description": "Star rating value",
+      "category": "feedback"
+    },
+    "reviews": {
+      "label": "Reviews Count",
+      "ui": "number",
+      "default": "0",
+      "description": "Number of reviews",
+      "category": "feedback"
+    },
+    "value": {
+      "label": "Value",
+      "ui": "text",
+      "default": "0",
+      "description": "Current value",
+      "category": "feedback"
+    },
+    "max": {
+      "label": "Max Value",
+      "ui": "number",
+      "default": "100",
+      "description": "Maximum value",
+      "category": "feedback"
+    },
+    "min": {
+      "label": "Min Value",
+      "ui": "number",
+      "default": "0",
+      "description": "Minimum value",
+      "category": "feedback"
+    },
+    "trend": {
+      "label": "Trend",
+      "ui": "select",
+      "default": "neutral",
+      "options": [
+        { "value": "up", "label": "📈 Up" },
+        { "value": "down", "label": "📉 Down" },
+        { "value": "neutral", "label": "➡️ Neutral" }
+      ],
+      "description": "Trend direction",
+      "category": "feedback"
+    },
+    "trendValue": {
+      "label": "Trend Value",
+      "ui": "text",
+      "default": "",
+      "description": "Trend percentage (e.g., +12%)",
+      "category": "feedback"
+    },
+
+    "icon": {
+      "label": "Icon",
+      "ui": "icon",
+      "default": "📈",
+      "description": "Emoji or icon name",
+      "category": "display"
+    },
+    "badge": {
+      "label": "Badge",
+      "ui": "text",
+      "default": "",
+      "description": "Badge text (e.g., Sale, New)",
+      "category": "display"
+    },
+    "hoverText": {
+      "label": "Tooltip",
+      "ui": "text",
+      "default": "",
+      "description": "Text shown on hover",
+      "category": "display"
+    },
+    "alt": {
+      "label": "Alt Text",
+      "ui": "text",
+      "default": "Image",
+      "description": "Image alt text for accessibility",
+      "category": "display"
+    },
+    "status": {
+      "label": "Status",
+      "ui": "select",
+      "default": "",
+      "options": [
+        { "value": "", "label": "None" },
+        { "value": "online", "label": "🟢 Online" },
+        { "value": "away", "label": "🟡 Away" },
+        { "value": "busy", "label": "🔴 Busy" },
+        { "value": "offline", "label": "⚫ Offline" }
+      ],
+      "description": "Online status indicator",
+      "category": "display"
+    },
+    "format": {
+      "label": "Format",
+      "ui": "select",
+      "default": "24",
+      "options": [
+        { "value": "12", "label": "12-hour" },
+        { "value": "24", "label": "24-hour" }
+      ],
+      "description": "Time format",
+      "category": "display"
+    },
+
+    "id": {
+      "label": "Video ID",
+      "ui": "text",
+      "default": "",
+      "description": "YouTube/Vimeo video ID",
+      "category": "embed"
+    },
+    "clipboardText": {
+      "label": "Text to Copy",
+      "ui": "textarea",
+      "default": "Text to copy",
+      "description": "Text that will be copied to clipboard",
+      "category": "embed"
+    },
+    "shareText": {
+      "label": "Share Text",
+      "ui": "textarea",
+      "default": "",
+      "description": "Text to share",
+      "category": "embed"
+    },
+    "url": {
+      "label": "Share URL",
+      "ui": "url",
+      "default": "",
+      "description": "URL to share",
+      "category": "embed"
+    },
+
+    "count": {
+      "label": "Count",
+      "ui": "number",
+      "default": "50",
+      "description": "Number of particles/items",
+      "category": "effects"
+    },
+    "length": {
+      "label": "Length",
+      "ui": "number",
+      "default": "6",
+      "description": "Character/item length",
+      "category": "effects"
+    },
+    "targetDate": {
+      "label": "Target Date",
+      "ui": "datetime",
+      "default": "2025-12-31T23:59:59Z",
+      "description": "Countdown target date/time",
+      "category": "effects"
+    }
+  },
+
+  "categories": {
+    "content": { "label": "📝 Content", "order": 1 },
+    "media": { "label": "🖼️ Media", "order": 2 },
+    "link": { "label": "🔗 Links", "order": 3 },
+    "appearance": { "label": "🎨 Appearance", "order": 4 },
+    "layout": { "label": "📐 Layout", "order": 5 },
+    "style": { "label": "✨ Style", "order": 6 },
+    "behavior": { "label": "⚙️ Behavior", "order": 7 },
+    "buttons": { "label": "🔘 Buttons", "order": 8 },
+    "file": { "label": "📁 File", "order": 9 },
+    "pricing": { "label": "💰 Pricing", "order": 10 },
+    "data": { "label": "📊 Data", "order": 11 },
+    "contact": { "label": "📇 Contact", "order": 12 },
+    "feedback": { "label": "📈 Feedback", "order": 13 },
+    "display": { "label": "👁️ Display", "order": 14 },
+    "embed": { "label": "🔌 Embed", "order": 15 },
+    "effects": { "label": "🎆 Effects", "order": 16 }
+  },
+
+  "componentDefaults": {
+    "accordion": {
+      "multiple": false
+    },
+    "alert": {
+      "type": "info",
+      "title": "Alert",
+      "message": "This is an alert message."
+    },
+    "audio": {
+      "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      "volume": "0.8",
+      "bass": "0",
+      "treble": "0",
+      "showEq": false,
+      "loop": false,
+      "controls": true
+    },
+    "avatar": {
+      "src": "https://i.pravatar.cc/80?img=1",
+      "name": "",
+      "size": "md",
+      "status": ""
+    },
+    "badge": {
+      "text": "Badge",
+      "color": "",
+      "variant": "default"
+    },
+    "breadcrumb": {
+      "items": "Home,Products,Category,Current Page",
+      "separator": "/"
+    },
+    "card": {
+      "title": "Card Title",
+      "subtitle": "Card subtitle",
+      "footer": "",
+      "elevated": false,
+      "clickable": false,
+      "href": "",
+      "hoverText": ""
+    },
+    "cardbutton": {
+      "title": "Button Card",
+      "subtitle": "",
+      "footer": "",
+      "content": "Card content with action buttons.",
+      "primary": "Primary",
+      "primaryHref": "#",
+      "secondary": "",
+      "secondaryHref": ""
+    },
+    "carddraggable": {
+      "title": "Draggable Card",
+      "subtitle": "Drag me around",
+      "content": "Drag the header to move this card.",
+      "elevated": true,
+      "constrain": "none",
+      "axis": "both",
+      "snapToGrid": false
+    },
+    "cardexpandable": {
+      "title": "Expandable Card",
+      "subtitle": "Click to expand",
+      "content": "This content can be expanded or collapsed.",
+      "maxHeight": "100px",
+      "expanded": false
+    },
+    "cardfile": {
+      "filename": "document.pdf",
+      "type": "pdf",
+      "size": "2.4 MB",
+      "date": "",
+      "downloadable": true,
+      "href": "#"
+    },
+    "hero": {
+      "variant": "default",
+      "title": "Hero Title",
+      "subtitle": "Hero subtitle text",
+      "cta": "Get Started",
+      "ctaHref": "#",
+      "image": "",
+      "background": "",
+      "height": "400px",
+      "align": "center",
+      "overlay": true,
+      "showBadge": false,
+      "badge": "",
+      "badgeColor": ""
+    },
+    "cardoverlay": {
+      "title": "Overlay Card",
+      "subtitle": "Beautiful overlay effect",
+      "image": "https://picsum.photos/400/300",
+      "position": "bottom",
+      "gradient": true,
+      "height": "300px"
+    },
+    "cardportfolio": {
+      "name": "John Doe",
+      "title": "Software Developer",
+      "bio": "Passionate about creating great software.",
+      "company": "Acme Inc",
+      "location": "San Francisco, CA",
+      "avatar": "https://i.pravatar.cc/150",
+      "email": "john@example.com",
+      "phone": "+1 555-1234",
+      "website": ""
+    },
+    "cardpricing": {
+      "plan": "Pro",
+      "price": "$29",
+      "period": "/month",
+      "features": "Unlimited projects,Priority support,Advanced analytics",
+      "cta": "Get Started",
+      "ctaHref": "#",
+      "featured": false
+    },
+    "cardproduct": {
+      "title": "Product Name",
+      "description": "Product description here.",
+      "image": "https://picsum.photos/300/300",
+      "price": "$99.99",
+      "originalPrice": "",
+      "badge": "",
+      "rating": "4.5",
+      "reviews": "128",
+      "cta": "Add to Cart"
+    },
+    "cardprofile": {
+      "name": "John Doe",
+      "role": "Designer",
+      "bio": "Creating beautiful experiences.",
+      "avatar": "https://i.pravatar.cc/80?img=1",
+      "cover": "",
+      "size": "md",
+      "align": "center"
+    },
+    "cardstats": {
+      "value": "1,234",
+      "label": "Total Users",
+      "icon": "📈",
+      "trend": "neutral",
+      "trendValue": "",
+      "color": ""
+    },
+    "cardtestimonial": {
+      "quote": "This product changed my life. Highly recommended!",
+      "author": "Jane Smith",
+      "role": "CEO, TechCorp",
+      "avatar": "https://i.pravatar.cc/80?img=5",
+      "rating": "5"
+    },
+    "cardvideo": {
+      "title": "Video Title",
+      "src": "https://www.w3schools.com/html/mov_bbb.mp4",
+      "poster": "",
+      "autoplay": false,
+      "muted": false,
+      "loop": false,
+      "controls": true,
+      "aspect": "16/9"
+    },
+    "clock": {
+      "format": "24",
+      "showSeconds": true,
+      "variant": "digital"
+    },
+    "code": {
+      "language": "javascript",
+      "code": "console.log('Hello, World!');"
+    },
+    "colorpicker": {
+      "value": "#3b82f6"
+    },
+    "confetti": {
+      "count": 50,
+      "label": "🎉 Fire Confetti!"
+    },
+    "container": {
+      "direction": "column",
+      "columns": 1,
+      "gap": "1rem",
+      "align": "stretch",
+      "justify": "start",
+      "wrap": true,
+      "padding": "1rem"
+    },
+    "drawerLayout": {
+      "position": "left",
+      "width": "250px",
+      "height": "250px",
+      "minWidth": "1.5rem",
+      "minHeight": "1.5rem",
+      "maxWidth": "50vw",
+      "maxHeight": "50vh"
+    },
+    "countdown": {
+      "target": "2025-12-31T23:59:59Z"
+    },
+    "grid": {
+      "columns": "3"
+    },
+    "image": {
+      "src": "https://picsum.photos/400/300",
+      "alt": "Image"
+    },
+    "input": {
+      "placeholder": "Enter text..."
+    },
+    "link": {
+      "href": "#section1",
+      "text": "Jump to Section",
+      "offset": "0"
+    },
+    "list": {
+      "items": "Item 1,Item 2,Item 3"
+    },
+    "marquee": {
+      "text": "Scrolling text..."
+    },
+    "masked": {
+      "mask": "(XXX) XXX-XXXX"
+    },
+    "otp": {
+      "length": "6"
+    },
+    "progress": {
+      "value": "60"
+    },
+    "progressbar": {
+      "value": "75"
+    },
+    "range": {
+      "min": "0",
+      "max": "100",
+      "value": "50"
+    },
+    "rating": {
+      "value": "3",
+      "max": "5"
+    },
+    "table": {
+      "headers": "Name,Email",
+      "rows": "[]"
+    },
+    "youtube": {
+      "id": "dQw4w9WgXcQ"
+    }
+  }
+}

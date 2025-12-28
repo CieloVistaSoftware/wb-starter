@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2025-12-18T00:00:00Z",
+    "lastUpdated": "2025-12-18T00:00:00Z",
+    "description": "Test failures from builder property validation. Used for next test run.",
+    "source": "builder-validation"
+  },
+  "pendingTests": [],
+  "failures": [],
+  "stats": {
+    "totalFailures": 0,
+    "schemaErrors": 0,
+    "behaviorErrors": 0,
+    "lastRunDate": null
+  }
+}

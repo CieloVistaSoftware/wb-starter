@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Button",
+  "description": "Interactive button element",
+  "behavior": "button",
+  "element": "button",
+  "properties": {
+    "variant": {
+      "type": "string",
+      "enum": ["primary", "secondary", "outline", "ghost"],
+      "default": "primary"
+    },
+    "size": {
+      "type": "string",
+      "enum": ["sm", "md", "lg"],
+      "default": "md"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "compliance": {
+    "baseClass": "wb-button"
+  },
+  "interactions": {
+    "elements": {
+      "element": "button"
+    },
+    "keyboard": {
+      "Enter": "Triggers click",
+      "Space": "Triggers click"
+    }
+  },
+  "test": {
+    "setup": [
+      "<button data-wb=\"button\">Button</button>"
+    ],
+    "functional": {
+      "buttons": [
+        {
+          "name": "Button click",
+          "setup": "<button data-wb=\"button\">Click me</button>",
+          "selector": "button",
+          "expect": { "event": "click" }
+        }
+      ],
+      "interactions": [
+        {
+          "name": "Click triggers action",
+          "setup": "<button data-wb=\"button\">Click me</button>",
+          "action": "click",
+          "selector": "button",
+          "expect": { "event": "click" }
+        }
+      ],
+      "keyboard": [
+        {
+          "name": "Enter triggers click",
+          "setup": "<button data-wb=\"button\">Click me</button>",
+          "key": "Enter",
+          "selector": "button",
+          "expect": { "event": "click" }
+        }
+      ],
+      "visual": [
+        {
+          "name": "Primary variant style",
+          "setup": "<button data-wb=\"button\" data-variant=\"primary\">Primary</button>",
+          "expect": { "selector": "button", "hasClass": "wb-button--primary" }
+        }
+      ]
+    }
+  }
+}

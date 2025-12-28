@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WB Error Log Viewer</title>
+  <link rel="stylesheet" href="/src/styles/themes.css">
+  <link rel="stylesheet" href="/src/styles/site.css">
+  <link rel="stylesheet" href="/src/styles/components.css">
+  <style>
+    body {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--bg-color);
+      color: var(--text-primary);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    h1 { margin: 0; }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--bg-secondary);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .error-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .error-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .error-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-color: var(--primary);
+    }
+
+    .error-header {
+      padding: 1rem;
+      background: var(--bg-secondary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      cursor: pointer;
+    }
+
+    .error-title {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .badge-error { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    .badge-warn { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+    .badge-info { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+
+    .error-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .error-body {
+      padding: 1rem;
+      display: none;
+    }
+
+    .error-body.open {
+      display: block;
+    }
+
+    .detail-row {
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    code {
+      background: var(--bg-tertiary);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: var(--accent);
+    }
+
+    pre {
+      background: var(--bg-tertiary);
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--primary);
+    }
+
+    button.primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    button.primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem;
+      color: var(--text-muted);
+    }
+
+    .source-badge {
+      background: var(--bg-tertiary);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>🚨 Error Log Viewer</h1>
+      <p style="color: var(--text-secondary); margin-top: 0.5rem;">Monitor and debug application errors</p>
+    </div>
+    <div class="actions">
+      <button onclick="loadErrors()">🔄 Refresh</button>
+      <button onclick="clearErrors()" class="primary">🗑️ Clear Log</button>
+    </div>
+  </header>
+
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-value" id="total-count">0</div>
+      <div class="stat-label">Total Errors</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="last-updated">-</div>
+      <div class="stat-label">Last Updated</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="unique-sources">0</div>
+      <div class="stat-label">Unique Sources</div>
+    </div>
+  </div>
+
+  <div id="error-container" class="error-list">
+    <div class="empty-state">Loading errors...</div>
+  </div>
+
+  <script>
+    async function loadErrors() {
+      try {
+        const response = await fetch('/data/errors.json?t=' + Date.now());
+        if (!response.ok) throw new Error('Failed to load errors');
+        
+        const data = await response.json();
+        renderErrors(data);
+      } catch (err) {
+        console.error(err);
+        document.getElementById('error-container').innerHTML = `
+          <div class="empty-state">
+            <p>Could not load error log.</p>
+            <small>${err.message}</small>
+          </div>
+        `;
+      }
+    }
+
+    function renderErrors(data) {
+      const container = document.getElementById('error-container');
+      const errors = data.errors || [];
+      
+      // Update stats
+      document.getElementById('total-count').textContent = data.count || errors.length;
+      document.getElementById('last-updated').textContent = data.lastUpdated ? new Date(data.lastUpdated).toLocaleTimeString() : '-';
+      
+      const sources = new Set(errors.map(e => e.source));
+      document.getElementById('unique-sources').textContent = sources.size;
+
+      if (errors.length === 0) {
+        container.innerHTML = '<div class="empty-state">No errors found. Great job! 🎉</div>';
+        return;
+      }
+
+      // Sort by timestamp desc
+      errors.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+      container.innerHTML = errors.map((error, index) => `
+        <div class="error-card">
+          <div class="error-header" onclick="toggleDetails(${index})">
+            <div class="error-title">
+              <span class="badge badge-${error.level || 'error'}">${error.level || 'ERROR'}</span>
+              <span class="source-badge">${error.source || 'Unknown'}</span>
+              <span>${escapeHtml(error.message)}</span>
+            </div>
+            <div class="error-meta">
+              ${new Date(error.timestamp).toLocaleString()}
+            </div>
+          </div>
+          <div class="error-body" id="details-${index}">
+            <div class="detail-row">
+              <div class="detail-label">Location</div>
+              <code>${error.module || 'unknown'}:${error.line || '?'}:${error.column || '?'}</code>
+              ${error.function ? ` in <code>${error.function}()</code>` : ''}
+            </div>
+            
+            <div class="detail-row">
+              <div class="detail-label">URL</div>
+              <a href="${error.url}" target="_blank" style="color: var(--primary);">${error.url}</a>
+            </div>
+
+            ${error.stack ? `
+              <div class="detail-row">
+                <div class="detail-label">Stack Trace</div>
+                <pre>${escapeHtml(error.stack)}</pre>
+              </div>
+            ` : ''}
+
+            <div class="detail-row">
+              <div class="detail-label">User Agent</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(error.userAgent)}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleDetails(index) {
+      const el = document.getElementById(`details-${index}`);
+      el.classList.toggle('open');
+    }
+
+    async function clearErrors() {
+      if (!confirm('Are you sure you want to clear all errors?')) return;
+      
+      try {
+        const emptyLog = {
+          lastUpdated: new Date().toISOString(),
+          count: 0,
+          errors: []
+        };
+
+        const response = await fetch('/api/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            location: 'data/errors.json',
+            data: emptyLog
+          })
+        });
+
+        if (response.ok) {
+          loadErrors();
+        } else {
+          alert('Failed to clear errors');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Error clearing logs');
+      }
+    }
+
+    function escapeHtml(unsafe) {
+      if (!unsafe) return '';
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Initial load
+    loadErrors();
+  </script>
+</body>
+</html>

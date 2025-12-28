@@ -1,0 +1,37 @@
+{
+  "name": "wb-starter",
+  "version": "1.0.0",
+  "description": "Modern website starter kit powered by WB Behaviors",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "npx serve . -p 3000",
+    "test": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors",
+    "test:ui": "npx playwright test --ui",
+    "test:single": "npx playwright test --workers=1",
+    "test:compliance": "npx playwright test --project=compliance",
+    "test:regression": "npx playwright test --project=regression",
+    "test:base": "npx playwright test --project=compliance && npx playwright test --project=base",
+    "test:behaviors": "npx playwright test --project=compliance && npx playwright test --project=base && npx playwright test --project=behaviors",
+    "test:all": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors"
+  },
+  "keywords": [
+    "website",
+    "starter",
+    "template",
+    "wb-behaviors",
+    "no-build",
+    "config-driven"
+  ],
+  "author": "CieloVista Software",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CieloVistaSoftware/wb-starter.git"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "highlight.js": "^11.11.1",
+    "ws": "^8.18.3"
+  }
+}

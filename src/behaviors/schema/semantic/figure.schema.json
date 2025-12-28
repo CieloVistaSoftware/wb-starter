@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "figure.schema.json",
+  "title": "Figure Semantic Element",
+  "description": "Self-contained content with optional caption - images, diagrams, code snippets, illustrations.",
+  
+  "$inheritance": {
+    "extends": "_element.base.schema.json",
+    "reason": "Figure IS-A element with all base properties"
+  },
+  
+  "htmlTag": "figure",
+  "role": "figure",
+  
+  "semanticMeaning": {
+    "description": "Self-contained content that is referenced from main flow but could be moved without affecting meaning",
+    "examples": ["Image with caption", "Code snippet", "Diagram", "Chart", "Video", "Audio", "Illustration"],
+    "whenToUse": "Content that is referenced but self-contained - typically with a caption"
+  },
+  
+  "type": "object",
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "Source URL for image/video/audio",
+      "canvasEditable": false
+    },
+    "alt": {
+      "type": "string",
+      "description": "Alternative text for images - REQUIRED for accessibility",
+      "canvasEditable": true,
+      "default": ""
+    },
+    "caption": {
+      "type": "string",
+      "description": "Figure caption text - ALWAYS canvas editable",
+      "canvasEditable": true,
+      "default": "",
+      "htmlElement": "figcaption",
+      "cssClass": "wb-*__caption"
+    },
+    "aspectRatio": {
+      "type": "string",
+      "description": "Aspect ratio for media",
+      "enum": ["16/9", "4/3", "1/1", "3/2", "21/9"],
+      "default": "16/9"
+    },
+    "fit": {
+      "type": "string",
+      "description": "Object-fit for media",
+      "enum": ["cover", "contain", "fill", "none", "scale-down"],
+      "default": "cover"
+    }
+  },
+  
+  "textProperties": {
+    "description": "Canvas-editable text properties",
+    "list": ["alt", "caption"]
+  },
+  
+  "structure": {
+    "template": "<figure>\n  <img src=\"{{src}}\" alt=\"{{alt}}\" />\n  <figcaption>{{caption}}</figcaption>\n</figure>",
+    "conditionalRendering": {
+      "caption": "Render figcaption only if caption is not empty"
+    }
+  },
+  
+  "accessibility": {
+    "requirements": [
+      "Images must have alt text",
+      "Decorative images should have empty alt=\"\"",
+      "figcaption provides visible caption"
+    ]
+  },
+  
+  "canContain": ["img", "video", "audio", "picture", "iframe", "svg", "canvas", "figcaption", "pre", "code"],
+  
+  "wbComponents": {
+    "description": "WB components that extend figure",
+    "list": ["image", "cardimage", "cardvideo", "gallery", "lightbox"]
+  }
+}

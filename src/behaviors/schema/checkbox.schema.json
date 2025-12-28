@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Checkbox",
+  "description": "Checkbox input with label. Supports checked state and click toggling.",
+  "behavior": "checkbox",
+  "element": "input",
+  
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Label text displayed next to checkbox",
+      "default": "",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": [null, "Accept terms", "Subscribe to newsletter"],
+        "assertions": {
+          "Accept terms": {
+            "selector": ".wb-checkbox__label",
+            "checks": { "textContains": "Accept terms" }
+          }
+        }
+      }
+    },
+    "checked": {
+      "type": "boolean",
+      "description": "Whether the checkbox is initially checked",
+      "default": false,
+      "permutations": {
+        "type": "BOOLEAN",
+        "assertions": {
+          "true": {
+            "selector": "input",
+            "checks": { "attribute": { "checked": "" } }
+          }
+        }
+      }
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Whether the checkbox is disabled",
+      "default": false,
+      "permutations": {
+        "type": "BOOLEAN",
+        "assertions": {
+          "true": {
+            "selector": "input",
+            "checks": { "attribute": { "disabled": "" } }
+          }
+        }
+      }
+    }
+  },
+  
+  "compliance": {
+    "baseClass": "wb-checkbox",
+    "requiredChildren": {
+      "input[type=\"checkbox\"]": {
+        "description": "Hidden checkbox input",
+        "required": true
+      },
+      ".wb-checkbox__box": {
+        "description": "Visual checkbox element",
+        "required": true
+      }
+    },
+    "optionalChildren": {
+      ".wb-checkbox__label": {
+        "description": "Label text",
+        "createdWhen": "data-label is set"
+      }
+    },
+    "styles": {
+      "display": {
+        "required": true,
+        "value": "inline-flex"
+      },
+      "cursor": {
+        "required": true,
+        "value": "pointer"
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      "element": {
+        "type": "checkbox",
+        "clickable": true,
+        "click": {
+          "action": "toggle checked state",
+          "event": "wb:checkbox:change"
+        }
+      }
+    },
+    "keyboard": {
+      "Space": {
+        "target": "element",
+        "action": "toggle checked"
+      },
+      "Enter": {
+        "target": "element",
+        "action": "toggle checked"
+      }
+    }
+  },
+  
+  "accessibility": {
+    "element": {
+      "role": "checkbox",
+      "tabindex": "0"
+    },
+    "input": {
+      "aria-checked": "dynamic"
+    }
+  },
+  
+  "events": {
+    "wb:checkbox:change": {
+      "trigger": "Checkbox state changes",
+      "detail": {
+        "checked": "boolean"
+      },
+      "bubbles": true
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<input type=\"checkbox\" data-wb=\"checkbox\" data-label=\"Accept terms\">",
+      "<input type=\"checkbox\" data-wb=\"checkbox\" data-label=\"Remember me\" data-checked>",
+      "<input type=\"checkbox\" data-wb=\"checkbox\" data-label=\"Disabled\" data-disabled>"
+    ],
+    
+    "matrix": {
+      "combinations": [
+        { "label": "Test" },
+        { "label": "Test", "checked": true },
+        { "label": "Test", "disabled": true },
+        { "label": "Test", "checked": true, "disabled": true }
+      ]
+    },
+    
+    "functional": {
+      "buttons": [],
+      
+      "interactions": [
+        {
+          "name": "clicking checkbox toggles checked state",
+          "setup": "<div data-wb=\"checkbox\" data-label=\"Test\"></div>",
+          "action": "click",
+          "expect": {
+            "event": "wb:checkbox:change"
+          }
+        }
+      ],
+      
+      "keyboard": [
+        {
+          "name": "Space toggles checkbox",
+          "setup": "<div data-wb=\"checkbox\" data-label=\"Test\"></div>",
+          "key": "Space",
+          "expect": {}
+        }
+      ],
+      
+      "visual": [
+        {
+          "name": "checkbox has proper structure",
+          "setup": "<div data-wb=\"checkbox\" data-label=\"Test\"></div>",
+          "expect": {
+            "selector": "element",
+            "hasClass": ["wb-checkbox"],
+            "style": {
+              "display": "inline-flex",
+              "cursor": "pointer"
+            }
+          }
+        },
+        {
+          "name": "checkbox box element exists",
+          "setup": "<div data-wb=\"checkbox\" data-label=\"Test\"></div>",
+          "checks": [
+            { "selector": ".wb-checkbox__box", "style": "width", "notEmpty": true }
+          ]
+        }
+      ]
+    }
+  }
+}

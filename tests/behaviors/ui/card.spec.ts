@@ -1,0 +1,109 @@
+import { test, expect, Page } from '@playwright/test';
+
+const BASE_URL = 'http://localhost:3000/index.html';
+
+test.describe('Card Behavior (integration)', () => {
+  async function injectCard(page: Page, html: string) {
+    await page.goto(BASE_URL);
+    await page.waitForFunction(
+      () => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,
+      { timeout: 10000 }
+    );
+    await page.waitForFunction(
+      () => (window as any).WBSite && (window as any).WBSite.currentPage,
+      { timeout: 10000 }
+    );
+    await page.waitForTimeout(100);
+    
+    await page.evaluate((html: string) => {
+      const container = document.createElement('div');
+      container.id = 'test-container';
+      container.innerHTML = html;
+      document.body.appendChild(container);
+    }, html);
+    
+    await page.evaluate(() => {
+      (window as any).WB.scan(document.getElementById('test-container'));
+    });
+    
+    await page.waitForTimeout(50);
+  }
+
+  // BORDER TESTS - All cards must have a border
+  test('should have a border on basic card', async ({ page }) => {
+    await injectCard(page, '<div data-wb="card">Card with border</div>');
+    const card = page.locator('#test-container [data-wb="card"]');
+    await expect(card).toHaveCSS('border-style', 'solid');
+    await expect(card).toHaveCSS('border-width', '1px');
+  });
+
+  test('should have a border on cardimage', async ({ page }) => {
+    await injectCard(page, '<div data-wb="cardimage" data-src="test.jpg" data-title="Test">Content</div>');
+    const card = page.locator('#test-container [data-wb="cardimage"]');
+    await expect(card).toHaveCSS('border-style', 'solid');
+  });
+
+  test('should have a border on cardbutton', async ({ page }) => {
+    await injectCard(page, '<div data-wb="cardbutton" data-title="Test" data-primary="Click">Content</div>');
+    const card = page.locator('#test-container [data-wb="cardbutton"]');
+    await expect(card).toHaveCSS('border-style', 'solid');
+  });
+
+  test('should have a border on cardfile', async ({ page }) => {
+    await injectCard(page, '<div data-wb="cardfile" data-filename="test.pdf" data-type="pdf">Content</div>');
+    const card = page.locator('#test-container [data-wb="cardfile"]');
+    await expect(card).toHaveCSS('border-style', 'solid');
+  });
+
+  test('should have a border on cardhorizontal', async ({ page }) => {
+    await injectCard(page, '<div data-wb="cardhorizontal" data-title="Test">Content</div>');
+    const card = page.locator('#test-container [data-wb="cardhorizontal"]');
+    await expect(card).toHaveCSS('border-style', 'solid');
+  });
+
+  // CLASS TESTS
+  test('should render a basic card with wb-card class', async ({ page }) => {
+    await injectCard(page, '<div data-wb="card">Basic card</div>');
+    const card = page.locator('#test-container [data-wb="card"]');
+    await expect(card).toHaveClass(/wb-card/);
+  });
+
+  test('should apply wb-card--hoverable by default', async ({ page }) => {
+    await injectCard(page, '<div data-wb="card">Hoverable card</div>');
+    const card = page.locator('#test-container [data-wb="card"]');
+    await expect(card).toHaveClass(/wb-card--hoverable/);
+  });
+
+  test('should not apply wb-card--hoverable if data-hoverable="false"', async ({ page }) => {
+    await injectCard(page, '<div data-wb="card" data-hoverable="false">Non-hoverable card</div>');
+    const card = page.locator('#test-container [data-wb="card"]');
+    await expect(card).not.toHaveClass(/wb-card--hoverable/);
+  });
+
+  test('should apply wb-card--clickable if data-clickable is present', async ({ page }) => {
+    await injectCard(page, '<div data-wb="card" data-clickable>Clickable card</div>');
+    const card = page.locator('#test-container [data-wb="card"]');
+    await expect(card).toHaveClass(/wb-card--clickable/);
+  });
+
+  test('should apply wb-card--elevated if data-elevated is present', async ({ page }) => {
+    await injectCard(page, '<div data-wb="card" data-elevated>Elevated card</div>');
+    const card = page.locator('#test-container [data-wb="card"]');
+    await expect(card).toHaveClass(/wb-card--elevated/);
+  });
+
+  test('should have base wb-card class without variant modifier when no variant specified', async ({ page }) => {
+    await injectCard(page, '<div data-wb="card">Default variant card</div>');
+    const card = page.locator('#test-container [data-wb="card"]');
+    // When no variant is specified, card has wb-card but no variant modifier like --default
+    await expect(card).toHaveClass(/\bwb-card\b/);
+    // Verify it doesn't have a random variant
+    await expect(card).not.toHaveClass(/wb-card--info/);
+  });
+
+  test('should apply custom variant class if specified', async ({ page }) => {
+    await injectCard(page, '<div data-wb="card" data-variant="info">Info variant card</div>');
+    const card = page.locator('#test-container [data-wb="card"]');
+    await expect(card).toHaveClass(/wb-card--info/);
+  });
+});

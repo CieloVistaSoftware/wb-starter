@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "blockquote.schema.json",
+  "title": "Blockquote Semantic Element",
+  "description": "Extended quotation from another source. Used for testimonials, reviews, cited content.",
+  
+  "$inheritance": {
+    "extends": "_element.base.schema.json",
+    "reason": "Blockquote IS-A element with all base properties"
+  },
+  
+  "htmlTag": "blockquote",
+  "role": "blockquote",
+  
+  "semanticMeaning": {
+    "description": "Content quoted from another source",
+    "examples": ["Customer testimonial", "Book excerpt", "Review quote", "Expert opinion"],
+    "whenToUse": "When quoting someone or something - testimonials, reviews, citations"
+  },
+  
+  "type": "object",
+  "properties": {
+    "quote": {
+      "type": "string",
+      "description": "The quoted text - ALWAYS canvas editable",
+      "canvasEditable": true,
+      "default": "",
+      "htmlElement": "p",
+      "cssClass": "wb-*__quote"
+    },
+    "cite": {
+      "$ref": "cite.schema.json",
+      "description": "Citation/attribution for the quote"
+    },
+    "source": {
+      "type": "string",
+      "description": "URL of the source (cite attribute on blockquote)",
+      "canvasEditable": false
+    }
+  },
+  
+  "textProperties": {
+    "description": "Canvas-editable text",
+    "list": ["quote"]
+  },
+  
+  "structure": {
+    "template": "<blockquote cite=\"{{source}}\">\n  <p>{{quote}}</p>\n  <footer>\n    <cite>{{author}}</cite>\n  </footer>\n</blockquote>"
+  },
+  
+  "accessibility": {
+    "requirements": [
+      "Use cite attribute for source URL",
+      "Use <cite> element for author/source name"
+    ]
+  },
+  
+  "canContain": ["p", "cite", "footer", "figure"],
+  
+  "wbComponents": {
+    "description": "WB components that extend blockquote",
+    "list": ["cardtestimonial"]
+  }
+}

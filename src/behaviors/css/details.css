@@ -1,0 +1,62 @@
+/**
+ * WB Details & Accordion - Native HTML5 <details> styling
+ * 
+ * Uses native <details>/<summary> elements:
+ * - Built-in accessibility
+ * - Works without JavaScript
+ * - Keyboard support (Enter/Space)
+ */
+
+/* ============================================
+   DETAILS - Single disclosure widget
+   ============================================ */
+.wb-details {
+  /* Base styles provided by theme, not hardcoded here */
+  display: block;
+}
+
+.wb-details__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  list-style: none; /* Remove default marker */
+  user-select: none;
+}
+
+/* Remove default marker in different browsers */
+.wb-details__summary::-webkit-details-marker,
+.wb-details__summary::marker {
+  display: none;
+}
+
+.wb-details__icon {
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+/* Use class-based toggle for icon rotation to support JS-less fallback if needed, 
+   but primarily driven by [open] attribute */
+.wb-details[open] .wb-details__icon {
+  transform: rotate(180deg);
+}
+
+/* ============================================
+   ANIMATION (optional)
+   ============================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .wb-details[open] .wb-details__content {
+    animation: detailsOpen 0.2s ease;
+  }
+  
+  @keyframes detailsOpen {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

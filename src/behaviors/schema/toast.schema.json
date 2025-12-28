@@ -1,0 +1,223 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Toast",
+  "description": "Toast notification trigger. Click element to show a temporary notification.",
+  "behavior": "toast",
+  
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Toast notification message",
+      "default": "Notification",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["Notification", "Success!", "Error occurred", "Warning message"],
+        "assertions": {
+          "Success!": {
+            "selector": ".wb-toast-container div",
+            "checks": { "textContains": "Success!" }
+          }
+        }
+      }
+    },
+    "type": {
+      "type": "string",
+      "description": "Toast type/severity",
+      "enum": ["info", "success", "warning", "error"],
+      "default": "info",
+      "permutations": {
+        "type": "ALL_ENUM",
+        "assertions": {
+          "info": { "selector": ".wb-toast-container div", "checks": { "styleContains": { "background": "#3b82f6" } } },
+          "success": { "selector": ".wb-toast-container div", "checks": { "styleContains": { "background": "#22c55e" } } },
+          "warning": { "selector": ".wb-toast-container div", "checks": { "styleContains": { "background": "#f59e0b" } } },
+          "error": { "selector": ".wb-toast-container div", "checks": { "styleContains": { "background": "#ef4444" } } }
+        }
+      }
+    },
+    "duration": {
+      "type": "number",
+      "description": "Duration in milliseconds before toast auto-dismisses",
+      "default": 3000,
+      "minimum": 1000,
+      "maximum": 10000,
+      "permutations": {
+        "type": "BOUNDARY_NUMBER",
+        "min": 1000,
+        "max": 10000
+      }
+    },
+    "position": {
+      "type": "string",
+      "description": "Toast container position",
+      "enum": ["top-right", "top-left", "bottom-right", "bottom-left", "top-center", "bottom-center"],
+      "default": "top-right",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["top-right", "bottom-right"]
+      }
+    }
+  },
+  
+  "compliance": {
+    "baseClass": "wb-toast-trigger",
+    "requiredChildren": {},
+    "optionalChildren": {},
+    "styles": {
+      "cursor": {
+        "required": true,
+        "value": "pointer"
+      }
+    },
+    "dynamicElements": {
+      ".wb-toast-container": {
+        "description": "Container for toast notifications, created on first toast",
+        "createdWhen": "toast is triggered"
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      "element": {
+        "type": "trigger",
+        "clickable": true,
+        "click": {
+          "action": "show toast notification",
+          "event": "wb:toast:show"
+        }
+      }
+    },
+    "keyboard": {
+      "Enter": {
+        "target": "element",
+        "action": "show toast"
+      },
+      "Space": {
+        "target": "element",
+        "action": "show toast"
+      }
+    }
+  },
+  
+  "accessibility": {
+    "toast": {
+      "role": "alert",
+      "aria-live": "polite"
+    }
+  },
+  
+  "events": {
+    "wb:toast:show": {
+      "trigger": "Toast notification appears",
+      "detail": {
+        "message": "string",
+        "type": "string"
+      },
+      "bubbles": true
+    },
+    "wb:toast:hide": {
+      "trigger": "Toast notification is dismissed",
+      "detail": {},
+      "bubbles": true
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<button data-wb=\"toast\" data-message=\"Hello!\">Show Toast</button>",
+      "<button data-wb=\"toast\" data-type=\"success\" data-message=\"Success!\">Success Toast</button>",
+      "<button data-wb=\"toast\" data-type=\"error\" data-message=\"Error!\">Error Toast</button>"
+    ],
+    
+    "matrix": {
+      "combinations": [
+        { "message": "Test" },
+        { "message": "Test", "type": "info" },
+        { "message": "Test", "type": "success" },
+        { "message": "Test", "type": "warning" },
+        { "message": "Test", "type": "error" },
+        { "message": "Test", "duration": 1000 },
+        { "message": "Test", "duration": 5000 },
+        { "message": "Test", "position": "bottom-right" }
+      ]
+    },
+    
+    "functional": {
+      "buttons": [
+        {
+          "name": "toast trigger is clickable",
+          "setup": "<button data-wb=\"toast\" data-message=\"Test\">Click Me</button>",
+          "selector": "element",
+          "expectEvent": "click",
+          "expect": { "event": "wb:toast:show" }
+        }
+      ],
+      
+      "interactions": [
+        {
+          "name": "clicking trigger shows toast",
+          "setup": "<button data-wb=\"toast\" data-message=\"Hello\">Show</button>",
+          "action": "click",
+          "expect": {
+            "selector": ".wb-toast-container",
+            "exists": true
+          }
+        },
+        {
+          "name": "toast contains correct message",
+          "setup": "<button data-wb=\"toast\" data-message=\"Test Message\">Show</button>",
+          "action": "click",
+          "expect": {
+            "selector": ".wb-toast-container",
+            "textContains": "Test Message"
+          }
+        }
+      ],
+      
+      "keyboard": [
+        {
+          "name": "Enter key shows toast",
+          "setup": "<button data-wb=\"toast\" data-message=\"Test\">Show</button>",
+          "key": "Enter",
+          "expect": {
+            "selector": ".wb-toast-container",
+            "exists": true
+          }
+        }
+      ],
+      
+      "visual": [
+        {
+          "name": "trigger has pointer cursor",
+          "setup": "<button data-wb=\"toast\" data-message=\"Test\">Show</button>",
+          "expect": {
+            "selector": "element",
+            "hasClass": ["wb-toast-trigger"],
+            "style": {
+              "cursor": "pointer"
+            }
+          }
+        },
+        {
+          "name": "info toast has blue background",
+          "setup": "<button data-wb=\"toast\" data-type=\"info\" data-message=\"Info\">Info</button>",
+          "action": "click",
+          "expect": {
+            "selector": ".wb-toast-container > div",
+            "styleContains": { "background": "rgb(59, 130, 246)" }
+          }
+        },
+        {
+          "name": "success toast has green background",
+          "setup": "<button data-wb=\"toast\" data-type=\"success\" data-message=\"Success\">Success</button>",
+          "action": "click",
+          "expect": {
+            "selector": ".wb-toast-container > div",
+            "styleContains": { "background": "rgb(34, 197, 94)" }
+          }
+        }
+      ]
+    }
+  }
+}

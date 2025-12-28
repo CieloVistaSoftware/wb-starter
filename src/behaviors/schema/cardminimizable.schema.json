@@ -1,0 +1,438 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Minimizable",
+  "description": "Minimizable card with collapsible content. INHERITS from card.base (IS-A card), CONTAINS minimize behavior (HAS-A minimizable content, minimize button).",
+  "behavior": "cardminimizable",
+  
+  "$extends": "card.base.schema.json",
+  "$inheritance": {
+    "type": "IS-A",
+    "parent": "card",
+    "inherits": [
+      "semantic.element",
+      "semantic.structure.header",
+      "semantic.structure.main",
+      "compliance.containerTag",
+      "accessibility"
+    ]
+  },
+  
+  "$containment": [
+    {
+      "type": "HAS-A",
+      "name": "minimizableContent",
+      "element": "MAIN.wb-card__minimizable-content",
+      "description": "Content area that shows/hides on minimize"
+    },
+    {
+      "type": "HAS-A",
+      "name": "minimizeButton",
+      "element": "HEADER > BUTTON.wb-card__minimize-btn",
+      "description": "Button to toggle minimize state (in header)"
+    }
+  ],
+  
+  "properties": {
+    
+    "title": {
+      "type": "string",
+      "description": "Card title in header (always visible)",
+      "required": true,
+      "mapsTo": "header",
+      "default": "Minimizable Card",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["Minimizable Card", "Panel", "Widget"],
+        "assertions": {
+          "Minimizable Card": {
+            "selector": "header h3.wb-card__title",
+            "checks": { "exists": true, "textContains": "Minimizable Card", "tagName": "H3" }
+          }
+        }
+      }
+    },
+    "content": {
+      "type": "string",
+      "description": "The minimizable content (can be HTML)",
+      "required": true,
+      "containedIn": "minimizableContent",
+      "mapsTo": "main",
+      "default": "This content can be minimized. Click the button in the header to toggle.",
+      "inputType": "textarea",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": [
+          "Short content",
+          "Longer content with multiple lines to demonstrate the minimize functionality.",
+          "<p>HTML content</p><ul><li>Item 1</li><li>Item 2</li></ul>"
+        ],
+        "assertions": {
+          "Short content": {
+            "selector": "main.wb-card__minimizable-content",
+            "checks": { "exists": true, "textContains": "Short content" }
+          }
+        }
+      }
+    },
+    "minimized": {
+      "type": "boolean",
+      "description": "Initial minimized state",
+      "default": false,
+      "inputType": "checkbox",
+      "permutations": {
+        "type": "BOOLEAN",
+        "assertions": {
+          "true": {
+            "selector": "element",
+            "checks": { "hasClass": "wb-card--minimized" }
+          },
+          "false": {
+            "selector": "element",
+            "checks": { "notHasClass": "wb-card--minimized" }
+          }
+        }
+      }
+    },
+    "elevated": {
+      "type": "boolean",
+      "description": "Has shadow/elevation effect",
+      "default": false
+    }
+  },
+  
+  "compliance": {
+    "$inherits": "card.base.schema.json#compliance",
+    "baseClass": "wb-card",
+    "additionalClasses": ["wb-card--minimizable"],
+    "containerTag": {
+      "preferred": "ARTICLE",
+      "allowed": ["ARTICLE", "SECTION", "DIV"]
+    },
+    "requiredChildren": {
+      "header.wb-card__header": {
+        "description": "Header with title and minimize button",
+        "tagName": "HEADER",
+        "required": true,
+        "style": {
+          "display": "flex",
+          "alignItems": "center",
+          "justifyContent": "space-between"
+        },
+        "children": {
+          "h3.wb-card__title": { "tagName": "H3", "required": true },
+          "button.wb-card__minimize-btn": {
+            "tagName": "BUTTON",
+            "required": true,
+            "relationship": "HAS-A"
+          }
+        }
+      },
+      "main.wb-card__minimizable-content": {
+        "description": "Minimizable content area",
+        "tagName": "MAIN",
+        "required": true,
+        "relationship": "HAS-A",
+        "style": {
+          "transition": "all 0.3s ease",
+          "overflow": "hidden"
+        }
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      "button.wb-card__minimize-btn": {
+        "type": "button",
+        "clickable": true,
+        "focusable": true,
+        "click": {
+          "action": "Toggle minimized state",
+          "togglesClass": "wb-card--minimized",
+          "event": "wb:cardminimizable:toggle"
+        }
+      }
+    },
+    "keyboard": {
+      "Enter": { 
+        "target": "button.wb-card__minimize-btn", 
+        "action": "Toggle minimized state" 
+      },
+      "Space": { 
+        "target": "button.wb-card__minimize-btn", 
+        "action": "Toggle minimized state" 
+      }
+    },
+    "states": {
+      "normal": {
+        "class": "",
+        "mainStyle": { "maxHeight": "scrollHeight", "opacity": "1" },
+        "buttonText": "−",
+        "buttonTitle": "Minimize",
+        "ariaExpanded": "true"
+      },
+      "minimized": {
+        "class": "wb-card--minimized",
+        "mainStyle": { "maxHeight": "0", "opacity": "0", "overflow": "hidden" },
+        "buttonText": "+",
+        "buttonTitle": "Expand",
+        "ariaExpanded": "false"
+      }
+    }
+  },
+  
+  "accessibility": {
+    "$inherits": "card.base.schema.json#accessibility",
+    "minimizeButton": {
+      "ariaExpanded": "true|false based on state",
+      "title": "Minimize|Expand based on state"
+    }
+  },
+  
+  "events": {
+    "wb:cardminimizable:toggle": {
+      "source": "button.wb-card__minimize-btn",
+      "bubbles": true,
+      "detail": { "minimized": "boolean" },
+      "firesWhen": "Minimize button is clicked"
+    }
+  },
+  
+  "api": {
+    "element.wbCardMinimizable": {
+      "minimize": { "description": "Minimize the card", "returns": "void" },
+      "expand": { "description": "Expand the card", "returns": "void" },
+      "toggle": { "description": "Toggle minimized state", "returns": "void" },
+      "minimized": { "description": "Get current minimized state", "returns": "boolean" }
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<article data-wb=\"cardminimizable\" data-title=\"Test Card\">Test content here</article>",
+      "<article data-wb=\"cardminimizable\" data-title=\"Minimized\" data-minimized>Already minimized</article>"
+    ],
+    
+    "matrix": {
+      "description": "Test all property combinations",
+      "combinations": [
+        { "title": "Basic", "content": "Basic content" },
+        { "title": "Minimized", "content": "Content", "minimized": true },
+        { "title": "Expanded", "content": "Content", "minimized": false },
+        { "title": "Long Content", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+        { "title": "HTML Content", "content": "<p>Paragraph</p><ul><li>Item</li></ul>" },
+        { "title": "Elevated", "content": "Content", "elevated": true }
+      ]
+    },
+    
+    "functional": {
+      "semantic": [
+        {
+          "name": "Container should be ARTICLE (inherited from card.base)",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "expect": { "selector": "element", "tagName": "ARTICLE" }
+        },
+        {
+          "name": "Title should be in HEADER with H3 (inherited)",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "expect": { "selector": "header.wb-card__header h3.wb-card__title", "tagName": "H3" }
+        },
+        {
+          "name": "Minimize button should be in HEADER (HAS-A)",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "expect": { "selector": "header.wb-card__header button.wb-card__minimize-btn", "tagName": "BUTTON" }
+        },
+        {
+          "name": "Content should be in MAIN (HAS-A minimizableContent)",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "expect": { "selector": "main.wb-card__minimizable-content", "tagName": "MAIN" }
+        }
+      ],
+      
+      "rendering": [
+        {
+          "name": "Default state is expanded (not minimized)",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "expect": { 
+            "selector": "element", 
+            "checks": { "notHasClass": "wb-card--minimized" }
+          }
+        },
+        {
+          "name": "data-minimized starts card minimized",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\" data-minimized>Content</article>",
+          "expect": { 
+            "selector": "element", 
+            "checks": { "hasClass": "wb-card--minimized" }
+          }
+        },
+        {
+          "name": "Button shows − when expanded",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "expect": { 
+            "selector": "button.wb-card__minimize-btn", 
+            "checks": { "textContains": "−" }
+          }
+        },
+        {
+          "name": "Button shows + when minimized",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\" data-minimized>Content</article>",
+          "expect": { 
+            "selector": "button.wb-card__minimize-btn", 
+            "checks": { "textContains": "+" }
+          }
+        },
+        {
+          "name": "Content hidden when minimized",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\" data-minimized>Content</article>",
+          "expect": { 
+            "selector": "main.wb-card__minimizable-content", 
+            "checks": { "style": { "maxHeight": "0", "opacity": "0" } }
+          }
+        }
+      ],
+      
+      "interactions": [
+        {
+          "name": "Click minimize button toggles to minimized",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "click", "selector": "button.wb-card__minimize-btn" }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "hasClass": "wb-card--minimized" }
+          }
+        },
+        {
+          "name": "Click minimize button again toggles to expanded",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\" data-minimized>Content</article>",
+          "steps": [
+            { "action": "click", "selector": "button.wb-card__minimize-btn" }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "notHasClass": "wb-card--minimized" }
+          }
+        },
+        {
+          "name": "Button text changes on toggle",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "click", "selector": "button.wb-card__minimize-btn" }
+          ],
+          "expect": { 
+            "selector": "button.wb-card__minimize-btn", 
+            "checks": { "textContains": "+" }
+          }
+        },
+        {
+          "name": "Dispatches toggle event with minimized state",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "click", "selector": "button.wb-card__minimize-btn" }
+          ],
+          "expect": { 
+            "event": "wb:cardminimizable:toggle",
+            "detail": { "minimized": true }
+          }
+        }
+      ],
+      
+      "keyboard": [
+        {
+          "name": "Enter key on button toggles state",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "focus", "selector": "button.wb-card__minimize-btn" },
+            { "action": "keypress", "key": "Enter" }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "hasClass": "wb-card--minimized" }
+          }
+        }
+      ],
+      
+      "api": [
+        {
+          "name": "wbCardMinimizable.minimize() minimizes the card",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "steps": [
+            { "action": "call", "method": "element.wbCardMinimizable.minimize" }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "hasClass": "wb-card--minimized" }
+          }
+        },
+        {
+          "name": "wbCardMinimizable.expand() expands the card",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\" data-minimized>Content</article>",
+          "steps": [
+            { "action": "call", "method": "element.wbCardMinimizable.expand" }
+          ],
+          "expect": { 
+            "selector": "element", 
+            "checks": { "notHasClass": "wb-card--minimized" }
+          }
+        },
+        {
+          "name": "wbCardMinimizable.minimized returns current state",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\" data-minimized>Content</article>",
+          "steps": [
+            { "action": "call", "method": "element.wbCardMinimizable.minimized" }
+          ],
+          "expect": { "returns": true }
+        }
+      ],
+      
+      "accessibility": [
+        {
+          "name": "Button has aria-expanded true when expanded",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\">Content</article>",
+          "expect": { 
+            "selector": "button.wb-card__minimize-btn", 
+            "checks": { "attribute": { "aria-expanded": "true" } }
+          }
+        },
+        {
+          "name": "Button has aria-expanded false when minimized",
+          "setup": "<article data-wb=\"cardminimizable\" data-title=\"Test\" data-minimized>Content</article>",
+          "expect": { 
+            "selector": "button.wb-card__minimize-btn", 
+            "checks": { "attribute": { "aria-expanded": "false" } }
+          }
+        }
+      ]
+    }
+  },
+  
+  "builder": {
+    "category": "Cards",
+    "icon": "➖",
+    "name": "Card Minimizable",
+    "description": "Card with minimize/expand toggle in header",
+    "defaults": {
+      "title": "Minimizable Card",
+      "content": "This content can be minimized. Click the − button in the header to toggle.",
+      "minimized": false
+    },
+    "propertyPanel": {
+      "groups": [
+        {
+          "name": "Content",
+          "properties": ["title", "content"]
+        },
+        {
+          "name": "Behavior",
+          "properties": ["minimized"]
+        },
+        {
+          "name": "Style",
+          "properties": ["elevated", "hoverable"]
+        }
+      ]
+    }
+  }
+}

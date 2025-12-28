@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html id="builder-html-1" lang="en" data-theme="dark">
+<head id="builder-head-2">
+  <link id="builder-link-3" rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta id="builder-meta-4" charset="UTF-8">
+  <meta id="builder-meta-5" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="builder-title-6">WB Page Builder</title>
+  <link id="builder-link-7" rel="preconnect" href="https://fonts.googleapis.com">
+  <link id="builder-link-8" rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link id="builder-link-9" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link id="builder-link-10" rel="stylesheet" href="../src/styles/themes.css">
+  <link id="builder-link-11" rel="stylesheet" href="../src/styles/site.css">
+  <link id="builder-link-12" rel="stylesheet" href="../src/behaviors/css/effects.css">
+  <link id="builder-link-13" rel="stylesheet" href="../src/styles/builder.css">
+</head>
+<body id="builder-body-14" class="wb-builder">
+  <header class="builder-header" id="builderHeader">
+    <div class="header-content" id="headerContent">
+      <h1 id="headerTitle">Builder Dashboard</h1>
+      <div class="header-actions" id="headerActions">
+        <!-- Collaboration Status -->
+        <div class="collab-status" id="collabStatus" title="Collaboration: Offline">
+          <span class="collab-dot offline" id="collabDot"></span>
+          <span class="collab-text" id="collabText">Offline</span>
+        </div>
+        <!-- Theme Selector -->
+        <select id="pageTheme" class="theme-select" title="Change Page Theme">
+          <!-- Options populated by JS -->
+        </select>
+        <!-- Preview Toggle -->
+        <button class="header-btn" id="previewBtn" title="Preview Mode (Ctrl+P)">
+          <span id="previewIcon">👁️</span> Preview
+        </button>
+        <!-- Templates -->
+        <button class="header-btn" id="templatesBtn" onclick="openTemplates()" title="Insert Template">📐 Templates</button>
+        <!-- Keyboard Shortcuts -->
+        <button class="header-btn" id="shortcutsBtn" onclick="showShortcuts()" title="Keyboard Shortcuts">⌨️</button>
+        <!-- Notes -->
+        <button class="header-btn" id="headerNotesBtn" onclick="toggleNotesDrawer()" title="Toggle Notes (Ctrl+Shift+N)">📝 Notes</button>
+      </div>
+    </div>
+  </header>
+  
+  <main class="builder-container" id="builderContainer">
+    <div id="builder-root">
+      <!-- LEFT SIDEBAR - Component Library -->
+      <aside class="sidebar" id="sidebar" 
+        data-wb="drawerLayout"
+        data-position="left"
+        data-width="280px"
+        data-min-width="1.5rem"
+        data-max-width="50vw"
+        data-resizable="true"
+        data-save-state="true"
+        data-toggle-selector="#sidebarToggle"
+        data-handle-selector="#sidebarResizeHandle">
+        <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar (\)">
+          <span class="toggle-icon" id="sidebarToggleIcon">◀</span>
+        </button>
+        <div class="sidebar-collapsed-label" id="sidebarCollapsedLabel">COMPONENTS</div>
+        <div class="sidebar-resize-handle" id="sidebarResizeHandle"></div>
+        <div class="search" id="searchContainer">
+          <input type="text" placeholder="Search components..." id="search" oninput="filter()">
+          <span class="search-icon" id="searchIcon">🔍</span>
+        </div>
+        
+        <!-- Favorites Section -->
+        <div class="favorites-section" id="favoritesSection">
+          <div class="favorites-header" id="favoritesHeader">
+            <span id="builder-span-15">⭐ Favorites</span>
+            <button class="favorites-clear" id="favoritesClearBtn" onclick="clearFavorites()" title="Clear favorites">✕</button>
+          </div>
+          <div class="favorites-list" id="favoritesList"></div>
+        </div>
+        
+        <!-- CATEGORIZED COMPONENT SECTIONS -->
+        <div class="categories" id="list">
+          <!-- Containers Section -->
+          <div id="builder-div-16" class="category-label-wrapper" title="Layout wrappers that structure your page.">
+            <span id="builder-span-17" class="category-icon">📐</span>
+            <span id="builder-span-18" class="category-title-text">Containers</span>
+            <span class="category-count-badge" id="containersCount">0</span>
+          </div>
+          <div class="category-section collapsed" id="containersSection">
+            <div id="builder-div-19" class="category-expander-btn" data-category="containers">
+              <span id="builder-span-20" class="category-toggle">▼</span>
+            </div>
+            <div class="category-desc" id="containersDesc">Drag and drop</div>
+            <div class="category-items" id="containersList"></div>
+          </div>
+          
+          <!-- Elements Section -->
+          <div id="builder-div-21" class="category-label-wrapper" title="Components that augment semantic HTML5 elements.">
+            <span id="builder-span-22" class="category-icon">📦</span>
+            <span id="builder-span-23" class="category-title-text">Elements</span>
+            <span class="category-count-badge" id="elementsCount">0</span>
+          </div>
+          <div class="category-section collapsed" id="elementsSection">
+            <div id="builder-div-24" class="category-expander-btn" data-category="elements">
+              <span id="builder-span-25" class="category-toggle">▼</span>
+            </div>
+            <div class="category-desc" id="elementsDesc">Drag and drop</div>
+            <div class="category-items" id="elementsList"></div>
+          </div>
+          
+          <!-- Effects Section -->
+          <div id="builder-div-26" class="category-label-wrapper" title="Visual enhancements that can be applied to any element.">
+            <span id="builder-span-27" class="category-icon">✨</span>
+            <span id="builder-span-28" class="category-title-text">Effects</span>
+            <span class="category-count-badge" id="effectsCount">0</span>
+          </div>
+          <div class="category-section collapsed" id="effectsSection">
+            <div id="builder-div-29" class="category-expander-btn" data-category="effects">
+              <span id="builder-span-30" class="category-toggle">▼</span>
+            </div>
+            <div class="category-desc" id="effectsDesc">Drag and drop</div>
+            <div class="category-items" id="effectsList"></div>
+          </div>
+          
+          <!-- Actions Section -->
+          <div id="builder-div-31" class="category-label-wrapper" title="Interactive behaviors triggered by user actions.">
+            <span id="builder-span-32" class="category-icon">⚡</span>
+            <span id="builder-span-33" class="category-title-text">Actions</span>
+            <span class="category-count-badge" id="actionsCount">0</span>
+          </div>
+          <div class="category-section collapsed" id="actionsSection">
+            <div id="builder-div-34" class="category-expander-btn" data-category="actions">
+              <span id="builder-span-35" class="category-toggle">▼</span>
+            </div>
+            <div class="category-desc" id="actionsDesc">Drag and drop</div>
+            <div class="category-items" id="actionsList"></div>
+          </div>
+        </div>
+      </aside>
+      
+      <!-- CENTER - Canvas Area -->
+      <section class="canvas-area" id="canvasArea">
+        <div class="toolbar" id="toolbar">
+          <div class="toolbar-group" id="toolbarGroupUndo">
+            <button class="tool-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>
+              <span id="builder-span-36">↩️</span>
+              <span class="undo-label" id="undoLabel"></span>
+            </button>
+            <button class="tool-btn" id="redoBtn" title="Redo (Ctrl+Y)" disabled>
+              <span id="builder-span-37">↪️</span>
+              <span class="redo-label" id="redoLabel"></span>
+            </button>
+          </div>
+          <div class="toolbar-group" id="toolbarGroupSnap">
+            <label class="snap-toggle" id="snapToggleLabel" title="Snap to Grid (G)">
+              <input type="checkbox" id="snapGrid" onchange="toggleSnapGrid(this.checked)">
+              <span id="builder-span-38">📐 Snap</span>
+            </label>
+          </div>
+          <div class="toolbar-group" id="toolbarGroupIO">
+            <button class="tool-btn" id="saveHtmlBtn" title="Save as HTML">💾 Save HTML</button>
+            <button class="tool-btn" id="exportBtn" title="Export JSON (Ctrl+E)">📤 Export</button>
+            <button class="tool-btn" id="importBtn" title="Import JSON (Ctrl+I)">📥 Import</button>
+          </div>
+          <span class="comp-count" id="count">0 components</span>
+        </div>
+        <div class="viewport" id="viewport">
+          <div class="frame" id="canvas">
+            <div class="empty" id="empty">
+              <div id="builder-div-39" class="empty-icon">📦</div>
+              <h3 id="builder-h3-40">Drag components here</h3>
+              <p id="builder-p-41">Build your page visually</p>
+              <p id="builder-p-42" class="empty-hint">or press <kbd id="builder-kbd-43">T</kbd> for templates</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- RIGHT PANEL - Component Tree & Properties -->
+      <aside class="panel-right" id="panelRight"
+        data-wb="drawerLayout"
+        data-position="right"
+        data-width="320px"
+        data-min-width="1.5rem"
+        data-max-width="50vw"
+        data-resizable="true"
+        data-save-state="true"
+        data-toggle-selector="#panelToggle"
+        data-handle-selector="#panelResizeHandle">
+        <button class="panel-toggle" id="panelToggle" title="Toggle panel (])">
+          <span class="toggle-icon" id="panelToggleIcon">▶</span>
+        </button>
+        <div class="panel-collapsed-label" id="panelCollapsedLabel">TREE</div>
+        <div class="panel-resize-handle" id="panelResizeHandle"></div>
+        <div class="panel-right-header" id="panelRightHeader">
+          <span id="builder-span-44">📦 Components</span>
+          <div class="panel-header-actions" id="panelHeaderActions">
+            <button class="hamburger-btn" id="propsToggleBtn" title="Toggle Properties Panel">
+              <span id="builder-span-45" class="hamburger-icon">☰</span>
+            </button>
+            <button class="btn btn-sm btn-danger" id="clearCanvasBtn" title="Clear canvas">Clear</button>
+          </div>
+        </div>
+        <div class="panel-right-list" id="componentList">
+          <div class="panel-right-empty" id="panelRightEmpty">
+            <div id="builder-div-46" style="font-size:1.5rem;opacity:0.5;margin-bottom:0.5rem">📦</div>
+            <p id="builder-p-47">Drop components to add</p>
+          </div>
+        </div>
+        <!-- Properties Panel -->
+        <div id="propsPanel" class="props-panel"></div>
+      </aside>
+    </div>
+  </main>
+  
+  <footer class="builder-footer" id="builderFooter">
+    <div id="builder-div-48" class="footer-left">
+      <span id="footerCount">0 components</span>
+      <span class="footer-status" id="issueStatus" style="display:none">
+        <span id="builder-span-49" class="status-dot status-dot--error"></span>
+        <span id="issueCount">0 issues</span>
+      </span>
+    </div>
+    <div id="builder-div-50" class="footer-right">
+      <span id="shortcutHint">Press <kbd id="builder-kbd-51">?</kbd> for shortcuts</span>
+    </div>
+  </footer>
+  
+  <!-- Notes Modal -->
+  <div class="notes-modal" id="notesModal">
+    <div class="notes-modal-header" id="notesModalHeader">
+      <span id="builder-span-52">📝 Notes</span>
+      <div class="notes-modal-actions" id="notesModalActions">
+        <button class="notes-modal-btn" id="notesCopyBtn" onclick="copyNotes()" title="Copy to clipboard">📋</button>
+        <button class="notes-modal-btn" id="notesSaveBtn" onclick="saveNotesToFile()" title="Save notes">💾</button>
+        <button class="notes-modal-btn" id="notesClearBtn" onclick="clearNotes()" title="Clear all">🗑️</button>
+        <button class="notes-close-btn" id="notesCloseBtn" onclick="toggleNotesDrawer()" title="Close">✕</button>
+      </div>
+    </div>
+    <textarea id="notesArea" placeholder="Add your notes here..." class="notes-textarea"></textarea>
+    <div class="notes-modal-status" id="notesStatus"></div>
+  </div>
+  
+  <!-- Notes Backdrop -->
+  <div class="notes-backdrop" id="notesBackdrop" onclick="toggleNotesDrawer()"></div>
+  
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+  
+  <!-- Docs/Schema Viewer Modal -->
+  <div class="docs-modal" id="docsModal">
+    <div id="builder-div-53" class="docs-modal-content">
+      <div class="docs-modal-header" id="docsModalHeader">
+        <div class="docs-modal-title" id="docsModalTitleContainer">
+          <span id="docsModalIcon">📖</span>
+          <span id="docsModalTitle">Component</span>
+        </div>
+        <div class="docs-modal-tabs" id="docsModalTabs">
+          <button class="docs-tab-btn active" id="docsTabBtn" data-tab="docs" onclick="switchDocsTab('docs')">📖 Docs</button>
+          <button class="docs-tab-btn" id="schemaTabBtn" data-tab="schema" onclick="switchDocsTab('schema')">📋 Schema</button>
+        </div>
+        <button class="notes-close-btn" id="docsCloseBtn" onclick="closeDocsModal()" title="Close">✕</button>
+      </div>
+      <div class="docs-modal-body" id="docsModalBody">
+        <!-- Content loaded dynamically -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Templates Modal -->
+  <div class="templates-modal" id="templatesModal">
+    <div id="builder-div-54" class="templates-modal-content">
+      <div class="templates-modal-header" id="templatesModalHeader">
+        <span id="builder-span-55">📐 Templates</span>
+        <button class="notes-close-btn" id="templatesCloseBtn" onclick="closeTemplates()" title="Close">✕</button>
+      </div>
+      <div class="templates-grid" id="templatesGrid">
+        <!-- Templates loaded dynamically -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Keyboard Shortcuts Modal -->
+  <div class="shortcuts-modal" id="shortcutsModal">
+    <div id="builder-div-56" class="shortcuts-modal-content">
+      <div class="shortcuts-modal-header" id="shortcutsModalHeader">
+        <span id="builder-span-57">⌨️ Keyboard Shortcuts</span>
+        <button class="notes-close-btn" id="shortcutsCloseBtn" onclick="closeShortcuts()" title="Close">✕</button>
+      </div>
+      <div class="shortcuts-list" id="shortcutsList">
+        <div id="builder-div-58" class="shortcuts-group">
+          <h4 id="builder-h4-59">General</h4>
+          <div id="builder-div-60" class="shortcut-item"><kbd id="builder-kbd-61">Ctrl</kbd>+<kbd id="builder-kbd-62">Z</kbd> <span id="builder-span-63">Undo</span></div>
+          <div id="builder-div-64" class="shortcut-item"><kbd id="builder-kbd-65">Ctrl</kbd>+<kbd id="builder-kbd-66">Y</kbd> <span id="builder-span-67">Redo</span></div>
+          <div id="builder-div-68" class="shortcut-item"><kbd id="builder-kbd-69">Ctrl</kbd>+<kbd id="builder-kbd-70">S</kbd> <span id="builder-span-71">Save page</span></div>
+          <div id="builder-div-72" class="shortcut-item"><kbd id="builder-kbd-73">Ctrl</kbd>+<kbd id="builder-kbd-74">E</kbd> <span id="builder-span-75">Export JSON</span></div>
+          <div id="builder-div-76" class="shortcut-item"><kbd id="builder-kbd-77">Ctrl</kbd>+<kbd id="builder-kbd-78">I</kbd> <span id="builder-span-79">Import JSON</span></div>
+          <div id="builder-div-80" class="shortcut-item"><kbd id="builder-kbd-81">Ctrl</kbd>+<kbd id="builder-kbd-82">P</kbd> <span id="builder-span-83">Toggle Preview</span></div>
+        </div>
+        <div id="builder-div-84" class="shortcuts-group">
+          <h4 id="builder-h4-85">Components</h4>
+          <div id="builder-div-86" class="shortcut-item"><kbd id="builder-kbd-87">Delete</kbd> / <kbd id="builder-kbd-88">Backspace</kbd> <span id="builder-span-89">Delete selected</span></div>
+          <div id="builder-div-90" class="shortcut-item"><kbd id="builder-kbd-91">Ctrl</kbd>+<kbd id="builder-kbd-92">D</kbd> <span id="builder-span-93">Duplicate selected</span></div>
+          <div id="builder-div-94" class="shortcut-item"><kbd id="builder-kbd-95">Ctrl</kbd>+<kbd id="builder-kbd-96">C</kbd> <span id="builder-span-97">Copy as HTML</span></div>
+          <div id="builder-div-98" class="shortcut-item"><kbd id="builder-kbd-99">↑</kbd> / <kbd id="builder-kbd-100">↓</kbd> <span id="builder-span-101">Move component</span></div>
+          <div id="builder-div-102" class="shortcut-item"><kbd id="builder-kbd-103">Escape</kbd> <span id="builder-span-104">Deselect</span></div>
+        </div>
+        <div id="builder-div-105" class="shortcuts-group">
+          <h4 id="builder-h4-106">Panels</h4>
+          <div id="builder-div-107" class="shortcut-item"><kbd id="builder-kbd-108">\</kbd> <span id="builder-span-109">Toggle left sidebar</span></div>
+          <div id="builder-div-110" class="shortcut-item"><kbd id="builder-kbd-111">]</kbd> <span id="builder-span-112">Toggle right panel</span></div>
+          <div id="builder-div-113" class="shortcut-item"><kbd id="builder-kbd-114">P</kbd> <span id="builder-span-115">Toggle properties panel</span></div>
+          <div id="builder-div-116" class="shortcut-item"><kbd id="builder-kbd-117">[</kbd> <span id="builder-span-118">Toggle both panels</span></div>
+          <div id="builder-div-119" class="shortcut-item"><kbd id="builder-kbd-120">Ctrl</kbd>+<kbd id="builder-kbd-121">Shift</kbd>+<kbd id="builder-kbd-122">N</kbd> <span id="builder-span-123">Toggle Notes</span></div>
+          <div id="builder-div-124" class="shortcut-item"><kbd id="builder-kbd-125">T</kbd> <span id="builder-span-126">Open Templates</span></div>
+          <div id="builder-div-127" class="shortcut-item"><kbd id="builder-kbd-128">G</kbd> <span id="builder-span-129">Toggle Snap Grid</span></div>
+          <div id="builder-div-130" class="shortcut-item"><kbd id="builder-kbd-131">F</kbd> <span id="builder-span-132">Add to Favorites</span></div>
+          <div id="builder-div-133" class="shortcut-item"><kbd id="builder-kbd-134">?</kbd> <span id="builder-span-135">Show Shortcuts</span></div>
+        </div>
+        <div id="builder-div-136" class="shortcuts-group">
+          <h4 id="builder-h4-137">Context Menu</h4>
+          <div id="builder-div-138" class="shortcut-item"><kbd id="builder-kbd-139">Shift</kbd>+<kbd id="builder-kbd-140">Right-click</kbd> <span id="builder-span-141">Builder context menu</span></div>
+          <div id="builder-div-142" class="shortcut-item"><kbd id="builder-kbd-143">Right-click</kbd> <span id="builder-span-144">Native browser menu</span></div>
+        </div>
+        <div id="builder-div-145" class="shortcuts-group">
+          <h4 id="builder-h4-146">Drag & Drop</h4>
+          <div id="builder-div-147" class="shortcut-item"><span id="builder-span-148" class="shortcut-badge element">📦</span> <span id="builder-span-149">Elements → Drop on canvas</span></div>
+          <div id="builder-div-150" class="shortcut-item"><span id="builder-span-151" class="shortcut-badge container">📐</span> <span id="builder-span-152">Containers → Drop on canvas</span></div>
+          <div id="builder-div-153" class="shortcut-item"><span id="builder-span-154" class="shortcut-badge effect">✨</span> <span id="builder-span-155">Effects → Drop on element</span></div>
+          <div id="builder-div-156" class="shortcut-item"><span id="builder-span-157" class="shortcut-badge action">⚡</span> <span id="builder-span-158">Actions → Creates trigger</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script id="builder-script-159" type="module" src="../src/builder/index.js"></script>
+  <script id="builder-script-160" src="../src/builder/builder-tree.js"></script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Notes",
+  "description": "Slide-out notes drawer with multiple display modes (left, right, modal). Features auto-save to JSON with duplicate prevention, copy to clipboard, clear, collapse arrows, and resize up to 50vw.",
+  "behavior": "notes",
+  "version": "2.0.0",
+  
+  "properties": {
+    "position": {
+      "type": "string",
+      "description": "Display position: left slide, right slide, or centered modal",
+      "enum": ["left", "right", "modal"],
+      "default": "left",
+      "permutations": {
+        "type": "ENUM",
+        "assertions": {
+          "left": {
+            "selector": "element",
+            "checks": { "hasClass": "wb-notes--left" }
+          },
+          "right": {
+            "selector": "element",
+            "checks": { "hasClass": "wb-notes--right" }
+          },
+          "modal": {
+            "selector": "element",
+            "checks": { "hasClass": "wb-notes--modal" }
+          }
+        }
+      }
+    },
+    "maxWidth": {
+      "type": "string",
+      "description": "Maximum width when resizing (default 50vw)",
+      "default": "50vw"
+    },
+    "minWidth": {
+      "type": "string",
+      "description": "Minimum width when resizing",
+      "default": "200px"
+    },
+    "defaultWidth": {
+      "type": "string",
+      "description": "Default width on initial load",
+      "default": "320px"
+    },
+    "autoSave": {
+      "type": "boolean",
+      "description": "Whether to auto-save notes to localStorage on input",
+      "default": true
+    },
+    "savePath": {
+      "type": "string",
+      "description": "Path for JSON file save feedback",
+      "default": "/data/notes.json"
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "Placeholder text for empty textarea",
+      "default": "Add your notes here..."
+    }
+  },
+  
+  "compliance": {
+    "baseClass": "wb-notes",
+    "requiredChildren": {
+      ".wb-notes__backdrop": {
+        "description": "Backdrop overlay for modal mode",
+        "required": true
+      },
+      ".wb-notes__drawer": {
+        "description": "Main drawer container",
+        "required": true
+      },
+      ".wb-notes__header": {
+        "description": "Header with title and actions",
+        "required": true,
+        "tagName": "HEADER"
+      },
+      ".wb-notes__textarea": {
+        "description": "Notes text input area",
+        "required": true,
+        "tagName": "TEXTAREA"
+      },
+      ".wb-notes__footer": {
+        "description": "Footer with status and clear button",
+        "required": true,
+        "tagName": "FOOTER"
+      },
+      ".wb-notes__btn-row": {
+        "description": "Row container for wide buttons",
+        "required": true
+      }
+    },
+    "requiredButtons": {
+      ".wb-notes__wide-btn[data-action='collapse-left']": {
+        "description": "Collapse to left arrow («)",
+        "text": "«"
+      },
+      ".wb-notes__wide-btn[data-pos='left']": {
+        "description": "Left position button"
+      },
+      ".wb-notes__wide-btn[data-pos='modal']": {
+        "description": "Modal position button"
+      },
+      ".wb-notes__wide-btn[data-pos='right']": {
+        "description": "Right position button"
+      },
+      ".wb-notes__wide-btn[data-action='collapse-right']": {
+        "description": "Collapse to right arrow (»)",
+        "text": "»"
+      },
+      ".wb-notes__wide-btn[data-action='copy']": {
+        "description": "Copy to clipboard button"
+      },
+      ".wb-notes__wide-btn[data-action='save']": {
+        "description": "Save to JSON file button"
+      },
+      ".wb-notes__wide-btn[data-action='close']": {
+        "description": "Close drawer button"
+      },
+      ".wb-notes__footer .wb-notes__wide-btn[data-action='clear']": {
+        "description": "Clear notes button (in footer to avoid accidental clicks)"
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      ".wb-notes__wide-btn[data-action='collapse-left']": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "sets position to left and closes drawer"
+        }
+      },
+      ".wb-notes__wide-btn[data-action='collapse-right']": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "sets position to right and closes drawer"
+        }
+      },
+      ".wb-notes__wide-btn[data-action='copy']": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "copies textarea content to clipboard",
+          "feedback": "shows status message"
+        }
+      },
+      ".wb-notes__wide-btn[data-action='save']": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "saves notes to JSON file with duplicate prevention",
+          "feedback": "shows save count or duplicate warning"
+        }
+      },
+      ".wb-notes__wide-btn[data-action='clear']": {
+        "type": "button",
+        "clickable": true,
+        "location": "footer",
+        "click": {
+          "action": "clears all notes after confirmation",
+          "confirm": true
+        }
+      },
+      ".wb-notes__wide-btn[data-action='close']": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "closes the drawer"
+        }
+      },
+      ".wb-notes__wide-btn[data-pos]": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "changes drawer position (left/right/modal)"
+        }
+      },
+      ".wb-notes__resize-handle": {
+        "type": "draggable",
+        "drag": {
+          "action": "resizes drawer width",
+          "constraint": "min 200px, max 50vw"
+        }
+      },
+      ".wb-notes__backdrop": {
+        "type": "overlay",
+        "clickable": true,
+        "click": {
+          "action": "closes drawer (modal mode only)"
+        }
+      },
+      ".wb-notes__textarea": {
+        "type": "textarea",
+        "focusable": true,
+        "input": {
+          "action": "auto-saves to localStorage (debounced 500ms)"
+        }
+      }
+    },
+    "keyboard": {
+      "Escape": {
+        "action": "closes drawer"
+      },
+      "Ctrl+S": {
+        "action": "saves to JSON file"
+      }
+    }
+  },
+  
+  "events": {
+    "wb:notes:open": {
+      "source": "element",
+      "bubbles": true,
+      "description": "Fired when drawer opens"
+    },
+    "wb:notes:close": {
+      "source": "element",
+      "bubbles": true,
+      "description": "Fired when drawer closes"
+    },
+    "wb:notes:save": {
+      "source": "element",
+      "bubbles": true,
+      "detail": {
+        "path": "string - save file path",
+        "data": "object - all saved notes",
+        "newNote": "object - the newly added note"
+      },
+      "description": "Fired when notes are saved to file (not fired on duplicate)"
+    },
+    "wb:notes:copy": {
+      "source": "element",
+      "bubbles": true,
+      "description": "Fired when notes are copied to clipboard"
+    },
+    "wb:notes:clear": {
+      "source": "element",
+      "bubbles": true,
+      "description": "Fired when notes are cleared"
+    },
+    "wb:notes:position": {
+      "source": "element",
+      "bubbles": true,
+      "detail": {
+        "position": "string - new position (left/right/modal)"
+      },
+      "description": "Fired when position changes"
+    }
+  },
+  
+  "api": {
+    "methods": {
+      "open": {
+        "description": "Opens the notes drawer"
+      },
+      "close": {
+        "description": "Closes the notes drawer"
+      },
+      "toggle": {
+        "description": "Toggles drawer open/closed"
+      },
+      "setPosition": {
+        "description": "Sets drawer position",
+        "params": ["position: 'left' | 'right' | 'modal'"]
+      },
+      "collapseToSide": {
+        "description": "Sets position and closes drawer",
+        "params": ["side: 'left' | 'right'"]
+      },
+      "save": {
+        "description": "Saves notes to JSON file (prevents duplicates)"
+      },
+      "copy": {
+        "description": "Copies notes to clipboard"
+      },
+      "clear": {
+        "description": "Clears all notes"
+      }
+    },
+    "properties": {
+      "content": {
+        "type": "string",
+        "description": "Get/set textarea content"
+      },
+      "isOpen": {
+        "type": "boolean",
+        "readonly": true,
+        "description": "Current open state"
+      },
+      "position": {
+        "type": "string",
+        "readonly": true,
+        "description": "Current position"
+      }
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<div data-wb=\"notes\"></div>",
+      "<div data-wb=\"notes\" data-position=\"right\"></div>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        { "position": "left" },
+        { "position": "right" },
+        { "position": "modal" }
+      ]
+    }
+  }
+}

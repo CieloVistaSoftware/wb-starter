@@ -1,0 +1,179 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Product",
+  "description": "E-commerce product card. INHERITS from card.base (IS-A card), CONTAINS product info (HAS-A image, price, rating, CTA).",
+  "behavior": "cardproduct",
+  
+  "$extends": "card.base.schema.json",
+  "$inheritance": {
+    "type": "IS-A",
+    "parent": "card",
+    "inherits": ["semantic.element", "semantic.structure", "compliance.containerTag", "accessibility"]
+  },
+  
+  "$containment": [
+    {
+      "type": "HAS-A",
+      "name": "productImage",
+      "element": "FIGURE > IMG",
+      "description": "Product image in figure element"
+    },
+    {
+      "type": "HAS-A",
+      "name": "badge",
+      "element": "SPAN",
+      "description": "Optional badge (Sale, New, etc)"
+    },
+    {
+      "type": "HAS-A",
+      "name": "price",
+      "element": "DATA",
+      "description": "Semantic data element for machine-readable price"
+    },
+    {
+      "type": "HAS-A",
+      "name": "cta",
+      "element": "FOOTER > BUTTON",
+      "description": "Add to cart button"
+    }
+  ],
+  
+  "properties": {
+    "$inherited": ["title", "hoverable", "elevated"],
+    
+    "image": {
+      "type": "string",
+      "description": "Product image URL",
+      "containedIn": "figure"
+    },
+    "description": {
+      "type": "string",
+      "description": "Product description",
+      "mapsTo": "header"
+    },
+    "price": {
+      "type": "string",
+      "description": "Current price - uses semantic DATA element",
+      "containedIn": "data",
+      "mapsTo": "main"
+    },
+    "originalPrice": {
+      "type": "string",
+      "description": "Original price (for showing discount)",
+      "containedIn": "data",
+      "mapsTo": "main"
+    },
+    "badge": {
+      "type": "string",
+      "description": "Badge text (Sale, New, Pro)",
+      "containedIn": "badge"
+    },
+    "rating": {
+      "type": "string",
+      "description": "Product rating (e.g., 4.5)",
+      "mapsTo": "main"
+    },
+    "reviews": {
+      "type": "string",
+      "description": "Number of reviews",
+      "mapsTo": "main"
+    },
+    "cta": {
+      "type": "string",
+      "description": "CTA button text",
+      "default": "Add to Cart",
+      "mapsTo": "footer"
+    },
+    "featured": {
+      "type": "boolean",
+      "description": "Highlight as featured product",
+      "default": false
+    }
+  },
+  
+  "compliance": {
+    "$inherits": "card.base.schema.json#compliance",
+    "baseClass": "wb-card",
+    "additionalClasses": ["wb-card--product"],
+    "containedElements": {
+      "figure.wb-card__figure": {
+        "description": "Product image figure",
+        "tagName": "FIGURE",
+        "relationship": "HAS-A"
+      },
+      "data.wb-card__price-current": {
+        "description": "Current price",
+        "tagName": "DATA",
+        "relationship": "HAS-A"
+      },
+      "data.wb-card__price-original": {
+        "description": "Original price (strikethrough)",
+        "tagName": "DATA",
+        "relationship": "HAS-A"
+      },
+      "footer button.wb-card__product-cta": {
+        "description": "Add to cart button",
+        "tagName": "BUTTON",
+        "relationship": "HAS-A"
+      }
+    }
+  },
+  
+  "events": {
+    "wb:cardproduct:addtocart": {
+      "description": "Fired when user clicks Add to Cart button",
+      "detail": {
+        "productTitle": "string",
+        "price": "string"
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      "button.wb-card__product-cta": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "Add to cart",
+          "event": "wb:cardproduct:addtocart"
+        }
+      }
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<article data-wb=\"cardproduct\" data-title=\"Product\" data-price=\"$29\"></article>",
+      "<article data-wb=\"cardproduct\" data-image=\"product.jpg\" data-title=\"Widget\" data-price=\"$19\" data-badge=\"Sale\"></article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "title": "Product", "price": "$29" },
+        { "title": "Product", "price": "$29", "originalPrice": "$49" },
+        { "image": "test.jpg", "title": "Product", "price": "$29" },
+        { "title": "Product", "price": "$29", "rating": "4.5", "reviews": "128" },
+        { "title": "Product", "price": "$29", "badge": "Sale", "featured": true }
+      ]
+    },
+    "functional": {
+      "semantic": [
+        {
+          "name": "Container should be ARTICLE (inherited)",
+          "setup": "<article data-wb=\"cardproduct\" data-title=\"Test\" data-price=\"$10\"></article>",
+          "expect": { "selector": "element", "tagName": "ARTICLE" }
+        },
+        {
+          "name": "Image should be in FIGURE (HAS-A)",
+          "setup": "<article data-wb=\"cardproduct\" data-image=\"test.jpg\" data-title=\"Test\" data-price=\"$10\"></article>",
+          "expect": { "selector": "figure.wb-card__figure", "tagName": "FIGURE" }
+        },
+        {
+          "name": "Price should use DATA element (HAS-A)",
+          "setup": "<article data-wb=\"cardproduct\" data-title=\"Test\" data-price=\"$10\"></article>",
+          "expect": { "selector": "data.wb-card__price-current", "tagName": "DATA" }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dropdown",
+  "description": "Toggleable menu",
+  "behavior": "dropdown",
+  "properties": {
+    "position": {
+      "type": "string",
+      "enum": ["bottom-left", "bottom-right"],
+      "default": "bottom-left"
+    }
+  },
+  "compliance": {
+    "baseClass": "wb-dropdown"
+  },
+  "interactions": {
+    "elements": {
+      "trigger": ".wb-dropdown-trigger",
+      "menu": ".wb-dropdown-menu"
+    },
+    "keyboard": {
+      "Escape": "Closes menu"
+    }
+  },
+  "test": {
+    "setup": [
+      "<div data-wb=\"dropdown\"><button class=\"wb-dropdown-trigger\">Menu</button><div class=\"wb-dropdown-menu\">...</div></div>"
+    ],
+    "functional": {
+      "buttons": [
+        {
+          "name": "Trigger toggle",
+          "setup": "<div data-wb=\"dropdown\"><button class=\"wb-dropdown-trigger\">Menu</button><div class=\"wb-dropdown-menu\">...</div></div>",
+          "selector": ".wb-dropdown-trigger",
+          "expect": { "selector": ".wb-dropdown-menu", "visible": true }
+        }
+      ],
+      "interactions": [
+        {
+          "name": "Click trigger toggles menu",
+          "setup": "<div data-wb=\"dropdown\"><button class=\"wb-dropdown-trigger\">Menu</button><div class=\"wb-dropdown-menu\">...</div></div>",
+          "action": "click",
+          "selector": ".wb-dropdown-trigger",
+          "expect": { "selector": ".wb-dropdown-menu", "visible": true }
+        }
+      ],
+      "keyboard": [
+        {
+          "name": "Escape closes menu",
+          "setup": "<div data-wb=\"dropdown\" class=\"open\"><button class=\"wb-dropdown-trigger\">Menu</button><div class=\"wb-dropdown-menu\">...</div></div>",
+          "key": "Escape",
+          "selector": ".wb-dropdown-trigger",
+          "expect": { "selector": ".wb-dropdown-menu", "visible": false }
+        }
+      ],
+      "visual": [
+        {
+          "name": "Menu visible when open",
+          "setup": "<div data-wb=\"dropdown\" class=\"open\"><button class=\"wb-dropdown-trigger\">Menu</button><div class=\"wb-dropdown-menu\">...</div></div>",
+          "expect": { "selector": ".wb-dropdown-menu", "visible": true }
+        }
+      ]
+    }
+  }
+}

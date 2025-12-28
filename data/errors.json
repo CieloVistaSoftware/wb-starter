@@ -1,0 +1,366 @@
+{
+  "lastUpdated": "2025-12-28T06:08:23.796Z",
+  "count": 5,
+  "errors": [
+    {
+      "id": 1766902103777,
+      "timestamp": "2025-12-28T06:08:23.777Z",
+      "level": "error",
+      "source": "WB:drawer-layout",
+      "module": "index.js",
+      "line": 186,
+      "column": 11,
+      "function": "getBehavior",
+      "message": "[WB] Unknown behavior: drawer-layout",
+      "stack": "Error: [WB] Unknown behavior: drawer-layout\n    at getBehavior (http://localhost:3000/src/behaviors/index.js:186:11)\n    at Proxy.<anonymous> (http://localhost:3000/src/behaviors/index.js:260:24)\n    at Object.inject (http://localhost:3000/src/core/wb.js:110:45)\n    at http://localhost:3000/src/core/wb.js:186:26\n    at Array.forEach (<anonymous>)\n    at http://localhost:3000/src/core/wb.js:185:20\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:182:14)\n    at Object.init (http://localhost:3000/src/core/wb.js:364:12)\n    at http://localhost:3000/demos/behaviors.html:667:8",
+      "frames": [
+        {
+          "function": "getBehavior",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 186,
+          "column": 11
+        },
+        {
+          "function": "Proxy.<anonymous>",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 260,
+          "column": 24
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 110,
+          "column": 45
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 186,
+          "column": 26
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 185,
+          "column": 20
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 182,
+          "column": 14
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 364,
+          "column": 12
+        },
+        {
+          "function": "(anonymous)",
+          "file": "behaviors.html",
+          "fullPath": "http://localhost:3000/demos/behaviors.html",
+          "line": 667,
+          "column": 8
+        }
+      ],
+      "url": "http://localhost:3000/demos/behaviors.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36"
+    },
+    {
+      "id": 1766902103791,
+      "timestamp": "2025-12-28T06:08:23.791Z",
+      "level": "error",
+      "source": "WB:sidebar-layout",
+      "module": "index.js",
+      "line": 186,
+      "column": 11,
+      "function": "getBehavior",
+      "message": "[WB] Unknown behavior: sidebar-layout",
+      "stack": "Error: [WB] Unknown behavior: sidebar-layout\n    at getBehavior (http://localhost:3000/src/behaviors/index.js:186:11)\n    at Proxy.<anonymous> (http://localhost:3000/src/behaviors/index.js:260:24)\n    at Object.inject (http://localhost:3000/src/core/wb.js:110:45)\n    at http://localhost:3000/src/core/wb.js:186:26\n    at Array.forEach (<anonymous>)\n    at http://localhost:3000/src/core/wb.js:185:20\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:182:14)\n    at Object.init (http://localhost:3000/src/core/wb.js:364:12)\n    at http://localhost:3000/demos/behaviors.html:667:8",
+      "frames": [
+        {
+          "function": "getBehavior",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 186,
+          "column": 11
+        },
+        {
+          "function": "Proxy.<anonymous>",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 260,
+          "column": 24
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 110,
+          "column": 45
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 186,
+          "column": 26
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 185,
+          "column": 20
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 182,
+          "column": 14
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 364,
+          "column": 12
+        },
+        {
+          "function": "(anonymous)",
+          "file": "behaviors.html",
+          "fullPath": "http://localhost:3000/demos/behaviors.html",
+          "line": 667,
+          "column": 8
+        }
+      ],
+      "url": "http://localhost:3000/demos/behaviors.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36"
+    },
+    {
+      "id": 1766902103792,
+      "timestamp": "2025-12-28T06:08:23.792Z",
+      "level": "error",
+      "source": "WB:kbd",
+      "module": "index.js",
+      "line": 186,
+      "column": 11,
+      "function": "getBehavior",
+      "message": "[WB] Unknown behavior: kbd",
+      "stack": "Error: [WB] Unknown behavior: kbd\n    at getBehavior (http://localhost:3000/src/behaviors/index.js:186:11)\n    at Proxy.<anonymous> (http://localhost:3000/src/behaviors/index.js:260:24)\n    at Object.inject (http://localhost:3000/src/core/wb.js:110:45)\n    at http://localhost:3000/src/core/wb.js:186:26\n    at Array.forEach (<anonymous>)\n    at http://localhost:3000/src/core/wb.js:185:20\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:182:14)\n    at Object.init (http://localhost:3000/src/core/wb.js:364:12)\n    at http://localhost:3000/demos/behaviors.html:667:8",
+      "frames": [
+        {
+          "function": "getBehavior",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 186,
+          "column": 11
+        },
+        {
+          "function": "Proxy.<anonymous>",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 260,
+          "column": 24
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 110,
+          "column": 45
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 186,
+          "column": 26
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 185,
+          "column": 20
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 182,
+          "column": 14
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 364,
+          "column": 12
+        },
+        {
+          "function": "(anonymous)",
+          "file": "behaviors.html",
+          "fullPath": "http://localhost:3000/demos/behaviors.html",
+          "line": 667,
+          "column": 8
+        }
+      ],
+      "url": "http://localhost:3000/demos/behaviors.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36"
+    },
+    {
+      "id": 1766902103794,
+      "timestamp": "2025-12-28T06:08:23.794Z",
+      "level": "error",
+      "source": "WB:kbd",
+      "module": "index.js",
+      "line": 186,
+      "column": 11,
+      "function": "getBehavior",
+      "message": "[WB] Unknown behavior: kbd",
+      "stack": "Error: [WB] Unknown behavior: kbd\n    at getBehavior (http://localhost:3000/src/behaviors/index.js:186:11)\n    at Proxy.<anonymous> (http://localhost:3000/src/behaviors/index.js:260:24)\n    at Object.inject (http://localhost:3000/src/core/wb.js:110:45)\n    at http://localhost:3000/src/core/wb.js:186:26\n    at Array.forEach (<anonymous>)\n    at http://localhost:3000/src/core/wb.js:185:20\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:182:14)\n    at Object.init (http://localhost:3000/src/core/wb.js:364:12)\n    at http://localhost:3000/demos/behaviors.html:667:8",
+      "frames": [
+        {
+          "function": "getBehavior",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 186,
+          "column": 11
+        },
+        {
+          "function": "Proxy.<anonymous>",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 260,
+          "column": 24
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 110,
+          "column": 45
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 186,
+          "column": 26
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 185,
+          "column": 20
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 182,
+          "column": 14
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 364,
+          "column": 12
+        },
+        {
+          "function": "(anonymous)",
+          "file": "behaviors.html",
+          "fullPath": "http://localhost:3000/demos/behaviors.html",
+          "line": 667,
+          "column": 8
+        }
+      ],
+      "url": "http://localhost:3000/demos/behaviors.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36"
+    },
+    {
+      "id": 1766902103796,
+      "timestamp": "2025-12-28T06:08:23.796Z",
+      "level": "error",
+      "source": "WB:mark",
+      "module": "index.js",
+      "line": 186,
+      "column": 11,
+      "function": "getBehavior",
+      "message": "[WB] Unknown behavior: mark",
+      "stack": "Error: [WB] Unknown behavior: mark\n    at getBehavior (http://localhost:3000/src/behaviors/index.js:186:11)\n    at Proxy.<anonymous> (http://localhost:3000/src/behaviors/index.js:260:24)\n    at Object.inject (http://localhost:3000/src/core/wb.js:110:45)\n    at http://localhost:3000/src/core/wb.js:186:26\n    at Array.forEach (<anonymous>)\n    at http://localhost:3000/src/core/wb.js:185:20\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:182:14)\n    at Object.init (http://localhost:3000/src/core/wb.js:364:12)\n    at http://localhost:3000/demos/behaviors.html:667:8",
+      "frames": [
+        {
+          "function": "getBehavior",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 186,
+          "column": 11
+        },
+        {
+          "function": "Proxy.<anonymous>",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 260,
+          "column": 24
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 110,
+          "column": 45
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 186,
+          "column": 26
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 185,
+          "column": 20
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 182,
+          "column": 14
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 364,
+          "column": 12
+        },
+        {
+          "function": "(anonymous)",
+          "file": "behaviors.html",
+          "fullPath": "http://localhost:3000/demos/behaviors.html",
+          "line": 667,
+          "column": 8
+        }
+      ],
+      "url": "http://localhost:3000/demos/behaviors.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36"
+    }
+  ]
+}

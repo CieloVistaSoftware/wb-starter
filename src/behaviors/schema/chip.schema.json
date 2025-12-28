@@ -1,0 +1,141 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Chip",
+  "description": "Small pill-shaped tag/label component. Optionally dismissible with remove button.",
+  "behavior": "chip",
+  
+  "properties": {
+    "dismissible": {
+      "type": "boolean",
+      "description": "Whether the chip can be dismissed/removed via X button",
+      "default": false,
+      "permutations": {
+        "type": "BOOLEAN",
+        "assertions": {
+          "true": {
+            "selector": ".wb-chip__remove",
+            "checks": { "exists": true }
+          },
+          "false": {
+            "selector": ".wb-chip__remove",
+            "checks": { "exists": false }
+          }
+        }
+      }
+    }
+  },
+  
+  "compliance": {
+    "baseClass": "wb-chip",
+    "requiredChildren": {},
+    "optionalChildren": {
+      ".wb-chip__remove": {
+        "description": "Dismiss button that removes the chip",
+        "createdWhen": "data-dismissible is present"
+      }
+    },
+    "styles": {
+      "display": {
+        "required": true,
+        "value": "inline-flex"
+      },
+      "borderRadius": {
+        "required": true,
+        "value": "999px"
+      },
+      "padding": {
+        "required": true
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      ".wb-chip__remove": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "remove element and dispatch event",
+          "event": "wb:chip:remove"
+        }
+      }
+    },
+    "keyboard": {}
+  },
+  
+  "accessibility": {
+    "element": {
+      "description": "Chip should be visually distinguishable as a tag/label"
+    },
+    ".wb-chip__remove": {
+      "description": "Remove button should be keyboard accessible"
+    }
+  },
+  
+  "events": {
+    "wb:chip:remove": {
+      "trigger": "Dismiss button clicked",
+      "detail": {},
+      "bubbles": true
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<span data-wb=\"chip\">Tag</span>",
+      "<span data-wb=\"chip\" data-dismissible>Dismissible</span>"
+    ],
+    
+    "matrix": {
+      "combinations": [
+        {},
+        { "dismissible": true }
+      ]
+    },
+    
+    "functional": {
+      "buttons": [
+        {
+          "name": "dismiss button exists when dismissible",
+          "setup": "<span data-wb=\"chip\" data-dismissible>Test</span>",
+          "selector": ".wb-chip__remove",
+          "expect": {
+            "clickable": true
+          }
+        }
+      ],
+      
+      "interactions": [],
+      
+      "keyboard": [],
+      
+      "dismiss": [
+        {
+          "name": "clicking dismiss removes chip",
+          "setup": "<span data-wb=\"chip\" data-dismissible>Test</span>",
+          "selector": ".wb-chip__remove",
+          "action": "click",
+          "expect": {
+            "removed": true,
+            "event": "wb:chip:remove"
+          }
+        }
+      ],
+      
+      "visual": [
+        {
+          "name": "chip has pill shape",
+          "setup": "<span data-wb=\"chip\">Tag</span>",
+          "expect": {
+            "selector": "element",
+            "hasClass": ["wb-chip"],
+            "style": {
+              "borderRadius": "999px",
+              "display": "inline-flex"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

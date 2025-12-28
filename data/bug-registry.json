@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "description": "Registry of all bugs found during development. Each bug MUST have a corresponding regression test.",
+    "lastUpdated": "2025-12-26",
+    "totalBugs": 3,
+    "testedBugs": 3,
+    "untestedBugs": 0
+  },
+  "bugs": [
+    {
+      "id": "BUG-2025-12-26-002",
+      "title": "Audio EQ panel missing controls",
+      "dateFound": "2025-12-26",
+      "severity": "HIGH",
+      "status": "FIXED",
+      "component": "media.js",
+      "function": "audio()",
+      "line": 450,
+      "description": "The Audio EQ panel was missing the Play/Pause button and Master Volume slider, which are required features.",
+      "rootCause": "Controls row was missing from EQ panel construction logic",
+      "symptom": "EQ panel showed sliders but no playback controls",
+      "fix": {
+        "file": "src/behaviors/js/media.js",
+        "before": "eqContainer.appendChild(headerRow); // Button row...",
+        "after": "eqContainer.appendChild(headerRow); const controlsRow = ...; eqContainer.appendChild(controlsRow);"
+      },
+      "affectedComponents": ["audio"],
+      "regressionTests": [
+        "tests/behaviors/ui/audio.spec.ts"
+      ],
+      "testCases": [
+        "Audio: EQ panel has Play/Pause button",
+        "Audio: EQ panel has Master Volume slider"
+      ]
+    },
+    {
+      "id": "BUG-2025-12-26-001",
+      "title": "Figure data-caption attribute ignored",
+      "dateFound": "2025-12-26",
+      "severity": "MEDIUM",
+      "status": "FIXED",
+      "component": "media.js",
+      "function": "figure()",
+      "line": 600,
+      "description": "The figure component was ignoring the data-caption attribute on the figure element, only looking for an existing figcaption element.",
+      "rootCause": "Missing check for data-caption attribute in figure behavior",
+      "symptom": "data-caption shows nothing on a figure element",
+      "fix": {
+        "file": "src/behaviors/js/media.js",
+        "before": "const caption = element.querySelector('figcaption');",
+        "after": "let caption = element.querySelector('figcaption'); if (config.caption) { ... }"
+      },
+      "affectedComponents": ["figure"],
+      "regressionTests": [
+        "tests/behaviors/ui/figure.spec.ts"
+      ],
+      "testCases": [
+        "Figure: renders caption from data-caption attribute"
+      ]
+    },
+    {
+      "id": "BUG-2024-12-19-001",
+      "title": "Audio src attribute set on div instead of dataset",
+      "dateFound": "2024-12-19",
+      "severity": "HIGH",
+      "status": "FIXED",
+      "component": "builder.js",
+      "function": "mkEl()",
+      "line": 1068,
+      "description": "The mkEl() function was setting el.src = v directly for all elements. For div containers (like audio, video containers), src should go to dataset.src since div elements don't have a native src property.",
+      "rootCause": "Missing element type check before setting src attribute",
+      "symptom": "Audio component showed no play/pause controls because the audio element was never created (src was lost)",
+      "fix": {
+        "file": "builder.js",
+        "before": "else if (k === 'src') el.src = v;",
+        "after": "else if (k === 'src' && ['IMG', 'AUDIO', 'VIDEO', 'SOURCE', 'IFRAME'].includes(el.tagName)) el.src = v;"
+      },
+      "affectedComponents": ["audio", "video", "cardimage", "cardvideo", "avatar", "youtube", "vimeo"],
+      "regressionTests": [
+        "tests/behaviors/builder-mkel.spec.ts",
+        "tests/behaviors/ui/audio.spec.ts",
+        "tests/regression/regression-tests.spec.ts"
+      ],
+      "testCases": [
+        "Audio: src goes to dataset.src (not native src) for div container",
+        "Video (div container): src goes to dataset.src",
+        "Card Image: src goes to dataset.src for article container",
+        "REGRESSION: src goes to dataset NOT native attribute"
+      ]
+    }
+  ],
+  "categories": {
+    "attribute-routing": ["BUG-2024-12-19-001"],
+    "element-creation": ["BUG-2025-12-26-001", "BUG-2025-12-26-002"],
+    "behavior-initialization": [],
+    "event-handling": [],
+    "styling": [],
+    "accessibility": []
+  },
+  "componentIndex": {
+    "figure": ["BUG-2025-12-26-001"],
+    "audio": ["BUG-2024-12-19-001", "BUG-2025-12-26-002"],
+    "video": ["BUG-2024-12-19-001"],
+    "cardimage": ["BUG-2024-12-19-001"],
+    "cardvideo": ["BUG-2024-12-19-001"],
+    "avatar": ["BUG-2024-12-19-001"],
+    "builder": ["BUG-2024-12-19-001"]
+  }
+}

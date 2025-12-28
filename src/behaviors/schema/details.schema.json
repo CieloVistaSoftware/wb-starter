@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Details",
+  "description": "Native HTML5 <details> disclosure widget - expandable/collapsible content",
+  "behavior": "details",
+  "element": "details",
+  
+  "properties": {
+    "summary": {
+      "type": "string",
+      "description": "Text shown in the clickable summary/header",
+      "default": "Click to expand"
+    },
+    "open": {
+      "type": "boolean",
+      "description": "Whether the details are expanded by default",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Group name for exclusive accordion behavior (native)",
+      "default": ""
+    },
+    "animated": {
+      "type": "boolean", 
+      "description": "Enable open/close animation",
+      "default": true
+    }
+  },
+
+  "compliance": {
+    "baseClass": "wb-details"
+  },
+
+  "interactions": {
+    "elements": {
+      "summary": "summary",
+      "content": "div:not(summary)"
+    },
+    "keyboard": {
+      "Enter": "Toggles the details state",
+      "Space": "Toggles the details state"
+    }
+  },
+
+  "test": {
+    "setup": [
+      "<details data-wb=\"details\"><summary>Summary</summary><div>Content</div></details>"
+    ],
+    "functional": {
+      "buttons": [
+        {
+          "name": "Summary toggle",
+          "setup": "<details data-wb=\"details\"><summary>Summary</summary><div>Content</div></details>",
+          "selector": "summary",
+          "expect": { "attribute": { "open": "" } }
+        }
+      ],
+      "interactions": [
+        {
+          "name": "Click summary toggles open",
+          "setup": "<details data-wb=\"details\"><summary>Summary</summary><div>Content</div></details>",
+          "action": "click",
+          "selector": "summary",
+          "expect": { "attribute": { "open": "" } }
+        }
+      ],
+      "keyboard": [
+        {
+          "name": "Enter toggles open",
+          "setup": "<details data-wb=\"details\"><summary>Summary</summary><div>Content</div></details>",
+          "key": "Enter",
+          "selector": "summary",
+          "expect": { "attribute": { "open": "" } }
+        }
+      ],
+      "visual": [
+        {
+          "name": "Content visible when open",
+          "setup": "<details data-wb=\"details\" open><summary>Summary</summary><div>Content</div></details>",
+          "expect": { "selector": "div:not(summary)", "visible": true }
+        }
+      ]
+    }
+  },
+  
+  "events": {
+    "toggle": {
+      "native": true,
+      "description": "Fires when open state changes (native browser event)"
+    },
+    "wb:details:toggle": {
+      "description": "WB custom event with detail.open boolean",
+      "detail": { "open": "boolean" }
+    }
+  },
+  
+  "accessibility": {
+    "notes": [
+      "Native <details> provides built-in keyboard support (Enter/Space)",
+      "Screen readers announce expanded/collapsed state automatically",
+      "No ARIA attributes needed - native semantics handle everything"
+    ]
+  },
+  
+  "examples": [
+    {
+      "html": "<details data-wb=\"details\" data-summary=\"Show more\"><p>Hidden content</p></details>",
+      "description": "Basic usage"
+    },
+    {
+      "html": "<details data-wb=\"details\" data-open><summary>Open by default</summary><p>Content</p></details>",
+      "description": "Start expanded"
+    }
+  ]
+}

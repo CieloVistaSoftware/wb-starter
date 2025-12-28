@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "header.schema.json",
+  "title": "Header Semantic Element",
+  "description": "Introductory content - titles, subtitles, navigation, logos. Used within article, section, or body.",
+  
+  "$inheritance": {
+    "extends": "_element.base.schema.json",
+    "reason": "Header IS-A element with all base properties"
+  },
+  
+  "htmlTag": "header",
+  "role": "banner (when child of body) or generic",
+  
+  "semanticMeaning": {
+    "description": "Introductory content for its nearest sectioning content ancestor",
+    "examples": ["Page header", "Article header", "Card header", "Section header"],
+    "whenToUse": "Group of introductory or navigational aids"
+  },
+  
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Primary heading text - ALWAYS canvas editable",
+      "canvasEditable": true,
+      "default": "",
+      "htmlElement": "h1|h2|h3|h4|h5|h6",
+      "cssClass": "wb-*__title"
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Secondary heading text - ALWAYS canvas editable",
+      "canvasEditable": true,
+      "default": "",
+      "htmlElement": "p",
+      "cssClass": "wb-*__subtitle"
+    },
+    "metadata": {
+      "type": "string",
+      "description": "Additional info like date, author, category",
+      "canvasEditable": true,
+      "default": ""
+    }
+  },
+  
+  "required": [],
+  
+  "textProperties": {
+    "description": "ALL of these are canvas-editable when they have content",
+    "list": ["title", "subtitle", "metadata"],
+    "rule": "If property has value, element is rendered and editable"
+  },
+  
+  "structure": {
+    "template": "<header>\n  <h3 class=\"wb-*__title\">{{title}}</h3>\n  <p class=\"wb-*__subtitle\">{{subtitle}}</p>\n</header>",
+    "conditionalRendering": {
+      "title": "Render h3 only if title is not empty",
+      "subtitle": "Render p only if subtitle is not empty"
+    }
+  },
+  
+  "accessibility": {
+    "requirements": [
+      "Header should contain at least one heading element (h1-h6)",
+      "Heading level should be appropriate for document outline"
+    ]
+  },
+  
+  "canContain": ["h1", "h2", "h3", "h4", "h5", "h6", "p", "nav", "img", "figure", "button", "a"]
+}

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "_inheritance.schema.json",
+  "title": "WB Inheritance Rules",
+  "description": "Defines what IS-A inheritance means in the WB system. ALL components must follow these rules.",
+  
+  "version": "1.0.0",
+  
+  "fundamentalPrinciple": {
+    "statement": "ALL WB components inherit from at least one semantic HTML element",
+    "reason": "Semantic elements define base properties, structure, and accessibility. Our components IMPROVE on them.",
+    "hierarchy": [
+      "1. Semantic Element (article, section, aside, nav, etc.) - defines BASE",
+      "2. WB Component (card, alert, modal, etc.) - IS-A semantic element, ADDS behavior",
+      "3. WB Variant (cardbutton, cardimage, etc.) - IS-A component, ADDS specialization"
+    ]
+  },
+
+  "isA_Rules": {
+    "description": "When schema declares '$inheritance.extends', these rules apply:",
+    
+    "rule1_AllPropertiesInherited": {
+      "statement": "Child inherits ALL parent properties with their defaults",
+      "implementation": "Merge parent.properties into child.properties, child can override defaults",
+      "example": "cardbutton IS-A card → cardbutton has title, subtitle, footer, elevated, clickable, href, hoverText"
+    },
+    
+    "rule2_StructureInherited": {
+      "statement": "Child inherits parent's semantic structure (header, main, footer)",
+      "implementation": "Parent renders structure, child ADDS to it (typically to main)",
+      "violation": "skipStructure: true breaks inheritance - FORBIDDEN",
+      "example": "cardbutton uses card's header/footer, adds buttons to main"
+    },
+    
+    "rule3_TextAlwaysEditable": {
+      "statement": "ALL text properties are canvas-editable",
+      "implementation": "If property.canvasEditable !== false, it's editable in canvas",
+      "violation": "Text that cannot be edited is a BUG",
+      "example": "title, subtitle, footer, content, quote, author - ALL editable"
+    },
+    
+    "rule4_NoRemoval": {
+      "statement": "Child can OVERRIDE but NOT REMOVE parent properties",
+      "implementation": "Child can change defaults, add constraints, but property must exist",
+      "example": "cardlink.clickable defaults to true (override), but clickable property still exists"
+    },
+    
+    "rule5_ContainmentSeparate": {
+      "statement": "HAS-A (containment) is separate from IS-A (inheritance)",
+      "implementation": "Use $containment for composed behaviors, $inheritance for parent",
+      "example": "cardbutton IS-A card, HAS-A buttonGroup"
+    }
+  },
+
+  "hasA_Rules": {
+    "description": "When schema declares '$containment', these rules apply:",
+    
+    "rule1_CompositionNotInheritance": {
+      "statement": "Contained items ADD behavior, don't inherit structure",
+      "example": "cardimage HAS-A figure (adds image display) but IS-A card (has header/footer)"
+    },
+    
+    "rule2_ContainedBehaviorsIndependent": {
+      "statement": "Each contained behavior is initialized independently",
+      "example": "carddraggable HAS-A draggable - draggable behavior applies to the card"
+    }
+  },
+
+  "textPropertyRules": {
+    "description": "Rules for text content across ALL components",
+    
+    "rule_AlwaysEditable": {
+      "statement": "If an element displays text, that text MUST be editable",
+      "canvas": "Double-click to edit in canvas",
+      "panel": "Shows in property panel if not in canvas",
+      "never": "Text that cannot be set is a BUG"
+    },
+    
+    "standardTextProperties": {
+      "fromHeader": ["title", "subtitle", "metadata"],
+      "fromMain": ["content"],
+      "fromFooter": ["footer", "timestamp", "author"],
+      "fromFigure": ["caption", "alt"],
+      "fromBlockquote": ["quote"],
+      "fromCite": ["author", "role", "source"],
+      "fromAddress": ["name", "email", "phone", "website", "location"],
+      "fromNav": ["label", "items[].label"]
+    }
+  },
+
+  "implementationRequirements": {
+    "javascript": {
+      "baseFunction": "cardBase() MUST render header if title/subtitle exist, footer if footer exists",
+      "variants": "Variants call base first, then add to main - NEVER skipStructure",
+      "rendering": "Check each text property - if has value, render element and make editable"
+    },
+    
+    "builder": {
+      "propertyPanel": "Show ALL properties from inheritance chain",
+      "canvasEditing": "ALL text properties editable via double-click",
+      "defaults": "Inherit parent defaults, override with variant-specific"
+    },
+    
+    "schemas": {
+      "inheritance": "Use $inheritance.extends to declare parent",
+      "containment": "Use $containment for HAS-A relationships",
+      "textProperties": "Mark with canvasEditable: true"
+    }
+  },
+
+  "validationChecks": {
+    "description": "Tests that verify inheritance is working",
+    
+    "check1": "Drop cardbutton → title, subtitle, footer should render and be editable",
+    "check2": "Change card.title default → all card variants should reflect change",
+    "check3": "Remove skipStructure from cardbutton → should still work",
+    "check4": "Every text property should be double-click editable in canvas"
+  },
+
+  "migrationPath": {
+    "step1": "Create semantic element schemas (DONE)",
+    "step2": "Update card.schema.json to compose semantic schemas",
+    "step3": "Refactor card.js - remove skipStructure, implement real inheritance",
+    "step4": "Update builder to read inheritance chain",
+    "step5": "Test all card variants show inherited properties"
+  }
+}

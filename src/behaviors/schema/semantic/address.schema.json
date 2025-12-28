@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "address.schema.json",
+  "title": "Address Semantic Element",
+  "description": "Contact information for people or organizations. NOT for postal addresses.",
+  
+  "$inheritance": {
+    "extends": "_element.base.schema.json",
+    "reason": "Address IS-A element with all base properties"
+  },
+  
+  "htmlTag": "address",
+  "role": "group",
+  
+  "semanticMeaning": {
+    "description": "Contact information for the author/owner of the document or article",
+    "examples": ["Author contact info", "Organization contact", "Business card", "Portfolio contact"],
+    "whenToUse": "Contact information for the nearest article or body ancestor",
+    "whenNotToUse": "NOT for postal addresses - use p with schema.org markup instead"
+  },
+  
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Person/organization name - canvas editable",
+      "canvasEditable": true,
+      "default": ""
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address - canvas editable",
+      "canvasEditable": true,
+      "default": ""
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number - canvas editable",
+      "canvasEditable": true,
+      "default": ""
+    },
+    "website": {
+      "type": "string",
+      "format": "uri",
+      "description": "Website URL - canvas editable",
+      "canvasEditable": true,
+      "default": ""
+    },
+    "location": {
+      "type": "string",
+      "description": "Location/city - canvas editable",
+      "canvasEditable": true,
+      "default": ""
+    }
+  },
+  
+  "textProperties": {
+    "description": "Canvas-editable text",
+    "list": ["name", "email", "phone", "website", "location"]
+  },
+  
+  "structure": {
+    "template": "<address>\n  <a href=\"mailto:{{email}}\">{{email}}</a>\n  <a href=\"tel:{{phone}}\">{{phone}}</a>\n</address>"
+  },
+  
+  "accessibility": {
+    "requirements": [
+      "Use mailto: links for email",
+      "Use tel: links for phone numbers"
+    ]
+  },
+  
+  "canContain": ["a", "p", "span", "br"],
+  
+  "wbComponents": {
+    "description": "WB components that extend address",
+    "list": ["cardportfolio", "cardprofile"]
+  }
+}

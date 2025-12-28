@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "section.schema.json",
+  "title": "Section Semantic Element",
+  "description": "Generic thematic grouping of content. Used when article is not appropriate.",
+  
+  "$inheritance": {
+    "extends": "_element.base.schema.json",
+    "reason": "Section IS-A element with all base properties"
+  },
+  
+  "htmlTag": "section",
+  "role": "region (when labelled)",
+  
+  "semanticMeaning": {
+    "description": "A generic standalone section of content that doesn't have a more specific semantic element",
+    "examples": ["Chapter", "Tab panel", "Numbered section of a document", "Thematic grouping"],
+    "whenToUse": "When content is thematically related but not self-contained like article",
+    "whenNotToUse": "Don't use as generic container - use div instead"
+  },
+  
+  "type": "object",
+  "properties": {
+    "header": {
+      "$ref": "header.schema.json",
+      "description": "Section header with title"
+    },
+    "main": {
+      "$ref": "main.schema.json",
+      "description": "Section content"
+    },
+    "footer": {
+      "$ref": "footer.schema.json",
+      "description": "Section footer"
+    }
+  },
+  
+  "structure": {
+    "template": "<section>\n  <header><h2>{{title}}</h2></header>\n  {{content}}\n</section>",
+    "notes": "Section should generally have a heading"
+  },
+  
+  "accessibility": {
+    "landmarkRole": "region (only with aria-label or aria-labelledby)",
+    "requirements": [
+      "Almost always should have a heading",
+      "Use aria-label if heading is not visible"
+    ]
+  },
+  
+  "wbComponents": {
+    "description": "WB components that extend section",
+    "list": ["collapse", "accordion-panel", "tabs-panel", "modal-body"]
+  }
+}

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html id="autoinject-html-1" lang="en" data-theme="dark">
+<head id="autoinject-head-2">
+  <meta id="autoinject-meta-3" charset="UTF-8">
+  <meta id="autoinject-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="autoinject-title-5">WB Auto-Inject Demo</title>
+  <link id="autoinject-link-6" rel="stylesheet" href="/src/styles/themes.css">
+  <link id="autoinject-link-7" rel="stylesheet" href="/src/styles/site.css">
+  <link id="autoinject-link-8" rel="stylesheet" href="/src/styles/components.css">
+  <style id="autoinject-style-9">
+    body {
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--bg-color);
+      color: var(--text-primary);
+    }
+    section {
+      margin-bottom: 3rem;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--bg-primary);
+    }
+    h2 {
+      margin-top: 0;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .feature-badge {
+      font-size: 0.7rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 12px;
+      font-weight: normal;
+      vertical-align: middle;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    code {
+      background: var(--bg-secondary);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-family: monospace;
+      color: var(--accent);
+    }
+    .value-prop {
+      background: var(--bg-secondary);
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--success-color);
+    }
+    .value-prop h4 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      color: var(--success-color);
+    }
+    .value-prop ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    .value-prop li {
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    @media (max-width: 600px) {
+      .demo-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body id="autoinject-body-10">
+
+  <h1 id="autoinject-h1-11">Auto-Injection Demo</h1>
+  <p id="autoinject-p-12" class="lead">
+    Write standard HTML. Get enhanced, accessible, theme-aware components automatically.
+    <br id="autoinject-br-13">
+    <small id="autoinject-small-14" style="opacity: 0.7;">No classes. No data attributes. Just pure HTML.</small>
+  </p>
+  
+  <div id="autoinject-div-15" style="margin-bottom: 2rem; padding: 1rem; background: var(--bg-secondary); border-radius: 4px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color);">
+    <div id="autoinject-div-16">
+      <strong id="autoinject-strong-17">Status:</strong> <span id="status">Initializing...</span>
+    </div>
+    <div id="autoinject-div-18" style="display: flex; gap: 1rem; align-items: center;">
+      <div id="autoinject-div-19" data-wb="themecontrol"></div>
+      <div id="autoinject-div-20" style="font-size: 0.9rem; opacity: 0.8;">
+        Enabled via <code id="autoinject-code-21">WB.init({ autoInject: true })</code>
+      </div>
+    </div>
+  </div>
+
+  <section id="autoinject-section-22" style="border-left: 4px solid var(--primary);">
+    <h2 id="autoinject-h2-23">🚀 The "Zero-Config" Form</h2>
+    <p id="autoinject-p-24">This entire form is built with <strong id="autoinject-strong-25">standard HTML tags</strong> only. No custom classes, no JavaScript initialization code.</p>
+    
+    <div id="autoinject-div-26" class="demo-grid">
+      <div id="autoinject-div-27" style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 8px;">
+        <form id="autoinject-form-28" onsubmit="event.preventDefault();">
+          <div id="autoinject-div-29" class="form-group">
+            <label id="autoinject-label-30">Full Name</label>
+            <input id="autoinject-input-31" type="text" placeholder="John Doe" required>
+          </div>
+          
+          <div id="autoinject-div-32" class="form-group">
+            <label id="autoinject-label-33">Email Address</label>
+            <input id="autoinject-input-34" type="email" placeholder="john@example.com" required>
+          </div>
+
+          <div id="autoinject-div-35" class="form-group">
+            <label id="autoinject-label-36">Department</label>
+            <select id="autoinject-select-37">
+              <option id="autoinject-option-38">Engineering</option>
+              <option id="autoinject-option-39">Design</option>
+              <option id="autoinject-option-40">Marketing</option>
+              <option id="autoinject-option-41">Sales</option>
+            </select>
+          </div>
+
+          <div id="autoinject-div-42" class="form-group">
+            <label id="autoinject-label-43">Bio</label>
+            <textarea id="autoinject-textarea-44" rows="3" placeholder="Tell us about yourself..."></textarea>
+          </div>
+
+          <div id="autoinject-div-45" class="form-group">
+            <label id="autoinject-label-46">Experience Level</label>
+            <input id="autoinject-input-47" type="range" min="0" max="10" value="5">
+          </div>
+
+          <div id="autoinject-div-48" class="form-group">
+            <label id="autoinject-label-49">Preferences</label>
+            <div id="autoinject-div-50" style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+              <label id="autoinject-label-51"><input id="autoinject-input-52" type="checkbox" checked> Remote</label>
+              <label id="autoinject-label-53"><input id="autoinject-input-54" type="checkbox"> Relocation</label>
+            </div>
+          </div>
+
+          <div id="autoinject-div-55" class="form-group">
+            <label id="autoinject-label-56">Contract Type</label>
+            <div id="autoinject-div-57" style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+              <label id="autoinject-label-58"><input id="autoinject-input-59" type="radio" name="contract" checked> Full-time</label>
+              <label id="autoinject-label-60"><input id="autoinject-input-61" type="radio" name="contract"> Contractor</label>
+            </div>
+          </div>
+
+          <button id="autoinject-button-62" type="submit" data-wb="button" data-variant="primary" style="width: 100%;">Submit Application</button>
+        </form>
+      </div>
+      
+      <div id="autoinject-div-63" style="display: flex; flex-direction: column; justify-content: center;">
+        <h3 id="autoinject-h3-64">Why this matters:</h3>
+        <ul id="autoinject-ul-65" style="line-height: 1.8;">
+          <li id="autoinject-li-66"><strong id="autoinject-strong-67">Clean Code:</strong> Your HTML remains semantic and readable.</li>
+          <li id="autoinject-li-68"><strong id="autoinject-strong-69">Instant Theming:</strong> Try the theme switcher above. Every input adapts instantly.</li>
+          <li id="autoinject-li-70"><strong id="autoinject-strong-71">Future Proof:</strong> If you switch frameworks, your HTML is still valid standard HTML.</li>
+          <li id="autoinject-li-72"><strong id="autoinject-strong-73">Accessibility:</strong> ARIA attributes and keyboard navigation are added automatically.</li>
+        </ul>
+        
+        <div id="autoinject-div-74" style="margin-top: 1rem;">
+          <h4 id="autoinject-h4-75">The Code:</h4>
+          <pre id="autoinject-pre-76" style="background: #1e1e1e; color: #d4d4d4; padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.85rem;"><code id="autoinject-code-77">&lt;form&gt;
+  &lt;input type="text"&gt;
+  &lt;select&gt;...&lt;/select&gt;
+  &lt;textarea&gt;&lt;/textarea&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;input type="radio"&gt;
+&lt;/form&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="autoinject-section-78">
+    <h2 id="autoinject-h2-79">1. Checkboxes <span id="autoinject-span-80" class="feature-badge">Enhanced</span></h2>
+    
+    <div id="autoinject-div-81" class="value-prop">
+      <h4 id="autoinject-h4-82">Value Added:</h4>
+      <ul id="autoinject-ul-83">
+        <li id="autoinject-li-84"><strong id="autoinject-strong-85">Custom Styling:</strong> Replaces browser default with a consistent, theme-aware SVG checkmark.</li>
+        <li id="autoinject-li-86"><strong id="autoinject-strong-87">Wrapper:</strong> Automatically wraps input and label for better alignment.</li>
+        <li id="autoinject-li-88"><strong id="autoinject-strong-89">Indeterminate State:</strong> Visual support for indeterminate state.</li>
+        <li id="autoinject-li-90"><strong id="autoinject-strong-91">Accessibility:</strong> Maintains keyboard navigation and screen reader support.</li>
+      </ul>
+    </div>
+
+    <div id="autoinject-div-92" class="demo-grid">
+      <div id="autoinject-div-93">
+        <h3 id="autoinject-h3-94">Standard HTML</h3>
+        <div id="autoinject-div-95" class="form-group">
+          <label id="autoinject-label-96">
+            <input id="autoinject-input-97" type="checkbox"> 
+            Standard Checkbox
+          </label>
+        </div>
+        <div id="autoinject-div-98" class="form-group">
+          <label id="autoinject-label-99">
+            <input id="autoinject-input-100" type="checkbox" checked> 
+            Checked Checkbox
+          </label>
+        </div>
+      </div>
+      <div id="autoinject-div-101">
+        <h3 id="autoinject-h3-102">With Options (data-wb)</h3>
+        <div id="autoinject-div-103" class="form-group">
+          <label id="autoinject-label-104">
+            <input id="autoinject-input-105" type="checkbox" data-wb="checkbox" data-variant="success"> 
+            Success Variant
+          </label>
+        </div>
+        <div id="autoinject-div-106" class="form-group">
+          <label id="autoinject-label-107">
+            <input id="autoinject-input-108" type="checkbox" data-wb="checkbox" data-size="lg"> 
+            Large Size
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="autoinject-section-109">
+    <h2 id="autoinject-h2-110">2. Radio Buttons <span id="autoinject-span-111" class="feature-badge">Enhanced</span></h2>
+    
+    <div id="autoinject-div-112" class="value-prop">
+      <h4 id="autoinject-h4-113">Value Added:</h4>
+      <ul id="autoinject-ul-114">
+        <li id="autoinject-li-115"><strong id="autoinject-strong-116">Custom Styling:</strong> Consistent, theme-aware radio buttons.</li>
+        <li id="autoinject-li-117"><strong id="autoinject-strong-118">Animation:</strong> Smooth transition effects on selection.</li>
+        <li id="autoinject-li-119"><strong id="autoinject-strong-120">Layout:</strong> Automatic flexbox alignment with labels.</li>
+      </ul>
+    </div>
+
+    <div id="autoinject-div-121" class="form-group">
+      <label id="autoinject-label-122">
+        <input id="autoinject-input-123" type="radio" name="demo-radio" value="1"> 
+        Option 1
+      </label>
+      <label id="autoinject-label-124">
+        <input id="autoinject-input-125" type="radio" name="demo-radio" value="2" checked> 
+        Option 2
+      </label>
+      <label id="autoinject-label-126">
+        <input id="autoinject-input-127" type="radio" name="demo-radio" value="3"> 
+        Option 3
+      </label>
+    </div>
+  </section>
+
+  <section id="autoinject-section-128">
+    <h2 id="autoinject-h2-129">3. Select Dropdowns <span id="autoinject-span-130" class="feature-badge">Enhanced</span></h2>
+    
+    <div id="autoinject-div-131" class="value-prop">
+      <h4 id="autoinject-h4-132">Value Added:</h4>
+      <ul id="autoinject-ul-133">
+        <li id="autoinject-li-134"><strong id="autoinject-strong-135">Theming:</strong> Applies site theme colors to the dropdown trigger.</li>
+        <li id="autoinject-li-136"><strong id="autoinject-strong-137">Clearable:</strong> Adds a clear button (x) if <code id="autoinject-code-138">data-clearable</code> is present.</li>
+        <li id="autoinject-li-139"><strong id="autoinject-strong-140">Searchable:</strong> Adds search capabilities if <code id="autoinject-code-141">data-searchable</code> is present.</li>
+      </ul>
+    </div>
+
+    <div id="autoinject-div-142" class="demo-grid">
+      <div id="autoinject-div-143">
+        <h3 id="autoinject-h3-144">Standard Select</h3>
+        <div id="autoinject-div-145" class="form-group">
+          <label id="autoinject-label-146">Choose a fruit:</label>
+          <select id="autoinject-select-147" style="width: 100%">
+            <option id="autoinject-option-148">Apple</option>
+            <option id="autoinject-option-149">Banana</option>
+            <option id="autoinject-option-150">Cherry</option>
+            <option id="autoinject-option-151">Date</option>
+            <option id="autoinject-option-152">Elderberry</option>
+          </select>
+        </div>
+      </div>
+      <div id="autoinject-div-153">
+        <h3 id="autoinject-h3-154">Clearable Select</h3>
+        <div id="autoinject-div-155" class="form-group">
+          <label id="autoinject-label-156">Choose a topping (Clearable):</label>
+          <select id="autoinject-select-157" data-clearable style="width: 100%">
+            <option id="autoinject-option-158" value="">Select...</option>
+            <option id="autoinject-option-159">Chocolate</option>
+            <option id="autoinject-option-160">Sprinkles</option>
+            <option id="autoinject-option-161">Nuts</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="autoinject-section-162">
+    <h2 id="autoinject-h2-163">4. Textarea <span id="autoinject-span-164" class="feature-badge">Enhanced</span></h2>
+    
+    <div id="autoinject-div-165" class="value-prop">
+      <h4 id="autoinject-h4-166">Value Added:</h4>
+      <ul id="autoinject-ul-167">
+        <li id="autoinject-li-168"><strong id="autoinject-strong-169">Auto-resize:</strong> Automatically expands height as you type (if <code id="autoinject-code-170">data-autosize</code>).</li>
+        <li id="autoinject-li-171"><strong id="autoinject-strong-172">Character Count:</strong> Shows current/max characters (if <code id="autoinject-code-173">data-show-count</code>).</li>
+        <li id="autoinject-li-174"><strong id="autoinject-strong-175">Styling:</strong> Consistent border, background, and focus states.</li>
+      </ul>
+    </div>
+
+    <div id="autoinject-div-176" class="demo-grid">
+      <div id="autoinject-div-177">
+        <h3 id="autoinject-h3-178">Standard Textarea</h3>
+        <div id="autoinject-div-179" class="form-group">
+          <label id="autoinject-label-180">Comments:</label>
+          <textarea id="autoinject-textarea-181" placeholder="Type something here..." rows="4" style="width: 100%"></textarea>
+        </div>
+      </div>
+      <div id="autoinject-div-182">
+        <h3 id="autoinject-h3-183">With Features</h3>
+        <div id="autoinject-div-184" class="form-group">
+          <label id="autoinject-label-185">Feedback (Autosize + Counter):</label>
+          <textarea id="autoinject-textarea-186" 
+            data-autosize 
+            data-show-count 
+            data-max-length="100" 
+            placeholder="Type to see auto-resize..." 
+            rows="2" 
+            style="width: 100%"></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="autoinject-section-187">
+    <h2 id="autoinject-h2-188">5. Range Slider <span id="autoinject-span-189" class="feature-badge">Enhanced</span></h2>
+    
+    <div id="autoinject-div-190" class="value-prop">
+      <h4 id="autoinject-h4-191">Value Added:</h4>
+      <ul id="autoinject-ul-192">
+        <li id="autoinject-li-193"><strong id="autoinject-strong-194">Value Display:</strong> Shows the current numeric value (if <code id="autoinject-code-195">data-show-value</code>).</li>
+        <li id="autoinject-li-196"><strong id="autoinject-strong-197">Min/Max Labels:</strong> Displays start and end values (if <code id="autoinject-code-198">data-show-labels</code>).</li>
+        <li id="autoinject-li-199"><strong id="autoinject-strong-200">Styling:</strong> Custom track and thumb styling.</li>
+      </ul>
+    </div>
+
+    <div id="autoinject-div-201" class="form-group">
+      <label id="autoinject-label-202">Volume (Standard):</label>
+      <input id="autoinject-input-203" type="range" min="0" max="100" value="50" style="width: 100%">
+    </div>
+
+    <div id="autoinject-div-204" class="form-group" style="margin-top: 2rem;">
+      <label id="autoinject-label-205">Brightness (With Labels & Value):</label>
+      <input id="autoinject-input-206" 
+        type="range" 
+        min="0" 
+        max="100" 
+        value="75" 
+        data-show-value 
+        data-show-labels 
+        data-value-suffix="%" 
+        style="width: 100%">
+    </div>
+  </section>
+
+  <section id="autoinject-section-207">
+    <h2 id="autoinject-h2-208">6. Buttons <span id="autoinject-span-209" class="feature-badge">Enhanced</span></h2>
+    
+    <div id="autoinject-div-210" class="value-prop">
+      <h4 id="autoinject-h4-211">Value Added:</h4>
+      <ul id="autoinject-ul-212">
+        <li id="autoinject-li-213"><strong id="autoinject-strong-214">Styling:</strong> Applies consistent theme-aware styling automatically.</li>
+        <li id="autoinject-li-215"><strong id="autoinject-strong-216">Variants:</strong> Supports variants via <code id="autoinject-code-217">data-variant</code> (primary, secondary, danger, etc.).</li>
+        <li id="autoinject-li-218"><strong id="autoinject-strong-219">Loading State:</strong> Built-in loading spinner support.</li>
+      </ul>
+    </div>
+
+    <div id="autoinject-div-220" class="demo-grid">
+      <div id="autoinject-div-221">
+        <h3 id="autoinject-h3-222">Standard Button</h3>
+        <button id="autoinject-button-223">Standard Button</button>
+      </div>
+      <div id="autoinject-div-224">
+        <h3 id="autoinject-h3-225">Enhanced Buttons</h3>
+        <div id="autoinject-div-226" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button id="autoinject-button-227" data-variant="primary">Primary</button>
+          <button id="autoinject-button-228" data-variant="secondary">Secondary</button>
+          <button id="autoinject-button-229" data-variant="danger">Danger</button>
+          <button id="autoinject-button-230" data-variant="outline">Outline</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="autoinject-section-231">
+    <h2 id="autoinject-h2-232">7. Media <span id="autoinject-span-233" class="feature-badge">Enhanced</span></h2>
+    
+    <div id="autoinject-div-234" class="value-prop">
+      <h4 id="autoinject-h4-235">Value Added:</h4>
+      <ul id="autoinject-ul-236">
+        <li id="autoinject-li-237"><strong id="autoinject-strong-238">Lazy Loading:</strong> Images and videos load lazily by default.</li>
+        <li id="autoinject-li-239"><strong id="autoinject-strong-240">Lightbox:</strong> Click to expand images (if configured).</li>
+        <li id="autoinject-li-241"><strong id="autoinject-strong-242">Custom Controls:</strong> Enhanced audio/video players.</li>
+      </ul>
+    </div>
+
+    <div id="autoinject-div-243" class="demo-grid">
+      <div id="autoinject-div-244">
+        <h3 id="autoinject-h3-245">Image</h3>
+        <img id="autoinject-img-246" src="https://picsum.photos/400/300" alt="Random Image" style="max-width: 100%;">
+      </div>
+      <div id="autoinject-div-247">
+        <h3 id="autoinject-h3-248">Video</h3>
+        <video id="autoinject-video-249" controls style="max-width: 100%;">
+          <source id="autoinject-source-250" src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+          Your browser does not support HTML video.
+        </video>
+      </div>
+    </div>
+    <div id="autoinject-div-251" style="margin-top: 1rem;">
+      <h3 id="autoinject-h3-252">Audio</h3>
+      <audio id="autoinject-audio-253" controls style="width: 100%;">
+        <source id="autoinject-source-254" src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </section>
+
+  <section id="autoinject-section-255">
+    <h2 id="autoinject-h2-256">8. Typography <span id="autoinject-span-257" class="feature-badge">Enhanced</span></h2>
+    
+    <div id="autoinject-div-258" class="value-prop">
+      <h4 id="autoinject-h4-259">Value Added:</h4>
+      <ul id="autoinject-ul-260">
+        <li id="autoinject-li-261"><strong id="autoinject-strong-262">Code Blocks:</strong> Syntax highlighting and copy button for <code id="autoinject-code-263">&lt;pre&gt;</code>.</li>
+        <li id="autoinject-li-264"><strong id="autoinject-strong-265">Inline Code:</strong> Styled <code id="autoinject-code-266">&lt;code&gt;</code> elements.</li>
+        <li id="autoinject-li-267"><strong id="autoinject-strong-268">Keyboard Input:</strong> Styled <code id="autoinject-code-269">&lt;kbd&gt;</code> keys.</li>
+        <li id="autoinject-li-270"><strong id="autoinject-strong-271">Highlighting:</strong> Styled <code id="autoinject-code-272">&lt;mark&gt;</code> text.</li>
+      </ul>
+    </div>
+
+    <div id="autoinject-div-273" class="demo-grid">
+      <div id="autoinject-div-274">
+        <h3 id="autoinject-h3-275">Inline Elements</h3>
+        <p id="autoinject-p-276">Press <kbd id="autoinject-kbd-277">Ctrl</kbd> + <kbd id="autoinject-kbd-278">C</kbd> to copy.</p>
+        <p id="autoinject-p-279">Use the <code id="autoinject-code-280">print()</code> function.</p>
+        <p id="autoinject-p-281">Don't forget to <mark id="autoinject-mark-282">highlight important text</mark>.</p>
+      </div>
+      <div id="autoinject-div-283">
+        <h3 id="autoinject-h3-284">Code Block</h3>
+        <pre id="autoinject-pre-285"><code id="autoinject-code-286" class="language-javascript">function hello() {
+  console.log("Hello World");
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="autoinject-section-287">
+    <h2 id="autoinject-h2-288">9. Structure & Feedback <span id="autoinject-span-289" class="feature-badge">Enhanced</span></h2>
+    
+    <div id="autoinject-div-290" class="value-prop">
+      <h4 id="autoinject-h4-291">Value Added:</h4>
+      <ul id="autoinject-ul-292">
+        <li id="autoinject-li-293"><strong id="autoinject-strong-294">Tables:</strong> Sortable, responsive tables.</li>
+        <li id="autoinject-li-295"><strong id="autoinject-strong-296">Details:</strong> Animated expand/collapse.</li>
+        <li id="autoinject-li-297"><strong id="autoinject-strong-298">Progress:</strong> Styled progress bars.</li>
+        <li id="autoinject-li-299"><strong id="autoinject-strong-300">Dialog:</strong> Enhanced modal dialogs.</li>
+      </ul>
+    </div>
+
+    <div id="autoinject-div-301" class="demo-grid">
+      <div id="autoinject-div-302">
+        <h3 id="autoinject-h3-303">Details / Summary</h3>
+        <details id="autoinject-details-304">
+          <summary id="autoinject-summary-305">Click to expand</summary>
+          <p id="autoinject-p-306">This content expands with a smooth animation.</p>
+        </details>
+        
+        <h3 id="autoinject-h3-307" style="margin-top: 1rem;">Progress</h3>
+        <progress id="autoinject-progress-308" value="70" max="100" style="width: 100%;"></progress>
+      </div>
+      <div id="autoinject-div-309">
+        <h3 id="autoinject-h3-310">Table</h3>
+        <table id="autoinject-table-311" style="width: 100%;">
+          <thead id="autoinject-thead-312">
+            <tr id="autoinject-tr-313">
+              <th id="autoinject-th-314">Name</th>
+              <th id="autoinject-th-315">Role</th>
+            </tr>
+          </thead>
+          <tbody id="autoinject-tbody-316">
+            <tr id="autoinject-tr-317">
+              <td id="autoinject-td-318">Alice</td>
+              <td id="autoinject-td-319">Developer</td>
+            </tr>
+            <tr id="autoinject-tr-320">
+              <td id="autoinject-td-321">Bob</td>
+              <td id="autoinject-td-322">Designer</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 id="autoinject-h3-323" style="margin-top: 1rem;">Dialog</h3>
+        <button id="autoinject-button-324" onclick="document.getElementById('demo-dialog').showModal()">Open Dialog</button>
+        <dialog id="demo-dialog">
+          <h3 id="autoinject-h3-325">Hello!</h3>
+          <p id="autoinject-p-326">This is a native dialog enhanced by WB.</p>
+          <form id="autoinject-form-327" method="dialog">
+            <button id="autoinject-button-328">Close</button>
+          </form>
+        </dialog>
+      </div>
+    </div>
+  </section>
+
+  <section id="autoinject-section-329">
+    <h2 id="autoinject-h2-330">10. Cards <span id="autoinject-span-331" class="feature-badge">Enhanced</span></h2>
+    
+    <div id="autoinject-div-332" class="value-prop">
+      <h4 id="autoinject-h4-333">Value Added:</h4>
+      <ul id="autoinject-ul-334">
+        <li id="autoinject-li-335"><strong id="autoinject-strong-336">Semantic:</strong> Uses <code id="autoinject-code-337">&lt;article&gt;</code> tags automatically.</li>
+        <li id="autoinject-li-338"><strong id="autoinject-strong-339">Structure:</strong> Automatically organizes header, main, and footer content.</li>
+        <li id="autoinject-li-340"><strong id="autoinject-strong-341">Interactive:</strong> Supports hover effects and click actions.</li>
+      </ul>
+    </div>
+
+    <div id="autoinject-div-342" class="demo-grid">
+      <div id="autoinject-div-343">
+        <h3 id="autoinject-h3-344">Basic Card</h3>
+        <article id="autoinject-article-345" data-title="Card Title" data-subtitle="Card Subtitle">
+          <p id="autoinject-p-346">This is a standard <code id="autoinject-code-347">&lt;article&gt;</code> tag. WB automatically enhances it into a card component.</p>
+        </article>
+      </div>
+      <div id="autoinject-div-348">
+        <h3 id="autoinject-h3-349">Interactive Card</h3>
+        <article id="autoinject-article-350" 
+          data-title="Click Me" 
+          data-clickable="true" 
+          data-hoverable="true" 
+          data-variant="primary"
+          onclick="alert('Card clicked!')">
+          <p id="autoinject-p-351">This card has hover effects and is clickable.</p>
+          <p id="autoinject-p-352">It also uses the primary variant.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="autoinject-section-353">
+    <h2 id="autoinject-h2-354">11. Dynamic Injection <span id="autoinject-span-355" class="feature-badge">Live</span></h2>
+    <p id="autoinject-p-356">Click the button to add new elements dynamically. The <code id="autoinject-code-357">MutationObserver</code> will detect them and automatically apply the enhancements.</p>
+    
+    <button id="add-btn" class="btn btn-primary" style="padding: 0.5rem 1rem; cursor: pointer; background: var(--primary); color: white; border: none; border-radius: 4px;">
+      Add New Checkbox
+    </button>
+    
+    <div id="dynamic-area" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;"></div>
+  </section>
+
+  <script id="autoinject-script-358" type="module">
+    import WB from '/src/core/wb-lazy.js';
+
+    // Initialize with autoInject enabled
+    WB.init({
+      debug: true,
+      autoInject: true
+    }).then(() => {
+      document.getElementById('status').textContent = 'WB Initialized with autoInject: true';
+      document.getElementById('status').style.color = 'var(--success-color, #10b981)';
+      
+      // Debug check
+      setTimeout(() => {
+        const checkboxes = document.querySelectorAll('.wb-checkbox');
+        if (checkboxes.length === 0) {
+          console.warn('No checkboxes enhanced yet. Checking auto-inject...');
+          // Force re-scan if needed
+          WB.scan();
+        }
+      }, 500);
+    });
+
+    // Dynamic injection demo
+    document.getElementById('add-btn').addEventListener('click', () => {
+      const container = document.getElementById('dynamic-area');
+      const div = document.createElement('div');
+      div.className = 'form-group';
+      div.style.animation = 'fadeIn 0.5s ease';
+      div.innerHTML = `
+        <label id="autoinject-label-359">
+          <input id="autoinject-input-360" type="checkbox"> 
+          Dynamically Added Checkbox ${container.children.length + 1}
+        </label>
+      `;
+      container.appendChild(div);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+[
+  { "n": "Heading 1", "i": "H1", "t": "h1", "d": { "text": "Heading 1" } },
+  { "n": "Heading 2", "i": "H2", "t": "h2", "d": { "text": "Heading 2" } },
+  { "n": "Heading 3", "i": "H3", "t": "h3", "d": { "text": "Heading 3" } },
+  { "n": "Paragraph", "i": "¶", "t": "p", "d": { "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." } },
+  { "n": "Text Block", "i": "T", "t": "div", "d": { "text": "Text block" } },
+  { "n": "Button", "i": "🔘", "t": "button", "d": { "text": "Click Me", "type": "button", "class": "btn btn-primary" } },
+  { "n": "Input", "i": "⌨️", "t": "input", "d": { "type": "text", "placeholder": "Enter text" } },
+  { "n": "Textarea", "i": "📝", "t": "textarea", "d": { "placeholder": "Enter long text", "rows": "3" } },
+  { "n": "Label", "i": "🏷️", "t": "label", "d": { "text": "Label" } },
+  { "n": "Divider", "i": "➖", "t": "hr", "d": {} },
+  { "n": "Select", "i": "▼", "t": "select", "d": {}, "children": [{ "t": "option", "text": "Option 1", "value": "1" }, { "t": "option", "text": "Option 2", "value": "2" }] },
+  { "n": "Checkbox", "i": "☑️", "t": "input", "d": { "type": "checkbox" } },
+  { "n": "Radio", "i": "🔘", "t": "input", "d": { "type": "radio" } },
+  { "n": "Color Picker", "i": "🎨", "t": "input", "d": { "type": "color" } },
+  { "n": "Date Picker", "i": "📅", "t": "input", "d": { "type": "date" } },
+  { "n": "Range Slider", "i": "↔️", "t": "input", "d": { "type": "range" } },
+  { "n": "Form", "i": "📝", "t": "form", "d": { "padding": "1rem" }, "container": true },
+  { "n": "Fieldset", "i": "🔲", "t": "fieldset", "d": { "padding": "1rem" }, "container": true, "children": [{ "t": "legend", "text": "Group Name" }] },
+  {
+    "n": "Card", "i": "🃏", "b": "card", "t": "article", "d": {
+      "title": "Card Title",
+      "subtitle": "Card subtitle",
+      "footer": "Card footer",
+      "elevated": false,
+      "clickable": false,
+      "href": "",
+      "hoverText": ""
+    }
+  },
+  {
+    "n": "Card Product", "i": "📦", "b": "cardproduct", "t": "article", "d": {
+      "title": "Product Name",
+      "description": "Product description here.",
+      "image": "https://picsum.photos/300/300",
+      "price": "$99.99",
+      "originalPrice": "$129.99",
+      "badge": "Sale",
+      "rating": "4.5",
+      "reviews": "128",
+      "cta": "Add to Cart",
+      "featured": false
+    }
+  },
+  {
+    "n": "Card Profile", "i": "👨", "b": "cardprofile", "t": "article", "d": {
+      "name": "John Doe",
+      "role": "Designer",
+      "bio": "Creating beautiful experiences.",
+      "avatar": "https://i.pravatar.cc/80?img=1",
+      "cover": "",
+      "size": "md",
+      "align": "center",
+      "hoverText": ""
+    }
+  },
+  {
+    "n": "Card Pricing", "i": "💰", "b": "cardpricing", "t": "article", "d": {
+      "plan": "Pro",
+      "price": "$29",
+      "period": "/month",
+      "features": "Unlimited projects,Priority support,Advanced analytics",
+      "cta": "Get Started",
+      "ctaHref": "#signup",
+      "featured": false
+    }
+  },
+  {
+    "n": "Card Stats", "i": "📈", "b": "cardstats", "t": "article", "d": {
+      "value": "1,234",
+      "label": "Total Users",
+      "icon": "📈",
+      "trend": "up",
+      "trendValue": "+12%",
+      "color": ""
+    }
+  },
+  {
+    "n": "Card Testimonial", "i": "💬", "b": "cardtestimonial", "t": "blockquote", "d": {
+      "quote": "This product changed my life!",
+      "author": "Jane Smith",
+      "role": "CEO, TechCorp",
+      "avatar": "https://i.pravatar.cc/80?img=5",
+      "rating": "5"
+    }
+  },
+  {
+    "n": "Card Overlay", "i": "🎨", "b": "cardoverlay", "t": "article", "d": {
+      "title": "Overlay Card",
+      "subtitle": "Beautiful overlay effect",
+      "image": "https://picsum.photos/400/300",
+      "position": "bottom",
+      "gradient": true,
+      "height": "300px"
+    }
+  },
+  {
+    "n": "Hero", "i": "🌌", "b": "hero", "t": "section", "d": {
+      "variant": "default",
+      "title": "Hero Title",
+      "subtitle": "Hero subtitle text",
+      "cta": "Get Started",
+      "ctaHref": "#",
+      "height": "400px",
+      "align": "center",
+      "overlay": true
+    }
+  },
+  { "n": "Breadcrumb", "i": "🍞", "b": "breadcrumb", "t": "nav", "d": { "items": "Home,Products,Category,Current Page", "separator": "/" } },
+  { "n": "Link", "i": "🔗", "b": "link", "t": "a", "d": { "href": "#section1", "text": "Jump to Section", "offset": "0" } },
+  { "n": "List", "i": "📃", "b": "list", "t": "ul", "d": { "items": "Item 1,Item 2,Item 3" } },
+  { "n": "Ordered List", "i": "🔢", "t": "ol", "d": {}, "container": true, "children": [{ "t": "li", "text": "Item 1" }, { "t": "li", "text": "Item 2" }] },
+  { "n": "Unordered List", "i": "•", "t": "ul", "d": {}, "container": true, "children": [{ "t": "li", "text": "Item 1" }, { "t": "li", "text": "Item 2" }] },
+  { "n": "List Item", "i": "➖", "t": "li", "d": { "text": "List Item" } },
+  { "n": "Image", "i": "🖼️", "b": "image", "t": "img", "d": { "src": "https://picsum.photos/400/300", "alt": "Image" } },
+  { "n": "Code", "i": "<>", "b": "code", "t": "pre", "d": { "language": "javascript", "code": "console.log(\"Hello\");" } },
+  { "n": "Details", "i": "⬇️", "b": "details", "t": "details", "d": { "summary": "Click to expand", "open": false } },
+  { "n": "Clock", "i": "🕐", "b": "clock", "t": "time", "d": { "format": "24", "showSeconds": true, "variant": "digital" } },
+  { "n": "Countdown", "i": "⏳", "b": "countdown", "t": "time", "d": { "target": "2025-12-31T23:59:59Z" } },
+  { "n": "Youtube", "i": "▶️", "b": "youtube", "t": "iframe", "d": { "id": "dQw4w9WgXcQ" } },
+  { "n": "Vimeo", "i": "🎬", "b": "vimeo", "t": "iframe", "d": { "id": "video-id" } },
+  { "n": "Embed", "i": "🎬", "b": "embed", "t": "iframe", "d": { "src": "https://example.com/embed" } },
+  {
+    "n": "Table", "i": "▦", "t": "table", "d": { "class": "table" }, "container": true,
+    "children": [
+      { "t": "thead", "children": [{ "t": "tr", "children": [{ "t": "th", "text": "Header 1" }, { "t": "th", "text": "Header 2" }] }] },
+      { "t": "tbody", "children": [{ "t": "tr", "children": [{ "t": "td", "text": "Cell 1" }, { "t": "td", "text": "Cell 2" }] }] }
+    ]
+  },
+  { "n": "Progress", "i": "📊", "t": "progress", "d": { "value": "70", "max": "100" } },
+  { "n": "Meter", "i": "📏", "t": "meter", "d": { "value": "0.6" } },
+  { "n": "Details", "i": "▶️", "t": "details", "d": {}, "children": [{ "t": "summary", "text": "More Info" }, { "t": "p", "text": "Hidden content" }] },
+  { "n": "Section", "i": "S", "t": "section", "d": { "padding": "1rem" }, "container": true },
+  { "n": "Article", "i": "A", "t": "article", "d": { "padding": "1rem" }, "container": true },
+  { "n": "Header", "i": "H", "t": "header", "d": { "padding": "1rem" }, "container": true },
+  { "n": "Footer", "i": "F", "t": "footer", "d": { "padding": "1rem" }, "container": true },
+  { "n": "Nav", "i": "N", "t": "nav", "d": { "padding": "1rem" }, "container": true },
+  { "n": "Aside", "i": "As", "t": "aside", "d": { "padding": "1rem" }, "container": true },
+  { "n": "Main", "i": "M", "t": "main", "d": { "padding": "1rem" }, "container": true },
+  { "n": "Figure", "i": "🖼️", "t": "figure", "d": { "padding": "1rem" }, "container": true },
+  { "n": "Blockquote", "i": "❝", "t": "blockquote", "d": { "padding": "1rem" }, "container": true },
+  { "n": "Address", "i": "📍", "t": "address", "d": { "padding": "1rem" }, "container": true },
+  { "n": "Cite", "i": "📖", "t": "cite", "d": { "text": "Citation" } },
+  {
+    "n": "Container", "i": "📦", "b": "container", "t": "section", "d": {
+      "direction": "column",
+      "columns": 1,
+      "gap": "1rem",
+      "align": "stretch",
+      "justify": "start",
+      "wrap": true,
+      "padding": "1rem"
+    }, "container": true
+  },
+  { "n": "Grid", "i": "▦", "b": "grid", "t": "div", "d": { "columns": "3" }, "container": true },
+  {
+    "n": "Tabs", "i": "📑", "b": "tabs", "t": "div", "d": {},
+    "container": true,
+    "childTemplate": { "tabTitle": "New Tab", "content": "Tab content..." },
+    "children": [
+      { "tabTitle": "Tab 1", "content": "Content for tab 1" },
+      { "tabTitle": "Tab 2", "content": "Content for tab 2" }
+    ]
+  },
+  { "n": "Dialog", "i": "📦", "b": "dialog", "t": "button", "d": { "title": "Dialog", "message": "Dialog content" }, "container": true },
+  { "n": "Drawer", "i": "🎛️", "b": "drawerLayout", "t": "aside", "d": { "position": "left", "width": "250px", "height": "250px", "minWidth": "1.5rem", "minHeight": "1.5rem", "maxWidth": "50vw", "maxHeight": "50vh" }, "container": true },
+  { "n": "Stack", "i": "📚", "b": "stack", "t": "div", "d": {}, "container": true },
+  { "n": "Group", "i": "👥", "b": "group", "t": "div", "d": {}, "container": true },
+  { "n": "Masonry", "i": "🧱", "b": "masonry", "t": "div", "d": {}, "container": true },
+  { "n": "Gallery", "i": "🎨", "b": "gallery", "t": "div", "d": {}, "container": true },
+  { "n": "Animate", "i": "✨", "b": "animate", "d": {} },
+  { "n": "Fade In", "i": "✨", "b": "fadein", "d": {} },
+  { "n": "Fade Out", "i": "👻", "b": "fadeout", "d": {} },
+  { "n": "Parallax", "i": "🎞️", "b": "parallax", "d": {} },
+  { "n": "Ripple", "i": "💧", "b": "ripple", "d": {} },
+  { "n": "Glow", "i": "💡", "b": "glow", "d": {} },
+  { "n": "Pulse", "i": "💫", "b": "pulse", "d": {} },
+  { "n": "Bounce", "i": "🪀", "b": "bounce", "d": {} },
+  { "n": "Slide In", "i": "👉", "b": "slidein", "d": {} },
+  { "n": "Slide Out", "i": "👈", "b": "slideout", "d": {} },
+  { "n": "Flip", "i": "🔄", "b": "flip", "d": {} },
+  { "n": "Rotate", "i": "🔃", "b": "rotate", "d": {} },
+  { "n": "Zoom In", "i": "🔎", "b": "zoomin", "d": {} },
+  { "n": "Zoom Out", "i": "🔍", "b": "zoomout", "d": {} },
+  { "n": "Sparkle", "i": "✨", "b": "sparkle", "d": {} },
+  { "n": "Rainbow", "i": "🌈", "b": "rainbow", "d": {} },
+  { "n": "Typewriter", "i": "⌨️", "b": "typewriter", "d": {} },
+  { "n": "Sticky", "i": "📌", "b": "sticky", "d": {} },
+  { "n": "Lazy", "i": "😴", "b": "lazy", "d": {} },
+  { "n": "Draggable", "i": "👆", "b": "draggable", "d": {} },
+  { "n": "Resizable", "i": "↗️", "b": "resizable", "d": {} },
+  { "n": "Truncate", "i": "✂️", "b": "truncate", "d": {} },
+  { "n": "Clipboard", "i": "📋", "b": "clipboard", "d": { "clipboardText": "Text to copy", "label": "📋 Copy" } },
+  { "n": "Dark Mode", "i": "🌙", "b": "darkmode", "d": {} },
+  { "n": "Theme Control", "i": "🎨", "b": "themecontrol", "d": {} },
+  { "n": "Share", "i": "📤", "b": "share", "d": { "title": "", "shareText": "", "url": "", "label": "📤 Share" } },
+  { "n": "Print", "i": "🖨️", "b": "print", "d": { "target": "", "label": "🖨️ Print" } },
+  { "n": "Fullscreen", "i": "⛶", "b": "fullscreen", "d": { "target": "", "label": "⛶ Fullscreen" } },
+  { "n": "Back to Top", "i": "⬆️", "b": "backtotop", "d": {} },
+  { "n": "Lightbox", "i": "💡", "b": "lightbox", "d": {} },
+  { "n": "Hotkey", "i": "⌨️", "b": "hotkey", "d": {} },
+  { "n": "Confetti", "i": "🎉", "b": "confetti", "d": { "count": 50, "label": "🎉 Confetti!" } },
+  { "n": "Fireworks", "i": "🎆", "b": "fireworks", "d": {} },
+  { "n": "Snow", "i": "❄️", "b": "snow", "d": {} }
+]

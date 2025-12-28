@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "_base/html-element.schema.json",
+  "title": "HTMLElement Base",
+  "description": "Base schema for ALL HTML elements. Every component inherits these properties.",
+  
+  "type": "object",
+  
+  "properties": {
+    
+    "_identity": {
+      "title": "Identity",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the element",
+          "native": true
+        },
+        "class": {
+          "type": "string", 
+          "description": "CSS class names (space-separated)",
+          "native": true
+        }
+      }
+    },
+    
+    "_layout": {
+      "title": "Layout",
+      "type": "object",
+      "properties": {
+        "display": {
+          "type": "string",
+          "enum": ["block", "inline", "inline-block", "flex", "inline-flex", "grid", "inline-grid", "none", "contents"],
+          "default": "block",
+          "css": true
+        },
+        "position": {
+          "type": "string",
+          "enum": ["static", "relative", "absolute", "fixed", "sticky"],
+          "default": "static",
+          "css": true
+        },
+        "width": {
+          "type": "string",
+          "description": "Width (px, %, rem, vw, auto)",
+          "default": "auto",
+          "css": true
+        },
+        "height": {
+          "type": "string",
+          "description": "Height (px, %, rem, vh, auto)",
+          "default": "auto",
+          "css": true
+        },
+        "minWidth": {
+          "type": "string",
+          "default": "0",
+          "css": true
+        },
+        "maxWidth": {
+          "type": "string",
+          "default": "none",
+          "css": true
+        },
+        "minHeight": {
+          "type": "string",
+          "default": "0",
+          "css": true
+        },
+        "maxHeight": {
+          "type": "string",
+          "default": "none",
+          "css": true
+        },
+        "margin": {
+          "type": "string",
+          "description": "Outer spacing (shorthand or individual)",
+          "default": "0",
+          "css": true
+        },
+        "marginTop": { "type": "string", "css": true },
+        "marginRight": { "type": "string", "css": true },
+        "marginBottom": { "type": "string", "css": true },
+        "marginLeft": { "type": "string", "css": true },
+        "padding": {
+          "type": "string",
+          "description": "Inner spacing (shorthand or individual)",
+          "default": "0",
+          "css": true
+        },
+        "paddingTop": { "type": "string", "css": true },
+        "paddingRight": { "type": "string", "css": true },
+        "paddingBottom": { "type": "string", "css": true },
+        "paddingLeft": { "type": "string", "css": true },
+        "overflow": {
+          "type": "string",
+          "enum": ["visible", "hidden", "scroll", "auto", "clip"],
+          "default": "visible",
+          "css": true
+        },
+        "overflowX": {
+          "type": "string",
+          "enum": ["visible", "hidden", "scroll", "auto", "clip"],
+          "css": true
+        },
+        "overflowY": {
+          "type": "string",
+          "enum": ["visible", "hidden", "scroll", "auto", "clip"],
+          "css": true
+        },
+        "zIndex": {
+          "type": "integer",
+          "description": "Stack order",
+          "default": "auto",
+          "css": true
+        }
+      }
+    },
+    
+    "_flexChild": {
+      "title": "Flex Child",
+      "description": "Properties when element is a child of a flex container",
+      "type": "object",
+      "contextual": "parent:display=flex",
+      "properties": {
+        "flexGrow": {
+          "type": "number",
+          "default": 0,
+          "css": true
+        },
+        "flexShrink": {
+          "type": "number",
+          "default": 1,
+          "css": true
+        },
+        "flexBasis": {
+          "type": "string",
+          "default": "auto",
+          "css": true
+        },
+        "alignSelf": {
+          "type": "string",
+          "enum": ["auto", "flex-start", "flex-end", "center", "baseline", "stretch"],
+          "default": "auto",
+          "css": true
+        },
+        "order": {
+          "type": "integer",
+          "default": 0,
+          "css": true
+        }
+      }
+    },
+    
+    "_gridChild": {
+      "title": "Grid Child",
+      "description": "Properties when element is a child of a grid container",
+      "type": "object",
+      "contextual": "parent:display=grid",
+      "properties": {
+        "gridColumnStart": { "type": "string", "css": true },
+        "gridColumnEnd": { "type": "string", "css": true },
+        "gridRowStart": { "type": "string", "css": true },
+        "gridRowEnd": { "type": "string", "css": true },
+        "gridColumn": {
+          "type": "string",
+          "description": "Column span (e.g., 'span 2' or '1 / 3')",
+          "css": true
+        },
+        "gridRow": {
+          "type": "string",
+          "description": "Row span (e.g., 'span 2' or '1 / 3')",
+          "css": true
+        },
+        "justifySelf": {
+          "type": "string",
+          "enum": ["auto", "start", "end", "center", "stretch"],
+          "default": "auto",
+          "css": true
+        },
+        "alignSelf": {
+          "type": "string",
+          "enum": ["auto", "start", "end", "center", "stretch"],
+          "default": "auto",
+          "css": true
+        }
+      }
+    },
+    
+    "_accessibility": {
+      "title": "Accessibility",
+      "type": "object",
+      "properties": {
+        "tooltip": {
+          "type": "string",
+          "description": "Tooltip text shown on hover",
+          "native": true,
+          "nativeAttr": "title"
+        },
+        "lang": {
+          "type": "string",
+          "description": "Language code (e.g., 'en', 'es', 'fr')",
+          "native": true
+        },
+        "tabindex": {
+          "type": "integer",
+          "description": "Tab order (-1 = not focusable, 0 = normal, 1+ = priority)",
+          "native": true
+        },
+        "hidden": {
+          "type": "boolean",
+          "description": "Hide element from rendering",
+          "default": false,
+          "native": true
+        },
+        "role": {
+          "type": "string",
+          "description": "ARIA role override",
+          "native": true
+        },
+        "ariaLabel": {
+          "type": "string",
+          "description": "Accessible name for screen readers",
+          "native": true,
+          "nativeAttr": "aria-label"
+        },
+        "ariaDescribedby": {
+          "type": "string",
+          "description": "ID of element that describes this element",
+          "native": true,
+          "nativeAttr": "aria-describedby"
+        },
+        "ariaLabelledby": {
+          "type": "string",
+          "description": "ID of element that labels this element",
+          "native": true,
+          "nativeAttr": "aria-labelledby"
+        },
+        "ariaHidden": {
+          "type": "boolean",
+          "description": "Hide from accessibility tree",
+          "native": true,
+          "nativeAttr": "aria-hidden"
+        }
+      }
+    },
+    
+    "_behavior": {
+      "title": "Behavior",
+      "type": "object",
+      "properties": {
+        "draggable": {
+          "type": "boolean",
+          "description": "Enable native drag-and-drop",
+          "default": false,
+          "native": true
+        },
+        "contenteditable": {
+          "type": "boolean",
+          "description": "Allow inline text editing",
+          "default": false,
+          "native": true
+        },
+        "spellcheck": {
+          "type": "boolean",
+          "description": "Enable spell checking",
+          "native": true
+        }
+      }
+    }
+  },
+  
+  "_metadata": {
+    "categories": {
+      "_identity": { "order": 1, "collapsed": false },
+      "_layout": { "order": 2, "collapsed": true },
+      "_flexChild": { "order": 3, "collapsed": true, "contextual": true },
+      "_gridChild": { "order": 4, "collapsed": true, "contextual": true },
+      "_accessibility": { "order": 5, "collapsed": true },
+      "_behavior": { "order": 6, "collapsed": true }
+    }
+  }
+}

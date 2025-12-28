@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tabs",
+  "description": "Tab navigation component for switching between content panels",
+  "behavior": "tabs",
+  
+  "properties": {
+    "activeTab": {
+      "type": "number",
+      "description": "Index of initially active tab (0-based)",
+      "minimum": 0,
+      "default": 0
+    }
+  },
+
+  "compliance": {
+    "baseClass": "wb-tabs",
+    "requiredChildren": {},
+    "optionalChildren": {
+      ".wb-tabs__nav": {
+        "description": "Tab navigation container",
+        "role": "tablist"
+      },
+      ".wb-tabs__tab": {
+        "description": "Individual tab buttons",
+        "role": "tab"
+      },
+      ".wb-tabs__panel": {
+        "description": "Tab content panels",
+        "role": "tabpanel"
+      }
+    }
+  },
+
+  "test": {
+    "setup": [
+      "<div data-wb=\"tabs\"><div data-tab-title=\"Tab 1\">Content 1</div><div data-tab-title=\"Tab 2\">Content 2</div></div>"
+    ],
+    "matrix": {
+      "combinations": [
+        {}
+      ]
+    }
+  }
+}

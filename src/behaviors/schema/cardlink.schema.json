@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Link",
+  "description": "Clickable link card. INHERITS from card.base (IS-A card), CONTAINS navigation link (HAS-A href destination).",
+  "behavior": "cardlink",
+  
+  "$extends": "card.base.schema.json",
+  "$inheritance": {
+    "type": "IS-A",
+    "parent": "card",
+    "inherits": ["semantic.element", "semantic.structure", "compliance.containerTag", "accessibility"]
+  },
+  
+  "$containment": [
+    {
+      "type": "HAS-A",
+      "name": "link",
+      "element": "implicit click handler",
+      "description": "Navigation destination on click"
+    }
+  ],
+  
+  "properties": {
+    "$inherited": ["title", "subtitle", "footer", "hoverable", "elevated"],
+    
+    "href": {
+      "type": "string",
+      "description": "Link destination URL",
+      "default": "#"
+    },
+    "content": {
+      "type": "string",
+      "description": "Card content/description",
+      "default": "Click to visit link",
+      "mapsTo": "main"
+    },
+    "target": {
+      "type": "string",
+      "description": "Link target",
+      "enum": ["_self", "_blank"],
+      "default": "_blank"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Link icon",
+      "default": "🔗",
+      "mapsTo": "header"
+    }
+  },
+  
+  "compliance": {
+    "$inherits": "card.base.schema.json#compliance",
+    "baseClass": "wb-card",
+    "additionalClasses": ["wb-card--link"],
+    "attributes": {
+      "role": "link",
+      "tabindex": "0"
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      "element": {
+        "type": "card",
+        "clickable": true,
+        "focusable": true,
+        "click": {
+          "action": "Navigate to href",
+          "event": "wb:cardlink:click"
+        },
+        "hover": {
+          "expectedStyle": {
+            "transform": "translateY(-2px)",
+            "borderColor": "var(--primary)"
+          }
+        }
+      }
+    },
+    "keyboard": {
+      "Enter": { "target": "element", "action": "Navigate to href" }
+    }
+  },
+  
+  "events": {
+    "wb:cardlink:click": {
+      "source": "element",
+      "bubbles": true,
+      "detail": { "href": "string", "title": "string" },
+      "firesWhen": "Card is clicked"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<article data-wb=\"cardlink\" data-href=\"https://example.com\" data-title=\"Example\"></article>",
+      "<article data-wb=\"cardlink\" data-href=\"#section\" data-title=\"Internal\" data-target=\"_self\"></article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "href": "https://example.com" },
+        { "href": "https://example.com", "title": "Link Title" },
+        { "href": "#section", "target": "_self" },
+        { "href": "https://example.com", "icon": "🌐" }
+      ]
+    },
+    "functional": {
+      "semantic": [
+        {
+          "name": "Container should be ARTICLE (inherited)",
+          "setup": "<article data-wb=\"cardlink\" data-href=\"#\"></article>",
+          "expect": { "selector": "element", "tagName": "ARTICLE" }
+        }
+      ],
+      "interactions": [
+        {
+          "name": "Clicking card navigates to href",
+          "setup": "<article data-wb=\"cardlink\" data-href=\"https://example.com\" data-target=\"_blank\"></article>",
+          "steps": [{ "action": "click", "selector": "element" }],
+          "expect": { "windowOpen": "https://example.com" }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tooltip",
+  "description": "Tooltip component for displaying additional information on hover",
+  "behavior": "tooltip",
+  
+  "properties": {
+    "content": {
+      "type": "string",
+      "description": "Tooltip content text (from data-tooltip attribute)"
+    },
+    "position": {
+      "type": "string",
+      "description": "Tooltip position relative to trigger",
+      "enum": ["top", "bottom", "left", "right"],
+      "default": "top"
+    },
+    "delay": {
+      "type": "number",
+      "description": "Delay before showing tooltip (ms)",
+      "default": 200
+    }
+  },
+
+  "compliance": {
+    "baseClass": "wb-tooltip-trigger",
+    "triggerAttributes": {
+      "aria-describedby": "dynamic tooltip ID"
+    },
+    "generatedElement": {
+      "class": "wb-tooltip"
+    },
+    "requiredChildren": {},
+    "optionalChildren": {}
+  },
+
+  "test": {
+    "setup": [
+      "<span data-wb=\"tooltip\" data-tooltip=\"Helpful tip\">Hover me</span>"
+    ],
+    "matrix": {
+      "combinations": [
+        {"content": "Test tip"}
+      ]
+    }
+  }
+}

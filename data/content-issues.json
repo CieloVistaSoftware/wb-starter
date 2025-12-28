@@ -1,0 +1,141 @@
+{
+  "lastUpdated": "2025-12-28T05:16:26.394Z",
+  "issues": [
+    {
+      "id": "image-6",
+      "behavior": "image",
+      "issues": [
+        {
+          "field": "src",
+          "type": "placeholder",
+          "message": " Source has a placeholder value",
+          "value": "https://picsum.photos/500/400",
+          "severity": "error"
+        }
+      ],
+      "warnings": [],
+      "suggestions": [],
+      "isComplete": false
+    },
+    {
+      "id": "cardprofile-16",
+      "behavior": "cardprofile",
+      "issues": [],
+      "warnings": [
+        {
+          "field": "avatar",
+          "type": "placeholder",
+          "message": "Avatar appears to be a placeholder",
+          "value": "https://i.pravatar.cc/150?img=1",
+          "severity": "warning"
+        },
+        {
+          "field": "avatar",
+          "type": "placeholder-image",
+          "message": "Avatar uses a placeholder image",
+          "value": "https://i.pravatar.cc/150?img=1",
+          "severity": "warning"
+        }
+      ],
+      "suggestions": [
+        {
+          "field": "bio",
+          "type": "empty",
+          "message": "Consider adding Bio",
+          "severity": "info"
+        }
+      ],
+      "isComplete": true
+    },
+    {
+      "id": "cardprofile-17",
+      "behavior": "cardprofile",
+      "issues": [],
+      "warnings": [
+        {
+          "field": "avatar",
+          "type": "placeholder",
+          "message": "Avatar appears to be a placeholder",
+          "value": "https://i.pravatar.cc/150?img=5",
+          "severity": "warning"
+        },
+        {
+          "field": "avatar",
+          "type": "placeholder-image",
+          "message": "Avatar uses a placeholder image",
+          "value": "https://i.pravatar.cc/150?img=5",
+          "severity": "warning"
+        }
+      ],
+      "suggestions": [
+        {
+          "field": "bio",
+          "type": "empty",
+          "message": "Consider adding Bio",
+          "severity": "info"
+        }
+      ],
+      "isComplete": true
+    },
+    {
+      "id": "cardprofile-18",
+      "behavior": "cardprofile",
+      "issues": [],
+      "warnings": [
+        {
+          "field": "avatar",
+          "type": "placeholder",
+          "message": "Avatar appears to be a placeholder",
+          "value": "https://i.pravatar.cc/150?img=3",
+          "severity": "warning"
+        },
+        {
+          "field": "avatar",
+          "type": "placeholder-image",
+          "message": "Avatar uses a placeholder image",
+          "value": "https://i.pravatar.cc/150?img=3",
+          "severity": "warning"
+        }
+      ],
+      "suggestions": [
+        {
+          "field": "bio",
+          "type": "empty",
+          "message": "Consider adding Bio",
+          "severity": "info"
+        }
+      ],
+      "isComplete": true
+    },
+    {
+      "id": "cardprofile-19",
+      "behavior": "cardprofile",
+      "issues": [],
+      "warnings": [
+        {
+          "field": "avatar",
+          "type": "placeholder",
+          "message": "Avatar appears to be a placeholder",
+          "value": "https://i.pravatar.cc/150?img=9",
+          "severity": "warning"
+        },
+        {
+          "field": "avatar",
+          "type": "placeholder-image",
+          "message": "Avatar uses a placeholder image",
+          "value": "https://i.pravatar.cc/150?img=9",
+          "severity": "warning"
+        }
+      ],
+      "suggestions": [
+        {
+          "field": "bio",
+          "type": "empty",
+          "message": "Consider adding Bio",
+          "severity": "info"
+        }
+      ],
+      "isComplete": true
+    }
+  ]
+}

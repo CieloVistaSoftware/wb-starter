@@ -1,0 +1,520 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Portfolio",
+  "description": "Professional portfolio card. INHERITS from card.base (IS-A card), CONTAINS multiple profile elements (HAS-A cover, avatar, bio, contact, social).",
+  "behavior": "cardportfolio",
+  
+  "$extends": "card.base.schema.json",
+  "$inheritance": {
+    "type": "IS-A",
+    "parent": "card",
+    "inherits": [
+      "semantic.element",
+      "compliance.containerTag",
+      "accessibility"
+    ],
+    "overrides": {
+      "hoverable": false
+    }
+  },
+  
+  "$containment": [
+    {
+      "type": "HAS-A",
+      "name": "cover",
+      "element": "FIGURE.wb-card__portfolio-cover",
+      "description": "Cover/banner image"
+    },
+    {
+      "type": "HAS-A",
+      "name": "avatar",
+      "element": "FIGURE.wb-card__portfolio-avatar > IMG",
+      "description": "Profile avatar image"
+    },
+    {
+      "type": "HAS-A",
+      "name": "identity",
+      "element": "HEADER",
+      "description": "Name, title, company, location"
+    },
+    {
+      "type": "HAS-A",
+      "name": "bio",
+      "element": "P.wb-card__portfolio-bio",
+      "description": "Biography text"
+    },
+    {
+      "type": "HAS-A",
+      "name": "contact",
+      "element": "ADDRESS.wb-card__portfolio-contact",
+      "description": "Contact information (semantic ADDRESS)"
+    },
+    {
+      "type": "HAS-A",
+      "name": "social",
+      "element": "NAV.wb-card__portfolio-social",
+      "description": "Social media links (semantic NAV)"
+    }
+  ],
+  
+  "properties": {
+    "$inherited": ["elevated"],
+    
+    "name": {
+      "type": "string",
+      "description": "Full name",
+      "required": true,
+      "containedIn": "identity",
+      "default": "John Doe",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["John Doe", "Jane Smith", "Alex Johnson"],
+        "assertions": {
+          "John Doe": {
+            "selector": "header h2.wb-card__portfolio-name",
+            "checks": { "exists": true, "textContains": "John Doe", "tagName": "H2" }
+          }
+        }
+      }
+    },
+    "title": {
+      "type": "string",
+      "description": "Job title",
+      "containedIn": "identity",
+      "default": "Software Developer",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["Software Developer", "Product Designer", "CEO"],
+        "assertions": {
+          "Software Developer": {
+            "selector": "header p.wb-card__portfolio-title",
+            "checks": { "textContains": "Software Developer", "tagName": "P" }
+          }
+        }
+      }
+    },
+    "company": {
+      "type": "string",
+      "description": "Company name",
+      "containedIn": "identity",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["Acme Corp", "Tech Inc", "StartupXYZ"],
+        "assertions": {
+          "Acme Corp": {
+            "selector": "header p.wb-card__portfolio-company",
+            "checks": { "textContains": "Acme Corp" }
+          }
+        }
+      }
+    },
+    "location": {
+      "type": "string",
+      "description": "Location",
+      "containedIn": "identity",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["San Francisco, CA", "New York, NY", "Remote"],
+        "assertions": {
+          "San Francisco, CA": {
+            "selector": "header p.wb-card__portfolio-location",
+            "checks": { "textContains": "San Francisco" }
+          }
+        }
+      }
+    },
+    "cover": {
+      "type": "string",
+      "description": "Cover image URL",
+      "containedIn": "cover",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["https://picsum.photos/800/200", ""],
+        "assertions": {
+          "https://picsum.photos/800/200": {
+            "selector": "figure.wb-card__portfolio-cover img",
+            "checks": { "attribute": { "src": "https://picsum.photos/800/200" } }
+          }
+        }
+      }
+    },
+    "avatar": {
+      "type": "string",
+      "description": "Avatar image URL",
+      "containedIn": "avatar",
+      "default": "https://i.pravatar.cc/150",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["https://i.pravatar.cc/150", "https://i.pravatar.cc/150?img=2"],
+        "assertions": {
+          "https://i.pravatar.cc/150": {
+            "selector": "figure.wb-card__portfolio-avatar img",
+            "checks": { "attribute": { "src": "https://i.pravatar.cc/150" } }
+          }
+        }
+      }
+    },
+    "bio": {
+      "type": "string",
+      "description": "Biography text",
+      "containedIn": "bio",
+      "inputType": "textarea",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": [
+          "Short bio.",
+          "Passionate developer with 10+ years of experience building web applications."
+        ],
+        "assertions": {
+          "Short bio.": {
+            "selector": "p.wb-card__portfolio-bio",
+            "checks": { "textContains": "Short bio.", "tagName": "P" }
+          }
+        }
+      }
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address",
+      "containedIn": "contact",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["john@example.com", ""],
+        "assertions": {
+          "john@example.com": {
+            "selector": "address a[href^='mailto:']",
+            "checks": { "exists": true, "textContains": "john@example.com" }
+          }
+        }
+      }
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number",
+      "containedIn": "contact",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["+1 555-1234", ""],
+        "assertions": {
+          "+1 555-1234": {
+            "selector": "address a[href^='tel:']",
+            "checks": { "exists": true }
+          }
+        }
+      }
+    },
+    "website": {
+      "type": "string",
+      "description": "Personal website URL",
+      "containedIn": "contact",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["https://johndoe.com", ""],
+        "assertions": {
+          "https://johndoe.com": {
+            "selector": "address a.wb-card__portfolio-website",
+            "checks": { "attribute": { "href": "https://johndoe.com" } }
+          }
+        }
+      }
+    },
+    "social": {
+      "type": "string",
+      "description": "Social links as JSON array [{name, url, icon}]",
+      "containedIn": "social",
+      "inputType": "textarea",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": [
+          "[{\"name\":\"Twitter\",\"url\":\"https://twitter.com/john\",\"icon\":\"🐦\"}]",
+          "[{\"name\":\"LinkedIn\",\"url\":\"https://linkedin.com/in/john\",\"icon\":\"💼\"},{\"name\":\"GitHub\",\"url\":\"https://github.com/john\",\"icon\":\"🐙\"}]",
+          ""
+        ],
+        "assertions": {
+          "[{\"name\":\"Twitter\",\"url\":\"https://twitter.com/john\",\"icon\":\"🐦\"}]": {
+            "selector": "nav.wb-card__portfolio-social a",
+            "checks": { "count": 1 }
+          }
+        }
+      }
+    }
+  },
+  
+  "compliance": {
+    "$inherits": "card.base.schema.json#compliance",
+    "baseClass": "wb-card",
+    "additionalClasses": ["wb-card--portfolio"],
+    "containerTag": {
+      "preferred": "ARTICLE",
+      "allowed": ["ARTICLE", "SECTION", "DIV"]
+    },
+    "requiredChildren": {
+      "header": {
+        "description": "Identity section",
+        "tagName": "HEADER",
+        "required": true,
+        "relationship": "HAS-A",
+        "children": {
+          "h2.wb-card__portfolio-name": { "tagName": "H2", "required": true }
+        }
+      }
+    },
+    "optionalChildren": {
+      "figure.wb-card__portfolio-cover": {
+        "description": "Cover image",
+        "tagName": "FIGURE",
+        "relationship": "HAS-A",
+        "createdWhen": "cover property is set"
+      },
+      "figure.wb-card__portfolio-avatar": {
+        "description": "Avatar image",
+        "tagName": "FIGURE",
+        "relationship": "HAS-A",
+        "children": {
+          "img": { "tagName": "IMG" }
+        }
+      },
+      "p.wb-card__portfolio-bio": {
+        "description": "Biography",
+        "tagName": "P",
+        "relationship": "HAS-A"
+      },
+      "address.wb-card__portfolio-contact": {
+        "description": "Contact info (semantic ADDRESS)",
+        "tagName": "ADDRESS",
+        "relationship": "HAS-A"
+      },
+      "nav.wb-card__portfolio-social": {
+        "description": "Social links (semantic NAV)",
+        "tagName": "NAV",
+        "relationship": "HAS-A"
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      "address a": {
+        "type": "link",
+        "clickable": true,
+        "description": "Contact links",
+        "click": { "behavior": "navigate", "description": "Navigate to contact link" }
+      },
+      "nav a": {
+        "type": "link",
+        "clickable": true,
+        "target": "_blank",
+        "description": "Social links open in new tab",
+        "click": { "behavior": "navigate", "target": "_blank", "description": "Open social link in new tab" }
+      }
+    }
+  },
+  
+  "accessibility": {
+    "$inherits": "card.base.schema.json#accessibility",
+    "avatar": {
+      "alt": "Profile photo of {name}"
+    },
+    "socialLinks": {
+      "ariaLabel": "Visit {name} on {platform}"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<article data-wb=\"cardportfolio\" data-name=\"John Doe\"></article>",
+      "<article data-wb=\"cardportfolio\" data-name=\"Jane\" data-title=\"Designer\" data-company=\"Acme\"></article>"
+    ],
+    
+    "matrix": {
+      "description": "Test all property combinations",
+      "combinations": [
+        { "name": "John Doe" },
+        { "name": "John Doe", "title": "Developer" },
+        { "name": "John Doe", "title": "Developer", "company": "Acme Corp" },
+        { "name": "John Doe", "title": "Developer", "location": "NYC" },
+        { "name": "John Doe", "avatar": "https://i.pravatar.cc/150" },
+        { "name": "John Doe", "cover": "https://picsum.photos/800/200" },
+        { "name": "John Doe", "bio": "Short bio text." },
+        { "name": "John Doe", "email": "john@test.com" },
+        { "name": "John Doe", "phone": "+1 555-1234" },
+        { "name": "John Doe", "website": "https://johndoe.com" },
+        { "name": "John Doe", "social": "[{\"name\":\"Twitter\",\"url\":\"https://twitter.com\",\"icon\":\"🐦\"}]" },
+        { 
+          "name": "Full Profile", 
+          "title": "CEO", 
+          "company": "Tech Inc", 
+          "location": "SF",
+          "avatar": "https://i.pravatar.cc/150",
+          "cover": "https://picsum.photos/800/200",
+          "bio": "Experienced leader.",
+          "email": "ceo@tech.com",
+          "website": "https://tech.com",
+          "social": "[{\"name\":\"LinkedIn\",\"url\":\"https://linkedin.com\",\"icon\":\"💼\"}]"
+        }
+      ]
+    },
+    
+    "functional": {
+      "semantic": [
+        {
+          "name": "Container should be ARTICLE (inherited)",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\"></article>",
+          "expect": { "selector": "element", "tagName": "ARTICLE" }
+        },
+        {
+          "name": "Name should be H2 in HEADER (HAS-A identity)",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\"></article>",
+          "expect": { "selector": "header h2.wb-card__portfolio-name", "tagName": "H2" }
+        },
+        {
+          "name": "Cover should be in FIGURE (HAS-A cover)",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-cover=\"https://example.com/img.jpg\"></article>",
+          "expect": { "selector": "figure.wb-card__portfolio-cover", "tagName": "FIGURE" }
+        },
+        {
+          "name": "Avatar should be in FIGURE (HAS-A avatar)",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-avatar=\"https://example.com/avatar.jpg\"></article>",
+          "expect": { "selector": "figure.wb-card__portfolio-avatar img", "tagName": "IMG" }
+        },
+        {
+          "name": "Bio should be P (HAS-A bio)",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-bio=\"Bio text\"></article>",
+          "expect": { "selector": "p.wb-card__portfolio-bio", "tagName": "P" }
+        },
+        {
+          "name": "Contact should be ADDRESS (HAS-A contact)",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-email=\"test@test.com\"></article>",
+          "expect": { "selector": "address.wb-card__portfolio-contact", "tagName": "ADDRESS" }
+        },
+        {
+          "name": "Social should be NAV (HAS-A social)",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-social='[{\"name\":\"X\",\"url\":\"#\",\"icon\":\"X\"}]'></article>",
+          "expect": { "selector": "nav.wb-card__portfolio-social", "tagName": "NAV" }
+        }
+      ],
+      
+      "rendering": [
+        {
+          "name": "Has wb-card--portfolio class",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\"></article>",
+          "expect": { "selector": "element", "checks": { "hasClass": "wb-card--portfolio" } }
+        },
+        {
+          "name": "Title renders in header",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-title=\"Developer\"></article>",
+          "expect": { "selector": "header p.wb-card__portfolio-title", "checks": { "textContains": "Developer" } }
+        },
+        {
+          "name": "Company renders in header",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-company=\"Acme\"></article>",
+          "expect": { "selector": "header p.wb-card__portfolio-company", "checks": { "textContains": "Acme" } }
+        },
+        {
+          "name": "Location renders in header",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-location=\"NYC\"></article>",
+          "expect": { "selector": "header p.wb-card__portfolio-location", "checks": { "textContains": "NYC" } }
+        },
+        {
+          "name": "Email creates mailto link",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-email=\"test@test.com\"></article>",
+          "expect": { "selector": "address a[href='mailto:test@test.com']", "exists": true }
+        },
+        {
+          "name": "Phone creates tel link",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-phone=\"+15551234\"></article>",
+          "expect": { "selector": "address a[href='tel:+15551234']", "exists": true }
+        },
+        {
+          "name": "Website creates external link",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-website=\"https://test.com\"></article>",
+          "expect": { "selector": "address a.wb-card__portfolio-website", "checks": { "attribute": { "target": "_blank" } } }
+        },
+        {
+          "name": "Social links render in nav",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-social='[{\"name\":\"Twitter\",\"url\":\"https://twitter.com\",\"icon\":\"🐦\"}]'></article>",
+          "expect": { "selector": "nav.wb-card__portfolio-social a", "checks": { "count": 1 } }
+        },
+        {
+          "name": "Multiple social links render",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-social='[{\"name\":\"A\",\"url\":\"#\",\"icon\":\"A\"},{\"name\":\"B\",\"url\":\"#\",\"icon\":\"B\"}]'></article>",
+          "expect": { "selector": "nav.wb-card__portfolio-social a", "checks": { "count": 2 } }
+        }
+      ],
+      
+      "interactions": [
+        {
+          "name": "Social links open in new tab",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"Test\" data-social='[{\"name\":\"X\",\"url\":\"https://x.com\",\"icon\":\"X\"}]'></article>",
+          "expect": { 
+            "selector": "nav.wb-card__portfolio-social a", 
+            "checks": { "attribute": { "target": "_blank", "rel": "noopener" } }
+          }
+        }
+      ],
+      
+      "accessibility": [
+        {
+          "name": "Avatar has alt text with name",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"John Doe\" data-avatar=\"https://example.com/img.jpg\"></article>",
+          "expect": { 
+            "selector": "figure.wb-card__portfolio-avatar img", 
+            "checks": { "attribute": { "alt": "Profile photo of John Doe" } }
+          }
+        },
+        {
+          "name": "Social links have aria-label",
+          "setup": "<article data-wb=\"cardportfolio\" data-name=\"John\" data-social='[{\"name\":\"Twitter\",\"url\":\"#\",\"icon\":\"🐦\"}]'></article>",
+          "expect": { 
+            "selector": "nav.wb-card__portfolio-social a", 
+            "checks": { "attribute": { "aria-label": "Visit John on Twitter" } }
+          }
+        }
+      ]
+    }
+  },
+  
+  "builder": {
+    "category": "Cards",
+    "icon": "💼",
+    "name": "Card Portfolio",
+    "description": "Professional portfolio/profile card",
+    "defaults": {
+      "name": "John Doe",
+      "title": "Software Developer",
+      "company": "",
+      "location": "",
+      "avatar": "https://i.pravatar.cc/150",
+      "cover": "",
+      "bio": "",
+      "email": "",
+      "phone": "",
+      "website": "",
+      "social": ""
+    },
+    "propertyPanel": {
+      "groups": [
+        {
+          "name": "Identity",
+          "properties": ["name", "title", "company", "location"]
+        },
+        {
+          "name": "Images",
+          "properties": ["avatar", "cover"]
+        },
+        {
+          "name": "About",
+          "properties": ["bio"]
+        },
+        {
+          "name": "Contact",
+          "properties": ["email", "phone", "website"]
+        },
+        {
+          "name": "Social",
+          "properties": ["social"]
+        }
+      ]
+    }
+  }
+}

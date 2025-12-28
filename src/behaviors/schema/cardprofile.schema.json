@@ -1,0 +1,384 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Profile",
+  "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
+  "behavior": "cardprofile",
+  
+  "$extends": "card.base.schema.json",
+  "$inheritance": {
+    "type": "IS-A",
+    "parent": "card",
+    "inherits": [
+      "semantic.element",
+      "compliance.containerTag",
+      "accessibility"
+    ]
+  },
+  
+  "$containment": [
+    {
+      "type": "HAS-A",
+      "name": "cover",
+      "element": "FIGURE.wb-card__profile-cover",
+      "description": "Optional cover/banner image"
+    },
+    {
+      "type": "HAS-A",
+      "name": "avatar",
+      "element": "FIGURE.wb-card__profile-avatar > IMG",
+      "description": "Profile avatar image"
+    },
+    {
+      "type": "HAS-A",
+      "name": "identity",
+      "element": "HEADER",
+      "description": "Name and role"
+    },
+    {
+      "type": "HAS-A",
+      "name": "bio",
+      "element": "P.wb-card__profile-bio",
+      "description": "Biography text"
+    }
+  ],
+  
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Person's name",
+      "required": true,
+      "containedIn": "identity",
+      "default": "John Doe",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["John Doe", "Jane Smith", "Alex Johnson"],
+        "assertions": {
+          "John Doe": {
+            "selector": "header h3.wb-card__profile-name",
+            "checks": { "exists": true, "textContains": "John Doe", "tagName": "H3" }
+          }
+        }
+      }
+    },
+    "role": {
+      "type": "string",
+      "description": "Job title or role",
+      "containedIn": "identity",
+      "default": "Designer",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["Designer", "Developer", "Manager", ""],
+        "assertions": {
+          "Designer": {
+            "selector": "header p.wb-card__profile-role",
+            "checks": { "textContains": "Designer", "tagName": "P" }
+          }
+        }
+      }
+    },
+    "avatar": {
+      "type": "string",
+      "description": "Avatar image URL",
+      "containedIn": "avatar",
+      "default": "https://i.pravatar.cc/80?img=1",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": [
+          "https://i.pravatar.cc/80?img=1",
+          "https://i.pravatar.cc/80?img=2",
+          ""
+        ],
+        "assertions": {
+          "https://i.pravatar.cc/80?img=1": {
+            "selector": "figure.wb-card__profile-avatar img",
+            "checks": { "attribute": { "src": "https://i.pravatar.cc/80?img=1" } }
+          }
+        }
+      }
+    },
+    "bio": {
+      "type": "string",
+      "description": "Short biography",
+      "containedIn": "bio",
+      "inputType": "textarea",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["", "Short bio here.", "Experienced professional with a passion for design."],
+        "assertions": {
+          "Short bio here.": {
+            "selector": "p.wb-card__profile-bio",
+            "checks": { "textContains": "Short bio here.", "tagName": "P" }
+          }
+        }
+      }
+    },
+    "cover": {
+      "type": "string",
+      "description": "Cover/banner image URL",
+      "containedIn": "cover",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["", "https://picsum.photos/400/100"],
+        "assertions": {
+          "https://picsum.photos/400/100": {
+            "selector": "figure.wb-card__profile-cover img",
+            "checks": { "attribute": { "src": "https://picsum.photos/400/100" } }
+          },
+          "": {
+            "selector": "figure.wb-card__profile-cover",
+            "checks": { "exists": false }
+          }
+        }
+      }
+    },
+    "size": {
+      "type": "string",
+      "description": "Avatar size",
+      "enum": ["sm", "md", "lg"],
+      "default": "md",
+      "inputType": "select",
+      "permutations": {
+        "type": "ENUM",
+        "assertions": {
+          "sm": {
+            "selector": "figure.wb-card__profile-avatar",
+            "checks": { "hasClass": "wb-card__profile-avatar--sm" }
+          },
+          "md": {
+            "selector": "figure.wb-card__profile-avatar",
+            "checks": { "hasClass": "wb-card__profile-avatar--md" }
+          },
+          "lg": {
+            "selector": "figure.wb-card__profile-avatar",
+            "checks": { "hasClass": "wb-card__profile-avatar--lg" }
+          }
+        }
+      }
+    },
+    "align": {
+      "type": "string",
+      "description": "Content alignment",
+      "enum": ["left", "center"],
+      "default": "center",
+      "inputType": "select",
+      "permutations": {
+        "type": "ENUM",
+        "assertions": {
+          "center": {
+            "selector": "element",
+            "checks": { "style": { "textAlign": "center" } }
+          },
+          "left": {
+            "selector": "element",
+            "checks": { "style": { "textAlign": "left" } }
+          }
+        }
+      }
+    },
+    "hoverText": {
+      "type": "string",
+      "description": "Tooltip text shown on hover",
+      "default": "",
+      "appliesAttribute": "title"
+    }
+  },
+  
+  "compliance": {
+    "$inherits": "card.base.schema.json#compliance",
+    "baseClass": "wb-card",
+    "additionalClasses": ["wb-card--profile"],
+    "containerTag": {
+      "preferred": "ARTICLE",
+      "allowed": ["ARTICLE", "SECTION", "DIV"]
+    },
+    "requiredChildren": {
+      "figure.wb-card__profile-avatar": {
+        "description": "Avatar image in figure",
+        "tagName": "FIGURE",
+        "required": true,
+        "relationship": "HAS-A",
+        "children": {
+          "img": { "tagName": "IMG" }
+        }
+      },
+      "header": {
+        "description": "Name and role",
+        "tagName": "HEADER",
+        "required": true,
+        "relationship": "HAS-A",
+        "children": {
+          "h3.wb-card__profile-name": { "tagName": "H3", "required": true }
+        }
+      }
+    },
+    "optionalChildren": {
+      "figure.wb-card__profile-cover": {
+        "description": "Cover image",
+        "tagName": "FIGURE",
+        "relationship": "HAS-A",
+        "createdWhen": "cover is set"
+      },
+      "p.wb-card__profile-bio": {
+        "description": "Biography text",
+        "tagName": "P",
+        "relationship": "HAS-A",
+        "createdWhen": "bio is set"
+      }
+    }
+  },
+  
+  "accessibility": {
+    "$inherits": "card.base.schema.json#accessibility",
+    "avatar": {
+      "alt": "Profile photo of {name}"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<article data-wb=\"cardprofile\" data-name=\"John Doe\"></article>",
+      "<article data-wb=\"cardprofile\" data-name=\"Jane\" data-role=\"Designer\" data-avatar=\"https://i.pravatar.cc/80\"></article>"
+    ],
+    
+    "matrix": {
+      "description": "Test all property combinations",
+      "combinations": [
+        { "name": "John Doe" },
+        { "name": "John Doe", "role": "Developer" },
+        { "name": "John Doe", "avatar": "https://i.pravatar.cc/80" },
+        { "name": "John Doe", "bio": "Short bio." },
+        { "name": "John Doe", "cover": "https://picsum.photos/400/100" },
+        { "name": "John Doe", "size": "sm" },
+        { "name": "John Doe", "size": "lg" },
+        { "name": "John Doe", "align": "left" },
+        { "name": "John Doe", "align": "center" },
+        { "name": "Full", "role": "CEO", "avatar": "https://i.pravatar.cc/80", "bio": "Leader.", "cover": "https://picsum.photos/400/100", "size": "lg", "align": "center" }
+      ]
+    },
+    
+    "functional": {
+      "semantic": [
+        {
+          "name": "Container should be ARTICLE (inherited)",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\"></article>",
+          "expect": { "selector": "element", "tagName": "ARTICLE" }
+        },
+        {
+          "name": "Avatar should be in FIGURE (HAS-A avatar)",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\" data-avatar=\"img.jpg\"></article>",
+          "expect": { "selector": "figure.wb-card__profile-avatar img", "tagName": "IMG" }
+        },
+        {
+          "name": "Name should be H3 in HEADER (HAS-A identity)",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\"></article>",
+          "expect": { "selector": "header h3.wb-card__profile-name", "tagName": "H3" }
+        },
+        {
+          "name": "Role should be P in HEADER",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\" data-role=\"Dev\"></article>",
+          "expect": { "selector": "header p.wb-card__profile-role", "tagName": "P" }
+        },
+        {
+          "name": "Bio should be P (HAS-A bio)",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\" data-bio=\"Bio text\"></article>",
+          "expect": { "selector": "p.wb-card__profile-bio", "tagName": "P" }
+        },
+        {
+          "name": "Cover should be in FIGURE (HAS-A cover)",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\" data-cover=\"cover.jpg\"></article>",
+          "expect": { "selector": "figure.wb-card__profile-cover", "tagName": "FIGURE" }
+        }
+      ],
+      
+      "rendering": [
+        {
+          "name": "Has wb-card--profile class",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\"></article>",
+          "expect": { "selector": "element", "checks": { "hasClass": "wb-card--profile" } }
+        },
+        {
+          "name": "Name text rendered",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"John Doe\"></article>",
+          "expect": { "selector": "h3.wb-card__profile-name", "checks": { "textContains": "John Doe" } }
+        },
+        {
+          "name": "Role text rendered",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\" data-role=\"Designer\"></article>",
+          "expect": { "selector": "p.wb-card__profile-role", "checks": { "textContains": "Designer" } }
+        },
+        {
+          "name": "Avatar src set",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\" data-avatar=\"avatar.jpg\"></article>",
+          "expect": { "selector": "figure.wb-card__profile-avatar img", "checks": { "attribute": { "src": "avatar.jpg" } } }
+        },
+        {
+          "name": "Cover hidden when not set",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\"></article>",
+          "expect": { "selector": "figure.wb-card__profile-cover", "checks": { "exists": false } }
+        },
+        {
+          "name": "Bio hidden when not set",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\"></article>",
+          "expect": { "selector": "p.wb-card__profile-bio", "checks": { "exists": false } }
+        },
+        {
+          "name": "Size sm class applied",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\" data-size=\"sm\"></article>",
+          "expect": { "selector": "figure.wb-card__profile-avatar", "checks": { "hasClass": "wb-card__profile-avatar--sm" } }
+        },
+        {
+          "name": "Align center applied",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"Test\" data-align=\"center\"></article>",
+          "expect": { "selector": "element", "checks": { "style": { "textAlign": "center" } } }
+        }
+      ],
+      
+      "accessibility": [
+        {
+          "name": "Avatar has alt with name",
+          "setup": "<article data-wb=\"cardprofile\" data-name=\"John Doe\" data-avatar=\"img.jpg\"></article>",
+          "expect": { 
+            "selector": "figure.wb-card__profile-avatar img", 
+            "checks": { "attribute": { "alt": "Profile photo of John Doe" } }
+          }
+        }
+      ]
+    }
+  },
+  
+  "builder": {
+    "category": "Cards",
+    "icon": "👨",
+    "name": "Card Profile",
+    "description": "Simple profile card with avatar",
+    "defaults": {
+      "name": "John Doe",
+      "role": "Designer",
+      "avatar": "https://i.pravatar.cc/80?img=1",
+      "bio": "",
+      "cover": "",
+      "size": "md",
+      "align": "center"
+    },
+    "propertyPanel": {
+      "groups": [
+        {
+          "name": "Identity",
+          "properties": ["name", "role"]
+        },
+        {
+          "name": "Images",
+          "properties": ["avatar", "cover", "size"]
+        },
+        {
+          "name": "Content",
+          "properties": ["bio"]
+        },
+        {
+          "name": "Style",
+          "properties": ["align", "elevated"]
+        }
+      ]
+    }
+  }
+}

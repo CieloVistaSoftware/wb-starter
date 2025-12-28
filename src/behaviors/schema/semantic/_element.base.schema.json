@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "_element.base.schema.json",
+  "title": "Base Element Schema",
+  "description": "ALL elements inherit from this. Defines universal properties every element has.",
+  
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the element",
+      "canvasEditable": false
+    },
+    "className": {
+      "type": "string", 
+      "description": "CSS class names",
+      "canvasEditable": false
+    },
+    "textContent": {
+      "type": "string",
+      "description": "Text content of the element - ALWAYS editable",
+      "canvasEditable": true,
+      "default": ""
+    },
+    "hidden": {
+      "type": "boolean",
+      "description": "Whether element is hidden",
+      "default": false
+    },
+    "title": {
+      "type": "string",
+      "description": "Tooltip text on hover",
+      "canvasEditable": false
+    },
+    "lang": {
+      "type": "string",
+      "description": "Language of content"
+    },
+    "dir": {
+      "type": "string",
+      "enum": ["ltr", "rtl", "auto"],
+      "description": "Text direction"
+    },
+    "tabindex": {
+      "type": "integer",
+      "description": "Tab order for keyboard navigation"
+    }
+  },
+  
+  "universalAttributes": {
+    "description": "These are available on ALL HTML elements",
+    "list": ["id", "class", "style", "title", "lang", "dir", "tabindex", "hidden", "data-*"]
+  },
+  
+  "universalEvents": {
+    "description": "Events available on ALL elements",
+    "list": ["click", "dblclick", "mouseenter", "mouseleave", "focus", "blur", "keydown", "keyup"]
+  },
+  
+  "rules": {
+    "textContentAlwaysEditable": true,
+    "childrenAllowed": true,
+    "selfClosing": false
+  }
+}

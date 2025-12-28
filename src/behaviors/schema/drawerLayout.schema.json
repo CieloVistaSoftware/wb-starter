@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Drawer Layout",
+  "description": "Collapsible sidebar layout container",
+  "behavior": "drawerLayout",
+  
+  "semantic": {
+    "element": {
+      "description": "Container element that acts as the drawer"
+    }
+  },
+  
+  "properties": {
+    "position": {
+      "type": "string",
+      "description": "Side of the screen the drawer is attached to",
+      "enum": ["left", "right", "top", "bottom"],
+      "default": "left"
+    },
+    "width": {
+      "type": "string",
+      "description": "Width of the drawer when expanded (for left/right)",
+      "default": "250px"
+    },
+    "height": {
+      "type": "string",
+      "description": "Height of the drawer when expanded (for top/bottom)",
+      "default": "250px"
+    },
+    "minWidth": {
+      "type": "string",
+      "description": "Width of the drawer when collapsed (for left/right)",
+      "default": "1.5rem"
+    },
+    "minHeight": {
+      "type": "string",
+      "description": "Height of the drawer when collapsed (for top/bottom)",
+      "default": "1.5rem"
+    },
+    "maxWidth": {
+      "type": "string",
+      "description": "Maximum width of the drawer",
+      "default": "50vw"
+    },
+    "maxHeight": {
+      "type": "string",
+      "description": "Maximum height of the drawer",
+      "default": "50vh"
+    }
+  },
+  
+  "compliance": {
+    "baseClass": "wb-drawer-layout",
+    "generatedElement": {
+      "tag": "BUTTON",
+      "class": "wb-drawer-toggle"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<div data-wb=\"drawerLayout\" data-position=\"left\">Content</div>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "position": "left" },
+        { "position": "right" },
+        { "position": "top" },
+        { "position": "bottom" }
+      ]
+    }
+  }
+}

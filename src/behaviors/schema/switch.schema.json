@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Switch",
+  "description": "Toggle switch component - NOT YET IMPLEMENTED",
+  "behavior": "switch",
+  "status": "planned",
+  
+  "properties": {},
+  "compliance": {
+    "baseClass": "wb-switch",
+    "requiredChildren": {},
+    "optionalChildren": {}
+  },
+  "test": {
+    "skip": true,
+    "skipReason": "Behavior not yet implemented",
+    "setup": ["<div data-wb=\"switch\"></div>"]
+  }
+}

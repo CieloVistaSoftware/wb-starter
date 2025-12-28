@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html id="builderguidiagram-html-1" lang="en">
+<head id="builderguidiagram-head-2">
+  <meta id="builderguidiagram-meta-3" charset="UTF-8">
+  <meta id="builderguidiagram-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="builderguidiagram-title-5">Builder GUI Diagram</title>
+  <style id="builderguidiagram-style-6">
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', system-ui, sans-serif; 
+      background: #0f172a; 
+      color: #e2e8f0;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    h1 { text-align: center; margin-bottom: 2rem; color: #60a5fa; }
+    
+    .diagram-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* Main Builder Layout */
+    .builder-diagram {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      height: 600px;
+      border: 2px solid #3b82f6;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #1e293b;
+    }
+    
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #3b82f6;
+    }
+    .header h2 { font-size: 1.25rem; }
+    .header-actions { display: flex; gap: 0.5rem; }
+    .header-btn {
+      padding: 0.5rem 1rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      color: white;
+      font-size: 0.75rem;
+    }
+    
+    /* Main Content Area */
+    .main-content {
+      display: grid;
+      grid-template-columns: 240px 1fr 280px;
+      min-height: 0;
+    }
+    
+    /* Left Sidebar */
+    .sidebar {
+      background: #0f172a;
+      border-right: 2px solid #334155;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .sidebar-header {
+      padding: 1rem;
+      border-bottom: 1px solid #334155;
+      background: #1e293b;
+    }
+    .search-box {
+      width: 100%;
+      padding: 0.5rem;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: #94a3b8;
+      font-size: 0.75rem;
+    }
+    .categories {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem;
+    }
+    .category {
+      margin-bottom: 0.5rem;
+    }
+    .category-title {
+      font-size: 0.7rem;
+      color: #64748b;
+      padding: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .component-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      background: #1e293b;
+      border-radius: 6px;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      cursor: grab;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .component-item:hover {
+      border-color: #3b82f6;
+      background: #1e40af20;
+    }
+    .resize-handle {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #3b82f6;
+      cursor: col-resize;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .sidebar:hover .resize-handle { opacity: 1; }
+    
+    /* Canvas Area */
+    .canvas-area {
+      display: flex;
+      flex-direction: column;
+      background: #1e293b;
+    }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1rem;
+      background: #0f172a;
+      border-bottom: 1px solid #334155;
+    }
+    .toolbar-group {
+      display: flex;
+      gap: 0.25rem;
+    }
+    .tool-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .tool-btn.active {
+      background: #3b82f6;
+      border-color: #3b82f6;
+    }
+    .viewport-info {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-left: 0.5rem;
+    }
+    .comp-count {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+    .viewport {
+      flex: 1;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: auto;
+      background: 
+        linear-gradient(90deg, #334155 1px, transparent 1px),
+        linear-gradient(#334155 1px, transparent 1px);
+      background-size: 20px 20px;
+      background-position: center;
+    }
+    .canvas-frame {
+      width: 100%;
+      max-width: 900px;
+      min-height: 400px;
+      background: #0f172a;
+      border: 2px dashed #334155;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+    }
+    .canvas-frame.has-content {
+      border-style: solid;
+      border-color: #334155;
+      padding: 1rem;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+    .empty-state {
+      text-align: center;
+    }
+    .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+    .empty-state h3 { margin-bottom: 0.5rem; }
+    .empty-state p { font-size: 0.875rem; }
+    
+    /* Sample dropped components */
+    .dropped-comp {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+    .dropped-comp.selected {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+    .dropped-comp::before {
+      content: attr(data-label);
+      position: absolute;
+      top: -10px;
+      left: 8px;
+      background: #3b82f6;
+      color: white;
+      font-size: 0.6rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    
+    /* Right Panel */
+    .panel-right {
+      background: #0f172a;
+      border-left: 2px solid #334155;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel-header {
+      padding: 1rem;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1e293b;
+    }
+    .panel-header span { font-weight: 600; }
+    .btn-danger {
+      padding: 0.25rem 0.5rem;
+      background: #7f1d1d;
+      border: none;
+      border-radius: 4px;
+      color: #fca5a5;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+    .panel-tabs {
+      display: flex;
+      border-bottom: 1px solid #334155;
+    }
+    .panel-tab {
+      flex: 1;
+      padding: 0.75rem;
+      text-align: center;
+      font-size: 0.75rem;
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .panel-tab.active {
+      color: #3b82f6;
+      border-bottom-color: #3b82f6;
+    }
+    .panel-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+    .prop-group {
+      margin-bottom: 1rem;
+    }
+    .prop-group-title {
+      font-size: 0.7rem;
+      color: #64748b;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .prop-row {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 0.75rem;
+    }
+    .prop-label {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin-bottom: 0.25rem;
+    }
+    .prop-input {
+      width: 100%;
+      padding: 0.5rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 4px;
+      color: #e2e8f0;
+      font-size: 0.8rem;
+    }
+    .prop-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .component-list-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: #1e293b;
+      border-radius: 6px;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .component-list-item:hover {
+      background: #334155;
+    }
+    
+    /* Footer */
+    .footer {
+      padding: 0.75rem 1.5rem;
+      background: #0f172a;
+      border-top: 1px solid #334155;
+      font-size: 0.75rem;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    /* Labels */
+    .label {
+      position: absolute;
+      background: #f59e0b;
+      color: #000;
+      font-size: 0.6rem;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+      z-index: 100;
+    }
+    
+    /* Annotations */
+    .annotations {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .annotation {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .annotation h3 {
+      color: #f59e0b;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .annotation ul {
+      list-style: none;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+    .annotation li {
+      padding: 0.25rem 0;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .annotation li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: #3b82f6;
+    }
+  </style>
+</head>
+<body id="builderguidiagram-body-7">
+  <h1 id="builderguidiagram-h1-8">WB Page Builder - GUI Layout</h1>
+  
+  <div id="builderguidiagram-div-9" class="diagram-container">
+    <div id="builderguidiagram-div-10" class="builder-diagram">
+      <!-- Header -->
+      <div id="builderguidiagram-div-11" class="header">
+        <h2 id="builderguidiagram-h2-12">🏗️ Builder Dashboard</h2>
+        <div id="builderguidiagram-div-13" class="header-actions">
+          <button id="builderguidiagram-button-14" class="header-btn">💾 Save</button>
+          <button id="builderguidiagram-button-15" class="header-btn">📤 Export</button>
+          <button id="builderguidiagram-button-16" class="header-btn">👁️ Preview</button>
+        </div>
+      </div>
+      
+      <!-- Main Content -->
+      <div id="builderguidiagram-div-17" class="main-content">
+        <!-- Left Sidebar -->
+        <div id="builderguidiagram-div-18" class="sidebar">
+          <div id="builderguidiagram-div-19" class="sidebar-header">
+            <input id="builderguidiagram-input-20" type="text" class="search-box" placeholder="🔍 Search components...">
+          </div>
+          <div id="builderguidiagram-div-21" class="categories">
+            <div id="builderguidiagram-div-22" class="category">
+              <div id="builderguidiagram-div-23" class="category-title">📐 Layout</div>
+              <div id="builderguidiagram-div-24" class="component-item">📦 Container</div>
+              <div id="builderguidiagram-div-25" class="component-item">⬜ Spacer</div>
+            </div>
+            <div id="builderguidiagram-div-26" class="category">
+              <div id="builderguidiagram-div-27" class="category-title">🃏 Cards</div>
+              <div id="builderguidiagram-div-28" class="component-item">🃏 Card</div>
+              <div id="builderguidiagram-div-29" class="component-item">🖼️ Card Image</div>
+              <div id="builderguidiagram-div-30" class="component-item">🦸 Card Hero</div>
+              <div id="builderguidiagram-div-31" class="component-item">💰 Card Pricing</div>
+            </div>
+            <div id="builderguidiagram-div-32" class="category">
+              <div id="builderguidiagram-div-33" class="category-title">📝 Forms</div>
+              <div id="builderguidiagram-div-34" class="component-item">✏️ Input</div>
+              <div id="builderguidiagram-div-35" class="component-item">📝 Textarea</div>
+              <div id="builderguidiagram-div-36" class="component-item">🔘 Button</div>
+            </div>
+            <div id="builderguidiagram-div-37" class="category">
+              <div id="builderguidiagram-div-38" class="category-title">🎬 Actions</div>
+              <div id="builderguidiagram-div-39" class="component-item">📋 Clipboard</div>
+              <div id="builderguidiagram-div-40" class="component-item">🎉 Confetti</div>
+            </div>
+          </div>
+          <div id="builderguidiagram-div-41" class="resize-handle"></div>
+        </div>
+        
+        <!-- Canvas Area -->
+        <div id="builderguidiagram-div-42" class="canvas-area">
+          <div id="builderguidiagram-div-43" class="toolbar">
+            <div id="builderguidiagram-div-44" class="toolbar-group">
+              <button id="builderguidiagram-button-45" class="tool-btn active">🖥️</button>
+              <button id="builderguidiagram-button-46" class="tool-btn">📱</button>
+              <button id="builderguidiagram-button-47" class="tool-btn">📲</button>
+              <span id="builderguidiagram-span-48" class="viewport-info">1200 × 800</span>
+            </div>
+            <div id="builderguidiagram-div-49" class="toolbar-group">
+              <button id="builderguidiagram-button-50" class="tool-btn">↩️</button>
+              <button id="builderguidiagram-button-51" class="tool-btn">↪️</button>
+            </div>
+            <button id="builderguidiagram-button-52" class="tool-btn">📝</button>
+            <span id="builderguidiagram-span-53" class="comp-count">3 components</span>
+          </div>
+          <div id="builderguidiagram-div-54" class="viewport">
+            <div id="builderguidiagram-div-55" class="canvas-frame has-content">
+              <div id="builderguidiagram-div-56" class="dropped-comp" data-label="Card Hero">
+                <h3 id="builderguidiagram-h3-57" style="margin-bottom:0.5rem">Welcome to My Site</h3>
+                <p id="builderguidiagram-p-58" style="font-size:0.8rem;color:#94a3b8">Build beautiful pages with drag & drop</p>
+              </div>
+              <div id="builderguidiagram-div-59" class="dropped-comp selected" data-label="Container (3 cols)">
+                <div id="builderguidiagram-div-60" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem">
+                  <div id="builderguidiagram-div-61" style="background:#334155;padding:0.5rem;border-radius:4px;font-size:0.7rem">Card 1</div>
+                  <div id="builderguidiagram-div-62" style="background:#334155;padding:0.5rem;border-radius:4px;font-size:0.7rem">Card 2</div>
+                  <div id="builderguidiagram-div-63" style="background:#334155;padding:0.5rem;border-radius:4px;font-size:0.7rem">Card 3</div>
+                </div>
+              </div>
+              <div id="builderguidiagram-div-64" class="dropped-comp" data-label="Button">
+                <button id="builderguidiagram-button-65" style="background:#3b82f6;border:none;padding:0.5rem 1rem;border-radius:6px;color:white;font-size:0.8rem">Get Started</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Panel -->
+        <div id="builderguidiagram-div-66" class="panel-right">
+          <div id="builderguidiagram-div-67" class="panel-header">
+            <span id="builderguidiagram-span-68">⚙️ Properties</span>
+            <button id="builderguidiagram-button-69" class="btn-danger">🗑️ Delete</button>
+          </div>
+          <div id="builderguidiagram-div-70" class="panel-tabs">
+            <button id="builderguidiagram-button-71" class="panel-tab active">Properties</button>
+            <button id="builderguidiagram-button-72" class="panel-tab">Layers</button>
+          </div>
+          <div id="builderguidiagram-div-73" class="panel-content">
+            <div id="builderguidiagram-div-74" class="prop-group">
+              <div id="builderguidiagram-div-75" class="prop-group-title">Container Settings</div>
+              <div id="builderguidiagram-div-76" class="prop-row">
+                <label id="builderguidiagram-label-77" class="prop-label">Direction</label>
+                <select id="builderguidiagram-select-78" class="prop-input">
+                  <option id="builderguidiagram-option-79">Row</option>
+                  <option id="builderguidiagram-option-80" selected>Column</option>
+                </select>
+              </div>
+              <div id="builderguidiagram-div-81" class="prop-row">
+                <label id="builderguidiagram-label-82" class="prop-label">Columns</label>
+                <input id="builderguidiagram-input-83" type="number" class="prop-input" value="3">
+              </div>
+              <div id="builderguidiagram-div-84" class="prop-row">
+                <label id="builderguidiagram-label-85" class="prop-label">Gap</label>
+                <input id="builderguidiagram-input-86" type="text" class="prop-input" value="1rem">
+              </div>
+            </div>
+            <div id="builderguidiagram-div-87" class="prop-group">
+              <div id="builderguidiagram-div-88" class="prop-group-title">Style</div>
+              <div id="builderguidiagram-div-89" class="prop-row prop-checkbox">
+                <input type="checkbox" id="elevated">
+                <label id="builderguidiagram-label-90" for="elevated" class="prop-label" style="margin:0">Elevated (shadow)</label>
+              </div>
+              <div id="builderguidiagram-div-91" class="prop-row">
+                <label id="builderguidiagram-label-92" class="prop-label">Padding</label>
+                <input id="builderguidiagram-input-93" type="text" class="prop-input" value="1rem">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div id="builderguidiagram-div-94" class="footer">
+        <span id="builderguidiagram-span-95">© 2025 WB Page Builder</span>
+        <span id="builderguidiagram-span-96">Ctrl+Z Undo | Ctrl+Shift+Z Redo | Right-click for menu</span>
+      </div>
+    </div>
+    
+    <!-- Annotations -->
+    <div id="builderguidiagram-div-97" class="annotations">
+      <div id="builderguidiagram-div-98" class="annotation">
+        <h3 id="builderguidiagram-h3-99">① Left Sidebar</h3>
+        <ul id="builderguidiagram-ul-100">
+          <li id="builderguidiagram-li-101">Search/filter components</li>
+          <li id="builderguidiagram-li-102">Categorized component list</li>
+          <li id="builderguidiagram-li-103">Drag components to canvas</li>
+          <li id="builderguidiagram-li-104">Resizable width (up to 50%)</li>
+        </ul>
+      </div>
+      <div id="builderguidiagram-div-105" class="annotation">
+        <h3 id="builderguidiagram-h3-106">② Toolbar</h3>
+        <ul id="builderguidiagram-ul-107">
+          <li id="builderguidiagram-li-108">Viewport switcher (desktop/tablet/mobile)</li>
+          <li id="builderguidiagram-li-109">Undo/Redo buttons</li>
+          <li id="builderguidiagram-li-110">Notes toggle</li>
+          <li id="builderguidiagram-li-111">Component count</li>
+        </ul>
+      </div>
+      <div id="builderguidiagram-div-112" class="annotation">
+        <h3 id="builderguidiagram-h3-113">③ Canvas</h3>
+        <ul id="builderguidiagram-ul-114">
+          <li id="builderguidiagram-li-115">Drop zone for components</li>
+          <li id="builderguidiagram-li-116">Visual grid background</li>
+          <li id="builderguidiagram-li-117">Double-click to edit text</li>
+          <li id="builderguidiagram-li-118">Right-click for context menu</li>
+          <li id="builderguidiagram-li-119">Drag to reorder</li>
+        </ul>
+      </div>
+      <div id="builderguidiagram-div-120" class="annotation">
+        <h3 id="builderguidiagram-h3-121">④ Right Panel</h3>
+        <ul id="builderguidiagram-ul-122">
+          <li id="builderguidiagram-li-123">Properties tab (edit selected)</li>
+          <li id="builderguidiagram-li-124">Layers tab (component tree)</li>
+          <li id="builderguidiagram-li-125">Schema-driven property inputs</li>
+          <li id="builderguidiagram-li-126">Delete button</li>
+        </ul>
+      </div>
+      <div id="builderguidiagram-div-127" class="annotation">
+        <h3 id="builderguidiagram-h3-128">⑤ Header Actions</h3>
+        <ul id="builderguidiagram-ul-129">
+          <li id="builderguidiagram-li-130">Save page to JSON</li>
+          <li id="builderguidiagram-li-131">Export to HTML</li>
+          <li id="builderguidiagram-li-132">Preview in new tab</li>
+        </ul>
+      </div>
+      <div id="builderguidiagram-div-133" class="annotation">
+        <h3 id="builderguidiagram-h3-134">⑥ Context Menu (Right-click)</h3>
+        <ul id="builderguidiagram-ul-135">
+          <li id="builderguidiagram-li-136">View Schema</li>
+          <li id="builderguidiagram-li-137">Edit Properties</li>
+          <li id="builderguidiagram-li-138">Duplicate / Move / Delete</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

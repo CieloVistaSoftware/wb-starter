@@ -1,0 +1,409 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Notification",
+  "description": "Dismissible notification card. INHERITS from card.base (IS-A card), CONTAINS notification elements (HAS-A icon, message, dismiss button).",
+  "behavior": "cardnotification",
+  
+  "$extends": "card.base.schema.json",
+  "$inheritance": {
+    "type": "IS-A",
+    "parent": "card",
+    "inherits": [
+      "semantic.element",
+      "compliance.containerTag",
+      "accessibility"
+    ],
+    "overrides": {
+      "semantic.element.preferredTag": "ASIDE",
+      "hoverable": false
+    }
+  },
+  
+  "$containment": [
+    {
+      "type": "HAS-A",
+      "name": "icon",
+      "element": "SPAN.wb-card__notification-icon",
+      "description": "Type-based icon indicator"
+    },
+    {
+      "type": "HAS-A",
+      "name": "content",
+      "element": "MAIN.wb-card__notification-content",
+      "description": "Title and message content area"
+    },
+    {
+      "type": "HAS-A",
+      "name": "dismissButton",
+      "element": "BUTTON.wb-card__notification-dismiss",
+      "description": "Optional dismiss/close button"
+    }
+  ],
+  
+  "properties": {
+    
+    "type": {
+      "type": "string",
+      "description": "Notification type - determines icon and color",
+      "enum": ["info", "success", "warning", "error"],
+      "default": "info",
+      "inputType": "select",
+      "permutations": {
+        "type": "ENUM",
+        "assertions": {
+          "info": {
+            "selector": "element",
+            "checks": { "hasClass": "wb-card--info" }
+          },
+          "success": {
+            "selector": "element",
+            "checks": { "hasClass": "wb-card--success" }
+          },
+          "warning": {
+            "selector": "element",
+            "checks": { "hasClass": "wb-card--warning" }
+          },
+          "error": {
+            "selector": "element",
+            "checks": { "hasClass": "wb-card--error" }
+          }
+        }
+      }
+    },
+    "title": {
+      "type": "string",
+      "description": "Notification title (bold text)",
+      "containedIn": "content",
+      "default": "Notification",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["Notification", "Alert", "Notice", "Update"],
+        "assertions": {
+          "Notification": {
+            "selector": "main strong.wb-card__notification-title",
+            "checks": { "exists": true, "textContains": "Notification", "tagName": "STRONG" }
+          }
+        }
+      }
+    },
+    "message": {
+      "type": "string",
+      "description": "Notification message body",
+      "containedIn": "content",
+      "default": "This is a notification message.",
+      "inputType": "textarea",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": [
+          "Short message",
+          "This is a longer notification message that spans multiple lines.",
+          "Action required: Please review and confirm."
+        ],
+        "assertions": {
+          "Short message": {
+            "selector": "main p.wb-card__notification-message",
+            "checks": { "exists": true, "textContains": "Short message", "tagName": "P" }
+          }
+        }
+      }
+    },
+    "dismissible": {
+      "type": "boolean",
+      "description": "Show dismiss button",
+      "default": true,
+      "inputType": "checkbox",
+      "permutations": {
+        "type": "BOOLEAN",
+        "assertions": {
+          "true": {
+            "selector": "button.wb-card__notification-dismiss",
+            "checks": { "exists": true }
+          },
+          "false": {
+            "selector": "button.wb-card__notification-dismiss",
+            "checks": { "exists": false }
+          }
+        }
+      }
+    },
+    "icon": {
+      "type": "string",
+      "description": "Custom icon (overrides type-based icon)",
+      "containedIn": "icon",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["ℹ️", "✅", "⚠️", "❌", "🔔", "📢"],
+        "assertions": {
+          "🔔": {
+            "selector": "span.wb-card__notification-icon",
+            "checks": { "textContains": "🔔" }
+          }
+        }
+      }
+    },
+    "elevated": {
+      "type": "boolean",
+      "description": "Has shadow/elevation effect",
+      "default": false
+    }
+  },
+  
+  "compliance": {
+    "$inherits": "card.base.schema.json#compliance",
+    "baseClass": "wb-card",
+    "additionalClasses": ["wb-card--notification"],
+    "containerTag": {
+      "preferred": "ASIDE",
+      "allowed": ["ASIDE", "DIV"],
+      "warnIf": "DIV"
+    },
+    "attributes": {
+      "role": "alert"
+    },
+    "requiredChildren": {
+      "span.wb-card__notification-icon": {
+        "description": "Type icon",
+        "tagName": "SPAN",
+        "required": true,
+        "relationship": "HAS-A"
+      },
+      "main.wb-card__notification-content": {
+        "description": "Content area",
+        "tagName": "MAIN",
+        "required": true,
+        "relationship": "HAS-A",
+        "children": {
+          "strong.wb-card__notification-title": { "tagName": "STRONG" },
+          "p.wb-card__notification-message": { "tagName": "P" }
+        }
+      }
+    },
+    "optionalChildren": {
+      "button.wb-card__notification-dismiss": {
+        "description": "Dismiss button",
+        "tagName": "BUTTON",
+        "relationship": "HAS-A",
+        "createdWhen": "dismissible is true"
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      "button.wb-card__notification-dismiss": {
+        "type": "button",
+        "clickable": true,
+        "focusable": true,
+        "click": {
+          "action": "Dismiss notification",
+          "removesElement": true,
+          "event": "wb:cardnotification:dismiss"
+        }
+      }
+    },
+    "keyboard": {
+      "Escape": { 
+        "target": "element", 
+        "action": "Dismiss notification",
+        "condition": "dismissible is true"
+      }
+    }
+  },
+  
+  "accessibility": {
+    "containerRole": "alert",
+    "liveRegion": "polite",
+    "dismissButton": {
+      "ariaLabel": "Dismiss notification"
+    }
+  },
+  
+  "events": {
+    "wb:cardnotification:dismiss": {
+      "source": "button.wb-card__notification-dismiss",
+      "bubbles": true,
+      "detail": { "type": "string", "title": "string" },
+      "firesWhen": "Dismiss button is clicked or Escape pressed"
+    }
+  },
+  
+  "api": {
+    "element.wbCardNotification": {
+      "dismiss": { "description": "Dismiss the notification", "returns": "void" },
+      "show": { "description": "Show the notification (if hidden)", "returns": "void" }
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<aside data-wb=\"cardnotification\" data-title=\"Info\" data-message=\"Info message\"></aside>",
+      "<aside data-wb=\"cardnotification\" data-type=\"success\" data-title=\"Success\" data-message=\"Success!\"></aside>",
+      "<aside data-wb=\"cardnotification\" data-type=\"error\" data-title=\"Error\" data-message=\"Error!\" data-dismissible=\"false\"></aside>"
+    ],
+    
+    "matrix": {
+      "description": "Test all property combinations",
+      "combinations": [
+        { "type": "info", "title": "Info", "message": "Info message" },
+        { "type": "success", "title": "Success", "message": "Success message" },
+        { "type": "warning", "title": "Warning", "message": "Warning message" },
+        { "type": "error", "title": "Error", "message": "Error message" },
+        { "type": "info", "title": "Title", "message": "Message", "dismissible": true },
+        { "type": "info", "title": "Title", "message": "Message", "dismissible": false },
+        { "type": "info", "title": "Title", "message": "Message", "icon": "🔔" },
+        { "type": "success", "title": "Done", "message": "Task completed", "dismissible": true, "elevated": true }
+      ]
+    },
+    
+    "functional": {
+      "semantic": [
+        {
+          "name": "Container should be ASIDE with role=alert",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"Test\" data-message=\"Test\"></aside>",
+          "expect": { 
+            "selector": "element", 
+            "tagName": "ASIDE",
+            "checks": { "attribute": { "role": "alert" } }
+          }
+        },
+        {
+          "name": "Icon should be in SPAN (HAS-A icon)",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"Test\" data-message=\"Test\"></aside>",
+          "expect": { "selector": "span.wb-card__notification-icon", "tagName": "SPAN" }
+        },
+        {
+          "name": "Title should be STRONG in MAIN (HAS-A content)",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"Test\" data-message=\"Test\"></aside>",
+          "expect": { "selector": "main strong.wb-card__notification-title", "tagName": "STRONG" }
+        },
+        {
+          "name": "Message should be P in MAIN (HAS-A content)",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"Test\" data-message=\"Test\"></aside>",
+          "expect": { "selector": "main p.wb-card__notification-message", "tagName": "P" }
+        },
+        {
+          "name": "Dismiss button should be BUTTON (HAS-A dismissButton)",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"Test\" data-message=\"Test\"></aside>",
+          "expect": { "selector": "button.wb-card__notification-dismiss", "tagName": "BUTTON" }
+        }
+      ],
+      
+      "rendering": [
+        {
+          "name": "Type 'info' adds wb-card--info class",
+          "setup": "<aside data-wb=\"cardnotification\" data-type=\"info\" data-title=\"T\" data-message=\"M\"></aside>",
+          "expect": { "selector": "element", "checks": { "hasClass": "wb-card--info" } }
+        },
+        {
+          "name": "Type 'success' adds wb-card--success class",
+          "setup": "<aside data-wb=\"cardnotification\" data-type=\"success\" data-title=\"T\" data-message=\"M\"></aside>",
+          "expect": { "selector": "element", "checks": { "hasClass": "wb-card--success" } }
+        },
+        {
+          "name": "Type 'warning' adds wb-card--warning class",
+          "setup": "<aside data-wb=\"cardnotification\" data-type=\"warning\" data-title=\"T\" data-message=\"M\"></aside>",
+          "expect": { "selector": "element", "checks": { "hasClass": "wb-card--warning" } }
+        },
+        {
+          "name": "Type 'error' adds wb-card--error class",
+          "setup": "<aside data-wb=\"cardnotification\" data-type=\"error\" data-title=\"T\" data-message=\"M\"></aside>",
+          "expect": { "selector": "element", "checks": { "hasClass": "wb-card--error" } }
+        },
+        {
+          "name": "Default type is info",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"T\" data-message=\"M\"></aside>",
+          "expect": { "selector": "element", "checks": { "hasClass": "wb-card--info" } }
+        },
+        {
+          "name": "dismissible=false hides dismiss button",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"T\" data-message=\"M\" data-dismissible=\"false\"></aside>",
+          "expect": { "selector": "button.wb-card__notification-dismiss", "checks": { "exists": false } }
+        },
+        {
+          "name": "Custom icon overrides type icon",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"T\" data-message=\"M\" data-icon=\"🔔\"></aside>",
+          "expect": { "selector": "span.wb-card__notification-icon", "checks": { "textContains": "🔔" } }
+        }
+      ],
+      
+      "interactions": [
+        {
+          "name": "Click dismiss button removes notification",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"T\" data-message=\"M\"></aside>",
+          "steps": [
+            { "action": "click", "selector": "button.wb-card__notification-dismiss" }
+          ],
+          "expect": { "selector": "element", "checks": { "exists": false } }
+        },
+        {
+          "name": "Dispatches dismiss event on click",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"Test\" data-message=\"M\"></aside>",
+          "steps": [
+            { "action": "click", "selector": "button.wb-card__notification-dismiss" }
+          ],
+          "expect": { 
+            "event": "wb:cardnotification:dismiss",
+            "detail": { "title": "Test" }
+          }
+        }
+      ],
+      
+      "keyboard": [
+        {
+          "name": "Escape key dismisses notification when dismissible",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"T\" data-message=\"M\"></aside>",
+          "steps": [
+            { "action": "focus", "selector": "element" },
+            { "action": "keypress", "key": "Escape" }
+          ],
+          "expect": { "selector": "element", "checks": { "exists": false } }
+        }
+      ],
+      
+      "accessibility": [
+        {
+          "name": "Container has role=alert",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"T\" data-message=\"M\"></aside>",
+          "expect": { "selector": "element", "checks": { "attribute": { "role": "alert" } } }
+        },
+        {
+          "name": "Dismiss button has aria-label",
+          "setup": "<aside data-wb=\"cardnotification\" data-title=\"T\" data-message=\"M\"></aside>",
+          "expect": { 
+            "selector": "button.wb-card__notification-dismiss", 
+            "checks": { "attribute": { "aria-label": "Dismiss notification" } } 
+          }
+        }
+      ]
+    }
+  },
+  
+  "builder": {
+    "category": "Cards",
+    "icon": "🔔",
+    "name": "Card Notification",
+    "description": "Dismissible notification/alert card",
+    "defaults": {
+      "type": "info",
+      "title": "Notification",
+      "message": "This is a notification message.",
+      "dismissible": true
+    },
+    "propertyPanel": {
+      "groups": [
+        {
+          "name": "Content",
+          "properties": ["title", "message"]
+        },
+        {
+          "name": "Appearance",
+          "properties": ["type", "icon"]
+        },
+        {
+          "name": "Behavior",
+          "properties": ["dismissible"]
+        }
+      ]
+    }
+  }
+}

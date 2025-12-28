@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Hero",
+  "description": "Hero banner card with background image.",
+  "behavior": "cardhero",
+  
+  "$extends": "card.base.schema.json",
+  
+  "properties": {
+    "background": {
+      "type": "string",
+      "description": "Background image URL",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "description": "Hero title",
+      "default": "Hero Title"
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Hero subtitle"
+    },
+    "height": {
+      "type": "string",
+      "description": "Card height",
+      "default": "300px"
+    },
+    "overlay": {
+      "type": "boolean",
+      "description": "Show gradient overlay for text readability",
+      "default": true
+    },
+    "align": {
+      "type": "string",
+      "description": "Content alignment",
+      "enum": ["left", "center", "right"],
+      "default": "center"
+    }
+  },
+  
+  "compliance": {
+    "baseClass": "wb-card",
+    "requiredChildren": {},
+    "optionalChildren": {
+      "header.wb-card__header": {
+        "description": "Hero content area",
+        "tagName": "HEADER"
+      }
+    },
+    "styles": {
+      "backgroundSize": {"value": "cover", "required": false},
+      "backgroundPosition": {"value": "center", "required": false}
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<article data-wb=\"cardhero\" data-background=\"bg.jpg\" data-title=\"Hero\"></article>",
+      "<article data-wb=\"cardhero\" data-background=\"bg.jpg\" data-title=\"Test\" data-subtitle=\"Subtitle\"></article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "background": "bg.jpg", "title": "Hero" },
+        { "background": "bg.jpg", "title": "Hero", "subtitle": "Subtitle" },
+        { "background": "bg.jpg", "title": "Hero", "height": "400px" },
+        { "background": "bg.jpg", "title": "Hero", "align": "left" }
+      ]
+    }
+  }
+}

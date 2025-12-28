@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm test:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(timeout 1 echo:*)",
+      "Bash(npm start)",
+      "Bash(npm run dev:*)",
+      "Bash(npx playwright:*)",
+      "Bash(npm run fix:list:*)",
+      "Bash(npm run test:results:*)",
+      "Bash(npm run test:failures:*)",
+      "Bash(cat:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

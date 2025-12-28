@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nav.schema.json",
+  "title": "Nav Semantic Element",
+  "description": "Navigation section with links to other pages or sections within the page.",
+  
+  "$inheritance": {
+    "extends": "_element.base.schema.json",
+    "reason": "Nav IS-A element with all base properties"
+  },
+  
+  "htmlTag": "nav",
+  "role": "navigation",
+  
+  "semanticMeaning": {
+    "description": "Section of page with navigation links",
+    "examples": ["Main navigation", "Breadcrumbs", "Table of contents", "Pagination", "Social links"],
+    "whenToUse": "Major navigation blocks - not every group of links needs nav",
+    "whenNotToUse": "Don't wrap every link group in nav - only major navigation"
+  },
+  
+  "type": "object",
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Accessible label for navigation - REQUIRED",
+      "canvasEditable": true,
+      "default": "Navigation"
+    },
+    "items": {
+      "type": "array",
+      "description": "Navigation items",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": { "type": "string", "canvasEditable": true },
+          "href": { "type": "string" },
+          "icon": { "type": "string" },
+          "active": { "type": "boolean" }
+        }
+      }
+    },
+    "orientation": {
+      "type": "string",
+      "enum": ["horizontal", "vertical"],
+      "default": "horizontal"
+    }
+  },
+  
+  "textProperties": {
+    "description": "Canvas-editable text",
+    "list": ["label", "items[].label"]
+  },
+  
+  "structure": {
+    "template": "<nav aria-label=\"{{label}}\">\n  <ul>\n    {{#items}}<li><a href=\"{{href}}\">{{label}}</a></li>{{/items}}\n  </ul>\n</nav>"
+  },
+  
+  "accessibility": {
+    "landmarkRole": "navigation",
+    "requirements": [
+      "Use aria-label to distinguish multiple nav elements",
+      "Use ul/li for list of links"
+    ]
+  },
+  
+  "canContain": ["ul", "ol", "a", "button"],
+  
+  "wbComponents": {
+    "description": "WB components that extend nav",
+    "list": ["breadcrumb", "menu", "tabs", "pagination", "sidebar"]
+  }
+}

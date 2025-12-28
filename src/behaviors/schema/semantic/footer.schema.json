@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "footer.schema.json",
+  "title": "Footer Semantic Element", 
+  "description": "Footer content - actions, author info, related links, timestamps. Used within article, section, or body.",
+  
+  "$inheritance": {
+    "extends": "_element.base.schema.json",
+    "reason": "Footer IS-A element with all base properties"
+  },
+  
+  "htmlTag": "footer",
+  "role": "contentinfo (when child of body) or generic",
+  
+  "semanticMeaning": {
+    "description": "Footer for its nearest sectioning content ancestor - typically contains author, copyright, related links",
+    "examples": ["Page footer", "Article footer", "Card footer with actions", "Section footer"],
+    "whenToUse": "Information about the containing element - author, copyright, actions, metadata"
+  },
+  
+  "type": "object",
+  "properties": {
+    "footer": {
+      "type": "string",
+      "description": "Footer text content - ALWAYS canvas editable",
+      "canvasEditable": true,
+      "default": "",
+      "htmlElement": "p|span|div",
+      "cssClass": "wb-*__footer-text"
+    },
+    "actions": {
+      "type": "array",
+      "description": "Action buttons/links in footer",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": { "type": "string", "canvasEditable": true },
+          "href": { "type": "string" },
+          "variant": { "enum": ["primary", "secondary", "link"] }
+        }
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "Date/time metadata",
+      "canvasEditable": true,
+      "htmlElement": "time"
+    },
+    "author": {
+      "type": "string", 
+      "description": "Author attribution",
+      "canvasEditable": true
+    }
+  },
+  
+  "textProperties": {
+    "description": "ALL text properties are canvas-editable",
+    "list": ["footer", "timestamp", "author"],
+    "actionLabels": "Action button labels are also editable"
+  },
+  
+  "structure": {
+    "template": "<footer class=\"wb-*__footer\">\n  <span class=\"wb-*__footer-text\">{{footer}}</span>\n  {{#actions}}<button>{{label}}</button>{{/actions}}\n</footer>",
+    "conditionalRendering": {
+      "footer": "Render text span if footer is not empty",
+      "actions": "Render button group if actions exist"
+    }
+  },
+  
+  "accessibility": {
+    "requirements": [
+      "Footer is not a landmark unless direct child of body",
+      "Actions should be keyboard accessible"
+    ]
+  },
+  
+  "canContain": ["p", "span", "div", "button", "a", "nav", "time", "address", "small"]
+}

@@ -1,0 +1,129 @@
+[
+  {
+    "id": "hero-section",
+    "name": "Hero Section",
+    "icon": "🦸",
+    "desc": "Full-width hero with heading and CTA",
+    "components": [
+      {
+        "n": "Card Hero", "i": "🦸", "b": "cardhero", "d": {
+          "title": "Welcome to Our Site",
+          "subtitle": "Build amazing experiences",
+          "primary": "Get Started",
+          "primaryHref": "#features"
+        }
+      }
+    ]
+  },
+  {
+    "id": "feature-cards",
+    "name": "Feature Cards",
+    "icon": "🃏",
+    "desc": "3-column feature showcase",
+    "components": [
+      {
+        "n": "Grid", "i": "📊", "b": "grid", "d": { "columns": "3" }, "gridChildren": [
+          { "n": "Card", "i": "🃏", "b": "card", "d": { "title": "Feature 1", "subtitle": "Description of feature 1" } },
+          { "n": "Card", "i": "🃏", "b": "card", "d": { "title": "Feature 2", "subtitle": "Description of feature 2" } },
+          { "n": "Card", "i": "🃏", "b": "card", "d": { "title": "Feature 3", "subtitle": "Description of feature 3" } }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pricing-table",
+    "name": "Pricing Table",
+    "icon": "💰",
+    "desc": "3-tier pricing comparison",
+    "components": [
+      {
+        "n": "Grid", "i": "📊", "b": "grid", "d": { "columns": "3" }, "gridChildren": [
+          { "n": "Card Pricing", "i": "💰", "b": "cardpricing", "d": { "plan": "Basic", "price": "$9", "period": "/mo", "features": "Feature 1,Feature 2,Feature 3", "cta": "Choose Basic" } },
+          { "n": "Card Pricing", "i": "💰", "b": "cardpricing", "d": { "plan": "Pro", "price": "$29", "period": "/mo", "features": "All Basic,Pro Feature 1,Pro Feature 2,Priority Support", "cta": "Choose Pro", "featured": "true" } },
+          { "n": "Card Pricing", "i": "💰", "b": "cardpricing", "d": { "plan": "Enterprise", "price": "$99", "period": "/mo", "features": "All Pro,Enterprise Feature,Dedicated Support,Custom Integration", "cta": "Contact Sales" } }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "team-section",
+    "name": "Team Section",
+    "icon": "👥",
+    "desc": "Team member profiles",
+    "components": [
+      { "n": "Card", "i": "🃏", "b": "card", "d": { "title": "Our Team", "subtitle": "Meet the people behind the product" } },
+      {
+        "n": "Grid", "i": "📊", "b": "grid", "d": { "columns": "4" }, "gridChildren": [
+          { "n": "Card Profile", "i": "👤", "b": "cardprofile", "d": { "name": "John Doe", "role": "CEO", "src": "https://i.pravatar.cc/150?img=1" } },
+          { "n": "Card Profile", "i": "👤", "b": "cardprofile", "d": { "name": "Jane Smith", "role": "CTO", "src": "https://i.pravatar.cc/150?img=5" } },
+          { "n": "Card Profile", "i": "👤", "b": "cardprofile", "d": { "name": "Bob Wilson", "role": "Designer", "src": "https://i.pravatar.cc/150?img=3" } },
+          { "n": "Card Profile", "i": "👤", "b": "cardprofile", "d": { "name": "Alice Brown", "role": "Developer", "src": "https://i.pravatar.cc/150?img=9" } }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "faq-section",
+    "name": "FAQ Section",
+    "icon": "❓",
+    "desc": "Expandable FAQ accordion",
+    "components": [
+      { "n": "Card", "i": "🃏", "b": "card", "d": { "title": "Frequently Asked Questions", "subtitle": "Find answers to common questions" } },
+      {
+        "n": "Container", "i": "📦", "b": "container", "d": { "direction": "column", "gap": "0.5rem" }, "container": true, "children": [
+          { "n": "Details", "i": "⬇️", "b": "details", "t": "details", "d": { "summary": "What is this product?", "open": false, "name": "faq-group" }, "children": [{ "t": "p", "text": "This is an amazing product that helps you build websites quickly." }] },
+          { "n": "Details", "i": "⬇️", "b": "details", "t": "details", "d": { "summary": "How do I get started?", "open": false, "name": "faq-group" }, "children": [{ "t": "p", "text": "Simply sign up for an account and follow our quick start guide." }] },
+          { "n": "Details", "i": "⬇️", "b": "details", "t": "details", "d": { "summary": "Is there a free trial?", "open": false, "name": "faq-group" }, "children": [{ "t": "p", "text": "Yes! We offer a 14-day free trial with all features included." }] },
+          { "n": "Details", "i": "⬇️", "b": "details", "t": "details", "d": { "summary": "How do I contact support?", "open": false, "name": "faq-group" }, "children": [{ "t": "p", "text": "You can reach our support team via email or live chat 24/7." }] }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "contact-form",
+    "name": "Contact Section",
+    "icon": "📧",
+    "desc": "Contact info with form fields",
+    "components": [
+      { "n": "Card", "i": "🃏", "b": "card", "d": { "title": "Contact Us", "subtitle": "We'd love to hear from you" } },
+      {
+        "n": "Grid", "i": "📊", "b": "grid", "d": { "columns": "2" }, "gridChildren": [
+          { "n": "Card", "i": "🃏", "b": "card", "d": { "title": "📍 Address", "subtitle": "123 Main St, City, State 12345" } },
+          { "n": "Card", "i": "🃏", "b": "card", "d": { "title": "📞 Phone", "subtitle": "(555) 123-4567" } }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stats-section",
+    "name": "Stats Section",
+    "icon": "📊",
+    "desc": "Key metrics display",
+    "components": [
+      {
+        "n": "Grid", "i": "📊", "b": "grid", "d": { "columns": "4" }, "gridChildren": [
+          { "n": "Card Stats", "i": "📈", "b": "cardstats", "d": { "label": "Users", "value": "10,000+", "icon": "👥", "trend": "up", "trendValue": "+12%" } },
+          { "n": "Card Stats", "i": "📈", "b": "cardstats", "d": { "label": "Revenue", "value": "$1.2M", "icon": "💰", "trend": "up", "trendValue": "+8%" } },
+          { "n": "Card Stats", "i": "📈", "b": "cardstats", "d": { "label": "Projects", "value": "500+", "icon": "📁", "trend": "up", "trendValue": "+25%" } },
+          { "n": "Card Stats", "i": "📈", "b": "cardstats", "d": { "label": "Support", "value": "24/7", "icon": "🎧" } }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "testimonials",
+    "name": "Testimonials",
+    "icon": "💬",
+    "desc": "Customer testimonial cards",
+    "components": [
+      { "n": "Card", "i": "🃏", "b": "card", "d": { "title": "What Our Customers Say", "subtitle": "Trusted by thousands" } },
+      {
+        "n": "Grid", "i": "📊", "b": "grid", "d": { "columns": "3" }, "gridChildren": [
+          { "n": "Blockquote", "i": "💬", "b": "blockquote", "d": { "quote": "This product changed how we work. Highly recommended!", "author": "Sarah J.", "source": "CEO, TechCo" } },
+          { "n": "Blockquote", "i": "💬", "b": "blockquote", "d": { "quote": "Incredible support team and amazing features. 5 stars!", "author": "Mike R.", "source": "Designer" } },
+          { "n": "Blockquote", "i": "💬", "b": "blockquote", "d": { "quote": "Best investment we've made this year. Period.", "author": "Lisa M.", "source": "Founder, StartupXYZ" } }
+        ]
+      }
+    ]
+  }
+]

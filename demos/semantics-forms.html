@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html id="semanticsforms-html-1" lang="en" data-theme="dark">
+<head id="semanticsforms-head-2">
+  <meta id="semanticsforms-meta-3" charset="UTF-8">
+  <meta id="semanticsforms-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="semanticsforms-title-5">Semantic Forms Demo</title>
+  <link id="semanticsforms-link-6" rel="stylesheet" href="/src/styles/themes.css">
+  <link id="semanticsforms-link-7" rel="stylesheet" href="/src/styles/components.css">
+  <style id="semanticsforms-style-8">
+    body { 
+      padding: 2rem; 
+      background: var(--bg-color); 
+      color: var(--text-primary);
+      font-family: system-ui, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.5rem;
+    }
+    h1 { margin: 0; border: none; padding: 0; }
+    h2 { 
+      margin: 3rem 0 1.5rem; 
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .demo-section {
+      background: var(--bg-secondary);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+    }
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+      align-items: start;
+    }
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    code {
+      background: rgba(0,0,0,0.3);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body id="semanticsforms-body-9">
+  <header id="semanticsforms-header-10">
+    <h1 id="semanticsforms-h1-11">📝 Semantic Forms Demo</h1>
+    <div id="semanticsforms-div-12" data-wb="themecontrol"></div>
+  </header>
+  <p id="semanticsforms-p-13">Enhanced form controls using standard HTML elements with <code id="semanticsforms-code-14">data-wb</code> attributes.</p>
+
+  <!-- BUTTONS -->
+  <h2 id="semanticsforms-h2-15">Button <code id="semanticsforms-code-16">&lt;button&gt;</code></h2>
+  <div id="semanticsforms-div-17" class="demo-section">
+    <div id="semanticsforms-div-18" class="demo-row">
+      <button id="semanticsforms-button-19" data-wb="button" data-variant="primary">Primary</button>
+      <button id="semanticsforms-button-20" data-wb="button" data-variant="secondary">Secondary</button>
+      <button id="semanticsforms-button-21" data-wb="button" data-variant="success">Success</button>
+      <button id="semanticsforms-button-22" data-wb="button" data-variant="danger">Danger</button>
+      <button id="semanticsforms-button-23" data-wb="button" data-variant="warning">Warning</button>
+      <button id="semanticsforms-button-24" data-wb="button" data-variant="ghost">Ghost</button>
+    </div>
+    <div id="semanticsforms-div-25" class="demo-row">
+      <button id="semanticsforms-button-26" data-wb="button" data-variant="primary" data-size="sm">Small</button>
+      <button id="semanticsforms-button-27" data-wb="button" data-variant="primary" data-size="md">Medium</button>
+      <button id="semanticsforms-button-28" data-wb="button" data-variant="primary" data-size="lg">Large</button>
+    </div>
+    <div id="semanticsforms-div-29" class="demo-row">
+      <button id="semanticsforms-button-30" data-wb="button" data-variant="primary" data-loading="true">Loading</button>
+      <button id="semanticsforms-button-31" data-wb="button" data-variant="secondary" data-icon="💾">Save</button>
+      <button id="semanticsforms-button-32" data-wb="button" data-variant="danger" data-icon="🗑️" data-icon-position="right">Delete</button>
+    </div>
+  </div>
+
+  <!-- INPUTS -->
+  <h2 id="semanticsforms-h2-33">Input <code id="semanticsforms-code-34">&lt;input&gt;</code></h2>
+  <div id="semanticsforms-div-35" class="demo-section">
+    <div id="semanticsforms-div-36" class="demo-grid">
+      <div id="semanticsforms-div-37">
+        <label id="semanticsforms-label-38">Standard Input</label>
+        <input id="semanticsforms-input-39" data-wb="input" type="text" placeholder="Type something...">
+      </div>
+      <div id="semanticsforms-div-40">
+        <label id="semanticsforms-label-41">With Prefix/Suffix</label>
+        <input id="semanticsforms-input-42" data-wb="input" type="text" data-prefix="👤" data-suffix="@gmail.com" placeholder="Username">
+      </div>
+      <div id="semanticsforms-div-43">
+        <label id="semanticsforms-label-44">Clearable</label>
+        <input id="semanticsforms-input-45" data-wb="input" type="text" data-clearable="true" placeholder="Search...">
+      </div>
+      <div id="semanticsforms-div-46">
+        <label id="semanticsforms-label-47">Validation States</label>
+        <input id="semanticsforms-input-48" data-wb="input" type="text" data-variant="success" value="Valid Input">
+        <div id="semanticsforms-div-49" style="height: 1rem"></div>
+        <input id="semanticsforms-input-50" data-wb="input" type="text" data-variant="error" value="Invalid Input">
+      </div>
+    </div>
+  </div>
+
+  <!-- TEXTAREA -->
+  <h2 id="semanticsforms-h2-51">Textarea <code id="semanticsforms-code-52">&lt;textarea&gt;</code></h2>
+  <div id="semanticsforms-div-53" class="demo-section">
+    <div id="semanticsforms-div-54" class="demo-grid">
+      <div id="semanticsforms-div-55">
+        <label id="semanticsforms-label-56">Auto-sizing</label>
+        <textarea id="semanticsforms-textarea-57" data-wb="textarea" data-autosize="true" placeholder="Type to expand..."></textarea>
+      </div>
+      <div id="semanticsforms-div-58">
+        <label id="semanticsforms-label-59">Character Count (Max 100)</label>
+        <textarea id="semanticsforms-textarea-60" data-wb="textarea" data-show-count="true" data-max-length="100" placeholder="Limited bio..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKBOX & RADIO -->
+  <h2 id="semanticsforms-h2-61">Checkbox & Radio</h2>
+  <div id="semanticsforms-div-62" class="demo-section">
+    <div id="semanticsforms-div-63" class="demo-row">
+      <input id="semanticsforms-input-64" type="checkbox" data-wb="checkbox" data-label="Accept Terms">
+      <input id="semanticsforms-input-65" type="checkbox" data-wb="checkbox" data-label="Subscribe" checked>
+      <input id="semanticsforms-input-66" type="checkbox" data-wb="checkbox" data-label="Indeterminate" data-indeterminate="true">
+    </div>
+    <div id="semanticsforms-div-67" class="demo-row">
+      <input id="semanticsforms-input-68" type="radio" name="plan" data-wb="radio" data-label="Free Plan" value="free">
+      <input id="semanticsforms-input-69" type="radio" name="plan" data-wb="radio" data-label="Pro Plan" value="pro" checked>
+      <input id="semanticsforms-input-70" type="radio" name="plan" data-wb="radio" data-label="Enterprise" value="ent">
+    </div>
+  </div>
+
+  <!-- SWITCH -->
+  <h2 id="semanticsforms-h2-71">Switch</h2>
+  <div id="semanticsforms-div-72" class="demo-section">
+    <div id="semanticsforms-div-73" class="demo-row">
+      <input id="semanticsforms-input-74" type="checkbox" data-wb="switch" data-label="Notifications">
+      <input id="semanticsforms-input-75" type="checkbox" data-wb="switch" data-label="Dark Mode" checked>
+      <input id="semanticsforms-input-76" type="checkbox" data-wb="switch" data-label="Disabled" disabled>
+    </div>
+  </div>
+
+  <!-- RATING -->
+  <h2 id="semanticsforms-h2-77">Rating</h2>
+  <div id="semanticsforms-div-78" class="demo-section">
+    <div id="semanticsforms-div-79" class="demo-row">
+      <div id="semanticsforms-div-80" data-wb="rating" data-value="3" data-max="5"></div>
+      <div id="semanticsforms-div-81" data-wb="rating" data-value="4.5" data-max="5" data-precision="0.5" data-color="gold"></div>
+      <div id="semanticsforms-div-82" data-wb="rating" data-value="2" data-max="10" data-icon="heart"></div>
+    </div>
+  </div>
+
+  <!-- SELECT -->
+  <h2 id="semanticsforms-h2-83">Select <code id="semanticsforms-code-84">&lt;select&gt;</code></h2>
+  <div id="semanticsforms-div-85" class="demo-section">
+    <div id="semanticsforms-div-86" class="demo-grid">
+      <div id="semanticsforms-div-87">
+        <label id="semanticsforms-label-88">Standard Select</label>
+        <select id="semanticsforms-select-89" data-wb="select">
+          <option id="semanticsforms-option-90">Option 1</option>
+          <option id="semanticsforms-option-91">Option 2</option>
+          <option id="semanticsforms-option-92">Option 3</option>
+        </select>
+      </div>
+      <div id="semanticsforms-div-93">
+        <label id="semanticsforms-label-94">Searchable (Visual)</label>
+        <select id="semanticsforms-select-95" data-wb="select" data-searchable="true">
+          <option id="semanticsforms-option-96">Apple</option>
+          <option id="semanticsforms-option-97">Banana</option>
+          <option id="semanticsforms-option-98">Cherry</option>
+          <option id="semanticsforms-option-99">Date</option>
+          <option id="semanticsforms-option-100">Elderberry</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- RANGE -->
+  <h2 id="semanticsforms-h2-101">Range <code id="semanticsforms-code-102">&lt;input type="range"&gt;</code></h2>
+  <div id="semanticsforms-div-103" class="demo-section">
+    <div id="semanticsforms-div-104" class="demo-grid">
+      <div id="semanticsforms-div-105">
+        <label id="semanticsforms-label-106">With Value Display</label>
+        <input id="semanticsforms-input-107" type="range" data-wb="range" data-show-value="true" min="0" max="100" value="50">
+      </div>
+      <div id="semanticsforms-div-108">
+        <label id="semanticsforms-label-109">With Labels & Suffix</label>
+        <input id="semanticsforms-input-110" type="range" data-wb="range" data-show-value="true" data-show-labels="true" data-value-suffix="%" min="0" max="100" value="75">
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <h2 id="semanticsforms-h2-111">Form <code id="semanticsforms-code-112">&lt;form&gt;</code></h2>
+  <div id="semanticsforms-div-113" class="demo-section">
+    <form id="semanticsforms-form-114" data-wb="form" data-ajax="true" action="#" onsubmit="return false;">
+      <div id="semanticsforms-div-115" style="display: grid; gap: 1rem; max-width: 400px;">
+        <input id="semanticsforms-input-116" data-wb="input" name="name" placeholder="Name" required>
+        <input id="semanticsforms-input-117" data-wb="input" type="email" name="email" placeholder="Email" required>
+        <textarea id="semanticsforms-textarea-118" data-wb="textarea" name="message" placeholder="Message" required></textarea>
+        <button id="semanticsforms-button-119" data-wb="button" type="submit" data-variant="primary" data-loading-text="Sending...">Send Message</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Load WB -->
+  <script id="semanticsforms-script-120" type="module">
+    import WB from '/src/core/wb.js';
+    window.WB = WB;
+    WB.init();
+  </script>
+</body>
+</html>

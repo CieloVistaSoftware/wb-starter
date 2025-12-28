@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Base",
+  "description": "BASE SCHEMA - All card variants INHERIT from this. Contains shared properties, semantic requirements, and compliance rules.",
+  "behavior": "card",
+  "isBase": true,
+  
+  "semantic": {
+    "element": {
+      "preferredTag": "ARTICLE",
+      "allowedTags": ["ARTICLE", "SECTION", "DIV"],
+      "warnIf": "DIV",
+      "description": "Cards are self-contained compositions and should use <article> element"
+    },
+    "structure": {
+      "header": {
+        "tag": "HEADER",
+        "contains": ["title (H3)", "subtitle (P)"],
+        "createdWhen": "title property is set"
+      },
+      "main": {
+        "tag": "MAIN",
+        "contains": ["user content"],
+        "required": true
+      },
+      "footer": {
+        "tag": "FOOTER",
+        "contains": ["footer text", "actions"],
+        "createdWhen": "footer property is set"
+      }
+    }
+  },
+  
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title text displayed in card header",
+      "mapsTo": "header",
+      "default": null
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Subtitle text displayed below title",
+      "mapsTo": "header",
+      "default": null
+    },
+    "footer": {
+      "type": "string",
+      "description": "Footer text displayed at bottom of card",
+      "mapsTo": "footer",
+      "default": null
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual variant of the card",
+      "enum": ["default", "info", "success", "warning", "error"],
+      "default": "default"
+    },
+    "clickable": {
+      "type": "boolean",
+      "description": "Whether the card is clickable",
+      "default": false
+    },
+    "hoverable": {
+      "type": "boolean",
+      "description": "Whether the card has hover effects",
+      "default": true
+    },
+    "elevated": {
+      "type": "boolean",
+      "description": "Whether the card has an elevated shadow",
+      "default": false
+    }
+  },
+  
+  "compliance": {
+    "baseClass": "wb-card",
+    "containerTag": {
+      "preferred": "ARTICLE",
+      "allowed": ["ARTICLE", "SECTION", "DIV"],
+      "warnIf": "DIV"
+    },
+    "requiredChildren": {
+      ".wb-card__main": {
+        "description": "Main content area - always created",
+        "tagName": "MAIN",
+        "required": true
+      }
+    },
+    "optionalChildren": {
+      ".wb-card__header": {
+        "description": "Header section with title/subtitle",
+        "createdWhen": "data-title is set",
+        "tagName": "HEADER"
+      },
+      ".wb-card__footer": {
+        "description": "Footer section",
+        "createdWhen": "data-footer is set",
+        "tagName": "FOOTER"
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      "element": {
+        "type": "card",
+        "clickable": "when data-clickable",
+        "focusable": "when data-clickable",
+        "click": {
+          "when": "clickable",
+          "action": "toggles wb-card--active class",
+          "event": "wb:card:click"
+        },
+        "hover": {
+          "when": "hoverable",
+          "expectedStyle": {
+            "transform": "translateY(-2px)",
+            "boxShadow": "0 8px 24px rgba(0,0,0,0.2)"
+          }
+        }
+      }
+    },
+    "keyboard": {
+      "Enter": { "target": "element (when clickable)", "action": "trigger click" },
+      "Space": { "target": "element (when clickable)", "action": "trigger click" }
+    }
+  },
+  
+  "accessibility": {
+    "element": {
+      "roleWhenClickable": "button",
+      "tabindexWhenClickable": "0"
+    }
+  },
+  
+  "events": {
+    "wb:card:click": {
+      "source": "element",
+      "bubbles": true,
+      "detail": { "active": "boolean" },
+      "firesWhen": "clickable card is clicked"
+    }
+  }
+}

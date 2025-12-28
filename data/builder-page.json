@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "created": "2025-12-19T05:18:28.043Z",
+  "components": [
+    {
+      "n": "Details",
+      "i": "📑",
+      "b": "details",
+      "d": {
+        "multiple": false
+      },
+      "container": true,
+      "childTemplate": {
+        "title": "New Section",
+        "content": "Content here..."
+      },
+      "children": [
+        {
+          "title": "Section 1",
+          "content": "Content for section 1"
+        },
+        {
+          "title": "Section 2",
+          "content": "Content for section 2"
+        }
+      ]
+    }
+  ]
+}

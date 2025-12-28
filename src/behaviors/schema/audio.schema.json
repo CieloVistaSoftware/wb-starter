@@ -1,0 +1,594 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Audio Player",
+  "description": "Audio player with optional 15-band graphic equalizer. Container creates AUDIO element dynamically.",
+  "behavior": "audio",
+  
+  "$containment": [
+    {
+      "type": "CREATES",
+      "name": "audioElement",
+      "element": "AUDIO",
+      "description": "Native audio element created dynamically from src"
+    },
+    {
+      "type": "CREATES",
+      "name": "eqPanel",
+      "element": "DIV.wb-audio__eq-container",
+      "condition": "showEq is true",
+      "description": "15-band graphic equalizer panel"
+    }
+  ],
+  
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "Audio source URL - MUST go to dataset.src, NOT native src attribute",
+      "required": true,
+      "routing": "dataset",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": [
+          "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+          "https://example.com/audio.ogg",
+          "",
+          "audio.mp3"
+        ],
+        "assertions": {
+          "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3": {
+            "selector": "element",
+            "checks": { 
+              "dataset": { "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+              "nativeAttributeAbsent": "src"
+            }
+          },
+          "": {
+            "selector": "element",
+            "checks": { "dataset": { "src": "" } }
+          }
+        }
+      }
+    },
+    "volume": {
+      "type": "string",
+      "description": "Initial volume (0-1)",
+      "default": "0.8",
+      "permutations": {
+        "type": "BOUNDARY_NUMBER",
+        "min": 0,
+        "max": 1,
+        "values": ["0", "0.5", "0.8", "1"],
+        "assertions": {
+          "0": {
+            "selector": "audio",
+            "checks": { "property": { "volume": 0 } }
+          },
+          "0.5": {
+            "selector": "audio",
+            "checks": { "property": { "volume": 0.5 } }
+          },
+          "1": {
+            "selector": "audio",
+            "checks": { "property": { "volume": 1 } }
+          }
+        }
+      }
+    },
+    "showEq": {
+      "type": "boolean",
+      "description": "Show 15-band graphic equalizer panel",
+      "default": false,
+      "inputType": "checkbox",
+      "permutations": {
+        "type": "BOOLEAN",
+        "assertions": {
+          "true": {
+            "selector": ".wb-audio__eq-container",
+            "checks": { "exists": true }
+          },
+          "false": {
+            "selector": ".wb-audio__eq-container",
+            "checks": { "exists": false }
+          }
+        }
+      }
+    },
+    "loop": {
+      "type": "boolean",
+      "description": "Loop audio playback",
+      "default": false,
+      "inputType": "checkbox",
+      "permutations": {
+        "type": "BOOLEAN",
+        "assertions": {
+          "true": {
+            "selector": "audio",
+            "checks": { "attribute": { "loop": "" } }
+          },
+          "false": {
+            "selector": "audio",
+            "checks": { "attributeAbsent": "loop" }
+          }
+        }
+      }
+    },
+    "autoplay": {
+      "type": "boolean",
+      "description": "Auto-play audio (may require muted)",
+      "default": false,
+      "inputType": "checkbox",
+      "permutations": {
+        "type": "BOOLEAN",
+        "assertions": {
+          "true": {
+            "selector": "audio",
+            "checks": { "attribute": { "autoplay": "" } }
+          }
+        }
+      }
+    },
+    "bass": {
+      "type": "string",
+      "description": "Initial bass boost (-12 to 12 dB)",
+      "default": "0",
+      "permutations": {
+        "type": "BOUNDARY_NUMBER",
+        "values": ["-12", "0", "12"]
+      }
+    },
+    "treble": {
+      "type": "string",
+      "description": "Initial treble boost (-12 to 12 dB)",
+      "default": "0",
+      "permutations": {
+        "type": "BOUNDARY_NUMBER",
+        "values": ["-12", "0", "12"]
+      }
+    }
+  },
+  
+  "compliance": {
+    "baseClass": "wb-audio",
+    "containerTag": {
+      "preferred": "DIV",
+      "allowed": ["DIV", "SECTION", "ASIDE"]
+    },
+    "requiredChildren": {
+      "audio": {
+        "description": "Native audio element for playback",
+        "tagName": "AUDIO",
+        "required": true,
+        "requiredWhen": "src is provided",
+        "attributes": {
+          "controls": "true (always)",
+          "src": "from data-src"
+        }
+      }
+    },
+    "optionalChildren": {
+      ".wb-audio__eq-container": {
+        "description": "15-band EQ panel",
+        "createdWhen": "showEq is true",
+        "children": {
+          ".wb-audio__eq-slider": {
+            "count": 15,
+            "description": "Individual band sliders"
+          },
+          ".wb-audio__master-vol": {
+            "count": 1,
+            "description": "Master volume control"
+          }
+        }
+      }
+    },
+    "styles": {
+      "background": {
+        "required": true,
+        "pattern": "gradient"
+      },
+      "borderRadius": {
+        "required": true,
+        "value": "16px"
+      }
+    }
+  },
+  
+  "interactions": {
+    "elements": {
+      "audio": {
+        "type": "media",
+        "clickable": true,
+        "nativeControls": true
+      },
+      ".wb-audio__eq-slider": {
+        "type": "range",
+        "draggable": true,
+        "min": -12,
+        "max": 12,
+        "input": {
+          "action": "Adjust EQ band gain",
+          "triggersAudioContext": true
+        }
+      },
+      ".wb-audio__master-vol": {
+        "type": "range",
+        "min": 0,
+        "max": 100,
+        "input": {
+          "action": "Adjust master volume"
+        }
+      },
+      "button[preset]": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "Apply EQ preset",
+          "presets": ["Flat", "Bass Boost", "Treble", "V-Shape", "Vocal"]
+        }
+      },
+      "button[zero]": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "Reset all EQ bands to 0"
+        }
+      }
+    },
+    "keyboard": {
+      "ArrowRight": {
+        "target": ".wb-audio__eq-slider",
+        "action": "Increase band gain"
+      },
+      "ArrowLeft": {
+        "target": ".wb-audio__eq-slider",
+        "action": "Decrease band gain"
+      }
+    }
+  },
+  
+  "accessibility": {
+    "audio": {
+      "role": "implicit (media element)",
+      "description": "Native audio controls provide accessibility"
+    },
+    ".wb-audio__eq-slider": {
+      "role": "slider",
+      "aria-valuemin": "-12",
+      "aria-valuemax": "12",
+      "aria-valuenow": "dynamic"
+    }
+  },
+  
+  "events": {
+    "wb:audio:play": {
+      "source": "audio",
+      "bubbles": true,
+      "firesWhen": "Audio starts playing"
+    },
+    "wb:audio:pause": {
+      "source": "audio",
+      "bubbles": true,
+      "firesWhen": "Audio is paused"
+    },
+    "wb:audio:volumechange": {
+      "source": "audio or master slider",
+      "bubbles": true,
+      "firesWhen": "Volume changes"
+    },
+    "wb:audio:eqchange": {
+      "source": "EQ slider",
+      "bubbles": true,
+      "firesWhen": "EQ band is adjusted",
+      "detail": {
+        "band": "number (0-14)",
+        "frequency": "number (Hz)",
+        "gain": "number (-12 to 12)"
+      }
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<div data-wb=\"audio\" data-src=\"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3\"></div>",
+      "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"true\"></div>",
+      "<div data-wb=\"audio\" data-src=\"test.mp3\" data-volume=\"0.5\" data-loop></div>"
+    ],
+    
+    "matrix": {
+      "description": "Test all property combinations",
+      "combinations": [
+        { "src": "test.mp3" },
+        { "src": "test.mp3", "volume": "0" },
+        { "src": "test.mp3", "volume": "1" },
+        { "src": "test.mp3", "showEq": true },
+        { "src": "test.mp3", "showEq": false },
+        { "src": "test.mp3", "loop": true },
+        { "src": "test.mp3", "autoplay": true },
+        { "src": "test.mp3", "showEq": true, "volume": "0.7", "loop": true },
+        { "src": "" },
+        { "showEq": true }
+      ]
+    },
+    
+    "functional": {
+      "critical": [
+        {
+          "name": "REGRESSION: src goes to dataset NOT native attribute",
+          "bugId": "BUG-2024-12-19-001",
+          "setup": "<div data-wb=\"audio\" data-src=\"https://example.com/audio.mp3\"></div>",
+          "expect": {
+            "selector": "element",
+            "checks": {
+              "datasetHas": { "src": "https://example.com/audio.mp3" },
+              "nativeAttributeAbsent": "src"
+            }
+          }
+        },
+        {
+          "name": "Audio element created with controls",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\"></div>",
+          "expect": {
+            "selector": "audio",
+            "checks": {
+              "exists": true,
+              "attribute": { "controls": "" }
+            }
+          }
+        }
+      ],
+      
+      "rendering": [
+        {
+          "name": "Has wb-audio base class",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\"></div>",
+          "expect": { "selector": "element", "checks": { "hasClass": "wb-audio" } }
+        },
+        {
+          "name": "Container has dark studio styling",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\"></div>",
+          "expect": { 
+            "selector": "element", 
+            "checks": { 
+              "style": { "borderRadius": "16px" }
+            }
+          }
+        },
+        {
+          "name": "Audio element has correct source",
+          "setup": "<div data-wb=\"audio\" data-src=\"https://example.com/test.mp3\"></div>",
+          "expect": {
+            "selector": "audio",
+            "checks": { "attribute": { "src": "https://example.com/test.mp3" } }
+          }
+        }
+      ],
+      
+      "eqPanel": [
+        {
+          "name": "EQ panel created when showEq true",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"true\"></div>",
+          "expect": {
+            "selector": ".wb-audio__eq-container",
+            "checks": { "exists": true }
+          }
+        },
+        {
+          "name": "EQ panel NOT created when showEq false",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"false\"></div>",
+          "expect": {
+            "selector": ".wb-audio__eq-container",
+            "checks": { "exists": false }
+          }
+        },
+        {
+          "name": "EQ panel has 15 band sliders",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"true\"></div>",
+          "expect": {
+            "selector": ".wb-audio__eq-slider",
+            "checks": { "count": 15 }
+          }
+        },
+        {
+          "name": "EQ panel has preset buttons",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"true\"></div>",
+          "expect": {
+            "selector": "button",
+            "checks": { "textContains": ["Flat", "Bass Boost", "Treble", "V-Shape", "Vocal"] }
+          }
+        },
+        {
+          "name": "EQ panel has Zero All button",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"true\"></div>",
+          "expect": {
+            "selector": "button",
+            "checks": { "textContains": "Zero All" }
+          }
+        },
+        {
+          "name": "EQ panel has master volume slider",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"true\"></div>",
+          "expect": {
+            "selector": ".wb-audio__master-vol",
+            "checks": { "exists": true }
+          }
+        },
+        {
+          "name": "EQ panel has play/pause button",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"true\"></div>",
+          "expect": {
+            "selector": "button",
+            "checks": { "textContains": ["🔊", "⏸️"] }
+          }
+        }
+      ],
+      
+      "volume": [
+        {
+          "name": "Volume 0 sets audio volume to 0",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-volume=\"0\"></div>",
+          "expect": {
+            "selector": "audio",
+            "checks": { "property": { "volume": 0 } }
+          }
+        },
+        {
+          "name": "Volume 1 sets audio volume to 1",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-volume=\"1\"></div>",
+          "expect": {
+            "selector": "audio",
+            "checks": { "property": { "volume": 1 } }
+          }
+        },
+        {
+          "name": "Default volume is 0.8",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\"></div>",
+          "expect": {
+            "selector": "audio",
+            "checks": { "property": { "volume": 0.8 } }
+          }
+        }
+      ],
+      
+      "loop": [
+        {
+          "name": "Loop attribute set when data-loop present",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-loop></div>",
+          "expect": {
+            "selector": "audio",
+            "checks": { "attribute": { "loop": "" } }
+          }
+        },
+        {
+          "name": "Loop attribute absent when data-loop not present",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\"></div>",
+          "expect": {
+            "selector": "audio",
+            "checks": { "attributeAbsent": "loop" }
+          }
+        }
+      ],
+      
+      "buttons": [
+        {
+          "name": "Bass Boost preset sets first sliders high",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"true\"></div>",
+          "selector": "button:has-text('Bass Boost')",
+          "action": "click",
+          "expect": {
+            "selector": ".wb-audio__eq-slider:first-of-type",
+            "checks": { "property": { "value": "8" } }
+          }
+        },
+        {
+          "name": "Zero All resets all sliders to 0",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"true\"></div>",
+          "steps": [
+            { "action": "click", "selector": "button:has-text('Bass Boost')" },
+            { "action": "click", "selector": "button:has-text('Zero All')" }
+          ],
+          "expect": {
+            "selector": ".wb-audio__eq-slider",
+            "checks": { "allValues": "0" }
+          }
+        }
+      ],
+      
+      "keyboard": [
+        {
+          "name": "Arrow keys adjust EQ slider",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"true\"></div>",
+          "steps": [
+            { "action": "focus", "selector": ".wb-audio__eq-slider:first-of-type" },
+            { "action": "press", "key": "ArrowRight" }
+          ],
+          "expect": {
+            "selector": ".wb-audio__eq-slider:first-of-type",
+            "checks": { "property": { "value": "> 0" } }
+          }
+        }
+      ]
+    },
+    
+    "api": {
+      "methods": [
+        {
+          "name": "play() starts playback",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\"></div>",
+          "call": "element.wbAudio.play()",
+          "expect": {
+            "selector": "audio",
+            "checks": { "property": { "paused": false } }
+          }
+        },
+        {
+          "name": "pause() stops playback",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\"></div>",
+          "steps": [
+            { "call": "element.wbAudio.play()" },
+            { "call": "element.wbAudio.pause()" }
+          ],
+          "expect": {
+            "selector": "audio",
+            "checks": { "property": { "paused": true } }
+          }
+        },
+        {
+          "name": "toggle() toggles playback",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\"></div>",
+          "call": "element.wbAudio.toggle()",
+          "expect": {
+            "selector": "audio",
+            "checks": { "property": { "paused": false } }
+          }
+        },
+        {
+          "name": "setVolume() adjusts volume",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\"></div>",
+          "call": "element.wbAudio.setVolume(0.3)",
+          "expect": {
+            "selector": "audio",
+            "checks": { "property": { "volume": 0.3 } }
+          }
+        },
+        {
+          "name": "setBand() adjusts EQ",
+          "setup": "<div data-wb=\"audio\" data-src=\"test.mp3\" data-show-eq=\"true\"></div>",
+          "call": "element.wbAudio.setBand(0, 6)",
+          "expect": {
+            "audioContext": true,
+            "filterGain": { "band": 0, "value": 6 }
+          }
+        }
+      ]
+    }
+  },
+  
+  "builder": {
+    "category": "Media",
+    "icon": "🎵",
+    "name": "Audio",
+    "description": "Audio player with optional 15-band EQ",
+    "defaults": {
+      "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      "volume": "0.8",
+      "showEq": false,
+      "loop": false
+    },
+    "propertyPanel": {
+      "groups": [
+        {
+          "name": "Source",
+          "properties": ["src"]
+        },
+        {
+          "name": "Playback",
+          "properties": ["volume", "loop", "autoplay"]
+        },
+        {
+          "name": "Equalizer",
+          "properties": ["showEq", "bass", "treble"]
+        }
+      ]
+    }
+  }
+}
