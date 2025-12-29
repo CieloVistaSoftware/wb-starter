@@ -12,3 +12,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Test Results
+data/test-results/
