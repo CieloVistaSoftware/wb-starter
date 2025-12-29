@@ -76,3 +76,25 @@ public class HelloWorld {
     }
 }
 ```
+
+## User Examples
+
+### JavaScript
+
+```javascript
+// JavaScript example
+const greeting = "Hello, World!";
+function sayHello(name) {
+  return `Hello, ${name}!`;
+}
+console.log(sayHello("Developer"));
+```
+
+### HTML
+
+```html
+<!-- HTML example -->
+<button data-wb="ripple tooltip" data-tooltip="Click me!">
+  Interactive Button
+</button>
+```
