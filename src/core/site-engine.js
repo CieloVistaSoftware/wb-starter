@@ -17,23 +17,43 @@ export class WBSite {
       loadingTimerId = window.WBLoadingManager.startMonitoring(loadingEl, 'Site initialization');
     }
     try {
-      const res = await fetch('../config/site.json');
+      const res = await fetch('config/site.json');
       this.config = await res.json();
       document.documentElement.dataset.theme = this.config.site.theme;
       document.title = this.config.seo?.title || this.config.site.name;
-      const hash = window.location.hash.slice(1);
-      if (hash && this.config.nav.find(n => n.id === hash)) {
-        this.currentPage = hash;
+      
+      const params = new URLSearchParams(window.location.search);
+      const pageParam = params.get('page');
+      if (pageParam && this.config.nav.find(n => n.id === pageParam)) {
+        this.currentPage = pageParam;
       }
+
       this.render();
       WB.init({ 
         debug: false,
         autoInject: this.config.site.autoInject || false
       });
-      window.addEventListener('hashchange', () => {
-        const page = window.location.hash.slice(1) || 'home';
+
+      window.addEventListener('popstate', () => {
+        const params = new URLSearchParams(window.location.search);
+        const page = params.get('page') || 'home';
         this.navigateTo(page);
       });
+
+      // Intercept clicks for SPA navigation
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (link) {
+          const href = link.getAttribute('href');
+          if (href && href.startsWith('?page=')) {
+            e.preventDefault();
+            const page = new URLSearchParams(href).get('page');
+            history.pushState(null, '', href);
+            this.navigateTo(page);
+          }
+        }
+      });
+
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
@@ -96,7 +116,7 @@ export class WBSite {
       <header class="site__header ${header.sticky ? 'site__header--sticky' : ''}" id="siteHeader">
         <div class="header__left" id="headerLeft">
           <button class="nav__toggle" data-wb="ripple" title="Toggle Navigation" id="navToggle">☰</button>
-          <a href="#home" class="header__logo" id="headerLogo">
+          <a href="?page=home" class="header__logo" id="headerLogo">
             <span class="header__logo-icon" id="headerLogoIcon">${site.logo}</span>
             <span class="header__logo-text" id="headerLogoText">${site.name}</span>
           </a>
@@ -112,7 +132,7 @@ export class WBSite {
   renderNav() {
     const { nav, layout } = this.config;
     const items = nav.map(item => `
-      <a href="#${item.id}" class="nav__item" data-page="${item.id}" data-wb="ripple" id="navItem-${item.id}">
+      <a href="?page=${item.id}" class="nav__item" data-page="${item.id}" data-wb="ripple" id="navItem-${item.id}">
         <span class="nav__icon" id="navIcon-${item.id}">${item.icon || ''}</span>
         <span class="nav__label" id="navLabel-${item.id}">${item.label}</span>
       </a>
@@ -132,7 +152,7 @@ export class WBSite {
       `<a href="${s.url}" class="footer__social-link" target="_blank" title="${s.name}" id="footerSocialLink-${s.name}">${s.icon}</a>`
     ).join('') : '';
     const footerLinks = footer.links?.map(l => 
-      `<a href="#${l.page}" class="footer__link" id="footerLink-${l.page}">${l.label}</a>`
+      `<a href="?page=${l.page}" class="footer__link" id="footerLink-${l.page}">${l.label}</a>`
     ).join(' · ') || '';
     return `
       <footer class="site__footer" id="siteFooter">

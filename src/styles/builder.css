@@ -261,6 +261,12 @@ body {
   left: 50%;
   transform: rotate(180deg) translate(50%, 50%);
   white-space: nowrap;
+  cursor: pointer;
+  z-index: 30;
+}
+
+.sidebar-collapsed-label:hover {
+  color: var(--primary);
 }
 
 .sidebar.collapsed .sidebar-collapsed-label {
@@ -476,7 +482,8 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem 1rem;
+  min-height: 40px;
   border-radius: 5px;
   cursor: grab;
   font-size: 0.8rem;
@@ -769,6 +776,12 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   white-space: nowrap;
+  cursor: pointer;
+  z-index: 30;
+}
+
+.panel-collapsed-label:hover {
+  color: var(--primary);
 }
 
 .panel-right.collapsed .panel-collapsed-label {
@@ -969,8 +982,8 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  min-height: 32px;
+  padding: 0.75rem 1rem;
+  min-height: 44px;
 }
 
 .panel-item-props {
@@ -1072,8 +1085,8 @@ body {
 }
 
 .dropped.selected {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px hsla(var(--hue-primary), 70%, 50%, 0.2);
+  border-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
 }
 
 /* Snap grid positioning */
@@ -1889,6 +1902,20 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.prop-category.collapsed .prop-category-body {
+  display: none;
+}
+
+.prop-category-toggle {
+  transition: transform 0.2s;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.prop-category.collapsed .prop-category-toggle {
+  transform: rotate(-90deg);
 }
 
 /* Property Rows - Vertical layout (Single Column) */
@@ -2829,5 +2856,35 @@ body {
   height: 1px;
   background-color: #ef4444; /* Red */
   transform: translateY(-50%);
+}
+
+/* Panel Tabs */
+.panel-tabs {
+  display: flex;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.panel-tab {
+  background: none;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.panel-tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+  border-radius: 4px 4px 0 0;
+}
+
+.panel-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
 }
 

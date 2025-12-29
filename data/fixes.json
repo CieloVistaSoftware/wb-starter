@@ -539,15 +539,150 @@
       "priority": "CRITICAL",
       "status": "APPLIED",
       "appliedDate": "2025-12-27T12:40:00Z"
+    },
+    "WB_SEMANTICS_LIST_MISSING_036": {
+      "errorId": "WB_SEMANTICS_LIST_MISSING_036",
+      "component": "semantics/list.js",
+      "errorSignature": "Unknown behavior: list",
+      "issue": "Missing list behavior implementation",
+      "cause": "File not created",
+      "fix": {
+        "file": "src/behaviors/js/semantics/list.js",
+        "action": "Created list behavior with support for comma-separated and JSON items",
+        "verify": "List renders items correctly"
+      },
+      "priority": "HIGH",
+      "status": "APPLIED",
+      "appliedDate": "2025-12-28T10:00:00Z"
+    },
+    "WB_SEMANTICS_DESCLIST_MISSING_037": {
+      "errorId": "WB_SEMANTICS_DESCLIST_MISSING_037",
+      "component": "semantics/desclist.js",
+      "errorSignature": "Unknown behavior: desclist",
+      "issue": "Missing desclist behavior implementation",
+      "cause": "File not created",
+      "fix": {
+        "file": "src/behaviors/js/semantics/desclist.js",
+        "action": "Created desclist behavior for description lists",
+        "verify": "Description list renders correctly"
+      },
+      "priority": "HIGH",
+      "status": "APPLIED",
+      "appliedDate": "2025-12-28T10:05:00Z"
+    },
+    "WB_SEMANTICS_EMPTY_MISSING_038": {
+      "errorId": "WB_SEMANTICS_EMPTY_MISSING_038",
+      "component": "semantics/empty.js",
+      "errorSignature": "Unknown behavior: empty",
+      "issue": "Missing empty state behavior implementation",
+      "cause": "File not created",
+      "fix": {
+        "file": "src/behaviors/js/semantics/empty.js",
+        "action": "Created empty state behavior",
+        "verify": "Empty state renders with icon and message"
+      },
+      "priority": "MEDIUM",
+      "status": "APPLIED",
+      "appliedDate": "2025-12-28T10:10:00Z"
+    },
+    "WB_CODE_PRE_ERROR_039": {
+      "errorId": "WB_CODE_PRE_ERROR_039",
+      "component": "semantics/code.js",
+      "errorSignature": "Element must be a <code>",
+      "issue": "Code behavior failed when applied to <pre> tag",
+      "cause": "Strict tag check did not account for pre wrapper",
+      "fix": {
+        "file": "src/behaviors/js/semantics/code.js",
+        "action": "Updated code behavior to delegate to pre behavior when on <pre> tag",
+        "verify": "Code behavior works on <pre> tags"
+      },
+      "priority": "HIGH",
+      "status": "APPLIED",
+      "appliedDate": "2025-12-28T10:15:00Z"
+    },
+    "WB_REGISTRY_ALIASES_040": {
+      "errorId": "WB_REGISTRY_ALIASES_040",
+      "component": "behaviors/index.js",
+      "errorSignature": "Unknown behavior: list (despite file existing)",
+      "issue": "Incorrect aliases in registry prevented loading",
+      "cause": "Aliases mapped 'list' to 'ul' but export was 'list'",
+      "fix": {
+        "file": "src/behaviors/index.js",
+        "action": "Removed incorrect aliases for list and desclist",
+        "verify": "Behaviors load correctly"
+      },
+      "priority": "HIGH",
+      "status": "APPLIED",
+      "appliedDate": "2025-12-28T10:20:00Z"
+    },
+    "WB_SEMANTICS_LIST_JSON_041": {
+      "errorId": "WB_SEMANTICS_LIST_JSON_041",
+      "component": "semantics/list.js",
+      "errorSignature": "N/A (Enhancement)",
+      "issue": "List behavior only supported comma-separated strings",
+      "cause": "Limitation in parsing logic",
+      "fix": {
+        "file": "src/behaviors/js/semantics/list.js",
+        "action": "Added JSON parsing support for data-items",
+        "verify": "List accepts JSON arrays with commas in items"
+      },
+      "priority": "MEDIUM",
+      "status": "APPLIED",
+      "appliedDate": "2025-12-28T10:30:00Z"
+    },
+    "WB_SEMANTICS_STAT_MISSING_042": {
+      "errorId": "WB_SEMANTICS_STAT_MISSING_042",
+      "component": "semantics/stat.js",
+      "errorSignature": "Unknown behavior: stat",
+      "issue": "Missing stat behavior implementation",
+      "cause": "File not created",
+      "fix": {
+        "file": "src/behaviors/js/semantics/stat.js",
+        "action": "Created stat behavior",
+        "verify": "Stat component renders"
+      },
+      "priority": "MEDIUM",
+      "status": "APPLIED",
+      "appliedDate": "2025-12-28T09:50:00Z"
+    },
+    "WB_SEMANTICS_TIMELINE_MISSING_043": {
+      "errorId": "WB_SEMANTICS_TIMELINE_MISSING_043",
+      "component": "semantics/timeline.js",
+      "errorSignature": "Unknown behavior: timeline",
+      "issue": "Missing timeline behavior implementation",
+      "cause": "File not created",
+      "fix": {
+        "file": "src/behaviors/js/semantics/timeline.js",
+        "action": "Created timeline behavior",
+        "verify": "Timeline component renders"
+      },
+      "priority": "MEDIUM",
+      "status": "APPLIED",
+      "appliedDate": "2025-12-28T09:55:00Z"
+    },
+    "WB_SEMANTICS_JSON_MISSING_044": {
+      "errorId": "WB_SEMANTICS_JSON_MISSING_044",
+      "component": "semantics/json.js",
+      "errorSignature": "Unknown behavior: json",
+      "issue": "Missing json behavior implementation",
+      "cause": "File not created",
+      "fix": {
+        "file": "src/behaviors/js/semantics/json.js",
+        "action": "Created json behavior",
+        "verify": "JSON component renders"
+      },
+      "priority": "MEDIUM",
+      "status": "APPLIED",
+      "appliedDate": "2025-12-28T09:58:00Z"
     }
   },
   "stats": {
-    "totalFixes": 35,
+    "totalFixes": 44,
     "critical": 10,
-    "high": 18,
-    "medium": 6,
+    "high": 22,
+    "medium": 11,
     "low": 1,
-    "applied": 35,
+    "applied": 44,
     "pending": 0
   },
   "filesCreated": [

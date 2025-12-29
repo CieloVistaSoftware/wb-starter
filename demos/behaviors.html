@@ -661,10 +661,10 @@
   </div>
 
   <script id="behaviors-script-378" type="module">
-    import WB from "/src/core/wb.js";
+    import WB from "/src/core/wb-lazy.js";
     import { createToast } from "/src/behaviors/js/feedback.js";
     
-    WB.init();
+    WB.init({ autoInject: true });
 
     // 1. Show HTML Code below each card
     document.querySelectorAll('.behavior-card').forEach(card => {

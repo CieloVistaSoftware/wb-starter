@@ -62,6 +62,7 @@ export function notes(element, options = {}) {
             <button class="wb-notes__wide-btn ${currentPosition === 'right' ? 'active' : ''}" data-pos="right" title="Right">▶</button>
             <button class="wb-notes__wide-btn" data-action="collapse-right" title="Collapse right">»</button>
             <button class="wb-notes__wide-btn" data-action="copy" title="Copy">📋</button>
+            <button class="wb-notes__wide-btn" data-action="view" title="View Saved Notes">👁️</button>
             <button class="wb-notes__wide-btn wb-notes__wide-btn--save" data-action="save" title="Save">💾</button>
             <button class="wb-notes__wide-btn" data-action="close" title="Close">✕</button>
           </div>
@@ -89,14 +90,14 @@ export function notes(element, options = {}) {
     try {
       const local = localStorage.getItem(NOTES_STORAGE_KEY);
       if (local) {
-        const data = JSON.parse(local);
-        notesContent = data.content || '';
+        const loadedData = JSON.parse(local);
+        notesContent = loadedData.content || '';
         textarea.value = notesContent;
-        if (data.position) setPosition(data.position);
-        if (data.width) drawer.style.width = data.width;
-        if (data.modalPos) modalPos = data.modalPos;
-        if (data.modalSize) modalSize = data.modalSize;
-        if (data.isOpen) open();
+        if (loadedData.position) setPosition(loadedData.position);
+        if (loadedData.width) drawer.style.width = loadedData.width;
+        if (loadedData.modalPos) modalPos = loadedData.modalPos;
+        if (loadedData.modalSize) modalSize = loadedData.modalSize;
+        if (loadedData.isOpen) open();
       }
     } catch (e) {
       console.warn('Failed to load notes:', e);
@@ -131,9 +132,9 @@ export function notes(element, options = {}) {
 
   // Save to JSON file with duplicate prevention
   const saveToFile = async () => {
-    const content = textarea.value.trim();
+    const fileContent = textarea.value.trim();
     
-    if (!content) {
+    if (!fileContent) {
       showStatus('No notes to save', 'warning');
       return;
     }
@@ -150,7 +151,7 @@ export function notes(element, options = {}) {
       }
 
       // Check for duplicates
-      if (isDuplicateContent(existingData.notes, content)) {
+      if (isDuplicateContent(existingData.notes, fileContent)) {
         showStatus('Note already exists (duplicate prevented)', 'warning');
         return;
       }
@@ -158,7 +159,7 @@ export function notes(element, options = {}) {
       // Add new note
       const newNote = {
         id: 'note-' + Date.now(),
-        content: content,
+        content: fileContent,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
@@ -168,7 +169,7 @@ export function notes(element, options = {}) {
 
       localStorage.setItem(NOTES_STORAGE_KEY + '-file', JSON.stringify(existingData, null, 2));
       
-      showStatus(`Saved (${existingData.notes.length} notes)`, 'success');
+      showStatus('Note added', 'success');
       
       element.dispatchEvent(new CustomEvent('wb:notes:save', {
         bubbles: true,
@@ -202,6 +203,13 @@ export function notes(element, options = {}) {
   // Open/close
   const open = () => {
     isOpen = true;
+    
+    // Prepend URL if not present
+    const currentUrl = window.location.href;
+    if (!textarea.value.includes(currentUrl)) {
+      textarea.value = currentUrl + '\n' + textarea.value;
+    }
+
     element.classList.add('wb-notes--open');
     if (currentPosition === 'modal') {
       backdrop.classList.add('visible');
@@ -269,6 +277,42 @@ export function notes(element, options = {}) {
     } catch (e) {
       showStatus('Copy failed', 'error');
     }
+  };
+
+  // View saved notes
+  const viewSavedNotes = () => {
+    const raw = localStorage.getItem(NOTES_STORAGE_KEY + '-file');
+    const savedData = raw ? JSON.parse(raw) : { notes: [] };
+    
+    // Create modal overlay
+    const viewer = document.createElement('div');
+    viewer.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:10000;display:flex;align-items:center;justify-content:center;padding:2rem;';
+    
+    const viewerContent = document.createElement('div');
+    viewerContent.style.cssText = 'background:var(--bg-secondary,#1f2937);width:100%;max-width:800px;max-height:80vh;border-radius:8px;display:flex;flex-direction:column;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);border:1px solid var(--border-color,#374151);';
+    
+    const viewerHeader = document.createElement('div');
+    viewerHeader.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);display:flex;justify-content:space-between;align-items:center;background:var(--bg-tertiary,#111827);border-radius:8px 8px 0 0;';
+    viewerHeader.innerHTML = '<h3 style="margin:0;color:var(--text-primary,#f9fafb);">Saved Notes</h3><button style="background:none;border:none;color:var(--text-secondary,#9ca3af);cursor:pointer;font-size:1.5rem;line-height:1;">×</button>';
+    
+    const body = document.createElement('div');
+    body.style.cssText = 'padding:1rem;overflow:auto;flex:1;background:var(--bg-code,#1e1e1e);';
+    
+    const pre = document.createElement('pre');
+    pre.style.cssText = 'margin:0;white-space:pre-wrap;font-family:monospace;color:var(--text-primary,#f9fafb);font-size:0.875rem;';
+    pre.textContent = JSON.stringify(savedData, null, 2);
+    
+    body.appendChild(pre);
+    viewerContent.appendChild(viewerHeader);
+    viewerContent.appendChild(body);
+    viewer.appendChild(viewerContent);
+    
+    // Close handlers
+    const closeViewer = () => viewer.remove();
+    viewerHeader.querySelector('button').onclick = closeViewer;
+    viewer.onclick = (e) => { if(e.target === viewer) closeViewer(); };
+    
+    document.body.appendChild(viewer);
   };
 
   // Clear notes
@@ -392,6 +436,7 @@ export function notes(element, options = {}) {
     if (action === 'collapse-left') collapseToSide('left');
     else if (action === 'collapse-right') collapseToSide('right');
     else if (action === 'copy') copyToClipboard();
+    else if (action === 'view') viewSavedNotes();
     else if (action === 'save') saveToFile();
     else if (action === 'clear') clearNotes();
     else if (action === 'close') close();

@@ -188,11 +188,11 @@
         <div class="panel-collapsed-label" id="panelCollapsedLabel">TREE</div>
         <div class="panel-resize-handle" id="panelResizeHandle"></div>
         <div class="panel-right-header" id="panelRightHeader">
-          <span id="builder-span-44">📦 Components</span>
+          <div class="panel-tabs" id="panelTabs">
+            <button class="panel-tab active" id="tabTree" onclick="window.switchPanelTab('tree')">Tree</button>
+            <button class="panel-tab" id="tabProps" onclick="window.switchPanelTab('props')">Properties</button>
+          </div>
           <div class="panel-header-actions" id="panelHeaderActions">
-            <button class="hamburger-btn" id="propsToggleBtn" title="Toggle Properties Panel">
-              <span id="builder-span-45" class="hamburger-icon">☰</span>
-            </button>
             <button class="btn btn-sm btn-danger" id="clearCanvasBtn" title="Clear canvas">Clear</button>
           </div>
         </div>

@@ -459,6 +459,15 @@ export const PAGE_TEMPLATES = [
 
   // COMPANY PAGES
   {
+    id: 'full-company-site',
+    name: 'Full Company Site',
+    icon: '🏢',
+    desc: 'Complete corporate website',
+    category: 'company',
+    preview: 'Hero → Features → Stats → Team → Pricing → Testimonials → Contact → Footer',
+    sections: ['hero-video', 'features-grid', 'stats-section', 'team-section', 'pricing-table', 'testimonials', 'contact-section', 'footer-columns']
+  },
+  {
     id: 'about-company',
     name: 'About Us',
     icon: '👋',

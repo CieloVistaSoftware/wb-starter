@@ -30,7 +30,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: [
       {
         name: "npm_test",
-        description: "Run npm test in the my-website project. Returns test results and writes them to data/test-results.json",
+        description: "Run npm test in the wb-starter project. Returns test results and writes them to data/test-results.json",
         inputSchema: {
           type: "object",
           properties: {
@@ -49,7 +49,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "npm_command",
-        description: "Run any npm command in the my-website project",
+        description: "Run any npm command in the wb-starter project",
         inputSchema: {
           type: "object",
           properties: {

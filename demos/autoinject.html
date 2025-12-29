@@ -567,6 +567,7 @@
 
   <script id="autoinject-script-358" type="module">
     import WB from '/src/core/wb-lazy.js';
+    import { createToast } from '/src/behaviors/js/feedback.js';
 
     // Initialize with autoInject enabled
     WB.init({
@@ -585,6 +586,33 @@
           WB.scan();
         }
       }, 500);
+    });
+
+    // Global click handler for demo purposes
+    document.addEventListener('click', (e) => {
+      // Ignore if clicking on the toast itself or its container
+      if (e.target.closest('.wb-toast-container')) return;
+
+      const target = e.target.closest('button, a, input, select, textarea, summary, [onclick], [data-wb]');
+      
+      if (target) {
+        // Determine "From" (Element name/text)
+        let from = target.tagName.toLowerCase();
+        if (target.id) from += `#${target.id}`;
+        else if (target.textContent && target.textContent.trim().length > 0 && target.textContent.trim().length < 30) {
+          from += ` "${target.textContent.trim()}"`;
+        }
+        
+        // Determine "To" (Action/Target)
+        let to = 'User Action';
+        if (target.tagName === 'BUTTON' && target.type === 'submit') to = 'Submit Form';
+        else if (target.tagName === 'SUMMARY') to = 'Toggle Details';
+        else if (target.onclick || target.hasAttribute('onclick')) to = 'Script Handler';
+        else if (target.dataset.wb) to = `WB Behavior (${target.dataset.wb})`;
+        else if (['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)) to = 'Input Interaction';
+        
+        createToast(`Received from: ${from} to: ${to}`, 'info', 3000);
+      }
     });
 
     // Dynamic injection demo

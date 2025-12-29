@@ -7,7 +7,7 @@ An MCP server that allows Claude to run npm commands in your project.
 ### 1. Install Dependencies
 
 ```powershell
-cd C:\Users\jwpmi\Downloads\AI\my-website\mcp-server
+cd C:\Users\jwpmi\Downloads\AI\wb-starter\mcp-server
 npm install
 ```
 
@@ -25,7 +25,7 @@ Add this server to the `mcpServers` section:
   "mcpServers": {
     "npm-runner": {
       "command": "node",
-      "args": ["C:\\Users\\jwpmi\\Downloads\\AI\\my-website\\mcp-server\\server.js"]
+      "args": ["C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\mcp-server\\server.js"]
     }
   }
 }
@@ -54,5 +54,5 @@ Run any npm command.
 
 Test results are automatically saved to:
 ```
-my-website/data/test-results.json
+wb-starter/data/test-results.json
 ```

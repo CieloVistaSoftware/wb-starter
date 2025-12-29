@@ -197,14 +197,15 @@ function analyzeComponent(wrapper) {
         });
         result.isComplete = false;
       } else if (check.isPlaceholder) {
-        result.issues.push({
+        // Downgrade placeholder errors to warnings for better UX
+        result.warnings.push({
           field,
           type: 'placeholder',
           message: `${formatFieldName(field)} has a placeholder value`,
           value: value,
-          severity: 'error'
+          severity: 'warning'
         });
-        result.isComplete = false;
+        // result.isComplete = false; // Don't mark as incomplete, just warn
       }
     }
     
@@ -426,11 +427,24 @@ function showAllIssues() {
   const totalIssues = results.reduce((sum, r) => sum + r.issues.length, 0);
   const totalWarnings = results.reduce((sum, r) => sum + r.warnings.length, 0);
   
+  // Prepare text for copy
+  const headerText = `📋 Page Issues\n${totalIssues + totalWarnings} item${(totalIssues + totalWarnings) !== 1 ? 's' : ''} need attention\nIssues have been logged to the server (/api/log-issues)\n\n`;
+  
+  const bodyText = results.map(r => {
+    let text = `Component: ${r.behavior} (${r.id})\n`;
+    r.issues.forEach(i => text += `  [ERROR] ${i.message}\n`);
+    r.warnings.forEach(w => text += `  [WARN] ${w.message}\n`);
+    return text;
+  }).join('\n');
+
+  const copyText = headerText + bodyText;
+
   modal.innerHTML = `
     <div class="checklist-content">
       <div class="checklist-header">
         <h3>📋 Page Issues</h3>
         <p>${totalIssues + totalWarnings} item${(totalIssues + totalWarnings) > 1 ? 's' : ''} need attention</p>
+        <p style="font-size:0.75rem;opacity:0.6;margin-top:0.25rem;margin-bottom:1rem;display:block;">Issues have been logged to the server (/api/log-issues)</p>
       </div>
       
       <div class="checklist-summary">
@@ -461,12 +475,24 @@ function showAllIssues() {
       </div>
       
       <div class="checklist-actions">
+        <button class="checklist-btn checklist-btn--secondary" id="copyIssuesBtn">📋 Copy Issues</button>
         <button class="checklist-btn checklist-btn--primary" onclick="document.getElementById('allIssuesModal').remove()">Close</button>
       </div>
     </div>
   `;
   
   document.body.appendChild(modal);
+  
+  // Bind copy button
+  document.getElementById('copyIssuesBtn').onclick = () => {
+    navigator.clipboard.writeText(copyText).then(() => {
+      const btn = document.getElementById('copyIssuesBtn');
+      const originalText = btn.textContent;
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = originalText, 2000);
+      window.toast?.('Issues copied to clipboard');
+    });
+  };
   
   // Close on backdrop click
   modal.onclick = (e) => {

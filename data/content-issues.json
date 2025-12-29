@@ -1,24 +1,8 @@
 {
-  "lastUpdated": "2025-12-28T05:16:26.394Z",
+  "lastUpdated": "2025-12-29T02:26:31.251Z",
   "issues": [
     {
-      "id": "image-6",
-      "behavior": "image",
-      "issues": [
-        {
-          "field": "src",
-          "type": "placeholder",
-          "message": " Source has a placeholder value",
-          "value": "https://picsum.photos/500/400",
-          "severity": "error"
-        }
-      ],
-      "warnings": [],
-      "suggestions": [],
-      "isComplete": false
-    },
-    {
-      "id": "cardprofile-16",
+      "id": "cardprofile-20",
       "behavior": "cardprofile",
       "issues": [],
       "warnings": [
@@ -48,7 +32,7 @@
       "isComplete": true
     },
     {
-      "id": "cardprofile-17",
+      "id": "cardprofile-21",
       "behavior": "cardprofile",
       "issues": [],
       "warnings": [
@@ -78,7 +62,7 @@
       "isComplete": true
     },
     {
-      "id": "cardprofile-18",
+      "id": "cardprofile-22",
       "behavior": "cardprofile",
       "issues": [],
       "warnings": [
@@ -108,7 +92,7 @@
       "isComplete": true
     },
     {
-      "id": "cardprofile-19",
+      "id": "cardprofile-23",
       "behavior": "cardprofile",
       "issues": [],
       "warnings": [

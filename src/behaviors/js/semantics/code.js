@@ -1,4 +1,5 @@
 import hljs from '/src/lib/highlight.js';
+import { pre } from './pre.js';
 
 // Inject CSS if not present
 if (!document.querySelector('link[data-highlight-theme]')) {
@@ -21,6 +22,28 @@ if (!document.querySelector('link[data-highlight-theme]')) {
  * Adds syntax styling, copy button, language badge
  */
 export function code(element, options = {}) {
+  // Handle <pre> wrapper - delegate to pre behavior for chrome, and apply code behavior to inner code for highlighting
+  if (element.tagName === 'PRE') {
+    // 1. Apply pre behavior (chrome: copy, badge, line numbers)
+    const cleanupPre = pre(element, options);
+    
+    // 2. Apply code behavior to inner code (highlighting)
+    const codeElement = element.querySelector('code');
+    let cleanupCode = () => {};
+    
+    if (codeElement) {
+       // Pass language if set on pre
+       const lang = options.language || element.dataset.language;
+       // We don't pass other options because pre handles the chrome
+       cleanupCode = code(codeElement, { language: lang });
+    }
+    
+    return () => {
+      if (cleanupPre) cleanupPre();
+      if (cleanupCode) cleanupCode();
+    };
+  }
+
   if (element.tagName !== 'CODE') {
     console.warn('[code] Element must be a <code>');
     return () => {};
@@ -62,10 +85,10 @@ export function code(element, options = {}) {
       backgroundColor: 'var(--bg-tertiary, rgba(255,255,255,0.1))',
       color: 'var(--text-primary, inherit)',
       border: '1px solid var(--border-color, rgba(255,255,255,0.1))',
-      display: config.variant === 'inline' ? 'inline-block' : 'block',
+      display: config.variant === 'inline' ? 'inline' : 'block',
       whiteSpace: config.variant === 'inline' ? 'nowrap' : 'pre-wrap',
       wordBreak: config.variant === 'inline' ? 'normal' : 'break-all',
-      verticalAlign: 'middle'
+      verticalAlign: 'baseline'
     });
   }
 
@@ -80,7 +103,7 @@ export function code(element, options = {}) {
         
         // Fix for inline code: hljs adds 'hljs' class which might set display: block and padding
         if (!isInsidePre && config.variant === 'inline') {
-            element.style.display = 'inline-block';
+            element.style.display = 'inline';
             element.style.padding = '0.2em 0.4em';
             element.style.backgroundColor = 'var(--bg-tertiary, rgba(255,255,255,0.1))'; // Keep our background for inline
         } else if (isInsidePre) {

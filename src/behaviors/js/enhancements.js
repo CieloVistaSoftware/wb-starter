@@ -491,7 +491,276 @@ export function floatinglabel(element, options = {}) {
   };
 }
 
+/**
+ * OTP - One Time Password Input
+ */
+export function otp(element, options = {}) {
+  const config = {
+    length: parseInt(options.length || element.dataset.length || '6'),
+    ...options
+  };
+
+  element.classList.add('wb-otp');
+  element.innerHTML = '';
+  element.style.display = 'flex';
+  element.style.gap = '0.5rem';
+
+  const inputs = [];
+  for (let i = 0; i < config.length; i++) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.maxLength = 1;
+    input.className = 'wb-otp__input';
+    input.style.cssText = 'width:2.5rem;height:3rem;text-align:center;font-size:1.25rem;border:1px solid var(--border-color,#374151);border-radius:6px;background:var(--bg-secondary,#1f2937);color:var(--text-primary,#f9fafb);';
+    
+    input.oninput = (e) => {
+      const val = e.target.value.replace(/\D/g, '');
+      e.target.value = val;
+      if (val && i < config.length - 1) inputs[i + 1].focus();
+      checkComplete();
+    };
+
+    input.onkeydown = (e) => {
+      if (e.key === 'Backspace' && !e.target.value && i > 0) {
+        inputs[i - 1].focus();
+      }
+    };
+
+    input.onpaste = (e) => {
+      e.preventDefault();
+      const data = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+      for (let j = 0; j < Math.min(data.length, config.length - i); j++) {
+        inputs[i + j].value = data[j];
+      }
+      if (i + data.length < config.length) {
+        inputs[i + data.length].focus();
+      } else {
+        inputs[config.length - 1].focus();
+      }
+      checkComplete();
+    };
+
+    inputs.push(input);
+    element.appendChild(input);
+  }
+
+  function checkComplete() {
+    const value = inputs.map(i => i.value).join('');
+    if (value.length === config.length) {
+      element.dispatchEvent(new CustomEvent('wb:otp:complete', { bubbles: true, detail: { value } }));
+    }
+  }
+
+  return () => element.innerHTML = '';
+}
+
+/**
+ * Color Picker - Enhanced color input
+ */
+export function colorpicker(element, options = {}) {
+  const config = {
+    value: options.value || element.value || '#000000',
+    ...options
+  };
+
+  // If element is input, use it, otherwise create one
+  let input = element;
+  if (element.tagName !== 'INPUT') {
+    input = document.createElement('input');
+    input.type = 'color';
+    element.appendChild(input);
+  } else {
+    input.type = 'color';
+  }
+  
+  input.value = config.value;
+  input.classList.add('wb-colorpicker');
+  input.style.cssText = 'width:3rem;height:3rem;padding:0;border:none;border-radius:6px;cursor:pointer;background:none;';
+
+  return () => {
+    input.classList.remove('wb-colorpicker');
+    if (element !== input) input.remove();
+  };
+}
+
+/**
+ * Tags - Tag input
+ */
+export function tags(element, options = {}) {
+  const config = {
+    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
+    editable: options.editable ?? element.hasAttribute('data-editable'),
+    placeholder: options.placeholder || 'Add tag...',
+    ...options
+  };
+
+  element.classList.add('wb-tags');
+  element.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;padding:0.5rem;border:1px solid var(--border-color,#374151);border-radius:6px;background:var(--bg-secondary,#1f2937);min-height:2.5rem;';
+
+  const renderTags = () => {
+    // Keep input if exists
+    const input = element.querySelector('input');
+    element.innerHTML = '';
+    
+    config.items.forEach((item, i) => {
+      const tag = document.createElement('span');
+      tag.className = 'wb-tag';
+      tag.style.cssText = 'display:inline-flex;align-items:center;gap:0.25rem;padding:0.25rem 0.5rem;background:var(--primary,#6366f1);color:white;border-radius:4px;font-size:0.875rem;';
+      tag.innerHTML = `<span>${item}</span>`;
+      
+      if (config.editable) {
+        const remove = document.createElement('button');
+        remove.textContent = '×';
+        remove.style.cssText = 'background:none;border:none;color:white;cursor:pointer;padding:0;font-size:1rem;line-height:1;opacity:0.8;';
+        remove.onclick = () => {
+          config.items.splice(i, 1);
+          renderTags();
+        };
+        tag.appendChild(remove);
+      }
+      element.appendChild(tag);
+    });
+
+    if (config.editable) {
+      if (input) {
+        element.appendChild(input);
+        input.focus();
+      } else {
+        const newInput = document.createElement('input');
+        newInput.placeholder = config.placeholder;
+        newInput.style.cssText = 'border:none;background:transparent;color:var(--text-primary,#f9fafb);outline:none;flex:1;min-width:60px;font-size:0.875rem;';
+        
+        newInput.onkeydown = (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const val = newInput.value.trim();
+            if (val) {
+              config.items.push(val);
+              renderTags();
+            }
+          } else if (e.key === 'Backspace' && !newInput.value && config.items.length) {
+            config.items.pop();
+            renderTags();
+          }
+        };
+        element.appendChild(newInput);
+      }
+    }
+  };
+
+  renderTags();
+
+  return () => element.innerHTML = '';
+}
+
+/**
+ * Autocomplete - Input with suggestions
+ */
+export function autocomplete(element, options = {}) {
+  const config = {
+    items: (options.items || element.dataset.items || '').split(','),
+    ...options
+  };
+
+  const listId = 'wb-autocomplete-' + Math.random().toString(36).substr(2, 9);
+  element.setAttribute('list', listId);
+
+  const datalist = document.createElement('datalist');
+  datalist.id = listId;
+  
+  config.items.forEach(item => {
+    const option = document.createElement('option');
+    option.value = item.trim();
+    datalist.appendChild(option);
+  });
+
+  document.body.appendChild(datalist);
+
+  return () => {
+    element.removeAttribute('list');
+    datalist.remove();
+  };
+}
+
+/**
+ * File - Enhanced file input
+ */
+export function file(element, options = {}) {
+  const config = {
+    multiple: options.multiple ?? element.hasAttribute('data-multiple'),
+    accept: options.accept || element.dataset.accept || '',
+    ...options
+  };
+
+  element.classList.add('wb-file');
+  element.style.display = 'none'; // Hide original container if it's a div
+
+  // Create hidden input
+  const input = document.createElement('input');
+  input.type = 'file';
+  if (config.multiple) input.multiple = true;
+  if (config.accept) input.accept = config.accept;
+  input.style.display = 'none';
+  element.appendChild(input);
+
+  // Create UI
+  const dropzone = document.createElement('div');
+  dropzone.className = 'wb-file-dropzone';
+  dropzone.style.cssText = 'border:2px dashed var(--border-color,#374151);border-radius:8px;padding:2rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--bg-secondary,#1f2937);';
+  dropzone.innerHTML = `
+    <div style="font-size:2rem;margin-bottom:0.5rem;">📁</div>
+    <div style="color:var(--text-primary,#f9fafb);font-weight:500;">Click or drag files here</div>
+    <div style="color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin-top:0.25rem;">${config.accept || 'Any file'}</div>
+  `;
+
+  dropzone.onclick = () => input.click();
+
+  dropzone.ondragover = (e) => {
+    e.preventDefault();
+    dropzone.style.borderColor = 'var(--primary,#6366f1)';
+    dropzone.style.background = 'rgba(99,102,241,0.1)';
+  };
+
+  dropzone.ondragleave = () => {
+    dropzone.style.borderColor = 'var(--border-color,#374151)';
+    dropzone.style.background = 'var(--bg-secondary,#1f2937)';
+  };
+
+  dropzone.ondrop = (e) => {
+    e.preventDefault();
+    dropzone.style.borderColor = 'var(--border-color,#374151)';
+    dropzone.style.background = 'var(--bg-secondary,#1f2937)';
+    if (e.dataTransfer.files.length) {
+      input.files = e.dataTransfer.files;
+      updateLabel();
+    }
+  };
+
+  input.onchange = updateLabel;
+
+  function updateLabel() {
+    if (input.files.length) {
+      const names = Array.from(input.files).map(f => f.name).join(', ');
+      dropzone.innerHTML = `
+        <div style="font-size:2rem;margin-bottom:0.5rem;color:var(--success,#22c55e);">✅</div>
+        <div style="color:var(--text-primary,#f9fafb);font-weight:500;">${input.files.length} file(s) selected</div>
+        <div style="color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin-top:0.25rem;word-break:break-all;">${names}</div>
+      `;
+    }
+  }
+
+  element.parentNode.insertBefore(dropzone, element);
+  // We keep element in DOM but hidden to hold state/events if needed, or just use dropzone as replacement
+  element.style.display = 'none';
+
+  return () => {
+    dropzone.remove();
+    element.style.display = '';
+  };
+}
+
 export default { 
   form, fieldset, label, help, error, inputgroup, formrow, 
-  stepper, search, password, masked, counter, floatinglabel 
+  stepper, search, password, masked, counter, floatinglabel,
+  otp, colorpicker, tags, autocomplete, file
 };

@@ -1,0 +1,186 @@
+# Page snapshot
+
+```yaml
+- banner:
+  - button "☰"
+  - link "🚀 My Awesome Site":
+    - /url: "?page=home"
+  - button "📝"
+  - combobox:
+    - option "Dark" [selected]
+    - option "Light"
+    - option "Cyberpunk"
+    - option "Ocean"
+    - option "Sunset"
+    - option "Forest"
+    - option "Midnight"
+    - option "Twilight"
+    - option "Sakura"
+    - option "Arctic"
+    - option "Desert"
+    - option "Neon Dreams"
+    - option "Retro Wave"
+    - option "Lavender"
+    - option "Emerald"
+    - option "Ruby"
+    - option "Golden"
+    - option "Slate"
+    - option "Coffee"
+    - option "Mint"
+    - option "Noir"
+    - option "Aurora"
+    - option "Grape"
+- navigation:
+  - link "🏠 Home":
+    - /url: "?page=home"
+  - link "🎨 Page Builder":
+    - /url: "?page=builder"
+  - link "📋 Schema Viewer":
+    - /url: "?page=schema-viewer"
+  - link "✨ Features":
+    - /url: "?page=features"
+  - link "🧩 Components":
+    - /url: "?page=components"
+  - link "🎮 Demos":
+    - /url: "?page=demos"
+  - link "🦸 Hero Variants":
+    - /url: "?page=hero-variants"
+  - link "📖 Docs":
+    - /url: "?page=docs"
+  - link "ℹ️ About":
+    - /url: "?page=about"
+  - link "📧 Contact":
+    - /url: "?page=contact"
+- main:
+  - text: 232 Behaviors
+  - heading "Build stunning UIs with just HTML" [level=1]
+  - paragraph: No JavaScript knowledge required. Add behaviors to any element with simple data attributes. It just works.
+  - link "Explore Components →":
+    - /url: "?page=components"
+  - link "View Documentation":
+    - /url: "?page=docs"
+  - text: <!-- That's it. No JavaScript required. --> <button data-wb="ripple tooltip" data-tooltip="Click me!"> Magic Button ✨ </button> <div data-wb="card" data-title="Glass Card" data-hoverable> Beautiful by default. </div> <div data-wb="modal" data-modal-title="Hello!"> Open Modal </div>
+  - heading "Why WB Behaviors?" [level=2]
+  - paragraph: The simplest way to add interactivity to your websites.
+  - text: ⚡
+  - heading "Zero Build Step" [level=3]
+  - paragraph: No webpack, no npm, no CLI. Just add a script tag and start building.
+  - text: 🎨
+  - heading "23 Themes" [level=3]
+  - paragraph: From dark mode to cyberpunk. Switch themes instantly with one attribute.
+  - text: 📦
+  - heading "232 Behaviors" [level=3]
+  - paragraph: Cards, modals, forms, animations, data display, and much more.
+  - text: 🔌
+  - heading "Framework Agnostic" [level=3]
+  - paragraph: Works with React, Vue, Svelte, or plain HTML. No lock-in.
+  - text: 🪶
+  - heading "Lightweight" [level=3]
+  - paragraph: Each behavior loads only when used. No bloat, maximum performance.
+  - text: ♿
+  - heading "Accessible" [level=3]
+  - paragraph: ARIA attributes, keyboard navigation, and screen reader support built-in.
+  - separator
+  - heading "Rearrange Images" [level=2]
+  - paragraph: Click the arrow buttons to move images in the grid.
+  - img "Image 1"
+  - button "↑"
+  - button "↓"
+  - button "←"
+  - button "→"
+  - img "Image 2"
+  - button "↑"
+  - button "↓"
+  - button "←"
+  - button "→"
+  - img "Image 3"
+  - button "↑"
+  - button "↓"
+  - button "←"
+  - button "→"
+  - img "Image 4"
+  - button "↑"
+  - button "↓"
+  - button "←"
+  - button "→"
+  - img "Image 5"
+  - button "↑"
+  - button "↓"
+  - button "←"
+  - button "→"
+  - img "Image 6"
+  - button "↑"
+  - button "↓"
+  - button "←"
+  - button "→"
+  - separator
+  - heading "Buttons" [level=3]
+  - button "Gradient Button"
+  - button "Glass Button"
+  - heading "Inputs" [level=3]
+  - textbox "Glass input..."
+  - heading "Badges" [level=3]
+  - text: New Tag 🔥 Hot ✨ Pro
+  - heading "Progress" [level=3]
+  - heading "Avatars" [level=3]
+  - img "Avatar"
+  - img "Avatar"
+  - img "Avatar"
+  - heading "Overlays" [level=3]
+  - button "Modal"
+  - button "Toast"
+  - separator
+  - heading "Ready to build something amazing?" [level=2]
+  - paragraph: Start using WB Behaviors today. No signup required.
+  - link "Get Started Free →":
+    - /url: "?page=docs"
+  - link "⭐ Star on GitHub":
+    - /url: https://github.com
+- contentinfo:
+  - text: © 2025 Your Company. All rights reserved.
+  - link "Privacy Policy":
+    - /url: "?page=privacy"
+  - text: ·
+  - link "Terms of Service":
+    - /url: "?page=terms"
+  - link "🐙":
+    - /url: https://github.com
+  - link "🐦":
+    - /url: https://twitter.com
+  - link "💼":
+    - /url: https://linkedin.com
+- heading "Demos" [level=2]
+- link "Auto-Inject Demo Full auto-injection showcase":
+  - /url: demos/autoinject.html
+  - strong: Auto-Inject Demo
+  - text: Full auto-injection showcase
+- link "Behaviors Showcase Interactive behavior catalog":
+  - /url: demos/behaviors.html
+  - strong: Behaviors Showcase
+  - text: Interactive behavior catalog
+- link "Card Demo Card variants and layouts":
+  - /url: demos/card.html
+  - strong: Card Demo
+  - text: Card variants and layouts
+- link "Code Demo Syntax highlighting":
+  - /url: demos/code.html
+  - strong: Code Demo
+  - text: Syntax highlighting
+- link "Semantic Forms Form elements":
+  - /url: demos/semantics-forms.html
+  - strong: Semantic Forms
+  - text: Form elements
+- link "Semantic Media Audio, Video, Images":
+  - /url: demos/semantics-media.html
+  - strong: Semantic Media
+  - text: Audio, Video, Images
+- link "Semantic Structure Layout and structure":
+  - /url: demos/semantics-structure.html
+  - strong: Semantic Structure
+  - text: Layout and structure
+- link "Semantic Theme Theming capabilities":
+  - /url: demos/semantics-theme.html
+  - strong: Semantic Theme
+  - text: Theming capabilities
+- text: Clickable card
+```

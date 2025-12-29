@@ -27,7 +27,7 @@ export function pre(element, options = {}) {
   Object.assign(element.style, {
     fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
     fontSize: '0.875rem',
-    padding: (config.showCopy || config.language) ? '2.5rem 1rem 1rem 1rem' : '1rem',
+    padding: (config.showCopy || config.language) ? '2rem 1rem 1rem 1rem' : '1rem',
     borderRadius: '0', // Wrapper handles radius
     backgroundColor: 'transparent', // Wrapper handles bg
     color: 'var(--text-code, #d4d4d4)',
@@ -74,25 +74,28 @@ export function pre(element, options = {}) {
     
     copyButton.style.cssText = `
       position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
+      top: 0.25rem;
+      right: 0.25rem;
       background: var(--bg-secondary, #1f2937);
       border: 1px solid var(--border-color, #374151);
       color: var(--text-secondary, #9ca3af);
       padding: 0.25rem 0.5rem;
       border-radius: var(--radius-sm, 4px);
       cursor: pointer;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       transition: all 0.2s ease;
       z-index: 10;
+      opacity: 0.7;
     `;
 
     copyButton.addEventListener('mouseenter', () => {
       copyButton.style.backgroundColor = 'var(--bg-tertiary, #374151)';
+      copyButton.style.opacity = '1';
     });
 
     copyButton.addEventListener('mouseleave', () => {
       copyButton.style.backgroundColor = 'var(--bg-secondary, #1f2937)';
+      copyButton.style.opacity = '0.7';
     });
 
     copyButton.addEventListener('click', async () => {
@@ -134,11 +137,11 @@ export function pre(element, options = {}) {
     languageBadge.textContent = displayText;
     
     // Position to the left of copy button if it exists
-    const rightPos = config.showCopy ? '3.5rem' : '0.5rem';
+    const rightPos = config.showCopy ? '3rem' : '0.5rem';
 
     languageBadge.style.cssText = `
       position: absolute;
-      top: 0.5rem;
+      top: 0.25rem;
       right: ${rightPos};
       background: transparent;
       color: var(--text-tertiary, #9ca3af);
@@ -150,6 +153,7 @@ export function pre(element, options = {}) {
       font-family: system-ui, -apple-system, sans-serif;
       z-index: 9;
       pointer-events: none;
+      opacity: 0.5;
     `;
     
     // If copy button exists, we might overlap.
@@ -166,10 +170,24 @@ export function pre(element, options = {}) {
 
   // Add line numbers
   if (config.showLineNumbers) {
+    // Fix: Remove leading newline from code content if present to ensure line numbers align
+    // This handles the common case of <pre><code>\n...</code></pre>
+    if (codeChild && codeChild.firstChild && codeChild.firstChild.nodeType === 3) {
+      if (codeChild.firstChild.nodeValue.startsWith('\n')) {
+        codeChild.firstChild.nodeValue = codeChild.firstChild.nodeValue.substring(1);
+      }
+    } else if (element.firstChild && element.firstChild.nodeType === 3) {
+      if (element.firstChild.nodeValue.startsWith('\n')) {
+        element.firstChild.nodeValue = element.firstChild.nodeValue.substring(1);
+      }
+    }
+
     const lines = element.textContent.split('\n');
     // Remove last empty line if it exists (common in pre)
     if (lines[lines.length - 1] === '') lines.pop();
     
+    const topPadding = (config.showCopy || config.language) ? '2rem' : '1rem';
+
     lineNumbersEl = document.createElement('div');
     lineNumbersEl.className = 'wb-pre__line-numbers';
     lineNumbersEl.style.cssText = `
@@ -177,7 +195,7 @@ export function pre(element, options = {}) {
       left: 0;
       top: 0;
       bottom: 0;
-      padding: 1rem 0.5rem;
+      padding: ${topPadding} 0.5rem 1rem 0.5rem;
       background: var(--bg-secondary, rgba(0,0,0,0.2));
       color: var(--text-tertiary, #6b7280);
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;

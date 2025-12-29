@@ -5,16 +5,24 @@ A modern website starter kit powered by [WB Behaviors](https://github.com/CieloV
 ## 🚀 Quick Start
 
 1. Clone this repo
-2. Open `index.html` in your browser
-3. Edit `config/site.json` to customize
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm start
+   ```
+4. Open `http://localhost:3000` in your browser
 
-That's it! No npm, no build tools, no waiting.
+> **Note**: While the site can run as a static file (`index.html`), the development server is required for the Visual Builder to save changes and for error logging to work.
 
 ## 📁 Project Structure
 
 ```
 wb-starter/
-├── public/             # Entry points (index.html, builder.html)
+├── index.html          # Main entry point
+├── public/             # Tools (builder.html, schema-viewer.html)
 ├── config/
 │   └── site.json       # Site configuration (nav, branding, footer)
 ├── pages/
@@ -74,23 +82,47 @@ Edit `config/site.json` to customize your site:
 }
 ```
 
-Themes: `dark`, `light`, `cyberpunk`, `ocean`, `sunset`, `forest`, `midnight`, `twilight`, `sakura`, `arctic`, `desert`, `neon-dreams`, `retro-wave`, `lavender`, `emerald`, `ruby`, `golden`, `slate`, `coffee`, `mint`, `noir`, `aurora`, `grape`
+Themes: `dark`, `light`, `cyberpunk`, `ocean`, `sunset`, `forest`, `midnight`, `sakura`, `arctic`, `desert`, `neon-dreams`, `retro-wave`, `lavender`, `emerald`, `ruby`, `golden`, `slate`, `coffee`, `mint`, `noir`, `aurora`, `twilight`, `grape`
 
-## 🧩 Using Components
+## ✨ Auto Injection (Preview)
 
-Add behaviors with `data-wb` attributes:
+WB Behaviors automatically enhances standard HTML5 semantic elements. No `data-wb` attributes required!
 
-```html
-<button data-wb="ripple tooltip" data-tooltip="Hello!">
-  Click me
-</button>
+| HTML Element | WB Behavior | Description |
+|--------------|-------------|-------------|
+| `<article>` | `card` | Card component with header/main/footer |
+| `<nav>` | `navbar` | Responsive navigation bar |
+| `<aside>` | `sidebar` | Collapsible sidebar/drawer |
+| `<dialog>` | `dialog` | Modal with backdrop and animations |
+| `<details>` | `details` | Animated expand/collapse |
+| `<form>` | `form` | Validation and AJAX handling |
+| `<input>` | `input` | Enhanced styling and states |
+| `<select>` | `select` | Custom dropdown UI |
+| `<button>` | `button` | Ripple effects and loading states |
+| `<table>` | `table` | Responsive sorting and styling |
+| `<img>` | `image` | Lazy loading and fade-in |
+| `<video>` | `video` | Custom player controls |
+| `<audio>` | `audio` | Custom audio player |
+| `<pre>` | `pre` | Code block with copy button |
 
-<div data-wb="card" data-title="My Card" data-hoverable>
-  Content here
-</div>
-```
+**Opt-out:** Add `data-wb=""` to any element to disable auto-injection.
 
-See [WB Behaviors](https://github.com/CieloVistaSoftware/wb-behaviors) for all 235 behaviors.
+## 📦 Available Behaviors
+
+### Core UI & Layout
+`card`, `collapse`, `dropdown`, `hero`, `layouts`, `navigation`, `overlay` (modal/toast), `tabs`, `toggle`, `tooltip`
+
+### Interactive & Effects
+`copy`, `darkmode`, `draggable`, `effects`, `feedback`, `globe`, `move`, `resizable`, `ripple`, `scroll-progress`, `themecontrol`
+
+### Form & Input
+`checkbox`, `form`, `input`, `radio`, `range`, `rating`, `select`, `slider`, `switch`, `textarea`, `validator`
+
+### Media & Content
+`audio`, `code`, `details`, `dialog`, `dl`, `figure`, `img`, `mdhtml`, `media`, `ol`, `pre`, `progress`, `progressbar`, `table`, `ul`, `video`
+
+### Utilities
+`builder`, `docs-viewer`, `enhancements`, `helpers`, `notes`
 
 ## 📱 Responsive
 

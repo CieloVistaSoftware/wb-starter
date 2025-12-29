@@ -5,11 +5,37 @@ export function collapse(element, options = {}) {
   const config = {
     label: options.label || element.dataset.label || 'Toggle',
     open: options.open ?? element.hasAttribute('data-open'),
+    target: options.target || element.dataset.target,
     ...options
   };
 
   element.classList.add('wb-collapse');
 
+  // If target is specified, act as a remote trigger
+  if (config.target) {
+    const targetEl = document.querySelector(config.target);
+    if (targetEl) {
+      let isTargetOpen = config.open || targetEl.style.display !== 'none';
+      
+      // Initialize target state
+      targetEl.style.display = isTargetOpen ? 'block' : 'none';
+      
+      element.addEventListener('click', () => {
+        isTargetOpen = !isTargetOpen;
+        targetEl.style.display = isTargetOpen ? 'block' : 'none';
+        element.setAttribute('aria-expanded', isTargetOpen);
+        
+        element.dispatchEvent(new CustomEvent('wb:collapse:toggle', { 
+          bubbles: true, 
+          detail: { open: isTargetOpen, target: config.target } 
+        }));
+      });
+      
+      return () => element.classList.remove('wb-collapse');
+    }
+  }
+
+  // Default behavior: Wrap content (Accordion style)
   const content = element.innerHTML;
 
   element.innerHTML = `

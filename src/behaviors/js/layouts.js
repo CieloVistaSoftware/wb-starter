@@ -562,15 +562,15 @@ export function drawerLayout(element, options = {}) {
       element.style.overflow = '';
       element.style.border = element.dataset.prevBorder || '';
       
-      const size = element.dataset.originalSize || (isVertical ? config.height : config.width);
+      const restoredSize = element.dataset.originalSize || (isVertical ? config.height : config.width);
       if (isVertical) {
-          element.style.height = size;
-          element.style.minHeight = size;
-          element.style.flexBasis = size;
+          element.style.height = restoredSize;
+          element.style.minHeight = restoredSize;
+          element.style.flexBasis = restoredSize;
       } else {
-          element.style.width = size;
-          element.style.minWidth = size;
-          element.style.flexBasis = size;
+          element.style.width = restoredSize;
+          element.style.minWidth = restoredSize;
+          element.style.flexBasis = restoredSize;
       }
     }
   };

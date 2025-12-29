@@ -159,7 +159,7 @@ app.use((req, res, next) => {
     return res.status(404).send(`File not found: ${req.path}`);
   }
   
-  res.sendFile(path.join(rootDir, 'public', 'index.html'));
+  res.sendFile(path.join(rootDir, 'index.html'));
 });
 
 app.listen(port, () => {

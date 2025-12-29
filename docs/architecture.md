@@ -49,7 +49,7 @@ This project is a modern, config-driven website starter kit built with the WB Be
 ## 4. Data Flow
 
 ### Site Runtime
-1. **Startup**: `public/index.html` loads, imports `src/core/wb.js` and initializes the site engine.
+1. **Startup**: `index.html` loads, imports `src/core/wb.js` and initializes the site engine.
 2. **Config Load**: Site engine fetches `config/site.json` and applies settings.
 3. **Page Render**: Navigation, header, and main content are rendered based on config and current URL hash.
 4. **Auto Injection (Preview)**: `WB.init()` scans the DOM for semantic elements (e.g., `article`, `nav`, `dialog`) and automatically injects the corresponding behaviors.

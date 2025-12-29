@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" id="htmlRoot">
+<head id="headRoot">
+  <meta charset="UTF-8" id="metaCharset">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="metaViewport">
+  <title id="titleRoot">WB Starter</title>
+  <!-- Layer 1: Foundation (OOP - only 2 files needed) -->
+  <link rel="stylesheet" href="src/styles/themes.css" id="linkTheme">
+  <link rel="stylesheet" href="src/styles/site.css" id="linkSite">
+  <link rel="stylesheet" href="src/styles/wb-signature.css" id="linkSignature">
+  <link rel="preconnect" href="https://fonts.googleapis.com" id="linkPreconnect1">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin id="linkPreconnect2">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" id="linkFonts">
+</head>
+<body id="bodyRoot">
+  <!-- Site container - built dynamically from config -->
+  <div id="app" class="site">
+    <div class="site__loading" id="siteLoading">
+      <div data-wb="spinner" data-color="primary" id="spinner"></div>
+      <p id="loadingText">Loading...</p>
+    </div>
+  </div>
+
+  <!-- Notes modal markup removed. Will be injected by notes component/module. -->
+
+  <!-- GLOBAL ERROR HANDLER - Catches module errors before site loads -->
+  <script id="index-script-1" type="module" src="src/index.js"></script>
+  <!-- Remove notes modal JS logic (now in src/notes-modal.js) -->
+
+  <section id="demos-section" style="padding: 2rem; background: var(--bg-secondary); border-top: 1px solid var(--border-color); margin-top: 2rem;">
+    <div id="demos-container" style="max-width: 1200px; margin: 0 auto;">
+      <h2 id="demos-title" style="margin-bottom: 1rem;">Demos</h2>
+      <div id="demos-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+        <a id="demo-link-autoinject" href="demos/autoinject.html" style="display: block; padding: 1rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: var(--text-primary);">
+          <strong>Auto-Inject Demo</strong><br>
+          <small style="opacity: 0.7;">Full auto-injection showcase</small>
+        </a>
+        <a id="demo-link-behaviors" href="demos/behaviors.html" style="display: block; padding: 1rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: var(--text-primary);">
+          <strong>Behaviors Showcase</strong><br>
+          <small style="opacity: 0.7;">Interactive behavior catalog</small>
+        </a>
+        <a id="demo-link-card" href="demos/card.html" style="display: block; padding: 1rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: var(--text-primary);">
+          <strong>Card Demo</strong><br>
+          <small style="opacity: 0.7;">Card variants and layouts</small>
+        </a>
+        <a id="demo-link-code" href="demos/code.html" style="display: block; padding: 1rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: var(--text-primary);">
+          <strong>Code Demo</strong><br>
+          <small style="opacity: 0.7;">Syntax highlighting</small>
+        </a>
+        <a id="demo-link-forms" href="demos/semantics-forms.html" style="display: block; padding: 1rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: var(--text-primary);">
+          <strong>Semantic Forms</strong><br>
+          <small style="opacity: 0.7;">Form elements</small>
+        </a>
+        <a id="demo-link-media" href="demos/semantics-media.html" style="display: block; padding: 1rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: var(--text-primary);">
+          <strong>Semantic Media</strong><br>
+          <small style="opacity: 0.7;">Audio, Video, Images</small>
+        </a>
+        <a id="demo-link-structure" href="demos/semantics-structure.html" style="display: block; padding: 1rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: var(--text-primary);">
+          <strong>Semantic Structure</strong><br>
+          <small style="opacity: 0.7;">Layout and structure</small>
+        </a>
+        <a id="demo-link-theme" href="demos/semantics-theme.html" style="display: block; padding: 1rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: var(--text-primary);">
+          <strong>Semantic Theme</strong><br>
+          <small style="opacity: 0.7;">Theming capabilities</small>
+        </a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

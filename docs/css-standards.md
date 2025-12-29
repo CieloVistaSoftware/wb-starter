@@ -259,7 +259,7 @@ Is it a full HTML document with <!DOCTYPE html>?
 ## File Structure Summary
 
 ```
-my-website/
+wb-starter/
 ├── index.html              ← Loads foundation CSS (2 files only!)
 ├── src/styles/
 │   └── themes.css          ← Layer 1: ALL variables & themes

@@ -49,35 +49,36 @@ window.togglePanel = () => {
   if (panel && panel.wbToggle) panel.wbToggle();
 };
 
-// Toggle Properties Panel visibility via hamburger menu
-window.togglePropsPanel = () => {
-  const propsPanel = document.getElementById('propsPanel');
-  const toggleBtn = document.getElementById('propsToggleBtn');
+// Switch between Tree and Properties tabs in Right Panel
+window.switchPanelTab = (tab) => {
+  const treeTab = document.getElementById('tabTree');
+  const propsTab = document.getElementById('tabProps');
   const componentList = document.getElementById('componentList');
-  if (!propsPanel) return;
-  const isOpen = propsPanel.classList.toggle('open');
+  const propsPanel = document.getElementById('propsPanel');
 
-  // Toggle visibility between list and props
-  if (componentList) {
-    if (isOpen) {
-      componentList.style.display = 'none';
-      propsPanel.style.display = 'flex';
-    } else {
-      componentList.style.display = 'flex';
+  if (tab === 'tree') {
+    treeTab?.classList.add('active');
+    propsTab?.classList.remove('active');
+    if (componentList) componentList.style.display = 'flex';
+    if (propsPanel) {
       propsPanel.style.display = 'none';
+      propsPanel.classList.remove('open');
     }
-  }
-
-  // Update button state
-  if (toggleBtn) {
-    toggleBtn.classList.toggle('active', isOpen);
-    toggleBtn.title = isOpen ? 'Hide Properties Panel' : 'Show Properties Panel';
-  }
-  // Save state
-  localStorage.setItem('wb-props-panel-open', isOpen);
-  // If opening and a component is selected, render its properties
-  if (isOpen && sel) {
-    renderProps(sel);
+    localStorage.setItem('wb-active-panel-tab', 'tree');
+  } else {
+    treeTab?.classList.remove('active');
+    propsTab?.classList.add('active');
+    if (componentList) componentList.style.display = 'none';
+    if (propsPanel) {
+      propsPanel.style.display = 'flex';
+      propsPanel.classList.add('open');
+    }
+    localStorage.setItem('wb-active-panel-tab', 'props');
+    
+    // If we have a selection, ensure props are rendered
+    if (window.sel) {
+      renderProps(window.sel);
+    }
   }
 };
 
@@ -101,8 +102,12 @@ function bindToggleButtons() {
   // Panel toggle
   // document.getElementById('panelToggle')?.addEventListener('click', togglePanel);
 
+  // Collapsed labels - Allow clicking the text to expand
+  document.getElementById('sidebarCollapsedLabel')?.addEventListener('click', toggleSidebar);
+  document.getElementById('panelCollapsedLabel')?.addEventListener('click', togglePanel);
+
   // Props panel toggle
-  document.getElementById('propsToggleBtn')?.addEventListener('click', togglePropsPanel);
+  // document.getElementById('propsToggleBtn')?.addEventListener('click', togglePropsPanel);
 
   // Category expanders
   document.querySelectorAll('.category-expander-btn[data-category]').forEach(btn => {
@@ -163,22 +168,10 @@ function bindToggleButtons() {
 
 
 // Restore properties panel state on load
-function restorePropsPanel() {
-  const savedState = localStorage.getItem('wb-props-panel-open');
-  if (savedState === 'true') {
-    const propsPanel = document.getElementById('propsPanel');
-    const toggleBtn = document.getElementById('propsToggleBtn');
-    const componentList = document.getElementById('componentList');
-
-    if (propsPanel) {
-      propsPanel.classList.add('open');
-      propsPanel.style.display = 'flex';
-    }
-    if (toggleBtn) toggleBtn.classList.add('active');
-
-    if (componentList) {
-      componentList.style.display = 'none';
-    }
+function restorePanelTab() {
+  const savedTab = localStorage.getItem('wb-active-panel-tab') || 'tree';
+  if (window.switchPanelTab) {
+    window.switchPanelTab(savedTab);
   }
 }
 
@@ -202,7 +195,8 @@ document.addEventListener('keydown', (e) => {
   // P = Toggle properties panel
   if (e.key === 'p' || e.key === 'P') {
     e.preventDefault();
-    togglePropsPanel();
+    const currentTab = localStorage.getItem('wb-active-panel-tab') || 'tree';
+    window.switchPanelTab(currentTab === 'tree' ? 'props' : 'tree');
   }
   // [ = Toggle both panels
   if (e.key === '[') {
@@ -287,7 +281,7 @@ async function start() {
   initNotes();
   updateVPInfo();
   initCanvasEditing();
-  restorePropsPanel(); // Restore properties panel state
+  restorePanelTab(); // Restore properties panel state
 
   // Show welcome screen if canvas is empty (after load)
   setTimeout(() => {
@@ -323,6 +317,45 @@ function initCanvasEditing() {
 
   // Initialize snap grid for draggable components
   initSnapGrid(cv);
+  
+  // Initialize scroll sync
+  initScrollSync();
+}
+
+// Initialize scroll synchronization between canvas and tree view
+function initScrollSync() {
+  const viewport = document.getElementById('viewport');
+  if (!viewport) return;
+
+  let scrollTimeout;
+  viewport.addEventListener('scroll', () => {
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const viewportRect = viewport.getBoundingClientRect();
+      const viewportCenter = viewportRect.top + viewportRect.height / 2;
+      
+      let closestElement = null;
+      let minDistance = Infinity;
+
+      document.querySelectorAll('.dropped').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const elementCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(viewportCenter - elementCenter);
+        
+        // Check if element is actually visible in viewport
+        if (rect.bottom > viewportRect.top && rect.top < viewportRect.bottom) {
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestElement = el;
+          }
+        }
+      });
+
+      if (closestElement && window.highlightTreeItem) {
+        window.highlightTreeItem(closestElement.id);
+      }
+    }, 50); // Throttle
+  });
 }
 
 // Component type categorization and getComponentType are now imported from behavior-types.js
@@ -792,6 +825,10 @@ function add(c, parentId = null) {
   addResizeHandle(w);
   try {
     selComp(w);
+    // Scroll to the new component
+    setTimeout(() => {
+      w.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
   } catch (e) {
     Events.error('Builder', 'selComp failed in add()', { stack: e.stack, component: c.n });
   }
@@ -1007,6 +1044,9 @@ function addToGrid(c, gridWrapper) {
 
   try {
     selComp(w);
+    setTimeout(() => {
+      w.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
   } catch (e) {
     Events.error('Builder', 'selComp failed in addToGrid()', { stack: e.stack, component: c.n });
   }
@@ -1081,6 +1121,9 @@ function addToContainer(c, containerWrapper, dropZone, referenceNode = null) {
 
   try {
     selComp(w);
+    setTimeout(() => {
+      w.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
   } catch (e) {
     Events.error('Builder', 'selComp failed in addToContainer()', { stack: e.stack, component: c.n });
   }
@@ -1163,6 +1206,18 @@ function mkEl(c, id) {
         });
       }
 
+      // Make semantic children contenteditable
+      const semanticTags = [
+        'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'BUTTON', 'A', 'LI', 'LABEL',
+        'SUMMARY', 'DT', 'DD', 'SMALL', 'STRONG', 'EM', 'B', 'I', 'U', 'TH', 'TD'
+      ];
+      if (semanticTags.includes(tagName.toUpperCase()) || (childDef.d && childDef.d.text)) {
+        childEl.setAttribute('contenteditable', 'true');
+        childEl.classList.add('canvas-editable');
+        // Default key is text, but could be content for some
+        childEl.dataset.editableKey = childDef.content ? 'content' : 'text';
+      }
+
       return childEl;
     };
 
@@ -1231,7 +1286,7 @@ function mkEl(c, id) {
   return el;
 }
 
-function selComp(w, scrollToProperty = null) {
+function selComp(w, scrollToProperty = null, switchTab = true) {
   document.querySelectorAll('.dropped').forEach(d => d.classList.remove('selected'));
   w.classList.add('selected');
   sel = w;
@@ -1242,13 +1297,9 @@ function selComp(w, scrollToProperty = null) {
   // Render tree (handled by builder-tree.js)
   renderTree();
 
-  // Auto-open properties panel when component is selected
-  const propsPanel = document.getElementById('propsPanel');
-  const toggleBtn = document.getElementById('propsToggleBtn');
-  if (propsPanel && !propsPanel.classList.contains('open')) {
-    propsPanel.classList.add('open');
-    if (toggleBtn) toggleBtn.classList.add('active');
-    localStorage.setItem('wb-props-panel-open', 'true');
+  // Auto-switch to properties tab
+  if (switchTab && window.switchPanelTab) {
+    window.switchPanelTab('props');
   }
 
   // Render properties for selected component
@@ -2217,79 +2268,86 @@ start();
 // =============================================================================
 // PREVIEW MODE
 // =============================================================================
-let previewMode = false;
-let previewExitBtn = null;
 
 window.togglePreview = () => {
   try {
-    previewMode = !previewMode;
-    console.log('Toggling preview mode:', previewMode);
-    document.body.classList.toggle('preview-mode', previewMode);
-
-    const previewBtn = document.getElementById('previewBtn');
-
-    if (previewMode) {
-      // Disable all builder interactions
-      try {
-        disableBuilderInteractions();
-      } catch (e) {
-        console.error('Error disabling interactions:', e);
-      }
-
-      // Deselect current component
-      if (sel) {
-        sel.classList.remove('selected');
-        sel = null;
-        if (window.renderTree) renderTree();
-      }
-
-      // Hide header in preview
-      const header = document.querySelector('.builder-header');
-      if (header) header.style.display = 'none';
-
-      const footer = document.querySelector('.builder-footer');
-      if (footer) footer.style.display = 'none';
-
-      const container = document.querySelector('.builder-container');
-      if (container) {
-        container.style.top = '0';
-        container.style.bottom = '0';
-      }
-
-      // Add exit button
-      previewExitBtn = document.createElement('button');
-      previewExitBtn.className = 'preview-exit';
-      previewExitBtn.innerHTML = '✕ Exit Preview';
-      previewExitBtn.onclick = togglePreview;
-      document.body.appendChild(previewExitBtn);
-
-      toast('Preview Mode - Press Escape or click Exit to return');
+    const cv = document.getElementById('canvas');
+    const theme = document.documentElement.dataset.theme || 'dark';
+    
+    // Helper to clean up builder artifacts from HTML
+    const getCleanHTML = (root) => {
+      let html = '';
+      Array.from(root.children).forEach(child => {
+        if (child.classList.contains('dropped')) {
+          const inner = child.querySelector('[data-wb]') || child.querySelector('*:not(.controls)');
+          if (inner) {
+            const clone = inner.cloneNode(true);
+            
+            // Clean attributes
+            clone.removeAttribute('contenteditable');
+            clone.classList.remove('canvas-editable');
+            clone.removeAttribute('data-editable-key');
+            
+            // Unwrap nested components
+            const nestedDropped = clone.querySelectorAll('.dropped');
+            nestedDropped.forEach(dropped => {
+              const droppedInner = dropped.querySelector('[data-wb]') || dropped.querySelector('*:not(.controls)');
+              if (droppedInner) {
+                droppedInner.removeAttribute('contenteditable');
+                droppedInner.classList.remove('canvas-editable');
+                droppedInner.removeAttribute('data-editable-key');
+                dropped.replaceWith(droppedInner);
+              } else {
+                dropped.remove();
+              }
+            });
+            
+            // Remove controls
+            clone.querySelectorAll('.controls').forEach(c => c.remove());
+            
+            html += clone.outerHTML + '\n';
+          }
+        }
+      });
+      return html;
+    };
+    
+    const bodyContent = getCleanHTML(cv);
+    
+    const previewHtml = `
+<!DOCTYPE html>
+<html lang="en" data-theme="${theme}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview - WB Page Builder</title>
+  <base href="${window.location.href}">
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/behaviors/css/effects.css">
+  <style>
+    body { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  ${bodyContent}
+  
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    WB.init();
+  </script>
+</body>
+</html>
+    `;
+    
+    const win = window.open('', '_blank');
+    if (win) {
+      win.document.write(previewHtml);
+      win.document.close();
     } else {
-      // Re-enable builder interactions
-      try {
-        enableBuilderInteractions();
-      } catch (e) {
-        console.error('Error enabling interactions:', e);
-        toast('Error restoring builder interactions. Please reload.');
-      }
-
-      // Restore header
-      const header = document.querySelector('.builder-header');
-      if (header) header.style.display = '';
-
-      const footer = document.querySelector('.builder-footer');
-      if (footer) footer.style.display = '';
-
-      const container = document.querySelector('.builder-container');
-      if (container) {
-        container.style.top = '';
-        container.style.bottom = '';
-      }
-
-      // Remove exit button
-      previewExitBtn?.remove();
-      previewExitBtn = null;
+      toast('Please allow popups to view the preview');
     }
+
   } catch (err) {
     console.error('Preview toggle error:', err);
     alert('Error toggling preview mode: ' + err.message);

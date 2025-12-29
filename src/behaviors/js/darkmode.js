@@ -26,6 +26,20 @@ export function darkmode(element, options = {}) {
   targetEl.dataset.theme = config.theme;
   element.classList.add('wb-darkmode');
 
+  // If element is a button, make it toggle
+  if (element.tagName === 'BUTTON') {
+    element.onclick = () => {
+      const current = targetEl.dataset.theme;
+      const next = current === 'dark' ? 'light' : 'dark';
+      targetEl.dataset.theme = next;
+      
+      element.dispatchEvent(new CustomEvent('wb:darkmode:toggle', {
+        bubbles: true,
+        detail: { theme: next }
+      }));
+    };
+  }
+
   // Dispatch event
   element.dispatchEvent(new CustomEvent('wb:darkmode:applied', {
     bubbles: true,

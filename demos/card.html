@@ -108,20 +108,20 @@
   <!-- ============================================ -->
   <div id="card-div-16" class="demo-grid">
     <!-- 1. Basic Card -->
-    <div data-wb="card" data-title="Basic Card" data-subtitle="With subtitle" id="card-basic">
+    <article data-title="Basic Card" data-subtitle="With subtitle" id="card-basic">
       <p id="card-p-17">Card content goes here.</p>
-    </div>
+    </article>
 
     <!-- 2. Elevated Card -->
     <!-- IMPORTANT: !important required to override behavior defaults and ensure visibility -->
-    <div data-wb="card" data-title="Elevated Card" data-elevated="true" id="card-elevated" style="background: var(--bg-tertiary) !important; border: 1px solid var(--primary) !important;">
+    <article data-title="Elevated Card" data-elevated="true" id="card-elevated" style="background: var(--bg-tertiary) !important; border: 1px solid var(--primary) !important;">
       <p id="card-p-18">This card has elevation shadow and distinct styling.</p>
-    </div>
+    </article>
 
     <!-- 3. Clickable Card -->
-    <div data-wb="card" data-title="Clickable Card" data-clickable id="card-clickable">
+    <article data-title="Clickable Card" data-clickable id="card-clickable">
       <p id="card-p-19">Click me! I show a toast notification.</p>
-    </div>
+    </article>
 
     <!-- 4. Theme: Ocean -->
     <div data-wb="cardimage" data-title="Ocean Theme" data-theme="ocean" data-src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" data-alt="Ocean view" id="card-ocean">
@@ -526,49 +526,56 @@
   <!-- ============================================ -->
   <div data-wb="stack" data-gap="0.5rem" id="stack-locations">
     <!-- United States -->
-    <div data-wb="details" data-summary="United States" data-open id="details-us">
+    <details id="details-us" open>
+      <summary>United States</summary>
       <div id="card-div-47" data-wb="stack" data-gap="0.5rem">
-        <div id="card-div-48" data-wb="details" data-summary="California">
+        <details id="details-ca-la">
+          <summary>California</summary>
           <ul id="card-ul-49">
             <li id="card-li-50">Los Angeles</li>
             <li id="card-li-51">San Francisco</li>
             <li id="card-li-52">San Diego</li>
           </ul>
-        </div>
-        <div id="card-div-53" data-wb="details" data-summary="New York">
+        </details>
+        <details id="details-ny">
+          <summary>New York</summary>
           <ul id="card-ul-54">
             <li id="card-li-55">New York City</li>
             <li id="card-li-56">Buffalo</li>
             <li id="card-li-57">Albany</li>
           </ul>
-        </div>
-        <div id="card-div-58" data-wb="details" data-summary="Texas">
+        </details>
+        <details id="details-tx">
+          <summary>Texas</summary>
           <ul id="card-ul-59">
             <li id="card-li-60">Houston</li>
             <li id="card-li-61">Austin</li>
             <li id="card-li-62">Dallas</li>
           </ul>
-        </div>
+        </details>
       </div>
-    </div>
+    </details>
 
     <!-- Canada -->
-    <div data-wb="details" data-summary="Canada" id="details-ca">
+    <details id="details-ca">
+      <summary>Canada</summary>
       <div id="card-div-63" data-wb="stack" data-gap="0.5rem">
-        <div id="card-div-64" data-wb="details" data-summary="Ontario">
+        <details id="details-on">
+          <summary>Ontario</summary>
           <ul id="card-ul-65">
             <li id="card-li-66">Toronto</li>
             <li id="card-li-67">Ottawa</li>
           </ul>
-        </div>
-        <div id="card-div-68" data-wb="details" data-summary="British Columbia">
+        </details>
+        <details id="details-bc">
+          <summary>British Columbia</summary>
           <ul id="card-ul-69">
             <li id="card-li-70">Vancouver</li>
             <li id="card-li-71">Victoria</li>
           </ul>
-        </div>
+        </details>
       </div>
-    </div>
+    </details>
   </div>
 
   <div id="card-div-72" data-wb="mdhtml">
@@ -621,7 +628,7 @@
 
   <!-- Load WB -->
   <script id="card-script-73" type="module">
-    import WB from "/src/core/wb.js";
+    import WB from "/src/core/wb-lazy.js";
     window.WB = WB;
     
     // Expose WBServices as alias to WB.behaviors for test compatibility
@@ -630,7 +637,7 @@
       behaviors: WB.behaviors
     };
     
-    WB.init();
+    WB.init({ autoInject: true });
 
     // Demo interactions
     document.addEventListener("DOMContentLoaded", () => {

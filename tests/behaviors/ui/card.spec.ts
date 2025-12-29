@@ -19,6 +19,11 @@ test.describe('Card Behavior (integration)', () => {
       const container = document.createElement('div');
       container.id = 'test-container';
       container.innerHTML = html;
+      
+      // Force eager loading for tests to avoid IntersectionObserver race conditions
+      const elements = container.querySelectorAll('[data-wb]');
+      elements.forEach(el => el.setAttribute('data-wb-eager', ''));
+      
       document.body.appendChild(container);
     }, html);
     
@@ -26,7 +31,8 @@ test.describe('Card Behavior (integration)', () => {
       (window as any).WB.scan(document.getElementById('test-container'));
     });
     
-    await page.waitForTimeout(50);
+    // Wait a bit more for the dynamic import to complete
+    await page.waitForTimeout(500);
   }
 
   // BORDER TESTS - All cards must have a border

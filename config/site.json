@@ -15,6 +15,7 @@
     { "id": "schema-viewer", "label": "Schema Viewer", "icon": "📋", "page": "schema-viewer" },
     { "id": "features", "label": "Features", "icon": "✨", "page": "features" },
     { "id": "components", "label": "Components", "icon": "🧩", "page": "components" },
+    { "id": "demos", "label": "Demos", "icon": "🎮", "page": "demos" },
     { "id": "hero-variants", "label": "Hero Variants", "icon": "🦸", "page": "hero-variants" },
     { "id": "docs", "label": "Docs", "icon": "📖", "page": "docs" },
     { "id": "about", "label": "About", "icon": "ℹ️", "page": "about" },

@@ -18,8 +18,6 @@ const loadingPromises = new Map();
  * Maps behavior names to specific export names in the module
  */
 const exportAliases = {
-  list: 'ul',
-  desclist: 'dl',
   switch: 'switchInput',
   image: 'img',
   figure: 'figure',
@@ -72,6 +70,12 @@ const behaviorModules = {
   pre: 'semantics/pre',
   kbd: 'semantics/inline',
   mark: 'semantics/inline',
+  json: 'semantics/json',
+  timeline: 'semantics/timeline',
+  stat: 'semantics/stat',
+  list: 'semantics/list',
+  desclist: 'semantics/desclist',
+  empty: 'semantics/empty',
   
   // Media (10) → media.js
   image: 'media', gallery: 'media', video: 'media', audio: 'media',
@@ -99,6 +103,8 @@ const behaviorModules = {
   formrow: 'enhancements', stepper: 'enhancements', search: 'enhancements',
   password: 'enhancements', masked: 'enhancements', counter: 'enhancements',
   floatinglabel: 'enhancements',
+  otp: 'enhancements', colorpicker: 'enhancements', tags: 'enhancements',
+  autocomplete: 'enhancements', file: 'enhancements',
   
   // Validation
   validator: 'validator',

@@ -229,8 +229,11 @@ export function renderPropertiesPanel(wrapper, panelElement, onChange = null, sc
     const cardTypes = CARD_TYPES;
     
     html += `<div class="prop-category">
-      <div class="prop-category-title">Variant</div>
-      <div class="prop-category-content">
+      <div class="prop-category-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="prop-category-label">Variant</span>
+        <span class="prop-category-toggle">▼</span>
+      </div>
+      <div class="prop-category-body">
         <div class="prop-row">
           <div class="prop-row-header">
             <label class="prop-label">Card Type</label>
@@ -248,8 +251,11 @@ export function renderPropertiesPanel(wrapper, panelElement, onChange = null, sc
   for (const cat of sortedCategories) {
     const catDef = getCategory(cat);
     html += `<div class="prop-category">
-      <div class="prop-category-title">${catDef.label}</div>
-      <div class="prop-category-content">`;
+      <div class="prop-category-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="prop-category-label">${catDef.label}</span>
+        <span class="prop-category-toggle">▼</span>
+      </div>
+      <div class="prop-category-body">`;
       
     for (const prop of grouped[cat]) {
       // STRICT MODE: Use exact property name as requested

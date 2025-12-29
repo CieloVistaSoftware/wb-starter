@@ -153,10 +153,10 @@
   </div>
 
   <!-- Load WB -->
-  <script id="semanticsmedia-script-59" type="module">
-    import WB from '/src/core/wb.js';
+  <script type="module">
+    import WB from '/src/core/wb-lazy.js';
     window.WB = WB;
-    WB.init();
+    WB.init({ autoInject: true });
   </script>
 </body>
 </html>

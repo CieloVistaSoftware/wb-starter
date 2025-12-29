@@ -17,6 +17,21 @@ export function dialog(element, options = {}) {
     ...options
   };
 
+  // If element is already a <dialog>, just enhance it with classes
+  if (element.tagName === 'DIALOG') {
+    element.classList.add('wb-dialog');
+    element.classList.add('wb-modal');
+    
+    // Optional: Add size class if needed, or handle via CSS
+    // The existing logic creates a new dialog, but for auto-injection on <dialog>,
+    // we just want to style the existing one.
+    
+    element.dataset.wbReady = 'dialog';
+    return () => {
+      element.classList.remove('wb-dialog', 'wb-modal');
+    };
+  }
+
   element.classList.add('wb-dialog-trigger');
   element.classList.add('wb-dialog'); // Marker for test compliance
   element.classList.add('wb-modal');

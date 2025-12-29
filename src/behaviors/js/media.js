@@ -180,18 +180,37 @@ export function audio(element, options = {}) {
   // Inject styles
   injectAudioStyles();
 
-  element.classList.add('wb-audio');
-  element.setAttribute('role', 'region');
-  element.setAttribute('aria-label', 'Audio Player');
+  // If element is AUDIO, we need to wrap it to apply container styles correctly
+  // without breaking the native controls or layout
+  let container = element;
+  let wrapper = null;
+
+  if (element.tagName === 'AUDIO') {
+    // Create wrapper
+    wrapper = document.createElement('div');
+    wrapper.className = 'wb-audio-wrapper';
+    
+    // Insert wrapper before element
+    if (element.parentNode) {
+      element.parentNode.insertBefore(wrapper, element);
+      wrapper.appendChild(element);
+      container = wrapper;
+    }
+  }
+
+  container.classList.add('wb-audio');
+  container.setAttribute('role', 'region');
+  container.setAttribute('aria-label', 'Audio Player');
   
   // Apply container styles - dark studio look
-  Object.assign(element.style, {
+  Object.assign(container.style, {
     background: 'linear-gradient(145deg, #0a0a12 0%, #12121c 50%, #0a0a10 100%)',
     borderRadius: '16px',
     padding: '1.25rem',
     boxShadow: '0 10px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.03)',
     border: '1px solid rgba(255,255,255,0.05)',
-    minWidth: '320px'
+    minWidth: '320px',
+    display: 'block'
   });
 
   // Debug: log audio element state
@@ -679,7 +698,7 @@ export function audio(element, options = {}) {
     });
 
     eqContainer.appendChild(eqPanel);
-    element.appendChild(eqContainer);
+    container.appendChild(eqContainer);
   }
 
   // Initialize on first play ONLY if EQ is enabled
@@ -703,7 +722,11 @@ export function audio(element, options = {}) {
 
   element.dataset.wbReady = 'audio';
   return () => {
-    element.classList.remove('wb-audio');
+    container.classList.remove('wb-audio');
+    if (wrapper && wrapper.parentNode) {
+      wrapper.parentNode.insertBefore(element, wrapper);
+      wrapper.remove();
+    }
     if (audioContext) audioContext.close();
   };
 }
@@ -948,7 +971,7 @@ export function ratio(element, options = {}) {
   element.classList.add('wb-ratio');
   
   // Convert 16x9 to 16/9 for CSS
-  const cssRatio = config.ratio.replace('x', '/');
+  const cssRatio = config.ratio.replace('x', '/').replace(':', '/');
   element.style.aspectRatio = cssRatio;
   
   // Ensure children cover the area

@@ -60,14 +60,34 @@ window.activePropsTab = window.activePropsTab || 'props';
       font-style: italic;
     }
     
-    /* Fixes requested by user */
+    /* Fixes requested by user: Configurable height, auto by default to fit content */
+    .panel-item {
+      height: var(--panel-item-height, auto) !important;
+      min-height: fit-content !important;
+      overflow: visible !important;
+      flex-shrink: 0 !important; /* Prevent squashing */
+    }
+
     .panel-item-header {
-      padding: 0.75rem 1rem !important; /* Larger click area */
+      padding: 0.75rem 1rem !important;
       min-height: 40px !important;
+      height: auto !important;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Ensure properties are tall enough */
+    .prop-row, .prop-input, .prop-select, .prop-label--checkbox {
+      min-height: 1.5rem !important;
     }
     
-    .panel-item.selected {
+    .prop-label--checkbox {
+      display: flex;
+      align-items: center;
+    }
+    
+    .panel-item.selected, .panel-item.scroll-active {
       border-color: #22c55e !important; /* Green border */
       box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
     }
@@ -80,6 +100,32 @@ window.activePropsTab = window.activePropsTab || 'props';
   `;
   document.head.appendChild(style);
 })();
+
+// =============================================================================
+// SCROLL SYNC HIGHLIGHT
+// =============================================================================
+window.highlightTreeItem = (id) => {
+  // Remove existing scroll highlights
+  document.querySelectorAll('.panel-item.scroll-active').forEach(el => {
+    el.classList.remove('scroll-active');
+  });
+
+  if (!id) return;
+
+  // Find the tree item
+  // Note: We need to handle both top-level and child items
+  const item = document.querySelector(`.panel-item[data-id="${id}"]`);
+  if (item) {
+    // Don't highlight if already selected (avoids double border visual)
+    if (!item.classList.contains('selected')) {
+      item.classList.add('scroll-active');
+    }
+    
+    // Scroll tree view to keep item visible
+    // Use 'nearest' to avoid jumping if it's already in view
+    item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+};
 
 // =============================================================================
 // LOAD MARKED.JS FOR MARKDOWN RENDERING (same approach as mdhtml behavior)
@@ -245,12 +291,12 @@ function renderComponentList() {
     return;
   }
   
-  // Reverse order (newest at top)
-  const reversed = [...components].reverse();
+  // Show in DOM order (top to bottom)
+  const componentsList = [...components];
   
   panel.innerHTML = '';
   
-  reversed.forEach(comp => {
+  componentsList.forEach(comp => {
     const c = JSON.parse(comp.dataset.c);
     const isSelected = selectedId === comp.id;
     const isExpanded = expandedItemId === comp.id;
@@ -327,7 +373,7 @@ function renderComponentList() {
     
     // Click to toggle expand/select
     header.onclick = () => {
-      window.selComp(comp);
+      window.selComp(comp, null, false);
       // Scroll into view
       comp.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
@@ -404,7 +450,7 @@ function renderComponentList() {
         childHeader.appendChild(childRemoveBtn);
         
         childHeader.onclick = () => {
-          window.selComp(child);
+          window.selComp(child, null, false);
           // Scroll into view
           child.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
@@ -468,7 +514,7 @@ function renderContainerChildrenEditor(id, c) {
     return '<div class="prop-empty" style="padding:0.5rem;color:var(--text-muted);font-style:italic">No children components</div>';
   }
   
-  let html = '<div class="prop-category"><div class="prop-category-header"><span class="prop-category-label">Children</span><span class="prop-category-count">' + directChildren.length + '</span></div><div class="prop-category-body">';
+  let html = '<div class="prop-category"><div class="prop-category-header" onclick="this.parentElement.classList.toggle(\'collapsed\')"><span class="prop-category-label">Children</span><span class="prop-category-count">' + directChildren.length + '</span><span class="prop-category-toggle">▼</span></div><div class="prop-category-body">';
   
   directChildren.forEach(child => {
     let childC;
