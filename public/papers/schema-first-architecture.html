@@ -560,14 +560,23 @@
       <figure>
         <div class="demo-box">
           <span class="demo-label">Live Interactive Figure 2: Schema-Driven Rendering</span>
+          <p style="font-size: 9pt; color: #6b7280; margin: 0 0 1rem 0; text-indent: 0;">Click the valid buttons to see WB behaviors in action. The hallucinated button does nothing.</p>
           <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
             <div style="display: flex; gap: 1rem; align-items: center;">
               <span style="font-size: 9pt; color: #22c55e; font-weight: bold;">✓</span>
-              <button data-wb="button" data-variant="primary" style="padding: 0.5rem 1rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; background: #6366f1; color: white;">Schema Valid</button>
+              <button
+                data-wb="button ripple toast"
+                data-variant="primary"
+                data-message="✓ Schema-valid button clicked!"
+                data-type="success">Schema Valid (Primary)</button>
             </div>
             <div style="display: flex; gap: 1rem; align-items: center;">
               <span style="font-size: 9pt; color: #22c55e; font-weight: bold;">✓</span>
-              <button data-wb="button" data-variant="outlined" style="padding: 0.5rem 1rem; border-radius: 6px; border: 2px solid #6366f1; cursor: pointer; font-weight: 500; background: transparent; color: #6366f1;">Schema Valid</button>
+              <button
+                data-wb="button ripple toast"
+                data-variant="outline"
+                data-message="✓ Schema-valid button clicked!"
+                data-type="success">Schema Valid (Outline)</button>
             </div>
             <div style="display: flex; gap: 1rem; align-items: center;">
               <span style="font-size: 9pt; color: #ef4444; font-weight: bold;">✗</span>
