@@ -78,6 +78,10 @@ function injectStyles() {
     }
 
     /* Sizes */
+    .wb-checkbox--xs + .wb-checkbox__box {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
     .wb-checkbox--sm + .wb-checkbox__box {
       width: 0.875rem;
       height: 0.875rem;

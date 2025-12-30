@@ -24,3 +24,6 @@ Based on the project assessment (Dec 2025), here are strategic improvements to c
 ## 5. Testing & Stability
 - **Automated Visual Regression Testing:** Since this is a UI library, automated screenshots of components across different themes would ensure updates don't break styles.
 - **E2E Testing for Builder:** Automated tests to verify drag-and-drop functionality and property updates in the builder.
+
+## 6. Fix Viewer Enhancements
+- **Tooltips:** All controls in the header must have hover text explaining exactly what they do.

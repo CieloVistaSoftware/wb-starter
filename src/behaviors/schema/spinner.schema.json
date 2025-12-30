@@ -8,11 +8,15 @@
     "size": {
       "type": "string",
       "description": "Size of the spinner",
-      "enum": ["sm", "md", "lg", "xl"],
+      "enum": ["xs", "sm", "md", "lg", "xl"],
       "default": "md",
       "permutations": {
         "type": "ALL_ENUM",
         "assertions": {
+          "xs": {
+            "selector": ".wb-spinner div",
+            "checks": { "width": "12px", "height": "12px" }
+          },
           "sm": {
             "selector": ".wb-spinner div",
             "checks": { "width": "16px", "height": "16px" }
@@ -67,6 +71,29 @@
         "type": "EXPLICIT",
         "values": [0, 0.25, 0.5],
         "assertions": {}
+      }
+    },
+    "speed": {
+      "type": "string",
+      "description": "Animation speed preset",
+      "enum": ["slow", "medium", "fast"],
+      "default": "medium",
+      "permutations": {
+        "type": "ALL_ENUM",
+        "assertions": {
+          "slow": {
+            "selector": ".wb-spinner div",
+            "checks": { "style": { "animationDuration": "2s" } }
+          },
+          "medium": {
+            "selector": ".wb-spinner div",
+            "checks": { "style": { "animationDuration": "1.2s" } }
+          },
+          "fast": {
+            "selector": ".wb-spinner div",
+            "checks": { "style": { "animationDuration": "0.6s" } }
+          }
+        }
       }
     }
   },

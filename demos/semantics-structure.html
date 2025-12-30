@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html id="semanticsstructure-html-1" lang="en" data-theme="dark">
-<head id="semanticsstructure-head-2">
-  <meta id="semanticsstructure-meta-3" charset="UTF-8">
-  <meta id="semanticsstructure-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="semanticsstructure-title-5">Semantic Structure Demo</title>
-  <link id="semanticsstructure-link-6" rel="stylesheet" href="../src/styles/themes.css">
-  <link id="semanticsstructure-link-7" rel="stylesheet" href="../src/styles/components.css">
-  <style id="semanticsstructure-style-8">
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semantic Structure Demo</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/components.css">
+  <style>
     body { 
       padding: 2rem; 
       background: var(--bg-color); 
@@ -46,105 +46,157 @@
       gap: 2rem;
       align-items: start;
     }
+    
+    /* Modal padding requirement notice */
+    .padding-warning {
+      display: none;
+      padding: 0.75rem 1rem;
+      background: var(--warning-color);
+      color: #000;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+    }
+    .padding-warning.show {
+      display: block;
+    }
   </style>
 </head>
-<body id="semanticsstructure-body-9">
-  <header id="semanticsstructure-header-10">
-    <h1 id="semanticsstructure-h1-11">🏗️ Semantic Structure Demo</h1>
-    <div id="semanticsstructure-div-12" data-wb="themecontrol"></div>
+<body>
+  <header>
+    <h1>🏗️ Semantic Structure Demo</h1>
+    <div data-wb="themecontrol"></div>
   </header>
-  <p id="semanticsstructure-p-13">Enhanced structural and data elements using standard HTML tags.</p>
+  <p>Enhanced structural and data elements using standard HTML tags.</p>
 
   <!-- TABLE -->
-  <h2 id="semanticsstructure-h2-14">Table <code id="semanticsstructure-code-15">&lt;table&gt;</code></h2>
-  <p id="semanticsstructure-p-16">Features: Sortable columns (click header), Copyable cells (click cell), Searchable, Striped rows.</p>
-  <div id="semanticsstructure-div-17" class="demo-section">
-    <table id="semanticsstructure-table-18" data-wb="table" data-sortable="true" data-searchable="true" data-striped="true" data-hover="true" data-copyable="true" data-pagination="true" data-page-size="5">
-      <thead id="semanticsstructure-thead-19">
-        <tr id="semanticsstructure-tr-20">
-          <th id="semanticsstructure-th-21">ID</th>
-          <th id="semanticsstructure-th-22">Name</th>
-          <th id="semanticsstructure-th-23">Role</th>
-          <th id="semanticsstructure-th-24">Department</th>
-          <th id="semanticsstructure-th-25">Status</th>
-          <th id="semanticsstructure-th-26">Last Login</th>
+  <h2>Table <code>&lt;table&gt;</code></h2>
+  <p>Features: Sortable columns (click header), Copyable cells (click cell), Searchable, Striped rows.</p>
+  <div class="demo-section">
+    <table
+      data-wb="table"
+      data-sortable="true"
+      data-searchable="true"
+      data-striped="true"
+      data-hover="true"
+      data-copyable="true"
+      data-pagination="true"
+      data-page-size="5">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Department</th>
+          <th>Status</th>
+          <th>Last Login</th>
         </tr>
       </thead>
-      <tbody id="semanticsstructure-tbody-27">
-        <tr id="semanticsstructure-tr-28"><td id="semanticsstructure-td-29">1</td><td id="semanticsstructure-td-30">Alice Smith</td><td id="semanticsstructure-td-31">Developer</td><td id="semanticsstructure-td-32">Engineering</td><td id="semanticsstructure-td-33">Active</td><td id="semanticsstructure-td-34">2023-10-01</td></tr>
-        <tr id="semanticsstructure-tr-35"><td id="semanticsstructure-td-36">2</td><td id="semanticsstructure-td-37">Bob Jones</td><td id="semanticsstructure-td-38">Designer</td><td id="semanticsstructure-td-39">Design</td><td id="semanticsstructure-td-40">Active</td><td id="semanticsstructure-td-41">2023-10-02</td></tr>
-        <tr id="semanticsstructure-tr-42"><td id="semanticsstructure-td-43">3</td><td id="semanticsstructure-td-44">Charlie Brown</td><td id="semanticsstructure-td-45">Manager</td><td id="semanticsstructure-td-46">Product</td><td id="semanticsstructure-td-47">Away</td><td id="semanticsstructure-td-48">2023-09-28</td></tr>
-        <tr id="semanticsstructure-tr-49"><td id="semanticsstructure-td-50">4</td><td id="semanticsstructure-td-51">Diana Prince</td><td id="semanticsstructure-td-52">Developer</td><td id="semanticsstructure-td-53">Engineering</td><td id="semanticsstructure-td-54">Active</td><td id="semanticsstructure-td-55">2023-10-03</td></tr>
-        <tr id="semanticsstructure-tr-56"><td id="semanticsstructure-td-57">5</td><td id="semanticsstructure-td-58">Evan Wright</td><td id="semanticsstructure-td-59">QA</td><td id="semanticsstructure-td-60">Engineering</td><td id="semanticsstructure-td-61">Offline</td><td id="semanticsstructure-td-62">2023-09-25</td></tr>
-        <tr id="semanticsstructure-tr-63"><td id="semanticsstructure-td-64">6</td><td id="semanticsstructure-td-65">Fiona Green</td><td id="semanticsstructure-td-66">Developer</td><td id="semanticsstructure-td-67">Engineering</td><td id="semanticsstructure-td-68">Active</td><td id="semanticsstructure-td-69">2023-10-04</td></tr>
-        <tr id="semanticsstructure-tr-70"><td id="semanticsstructure-td-71">7</td><td id="semanticsstructure-td-72">George Hill</td><td id="semanticsstructure-td-73">Designer</td><td id="semanticsstructure-td-74">Design</td><td id="semanticsstructure-td-75">Busy</td><td id="semanticsstructure-td-76">2023-10-01</td></tr>
-        <tr id="semanticsstructure-tr-77"><td id="semanticsstructure-td-78">8</td><td id="semanticsstructure-td-79">Hannah Lee</td><td id="semanticsstructure-td-80">Manager</td><td id="semanticsstructure-td-81">Product</td><td id="semanticsstructure-td-82">Active</td><td id="semanticsstructure-td-83">2023-10-05</td></tr>
-        <tr id="semanticsstructure-tr-84"><td id="semanticsstructure-td-85">9</td><td id="semanticsstructure-td-86">Ian Scott</td><td id="semanticsstructure-td-87">Developer</td><td id="semanticsstructure-td-88">Engineering</td><td id="semanticsstructure-td-89">Offline</td><td id="semanticsstructure-td-90">2023-09-30</td></tr>
-        <tr id="semanticsstructure-tr-91"><td id="semanticsstructure-td-92">10</td><td id="semanticsstructure-td-93">Jane Doe</td><td id="semanticsstructure-td-94">QA</td><td id="semanticsstructure-td-95">Engineering</td><td id="semanticsstructure-td-96">Active</td><td id="semanticsstructure-td-97">2023-10-02</td></tr>
+      <tbody>
+        <tr><td>1</td><td>Alice Smith</td><td>Developer</td><td>Engineering</td><td>Active</td><td>2023-10-01</td></tr>
+        <tr><td>2</td><td>Bob Jones</td><td>Designer</td><td>Design</td><td>Active</td><td>2023-10-02</td></tr>
+        <tr><td>3</td><td>Charlie Brown</td><td>Manager</td><td>Product</td><td>Away</td><td>2023-09-28</td></tr>
+        <tr><td>4</td><td>Diana Prince</td><td>Developer</td><td>Engineering</td><td>Active</td><td>2023-10-03</td></tr>
+        <tr><td>5</td><td>Evan Wright</td><td>QA</td><td>Engineering</td><td>Offline</td><td>2023-09-25</td></tr>
+        <tr><td>6</td><td>Fiona Green</td><td>Developer</td><td>Engineering</td><td>Active</td><td>2023-10-04</td></tr>
+        <tr><td>7</td><td>George Hill</td><td>Designer</td><td>Design</td><td>Busy</td><td>2023-10-01</td></tr>
+        <tr><td>8</td><td>Hannah Lee</td><td>Manager</td><td>Product</td><td>Active</td><td>2023-10-05</td></tr>
+        <tr><td>9</td><td>Ian Scott</td><td>Developer</td><td>Engineering</td><td>Offline</td><td>2023-09-30</td></tr>
+        <tr><td>10</td><td>Jane Doe</td><td>QA</td><td>Engineering</td><td>Active</td><td>2023-10-02</td></tr>
       </tbody>
     </table>
   </div>
 
   <!-- DETAILS -->
-  <h2 id="semanticsstructure-h2-98">Details <code id="semanticsstructure-code-99">&lt;details&gt;</code></h2>
-  <div id="semanticsstructure-div-100" class="demo-section">
-    <div id="semanticsstructure-div-101" class="demo-grid">
-      <details id="semanticsstructure-details-102" data-wb="details" data-accordion="group1">
-        <summary id="semanticsstructure-summary-103">Detail Item 1</summary>
-        <p id="semanticsstructure-p-104">This is the content for item 1. It closes when another item in the group opens.</p>
+  <h2>Details <code>&lt;details&gt;</code></h2>
+  <div class="demo-section">
+    <div class="demo-grid">
+      <details
+        data-wb="details"
+        data-accordion="group1">
+        <summary>Detail Item 1</summary>
+        <p>This is the content for item 1. It closes when another item in the group opens.</p>
       </details>
-      <details id="semanticsstructure-details-105" data-wb="details" data-accordion="group1">
-        <summary id="semanticsstructure-summary-106">Detail Item 2</summary>
-        <p id="semanticsstructure-p-107">This is the content for item 2. It closes when another item in the group opens.</p>
+      <details
+        data-wb="details"
+        data-accordion="group1">
+        <summary>Detail Item 2</summary>
+        <p>This is the content for item 2. It closes when another item in the group opens.</p>
       </details>
-      <details id="semanticsstructure-details-108" data-wb="details" data-accordion="group1">
-        <summary id="semanticsstructure-summary-109">Detail Item 3</summary>
-        <p id="semanticsstructure-p-110">This is the content for item 3. It closes when another item in the group opens.</p>
+      <details
+        data-wb="details"
+        data-accordion="group1">
+        <summary>Detail Item 3</summary>
+        <p>This is the content for item 3. It closes when another item in the group opens.</p>
       </details>
     </div>
   </div>
 
   <!-- DIALOG -->
-  <h2 id="semanticsstructure-h2-111">Dialog <code id="semanticsstructure-code-112">&lt;dialog&gt;</code></h2>
-  <div id="semanticsstructure-div-113" class="demo-section">
-    <button id="semanticsstructure-button-114" onclick="document.getElementById('demo-dialog').showModal()">Open Modal Dialog</button>
+  <h2>Dialog <code>&lt;dialog&gt;</code></h2>
+  <div class="demo-section">
+    <button id="open-dialog-btn">Open Modal Dialog</button>
+    <div id="padding-warning" class="padding-warning">
+      ⚠️ Modal blocked: Body requires at least 1rem padding on left and right sides.
+    </div>
     
-    <dialog id="demo-dialog" data-wb="dialog" data-close-on-backdrop="true" data-animation="fade">
-      <form id="semanticsstructure-form-115" method="dialog">
-        <h3 id="semanticsstructure-h3-116">Confirmation</h3>
-        <p id="semanticsstructure-p-117">This is a native dialog enhanced with animations and backdrop click handling.</p>
-        <div id="semanticsstructure-div-118" style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
-          <button id="semanticsstructure-button-119" value="cancel">Cancel</button>
-          <button id="semanticsstructure-button-120" value="confirm" autofocus>Confirm</button>
+    <dialog
+      id="demo-dialog"
+      data-wb="dialog"
+      data-close-on-backdrop="true"
+      data-animation="fade">
+      <form method="dialog">
+        <h3>Confirmation</h3>
+        <p>This is a native dialog enhanced with animations and backdrop click handling.</p>
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+          <button value="cancel">Cancel</button>
+          <button value="confirm" autofocus>Confirm</button>
         </div>
       </form>
     </dialog>
   </div>
 
   <!-- PROGRESS -->
-  <h2 id="semanticsstructure-h2-121">Progress <code id="semanticsstructure-code-122">&lt;progress&gt;</code></h2>
-  <div id="semanticsstructure-div-123" class="demo-section">
-    <div id="semanticsstructure-div-124" class="demo-grid">
-      <div id="semanticsstructure-div-125">
-        <h3 id="semanticsstructure-h3-126">Determinate</h3>
-        <progress id="semanticsstructure-progress-127" data-wb="progress" value="70" max="100" data-label="Loading..." data-animated="true"></progress>
+  <h2>Progress <code>&lt;progress&gt;</code></h2>
+  <div class="demo-section">
+    <div class="demo-grid">
+      <div>
+        <h3>Determinate</h3>
+        <progress
+          data-wb="progress"
+          value="70"
+          max="100"
+          data-label="Loading..."
+          data-animated="true"></progress>
       </div>
-      <div id="semanticsstructure-div-128">
-        <h3 id="semanticsstructure-h3-129">Indeterminate</h3>
+      <div>
+        <h3>Indeterminate</h3>
         <!-- Using striped animation for indeterminate state -->
-        <progress id="semanticsstructure-progress-130" data-wb="progress" value="100" max="100" data-striped="true" data-animated="true"></progress>
+        <progress
+          data-wb="progress"
+          value="100"
+          max="100"
+          data-striped="true"
+          data-animated="true"></progress>
       </div>
     </div>
   </div>
 
   <!-- CODE & PRE -->
-  <h2 id="semanticsstructure-h2-131">Code <code id="semanticsstructure-code-132">&lt;code&gt;</code> & <code id="semanticsstructure-code-133">&lt;pre&gt;</code></h2>
-  <div id="semanticsstructure-div-134" class="demo-section">
-    <h3 id="semanticsstructure-h3-135">Inline Code</h3>
-    <p id="semanticsstructure-p-136">Use <code id="semanticsstructure-code-137" data-wb="code" data-copy="true">npm install wb-core</code> to install.</p>
+  <h2>Code <code>&lt;code&gt;</code> & <code>&lt;pre&gt;</code></h2>
+  <div class="demo-section">
+    <h3>Inline Code</h3>
+    <p>Use <code
+      data-wb="code"
+      data-copy="true">npm install wb-core</code> to install.</p>
     
-    <h3 id="semanticsstructure-h3-138">Code Block</h3>
-    <pre id="semanticsstructure-pre-139" data-wb="pre" data-copy="true" data-line-numbers="true"><code id="semanticsstructure-code-140" data-wb="code" data-language="javascript">
+    <h3>Code Block</h3>
+    <pre
+      data-wb="pre"
+      data-copy="true"
+      data-line-numbers="true"><code
+        data-wb="code"
+        data-language="javascript">
 function hello() {
   console.log("Hello World");
   return true;
@@ -153,32 +205,38 @@ function hello() {
   </div>
 
   <!-- LISTS -->
-  <h2 id="semanticsstructure-h2-141">Lists <code id="semanticsstructure-code-142">&lt;ul&gt;, &lt;ol&gt;, &lt;dl&gt;</code></h2>
-  <div id="semanticsstructure-div-143" class="demo-section">
-    <div id="semanticsstructure-div-144" class="demo-grid">
-      <div id="semanticsstructure-div-145">
-        <h3 id="semanticsstructure-h3-146">Enhanced Unordered List</h3>
-        <ul id="semanticsstructure-ul-147" data-wb="ul" data-marker="check">
-          <li id="semanticsstructure-li-148">Feature One</li>
-          <li id="semanticsstructure-li-149">Feature Two</li>
-          <li id="semanticsstructure-li-150">Feature Three</li>
+  <h2>Lists <code>&lt;ul&gt;, &lt;ol&gt;, &lt;dl&gt;</code></h2>
+  <div class="demo-section">
+    <div class="demo-grid">
+      <div>
+        <h3>Enhanced Unordered List</h3>
+        <ul
+          data-wb="ul"
+          data-marker="check">
+          <li>Feature One</li>
+          <li>Feature Two</li>
+          <li>Feature Three</li>
         </ul>
       </div>
-      <div id="semanticsstructure-div-151">
-        <h3 id="semanticsstructure-h3-152">Enhanced Ordered List</h3>
-        <ol id="semanticsstructure-ol-153" data-wb="ol" data-marker="circle">
-          <li id="semanticsstructure-li-154">Step One</li>
-          <li id="semanticsstructure-li-155">Step Two</li>
-          <li id="semanticsstructure-li-156">Step Three</li>
+      <div>
+        <h3>Enhanced Ordered List</h3>
+        <ol
+          data-wb="ol"
+          data-marker="circle">
+          <li>Step One</li>
+          <li>Step Two</li>
+          <li>Step Three</li>
         </ol>
       </div>
-      <div id="semanticsstructure-div-157">
-        <h3 id="semanticsstructure-h3-158">Description List</h3>
-        <dl id="semanticsstructure-dl-159" data-wb="dl" data-layout="grid">
-          <dt id="semanticsstructure-dt-160">HTML</dt>
-          <dd id="semanticsstructure-dd-161">HyperText Markup Language</dd>
-          <dt id="semanticsstructure-dt-162">CSS</dt>
-          <dd id="semanticsstructure-dd-163">Cascading Style Sheets</dd>
+      <div>
+        <h3>Description List</h3>
+        <dl
+          data-wb="dl"
+          data-layout="grid">
+          <dt>HTML</dt>
+          <dd>HyperText Markup Language</dd>
+          <dt>CSS</dt>
+          <dd>Cascading Style Sheets</dd>
         </dl>
       </div>
     </div>
@@ -189,6 +247,33 @@ function hello() {
     import WB from '../src/core/wb-lazy.js';
     window.WB = WB;
     WB.init({ autoInject: true });
+    
+    // Modal padding validation
+    const openDialogBtn = document.getElementById('open-dialog-btn');
+    const demoDialog = document.getElementById('demo-dialog');
+    const paddingWarning = document.getElementById('padding-warning');
+    
+    /**
+     * Check if body has at least 1rem (16px) padding on left and right
+     */
+    function hasRequiredPadding() {
+      const bodyStyle = window.getComputedStyle(document.body);
+      const paddingLeft = parseFloat(bodyStyle.paddingLeft);
+      const paddingRight = parseFloat(bodyStyle.paddingRight);
+      const minPadding = 16; // 1rem = 16px
+      
+      return paddingLeft >= minPadding && paddingRight >= minPadding;
+    }
+    
+    openDialogBtn.addEventListener('click', () => {
+      if (hasRequiredPadding()) {
+        paddingWarning.classList.remove('show');
+        demoDialog.showModal();
+      } else {
+        paddingWarning.classList.add('show');
+        console.warn('Modal blocked: Body requires at least 1rem padding on left and right sides.');
+      }
+    });
   </script>
 </body>
 </html>

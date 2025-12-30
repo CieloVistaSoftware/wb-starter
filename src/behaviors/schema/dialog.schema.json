@@ -32,6 +32,16 @@
       "description": "Dialog width",
       "enum": ["sm", "md", "lg", "xl"],
       "default": "md"
+    },
+    "closeOnBackdrop": {
+      "type": "boolean",
+      "description": "Whether clicking the backdrop closes the dialog",
+      "default": true
+    },
+    "closeOnEscape": {
+      "type": "boolean",
+      "description": "Whether pressing Escape closes the dialog",
+      "default": true
     }
   },
   
@@ -58,15 +68,206 @@
       }
     }
   },
+
+  "interactions": {
+    "elements": {
+      "element": {
+        "type": "trigger",
+        "clickable": true,
+        "click": {
+          "action": "open dialog",
+          "event": "wb:dialog:open"
+        }
+      },
+      ".wb-dialog__close": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "close dialog",
+          "event": "wb:dialog:close"
+        }
+      },
+      "::backdrop": {
+        "type": "backdrop",
+        "clickable": true,
+        "click": {
+          "action": "close dialog (if closeOnBackdrop)",
+          "event": "wb:dialog:close"
+        }
+      }
+    },
+    "keyboard": {
+      "Escape": {
+        "target": "dialog",
+        "action": "close dialog"
+      },
+      "Tab": {
+        "target": "dialog",
+        "action": "cycle focus within dialog (focus trap)"
+      }
+    }
+  },
+
+  "accessibility": {
+    "dialog": {
+      "role": "dialog",
+      "aria-modal": "true",
+      "aria-labelledby": "dialog title ID"
+    },
+    "closeButton": {
+      "aria-label": "Close dialog"
+    }
+  },
+
+  "events": {
+    "wb:dialog:open": {
+      "trigger": "Dialog opens",
+      "detail": { "title": "string" },
+      "bubbles": true
+    },
+    "wb:dialog:close": {
+      "trigger": "Dialog closes",
+      "detail": {},
+      "bubbles": true
+    }
+  },
   
   "test": {
     "setup": [
-      "<button data-wb=\"dialog\" data-dialog-title=\"Test Dialog\">Open</button>"
+      "<button data-wb=\"dialog\" data-dialog-title=\"Test Dialog\">Open</button>",
+      "<button data-wb=\"dialog\" data-dialog-title=\"With Content\" data-dialog-content=\"Hello world\">Open</button>"
     ],
     "matrix": {
       "combinations": [
         {},
-        { "title": "Custom Title" }
+        { "title": "Custom Title" },
+        { "title": "Large", "size": "lg" }
+      ]
+    },
+    "functional": {
+      "buttons": [
+        {
+          "name": "trigger opens dialog",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\">Open</button>",
+          "selector": "element",
+          "expect": {
+            "selector": ".wb-dialog",
+            "visible": true
+          }
+        }
+      ],
+      "interactions": [
+        {
+          "name": "clicking trigger opens dialog",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\">Open</button>",
+          "action": "click",
+          "selector": "element",
+          "expect": {
+            "selector": "dialog[open]",
+            "exists": true
+          }
+        },
+        {
+          "name": "clicking close button closes dialog",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\" class=\"--open\">Open</button>",
+          "action": "click",
+          "selector": ".wb-dialog__close",
+          "expect": {
+            "selector": "dialog[open]",
+            "exists": false
+          }
+        },
+        {
+          "name": "dialog fires open event",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\">Open</button>",
+          "action": "click",
+          "selector": "element",
+          "expect": {
+            "event": "wb:dialog:open"
+          }
+        }
+      ],
+      "keyboard": [
+        {
+          "name": "Escape closes dialog",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\" class=\"--open\">Open</button>",
+          "key": "Escape",
+          "expect": {
+            "selector": "dialog[open]",
+            "exists": false
+          }
+        },
+        {
+          "name": "Tab cycles focus within dialog",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\" class=\"--open\">Open</button>",
+          "key": "Tab",
+          "expect": {
+            "focused": ".wb-dialog button, .wb-dialog [tabindex]"
+          }
+        }
+      ],
+      "dismiss": [
+        {
+          "name": "close button dismisses dialog",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\" class=\"--open\">Open</button>",
+          "selector": ".wb-dialog__close",
+          "action": "click",
+          "expect": {
+            "selector": ".wb-dialog",
+            "visible": false
+          }
+        },
+        {
+          "name": "Escape key dismisses dialog",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\" class=\"--open\">Open</button>",
+          "selector": ".wb-dialog",
+          "action": "press",
+          "key": "Escape",
+          "expect": {
+            "selector": "dialog[open]",
+            "exists": false
+          }
+        }
+      ],
+      "focus": [
+        {
+          "name": "focus moves into dialog on open",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\">Open</button>",
+          "action": "click",
+          "selector": "element",
+          "expect": {
+            "focused": ".wb-dialog"
+          }
+        },
+        {
+          "name": "focus returns to trigger on close",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\" class=\"--open\">Open</button>",
+          "action": "click",
+          "selector": ".wb-dialog__close",
+          "expect": {
+            "focused": "[data-wb=\"dialog\"]"
+          }
+        }
+      ],
+      "visual": [
+        {
+          "name": "trigger has trigger class",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\">Open</button>",
+          "expect": {
+            "selector": "element",
+            "hasClass": "wb-dialog-trigger"
+          }
+        },
+        {
+          "name": "dialog has dialog class",
+          "setup": "<button data-wb=\"dialog\" data-dialog-title=\"Test\" class=\"--open\">Open</button>",
+          "action": "click",
+          "selector": "element",
+          "expect": {
+            "selector": "dialog",
+            "hasClass": "wb-dialog"
+          }
+        }
       ]
     }
   }

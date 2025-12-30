@@ -7,16 +7,38 @@ export function select(element, options = {}) {
     searchable: options.searchable ?? element.hasAttribute('data-searchable'),
     clearable: options.clearable ?? element.hasAttribute('data-clearable'),
     multiple: options.multiple ?? element.hasAttribute('multiple'),
+    variant: options.variant || element.dataset.variant || 'default',
+    size: options.size || element.dataset.size || 'md',
     placeholder: options.placeholder || element.dataset.placeholder || 'Select...',
     ...options
   };
 
   element.classList.add('wb-select');
+  
+  // Apply variant
+  if (config.variant !== 'default') {
+    element.classList.add(`wb-select--${config.variant}`);
+  }
+
+  // Apply size
+  if (config.size !== 'md') {
+    element.classList.add(`wb-select--${config.size}`);
+    
+    // Adjust padding based on size
+    const paddings = {
+      xs: '0.125rem 0.5rem',
+      sm: '0.25rem 0.5rem',
+      md: '0.5rem 0.75rem',
+      lg: '0.75rem 1rem',
+      xl: '1rem 1.25rem'
+    };
+    element.style.padding = paddings[config.size] || paddings.md;
+  }
+
   element.setAttribute('role', 'combobox');
   
   // Basic styling
   Object.assign(element.style, {
-    padding: '0.5rem 0.75rem',
     borderRadius: '6px',
     border: '1px solid var(--border-color, #374151)',
     background: 'var(--bg-secondary, #1f2937)',

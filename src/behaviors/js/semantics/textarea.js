@@ -14,6 +14,7 @@ export function textarea(element, options = {}) {
     showCount: options.showCount ?? element.hasAttribute('data-show-count'),
     minRows: parseInt(options.minRows || element.dataset.minRows || '2'),
     maxRows: parseInt(options.maxRows || element.dataset.maxRows || '10'),
+    size: options.size || element.dataset.size || 'md',
     ...options
   };
 
@@ -21,7 +22,6 @@ export function textarea(element, options = {}) {
   
   // Basic styling
   Object.assign(element.style, {
-    padding: '0.75rem',
     borderRadius: '6px',
     border: '1px solid var(--border-color, #374151)',
     background: 'var(--bg-secondary, #1f2937)',
@@ -29,6 +29,20 @@ export function textarea(element, options = {}) {
     resize: config.autosize ? 'none' : 'vertical',
     minHeight: `${config.minRows * 1.5}rem`
   });
+
+  // Apply size
+  const paddings = {
+    xs: '0.125rem 0.5rem',
+    sm: '0.25rem 0.75rem',
+    md: '0.5rem 0.75rem',
+    lg: '0.75rem 1rem',
+    xl: '1rem 1.25rem'
+  };
+  element.style.padding = paddings[config.size] || paddings.md;
+
+  if (config.size !== 'md') {
+    element.classList.add(`wb-textarea--${config.size}`);
+  }
 
   if (config.autosize) {
     element.classList.add('wb-textarea--autosize');
@@ -85,6 +99,9 @@ export function textarea(element, options = {}) {
   element.dataset.wbReady = 'textarea';
   return () => {
     element.classList.remove('wb-textarea');
+    if (config.size !== 'md') {
+      element.classList.remove(`wb-textarea--${config.size}`);
+    }
     if (counter && counter.parentNode) {
       // Unwrap
       const cleanupWrapper = counter.parentNode;

@@ -1,0 +1,69 @@
+{
+  "title": "Documentation",
+  "description": "WB Starter documentation and guides",
+  "categories": [
+    {
+      "name": "Architecture",
+      "icon": "🏗️",
+      "docs": [
+        { "file": "architecture.md", "title": "System Architecture", "description": "Overview of the WB system design" },
+        { "file": "WB_BEHAVIOR_SYSTEM.md", "title": "Behavior System", "description": "How behaviors work" },
+        { "file": "container-pattern.md", "title": "Container Pattern", "description": "Container component patterns" },
+        { "file": "semantic-standard.md", "title": "Semantic Standard", "description": "HTML5 semantic guidelines" }
+      ]
+    },
+    {
+      "name": "Components",
+      "icon": "🧩",
+      "docs": [
+        { "file": "behaviors-reference.md", "title": "Behaviors Reference", "description": "Complete list of all behaviors" },
+        { "file": "card.md", "title": "Card Component", "description": "Card behavior documentation" },
+        { "file": "audio.md", "title": "Audio Component", "description": "Audio player behavior" },
+        { "file": "properties.md", "title": "Properties", "description": "Component property reference" }
+      ]
+    },
+    {
+      "name": "Styling",
+      "icon": "🎨",
+      "docs": [
+        { "file": "themes.md", "title": "Themes", "description": "Theme system and customization" },
+        { "file": "css-standards.md", "title": "CSS Standards", "description": "CSS coding standards" }
+      ]
+    },
+    {
+      "name": "Testing",
+      "icon": "🧪",
+      "docs": [
+        { "file": "testing-strategy.md", "title": "Testing Strategy", "description": "How to test WB components" },
+        { "file": "test-schema-standard.md", "title": "Schema Testing", "description": "Schema-based testing approach" },
+        { "file": "builder-testing.md", "title": "Builder Testing", "description": "Testing the page builder" }
+      ]
+    },
+    {
+      "name": "Features",
+      "icon": "⚡",
+      "docs": [
+        { "file": "Auto-Injection.md", "title": "Auto-Injection", "description": "Automatic behavior injection" },
+        { "file": "inline-editing.md", "title": "Inline Editing", "description": "Content editing features" },
+        { "file": "NOTES-V3-GUIDE.md", "title": "Notes System", "description": "Notes feature guide" }
+      ]
+    },
+    {
+      "name": "Planning",
+      "icon": "📋",
+      "docs": [
+        { "file": "IMPROVEMENTS.md", "title": "Improvements", "description": "Planned improvements" },
+        { "file": "USER-PAGE-BUILDER-PLAN.md", "title": "Page Builder Plan", "description": "Builder roadmap" },
+        { "file": "builder.todo.md", "title": "Builder TODO", "description": "Builder task list" },
+        { "file": "semantic-audit.md", "title": "Semantic Audit", "description": "HTML audit results" }
+      ]
+    },
+    {
+      "name": "Research",
+      "icon": "📑",
+      "pages": [
+        { "page": "schema-first-architecture", "title": "Schema-First Architecture", "description": "Research paper on AI error elimination" }
+      ]
+    }
+  ]
+}

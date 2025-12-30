@@ -46,7 +46,7 @@ function validateSemanticContainer(element, behaviorName) {
 // ============================================
 // BASE CARD - All variants inherit from this
 // ============================================
-function cardBase(element, options = {}) {
+export function cardBase(element, options = {}) {
   const config = {
     ...options, // Spread first to allow overrides, but specific logic below takes precedence
     behavior: options.behavior || 'card',
@@ -1136,42 +1136,84 @@ export function cardfile(element, options = {}) {
 }
 
 // ============================================
-// LINK CARD
+// LINK CARD - Simple clickable card (no main body)
 // ============================================
 export function cardlink(element, options = {}) {
   const config = {
     href: options.href || element.dataset.href || '#',
-    target: options.target || element.dataset.target || '_blank',
-    icon: options.icon || element.dataset.icon || '🔗',
+    target: options.target || element.dataset.target || '_self',
+    icon: options.icon || element.dataset.icon,
+    description: options.description || element.dataset.description || '',
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardlink' });
   
+  element.innerHTML = '';
   element.style.cursor = 'pointer';
+  element.style.position = 'relative';
+  element.style.padding = '1.25rem';
   element.setAttribute('role', 'link');
   element.setAttribute('tabindex', '0');
 
-  // Build structure
-  base.buildStructure();
+  // Header row with icon and external indicator
+  const headerRow = document.createElement('div');
+  headerRow.style.cssText = 'display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;';
 
-  // Add external indicator
-  if (config.target === '_blank') {
-    const extIcon = document.createElement('span');
-    extIcon.style.cssText = 'position:absolute;top:1rem;right:1rem;opacity:0.5;';
-    extIcon.textContent = '↗';
-    element.appendChild(extIcon);
-    element.style.position = 'relative';
+  const titleGroup = document.createElement('div');
+  titleGroup.style.cssText = 'flex:1;';
+
+  // Title
+  if (base.config.title) {
+    const titleEl = document.createElement('h3');
+    titleEl.className = 'wb-card__title';
+    titleEl.style.cssText = 'margin:0;font-size:1.1rem;font-weight:600;color:var(--text-primary,#f9fafb);';
+    titleEl.textContent = base.config.title;
+    titleGroup.appendChild(titleEl);
   }
 
+  // Description (subtitle or description)
+  const desc = config.description || base.config.subtitle;
+  if (desc) {
+    const descEl = document.createElement('p');
+    descEl.className = 'wb-card__description';
+    descEl.style.cssText = 'margin:0.5rem 0 0;font-size:0.875rem;color:var(--text-secondary,#9ca3af);line-height:1.5;';
+    descEl.textContent = desc;
+    titleGroup.appendChild(descEl);
+  }
+
+  headerRow.appendChild(titleGroup);
+
+  // External indicator
+  if (config.target === '_blank') {
+    const extIcon = document.createElement('span');
+    extIcon.style.cssText = 'opacity:0.5;font-size:1rem;flex-shrink:0;';
+    extIcon.textContent = '↗';
+    headerRow.appendChild(extIcon);
+  }
+
+  element.appendChild(headerRow);
+
   // Click handler
-  element.onclick = () => {
-    if (config.href !== '#') {
+  const clickHandler = (e) => {
+    e.preventDefault();
+    if (config.href && config.href !== '#') {
       window.open(config.href, config.target);
     }
   };
 
-  return base.cleanup;
+  element.addEventListener('click', clickHandler);
+  element.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      clickHandler(e);
+    }
+  });
+
+  return () => {
+    base.cleanup();
+    element.removeEventListener('click', clickHandler);
+  };
 }
 
 // ============================================

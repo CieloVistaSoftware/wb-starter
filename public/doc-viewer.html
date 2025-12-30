@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation Viewer</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <style>
+    body { 
+      padding: 2rem; 
+      max-width: 900px; 
+      margin: 0 auto; 
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .back-link { 
+      display: inline-flex; 
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem; 
+      color: var(--text-secondary); 
+      text-decoration: none; 
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      transition: all 0.2s;
+    }
+    .back-link:hover { 
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border-color: var(--primary);
+    }
+    
+    /* Markdown Styles */
+    .wb-mdhtml { line-height: 1.6; }
+    .wb-mdhtml h1 { font-size: 2rem; margin-bottom: 1.5rem; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+    .wb-mdhtml h2 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--text-primary); }
+    .wb-mdhtml h3 { font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+    .wb-mdhtml p { margin-bottom: 1rem; color: var(--text-secondary); }
+    .wb-mdhtml ul, .wb-mdhtml ol { margin-bottom: 1rem; padding-left: 1.5rem; color: var(--text-secondary); }
+    .wb-mdhtml li { margin-bottom: 0.5rem; }
+    .wb-mdhtml code { background: var(--bg-tertiary); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: var(--primary); }
+    .wb-mdhtml pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
+    .wb-mdhtml pre code { background: none; padding: 0; color: var(--text-secondary); }
+    .wb-mdhtml blockquote { border-left: 4px solid var(--primary); margin: 0 0 1.5rem 0; padding-left: 1rem; color: var(--text-muted); font-style: italic; }
+    .wb-mdhtml table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+    .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; }
+    .wb-mdhtml th { background: var(--bg-secondary); font-weight: 600; }
+    
+    .loading { color: var(--text-muted); font-style: italic; }
+    .error { color: var(--danger); padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 6px; border: 1px solid var(--danger); }
+  </style>
+</head>
+<body>
+  <a href="javascript:window.close()" class="back-link">✕ Close</a>
+  <div id="content" class="wb-mdhtml">
+    <div class="loading">Loading documentation...</div>
+  </div>
+
+  <script type="module">
+    import { mdhtml } from '../src/behaviors/js/mdhtml.js';
+    
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get('file');
+    
+    if (file) {
+      const content = document.getElementById('content');
+      content.dataset.src = file;
+      // Initialize mdhtml
+      mdhtml(content).catch(err => {
+        content.innerHTML = `<div class="error">Failed to load documentation: ${err.message}</div>`;
+      });
+    } else {
+      document.getElementById('content').innerHTML = '<div class="error">No file specified.</div>';
+    }
+  </script>
+</body>
+</html>

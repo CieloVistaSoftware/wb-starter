@@ -533,4 +533,116 @@ export function link(element, options = {}) {
   return () => element.classList.remove('wb-link');
 }
 
-export default { navbar, sidebar, menu, pagination, steps, treeview, backtotop, link };
+/**
+ * Statusbar - Bottom status bar
+ */
+export function statusbar(element, options = {}) {
+  const config = {
+    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
+    position: options.position || element.dataset.position || 'bottom',
+    ...options
+  };
+
+  element.classList.add('wb-statusbar');
+  element.style.display = 'flex';
+  element.style.alignItems = 'center';
+  element.style.justifyContent = 'space-between';
+  element.style.padding = '0 1rem';
+  element.style.height = '1.5rem';
+  element.style.background = 'var(--bg-secondary, #1f2937)';
+  element.style.borderTop = '1px solid var(--border-color, #374151)';
+  element.style.fontSize = '0.75rem';
+  element.style.color = 'var(--text-secondary, #9ca3af)';
+  element.style.width = '100%';
+  element.style.boxSizing = 'border-box';
+
+  if (config.position === 'bottom' || config.position === 'fixed') {
+    element.style.position = 'fixed';
+    element.style.bottom = '0';
+    element.style.left = '0';
+    element.style.zIndex = '100';
+    document.body.style.paddingBottom = '1.5rem';
+  } else if (config.position === 'top') {
+    element.style.position = 'fixed';
+    element.style.top = '0';
+    element.style.left = '0';
+    element.style.zIndex = '100';
+    element.style.borderTop = 'none';
+    element.style.borderBottom = '1px solid var(--border-color, #374151)';
+    document.body.style.paddingTop = '1.5rem';
+  }
+
+  // Create message area
+  let messageArea = element.querySelector('.wb-statusbar__message');
+  if (!messageArea) {
+    messageArea = document.createElement('span');
+    messageArea.className = 'wb-statusbar__message';
+    messageArea.style.flex = '1';
+    messageArea.style.textAlign = 'center';
+    messageArea.style.fontWeight = '500';
+    messageArea.style.color = 'var(--text-primary, #e5e7eb)';
+    messageArea.style.transition = 'opacity 0.3s ease';
+    messageArea.style.opacity = '0';
+    
+    // If items exist, insert in middle, otherwise append
+    if (element.children.length > 0) {
+      const mid = Math.floor(element.children.length / 2);
+      element.insertBefore(messageArea, element.children[mid]);
+    } else {
+      element.appendChild(messageArea);
+    }
+  }
+
+  // If items are provided via data attribute
+  if (config.items.length > 0) {
+    // Clear but save message area
+    const msg = messageArea;
+    element.innerHTML = '';
+    
+    // Add left items
+    const leftItems = config.items.slice(0, Math.ceil(config.items.length / 2));
+    leftItems.forEach(item => {
+      const span = document.createElement('span');
+      span.textContent = item.trim();
+      element.appendChild(span);
+    });
+
+    // Add message area
+    element.appendChild(msg);
+
+    // Add right items
+    const rightItems = config.items.slice(Math.ceil(config.items.length / 2));
+    rightItems.forEach(item => {
+      const span = document.createElement('span');
+      span.textContent = item.trim();
+      element.appendChild(span);
+    });
+  }
+
+  // Event listener for status messages
+  const handleStatusMessage = (e) => {
+    const { message, type, duration = 3000 } = e.detail;
+    messageArea.textContent = message;
+    messageArea.style.opacity = '1';
+    
+    if (type === 'error') messageArea.style.color = 'var(--danger-color, #ef4444)';
+    else if (type === 'success') messageArea.style.color = 'var(--success-color, #10b981)';
+    else messageArea.style.color = 'var(--text-primary, #e5e7eb)';
+
+    if (element._statusTimeout) clearTimeout(element._statusTimeout);
+    
+    element._statusTimeout = setTimeout(() => {
+      messageArea.style.opacity = '0';
+    }, duration);
+  };
+
+  document.addEventListener('wb:status:message', handleStatusMessage);
+
+  element.dataset.wbReady = 'statusbar';
+  return () => {
+    element.classList.remove('wb-statusbar');
+    document.removeEventListener('wb:status:message', handleStatusMessage);
+  };
+}
+
+export default { navbar, sidebar, menu, pagination, steps, treeview, backtotop, link, statusbar };

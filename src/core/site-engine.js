@@ -2,7 +2,7 @@
 // Contains WBSite class and site logic
 import WB from './wb-lazy.js';
 
-export class WBSite {
+export default class WBSite {
   constructor() {
     this.config = null;
     this.currentPage = 'home';
@@ -29,6 +29,7 @@ export class WBSite {
       }
 
       this.render();
+      this.initResizableNav();
       WB.init({ 
         debug: false,
         autoInject: this.config.site.autoInject || false
@@ -142,8 +143,39 @@ export class WBSite {
         <div class="nav__items" id="navItems">
           ${items}
         </div>
+        <div class="nav__resizer" id="navResizer"></div>
       </nav>
     `;
+  }
+
+  initResizableNav() {
+    const nav = document.getElementById('siteNav');
+    const resizer = document.getElementById('navResizer');
+    if (!nav || !resizer) return;
+
+    let isResizing = false;
+
+    resizer.addEventListener('mousedown', (e) => {
+      isResizing = true;
+      document.body.style.cursor = 'col-resize';
+      document.body.classList.add('resizing');
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isResizing) return;
+      const newWidth = e.clientX;
+      if (newWidth > 150 && newWidth < 600) { // Min and max width
+        nav.style.setProperty('--nav-width', `${newWidth}px`);
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isResizing) {
+        isResizing = false;
+        document.body.style.cursor = '';
+        document.body.classList.remove('resizing');
+      }
+    });
   }
 
   renderFooter() {
@@ -185,6 +217,10 @@ export class WBSite {
       window.open('schema-viewer.html', '_blank');
       return;
     }
+    if (pageId === 'schema-first-architecture') {
+      window.open('pages/schema-first-architecture.html', '_blank');
+      return;
+    }
     this.currentPage = pageId;
     this.updateActiveNav();
     const main = document.getElementById('main');
@@ -203,6 +239,19 @@ export class WBSite {
       if (res.ok) {
         const html = await res.text();
         main.innerHTML = `<div class="page page--${pageId}" data-page="${pageId}" id="mainPage-${pageId}">${html}</div>`;
+        
+        // Execute any scripts in the loaded page
+        const scripts = main.querySelectorAll('script');
+        scripts.forEach(oldScript => {
+          const newScript = document.createElement('script');
+          // Copy attributes
+          Array.from(oldScript.attributes).forEach(attr => {
+            newScript.setAttribute(attr.name, attr.value);
+          });
+          // Copy content
+          newScript.textContent = oldScript.textContent;
+          oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
       } else {
         main.innerHTML = this.render404(pageId);
       }

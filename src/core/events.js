@@ -5,6 +5,38 @@
 const ERROR_LOG_PATH = 'data/errors.json';
 let errorContainer = null;
 let errors = [];
+let lastInteraction = { from: 'System', to: 'Idle', timestamp: 0 };
+
+/**
+ * Track user interactions for error context
+ */
+if (typeof document !== 'undefined') {
+  document.addEventListener('click', (e) => {
+    try {
+      const target = e.target.closest('button, a, input, select, textarea, summary, [onclick], [data-wb]');
+      if (target) {
+        // Determine "From" (Element name/text)
+        let from = target.tagName.toLowerCase();
+        if (target.id) from += `#${target.id}`;
+        else if (target.textContent && target.textContent.trim().length > 0 && target.textContent.trim().length < 30) {
+          from += ` "${target.textContent.trim()}"`;
+        }
+        
+        // Determine "To" (Action/Target)
+        let to = 'User Action';
+        if (target.tagName === 'BUTTON' && target.type === 'submit') to = 'Submit Form';
+        else if (target.tagName === 'SUMMARY') to = 'Toggle Details';
+        else if (target.onclick || target.hasAttribute('onclick')) to = 'Script Handler';
+        else if (target.dataset.wb) to = `WB Behavior (${target.dataset.wb})`;
+        else if (['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)) to = 'Input Interaction';
+        
+        lastInteraction = { from, to, timestamp: Date.now() };
+      }
+    } catch (err) {
+      // Ignore interaction tracking errors
+    }
+  }, true);
+}
 
 /**
  * Parse stack trace to extract useful info
@@ -381,6 +413,11 @@ export const Events = {
     
     // Save errors to file and memory
     if (level === 'error') {
+      // Check if interaction is relevant (within last 5 seconds)
+      const interaction = (Date.now() - lastInteraction.timestamp < 5000) 
+        ? { from: lastInteraction.from, to: lastInteraction.to }
+        : { from: 'System', to: 'Background Process' };
+
       const entry = {
         id: Date.now(),
         timestamp: new Date().toISOString(),
@@ -395,7 +432,8 @@ export const Events = {
         frames: data.frames,
         file: data.file || data.fullPath,
         url: typeof window !== 'undefined' ? window.location.href : '',
-        userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : ''
+        userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+        interaction
       };
       errors.push(entry);
       saveToFile(entry);

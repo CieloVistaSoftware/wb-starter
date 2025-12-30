@@ -1,144 +1,85 @@
-<div id="docs-div-1" class="page__hero">
-  <h1 id="docs-h1-2">📖 Documentation</h1>
-  <p id="docs-p-3">Learn how to customize and extend your WB Starter site.</p>
+<div id="docs-hero" class="page__hero">
+  <h1>📖 Documentation</h1>
+  <p>Browse all documentation, guides, and research papers.</p>
 </div>
 
-<div id="docs-div-4" class="page__section">
-  <h2 id="docs-h2-5">Project Structure</h2>
-  <div id="docs-div-6" data-wb="code">wb-starter/
-├── index.html          # Main entry point
-├── config/
-│   └── site.json       # Site configuration
-├── pages/
-│   ├── home.html       # Home page content
-│   ├── features.html   # Features page
-│   └── ...             # Add more pages here
-├── styles/
-│   └── site.css        # Site layout styles
-├── assets/
-│   └── images/         # Your images
-└── src/                # WB Behaviors library</div>
+<div id="docs-container" class="page__section">
+  <div id="docs-loading" style="text-align: center; padding: 2rem;">
+    <div data-wb="spinner"></div>
+    <p style="margin-top: 1rem; color: var(--text-muted);">Loading documentation...</p>
+  </div>
 </div>
 
-<div id="docs-div-7" class="page__section">
-  <h2 id="docs-h2-8">Configuration Reference</h2>
-  
-  <div id="docs-div-9" data-wb="tabs">
-    <div id="docs-div-10" data-tab-title="Site">
-      <div id="docs-div-11" data-wb="code">{
-  "site": {
-    "name": "My Site",        // Site name in header
-    "tagline": "Description", // Optional tagline
-    "logo": "🚀",             // Emoji or image URL
-    "theme": "dark",          // Default theme
-    "version": "1.0.0"
-  }
-}</div>
-    </div>
+<script>
+  // Self-executing function (no module needed)
+  (async function loadDocs() {
+    const container = document.getElementById('docs-container');
+    if (!container) return;
     
-    <div id="docs-div-12" data-tab-title="Navigation">
-      <div id="docs-div-13" data-wb="code">{
-  "nav": [
-    {
-      "id": "home",           // URL hash (#home)
-      "label": "Home",        // Display text
-      "icon": "🏠",           // Optional icon
-      "page": "home"          // Loads pages/home.html
+    try {
+      const res = await fetch('docs/manifest.json');
+      if (!res.ok) throw new Error('Failed to fetch manifest');
+      const manifest = await res.json();
+      
+      let html = '';
+      
+      for (const category of manifest.categories) {
+        html += '<div class="docs-category" style="margin-bottom: 2.5rem;">';
+        html += '<h2 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">';
+        html += '<span>' + category.icon + '</span>';
+        html += '<span>' + category.name + '</span>';
+        html += '</h2>';
+        html += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">';
+        
+        // Handle markdown docs
+        if (category.docs) {
+          for (const doc of category.docs) {
+            html += '<a href="public/doc-viewer.html?file=' + encodeURIComponent(doc.file) + '" ';
+            html += 'class="docs-card" target="_blank" ';
+            html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
+            html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + doc.title + '</h3>';
+            html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + doc.description + '</p>';
+            html += '</a>';
+          }
+        }
+        
+        // Handle page links (like research papers)
+        if (category.pages) {
+          for (const page of category.pages) {
+            html += '<a href="pages/' + page.page + '.html" ';
+            html += 'class="docs-card" target="_blank" ';
+            html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
+            html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + page.title + '</h3>';
+            html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + page.description + '</p>';
+            html += '</a>';
+          }
+        }
+        
+        html += '</div></div>';
+      }
+      
+      container.innerHTML = html;
+      
+      // Add hover effects
+      container.querySelectorAll('.docs-card').forEach(function(card) {
+        card.addEventListener('mouseenter', function() {
+          card.style.transform = 'translateY(-2px)';
+          card.style.borderColor = 'var(--primary)';
+          card.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        });
+        card.addEventListener('mouseleave', function() {
+          card.style.transform = '';
+          card.style.borderColor = 'var(--border-color)';
+          card.style.boxShadow = '';
+        });
+      });
+      
+    } catch (err) {
+      console.error('Failed to load docs manifest:', err);
+      container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);">' +
+        '<p>⚠️ Could not load documentation index.</p>' +
+        '<p style="font-size: 0.875rem;">Error: ' + err.message + '</p>' +
+        '</div>';
     }
-  ]
-}</div>
-    </div>
-    
-    <div id="docs-div-14" data-tab-title="Footer">
-      <div id="docs-div-15" data-wb="code">{
-  "footer": {
-    "copyright": "© 2025 Company",
-    "showSocial": true,
-    "social": [
-      { "name": "GitHub", "icon": "🐙", "url": "..." }
-    ],
-    "links": [
-      { "label": "Privacy", "page": "privacy" }
-    ]
-  }
-}</div>
-    </div>
-    
-    <div id="docs-div-16" data-tab-title="Layout">
-      <div id="docs-div-17" data-wb="code">{
-  "layout": {
-    "navPosition": "left",    // "left" or "top"
-    "navWidth": "240px",      // Sidebar width
-    "navCollapsible": true,   // Toggle button
-    "navDefaultCollapsed": false
-  }
-}</div>
-    </div>
-  </div>
-</div>
-
-<div id="docs-div-18" class="page__section">
-  <h2 id="docs-h2-19">Adding Pages</h2>
-  <p id="docs-p-20">To add a new page:</p>
-  
-  <ol id="docs-ol-21" style="line-height: 2;">
-    <li id="docs-li-22">Create an HTML file in <code id="docs-code-23">pages/</code> folder (e.g., <code id="docs-code-24">pages/mypage.html</code>)</li>
-    <li id="docs-li-25">Add navigation entry in <code id="docs-code-26">config/site.json</code>:
-      <div id="docs-div-27" data-wb="code">{ "id": "mypage", "label": "My Page", "icon": "📄", "page": "mypage" }</div>
-    </li>
-    <li id="docs-li-28">Refresh the browser - your page is ready!</li>
-  </ol>
-</div>
-
-<div id="docs-div-29" class="page__section">
-  <h2 id="docs-h2-30">Using Behaviors</h2>
-  <p id="docs-p-31">Add behaviors to any HTML element with <code id="docs-code-32">data-wb</code> attributes:</p>
-  
-  <div id="docs-div-33" data-wb="code">&lt;!-- Simple behavior -->
-&lt;button data-wb="ripple">Click me&lt;/button>
-
-&lt;!-- With options -->
-&lt;div data-wb="card" data-title="My Card" data-hoverable>
-  Content here
-&lt;/div>
-
-&lt;!-- Multiple behaviors -->
-&lt;button data-wb="ripple tooltip" data-tooltip="Hello!">
-  Hover me
-&lt;/button></div>
-</div>
-
-<div id="docs-div-34" class="page__section">
-  <h2 id="docs-h2-35">Theming</h2>
-  <p id="docs-p-36">Change the default theme in <code id="docs-code-37">site.json</code>:</p>
-  <div id="docs-div-38" data-wb="code">"site": {
-  "theme": "cyberpunk"  // or any of 23 themes
-}</div>
-  
-  <p id="docs-p-39" style="margin-top: 1rem;">Available themes:</p>
-  <div id="docs-div-40" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-    <span id="docs-span-41" data-wb="badge">dark</span>
-    <span id="docs-span-42" data-wb="badge">light</span>
-    <span id="docs-span-43" data-wb="badge">cyberpunk</span>
-    <span id="docs-span-44" data-wb="badge">ocean</span>
-    <span id="docs-span-45" data-wb="badge">sunset</span>
-    <span id="docs-span-46" data-wb="badge">forest</span>
-    <span id="docs-span-47" data-wb="badge">midnight</span>
-    <span id="docs-span-48" data-wb="badge">twilight</span>
-    <span id="docs-span-49" data-wb="badge">sakura</span>
-    <span id="docs-span-50" data-wb="badge">arctic</span>
-    <span id="docs-span-51" data-wb="badge">desert</span>
-    <span id="docs-span-52" data-wb="badge">neon-dreams</span>
-    <span id="docs-span-53" data-wb="badge">retro-wave</span>
-    <span id="docs-span-54" data-wb="badge">lavender</span>
-    <span id="docs-span-55" data-wb="badge">emerald</span>
-    <span id="docs-span-56" data-wb="badge">ruby</span>
-    <span id="docs-span-57" data-wb="badge">golden</span>
-    <span id="docs-span-58" data-wb="badge">slate</span>
-    <span id="docs-span-59" data-wb="badge">coffee</span>
-    <span id="docs-span-60" data-wb="badge">mint</span>
-    <span id="docs-span-61" data-wb="badge">noir</span>
-    <span id="docs-span-62" data-wb="badge">aurora</span>
-    <span id="docs-span-63" data-wb="badge">grape</span>
-  </div>
-</div>
+  })();
+</script>

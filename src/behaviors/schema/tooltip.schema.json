@@ -34,13 +34,124 @@
     "optionalChildren": {}
   },
 
+  "interactions": {
+    "elements": {
+      "element": {
+        "type": "trigger",
+        "hoverable": true,
+        "hover": {
+          "action": "show tooltip",
+          "event": "wb:tooltip:show"
+        },
+        "unhover": {
+          "action": "hide tooltip",
+          "event": "wb:tooltip:hide"
+        }
+      }
+    },
+    "keyboard": {
+      "Escape": {
+        "target": "element",
+        "action": "hide tooltip"
+      }
+    }
+  },
+
+  "accessibility": {
+    "trigger": {
+      "aria-describedby": "tooltip ID"
+    },
+    "tooltip": {
+      "role": "tooltip",
+      "id": "auto-generated"
+    }
+  },
+
+  "events": {
+    "wb:tooltip:show": {
+      "trigger": "Tooltip becomes visible",
+      "detail": { "content": "string" },
+      "bubbles": true
+    },
+    "wb:tooltip:hide": {
+      "trigger": "Tooltip is hidden",
+      "detail": {},
+      "bubbles": true
+    }
+  },
+
   "test": {
     "setup": [
-      "<span data-wb=\"tooltip\" data-tooltip=\"Helpful tip\">Hover me</span>"
+      "<span data-wb=\"tooltip\" data-tooltip=\"Helpful tip\">Hover me</span>",
+      "<button data-wb=\"tooltip\" data-tooltip=\"Button help\" data-position=\"bottom\">Help</button>"
     ],
     "matrix": {
       "combinations": [
-        {"content": "Test tip"}
+        { "content": "Test tip" },
+        { "content": "Test tip", "position": "top" },
+        { "content": "Test tip", "position": "bottom" },
+        { "content": "Test tip", "position": "left" },
+        { "content": "Test tip", "position": "right" }
+      ]
+    },
+    "functional": {
+      "hover": [
+        {
+          "name": "tooltip shows on hover",
+          "setup": "<span data-wb=\"tooltip\" data-tooltip=\"Help text\">Hover me</span>",
+          "selector": "element",
+          "expect": {
+            "selector": ".wb-tooltip",
+            "visible": true
+          },
+          "unhover": {
+            "selector": ".wb-tooltip",
+            "visible": false
+          }
+        },
+        {
+          "name": "tooltip displays correct content",
+          "setup": "<span data-wb=\"tooltip\" data-tooltip=\"Custom message here\">Info</span>",
+          "selector": "element",
+          "expect": {
+            "selector": ".wb-tooltip",
+            "textContains": "Custom message here"
+          }
+        },
+        {
+          "name": "tooltip hides on mouse leave",
+          "setup": "<span data-wb=\"tooltip\" data-tooltip=\"Disappear\">Leave me</span>",
+          "selector": "element",
+          "expect": {
+            "selector": ".wb-tooltip",
+            "visible": true
+          },
+          "unhover": {
+            "selector": ".wb-tooltip",
+            "visible": false
+          }
+        }
+      ],
+      "keyboard": [
+        {
+          "name": "Escape hides tooltip",
+          "setup": "<span data-wb=\"tooltip\" data-tooltip=\"Press ESC\">Focus me</span>",
+          "key": "Escape",
+          "expect": {
+            "selector": ".wb-tooltip",
+            "visible": false
+          }
+        }
+      ],
+      "visual": [
+        {
+          "name": "trigger has tooltip class",
+          "setup": "<span data-wb=\"tooltip\" data-tooltip=\"Test\">Styled</span>",
+          "expect": {
+            "selector": "element",
+            "hasClass": "wb-tooltip-trigger"
+          }
+        }
       ]
     }
   }

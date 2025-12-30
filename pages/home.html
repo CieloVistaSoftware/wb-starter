@@ -37,7 +37,7 @@
         <span id="home-span-20" style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e;"></span>
         <span id="home-span-21" style="width: 12px; height: 12px; border-radius: 50%; background: #27ca40;"></span>
       </div>
-      <div id="home-div-22" data-wb="code" data-language="html">&lt;!-- That's it. No JavaScript required. --&gt;
+      <pre id="home-pre-22" data-wb="code" data-language="html" style="margin: 0; text-align: left;"><code>&lt;!-- That's it. No JavaScript required. --&gt;
 &lt;button data-wb="ripple tooltip" data-tooltip="Click me!"&gt;
   Magic Button ✨
 &lt;/button&gt;
@@ -48,7 +48,7 @@
 
 &lt;div data-wb="modal" data-modal-title="Hello!"&gt;
   Open Modal
-&lt;/div&gt;</div>
+&lt;/div&gt;</code></pre>
     </div>
   </div>
 </section>
@@ -112,78 +112,112 @@
 <!-- Image Grid with Move Behaviors -->
 <section id="home-section-55" style="padding: 4rem 2rem;">
   <div id="home-div-56" style="max-width: 1200px; margin: 0 auto;">
-    <div id="home-div-57" style="text-align: center; margin-bottom: 3rem;">
+    <div id="home-div-57" style="text-align: center; margin-bottom: 2rem;">
       <h2 id="home-h2-58">
         Rearrange <span id="home-span-59" class="wb-gradient-text">Images</span>
       </h2>
-      <p id="home-p-60" style="color: var(--text-secondary);">Click the arrow buttons to move images in the grid.</p>
+      <p id="home-p-60" style="color: var(--text-secondary); margin-bottom: 1.5rem;">Toggle edit mode to rearrange images in the grid.</p>
+      
+      <!-- Edit Mode Toggle -->
+      <button id="editModeToggle" class="wb-btn-glass" style="display: inline-flex; align-items: center; gap: 0.5rem;" onclick="toggleEditMode()">
+        <span id="editModeIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: #64748b; transition: background 0.2s;"></span>
+        <span id="editModeLabel">Edit Mode: Off</span>
+      </button>
     </div>
     
-    <div id="home-div-61" data-wb="grid" data-columns="3" style="gap: 1.5rem;">
+    <div id="imageGrid" data-wb="grid" data-columns="3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
       
-      <div id="home-div-62" data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img id="home-img-63" src="https://picsum.photos/300/300?random=1" alt="Image 1" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div id="home-div-64" style="display: flex; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.3);">
-          <button id="home-button-65" data-wb="moveup" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button id="home-button-66" data-wb="movedown" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button id="home-button-67" data-wb="moveleft" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button id="home-button-68" data-wb="moveright" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
+      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
+        <img src="https://picsum.photos/300/300?random=1" alt="Image 1" style="width: 100%; height: auto; border-radius: 8px; display: block;">
+        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
+          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
+          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
+          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
+          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
         </div>
       </div>
       
-      <div id="home-div-69" data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img id="home-img-70" src="https://picsum.photos/300/300?random=2" alt="Image 2" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div id="home-div-71" style="display: flex; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.3);">
-          <button id="home-button-72" data-wb="moveup" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button id="home-button-73" data-wb="movedown" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button id="home-button-74" data-wb="moveleft" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button id="home-button-75" data-wb="moveright" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
+      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
+        <img src="https://picsum.photos/300/300?random=2" alt="Image 2" style="width: 100%; height: auto; border-radius: 8px; display: block;">
+        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
+          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
+          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
+          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
+          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
         </div>
       </div>
       
-      <div id="home-div-76" data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img id="home-img-77" src="https://picsum.photos/300/300?random=3" alt="Image 3" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div id="home-div-78" style="display: flex; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.3);">
-          <button id="home-button-79" data-wb="moveup" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button id="home-button-80" data-wb="movedown" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button id="home-button-81" data-wb="moveleft" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button id="home-button-82" data-wb="moveright" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
+      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
+        <img src="https://picsum.photos/300/300?random=3" alt="Image 3" style="width: 100%; height: auto; border-radius: 8px; display: block;">
+        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
+          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
+          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
+          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
+          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
         </div>
       </div>
       
-      <div id="home-div-83" data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img id="home-img-84" src="https://picsum.photos/300/300?random=4" alt="Image 4" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div id="home-div-85" style="display: flex; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.3);">
-          <button id="home-button-86" data-wb="moveup" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button id="home-button-87" data-wb="movedown" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button id="home-button-88" data-wb="moveleft" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button id="home-button-89" data-wb="moveright" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
+      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
+        <img src="https://picsum.photos/300/300?random=4" alt="Image 4" style="width: 100%; height: auto; border-radius: 8px; display: block;">
+        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
+          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
+          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
+          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
+          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
         </div>
       </div>
       
-      <div id="home-div-90" data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img id="home-img-91" src="https://picsum.photos/300/300?random=5" alt="Image 5" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div id="home-div-92" style="display: flex; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.3);">
-          <button id="home-button-93" data-wb="moveup" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button id="home-button-94" data-wb="movedown" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button id="home-button-95" data-wb="moveleft" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button id="home-button-96" data-wb="moveright" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
+      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
+        <img src="https://picsum.photos/300/300?random=5" alt="Image 5" style="width: 100%; height: auto; border-radius: 8px; display: block;">
+        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
+          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
+          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
+          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
+          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
         </div>
       </div>
       
-      <div id="home-div-97" data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img id="home-img-98" src="https://picsum.photos/300/300?random=6" alt="Image 6" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div id="home-div-99" style="display: flex; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.3);">
-          <button id="home-button-100" data-wb="moveup" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button id="home-button-101" data-wb="movedown" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button id="home-button-102" data-wb="moveleft" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button id="home-button-103" data-wb="moveright" style="padding: 0.4rem 0.5rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
+      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
+        <img src="https://picsum.photos/300/300?random=6" alt="Image 6" style="width: 100%; height: auto; border-radius: 8px; display: block;">
+        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
+          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
+          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
+          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
+          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
         </div>
       </div>
       
     </div>
   </div>
 </section>
+
+<script>
+  // Edit Mode Toggle
+  let editModeActive = false;
+  
+  function toggleEditMode() {
+    editModeActive = !editModeActive;
+    
+    const indicator = document.getElementById('editModeIndicator');
+    const label = document.getElementById('editModeLabel');
+    const controls = document.querySelectorAll('#imageGrid .move-controls');
+    
+    if (editModeActive) {
+      indicator.style.background = '#22c55e';
+      label.textContent = 'Edit Mode: On';
+      controls.forEach(c => c.style.display = 'flex');
+      
+      // Re-initialize WB behaviors for the move buttons
+      if (window.WB) {
+        window.WB.scan(document.getElementById('imageGrid'));
+      }
+    } else {
+      indicator.style.background = '#64748b';
+      label.textContent = 'Edit Mode: Off';
+      controls.forEach(c => c.style.display = 'none');
+    }
+  }
+</script>
 
 <hr id="home-hr-104" class="wb-divider-gradient">
     
@@ -277,7 +311,7 @@
       <a id="home-a-152" href="?page=docs" class="wb-btn-gradient">
         <span id="home-span-153" style="position: relative; z-index: 1;">Get Started Free →</span>
       </a>
-      <a id="home-a-154" href="https://github.com" class="wb-btn-glass" target="_blank">
+      <a id="home-a-154" href="https://github.com/CieloVistaSoftware/wb-starter" class="wb-btn-glass" target="_blank">
         ⭐ Star on GitHub
       </a>
     </div>

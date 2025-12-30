@@ -24,7 +24,7 @@ if (!document.querySelector('link[data-highlight-theme]')) {
 export function code(element, options = {}) {
   // Handle <pre> wrapper - delegate to pre behavior for chrome, and apply code behavior to inner code for highlighting
   if (element.tagName === 'PRE') {
-    // 1. Apply pre behavior (chrome: copy, badge, line numbers)
+    // 1. Apply pre behavior (chrome: copy, badge, line numbers, scrollable)
     const cleanupPre = pre(element, options);
     
     // 2. Apply code behavior to inner code (highlighting)
@@ -53,6 +53,7 @@ export function code(element, options = {}) {
     language: options.language || element.dataset.language || '',
     showCopy: options.showCopy ?? (element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
     variant: options.variant || element.dataset.variant || 'inline',
+    scrollable: options.scrollable ?? (element.dataset.scrollable === 'true'),
     ...options
   };
 
@@ -77,17 +78,21 @@ export function code(element, options = {}) {
       boxShadow: 'none'
     });
   } else {
+    // Standalone code block (not inline, not in pre)
+    const isBlock = config.variant !== 'inline';
+    
     Object.assign(element.style, {
       fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
       fontSize: '0.875em',
-      padding: config.variant === 'inline' ? '0.2em 0.4em' : '0.5rem 1rem',
+      padding: !isBlock ? '0.2em 0.4em' : '0.5rem 1rem',
       borderRadius: 'var(--radius-sm, 4px)',
       backgroundColor: 'var(--bg-tertiary, rgba(255,255,255,0.1))',
       color: 'var(--text-primary, inherit)',
       border: '1px solid var(--border-color, rgba(255,255,255,0.1))',
-      display: config.variant === 'inline' ? 'inline' : 'block',
-      whiteSpace: config.variant === 'inline' ? 'nowrap' : 'pre-wrap',
-      wordBreak: config.variant === 'inline' ? 'normal' : 'break-all',
+      display: !isBlock ? 'inline' : 'block',
+      whiteSpace: !isBlock ? 'nowrap' : (config.scrollable ? 'pre' : 'pre-wrap'),
+      wordBreak: !isBlock ? 'normal' : (config.scrollable ? 'normal' : 'break-all'),
+      overflow: (isBlock && config.scrollable) ? 'auto' : 'visible',
       verticalAlign: 'baseline'
     });
   }

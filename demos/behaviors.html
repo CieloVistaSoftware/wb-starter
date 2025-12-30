@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html id="behaviors-html-1" lang="en" data-theme="dark">
-<head id="behaviors-head-2">
-  <meta id="behaviors-meta-3" charset="UTF-8">
-  <meta id="behaviors-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="behaviors-title-5">WB Behaviors Showcase</title>
-  <link id="behaviors-link-6" rel="stylesheet" href="../src/styles/themes.css">
-  <link id="behaviors-link-7" rel="stylesheet" href="../src/styles/site.css">
-  <link id="behaviors-link-8" rel="stylesheet" href="../src/styles/components.css">
-  <link id="behaviors-link-9" rel="stylesheet" href="../src/behaviors/css/effects.css">
-  <style id="behaviors-style-10">
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WB Behaviors Showcase</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/components.css">
+  <link rel="stylesheet" href="../src/behaviors/css/effects.css">
+  <style>
     body {
       padding: 2rem;
       max-width: 1200px;
@@ -71,6 +71,10 @@
       padding: 0.2rem 0.4rem;
       border-radius: 4px;
     }
+    .wb-mdhtml pre,
+    .behavior-card code {
+      font-size: 0.8rem;
+    }
     .demo-area {
       margin-top: 1rem;
       padding: 1.5rem;
@@ -110,96 +114,149 @@
       color: white;
       border-color: var(--primary);
     }
+    .spinner-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-top: 0.25rem;
+    }
+    .spinner-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
   </style>
 </head>
-<body id="behaviors-body-11">
+<body>
 
-  <header id="behaviors-header-12">
-    <div id="behaviors-div-13">
-      <h1 id="behaviors-h1-14">WB Behaviors Showcase</h1>
-      <p id="behaviors-p-15">Interactive demo of all available behaviors</p>
+  <header>
+    <div>
+      <h1>WB Behaviors Showcase</h1>
+      <p>Interactive demo of all available behaviors</p>
     </div>
-    <div id="behaviors-div-16" data-wb="themecontrol"></div>
+    <div data-wb="themecontrol"></div>
   </header>
 
-  <div id="behaviors-div-17" class="nav-links">
-    <a id="behaviors-a-18" href="#semantic">Semantic HTML</a>
-    <a id="behaviors-a-19" href="#ui">UI Components</a>
-    <a id="behaviors-a-20" href="#layout">Layout</a>
-    <a id="behaviors-a-21" href="#utilities">Utilities</a>
-    <a id="behaviors-a-22" href="#effects">Effects</a>
-    <a id="behaviors-a-23" href="code.html">Code Demo</a>
-    <a id="behaviors-a-24" href="card.html">Card Demo</a>
+  <div class="nav-links">
+    <a href="#semantic">Semantic HTML</a>
+    <a href="#ui">UI Components</a>
+    <a href="#layout">Layout</a>
+    <a href="#utilities">Utilities</a>
+    <a href="#effects">Effects</a>
+    <a href="code.html">Code Demo</a>
+    <a href="card.html">Card Demo</a>
   </div>
 
   <!-- 1. SEMANTIC HTML -->
   <h2 id="semantic">1. Semantic HTML & Forms</h2>
-  <div id="behaviors-div-25" class="behavior-grid">
+  <div class="behavior-grid">
     
-    <div id="behaviors-div-26" class="behavior-card">
-      <div id="behaviors-div-27" class="behavior-title">Button <span id="behaviors-span-28" class="behavior-code">data-wb="button"</span></div>
-      <div id="behaviors-div-29" class="demo-area">
-        <div id="behaviors-div-30" class="demo-row">
-          <button id="behaviors-button-31" data-wb="button" data-variant="primary">Primary</button>
-          <button id="behaviors-button-32" data-wb="button" data-variant="secondary">Secondary</button>
-          <button id="behaviors-button-33" data-wb="button" data-variant="outline">Outline</button>
-          <button id="behaviors-button-34" data-wb="button" data-variant="ghost">Ghost</button>
+    <div class="behavior-card">
+      <div class="behavior-title">Button <span class="behavior-code">data-wb="button"</span></div>
+      <div class="demo-area">
+        <div class="demo-row">
+          <button
+            data-wb="button"
+            data-variant="primary">Primary</button>
+          <button
+            data-wb="button"
+            data-variant="secondary">Secondary</button>
+          <button
+            data-wb="button"
+            data-variant="outline">Outline</button>
+          <button
+            data-wb="button"
+            data-variant="ghost">Ghost</button>
         </div>
       </div>
     </div>
 
-    <div id="behaviors-div-35" class="behavior-card">
-      <div id="behaviors-div-36" class="behavior-title">Input <span id="behaviors-span-37" class="behavior-code">data-wb="input"</span></div>
-      <div id="behaviors-div-38" class="demo-area">
-        <input id="behaviors-input-39" data-wb="input" placeholder="Default input" style="width: 100%">
-        <input id="behaviors-input-40" data-wb="input" placeholder="With icon" data-icon="🔍" style="width: 100%">
+    <div class="behavior-card">
+      <div class="behavior-title">Input <span class="behavior-code">data-wb="input"</span></div>
+      <div class="demo-area">
+        <input
+          data-wb="input"
+          placeholder="Default input"
+          style="width: 100%">
+        <input
+          data-wb="input"
+          data-icon="🔍"
+          placeholder="With icon"
+          style="width: 100%">
       </div>
     </div>
 
-    <div id="behaviors-div-41" class="behavior-card">
-      <div id="behaviors-div-42" class="behavior-title">Switch <span id="behaviors-span-43" class="behavior-code">data-wb="switch"</span></div>
-      <div id="behaviors-div-44" class="demo-area">
-        <div id="behaviors-div-45" class="demo-row">
-          <label id="behaviors-label-46" style="display:flex; gap:0.5rem; align-items:center;">
-            <input type="checkbox" id="demo-notifications-switch" data-wb="switch">
-            <span id="behaviors-span-47">Notifications</span>
+    <div class="behavior-card">
+      <div class="behavior-title">Switch <span class="behavior-code">data-wb="switch"</span></div>
+      <div class="demo-area">
+        <div class="demo-row">
+          <label style="display:flex; gap:0.5rem; align-items:center;">
+            <input
+              type="checkbox"
+              id="demo-notifications-switch"
+              data-wb="switch">
+            <span>Notifications</span>
           </label>
-          <label id="behaviors-label-48" style="display:flex; gap:0.5rem; align-items:center;">
-            <input type="checkbox" id="demo-dark-mode-switch" data-wb="switch" checked>
-            <span id="behaviors-span-49">Dark Mode</span>
+          <label style="display:flex; gap:0.5rem; align-items:center;">
+            <input
+              type="checkbox"
+              id="demo-dark-mode-switch"
+              data-wb="switch"
+              checked>
+            <span>Dark Mode</span>
           </label>
         </div>
       </div>
     </div>
 
-    <div id="behaviors-div-50" class="behavior-card">
-      <div id="behaviors-div-51" class="behavior-title">Badge <span id="behaviors-span-52" class="behavior-code">data-wb="badge"</span></div>
-      <div id="behaviors-div-53" class="demo-area">
-        <div id="behaviors-div-54" class="demo-row">
-          <span id="behaviors-span-55" data-wb="badge" data-variant="default">Default</span>
-          <span id="behaviors-span-56" data-wb="badge" data-variant="primary">Primary</span>
-          <span id="behaviors-span-57" data-wb="badge" data-variant="success">Success</span>
-          <span id="behaviors-span-58" data-wb="badge" data-variant="warning">Warning</span>
-          <span id="behaviors-span-59" data-wb="badge" data-variant="danger">Error</span>
+    <div class="behavior-card">
+      <div class="behavior-title">Badge <span class="behavior-code">data-wb="badge"</span></div>
+      <div class="demo-area">
+        <div class="demo-row">
+          <span
+            data-wb="badge"
+            data-variant="default">Default</span>
+          <span
+            data-wb="badge"
+            data-variant="primary">Primary</span>
+          <span
+            data-wb="badge"
+            data-variant="success">Success</span>
+          <span
+            data-wb="badge"
+            data-variant="warning">Warning</span>
+          <span
+            data-wb="badge"
+            data-variant="danger">Error</span>
         </div>
-        <div id="behaviors-div-60" class="demo-row">
-          <span id="behaviors-span-61" data-wb="badge" data-variant="info" data-pill="true">Pill</span>
-          <span id="behaviors-span-62" data-wb="badge" data-variant="success" data-dot="true"></span>
-          <span id="behaviors-span-63">Status Dot</span>
+        <div class="demo-row">
+          <span
+            data-wb="badge"
+            data-variant="info"
+            data-pill="true">Pill</span>
+          <span
+            data-wb="badge"
+            data-variant="success"
+            data-dot="true"></span>
+          <span>Status Dot</span>
         </div>
       </div>
     </div>
 
-    <div id="behaviors-div-64" class="behavior-card">
-      <div id="behaviors-div-65" class="behavior-title">Details <span id="behaviors-span-66" class="behavior-code">data-wb="details"</span></div>
-      <div id="behaviors-div-67" class="demo-area" style="display:block; padding: 0.5rem;">
-        <details id="behaviors-details-68" data-wb="details" style="margin-bottom: 0.5rem;">
-          <summary id="behaviors-summary-69">What is WB Behaviors?</summary>
-          <p id="behaviors-p-70">WB is a lightweight, behavior-driven JavaScript library that enhances HTML with interactive capabilities using data attributes.</p>
+    <div class="behavior-card">
+      <div class="behavior-title">Details <span class="behavior-code">data-wb="details"</span></div>
+      <div class="demo-area" style="display:block; padding: 0.5rem;">
+        <details
+          data-wb="details"
+          style="margin-bottom: 0.5rem;">
+          <summary>What is WB Behaviors?</summary>
+          <p>WB is a lightweight, behavior-driven JavaScript library that enhances HTML with interactive capabilities using data attributes.</p>
         </details>
-        <details id="behaviors-details-71" data-wb="details">
-          <summary id="behaviors-summary-72">How do I use it?</summary>
-          <p id="behaviors-p-73">Simply add <code id="behaviors-code-74">data-wb="behavior-name"</code> to any HTML element. No initialization code required!</p>
+        <details
+          data-wb="details">
+          <summary>How do I use it?</summary>
+          <p>Simply add <code>data-wb="behavior-name"</code> to any HTML element. No initialization code required!</p>
         </details>
       </div>
     </div>
@@ -208,74 +265,207 @@
 
   <!-- 2. UI COMPONENTS -->
   <h2 id="ui">2. UI Components</h2>
-  <div id="behaviors-div-75" class="behavior-grid">
+  <div class="behavior-grid">
 
-    <div id="behaviors-div-76" class="behavior-card">
-      <div id="behaviors-div-77" class="behavior-title">Spinner <span id="behaviors-span-78" class="behavior-code">data-wb="spinner"</span></div>
-      <div id="behaviors-div-79" class="demo-area">
-        <div id="behaviors-div-80" class="demo-row" style="gap: 1.5rem; justify-content: center;">
-          <div id="behaviors-div-81" data-wb="spinner" data-size="md" data-color="primary" data-delay="0s"></div>
-          <div id="behaviors-div-82" data-wb="spinner" data-size="md" data-color="secondary" data-delay="-0.15s"></div>
-          <div id="behaviors-div-83" data-wb="spinner" data-size="md" data-color="success" data-delay="-0.3s"></div>
-          <div id="behaviors-div-84" data-wb="spinner" data-size="md" data-color="warning" data-delay="-0.45s"></div>
-          <div id="behaviors-div-85" data-wb="spinner" data-size="md" data-color="error" data-delay="-0.6s"></div>
-          <div id="behaviors-div-86" data-wb="spinner" data-size="md" data-color="info" data-delay="-0.75s"></div>
-          <div id="behaviors-div-87" data-wb="spinner" data-size="md" data-color="#ec4899" data-delay="-0.9s"></div>
+    <div class="behavior-card">
+      <div class="behavior-title">Spinner <span class="behavior-code">data-wb="spinner"</span></div>
+      <div class="demo-area">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.5rem 0; width: 100%;">
+          <strong>Speeds:</strong> slow (2s), medium (1.2s), fast (0.6s)
+        </p>
+        <div class="demo-row" style="gap: 1.5rem; justify-content: center;">
+          <div class="spinner-group">
+            <div
+              data-wb="spinner"
+              data-size="sm"
+              data-color="primary"
+              data-speed="slow"></div>
+            <span class="spinner-label">slow / sm</span>
+          </div>
+          <div class="spinner-group">
+            <div
+              data-wb="spinner"
+              data-size="md"
+              data-color="success"
+              data-speed="medium"></div>
+            <span class="spinner-label">medium / md</span>
+          </div>
+          <div class="spinner-group">
+            <div
+              data-wb="spinner"
+              data-size="lg"
+              data-color="warning"
+              data-speed="fast"></div>
+            <span class="spinner-label">fast / lg</span>
+          </div>
+          <div class="spinner-group">
+            <div
+              data-wb="spinner"
+              data-size="xl"
+              data-color="error"
+              data-speed="medium"></div>
+            <span class="spinner-label">medium / xl</span>
+          </div>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 1rem 0 0.5rem 0; width: 100%;">
+          <strong>All Sizes:</strong> xs, sm, md, lg, xl
+        </p>
+        <div class="demo-row" style="gap: 1.5rem; justify-content: center; align-items: flex-end;">
+          <div class="spinner-group">
+            <div
+              data-wb="spinner"
+              data-size="xs"
+              data-color="info"
+              data-speed="medium"></div>
+            <span class="spinner-label">xs</span>
+          </div>
+          <div class="spinner-group">
+            <div
+              data-wb="spinner"
+              data-size="sm"
+              data-color="secondary"
+              data-speed="medium"></div>
+            <span class="spinner-label">sm</span>
+          </div>
+          <div class="spinner-group">
+            <div
+              data-wb="spinner"
+              data-size="md"
+              data-color="#ec4899"
+              data-speed="medium"></div>
+            <span class="spinner-label">md</span>
+          </div>
+          <div class="spinner-group">
+            <div
+              data-wb="spinner"
+              data-size="lg"
+              data-color="primary"
+              data-speed="medium"></div>
+            <span class="spinner-label">lg</span>
+          </div>
+          <div class="spinner-group">
+            <div
+              data-wb="spinner"
+              data-size="xl"
+              data-color="success"
+              data-speed="medium"></div>
+            <span class="spinner-label">xl</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div id="behaviors-div-88" class="behavior-card">
-      <div id="behaviors-div-89" class="behavior-title">Progress <span id="behaviors-span-90" class="behavior-code">data-wb="progressbar"</span></div>
-      <div id="behaviors-div-91" class="demo-area" style="display:flex; flex-direction:column; gap:1rem; width: 100%;">
-        <div id="behaviors-div-92" data-wb="progressbar" data-value="25" data-label="Uploading..."></div>
-        <div id="behaviors-div-93" data-wb="progressbar" data-value="60" data-label="Processing" data-striped="true" data-animated="true"></div>
-        <div id="behaviors-div-94" data-wb="progressbar" data-value="100" data-label="Complete" data-variant="success"></div>
-      </div>
-    </div>
-
-    <div id="behaviors-div-95" class="behavior-card">
-      <div id="behaviors-div-96" class="behavior-title">Avatar <span id="behaviors-span-97" class="behavior-code">data-wb="avatar"</span></div>
-      <div id="behaviors-div-98" class="demo-area">
-        <div id="behaviors-div-99" class="demo-row">
-          <div id="behaviors-div-100" data-wb="avatar" data-initials="JD" data-status="online"></div>
-          <div id="behaviors-div-101" data-wb="avatar" data-src="https://i.pravatar.cc/100?u=5" data-status="busy"></div>
-          <div id="behaviors-div-102" data-wb="avatar" data-initials="WB" data-size="lg" data-status="away"></div>
-        </div>
-      </div>
-    </div>
-
-    <div id="behaviors-div-103" class="behavior-card">
-      <div id="behaviors-div-104" class="behavior-title">Tooltip <span id="behaviors-span-105" class="behavior-code">data-wb="tooltip"</span></div>
-      <div id="behaviors-div-106" class="demo-area">
-        <div id="behaviors-div-107" class="demo-row" style="justify-content: center; width: 100%;">
-          <button id="behaviors-button-108" data-wb="button tooltip" data-variant="secondary" data-content="I am a tooltip on top!" data-position="top">
-            Top
-          </button>
-          <button id="behaviors-button-109" data-wb="button tooltip" data-variant="secondary" data-content="I am a tooltip on right!" data-position="right">
-            Right
-          </button>
-          <button id="behaviors-button-110" data-wb="button tooltip" data-variant="secondary" data-content="I am a tooltip on bottom!" data-position="bottom">
-            Bottom
-          </button>
-          <button id="behaviors-button-111" data-wb="button tooltip" data-variant="secondary" data-content="I am a tooltip on left!" data-position="left">
-            Left
-          </button>
-        </div>
-        <p id="behaviors-p-112" style="text-align: center; width: 100%; margin-top: 1rem;">
-          <span id="behaviors-span-113" data-wb="tooltip" data-content="Inline tooltips work too!" style="text-decoration: underline; cursor: help;">Hover me</span> for inline help.
+    <div class="behavior-card">
+      <div class="behavior-title">Progress <span class="behavior-code">data-wb="progressbar"</span></div>
+      <div class="demo-area" style="display:flex; flex-direction:column; gap:1rem; width: 100%;">
+        <div
+          id="progress-uploading"
+          data-wb="progressbar"
+          data-value="0"
+          data-label="Uploading..."
+          data-variant="primary"></div>
+        <div
+          id="progress-processing"
+          data-wb="progressbar"
+          data-value="0"
+          data-label="Processing"
+          data-striped="true"
+          data-animated="true"
+          data-variant="warning"></div>
+        <div
+          data-wb="progressbar"
+          data-value="100"
+          data-label="Complete"
+          data-variant="success"></div>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">
+          ⏱️ Upload resets every 8s, Processing resets every 5s
         </p>
       </div>
     </div>
 
-    <div id="behaviors-div-114" class="behavior-card">
-      <div id="behaviors-div-115" class="behavior-title">Toast & Notify <span id="behaviors-span-116" class="behavior-code">data-wb="toast/notify"</span></div>
-      <div id="behaviors-div-117" class="demo-area">
-        <div id="behaviors-div-118" class="demo-row">
-          <button id="behaviors-button-119" data-wb="toast" data-message="Action saved successfully!" data-type="success" class="wb-button">
+    <div class="behavior-card">
+      <div class="behavior-title">Avatar <span class="behavior-code">data-wb="avatar"</span></div>
+      <div class="demo-area">
+        <div class="demo-row">
+          <div
+            data-wb="avatar"
+            data-initials="JD"
+            data-status="online"></div>
+          <div
+            data-wb="avatar"
+            data-src="https://i.pravatar.cc/100?u=5"
+            data-status="busy"></div>
+          <div
+            data-wb="avatar"
+            data-initials="WB"
+            data-size="lg"
+            data-status="away"></div>
+          <div
+            data-wb="avatar"
+            data-initials="XL"
+            data-size="xl"
+            data-status="offline"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="behavior-card">
+      <div class="behavior-title">Tooltip <span class="behavior-code">data-wb="tooltip"</span></div>
+      <div class="demo-area">
+        <div class="demo-row" style="justify-content: center; width: 100%;">
+          <button
+            data-wb="tooltip ripple"
+            data-tooltip="I am a tooltip on top!"
+            data-tooltip-position="top"
+            style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
+            Top
+          </button>
+          <button
+            data-wb="tooltip ripple"
+            data-tooltip="I am a tooltip on right!"
+            data-tooltip-position="right"
+            style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
+            Right
+          </button>
+          <button
+            data-wb="tooltip ripple"
+            data-tooltip="I am a tooltip on bottom!"
+            data-tooltip-position="bottom"
+            style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
+            Bottom
+          </button>
+          <button
+            data-wb="tooltip ripple"
+            data-tooltip="I am a tooltip on left!"
+            data-tooltip-position="left"
+            style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
+            Left
+          </button>
+        </div>
+        <p style="text-align: center; width: 100%; margin-top: 1rem;">
+          <span
+            data-wb="tooltip"
+            data-tooltip="Inline tooltips work too!"
+            style="text-decoration: underline; cursor: help;">Hover me</span> for inline help.
+        </p>
+      </div>
+    </div>
+
+    <div class="behavior-card">
+      <div class="behavior-title">Toast & Notify <span class="behavior-code">data-wb="toast/notify"</span></div>
+      <div class="demo-area">
+        <div class="demo-row">
+          <button
+            data-wb="toast"
+            data-message="Action saved successfully!"
+            data-type="success"
+            class="wb-button">
             Show Toast
           </button>
-          <button id="behaviors-button-120" data-wb="notify" data-message="New notification received" class="wb-button">
+          <button
+            data-wb="notify"
+            data-message="New notification received"
+            class="wb-button">
             Show Notify
           </button>
         </div>
@@ -286,41 +476,48 @@
 
   <!-- 3. LAYOUT -->
   <h2 id="layout">3. Layout</h2>
-  <div id="behaviors-div-121" class="behavior-grid">
+  <div class="behavior-grid">
 
-    <div id="behaviors-div-122" class="behavior-card">
-      <div id="behaviors-div-123" class="behavior-title">Stack <span id="behaviors-span-124" class="behavior-code">data-wb="stack"</span></div>
-      <div id="behaviors-div-125" class="demo-area" style="display:block">
-        <div id="behaviors-div-126" data-wb="stack" data-gap="sm">
-          <div id="behaviors-div-127" style="background:var(--bg-tertiary); padding:0.5rem; border-radius: 4px;">Item 1</div>
-          <div id="behaviors-div-128" style="background:var(--bg-tertiary); padding:0.5rem; border-radius: 4px;">Item 2</div>
-          <div id="behaviors-div-129" style="background:var(--bg-tertiary); padding:0.5rem; border-radius: 4px;">Item 3</div>
+    <div class="behavior-card">
+      <div class="behavior-title">Stack <span class="behavior-code">data-wb="stack"</span></div>
+      <div class="demo-area" style="display:block">
+        <div
+          data-wb="stack"
+          data-gap="sm">
+          <div style="background:var(--bg-tertiary); padding:0.5rem; border-radius: 4px;">Item 1</div>
+          <div style="background:var(--bg-tertiary); padding:0.5rem; border-radius: 4px;">Item 2</div>
+          <div style="background:var(--bg-tertiary); padding:0.5rem; border-radius: 4px;">Item 3</div>
         </div>
       </div>
     </div>
 
-    <div id="behaviors-div-130" class="behavior-card">
-      <div id="behaviors-div-131" class="behavior-title">Cluster <span id="behaviors-span-132" class="behavior-code">data-wb="cluster"</span></div>
-      <div id="behaviors-div-133" class="demo-area" style="display:block">
-        <div id="behaviors-div-134" data-wb="cluster" data-gap="xs">
-          <span id="behaviors-span-135" data-wb="badge">JavaScript</span>
-          <span id="behaviors-span-136" data-wb="badge">HTML</span>
-          <span id="behaviors-span-137" data-wb="badge">CSS</span>
-          <span id="behaviors-span-138" data-wb="badge">Web Components</span>
-          <span id="behaviors-span-139" data-wb="badge">Design</span>
-          <span id="behaviors-span-140" data-wb="badge">UI/UX</span>
+    <div class="behavior-card">
+      <div class="behavior-title">Cluster <span class="behavior-code">data-wb="cluster"</span></div>
+      <div class="demo-area" style="display:block">
+        <div
+          data-wb="cluster"
+          data-gap="xs">
+          <span data-wb="badge">JavaScript</span>
+          <span data-wb="badge">HTML</span>
+          <span data-wb="badge">CSS</span>
+          <span data-wb="badge">Web Components</span>
+          <span data-wb="badge">Design</span>
+          <span data-wb="badge">UI/UX</span>
         </div>
       </div>
     </div>
 
-    <div id="behaviors-div-141" class="behavior-card">
-      <div id="behaviors-div-142" class="behavior-title">Grid <span id="behaviors-span-143" class="behavior-code">data-wb="grid"</span></div>
-      <div id="behaviors-div-144" class="demo-area" style="display:block">
-        <div id="behaviors-div-145" data-wb="grid" data-columns="2" data-gap="sm">
-          <div id="behaviors-div-146" style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">1</div>
-          <div id="behaviors-div-147" style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">2</div>
-          <div id="behaviors-div-148" style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">3</div>
-          <div id="behaviors-div-149" style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">4</div>
+    <div class="behavior-card">
+      <div class="behavior-title">Grid <span class="behavior-code">data-wb="grid"</span></div>
+      <div class="demo-area" style="display:block">
+        <div
+          data-wb="grid"
+          data-columns="2"
+          data-gap="sm">
+          <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">1</div>
+          <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">2</div>
+          <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">3</div>
+          <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">4</div>
         </div>
       </div>
     </div>
@@ -329,40 +526,58 @@
 
   <!-- 4. UTILITIES -->
   <h2 id="utilities">4. Utilities</h2>
-  <div id="behaviors-div-150" class="behavior-grid">
+  <div class="behavior-grid">
 
-    <div id="behaviors-div-151" class="behavior-card">
-      <div id="behaviors-div-152" class="behavior-title">Copy <span id="behaviors-span-153" class="behavior-code">data-wb="copy"</span></div>
-      <div id="behaviors-div-154" class="demo-area">
-        <div id="behaviors-div-155" style="display: flex; width: 100%; gap: 0.5rem;">
-          <input id="copy-target" value="Copy this text!" style="flex: 1; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
-          <button id="behaviors-button-156" data-wb="copy" data-target="#copy-target" class="wb-button">📋 Copy</button>
+    <div class="behavior-card">
+      <div class="behavior-title">Copy <span class="behavior-code">data-wb="copy"</span></div>
+      <div class="demo-area">
+        <div style="display: flex; width: 100%; gap: 0.5rem;">
+          <input
+            id="copy-target"
+            value="Copy this text!"
+            style="flex: 1; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+          <button
+            data-wb="copy ripple"
+            data-target="#copy-target"
+            style="padding:0.5rem 1rem; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer; overflow:hidden; position:relative;">📋 Copy</button>
         </div>
       </div>
     </div>
 
-    <div id="behaviors-div-157" class="behavior-card">
-      <div id="behaviors-div-158" class="behavior-title">Ripple <span id="behaviors-span-159" class="behavior-code">data-wb="ripple"</span></div>
-      <div id="behaviors-div-160" class="demo-area">
-        <button id="behaviors-button-161" data-wb="ripple" style="padding:1rem 2rem; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer; overflow:hidden; position:relative; font-size: 1rem;">
+    <div class="behavior-card">
+      <div class="behavior-title">Ripple <span class="behavior-code">data-wb="ripple"</span></div>
+      <div class="demo-area">
+        <button
+          data-wb="ripple"
+          style="padding:1rem 2rem; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer; overflow:hidden; position:relative; font-size: 1rem;">
           Click for Ripple Effect
         </button>
       </div>
     </div>
 
-    <div id="behaviors-div-162" class="behavior-card">
-      <div id="behaviors-div-163" class="behavior-title">Confetti <span id="behaviors-span-164" class="behavior-code">data-wb="confetti"</span></div>
-      <div id="behaviors-div-165" class="demo-area">
-        <button id="behaviors-button-166" data-wb="confetti" data-count="100" data-label="Celebrate!">🎉</button>
+    <div class="behavior-card">
+      <div class="behavior-title">Confetti <span class="behavior-code">data-wb="confetti"</span></div>
+      <div class="demo-area">
+        <button
+          data-wb="confetti"
+          data-count="100"
+          data-label="Celebrate!">🎉</button>
       </div>
     </div>
 
-    <div id="behaviors-div-167" class="behavior-card">
-      <div id="behaviors-div-168" class="behavior-title">Typewriter <span id="behaviors-span-169" class="behavior-code">data-wb="typewriter"</span></div>
-      <div id="behaviors-div-170" class="demo-area">
-        <div id="behaviors-div-171" style="display: flex; flex-direction: column; gap: 1rem; align-items: flex-start;">
-          <span id="typewriter-demo" data-wb="typewriter" data-text="Hello! I am typing this text out character by character using WB Behaviors." data-speed="50" style="font-family: monospace; font-size: 1.1rem; color: var(--primary);"></span>
-          <button id="behaviors-button-172" class="wb-button wb-button--sm wb-button--secondary" onclick="document.getElementById('typewriter-demo').wbTypewriter.type()">Restart Effect</button>
+    <div class="behavior-card">
+      <div class="behavior-title">Typewriter <span class="behavior-code">data-wb="typewriter"</span></div>
+      <div class="demo-area">
+        <div style="display: flex; flex-direction: column; gap: 1rem; align-items: flex-start;">
+          <span
+            id="typewriter-demo"
+            data-wb="typewriter"
+            data-text="Hello! I am typing this text out character by character using WB Behaviors."
+            data-speed="50"
+            style="font-family: monospace; font-size: 1.1rem; color: var(--primary);"></span>
+          <button
+            class="wb-button wb-button--sm wb-button--secondary"
+            onclick="document.getElementById('typewriter-demo').wbTypewriter.type()">Restart Effect</button>
         </div>
       </div>
     </div>
@@ -371,39 +586,47 @@
 
   <!-- 5. EFFECTS -->
   <h2 id="effects">5. Effects</h2>
-  <div id="behaviors-div-173" class="behavior-grid">
+  <div class="behavior-grid">
 
-    <div id="behaviors-div-174" class="behavior-card">
-      <div id="behaviors-div-175" class="behavior-title">Bounce <span id="behaviors-span-176" class="behavior-code">data-wb="bounce"</span></div>
-      <div id="behaviors-div-177" class="demo-area">
-        <button id="behaviors-button-178" data-wb="bounce" style="width:60px; height:60px; background:var(--accent, #f472b6); border-radius:50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+    <div class="behavior-card">
+      <div class="behavior-title">Bounce <span class="behavior-code">data-wb="bounce"</span></div>
+      <div class="demo-area">
+        <button
+          data-wb="bounce"
+          style="width:60px; height:60px; background:var(--accent, #f472b6); border-radius:50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
           Click
         </button>
       </div>
     </div>
 
-    <div id="behaviors-div-179" class="behavior-card">
-      <div id="behaviors-div-180" class="behavior-title">Pulse <span id="behaviors-span-181" class="behavior-code">data-wb="pulse"</span></div>
-      <div id="behaviors-div-182" class="demo-area">
-        <button id="behaviors-button-183" data-wb="pulse" style="width:60px; height:60px; background:var(--success-color); border-radius:50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+    <div class="behavior-card">
+      <div class="behavior-title">Pulse <span class="behavior-code">data-wb="pulse"</span></div>
+      <div class="demo-area">
+        <button
+          data-wb="pulse"
+          style="width:60px; height:60px; background:var(--success-color); border-radius:50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
           Click
         </button>
       </div>
     </div>
 
-    <div id="behaviors-div-184" class="behavior-card">
-      <div id="behaviors-div-185" class="behavior-title">Shake <span id="behaviors-span-186" class="behavior-code">data-wb="shake"</span></div>
-      <div id="behaviors-div-187" class="demo-area">
-        <button id="behaviors-button-188" data-wb="shake" style="padding: 0.75rem 1.5rem; background:var(--danger-color); color: white; border-radius: 4px; border: none; cursor: pointer;">
+    <div class="behavior-card">
+      <div class="behavior-title">Shake <span class="behavior-code">data-wb="shake"</span></div>
+      <div class="demo-area">
+        <button
+          data-wb="shake"
+          style="padding: 0.75rem 1.5rem; background:var(--danger-color); color: white; border-radius: 4px; border: none; cursor: pointer;">
           Shake Me
         </button>
       </div>
     </div>
 
-    <div id="behaviors-div-189" class="behavior-card">
-      <div id="behaviors-div-190" class="behavior-title">Rainbow <span id="behaviors-span-191" class="behavior-code">data-wb="rainbow"</span></div>
-      <div id="behaviors-div-192" class="demo-area">
-        <h3 id="behaviors-h3-193" data-wb="rainbow" style="font-size: 1.5rem; margin: 0;">Magical Text</h3>
+    <div class="behavior-card">
+      <div class="behavior-title">Rainbow <span class="behavior-code">data-wb="rainbow"</span></div>
+      <div class="demo-area">
+        <h3
+          data-wb="rainbow"
+          style="font-size: 1.5rem; margin: 0;">Magical Text</h3>
       </div>
     </div>
 
@@ -411,24 +634,35 @@
 
   <!-- 6. MEDIA -->
   <h2 id="media">6. Media</h2>
-  <div id="behaviors-div-194" class="behavior-grid">
-    <div id="behaviors-div-195" class="behavior-card">
-      <div id="behaviors-div-196" class="behavior-title">Audio <span id="behaviors-span-197" class="behavior-code">data-wb="audio"</span></div>
-      <div id="behaviors-div-198" class="demo-area">
-        <div id="behaviors-div-199" data-wb="audio" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" data-controls="true"></div>
+  <div class="behavior-grid">
+    <div class="behavior-card">
+      <div class="behavior-title">Audio <span class="behavior-code">data-wb="audio"</span></div>
+      <div class="demo-area">
+        <div
+          data-wb="audio"
+          data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+          data-controls="true"></div>
       </div>
     </div>
-    <div id="behaviors-div-200" class="behavior-card">
-      <div id="behaviors-div-201" class="behavior-title">Video <span id="behaviors-span-202" class="behavior-code">data-wb="video"</span></div>
-      <div id="behaviors-div-203" class="demo-area">
-        <video id="behaviors-video-204" data-wb="video" controls width="300" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></video>
+    <div class="behavior-card">
+      <div class="behavior-title">Video <span class="behavior-code">data-wb="video"</span></div>
+      <div class="demo-area">
+        <video
+          data-wb="video"
+          controls
+          width="300"
+          src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></video>
       </div>
     </div>
-    <div id="behaviors-div-205" class="behavior-card">
-      <div id="behaviors-div-206" class="behavior-title">Figure <span id="behaviors-span-207" class="behavior-code">data-wb="figure"</span></div>
-      <div id="behaviors-div-208" class="demo-area">
-        <figure id="behaviors-figure-209" data-wb="figure" data-caption="A beautiful placeholder image">
-          <img id="behaviors-img-210" src="https://picsum.photos/300/200" alt="Random Image">
+    <div class="behavior-card">
+      <div class="behavior-title">Figure <span class="behavior-code">data-wb="figure"</span></div>
+      <div class="demo-area">
+        <figure
+          data-wb="figure"
+          data-caption="A beautiful placeholder image">
+          <img
+            src="https://picsum.photos/300/200"
+            alt="Random Image">
         </figure>
       </div>
     </div>
@@ -436,30 +670,34 @@
 
   <!-- 7. NAVIGATION -->
   <h2 id="navigation">7. Navigation</h2>
-  <div id="behaviors-div-211" class="behavior-grid">
-    <div id="behaviors-div-212" class="behavior-card">
-      <div id="behaviors-div-213" class="behavior-title">Breadcrumb <span id="behaviors-span-214" class="behavior-code">data-wb="breadcrumb"</span></div>
-      <div id="behaviors-div-215" class="demo-area">
-        <nav id="behaviors-nav-216" data-wb="breadcrumb" data-items="Home, Products, Electronics, Laptops"></nav>
+  <div class="behavior-grid">
+    <div class="behavior-card">
+      <div class="behavior-title">Breadcrumb <span class="behavior-code">data-wb="breadcrumb"</span></div>
+      <div class="demo-area">
+        <nav
+          data-wb="breadcrumb"
+          data-items="Home, Products, Electronics, Laptops"></nav>
       </div>
     </div>
-    <div id="behaviors-div-217" class="behavior-card">
-      <div id="behaviors-div-218" class="behavior-title">Tabs <span id="behaviors-span-219" class="behavior-code">data-wb="tabs"</span></div>
-      <div id="behaviors-div-220" class="demo-area">
-        <div id="behaviors-div-221" data-wb="tabs">
-          <div id="behaviors-div-222" data-tab="Tab 1">Content for Tab 1</div>
-          <div id="behaviors-div-223" data-tab="Tab 2">Content for Tab 2</div>
-          <div id="behaviors-div-224" data-tab="Tab 3">Content for Tab 3</div>
+    <div class="behavior-card">
+      <div class="behavior-title">Tabs <span class="behavior-code">data-wb="tabs"</span></div>
+      <div class="demo-area">
+        <div data-wb="tabs">
+          <div data-tab="Tab 1">Content for Tab 1</div>
+          <div data-tab="Tab 2">Content for Tab 2</div>
+          <div data-tab="Tab 3">Content for Tab 3</div>
         </div>
       </div>
     </div>
-    <div id="behaviors-div-225" class="behavior-card">
-      <div id="behaviors-div-226" class="behavior-title">Dropdown <span id="behaviors-span-227" class="behavior-code">data-wb="dropdown"</span></div>
-      <div id="behaviors-div-228" class="demo-area">
-        <div id="behaviors-div-229" data-wb="dropdown" data-label="Options">
-          <a id="behaviors-a-230" href="#">Profile</a>
-          <a id="behaviors-a-231" href="#">Settings</a>
-          <a id="behaviors-a-232" href="#">Logout</a>
+    <div class="behavior-card">
+      <div class="behavior-title">Dropdown <span class="behavior-code">data-wb="dropdown"</span></div>
+      <div class="demo-area">
+        <div
+          data-wb="dropdown"
+          data-label="Options">
+          <a href="#">Profile</a>
+          <a href="#">Settings</a>
+          <a href="#">Logout</a>
         </div>
       </div>
     </div>
@@ -467,135 +705,188 @@
 
   <!-- 8. INTERACTIVE -->
   <h2 id="interactive">8. Interactive</h2>
-  <div id="behaviors-div-233" class="behavior-grid">
-    <div id="behaviors-div-234" class="behavior-card">
-      <div id="behaviors-div-235" class="behavior-title">Collapse <span id="behaviors-span-236" class="behavior-code">data-wb="collapse"</span></div>
-      <div id="behaviors-div-237" class="demo-area">
-        <button id="behaviors-button-238" data-wb="collapse" data-target="#collapse-content">Toggle Content</button>
-        <div id="collapse-content" style="margin-top: 1rem; padding: 1rem; background: var(--bg-tertiary);">
+  <div class="behavior-grid">
+    <div class="behavior-card">
+      <div class="behavior-title">Collapse <span class="behavior-code">data-wb="collapse"</span></div>
+      <div class="demo-area">
+        <button
+          data-wb="collapse"
+          data-target="#collapse-content">Toggle Content</button>
+        <div
+          id="collapse-content"
+          style="margin-top: 1rem; padding: 1rem; background: var(--bg-tertiary);">
           This content can be collapsed and expanded.
         </div>
       </div>
     </div>
-    <div id="behaviors-div-239" class="behavior-card">
-      <div id="behaviors-div-240" class="behavior-title">Dialog <span id="behaviors-span-241" class="behavior-code">data-wb="dialog"</span></div>
-      <div id="behaviors-div-242" class="demo-area">
-        <button id="behaviors-button-243" onclick="document.getElementById('demo-dialog').showModal()">Open Dialog</button>
-        <dialog id="demo-dialog" data-wb="dialog">
-          <h3 id="behaviors-h3-244">Hello!</h3>
-          <p id="behaviors-p-245">This is a modal dialog.</p>
-          <button id="behaviors-button-246" onclick="this.closest('dialog').close()">Close</button>
+    <div class="behavior-card">
+      <div class="behavior-title">Dialog <span class="behavior-code">data-wb="dialog"</span></div>
+      <div class="demo-area">
+        <button onclick="document.getElementById('demo-dialog').showModal()">Open Dialog</button>
+        <dialog
+          id="demo-dialog"
+          data-wb="dialog">
+          <h3>Hello!</h3>
+          <p>This is a modal dialog.</p>
+          <button onclick="this.closest('dialog').close()">Close</button>
         </dialog>
       </div>
     </div>
-    <div id="behaviors-div-247" class="behavior-card">
-      <div id="behaviors-div-248" class="behavior-title">Drawer <span id="behaviors-span-249" class="behavior-code">data-wb="drawer-layout"</span></div>
-      <div id="behaviors-div-250" class="demo-area" style="height: 200px; overflow: hidden; border: 1px solid var(--border-color);">
-        <div id="behaviors-div-251" data-wb="drawer-layout" data-position="left" data-width="150px" style="height: 100%;">
-          <div id="behaviors-div-252" style="background: var(--bg-tertiary); height: 100%; padding: 1rem;">Sidebar</div>
-          <div id="behaviors-div-253" style="padding: 1rem;">Main Content</div>
+    <div class="behavior-card">
+      <div class="behavior-title">Drawer <span class="behavior-code">data-wb="drawer-layout"</span></div>
+      <div class="demo-area" style="height: 200px; overflow: hidden; border: 1px solid var(--border-color);">
+        <div
+          data-wb="drawer-layout"
+          data-position="left"
+          data-width="150px"
+          style="height: 100%;">
+          <div style="background: var(--bg-tertiary); height: 100%; padding: 1rem;">Sidebar</div>
+          <div style="padding: 1rem;">Main Content</div>
         </div>
       </div>
     </div>
-    <div id="behaviors-div-254" class="behavior-card">
-      <div id="behaviors-div-255" class="behavior-title">Toggle <span id="behaviors-span-256" class="behavior-code">data-wb="toggle"</span></div>
-      <div id="behaviors-div-257" class="demo-area">
-        <button id="behaviors-button-258" data-wb="toggle" data-target="#toggle-box" data-class="active">Toggle Class</button>
-        <div id="toggle-box" style="width: 50px; height: 50px; background: red; margin-top: 1rem; transition: all 0.3s;"></div>
-        <style id="behaviors-style-259">#toggle-box.active { background: green; transform: rotate(45deg); }</style>
+    <div class="behavior-card">
+      <div class="behavior-title">Toggle <span class="behavior-code">data-wb="toggle"</span></div>
+      <div class="demo-area">
+        <button
+          data-wb="toggle"
+          data-target="#toggle-box"
+          data-class="active">Toggle Class</button>
+        <div
+          id="toggle-box"
+          style="width: 50px; height: 50px; background: red; margin-top: 1rem; transition: all 0.3s;"></div>
+        <style>#toggle-box.active { background: green; transform: rotate(45deg); }</style>
       </div>
     </div>
   </div>
 
   <!-- 9. FORMS -->
   <h2 id="forms">9. Forms</h2>
-  <div id="behaviors-div-260" class="behavior-grid">
-    <div id="behaviors-div-261" class="behavior-card">
-      <div id="behaviors-div-262" class="behavior-title">Checkbox <span id="behaviors-span-263" class="behavior-code">data-wb="checkbox"</span></div>
-      <div id="behaviors-div-264" class="demo-area">
-        <label id="behaviors-label-265"><input id="behaviors-input-266" type="checkbox" data-wb="checkbox"> Option 1</label>
-        <label id="behaviors-label-267"><input id="behaviors-input-268" type="checkbox" data-wb="checkbox" checked> Option 2</label>
+  <div class="behavior-grid">
+    <div class="behavior-card">
+      <div class="behavior-title">Checkbox <span class="behavior-code">data-wb="checkbox"</span></div>
+      <div class="demo-area">
+        <label>
+          <input
+            type="checkbox"
+            data-wb="checkbox"> Option 1</label>
+        <label>
+          <input
+            type="checkbox"
+            data-wb="checkbox"
+            checked> Option 2</label>
       </div>
     </div>
-    <div id="behaviors-div-269" class="behavior-card">
-      <div id="behaviors-div-270" class="behavior-title">Radio <span id="behaviors-span-271" class="behavior-code">data-wb="radio"</span></div>
-      <div id="behaviors-div-272" class="demo-area">
-        <label id="behaviors-label-273"><input id="behaviors-input-274" type="radio" name="r1" data-wb="radio"> Radio 1</label>
-        <label id="behaviors-label-275"><input id="behaviors-input-276" type="radio" name="r1" data-wb="radio" checked> Radio 2</label>
+    <div class="behavior-card">
+      <div class="behavior-title">Radio <span class="behavior-code">data-wb="radio"</span></div>
+      <div class="demo-area">
+        <label>
+          <input
+            type="radio"
+            name="r1"
+            data-wb="radio"> Radio 1</label>
+        <label>
+          <input
+            type="radio"
+            name="r1"
+            data-wb="radio"
+            checked> Radio 2</label>
       </div>
     </div>
-    <div id="behaviors-div-277" class="behavior-card">
-      <div id="behaviors-div-278" class="behavior-title">Range <span id="behaviors-span-279" class="behavior-code">data-wb="range"</span></div>
-      <div id="behaviors-div-280" class="demo-area">
-        <input id="behaviors-input-281" type="range" data-wb="range" min="0" max="100" value="50">
+    <div class="behavior-card">
+      <div class="behavior-title">Range <span class="behavior-code">data-wb="range"</span></div>
+      <div class="demo-area">
+        <input
+          type="range"
+          data-wb="range"
+          min="0"
+          max="100"
+          value="50">
       </div>
     </div>
-    <div id="behaviors-div-282" class="behavior-card">
-      <div id="behaviors-div-283" class="behavior-title">Select <span id="behaviors-span-284" class="behavior-code">data-wb="select"</span></div>
-      <div id="behaviors-div-285" class="demo-area">
-        <select id="behaviors-select-286" data-wb="select">
-          <option id="behaviors-option-287">Option 1</option>
-          <option id="behaviors-option-288">Option 2</option>
-          <option id="behaviors-option-289">Option 3</option>
+    <div class="behavior-card">
+      <div class="behavior-title">Select <span class="behavior-code">data-wb="select"</span></div>
+      <div class="demo-area">
+        <select data-wb="select">
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
         </select>
       </div>
     </div>
-    <div id="behaviors-div-290" class="behavior-card">
-      <div id="behaviors-div-291" class="behavior-title">Textarea <span id="behaviors-span-292" class="behavior-code">data-wb="textarea"</span></div>
-      <div id="behaviors-div-293" class="demo-area">
-        <textarea id="behaviors-textarea-294" data-wb="textarea" placeholder="Type something..."></textarea>
+    <div class="behavior-card">
+      <div class="behavior-title">Textarea <span class="behavior-code">data-wb="textarea"</span></div>
+      <div class="demo-area">
+        <textarea
+          data-wb="textarea"
+          placeholder="Type something..."></textarea>
       </div>
     </div>
-    <div id="behaviors-div-295" class="behavior-card">
-      <div id="behaviors-div-296" class="behavior-title">Rating <span id="behaviors-span-297" class="behavior-code">data-wb="rating"</span></div>
-      <div id="behaviors-div-298" class="demo-area">
-        <div id="behaviors-div-299" data-wb="rating" data-value="3" data-max="5"></div>
+    <div class="behavior-card">
+      <div class="behavior-title">Rating <span class="behavior-code">data-wb="rating"</span></div>
+      <div class="demo-area">
+        <div
+          data-wb="rating"
+          data-value="3"
+          data-max="5"></div>
       </div>
     </div>
   </div>
 
   <!-- 10. ADVANCED LAYOUT -->
   <h2 id="advanced-layout">10. Advanced Layout</h2>
-  <div id="behaviors-div-300" class="behavior-grid">
-    <div id="behaviors-div-301" class="behavior-card">
-      <div id="behaviors-div-302" class="behavior-title">Masonry <span id="behaviors-span-303" class="behavior-code">data-wb="masonry"</span></div>
-      <div id="behaviors-div-304" class="demo-area">
-        <div id="behaviors-div-305" data-wb="masonry" data-columns="3" data-gap="0.5rem">
-          <div id="behaviors-div-306" style="background: #333; height: 50px;"></div>
-          <div id="behaviors-div-307" style="background: #444; height: 80px;"></div>
-          <div id="behaviors-div-308" style="background: #555; height: 40px;"></div>
-          <div id="behaviors-div-309" style="background: #666; height: 60px;"></div>
-          <div id="behaviors-div-310" style="background: #777; height: 90px;"></div>
+  <div class="behavior-grid">
+    <div class="behavior-card">
+      <div class="behavior-title">Masonry <span class="behavior-code">data-wb="masonry"</span></div>
+      <div class="demo-area">
+        <div
+          data-wb="masonry"
+          data-columns="3"
+          data-gap="0.5rem">
+          <div style="background: #333; height: 50px;"></div>
+          <div style="background: #444; height: 80px;"></div>
+          <div style="background: #555; height: 40px;"></div>
+          <div style="background: #666; height: 60px;"></div>
+          <div style="background: #777; height: 90px;"></div>
         </div>
       </div>
     </div>
-    <div id="behaviors-div-311" class="behavior-card">
-      <div id="behaviors-div-312" class="behavior-title">Switcher <span id="behaviors-span-313" class="behavior-code">data-wb="switcher"</span></div>
-      <div id="behaviors-div-314" class="demo-area">
-        <div id="behaviors-div-315" data-wb="switcher" data-threshold="200px">
-          <div id="behaviors-div-316" style="background: #333; padding: 1rem;">Item 1</div>
-          <div id="behaviors-div-317" style="background: #444; padding: 1rem;">Item 2</div>
-          <div id="behaviors-div-318" style="background: #555; padding: 1rem;">Item 3</div>
+    <div class="behavior-card">
+      <div class="behavior-title">Switcher <span class="behavior-code">data-wb="switcher"</span></div>
+      <div class="demo-area">
+        <div
+          data-wb="switcher"
+          data-threshold="200px">
+          <div style="background: #333; padding: 1rem;">Item 1</div>
+          <div style="background: #444; padding: 1rem;">Item 2</div>
+          <div style="background: #555; padding: 1rem;">Item 3</div>
         </div>
       </div>
     </div>
-    <div id="behaviors-div-319" class="behavior-card">
-      <div id="behaviors-div-320" class="behavior-title">Frame <span id="behaviors-span-321" class="behavior-code">data-wb="frame"</span></div>
-      <div id="behaviors-div-322" class="demo-area">
-        <div id="behaviors-div-323" data-wb="frame" data-ratio="16/9" style="width: 100%; background: #000;">
-          <img id="behaviors-img-324" src="https://picsum.photos/400/300" alt="Cover">
+    <div class="behavior-card">
+      <div class="behavior-title">Frame <span class="behavior-code">data-wb="frame"</span></div>
+      <div class="demo-area">
+        <div
+          data-wb="frame"
+          data-ratio="16/9"
+          style="width: 100%; background: #000;">
+          <img
+            src="https://picsum.photos/400/300"
+            alt="Cover">
         </div>
       </div>
     </div>
-    <div id="behaviors-div-325" class="behavior-card">
-      <div id="behaviors-div-326" class="behavior-title">Reel <span id="behaviors-span-327" class="behavior-code">data-wb="reel"</span></div>
-      <div id="behaviors-div-328" class="demo-area">
-        <div id="behaviors-div-329" data-wb="reel" data-item-width="100px">
-          <div id="behaviors-div-330" style="background: #333; height: 80px; width: 100px;">1</div>
-          <div id="behaviors-div-331" style="background: #444; height: 80px; width: 100px;">2</div>
-          <div id="behaviors-div-332" style="background: #555; height: 80px; width: 100px;">3</div>
-          <div id="behaviors-div-333" style="background: #666; height: 80px; width: 100px;">4</div>
-          <div id="behaviors-div-334" style="background: #777; height: 80px; width: 100px;">5</div>
+    <div class="behavior-card">
+      <div class="behavior-title">Reel <span class="behavior-code">data-wb="reel"</span></div>
+      <div class="demo-area">
+        <div
+          data-wb="reel"
+          data-item-width="100px">
+          <div style="background: #333; height: 80px; width: 100px;">1</div>
+          <div style="background: #444; height: 80px; width: 100px;">2</div>
+          <div style="background: #555; height: 80px; width: 100px;">3</div>
+          <div style="background: #666; height: 80px; width: 100px;">4</div>
+          <div style="background: #777; height: 80px; width: 100px;">5</div>
         </div>
       </div>
     </div>
@@ -603,79 +894,91 @@
 
   <!-- 11. UNIVERSAL -->
   <h2 id="universal">11. Universal</h2>
-  <div id="behaviors-div-335" class="behavior-grid">
-    <div id="behaviors-div-336" class="behavior-card">
-      <div id="behaviors-div-337" class="behavior-title">Draggable <span id="behaviors-span-338" class="behavior-code">data-wb="draggable"</span></div>
-      <div id="behaviors-div-339" class="demo-area" style="height: 150px; position: relative;">
-        <div id="behaviors-div-340" data-wb="draggable" style="width: 50px; height: 50px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; cursor: move;">Drag</div>
+  <div class="behavior-grid">
+    <div class="behavior-card">
+      <div class="behavior-title">Draggable <span class="behavior-code">data-wb="draggable"</span></div>
+      <div class="demo-area" style="height: 150px; position: relative;">
+        <div
+          data-wb="draggable"
+          style="width: 50px; height: 50px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; cursor: move;">Drag</div>
       </div>
     </div>
-    <div id="behaviors-div-341" class="behavior-card">
-      <div id="behaviors-div-342" class="behavior-title">Resizable <span id="behaviors-span-343" class="behavior-code">data-wb="resizable"</span></div>
-      <div id="behaviors-div-344" class="demo-area">
-        <div id="behaviors-div-345" data-wb="resizable" style="width: 100px; height: 100px; background: var(--bg-tertiary); border: 1px solid var(--border-color); overflow: hidden;">Resize Me</div>
+    <div class="behavior-card">
+      <div class="behavior-title">Resizable <span class="behavior-code">data-wb="resizable"</span></div>
+      <div class="demo-area">
+        <div
+          data-wb="resizable"
+          style="width: 100px; height: 100px; background: var(--bg-tertiary); border: 1px solid var(--border-color); overflow: hidden;">Resize Me</div>
       </div>
     </div>
   </div>
 
   <!-- 12. MORE COMPONENTS -->
   <h2 id="more">12. More Components</h2>
-  <div id="behaviors-div-346" class="behavior-grid">
-    <div id="behaviors-div-347" class="behavior-card">
-      <div id="behaviors-div-348" class="behavior-title">Sidebar Layout <span id="behaviors-span-349" class="behavior-code">data-wb="sidebar-layout"</span></div>
-      <div id="behaviors-div-350" class="demo-area" style="height: 200px; border: 1px solid var(--border-color);">
-        <div id="behaviors-div-351" data-wb="sidebar-layout" data-sidebar-width="100px">
-          <div id="behaviors-div-352" style="background: var(--bg-tertiary); padding: 1rem;">Side</div>
-          <div id="behaviors-div-353" style="padding: 1rem;">Main Content Area</div>
+  <div class="behavior-grid">
+    <div class="behavior-card">
+      <div class="behavior-title">Sidebar Layout <span class="behavior-code">data-wb="sidebar-layout"</span></div>
+      <div class="demo-area" style="height: 200px; border: 1px solid var(--border-color);">
+        <div
+          data-wb="sidebar-layout"
+          data-sidebar-width="100px">
+          <div style="background: var(--bg-tertiary); padding: 1rem;">Side</div>
+          <div style="padding: 1rem;">Main Content Area</div>
         </div>
       </div>
     </div>
-    <div id="behaviors-div-354" class="behavior-card">
-      <div id="behaviors-div-355" class="behavior-title">Imposter <span id="behaviors-span-356" class="behavior-code">data-wb="imposter"</span></div>
-      <div id="behaviors-div-357" class="demo-area" style="height: 150px; position: relative;">
-        <div id="behaviors-div-358" data-wb="imposter" style="background: rgba(0,0,0,0.5); color: white; padding: 1rem; border-radius: 4px;">
+    <div class="behavior-card">
+      <div class="behavior-title">Imposter <span class="behavior-code">data-wb="imposter"</span></div>
+      <div class="demo-area" style="height: 150px; position: relative;">
+        <div
+          data-wb="imposter"
+          style="background: rgba(0,0,0,0.5); color: white; padding: 1rem; border-radius: 4px;">
           I am centered over everything!
         </div>
       </div>
     </div>
-    <div id="behaviors-div-359" class="behavior-card">
-      <div id="behaviors-div-360" class="behavior-title">Alert <span id="behaviors-span-361" class="behavior-code">data-wb="alert"</span></div>
-      <div id="behaviors-div-362" class="demo-area">
-        <div id="behaviors-div-363" data-wb="alert" data-variant="info" style="padding: 1rem; background: var(--bg-tertiary); border-left: 4px solid var(--primary); width: 100%;">
-          <strong id="behaviors-strong-364">Info:</strong> This is an alert message.
+    <div class="behavior-card">
+      <div class="behavior-title">Alert <span class="behavior-code">data-wb="alert"</span></div>
+      <div class="demo-area">
+        <div
+          data-wb="alert"
+          data-variant="info"
+          style="padding: 1rem; background: var(--bg-tertiary); border-left: 4px solid var(--primary); width: 100%;">
+          <strong>Info:</strong> This is an alert message.
         </div>
       </div>
     </div>
-    <div id="behaviors-div-365" class="behavior-card">
-      <div id="behaviors-div-366" class="behavior-title">Keyboard <span id="behaviors-span-367" class="behavior-code">data-wb="kbd"</span></div>
-      <div id="behaviors-div-368" class="demo-area">
-        <p id="behaviors-p-369">Press <kbd id="behaviors-kbd-370" data-wb="kbd">Ctrl</kbd> + <kbd id="behaviors-kbd-371" data-wb="kbd">C</kbd> to copy.</p>
+    <div class="behavior-card">
+      <div class="behavior-title">Keyboard <span class="behavior-code">data-wb="kbd"</span></div>
+      <div class="demo-area">
+        <p>Press <kbd data-wb="kbd">Ctrl</kbd> + <kbd data-wb="kbd">C</kbd> to copy.</p>
       </div>
     </div>
-    <div id="behaviors-div-372" class="behavior-card">
-      <div id="behaviors-div-373" class="behavior-title">Highlight <span id="behaviors-span-374" class="behavior-code">data-wb="mark"</span></div>
-      <div id="behaviors-div-375" class="demo-area">
-        <p id="behaviors-p-376">This is <mark id="behaviors-mark-377" data-wb="mark">highlighted</mark> text.</p>
+    <div class="behavior-card">
+      <div class="behavior-title">Highlight <span class="behavior-code">data-wb="mark"</span></div>
+      <div class="demo-area">
+        <p>This is <mark data-wb="mark">highlighted</mark> text.</p>
       </div>
     </div>
   </div>
 
-  <script id="behaviors-script-378" type="module">
+  <script type="module">
     import WB from "../src/core/wb-lazy.js";
     import { createToast } from "../src/behaviors/js/feedback.js";
     
-    WB.init({ autoInject: true });
+    // Initialize WB and scan existing behaviors
+    await WB.init({ autoInject: false });
 
-    // 1. Show HTML Code below each card
+    // 1. Show HTML Code below each card (create mdhtml containers FIRST, before scanning)
+    const mdContainers = [];
     document.querySelectorAll('.behavior-card').forEach(card => {
       const demoArea = card.querySelector('.demo-area');
       if (demoArea) {
-        // Get HTML and strip leading/trailing whitespace from lines
+        // Get HTML BEFORE any behaviors are initialized
         let html = demoArea.innerHTML;
         
         // Simple formatting to remove excessive indentation
         const lines = html.split('\n');
-        // Find first non-empty line to determine base indentation
         const firstLine = lines.find(l => l.trim().length > 0);
         let baseIndent = 0;
         if (firstLine) {
@@ -683,9 +986,7 @@
         }
         
         const formattedHtml = lines.map(line => {
-          // If line is just whitespace, return empty
           if (line.trim().length === 0) return '';
-          // Remove base indentation
           if (line.length >= baseIndent) {
             return line.substring(baseIndent);
           }
@@ -698,10 +999,14 @@
         mdContainer.textContent = '```html\n' + formattedHtml + '\n```';
         
         card.appendChild(mdContainer);
+        mdContainers.push(mdContainer);
       }
     });
 
-    // 2. Dark Mode Switch Logic
+    // 2. Now scan the entire page to initialize all behaviors (including spinners)
+    await WB.scan();
+
+    // 3. Dark Mode Switch Logic
     const darkModeSwitch = document.getElementById('demo-dark-mode-switch');
     if (darkModeSwitch) {
       darkModeSwitch.addEventListener('change', (e) => {
@@ -709,7 +1014,7 @@
       });
     }
 
-    // 3. Notifications Switch Logic
+    // 4. Notifications Switch Logic
     const notifySwitch = document.getElementById('demo-notifications-switch');
     const messages = [
       "New message from Alice",
@@ -732,6 +1037,50 @@
         }
       });
     }
+
+    // 5. Animated Progress Bars with Timers
+    function animateProgress(elementId, duration, resetDelay, label) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      
+      let value = 0;
+      const step = 100 / (duration / 50); // 50ms intervals
+      
+      const interval = setInterval(() => {
+        value += step;
+        if (value >= 100) {
+          value = 100;
+          el.setAttribute('data-value', '100');
+          el.setAttribute('data-label', `${label} Complete!`);
+          
+          // Reset after delay
+          setTimeout(() => {
+            value = 0;
+            el.setAttribute('data-value', '0');
+            el.setAttribute('data-label', label);
+            
+            // Re-trigger animation
+            setTimeout(() => animateProgress(elementId, duration, resetDelay, label), 100);
+          }, resetDelay);
+          
+          clearInterval(interval);
+        } else {
+          el.setAttribute('data-value', Math.round(value).toString());
+          el.setAttribute('data-label', `${label} ${Math.round(value)}%`);
+        }
+        
+        // Trigger re-render by re-scanning just this element
+        if (el._wbProgressbar) {
+          el._wbProgressbar.update();
+        }
+      }, 50);
+    }
+
+    // Start progress animations
+    setTimeout(() => {
+      animateProgress('progress-uploading', 8000, 2000, 'Uploading...');
+      animateProgress('progress-processing', 5000, 1500, 'Processing');
+    }, 500);
   </script>
 </body>
 </html>

@@ -44,25 +44,29 @@ const autoInjectMappings = [
   { selector: 'progress', behavior: 'progress' },
   
   // Cards
-  { selector: 'article', behavior: 'card' }
+  { selector: 'article', behavior: 'card' },
+  
+  // Tooltips
+  { selector: '[data-tooltip]', behavior: 'tooltip' }
 ];
 
 /**
- * Get implicit behavior for an element based on its type
+ * Get implicit behaviors for an element based on its type
  * @param {HTMLElement} element 
- * @returns {string|null} Behavior name or null
+ * @returns {string[]} Array of behavior names
  */
-function getAutoInjectBehavior(element) {
-  if (!getConfig('autoInject')) return null;
+function getAutoInjectBehaviors(element) {
+  if (!getConfig('autoInject')) return [];
   // Skip if data-wb is already present (explicit overrides implicit)
-  if (element.hasAttribute('data-wb')) return null;
+  if (element.hasAttribute('data-wb')) return [];
   
+  const behaviors = [];
   for (const { selector, behavior } of autoInjectMappings) {
     if (element.matches(selector)) {
-      return behavior;
+      behaviors.push(behavior);
     }
   }
-  return null;
+  return behaviors;
 }
 
 // Track applied behaviors for cleanup
@@ -288,10 +292,8 @@ const WB = {
               });
             } else {
               // Check auto-inject for the node itself
-              const autoBehavior = getAutoInjectBehavior(node);
-              if (autoBehavior) {
-                WB.lazyInject(node, autoBehavior);
-              }
+              const autoBehaviors = getAutoInjectBehaviors(node);
+              autoBehaviors.forEach(name => WB.lazyInject(node, name));
             }
 
             // Check descendants

@@ -15,6 +15,7 @@ export function table(element, options = {}) {
     sortable: options.sortable ?? (element.dataset.sortable !== 'false'),
     searchable: options.searchable ?? element.hasAttribute('data-searchable'),
     copyable: options.copyable ?? element.hasAttribute('data-copyable'),
+    selectable: options.selectable ?? element.hasAttribute('data-selectable'),
     ...options
   };
 
@@ -134,6 +135,33 @@ export function table(element, options = {}) {
           });
         };
         th.title = 'Click to sort, right-click to copy';
+      });
+    }
+
+    // Add click handlers for selection
+    if (config.selectable) {
+      element.querySelectorAll('tbody tr').forEach((tr, index) => {
+        tr.style.cursor = 'pointer';
+        tr.onclick = (e) => {
+          // Ignore if clicking on a link or button inside the row
+          if (e.target.closest('a, button, input')) return;
+          
+          // Remove active class from all rows
+          element.querySelectorAll('tbody tr').forEach(r => r.classList.remove('active'));
+          
+          // Add active class to clicked row
+          tr.classList.add('active');
+          
+          // Dispatch event
+          element.dispatchEvent(new CustomEvent('wb:table:select', {
+            detail: { 
+              row: tr, 
+              data: filteredData[index],
+              index: index
+            },
+            bubbles: true
+          }));
+        };
       });
     }
   };

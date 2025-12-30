@@ -62,7 +62,7 @@ const behaviorModules = {
   // Navigation (8) → navigation.js
   navbar: 'navigation', sidebar: 'navigation', menu: 'navigation',
   pagination: 'navigation', steps: 'navigation', treeview: 'navigation',
-  backtotop: 'navigation', link: 'navigation',
+  backtotop: 'navigation', link: 'navigation', statusbar: 'navigation',
   
   // Data Display - Semantic HTML
   table: 'semantics/table',

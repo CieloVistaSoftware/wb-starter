@@ -12,12 +12,17 @@ export function pre(element, options = {}) {
   const codeChild = element.querySelector('code');
   const childLanguage = codeChild ? (codeChild.dataset.language || '') : '';
 
+  const scrollable = options.scrollable ?? (element.dataset.scrollable === 'true');
+  // If scrollable is false (default), we wrap text. If true, we don't wrap (unless wrap is explicitly forced).
+  const defaultWrap = !scrollable;
+
   const config = {
     language: options.language || element.dataset.language || childLanguage || '',
     showLineNumbers: options.showLineNumbers ?? (element.hasAttribute('data-show-line-numbers') || element.hasAttribute('data-line-numbers')),
     showCopy: options.showCopy ?? (element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
     maxHeight: options.maxHeight || element.dataset.maxHeight || '',
-    wrap: options.wrap ?? element.hasAttribute('data-wrap'),
+    wrap: options.wrap ?? (element.hasAttribute('data-wrap') ? element.dataset.wrap !== 'false' : defaultWrap),
+    scrollable: scrollable,
     ...options
   };
 
@@ -32,7 +37,7 @@ export function pre(element, options = {}) {
     backgroundColor: 'transparent', // Wrapper handles bg
     color: 'var(--text-code, #d4d4d4)',
     border: 'none', // Wrapper handles border
-    overflow: 'auto',
+    overflow: config.scrollable ? 'auto' : 'visible',
     whiteSpace: config.wrap ? 'pre-wrap' : 'pre',
     wordBreak: config.wrap ? 'break-word' : 'normal',
     margin: '0',

@@ -1,0 +1,268 @@
+/**
+ * Page Transitions CSS
+ * Smooth enter/exit animations for SPA navigation
+ * 
+ * @layer transitions
+ */
+
+/* ========================================
+   Page Transition States
+   ======================================== */
+
+.page {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Exit transition - fade out and slide up */
+.page--exit {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+/* Enter transition - start state (fade in from below) */
+.page--enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Enter transition - active state */
+.page--enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Loading state */
+.page--loading {
+  opacity: 0.5;
+}
+
+.page__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  gap: 1rem;
+  color: var(--text-secondary, #888);
+}
+
+
+/* ========================================
+   Nav Toggle Transitions
+   ======================================== */
+
+.nav__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.nav__toggle:hover {
+  background-color: var(--surface-hover, rgba(255, 255, 255, 0.1));
+}
+
+.nav__toggle:active {
+  transform: scale(0.95);
+}
+
+.nav__toggle svg {
+  transition: transform 0.3s ease;
+}
+
+.nav-collapsed .nav__toggle svg {
+  transform: rotate(180deg);
+}
+
+
+/* ========================================
+   Navigation Transitions
+   ======================================== */
+
+.site__nav {
+  transition: width 0.3s ease, transform 0.3s ease;
+}
+
+.site__nav--collapsed {
+  width: 60px !important;
+}
+
+@media (max-width: 768px) {
+  .site__nav {
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .site__nav--collapsed {
+    transform: translateX(-100%);
+    width: var(--nav-width) !important;
+  }
+}
+
+.nav__item {
+  transition: background-color 0.2s ease, color 0.2s ease, padding 0.3s ease;
+}
+
+.nav__label {
+  transition: opacity 0.2s ease, max-width 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.site__nav--collapsed .nav__label {
+  opacity: 0;
+  max-width: 0;
+}
+
+.nav__icon {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.nav__item:hover .nav__icon {
+  transform: scale(1.1);
+}
+
+
+/* ========================================
+   External Link Indicator
+   ======================================== */
+
+.nav__external {
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.nav__item:hover .nav__external {
+  opacity: 1;
+}
+
+.nav__item--external::after {
+  content: '';
+}
+
+
+/* ========================================
+   Footer Link Transitions
+   ======================================== */
+
+.footer__social-link {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  opacity: 0.7;
+}
+
+.footer__social-link:hover {
+  transform: translateY(-2px);
+  opacity: 1;
+}
+
+.footer__link {
+  transition: color 0.2s ease;
+}
+
+
+/* ========================================
+   Error State
+   ======================================== */
+
+.site__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  background: var(--surface-base, #1a1a2e);
+  color: var(--text-primary, #fff);
+}
+
+.error__icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.95); }
+}
+
+.site__error h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.site__error p {
+  margin: 0 0 1.5rem 0;
+  color: var(--text-secondary, #888);
+}
+
+.error__retry {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  background: var(--primary, #6366f1);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.error__retry:hover {
+  background: var(--primary-hover, #5558e3);
+  transform: translateY(-1px);
+}
+
+.error__retry:active {
+  transform: translateY(0);
+}
+
+
+/* ========================================
+   Screen Reader Only (Accessibility)
+   ======================================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* ========================================
+   Reduced Motion Support
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .page,
+  .page--exit,
+  .page--enter,
+  .page--enter-active,
+  .site__nav,
+  .nav__item,
+  .nav__icon,
+  .nav__toggle svg,
+  .footer__social-link {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .page--enter {
+    opacity: 1;
+    transform: none;
+  }
+}

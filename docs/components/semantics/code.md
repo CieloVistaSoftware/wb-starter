@@ -25,6 +25,7 @@ Add `data-wb="code"` to a `<code>` element.
 | `data-language` | String | `''` | Language name to display (e.g., "JS", "HTML"). |
 | `data-show-copy` | Boolean | `false` | Show a copy button (block mode only). |
 | `data-variant` | String | `inline` | Display style: `inline`, `block`. |
+| `data-scrollable` | Boolean | `false` | If true, enables scrolling. If false (default), wraps content and expands height. |
 
 ## 3. Examples
 
@@ -47,6 +48,18 @@ A code block with a language badge and copy button.
 function hello() {
   console.log("Hello World");
 }
+</code>
+```
+
+### Example 3: Scrollable Code Block
+A code block that scrolls instead of wrapping.
+
+```html
+<code 
+  data-wb="code" 
+  data-variant="block" 
+  data-scrollable="true">
+const veryLongLine = "This is a very long line of code that will scroll horizontally instead of wrapping to the next line because scrollable is set to true.";
 </code>
 ```
 

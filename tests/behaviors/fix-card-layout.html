@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Card Layout Test</title>
+    <script type="module" src="/src/behaviors/js/fix-card.js"></script>
+    <style>
+        body {
+            background: #111;
+            color: #eee;
+            font-family: sans-serif;
+            padding: 2rem;
+        }
+        wb-fix-card {
+            display: block;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fix Card Layout Test</h1>
+    <wb-fix-card id="test-card"></wb-fix-card>
+
+    <script>
+        const card = document.getElementById('test-card');
+        
+        // Mock data with the problematic code snippet
+        const fixData = {
+            errorId: 'TEST-001',
+            issue: 'Scrollbar Test',
+            component: 'test-component.js',
+            date: new Date().toISOString(),
+            status: 'OPEN',
+            cause: 'Testing scrollbar removal',
+            fix: {
+                action: 'Updated code',
+                file: 'src/test.js',
+                // This simulates the content that might be generated or passed
+                code: `try {
+  items = JSON.parse(element.dataset.items);
+} catch (e) {
+  items = element.dataset.items.split(',');
+}`
+            },
+            testRun: true,
+            testName: 'tests/behaviors/semantics-new.spec.js'
+        };
+
+        card.data = fixData;
+
+        // Wait for render
+        setTimeout(() => {
+            // Manually inject the problematic HTML structure if mdhtml doesn't produce it exactly
+            // But we want to test if our CSS fixes the *result* of mdhtml.
+            // If the user is seeing that specific HTML, it's likely what mdhtml + highlight.js produces.
+            
+            // Let's verify computed styles
+            const codeBlock = card.querySelector('.fix-code-block');
+            if (codeBlock) {
+                console.log('Code block found');
+                const pre = codeBlock.querySelector('pre');
+                const code = codeBlock.querySelector('code');
+                
+                if (pre) {
+                    const preStyle = window.getComputedStyle(pre);
+                    console.log('PRE overflow:', preStyle.overflow);
+                    console.log('PRE white-space:', preStyle.whiteSpace);
+                }
+                
+                if (code) {
+                    const codeStyle = window.getComputedStyle(code);
+                    console.log('CODE display:', codeStyle.display);
+                    console.log('CODE white-space:', codeStyle.whiteSpace);
+                }
+            }
+        }, 500);
+    </script>
+</body>
+</html>

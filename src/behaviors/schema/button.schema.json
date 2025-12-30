@@ -25,21 +25,56 @@
   },
   "interactions": {
     "elements": {
-      "element": "button"
+      "element": {
+        "type": "button",
+        "clickable": true,
+        "click": {
+          "action": "trigger click event",
+          "event": "click"
+        }
+      }
     },
     "keyboard": {
-      "Enter": "Triggers click",
-      "Space": "Triggers click"
+      "Enter": {
+        "target": "element",
+        "action": "trigger click"
+      },
+      "Space": {
+        "target": "element",
+        "action": "trigger click"
+      }
+    }
+  },
+  "accessibility": {
+    "element": {
+      "role": "button",
+      "aria-disabled": "dynamic when disabled"
     }
   },
   "test": {
     "setup": [
-      "<button data-wb=\"button\">Button</button>"
+      "<button data-wb=\"button\">Button</button>",
+      "<button data-wb=\"button\" data-variant=\"primary\">Primary</button>",
+      "<button data-wb=\"button\" data-variant=\"secondary\">Secondary</button>",
+      "<button data-wb=\"button\" disabled>Disabled</button>"
     ],
+    "matrix": {
+      "combinations": [
+        {},
+        { "variant": "primary" },
+        { "variant": "secondary" },
+        { "variant": "outline" },
+        { "variant": "ghost" },
+        { "size": "sm" },
+        { "size": "md" },
+        { "size": "lg" },
+        { "disabled": true }
+      ]
+    },
     "functional": {
       "buttons": [
         {
-          "name": "Button click",
+          "name": "button click fires event",
           "setup": "<button data-wb=\"button\">Click me</button>",
           "selector": "button",
           "expect": { "event": "click" }
@@ -47,7 +82,7 @@
       ],
       "interactions": [
         {
-          "name": "Click triggers action",
+          "name": "click triggers action",
           "setup": "<button data-wb=\"button\">Click me</button>",
           "action": "click",
           "selector": "button",
@@ -57,17 +92,95 @@
       "keyboard": [
         {
           "name": "Enter triggers click",
-          "setup": "<button data-wb=\"button\">Click me</button>",
+          "setup": "<button data-wb=\"button\">Enter me</button>",
           "key": "Enter",
+          "selector": "button",
+          "expect": { "event": "click" }
+        },
+        {
+          "name": "Space triggers click",
+          "setup": "<button data-wb=\"button\">Space me</button>",
+          "key": "Space",
           "selector": "button",
           "expect": { "event": "click" }
         }
       ],
+      "hover": [
+        {
+          "name": "button shows hover state",
+          "setup": "<button data-wb=\"button\">Hover me</button>",
+          "selector": "button",
+          "expect": {
+            "selector": "button:hover",
+            "exists": true
+          }
+        }
+      ],
       "visual": [
         {
-          "name": "Primary variant style",
+          "name": "has base button class",
+          "setup": "<button data-wb=\"button\">Base</button>",
+          "expect": { "selector": "button", "hasClass": "wb-button" }
+        },
+        {
+          "name": "primary variant has correct class",
           "setup": "<button data-wb=\"button\" data-variant=\"primary\">Primary</button>",
-          "expect": { "selector": "button", "hasClass": "wb-button--primary" }
+          "expect": { "selector": "button", "hasClass": ["wb-button", "wb-button--primary"] }
+        },
+        {
+          "name": "secondary variant has correct class",
+          "setup": "<button data-wb=\"button\" data-variant=\"secondary\">Secondary</button>",
+          "expect": { "selector": "button", "hasClass": ["wb-button", "wb-button--secondary"] }
+        },
+        {
+          "name": "outline variant has correct class",
+          "setup": "<button data-wb=\"button\" data-variant=\"outline\">Outline</button>",
+          "expect": { "selector": "button", "hasClass": ["wb-button", "wb-button--outline"] }
+        },
+        {
+          "name": "ghost variant has correct class",
+          "setup": "<button data-wb=\"button\" data-variant=\"ghost\">Ghost</button>",
+          "expect": { "selector": "button", "hasClass": ["wb-button", "wb-button--ghost"] }
+        },
+        {
+          "name": "small size has correct class",
+          "setup": "<button data-wb=\"button\" data-size=\"sm\">Small</button>",
+          "expect": { "selector": "button", "hasClass": ["wb-button", "wb-button--sm"] }
+        },
+        {
+          "name": "large size has correct class",
+          "setup": "<button data-wb=\"button\" data-size=\"lg\">Large</button>",
+          "expect": { "selector": "button", "hasClass": ["wb-button", "wb-button--lg"] }
+        },
+        {
+          "name": "disabled button has disabled attribute",
+          "setup": "<button data-wb=\"button\" disabled>Disabled</button>",
+          "expect": { "selector": "button", "attribute": { "disabled": "" } }
+        }
+      ],
+      "disabled": [
+        {
+          "name": "disabled button ignores click",
+          "setup": "<button data-wb=\"button\" disabled>Disabled</button>",
+          "action": "click",
+          "selector": "button",
+          "expect": { "event": null }
+        },
+        {
+          "name": "disabled button ignores Enter key",
+          "setup": "<button data-wb=\"button\" disabled>Disabled</button>",
+          "action": "press",
+          "key": "Enter",
+          "selector": "button",
+          "expect": { "event": null }
+        },
+        {
+          "name": "disabled button ignores Space key",
+          "setup": "<button data-wb=\"button\" disabled>Disabled</button>",
+          "action": "press",
+          "key": "Space",
+          "selector": "button",
+          "expect": { "event": null }
         }
       ]
     }

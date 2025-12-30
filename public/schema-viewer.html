@@ -4,330 +4,350 @@
   <meta id="schemaviewer-meta-3" charset="UTF-8">
   <meta id="schemaviewer-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="schemaviewer-title-5">Builder Schema Viewer</title>
-  <link id="schemaviewer-link-6" rel="stylesheet" href="src/styles/themes.css">
-  <link id="schemaviewer-link-7" rel="stylesheet" href="src/styles/site.css">
-  <link id="schemaviewer-link-8" rel="stylesheet" href="src/styles/wb-signature.css">
+  <link id="schemaviewer-link-6" rel="stylesheet" href="../src/styles/themes.css">
+  <link id="schemaviewer-link-7" rel="stylesheet" href="../src/styles/site.css">
   <script id="schemaviewer-script-9" type="module">
-    import WB from './src/core/wb-lazy.js';
+    import WB from '../src/core/wb-lazy.js';
     window.WB = WB;
     WB.init({ debug: false });
   </script>
   <style id="schemaviewer-style-10">
-    .schema-container {
+    * { box-sizing: border-box; }
+    
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-primary);
+    }
+    
+    /* Header */
+    .sv-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .sv-header h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .sv-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    /* Schema Selector */
+    .sv-select {
+      padding: 0.5rem 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      min-width: 200px;
+      cursor: pointer;
+    }
+    
+    .sv-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    /* Main Layout */
+    .sv-main {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 2rem;
-      padding: 2rem;
-      height: 100vh;
+      grid-template-columns: 1fr 1fr;
+      height: calc(100vh - 60px);
       overflow: hidden;
     }
-    .schema-panel {
+    
+    /* Panels */
+    .sv-panel {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      overflow: auto;
+      overflow: hidden;
+      border-right: 1px solid var(--border-color);
     }
-    .schema-header {
+    
+    .sv-panel:last-child {
+      border-right: none;
+    }
+    
+    .sv-panel-header {
+      padding: 0.75rem 1rem;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
       display: flex;
+      align-items: center;
       justify-content: space-between;
+    }
+    
+    .sv-panel-content {
+      flex: 1;
+      overflow: auto;
+      padding: 1rem;
+    }
+    
+    /* Preview Panel */
+    .sv-preview {
+      background: var(--bg-color);
+      min-height: 200px;
+      border-radius: 8px;
+      border: 2px dashed var(--border-color);
+      display: flex;
       align-items: center;
-      padding: 1rem;
-      background: var(--bg-secondary);
-      border-radius: 8px;
-    }
-    .schema-editor {
-      flex: 1;
-      font-family: monospace;
-      padding: 1rem;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-primary);
-      font-size: 14px;
-      resize: none;
-      overflow: auto;
-    }
-    .schema-preview {
-      flex: 1;
-      padding: 1rem;
-      background: var(--bg-primary);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      overflow: auto;
-    }
-    .property-group {
+      justify-content: center;
+      padding: 2rem;
       margin-bottom: 1.5rem;
-      padding: 1rem;
-      background: var(--bg-secondary);
-      border-radius: 8px;
     }
-    .property-item {
-      display: grid;
-      grid-template-columns: 150px 1fr;
-      gap: 1rem;
-      margin-bottom: 0.75rem;
-      align-items: center;
+    
+    .sv-preview.has-content {
+      border-style: solid;
+      border-color: var(--primary);
+      display: block;
     }
-    .property-label {
+    
+    .sv-preview-placeholder {
+      text-align: center;
+      color: var(--text-muted);
+    }
+    
+    .sv-preview-placeholder span {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Component Info */
+    .sv-info {
+      margin-bottom: 1.5rem;
+    }
+    
+    .sv-info h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+    
+    .sv-info p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    /* Properties List */
+    .sv-props-title {
+      font-size: 0.875rem;
       font-weight: 600;
       color: var(--text-secondary);
-      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .property-input {
-      padding: 0.5rem;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
+    
+    .sv-props-count {
+      background: var(--primary);
+      color: white;
+      padding: 0.125rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+    }
+    
+    .sv-prop {
+      padding: 0.75rem;
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      border-left: 3px solid var(--primary);
+    }
+    
+    .sv-prop-name {
+      font-family: monospace;
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+    
+    .sv-prop-desc {
+      font-size: 0.8rem;
       color: var(--text-primary);
-      font-family: inherit;
+      margin: 0.25rem 0;
     }
-    .property-checkbox {
-      width: 20px;
-      height: 20px;
+    
+    .sv-prop-meta {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
-    .btn {
+    
+    .sv-prop-meta span {
+      background: var(--bg-tertiary);
+      padding: 0.125rem 0.375rem;
+      border-radius: 3px;
+    }
+    
+    .sv-prop-meta .default {
+      color: var(--success-color);
+    }
+    
+    .sv-prop-meta .options {
+      color: var(--info-color, #0ea5e9);
+    }
+    
+    /* Code Example */
+    .sv-code-section {
+      margin-top: 1.5rem;
+    }
+    
+    .sv-code {
+      background: var(--bg-tertiary);
+      padding: 1rem;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      color: var(--text-secondary);
+    }
+    
+    /* JSON Editor */
+    .sv-json-editor {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      padding: 1rem;
+      background: var(--bg-tertiary);
+      border: none;
+      color: var(--text-primary);
+      resize: none;
+    }
+    
+    .sv-json-editor:focus {
+      outline: none;
+    }
+    
+    /* Buttons */
+    .sv-btn {
       padding: 0.5rem 1rem;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 500;
+      font-size: 0.875rem;
       transition: all 0.2s;
     }
-    .btn-primary {
+    
+    .sv-btn-primary {
       background: var(--primary);
       color: white;
     }
-    .btn-primary:hover {
-      background: var(--primary-dark);
+    
+    .sv-btn-primary:hover {
+      filter: brightness(1.1);
     }
-    .btn-secondary {
+    
+    .sv-btn-secondary {
       background: var(--bg-tertiary);
       color: var(--text-primary);
     }
-    .btn-secondary:hover {
+    
+    .sv-btn-secondary:hover {
       background: var(--bg-secondary);
     }
-    .section-title {
-      font-size: 1.25rem;
-      font-weight: 700;
+    
+    /* Empty State */
+    .sv-empty {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+    }
+    
+    .sv-empty span {
+      font-size: 3rem;
+      display: block;
       margin-bottom: 1rem;
-      color: var(--primary);
     }
   </style>
 </head>
 <body id="schemaviewer-body-11">
-  <div id="schemaviewer-div-12" class="schema-container">
-    <!-- Left Panel: Visual Editor -->
-    <div id="schemaviewer-div-13" class="schema-panel">
-      <div id="schemaviewer-div-14" class="schema-header">
-        <h1 id="schemaviewer-h1-15">Schema Editor</h1>
-        <div id="schemaviewer-div-16" style="display: flex; gap: 0.5rem;">
-          <select class="property-input" id="schemaSelector" style="min-width: 200px;">
-            <option id="schemaviewer-option-17" value="">Select a schema...</option>
-          </select>
-          <button class="btn btn-secondary" id="resetBtn">Reset</button>
-          <button class="btn btn-primary" id="saveBtn">Save</button>
-        </div>
+  <!-- Header -->
+  <header class="sv-header">
+    <h1>📋 Schema Viewer</h1>
+    <div class="sv-header-actions">
+      <select class="sv-select" id="schemaSelector">
+        <option value="">Select a component...</option>
+      </select>
+      <button class="sv-btn sv-btn-secondary" id="formatBtn">Format</button>
+      <button class="sv-btn sv-btn-primary" id="saveBtn">💾 Save</button>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="sv-main">
+    <!-- Left Panel: Preview & Properties -->
+    <div class="sv-panel">
+      <div class="sv-panel-header">
+        <span>Preview & Properties</span>
+        <button class="sv-btn sv-btn-secondary" id="refreshBtn" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">↻ Refresh</button>
       </div>
-
-      <div id="schemaviewer-div-18" class="schema-preview">
-        <div id="schemaviewer-div-19" class="section-title">Property Manager</div>
-        
-        <div id="schemaviewer-div-20" class="property-group">
-          <div id="schemaviewer-div-21" style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-            <select class="property-input" id="propertySelector" style="flex: 1;">
-              <option id="schemaviewer-option-22" value="">Select property to edit...</option>
-            </select>
-            <button class="btn btn-primary" id="addPropertyBtn">+ Add</button>
-            <button class="btn btn-secondary" id="deletePropertyBtn">Delete</button>
-          </div>
-        </div>
-
-        <div id="schemaviewer-div-23" class="section-title">Component Properties</div>
-        <div id="schemaviewer-div-24" class="property-group">
-          <h3 id="schemaviewer-h3-25" style="margin-bottom: 1rem;">Basic Info</h3>
-          <div id="schemaviewer-div-26" class="property-item">
-            <label id="schemaviewer-label-27" class="property-label">Label:</label>
-            <input type="text" class="property-input" id="label" placeholder="Component label">
-          </div>
-          <div id="schemaviewer-div-28" class="property-item">
-            <label id="schemaviewer-label-29" class="property-label">Icon:</label>
-            <input type="text" class="property-input" id="icon" placeholder="🧩">
-          </div>
-        </div>
-
-        <div id="schemaviewer-div-30" class="property-group">
-          <h3 id="schemaviewer-h3-31" style="margin-bottom: 1rem;">Behavior</h3>
-          <div id="schemaviewer-div-32" class="property-item">
-            <label id="schemaviewer-label-33" class="property-label">Theme:</label>
-            <select class="property-input" id="theme">
-              <option id="schemaviewer-option-34" value="default">Default</option>
-              <option id="schemaviewer-option-35" value="dark">Dark</option>
-              <option id="schemaviewer-option-36" value="light">Light</option>
-              <option id="schemaviewer-option-37" value="info">Info</option>
-              <option id="schemaviewer-option-38" value="success">Success</option>
-              <option id="schemaviewer-option-39" value="warning">Warning</option>
-              <option id="schemaviewer-option-40" value="error">Error</option>
-            </select>
-          </div>
-          <div id="schemaviewer-div-41" class="property-item">
-            <label id="schemaviewer-label-42" class="property-label">Draggable:</label>
-            <input type="checkbox" class="property-checkbox" id="draggable" checked>
-          </div>
-          <div id="schemaviewer-div-43" class="property-item">
-            <label id="schemaviewer-label-44" class="property-label">Render on Drop:</label>
-            <input type="checkbox" class="property-checkbox" id="renderOnDrop" checked>
-          </div>
-          <div id="schemaviewer-div-45" class="property-item">
-            <label id="schemaviewer-label-46" class="property-label">Configurable:</label>
-            <input type="checkbox" class="property-checkbox" id="configurable" checked>
-          </div>
-        </div>
-
-        <div id="schemaviewer-div-47" class="property-group">
-          <h3 id="schemaviewer-h3-48" style="margin-bottom: 1rem;">Content Properties</h3>
-          <div id="schemaviewer-div-49" class="property-item">
-            <label id="schemaviewer-label-50" class="property-label">Title:</label>
-            <input type="text" class="property-input" id="title" placeholder="Component title">
-          </div>
-          <div id="schemaviewer-div-51" class="property-item">
-            <label id="schemaviewer-label-52" class="property-label">Subtitle:</label>
-            <input type="text" class="property-input" id="subtitle" placeholder="Subtitle text">
-          </div>
-          <div id="schemaviewer-div-53" class="property-item">
-            <label id="schemaviewer-label-54" class="property-label">Variant:</label>
-            <select class="property-input" id="variant">
-              <option id="schemaviewer-option-55" value="default">Default</option>
-              <option id="schemaviewer-option-56" value="info">Info</option>
-              <option id="schemaviewer-option-57" value="success">Success</option>
-              <option id="schemaviewer-option-58" value="warning">Warning</option>
-              <option id="schemaviewer-option-59" value="error">Error</option>
-            </select>
-          </div>
-          <div id="schemaviewer-div-60" class="property-item">
-            <label id="schemaviewer-label-61" class="property-label">Clickable:</label>
-            <input type="checkbox" class="property-checkbox" id="clickable">
-          </div>
-          <div id="schemaviewer-div-62" class="property-item">
-            <label id="schemaviewer-label-63" class="property-label">Hoverable:</label>
-            <input type="checkbox" class="property-checkbox" id="hoverable" checked>
-          </div>
-          <div id="schemaviewer-div-64" class="property-item">
-            <label id="schemaviewer-label-65" class="property-label">Elevated:</label>
-            <input type="checkbox" class="property-checkbox" id="elevated">
-          </div>
+      <div class="sv-panel-content" id="previewPanel">
+        <div class="sv-empty">
+          <span>📦</span>
+          <p>Select a component to preview</p>
         </div>
       </div>
     </div>
-
+    
     <!-- Right Panel: JSON Editor -->
-    <div id="schemaviewer-div-66" class="schema-panel">
-      <div id="schemaviewer-div-67" class="schema-header">
-        <h2 id="schemaviewer-h2-68">JSON Schema</h2>
-        <button class="btn btn-secondary" id="formatBtn">Format JSON</button>
+    <div class="sv-panel">
+      <div class="sv-panel-header">
+        <span>JSON Schema</span>
       </div>
-      <textarea class="schema-editor" id="jsonEditor" spellcheck="false"></textarea>
-    </div>
-
-    <!-- HTML Preview Panel -->
-    <div id="schemaviewer-div-69" class="schema-panel">
-      <div class="schema-preview" id="htmlPreview" style="background: var(--bg-color); padding-top: 0;">
-        <div id="schemaviewer-div-70" style="position: sticky; top: 0; background: var(--bg-secondary); padding: 1rem; margin: 0 -1rem 1rem -1rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; z-index: 10;">
-          <h3 id="schemaviewer-h3-71" style="margin: 0; color: var(--text-primary);">HTML Preview</h3>
-          <button class="btn btn-secondary" id="refreshPreviewBtn">Refresh</button>
-        </div>
-        <div id="previewContent">
-          <p id="schemaviewer-p-72" style="color: var(--text-secondary); text-align: center; padding: 2rem;">Select a schema to preview</p>
-        </div>
+      <div class="sv-panel-content" style="padding: 0;">
+        <textarea class="sv-json-editor" id="jsonEditor" spellcheck="false" placeholder="Select a schema to view JSON..."></textarea>
       </div>
     </div>
-  </div>
+  </main>
 
   <script id="schemaviewer-script-73" type="module">
     let schema = null;
     let currentSchemaPath = '';
 
-    // Helper to escape HTML
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
-
     const schemas = [
-      'src/behaviors/schema/alert.schema.json',
-      'src/behaviors/schema/audio.schema.json',
-      'src/behaviors/schema/avatar.schema.json',
-      'src/behaviors/schema/badge.schema.json',
-      'src/behaviors/schema/builder.schema.json',
-      'src/behaviors/schema/button.schema.json',
-      'src/behaviors/schema/card.base.schema.json',
-      'src/behaviors/schema/card.schema.json',
-      'src/behaviors/schema/cardbutton.schema.json',
-      'src/behaviors/schema/carddraggable.schema.json',
-      'src/behaviors/schema/cardexpandable.schema.json',
-      'src/behaviors/schema/cardfile.schema.json',
-      'src/behaviors/schema/cardhero.schema.json',
-      'src/behaviors/schema/cardhorizontal.schema.json',
-      'src/behaviors/schema/cardimage.schema.json',
-      'src/behaviors/schema/cardlink.schema.json',
-      'src/behaviors/schema/cardminimizable.schema.json',
-      'src/behaviors/schema/cardnotification.schema.json',
-      'src/behaviors/schema/cardoverlay.schema.json',
-      'src/behaviors/schema/cardportfolio.schema.json',
-      'src/behaviors/schema/cardpricing.schema.json',
-      'src/behaviors/schema/cardproduct.schema.json',
-      'src/behaviors/schema/cardprofile.schema.json',
-      'src/behaviors/schema/cardstats.schema.json',
-      'src/behaviors/schema/cardtestimonial.schema.json',
-      'src/behaviors/schema/cardvideo.schema.json',
-      'src/behaviors/schema/checkbox.schema.json',
-      'src/behaviors/schema/chip.schema.json',
-      'src/behaviors/schema/confetti.schema.json',
-      'src/behaviors/schema/details.schema.json',
-      'src/behaviors/schema/dialog.schema.json',
-      'src/behaviors/schema/drawer.schema.json',
-      'src/behaviors/schema/drawerLayout.schema.json',
-      'src/behaviors/schema/dropdown.schema.json',
-      'src/behaviors/schema/fireworks.schema.json',
-      'src/behaviors/schema/input.schema.json',
-      'src/behaviors/schema/notes.schema.json',
-      'src/behaviors/schema/progress.schema.json',
-      'src/behaviors/schema/rating.schema.json',
-      'src/behaviors/schema/select.schema.json',
-      'src/behaviors/schema/skeleton.schema.json',
-      'src/behaviors/schema/snow.schema.json',
-      'src/behaviors/schema/spinner.schema.json',
-      'src/behaviors/schema/switch.schema.json',
-      'src/behaviors/schema/table.schema.json',
-      'src/behaviors/schema/tabs.schema.json',
-      'src/behaviors/schema/textarea.schema.json',
-      'src/behaviors/schema/toast.schema.json',
-      'src/behaviors/schema/tooltip.schema.json'
+      'alert', 'audio', 'avatar', 'badge', 'button', 'card', 'checkbox', 'chip',
+      'confetti', 'details', 'dialog', 'drawer', 'drawerLayout', 'dropdown',
+      'fireworks', 'input', 'notes', 'progress', 'rating', 'select', 'skeleton',
+      'snow', 'spinner', 'switch', 'table', 'tabs', 'textarea', 'toast', 'tooltip'
     ];
 
     // Populate schema selector
     function populateSelector() {
       const selector = document.getElementById('schemaSelector');
-      schemas.forEach(path => {
+      schemas.forEach(name => {
         const option = document.createElement('option');
-        option.value = path;
-        option.textContent = path.split('/').pop().replace('.schema.json', '');
-        selector.appendChild(option);
-      });
-    }
-
-    // Populate property selector
-    function populatePropertySelector() {
-      const selector = document.getElementById('propertySelector');
-      selector.innerHTML = '<option id="schemaviewer-option-74" value="">Select property to edit...</option>';
-      
-      if (!schema || !schema.properties) return;
-      
-      Object.keys(schema.properties).forEach(propName => {
-        const option = document.createElement('option');
-        option.value = propName;
-        option.textContent = propName;
+        option.value = `src/behaviors/schema/${name}.schema.json`;
+        option.textContent = name.charAt(0).toUpperCase() + name.slice(1);
         selector.appendChild(option);
       });
     }
@@ -335,340 +355,140 @@
     // Load schema
     async function loadSchema(path) {
       if (!path) return;
-      console.log('🔄 Loading schema:', path);
+      
       try {
         const response = await fetch(path);
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-        const text = await response.text();
-        console.log('📄 Schema text loaded, length:', text.length);
-        schema = JSON.parse(text);
-        console.log('✅ Schema parsed:', schema);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        schema = await response.json();
         currentSchemaPath = path;
-        console.log('🔧 Populating property selector...');
-        populatePropertySelector();
-        console.log('🎨 Updating UI...');
-        updateUI();
-        console.log('📝 Updating JSON...');
+        
         updateJSON();
-        console.log('✅ Schema load complete');
+        renderPreview();
       } catch (e) {
-        console.error('❌ Schema load error:', e);
-        alert('Failed to load schema: ' + e.message + '\nPath: ' + path);
+        console.error('Schema load error:', e);
+        alert('Failed to load schema: ' + e.message);
       }
-    }
-
-    // Update UI from schema
-    function updateUI() {
-      if (!schema) return;
-      
-      document.getElementById('label').value = schema.properties?.label?.description || '';
-      document.getElementById('icon').value = schema.properties?.icon?.description || '';
-      document.getElementById('theme').value = schema.properties?.theme?.default || 'default';
-      document.getElementById('draggable').checked = schema.properties?.draggable?.default !== false;
-      document.getElementById('renderOnDrop').checked = schema.properties?.renderOnDrop?.default !== false;
-      document.getElementById('configurable').checked = schema.properties?.configurable?.default !== false;
-      
-      const props = schema.properties?.properties?.properties || {};
-      document.getElementById('title').value = props.title?.description || '';
-      document.getElementById('subtitle').value = props.subtitle?.description || '';
-      document.getElementById('variant').value = props.variant?.default || 'default';
-      document.getElementById('clickable').checked = props.clickable?.default === true;
-      document.getElementById('hoverable').checked = props.hoverable?.default !== false;
-      document.getElementById('elevated').checked = props.elevated?.default === true;
-    }
-
-    // Update JSON from UI
-    function updateFromUI() {
-      if (!schema) return;
-
-      schema.properties.theme.default = document.getElementById('theme').value;
-      schema.properties.draggable.default = document.getElementById('draggable').checked;
-      schema.properties.renderOnDrop.default = document.getElementById('renderOnDrop').checked;
-      schema.properties.configurable.default = document.getElementById('configurable').checked;
-
-      const props = schema.properties.properties.properties;
-      props.variant.default = document.getElementById('variant').value;
-      props.clickable.default = document.getElementById('clickable').checked;
-      props.hoverable.default = document.getElementById('hoverable').checked;
-      props.elevated.default = document.getElementById('elevated').checked;
-
-      updateJSON();
     }
 
     // Update JSON editor
     function updateJSON() {
       document.getElementById('jsonEditor').value = JSON.stringify(schema, null, 2);
-      renderHTMLPreview();
     }
 
-    // Render HTML preview based on schema
-    function renderHTMLPreview() {
-      console.log('🎨 renderHTMLPreview called');
-      const preview = document.getElementById('previewContent');
+    // Render preview panel
+    function renderPreview() {
+      const panel = document.getElementById('previewPanel');
       
-      if (!schema || !schema.properties) {
-        preview.innerHTML = '<p id="schemaviewer-p-75" style="color: var(--text-secondary); text-align: center; padding: 2rem;">No schema loaded</p>';
+      if (!schema) {
+        panel.innerHTML = `
+          <div class="sv-empty">
+            <span>📦</span>
+            <p>Select a component to preview</p>
+          </div>
+        `;
         return;
       }
 
       const componentName = currentSchemaPath.split('/').pop().replace('.schema.json', '');
-      const props = schema.properties;
-      
-      // --- EXAMPLE CONFIGURATIONS ---
-      const exampleConfigs = {
-        alert: {
-          content: '<strong id="schemaviewer-strong-76">Heads up!</strong> This is an important alert message.',
-          attributes: { type: 'info', dismissible: 'true' }
-        },
-        audio: {
-          attributes: { src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Demo Song' }
-        },
-        avatar: {
-          attributes: { src: 'https://i.pravatar.cc/150?img=32', size: 'lg', status: 'online', name: 'Jane Doe' }
-        },
-        badge: {
-          content: 'New Arrival',
-          attributes: { variant: 'success', pill: 'true' }
-        },
-        button: {
-          content: 'Click Me',
-          attributes: { variant: 'primary', icon: '👆' }
-        },
-        checkbox: {
-          attributes: { label: 'I agree to the terms', checked: 'true' }
-        },
-        chip: {
-          content: 'React',
-          attributes: { dismissible: 'true', variant: 'primary' }
-        },
-        confetti: {
-           attributes: { trigger: 'click' },
-           content: '<button id="schemaviewer-button-77" class="btn btn-primary">Click for Confetti 🎉</button>'
-        },
-        details: {
-          content: '<p id="schemaviewer-p-78" style="padding:1rem; margin:0;">Here is the detailed content that was hidden. It reveals more information when the user clicks the summary.</p>',
-          attributes: { summary: 'Click to reveal details', open: 'true' }
-        },
-        dialog: {
-          content: `
-            <p id="schemaviewer-p-79">This is a dialog window. It overlays the page content.</p>
-            <div id="schemaviewer-div-80" style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1rem;">
-              <button id="schemaviewer-button-81" class="btn btn-secondary">Cancel</button>
-              <button id="schemaviewer-button-82" class="btn btn-primary">Confirm</button>
-            </div>
-          `,
-          attributes: { title: 'Confirmation', open: 'true' }
-        },
-        drawer: {
-          content: '<div id="schemaviewer-div-83" style="padding:1rem"><h3 id="schemaviewer-h3-84">Drawer Content</h3><p id="schemaviewer-p-85">This is a side drawer.</p></div>',
-          attributes: { position: 'right', open: 'true' }
-        },
-        dropdown: {
-          content: '<button id="schemaviewer-button-86">Profile</button><button id="schemaviewer-button-87">Settings</button><hr id="schemaviewer-hr-88"><button id="schemaviewer-button-89">Logout</button>',
-          attributes: { label: 'User Menu', icon: '👤' }
-        },
-        fireworks: {
-           attributes: { trigger: 'click' },
-           content: '<button id="schemaviewer-button-90" class="btn btn-primary">Click for Fireworks 🎆</button>'
-        },
-        input: {
-          attributes: { placeholder: 'Type something...', label: 'Username', icon: '👤' }
-        },
-        notes: {
-            attributes: { title: 'My Notes' }
-        },
-        progress: {
-          attributes: { value: '75', max: '100', label: 'Loading resources...', variant: 'success' }
-        },
-        rating: {
-          attributes: { value: '3.5', max: '5', icon: '⭐' }
-        },
-        select: {
-          content: '<option id="schemaviewer-option-91">Option A</option><option id="schemaviewer-option-92">Option B</option><option id="schemaviewer-option-93">Option C</option>',
-          attributes: { label: 'Choose an option' }
-        },
-        skeleton: {
-          attributes: { type: 'article', lines: '3' }
-        },
-        snow: {
-           attributes: { count: '50' },
-           wrapperStyle: 'background: #000; min-height: 200px; position: relative;'
-        },
-        spinner: {
-          attributes: { size: 'lg', variant: 'primary' }
-        },
-        switch: {
-          attributes: { label: 'Enable Notifications', checked: 'true' }
-        },
-        table: {
-          content: `
-            <thead id="schemaviewer-thead-94"><tr id="schemaviewer-tr-95"><th id="schemaviewer-th-96">Name</th><th id="schemaviewer-th-97">Role</th><th id="schemaviewer-th-98">Status</th></tr></thead>
-            <tbody id="schemaviewer-tbody-99">
-              <tr id="schemaviewer-tr-100"><td id="schemaviewer-td-101">Alice</td><td id="schemaviewer-td-102">Admin</td><td id="schemaviewer-td-103">Active</td></tr>
-              <tr id="schemaviewer-tr-104"><td id="schemaviewer-td-105">Bob</td><td id="schemaviewer-td-106">User</td><td id="schemaviewer-td-107">Inactive</td></tr>
-              <tr id="schemaviewer-tr-108"><td id="schemaviewer-td-109">Charlie</td><td id="schemaviewer-td-110">Editor</td><td id="schemaviewer-td-111">Active</td></tr>
-            </tbody>
-          `,
-          attributes: { striped: 'true', hoverable: 'true' }
-        },
-        tabs: {
-          content: `
-            <div id="schemaviewer-div-112" data-tab="Account">
-              <p id="schemaviewer-p-113">Account settings content goes here.</p>
-            </div>
-            <div id="schemaviewer-div-114" data-tab="Security">
-              <p id="schemaviewer-p-115">Security settings content goes here.</p>
-            </div>
-            <div id="schemaviewer-div-116" data-tab="Notifications">
-              <p id="schemaviewer-p-117">Notification preferences.</p>
-            </div>
-          `,
-          attributes: { active: 'Account', variant: 'pills' }
-        },
-        textarea: {
-          attributes: { placeholder: 'Enter your bio...', label: 'Biography', rows: '4' }
-        },
-        toast: {
-          content: 'Operation completed successfully',
-          attributes: { type: 'success', duration: '0', title: 'Success' }
-        },
-        tooltip: {
-          content: '<button id="schemaviewer-button-118" class="btn btn-secondary">Hover me</button>',
-          attributes: { content: 'This is a helpful tooltip!', position: 'top' }
-        }
-      };
+      const props = schema.properties || {};
+      const propCount = Object.keys(props).length;
 
-      // Generic Card Handler
-      if (componentName.startsWith('card')) {
-        if (!exampleConfigs[componentName]) {
-            exampleConfigs[componentName] = {
-                content: '<p id="schemaviewer-p-119">This is the body content of the card. It can contain text, images, or other elements.</p>',
-                attributes: { 
-                    title: 'Card Title', 
-                    subtitle: 'Card Subtitle',
-                    image: 'https://picsum.photos/400/200',
-                    footer: 'Card Footer'
-                }
-            };
-        }
-      }
-
-      // Get config for current component
-      const config = exampleConfigs[componentName] || { content: '', attributes: {} };
-      
-      // Build component HTML
-      let componentHTML = `<div id="schemaviewer-div-120" data-wb="${componentName}"`;
-      
-      // 1. Add attributes from Example Config
-      Object.entries(config.attributes).forEach(([key, value]) => {
-        componentHTML += ` data-${key}="${value}"`;
-      });
-
-      // 2. Add defaults from Schema (only if not already set by example)
-      Object.keys(props).forEach(key => {
-        if (config.attributes[key] !== undefined) return; // Skip if in example
-
+      // Build example HTML
+      let exampleHTML = `<div data-wb="${componentName}"`;
+      Object.keys(props).slice(0, 5).forEach(key => {
         const prop = props[key];
         if (prop.default !== undefined && prop.default !== null) {
           if (typeof prop.default === 'boolean') {
-            if (prop.default) componentHTML += ` data-${key}`;
+            if (prop.default) exampleHTML += ` data-${key}`;
           } else if (typeof prop.default !== 'object') {
-            componentHTML += ` data-${key}="${prop.default}"`;
+            exampleHTML += `\n  data-${key}="${prop.default}"`;
           }
         }
       });
-      
-      componentHTML += `>${config.content || ''}</div>`;
-      
-      // Render the preview section
-      let html = `<div id="schemaviewer-div-121" style="padding: 1rem;">`;
-      html += `<h3 id="schemaviewer-h3-122" style="margin-bottom: 1rem; color: var(--primary);">${schema.title || componentName}</h3>`;
-      html += `<p id="schemaviewer-p-123" style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.875rem;">${(schema.description || '').split('\n\n')[0]}</p>`;
-      
-      // Live preview
-      html += `<div id="schemaviewer-div-124" style="margin-bottom: 1.5rem;">`;
-      html += `<h4 id="schemaviewer-h4-125" style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--text-secondary);">Live Preview:</h4>`;
-      html += `<div id="schemaviewer-div-126" style="padding: 2rem; background: #0a0f1a; border-radius: 8px; border: 2px solid var(--primary); min-height: 300px; display: flex; align-items: center; justify-content: center; ${config.wrapperStyle || ''}">`;
-      html += `<div id="schemaviewer-div-127" style="width: 100%; max-width: 600px;">${componentHTML}</div>`; // Wrapper to constrain width
-      html += `</div>`;
-      html += `</div>`;
-      
-      // Example code
-      html += `<div id="schemaviewer-div-128" style="margin-bottom: 1.5rem;">`;
-      html += `<h4 id="schemaviewer-h4-129" style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--text-secondary);">Example Usage:</h4>`;
-      html += `<pre id="schemaviewer-pre-130" style="background: var(--bg-tertiary); padding: 1rem; border-radius: 4px; overflow: auto; font-size: 0.75rem; white-space: pre-wrap; font-family: monospace;"><code id="schemaviewer-code-131">${escapeHtml(componentHTML)}</code></pre>`;
-      html += `</div>`;
-      
-      // Properties list
-      html += `<h4 id="schemaviewer-h4-132" style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--text-secondary);">Properties (${Object.keys(props).length}):</h4>`;
-      html += `<div id="schemaviewer-div-133" style="display: flex; flex-direction: column; gap: 0.5rem;">`;
-      
-      Object.keys(props).forEach(key => {
-        const prop = props[key];
-        const propType = prop.type || (prop.properties ? 'object' : (prop.enum ? 'enum' : 'any'));
-        const description = prop.description || '';
+      exampleHTML += `></div>`;
+
+      panel.innerHTML = `
+        <!-- Component Info -->
+        <div class="sv-info">
+          <h2>${schema.title || componentName}</h2>
+          <p>${schema.description || 'No description available.'}</p>
+        </div>
         
-        html += `<div id="schemaviewer-div-134" style="padding: 0.75rem; background: var(--bg-secondary); border-radius: 4px; border-left: 3px solid var(--primary);">`;
-        html += `<div id="schemaviewer-div-135" style="font-weight: 600; margin-bottom: 0.25rem; font-family: monospace; color: var(--primary);">${key}</div>`;
-        html += `<div id="schemaviewer-div-136" style="font-size: 0.75rem; color: var(--text-primary); margin-bottom: 0.25rem;">${description}</div>`;
-        html += `<div id="schemaviewer-div-137" style="font-size: 0.75rem; color: var(--text-secondary);">Type: ${propType}</div>`;
+        <!-- Live Preview -->
+        <div class="sv-preview has-content" id="livePreview">
+          <div data-wb="${componentName}" style="width: 100%;"></div>
+        </div>
         
-        if (prop.default !== undefined) {
-          html += `<div id="schemaviewer-div-138" style="font-size: 0.75rem; color: var(--success); margin-top: 0.25rem;">Default: ${JSON.stringify(prop.default)}</div>`;
-        }
-        if (prop.enum) {
-          html += `<div id="schemaviewer-div-139" style="font-size: 0.75rem; color: var(--info); margin-top: 0.25rem;">Options: ${prop.enum.join(', ')}</div>`;
-        }
-        html += `</div>`;
-      });
-      
-      html += `</div></div>`;
-      
-      preview.innerHTML = html;
-      
-      // Initialize WB behaviors after DOM update
+        <!-- Properties List -->
+        <div class="sv-props-title">
+          Properties <span class="sv-props-count">${propCount}</span>
+        </div>
+        
+        ${Object.keys(props).map(key => {
+          const prop = props[key];
+          const propType = prop.type || (prop.enum ? 'enum' : 'any');
+          
+          return `
+            <div class="sv-prop">
+              <div class="sv-prop-name">${key}</div>
+              <div class="sv-prop-desc">${prop.description || ''}</div>
+              <div class="sv-prop-meta">
+                <span>Type: ${propType}</span>
+                ${prop.default !== undefined ? `<span class="default">Default: ${JSON.stringify(prop.default)}</span>` : ''}
+                ${prop.enum ? `<span class="options">Options: ${prop.enum.join(', ')}</span>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('')}
+        
+        <!-- Code Example -->
+        <div class="sv-code-section">
+          <div class="sv-props-title">Example Usage</div>
+          <pre class="sv-code">${exampleHTML.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+        </div>
+      `;
+
+      // Initialize WB behaviors in preview
       setTimeout(() => {
         if (window.WB) {
           try {
-            window.WB.scan();
+            window.WB.scan(document.getElementById('livePreview'));
           } catch (e) {
-            console.error('❌ WB.scan() error:', e);
+            console.error('WB.scan() error:', e);
           }
         }
       }, 100);
     }
 
-    // Update schema from JSON editor
+    // Update from JSON editor
     function updateFromJSON() {
       try {
         schema = JSON.parse(document.getElementById('jsonEditor').value);
-        updateUI();
+        renderPreview();
       } catch (e) {
         console.error('JSON parse error:', e);
-        alert('Invalid JSON: ' + e.message);
       }
     }
 
     // Event listeners
-    document.querySelectorAll('.property-input, .property-checkbox').forEach(input => {
-      input.addEventListener('change', updateFromUI);
+    document.getElementById('schemaSelector').addEventListener('change', (e) => {
+      loadSchema(e.target.value);
+    });
+
+    document.getElementById('formatBtn').addEventListener('click', () => {
+      updateFromJSON();
+      updateJSON();
+    });
+
+    document.getElementById('refreshBtn').addEventListener('click', () => {
+      renderPreview();
     });
 
     document.getElementById('jsonEditor').addEventListener('blur', updateFromJSON);
 
-    document.getElementById('formatBtn').addEventListener('click', () => {
-      updateFromJSON();
-    });
-
-    document.getElementById('resetBtn').addEventListener('click', () => {
-      if (confirm('Reset to original schema?')) {
-        loadSchema(currentSchemaPath);
-      }
-    });
-
     document.getElementById('saveBtn').addEventListener('click', () => {
+      if (!schema) return;
       const blob = new Blob([JSON.stringify(schema, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -676,59 +496,6 @@
       a.download = currentSchemaPath.split('/').pop();
       a.click();
       URL.revokeObjectURL(url);
-      alert('Schema downloaded! Copy to ' + currentSchemaPath);
-    });
-
-    document.getElementById('schemaSelector').addEventListener('change', (e) => {
-      loadSchema(e.target.value);
-    });
-
-    document.getElementById('propertySelector').addEventListener('change', (e) => {
-      const propName = e.target.value;
-      if (propName && schema && schema.properties[propName]) {
-        const prop = schema.properties[propName];
-        document.getElementById('jsonEditor').value = JSON.stringify(prop, null, 2);
-      }
-    });
-
-    document.getElementById('addPropertyBtn').addEventListener('click', () => {
-      const propName = prompt('Enter new property name:');
-      if (!propName) return;
-      
-      if (schema.properties[propName]) {
-        alert('Property already exists!');
-        return;
-      }
-      
-      schema.properties[propName] = {
-        type: 'string',
-        description: 'New property'
-      };
-      
-      populatePropertySelector();
-      updateJSON();
-      document.getElementById('propertySelector').value = propName;
-      document.getElementById('jsonEditor').value = JSON.stringify(schema.properties[propName], null, 2);
-    });
-
-    document.getElementById('deletePropertyBtn').addEventListener('click', () => {
-      const propName = document.getElementById('propertySelector').value;
-      if (!propName) {
-        alert('Select a property to delete');
-        return;
-      }
-      
-      if (confirm(`Delete property "${propName}"?`)) {
-        delete schema.properties[propName];
-        populatePropertySelector();
-        updateJSON();
-        document.getElementById('propertySelector').value = '';
-        document.getElementById('jsonEditor').value = JSON.stringify(schema, null, 2);
-      }
-    });
-
-    document.getElementById('refreshPreviewBtn').addEventListener('click', () => {
-      renderHTMLPreview();
     });
 
     // Initialize

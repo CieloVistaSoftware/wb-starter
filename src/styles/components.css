@@ -33,6 +33,11 @@
 }
 
 /* Sizes */
+.wb-button--xs {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+}
+
 .wb-button--sm {
   padding: 0.25rem 0.75rem;
   font-size: 0.875rem;
@@ -46,6 +51,11 @@
 .wb-button--lg {
   padding: 0.75rem 1.5rem;
   font-size: 1.125rem;
+}
+
+.wb-button--xl {
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
 }
 
 /* Variants */
@@ -165,6 +175,27 @@
   background-color: var(--bg-secondary);
   opacity: 1;
   cursor: not-allowed;
+}
+
+/* Input Sizes */
+.wb-input--xs, .wb-select--xs, .wb-textarea--xs {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.wb-input--sm, .wb-select--sm, .wb-textarea--sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.wb-input--lg, .wb-select--lg, .wb-textarea--lg {
+  padding: 0.75rem 1rem;
+  font-size: 1.125rem;
+}
+
+.wb-input--xl, .wb-select--xl, .wb-textarea--xl {
+  padding: 1rem 1.25rem;
+  font-size: 1.25rem;
 }
 
 /* Validation States */
@@ -297,6 +328,15 @@ input:disabled + .wb-switch__slider {
 
 .wb-table--hover tbody tr:hover {
   background-color: var(--bg-tertiary);
+}
+
+.wb-table tbody tr.active {
+  background-color: var(--bg-tertiary);
+  border-left: 3px solid var(--primary);
+}
+.wb-table tbody tr.active td:first-child {
+  /* Adjust padding to account for border if needed, or just let it be */
+  /* padding-left: calc(0.75rem - 3px); */
 }
 
 .wb-table--bordered {

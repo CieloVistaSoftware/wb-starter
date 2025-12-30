@@ -112,6 +112,9 @@ export default defineConfig({
         'builder-api.spec.ts',
         'builder-mkel.spec.ts',
         'permutation-compliance.spec.ts',
+        'semantics-new.spec.ts',
+        'semantics-code-scroll.spec.ts',
+        'js-syntax-compliance.spec.ts',
         'ui/cardbutton.spec.ts',
         'ui/cardchip.spec.ts',
         'ui/cardhero.spec.ts',
@@ -134,7 +137,18 @@ export default defineConfig({
       ],
     },
     // ═══════════════════════════════════════════════════════════════
-    // TIER 4: REGRESSION TESTS
+    // TIER 4: FUNCTIONAL TESTS
+    // Schema-driven browser tests for user interactions
+    // Reads test.functional from schemas and executes in Playwright
+    // ═══════════════════════════════════════════════════════════════
+    {
+      name: 'functional',
+      testDir: './tests/behaviors',
+      testMatch: ['functional-runner.spec.ts'],
+    },
+    
+    // ═══════════════════════════════════════════════════════════════
+    // TIER 5: REGRESSION TESTS
     // Tests for specific bug fixes
     // ═══════════════════════════════════════════════════════════════
     {

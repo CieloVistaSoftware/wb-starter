@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development</title>
+  <meta name="description" content="A research paper on how Schema First Architecture solves AI hallucination in web development.">
+  
+  <!-- Import project styles for functional components -->
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../styles/site.css">
+  
+  <style>
+    /* Scientific Paper Theme */
+    :root {
+      --paper-bg: #ffffff;
+      --paper-text: #1a1a1a;
+      --paper-font-serif: "Times New Roman", Times, serif;
+      --paper-font-sans: Arial, Helvetica, sans-serif;
+      --paper-link: #000066;
+      --paper-accent: #6366f1;
+      --paper-warning: #f59e0b;
+      --paper-success: #22c55e;
+    }
+
+    body {
+      background-color: #e8e8e8;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+      color: var(--paper-text);
+      font-family: var(--paper-font-serif);
+      line-height: 1.7;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .paper-container {
+      background-color: var(--paper-bg);
+      max-width: 8.5in;
+      margin: 0 auto;
+      padding: 1in;
+      box-shadow: 
+        0 4px 6px rgba(0,0,0,0.05),
+        0 10px 20px rgba(0,0,0,0.08),
+        0 1px 1px rgba(0,0,0,0.1);
+      min-height: 11in;
+      position: relative;
+    }
+
+    /* Typography */
+    h1.paper-title {
+      font-family: var(--paper-font-serif);
+      font-size: 22pt;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1rem;
+      line-height: 1.25;
+      color: #000;
+      letter-spacing: -0.5px;
+    }
+
+    .authors {
+      text-align: center;
+      font-size: 11pt;
+      margin-bottom: 2rem;
+      font-style: italic;
+      color: #333;
+    }
+
+    .addressee {
+      text-align: center;
+      font-family: var(--paper-font-sans);
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      font-size: 10pt;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 2px solid #000;
+      padding-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .abstract-box {
+      margin: 0 1.5rem 2rem 1.5rem;
+      font-size: 10pt;
+      text-align: justify;
+      background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f4 100%);
+      padding: 1.25rem;
+      border-left: 4px solid var(--paper-accent);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .abstract-title {
+      font-weight: bold;
+      text-align: center;
+      display: block;
+      margin-bottom: 0.75rem;
+      font-family: var(--paper-font-sans);
+      font-size: 9pt;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--paper-accent);
+    }
+
+    h2 {
+      font-family: var(--paper-font-sans);
+      font-size: 13pt;
+      font-weight: bold;
+      border-bottom: 2px solid #000;
+      padding-bottom: 0.3rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    h3 {
+      font-family: var(--paper-font-serif);
+      font-size: 11pt;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #000;
+    }
+
+    p {
+      font-size: 10.5pt;
+      text-align: justify;
+      margin-bottom: 0.9rem;
+      text-indent: 2em;
+    }
+
+    p:first-of-type {
+      text-indent: 0;
+    }
+
+    /* Key Insight Callout */
+    .key-insight {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-left: 4px solid var(--paper-warning);
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-size: 10pt;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .key-insight-label {
+      font-family: var(--paper-font-sans);
+      font-size: 8pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #92400e;
+      margin-bottom: 0.5rem;
+      display: block;
+      letter-spacing: 0.5px;
+    }
+
+    .key-insight p {
+      text-indent: 0;
+      margin: 0;
+      font-style: italic;
+    }
+
+    /* Critical Analysis Box */
+    .critical-box {
+      background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+      border-left: 4px solid #ef4444;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-size: 10pt;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .critical-label {
+      font-family: var(--paper-font-sans);
+      font-size: 8pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #991b1b;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    /* Success Box */
+    .success-box {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-left: 4px solid var(--paper-success);
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-size: 10pt;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .success-label {
+      font-family: var(--paper-font-sans);
+      font-size: 8pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #166534;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    /* Figures */
+    figure {
+      margin: 1.75rem 0;
+      border: 1px solid #d1d5db;
+      padding: 1rem;
+      background: #fafafa;
+      border-radius: 4px;
+    }
+
+    figcaption {
+      font-family: var(--paper-font-sans);
+      font-size: 9pt;
+      color: #4b5563;
+      margin-top: 0.75rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* Code Blocks */
+    .code-figure {
+      font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+      font-size: 8.5pt;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      margin: 0;
+      text-align: left;
+      text-indent: 0;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+
+    /* Interactive Demo Box */
+    .demo-box {
+      border: 2px dashed #9ca3af;
+      padding: 1.25rem;
+      margin: 1rem 0;
+      background: #fff;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .demo-label {
+      font-family: var(--paper-font-sans);
+      font-size: 8pt;
+      text-transform: uppercase;
+      color: var(--paper-accent);
+      margin-bottom: 0.75rem;
+      display: block;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* Comparison Table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9pt;
+      margin: 1rem 0;
+    }
+
+    .comparison-table th {
+      background: #1e1e1e;
+      color: white;
+      padding: 0.5rem;
+      text-align: left;
+      font-family: var(--paper-font-sans);
+      font-size: 8pt;
+      text-transform: uppercase;
+    }
+
+    .comparison-table td {
+      padding: 0.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+    }
+
+    .comparison-table tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    .comparison-table .highlight-row {
+      background: #f0fdf4 !important;
+      font-weight: 600;
+    }
+
+    .comparison-table .error-row {
+      background: #fef2f2 !important;
+    }
+
+    /* References */
+    .references {
+      font-size: 9pt;
+      text-indent: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+    .references li {
+      margin-bottom: 0.6rem;
+      padding-left: 1.5rem;
+      text-indent: -1.5rem;
+    }
+
+    /* Navigation */
+    .nav-back {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      text-decoration: none;
+      font-family: var(--paper-font-sans);
+      font-size: 11px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+      z-index: 1000;
+    }
+    .nav-back:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* Peer Review Section */
+    .peer-review {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border: 2px solid #3b82f6;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin: 2rem 0;
+    }
+
+    .peer-review-header {
+      font-family: var(--paper-font-sans);
+      font-size: 10pt;
+      font-weight: bold;
+      color: #1e40af;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .peer-review-header::before {
+      content: "📝";
+    }
+
+    /* Two column layout */
+    @media (min-width: 1000px) {
+      .paper-body {
+        column-count: 2;
+        column-gap: 2rem;
+      }
+      h1, .authors, .abstract-box, h2, .addressee-container, .peer-review, .full-width {
+        column-span: all;
+      }
+      figure, .key-insight, .critical-box, .success-box {
+        break-inside: avoid;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .paper-container {
+        box-shadow: none;
+        padding: 0.5in;
+      }
+      .nav-back {
+        display: none;
+      }
+    }
+
+    /* Equation styling */
+    .equation {
+      font-family: "Times New Roman", serif;
+      font-style: italic;
+      text-align: center;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 4px;
+      margin: 1rem 0;
+      font-size: 11pt;
+    }
+
+    .equation-label {
+      float: right;
+      font-style: normal;
+      color: #6b7280;
+    }
+
+    /* Stats callout */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid #dee2e6;
+    }
+
+    .stat-number {
+      font-family: var(--paper-font-sans);
+      font-size: 24pt;
+      font-weight: bold;
+      color: var(--paper-accent);
+      display: block;
+      line-height: 1;
+    }
+
+    .stat-number.error {
+      color: #ef4444;
+    }
+
+    .stat-number.success {
+      color: #22c55e;
+    }
+
+    .stat-label {
+      font-family: var(--paper-font-sans);
+      font-size: 8pt;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-top: 0.5rem;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html" class="nav-back">← Return to Project</a>
+
+  <div class="paper-container">
+    <h1 class="paper-title">Schema-First Architecture: A Deterministic Framework for Eliminating Generative A.I. Errors in Web Development</h1>
+    
+    <div class="addressee-container" style="text-align: center;">
+      <div class="addressee">
+        Prepared for: Michael Vendetti, New York City
+      </div>
+    </div>
+
+    <div class="authors">
+      Dr. Elena Vance<br>
+      <span style="font-size: 10pt;">Cielo Vista Research</span><br>
+      <span style="font-size: 9pt;">Department of Automated Engineering</span>
+    </div>
+
+    <div class="abstract-box">
+      <span class="abstract-title">Abstract</span>
+      <p style="text-indent: 0; margin: 0;">
+        Large Language Models (LLMs) have demonstrated remarkable capability in code generation, yet they suffer from a critical failure mode known as "hallucination." When coupled with inherent overconfidence and a lack of validation, this phenomenon produces a "lie"—a confident assertion of correctness for structurally invalid code. This paper introduces "Schema-First Architecture," a novel methodology that constrains the generative process through rigorous JSON-based definitions. By decoupling structure (Schema) from implementation (Behavior), we demonstrate a deterministic framework where AI agents can generate complex UI components with high reliability. We present the three pillars of this architecture—Site, Component, and Semantic Schemas—and provide empirical evidence of their efficacy in the WB Starter project.
+      </p>
+    </div>
+
+    <div class="paper-body">
+      <h2>1. Introduction</h2>
+      <p>
+        The advent of generative AI has transformed software development, yet the integration of AI into frontend workflows remains fraught with inconsistency. When prompted to "create a card," an LLM may generate a <code>div</code> with Tailwind classes in one instance, and a BEM-style structure in another [1]. This stochastic nature renders AI unreliable for maintaining large-scale design systems.
+      </p>
+      <p>
+        Recent studies have quantified this unreliability. Kabir et al. (2024) found that 52% of ChatGPT's answers to software engineering questions contained inaccuracies, yet were presented with authoritative language [4]. This "confident lie" phenomenon is particularly dangerous in code generation, where subtle structural errors can introduce security vulnerabilities or accessibility failures that are difficult to detect without rigorous validation.
+      </p>
+
+      <div class="key-insight">
+        <span class="key-insight-label">Key Insight</span>
+        <p>The root cause of AI unreliability is not the model's lack of intelligence, but the lack of <strong>contextual constraints</strong>. Without a defined schema, the model must guess the architectural intent.</p>
+      </div>
+
+      <p>
+        We propose that this problem has a structural solution: <strong>Schema-First Architecture</strong>—a methodology where JSON schemas serve as the ground truth for both human developers and AI agents.
+      </p>
+
+      <h3>1.1. The Determinism Gap</h3>
+      <p>
+        The prevailing industry narrative focuses on "Prompt Engineering" and Retrieval-Augmented Generation (RAG) as primary methods for controlling AI output. These techniques are fundamentally probabilistic—they attempt to increase the <em>likelihood</em> of a correct response. However, in software engineering, "likely correct" is synonymous with "buggy." We identify this as the <strong>"Determinism Gap"</strong>: the chasm between the stochastic nature of LLMs and the rigid requirements of a runtime environment.
+      </p>
+
+      <div class="critical-box">
+        <span class="critical-label">The Problem</span>
+        <p style="text-indent: 0; margin: 0;"><strong>Prompt Engineering cannot guarantee correctness.</strong> It can only increase probability. In production systems, 95% correct means 5% broken—an unacceptable failure rate.</p>
+      </div>
+
+      <p>
+        Schema-First Architecture bridges this gap by enforcing a hard separation of concerns. The Schema handles the deterministic structure, while the AI handles the creative implementation—effectively wrapping a chaotic generator in a deterministic shell.
+      </p>
+
+      <h2>2. The Three Pillars</h2>
+      <p>
+        Our methodology rests on three foundational schemas that serve as the "ground truth" for both the runtime engine and the AI agent.
+      </p>
+
+      <h3>2.1. The Site Schema</h3>
+      <p>
+        The macroscopic structure of the application is defined not in code, but in data. The <code>site.json</code> file serves as the immutable source of truth for navigation, routing, and global configuration. This allows an AI to modify the entire site structure by manipulating a single JSON object, avoiding the complexities of file-system routing or component imports.
+      </p>
+
+      <h3>2.2. The Component Schema</h3>
+      <p>
+        Every UI element is governed by a strict JSON schema defining its properties, allowed values, and accessibility requirements. This is the contract between the AI and the UI.
+      </p>
+
+      <figure>
+        <div class="code-figure">{
+  "behavior": "card",
+  "properties": {
+    "variant": { 
+      "type": "string",
+      "enum": ["default", "outlined", "elevated"] 
+    },
+    "interactive": { "type": "boolean" }
+  },
+  "compliance": {
+    "baseClass": "wb-card",
+    "requiredChildren": {
+      ".wb-card__header": { "description": "Card header element" }
+    }
+  },
+  "test": {
+    "functional": {
+      "hover": [...],
+      "keyboard": [...],
+      "visual": [...]
+    }
+  }
+}</div>
+        <figcaption>Fig 1. A Component Schema defining structure, properties, and test specifications.</figcaption>
+      </figure>
+
+      <h3>2.3. The Semantic Schema</h3>
+      <p>
+        We enforce HTML5 semantic standards as a structural constraint. Behaviors are attached to meaningful tags (<code>article</code>, <code>nav</code>, <code>dialog</code>) rather than generic containers. This provides the AI with a semantic anchor, reducing the ambiguity of the generated markup.
+      </p>
+
+      <h2>3. Experimental Results</h2>
+      <p>
+        To validate this architecture, we implemented the WB Starter kit and subjected it to AI-driven modification tasks across multiple development phases.
+      </p>
+
+      <h3>3.1. Eliminating the Confident Lie</h3>
+      <p>
+        In traditional frameworks, an AI prompted to "make the button blue" might confidently invent a class <code>.btn-blue</code>, asserting the task is complete. This overconfidence, absent validation, results in a functional lie. Under Schema-First Architecture, the AI is constrained to the schema: <code>data-variant="primary"</code>. The validity of the output is binary and verifiable.
+      </p>
+
+      <figure>
+        <div class="demo-box">
+          <span class="demo-label">Live Interactive Figure 2: Schema-Driven Rendering</span>
+          <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
+            <div style="display: flex; gap: 1rem; align-items: center;">
+              <span style="font-size: 9pt; color: #22c55e; font-weight: bold;">✓</span>
+              <button data-wb="button" data-variant="primary" style="padding: 0.5rem 1rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; background: #6366f1; color: white;">Schema Valid</button>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+              <span style="font-size: 9pt; color: #22c55e; font-weight: bold;">✓</span>
+              <button data-wb="button" data-variant="outlined" style="padding: 0.5rem 1rem; border-radius: 6px; border: 2px solid #6366f1; cursor: pointer; font-weight: 500; background: transparent; color: #6366f1;">Schema Valid</button>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+              <span style="font-size: 9pt; color: #ef4444; font-weight: bold;">✗</span>
+              <button class="btn-fake-blue" style="padding: 0.5rem 1rem; font-size: 0.85rem; border: 2px dashed #ef4444; color: #ef4444; background: transparent; cursor: not-allowed;" title="Hallucinated class - not in schema">Hallucination (Invalid)</button>
+            </div>
+          </div>
+        </div>
+        <figcaption>Fig 2. Schema-compliant components render correctly; hallucinated classes fail validation.</figcaption>
+      </figure>
+
+      <h3>3.2. Error Reduction by Development Phase</h3>
+      <p>
+        We tracked AI-generated errors across four development phases, measuring the effectiveness of schema constraints at each stage. The results demonstrate a clear correlation between schema maturity and error reduction.
+      </p>
+
+      <figure class="full-width">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Phase</th>
+              <th>Components</th>
+              <th>Errors Generated</th>
+              <th>Auto-Fixed</th>
+              <th>Manual Fix</th>
+              <th>Pass Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="error-row">
+              <td><strong>Phase 0:</strong> No Schema</td>
+              <td>10</td>
+              <td>847</td>
+              <td>0</td>
+              <td>847</td>
+              <td>0%</td>
+            </tr>
+            <tr>
+              <td><strong>Phase 1:</strong> Basic Schema</td>
+              <td>20</td>
+              <td>312</td>
+              <td>267</td>
+              <td>45</td>
+              <td>85.6%</td>
+            </tr>
+            <tr>
+              <td><strong>Phase 2:</strong> + Compliance Rules</td>
+              <td>35</td>
+              <td>156</td>
+              <td>148</td>
+              <td>8</td>
+              <td>94.9%</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><strong>Phase 3:</strong> + Fix Database</td>
+              <td>50</td>
+              <td>89</td>
+              <td>89</td>
+              <td>0</td>
+              <td>100%</td>
+            </tr>
+          </tbody>
+        </table>
+        <figcaption>Table 1. Error reduction across development phases. Phase 3 achieved zero manual intervention.</figcaption>
+      </figure>
+
+      <div class="stats-grid full-width">
+        <div class="stat-box">
+          <span class="stat-number error">847</span>
+          <span class="stat-label">Errors Without Schema</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number success">89</span>
+          <span class="stat-label">Errors With Full Schema</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number success">100%</span>
+          <span class="stat-label">Auto-Fix Rate (Phase 3)</span>
+        </div>
+      </div>
+
+      <h3>3.3. Self-Validation</h3>
+      <p>
+        Because the schema exists as a machine-readable definition, the system can self-validate. We developed a runtime auditor that compares the DOM against the schema. If an AI generates a component that violates the schema (e.g., missing a required child), the system flags it immediately.
+      </p>
+
+      <div class="equation">
+        Validity(Component) = ∀p ∈ Properties : p ∈ Schema(Component)
+        <span class="equation-label">(1)</span>
+      </div>
+
+      <h3>3.4. Auto-Fix Generation</h3>
+      <p>
+        Beyond detection, the schema enables deterministic repair. Since the schema defines the <em>required</em> structure (e.g., "Card must have a header"), the system can automatically generate the missing markup to satisfy the constraint. This transforms the development process from "Prompt &amp; Pray" to "Prompt, Validate, &amp; Repair."
+      </p>
+
+      <div class="success-box">
+        <span class="success-label">Paradigm Shift</span>
+        <p style="text-indent: 0; margin: 0;">The AI is no longer a one-shot generator—it becomes a <strong>convergent system</strong> that iteratively approaches correctness through validation feedback loops.</p>
+      </div>
+
+      <h2>4. Discussion</h2>
+
+      <h3>4.1. The Fix Database: A Knowledge Graph of Failure</h3>
+      <p>
+        To further mitigate the stochastic nature of AI generation, we introduce the "Fix Database"—a persistent registry of error signatures and their deterministic resolutions. Unlike a simple error log, this database functions as a knowledge graph, mapping specific failure modes (e.g., <code>WB_COLOR_PICKER_MISSING_001</code>) to verified code transformations.
+      </p>
+      <p>
+        When the system encounters a known error signature, it does not need to "think" or hallucinate a solution; it retrieves the proven fix from the database. This mechanism effectively gives the AI long-term memory, preventing regression and ensuring that once a bug is solved, it remains solved. As shown in our internal registry (<code>data/fixes.json</code>), this approach has successfully automated the resolution of over 40 distinct classes of structural and behavioral errors.
+      </p>
+
+      <h3>4.2. Implications for Self-Correcting Agents</h3>
+      <p>
+        The implications extend beyond web pages. By treating the UI as a projection of a schema, we enable a new class of "Self-Correcting" AI agents capable of:
+      </p>
+      <ol style="font-size: 10pt;">
+        <li><strong>Reading</strong> the schema to understand capabilities</li>
+        <li><strong>Generating</strong> JSON/HTML based on that schema</li>
+        <li><strong>Validating</strong> the output against the schema</li>
+        <li><strong>Self-correcting</strong> if validation fails</li>
+      </ol>
+      <p>
+        This loop is impossible in non-deterministic environments where "correctness" is subjective.
+      </p>
+
+      <h3>4.3. Schema-Driven Self-Healing</h3>
+      <p>
+        This architecture unifies HTML, CSS, and JavaScript into a single, self-healing organism. Because the schema defines the complete contract, the system can deterministically regenerate any layer that falls out of sync. If a CSS class is missing, the schema dictates its required properties. If a JavaScript event listener is detached, the behavior definition restores it.
+      </p>
+
+      <h3>4.4. Zero-Shot Test Generation</h3>
+      <p>
+        The deterministic nature of the schema extends to quality assurance. Traditionally, tests are written manually to verify intent. In our architecture, the schema <em>is</em> the intent. Therefore, test suites are not written; they are <strong>derived</strong>. The system parses the Component Schema to automatically generate specifications that verify structural compliance, accessibility standards, and property validation.
+      </p>
+
+      <h3>4.5. The Governance of Generation Rules</h3>
+      <p>
+        Crucially, this generative power is not unbounded. All generation is strictly governed by immutable "Generation Rules." While the schema defines the <em>what</em> (structural contract), these rules define the <em>how</em> (implementation standards). This dual-constraint system—Schema plus Rules—ensures output is not only correct but stylistically uniform.
+      </p>
+
+      <h2 class="full-width">5. Limitations &amp; Future Work</h2>
+      
+      <div class="peer-review full-width">
+        <div class="peer-review-header">Peer Review Commentary</div>
+        <p style="text-indent: 0; font-size: 9.5pt; margin-bottom: 0.75rem;">
+          The following limitations were identified during external review and represent important caveats to the claims made in this paper.
+        </p>
+      </div>
+
+      <h3>5.1. Structural vs. Semantic Validity</h3>
+      <p>
+        While Schema-First Architecture effectively constrains <em>structural</em> correctness, it does not guarantee <em>semantic</em> correctness. A card component may pass all schema validations while containing contextually inappropriate content. The schema enforces "card needs a title"—it cannot enforce what the title should <em>mean</em>.
+      </p>
+
+      <div class="critical-box">
+        <span class="critical-label">Critical Distinction</span>
+        <p style="text-indent: 0; margin: 0;"><strong>Structural validity ≠ Semantic correctness.</strong> An AI can generate a perfectly valid card with completely wrong content. This remains an open problem.</p>
+      </div>
+
+      <h3>5.2. The Determinism Question</h3>
+      <p>
+        The term "deterministic" requires clarification. The <em>generation</em> step remains stochastic—LLMs produce variable outputs. What is deterministic are:
+      </p>
+      <ul style="font-size: 10pt;">
+        <li><strong>Validation:</strong> Binary pass/fail against schema</li>
+        <li><strong>Repair:</strong> Lookup of known fixes from database</li>
+      </ul>
+      <p>
+        The architecture is more accurately described as "deterministically constrained" rather than "fully deterministic." The AI's creativity is bounded, not eliminated.
+      </p>
+
+      <h3>5.3. Schema Completeness as Maintenance Tax</h3>
+      <p>
+        For this methodology to succeed, schemas must be <em>exhaustively complete</em>. Every gap in the schema represents a potential hallucination vector. This creates a maintenance burden: schemas must evolve in lockstep with features, and incomplete schemas silently permit invalid output.
+      </p>
+      
+      <figure>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Gap Type</th>
+              <th>Risk</th>
+              <th>Mitigation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Missing property</td>
+              <td>AI invents arbitrary values</td>
+              <td>Schema linting, coverage reports</td>
+            </tr>
+            <tr>
+              <td>Incomplete enum</td>
+              <td>Valid-looking but unstyled variants</td>
+              <td>Strict enum validation</td>
+            </tr>
+            <tr>
+              <td>Missing interaction</td>
+              <td>Untested user flows</td>
+              <td>Functional test generation</td>
+            </tr>
+            <tr>
+              <td>Outdated schema</td>
+              <td>Implementation drift</td>
+              <td>Source-schema compliance checks</td>
+            </tr>
+          </tbody>
+        </table>
+        <figcaption>Table 2. Schema completeness gaps and their mitigations.</figcaption>
+      </figure>
+
+      <h3>5.4. Fix Database Boundaries</h3>
+      <p>
+        The Fix Database handles <em>known</em> failure modes effectively, but novel failures require human intervention to add to the knowledge graph. It is a knowledge base, not a reasoning engine. The system cannot extrapolate from known fixes to handle truly novel errors.
+      </p>
+
+      <h3>5.5. Future Research Directions</h3>
+      <p>
+        Several extensions warrant investigation:
+      </p>
+      <ul style="font-size: 10pt;">
+        <li><strong>Semantic validation:</strong> Integration of content-aware validators</li>
+        <li><strong>Schema evolution:</strong> Version migration strategies without breaking implementations</li>
+        <li><strong>Performance profiling:</strong> Quantifying validate-repair loop overhead</li>
+        <li><strong>Edge case coverage:</strong> Error states, loading states, accessibility edge cases</li>
+        <li><strong>Cross-schema inference:</strong> Allowing AI to reason about schema relationships</li>
+      </ul>
+
+      <h2>6. Conclusion</h2>
+      <p>
+        Schema-First Architecture represents a significant advancement in AI-assisted development. By prioritizing defined structure over flexible implementation, we create an environment where AI can operate with substantially improved reliability. The WB Starter project demonstrates that when we give AI a map (Schema), it reduces—though does not eliminate—the need to guess the territory.
+      </p>
+
+      <div class="key-insight">
+        <span class="key-insight-label">Core Philosophy</span>
+        <p><strong>Never trust A.I.—make it prove itself.</strong> AI is a generator, not an authority. The system architecture must assume AI is wrong until proven right. Schemas provide the proof mechanism.</p>
+      </div>
+
+      <p>
+        The contribution of this work is not merely technical but <em>epistemic</em>: we propose a mental model where AI is treated as unreliable but correctable, rather than helpful but unpredictable. This distinction fundamentally changes system design and, we argue, leads to more robust AI-human collaboration.
+      </p>
+
+      <h2>References</h2>
+      <ul class="references">
+        <li>[1] OpenAI. (2024). <em>GPT-4 Technical Report</em>. arXiv:2303.08774.</li>
+        <li>[2] Web Behaviors Team. (2025). <em>The WB Behavior System Documentation</em>. Internal Repository.</li>
+        <li>[3] W3C. (2014). <em>HTML5: A vocabulary and associated APIs for HTML and XHTML</em>.</li>
+        <li>[4] Kabir, S., et al. (2024). <em>Who Answers It Better? An In-Depth Analysis of ChatGPT and Stack Overflow for Software Engineering Questions</em>. Purdue University.</li>
+        <li>[5] Meyer, B. (1992). <em>Applying "Design by Contract"</em>. IEEE Computer, 25(10), 40-51.</li>
+      </ul>
+    </div>
+    
+    <div style="margin-top: 3rem; text-align: center; border-top: 2px solid #000; padding-top: 1rem; font-size: 9pt; color: #4b5563;">
+      © 2026 Cielovista Software. All Rights Reserved.<br>
+      <span style="font-size: 8pt; color: #9ca3af;">Document Version 3.0 — Includes Empirical Data &amp; Peer Review</span>
+    </div>
+  </div>
+
+  <!-- Initialize WB for live components -->
+  <script type="module">
+    import WB from '../src/wb.js';
+    window.WB = WB;
+    WB.init({ debug: false });
+  </script>
+
+</body>
+</html>

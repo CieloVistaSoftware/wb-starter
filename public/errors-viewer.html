@@ -279,6 +279,26 @@
           </div>
           <div class="error-body" id="details-${index}">
             <div class="detail-row">
+              <div class="detail-label">Error ID</div>
+              <code>${error.id}</code>
+            </div>
+
+            <div class="detail-row">
+              <div class="detail-label">Interaction Context</div>
+              <div style="display: flex; gap: 1rem; align-items: center; background: var(--bg-tertiary); padding: 0.5rem; border-radius: 4px;">
+                <div>
+                  <span style="font-size: 0.75rem; color: var(--text-secondary); display: block;">FROM</span>
+                  <strong>${escapeHtml(error.interaction?.from || 'System')}</strong>
+                </div>
+                <div style="color: var(--text-secondary);">→</div>
+                <div>
+                  <span style="font-size: 0.75rem; color: var(--text-secondary); display: block;">TO</span>
+                  <strong>${escapeHtml(error.interaction?.to || 'Unknown')}</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-row">
               <div class="detail-label">Location</div>
               <code>${error.module || 'unknown'}:${error.line || '?'}:${error.column || '?'}</code>
               ${error.function ? ` in <code>${error.function}()</code>` : ''}

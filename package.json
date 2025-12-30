@@ -30,8 +30,12 @@
     "url": "https://github.com/CieloVistaSoftware/wb-starter.git"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.23.0",
     "express": "^5.1.0",
     "highlight.js": "^11.11.1",
     "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   }
 }

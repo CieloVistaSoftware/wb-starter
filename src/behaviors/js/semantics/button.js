@@ -32,7 +32,11 @@ export function button(element, options = {}) {
 
   // Base styles
   Object.assign(element.style, {
-    padding: config.size === 'sm' ? '0.25rem 0.75rem' : config.size === 'lg' ? '0.75rem 1.5rem' : '0.5rem 1rem',
+    padding: config.size === 'xs' ? '0.125rem 0.5rem' : 
+             config.size === 'sm' ? '0.25rem 0.75rem' : 
+             config.size === 'lg' ? '0.75rem 1.5rem' : 
+             config.size === 'xl' ? '1rem 2rem' : 
+             '0.5rem 1rem',
     borderRadius: 'var(--radius-md, 6px)',
     border: 'none',
     cursor: config.disabled || config.loading ? 'not-allowed' : 'pointer',
@@ -100,7 +104,12 @@ export function button(element, options = {}) {
     // But for the demo page, we want this feedback.
     const text = element.textContent.trim();
     if (text) {
-      createToast(`Clicked: ${text}`, 'info');
+      let toastType = config.variant;
+      // Map variants to toast types
+      if (toastType === 'outline' || toastType === 'link') toastType = 'primary';
+      if (toastType === 'ghost') toastType = 'secondary';
+      
+      createToast(`Clicked: ${text}`, toastType);
     }
   };
   element.addEventListener('click', clickHandler);

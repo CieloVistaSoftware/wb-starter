@@ -6,6 +6,7 @@ export function input(element, options = {}) {
   const config = {
     type: options.type || element.dataset.type || element.type || 'text',
     variant: options.variant || element.dataset.variant || '',
+    size: options.size || element.dataset.size || 'md',
     clearable: options.clearable ?? element.hasAttribute('data-clearable'),
     prefix: options.prefix || element.dataset.prefix || element.dataset.icon || '',
     suffix: options.suffix || element.dataset.suffix || '',
@@ -22,13 +23,27 @@ export function input(element, options = {}) {
   // Default styles for compliance
   Object.assign(element.style, {
     width: '100%',
-    padding: '0.5rem 0.75rem',
     border: '1px solid var(--border-color, #374151)',
     borderRadius: '6px',
     background: 'var(--bg-primary, #1f2937)',
     color: 'var(--text-primary, #f9fafb)',
     outline: 'none'
   });
+
+  // Apply size
+  const paddings = {
+    xs: '0.125rem 0.5rem',
+    sm: '0.25rem 0.75rem',
+    md: '0.5rem 0.75rem',
+    lg: '0.75rem 1rem',
+    xl: '1rem 1.25rem'
+  };
+  element.style.padding = paddings[config.size] || paddings.md;
+  
+  if (config.size !== 'md') {
+    wrapper.classList.add(`wb-input--${config.size}`);
+    element.classList.add(`wb-input--${config.size}`);
+  }
   
   if (config.variant === 'success') {
     element.style.borderColor = 'var(--success-color, #22c55e)';
