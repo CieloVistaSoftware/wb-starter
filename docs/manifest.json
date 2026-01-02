@@ -530,6 +530,11 @@
           "file": "templates.md",
           "title": "Templates",
           "description": "Documentation for Templates"
+        },
+        {
+          "file": "deploying-wb-starter-to-render.md",
+          "title": "Deploying-wb-starter-to-render",
+          "description": "Documentation for Deploying-wb-starter-to-render"
         }
       ]
     }

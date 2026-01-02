@@ -51,9 +51,9 @@
         // Handle markdown docs
         if (category.docs) {
           for (const doc of category.docs) {
-            // Prepend ../docs/ to the file path so doc-viewer (in public/) can find it
-            const filePath = doc.file.startsWith('http') || doc.file.startsWith('/') ? doc.file : '../docs/' + doc.file;
-            html += '<a href="../public/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
+            // Use absolute path for doc-viewer
+            const filePath = doc.file.startsWith('http') || doc.file.startsWith('/') ? doc.file : '/docs/' + doc.file;
+            html += '<a href="/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
             html += 'class="docs-card" target="_blank" ';
             html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
             html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + doc.title + '</h3>';
@@ -65,7 +65,7 @@
         // Handle page links (like research papers)
         if (category.pages) {
           for (const page of category.pages) {
-            html += '<a href="../pages/' + page.page + '.html" ';
+            html += '<a href="/pages/' + page.page + '.html" ';
             html += 'class="docs-card" target="_blank" ';
             html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
             html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + page.title + '</h3>';
