@@ -741,11 +741,31 @@ export function file(element, options = {}) {
   function updateLabel() {
     if (input.files.length) {
       const names = Array.from(input.files).map(f => f.name).join(', ');
+      
+      // Show uploading state
       dropzone.innerHTML = `
-        <div style="font-size:2rem;margin-bottom:0.5rem;color:var(--success,#22c55e);">✅</div>
-        <div style="color:var(--text-primary,#f9fafb);font-weight:500;">${input.files.length} file(s) selected</div>
-        <div style="color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin-top:0.25rem;word-break:break-all;">${names}</div>
+        <div style="font-size:2rem;margin-bottom:0.5rem;">⏳</div>
+        <div style="color:var(--text-primary,#f9fafb);font-weight:500;">Uploading...</div>
+        <div class="wb-file-progress" style="width:100%;height:4px;background:var(--bg-tertiary,#374151);margin-top:1rem;border-radius:2px;overflow:hidden;">
+          <div style="width:0%;height:100%;background:var(--primary,#6366f1);transition:width 1.5s ease-out;"></div>
+        </div>
       `;
+      
+      // Simulate upload
+      setTimeout(() => {
+        const progressBar = dropzone.querySelector('.wb-file-progress div');
+        if (progressBar) progressBar.style.width = '100%';
+        
+        setTimeout(() => {
+          dropzone.innerHTML = `
+            <div style="font-size:2rem;margin-bottom:0.5rem;color:var(--success,#22c55e);">✅</div>
+            <div style="color:var(--text-primary,#f9fafb);font-weight:500;">${input.files.length} file(s) uploaded</div>
+            <div style="color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin-top:0.25rem;word-break:break-all;">
+              Location: <span style="color:var(--primary,#6366f1);cursor:pointer;">/uploads/${names}</span>
+            </div>
+          `;
+        }, 1500);
+      }, 100);
     }
   }
 

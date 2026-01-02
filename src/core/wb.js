@@ -52,6 +52,9 @@ const autoInjectMappings = [
   { selector: 'progress', behavior: 'progress' },
   { selector: 'nav', behavior: 'navbar' },
   { selector: 'aside', behavior: 'sidebar' },
+  { selector: 'header', behavior: 'header' },
+  { selector: 'footer', behavior: 'footer' },
+  { selector: 'article[data-href]', behavior: 'cardlink' },
   
   // Cards
   { selector: 'article', behavior: 'card' }
@@ -66,6 +69,8 @@ function getAutoInjectBehavior(element) {
   if (!getConfig('autoInject')) return null;
   // Skip if data-wb is already present (explicit overrides implicit)
   if (element.hasAttribute('data-wb')) return null;
+  // Skip if explicitly ignored
+  if (element.hasAttribute('data-wb-ignore')) return null;
   
   for (const { selector, behavior } of autoInjectMappings) {
     if (element.matches(selector)) {
@@ -219,8 +224,8 @@ const WB = {
       autoInjectMappings.forEach(({ selector, behavior }) => {
         const autoElements = root.querySelectorAll(selector);
         autoElements.forEach(element => {
-          // Skip if data-wb is present (already handled)
-          if (!element.hasAttribute('data-wb')) {
+          // Skip if data-wb is present (already handled) or ignored
+          if (!element.hasAttribute('data-wb') && !element.hasAttribute('data-wb-ignore')) {
             promises.push(WB.inject(element, behavior));
           }
         });
@@ -275,7 +280,7 @@ const WB = {
             if (getConfig('autoInject')) {
               autoInjectMappings.forEach(({ selector, behavior }) => {
                 node.querySelectorAll?.(selector).forEach(el => {
-                  if (!el.hasAttribute('data-wb')) {
+                  if (!el.hasAttribute('data-wb') && !el.hasAttribute('data-wb-ignore')) {
                     WB.inject(el, behavior);
                   }
                 });

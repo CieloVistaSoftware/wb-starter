@@ -1,6 +1,6 @@
 # `<blockquote>` Element
 
-The `<blockquote>` element represents an extended quotation from another source. In WB Behaviors, it's used for testimonials and quoted content.
+The `<blockquote>` element represents an extended quotation from another source. In Web Behaviors (WB), it's used for testimonials and quoted content.
 
 ## Semantic Meaning
 

@@ -130,6 +130,8 @@
     .fix-card {
       /* Base styles handled by wb-card behavior */
       height: 100%;
+      max-height: 700px;
+      overflow-y: auto;
     }
 
     .fix-card:hover {
@@ -561,14 +563,18 @@
         const items = grouped[group];
         if (items.length === 0) return;
 
+        // Wrap each group in a container for testability
+        const groupWrapper = document.createElement('div');
+        groupWrapper.className = 'fix-group';
+        // Add ID for testing/linking
+        const safeId = 'group-' + group.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        groupWrapper.id = safeId;
+
         if (groupType !== 'none') {
           const header = document.createElement('div');
           header.className = 'group-header';
-          // Add ID for testing/linking
-          const safeId = 'group-' + group.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-          header.id = safeId;
           header.innerHTML = `${group} <span class="badge">${items.length}</span>`;
-          container.appendChild(header);
+          groupWrapper.appendChild(header);
         }
         
         const grid = document.createElement('div');
@@ -580,7 +586,8 @@
           grid.appendChild(card);
         });
         
-        container.appendChild(grid);
+        groupWrapper.appendChild(grid);
+        container.appendChild(groupWrapper);
       });
     }
 

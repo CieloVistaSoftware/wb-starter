@@ -57,7 +57,7 @@ export function createToast(message, type = 'info', duration = 3000) {
 
 export function toast(element, options = {}) {
   const config = {
-    message: options.message || element.dataset.toastMessage || element.dataset.message || 'Notification',
+    message: options.message || element.dataset.toastMessage || element.dataset.message || element.getAttribute('toast-message') || element.getAttribute('message') || 'Notification',
     type: options.type || element.dataset.type || 'info',
     duration: parseInt(options.duration || element.dataset.duration || '3000'),
     position: options.position || element.dataset.position || 'top-right',
@@ -81,10 +81,10 @@ export function toast(element, options = {}) {
  */
 export function badge(element, options = {}) {
   const config = {
-    variant: options.variant || element.dataset.variant || 'default',
-    size: options.size || element.dataset.size || 'md',
-    pill: options.pill ?? element.hasAttribute('data-pill'),
-    dot: options.dot ?? element.hasAttribute('data-dot'),
+    variant: options.variant || element.dataset.variant || element.getAttribute('badge') || 'default',
+    size: options.size || element.dataset.size || element.getAttribute('size') || 'md',
+    pill: options.pill ?? (element.hasAttribute('data-pill') || element.hasAttribute('pill')),
+    dot: options.dot ?? (element.hasAttribute('data-dot') || element.hasAttribute('dot')),
     ...options
   };
 
@@ -657,4 +657,11 @@ export function notify(element, options = {}) {
   return () => element.classList.remove('wb-notify-trigger');
 }
 
-export default { toast, createToast, badge, progress, spinner, avatar, chip, alert, skeleton, divider, breadcrumb, notify };
+/**
+ * Pill - Badge with rounded corners (shortcut)
+ */
+export function pill(element, options = {}) {
+  return badge(element, { ...options, pill: true });
+}
+
+export default { toast, createToast, badge, progress, spinner, avatar, chip, alert, skeleton, divider, breadcrumb, notify, pill };

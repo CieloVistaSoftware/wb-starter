@@ -76,7 +76,7 @@ window.WB = WB;
 })();
 
 // Site boot logic (moved from index.html)
-import { WBSite } from './core/site-engine.js';
+import WBSite from './core/site-engine.js';
 const site = new WBSite();
 site.init().then(() => {
   window.__WB_INITIALIZED__ = true;

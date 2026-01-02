@@ -72,56 +72,117 @@ Card Image **HAS-A** figure element containing the image.
 
 ### Basic Image Card
 
+<article 
+  data-wb="cardimage" 
+  data-src="photo.jpg">
+</article>
+
 ```html
-<article data-wb="cardimage" data-src="photo.jpg"></article>
+<article 
+  data-wb="cardimage" 
+  data-src="photo.jpg">
+</article>
 ```
 
 ### Image with Title
 
+<article 
+  data-wb="cardimage" 
+  data-src="photo.jpg" 
+  data-title="Beautiful Sunset"
+  data-alt="Orange sunset over mountains">
+</article>
+
 ```html
-<article data-wb="cardimage" 
-         data-src="photo.jpg" 
-         data-title="Beautiful Sunset"
-         data-alt="Orange sunset over mountains">
+<article 
+  data-wb="cardimage" 
+  data-src="photo.jpg" 
+  data-title="Beautiful Sunset"
+  data-alt="Orange sunset over mountains">
 </article>
 ```
 
 ### Image with Full Details
 
+<article 
+  data-wb="cardimage" 
+  data-src="photo.jpg"
+  data-alt="Product photo"
+  data-title="Product Name"
+  data-subtitle="Category"
+  data-aspect="1/1"
+  data-position="top"
+  data-fit="cover">
+</article>
+
 ```html
-<article data-wb="cardimage" 
-         data-src="photo.jpg"
-         data-alt="Product photo"
-         data-title="Product Name"
-         data-subtitle="Category"
-         data-aspect="1/1"
-         data-position="top"
-         data-fit="cover">
+<article 
+  data-wb="cardimage" 
+  data-src="photo.jpg"
+  data-alt="Product photo"
+  data-title="Product Name"
+  data-subtitle="Category"
+  data-aspect="1/1"
+  data-position="top"
+  data-fit="cover">
 </article>
 ```
 
 ### Square Image Card
 
+<article 
+  data-wb="cardimage" 
+  data-src="avatar.jpg"
+  data-aspect="1/1"
+  data-title="Team Member">
+</article>
+
 ```html
-<article data-wb="cardimage" 
-         data-src="avatar.jpg"
-         data-aspect="1/1"
-         data-title="Team Member">
+<article 
+  data-wb="cardimage" 
+  data-src="avatar.jpg"
+  data-aspect="1/1"
+  data-title="Team Member">
 </article>
 ```
 
 ### Image at Bottom
 
+<article 
+  data-wb="cardimage" 
+  data-src="diagram.png"
+  data-position="bottom"
+  data-title="How It Works"
+  data-subtitle="Step-by-step guide">
+</article>
+
 ```html
-<article data-wb="cardimage" 
-         data-src="diagram.png"
-         data-position="bottom"
-         data-title="How It Works"
-         data-subtitle="Step-by-step guide">
+<article 
+  data-wb="cardimage" 
+  data-src="diagram.png"
+  data-position="bottom"
+  data-title="How It Works"
+  data-subtitle="Step-by-step guide">
 </article>
 ```
 
 ## Structure
+
+<article class="wb-card wb-card--image">
+  <!-- Image in semantic figure -->
+  <figure class="wb-card__figure">
+    <img src="photo.jpg" 
+         alt="Description" 
+         class="wb-card__image"
+         style="aspect-ratio: 16/9; object-fit: cover;">
+  </figure>
+  
+  <!-- Header (when title is set) -->
+  <header class="wb-card__header">
+    <h3 class="wb-card__title">Title</h3>
+    <p class="wb-card__subtitle">Subtitle</p>
+  </header>
+</article>
 
 ```html
 <article class="wb-card wb-card--image">
@@ -168,17 +229,33 @@ Card Image **HAS-A** figure element containing the image.
 
 ### Good Alt Text Examples
 
-```html
 <!-- Informative -->
-<article data-wb="cardimage" 
-         data-src="chart.png"
-         data-alt="Sales increased 25% in Q4 2024">
+<article 
+  data-wb="cardimage" 
+  data-src="chart.png"
+  data-alt="Sales increased 25% in Q4 2024">
 </article>
 
 <!-- Decorative (empty alt) -->
-<article data-wb="cardimage" 
-         data-src="pattern.jpg"
-         data-alt="">
+<article 
+  data-wb="cardimage" 
+  data-src="pattern.jpg"
+  data-alt="">
+</article>
+
+```html
+<!-- Informative -->
+<article 
+  data-wb="cardimage" 
+  data-src="chart.png"
+  data-alt="Sales increased 25% in Q4 2024">
+</article>
+
+<!-- Decorative (empty alt) -->
+<article 
+  data-wb="cardimage" 
+  data-src="pattern.jpg"
+  data-alt="">
 </article>
 ```
 
@@ -228,38 +305,69 @@ Card Image **HAS-A** figure element containing the image.
 
 ### Photo Gallery Card
 
+<article 
+  data-wb="cardimage"
+  data-src="https://picsum.photos/400/300"
+  data-alt="Random nature photo"
+  data-title="Nature Collection"
+  data-subtitle="12 photos"
+  data-aspect="4/3">
+</article>
+
 ```html
-<article data-wb="cardimage"
-         data-src="https://picsum.photos/400/300"
-         data-alt="Random nature photo"
-         data-title="Nature Collection"
-         data-subtitle="12 photos"
-         data-aspect="4/3">
+<article 
+  data-wb="cardimage"
+  data-src="https://picsum.photos/400/300"
+  data-alt="Random nature photo"
+  data-title="Nature Collection"
+  data-subtitle="12 photos"
+  data-aspect="4/3">
 </article>
 ```
 
 ### Product Card
 
+<article 
+  data-wb="cardimage"
+  data-src="product.jpg"
+  data-alt="Blue wireless headphones"
+  data-title="Wireless Headphones"
+  data-subtitle="$99.99"
+  data-aspect="1/1"
+  data-elevated="true">
+</article>
+
 ```html
-<article data-wb="cardimage"
-         data-src="product.jpg"
-         data-alt="Blue wireless headphones"
-         data-title="Wireless Headphones"
-         data-subtitle="$99.99"
-         data-aspect="1/1"
-         data-elevated="true">
+<article 
+  data-wb="cardimage"
+  data-src="product.jpg"
+  data-alt="Blue wireless headphones"
+  data-title="Wireless Headphones"
+  data-subtitle="$99.99"
+  data-aspect="1/1"
+  data-elevated="true">
 </article>
 ```
 
 ### Blog Post Card
 
+<article 
+  data-wb="cardimage"
+  data-src="blog-header.jpg"
+  data-alt="Person typing on laptop"
+  data-title="Getting Started with Web Components"
+  data-subtitle="5 min read"
+  data-aspect="16/9">
+</article>
+
 ```html
-<article data-wb="cardimage"
-         data-src="blog-header.jpg"
-         data-alt="Person typing on laptop"
-         data-title="Getting Started with Web Components"
-         data-subtitle="5 min read"
-         data-aspect="16/9">
+<article 
+  data-wb="cardimage"
+  data-src="blog-header.jpg"
+  data-alt="Person typing on laptop"
+  data-title="Getting Started with Web Components"
+  data-subtitle="5 min read"
+  data-aspect="16/9">
 </article>
 ```
 

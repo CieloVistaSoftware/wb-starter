@@ -2,8 +2,8 @@
   "site": {
     "name": "My Awesome Site",
     "tagline": "Built with WB Behaviors",
-    "logo": "🚀",
-    "favicon": "assets/favicon.ico",
+    "logo": "<img src='images/wb.png' alt='WB Logo' style='height: 2rem; width: auto;' />",
+    "favicon": "images/wb.png",
     "theme": "dark",
     "version": "1.0.0",
     "autoInject": false
@@ -11,6 +11,7 @@
   
   "nav": [
     { "id": "home", "label": "Home", "icon": "🏠", "page": "home" },
+    { "id": "links", "label": "Links", "icon": "🔗", "page": "links" },
     { "id": "builder", "label": "Page Builder", "icon": "🎨", "page": "builder" },
     { "id": "schema-viewer", "label": "Schema Viewer", "icon": "📋", "page": "schema-viewer" },
     { "id": "features", "label": "Features", "icon": "✨", "page": "features" },
@@ -45,7 +46,7 @@
   
   "layout": {
     "navPosition": "left",
-    "navWidth": "240px",
+    "navWidth": "fit-content",
     "navCollapsible": true,
     "navDefaultCollapsed": false
   },

@@ -1,0 +1,20 @@
+#!/bin/sh
+# WB Starter Pre-commit Hook
+# Runs project-integrity tests before allowing commit
+
+echo "🔍 Running pre-commit checks..."
+
+# Run project integrity tests
+npm test -- --grep "project-integrity" --reporter=line
+
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Pre-commit checks FAILED"
+  echo "   Fix the issues above before committing."
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo "✅ Pre-commit checks passed"
+echo ""

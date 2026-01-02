@@ -2,7 +2,7 @@
 
 **Status:** Self-Assessed / Architectural Alignment
 **Date:** October 2023
-**Scope:** WB Starter Project (Schema-First Architecture)
+**Scope:** Web Behaviors (WB) Starter Project (Schema-First Architecture)
 
 ## Executive Summary
 While the WB Starter project does not hold formal third-party ISO/IEC 42001 certification, its core "Schema-First Architecture" is designed to address the standard's primary controls regarding AI Risk Management, System Lifecycle, and Data Quality.

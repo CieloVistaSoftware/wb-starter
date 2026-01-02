@@ -2,7 +2,7 @@
 
 ## Overview
 
-WB Behaviors components use proper semantic HTML elements to ensure accessibility, SEO, and meaningful document structure.
+Web Behaviors (WB) components use proper semantic HTML elements to ensure accessibility, SEO, and meaningful document structure.
 
 ---
 

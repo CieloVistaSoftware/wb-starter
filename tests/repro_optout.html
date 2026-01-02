@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Opt-out Test</title>
+    <script type="module">
+        import WB from '../src/core/wb.js';
+        WB.init({ debug: true, autoInject: true });
+    </script>
+</head>
+<body>
+    <!-- Should be a card -->
+    <article id="auto">
+        <header><h3>Auto</h3></header>
+    </article>
+
+    <!-- Should NOT be a card -->
+    <article id="optout" data-wb="">
+        <header><h3>Opt-out</h3></header>
+    </article>
+    
+    <!-- Should NOT be a card -->
+    <article id="optout-ignore" data-wb-ignore>
+        <header><h3>Ignore Attribute</h3></header>
+    </article>
+</body>
+</html>

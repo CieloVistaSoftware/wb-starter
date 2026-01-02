@@ -2,7 +2,7 @@
 
 ## Overview
 
-WB Behaviors provides components for user feedback, notifications, and loading states.
+Web Behaviors (WB) provides components for user feedback, notifications, and loading states.
 
 ---
 

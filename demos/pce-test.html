@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCE (Pseudo-Custom Elements) Test</title>
+    <link rel="stylesheet" href="../src/styles/themes.css">
+    <link rel="stylesheet" href="../src/styles/site.css">
+    <script type="module">
+        import WB from '../src/core/wb-lazy.js';
+        
+        // Initialize WB directly for this demo
+        WB.init({
+            debug: true,
+            scan: true,
+            observe: true
+        });
+        
+        window.WB = WB;
+    </script>
+    <style>
+        body { 
+            font-family: system-ui, sans-serif; 
+            padding: 2rem; 
+            background: var(--bg-color); 
+            color: var(--text-primary);
+        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        h2 { margin-bottom: 1rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
+
+        /* Ensure custom elements are block-level so IntersectionObserver sees them */
+        profile-card, hero-card, stats-card, testimonial-card, 
+        video-card, file-card, notification-card, basic-card, 
+        image-card, overlay-card, portfolio-card, link-card, 
+        horizontal-card, button-tooltip {
+            display: block;
+            min-height: 50px; /* Give them some initial size */
+        }
+    </style>
+</head>
+<body>
+    <h1>PCE Test Suite</h1>
+    <p>Verifying that custom tags automatically inject behaviors.</p>
+
+    <h2>1. Profile Card (&lt;profile-card&gt;)</h2>
+    <div class="grid">
+        <profile-card 
+            id="profile-card-1"
+            data-name="Sarah Connor" 
+            data-role="Resistance Leader" 
+            data-bio="No fate but what we make." 
+            data-avatar="https://i.pravatar.cc/150?img=1"
+            data-cover="https://picsum.photos/400/100?r=1">
+        </profile-card>
+    </div>
+
+    <h2>2. Hero Card (&lt;hero-card&gt;)</h2>
+    <div class="grid">
+        <hero-card 
+            id="hero-card-1"
+            data-title="Welcome to the Future" 
+            data-subtitle="It's brighter than you think." 
+            data-height="300px"
+            data-align="center"
+            data-overlay="true">
+        </hero-card>
+    </div>
+
+    <h2>3. Stats Card (&lt;stats-card&gt;)</h2>
+    <div class="grid">
+        <stats-card 
+            id="stats-card-1"
+            data-label="Total Users" 
+            data-value="1,234,567" 
+            data-icon="👥" 
+            data-trend="up" 
+            data-trend-value="12%">
+        </stats-card>
+        <stats-card 
+            id="stats-card-2"
+            data-label="Bounce Rate" 
+            data-value="42%" 
+            data-icon="📉" 
+            data-trend="down" 
+            data-trend-value="5%">
+        </stats-card>
+    </div>
+
+    <h2>4. Testimonial Card (&lt;testimonial-card&gt;)</h2>
+    <div class="grid">
+        <testimonial-card 
+            id="testimonial-card-1"
+            data-quote="This library saved me hours of work. Highly recommended!" 
+            data-author="Jane Doe" 
+            data-role="CTO, TechCorp" 
+            data-rating="5"
+            data-avatar="https://i.pravatar.cc/150?img=5">
+        </testimonial-card>
+    </div>
+
+    <h2>5. Video Card (&lt;video-card&gt;)</h2>
+    <div class="grid">
+        <video-card 
+            id="video-card-1"
+            data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" 
+            data-title="Blooming Flower"
+            data-controls="true">
+        </video-card>
+    </div>
+
+    <h2>6. File Card (&lt;file-card&gt;)</h2>
+    <div class="grid">
+        <file-card 
+            id="file-card-1"
+            data-filename="project-specs-v2.pdf" 
+            data-type="pdf" 
+            data-size="2.4 MB" 
+            data-date="Jan 1, 2026"
+            data-downloadable="true">
+        </file-card>
+    </div>
+
+    <h2>7. Notification Card (&lt;notification-card&gt;)</h2>
+    <div class="grid">
+        <notification-card 
+            id="notification-card-1"
+            data-type="info" 
+            data-title="Update Available" 
+            data-message="A new version of the software is ready to install."
+            data-dismissible="true">
+        </notification-card>
+        <notification-card 
+            id="notification-card-2"
+            data-type="error" 
+            data-title="Connection Lost" 
+            data-message="Please check your internet connection."
+            data-dismissible="true">
+        </notification-card>
+    </div>
+
+    <h2>8. Phase 2 Tags</h2>
+    <div class="grid">
+        <basic-card id="basic-card-1" data-title="Basic Card">
+            <p>This is a basic card.</p>
+        </basic-card>
+
+        <image-card id="image-card-1" data-src="https://picsum.photos/400/200" data-title="Image Card"></image-card>
+
+        <overlay-card id="overlay-card-1" data-image="https://picsum.photos/400/300" data-title="Overlay Card" data-subtitle="Subtitle"></overlay-card>
+
+        <portfolio-card 
+             id="portfolio-card-1"
+             data-name="Portfolio User" 
+             data-title="Developer" 
+             data-company="Company" 
+             data-email="user@example.com">
+        </portfolio-card>
+
+        <link-card id="link-card-1" data-title="Link Card" data-href="#" data-description="Click me"></link-card>
+
+        <horizontal-card id="horizontal-card-1" data-title="Horizontal Card" data-image="https://picsum.photos/150/150" data-subtitle="Subtitle"></horizontal-card>
+    </div>
+
+    <h2>9. Interactive Elements</h2>
+    <div class="grid">
+        <button-tooltip id="btn-tooltip-1" class="wb-btn" 
+            tooltip="I am a tooltip" 
+            tooltip-position="top" 
+            toast-message="Button clicked!">
+            Hover & Click Me (Custom Element)
+        </button-tooltip>
+
+        <button id="btn-generic-1" class="wb-btn" 
+            tooltip="I am a generic button tooltip" 
+            tooltip-position="bottom"
+            toast-message="Generic button clicked!">
+            Hover & Click Me (Generic Attribute)
+        </button>
+
+        <span id="span-tooltip-1" tooltip="I am a span tooltip" style="padding: 1rem; background: white; border-radius: 4px; display: inline-block;">
+            Hover Me (Span)
+        </span>
+
+        <button id="btn-ripple-1" class="wb-btn" ripple>
+            Ripple Button (Attribute)
+        </button>
+
+        <span id="span-badge-1" badge="success">Success Badge</span>
+    </div>
+
+</body>
+</html>

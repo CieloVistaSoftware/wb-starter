@@ -1,6 +1,6 @@
 # `<figure>` and `<figcaption>` Elements
 
-The `<figure>` element represents self-contained content with an optional caption. In WB Behaviors, it's used for images, videos, code snippets, and file previews.
+The `<figure>` element represents self-contained content with an optional caption. In Web Behaviors (WB), it's used for images, videos, code snippets, and file previews.
 
 ## Semantic Meaning
 

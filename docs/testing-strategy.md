@@ -1,4 +1,4 @@
-# WB Behaviors Testing Strategy
+# Web Behaviors (WB) Testing Strategy
 
 ## Core Principle
 **Testing proves wellbeing. NO GAPS ALLOWED.**

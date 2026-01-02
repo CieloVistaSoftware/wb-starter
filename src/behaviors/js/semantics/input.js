@@ -15,14 +15,17 @@ export function input(element, options = {}) {
 
   const wrapper = document.createElement('div');
   wrapper.className = 'wb-input';
-  wrapper.style.cssText = 'position:relative;display:flex;align-items:center;';
+  // Wrapper takes full width to mimic the input's behavior
+  wrapper.style.cssText = 'position:relative;display:flex;align-items:center;width:100%;';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
   element.classList.add('wb-input__field');
   
   // Default styles for compliance
   Object.assign(element.style, {
-    width: '100%',
+    width: 'auto', // Let flex handle width
+    flex: '1',     // Take remaining space
+    minWidth: '0', // Prevent overflow
     border: '1px solid var(--border-color, #374151)',
     borderRadius: '6px',
     background: 'var(--bg-primary, #1f2937)',

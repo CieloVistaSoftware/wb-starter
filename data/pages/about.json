@@ -1,0 +1,93 @@
+{
+  "id": "about",
+  "title": "About",
+  "icon": "ℹ️",
+  "description": "About WB Starter",
+  "components": [
+    {
+      "b": "hero",
+      "d": {
+        "title": "ℹ️ About",
+        "subtitle": "WB Starter is a modern website template powered by WB Behaviors."
+      }
+    },
+    {
+      "b": "section",
+      "children": [
+        {
+          "b": "horizontal-card",
+          "d": {
+            "image": "https://picsum.photos/200/200?r=about",
+            "title": "Built for Speed",
+            "subtitle": "No build step required",
+            "content": "WB Starter is designed to get you up and running in seconds. No npm install, no webpack configuration, no waiting for builds. Just open index.html and start creating."
+          }
+        }
+      ]
+    },
+    {
+      "b": "section",
+      "children": [
+        {
+          "b": "heading",
+          "d": { "level": 2, "text": "Why We Built This" }
+        },
+        {
+          "b": "text",
+          "d": { "content": "Modern web development has become overly complex. We wanted to create something that:" }
+        },
+        {
+          "b": "list",
+          "d": {
+            "items": [
+              "Works out of the box with zero configuration",
+              "Uses semantic HTML that everyone understands",
+              "Provides beautiful themes without fighting CSS",
+              "Lets you focus on content, not tooling"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "b": "section",
+      "children": [
+        {
+          "b": "heading",
+          "d": { "level": 2, "text": "Credits" }
+        },
+        {
+          "b": "grid",
+          "d": { "columns": 3 },
+          "children": [
+            {
+              "b": "profile-card",
+              "d": { "name": "WB Behaviors", "role": "UI Library", "bio": "235 behaviors in ~310KB", "avatar": "🧩" }
+            },
+            {
+              "b": "profile-card",
+              "d": { "name": "CSS Variables", "role": "Theming", "bio": "23 themes, infinite possibilities", "avatar": "🎨" }
+            },
+            {
+              "b": "profile-card",
+              "d": { "name": "Semantic HTML", "role": "Foundation", "bio": "Standard elements, enhanced", "avatar": "📝" }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "b": "section",
+      "children": [
+        {
+          "b": "heading",
+          "d": { "level": 2, "text": "License" }
+        },
+        {
+          "b": "alert",
+          "d": { "type": "info", "message": "MIT License - Use freely in personal and commercial projects." }
+        }
+      ]
+    }
+  ]
+}

@@ -14,6 +14,61 @@ import { Theme } from './theme.js';
 import { getConfig, setConfig } from './config.js';
 
 // Auto-injection mappings
+const customElementMappings = [
+  { selector: 'price-card', behavior: 'cardpricing' },
+  { selector: 'product-card', behavior: 'cardproduct' },
+  { selector: 'profile-card', behavior: 'cardprofile' },
+  { selector: 'hero-card', behavior: 'cardhero' },
+  { selector: 'stats-card', behavior: 'cardstats' },
+  { selector: 'testimonial-card', behavior: 'cardtestimonial' },
+  { selector: 'video-card', behavior: 'cardvideo' },
+  { selector: 'file-card', behavior: 'cardfile' },
+  { selector: 'notification-card', behavior: 'cardnotification' },
+  { selector: 'portfolio-card', behavior: 'cardportfolio' },
+  { selector: 'link-card', behavior: 'cardlink' },
+  { selector: 'horizontal-card', behavior: 'cardhorizontal' },
+  { selector: 'basic-card', behavior: 'card' },
+  { selector: 'image-card', behavior: 'cardimage' },
+  { selector: 'overlay-card', behavior: 'cardoverlay' },
+  
+  // === NEW LAYOUT MAPPINGS ===
+  
+  // Structural
+  { selector: 'wb-grid', behavior: 'grid' },
+  { selector: 'wb-flex', behavior: 'flex' },
+  { selector: 'wb-stack', behavior: 'stack' },
+  { selector: 'wb-cluster', behavior: 'cluster' },
+  { selector: 'wb-container', behavior: 'container' },
+  
+  // Aliases (Common Terminology)
+  { selector: 'wb-row', behavior: 'flex' },     // Alias for horizontal flex
+  { selector: 'wb-column', behavior: 'stack' }, // Alias for vertical stack
+
+  // Page Layouts
+  { selector: 'wb-sidebar', behavior: 'sidebarlayout' },
+  { selector: 'wb-center', behavior: 'center' },
+  { selector: 'wb-cover', behavior: 'cover' },
+  { selector: 'wb-masonry', behavior: 'masonry' },
+  { selector: 'wb-switcher', behavior: 'switcher' },
+
+  // Specialty
+  { selector: 'wb-reel', behavior: 'reel' },
+  { selector: 'wb-frame', behavior: 'frame' },
+  { selector: 'wb-sticky', behavior: 'sticky' },
+  { selector: 'wb-drawer', behavior: 'drawerLayout' },
+  { selector: 'wb-icon', behavior: 'icon' },
+
+  // Interactive Elements
+  { selector: 'button-tooltip', behavior: 'tooltip' },
+  { selector: 'button-tooltip', behavior: 'toast' },
+
+  // Generic Attributes (Always Active)
+  { selector: '[tooltip]', behavior: 'tooltip' },
+  { selector: '[toast-message]', behavior: 'toast' },
+  { selector: '[ripple]', behavior: 'ripple' },
+  { selector: '[badge]', behavior: 'badge' }
+];
+
 const autoInjectMappings = [
   // Form Elements
   { selector: 'input[type="checkbox"]', behavior: 'checkbox' },
@@ -56,11 +111,20 @@ const autoInjectMappings = [
  * @returns {string[]} Array of behavior names
  */
 function getAutoInjectBehaviors(element) {
-  if (!getConfig('autoInject')) return [];
-  // Skip if data-wb is already present (explicit overrides implicit)
-  if (element.hasAttribute('data-wb')) return [];
-  
   const behaviors = [];
+
+  // Always check custom elements (regardless of autoInject setting)
+  for (const { selector, behavior } of customElementMappings) {
+    if (element.matches(selector)) {
+      behaviors.push(behavior);
+    }
+  }
+
+  if (!getConfig('autoInject')) return behaviors;
+  
+  // Skip if data-wb is already present (explicit overrides implicit)
+  if (element.hasAttribute('data-wb')) return behaviors;
+  
   for (const { selector, behavior } of autoInjectMappings) {
     if (element.matches(selector)) {
       behaviors.push(behavior);
@@ -76,6 +140,29 @@ const applied = new WeakMap();
 // Map<HTMLElement, Set<string>>
 const pendingInjections = new Map();
 let injectionTimeout = null;
+
+// Shared observer for lazy loading
+const lazyPending = new WeakMap();
+let lazyObserver = null;
+
+function getLazyObserver() {
+  if (!lazyObserver) {
+    lazyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const element = entry.target;
+          const behaviors = lazyPending.get(element);
+          if (behaviors) {
+            behaviors.forEach(name => WB.inject(element, name));
+            lazyPending.delete(element);
+            lazyObserver.unobserve(element);
+          }
+        }
+      });
+    }, { rootMargin: '200px' });
+  }
+  return lazyObserver;
+}
 
 /**
  * WB - Web Behavior Core
@@ -184,17 +271,14 @@ const WB = {
     const pending = pendingInjections.get(element);
     if (pending && pending.has(behaviorName)) return;
 
-    // Create observer
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          WB.inject(element, behaviorName);
-          obs.disconnect();
-        }
-      });
-    }, { rootMargin: '200px' }); // Load a bit before it comes into view
-    
-    observer.observe(element);
+    // Add to lazy pending
+    let behaviors = lazyPending.get(element);
+    if (!behaviors) {
+      behaviors = new Set();
+      lazyPending.set(element, behaviors);
+      getLazyObserver().observe(element);
+    }
+    behaviors.add(behaviorName);
   },
 
   /**
@@ -242,6 +326,14 @@ const WB = {
         } else {
           WB.lazyInject(element, name);
         }
+      });
+    });
+
+    // Custom elements scan (always active)
+    customElementMappings.forEach(({ selector, behavior }) => {
+      const customElements = root.querySelectorAll(selector);
+      customElements.forEach(element => {
+        WB.lazyInject(element, behavior);
       });
     });
 
@@ -297,17 +389,28 @@ const WB = {
             }
 
             // Check descendants
-            node.querySelectorAll?.('[data-wb]').forEach(el => {
-              const behaviorList = el.dataset.wb.split(/\s+/).filter(Boolean);
-              const isEager = el.hasAttribute('data-wb-eager');
-              behaviorList.forEach(name => {
-                if (isEager) WB.inject(el, name);
-                else WB.lazyInject(el, name);
+            if (node.hasChildNodes?.()) {
+              node.querySelectorAll?.('[data-wb]').forEach(el => {
+                const behaviorList = el.dataset.wb.split(/\s+/).filter(Boolean);
+                const isEager = el.hasAttribute('data-wb-eager');
+                behaviorList.forEach(name => {
+                  if (isEager) WB.inject(el, name);
+                  else WB.lazyInject(el, name);
+                });
               });
-            });
+            }
+
+            // Check descendants for custom elements (always active)
+            if (node.hasChildNodes?.()) {
+              customElementMappings.forEach(({ selector, behavior }) => {
+                node.querySelectorAll?.(selector).forEach(el => {
+                  WB.lazyInject(el, behavior);
+                });
+              });
+            }
 
             // Check descendants for auto-inject
-            if (getConfig('autoInject')) {
+            if (getConfig('autoInject') && node.hasChildNodes?.()) {
               autoInjectMappings.forEach(({ selector, behavior }) => {
                 node.querySelectorAll?.(selector).forEach(el => {
                   if (!el.hasAttribute('data-wb')) {
@@ -360,6 +463,10 @@ const WB = {
     if (WB._observer) {
       WB._observer.disconnect();
       WB._observer = null;
+    }
+    if (lazyObserver) {
+      lazyObserver.disconnect();
+      lazyObserver = null;
     }
   },
 
@@ -456,6 +563,87 @@ const WB = {
     }
 
     return WB;
+  },
+
+  /**
+   * Render JSON definition to DOM elements
+   * @param {Object|Array} data - Component definition(s)
+   * @param {HTMLElement} container - Target container (appends to it)
+   * @returns {HTMLElement|HTMLElement[]} The created element(s)
+   */
+  render(data, container = null) {
+    // Handle Array (Fragment)
+    if (Array.isArray(data)) {
+      const elements = data.map(item => WB.render(item, container));
+      return elements;
+    }
+
+    if (!data) return null;
+
+    // 1. Determine Tag Name
+    let tagName = data.t || 'div';
+    let isCustomTag = false;
+
+    // Try to find a custom tag for the behavior
+    if (data.b) {
+      const mapping = customElementMappings.find(m => m.behavior === data.b);
+      // Only use selector if it's a simple tag name (not [attr] or .class)
+      if (mapping && /^[a-z][a-z0-9-]*$/.test(mapping.selector)) {
+        tagName = mapping.selector;
+        isCustomTag = true;
+      }
+    }
+
+    // 2. Create Element
+    const el = document.createElement(tagName);
+
+    // 3. Apply Data Attributes (Props)
+    if (data.d) {
+      Object.entries(data.d).forEach(([key, val]) => {
+        // Handle boolean attributes
+        if (val === true) {
+          el.setAttribute(`data-${key}`, 'true'); // Standardize on string 'true' for data attrs
+        } else if (val === false) {
+          // Skip false
+        } else {
+          el.dataset[key] = val;
+        }
+      });
+    }
+
+    // 4. Apply Behaviors
+    // If we didn't find a custom tag, or if there are extra behaviors, add data-wb
+    const behaviors = data.behaviors || [];
+    if (data.b && !isCustomTag) {
+      behaviors.push(data.b);
+    }
+    
+    if (behaviors.length > 0) {
+      el.dataset.wb = behaviors.join(' ');
+    }
+
+    // 5. Apply ID and Classes
+    if (data.id) el.id = data.id;
+    if (data.classes) el.className = data.classes;
+    if (data.style) Object.assign(el.style, data.style);
+
+    // 6. Handle Content/Children
+    if (data.content) {
+      el.textContent = data.content;
+    } else if (data.html) {
+      el.innerHTML = data.html;
+    }
+    
+    if (data.children && Array.isArray(data.children)) {
+      data.children.forEach(child => WB.render(child, el));
+    }
+
+    // 7. Append to container if provided
+    if (container && container.appendChild) {
+      container.appendChild(el);
+    }
+
+    return el;
   },
 
   // Expose core modules

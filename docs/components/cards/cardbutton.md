@@ -45,6 +45,11 @@ Card Button **HAS-A** button group in the footer.
 
 ### Basic Action Card
 
+<article data-wb="cardbutton"
+         data-title="Confirm Action"
+         data-primary="OK">
+</article>
+
 ```html
 <article data-wb="cardbutton"
          data-title="Confirm Action"
@@ -53,6 +58,12 @@ Card Button **HAS-A** button group in the footer.
 ```
 
 ### Card with Content
+
+<article data-wb="cardbutton"
+         data-title="Delete Item"
+         data-content="Are you sure you want to delete this item? This action cannot be undone."
+         data-primary="Delete">
+</article>
 
 ```html
 <article data-wb="cardbutton"
@@ -64,6 +75,13 @@ Card Button **HAS-A** button group in the footer.
 
 ### Two Buttons
 
+<article data-wb="cardbutton"
+         data-title="Save Changes?"
+         data-content="You have unsaved changes."
+         data-primary="Save"
+         data-secondary="Discard">
+</article>
+
 ```html
 <article data-wb="cardbutton"
          data-title="Save Changes?"
@@ -74,6 +92,15 @@ Card Button **HAS-A** button group in the footer.
 ```
 
 ### Link Buttons
+
+<article data-wb="cardbutton"
+         data-title="Get Started"
+         data-content="Ready to begin your journey?"
+         data-primary="Sign Up"
+         data-primary-href="/signup"
+         data-secondary="Learn More"
+         data-secondary-href="/about">
+</article>
 
 ```html
 <article data-wb="cardbutton"
@@ -87,6 +114,26 @@ Card Button **HAS-A** button group in the footer.
 ```
 
 ## Structure
+
+<article class="wb-card">
+  <!-- Header (when title is set) -->
+  <header class="wb-card__header">
+    <h3 class="wb-card__title">Confirm Action</h3>
+  </header>
+  
+  <!-- Main content (when content is set) -->
+  <main class="wb-card__main">
+    <p>Are you sure?</p>
+  </main>
+  
+  <!-- Footer with button group -->
+  <footer class="wb-card__footer">
+    <div class="wb-card__btn-group">
+      <button class="wb-card__btn wb-card__btn--secondary">Cancel</button>
+      <button class="wb-card__btn wb-card__btn--primary">Confirm</button>
+    </div>
+  </footer>
+</article>
 
 ```html
 <article class="wb-card">
@@ -111,6 +158,13 @@ Card Button **HAS-A** button group in the footer.
 ```
 
 ### With Link Buttons
+
+<footer class="wb-card__footer">
+  <div class="wb-card__btn-group">
+    <a href="/about" class="wb-card__btn wb-card__btn--secondary">Learn More</a>
+    <a href="/signup" class="wb-card__btn wb-card__btn--primary">Sign Up</a>
+  </div>
+</footer>
 
 ```html
 <footer class="wb-card__footer">
@@ -228,6 +282,14 @@ card.addEventListener('wb:cardbutton:secondary', (e) => {
 
 ### Confirmation Dialog
 
+<article data-wb="cardbutton"
+         data-title="Delete Account"
+         data-content="This will permanently delete your account and all associated data. This action cannot be undone."
+         data-primary="Delete Account"
+         data-secondary="Cancel"
+         data-elevated="true">
+</article>
+
 ```html
 <article data-wb="cardbutton"
          data-title="Delete Account"
@@ -239,6 +301,15 @@ card.addEventListener('wb:cardbutton:secondary', (e) => {
 ```
 
 ### Success Card
+
+<article data-wb="cardbutton"
+         data-title="Payment Successful!"
+         data-content="Your order #12345 has been confirmed. You will receive an email confirmation shortly."
+         data-primary="View Order"
+         data-primary-href="/orders/12345"
+         data-secondary="Continue Shopping"
+         data-secondary-href="/shop">
+</article>
 
 ```html
 <article data-wb="cardbutton"
@@ -253,6 +324,12 @@ card.addEventListener('wb:cardbutton:secondary', (e) => {
 
 ### Simple Acknowledgment
 
+<article data-wb="cardbutton"
+         data-title="Terms Updated"
+         data-content="We've updated our terms of service. Please review the changes."
+         data-primary="I Understand">
+</article>
+
 ```html
 <article data-wb="cardbutton"
          data-title="Terms Updated"
@@ -262,6 +339,15 @@ card.addEventListener('wb:cardbutton:secondary', (e) => {
 ```
 
 ### Call to Action
+
+<article data-wb="cardbutton"
+         data-title="Upgrade to Pro"
+         data-content="Get unlimited access to all features and priority support."
+         data-primary="Upgrade Now"
+         data-primary-href="/upgrade"
+         data-secondary="Compare Plans"
+         data-secondary-href="/pricing">
+</article>
 
 ```html
 <article data-wb="cardbutton"
@@ -275,6 +361,14 @@ card.addEventListener('wb:cardbutton:secondary', (e) => {
 ```
 
 ### Error Recovery
+
+<article data-wb="cardbutton"
+         data-title="Something Went Wrong"
+         data-content="We couldn't process your request. Please try again or contact support."
+         data-primary="Try Again"
+         data-secondary="Contact Support"
+         data-secondary-href="/support">
+</article>
 
 ```html
 <article data-wb="cardbutton"

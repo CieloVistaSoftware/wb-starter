@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ripple",
+  "description": "Material Design-style ripple effect on click",
+  "behavior": "ripple",
+  
+  "properties": {
+    "color": {
+      "type": "string",
+      "description": "Color of the ripple effect",
+      "default": "rgba(255, 255, 255, 0.3)",
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": ["rgba(255, 255, 255, 0.3)", "rgba(0, 0, 0, 0.2)"],
+        "assertions": {
+          "rgba(0, 0, 0, 0.2)": {
+            "selector": ".wb-ripple-effect",
+            "checks": { "styleContains": { "backgroundColor": "rgba(0, 0, 0, 0.2)" } }
+          }
+        }
+      }
+    },
+    "duration": {
+      "type": "number",
+      "description": "Duration of the ripple animation in ms",
+      "default": 600,
+      "permutations": {
+        "type": "BOUNDARY_NUMBER",
+        "min": 300,
+        "max": 1000
+      }
+    }
+  },
+
+  "compliance": {
+    "baseClass": "wb-ripple",
+    "generatedElement": {
+      "class": "wb-ripple-effect"
+    },
+    "styles": {
+      "position": {
+        "required": true,
+        "value": "relative"
+      },
+      "overflow": {
+        "required": true,
+        "value": "hidden"
+      }
+    }
+  },
+
+  "interactions": {
+    "elements": {
+      "element": {
+        "type": "trigger",
+        "clickable": true,
+        "click": {
+          "action": "show ripple",
+          "event": "wb:ripple:show"
+        }
+      }
+    }
+  },
+
+  "accessibility": {
+    "trigger": {}
+  },
+
+  "events": {
+    "wb:ripple:show": {
+      "trigger": "Ripple effect starts",
+      "detail": { "x": "number", "y": "number" },
+      "bubbles": true
+    }
+  },
+
+  "test": {
+    "setup": [
+      "<button data-wb=\"ripple\">Click me</button>",
+      "<div data-wb=\"ripple\" data-ripple-color=\"rgba(0,0,0,0.2)\">Dark Ripple</div>",
+      "<button ripple>Global Attribute</button>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        { "color": "rgba(0, 0, 0, 0.2)" },
+        { "duration": 300 }
+      ]
+    },
+    "functional": {
+      "interactions": [
+        {
+          "name": "click creates ripple element",
+          "setup": "<button data-wb=\"ripple\">Ripple</button>",
+          "action": "click",
+          "expect": {
+            "selector": ".wb-ripple-effect",
+            "exists": true
+          }
+        },
+        {
+          "name": "global attribute creates ripple",
+          "setup": "<button ripple>Global</button>",
+          "action": "click",
+          "expect": {
+            "selector": ".wb-ripple-effect",
+            "exists": true
+          }
+        }
+      ],
+      "visual": [
+        {
+          "name": "trigger has relative position",
+          "setup": "<button data-wb=\"ripple\">Pos</button>",
+          "expect": {
+            "selector": "element",
+            "style": {
+              "position": "relative",
+              "overflow": "hidden"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

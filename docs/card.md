@@ -1,7 +1,41 @@
 # Card Component Documentation
 
 ## Overview
-The Card component is a flexible UI container for displaying grouped content. It supports multiple variants, interactive features, and can be extended with images, buttons, and more.
+The Card component is a flexible UI container for displaying grouped content. It is the foundation for **19 specialized variants**, ranging from simple content containers to complex interactive elements like draggable cards, product displays, and portfolios.
+
+---
+
+## Variants
+There are 19 distinct card behaviors available. All inherit from the base `card` behavior but provide specialized rendering and logic:
+
+| Category | Behaviors |
+|----------|-----------|
+| **Base** | `card` |
+| **Media** | `cardimage`, `cardvideo`, `cardoverlay`, `cardhero` |
+| **Content** | `cardprofile`, `cardtestimonial`, `cardstats`, `cardfile`, `cardnotification` |
+| **Commerce** | `cardproduct`, `cardpricing` |
+| **Layout** | `cardhorizontal`, `cardbutton`, `cardlink` |
+| **Interactive** | `carddraggable`, `cardexpandable`, `cardminimizable`, `cardportfolio` |
+
+### cardlink with AutoInject
+
+The `cardlink` variant has special autoInject support. With `autoInject: true`:
+
+```html
+<!-- This automatically becomes a cardlink -->
+<article data-href="/page" data-title="My Page" data-badge="NEW"></article>
+```
+
+Supported attributes:
+- `data-href` - Link destination (required for autoInject)
+- `data-title` - Card title
+- `data-description` - Card description
+- `data-icon` - Icon before title
+- `data-badge` - Badge text
+- `data-badge-variant` - Badge style: `glass` (default) or `gradient`
+- `data-target` - Link target: `_self` (default) or `_blank`
+
+**Note:** Plain `<article>` elements without `data-href` remain semantic articles.
 
 ---
 
@@ -20,6 +54,14 @@ The Card component is a flexible UI container for displaying grouped content. It
 - Always adds the `wb-card--default` class if no variant is specified.
 - Supports additional classes for hoverable, clickable, elevated, and custom variants.
 
+### Semantic HTML Relationship
+The card component is designed to work seamlessly with semantic HTML.
+- **Preferred Tag:** `<article>` (represents a self-contained composition)
+- **Alternative Tag:** `<section>` (represents a generic section)
+- **Fallback Tag:** `<div>` (generic container)
+
+When using `<article>` or `<section>`, the component will automatically enhance existing `<header>`, `<main>`, and `<footer>` children instead of overwriting them, preserving your semantic structure.
+
 ---
 
 ## Usage Example
@@ -29,6 +71,11 @@ The Card component is a flexible UI container for displaying grouped content. It
   <p>Card content goes here.</p>
 </div>
 ```
+
+> **Developer Tip:** In VS Code, type `data-wb="` (including the quote) to trigger IntelliSense and see a dropdown list of all available behaviors.
+>
+> ![IntelliSense Demo](assets/images/intellisense-demo.png)
+> *(Please save your screenshot to `docs/assets/images/intellisense-demo.png` to see it here)*
 
 **Attribute Definitions:**
 - `data-wb="card"`: Activates the card behavior for this element.

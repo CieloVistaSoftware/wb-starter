@@ -1,6 +1,6 @@
 # `<data>` Element
 
-The `<data>` element links content with a machine-readable value. In WB Behaviors, it's used for statistics, prices, and other numeric data.
+The `<data>` element links content with a machine-readable value. In Web Behaviors (WB), it's used for statistics, prices, and other numeric data.
 
 ## Semantic Meaning
 

@@ -120,9 +120,16 @@ export class WBFixCard extends WBCard {
           padding: 0.5rem;
           border-radius: 4px;
           overflow-x: auto;
-          max-height: 100px;
+          overflow-y: auto;
+          max-height: 150px;
           white-space: pre-wrap;
           word-break: break-word;
+        }
+        
+        /* Constrain overall card height to prevent massive cards */
+        .fix-card {
+          max-height: 750px;
+          overflow-y: auto;
         }
         
         .glow-red {
@@ -191,10 +198,10 @@ export class WBFixCard extends WBCard {
     const errorSignature = (() => {
       const sig = fix.errorSignature || 'No signature provided';
       if (sig.includes('Enhancement')) {
-        // Try to find a component doc link
+        // Try to find a component doc link - use direct path for simplicity
         const compName = (fix.component || '').split('/').pop().replace('.js', '');
         if (compName) {
-          return `<a href="/public/doc-viewer.html?file=/docs/components/semantics/${this.escapeHtml(compName)}.md" target="_blank" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">Enhancement: See ${this.escapeHtml(compName)}.md</a>`;
+          return `<a href="/docs/components/semantics/${this.escapeHtml(compName)}.md" target="_blank" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">Enhancement: See ${this.escapeHtml(compName)}.md</a>`;
         }
         return this.escapeHtml(sig);
       }
@@ -303,8 +310,8 @@ export class WBFixCard extends WBCard {
       
       // Also ensure internal code blocks don't take up too much space individually
       // (Though the global card scroll handles the overflow, keeping these small helps UX)
-      const codeBlocks = main.querySelectorAll('code, .stack-trace, .signature-block');
-      codeBlocks.forEach(block => {
+      const internalBlocks = main.querySelectorAll('code, .stack-trace, .signature-block');
+      internalBlocks.forEach(block => {
         // Only apply scroll container class to non-fix-code blocks (stack trace etc)
         if (!block.closest('.fix-code-block')) {
             block.classList.add('wb-fix-card-scroll-container');

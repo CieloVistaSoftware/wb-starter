@@ -1,0 +1,207 @@
+<div class="page__hero">
+  <h1 class="wb-gradient-text">AI Permutation Testing</h1>
+  <p>Automated combinatorial testing powered by Artificial Intelligence.</p>
+</div>
+
+<div class="page__section">
+  <div class="grid" style="display: grid; grid-template-columns: 1fr 300px; gap: 2rem;">
+    
+    <!-- Main Content -->
+    <div>
+      <h2>The Theory</h2>
+      <p>
+        Traditional testing often relies on happy-path scenarios or manually defined edge cases. 
+        <strong>Permutation Testing</strong> takes a different approach: it identifies the key 
+        dimensions of variability (e.g., User Roles, Device Types, Data States) and generates 
+        every possible combination.
+      </p>
+      <p>
+        When combined with <strong>AI Agents</strong>, we can not only generate these scenarios 
+        but autonomously execute them, analyzing the results for anomalies that a human tester 
+        might miss.
+      </p>
+
+      <div class="wb-card-float" style="margin-top: 2rem;">
+        <h3>Interactive Demo</h3>
+        <p style="margin-bottom: 1rem;">Define your test dimensions below to see the combinatorial explosion.</p>
+        
+        <div id="dimensions-container">
+          <!-- Dimensions will be injected here -->
+        </div>
+
+        <button class="btn btn-secondary" onclick="addDimension()" style="margin-top: 1rem;">+ Add Dimension</button>
+        <button class="btn btn-primary" onclick="generatePermutations()" style="margin-left: 0.5rem;">Generate Scenarios</button>
+      </div>
+
+      <div id="results-area" style="margin-top: 2rem; display: none;">
+        <h3>Generated Scenarios (<span id="scenario-count">0</span>)</h3>
+        <div class="wb-progress-striped" style="display: none;" id="test-progress">
+          <div class="wb-progress-striped__bar" style="width: 0%"></div>
+        </div>
+        
+        <div style="max-height: 300px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px;">
+          <table class="wb-table wb-table--striped" id="scenario-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Combination</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar / Stats -->
+    <div>
+      <div class="card" style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px; position: sticky; top: 2rem;">
+        <h3>Coverage Analysis</h3>
+        <canvas id="coverageChart"></canvas>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+          <strong>X-Axis:</strong> The dimension being tested (e.g., Browser, Role).<br>
+          <strong>Y-Axis:</strong> Percentage of total possible values covered by the current test suite.
+        </p>
+
+        <div style="margin-top: 2rem;">
+          <h4>AI Insights</h4>
+          <ul style="font-size: 0.9rem; color: var(--text-secondary); padding-left: 1.2rem;">
+            <li>Exponential growth detected in scenario count.</li>
+            <li>Recommended: Pairwise testing to reduce volume by 85%.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simple State Management
+  let dimensions = [
+    { name: 'Browser', values: ['Chrome', 'Firefox', 'Safari'] },
+    { name: 'User Role', values: ['Admin', 'Editor', 'Viewer'] }
+  ];
+
+  function renderDimensions() {
+    const container = document.getElementById('dimensions-container');
+    container.innerHTML = dimensions.map((dim, idx) => `
+      <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <input type="text" value="${dim.name}" class="wb-input-glass" style="width: 40%;" onchange="updateDimName(${idx}, this.value)">
+          <button class="btn btn-secondary" onclick="removeDimension(${idx})" style="padding: 0.25rem 0.5rem;">×</button>
+        </div>
+        <input type="text" value="${dim.values.join(', ')}" class="wb-input-glass" placeholder="Values (comma separated)" onchange="updateDimValues(${idx}, this.value)">
+      </div>
+    `).join('');
+  }
+
+  window.addDimension = () => {
+    dimensions.push({ name: 'New Dimension', values: ['Value A', 'Value B'] });
+    renderDimensions();
+  };
+
+  window.removeDimension = (idx) => {
+    dimensions.splice(idx, 1);
+    renderDimensions();
+  };
+
+  window.updateDimName = (idx, val) => { dimensions[idx].name = val; };
+  window.updateDimValues = (idx, val) => { dimensions[idx].values = val.split(',').map(s => s.trim()).filter(s => s); };
+
+  window.generatePermutations = () => {
+    const resultsArea = document.getElementById('results-area');
+    const tableBody = document.querySelector('#scenario-table tbody');
+    const countSpan = document.getElementById('scenario-count');
+    const progress = document.getElementById('test-progress');
+    const bar = progress.querySelector('.wb-progress-striped__bar');
+
+    resultsArea.style.display = 'block';
+    progress.style.display = 'block';
+    bar.style.width = '0%';
+
+    // Cartesian Product
+    const cartesian = (...a) => a.reduce((a, b) => a.flatMap(d => b.map(e => [d, e].flat())));
+    const valueArrays = dimensions.map(d => d.values);
+    const scenarios = cartesian(...valueArrays);
+
+    countSpan.textContent = scenarios.length;
+    
+    // Render Table
+    tableBody.innerHTML = scenarios.map((s, i) => `
+      <tr>
+        <td>#${i + 1}</td>
+        <td>${Array.isArray(s) ? s.join(' + ') : s}</td>
+        <td><span class="wb-dot-pulse" style="background: var(--text-muted);"></span> Pending</td>
+      </tr>
+    `).join('');
+
+    // Simulate AI Testing
+    let completed = 0;
+    const total = scenarios.length;
+    const interval = setInterval(() => {
+      completed += Math.floor(Math.random() * 3) + 1;
+      if (completed > total) completed = total;
+      
+      const pct = (completed / total) * 100;
+      bar.style.width = `${pct}%`;
+
+      // Update rows
+      const rows = tableBody.querySelectorAll('tr');
+      for(let i=0; i<completed; i++) {
+        if(rows[i]) {
+          const isPass = Math.random() > 0.1; // 10% fail rate
+          const statusCell = rows[i].cells[2];
+          statusCell.innerHTML = isPass 
+            ? '<span style="color: var(--success-color)">✓ Passed</span>' 
+            : '<span style="color: var(--danger-color)">✗ Failed</span>';
+        }
+      }
+
+      if (completed >= total) {
+        clearInterval(interval);
+        updateChart();
+      }
+    }, 100);
+  };
+
+  function updateChart() {
+    // Lazy load chart if needed, or just update
+    if (window.Chart) {
+      const ctx = document.getElementById('coverageChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: dimensions.map(d => d.name),
+          datasets: [{
+            label: 'Test Coverage',
+            data: dimensions.map(() => 100), // Full permutation = 100%
+            backgroundColor: 'rgba(99, 102, 241, 0.2)',
+            borderColor: '#6366f1',
+            pointBackgroundColor: '#fff'
+          }]
+        },
+        options: {
+          scales: {
+            r: {
+              angleLines: { color: 'rgba(255,255,255,0.1)' },
+              grid: { color: 'rgba(255,255,255,0.1)' },
+              pointLabels: { color: '#94a3b8' },
+              ticks: { display: false }
+            }
+          }
+        }
+      });
+    }
+  }
+
+  // Init
+  renderDimensions();
+  
+  // Load Chart.js dynamically if not present
+  if (!window.Chart) {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+    document.head.appendChild(script);
+  }
+</script>

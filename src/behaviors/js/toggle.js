@@ -4,8 +4,10 @@
  */
 export function toggle(element, options = {}) {
   const config = {
-    class: options.class || element.dataset.toggleClass || 'active',
-    target: options.target || element.dataset.toggleTarget,
+    // Support both data-class/data-toggle-class for flexibility
+    class: options.class || element.dataset.class || element.dataset.toggleClass || 'active',
+    // Support both data-target/data-toggle-target for flexibility
+    target: options.target || element.dataset.target || element.dataset.toggleTarget,
     self: options.self ?? (element.dataset.toggleSelf !== 'false'),
     ...options
   };

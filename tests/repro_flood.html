@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Network Flood Test</title>
+    <script type="module">
+        import WB from '../src/core/wb.js';
+        WB.init({ debug: true, autoInject: true });
+    </script>
+</head>
+<body>
+    <h1>Flood Test</h1>
+    <div id="container"></div>
+
+    <script>
+        // Generate 100 cards
+        const container = document.getElementById('container');
+        let html = '';
+        for (let i = 0; i < 100; i++) {
+            html += `<article data-wb="card" data-title="Card ${i}">Content ${i}</article>`;
+        }
+        container.innerHTML = html;
+    </script>
+</body>
+</html>

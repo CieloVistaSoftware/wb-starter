@@ -70,11 +70,18 @@ Card Profile **IS-A** card, inheriting semantic structure.
 
 ### Basic Profile
 
+<article data-wb="cardprofile" data-name="John Doe"></article>
+
 ```html
 <article data-wb="cardprofile" data-name="John Doe"></article>
 ```
 
 ### Profile with Role
+
+<article data-wb="cardprofile"
+         data-name="Jane Smith"
+         data-role="Product Designer">
+</article>
 
 ```html
 <article data-wb="cardprofile"
@@ -84,6 +91,14 @@ Card Profile **IS-A** card, inheriting semantic structure.
 ```
 
 ### Full Profile
+
+<article data-wb="cardprofile"
+         data-name="Alex Johnson"
+         data-role="Senior Developer"
+         data-avatar="https://i.pravatar.cc/80?img=3"
+         data-bio="Full-stack developer with 10 years of experience."
+         data-cover="https://picsum.photos/400/100">
+</article>
 
 ```html
 <article data-wb="cardprofile"
@@ -97,6 +112,12 @@ Card Profile **IS-A** card, inheriting semantic structure.
 
 ### Large Avatar
 
+<article data-wb="cardprofile"
+         data-name="Sarah Wilson"
+         data-role="CEO"
+         data-size="lg">
+</article>
+
 ```html
 <article data-wb="cardprofile"
          data-name="Sarah Wilson"
@@ -107,6 +128,12 @@ Card Profile **IS-A** card, inheriting semantic structure.
 
 ### Left-Aligned Profile
 
+<article data-wb="cardprofile"
+         data-name="Mike Brown"
+         data-role="Marketing Lead"
+         data-align="left">
+</article>
+
 ```html
 <article data-wb="cardprofile"
          data-name="Mike Brown"
@@ -116,6 +143,29 @@ Card Profile **IS-A** card, inheriting semantic structure.
 ```
 
 ## Structure
+
+<article class="wb-card wb-card--profile" style="text-align: center;">
+  <!-- Cover image (when set) -->
+  <figure class="wb-card__profile-cover">
+    <img src="cover.jpg" alt="">
+  </figure>
+  
+  <!-- Avatar -->
+  <figure class="wb-card__profile-avatar wb-card__profile-avatar--md">
+    <img src="avatar.jpg" alt="Profile photo of John Doe">
+  </figure>
+  
+  <!-- Identity (name and role) -->
+  <header>
+    <h3 class="wb-card__profile-name">John Doe</h3>
+    <p class="wb-card__profile-role">Designer</p>
+  </header>
+  
+  <!-- Bio (when set) -->
+  <p class="wb-card__profile-bio">
+    Short biography here...
+  </p>
+</article>
 
 ```html
 <article class="wb-card wb-card--profile" style="text-align: center;">
@@ -242,6 +292,14 @@ Avatar alt text is automatically generated:
 
 ### Team Member Card
 
+<article data-wb="cardprofile"
+         data-name="Emily Chen"
+         data-role="Lead Designer"
+         data-avatar="https://i.pravatar.cc/80?img=32"
+         data-bio="Creating beautiful user experiences since 2015."
+         data-elevated="true">
+</article>
+
 ```html
 <article data-wb="cardprofile"
          data-name="Emily Chen"
@@ -254,6 +312,13 @@ Avatar alt text is automatically generated:
 
 ### Compact Profile (No Bio)
 
+<article data-wb="cardprofile"
+         data-name="David Kim"
+         data-role="Engineer"
+         data-avatar="https://i.pravatar.cc/80?img=12"
+         data-size="sm">
+</article>
+
 ```html
 <article data-wb="cardprofile"
          data-name="David Kim"
@@ -264,6 +329,15 @@ Avatar alt text is automatically generated:
 ```
 
 ### Executive Profile (Large)
+
+<article data-wb="cardprofile"
+         data-name="Maria Garcia"
+         data-role="Chief Executive Officer"
+         data-avatar="https://i.pravatar.cc/120?img=47"
+         data-bio="Visionary leader with 20+ years in tech industry."
+         data-cover="https://picsum.photos/400/100?blur=2"
+         data-size="lg">
+</article>
 
 ```html
 <article data-wb="cardprofile"
@@ -277,6 +351,14 @@ Avatar alt text is automatically generated:
 ```
 
 ### Testimonial Style
+
+<article data-wb="cardprofile"
+         data-name="Tom Wilson"
+         data-role="Happy Customer"
+         data-avatar="https://i.pravatar.cc/80?img=8"
+         data-bio="This product changed my workflow completely!"
+         data-align="center">
+</article>
 
 ```html
 <article data-wb="cardprofile"

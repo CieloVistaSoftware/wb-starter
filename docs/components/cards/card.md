@@ -35,48 +35,88 @@ The card **IS-A** article element, inheriting semantic structure and accessibili
 
 ### Basic Card
 
+<article 
+  data-wb="card" 
+  data-title="Card Title">
+  This is the card content.
+</article>
+
 ```html
-<article data-wb="card" data-title="Card Title">
+<article 
+  data-wb="card" 
+  data-title="Card Title">
   This is the card content.
 </article>
 ```
 
 ### Card with Subtitle
 
+<article 
+  data-wb="card" 
+  data-title="Card Title" 
+  data-subtitle="A brief description">
+  Main content goes here.
+</article>
+
 ```html
-<article data-wb="card" 
-         data-title="Card Title" 
-         data-subtitle="A brief description">
+<article 
+  data-wb="card" 
+  data-title="Card Title" 
+  data-subtitle="A brief description">
   Main content goes here.
 </article>
 ```
 
 ### Card with Footer
 
+<article 
+  data-wb="card" 
+  data-title="Card Title" 
+  data-footer="Last updated: Today">
+  Content with footer.
+</article>
+
 ```html
-<article data-wb="card" 
-         data-title="Card Title" 
-         data-footer="Last updated: Today">
+<article 
+  data-wb="card" 
+  data-title="Card Title" 
+  data-footer="Last updated: Today">
   Content with footer.
 </article>
 ```
 
 ### Elevated Card
 
+<article 
+  data-wb="card" 
+  data-title="Elevated Card" 
+  data-elevated="true">
+  This card has a shadow.
+</article>
+
 ```html
-<article data-wb="card" 
-         data-title="Elevated Card" 
-         data-elevated="true">
+<article 
+  data-wb="card" 
+  data-title="Elevated Card" 
+  data-elevated="true">
   This card has a shadow.
 </article>
 ```
 
 ### Clickable Card
 
+<article 
+  data-wb="card" 
+  data-title="Click Me" 
+  data-clickable="true">
+  Click anywhere on this card.
+</article>
+
 ```html
-<article data-wb="card" 
-         data-title="Click Me" 
-         data-clickable="true">
+<article 
+  data-wb="card" 
+  data-title="Click Me" 
+  data-clickable="true">
   Click anywhere on this card.
 </article>
 ```

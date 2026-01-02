@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Fix Viewer Grouping', () => {
   test.beforeEach(async ({ page }) => {
     // Mock the fixes data to have predictable data for grouping
+    // NOTE: testRun must be set to preserve status (otherwise all become "TEST MISSING")
     await page.route('/data/fixes.json', async route => {
       const json = {
         metadata: { version: "1.0.0" },
@@ -11,6 +12,7 @@ test.describe('Fix Viewer Grouping', () => {
             errorId: "FIX_1",
             component: "comp-a",
             status: "APPLIED",
+            testRun: true,
             date: "2025-01-01T12:00:00Z",
             issue: "Issue 1",
             fix: { file: "f1.js", action: "a1" }
@@ -19,6 +21,7 @@ test.describe('Fix Viewer Grouping', () => {
             errorId: "FIX_2",
             component: "comp-a",
             status: "INCOMPLETE",
+            testRun: true,
             date: "2025-01-01T12:00:00Z",
             issue: "Issue 2",
             fix: { file: "f2.js", action: "a2" }
@@ -27,6 +30,7 @@ test.describe('Fix Viewer Grouping', () => {
             errorId: "FIX_3",
             component: "comp-b",
             status: "APPLIED",
+            testRun: true,
             date: "2025-01-02T12:00:00Z",
             issue: "Issue 3",
             fix: { file: "f3.js", action: "a3" }

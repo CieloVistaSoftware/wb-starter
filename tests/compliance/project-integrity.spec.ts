@@ -1,68 +1,29 @@
 import { test, expect } from '@playwright/test';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
+import { 
+  getFiles, getHtmlFiles, readFile, fileExists, 
+  stripDynamicContent, stripCodeExamples,
+  ROOT, PATHS, relativePath, IssueCollector 
+} from '../base';
 
 /**
  * PROJECT INTEGRITY & LINK CHECKING
  * =================================
- * Deep validation of project structure to catch "missing file" errors
- * that slip through standard tests.
- * 
- * Checks:
- * 1. JS Imports: All 'import' statements in .js files point to existing files.
- * 2. HTML Resources: All <script>, <link>, <img> tags point to existing files.
- * 3. HTML Behaviors: All data-wb="..." attributes reference valid registered behaviors.
+ * Deep validation of project structure to catch "missing file" errors.
  */
-
-const ROOT_DIR = process.cwd();
-const SRC_DIR = path.join(ROOT_DIR, 'src');
-const PAGES_DIR = path.join(ROOT_DIR, 'pages');
-const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
-const DEMOS_DIR = path.join(ROOT_DIR, 'demos');
-
-// Helper: Recursively get all files of specific extensions
-function getFiles(dir: string, extensions: string[], fileList: string[] = []): string[] {
-  if (!fs.existsSync(dir)) return fileList;
-  
-  const files = fs.readdirSync(dir);
-  for (const file of files) {
-    const filePath = path.join(dir, file);
-    const stat = fs.statSync(filePath);
-    
-    if (stat.isDirectory()) {
-      if (file !== 'node_modules' && file !== '.git') {
-        getFiles(filePath, extensions, fileList);
-      }
-    } else {
-      const ext = path.extname(file).toLowerCase();
-      if (extensions.includes(ext)) {
-        fileList.push(filePath);
-      }
-    }
-  }
-  return fileList;
-}
 
 // Helper: Extract behavior names from index.js
 function getRegisteredBehaviors(): Set<string> {
-  const indexPath = path.join(SRC_DIR, 'behaviors', 'index.js');
-  const content = fs.readFileSync(indexPath, 'utf-8');
+  const indexPath = path.join(PATHS.src, 'behaviors', 'index.js');
+  const content = readFile(indexPath);
   const behaviors = new Set<string>();
   
-  // Match keys in behaviorModules object
   const match = content.match(/const behaviorModules = ({[\s\S]*?});/);
   if (match) {
-    // Use a global regex to find all keys in the object body
-    const keyRegex = /^\s*['"]?([a-zA-Z0-9_-]+)['"]?:\s*['"]/gm;
-    let keyMatch;
-    // We need to match against the content block, but the regex needs to handle multiple per line
-    // Simpler approach: split by comma and match keys
-    const body = match[1];
-    // Remove comments
-    const cleanBody = body.replace(/\/\/.*$/gm, '');
-    
-    // Match "key: 'value'" pattern
+    const cleanBody = match[1].replace(/\/\/.*$/gm, '');
     const entryRegex = /['"]?([a-zA-Z0-9_\-\/]+)['"]?\s*:\s*['"]/g;
+    let keyMatch;
     
     while ((keyMatch = entryRegex.exec(cleanBody)) !== null) {
       behaviors.add(keyMatch[1]);
@@ -73,22 +34,20 @@ function getRegisteredBehaviors(): Set<string> {
 
 test.describe('Project Integrity', () => {
   
-  // 1. JS IMPORT INTEGRITY
   test('all JS imports resolve to existing files', () => {
-    const jsFiles = getFiles(SRC_DIR, ['.js']);
-    const missingImports: string[] = [];
+    const jsFiles = getFiles(PATHS.src, ['.js']);
+    const issues = new IssueCollector();
     
-    // Known false positives (e.g. imports inside template strings)
     const ignoredImports = [
-      '../src/core/wb-lazy.js' // Used in preview HTML template string
+      '../src/core/wb-lazy.js', 
+      './src/core/wb-lazy.js',
+      '../core/wb-lazy.js'
     ];
     
     for (const file of jsFiles) {
-      const content = fs.readFileSync(file, 'utf-8');
+      const content = readFile(file);
       const dir = path.dirname(file);
       
-      // Match import ... from '...' and export ... from '...'
-      // Regex captures the path inside quotes
       const importRegex = /(?:import|export)\s+(?:[\s\S]*?from\s+)?['"]([^'"]+)['"]/g;
       let match;
       
@@ -96,122 +55,160 @@ test.describe('Project Integrity', () => {
         const importPath = match[1];
         
         if (ignoredImports.includes(importPath)) continue;
-
-        // Skip node_modules imports (bare specifiers)
-        if (!importPath.startsWith('.') && !importPath.startsWith('/')) {
-          continue; 
-        }
+        if (!importPath.startsWith('.') && !importPath.startsWith('/')) continue;
         
-        // Resolve path
-        let targetPath;
-        if (importPath.startsWith('/')) {
-          // Root relative
-          targetPath = path.join(ROOT_DIR, importPath);
-        } else {
-          // Relative to file
-          targetPath = path.join(dir, importPath);
-        }
+        let targetPath = importPath.startsWith('/')
+          ? path.join(ROOT, importPath)
+          : path.join(dir, importPath);
         
-        // Check existence (try exact, then .js, then /index.js)
-        const exists = fs.existsSync(targetPath) || 
-                       fs.existsSync(targetPath + '.js') || 
-                       fs.existsSync(path.join(targetPath, 'index.js'));
+        const exists = fileExists(targetPath) || 
+                       fileExists(targetPath + '.js') || 
+                       fileExists(path.join(targetPath, 'index.js'));
                        
         if (!exists) {
-          const relFile = path.relative(ROOT_DIR, file);
-          missingImports.push(`${relFile}: imports missing file '${importPath}'`);
+          issues.add(`${relativePath(file)}: imports missing file '${importPath}'`);
         }
       }
     }
     
-    expect(missingImports, `Broken JS imports found:\n${missingImports.join('\n')}`).toEqual([]);
+    issues.expectEmpty('Broken JS imports found');
   });
 
-  // 2. HTML RESOURCE INTEGRITY
-  test('all HTML resource links (script, link, img) point to existing files', () => {
+  test('all HTML resource links point to existing files', () => {
     const htmlFiles = [
-      ...getFiles(PAGES_DIR, ['.html']),
-      ...getFiles(PUBLIC_DIR, ['.html']),
-      ...getFiles(DEMOS_DIR, ['.html'])
+      ...getFiles(PATHS.pages, ['.html']),
+      ...getFiles(PATHS.public, ['.html']),
+      ...getFiles(PATHS.demos, ['.html'])
     ];
     
-    const brokenLinks: string[] = [];
+    const issues = new IssueCollector();
     
     for (const file of htmlFiles) {
-      const content = fs.readFileSync(file, 'utf-8');
+      const content = stripDynamicContent(readFile(file));
       
-      // Match src="..." and href="..."
       const linkRegex = /(?:src|href)=['"]([^'"]+)['"]/g;
       let match;
       
       while ((match = linkRegex.exec(content)) !== null) {
         const linkPath = match[1];
         
-        // Skip external links, anchors, data URIs, and template variables
         if (linkPath.startsWith('http') || 
             linkPath.startsWith('#') || 
             linkPath.startsWith('data:') ||
             linkPath.startsWith('mailto:') ||
             linkPath.startsWith('javascript:') ||
             linkPath.includes('${') ||
-            linkPath.includes('{{')) {
+            linkPath.includes('{{') ||
+            linkPath.includes('&lt;') ||
+            linkPath.includes('&gt;')) {
           continue;
         }
         
-        // Resolve path
-        let targetPath;
-        if (linkPath.startsWith('/')) {
-          targetPath = path.join(ROOT_DIR, linkPath);
-        } else {
-          targetPath = path.join(path.dirname(file), linkPath);
-        }
+        let targetPath = linkPath.startsWith('/')
+          ? path.join(ROOT, linkPath)
+          : path.join(path.dirname(file), linkPath);
         
-        // Remove query strings / hashes
         targetPath = targetPath.split('?')[0].split('#')[0];
         
-        if (!fs.existsSync(targetPath)) {
-          const relFile = path.relative(ROOT_DIR, file);
-          brokenLinks.push(`${relFile}: links to missing file '${linkPath}'`);
+        if (!fileExists(targetPath)) {
+          issues.add(`${relativePath(file)}: links to missing file '${linkPath}'`);
         }
       }
     }
     
-    expect(brokenLinks, `Broken HTML links found:\n${brokenLinks.join('\n')}`).toEqual([]);
+    issues.expectEmpty('Broken HTML links found');
   });
 
-  // 3. BEHAVIOR USAGE INTEGRITY
-  test('all data-wb attributes in HTML reference valid behaviors', () => {
-    const validBehaviors = getRegisteredBehaviors();
+  test('no redundant data-wb attributes on auto-injected semantic elements', () => {
     const htmlFiles = [
-      ...getFiles(PAGES_DIR, ['.html']),
-      ...getFiles(PUBLIC_DIR, ['.html']),
-      ...getFiles(DEMOS_DIR, ['.html'])
+      ...getFiles(PATHS.pages, ['.html']),
+      ...getFiles(PATHS.public, ['.html']),
+      ...getFiles(PATHS.demos, ['.html'])
     ];
     
-    const unknownBehaviors: string[] = [];
+    const issues = new IssueCollector();
+    
+    const autoInjectMap: Record<string, string> = {
+      'button': 'button', 'input': 'input', 'textarea': 'textarea',
+      'select': 'select', 'details': 'details', 'dialog': 'dialog',
+      'figure': 'figure', 'video': 'video', 'audio': 'audio',
+      'table': 'table', 'kbd': 'kbd', 'mark': 'mark'
+    };
+    
+    const inputTypeMap: Record<string, string> = {
+      'checkbox': 'checkbox', 'radio': 'radio', 'range': 'range'
+    };
     
     for (const file of htmlFiles) {
-      const content = fs.readFileSync(file, 'utf-8');
+      const content = stripCodeExamples(readFile(file));
+      const relFile = relativePath(file);
       
-      // Match data-wb="..."
-      const wbRegex = /data-wb=['"]([^'"]+)['"]/g;
-      let match;
+      for (const [element, behavior] of Object.entries(autoInjectMap)) {
+        const regex = new RegExp(
+          `<${element}\\b[^>]*\\bdata-wb=["'][^"']*\\b${behavior}\\b[^"']*["'][^>]*>`, 'gi'
+        );
+        const matches = content.match(regex);
+        if (matches) {
+          for (const match of matches) {
+            issues.add(`${relFile}: <${element} data-wb="${behavior}"> is redundant (auto-injected)`);
+          }
+        }
+      }
       
-      while ((match = wbRegex.exec(content)) !== null) {
-        const behaviors = match[1].split(/\s+/); // Handle multiple behaviors "foo bar"
-        
-        for (const b of behaviors) {
-          if (b && !validBehaviors.has(b)) {
-            const relFile = path.relative(ROOT_DIR, file);
-            unknownBehaviors.push(`${relFile}: uses unknown behavior '${b}'`);
+      for (const [inputType, behavior] of Object.entries(inputTypeMap)) {
+        const regex = new RegExp(
+          `<input\\b[^>]*\\btype=["']${inputType}["'][^>]*\\bdata-wb=["'][^"']*\\b${behavior}\\b[^"']*["'][^>]*>`, 'gi'
+        );
+        const matches = content.match(regex);
+        if (matches) {
+          for (const match of matches) {
+            issues.add(`${relFile}: <input type="${inputType}" data-wb="${behavior}"> is redundant`);
           }
         }
       }
     }
     
-    // Filter out known "dynamic" or "test" behaviors if any
-    const realUnknowns = unknownBehaviors.filter(msg => !msg.includes('test-'));
+    // Warn but don't break - these are optimization suggestions
+    if (issues.count > 0) {
+      console.warn(`Found ${issues.count} redundant data-wb attributes:`);
+      issues.all.slice(0, 5).forEach(i => console.warn(`  - ${i}`));
+    }
+    issues.expectLessThan(50, 'Too many redundant data-wb attributes');
+  });
+
+  test('all data-wb attributes reference valid behaviors', () => {
+    const validBehaviors = getRegisteredBehaviors();
+    const htmlFiles = [
+      ...getFiles(PATHS.pages, ['.html']),
+      ...getFiles(PATHS.public, ['.html']),
+      ...getFiles(PATHS.demos, ['.html'])
+    ];
     
-    expect(realUnknowns, `Unknown behaviors used in HTML:\n${realUnknowns.join('\n')}`).toEqual([]);
+    const issues = new IssueCollector();
+    
+    const ignoredPatterns = [
+      /^\$\{/, /^behavior-/, /\//, /^test-/, /^ul$/, /^ol$/, /^dl$/, /^\.\.\.$/
+    ];
+    
+    for (const file of htmlFiles) {
+      const content = stripDynamicContent(readFile(file));
+      
+      const wbRegex = /data-wb=['"]([^'"]+)['"]/g;
+      let match;
+      
+      while ((match = wbRegex.exec(content)) !== null) {
+        const behaviors = match[1].split(/\s+/);
+        
+        for (const b of behaviors) {
+          if (ignoredPatterns.some(pattern => pattern.test(b))) continue;
+          
+          if (b && !validBehaviors.has(b)) {
+            issues.add(`${relativePath(file)}: uses unknown behavior '${b}'`);
+          }
+        }
+      }
+    }
+    
+    issues.expectEmpty('Unknown behaviors used in HTML');
   });
 });

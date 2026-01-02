@@ -2,7 +2,7 @@
 
 ## The Rule
 
-**Every WB behavior MUST use HTML5 semantic elements. `<div>` is only permitted when no semantic element exists for that purpose.**
+**Every Web Behaviors (WB) behavior MUST use HTML5 semantic elements. `<div>` is only permitted when no semantic element exists for that purpose.**
 
 ---
 

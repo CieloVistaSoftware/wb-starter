@@ -6,7 +6,8 @@
 /* =============================================================================
    BUTTONS
    ============================================================================= */
-.wb-button {
+.wb-button,
+button-tooltip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -21,12 +22,14 @@
   user-select: none;
 }
 
-.wb-button:focus-visible {
+.wb-button:focus-visible,
+button-tooltip:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
-.wb-button:disabled {
+.wb-button:disabled,
+button-tooltip[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
@@ -475,4 +478,3 @@ input:disabled + .wb-switch__slider {
   from { background-position: 1rem 0; }
   to { background-position: 0 0; }
 }
-

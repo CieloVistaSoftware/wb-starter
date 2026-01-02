@@ -73,7 +73,7 @@ async function injectPermutation(page: Page, html: string) {
   await page.evaluate(async (markup) => {
     // Wait for window.add to be available (max 2s)
     let tries = 0;
-    while (typeof window.add !== 'function' && tries < 20) {
+    while (typeof (window as any).add !== 'function' && tries < 20) {
       await new Promise(r => setTimeout(r, 100));
       tries++;
     }
@@ -97,8 +97,8 @@ async function injectPermutation(page: Page, html: string) {
     // Clear between runs
     canvas.innerHTML = '';
 
-    if (typeof window.add === 'function') {
-      window.add(data);
+    if (typeof (window as any).add === 'function') {
+      (window as any).add(data);
     } else {
       canvas.appendChild(el);
     }

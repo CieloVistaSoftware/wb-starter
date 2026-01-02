@@ -53,6 +53,11 @@ Card Hero **HAS-A** background image as CSS property.
 
 ### Basic Hero
 
+<article data-wb="cardhero" 
+         data-background="hero.jpg" 
+         data-title="Welcome">
+</article>
+
 ```html
 <article data-wb="cardhero" 
          data-background="hero.jpg" 
@@ -61,6 +66,12 @@ Card Hero **HAS-A** background image as CSS property.
 ```
 
 ### Hero with Subtitle
+
+<article data-wb="cardhero"
+         data-background="hero.jpg"
+         data-title="Welcome to Our Site"
+         data-subtitle="Discover amazing things">
+</article>
 
 ```html
 <article data-wb="cardhero"
@@ -72,6 +83,12 @@ Card Hero **HAS-A** background image as CSS property.
 
 ### Tall Hero
 
+<article data-wb="cardhero"
+         data-background="hero.jpg"
+         data-title="Big Impact"
+         data-height="500px">
+</article>
+
 ```html
 <article data-wb="cardhero"
          data-background="hero.jpg"
@@ -81,6 +98,13 @@ Card Hero **HAS-A** background image as CSS property.
 ```
 
 ### Left-Aligned Hero
+
+<article data-wb="cardhero"
+         data-background="hero.jpg"
+         data-title="Our Story"
+         data-subtitle="Since 2020"
+         data-align="left">
+</article>
 
 ```html
 <article data-wb="cardhero"
@@ -93,6 +117,12 @@ Card Hero **HAS-A** background image as CSS property.
 
 ### No Overlay (High Contrast Image)
 
+<article data-wb="cardhero"
+         data-background="dark-image.jpg"
+         data-title="Clear Text"
+         data-overlay="false">
+</article>
+
 ```html
 <article data-wb="cardhero"
          data-background="dark-image.jpg"
@@ -102,6 +132,22 @@ Card Hero **HAS-A** background image as CSS property.
 ```
 
 ## Structure
+
+<article class="wb-card wb-card--hero"
+         style="background-image: url(hero.jpg);
+                background-size: cover;
+                background-position: center;
+                height: 300px;">
+  
+  <!-- Gradient overlay for text readability -->
+  <div class="wb-card__overlay"></div>
+  
+  <!-- Content centered over image -->
+  <header class="wb-card__header" style="text-align: center;">
+    <h3 class="wb-card__title">Hero Title</h3>
+    <p class="wb-card__subtitle">Subtitle</p>
+  </header>
+</article>
 
 ```html
 <article class="wb-card wb-card--hero"
@@ -225,6 +271,14 @@ The overlay ensures text meets WCAG contrast requirements:
 
 ### Landing Page Hero
 
+<article data-wb="cardhero"
+         data-background="https://picsum.photos/1200/600"
+         data-title="Build Amazing Websites"
+         data-subtitle="No coding required"
+         data-height="400px"
+         data-align="center">
+</article>
+
 ```html
 <article data-wb="cardhero"
          data-background="https://picsum.photos/1200/600"
@@ -236,6 +290,14 @@ The overlay ensures text meets WCAG contrast requirements:
 ```
 
 ### Feature Section
+
+<article data-wb="cardhero"
+         data-background="feature-bg.jpg"
+         data-title="Premium Features"
+         data-subtitle="Everything you need to succeed"
+         data-height="250px"
+         data-align="left">
+</article>
 
 ```html
 <article data-wb="cardhero"
@@ -249,6 +311,14 @@ The overlay ensures text meets WCAG contrast requirements:
 
 ### Call to Action
 
+<article data-wb="cardhero"
+         data-background="cta-bg.jpg"
+         data-title="Get Started Today"
+         data-subtitle="Join thousands of happy users"
+         data-height="300px"
+         data-elevated="true">
+</article>
+
 ```html
 <article data-wb="cardhero"
          data-background="cta-bg.jpg"
@@ -260,6 +330,13 @@ The overlay ensures text meets WCAG contrast requirements:
 ```
 
 ### Minimal Hero (No Overlay)
+
+<article data-wb="cardhero"
+         data-background="dark-bg.jpg"
+         data-title="Clean Design"
+         data-overlay="false"
+         data-height="350px">
+</article>
 
 ```html
 <article data-wb="cardhero"

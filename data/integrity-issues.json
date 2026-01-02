@@ -1,0 +1,81 @@
+{
+  "jsIssues": [
+    {
+      "file": "src\\builder\\index.js",
+      "import": "./src/index.js",
+      "target": "src\\builder\\src\\index.js"
+    }
+  ],
+  "htmlIssues": [
+    {
+      "file": "pages\\docs.html",
+      "link": "public/doc-viewer.html?file=",
+      "target": "pages\\public\\doc-viewer.html"
+    },
+    {
+      "file": "pages\\docs.html",
+      "link": "pages/",
+      "target": "pages\\pages\\"
+    },
+    {
+      "file": "pages\\home.html",
+      "link": "demos/frameworks.html",
+      "target": "pages\\demos\\frameworks.html"
+    },
+    {
+      "file": "demos\\autoinject.html",
+      "link": "success.mp3",
+      "target": "demos\\success.mp3"
+    },
+    {
+      "file": "demos\\autoinject.html",
+      "link": "warning.mp3",
+      "target": "demos\\warning.mp3"
+    },
+    {
+      "file": "demos\\autoinject.html",
+      "link": "danger.mp3",
+      "target": "demos\\danger.mp3"
+    },
+    {
+      "file": "pages\\docs.html",
+      "link": "public/doc-viewer.html?file=",
+      "target": "pages\\public\\doc-viewer.html"
+    },
+    {
+      "file": "pages\\docs.html",
+      "link": "pages/",
+      "target": "pages\\pages\\"
+    },
+    {
+      "file": "pages\\home.html",
+      "link": "demos/frameworks.html",
+      "target": "pages\\demos\\frameworks.html"
+    },
+    {
+      "file": "scripts\\tools\\scope-dashboard.html",
+      "link": "../src/styles/themes.css",
+      "target": "scripts\\src\\styles\\themes.css"
+    },
+    {
+      "file": "src\\behaviors\\html\\card.html",
+      "link": "../../src/styles/themes.css",
+      "target": "src\\src\\styles\\themes.css"
+    },
+    {
+      "file": "demos\\autoinject.html",
+      "link": "success.mp3",
+      "target": "demos\\success.mp3"
+    },
+    {
+      "file": "demos\\autoinject.html",
+      "link": "warning.mp3",
+      "target": "demos\\warning.mp3"
+    },
+    {
+      "file": "demos\\autoinject.html",
+      "link": "danger.mp3",
+      "target": "demos\\danger.mp3"
+    }
+  ]
+}

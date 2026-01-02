@@ -1,9 +1,20 @@
 /**
  * Figure - Enhanced <figure> element
  * Adds lightbox, lazy loading, caption animation, zoom
+ * 
+ * Supports pure attribute-driven usage (no child tags needed):
+ *   <figure data-img-src="photo.jpg" data-alt="Description" data-caption="Caption">
+ *   </figure>
+ * 
+ * Or traditional HTML with enhancements:
+ *   <figure data-caption="Caption">
+ *     <img src="photo.jpg" alt="Description">
+ *   </figure>
  */
 export function figure(element, options = {}) {
   const config = {
+    imgSrc: options.imgSrc || element.dataset.imgSrc,
+    alt: options.alt || element.dataset.alt,
     lightbox: options.lightbox ?? element.hasAttribute('data-lightbox'),
     lazy: options.lazy ?? element.hasAttribute('data-lazy'),
     zoom: options.zoom ?? element.hasAttribute('data-zoom'),
@@ -16,13 +27,30 @@ export function figure(element, options = {}) {
   // Basic styling
   Object.assign(element.style, {
     position: 'relative',
-    display: 'inline-block',
+    display: 'block',
     margin: '0',
     overflow: 'hidden',
     borderRadius: '8px'
   });
 
-  const img = element.querySelector('img');
+  // Auto-generate img from data-img-src if no img child exists
+  let img = element.querySelector('img');
+  if (!img && config.imgSrc) {
+    img = document.createElement('img');
+    img.src = config.imgSrc;
+    img.alt = config.alt || config.imgSrc; // Fallback alt to src
+    element.insertBefore(img, element.firstChild);
+  }
+  
+  // Ensure img fills the figure
+  if (img) {
+    Object.assign(img.style, {
+      display: 'block',
+      width: '100%',
+      height: 'auto'
+    });
+  }
+
   let figcaption = element.querySelector('figcaption');
 
   // Handle data-caption

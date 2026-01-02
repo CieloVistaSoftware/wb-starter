@@ -52,6 +52,7 @@ export async function mdhtml(element, options = {}) {
     gfm: options.gfm ?? (element.dataset.gfm !== 'false'),
     headerIds: options.headerIds ?? (element.dataset.headerIds !== 'false'),
     highlight: options.highlight ?? element.dataset.highlight,
+    size: options.size || element.dataset.size || 'xs',
     ...options
   };
 
@@ -111,6 +112,10 @@ export async function mdhtml(element, options = {}) {
 
     // Apply WB behaviors to generated content
     if (window.WB) {
+        // Scan the entire element for behaviors (including auto-inject)
+        // This will handle cardlink, button, and any other behaviors in the markdown
+        window.WB.scan(element);
+
         // Handle Pre blocks (which contain code)
         element.querySelectorAll('pre').forEach(el => {
             // Check if it has a code block with language class
@@ -142,6 +147,22 @@ export async function mdhtml(element, options = {}) {
              window.WB.inject(el, 'code');
         });
     }
+
+    // Apply size via CSS font-size on container (cascades to all children)
+    // Always apply for consistent sizing
+    const sizeMap = {
+      xs: '0.55rem',
+      sm: '0.6rem',
+      md: '0.65rem',
+      lg: '0.75rem',
+      xl: '0.85rem'
+    };
+    element.style.fontSize = sizeMap[config.size] || sizeMap.xs;
+    
+    // Ensure no overflow
+    element.style.maxWidth = '100%';
+    // element.style.overflowWrap = 'break-word';
+    // element.style.wordBreak = 'break-word';
 
     // Dispatch event
     element.dispatchEvent(new CustomEvent('wb:mdhtml:loaded', {

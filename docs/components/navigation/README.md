@@ -2,7 +2,7 @@
 
 ## Overview
 
-WB Behaviors provides accessible navigation components using semantic `<nav>` elements.
+Web Behaviors (WB) provides accessible navigation components using semantic `<nav>` elements.
 
 ---
 

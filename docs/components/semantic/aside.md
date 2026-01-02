@@ -1,6 +1,6 @@
 # `<aside>` Element
 
-The `<aside>` element represents content that is tangentially related to the content around it. In WB Behaviors, it's used for notifications, alerts, and side content.
+The `<aside>` element represents content that is tangentially related to the content around it. In Web Behaviors (WB), it's used for notifications, alerts, and side content.
 
 ## Semantic Meaning
 

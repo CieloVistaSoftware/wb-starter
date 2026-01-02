@@ -1,0 +1,170 @@
+[
+  {
+    "timestamp": "2026-01-01T21:18:30.563Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 1393,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-01T21:18:30.944Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 12.1015625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-01T21:18:30.951Z",
+    "category": "resource",
+    "name": "JS: site-engine.js",
+    "value": 10.5615234375,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-01T21:18:32.996Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 964,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-01T21:18:33.178Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 1125,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-01T21:18:33.441Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.228515625,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-01T21:18:33.450Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-01T21:18:33.452Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 32.263671875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-01T21:18:33.582Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 195,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-01T21:18:42.589Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 339,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-01T21:39:07.420Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.228515625,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-01T21:39:07.433Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-01T21:39:07.438Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 32.35546875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-01T21:39:07.441Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 12.1015625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-01T21:39:08.789Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 1830,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-01T21:39:08.986Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 203,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-01T21:39:09.132Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 2287,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-01T21:39:09.420Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 2577,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-01T21:39:25.003Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 1279,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-01T21:39:39.804Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 662,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-01T21:39:42.031Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 6212,
+    "unit": "ms",
+    "threshold": 2000
+  }
+]

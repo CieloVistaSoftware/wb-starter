@@ -83,7 +83,8 @@
   "test": {
     "setup": [
       "<span data-wb=\"tooltip\" data-tooltip=\"Helpful tip\">Hover me</span>",
-      "<button data-wb=\"tooltip\" data-tooltip=\"Button help\" data-position=\"bottom\">Help</button>"
+      "<button data-wb=\"tooltip\" data-tooltip=\"Button help\" data-position=\"bottom\">Help</button>",
+      "<button tooltip=\"Global tooltip\">Global</button>"
     ],
     "matrix": {
       "combinations": [
@@ -107,6 +108,16 @@
           "unhover": {
             "selector": ".wb-tooltip",
             "visible": false
+          }
+        },
+        {
+          "name": "global tooltip attribute works",
+          "setup": "<button tooltip=\"Global works\">Hover me</button>",
+          "selector": "element",
+          "expect": {
+            "selector": ".wb-tooltip",
+            "textContains": "Global works",
+            "visible": true
           }
         },
         {

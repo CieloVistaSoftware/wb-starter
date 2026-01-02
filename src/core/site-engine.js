@@ -21,6 +21,7 @@ export default class WBSite {
       this.config = await res.json();
       document.documentElement.dataset.theme = this.config.site.theme;
       document.title = this.config.seo?.title || this.config.site.name;
+      this.updateFavicon();
       
       const params = new URLSearchParams(window.location.search);
       const pageParam = params.get('page');
@@ -30,9 +31,11 @@ export default class WBSite {
 
       this.render();
       this.initResizableNav();
+      this.initStickyHeader();
       WB.init({ 
         debug: false,
-        autoInject: this.config.site.autoInject || false
+        autoInject: this.config.site.autoInject || false,
+        preload: ['ripple', 'themecontrol', 'tooltip']
       });
 
       window.addEventListener('popstate', () => {
@@ -70,6 +73,18 @@ export default class WBSite {
     }
   }
 
+  updateFavicon() {
+    if (!this.config.site.favicon) return;
+    
+    let link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.head.appendChild(link);
+    }
+    link.href = this.config.site.favicon;
+  }
+
   render() {
     const app = document.getElementById('app');
     app.innerHTML = `
@@ -81,6 +96,7 @@ export default class WBSite {
         </main>
       </div>
       ${this.renderFooter()}
+      <div data-wb="notes" data-wb-eager id="siteNotes"></div>
     `;
     const toggleBtn = app.querySelector('.nav__toggle');
     if (toggleBtn) {
@@ -139,7 +155,7 @@ export default class WBSite {
       </a>
     `).join('');
     return `
-      <nav class="site__nav ${this.navCollapsed ? 'site__nav--collapsed' : ''}" style="--nav-width: ${layout.navWidth}" id="siteNav">
+      <nav class="site__nav ${this.navCollapsed ? 'site__nav--collapsed' : ''}" style="--nav-width: ${layout.navWidth}" id="siteNav" data-wb="scrollalong">
         <div class="nav__items" id="navItems">
           ${items}
         </div>
@@ -164,7 +180,7 @@ export default class WBSite {
     document.addEventListener('mousemove', (e) => {
       if (!isResizing) return;
       const newWidth = e.clientX;
-      if (newWidth > 150 && newWidth < 600) { // Min and max width
+      if (newWidth > 60 && newWidth < 600) { // Min and max width
         nav.style.setProperty('--nav-width', `${newWidth}px`);
       }
     });
@@ -176,6 +192,37 @@ export default class WBSite {
         document.body.classList.remove('resizing');
       }
     });
+  }
+
+  initStickyHeader() {
+    const main = document.getElementById('main');
+    const header = document.getElementById('siteHeader');
+    if (!main || !header) return;
+
+    let lastScrollY = main.scrollTop;
+    const threshold = 50; // Min scroll to trigger
+
+    main.addEventListener('scroll', () => {
+      const currentScrollY = main.scrollTop;
+      
+      // Don't hide if near top
+      if (currentScrollY < threshold) {
+        header.classList.remove('site__header--hidden');
+        lastScrollY = currentScrollY;
+        return;
+      }
+
+      // Scrolling Down -> Hide
+      if (currentScrollY > lastScrollY + 10) {
+        header.classList.add('site__header--hidden');
+      } 
+      // Scrolling Up -> Show
+      else if (currentScrollY < lastScrollY - 10) {
+        header.classList.remove('site__header--hidden');
+      }
+
+      lastScrollY = currentScrollY;
+    }, { passive: true });
   }
 
   renderFooter() {
@@ -225,7 +272,9 @@ export default class WBSite {
     this.updateActiveNav();
     const main = document.getElementById('main');
     main.innerHTML = `<div class="page__loading" id="mainPageLoading"><div data-wb="spinner" id="mainSpinner"></div><p id="mainLoadingText">Loading...</p></div>`;
-    await WB.scan(main);
+    // Optimization: Don't await scan here to start fetch immediately. MutationObserver handles injection.
+    // WB.scan(main); 
+    
     const loadingEl = main.querySelector('.page__loading');
     let loadingTimerId;
     if (loadingEl && window.WBLoadingManager) {
@@ -261,7 +310,8 @@ export default class WBSite {
       }
       main.innerHTML = this.render404(pageId);
     }
-    WB.scan(main);
+    // Optimization: MutationObserver handles injection automatically
+    // WB.scan(main);
     main.scrollTop = 0;
   }
 
@@ -284,5 +334,10 @@ export default class WBSite {
     const nav = document.querySelector('.site__nav');
     nav?.classList.toggle('site__nav--collapsed', this.navCollapsed);
     document.body.classList.toggle('nav-collapsed', this.navCollapsed);
+    
+    // Scroll page to top when nav is toggled
+    const main = document.getElementById('main');
+    if (main) main.scrollTop = 0;
+    window.scrollTo(0, 0);
   }
 }

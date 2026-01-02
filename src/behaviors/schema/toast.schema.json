@@ -127,7 +127,8 @@
     "setup": [
       "<button data-wb=\"toast\" data-message=\"Hello!\">Show Toast</button>",
       "<button data-wb=\"toast\" data-type=\"success\" data-message=\"Success!\">Success Toast</button>",
-      "<button data-wb=\"toast\" data-type=\"error\" data-message=\"Error!\">Error Toast</button>"
+      "<button data-wb=\"toast\" data-type=\"error\" data-message=\"Error!\">Error Toast</button>",
+      "<button toast-message=\"Global Toast\">Global</button>"
     ],
     
     "matrix": {
@@ -162,6 +163,15 @@
           "expect": {
             "selector": ".wb-toast-container",
             "exists": true
+          }
+        },
+        {
+          "name": "global attribute shows toast",
+          "setup": "<button toast-message=\"Global Hello\">Show</button>",
+          "action": "click",
+          "expect": {
+            "selector": ".wb-toast-container",
+            "textContains": "Global Hello"
           }
         },
         {

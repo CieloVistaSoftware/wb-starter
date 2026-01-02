@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Card Link",
-  "description": "Clickable link card. INHERITS from card.base (IS-A card), CONTAINS navigation link (HAS-A href destination).",
+  "description": "Clickable link card. INHERITS from card.base (IS-A card), CONTAINS navigation link (HAS-A href destination). With autoInject enabled, any <article data-href> automatically becomes a cardlink.",
   "behavior": "cardlink",
   
   "$extends": "card.base.schema.json",
@@ -20,6 +20,12 @@
     }
   ],
   
+  "autoInject": {
+    "selector": "article[data-href]",
+    "description": "Any <article> with data-href attribute automatically gets cardlink behavior when autoInject is enabled",
+    "note": "Plain <article> elements without data-href remain semantic articles"
+  },
+  
   "properties": {
     "$inherited": ["title", "subtitle", "footer", "hoverable", "elevated"],
     
@@ -28,23 +34,35 @@
       "description": "Link destination URL",
       "default": "#"
     },
-    "content": {
+    "title": {
       "type": "string",
-      "description": "Card content/description",
-      "default": "Click to visit link",
-      "mapsTo": "main"
+      "description": "Card title text"
+    },
+    "description": {
+      "type": "string",
+      "description": "Card description/subtitle text"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon displayed before title (emoji or text)",
+      "default": ""
+    },
+    "badge": {
+      "type": "string",
+      "description": "Badge text displayed below description",
+      "default": ""
+    },
+    "badgeVariant": {
+      "type": "string",
+      "description": "Badge style variant",
+      "enum": ["glass", "gradient"],
+      "default": "glass"
     },
     "target": {
       "type": "string",
       "description": "Link target",
       "enum": ["_self", "_blank"],
-      "default": "_blank"
-    },
-    "icon": {
-      "type": "string",
-      "description": "Link icon",
-      "default": "🔗",
-      "mapsTo": "header"
+      "default": "_self"
     }
   },
   
@@ -93,14 +111,17 @@
   "test": {
     "setup": [
       "<article data-wb=\"cardlink\" data-href=\"https://example.com\" data-title=\"Example\"></article>",
-      "<article data-wb=\"cardlink\" data-href=\"#section\" data-title=\"Internal\" data-target=\"_self\"></article>"
+      "<article data-wb=\"cardlink\" data-href=\"#section\" data-title=\"Internal\" data-target=\"_self\"></article>",
+      "<article data-href=\"https://example.com\" data-title=\"AutoInjected\"></article>"
     ],
     "matrix": {
       "combinations": [
         { "href": "https://example.com" },
         { "href": "https://example.com", "title": "Link Title" },
         { "href": "#section", "target": "_self" },
-        { "href": "https://example.com", "icon": "🌐" }
+        { "href": "https://example.com", "icon": "🌐" },
+        { "href": "https://example.com", "badge": "NEW" },
+        { "href": "https://example.com", "badge": "Featured", "badgeVariant": "gradient" }
       ]
     },
     "functional": {
@@ -120,5 +141,21 @@
         }
       ]
     }
-  }
+  },
+  
+  "examples": [
+    {
+      "description": "Explicit cardlink with data-wb",
+      "html": "<article data-wb=\"cardlink\" data-href=\"/page\" data-title=\"My Page\"></article>"
+    },
+    {
+      "description": "AutoInjected cardlink (with autoInject enabled)",
+      "html": "<article data-href=\"/page\" data-title=\"My Page\" data-badge=\"NEW\"></article>",
+      "note": "Automatically enhanced when WB.init({ autoInject: true })"
+    },
+    {
+      "description": "Cardlink with icon and gradient badge",
+      "html": "<article data-href=\"/featured\" data-icon=\"⭐\" data-title=\"Featured\" data-badge=\"HOT\" data-badge-variant=\"gradient\"></article>"
+    }
+  ]
 }

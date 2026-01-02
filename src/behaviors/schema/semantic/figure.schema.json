@@ -20,16 +20,23 @@
   
   "type": "object",
   "properties": {
+    "imgSrc": {
+      "type": "string",
+      "description": "Image source URL - auto-generates <img> child if provided",
+      "htmlAttribute": "data-img-src",
+      "canvasEditable": false
+    },
     "src": {
       "type": "string",
-      "description": "Source URL for image/video/audio",
+      "description": "Source URL for image/video/audio (legacy, use imgSrc for attribute-driven)",
       "canvasEditable": false
     },
     "alt": {
       "type": "string",
-      "description": "Alternative text for images - REQUIRED for accessibility",
+      "description": "Alternative text for images - defaults to imgSrc if omitted",
+      "htmlAttribute": "data-alt",
       "canvasEditable": true,
-      "default": ""
+      "default": "(uses imgSrc value)"
     },
     "caption": {
       "type": "string",
@@ -59,9 +66,11 @@
   },
   
   "structure": {
-    "template": "<figure>\n  <img src=\"{{src}}\" alt=\"{{alt}}\" />\n  <figcaption>{{caption}}</figcaption>\n</figure>",
+    "preferredTemplate": "<figure data-img-src=\"{{imgSrc}}\" data-alt=\"{{alt}}\" data-caption=\"{{caption}}\"></figure>",
+    "legacyTemplate": "<figure data-caption=\"{{caption}}\">\n  <img src=\"{{src}}\" alt=\"{{alt}}\" />\n</figure>",
     "conditionalRendering": {
-      "caption": "Render figcaption only if caption is not empty"
+      "caption": "Render figcaption only if caption is not empty",
+      "alt": "If omitted, defaults to imgSrc value"
     }
   },
   

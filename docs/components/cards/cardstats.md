@@ -61,11 +61,18 @@ Card Stats **IS-A** card, inheriting semantic structure.
 
 ### Basic Stat
 
+<article data-wb="cardstats" data-value="1,234"></article>
+
 ```html
 <article data-wb="cardstats" data-value="1,234"></article>
 ```
 
 ### Stat with Label
+
+<article data-wb="cardstats"
+         data-value="1,234"
+         data-label="Total Users">
+</article>
 
 ```html
 <article data-wb="cardstats"
@@ -75,6 +82,12 @@ Card Stats **IS-A** card, inheriting semantic structure.
 ```
 
 ### Stat with Icon
+
+<article data-wb="cardstats"
+         data-value="$50K"
+         data-label="Revenue"
+         data-icon="💰">
+</article>
 
 ```html
 <article data-wb="cardstats"
@@ -86,6 +99,13 @@ Card Stats **IS-A** card, inheriting semantic structure.
 
 ### Stat with Trend
 
+<article data-wb="cardstats"
+         data-value="89%"
+         data-label="Satisfaction"
+         data-trend="up"
+         data-trend-value="+5%">
+</article>
+
 ```html
 <article data-wb="cardstats"
          data-value="89%"
@@ -96,6 +116,15 @@ Card Stats **IS-A** card, inheriting semantic structure.
 ```
 
 ### Full Stats Card
+
+<article data-wb="cardstats"
+         data-value="2,847"
+         data-label="Active Users"
+         data-icon="👥"
+         data-trend="up"
+         data-trend-value="+12%"
+         data-elevated="true">
+</article>
 
 ```html
 <article data-wb="cardstats"
@@ -109,6 +138,28 @@ Card Stats **IS-A** card, inheriting semantic structure.
 ```
 
 ## Structure
+
+<article class="wb-card wb-card--stats">
+  <!-- Header with icon (when icon is set) -->
+  <header class="wb-card__header">
+    <span class="wb-card__stats-icon">💰</span>
+  </header>
+  
+  <!-- Main content -->
+  <main class="wb-card__main">
+    <!-- Semantic data element for value -->
+    <data class="wb-card__stats-value" value="50000">$50K</data>
+    
+    <!-- Label -->
+    <p class="wb-card__stats-label">Revenue</p>
+    
+    <!-- Trend indicator (when trend is set) -->
+    <p class="wb-card__stats-trend wb-card__stats-trend--up">
+      <span class="trend-icon">↑</span>
+      <span class="trend-value">+12%</span>
+    </p>
+  </main>
+</article>
 
 ```html
 <article class="wb-card wb-card--stats">
@@ -220,6 +271,42 @@ Benefits:
 
 ### Dashboard KPIs
 
+<!-- Users -->
+<article data-wb="cardstats"
+         data-value="12,847"
+         data-label="Total Users"
+         data-icon="👥"
+         data-trend="up"
+         data-trend-value="+8.2%">
+</article>
+
+<!-- Revenue -->
+<article data-wb="cardstats"
+         data-value="$284K"
+         data-label="Monthly Revenue"
+         data-icon="💰"
+         data-trend="up"
+         data-trend-value="+15%">
+</article>
+
+<!-- Orders -->
+<article data-wb="cardstats"
+         data-value="1,492"
+         data-label="Orders"
+         data-icon="📦"
+         data-trend="down"
+         data-trend-value="-3.1%">
+</article>
+
+<!-- Conversion -->
+<article data-wb="cardstats"
+         data-value="3.2%"
+         data-label="Conversion Rate"
+         data-icon="📈"
+         data-trend="neutral"
+         data-trend-value="0%">
+</article>
+
 ```html
 <!-- Users -->
 <article data-wb="cardstats"
@@ -260,6 +347,12 @@ Benefits:
 
 ### Compact Stats Row
 
+<div style="display: flex; gap: 1rem;">
+  <article data-wb="cardstats" data-value="42" data-label="Projects"></article>
+  <article data-wb="cardstats" data-value="128" data-label="Tasks"></article>
+  <article data-wb="cardstats" data-value="97%" data-label="Complete"></article>
+</div>
+
 ```html
 <div style="display: flex; gap: 1rem;">
   <article data-wb="cardstats" data-value="42" data-label="Projects"></article>
@@ -269,6 +362,15 @@ Benefits:
 ```
 
 ### Large Elevated Stats
+
+<article data-wb="cardstats"
+         data-value="$1.2M"
+         data-label="Annual Revenue"
+         data-icon="🏆"
+         data-trend="up"
+         data-trend-value="+24%"
+         data-elevated="true">
+</article>
 
 ```html
 <article data-wb="cardstats"

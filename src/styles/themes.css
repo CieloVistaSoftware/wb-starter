@@ -1031,6 +1031,7 @@
   --success-color: hsl(160, 84%, 39%);
   --success-color-light: hsl(160, 72%, 52%);
   --success-color-dark: hsl(160, 84%, 29%);
+  --success-bg: hsla(160, 84%, 39%, 0.1);
   
   /* Danger / Error */
   --danger-color: hsl(0, 84%, 60%);

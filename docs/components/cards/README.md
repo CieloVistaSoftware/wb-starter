@@ -2,7 +2,7 @@
 
 ## Overview
 
-The WB Behaviors provides 19 card variants that all inherit from a base card. Cards use semantic `<article>` elements and support inline text editing.
+The Web Behaviors (WB) library provides 19 card variants that all inherit from a base card. Cards use semantic `<article>` elements and support inline text editing.
 
 ## Base Card Properties
 

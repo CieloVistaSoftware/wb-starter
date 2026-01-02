@@ -57,12 +57,18 @@ const behaviorModules = {
   // Feedback (10) → feedback.js
   toast: 'feedback', badge: 'feedback', progress: 'feedback', spinner: 'feedback',
   avatar: 'feedback', chip: 'feedback', alert: 'feedback', skeleton: 'feedback',
-  divider: 'feedback', breadcrumb: 'feedback', notify: 'feedback',
+  divider: 'feedback', breadcrumb: 'feedback', notify: 'feedback', pill: 'feedback',
   
   // Navigation (8) → navigation.js
   navbar: 'navigation', sidebar: 'navigation', menu: 'navigation',
   pagination: 'navigation', steps: 'navigation', treeview: 'navigation',
   backtotop: 'navigation', link: 'navigation', statusbar: 'navigation',
+  
+  // Header → header.js
+  header: 'header',
+  
+  // Footer → footer.js
+  footer: 'footer',
   
   // Data Display - Semantic HTML
   table: 'semantics/table',
@@ -129,11 +135,13 @@ const behaviorModules = {
   draggable: 'draggable',
   resizable: 'resizable',
   globe: 'globe',
+  scrollalong: 'scrollalong',
   scrollProgress: 'scroll-progress',
   slider: 'slider',
+  sticky: 'sticky',
   grid: 'layouts', flex: 'layouts', container: 'layouts', stack: 'layouts',
   cluster: 'layouts', center: 'layouts', sidebarlayout: 'layouts', 'sidebar-layout': 'layouts',
-  switcher: 'layouts', masonry: 'layouts', sticky: 'layouts', fixed: 'layouts',
+  switcher: 'layouts', masonry: 'layouts', fixed: 'layouts',
   scrollable: 'layouts', cover: 'layouts', frame: 'layouts', reel: 'layouts',
   imposter: 'layouts', icon: 'layouts', drawerLayout: 'layouts', 'drawer-layout': 'layouts',
   
@@ -144,6 +152,7 @@ const behaviorModules = {
   ripple: 'ripple',
   darkmode: 'darkmode',
   themecontrol: 'themecontrol',
+  codecontrol: 'codecontrol',
   lazy: 'helpers', print: 'helpers', share: 'helpers', fullscreen: 'helpers',
   hotkey: 'helpers', clipboard: 'helpers', scroll: 'helpers', truncate: 'helpers',
   highlight: 'helpers', external: 'helpers', countdown: 'helpers', clock: 'helpers',

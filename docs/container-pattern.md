@@ -5,11 +5,9 @@
 Container components are components that can accept other components as children. This enables building complex nested layouts like:
 
 ```
-accordion
-  └─ accordion-item
-       └─ avatar
-       └─ badge
-       └─ button
+details
+  └─ summary
+  └─ div (content)
 ```
 
 ## Schema Definition
@@ -18,10 +16,10 @@ Container components declare their capability in the schema:
 
 ```json
 {
-  "behavior": "accordion",
+  "behavior": "details",
   "container": {
     "enabled": true,
-    "dropZone": ".accordion-content",
+    "dropZone": "div",
     "accepts": ["all"],
     "rejects": ["modal", "drawer"],
     "maxChildren": null,
@@ -43,16 +41,23 @@ Container components declare their capability in the schema:
 
 ## Builder Configuration
 
-In `builder.js`, container components are marked with `container: true`:
+In `builder.js`, container components are marked with `container: true`. The configuration uses abbreviated keys for compactness:
+
+| Key | Full Name | Description |
+|-----|-----------|-------------|
+| `n` | Name | Display name in the component palette |
+| `i` | Icon | Emoji or icon for the component |
+| `b` | Behavior | The Web Behaviors (WB) identifier |
+| `d` | Data | Default properties object |
 
 ```javascript
 { 
-  n: 'Accordion', 
-  i: '📑', 
-  b: 'accordion', 
-  d: { multiple: false },
+  n: 'Details', 
+  i: '▶️', 
+  b: 'details', 
+  d: { open: true },
   container: true,
-  dropZone: '.wb-accordion__content',
+  dropZone: 'div',
   accepts: ['all'],
   rejects: ['modal', 'drawer', 'offcanvas']
 }
@@ -96,7 +101,7 @@ function handleDrop(e, draggedComponent) {
 ### Container Components List
 
 Current container components:
-- `accordion` - Each item can contain any components
+- `details` - Content area accepts children
 - `tabs` - Each tab panel can contain any components
 - `card` - Main content area accepts children
 - `modal` - Body content accepts children

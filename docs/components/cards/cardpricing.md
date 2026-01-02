@@ -53,6 +53,11 @@ Card Pricing **IS-A** card, inheriting semantic structure.
 
 ### Basic Pricing Card
 
+<article data-wb="cardpricing"
+         data-plan="Basic"
+         data-price="$9">
+</article>
+
 ```html
 <article data-wb="cardpricing"
          data-plan="Basic"
@@ -61,6 +66,12 @@ Card Pricing **IS-A** card, inheriting semantic structure.
 ```
 
 ### Pricing with Period
+
+<article data-wb="cardpricing"
+         data-plan="Pro"
+         data-price="$29"
+         data-period="/month">
+</article>
 
 ```html
 <article data-wb="cardpricing"
@@ -72,6 +83,12 @@ Card Pricing **IS-A** card, inheriting semantic structure.
 
 ### Pricing with Features
 
+<article data-wb="cardpricing"
+         data-plan="Pro"
+         data-price="$29"
+         data-features="10 Projects,Unlimited Storage,Priority Support">
+</article>
+
 ```html
 <article data-wb="cardpricing"
          data-plan="Pro"
@@ -81,6 +98,14 @@ Card Pricing **IS-A** card, inheriting semantic structure.
 ```
 
 ### Featured Plan
+
+<article data-wb="cardpricing"
+         data-plan="Business"
+         data-price="$99"
+         data-period="/month"
+         data-features="Unlimited Projects,Dedicated Support,Custom Integrations"
+         data-featured="true">
+</article>
 
 ```html
 <article data-wb="cardpricing"
@@ -93,6 +118,16 @@ Card Pricing **IS-A** card, inheriting semantic structure.
 ```
 
 ### Full Pricing Card
+
+<article data-wb="cardpricing"
+         data-plan="Enterprise"
+         data-price="$299"
+         data-period="/month"
+         data-features="Everything in Business,SLA Guarantee,On-premise Option,24/7 Phone Support"
+         data-cta="Contact Sales"
+         data-cta-href="/contact"
+         data-elevated="true">
+</article>
 
 ```html
 <article data-wb="cardpricing"
@@ -107,6 +142,31 @@ Card Pricing **IS-A** card, inheriting semantic structure.
 ```
 
 ## Structure
+
+<article class="wb-card wb-card--pricing">
+  <!-- Plan header -->
+  <header class="wb-card__header">
+    <h3 class="wb-card__plan">Pro</h3>
+  </header>
+  
+  <!-- Pricing display -->
+  <div class="wb-card__price">
+    <data class="wb-card__amount" value="29">$29</data>
+    <span class="wb-card__period">/month</span>
+  </div>
+  
+  <!-- Features list -->
+  <ul class="wb-card__features">
+    <li>10 Projects</li>
+    <li>Unlimited Storage</li>
+    <li>Priority Support</li>
+  </ul>
+  
+  <!-- CTA in footer -->
+  <footer class="wb-card__footer">
+    <a href="#" class="wb-card__cta">Get Started</a>
+  </footer>
+</article>
 
 ```html
 <article class="wb-card wb-card--pricing">
@@ -261,6 +321,36 @@ Featured cards receive visual emphasis:
 
 ### Three-Tier Pricing
 
+<div style="display: flex; gap: 1rem; align-items: stretch;">
+  <!-- Basic -->
+  <article data-wb="cardpricing"
+           data-plan="Basic"
+           data-price="$9"
+           data-period="/month"
+           data-features="5 Projects,1GB Storage,Email Support"
+           data-cta="Start Free">
+  </article>
+  
+  <!-- Pro (Featured) -->
+  <article data-wb="cardpricing"
+           data-plan="Pro"
+           data-price="$29"
+           data-period="/month"
+           data-features="25 Projects,10GB Storage,Priority Support,API Access"
+           data-cta="Get Pro"
+           data-featured="true">
+  </article>
+  
+  <!-- Enterprise -->
+  <article data-wb="cardpricing"
+           data-plan="Enterprise"
+           data-price="$99"
+           data-period="/month"
+           data-features="Unlimited Projects,Unlimited Storage,24/7 Support,Custom Integrations,SLA"
+           data-cta="Contact Sales">
+  </article>
+</div>
+
 ```html
 <div style="display: flex; gap: 1rem; align-items: stretch;">
   <!-- Basic -->
@@ -295,6 +385,15 @@ Featured cards receive visual emphasis:
 
 ### Annual Pricing
 
+<article data-wb="cardpricing"
+         data-plan="Annual Pro"
+         data-price="$290"
+         data-period="/year"
+         data-features="Save $58,All Pro Features,Priority Onboarding"
+         data-cta="Save 17%"
+         data-featured="true">
+</article>
+
 ```html
 <article data-wb="cardpricing"
          data-plan="Annual Pro"
@@ -308,6 +407,14 @@ Featured cards receive visual emphasis:
 
 ### Free Tier
 
+<article data-wb="cardpricing"
+         data-plan="Free"
+         data-price="$0"
+         data-period=""
+         data-features="1 Project,100MB Storage,Community Support"
+         data-cta="Sign Up Free">
+</article>
+
 ```html
 <article data-wb="cardpricing"
          data-plan="Free"
@@ -319,6 +426,15 @@ Featured cards receive visual emphasis:
 ```
 
 ### Custom/Contact
+
+<article data-wb="cardpricing"
+         data-plan="Custom"
+         data-price="Custom"
+         data-period=""
+         data-features="Tailored Solution,Volume Discounts,Dedicated Account Manager"
+         data-cta="Request Quote"
+         data-cta-href="/contact">
+</article>
 
 ```html
 <article data-wb="cardpricing"

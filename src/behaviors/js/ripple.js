@@ -4,9 +4,9 @@
  */
 export function ripple(element, options = {}) {
   const config = {
-    color: options.color || element.dataset.rippleColor || 'rgba(255, 255, 255, 0.4)',
-    duration: parseInt(options.duration || element.dataset.rippleDuration || '600', 10),
-    centered: options.centered ?? element.hasAttribute('data-ripple-centered'),
+    color: options.color || element.dataset.rippleColor || element.getAttribute('ripple-color') || 'rgba(255, 255, 255, 0.4)',
+    duration: parseInt(options.duration || element.dataset.rippleDuration || element.getAttribute('ripple-duration') || '600', 10),
+    centered: options.centered ?? (element.hasAttribute('data-ripple-centered') || element.hasAttribute('ripple-centered')),
     ...options
   };
 

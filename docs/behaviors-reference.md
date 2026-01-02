@@ -1,4 +1,4 @@
-# WB Behaviors Reference
+# Web Behaviors (WB) Reference
 
 This document lists all available behaviors in the WB Behaviors, categorized by function.
 
@@ -15,17 +15,37 @@ Behaviors are automatically attached to standard HTML5 semantic elements. This i
 <nav>...</nav>
 ```
 
+### Custom Tags (Declarative)
+For layouts and specific components, you can use custom `<wb-*>` tags. This provides a clean, semantic way to define structure.
+
+```html
+<!-- Declarative Layout -->
+<wb-grid columns="3">
+  <wb-card>...</wb-card>
+</wb-grid>
+
+<!-- Semantic Aliases -->
+<wb-row>...</wb-row>    <!-- Horizontal Flex -->
+<wb-column>...</wb-column> <!-- Vertical Stack -->
+```
+
 ### Explicit Injection (Legacy)
 You can also apply any behavior by adding the `data-wb` attribute to an HTML element:
 
 ```html
-<div data-wb="behavior-name" data-option="value"></div>
+<div 
+  data-wb="behavior-name" 
+  data-option="value">
+</div>
 ```
 
 You can combine multiple behaviors:
 
 ```html
-<div data-wb="card animate" data-animation="fadein"></div>
+<div 
+  data-wb="card animate" 
+  data-animation="fadein">
+</div>
 ```
 
 ## Categories
@@ -87,18 +107,24 @@ Rich interactive components.
 ### 3. Layout & Structure
 Tools for arranging content.
 
-| Behavior | Description | Semantic Element (Auto) | Usage (Explicit) |
-|----------|-------------|-------------------------|------------------|
-| `grid` | CSS Grid layout | - | `<div data-wb="grid">` |
-| `flex` | Flexbox layout | - | `<div data-wb="flex">` |
-| `container` | Responsive container | - | `<div data-wb="container">` |
-| `stack` | Vertical stack | - | `<div data-wb="stack">` |
-| `cluster` | Horizontal cluster | - | `<div data-wb="cluster">` |
-| `center` | Centered content | - | `<div data-wb="center">` |
-| `masonry` | Masonry grid layout | - | `<div data-wb="masonry">` |
-| `sticky` | Sticky positioning | - | `<div data-wb="sticky">` |
+| Behavior | Description | Custom Tag | Usage (Explicit) |
+|----------|-------------|------------|------------------|
+| `grid` | CSS Grid layout | `<wb-grid>` | `<div data-wb="grid">` |
+| `flex` | Flexbox layout | `<wb-flex>`, `<wb-row>` | `<div data-wb="flex">` |
+| `container` | Responsive container | `<wb-container>` | `<div data-wb="container">` |
+| `stack` | Vertical stack | `<wb-stack>`, `<wb-column>` | `<div data-wb="stack">` |
+| `cluster` | Horizontal cluster | `<wb-cluster>` | `<div data-wb="cluster">` |
+| `center` | Centered content | `<wb-center>` | `<div data-wb="center">` |
+| `masonry` | Masonry grid layout | `<wb-masonry>` | `<div data-wb="masonry">` |
+| `sticky` | Sticky positioning | `<wb-sticky>` | `<div data-wb="sticky">` |
 | `scrollable` | Scrollable area | - | `<div data-wb="scrollable">` |
-| `drawerLayout` | App layout with drawer | - | `<div data-wb="drawerLayout">` |
+| `drawerLayout` | App layout with drawer | `<wb-drawer>` | `<div data-wb="drawerLayout">` |
+| `sidebarlayout` | Sidebar layout | `<wb-sidebar>` | `<div data-wb="sidebarlayout">` |
+| `switcher` | Responsive switcher | `<wb-switcher>` | `<div data-wb="switcher">` |
+| `cover` | Full-screen cover | `<wb-cover>` | `<div data-wb="cover">` |
+| `frame` | Aspect ratio frame | `<wb-frame>` | `<div data-wb="frame">` |
+| `reel` | Horizontal reel | `<wb-reel>` | `<div data-wb="reel">` |
+| `icon` | Icon wrapper | `<wb-icon>` | `<div data-wb="icon">` |
 | `draggable` | Draggable element | - | `<div data-wb="draggable">` |
 | `resizable` | Resizable element | - | `<div data-wb="resizable">` |
 

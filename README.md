@@ -1,4 +1,4 @@
-# WB Starter
+# Web Behaviors (WB) Starter
 
 A modern website starter kit powered by [WB Behaviors](https://github.com/CieloVistaSoftware/wb-behaviors). Config-driven, zero build step, 23 themes included.
 

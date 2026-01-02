@@ -75,7 +75,8 @@
     "setup": [
       "<span data-wb=\"badge\">New</span>",
       "<span data-wb=\"badge\" data-variant=\"success\">Done</span>",
-      "<span data-wb=\"badge\" data-variant=\"error\" data-pill>5</span>"
+      "<span data-wb=\"badge\" data-variant=\"error\" data-pill>5</span>",
+      "<span badge=\"success\">Global</span>"
     ],
     "matrix": {
       "combinations": [
@@ -87,6 +88,18 @@
         {"variant": "primary"},
         {"pill": true},
         {"variant": "success", "pill": true}
+      ]
+    },
+    "functional": {
+      "visual": [
+        {
+          "name": "global attribute applies variant",
+          "setup": "<span badge=\"success\">Success</span>",
+          "expect": {
+            "selector": "element",
+            "hasClass": "wb-badge--success"
+          }
+        }
       ]
     }
   }

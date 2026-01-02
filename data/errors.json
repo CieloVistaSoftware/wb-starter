@@ -1,36 +1,82 @@
 {
-  "lastUpdated": "2025-12-29T01:32:21.286Z",
+  "lastUpdated": "2026-01-02T05:56:22.646Z",
   "count": 1,
   "errors": [
     {
-      "id": 1766971941286,
-      "timestamp": "2025-12-29T01:32:21.286Z",
+      "id": 1767333382645,
+      "timestamp": "2026-01-02T05:56:22.645Z",
       "level": "error",
-      "source": "Promise",
-      "module": "builder-tree.js",
-      "line": 1146,
-      "column": 34,
-      "function": "window.openDocs",
-      "message": "Cannot read properties of undefined (reading 'charAt')",
-      "stack": "TypeError: Cannot read properties of undefined (reading 'charAt')\n    at window.openDocs (http://localhost:3000/src/builder/builder-tree.js:1146:34)\n    at item.onclick (http://localhost:3000/src/builder/builder-tree.js:1451:9)",
+      "source": "WB:behaviors-showcase",
+      "module": "index.js",
+      "line": 205,
+      "column": 11,
+      "function": "getBehavior",
+      "message": "[WB] Unknown behavior: behaviors-showcase",
+      "stack": "Error: [WB] Unknown behavior: behaviors-showcase\n    at getBehavior (http://localhost:3000/src/behaviors/index.js:205:11)\n    at Proxy.<anonymous> (http://localhost:3000/src/behaviors/index.js:279:24)\n    at Object.inject (http://localhost:3000/src/core/wb.js:142:45)\n    at http://localhost:3000/src/core/wb.js:218:26\n    at Array.forEach (<anonymous>)\n    at http://localhost:3000/src/core/wb.js:217:20\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:214:14)\n    at eval (eval at evaluate (:291:30), <anonymous>:6:21)\n    at UtilityScript.evaluate (<anonymous>:293:16)",
       "frames": [
         {
-          "function": "window.openDocs",
-          "file": "builder-tree.js",
-          "fullPath": "http://localhost:3000/src/builder/builder-tree.js",
-          "line": 1146,
-          "column": 34
+          "function": "getBehavior",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 205,
+          "column": 11
         },
         {
-          "function": "item.onclick",
-          "file": "builder-tree.js",
-          "fullPath": "http://localhost:3000/src/builder/builder-tree.js",
-          "line": 1451,
-          "column": 9
+          "function": "Proxy.<anonymous>",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/behaviors/index.js",
+          "line": 279,
+          "column": 24
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 142,
+          "column": 45
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 218,
+          "column": 26
+        },
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 217,
+          "column": 20
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 214,
+          "column": 14
+        },
+        {
+          "function": "eval",
+          "file": "eval at evaluate (",
+          "fullPath": "eval at evaluate (",
+          "line": 291,
+          "column": 30
+        },
+        {
+          "function": "UtilityScript.evaluate",
+          "file": "<anonymous>",
+          "fullPath": "<anonymous>",
+          "line": 293,
+          "column": 16
         }
       ],
-      "url": "http://localhost:3000/builder.html",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0"
+      "url": "http://localhost:3000/index.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Semantic HTML Elements
 
-WB Behaviors uses semantic HTML elements as the foundation for all components. This ensures accessibility, SEO benefits, and meaningful document structure.
+Web Behaviors (WB) uses semantic HTML elements as the foundation for all components. This ensures accessibility, SEO benefits, and meaningful document structure.
 
 ## Element Hierarchy
 

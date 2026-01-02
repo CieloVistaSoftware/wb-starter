@@ -34,31 +34,71 @@ export function navbar(element, options = {}) {
     element.style.zIndex = '100';
   }
 
-  element.innerHTML = `
-    <div class="wb-navbar__brand" style="
-      font-weight: 700;
-      white-space: nowrap;
-      flex-shrink: 0;
-    ">${config.brand}</div>
-    <nav class="wb-navbar__menu" style="
-      display: flex;
-      gap: 1.5rem;
-      flex: 1;
-      flex-wrap: wrap;
-    ">
-      ${config.items.map(item => `
-        <a class="wb-navbar__item" href="#" style="
-          opacity: 0.8;
-          text-decoration: none;
-          color: inherit;
-          transition: opacity 0.15s ease;
-          white-space: nowrap;
-        " onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'">
-          ${item.trim()}
-        </a>
-      `).join('')}
-    </nav>
-  `;
+  // If items are provided via data attributes, generate the content
+  if (config.items.length > 0 || config.brand) {
+    element.innerHTML = `
+      <div class="wb-navbar__brand" style="
+        font-weight: 700;
+        white-space: nowrap;
+        flex-shrink: 0;
+      ">${config.brand}</div>
+      <div class="wb-navbar__menu" style="
+        display: flex;
+        gap: 1.5rem;
+        flex: 1;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      ">
+        ${config.items.map(item => `
+          <a class="wb-navbar__item" href="#" style="
+            opacity: 0.8;
+            text-decoration: none;
+            color: inherit;
+            transition: opacity 0.15s ease;
+            white-space: nowrap;
+          " onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'">
+            ${item.trim()}
+          </a>
+        `).join('')}
+      </div>
+    `;
+  } else {
+    // Semantic Mode: Enhance existing content
+    // 1. Find or style the list
+    const list = element.querySelector('ul, ol');
+    if (list) {
+      list.style.display = 'flex';
+      list.style.gap = '1.5rem';
+      list.style.listStyle = 'none';
+      list.style.margin = '0';
+      list.style.padding = '0';
+      list.style.flex = '1';
+      list.style.flexWrap = 'wrap';
+      
+      // Style links within the list
+      const links = list.querySelectorAll('a');
+      links.forEach(link => {
+        link.style.opacity = '0.8';
+        link.style.textDecoration = 'none';
+        link.style.color = 'inherit';
+        link.style.transition = 'opacity 0.15s ease';
+        link.style.whiteSpace = 'nowrap';
+        
+        link.addEventListener('mouseenter', () => link.style.opacity = '1');
+        link.addEventListener('mouseleave', () => link.style.opacity = '0.8');
+      });
+    }
+    
+    // 2. Style any headings as brand
+    const brand = element.querySelector('h1, h2, h3, h4, h5, h6, .brand');
+    if (brand) {
+      brand.style.fontWeight = '700';
+      brand.style.whiteSpace = 'nowrap';
+      brand.style.flexShrink = '0';
+      brand.style.margin = '0';
+      brand.style.fontSize = '1.25rem';
+    }
+  }
 
   element.dataset.wbReady = 'navbar';
   return () => element.classList.remove('wb-navbar');
@@ -561,7 +601,8 @@ export function statusbar(element, options = {}) {
     element.style.bottom = '0';
     element.style.left = '0';
     element.style.zIndex = '100';
-    document.body.style.paddingBottom = '1.5rem';
+    // Compliance: Do not modify body padding. User must handle layout spacing.
+    // document.body.style.paddingBottom = '1.5rem';
   } else if (config.position === 'top') {
     element.style.position = 'fixed';
     element.style.top = '0';
@@ -569,7 +610,8 @@ export function statusbar(element, options = {}) {
     element.style.zIndex = '100';
     element.style.borderTop = 'none';
     element.style.borderBottom = '1px solid var(--border-color, #374151)';
-    document.body.style.paddingTop = '1.5rem';
+    // Compliance: Do not modify body padding.
+    // document.body.style.paddingTop = '1.5rem';
   }
 
   // Create message area
@@ -613,9 +655,9 @@ export function statusbar(element, options = {}) {
     // Add right items
     const rightItems = config.items.slice(Math.ceil(config.items.length / 2));
     rightItems.forEach(item => {
-      const span = document.createElement('span');
-      span.textContent = item.trim();
-      element.appendChild(span);
+      const rightSpan = document.createElement('span');
+      rightSpan.textContent = item.trim();
+      element.appendChild(rightSpan);
     });
   }
 

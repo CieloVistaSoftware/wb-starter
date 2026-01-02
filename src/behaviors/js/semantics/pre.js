@@ -23,25 +23,38 @@ export function pre(element, options = {}) {
     maxHeight: options.maxHeight || element.dataset.maxHeight || '',
     wrap: options.wrap ?? (element.hasAttribute('data-wrap') ? element.dataset.wrap !== 'false' : defaultWrap),
     scrollable: scrollable,
+    size: options.size || element.dataset.size || 'xs',
     ...options
   };
 
+  // Size mappings - compact by default
+  const sizeMap = {
+    xs: '0.55rem',
+    sm: '0.6rem',
+    md: '0.65rem',
+    lg: '0.75rem',
+    xl: '0.85rem'
+  };
+  const fontSize = sizeMap[config.size] || sizeMap.xs;
+
   element.classList.add('wb-pre');
 
-  // Base styling
+  // Base styling - ensure no overflow
   Object.assign(element.style, {
     fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-    fontSize: '0.875rem',
-    padding: (config.showCopy || config.language) ? '2rem 1rem 1rem 1rem' : '1rem',
+    fontSize: fontSize,
+    padding: (config.showCopy || config.language) ? '1.5rem 0.75rem 0.75rem 0.75rem' : '0.75rem',
     borderRadius: '0', // Wrapper handles radius
     backgroundColor: 'transparent', // Wrapper handles bg
     color: 'var(--text-code, #d4d4d4)',
     border: 'none', // Wrapper handles border
-    overflow: config.scrollable ? 'auto' : 'visible',
+    overflow: config.scrollable ? 'auto' : 'hidden',
     whiteSpace: config.wrap ? 'pre-wrap' : 'pre',
-    wordBreak: config.wrap ? 'break-word' : 'normal',
+    wordBreak: 'break-word', // Always break long words to prevent overflow
+    overflowWrap: 'break-word',
     margin: '0',
     width: '100%',
+    maxWidth: '100%',
     boxSizing: 'border-box'
   });
 
@@ -84,13 +97,14 @@ export function pre(element, options = {}) {
       background: var(--bg-secondary, #1f2937);
       border: 1px solid var(--border-color, #374151);
       color: var(--text-secondary, #9ca3af);
-      padding: 0.25rem 0.5rem;
-      border-radius: var(--radius-sm, 4px);
+      padding: 0.1rem 0.3rem;
+      border-radius: var(--radius-sm, 3px);
       cursor: pointer;
-      font-size: 0.75rem;
+      font-size: 0.6rem;
+      line-height: 1;
       transition: all 0.2s ease;
       z-index: 10;
-      opacity: 0.7;
+      opacity: 0.6;
     `;
 
     copyButton.addEventListener('mouseenter', () => {
@@ -200,16 +214,17 @@ export function pre(element, options = {}) {
       left: 0;
       top: 0;
       bottom: 0;
-      padding: ${topPadding} 0.5rem 1rem 0.5rem;
+      padding: ${topPadding} 0.25rem 1rem 0.25rem;
       background: var(--bg-secondary, rgba(0,0,0,0.2));
       color: var(--text-tertiary, #6b7280);
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.875rem;
+      font-size: 0.5rem;
       line-height: 1.5; /* Must match code line-height */
       text-align: right;
       user-select: none;
       border-right: 1px solid var(--border-color, #374151);
-      width: 3rem;
+      width: 1.5rem;
+      min-width: 1.5rem;
       box-sizing: border-box;
     `;
 
@@ -220,7 +235,7 @@ export function pre(element, options = {}) {
     });
 
     wrapper.insertBefore(lineNumbersEl, element);
-    element.style.paddingLeft = '4rem'; // 3rem width + 1rem padding
+    element.style.paddingLeft = '2rem'; // 1.5rem width + 0.5rem padding
     
     // Ensure line height matches
     element.style.lineHeight = '1.5';

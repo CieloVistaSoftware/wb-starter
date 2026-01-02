@@ -7,9 +7,9 @@
  */
 export function grid(element, options = {}) {
   const config = {
-    columns: options.columns || element.dataset.columns || '3',
-    gap: options.gap || element.dataset.gap || '1rem',
-    minWidth: options.minWidth || element.dataset.minWidth || '',
+    columns: options.columns || element.dataset.columns || element.getAttribute('columns') || '3',
+    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
+    minWidth: options.minWidth || element.dataset.minWidth || element.getAttribute('min-width') || '',
     ...options
   };
 
@@ -31,11 +31,11 @@ export function grid(element, options = {}) {
  */
 export function flex(element, options = {}) {
   const config = {
-    direction: options.direction || element.dataset.direction || 'row',
-    wrap: options.wrap || element.dataset.wrap || 'wrap',
-    justify: options.justify || element.dataset.justify || 'flex-start',
-    align: options.align || element.dataset.align || 'stretch',
-    gap: options.gap || element.dataset.gap || '1rem',
+    direction: options.direction || element.dataset.direction || element.getAttribute('direction') || 'row',
+    wrap: options.wrap || element.dataset.wrap || element.getAttribute('wrap') || 'wrap',
+    justify: options.justify || element.dataset.justify || element.getAttribute('justify') || 'flex-start',
+    align: options.align || element.dataset.align || element.getAttribute('align') || 'stretch',
+    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
     ...options
   };
 
@@ -57,14 +57,14 @@ export function flex(element, options = {}) {
  */
 export function container(element, options = {}) {
   const config = {
-    direction: options.direction || element.dataset.direction || 'column',
-    columns: parseInt(options.columns || element.dataset.columns || '1'),
-    gap: options.gap || element.dataset.gap || '1rem',
-    align: options.align || element.dataset.align || 'stretch',
-    justify: options.justify || element.dataset.justify || 'start',
-    wrap: (options.wrap ?? element.dataset.wrap) !== 'false',
-    padding: options.padding || element.dataset.padding || '1rem',
-    maxWidth: options.maxWidth || element.dataset.maxWidth || '',
+    direction: options.direction || element.dataset.direction || element.getAttribute('direction') || 'column',
+    columns: parseInt(options.columns || element.dataset.columns || element.getAttribute('columns') || '1'),
+    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
+    align: options.align || element.dataset.align || element.getAttribute('align') || 'stretch',
+    justify: options.justify || element.dataset.justify || element.getAttribute('justify') || 'start',
+    wrap: (options.wrap ?? element.dataset.wrap ?? element.getAttribute('wrap')) !== 'false',
+    padding: options.padding || element.dataset.padding || element.getAttribute('padding') || '1rem',
+    maxWidth: options.maxWidth || element.dataset.maxWidth || element.getAttribute('max-width') || '',
     ...options
   };
 
@@ -130,7 +130,7 @@ export function container(element, options = {}) {
  */
 export function stack(element, options = {}) {
   const config = {
-    gap: options.gap || element.dataset.gap || '1rem',
+    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
     ...options
   };
 
@@ -147,9 +147,9 @@ export function stack(element, options = {}) {
  */
 export function cluster(element, options = {}) {
   const config = {
-    gap: options.gap || element.dataset.gap || '1rem',
-    justify: options.justify || element.dataset.justify || 'flex-start',
-    align: options.align || element.dataset.align || 'center',
+    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
+    justify: options.justify || element.dataset.justify || element.getAttribute('justify') || 'flex-start',
+    align: options.align || element.dataset.align || element.getAttribute('align') || 'center',
     ...options
   };
 
@@ -168,9 +168,9 @@ export function cluster(element, options = {}) {
  */
 export function center(element, options = {}) {
   const config = {
-    maxWidth: options.maxWidth || element.dataset.maxWidth || '',
-    gutters: options.gutters || element.dataset.gutters || '1rem',
-    intrinsic: options.intrinsic ?? element.hasAttribute('data-intrinsic'),
+    maxWidth: options.maxWidth || element.dataset.maxWidth || element.getAttribute('max-width') || '',
+    gutters: options.gutters || element.dataset.gutters || element.getAttribute('gutters') || '1rem',
+    intrinsic: options.intrinsic ?? (element.hasAttribute('data-intrinsic') || element.hasAttribute('intrinsic')),
     ...options
   };
 
@@ -197,10 +197,10 @@ export function center(element, options = {}) {
  */
 export function sidebarlayout(element, options = {}) {
   const config = {
-    side: options.side || element.dataset.side || 'left',
-    sideWidth: options.sideWidth || element.dataset.sideWidth || '300px',
-    contentMin: options.contentMin || element.dataset.contentMin || '50%',
-    gap: options.gap || element.dataset.gap || '1rem',
+    side: options.side || element.dataset.side || element.getAttribute('side') || 'left',
+    sideWidth: options.sideWidth || element.dataset.sideWidth || element.getAttribute('side-width') || '300px',
+    contentMin: options.contentMin || element.dataset.contentMin || element.getAttribute('content-min') || '50%',
+    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
     ...options
   };
 
@@ -228,9 +228,9 @@ export function sidebarlayout(element, options = {}) {
  */
 export function switcher(element, options = {}) {
   const config = {
-    threshold: options.threshold || element.dataset.threshold || '30rem',
-    gap: options.gap || element.dataset.gap || '1rem',
-    limit: parseInt(options.limit || element.dataset.limit || '4'),
+    threshold: options.threshold || element.dataset.threshold || element.getAttribute('threshold') || '30rem',
+    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
+    limit: parseInt(options.limit || element.dataset.limit || element.getAttribute('limit') || '4'),
     ...options
   };
 
@@ -253,8 +253,8 @@ export function switcher(element, options = {}) {
  */
 export function masonry(element, options = {}) {
   const config = {
-    columns: parseInt(options.columns || element.dataset.columns || '3'),
-    gap: options.gap || element.dataset.gap || '1rem',
+    columns: parseInt(options.columns || element.dataset.columns || element.getAttribute('columns') || '3'),
+    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
     ...options
   };
 
@@ -276,9 +276,9 @@ export function masonry(element, options = {}) {
  */
 export function sticky(element, options = {}) {
   const config = {
-    top: options.top || element.dataset.top || '0',
-    bottom: options.bottom || element.dataset.bottom || '',
-    zIndex: options.zIndex || element.dataset.zIndex || '100',
+    top: options.top || element.dataset.top || element.getAttribute('top') || '0',
+    bottom: options.bottom || element.dataset.bottom || element.getAttribute('bottom') || '',
+    zIndex: options.zIndex || element.dataset.zIndex || element.getAttribute('z-index') || '100',
     ...options
   };
 
@@ -296,9 +296,9 @@ export function sticky(element, options = {}) {
  */
 export function fixed(element, options = {}) {
   const config = {
-    position: options.position || element.dataset.position || 'bottom-right',
-    offset: options.offset || element.dataset.offset || '1rem',
-    zIndex: options.zIndex || element.dataset.zIndex || '1000',
+    position: options.position || element.dataset.position || element.getAttribute('position') || 'bottom-right',
+    offset: options.offset || element.dataset.offset || element.getAttribute('offset') || '1rem',
+    zIndex: options.zIndex || element.dataset.zIndex || element.getAttribute('z-index') || '1000',
     ...options
   };
 
@@ -326,9 +326,9 @@ export function fixed(element, options = {}) {
  */
 export function scrollable(element, options = {}) {
   const config = {
-    direction: options.direction || element.dataset.direction || 'both',
-    maxHeight: options.maxHeight || element.dataset.maxHeight || '',
-    maxWidth: options.maxWidth || element.dataset.maxWidth || '',
+    direction: options.direction || element.dataset.direction || element.getAttribute('direction') || 'both',
+    maxHeight: options.maxHeight || element.dataset.maxHeight || element.getAttribute('max-height') || '',
+    maxWidth: options.maxWidth || element.dataset.maxWidth || element.getAttribute('max-width') || '',
     ...options
   };
 
@@ -351,8 +351,8 @@ export function scrollable(element, options = {}) {
  */
 export function cover(element, options = {}) {
   const config = {
-    minHeight: options.minHeight || element.dataset.minHeight || '100vh',
-    padding: options.padding || element.dataset.padding || '1rem',
+    minHeight: options.minHeight || element.dataset.minHeight || element.getAttribute('min-height') || '100vh',
+    padding: options.padding || element.dataset.padding || element.getAttribute('padding') || '1rem',
     ...options
   };
 
@@ -376,7 +376,7 @@ export function cover(element, options = {}) {
  */
 export function frame(element, options = {}) {
   const config = {
-    ratio: options.ratio || element.dataset.ratio || '16/9',
+    ratio: options.ratio || element.dataset.ratio || element.getAttribute('ratio') || '16/9',
     ...options
   };
 
@@ -399,8 +399,8 @@ export function frame(element, options = {}) {
  */
 export function reel(element, options = {}) {
   const config = {
-    itemWidth: options.itemWidth || element.dataset.itemWidth || 'auto',
-    gap: options.gap || element.dataset.gap || '1rem',
+    itemWidth: options.itemWidth || element.dataset.itemWidth || element.getAttribute('item-width') || 'auto',
+    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
     ...options
   };
 
@@ -425,8 +425,8 @@ export function reel(element, options = {}) {
  */
 export function imposter(element, options = {}) {
   const config = {
-    breakout: options.breakout ?? element.hasAttribute('data-breakout'),
-    margin: options.margin || element.dataset.margin || '0',
+    breakout: options.breakout ?? (element.hasAttribute('data-breakout') || element.hasAttribute('breakout')),
+    margin: options.margin || element.dataset.margin || element.getAttribute('margin') || '0',
     ...options
   };
 
@@ -449,8 +449,8 @@ export function imposter(element, options = {}) {
  */
 export function icon(element, options = {}) {
   const config = {
-    size: options.size || element.dataset.size || '1em',
-    space: options.space || element.dataset.space || '0.5em',
+    size: options.size || element.dataset.size || element.getAttribute('size') || '1em',
+    space: options.space || element.dataset.space || element.getAttribute('space') || '0.5em',
     ...options
   };
 
@@ -473,18 +473,18 @@ export function icon(element, options = {}) {
  */
 export function drawerLayout(element, options = {}) {
   const config = {
-    position: options.position || element.dataset.position || 'left',
-    width: options.width || element.dataset.width || '250px',
-    height: options.height || element.dataset.height || '250px',
-    minWidth: options.minWidth || element.dataset.minWidth || '1.5rem',
-    minHeight: options.minHeight || element.dataset.minHeight || '1.5rem',
-    maxWidth: options.maxWidth || element.dataset.maxWidth || '50vw',
-    maxHeight: options.maxHeight || element.dataset.maxHeight || '50vh',
-    resizable: options.resizable ?? (element.dataset.resizable === 'true'),
-    saveState: options.saveState ?? (element.dataset.saveState === 'true'),
+    position: options.position || element.dataset.position || element.getAttribute('position') || 'left',
+    width: options.width || element.dataset.width || element.getAttribute('width') || '250px',
+    height: options.height || element.dataset.height || element.getAttribute('height') || '250px',
+    minWidth: options.minWidth || element.dataset.minWidth || element.getAttribute('min-width') || '1.5rem',
+    minHeight: options.minHeight || element.dataset.minHeight || element.getAttribute('min-height') || '1.5rem',
+    maxWidth: options.maxWidth || element.dataset.maxWidth || element.getAttribute('max-width') || '50vw',
+    maxHeight: options.maxHeight || element.dataset.maxHeight || element.getAttribute('max-height') || '50vh',
+    resizable: options.resizable ?? (element.dataset.resizable === 'true' || element.getAttribute('resizable') === 'true'),
+    saveState: options.saveState ?? (element.dataset.saveState === 'true' || element.getAttribute('save-state') === 'true'),
     id: options.id || element.id || 'drawer',
-    toggleSelector: options.toggleSelector || element.dataset.toggleSelector,
-    handleSelector: options.handleSelector || element.dataset.handleSelector,
+    toggleSelector: options.toggleSelector || element.dataset.toggleSelector || element.getAttribute('toggle-selector'),
+    handleSelector: options.handleSelector || element.dataset.handleSelector || element.getAttribute('handle-selector'),
     ...options
   };
 
@@ -617,7 +617,7 @@ export function drawerLayout(element, options = {}) {
     
     if (config.position === 'left') {
         btnStyles += `
-          top: 50%; transform: translateY(-50%); right: 0;
+          top: 50%; transform: translateY(-50%); right: -${config.minWidth};
           width: ${config.minWidth}; height: 3rem;
           border-left: none; border-radius: 0 4px 4px 0;
         `;
@@ -692,45 +692,70 @@ export function drawerLayout(element, options = {}) {
         startY = e.clientY;
         startSize = isVertical ? element.offsetHeight : element.offsetWidth;
         
-        document.body.style.cursor = isVertical ? 'row-resize' : 'col-resize';
-        document.body.style.userSelect = 'none';
+        // Create overlay for cursor handling (Compliance: No body.style modification)
+        const overlay = document.createElement('div');
+        overlay.id = 'wb-resize-overlay';
+        overlay.style.cssText = `
+          position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+          z-index: 9999; cursor: ${isVertical ? 'row-resize' : 'col-resize'};
+          user-select: none;
+        `;
+        document.body.appendChild(overlay);
+        
         element.classList.add('resizing');
         
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
       };
 
+      let rAF = null;
+
       const onMouseMove = (e) => {
         if (!isResizing) return;
         
-        let newSize = startSize;
-        if (config.position === 'left') newSize = startSize + (e.clientX - startX);
-        else if (config.position === 'right') newSize = startSize - (e.clientX - startX);
-        else if (config.position === 'top') newSize = startSize + (e.clientY - startY);
-        else if (config.position === 'bottom') newSize = startSize - (e.clientY - startY);
-        
-        // Constraints
-        const min = parseInt(isVertical ? config.minHeight : config.minWidth);
-        const max = parseInt(isVertical ? config.maxHeight : config.maxWidth) || (isVertical ? window.innerHeight : window.innerWidth) * 0.8;
-        
-        newSize = Math.max(min, Math.min(max, newSize));
-        
-        if (isVertical) {
-          element.style.height = newSize + 'px';
-          element.style.minHeight = newSize + 'px';
-          element.style.flexBasis = newSize + 'px';
-        } else {
-          element.style.width = newSize + 'px';
-          element.style.minWidth = newSize + 'px';
-          element.style.flexBasis = newSize + 'px';
-        }
+        const clientX = e.clientX;
+        const clientY = e.clientY;
+
+        if (rAF) return;
+
+        rAF = requestAnimationFrame(() => {
+          let newSize = startSize;
+          if (config.position === 'left') newSize = startSize + (clientX - startX);
+          else if (config.position === 'right') newSize = startSize - (clientX - startX);
+          else if (config.position === 'top') newSize = startSize + (clientY - startY);
+          else if (config.position === 'bottom') newSize = startSize - (clientY - startY);
+          
+          // Constraints
+          const min = parseInt(isVertical ? config.minHeight : config.minWidth);
+          const max = parseInt(isVertical ? config.maxHeight : config.maxWidth) || (isVertical ? window.innerHeight : window.innerWidth) * 0.8;
+          
+          newSize = Math.max(min, Math.min(max, newSize));
+          
+          if (isVertical) {
+            element.style.height = newSize + 'px';
+            element.style.minHeight = newSize + 'px';
+            element.style.flexBasis = newSize + 'px';
+          } else {
+            element.style.width = newSize + 'px';
+            element.style.minWidth = newSize + 'px';
+            element.style.flexBasis = newSize + 'px';
+          }
+          rAF = null;
+        });
       };
 
       const onMouseUp = () => {
         if (isResizing) {
           isResizing = false;
-          document.body.style.cursor = '';
-          document.body.style.userSelect = '';
+          if (rAF) {
+            cancelAnimationFrame(rAF);
+            rAF = null;
+          }
+          
+          // Remove overlay
+          const resizeOverlay = document.getElementById('wb-resize-overlay');
+          if (resizeOverlay) resizeOverlay.remove();
+          
           element.classList.remove('resizing');
           
           // Save new size

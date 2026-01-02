@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Framework Integration Demo</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <style>
+    body { padding: 2rem; max-width: 1000px; margin: 0 auto; background: var(--bg-color); color: var(--text-primary); }
+    section { margin-bottom: 3rem; padding: 2rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-secondary); }
+    h2 { margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+    .framework-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: bold; margin-bottom: 1rem; }
+    .badge-react { background: #61dafb; color: #000; }
+    .badge-vue { background: #42b883; color: #fff; }
+    .badge-svelte { background: #ff3e00; color: #fff; }
+    code { background: rgba(0,0,0,0.3); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <a href="../index.html" style="display: inline-block; margin-bottom: 2rem; color: var(--text-secondary); text-decoration: none;">← Back to Home</a>
+  <h1>Framework Agnostic Demos</h1>
+  <p class="wb-text-secondary">WB Behaviors work with any framework because they rely on standard HTML attributes. The framework handles the DOM, and WB handles the behavior.</p>
+
+  <!-- Advantages Section -->
+  <section id="wb-advantages" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin-bottom: 3rem;">
+    <h2 style="margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">The WB Advantage</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+      <div>
+        <h3 style="margin-top: 0; color: var(--primary-color);">Universal Compatibility</h3>
+        <p style="font-size: 0.95rem; line-height: 1.5;">Write your behavior logic once using standard HTML attributes. It works identically in React, Vue, Svelte, or plain HTML.</p>
+      </div>
+      <div>
+        <h3 style="margin-top: 0; color: var(--primary-color);">Zero Lock-in</h3>
+        <p style="font-size: 0.95rem; line-height: 1.5;">Switching frameworks? Your UI behaviors stay the same. No need to rewrite tooltips, ripples, or validation logic.</p>
+      </div>
+      <div>
+        <h3 style="margin-top: 0; color: var(--primary-color);">Performance First</h3>
+        <p style="font-size: 0.95rem; line-height: 1.5;">Tiny footprint. Behaviors are lazy-loaded only when needed. No heavy hydration costs for simple interactions.</p>
+      </div>
+      <div>
+        <h3 style="margin-top: 0; color: var(--primary-color);">Progressive Enhancement</h3>
+        <p style="font-size: 0.95rem; line-height: 1.5;">Built on standard HTML. If JavaScript fails or hasn't loaded, your semantic HTML remains accessible and functional.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- React Demo -->
+  <section id="react-demo">
+    <span class="framework-badge badge-react">React</span>
+    <h2>React Integration</h2>
+    <p>This button is rendered by React. The <code>data-wb</code> attributes are passed as standard props.</p>
+    
+    <div id="react-root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    
+    <script>
+      const e = React.createElement;
+      
+      function ReactApp() {
+        const [count, setCount] = React.useState(0);
+
+        return e('div', { style: { padding: '1rem', border: '1px dashed #61dafb', borderRadius: '8px' } }, [
+          e('h3', { key: 'h3' }, `React Counter: ${count}`),
+          e('button', {
+            key: 'btn',
+            className: 'wb-btn-gradient',
+            'data-wb': 'ripple tooltip toast', // WB Behaviors
+            'data-tooltip': 'I am a React button!',
+            'data-message': `Count is now ${count + 1}`,
+            'data-type': 'info',
+            onClick: () => setCount(c => c + 1)
+          }, 'Increment + WB Magic ✨')
+        ]);
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('react-root'));
+      root.render(e(ReactApp));
+    </script>
+
+    <div style="margin-top: 1.5rem;">
+      <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
+      <pre data-wb="code" data-language="javascript" data-copy="true"><code>import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
+import WB from 'wb-behaviors';
+
+const e = React.createElement;
+
+function ReactApp() {
+  // Initialize WB when component mounts
+  useEffect(() => {
+    WB.init();
+  }, []);
+
+  const [count, setCount] = useState(0);
+
+  return e('div', { style: { padding: '1rem', border: '1px dashed #61dafb', borderRadius: '8px' } }, [
+    e('h3', { key: 'h3' }, `React Counter: ${count}`),
+    e('button', {
+      key: 'btn',
+      className: 'wb-btn-gradient',
+      'data-wb': 'ripple tooltip toast', // WB Behaviors
+      'data-tooltip': 'I am a React button!',
+      'data-message': `Count is now ${count + 1}`,
+      'data-type': 'info',
+      onClick: () => setCount(c => c + 1)
+    }, 'Increment + WB Magic ✨')
+  ]);
+}
+
+const root = ReactDOM.createRoot(document.getElementById('react-root'));
+root.render(e(ReactApp));</code></pre>
+    </div>
+  </section>
+
+  <!-- Vue Demo -->
+  <section id="vue-demo">
+    <span class="framework-badge badge-vue">Vue 3</span>
+    <h2>Vue Integration</h2>
+    <p>This section is a Vue app. WB attributes are bound just like any other attribute.</p>
+
+    <div id="vue-app">
+      <div style="padding: 1rem; border: 1px dashed #42b883; border-radius: 8px;">
+        <h3>Vue Message: {{ message }}</h3>
+        <input 
+          v-model="message" 
+          class="wb-input-glass" 
+          placeholder="Type here..." 
+          style="margin-bottom: 1rem; width: 100%;"
+        >
+        
+        <button 
+          class="wb-btn-glass"
+          data-wb="ripple tooltip"
+          :data-tooltip="'Current length: ' + message.length"
+          @click="reverseMessage"
+        >
+          Reverse Message (Vue + WB)
+        </button>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const { createApp, ref } = Vue;
+
+      createApp({
+        setup() {
+          const message = ref('Hello Vue!');
+          
+          const reverseMessage = () => {
+            message.value = message.value.split('').reverse().join('');
+          };
+
+          return { message, reverseMessage };
+        }
+      }).mount('#vue-app');
+    </script>
+
+    <div style="margin-top: 1.5rem;">
+      <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
+      <pre data-wb="code" data-language="html" data-copy="true"><code>&lt;div id="vue-app"&gt;
+  &lt;div style="padding: 1rem; border: 1px dashed #42b883; border-radius: 8px;"&gt;
+    &lt;h3&gt;Vue Message: {{ message }}&lt;/h3&gt;
+    &lt;input 
+      v-model="message" 
+      class="wb-input-glass" 
+      placeholder="Type here..." 
+      style="margin-bottom: 1rem; width: 100%;"
+    &gt;
+    
+    &lt;button 
+      class="wb-btn-glass"
+      data-wb="ripple tooltip"
+      :data-tooltip="'Current length: ' + message.length"
+      @click="reverseMessage"
+    &gt;
+      Reverse Message (Vue + WB)
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  import { createApp, ref, onMounted } from 'vue';
+  import WB from 'wb-behaviors';
+
+  createApp({
+    setup() {
+      // Initialize WB when component mounts
+      onMounted(() => {
+        WB.init();
+      });
+
+      const message = ref('Hello Vue!');
+      
+      const reverseMessage = () => {
+        message.value = message.value.split('').reverse().join('');
+      };
+
+      return { message, reverseMessage };
+    }
+  }).mount('#vue-app');
+&lt;/script&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- Svelte Example (Code Only) -->
+  <section>
+    <span class="framework-badge badge-svelte">Svelte</span>
+    <h2>Svelte Integration</h2>
+    <p>In Svelte, you just add the attributes to your markup. No special bindings needed.</p>
+    <p class="wb-text-secondary" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>Note: This example requires a Svelte build step.</em></p>
+    
+    <pre data-wb="code" data-language="html" data-copy="true"><code>&lt;script&gt;
+  import WB from 'wb-behaviors';
+  import { onMount } from 'svelte';
+
+  onMount(() => {
+    WB.init();
+  });
+
+  let count = 0;
+  function handleClick() {
+    count += 1;
+  }
+&lt;/script&gt;
+
+&lt;button 
+  class="wb-btn-gradient"
+  data-wb="ripple tooltip"
+  data-tooltip="Count: {count}"
+  on:click={handleClick}
+&gt;
+  Svelte Button
+&lt;/button&gt;</code></pre>
+  </section>
+
+  <!-- Angular Example (Code Only) -->
+  <section>
+    <span class="framework-badge badge-angular" style="background: #dd0031; color: #fff;">Angular</span>
+    <h2>Angular Integration</h2>
+    <p>In Angular, use standard attribute binding. WB behaviors initialize automatically.</p>
+    <p class="wb-text-secondary" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>Note: This example requires an Angular build step.</em></p>
+    
+    <pre data-wb="code" data-language="typescript" data-copy="true"><code>import { Component, OnInit } from '@angular/core';
+import WB from 'wb-behaviors';
+
+@Component({
+  selector: 'app-demo',
+  template: `
+    &lt;button 
+      class="wb-btn-gradient"
+      data-wb="ripple tooltip"
+      [attr.data-tooltip]="'Count: ' + count"
+      (click)="increment()"&gt;
+      Angular Button
+    &lt;/button&gt;
+  `
+})
+export class DemoComponent implements OnInit {
+  count = 0;
+  
+  ngOnInit() {
+    WB.init();
+  }
+  
+  increment() {
+    this.count++;
+  }
+}</code></pre>
+  </section>
+
+  <!-- SolidJS Example (Code Only) -->
+  <section>
+    <span class="framework-badge badge-solid" style="background: #2c4f7c; color: #fff;">SolidJS</span>
+    <h2>SolidJS Integration</h2>
+    <p>SolidJS uses fine-grained reactivity. Initialize WB in <code>onMount</code>.</p>
+    <p class="wb-text-secondary" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>Note: This example requires a SolidJS build step.</em></p>
+    
+    <pre data-wb="code" data-language="javascript" data-copy="true"><code>import { createSignal, onMount } from 'solid-js';
+import WB from 'wb-behaviors';
+
+function Counter() {
+  const [count, setCount] = createSignal(0);
+
+  onMount(() => {
+    WB.init();
+  });
+
+  return (
+    &lt;button
+      class="wb-btn-gradient"
+      data-wb="ripple tooltip"
+      data-tooltip={`Count: ${count()}`}
+      onClick={() => setCount(c => c + 1)}
+    &gt;
+      SolidJS Button
+    &lt;/button&gt;
+  );
+}</code></pre>
+  </section>
+
+  <!-- HTMX Example -->
+  <section>
+    <span class="framework-badge badge-htmx" style="background: #3d72d7; color: #fff;">HTMX</span>
+    <h2>HTMX Integration</h2>
+    <p>HTMX swaps HTML from the server. Use <code>htmx:afterSwap</code> to re-scan new content.</p>
+    
+    <div id="htmx-demo" style="padding: 1rem; border: 1px dashed #3d72d7; border-radius: 8px; margin-bottom: 1rem;">
+      <!-- HTMX loads content, WB enhances it -->
+      <button 
+        hx-post="/clicked"
+        hx-swap="outerHTML"
+        class="wb-btn-gradient"
+        data-wb="ripple tooltip" 
+        data-tooltip="I ripple locally, but fetch remotely!"
+      >
+        Click Me (HTMX)
+      </button>
+    </div>
+
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script>
+      // Re-initialize WB after HTMX swaps content
+      document.body.addEventListener('htmx:afterSwap', (evt) => {
+        // Only scan the new content for better performance
+        if (window.WB) {
+          window.WB.scan(evt.detail.target);
+        }
+      });
+    </script>
+    
+    <div style="margin-top: 1.5rem;">
+      <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
+      <pre data-wb="code" data-language="html" data-copy="true"><code>&lt;!-- HTMX loads content, WB enhances it --&gt;
+&lt;button 
+  hx-post="/clicked"
+  hx-swap="outerHTML"
+  class="wb-btn-gradient"
+  data-wb="ripple tooltip" 
+  data-tooltip="I ripple locally, but fetch remotely!"
+&gt;
+  Click Me
+&lt;/button&gt;
+
+&lt;script&gt;
+  // Re-initialize WB after HTMX swaps content
+  document.body.addEventListener('htmx:afterSwap', (evt) => {
+    // Only scan the new content for better performance
+    WB.scan(evt.detail.target);
+  });
+&lt;/script&gt;</code></pre>
+    </div>
+  </section>
+
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    
+    // Initialize WB
+    // Note: For frameworks that dynamically add DOM, you might need to re-scan 
+    // or use a MutationObserver. WB's autoInject handles many cases, but 
+    // explicit scanning is robust for demos.
+    WB.init({ autoInject: true });
+
+    // Optional: Re-scan periodically or on specific events if the framework 
+    // completely replaces the DOM after WB has already initialized.
+    // For this demo, autoInject (MutationObserver) should handle the React/Vue mounts.
+  </script>
+</body>
+</html>

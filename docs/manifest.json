@@ -6,63 +6,531 @@
       "name": "Architecture",
       "icon": "🏗️",
       "docs": [
-        { "file": "architecture.md", "title": "System Architecture", "description": "Overview of the WB system design" },
-        { "file": "WB_BEHAVIOR_SYSTEM.md", "title": "Behavior System", "description": "How behaviors work" },
-        { "file": "container-pattern.md", "title": "Container Pattern", "description": "Container component patterns" },
-        { "file": "semantic-standard.md", "title": "Semantic Standard", "description": "HTML5 semantic guidelines" }
+        {
+          "file": "architecture.md",
+          "title": "System Architecture",
+          "description": "Overview of the WB system design"
+        },
+        {
+          "file": "WB_BEHAVIOR_SYSTEM.md",
+          "title": "Behavior System",
+          "description": "How behaviors work"
+        },
+        {
+          "file": "container-pattern.md",
+          "title": "Container Pattern",
+          "description": "Container component patterns"
+        },
+        {
+          "file": "semantic-standard.md",
+          "title": "Semantic Standard",
+          "description": "HTML5 semantic guidelines"
+        }
       ]
     },
     {
       "name": "Components",
       "icon": "🧩",
       "docs": [
-        { "file": "behaviors-reference.md", "title": "Behaviors Reference", "description": "Complete list of all behaviors" },
-        { "file": "card.md", "title": "Card Component", "description": "Card behavior documentation" },
-        { "file": "audio.md", "title": "Audio Component", "description": "Audio player behavior" },
-        { "file": "properties.md", "title": "Properties", "description": "Component property reference" }
+        {
+          "file": "behaviors-reference.md",
+          "title": "Behaviors Reference",
+          "description": "Complete list of all behaviors"
+        },
+        {
+          "file": "components/cards/card.md",
+          "title": "Card Component",
+          "description": "Base card component"
+        },
+        {
+          "file": "components/cards/cardbutton.md",
+          "title": "Card Button",
+          "description": "Card with action buttons"
+        },
+        {
+          "file": "components/cards/carddraggable.md",
+          "title": "Card Draggable",
+          "description": "Draggable card component"
+        },
+        {
+          "file": "components/cards/cardexpandable.md",
+          "title": "Card Expandable",
+          "description": "Expandable content card"
+        },
+        {
+          "file": "components/cards/cardfile.md",
+          "title": "Card File",
+          "description": "File download card"
+        },
+        {
+          "file": "components/cards/cardhero.md",
+          "title": "Card Hero",
+          "description": "Hero banner card"
+        },
+        {
+          "file": "components/cards/cardhorizontal.md",
+          "title": "Card Horizontal",
+          "description": "Horizontal layout card"
+        },
+        {
+          "file": "components/cards/cardimage.md",
+          "title": "Card Image",
+          "description": "Card with featured image"
+        },
+        {
+          "file": "components/cards/cardlink.md",
+          "title": "Card Link",
+          "description": "Clickable link card"
+        },
+        {
+          "file": "components/cards/cardminimizable.md",
+          "title": "Card Minimizable",
+          "description": "Minimizable card component"
+        },
+        {
+          "file": "components/cards/cardnotification.md",
+          "title": "Card Notification",
+          "description": "Notification alert card"
+        },
+        {
+          "file": "components/cards/cardoverlay.md",
+          "title": "Card Overlay",
+          "description": "Image overlay card"
+        },
+        {
+          "file": "components/cards/cardportfolio.md",
+          "title": "Card Portfolio",
+          "description": "Portfolio/contact card"
+        },
+        {
+          "file": "components/cards/cardpricing.md",
+          "title": "Card Pricing",
+          "description": "Pricing plan card"
+        },
+        {
+          "file": "components/cards/cardproduct.md",
+          "title": "Card Product",
+          "description": "Product showcase card"
+        },
+        {
+          "file": "components/cards/cardprofile.md",
+          "title": "Card Profile",
+          "description": "User profile card"
+        },
+        {
+          "file": "components/cards/cardstats.md",
+          "title": "Card Stats",
+          "description": "Statistics display card"
+        },
+        {
+          "file": "components/cards/cardtestimonial.md",
+          "title": "Card Testimonial",
+          "description": "Testimonial quote card"
+        },
+        {
+          "file": "components/cards/cardvideo.md",
+          "title": "Card Video",
+          "description": "Video player card"
+        },
+        {
+          "file": "audio.md",
+          "title": "Audio Component",
+          "description": "Audio player behavior"
+        },
+        {
+          "file": "properties.md",
+          "title": "Properties",
+          "description": "Component property reference"
+        },
+        {
+          "file": "card.md",
+          "title": "Card Overview",
+          "description": "Documentation for Card Overview"
+        },
+        {
+          "file": "components/cards/index.md",
+          "title": "cards Index",
+          "description": "Documentation for cards Index"
+        },
+        {
+          "file": "components/cards/README.md",
+          "title": "cards Readme",
+          "description": "Documentation for cards Readme"
+        },
+        {
+          "file": "components/drawer.md",
+          "title": "Drawer",
+          "description": "Documentation for Drawer"
+        },
+        {
+          "file": "components/feedback/README.md",
+          "title": "feedback Readme",
+          "description": "Documentation for feedback Readme"
+        },
+        {
+          "file": "components/forms/README.md",
+          "title": "forms Readme",
+          "description": "Documentation for forms Readme"
+        },
+        {
+          "file": "components/layout/README.md",
+          "title": "layout Readme",
+          "description": "Documentation for layout Readme"
+        },
+        {
+          "file": "components/navigation/README.md",
+          "title": "navigation Readme",
+          "description": "Documentation for navigation Readme"
+        },
+        {
+          "file": "components/README.md",
+          "title": "components Readme",
+          "description": "Documentation for components Readme"
+        },
+        {
+          "file": "components/tabs.md",
+          "title": "Tabs",
+          "description": "Documentation for Tabs"
+        }
       ]
     },
     {
       "name": "Styling",
       "icon": "🎨",
       "docs": [
-        { "file": "themes.md", "title": "Themes", "description": "Theme system and customization" },
-        { "file": "css-standards.md", "title": "CSS Standards", "description": "CSS coding standards" }
+        {
+          "file": "themes.md",
+          "title": "Themes",
+          "description": "Theme system and customization"
+        },
+        {
+          "file": "css-standards.md",
+          "title": "CSS Standards",
+          "description": "CSS coding standards"
+        },
+        {
+          "file": "code-examples-standard.md",
+          "title": "Code Examples Standard",
+          "description": "Formatting rules for code examples"
+        }
       ]
     },
     {
       "name": "Testing",
       "icon": "🧪",
       "docs": [
-        { "file": "testing-strategy.md", "title": "Testing Strategy", "description": "How to test WB components" },
-        { "file": "test-schema-standard.md", "title": "Schema Testing", "description": "Schema-based testing approach" },
-        { "file": "builder-testing.md", "title": "Builder Testing", "description": "Testing the page builder" }
+        {
+          "file": "testing-strategy.md",
+          "title": "Testing Strategy",
+          "description": "How to test WB components"
+        },
+        {
+          "file": "test-schema-standard.md",
+          "title": "Schema Testing",
+          "description": "Schema-based testing approach"
+        },
+        {
+          "file": "builder-testing.md",
+          "title": "Builder Testing",
+          "description": "Testing the page builder"
+        }
       ]
     },
     {
       "name": "Features",
       "icon": "⚡",
       "docs": [
-        { "file": "Auto-Injection.md", "title": "Auto-Injection", "description": "Automatic behavior injection" },
-        { "file": "inline-editing.md", "title": "Inline Editing", "description": "Content editing features" },
-        { "file": "NOTES-V3-GUIDE.md", "title": "Notes System", "description": "Notes feature guide" }
+        {
+          "file": "Auto-Injection.md",
+          "title": "Auto-Injection",
+          "description": "Automatic behavior injection"
+        },
+        {
+          "file": "inline-editing.md",
+          "title": "Inline Editing",
+          "description": "Content editing features"
+        },
+        {
+          "file": "NOTES-V3-GUIDE.md",
+          "title": "Notes System",
+          "description": "Notes feature guide"
+        }
       ]
     },
     {
       "name": "Planning",
       "icon": "📋",
       "docs": [
-        { "file": "IMPROVEMENTS.md", "title": "Improvements", "description": "Planned improvements" },
-        { "file": "USER-PAGE-BUILDER-PLAN.md", "title": "Page Builder Plan", "description": "Builder roadmap" },
-        { "file": "builder.todo.md", "title": "Builder TODO", "description": "Builder task list" },
-        { "file": "semantic-audit.md", "title": "Semantic Audit", "description": "HTML audit results" }
+        {
+          "file": "IMPROVEMENTS.md",
+          "title": "Improvements",
+          "description": "Planned improvements"
+        },
+        {
+          "file": "USER-PAGE-BUILDER-PLAN.md",
+          "title": "Page Builder Plan",
+          "description": "Builder roadmap"
+        },
+        {
+          "file": "builder.todo.md",
+          "title": "Builder TODO",
+          "description": "Builder task list"
+        },
+        {
+          "file": "semantic-audit.md",
+          "title": "Semantic Audit",
+          "description": "HTML audit results"
+        }
       ]
     },
     {
       "name": "Research",
       "icon": "📑",
       "pages": [
-        { "page": "schema-first-architecture", "title": "Schema-First Architecture", "description": "Research paper on AI error elimination" }
+        {
+          "page": "schema-first-architecture",
+          "title": "Schema-First Architecture",
+          "description": "Research paper on AI error elimination"
+        }
+      ]
+    },
+    {
+      "name": "Compliance",
+      "icon": "⚖️",
+      "docs": [
+        {
+          "file": "compliance/iso-42001-alignment.md",
+          "title": "Iso-42001-alignment",
+          "description": "Documentation for Iso-42001-alignment"
+        }
+      ]
+    },
+    {
+      "name": "Effects",
+      "icon": "✨",
+      "docs": [
+        {
+          "file": "components/effects/confetti.md",
+          "title": "Confetti",
+          "description": "Documentation for Confetti"
+        },
+        {
+          "file": "components/effects/fireworks.md",
+          "title": "Fireworks",
+          "description": "Documentation for Fireworks"
+        },
+        {
+          "file": "components/effects/snow.md",
+          "title": "Snow",
+          "description": "Documentation for Snow"
+        }
+      ]
+    },
+    {
+      "name": "Semantics",
+      "icon": "🏷️",
+      "docs": [
+        {
+          "file": "components/semantic/address.md",
+          "title": "Address",
+          "description": "Documentation for Address"
+        },
+        {
+          "file": "components/semantic/article.md",
+          "title": "Article",
+          "description": "Documentation for Article"
+        },
+        {
+          "file": "components/semantic/aside.md",
+          "title": "Aside",
+          "description": "Documentation for Aside"
+        },
+        {
+          "file": "components/semantic/blockquote.md",
+          "title": "Blockquote",
+          "description": "Documentation for Blockquote"
+        },
+        {
+          "file": "components/semantic/data.md",
+          "title": "Data",
+          "description": "Documentation for Data"
+        },
+        {
+          "file": "components/semantic/figure.md",
+          "title": "Figure",
+          "description": "Documentation for Figure"
+        },
+        {
+          "file": "components/semantic/index.md",
+          "title": "semantic Index",
+          "description": "Documentation for semantic Index"
+        },
+        {
+          "file": "components/semantic/README.md",
+          "title": "semantic Readme",
+          "description": "Documentation for semantic Readme"
+        },
+        {
+          "file": "components/semantic/time.md",
+          "title": "Time",
+          "description": "Documentation for Time"
+        },
+        {
+          "file": "components/semantics/audio.md",
+          "title": "Audio",
+          "description": "Documentation for Audio"
+        },
+        {
+          "file": "components/semantics/button.md",
+          "title": "Button",
+          "description": "Documentation for Button"
+        },
+        {
+          "file": "components/semantics/checkbox.md",
+          "title": "Checkbox",
+          "description": "Documentation for Checkbox"
+        },
+        {
+          "file": "components/semantics/code.md",
+          "title": "Code",
+          "description": "Documentation for Code"
+        },
+        {
+          "file": "components/semantics/details.md",
+          "title": "Details",
+          "description": "Documentation for Details"
+        },
+        {
+          "file": "components/semantics/dialog.md",
+          "title": "Dialog",
+          "description": "Documentation for Dialog"
+        },
+        {
+          "file": "components/semantics/dl.md",
+          "title": "Dl",
+          "description": "Documentation for Dl"
+        },
+        {
+          "file": "components/semantics/figure.md",
+          "title": "Figure",
+          "description": "Documentation for Figure"
+        },
+        {
+          "file": "components/semantics/form.md",
+          "title": "Form",
+          "description": "Documentation for Form"
+        },
+        {
+          "file": "components/semantics/img.md",
+          "title": "Img",
+          "description": "Documentation for Img"
+        },
+        {
+          "file": "components/semantics/input.md",
+          "title": "Input",
+          "description": "Documentation for Input"
+        },
+        {
+          "file": "components/semantics/list.md",
+          "title": "List",
+          "description": "Documentation for List"
+        },
+        {
+          "file": "components/semantics/ol.md",
+          "title": "Ol",
+          "description": "Documentation for Ol"
+        },
+        {
+          "file": "components/semantics/pre.md",
+          "title": "Pre",
+          "description": "Documentation for Pre"
+        },
+        {
+          "file": "components/semantics/progress.md",
+          "title": "Progress",
+          "description": "Documentation for Progress"
+        },
+        {
+          "file": "components/semantics/radio.md",
+          "title": "Radio",
+          "description": "Documentation for Radio"
+        },
+        {
+          "file": "components/semantics/range.md",
+          "title": "Range",
+          "description": "Documentation for Range"
+        },
+        {
+          "file": "components/semantics/rating.md",
+          "title": "Rating",
+          "description": "Documentation for Rating"
+        },
+        {
+          "file": "components/semantics/select.md",
+          "title": "Select",
+          "description": "Documentation for Select"
+        },
+        {
+          "file": "components/semantics/switch.md",
+          "title": "Switch",
+          "description": "Documentation for Switch"
+        },
+        {
+          "file": "components/semantics/table.md",
+          "title": "Table",
+          "description": "Documentation for Table"
+        },
+        {
+          "file": "components/semantics/textarea.md",
+          "title": "Textarea",
+          "description": "Documentation for Textarea"
+        },
+        {
+          "file": "components/semantics/ul.md",
+          "title": "Ul",
+          "description": "Documentation for Ul"
+        },
+        {
+          "file": "components/semantics/video.md",
+          "title": "Video",
+          "description": "Documentation for Video"
+        }
+      ]
+    },
+    {
+      "name": "Uncategorized",
+      "icon": "📄",
+      "docs": [
+        {
+          "file": "DATA-FILES.md",
+          "title": "DATA-FILES",
+          "description": "Documentation for DATA-FILES"
+        },
+        {
+          "file": "performance.md",
+          "title": "Performance",
+          "description": "Documentation for Performance"
+        },
+        {
+          "file": "styles.md",
+          "title": "Styles",
+          "description": "Documentation for Styles"
+        },
+        {
+          "file": "pce-candidates.md",
+          "title": "Pce-candidates",
+          "description": "Documentation for Pce-candidates"
+        },
+        {
+          "file": "pricecard.md",
+          "title": "Pricecard",
+          "description": "Documentation for Pricecard"
+        },
+        {
+          "file": "templates.md",
+          "title": "Templates",
+          "description": "Documentation for Templates"
+        }
       ]
     }
   ]

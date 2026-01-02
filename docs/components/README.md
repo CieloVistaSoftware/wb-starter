@@ -1,4 +1,4 @@
-# WB Behaviors Components
+# Web Behaviors (WB) Components
 
 ## Overview
 

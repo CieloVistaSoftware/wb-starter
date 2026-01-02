@@ -5,7 +5,8 @@
   { "n": "Paragraph", "i": "¶", "t": "p", "d": { "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." } },
   { "n": "Text Block", "i": "T", "t": "div", "d": { "text": "Text block" } },
   { "n": "Button", "i": "🔘", "t": "button", "d": { "text": "Click Me", "type": "button", "class": "btn btn-primary" } },
-  { "n": "Input", "i": "⌨️", "t": "input", "d": { "type": "text", "placeholder": "Enter text" } },
+  { "n": "Input", "i": "⌨️", "t": "input", "d": { "type": "text", "placeholder": "Enter text", "icon": "" } },
+  { "n": "Switch", "i": "🔛", "t": "input", "d": { "type": "checkbox", "wb": "switch" } },
   { "n": "Textarea", "i": "📝", "t": "textarea", "d": { "placeholder": "Enter long text", "rows": "3" } },
   { "n": "Label", "i": "🏷️", "t": "label", "d": { "text": "Label" } },
   { "n": "Divider", "i": "➖", "t": "hr", "d": {} },
@@ -104,6 +105,48 @@
       "height": "400px",
       "align": "center",
       "overlay": true
+    }
+  },
+  {
+    "n": "Navbar", "i": "🧭", "b": "navbar", "t": "nav", "d": {
+      "brand": "My Site",
+      "items": "Home,About,Contact",
+      "sticky": false
+    }
+  },
+  {
+    "n": "Sidebar", "i": "📑", "b": "sidebar", "t": "aside", "d": {
+      "items": "Dashboard,Settings,Profile,Logout",
+      "active": "Dashboard",
+      "collapsed": false
+    }
+  },
+  {
+    "n": "Menu", "i": "📋", "b": "menu", "t": "div", "d": {
+      "items": "Option 1,Option 2,Option 3"
+    }
+  },
+  {
+    "n": "Pagination", "i": "🔢", "b": "pagination", "t": "nav", "d": {
+      "pages": "5",
+      "current": "1"
+    }
+  },
+  {
+    "n": "Steps", "i": "👣", "b": "steps", "t": "div", "d": {
+      "items": "Step 1,Step 2,Step 3",
+      "current": "1"
+    }
+  },
+  {
+    "n": "Treeview", "i": "🌳", "b": "treeview", "t": "div", "d": {
+      "items": "[{\"name\":\"Root\",\"children\":[{\"name\":\"Child 1\"},{\"name\":\"Child 2\"}]}]"
+    }
+  },
+  {
+    "n": "Statusbar", "i": "➖", "b": "statusbar", "t": "div", "d": {
+      "items": "Ready,Ln 1,Col 1",
+      "position": "bottom"
     }
   },
   { "n": "Breadcrumb", "i": "🍞", "b": "breadcrumb", "t": "nav", "d": { "items": "Home,Products,Category,Current Page", "separator": "/" } },

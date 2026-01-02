@@ -1,6 +1,6 @@
 # `<address>` Element
 
-The `<address>` element provides contact information for a person, organization, or entity. In WB Behaviors, it's used in portfolio and contact cards.
+The `<address>` element provides contact information for a person, organization, or entity. In Web Behaviors (WB), it's used in portfolio and contact cards.
 
 ## Semantic Meaning
 

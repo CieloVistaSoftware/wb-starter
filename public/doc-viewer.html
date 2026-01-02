@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Documentation Viewer</title>
-  <link rel="stylesheet" href="../src/styles/themes.css">
-  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="/src/styles/themes.css">
+  <link rel="stylesheet" href="/src/styles/site.css">
+  <link rel="stylesheet" href="/src/styles/transitions.css">
   <style>
     body { 
       padding: 2rem; 
@@ -43,9 +44,10 @@
     .wb-mdhtml p { margin-bottom: 1rem; color: var(--text-secondary); }
     .wb-mdhtml ul, .wb-mdhtml ol { margin-bottom: 1rem; padding-left: 1.5rem; color: var(--text-secondary); }
     .wb-mdhtml li { margin-bottom: 0.5rem; }
-    .wb-mdhtml code { background: var(--bg-tertiary); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: var(--primary); }
+    .wb-mdhtml code { background: var(--bg-tertiary); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: var(--text-primary); font-weight: 600; }
+    .wb-mdhtml a { color: var(--primary-light); text-decoration: underline; }
     .wb-mdhtml pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
-    .wb-mdhtml pre code { background: none; padding: 0; color: var(--text-secondary); }
+    .wb-mdhtml pre code { background: none; padding: 0; color: var(--text-primary); font-weight: normal; }
     .wb-mdhtml blockquote { border-left: 4px solid var(--primary); margin: 0 0 1.5rem 0; padding-left: 1rem; color: var(--text-muted); font-style: italic; }
     .wb-mdhtml table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
     .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; }
@@ -62,14 +64,94 @@
   </div>
 
   <script type="module">
-    import { mdhtml } from '../src/behaviors/js/mdhtml.js';
+    import { mdhtml } from '/src/behaviors/js/mdhtml.js';
     
     const params = new URLSearchParams(window.location.search);
     const file = params.get('file');
     
+    // Helper to resolve relative paths
+    function resolveRelativePath(base, relative) {
+      // Remove filename from base if present, or ensure it ends with /
+      // Actually base passed in is usually the directory
+      const stack = base.split('/').filter(p => p.length > 0);
+      
+      const parts = relative.split('/');
+      
+      for (const part of parts) {
+        if (part === '.') continue;
+        if (part === '..') {
+          if (stack.length > 0 && stack[stack.length - 1] !== '..') {
+            stack.pop();
+          } else {
+            stack.push('..');
+          }
+        } else {
+          stack.push(part);
+        }
+      }
+      
+      return stack.join('/');
+    }
+
+    // Link Interceptor for Markdown navigation
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (!link) return;
+      
+      const href = link.getAttribute('href');
+      if (!href) return;
+      
+      // Check if it's a relative markdown link
+      // Matches .md or .md#anchor, but not http:// or /absolute
+      if (href.match(/\.md(#.*)?$/) && !href.match(/^https?:/) && !href.startsWith('/')) {
+        e.preventDefault();
+        
+        const currentFile = new URLSearchParams(window.location.search).get('file') || '';
+        const currentDir = currentFile.substring(0, currentFile.lastIndexOf('/') + 1);
+        
+        // Handle hash
+        const [path, hash] = href.split('#');
+        
+        // Resolve path
+        const resolvedPath = resolveRelativePath(currentDir, path);
+        
+        // Construct new URL
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set('file', resolvedPath);
+        
+        // If it's the same file, just scroll (handled by browser if we didn't preventDefault, but we did)
+        if (resolvedPath === currentFile && hash) {
+             const element = document.getElementById(hash);
+             if (element) element.scrollIntoView();
+             history.pushState(null, '', newUrl.toString());
+             return;
+        }
+
+        if (hash) newUrl.hash = hash;
+        else newUrl.hash = '';
+        
+        window.location.href = newUrl.toString();
+      }
+    });
+
+    // Scroll to hash after load
+    document.addEventListener('wb:mdhtml:loaded', () => {
+      if (window.location.hash) {
+        // Decode hash to handle special characters
+        const id = decodeURIComponent(window.location.hash.substring(1));
+        const element = document.getElementById(id);
+        if (element) {
+            setTimeout(() => element.scrollIntoView(), 100);
+        }
+      }
+    });
+    
     if (file) {
       const content = document.getElementById('content');
       content.dataset.src = file;
+      // Disable sanitization to allow embedded HTML/Scripts in documentation
+      content.dataset.sanitize = "false";
+      
       // Initialize mdhtml
       mdhtml(content).catch(err => {
         content.innerHTML = `<div class="error">Failed to load documentation: ${err.message}</div>`;

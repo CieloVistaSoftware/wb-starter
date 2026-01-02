@@ -159,20 +159,56 @@ export function fullscreen(element, options = {}) {
   }
   element.style.cssText = 'cursor:pointer;padding:0.5rem 1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
   
-  const targetEl = config.target ? document.querySelector(config.target) : document.documentElement;
+  let targetEl = config.target ? document.querySelector(config.target) : document.documentElement;
+  
+  // If target is 'body', use document.body
+  if (config.target === 'body') {
+    targetEl = document.body;
+  }
+  
+  let originalStyles = {};
+  
+  // Handle fullscreen change events to restore styles
+  const handleFullscreenChange = () => {
+    if (!document.fullscreenElement) {
+      // Exiting fullscreen - restore original styles
+      if (targetEl) {
+        targetEl.style.overflow = originalStyles.overflow || '';
+        targetEl.style.overflowY = originalStyles.overflowY || '';
+        targetEl.style.height = originalStyles.height || '';
+      }
+      element.textContent = '⛶ Fullscreen';
+    }
+  };
+  
+  document.addEventListener('fullscreenchange', handleFullscreenChange);
   
   element.onclick = () => {
     if (document.fullscreenElement) {
       document.exitFullscreen();
-      element.textContent = '⛶ Fullscreen';
     } else {
+      // Store original styles
+      originalStyles = {
+        overflow: targetEl.style.overflow,
+        overflowY: targetEl.style.overflowY,
+        height: targetEl.style.height
+      };
+      
+      // Set styles for scrolling in fullscreen
+      targetEl.style.overflow = 'auto';
+      targetEl.style.overflowY = 'auto';
+      targetEl.style.height = '100vh';
+      
       targetEl.requestFullscreen();
       element.textContent = '✕ Exit Fullscreen';
     }
   };
 
   element.dataset.wbReady = 'fullscreen';
-  return () => element.classList.remove('wb-fullscreen');
+  return () => {
+    document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    element.classList.remove('wb-fullscreen');
+  };
 }
 
 /**

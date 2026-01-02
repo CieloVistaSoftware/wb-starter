@@ -56,14 +56,6 @@ export function notes(element, options = {}) {
         <span class="wb-notes__title">📝 Notes</span>
         <div class="wb-notes__actions">
           <div class="wb-notes__btn-row">
-            <button class="wb-notes__wide-btn" data-action="collapse-left" title="Collapse left">«</button>
-            <button class="wb-notes__wide-btn ${currentPosition === 'left' ? 'active' : ''}" data-pos="left" title="Left">◀</button>
-            <button class="wb-notes__wide-btn ${currentPosition === 'modal' ? 'active' : ''}" data-pos="modal" title="Modal">◻</button>
-            <button class="wb-notes__wide-btn ${currentPosition === 'right' ? 'active' : ''}" data-pos="right" title="Right">▶</button>
-            <button class="wb-notes__wide-btn" data-action="collapse-right" title="Collapse right">»</button>
-            <button class="wb-notes__wide-btn" data-action="copy" title="Copy">📋</button>
-            <button class="wb-notes__wide-btn" data-action="view" title="View Saved Notes">👁️</button>
-            <button class="wb-notes__wide-btn wb-notes__wide-btn--save" data-action="save" title="Save">💾</button>
             <button class="wb-notes__wide-btn" data-action="close" title="Close">✕</button>
           </div>
         </div>
@@ -106,17 +98,21 @@ export function notes(element, options = {}) {
 
   // Save notes to localStorage
   const saveToLocal = () => {
-    notesContent = textarea.value;
-    const saveData = {
-      content: notesContent,
-      position: currentPosition,
-      width: drawer.style.width,
-      modalPos: modalPos,
-      modalSize: modalSize,
-      isOpen: isOpen,
-      lastUpdated: new Date().toISOString()
-    };
-    localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(saveData));
+    try {
+      notesContent = textarea.value;
+      const saveData = {
+        content: notesContent,
+        position: currentPosition,
+        width: drawer.style.width,
+        modalPos: modalPos,
+        modalSize: modalSize,
+        isOpen: isOpen,
+        lastUpdated: new Date().toISOString()
+      };
+      localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(saveData));
+    } catch (e) {
+      console.warn('Failed to save notes:', e);
+    }
   };
 
   // Normalize content for duplicate checking
@@ -204,10 +200,26 @@ export function notes(element, options = {}) {
   const open = () => {
     isOpen = true;
     
-    // Prepend URL if not present
-    const currentUrl = window.location.href;
-    if (!textarea.value.includes(currentUrl)) {
-      textarea.value = currentUrl + '\n' + textarea.value;
+    // Current URL and Timestamp
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageName = urlParams.get('page');
+    const locationStr = pageName 
+      ? `Page: ${pageName.charAt(0).toUpperCase() + pageName.slice(1)}` 
+      : window.location.href;
+
+    const timestamp = new Date().toLocaleString();
+    const logLine = `[${timestamp}] ${locationStr}`;
+    
+    // Manage header line (ensure only one, update if needed)
+    // Regex matches a timestamp line at the start, optionally preceded by whitespace
+    const headerRegex = /^\s*\[.*?\] (http|Page:)[^\n]*(\n|$)/;
+    
+    if (headerRegex.test(textarea.value)) {
+      // Replace existing header
+      textarea.value = textarea.value.replace(headerRegex, logLine + '\n');
+    } else {
+      // Prepend new header
+      textarea.value = logLine + '\n' + textarea.value;
     }
 
     element.classList.add('wb-notes--open');
@@ -316,13 +328,46 @@ export function notes(element, options = {}) {
   };
 
   // Clear notes
-  const clearNotes = () => {
-    if (!textarea.value.trim() || confirm('Clear all notes?')) {
-      textarea.value = '';
-      notesContent = '';
-      saveToLocal();
-      showStatus('Notes cleared', 'info');
+  let clearConfirmTimeout;
+  const clearNotes = (btn) => {
+    if (!textarea.value.trim()) return;
+
+    // If button is passed and not in confirm mode, enter confirm mode
+    if (btn && !btn.dataset.confirm) {
+      btn.dataset.confirm = 'true';
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⚠️ Confirm?';
+      btn.classList.add('wb-notes__wide-btn--confirm');
+      
+      clearConfirmTimeout = setTimeout(() => {
+        btn.dataset.confirm = '';
+        btn.innerHTML = originalText;
+        btn.classList.remove('wb-notes__wide-btn--confirm');
+      }, 5000);
+      return;
     }
+
+    // Execute clear
+    if (clearConfirmTimeout) clearTimeout(clearConfirmTimeout);
+    if (btn) {
+      btn.dataset.confirm = '';
+      btn.innerHTML = '🗑️ Clear'; // Reset to default text
+      btn.classList.remove('wb-notes__wide-btn--confirm');
+    }
+
+    // Reset to just the current timestamp/URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageName = urlParams.get('page');
+    const locationStr = pageName 
+      ? `Page: ${pageName.charAt(0).toUpperCase() + pageName.slice(1)}` 
+      : window.location.href;
+      
+    const timestamp = new Date().toLocaleString();
+    textarea.value = `[${timestamp}] ${locationStr}\n`;
+    
+    notesContent = textarea.value;
+    saveToLocal();
+    showStatus('Notes cleared', 'info');
   };
 
   // RESIZE - Left/Right drawers
@@ -438,7 +483,7 @@ export function notes(element, options = {}) {
     else if (action === 'copy') copyToClipboard();
     else if (action === 'view') viewSavedNotes();
     else if (action === 'save') saveToFile();
-    else if (action === 'clear') clearNotes();
+    else if (action === 'clear') clearNotes(btn);
     else if (action === 'close') close();
     else if (pos) setPosition(pos);
   });

@@ -1,11 +1,13 @@
 import hljs from '/src/lib/highlight.js';
 import { pre } from './pre.js';
 
-// Inject CSS if not present
+// Inject CSS if not present (codecontrol behavior will override if used)
 if (!document.querySelector('link[data-highlight-theme]')) {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = '/node_modules/highlight.js/styles/atom-one-dark.css';
+  // Check localStorage for saved preference from codecontrol
+  const savedTheme = localStorage.getItem('wb-code-theme') || 'atom-one-dark';
+  link.href = `/node_modules/highlight.js/styles/${savedTheme}.css`;
   link.setAttribute('data-highlight-theme', 'true');
   document.head.appendChild(link);
   
@@ -54,8 +56,19 @@ export function code(element, options = {}) {
     showCopy: options.showCopy ?? (element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
     variant: options.variant || element.dataset.variant || 'inline',
     scrollable: options.scrollable ?? (element.dataset.scrollable === 'true'),
+    size: options.size || element.dataset.size || 'xs',
     ...options
   };
+
+  // Size mappings - compact by default
+  const sizeMap = {
+    xs: '0.55em',
+    sm: '0.6em',
+    md: '0.65em',
+    lg: '0.75em',
+    xl: '0.85em'
+  };
+  const fontSize = sizeMap[config.size] || sizeMap.xs;
 
   element.classList.add('wb-code');
 
@@ -83,17 +96,19 @@ export function code(element, options = {}) {
     
     Object.assign(element.style, {
       fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-      fontSize: '0.875em',
-      padding: !isBlock ? '0.2em 0.4em' : '0.5rem 1rem',
+      fontSize: fontSize,
+      padding: !isBlock ? '0.15em 0.3em' : '0.5rem 0.75rem',
       borderRadius: 'var(--radius-sm, 4px)',
       backgroundColor: 'var(--bg-tertiary, rgba(255,255,255,0.1))',
       color: 'var(--text-primary, inherit)',
       border: '1px solid var(--border-color, rgba(255,255,255,0.1))',
       display: !isBlock ? 'inline' : 'block',
-      whiteSpace: !isBlock ? 'nowrap' : (config.scrollable ? 'pre' : 'pre-wrap'),
-      wordBreak: !isBlock ? 'normal' : (config.scrollable ? 'normal' : 'break-all'),
-      overflow: (isBlock && config.scrollable) ? 'auto' : 'visible',
-      verticalAlign: 'baseline'
+      whiteSpace: !isBlock ? 'normal' : (config.scrollable ? 'pre' : 'pre-wrap'),
+      wordBreak: 'break-word', // Always break to prevent overflow
+      overflowWrap: 'break-word',
+      overflow: (isBlock && config.scrollable) ? 'auto' : 'hidden',
+      verticalAlign: 'baseline',
+      maxWidth: '100%'
     });
   }
 
@@ -165,15 +180,16 @@ export function code(element, options = {}) {
       copyButton.title = 'Copy code';
       copyButton.style.cssText = `
         position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
+        top: 0.25rem;
+        right: 0.25rem;
         background: var(--bg-secondary, #1f2937);
         border: 1px solid var(--border-color, #374151);
         color: var(--text-secondary, #9ca3af);
-        padding: 0.25rem 0.5rem;
-        border-radius: var(--radius-sm, 4px);
+        padding: 0.1rem 0.3rem;
+        border-radius: var(--radius-sm, 3px);
         cursor: pointer;
-        font-size: 0.875rem;
+        font-size: 0.6rem;
+        line-height: 1;
         transition: all 0.2s ease;
       `;
 

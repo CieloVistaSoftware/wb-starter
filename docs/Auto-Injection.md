@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Auto Injection (Preview)** is a core feature of WB Behaviors that automatically enhances standard HTML5 semantic elements with rich functionality. Instead of manually adding `data-wb` attributes to every element, you simply write standard, semantic HTML, and WB "wakes up" the elements at runtime.
+**Auto Injection (Preview)** is a core feature of Web Behaviors (WB) that automatically enhances standard HTML5 semantic elements with rich functionality. Instead of manually adding `data-wb` attributes to every element, you simply write standard, semantic HTML, and WB "wakes up" the elements at runtime.
 
 This approach promotes:
 1.  **Cleaner Markup**: No proprietary attributes cluttering your HTML.

@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "created": "2025-12-15T21:45:00Z",
-    "lastUpdated": "2025-12-15T22:15:00Z",
+    "lastUpdated": "2025-12-31T12:00:00Z",
     "description": "Auto-fix registry for test failures. Maps error signatures to fixes.",
     "usage": "When a test fails, extract error signature -> look up in fixes -> apply fix"
   },
@@ -13,8 +13,7 @@
       "errorSignature": "has at least 1 color picker",
       "issue": "wb-color-picker custom element not found in DOM",
       "cause": "Component not imported or registered",
-      "testRun": true,
-      "testName": "tests/behaviors/color-picker.test.js",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Created complete WBColorPicker class extending HTMLElement and registered it",
@@ -32,8 +31,7 @@
       "errorSignature": "has wb-color-picker class",
       "issue": "Root element missing 'wb-color-picker' CSS class",
       "cause": "Class not added in constructor",
-      "testRun": true,
-      "testName": "tests/behaviors/color-picker.test.js",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Added class to element in constructor",
@@ -50,6 +48,7 @@
       "errorSignature": "uses Light DOM (no Shadow DOM)",
       "issue": "Uses Light DOM only - no Shadow DOM",
       "cause": "Shadow DOM usage requested to be removed",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Implemented Light DOM only - all elements created with document.createElement",
@@ -66,6 +65,7 @@
       "errorSignature": "has services property",
       "issue": "Missing services property",
       "cause": "Services interface not initialized",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Initialized services object with all required method bindings",
@@ -82,15 +82,11 @@
       "errorSignature": "services has required methods",
       "issue": "Missing open, close, toggle, copyToClipboard methods",
       "cause": "Service methods not implemented",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Implemented all 4 required methods",
-        "methods": [
-          "open()",
-          "close()",
-          "toggle()",
-          "copyToClipboard()"
-        ],
+        "methods": ["open()", "close()", "toggle()", "copyToClipboard()"],
         "verify": "All 4 methods callable",
         "code": "// Code updated to match action: Implemented all 4 required methods"
       },
@@ -104,6 +100,7 @@
       "errorSignature": "has open method",
       "issue": "Missing open() method",
       "cause": "Method not implemented in class definition",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Implemented open() method",
@@ -119,6 +116,7 @@
       "errorSignature": "has close method",
       "issue": "Missing close() method",
       "cause": "Method not implemented in class definition",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Implemented close() method",
@@ -134,6 +132,7 @@
       "errorSignature": "has toggle method",
       "issue": "Missing toggle() method",
       "cause": "Method not implemented in class definition",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Implemented toggle() method",
@@ -149,6 +148,7 @@
       "errorSignature": "has copyToClipboard method",
       "issue": "Missing copyToClipboard() method",
       "cause": "Method not implemented in class definition",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Implemented copyToClipboard() using Clipboard API",
@@ -164,6 +164,7 @@
       "errorSignature": "has value getter/setter",
       "issue": "Missing value property accessor",
       "cause": "Getter/Setter pair not defined for 'value' property",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Implemented value getter and setter with attribute binding",
@@ -179,6 +180,7 @@
       "errorSignature": "has format getter/setter",
       "issue": "Missing format property accessor",
       "cause": "Getter/Setter pair not defined for 'format' property",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Implemented format getter and setter",
@@ -194,6 +196,7 @@
       "errorSignature": "has disabled getter/setter",
       "issue": "Missing disabled property accessor",
       "cause": "Getter/Setter pair not defined for 'disabled' property",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Implemented disabled getter and setter",
@@ -209,6 +212,7 @@
       "errorSignature": "trigger has button role",
       "issue": "Trigger element missing ARIA role",
       "cause": "Accessibility attribute 'role' not set on trigger element",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Set role='button' on trigger element",
@@ -224,6 +228,7 @@
       "errorSignature": "trigger has aria-haspopup",
       "issue": "Trigger element missing aria-haspopup attribute",
       "cause": "Accessibility attribute 'aria-haspopup' not set on trigger element",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/color-picker.js",
         "action": "Set aria-haspopup='true' on trigger element",
@@ -239,6 +244,7 @@
       "errorSignature": "select options render as [object Object]",
       "issue": "Property editor renders object options as string '[object Object]'",
       "cause": "Render logic did not check if option was an object before rendering",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/builder/builder-properties.js",
         "action": "Updated renderPropertyControl to handle object options in select inputs",
@@ -255,6 +261,7 @@
       "errorSignature": "SyntaxError: Duplicate export of 'default'",
       "issue": "Module had both named export and default export of same object",
       "cause": "Refactoring left a legacy export default statement",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/code.js",
         "action": "Removed duplicate 'export default' statement",
@@ -271,6 +278,7 @@
       "errorSignature": "Behavior not found: media",
       "issue": "Media behavior was not properly registered/exported",
       "cause": "Missing export statement in media.js or missing import in index.js",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/media.js",
         "action": "Added missing behavior definition and export",
@@ -287,6 +295,7 @@
       "errorSignature": "Manual position update not reflected on canvas",
       "issue": "Changing _posX/_posY in property panel did not update component style immediately",
       "cause": "Property update handler (updP) did not map internal _pos keys to CSS styles",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/builder/index.js",
         "action": "Updated updP function to apply _posX, _posY, _zIndex, _width, _height to wrapper style",
@@ -303,6 +312,7 @@
       "errorSignature": "Audio plays but is silent (Web Audio API CORS issue)",
       "issue": "Using Web Audio API (EQ) with non-CORS audio source results in silence",
       "cause": "Browser security policy prevents Web Audio API from accessing cross-origin audio data without CORS headers",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/media.js",
         "action": "Added fallback mechanism: if CORS error occurs, disable EQ and reload audio without crossOrigin",
@@ -319,6 +329,7 @@
       "errorSignature": "DUPLICATE: \"originalBg\" in table()",
       "issue": "Duplicate variable declaration 'originalBg' in table.js",
       "cause": "Variable name reused in different scope/block causing compliance failure",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/semantics/table.js",
         "action": "Renamed second occurrence to 'originalCellBg'",
@@ -335,6 +346,7 @@
       "errorSignature": "data-caption shows nothing on a figure element",
       "issue": "Figure component ignored data-caption attribute",
       "cause": "Missing check for data-caption attribute in figure behavior",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/media.js",
         "action": "Added logic to create figcaption from data-caption if missing",
@@ -351,6 +363,7 @@
       "errorSignature": "Play/Pause button should be present in EQ panel",
       "issue": "EQ panel missing play/pause button and master volume slider",
       "cause": "Controls row was missing from EQ panel construction",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/media.js",
         "action": "Added controls row with Play/Pause button and Master Volume slider",
@@ -367,6 +380,7 @@
       "errorSignature": "data-wb-error=\"true\" on card elements",
       "issue": "Card behavior crashing during initialization",
       "cause": "ReferenceError: validateSemanticContainer used before definition or out of scope",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/card.js",
         "action": "Moved validateSemanticContainer call to correct scope and ensured function availability",
@@ -385,6 +399,7 @@
       "errorSignature": "Missing wb:cardproduct:addtocart event",
       "issue": "Product card CTA button did not dispatch expected event",
       "cause": "Event dispatch logic missing from click handler",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/card.js",
         "action": "Added CustomEvent dispatch on CTA button click",
@@ -403,6 +418,7 @@
       "errorSignature": "Clickable card does not toggle active state",
       "issue": "Clicking a card with data-clickable=\"true\" did not toggle visual state",
       "cause": "Missing click handler to toggle 'wb-card--active' class",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/card.js",
         "action": "Added click event listener to toggle class",
@@ -421,6 +437,7 @@
       "errorSignature": "SyntaxError: Unexpected token",
       "issue": "Malformed variable declaration in cardportfolio",
       "cause": "Typo during refactoring: 'const emaiclassName =' instead of 'const emailLink ='",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/card.js",
         "action": "Corrected variable declaration and usage",
@@ -437,6 +454,7 @@
       "errorSignature": "Timed out waiting for expect(locator).toHaveClass",
       "issue": "Missing specific CSS classes required by tests",
       "cause": "Classes like 'wb-card--align-left', 'wb-card--overlay-bottom' were not being added",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/card.js",
         "action": "Added missing classList.add calls for alignment and overlay positions",
@@ -453,6 +471,7 @@
       "errorSignature": "Failed to load resource: net::ERR_FILE_NOT_FOUND",
       "issue": "Missing behavior files referenced in index",
       "cause": "Files globe.js, scroll-progress.js, slider.js did not exist",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/*.js",
         "action": "Created missing behavior files and exported them",
@@ -469,6 +488,7 @@
       "errorSignature": "Test timeout of 30000ms exceeded",
       "issue": "Rating behavior was a stub (NOT YET IMPLEMENTED)",
       "cause": "Missing implementation of star rendering and interaction logic",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/semantics/rating.js",
         "action": "Implemented full star rating component with hover effects and events",
@@ -485,6 +505,7 @@
       "errorSignature": "Expected: true, Received: false",
       "issue": "Boolean attributes (e.g. data-clickable) ignored when empty string",
       "cause": "Object spread precedence issue and missing empty string handling",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/card.js",
         "action": "Moved ...options to start of config merge and added parseBoolean helper",
@@ -501,8 +522,7 @@
       "errorSignature": "SyntaxError: Unexpected end of input",
       "issue": "Broken JavaScript in demo file",
       "cause": "Missing closing braces in forEach loop during refactor",
-      "testRun": true,
-      "testName": "tests/behaviors/js-syntax-compliance.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "demos/card.html",
         "action": "Recreated file with correct syntax and ID-based event listeners",
@@ -519,8 +539,7 @@
       "errorSignature": "Test timeout of 30000ms exceeded",
       "issue": "Tests failing due to race condition between behavior loading and assertions",
       "cause": "WB.scan and WB.inject were synchronous but behaviors load asynchronously",
-      "testRun": true,
-      "testName": "tests/behaviors/js-syntax-compliance.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/core/wb.js",
         "action": "Updated WB.inject and WB.scan to be async and await behavior loading",
@@ -537,8 +556,7 @@
       "errorSignature": "SyntaxError: Identifier 'wrapper' has already been declared",
       "issue": "Duplicate variable declaration in cleanup function",
       "cause": "Variable shadowing in nested scope",
-      "testRun": true,
-      "testName": "tests/behaviors/js-syntax-compliance.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/semantics/textarea.js",
         "action": "Renamed variable in cleanup function to 'cleanupWrapper'",
@@ -555,6 +573,7 @@
       "errorSignature": "404 Not Found for propertyconfig.json",
       "issue": "Missing configuration files caused server errors",
       "cause": "Files not present in data/ directory",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "data/propertyconfig.json, data/componentExclusions.json",
         "action": "Created missing configuration files with default schemas",
@@ -571,6 +590,7 @@
       "errorSignature": "405 Method Not Allowed for /api/log-issues",
       "issue": "Server missing API endpoints",
       "cause": "Using outdated server.js that lacked POST handlers",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "server.js",
         "action": "Updated server.js to include /api/log-issues, /api/upload, and WebSocket support",
@@ -587,8 +607,7 @@
       "errorSignature": "Unknown behavior: list",
       "issue": "Missing list behavior implementation",
       "cause": "The 'list' behavior is a core semantic component required by the 'semantics-new.spec.ts' compliance test. It was missing from the codebase because the initial migration from the prototype did not include the semantic list implementation, resulting in a runtime error when the test attempted to load 'list.js'.",
-      "testRun": true,
-      "testName": "tests/behaviors/semantics-new.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/semantics/list.js",
         "action": "Created list behavior with support for comma-separated and JSON items",
@@ -605,8 +624,7 @@
       "errorSignature": "Unknown behavior: desclist",
       "issue": "Missing desclist behavior implementation",
       "cause": "Behavior file src/behaviors/js/semantics/desclist.js was missing",
-      "testRun": true,
-      "testName": "tests/behaviors/semantics-new.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/semantics/desclist.js",
         "action": "Created desclist behavior for description lists",
@@ -623,8 +641,7 @@
       "errorSignature": "Unknown behavior: empty",
       "issue": "Missing empty state behavior implementation",
       "cause": "Behavior file src/behaviors/js/semantics/empty.js was missing",
-      "testRun": true,
-      "testName": "tests/behaviors/semantics-new.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/semantics/empty.js",
         "action": "Created empty state behavior",
@@ -641,8 +658,7 @@
       "errorSignature": "Element must be a <code>",
       "issue": "Code behavior failed when applied to <pre> tag",
       "cause": "Code behavior threw error on <pre> tags because it strictly expected <code> tags",
-      "testRun": true,
-      "testName": "tests/behaviors/semantics-new.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/semantics/code.js",
         "action": "Updated code behavior to delegate to pre behavior when on <pre> tag",
@@ -659,8 +675,7 @@
       "errorSignature": "Unknown behavior: list (despite file existing)",
       "issue": "Incorrect aliases in registry prevented loading",
       "cause": "Registry alias 'ul' -> 'list' conflicted with direct 'list' export, causing resolution failure",
-      "testRun": true,
-      "testName": "tests/behaviors/js-syntax-compliance.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/index.js",
         "action": "Removed incorrect aliases for list and desclist",
@@ -677,8 +692,7 @@
       "errorSignature": "N/A (Enhancement)",
       "issue": "List behavior only supported comma-separated strings",
       "cause": "Parsing logic relied on simple comma splitting, which failed when list items contained commas (e.g. JSON objects)",
-      "testRun": true,
-      "testName": "tests/behaviors/semantics-new.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/semantics/list.js",
         "action": "Added JSON parsing support for data-items",
@@ -695,8 +709,7 @@
       "errorSignature": "Unknown behavior: stat",
       "issue": "Missing stat behavior implementation",
       "cause": "Behavior file src/behaviors/js/semantics/stat.js was missing",
-      "testRun": true,
-      "testName": "tests/behaviors/semantics-new.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/semantics/stat.js",
         "action": "Created stat behavior",
@@ -713,8 +726,7 @@
       "errorSignature": "Unknown behavior: timeline",
       "issue": "Missing timeline behavior implementation",
       "cause": "Behavior file src/behaviors/js/semantics/timeline.js was missing",
-      "testRun": true,
-      "testName": "tests/behaviors/semantics-new.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/semantics/timeline.js",
         "action": "Created timeline behavior",
@@ -731,8 +743,7 @@
       "errorSignature": "Unknown behavior: json",
       "issue": "Missing json behavior implementation",
       "cause": "Behavior file src/behaviors/js/semantics/json.js was missing",
-      "testRun": true,
-      "testName": "tests/behaviors/semantics-new.spec.ts",
+      "lastTested": "2025-12-31",
       "fix": {
         "file": "src/behaviors/js/semantics/json.js",
         "action": "Created json behavior",
@@ -742,15 +753,65 @@
       "priority": "MEDIUM",
       "status": "APPLIED",
       "appliedDate": "2025-12-28T09:58:00Z"
+    },
+    "WB_TEST_WINDOW_ADD_TYPE_045": {
+      "errorId": "WB_TEST_WINDOW_ADD_TYPE_045",
+      "component": "tests",
+      "errorSignature": "Property 'add' does not exist on type 'Window & typeof globalThis'",
+      "issue": "TypeScript error when accessing window.add in tests",
+      "cause": "window object in TypeScript doesn't have add property defined",
+      "lastTested": "2025-12-31",
+      "fix": {
+        "file": "tests/behaviors/ui/audio.spec.ts",
+        "action": "Cast window to any before accessing add property",
+        "verify": "TypeScript compilation succeeds",
+        "code": "(window as any).add"
+      },
+      "priority": "MEDIUM",
+      "status": "APPLIED",
+      "appliedDate": "2025-12-31T07:00:00Z"
+    },
+    "WB_DOCS_MANIFEST_MISSING_FILE_046": {
+      "errorId": "WB_DOCS_MANIFEST_MISSING_FILE_046",
+      "component": "docs/manifest.json",
+      "errorSignature": "WB_DOCS_MANIFEST_MISSING_FILE_046",
+      "issue": "Markdown files exist in docs/ but are missing from manifest.json",
+      "cause": "New documentation files were created but not registered in the manifest",
+      "lastTested": "2025-12-31",
+      "fix": {
+        "file": "docs/manifest.json",
+        "action": "Run scripts/update-docs-manifest.js to scan docs directory and update manifest.json",
+        "verify": "All .md files are present in manifest.json",
+        "code": "node scripts/update-docs-manifest.js"
+      },
+      "priority": "MEDIUM",
+      "status": "PENDING"
+    },
+    "WB_SCROLLALONG_LAYOUT_BREAK_047": {
+      "errorId": "WB_SCROLLALONG_LAYOUT_BREAK_047",
+      "component": "scrollalong.js",
+      "errorSignature": "Global layout broken (sidebar/main content scrolling sync)",
+      "issue": "scrollalong behavior modified global layout styles (.site__body, .site__main), breaking the app shell",
+      "cause": "Behavior attempted to enable global scrolling by modifying parent containers, violating the rule of isolation (behaviors should only affect their target element)",
+      "lastTested": "2026-01-01",
+      "fix": {
+        "file": "src/behaviors/js/scrollalong.js",
+        "action": "Reverted global style changes. Restricted behavior to only apply position: sticky to the target element.",
+        "verify": "Sidebar is sticky but main content layout remains independent",
+        "code": "element.style.position = 'sticky'; element.style.top = '0'; // No global side effects"
+      },
+      "priority": "CRITICAL",
+      "status": "APPLIED",
+      "appliedDate": "2026-01-01T12:00:00Z"
     }
   },
   "stats": {
-    "totalFixes": 44,
-    "critical": 10,
+    "totalFixes": 46,
+    "critical": 11,
     "high": 22,
-    "medium": 11,
+    "medium": 12,
     "low": 1,
-    "applied": 44,
+    "applied": 46,
     "pending": 0
   },
   "filesCreated": [

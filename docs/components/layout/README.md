@@ -2,7 +2,7 @@
 
 ## Overview
 
-WB Behaviors provides flexible layout components using CSS Grid and Flexbox.
+Web Behaviors (WB) provides flexible layout components using CSS Grid and Flexbox.
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The WB Behaviors follows strict Object-Oriented CSS (OOCSS) principles. Styles are layered, inherited, and never duplicated. Every CSS file has a single responsibility and inherits from the layers above it.
+The Web Behaviors (WB) library follows strict Object-Oriented CSS (OOCSS) principles. Styles are layered, inherited, and never duplicated. Every CSS file has a single responsibility and inherits from the layers above it.
 
 ---
 
@@ -234,6 +234,34 @@ var(--transition-base)    /* 0.2s ease */
 var(--transition-medium)  /* 0.3s ease */
 var(--transition-slow)    /* 0.5s ease */
 ```
+
+---
+
+## Component Spacing Guidelines
+
+To ensure visual consistency, follow these spacing rules for specific component types:
+
+### Panels & Containers
+*   **Padding:** Use `var(--space-md)` (1rem) for standard panel padding.
+*   **Gap:** Use `var(--space-md)` for gaps between major sections within a panel.
+*   **Border Radius:** Use `var(--radius-lg)` (0.5rem) for outer containers/panels.
+*   **Responsive Grids:** Use `minmax(250px, 1fr)` for card grids to ensure items never become too narrow. Avoid fixed column counts (e.g., `repeat(4, 1fr)`) that break on smaller screens.
+
+### Editor Controls & Inputs
+*   **Height:** Standard inputs/buttons should be `36px` (or `2.25rem`) high.
+*   **Padding:** Use `var(--space-sm)` (0.5rem) horizontal padding for inputs/buttons.
+*   **Gap:** Use `var(--space-sm)` between related controls (e.g., a label and its input, or a group of buttons).
+*   **Margins:** Avoid outer margins on controls; use parent flex/grid gaps instead.
+
+### Text & Typography
+*   **Headings:** Bottom margin should be `var(--space-sm)` for small headings (h4-h6) and `var(--space-md)` for large headings (h1-h3).
+*   **Paragraphs:** Bottom margin should be `var(--space-md)`.
+*   **Wrapping:** All text in cards and containers must wrap automatically. Do not use `white-space: nowrap` or `text-overflow: ellipsis` unless specifically required for a single-line UI element (like a badge).
+*   **Long Words:** Use `word-break: break-word` or `overflow-wrap: anywhere` for content that might contain long strings (URLs, filenames).
+
+### Lists & Items
+*   **List Items:** Use `var(--space-xs)` or `var(--space-sm)` padding for list items.
+*   **Separators:** Use `1px solid var(--border-color)` for dividers between items.
 
 ---
 

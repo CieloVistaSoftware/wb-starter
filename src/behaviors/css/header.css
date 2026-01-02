@@ -1,0 +1,81 @@
+/**
+ * Header Behavior Styles
+ */
+
+.wb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 60px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  gap: 1rem;
+}
+
+.wb-header--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.wb-header__left,
+.wb-header__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wb-header__center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wb-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.wb-header__logo:hover {
+  color: var(--primary);
+}
+
+.wb-header__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.wb-header__title {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.wb-header__subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-left: 0.5rem;
+}
+
+.wb-header__subtitle::before {
+  content: "·";
+  margin-right: 0.5rem;
+  color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wb-header {
+    padding: 0 1rem;
+  }
+  
+  .wb-header__subtitle {
+    display: none;
+  }
+}

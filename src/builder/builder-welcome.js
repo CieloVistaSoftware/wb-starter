@@ -141,18 +141,10 @@ export function hideWelcome() {
 }
 
 /**
- * Check if welcome should be shown
+ * Check if welcome should be shown - DISABLED (templates in sidebar now)
  */
 export function shouldShowWelcome() {
-  // Don't show in test environment
-  if (navigator.webdriver) return false;
-
-  const canvas = document.getElementById('canvas');
-  if (!canvas) return false;
-  
-  // Show if canvas has no dropped components
-  const hasComponents = canvas.querySelector('.dropped');
-  return !hasComponents;
+  return false; // Templates are in sidebar - no modal needed
 }
 
 // =============================================================================
@@ -164,14 +156,23 @@ window.skipWelcome = () => {
 };
 
 /**
- * Open templates chooser (from header button)
+ * Open templates - just focus sidebar (no modal)
  */
 export function openTemplates() {
-  showWelcome();
+  // Focus the sidebar search
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar) {
+    sidebar.classList.remove('collapsed');
+    const search = document.getElementById('templateSearch');
+    if (search) {
+      search.focus();
+      search.select();
+    }
+  }
 }
 
 window.openTemplatesChooser = () => {
-  showWelcome();
+  openTemplates();
 };
 
 window.switchWelcomeTab = (tab) => {
@@ -206,6 +207,9 @@ window.selectPageTemplate = async (templateId) => {
   if (!template) return;
   
   hideWelcome();
+  
+  // Set template name on body
+  document.body.dataset.templateName = template.name;
   
   // Small delay for animation
   await new Promise(r => setTimeout(r, 350));
@@ -265,36 +269,192 @@ window.selectSectionTemplate = async (templateId) => {
 // =============================================================================
 
 /**
- * Insert a component from template (handles nested children)
+ * Find the drop zone for a container wrapper
  */
-async function insertTemplateComponent(comp, parentId = null) {
-  // Use builder's add function if available
-  if (window.add) {
-    const wrapper = window.add(comp, parentId);
-    
-    // Handle grid children
-    if (comp.gridChildren && wrapper) {
-      const gridEl = wrapper.querySelector('[data-wb="grid"]') || wrapper;
-      for (const child of comp.gridChildren) {
-        if (window.addToGrid) {
-          window.addToGrid(child, wrapper);
-        }
-      }
-    }
-    
-    // Handle container children
-    if (comp.children && comp.container && wrapper) {
-      for (const child of comp.children) {
-        if (child.n) { // Only process if it's a component definition
-          await insertTemplateComponent(child, wrapper.id);
-        }
-      }
-    }
-    
-    return wrapper;
-  }
+function findContainerDropZone(wrapper) {
+  // For containers, the drop zone is the element with data-wb="container"
+  const containerEl = wrapper.querySelector('[data-wb="container"]');
+  if (containerEl) return containerEl;
+  
+  // Fallback: the element with data-wb
+  const wbEl = wrapper.querySelector('[data-wb]');
+  if (wbEl) return wbEl;
   
   return null;
+}
+
+/**
+ * Find the grid element inside a grid wrapper
+ */
+function findGridElement(wrapper) {
+  return wrapper.querySelector('[data-wb="grid"]') || wrapper.querySelector('.wb-grid');
+}
+
+/**
+ * Insert a component from template (handles nested children)
+ * This properly nests children inside their parent containers/grids
+ */
+async function insertTemplateComponent(comp, parentWrapper = null) {
+  let wrapper = null;
+  
+  // Determine where to add this component
+  if (parentWrapper) {
+    // Adding to a parent container or grid
+    const parentConfig = JSON.parse(parentWrapper.dataset.c || '{}');
+    
+    if (parentWrapper.dataset.grid || parentConfig.b === 'grid') {
+      // Parent is a grid - use addToGrid
+      if (window.addToGrid) {
+        window.addToGrid(comp, parentWrapper);
+        // Find the just-added wrapper (last grid-child in the grid)
+        const gridEl = findGridElement(parentWrapper);
+        if (gridEl) {
+          wrapper = gridEl.querySelector('.dropped:last-child');
+        }
+      }
+    } else {
+      // Parent is a container - manually add to drop zone
+      const dropZone = findContainerDropZone(parentWrapper);
+      if (dropZone) {
+        wrapper = addChildToContainer(comp, parentWrapper, dropZone);
+      } else {
+        // Fallback: use add() but manually move it
+        wrapper = window.add(comp);
+        if (wrapper) {
+          const fallbackZone = parentWrapper.querySelector('[data-wb]');
+          if (fallbackZone) {
+            fallbackZone.appendChild(wrapper);
+            wrapper.dataset.parent = parentWrapper.id;
+            wrapper.classList.add('container-child');
+          }
+        }
+      }
+    }
+  } else {
+    // Root level component - add to canvas
+    if (window.add) {
+      wrapper = window.add(comp);
+    }
+  }
+  
+  if (!wrapper) return null;
+  
+  // Handle grid children (gridChildren array in template)
+  if (comp.gridChildren && Array.isArray(comp.gridChildren)) {
+    for (const child of comp.gridChildren) {
+      await insertTemplateComponent(child, wrapper);
+    }
+  }
+  
+  // Handle container children (children array with container flag)
+  if (comp.children && Array.isArray(comp.children) && comp.container) {
+    for (const child of comp.children) {
+      // Only process component definitions (have 'n' for name or 'b' for behavior)
+      if (child.n || child.b) {
+        await insertTemplateComponent(child, wrapper);
+      }
+    }
+  }
+  
+  return wrapper;
+}
+
+/**
+ * Manually add a child to a container's drop zone
+ */
+function addChildToContainer(comp, containerWrapper, dropZone) {
+  // Generate unique ID
+  const base = (comp.b || comp.t || 'el').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const id = base + '-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6);
+  
+  const w = document.createElement('div');
+  w.className = 'dropped container-child';
+  if (comp.container || comp.b === 'container' || comp.b === 'grid') {
+    w.classList.add('is-container');
+  }
+  w.id = id;
+  w.dataset.c = JSON.stringify(comp);
+  w.dataset.parent = containerWrapper.id;
+  
+  // Build controls
+  let controls = '<div class="controls">';
+  controls += `<button class="ctrl-btn" onclick="moveUp('${id}')" title="Move up">⬆️</button>`;
+  controls += `<button class="ctrl-btn" onclick="moveDown('${id}')" title="Move down">⬇️</button>`;
+  controls += `<button class="ctrl-btn" onclick="dup('${id}')" title="Duplicate">📋</button>`;
+  controls += `<button class="ctrl-btn del" onclick="del('${id}')" title="Delete">🗑️</button>`;
+  controls += '</div>';
+  w.innerHTML = controls;
+  
+  // Create the actual element
+  const el = createTemplateElement(comp, id);
+  w.appendChild(el);
+  
+  // Add to drop zone
+  dropZone.appendChild(w);
+  
+  // Scan with WB
+  if (window.WB && window.WB.scan) {
+    window.WB.scan(w);
+  }
+  
+  return w;
+}
+
+/**
+ * Create the inner element for a template component
+ */
+function createTemplateElement(comp, id) {
+  const t = comp.t || 'div';
+  const el = document.createElement(t);
+  el.id = id + '-el';
+  
+  if (comp.b) el.dataset.wb = comp.b;
+  
+  if (comp.d) {
+    for (const [k, v] of Object.entries(comp.d)) {
+      if (k === 'text') el.textContent = v;
+      else if (k === 'class') el.className = v;
+      else if (k === 'src' && ['IMG', 'AUDIO', 'VIDEO'].includes(el.tagName)) el.src = v;
+      else if (k === 'href') el.href = v;
+      else if (k === 'placeholder') el.placeholder = v;
+      else if (k === 'type' && t === 'input') el.type = v;
+      else el.dataset[k] = v;
+    }
+  }
+  
+  // Apply container styles immediately
+  if (comp.b === 'container' && comp.d) {
+    el.style.display = 'flex';
+    el.style.flexDirection = comp.d.direction || 'column';
+    el.style.flexWrap = (comp.d.wrap === true || comp.d.wrap === 'true') ? 'wrap' : 'nowrap';
+    if (comp.d.gap) {
+      el.style.gap = comp.d.gap;
+      el.style.setProperty('--gap', comp.d.gap);
+    }
+    if (comp.d.padding) el.style.padding = comp.d.padding;
+    
+    const alignMap = { start: 'flex-start', center: 'center', end: 'flex-end', stretch: 'stretch' };
+    const justifyMap = { start: 'flex-start', center: 'center', end: 'flex-end', 'space-between': 'space-between' };
+    if (comp.d.align) el.style.alignItems = alignMap[comp.d.align] || comp.d.align;
+    if (comp.d.justify) el.style.justifyContent = justifyMap[comp.d.justify] || comp.d.justify;
+  }
+  
+  // Apply grid styles
+  if (comp.b === 'grid' && comp.d) {
+    el.style.display = 'grid';
+    el.style.gap = comp.d.gap || '1rem';
+    el.style.gridTemplateColumns = `repeat(${comp.d.columns || 3}, 1fr)`;
+  }
+  
+  // Make semantic elements editable
+  const semanticTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'BUTTON', 'A'];
+  if (semanticTags.includes(el.tagName) || (comp.d && comp.d.text)) {
+    el.setAttribute('contenteditable', 'true');
+    el.classList.add('canvas-editable');
+    el.dataset.editableKey = 'text';
+  }
+  
+  return el;
 }
 
 // =============================================================================

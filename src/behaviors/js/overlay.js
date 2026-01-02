@@ -170,19 +170,24 @@ export function drawer(element, options = {}) {
     `;
     drawerEl.querySelector('button').onclick = hide;
     document.body.appendChild(drawerEl);
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('wb-scroll-lock');
   };
 
   const hide = () => {
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (drawerEl) { drawerEl.remove(); drawerEl = null; }
-    document.body.style.overflow = '';
+    document.body.classList.remove('wb-scroll-lock');
   };
 
-  element.onclick = () => drawerEl ? hide() : show();
-  element.wbDrawer = { show, hide, toggle: () => drawerEl ? hide() : show() };
+  const toggle = () => drawerEl ? hide() : show();
+  element.addEventListener('click', toggle);
+  element.wbDrawer = { show, hide, toggle };
 
-  return () => { hide(); element.classList.remove('wb-drawer-trigger'); };
+  return () => { 
+    hide(); 
+    element.removeEventListener('click', toggle);
+    element.classList.remove('wb-drawer-trigger'); 
+  };
 }
 
 /**
@@ -313,13 +318,13 @@ export function offcanvas(element, options = {}) {
     `;
     panelEl.querySelector('button').onclick = hide;
     document.body.appendChild(panelEl);
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('wb-scroll-lock');
   };
 
   const hide = () => {
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (panelEl) { panelEl.remove(); panelEl = null; }
-    document.body.style.overflow = '';
+    document.body.classList.remove('wb-scroll-lock');
   };
 
   element.onclick = () => panelEl ? hide() : show();
@@ -388,8 +393,7 @@ export function sheet(element, options = {}) {
     const resizeHandle = sheetEl.querySelector('.wb-sheet__resize');
     resizeHandle.onmousedown = (e) => {
       isResizing = true;
-      document.body.style.cursor = 'ew-resize';
-      document.body.style.userSelect = 'none';
+      document.body.classList.add('wb-resizing');
     };
     
     document.addEventListener('mousemove', (e) => {
@@ -404,12 +408,11 @@ export function sheet(element, options = {}) {
     
     document.addEventListener('mouseup', () => {
       isResizing = false;
-      document.body.style.cursor = '';
-      document.body.style.userSelect = '';
+      document.body.classList.remove('wb-resizing');
     });
     
     document.body.appendChild(sheetEl);
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('wb-scroll-lock');
     
     // Focus textarea if present
     const textarea = sheetEl.querySelector('textarea');
@@ -419,14 +422,19 @@ export function sheet(element, options = {}) {
   const hide = () => {
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (sheetEl) { sheetEl.remove(); sheetEl = null; }
-    document.body.style.overflow = '';
+    document.body.classList.remove('wb-scroll-lock');
   };
 
-  element.onclick = () => sheetEl ? hide() : show();
-  element.wbSheet = { show, hide, toggle: () => sheetEl ? hide() : show() };
+  const toggle = () => sheetEl ? hide() : show();
+  element.addEventListener('click', toggle);
+  element.wbSheet = { show, hide, toggle };
 
   element.dataset.wbReady = 'sheet';
-  return () => { hide(); element.classList.remove('wb-sheet-trigger'); };
+  return () => { 
+    hide(); 
+    element.removeEventListener('click', toggle);
+    element.classList.remove('wb-sheet-trigger'); 
+  };
 }
 
 /**

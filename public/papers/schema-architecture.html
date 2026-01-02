@@ -7,8 +7,8 @@
   <meta name="description" content="A research paper on how Schema First Architecture solves AI hallucination in web development.">
   
   <!-- Import project styles for functional components, but we will override heavily -->
-  <link rel="stylesheet" href="../src/styles/themes.css">
-  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
   
   <style>
     /* Scientific Paper Theme Overrides */
@@ -210,7 +210,7 @@
 </head>
 <body>
 
-  <a href="../index.html" class="nav-back">← Return to Project</a>
+  <a href="../../index.html" class="nav-back">← Return to Project</a>
 
   <div class="paper-container">
     <h1 class="paper-title">Schema-First Architecture: A Deterministic Framework for Eliminating Generative A.I. Errors in AI-Driven Web Development</h1>
@@ -300,8 +300,8 @@
           <span class="demo-label">Live Interactive Figure 2: Schema-Driven Rendering</span>
           <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; padding: 1rem; background: #f5f5f5; transform: scale(0.6); transform-origin: center;">
             <!-- These are real working components -->
-            <button data-wb="button" data-variant="primary" data-size="xs">Schema Valid</button>
-            <button data-wb="button" data-variant="outlined" data-size="xs">Schema Valid</button>
+            <button data-variant="primary" data-size="xs">Schema Valid</button>
+            <button data-variant="outlined" data-size="xs">Schema Valid</button>
             <button class="btn-fake-hallucination" style="padding: 2px 6px; font-size: 0.7rem; border: 1px solid red; color: red; background: transparent;" data-wb="toast" data-type="error" data-message="Error: Schema Validation Failed. Missing required child '.wb-card__header'.">Hallucination (Invalid)</button>
           </div>
         </div>
@@ -378,8 +378,8 @@
 
   <!-- Initialize WB for the live figures -->
   <script type="module">
-    import WB from '../src/core/wb.js';
-    import '../src/behaviors/index.js';
+    import WB from '../../src/core/wb.js';
+    import '../../src/behaviors/index.js';
     WB.init();
   </script>
 </body>

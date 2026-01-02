@@ -11,9 +11,9 @@
  */
 export function dialog(element, options = {}) {
   const config = {
-    title: options.title || element.dataset.dialogTitle || 'Dialog',
-    content: options.content || element.dataset.dialogContent || '',
-    size: options.size || element.dataset.dialogSize || 'md',
+    title: options.title || element.dataset.dialogTitle || element.dataset.modalTitle || 'Dialog',
+    content: options.content || element.dataset.dialogContent || element.dataset.modalContent || '',
+    size: options.size || element.dataset.dialogSize || element.dataset.modalSize || 'md',
     ...options
   };
 

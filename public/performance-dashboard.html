@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #6366f1;
+      --success: #22c55e;
+      --warning: #eab308;
+      --danger: #ef4444;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    h1 { margin: 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .stat {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+    .status-pass { color: var(--success); }
+    .status-fail { color: var(--danger); }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    th { color: var(--text-muted); font-weight: 600; }
+    
+    .refresh-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .refresh-btn:hover { filter: brightness(1.1); }
+
+    .control-cabinet {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      box-shadow: 
+        0 4px 24px -1px rgba(0, 0, 0, 0.2), 
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      min-width: 200px;
+    }
+
+    .control-cabinet button {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .run-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      overflow: hidden;
+    }
+
+    .run-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .run-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .status-light {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--success);
+      box-shadow: 0 0 8px var(--success);
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .run-btn.running .status-light {
+      background-color: var(--danger);
+      box-shadow: 0 0 8px var(--danger);
+      animation: pulse-red 1s infinite;
+    }
+
+    @keyframes pulse-red {
+      0% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { opacity: 1; box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+      100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Performance Dashboard</h1>
+        <p style="color: var(--text-muted)">Real-time metrics from Playwright tests</p>
+      </div>
+      <div class="control-cabinet">
+        <button id="runBtn" class="run-btn" onclick="runTests()">
+          <span class="status-light"></span>
+          <span class="btn-text">Run Test Suite</span>
+        </button>
+        <button class="refresh-btn" onclick="loadData()">Refresh Data</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Load Time Chart -->
+      <div class="card">
+        <h2>Page Load Times</h2>
+        <canvas id="loadChart"></canvas>
+      </div>
+
+      <!-- Interaction Chart -->
+      <div class="card">
+        <h2>Interaction Latency</h2>
+        <canvas id="interactionChart"></canvas>
+      </div>
+
+      <!-- Resource Size Chart -->
+      <div class="card">
+        <h2>Resource Sizes</h2>
+        <canvas id="resourceChart"></canvas>
+      </div>
+
+      <!-- Recent Results Table -->
+      <div class="card" style="grid-column: 1 / -1;">
+        <h2>Recent Test Runs</h2>
+        <div style="overflow-x: auto;">
+          <table id="resultsTable">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Test Name</th>
+                <th>Value</th>
+                <th>Threshold</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function loadData() {
+      try {
+        const res = await fetch('/data/performance-results.json');
+        const data = await res.json();
+        
+        // Process data for charts
+        // We want the latest run for each unique test name
+        const latestRuns = {};
+        data.forEach(entry => {
+          latestRuns[entry.name] = entry;
+        });
+        
+        const entries = Object.values(latestRuns);
+        
+        updateCharts(entries);
+        updateTable(data.slice(-20).reverse()); // Show last 20
+        
+      } catch (e) {
+        console.error('Failed to load data:', e);
+        alert('Could not load performance data. Make sure tests have run.');
+      }
+    }
+
+    function updateCharts(entries) {
+      const sortDesc = (a, b) => b.value - a.value;
+
+      // Load Time
+      const loadEntries = entries.filter(e => e.category === 'load').sort(sortDesc);
+      renderChart('loadChart', loadEntries, 'Load Time (ms)', '#6366f1', 'Page Name', 'Time (ms)');
+
+      // Interaction
+      const interactionEntries = entries.filter(e => e.category === 'interaction').sort(sortDesc);
+      renderChart('interactionChart', interactionEntries, 'Latency (ms)', '#22c55e', 'Interaction', 'Latency (ms)');
+
+      // Resource
+      const resourceEntries = entries.filter(e => e.category === 'resource').sort(sortDesc);
+      renderChart('resourceChart', resourceEntries, 'Size (KB)', '#eab308', 'File Name', 'Size (KB)');
+    }
+
+    function renderChart(canvasId, data, label, color, xLabel, yLabel) {
+      const ctx = document.getElementById(canvasId).getContext('2d');
+      
+      // Destroy existing chart if any
+      const existingChart = Chart.getChart(canvasId);
+      if (existingChart) existingChart.destroy();
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.map(d => d.name),
+          datasets: [{
+            label: label,
+            data: data.map(d => d.value),
+            backgroundColor: color,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(255,255,255,0.1)' },
+              ticks: { color: '#94a3b8' },
+              title: {
+                display: true,
+                text: yLabel,
+                color: '#94a3b8',
+                font: { size: 12 }
+              }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#94a3b8' },
+              title: {
+                display: true,
+                text: xLabel,
+                color: '#94a3b8',
+                font: { size: 12 }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function updateTable(entries) {
+      const tbody = document.querySelector('#resultsTable tbody');
+      tbody.innerHTML = entries.map(e => {
+        const passed = !e.threshold || e.value < e.threshold;
+        const statusColor = passed ? 'var(--success)' : 'var(--danger)';
+        const statusIcon = passed ? '✓ Pass' : '✗ Fail';
+        
+        return `
+          <tr>
+            <td>${new Date(e.timestamp).toLocaleTimeString()}</td>
+            <td>${e.name}</td>
+            <td>${e.value.toFixed(2)} ${e.unit}</td>
+            <td>${e.threshold ? '< ' + e.threshold + ' ' + e.unit : '-'}</td>
+            <td style="color: ${statusColor}; font-weight: bold;">${statusIcon}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Initial load
+    loadData();
+
+    async function runTests() {
+      const btn = document.getElementById('runBtn');
+      const btnText = btn.querySelector('.btn-text');
+      const originalText = btnText.innerText;
+      
+      if (!confirm('Initiate full performance test suite? This process runs on the server and may take 1-2 minutes.')) {
+        return;
+      }
+
+      try {
+        // Set Running State
+        btn.disabled = true;
+        btn.classList.add('running');
+        btnText.innerText = 'Test Suite Running...';
+        
+        const res = await fetch('/api/run-perf-tests', { method: 'POST' });
+        const result = await res.json();
+        
+        console.log('Test Output:', result.output);
+        
+        if (result.success) {
+          await loadData();
+          alert('Tests completed successfully. Dashboard updated.');
+        } else {
+          alert('Tests failed to execute properly. Check console.');
+        }
+      } catch (e) {
+        console.error(e);
+        alert('Error triggering tests: ' + e.message);
+      } finally {
+        // Reset State
+        btn.disabled = false;
+        btn.classList.remove('running');
+        btnText.innerText = originalText;
+      }
+    }
+  </script>
+</body>
+</html>

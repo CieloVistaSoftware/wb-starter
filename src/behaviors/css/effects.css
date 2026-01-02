@@ -81,12 +81,12 @@
 }
 
 .wb-container:hover {
-  border-color: var(--primary, #6366f1);
+  border-color: var(--primary);
 }
 
 .wb-container.drop-target {
-  border-color: var(--success, #22c55e);
-  background: var(--success-bg, rgba(34, 197, 94, 0.1));
+  border-color: var(--success-color);
+  background: var(--success-bg);
 }
 
 /* =============================================================================
@@ -218,4 +218,37 @@
   65% { transform: scaleX(0.95) scaleY(1.05); }
   75% { transform: scaleX(1.05) scaleY(0.95); }
   100% { transform: scale(1); }
+}
+
+/* =============================================================================
+   ANIMATION UTILITY CLASSES
+============================================================================= */
+.wb-animate-bounce { animation: wb-bounce 1s ease; }
+.wb-animate-shake { animation: wb-shake 0.8s ease; }
+.wb-animate-pulse { animation: wb-pulse 1s ease; }
+.wb-animate-flip { animation: wb-flip 1s ease; }
+.wb-animate-rotate { animation: wb-rotate 1s linear; }
+.wb-animate-swing { animation: wb-swing 1s ease; }
+.wb-animate-tada { animation: wb-tada 1s ease; }
+.wb-animate-wobble { animation: wb-wobble 1s ease; }
+.wb-animate-jello { animation: wb-jello 1s ease; }
+.wb-animate-heartbeat { animation: wb-heartbeat 1.3s ease; }
+.wb-animate-flash { animation: wb-flash 1s ease; }
+.wb-animate-rubberband { animation: wb-rubberband 1s ease; }
+
+/* =============================================================================
+   STICKY BEHAVIOR STYLES
+============================================================================= */
+.wb-sticky {
+  transition: box-shadow 0.2s ease;
+}
+
+.wb-sticky.is-stuck {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.sticky-placeholder {
+  flex-shrink: 0;
+  pointer-events: none;
+  visibility: hidden;
 }

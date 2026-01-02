@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sticky",
+  "behavior": "sticky",
+  "description": "Makes an element stick to the top of the viewport when scrolling past it",
+  "type": "object",
+  "compliance": {
+    "baseClass": "wb-sticky"
+  },
+  "properties": {
+    "offset": {
+      "type": "string",
+      "description": "Pixels from top when stuck",
+      "default": "0"
+    },
+    "zIndex": {
+      "type": "string",
+      "description": "Z-index when stuck",
+      "default": "100"
+    },
+    "threshold": {
+      "type": "string",
+      "description": "Scroll position (in px) to trigger sticky. Defaults to element's natural position."
+    },
+    "class": {
+      "type": "string",
+      "description": "CSS class to add when stuck",
+      "default": "is-stuck"
+    },
+    "animate": {
+      "type": "boolean",
+      "description": "Add smooth transition when sticking/unsticking",
+      "default": true
+    }
+  },
+  "events": [
+    {
+      "name": "wb:sticky:stuck",
+      "description": "Fired when element becomes stuck",
+      "detail": {
+        "offset": "number"
+      }
+    },
+    {
+      "name": "wb:sticky:unstuck",
+      "description": "Fired when element is no longer stuck"
+    }
+  ],
+  "test": {
+    "setup": [
+      "<nav data-wb=\"sticky\">Navigation</nav>",
+      "<header data-wb=\"sticky\" data-offset=\"60\">Header</header>"
+    ],
+    "functional": [
+      {
+        "type": "visual",
+        "name": "element becomes fixed on scroll",
+        "verify": "Element gets position:fixed when scrolled past trigger point"
+      },
+      {
+        "type": "visual",
+        "name": "placeholder prevents layout shift",
+        "verify": "A placeholder element maintains original space"
+      }
+    ]
+  },
+  "examples": [
+    {
+      "description": "Basic sticky navbar",
+      "html": "<nav data-wb=\"sticky\">Navigation</nav>"
+    },
+    {
+      "description": "Sticky with offset (below a fixed header)",
+      "html": "<aside data-wb=\"sticky\" data-offset=\"60\">Sidebar</aside>"
+    },
+    {
+      "description": "Sticky with custom class",
+      "html": "<header data-wb=\"sticky\" data-class=\"header--fixed\" data-z-index=\"1000\">Header</header>"
+    }
+  ]
+}

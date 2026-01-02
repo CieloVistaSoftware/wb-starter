@@ -4,22 +4,30 @@
   "description": "Modern website starter kit powered by WB Behaviors",
   "main": "index.html",
   "scripts": {
-    "start": "node server.js",
+    "start": "node scripts/update-docs-manifest.js && node server.js",
     "dev": "npx serve . -p 3000",
     "test": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors",
+    "test:fast": "npx playwright test --max-failures=1",
+    "test:dev": "npx playwright test --project=base --project=behaviors",
+    "test:inc": "node scripts/test-incremental.js",
     "test:ui": "npx playwright test --ui",
     "test:single": "npx playwright test --workers=1",
     "test:compliance": "npx playwright test --project=compliance",
     "test:regression": "npx playwright test --project=regression",
     "test:base": "npx playwright test --project=compliance && npx playwright test --project=base",
     "test:behaviors": "npx playwright test --project=compliance && npx playwright test --project=base && npx playwright test --project=behaviors",
-    "test:all": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors"
+    "test:performance": "npx playwright test --project=performance",
+    "test:all": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors && npx playwright test --project=performance",
+    "test:integrity": "npx playwright test tests/compliance/project-integrity.spec.ts",
+    "precommit": "npm run test:integrity"
   },
   "keywords": [
     "website",
     "starter",
     "template",
-    "wb-behaviors",
+    "wb-starter",
+    "Components",
+    "generator",
     "no-build",
     "config-driven"
   ],
@@ -31,6 +39,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.23.0",
+    "compression": "^1.8.1",
     "express": "^5.1.0",
     "highlight.js": "^11.11.1",
     "ws": "^8.18.3"

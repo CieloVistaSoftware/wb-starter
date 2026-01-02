@@ -1,6 +1,11 @@
 <div id="docs-hero" class="page__hero">
   <h1>📖 Documentation</h1>
   <p>Browse all documentation, guides, and research papers.</p>
+  <div style="margin-top: 1.5rem; max-width: 500px; margin-left: auto; margin-right: auto; position: relative;">
+    <input type="search" id="docs-search" placeholder="Search documentation..." 
+           style="width: 100%; padding: 0.75rem 1rem; padding-left: 2.5rem; border-radius: 2rem; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-size: 1rem;">
+    <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); opacity: 0.5;">🔍</span>
+  </div>
 </div>
 
 <div id="docs-container" class="page__section">
@@ -14,16 +19,28 @@
   // Self-executing function (no module needed)
   (async function loadDocs() {
     const container = document.getElementById('docs-container');
+    const searchInput = document.getElementById('docs-search');
     if (!container) return;
     
-    try {
-      const res = await fetch('docs/manifest.json');
-      if (!res.ok) throw new Error('Failed to fetch manifest');
-      const manifest = await res.json();
-      
+    let fullManifest = null;
+
+    function renderDocs(manifestData) {
+      if (!manifestData || !manifestData.categories) {
+        container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">No documentation found.</p>';
+        return;
+      }
+
       let html = '';
+      let hasResults = false;
       
-      for (const category of manifest.categories) {
+      for (const category of manifestData.categories) {
+        // Skip empty categories after filtering
+        const hasDocs = category.docs && category.docs.length > 0;
+        const hasPages = category.pages && category.pages.length > 0;
+        
+        if (!hasDocs && !hasPages) continue;
+        
+        hasResults = true;
         html += '<div class="docs-category" style="margin-bottom: 2.5rem;">';
         html += '<h2 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">';
         html += '<span>' + category.icon + '</span>';
@@ -34,7 +51,9 @@
         // Handle markdown docs
         if (category.docs) {
           for (const doc of category.docs) {
-            html += '<a href="public/doc-viewer.html?file=' + encodeURIComponent(doc.file) + '" ';
+            // Prepend ../docs/ to the file path so doc-viewer (in public/) can find it
+            const filePath = doc.file.startsWith('http') || doc.file.startsWith('/') ? doc.file : '../docs/' + doc.file;
+            html += '<a href="../public/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
             html += 'class="docs-card" target="_blank" ';
             html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
             html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + doc.title + '</h3>';
@@ -46,7 +65,7 @@
         // Handle page links (like research papers)
         if (category.pages) {
           for (const page of category.pages) {
-            html += '<a href="pages/' + page.page + '.html" ';
+            html += '<a href="../pages/' + page.page + '.html" ';
             html += 'class="docs-card" target="_blank" ';
             html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
             html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + page.title + '</h3>';
@@ -58,21 +77,71 @@
         html += '</div></div>';
       }
       
-      container.innerHTML = html;
+      if (!hasResults) {
+        container.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);">' +
+          '<p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔍</p>' +
+          '<p>No results found matching your search.</p>' +
+          '</div>';
+      } else {
+        container.innerHTML = html;
+        
+        // Add hover effects
+        container.querySelectorAll('.docs-card').forEach(function(card) {
+          card.addEventListener('mouseenter', function() {
+            card.style.transform = 'translateY(-2px)';
+            card.style.borderColor = 'var(--primary)';
+            card.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+          });
+          card.addEventListener('mouseleave', function() {
+            card.style.transform = '';
+            card.style.borderColor = 'var(--border-color)';
+            card.style.boxShadow = '';
+          });
+        });
+      }
+    }
+
+    function filterManifest(query) {
+      if (!query) return fullManifest;
       
-      // Add hover effects
-      container.querySelectorAll('.docs-card').forEach(function(card) {
-        card.addEventListener('mouseenter', function() {
-          card.style.transform = 'translateY(-2px)';
-          card.style.borderColor = 'var(--primary)';
-          card.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+      const lowerQuery = query.toLowerCase();
+      const filteredCategories = fullManifest.categories.map(cat => {
+        const filteredDocs = (cat.docs || []).filter(doc => 
+          doc.title.toLowerCase().includes(lowerQuery) || 
+          doc.description.toLowerCase().includes(lowerQuery)
+        );
+        
+        const filteredPages = (cat.pages || []).filter(page => 
+          page.title.toLowerCase().includes(lowerQuery) || 
+          page.description.toLowerCase().includes(lowerQuery)
+        );
+        
+        return {
+          ...cat,
+          docs: filteredDocs,
+          pages: filteredPages
+        };
+      }).filter(cat => 
+        (cat.docs && cat.docs.length > 0) || 
+        (cat.pages && cat.pages.length > 0)
+      );
+      
+      return { ...fullManifest, categories: filteredCategories };
+    }
+    
+    try {
+      const res = await fetch('docs/manifest.json');
+      if (!res.ok) throw new Error('Failed to fetch manifest');
+      fullManifest = await res.json();
+      
+      renderDocs(fullManifest);
+
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          const filtered = filterManifest(e.target.value);
+          renderDocs(filtered);
         });
-        card.addEventListener('mouseleave', function() {
-          card.style.transform = '';
-          card.style.borderColor = 'var(--border-color)';
-          card.style.boxShadow = '';
-        });
-      });
+      }
       
     } catch (err) {
       console.error('Failed to load docs manifest:', err);

@@ -1,0 +1,85 @@
+{
+  "id": "contact",
+  "title": "Contact",
+  "icon": "📧",
+  "description": "Get in touch with us",
+  "components": [
+    {
+      "b": "hero",
+      "d": {
+        "title": "📧 Contact",
+        "subtitle": "Get in touch with us. We'd love to hear from you!"
+      }
+    },
+    {
+      "b": "section",
+      "children": [
+        {
+          "b": "grid",
+          "d": { "columns": 2, "gap": "2rem" },
+          "children": [
+            {
+              "b": "container",
+              "children": [
+                {
+                  "b": "heading",
+                  "d": { "level": 2, "text": "Send a Message" }
+                },
+                {
+                  "b": "form",
+                  "children": [
+                    {
+                      "b": "input",
+                      "d": { "label": "Name", "placeholder": "Your name", "required": true }
+                    },
+                    {
+                      "b": "input",
+                      "d": { "label": "Email", "type": "email", "placeholder": "you@example.com", "required": true }
+                    },
+                    {
+                      "b": "select",
+                      "d": { "label": "Subject", "options": ["General Inquiry", "Bug Report", "Feature Request", "Partnership"] }
+                    },
+                    {
+                      "b": "textarea",
+                      "d": { "label": "Message", "placeholder": "Your message...", "rows": 4 }
+                    },
+                    {
+                      "b": "button",
+                      "d": { "text": "Send Message", "type": "submit", "variant": "primary" }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "b": "container",
+              "children": [
+                {
+                  "b": "heading",
+                  "d": { "level": 2, "text": "Other Ways to Reach Us" }
+                },
+                {
+                  "b": "card",
+                  "d": { "title": "📍 Address", "content": "123 Main Street\nCity, State 12345" }
+                },
+                {
+                  "b": "card",
+                  "d": { "title": "📞 Phone", "content": "+1 (555) 123-4567" }
+                },
+                {
+                  "b": "card",
+                  "d": { "title": "✉️ Email", "content": "hello@example.com" }
+                },
+                {
+                  "b": "card",
+                  "d": { "title": "🕐 Hours", "content": "Monday - Friday\n9:00 AM - 5:00 PM" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

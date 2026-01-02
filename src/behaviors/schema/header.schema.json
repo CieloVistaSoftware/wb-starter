@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Header",
+  "behavior": "header",
+  "description": "Generates a site/page header with logo, title, and optional elements like badges and navigation.",
+  "type": "object",
+  "compliance": {
+    "baseClass": "wb-header"
+  },
+  "properties": {
+    "icon": {
+      "type": "string",
+      "description": "Logo icon (emoji or text)",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "description": "Header title text",
+      "default": ""
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Optional subtitle text",
+      "default": ""
+    },
+    "badge": {
+      "type": "string",
+      "description": "Badge text shown on the right (e.g. version number)",
+      "default": ""
+    },
+    "logoHref": {
+      "type": "string",
+      "description": "URL for logo link",
+      "default": ""
+    },
+    "sticky": {
+      "type": "boolean",
+      "description": "Make header sticky at top of viewport",
+      "default": false
+    }
+  },
+  "slots": {
+    "left": "Custom content for left section",
+    "center": "Custom content for center section",
+    "right": "Custom content for right section"
+  },
+  "cssClasses": {
+    "wb-header": "Base header class",
+    "wb-header--sticky": "Sticky positioning",
+    "wb-header__left": "Left section container",
+    "wb-header__center": "Center section container",
+    "wb-header__right": "Right section container",
+    "wb-header__logo": "Logo wrapper",
+    "wb-header__icon": "Icon element",
+    "wb-header__title": "Title element",
+    "wb-header__subtitle": "Subtitle element"
+  },
+  "api": {
+    "setTitle": "Update the title text",
+    "setIcon": "Update the icon",
+    "setBadge": "Update the badge text"
+  },
+  "test": {
+    "setup": [
+      "<header data-wb=\"header\" data-icon=\"📂\" data-title=\"Test\"></header>",
+      "<header data-wb=\"header\" data-title=\"App\" data-badge=\"v1.0\"></header>",
+      "<header data-wb=\"header\" data-icon=\"🚀\" data-title=\"Site\" data-sticky></header>"
+    ],
+    "functional": [
+      {
+        "type": "visual",
+        "name": "renders title",
+        "verify": "Header displays title text"
+      },
+      {
+        "type": "visual",
+        "name": "renders icon",
+        "verify": "Header displays icon"
+      },
+      {
+        "type": "visual",
+        "name": "renders badge",
+        "verify": "Badge appears on right side"
+      },
+      {
+        "type": "style",
+        "name": "sticky class applied",
+        "selector": "[data-sticky]",
+        "verify": "Has wb-header--sticky class"
+      }
+    ]
+  },
+  "examples": [
+    {
+      "description": "Simple header with icon and title",
+      "html": "<header data-wb=\"header\" data-icon=\"📂\" data-title=\"Project Index\"></header>"
+    },
+    {
+      "description": "Header with badge",
+      "html": "<header data-wb=\"header\" data-icon=\"🚀\" data-title=\"My App\" data-badge=\"v2.0\"></header>"
+    },
+    {
+      "description": "Sticky header with subtitle",
+      "html": "<header data-wb=\"header\" data-icon=\"⚡\" data-title=\"Dashboard\" data-subtitle=\"Analytics\" data-sticky></header>"
+    },
+    {
+      "description": "Header with custom slots",
+      "html": "<header data-wb=\"header\"><div slot=\"left\">Custom Left</div><div slot=\"right\"><button>Action</button></div></header>"
+    }
+  ]
+}

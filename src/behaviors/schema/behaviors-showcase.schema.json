@@ -1,0 +1,630 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Behaviors Showcase",
+  "description": "Schema for demos/behaviors.html - validates all behaviors render correctly",
+  "behavior": "behaviors-showcase",
+  "type": "page-schema",
+  "page": "demos/behaviors.html",
+  
+  "pageStructure": {
+    "header": {
+      "selector": "header",
+      "description": "Page header with title and theme controls",
+      "children": {
+        "title": { "selector": "h1", "text": "WB Behaviors Showcase" },
+        "subtitle": { "selector": "p", "text": "Interactive demo of all behaviors" },
+        "codecontrol": { "selector": "[data-wb='codecontrol']" },
+        "themecontrol": { "selector": "[data-wb='themecontrol']" }
+      }
+    },
+    "navLinks": {
+      "selector": ".nav-links",
+      "description": "Quick jump navigation links",
+      "children": ["#semantic", "#ui", "#layout", "#utilities", "#effects", "code.html", "card.html"]
+    },
+    "codeThemeControl": {
+      "selector": "div:has([data-wb='codecontrol'])",
+      "description": "Live code theme preview bar with grayscale option"
+    },
+    "infoCallouts": {
+      "selector": ".info-callout",
+      "description": "Information callout boxes explaining features",
+      "count": 2,
+      "children": {
+        "autoInjectCallout": {
+          "description": "Explains auto-inject mode with BEFORE/AFTER comparison",
+          "hasGrid": true,
+          "codeExamples": 2
+        },
+        "behaviorReferenceCallout": {
+          "description": "Complete behavior reference with 4 sections",
+          "sections": ["Auto-Injected", "Global Behaviors", "Animation Effects", "Explicit Behaviors"]
+        }
+      }
+    },
+    "resizableContainer": {
+      "selector": ".resizable-container",
+      "description": "Two-column resizable layout",
+      "children": {
+        "columnLeft": { "selector": "#column-left", "sections": 5 },
+        "resizeHandle": { "selector": "#resize-handle" },
+        "columnRight": { "selector": "#column-right", "sections": 7 }
+      }
+    }
+  },
+
+  "sections": [
+    {
+      "id": "semantic",
+      "title": "1. Semantic HTML & Forms",
+      "column": "left",
+      "behaviors": ["button", "input", "switch", "badge", "details"]
+    },
+    {
+      "id": "ui",
+      "title": "2. UI Components",
+      "column": "left",
+      "behaviors": ["spinner", "progress", "avatar", "tooltip", "toast", "notify"]
+    },
+    {
+      "id": "layout",
+      "title": "3. Layout",
+      "column": "left",
+      "behaviors": ["stack", "cluster", "grid"]
+    },
+    {
+      "id": "utilities",
+      "title": "4. Utilities",
+      "column": "left",
+      "behaviors": ["copy", "ripple", "confetti", "typewriter"]
+    },
+    {
+      "id": "effects",
+      "title": "5. Effects",
+      "column": "left",
+      "behaviors": ["bounce", "pulse", "shake", "rainbow"]
+    },
+    {
+      "id": "media",
+      "title": "6. Media",
+      "column": "right",
+      "behaviors": ["audio", "video", "figure"]
+    },
+    {
+      "id": "navigation",
+      "title": "7. Navigation",
+      "column": "right",
+      "behaviors": ["breadcrumb", "tabs", "dropdown"]
+    },
+    {
+      "id": "interactive",
+      "title": "8. Interactive",
+      "column": "right",
+      "behaviors": ["collapse", "dialog", "drawer-layout", "toggle"]
+    },
+    {
+      "id": "forms",
+      "title": "9. Forms",
+      "column": "right",
+      "behaviors": ["checkbox", "radio", "range", "select", "textarea", "rating"]
+    },
+    {
+      "id": "advanced-layout",
+      "title": "10. Advanced Layout",
+      "column": "right",
+      "behaviors": ["masonry", "switcher", "frame", "reel"]
+    },
+    {
+      "id": "universal",
+      "title": "11. Universal",
+      "column": "right",
+      "behaviors": ["draggable", "resizable"]
+    },
+    {
+      "id": "more",
+      "title": "12. More Components",
+      "column": "right",
+      "behaviors": ["sidebar-layout", "imposter", "alert", "kbd", "mark"]
+    }
+  ],
+
+  "behaviors": {
+    "dropdown": {
+      "selector": "[data-wb='dropdown']",
+      "requiredClass": "wb-dropdown",
+      "htmlUsage": {
+        "current": "<div data-wb=\"dropdown\" data-label=\"Options\"><a href=\"#\">Profile</a><a href=\"#\">Settings</a><a href=\"#\">Logout</a></div>",
+        "note": "Uses child anchor elements as menu items with data-label for trigger text"
+      },
+      "requiredChildren": {
+        "trigger": {
+          "selector": ".wb-dropdown__trigger",
+          "description": "Must create a trigger button with data-label text"
+        },
+        "menu": {
+          "selector": ".wb-dropdown__menu",
+          "description": "Must wrap children in a hidden menu container"
+        }
+      },
+      "tests": {
+        "visual": {
+          "notRawLinks": {
+            "description": "Dropdown must NOT show raw anchor links - must transform to trigger+menu",
+            "check": "no-raw-children",
+            "failCondition": "anchor tags visible as siblings of trigger"
+          },
+          "hasTrigger": {
+            "description": "Dropdown must render a clickable trigger button",
+            "check": "element-exists",
+            "selector": ".wb-dropdown__trigger"
+          },
+          "hasMenu": {
+            "description": "Dropdown must render a menu container",
+            "check": "element-exists", 
+            "selector": ".wb-dropdown__menu"
+          },
+          "menuHiddenInitially": {
+            "description": "Menu should be hidden initially (display: none)",
+            "check": "hidden",
+            "selector": ".wb-dropdown__menu"
+          },
+          "triggerHasLabel": {
+            "description": "Trigger button should display 'Options' from data-label",
+            "check": "text-contains",
+            "selector": ".wb-dropdown__trigger",
+            "text": "Options"
+          }
+        },
+        "functional": {
+          "opensOnClick": {
+            "action": "click",
+            "selector": ".wb-dropdown__trigger",
+            "expect": { "visible": ".wb-dropdown__menu" }
+          },
+          "closesOnOutsideClick": {
+            "action": "click-outside",
+            "expect": { "hidden": ".wb-dropdown__menu" }
+          }
+        }
+      }
+    },
+
+    "tabs": {
+      "selector": "[data-wb='tabs']",
+      "requiredClass": "wb-tabs",
+      "htmlUsage": {
+        "current": "<div data-wb=\"tabs\"><div data-tab=\"Tab 1\">Content 1</div><div data-tab=\"Tab 2\">Content 2</div></div>",
+        "note": "Uses data-tab attribute for tab titles (data-tab-title also supported)"
+      },
+      "requiredChildren": {
+        "nav": {
+          "selector": ".wb-tabs__nav",
+          "description": "Must generate navigation container with tab buttons"
+        },
+        "tabs": {
+          "selector": ".wb-tabs__tab",
+          "description": "Must generate tab buttons inside nav"
+        },
+        "panels": {
+          "selector": ".wb-tabs__panels",
+          "description": "Must wrap content in panels container"
+        }
+      },
+      "tests": {
+        "visual": {
+          "hasNav": {
+            "description": "Tabs must generate .wb-tabs__nav container",
+            "check": "element-exists",
+            "selector": ".wb-tabs__nav"
+          },
+          "hasTabButtons": {
+            "description": "Tabs must generate clickable tab buttons",
+            "check": "element-count-gt",
+            "selector": ".wb-tabs__tab",
+            "min": 1
+          },
+          "tabButtonHeight": {
+            "description": "Tab buttons should have reasonable padding (not too tall) - padding is 0.25rem 0.75rem",
+            "check": "style-range",
+            "selector": ".wb-tabs__tab",
+            "property": "height",
+            "max": "50px",
+            "note": "Current implementation uses padding: 0.25rem 0.75rem which is compact"
+          },
+          "firstTabActive": {
+            "description": "First tab should be active by default",
+            "check": "has-class",
+            "selector": ".wb-tabs__tab:first-child",
+            "class": "wb-tabs__tab--active"
+          }
+        },
+        "functional": {
+          "tabSwitching": {
+            "action": "click",
+            "selector": ".wb-tabs__tab:nth-child(2)",
+            "expect": {
+              "class": "wb-tabs__tab--active",
+              "panelVisible": ".wb-tabs__panel[data-index='1']"
+            }
+          }
+        }
+      }
+    },
+
+    "toggle": {
+      "selector": "[data-wb='toggle']",
+      "description": "Button that toggles a CSS class on a target element",
+      "htmlUsage": {
+        "current": "<button data-wb=\"toggle\" data-target=\"#toggle-box\" data-class=\"active\">Toggle Class</button>",
+        "note": "Uses data-target and data-class attributes"
+      },
+      "knownIssue": {
+        "description": "Button appears unstyled (black text, transparent background)",
+        "cause": "No button behavior applied, inline styles not using theme colors",
+        "fix": "Add data-wb='button' or apply wb-button class"
+      },
+      "tests": {
+        "visual": {
+          "hasBackgroundColor": {
+            "description": "Toggle button should have visible background color (not transparent)",
+            "check": "has-style",
+            "property": "background-color",
+            "notValue": ["transparent", "rgba(0, 0, 0, 0)", ""]
+          },
+          "hasTextColor": {
+            "description": "Toggle button should have visible text color",
+            "check": "has-style",
+            "property": "color",
+            "notValue": ["transparent", "rgba(0, 0, 0, 0)"]
+          },
+          "notBlackAndWhite": {
+            "description": "Toggle button should NOT appear as plain black text on white (unstyled)",
+            "check": "not-unstyled-button"
+          }
+        },
+        "functional": {
+          "togglesTargetClass": {
+            "description": "Clicking toggle should add/remove class on target element",
+            "action": "click",
+            "selector": "[data-wb='toggle']",
+            "targetSelector": "#toggle-box",
+            "expect": { "classToggle": "active" }
+          }
+        }
+      }
+    },
+
+    "collapse": {
+      "selector": "[data-wb='collapse']",
+      "htmlUsage": {
+        "current": "<button data-wb=\"collapse\" data-target=\"#collapse-content\">Toggle Content</button>",
+        "note": "Button text is 'Toggle Content', targets #collapse-content"
+      },
+      "knownIssue": {
+        "description": "Button appears unstyled - same issue as toggle",
+        "cause": "No button styling applied",
+        "fix": "Apply button behavior or theme styles"
+      },
+      "tests": {
+        "visual": {
+          "buttonStyled": {
+            "description": "Collapse button should have visible styling (background color)",
+            "check": "button-has-styling"
+          }
+        },
+        "functional": {
+          "togglesTarget": {
+            "action": "click",
+            "expect": { "toggleVisibility": "#collapse-content" }
+          }
+        }
+      }
+    },
+
+    "masonry": {
+      "selector": "[data-wb='masonry']",
+      "requiredClass": "wb-masonry",
+      "htmlUsage": {
+        "current": "<div data-wb=\"masonry\" data-columns=\"3\" data-gap=\"0.5rem\"><div style=\"background: #333; height: 50px;\"></div>...</div>"
+      },
+      "status": "IMPLEMENTED",
+      "implementation": {
+        "file": "src/behaviors/js/layouts.js",
+        "function": "masonry",
+        "css": "column-count: N; column-gap: gap",
+        "children": "break-inside: avoid; margin-bottom: gap"
+      },
+      "tests": {
+        "visual": {
+          "hasWbMasonryClass": {
+            "description": "Element must have wb-masonry class after init",
+            "check": "has-class",
+            "class": "wb-masonry"
+          },
+          "hasColumnLayout": {
+            "description": "Masonry must have CSS columns set (not auto)",
+            "check": "has-style",
+            "property": "column-count",
+            "notValue": ["auto", "1", ""]
+          },
+          "childrenVisible": {
+            "description": "All children should be visible (not hidden/collapsed)",
+            "check": "children-visible"
+          },
+          "childrenStyled": {
+            "description": "Children should have break-inside: avoid",
+            "check": "children-have-style",
+            "property": "break-inside",
+            "value": "avoid"
+          }
+        }
+      }
+    },
+
+    "drawer-layout": {
+      "selector": "[data-wb='drawer-layout']",
+      "requiredClass": "wb-drawer-layout",
+      "htmlUsage": {
+        "current": "<div data-wb=\"drawer-layout\" data-position=\"left\" data-width=\"150px\" style=\"height: 100%;\"><div style=\"background: var(--bg-tertiary); height: 100%; padding: 1rem;\">Sidebar</div><div style=\"padding: 1rem;\">Main Content</div></div>"
+      },
+      "knownIssues": [
+        {
+          "issue": "Toggle button overlaps 'Sidebar' text",
+          "cause": "Button positioned with right: -minWidth which extends into content area",
+          "severity": "high"
+        },
+        {
+          "issue": "'Main Content' text may be cut off",
+          "cause": "Flex layout with fixed sidebar width may squeeze main content",
+          "severity": "high"
+        }
+      ],
+      "tests": {
+        "visual": {
+          "hasDrawerClass": {
+            "description": "Must have wb-drawer-layout class after initialization",
+            "check": "has-class",
+            "class": "wb-drawer-layout"
+          },
+          "textNotCovered": {
+            "description": "Toggle arrow must not overlap 'Sidebar' text",
+            "check": "no-overlap",
+            "elements": [".wb-drawer-toggle", ":text('Sidebar')"]
+          },
+          "sidebarTextVisible": {
+            "description": "'Sidebar' text must be fully visible",
+            "check": "text-visible",
+            "text": "Sidebar"
+          },
+          "mainContentVisible": {
+            "description": "'Main Content' text must be fully visible (not cut off)",
+            "check": "text-visible",
+            "text": "Main Content"
+          },
+          "noTextOverflow": {
+            "description": "No text should overflow container bounds",
+            "check": "no-text-overflow"
+          }
+        },
+        "functional": {
+          "toggleWorks": {
+            "description": "Clicking toggle should collapse/expand drawer",
+            "action": "click",
+            "selector": ".wb-drawer-toggle",
+            "expect": { "classToggle": "collapsed" }
+          }
+        }
+      }
+    },
+
+    "spinner": {
+      "selector": "[data-wb='spinner']",
+      "requiredClass": "wb-spinner",
+      "tests": {
+        "visual": {
+          "hasSvg": {
+            "description": "Spinner must render SVG element",
+            "check": "element-exists",
+            "selector": "svg"
+          },
+          "isAnimating": {
+            "description": "Spinner SVG must have animation applied",
+            "check": "has-animation"
+          }
+        }
+      }
+    },
+
+    "sidebar-layout": {
+      "selector": "[data-wb='sidebar-layout']",
+      "requiredClass": "wb-sidebar-layout",
+      "tests": {
+        "visual": {
+          "textVisible": {
+            "description": "All text content must be visible within bounds",
+            "check": "no-text-overflow"
+          }
+        }
+      }
+    },
+
+    "button": {
+      "selector": "button[data-variant]",
+      "tests": {
+        "visual": {
+          "hasVariantStyling": {
+            "description": "Buttons with data-variant should have corresponding colors",
+            "check": "has-background-color"
+          }
+        }
+      }
+    },
+
+    "typewriter": {
+      "selector": "[data-wb='typewriter']",
+      "htmlUsage": {
+        "current": "<span id=\"typewriter-demo\" data-wb=\"typewriter\" data-text=\"Hello! I am typing...\" data-speed=\"50\"></span>"
+      },
+      "exposedApi": {
+        "element.wbTypewriter.type()": "Restarts the typing animation"
+      },
+      "tests": {
+        "functional": {
+          "apiExposed": {
+            "description": "Element should expose wbTypewriter.type() method",
+            "check": "api-exists",
+            "path": "wbTypewriter.type"
+          }
+        }
+      }
+    },
+
+    "figure": {
+      "selector": "figure[data-img-src], [data-wb='figure']",
+      "variants": [
+        { "name": "Full syntax", "attrs": ["data-img-src", "data-alt", "data-caption"] },
+        { "name": "Minimal", "attrs": ["data-img-src"] },
+        { "name": "Lightbox", "attrs": ["data-img-src", "data-lightbox"] },
+        { "name": "Zoom", "attrs": ["data-img-src", "data-zoom"] },
+        { "name": "Overlay caption", "attrs": ["data-img-src", "data-caption-position='overlay'"] },
+        { "name": "Lazy loading", "attrs": ["data-img-src", "data-lazy"] }
+      ]
+    }
+  },
+
+  "codeExamples": {
+    "description": "All code examples shown in behavior cards and info callouts",
+    "selector": ".wb-mdhtml pre, .behavior-card pre, .info-callout pre",
+    "tests": {
+      "visual": {
+        "noHorizontalOverflow": {
+          "description": "Code blocks must not overflow their container horizontally",
+          "check": "no-horizontal-overflow"
+        },
+        "textFitsContainer": {
+          "description": "Long lines should wrap or be contained",
+          "check": "text-fits-container"
+        },
+        "fontSizeSmall": {
+          "description": "Code should use small font size for compact display (set via data-size='xs')",
+          "check": "style-range",
+          "property": "font-size",
+          "max": "14px"
+        }
+      },
+      "syntax": {
+        "validHtml": {
+          "description": "HTML code examples should be valid and parseable",
+          "check": "valid-html-syntax"
+        },
+        "codeRunnable": {
+          "description": "JavaScript code examples should be syntactically valid",
+          "check": "valid-js-syntax"
+        }
+      }
+    }
+  },
+
+  "jsCodeExamples": {
+    "description": "JavaScript code in page that must be valid and runnable",
+    "examples": [
+      {
+        "location": "typewriter restart button onclick",
+        "code": "document.getElementById('typewriter-demo').wbTypewriter.type()",
+        "expectedApi": "element.wbTypewriter.type()",
+        "test": "API must be exposed on element after behavior init",
+        "potentialIssue": "If typewriter behavior doesn't expose wbTypewriter, this will throw TypeError"
+      },
+      {
+        "location": "dialog open button onclick",
+        "code": "document.getElementById('demo-dialog').showModal()",
+        "expectedApi": "dialog.showModal()",
+        "test": "Native dialog API - should work"
+      },
+      {
+        "location": "dialog close button onclick", 
+        "code": "this.closest('dialog').close()",
+        "expectedApi": "dialog.close()",
+        "test": "Native dialog API - should work"
+      }
+    ]
+  },
+
+  "globalTests": {
+    "noTextOverflow": {
+      "description": "No text should overflow its container on the page",
+      "selector": ".behavior-card *, .demo-area *, .info-callout *",
+      "check": "no-text-overflow"
+    },
+    "noHorizontalScrollbar": {
+      "description": "Page should not have horizontal scrollbar",
+      "check": "no-horizontal-scrollbar"
+    },
+    "allBehaviorsInitialized": {
+      "description": "All data-wb elements should have data-wb-ready or wb-* class",
+      "selector": "[data-wb]",
+      "check": "behavior-initialized",
+      "maxUninitialized": 5
+    },
+    "noConsoleErrors": {
+      "description": "Page should load without JavaScript errors",
+      "check": "no-console-errors"
+    }
+  },
+
+  "knownIssues": [
+    {
+      "behavior": "dropdown",
+      "issue": "Not rendering as dropdown - shows raw anchor links instead of trigger button + hidden menu",
+      "severity": "critical",
+      "expectedBehavior": "Should create .wb-dropdown__trigger button with 'Options ▼' text and wrap anchors in .wb-dropdown__menu",
+      "actualBehavior": "Shows Profile, Settings, Logout as raw visible links",
+      "codeCheck": "dropdown.js line 26-43 creates trigger when hasChildItems is true"
+    },
+    {
+      "behavior": "tabs",
+      "issue": "Tab buttons may appear too high if CSS not loaded",
+      "severity": "medium",
+      "expectedBehavior": "Tab buttons with padding: 0.25rem 0.75rem (compact)",
+      "actualBehavior": "Inline styles should work, but verify"
+    },
+    {
+      "behavior": "toggle",
+      "issue": "Button appears unstyled (black/white) - no background color",
+      "severity": "high",
+      "expectedBehavior": "Button should have theme-appropriate background color",
+      "actualBehavior": "Plain button with no styling",
+      "fix": "Add data-wb='button' to the toggle button element"
+    },
+    {
+      "behavior": "collapse",
+      "issue": "Button appears unstyled - same as toggle issue",
+      "severity": "high",
+      "expectedBehavior": "Styled button with visible background",
+      "actualBehavior": "Plain unstyled button"
+    },
+    {
+      "behavior": "drawer-layout",
+      "issue": "Toggle arrow overlaps 'Sidebar' text when positioned left",
+      "severity": "high",
+      "expectedBehavior": "Arrow should be outside the drawer, not covering text content",
+      "actualBehavior": "Button positioned with right: -minWidth extends into content area"
+    },
+    {
+      "behavior": "drawer-layout",
+      "issue": "'Main Content' text may overflow or be cut off",
+      "severity": "high",
+      "expectedBehavior": "Text should be fully visible or properly truncated",
+      "actualBehavior": "Text may extend beyond visible area with narrow widths"
+    }
+  ],
+
+  "fixedIssues": [
+    {
+      "behavior": "masonry",
+      "previousStatus": "Incorrectly marked as NOT_IMPLEMENTED in schema",
+      "currentStatus": "IMPLEMENTED in layouts.js",
+      "implementation": "masonry() function applies column-count CSS and break-inside: avoid to children"
+    }
+  ]
+}

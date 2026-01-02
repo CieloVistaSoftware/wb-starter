@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Card Test</title>
+    <script type="module">
+        import WB from '../src/core/wb.js';
+        WB.init({ debug: true, autoInject: true });
+    </script>
+    <style>
+        /* Basic styles to see the card */
+        body { font-family: sans-serif; padding: 2rem; background: #111; color: #eee; }
+    </style>
+</head>
+<body>
+    <h1>Semantic Card Test</h1>
+
+    <h2>1. Semantic Article (Should be a Card)</h2>
+    <article id="semantic-card">
+        <header>
+            <h3>Semantic Title</h3>
+            <p>Semantic Subtitle</p>
+        </header>
+        <main>
+            <p>This is the main content of an article</p>
+        </main>
+        <footer>
+            <button>Action</button>
+        </footer>
+    </article>
+    <article id="semantic-card-2" data-wb="">
+
+    <h2>2. Standard Div Card (Control)</h2>
+    <div id="div-card" data-wb="card" data-title="Div Title" data-content="Div Content" data-footer="Div Footer"></div>
+
+    <script>
+        setTimeout(() => {
+            const semantic = document.getElementById('semantic-card');
+            const div = document.getElementById('div-card');
+
+            console.log('Semantic Classes:', semantic.className);
+            console.log('Div Classes:', div.className);
+
+            const semanticHeader = semantic.querySelector('header');
+            console.log('Semantic Header Classes:', semanticHeader.className);
+
+            if (semantic.classList.contains('wb-card') && semanticHeader.classList.contains('wb-card__header')) {
+                console.log('PASS: Semantic Article became a Card and preserved structure');
+            } else {
+                console.error('FAIL: Semantic Article did not become a proper Card');
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

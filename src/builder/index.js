@@ -5,7 +5,7 @@ import { BEHAVIOR_TYPES, getComponentType } from './behavior-types.js';
 import { Events } from '../core/events.js';
 import BuilderValidation from './builder-validation.js';
 import { showWelcome, hideWelcome, shouldShowWelcome, openTemplates as openTemplatesChooser } from './builder-welcome.js';
-import { initSearchSidebar, trackComponentUsage } from './builder-sidebar.js';
+import { initTemplateBrowser } from './builder-template-browser.js';
 import { showTemplateChecklist, showIssuesPanel, updateBadges, analyzeComponent, analyzeCanvas } from './builder-incomplete.js';
 import {
   initInlineEditing,
@@ -23,6 +23,12 @@ import {
   injectSnapGridStyles,
   getEditableKey
 } from './builder-editing.js';
+import {
+  handleSmartDrop,
+  applyModifier,
+  removeModifier,
+  getDragFeedback
+} from './builder-drop-handler.js';
 import {
   loadPropertyConfig,
   renderPropertiesPanel,
@@ -251,15 +257,11 @@ async function start() {
   // Load property configuration for enhanced property panel
   await loadPropertyConfig();
 
-  // Load components and templates
+  // Load components
   try {
-    const [compRes, tempRes] = await Promise.all([
-      fetch('src/builder/components.json'),
-      fetch('src/builder/templates.json')
-    ]);
+    const compRes = await fetch('src/builder/components.json');
     
     if (compRes.ok) C.All = await compRes.json();
-    if (tempRes.ok) TEMPLATES = await tempRes.json();
   } catch (e) {
     console.error('Failed to load builder config:', e);
   }
@@ -270,9 +272,8 @@ async function start() {
   // Initialize WB behaviors (scans document for data-wb)
   await WB.init({ scan: true, observe: true });
 
-  // Filter components and initialize search sidebar
-  const filteredComponents = C.All.filter(x => !x.b || !exclusions.includes(x.b));
-  initSearchSidebar(filteredComponents);
+  // Initialize template browser (replaces old drag-and-drop sidebar)
+  await initTemplateBrowser();
 
   // Note: renderList() is now handled by initSearchSidebar
   // restoreCollapsedCategories() is also handled by sidebar
@@ -471,6 +472,51 @@ function findInsertionPoint(dropZone, clientX, clientY, isRow) {
 
 let builderCleanup = [];
 
+// Helper to show/hide drag feedback UI
+function showDragFeedbackUI(feedback, x, y) {
+  let indicator = document.getElementById('drop-feedback-indicator');
+  if (!indicator) {
+    indicator = document.createElement('div');
+    indicator.id = 'drop-feedback-indicator';
+    indicator.style.cssText = `
+      position: fixed;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      pointer-events: none;
+      z-index: 10000;
+      transition: opacity 0.15s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    `;
+    document.body.appendChild(indicator);
+  }
+  
+  // Position near cursor
+  indicator.style.left = (x + 15) + 'px';
+  indicator.style.top = (y + 15) + 'px';
+  indicator.textContent = feedback.message || '';
+  
+  // Style based on allowed state
+  if (feedback.allowed) {
+    indicator.style.background = 'var(--color-success, #10b981)';
+    indicator.style.color = '#fff';
+  } else {
+    indicator.style.background = 'var(--color-error, #ef4444)';
+    indicator.style.color = '#fff';
+  }
+  
+  indicator.style.opacity = '1';
+}
+
+function removeDragFeedbackUI() {
+  const indicator = document.getElementById('drop-feedback-indicator');
+  if (indicator) {
+    indicator.style.opacity = '0';
+    setTimeout(() => indicator.remove(), 150);
+  }
+}
+
 function enableBuilderInteractions() {
   if (builderCleanup.length > 0) return;
 
@@ -496,6 +542,7 @@ function enableBuilderInteractions() {
     if (item) {
       item.classList.remove('dragging');
       hideDropZoneHighlight();
+      removeDragFeedbackUI();
     }
   };
   document.addEventListener('dragend', handleDragEnd);
@@ -504,6 +551,20 @@ function enableBuilderInteractions() {
     e.preventDefault();
     cv.classList.add('drag-over');
     showDropZoneHighlight(e.target);
+
+    // Show smart drop feedback based on what's being dragged
+    const draggingItem = document.querySelector('.comp-item.dragging');
+    if (draggingItem) {
+      try {
+        const component = JSON.parse(draggingItem.dataset.c);
+        const feedback = getDragFeedback(component.b, e.target);
+        if (feedback.message) {
+          showDragFeedbackUI(feedback, e.clientX, e.clientY);
+        }
+      } catch (err) {
+        // Ignore parse errors
+      }
+    }
 
     // Smart Snap Highlight for new components
     if (cv.classList.contains('snap-enabled')) {
@@ -535,6 +596,7 @@ function enableBuilderInteractions() {
     if (!cv.contains(e.relatedTarget)) {
       cv.classList.remove('drag-over');
       hideDropZoneHighlight();
+      removeDragFeedbackUI();
 
       // Remove highlight
       const highlight = document.getElementById('snap-guide-lines');
@@ -547,6 +609,7 @@ function enableBuilderInteractions() {
     e.preventDefault();
     cv.classList.remove('drag-over');
     hideDropZoneHighlight();
+    removeDragFeedbackUI();
 
     // Remove highlight
     const highlight = document.getElementById('snap-guide-lines');
@@ -556,7 +619,81 @@ function enableBuilderInteractions() {
     if (d) {
       const component = JSON.parse(d);
 
-      // Check if this is a modifier/action being dropped onto an existing element
+      // === SMART DROP HANDLING ===
+      // Use the new smart drop handler for behavior-aware dropping
+      const dropResult = handleSmartDrop(component, e.target, cv);
+      
+      if (dropResult.handled) {
+        // Smart drop handled this
+        if (dropResult.rejected) {
+          // Show rejection message
+          toast(dropResult.message || 'Cannot drop here');
+          return;
+        }
+        
+        // Handle different smart drop actions
+        if (dropResult.action === 'applyModifier') {
+          // Apply modifier to existing element
+          const result = applyModifier(dropResult.target, dropResult.behavior);
+          if (result.success) {
+            toast(`Applied ${component.n}`);
+            WB.scan(dropResult.target);
+            if (dropResult.target.classList.contains('selected')) {
+              renderProps(dropResult.target);
+            }
+            saveHist();
+          } else {
+            toast(result.message || 'Could not apply effect');
+          }
+          return;
+        }
+        
+        if (dropResult.action === 'addToContainer') {
+          // Add to container via smart drop
+          const dropZone = findDropZone(dropResult.container, JSON.parse(dropResult.container.dataset.c));
+          if (dropZone) {
+            addToContainer(component, dropResult.container, dropZone);
+          }
+          return;
+        }
+        
+        if (dropResult.action === 'createActionGroup' || dropResult.action === 'createFromTemplate') {
+          // Create from template
+          if (dropResult.template) {
+            const templateComp = { ...component, d: { ...component.d, ...dropResult.template } };
+            add(templateComp);
+          } else {
+            add(component);
+          }
+          return;
+        }
+        
+        if (dropResult.action === 'addActionToElement') {
+          addBehaviorToComponent(dropResult.target, component.b);
+          return;
+        }
+        
+        if (dropResult.action === 'createTrigger') {
+          // Create a button trigger for the action
+          const triggerComp = {
+            ...component,
+            t: 'button',
+            d: { ...component.d, text: component.n }
+          };
+          add(triggerComp);
+          return;
+        }
+        
+        // useTemplate flag - use template data
+        if (dropResult.useTemplate && dropResult.template) {
+          const templateComp = { ...component, d: { ...component.d, ...dropResult.template } };
+          add(templateComp);
+          return;
+        }
+      }
+      // === END SMART DROP ===
+
+      // Fallback: Check if this is a modifier/action being dropped onto an existing element
       const componentType = getComponentType(component);
       if (componentType === 'modifier' || componentType === 'action') {
         const existingWrapper = e.target.closest('.dropped');
@@ -691,7 +828,7 @@ function enableBuilderInteractions() {
       case 'Backspace': if (sel) { e.preventDefault(); del(sel.id); } break;
       case 'ArrowUp': if (sel && !snapEnabled) { e.preventDefault(); moveUp(sel.id); } break;
       case 'ArrowDown': if (sel && !snapEnabled) { e.preventDefault(); moveDown(sel.id); } break;
-      case 't': case 'T': openTemplates(); break;
+      case 't': case 'T': openTemplatesChooser(); break;
       case 'g': case 'G': toggleSnapGrid(!snapEnabled); break;
       case 'f': case 'F': if (sel) { const c = JSON.parse(sel.dataset.c); toggleFavorite(c.b); } break;
       case '?': showShortcuts(); break;
@@ -787,8 +924,8 @@ function add(c, parentId = null) {
   const isGrid = c.b === 'grid';
   if (isGrid) w.dataset.grid = 'true';
   let controls = '<div class="controls">';
-  controls += '<button class="ctrl-btn" onclick="moveUp(\'' + id + '\')" title="Move up">⬆️</button>';
-  controls += '<button class="ctrl-btn" onclick="moveDown(\'' + id + '\')" title="Move down">⬇️</button>';
+  controls += '<button class="ctrl-btn" onclick="moveUp(\'' + id + '\')" title="Move up">Up</button>';
+  controls += '<button class="ctrl-btn" onclick="moveDown(\'' + id + '\')" title="Move down">Dn</button>';
   if (parentId) {
     const parent = document.getElementById(parentId);
     if (parent?.dataset.grid) {
@@ -799,8 +936,8 @@ function add(c, parentId = null) {
       controls += '</div>';
     }
   }
-  controls += '<button class="ctrl-btn" onclick="dup(\'' + id + '\')" title="Duplicate">📋</button>';
-  controls += '<button class="ctrl-btn del" onclick="del(\'' + id + '\')" title="Delete">🗑️</button>';
+  controls += '<button class="ctrl-btn" onclick="dup(\'' + id + '\')" title="Duplicate">Dup</button>';
+  controls += '<button class="ctrl-btn del" onclick="del(\'' + id + '\')" title="Delete">Del</button>';
   controls += '</div>';
   w.innerHTML = controls;
   const builderEl = mkEl(c, id);
@@ -900,6 +1037,284 @@ window.add = add;
 window.addToGrid = addToGrid;
 window.upd = upd;
 window.toast = toast;
+
+// =============================================================================
+// HTML TEMPLATE SYSTEM - Add HTML templates directly to canvas
+// =============================================================================
+
+/**
+ * Add HTML template content to the canvas
+ * Used by the new HTML-based template browser
+ */
+window.addTemplateHTML = (html, templateMeta = {}) => {
+  const cv = document.getElementById('canvas');
+  if (!cv) return;
+  
+  // Remove empty state
+  document.getElementById('empty')?.remove();
+  
+  // Create a temporary container to parse the HTML
+  const temp = document.createElement('div');
+  temp.innerHTML = html;
+  
+  // Process each top-level element
+  const elements = Array.from(temp.children);
+  let lastWrapper = null;
+  
+  elements.forEach(el => {
+    // Skip comments
+    if (el.nodeType === Node.COMMENT_NODE) return;
+    
+    // Create wrapper for builder
+    const id = genId({ b: el.dataset?.wb || el.tagName.toLowerCase(), t: el.tagName.toLowerCase() });
+    const wrapper = document.createElement('div');
+    wrapper.className = 'dropped';
+    wrapper.id = id;
+    
+    // Store component data
+    const componentData = {
+      n: el.dataset?.wb || el.tagName,
+      b: el.dataset?.wb || null,
+      t: el.tagName.toLowerCase(),
+      d: {}
+    };
+    
+    // Extract data attributes
+    Array.from(el.attributes).forEach(attr => {
+      if (attr.name.startsWith('data-') && attr.name !== 'data-wb') {
+        const key = attr.name.replace('data-', '');
+        componentData.d[key] = attr.value;
+      }
+    });
+    
+    // Store text content if it's a simple element
+    if (el.childNodes.length === 1 && el.childNodes[0].nodeType === Node.TEXT_NODE) {
+      componentData.d.text = el.textContent.trim();
+    }
+    
+    wrapper.dataset.c = JSON.stringify(componentData);
+    
+    // Add controls (using text labels to avoid encoding issues)
+    let controls = '<div class="controls">';
+    controls += '<button class="ctrl-btn" onclick="moveUp(\'' + id + '\')" title="Move up">Up</button>';
+    controls += '<button class="ctrl-btn" onclick="moveDown(\'' + id + '\')" title="Move down">Dn</button>';
+    controls += '<button class="ctrl-btn" onclick="dup(\'' + id + '\')" title="Duplicate">Dup</button>';
+    controls += '<button class="ctrl-btn del" onclick="del(\'' + id + '\')" title="Delete">Del</button>';
+    controls += '</div>';
+    wrapper.innerHTML = controls;
+    
+    // Set element ID and append
+    el.id = id + '-el';
+    wrapper.appendChild(el);
+    cv.appendChild(wrapper);
+    
+    // Initialize WB behaviors
+    WB.scan(wrapper);
+    addResizeHandle(wrapper);
+    
+    lastWrapper = wrapper;
+  });
+  
+  // Select the last added element
+  if (lastWrapper) {
+    selComp(lastWrapper);
+    setTimeout(() => {
+      lastWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+  
+  updCount();
+  renderTree();
+  autoExtendCanvas();
+  saveHist();
+  updateBadges();
+  
+  toast('Added ' + (templateMeta.name || 'Template'));
+};
+
+/**
+ * Add raw HTML string to canvas (simpler version)
+ */
+window.addHTML = (html) => {
+  window.addTemplateHTML(html, {});
+};
+
+// =============================================================================
+// TEMPLATE SYSTEM - Add templates from template browser
+// =============================================================================
+
+/**
+ * Add a template to the canvas (recursive component tree)
+ */
+window.addTemplate = (template) => {
+  if (!template || !template.components) {
+    toast('Invalid template');
+    return;
+  }
+
+  const cv = document.getElementById('canvas');
+  document.getElementById('empty')?.remove();
+
+  // Recursively add components with children
+  const addComponentTree = (comp, parentWrapper = null, dropZone = null) => {
+    let wrapper;
+    
+    if (parentWrapper && dropZone) {
+      // Add to container
+      addToContainer(comp, parentWrapper, dropZone);
+      // Get the just-added wrapper (last child in dropZone)
+      wrapper = dropZone.lastElementChild;
+    } else {
+      // Add to canvas root
+      wrapper = add(comp);
+    }
+    
+    // If this component has children, add them to its drop zone
+    if (comp.children && comp.children.length > 0 && wrapper) {
+      const childDropZone = findDropZone(wrapper, comp);
+      if (childDropZone) {
+        comp.children.forEach(child => {
+          addComponentTree(child, wrapper, childDropZone);
+        });
+      }
+    }
+    
+    return wrapper;
+  };
+
+  // Add all top-level components
+  template.components.forEach(comp => {
+    addComponentTree(comp);
+  });
+
+  toast(`Added "${template.name}" template`);
+  renderTree();
+  saveHist();
+  updateBadges();
+};
+
+/**
+ * Preview a template in a modal or new window
+ */
+window.previewTemplate = (template) => {
+  if (!template || !template.components) {
+    toast('Invalid template');
+    return;
+  }
+
+  const theme = document.getElementById('pageTheme')?.value || 'dark';
+  
+  // Build preview HTML from template components
+  const buildPreviewHTML = (components, depth = 0) => {
+    return components.map(comp => {
+      const tag = comp.t || 'div';
+      const attrs = [];
+      
+      if (comp.b) attrs.push(`data-wb="${comp.b}"`);
+      
+      // Add data attributes
+      if (comp.d) {
+        Object.entries(comp.d).forEach(([k, v]) => {
+          if (k === 'text') return; // Handle separately
+          if (typeof v === 'boolean') {
+            if (v) attrs.push(`data-${k}`);
+          } else {
+            attrs.push(`data-${k}="${String(v).replace(/"/g, '&quot;')}"`);
+          }
+        });
+      }
+      
+      const attrStr = attrs.length ? ' ' + attrs.join(' ') : '';
+      const textContent = comp.d?.text || '';
+      
+      // Recurse for children
+      const childrenHTML = comp.children ? buildPreviewHTML(comp.children, depth + 1) : '';
+      
+      return `<${tag}${attrStr}>${textContent}${childrenHTML}</${tag}>`;
+    }).join('\n');
+  };
+
+  const bodyContent = buildPreviewHTML(template.components);
+  const escapedTemplate = JSON.stringify(template).replace(/"/g, '&quot;').replace(/'/g, "\\'");
+
+  const previewHtml = `
+<!DOCTYPE html>
+<html lang="en" data-theme="${theme}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview: ${template.name}</title>
+  <base href="${window.location.origin}/">
+  <link rel="stylesheet" href="src/styles/themes.css">
+  <link rel="stylesheet" href="src/styles/site.css">
+  <link rel="stylesheet" href="src/behaviors/css/effects.css">
+  <style>
+    body { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+    .preview-header { 
+      background: var(--bg-secondary); 
+      padding: 1rem 2rem; 
+      margin: -2rem -2rem 2rem -2rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .preview-header h2 { margin: 0; font-size: 1rem; }
+    .preview-header small { color: var(--text-secondary); }
+    .preview-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .preview-btn:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <div class="preview-header">
+    <div>
+      <h2>${template.name}</h2>
+      <small>${template.description || ''}</small>
+    </div>
+    <button class="preview-btn" onclick="window.opener.postMessage({type:'useTemplate',id:'${template.id}'},'*'); window.close();">
+      ✨ Use This Template
+    </button>
+  </div>
+  
+  ${bodyContent}
+  
+  <script type="module">
+    import WB from './src/core/wb-lazy.js';
+    WB.init();
+  </script>
+</body>
+</html>
+  `;
+
+  const win = window.open('', '_blank', 'width=1200,height=800');
+  if (win) {
+    win.document.write(previewHtml);
+    win.document.close();
+  } else {
+    toast('Please allow popups to preview');
+  }
+};
+
+// Listen for messages from preview window
+window.addEventListener('message', (e) => {
+  if (e.data?.type === 'useTemplate' && e.data?.id) {
+    // Find template and add it
+    fetch('/data/templates.json')
+      .then(r => r.json())
+      .then(data => {
+        const template = data.templates.find(t => t.id === e.data.id);
+        if (template) window.addTemplate(template);
+      });
+  }
+});
 
 // =============================================================================
 // ADD/REMOVE BEHAVIORS FROM EXISTING COMPONENTS
@@ -1025,15 +1440,15 @@ function addToGrid(c, gridWrapper) {
 
   // Build controls with span buttons
   let controls = '<div class="controls">';
-  controls += '<button class="ctrl-btn" onclick="moveUp(\'' + id + '\')" title="Move up">⬆️</button>';
-  controls += '<button class="ctrl-btn" onclick="moveDown(\'' + id + '\')" title="Move down">⬇️</button>';
+  controls += '<button class="ctrl-btn" onclick="moveUp(\'' + id + '\')" title="Move up">Up</button>';
+  controls += '<button class="ctrl-btn" onclick="moveDown(\'' + id + '\')" title="Move down">Dn</button>';
   controls += '<div class="span-btns">';
   controls += '<button class="span-btn active" onclick="setSpan(\'' + id + '\',1)" title="Span 1 column">1</button>';
   controls += '<button class="span-btn" onclick="setSpan(\'' + id + '\',2)" title="Span 2 columns">2</button>';
   controls += '<button class="span-btn" onclick="setSpan(\'' + id + '\',3)" title="Span 3 columns">3</button>';
   controls += '</div>';
-  controls += '<button class="ctrl-btn" onclick="dup(\'' + id + '\')" title="Duplicate">📋</button>';
-  controls += '<button class="ctrl-btn del" onclick="del(\'' + id + '\')" title="Delete">🗑️</button>';
+  controls += '<button class="ctrl-btn" onclick="dup(\'' + id + '\')" title="Duplicate">Dup</button>';
+  controls += '<button class="ctrl-btn del" onclick="del(\'' + id + '\')" title="Delete">Del</button>';
   controls += '</div>';
 
   w.innerHTML = controls;
@@ -1095,10 +1510,10 @@ function addToContainer(c, containerWrapper, dropZone, referenceNode = null) {
 
   // Build controls (simpler than grid - no span buttons)
   let controls = '<div class="controls">';
-  controls += '<button class="ctrl-btn" onclick="moveUp(\'' + id + '\')" title="Move up">⬆️</button>';
-  controls += '<button class="ctrl-btn" onclick="moveDown(\'' + id + '\')" title="Move down">⬇️</button>';
-  controls += '<button class="ctrl-btn" onclick="dup(\'' + id + '\')" title="Duplicate">📋</button>';
-  controls += '<button class="ctrl-btn del" onclick="del(\'' + id + '\')" title="Delete">🗑️</button>';
+  controls += '<button class="ctrl-btn" onclick="moveUp(\'' + id + '\')" title="Move up">Up</button>';
+  controls += '<button class="ctrl-btn" onclick="moveDown(\'' + id + '\')" title="Move down">Dn</button>';
+  controls += '<button class="ctrl-btn" onclick="dup(\'' + id + '\')" title="Duplicate">Dup</button>';
+  controls += '<button class="ctrl-btn del" onclick="del(\'' + id + '\')" title="Delete">Del</button>';
   controls += '</div>';
 
   w.innerHTML = controls;
@@ -1363,10 +1778,10 @@ async function wrapInRowContainer(wrapper) {
 
   // Controls
   let controls = '<div class="controls">';
-  controls += '<button class="ctrl-btn" onclick="moveUp(\'' + containerId + '\')" title="Move up">⬆️</button>';
-  controls += '<button class="ctrl-btn" onclick="moveDown(\'' + containerId + '\')" title="Move down">⬇️</button>';
-  controls += '<button class="ctrl-btn" onclick="dup(\'' + containerId + '\')" title="Duplicate">📋</button>';
-  controls += '<button class="ctrl-btn del" onclick="del(\'' + containerId + '\')" title="Delete">🗑️</button>';
+  controls += '<button class="ctrl-btn" onclick="moveUp(\'' + containerId + '\')" title="Move up">Up</button>';
+  controls += '<button class="ctrl-btn" onclick="moveDown(\'' + containerId + '\')" title="Move down">Dn</button>';
+  controls += '<button class="ctrl-btn" onclick="dup(\'' + containerId + '\')" title="Duplicate">Dup</button>';
+  controls += '<button class="ctrl-btn del" onclick="del(\'' + containerId + '\')" title="Delete">Del</button>';
   controls += '</div>';
   containerWrapper.innerHTML = controls;
 
@@ -1657,21 +2072,119 @@ window.savePage = () => {
   });
 
   const pageTheme = document.getElementById('pageTheme').value;
-  localStorage.setItem('wb-builder-page', JSON.stringify({ theme: pageTheme, components: data }));
+  const templateName = document.body.dataset.templateName;
+  localStorage.setItem('wb-builder-page', JSON.stringify({ theme: pageTheme, templateName, components: data }));
   toast('Page saved!');
   document.getElementById('saveMenu')?.classList.remove('show');
 };
 
 window.saveAsHTML = () => {
   const cv = document.getElementById('canvas');
-  let html = '';
-  cv.querySelectorAll('.dropped').forEach(w => {
-    const el = w.querySelector('[data-wb]') || w.querySelector('*:not(.controls)');
-    if (el) html += el.outerHTML + '\n';
+  let headerContent = '';
+  let mainContent = '';
+  let footerContent = '';
+
+  // Helper to clean the DOM tree
+  function cleanForExport(node) {
+    if (node.nodeType === Node.COMMENT_NODE) return null;
+    if (node.nodeType === Node.TEXT_NODE) return node.cloneNode(true);
+    if (node.nodeType !== Node.ELEMENT_NODE) return null;
+
+    // Skip controls
+    if (node.classList.contains('controls') || 
+        node.classList.contains('ui-resizable-handle') ||
+        node.classList.contains('span-btns')) {
+      return null;
+    }
+
+    // Unwrap .dropped wrappers
+    if (node.classList.contains('dropped')) {
+      const contentEl = node.querySelector(':scope > [data-wb]') || 
+                        node.querySelector(':scope > *:not(.controls)');
+      return contentEl ? cleanForExport(contentEl) : null;
+    }
+
+    // Clone and clean element
+    const clone = node.cloneNode(false);
+    clone.removeAttribute('contenteditable');
+    clone.removeAttribute('spellcheck');
+    clone.removeAttribute('data-wb-id');
+    
+    // Remove builder-specific styles
+    if (clone.style.border && clone.style.border.includes('dashed')) {
+      clone.style.removeProperty('border');
+    }
+    if (clone.style.length === 0) {
+      clone.removeAttribute('style');
+    }
+    
+    // Remove empty class
+    if (clone.classList.length === 0) {
+      clone.removeAttribute('class');
+    }
+
+    // Recurse
+    Array.from(node.childNodes).forEach(child => {
+      const cleaned = cleanForExport(child);
+      if (cleaned) clone.appendChild(cleaned);
+    });
+
+    return clone;
+  }
+
+  Array.from(cv.children).forEach(w => {
+    if (!w.classList.contains('dropped')) return;
+    
+    const cleanedEl = cleanForExport(w);
+    if (!cleanedEl) return;
+
+    const tagName = cleanedEl.tagName.toLowerCase();
+    const behavior = cleanedEl.dataset.wb || '';
+
+    // Heuristic to determine where content goes
+    if (tagName === 'header' || tagName === 'nav' || behavior.includes('navbar')) {
+      headerContent += cleanedEl.outerHTML + '\n';
+    } else if (tagName === 'footer') {
+      footerContent += cleanedEl.outerHTML + '\n';
+    } else {
+      mainContent += cleanedEl.outerHTML + '\n';
+    }
   });
 
+  const theme = document.getElementById('pageTheme')?.value || 'dark';
+  const templateName = document.body.dataset.templateName || '';
+
+  const fullHtml = '<!DOCTYPE html>\n' +
+    '<html lang="en" data-theme="' + theme + '">\n' +
+    '<head>\n' +
+    '  <meta charset="UTF-8">\n' +
+    '  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+    '  <title>Exported Page</title>\n' +
+    '  <link rel="stylesheet" href="src/styles/themes.css">\n' +
+    '  <link rel="stylesheet" href="src/styles/site.css">\n' +
+    '  <link rel="stylesheet" href="src/styles/transitions.css">\n' +
+    '  <link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+    '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+    '  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\n' +
+    '  <style>\n' +
+    '    body { margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }\n' +
+    '    main { flex: 1; display: flex; flex-direction: column; }\n' +
+    '  </style>\n' +
+    '</head>\n' +
+    '<body' + (templateName ? ' data-templateName="' + templateName + '"' : '') + '>\n' +
+    '  ' + headerContent + '\n' +
+    '  <main>\n' +
+    '    ' + mainContent + '\n' +
+    '  </main>\n' +
+    '  ' + footerContent + '\n' +
+    '  <script type="module">\n' +
+    '    import WB from \'./src/index.js\';\n' +
+    '  </script>\n' +
+    '</body>\n' +
+    '</html>';
+
   // Create download
-  const blob = new Blob([html], { type: 'text/html' });
+  const blob = new Blob([fullHtml], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -1687,8 +2200,9 @@ window.exportCode = window.saveAsHTML;
 
 window.resetCanvas = () => {
   if (confirm('Reset canvas? This will clear all components.')) {
-    document.getElementById('canvas').innerHTML = '<div class="empty" id="empty"><div class="empty-icon">📦</div><h3>Drag components here</h3><p>Build your page visually</p></div>';
+    document.getElementById('canvas').innerHTML = '<div class="empty" id="empty"><div class="empty-icon">+</div><h3>Drag components here</h3><p>Build your page visually</p></div>';
     localStorage.removeItem('wb-builder-page');
+    delete document.body.dataset.templateName;
     sel = null;
     hist = [];
     hi = -1;
@@ -1711,6 +2225,9 @@ function load() {
           document.getElementById('pageTheme').value = parsed.theme;
           document.documentElement.dataset.theme = parsed.theme;
           document.getElementById('canvas').dataset.theme = parsed.theme;
+        }
+        if (parsed.templateName) {
+          document.body.dataset.templateName = parsed.templateName;
         }
         if (parsed.components) {
           parsed.components.forEach(c => {
@@ -1949,7 +2466,7 @@ function upd() {
 function chkEmpty() {
   const cv = document.getElementById('canvas');
   if (!cv.querySelector('.dropped')) {
-    cv.innerHTML = '<div class="empty" id="empty"><div class="empty-icon">📦</div><h3>Drag components here</h3><p>Build your page visually</p></div>';
+    cv.innerHTML = '<div class="empty" id="empty"><div class="empty-icon">+</div><h3>Drag components here</h3><p>Build your page visually</p></div>';
   }
 }
 
@@ -2012,14 +2529,14 @@ function showContextMenu(x, y, wrapper) {
   `;
 
   menu.innerHTML = `
-    <button class="ctx-item" onclick="viewSchema('${c.b}')">📋 View Schema</button>
-    <button class="ctx-item" onclick="selComp(document.getElementById('${wrapper.id}'))">⚙️ Edit Properties</button>
+    <button class="ctx-item" onclick="viewSchema('${c.b}')">View Schema</button>
+    <button class="ctx-item" onclick="selComp(document.getElementById('${wrapper.id}'))">Edit Properties</button>
     <hr class="ctx-divider">
-    <button class="ctx-item" onclick="dup('${wrapper.id}')">📄 Duplicate</button>
-    <button class="ctx-item" onclick="moveUp('${wrapper.id}')">⬆️ Move Up</button>
-    <button class="ctx-item" onclick="moveDown('${wrapper.id}')">⬇️ Move Down</button>
+    <button class="ctx-item" onclick="dup('${wrapper.id}')">Duplicate</button>
+    <button class="ctx-item" onclick="moveUp('${wrapper.id}')">Move Up</button>
+    <button class="ctx-item" onclick="moveDown('${wrapper.id}')">Move Down</button>
     <hr class="ctx-divider">
-    <button class="ctx-item ctx-item--danger" onclick="del('${wrapper.id}')">🗑️ Delete</button>
+    <button class="ctx-item ctx-item--danger" onclick="del('${wrapper.id}')">Delete</button>
   `;
 
   // Style the menu items
@@ -2423,76 +2940,24 @@ window.clearFavorites = () => {
 // =============================================================================
 // TEMPLATES SYSTEM
 // =============================================================================
-let TEMPLATES = [];
 
 // Use the new template chooser from builder-welcome.js
 window.openTemplates = () => {
-  // Show the welcome screen with template chooser
-  if (openTemplatesChooser) {
+  console.log('Opening templates chooser...');
+  if (typeof openTemplatesChooser === 'function') {
     openTemplatesChooser();
+  } else if (window.openTemplatesChooser) {
+    window.openTemplatesChooser();
   } else {
-    // Fallback to old modal if available
-    const modal = document.getElementById('templatesModal');
-    const grid = document.getElementById('templatesGrid');
-
-    if (!modal || !grid) return;
-
-    grid.innerHTML = TEMPLATES.map(t => `
-      <div class="template-card" onclick="insertTemplate('${t.id}')">
-        <div class="template-preview">${t.icon}</div>
-        <div class="template-name">${t.name}</div>
-        <div class="template-desc">${t.desc}</div>
-        <div class="template-components">${t.components.length} component${t.components.length > 1 ? 's' : ''}</div>
-      </div>
-    `).join('');
-
-    modal.classList.add('open');
+    console.error('Templates chooser not available');
+    alert('Templates system is initializing, please try again in a moment.');
   }
 };
 
 window.closeTemplates = () => {
-  // Close the welcome screen if open
   if (hideWelcome) {
     hideWelcome();
   }
-  // Also close old modal if exists
-  document.getElementById('templatesModal')?.classList.remove('open');
-};
-
-window.insertTemplate = async (templateId) => {
-  const template = TEMPLATES.find(t => t.id === templateId);
-  if (!template) return;
-
-  closeTemplates();
-
-  // Track inserted component IDs for checklist
-  const insertedIds = [];
-
-  // Insert each component from template
-  for (const comp of template.components) {
-    const wrapper = await dropComponent(comp);
-    if (wrapper) insertedIds.push(wrapper.id);
-
-    // If it has grid children, add them
-    if (comp.gridChildren) {
-      const lastDropped = document.querySelector('.dropped:last-child');
-      if (lastDropped) {
-        for (const child of comp.gridChildren) {
-          const childWrapper = await dropComponent(child, lastDropped);
-          if (childWrapper) insertedIds.push(childWrapper.id);
-        }
-      }
-    }
-  }
-
-  toast(`Template "${template.name}" inserted`);
-  upd();
-
-  // Update badges and show checklist for incomplete items
-  updateBadges();
-  setTimeout(() => {
-    showTemplateChecklist(template.name, insertedIds);
-  }, 300);
 };
 
 // Helper to programmatically drop a component
@@ -2540,10 +3005,10 @@ async function dropComponent(comp, targetContainer = null) {
 
   wrapper.innerHTML = `
     <div class="controls">
-      <button class="ctrl-btn" onclick="window.duplicateComponent('${id}')" title="Duplicate (Ctrl+D)">📋</button>
-      <button class="ctrl-btn" onclick="window.moveUp('${id}')" title="Move Up (↑)">⬆</button>
-      <button class="ctrl-btn" onclick="window.moveDown('${id}')" title="Move Down (↓)">⬇</button>
-      <button class="ctrl-btn del" onclick="del('${id}')" title="Delete (Del)">🗑</button>
+      <button class="ctrl-btn" onclick="window.duplicateComponent('${id}')" title="Duplicate (Ctrl+D)">Dup</button>
+      <button class="ctrl-btn" onclick="window.moveUp('${id}')" title="Move Up">Up</button>
+      <button class="ctrl-btn" onclick="window.moveDown('${id}')" title="Move Down">Dn</button>
+      <button class="ctrl-btn del" onclick="del('${id}')" title="Delete (Del)">Del</button>
     </div>
   `;
   wrapper.appendChild(el);

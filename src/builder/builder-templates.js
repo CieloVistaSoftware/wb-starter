@@ -1,18 +1,117 @@
 /**
- * WB Builder Templates
- * Page templates and section templates for quick starts
+ * WB Builder Templates Registry
+ * -----------------------------------------------------------------------------
+ * This file contains the definitions for all Page and Section templates used
+ * in the Website Builder.
+ *
+ * HOW TO USE:
+ * 1. To add a new Section Template:
+ *    - Add an entry to the SECTION_TEMPLATES array.
+ *    - Ensure it has a unique 'id'.
+ *    - Assign it to a 'category' (see SECTION_CATEGORIES).
+ *    - Define the 'components' array using the WB shorthand:
+ *      n: name, i: icon, b: behavior, t: tag, d: data attributes
+ *
+ * 2. To add a new Page Template:
+ *    - Add an entry to the PAGE_TEMPLATES array.
+ *    - Define the 'sections' array with IDs of sections to include.
+ *    - Provide a 'preview' string describing the flow.
+ *
+ * 3. To add a new Category:
+ *    - Add to PAGE_CATEGORIES or SECTION_CATEGORIES arrays.
+ *
+ * 4. Theming:
+ *    - Templates automatically inherit the active theme.
+ *    - Use standard components (Card, Hero, Section) for best results.
+ * -----------------------------------------------------------------------------
  */
 
 // =============================================================================
 // SECTION TEMPLATES (Building blocks)
 // =============================================================================
+
+// ABBREVIATION KEY (Used in components arrays):
+// n: name (Display name in builder)
+// i: icon (Emoji for UI)
+// b: behavior (WB behavior ID)
+// t: tag (HTML tag name)
+// d: data (Properties/Attributes)
+
 export const SECTION_TEMPLATES = [
+  // CIELO VISTA SECTIONS
+  {
+    id: 'cv-hero',
+    name: 'Cielo Hero',
+    icon: '🚀',
+    desc: 'Cielo Vista Software Hero',
+    category: 'hero',
+    components: [
+      { n: 'Hero', i: '🌌', b: 'hero', t: 'section', d: {
+        variant: 'default',
+        title: 'Expert Software & Consulting Solutions',
+        subtitle: 'Cielo Vista Software delivers cutting-edge software solutions and expert consulting services from the heart of Rochester.',
+        cta: 'View Services',
+        ctaHref: '#services',
+        height: '600px',
+        align: 'center',
+        overlay: true
+      }}
+    ]
+  },
+  {
+    id: 'cv-services',
+    name: 'Cielo Services',
+    icon: '🛠️',
+    desc: 'Cielo Vista Services Grid',
+    category: 'features',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'column', gap: '2rem', padding: '4rem 2rem', align: 'center' }, container: true, children: [
+        { n: 'Heading 2', t: 'h2', d: { text: 'Innovative Solutions' }},
+        { n: 'Grid', i: '▦', b: 'grid', t: 'div', d: { columns: '3' }, container: true, gridChildren: [
+          { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: 'Custom Software Development', subtitle: 'Tailored development for your needs' }},
+          { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: 'Consulting Services', subtitle: 'Expert advice and strategy' }},
+          { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: 'Subscription-Based Software', subtitle: 'Scalable software products' }}
+        ]}
+      ]}
+    ]
+  },
+  {
+    id: 'cv-about',
+    name: 'Cielo About',
+    icon: 'ℹ️',
+    desc: 'Cielo Vista About Section',
+    category: 'content',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'column', gap: '1.5rem', padding: '4rem 2rem', align: 'center', maxWidth: '800px', margin: '0 auto' }, container: true, children: [
+        { n: 'Heading 2', t: 'h2', d: { text: 'About Us' }},
+        { n: 'Paragraph', t: 'p', d: { text: 'Our team is dedicated to helping businesses thrive by leveraging technology to enhance efficiency and drive growth. With a focus on innovation and client satisfaction, we partner with you to create tailored solutions that meet your unique needs.' }}
+      ]}
+    ]
+  },
+  {
+    id: 'cv-contact',
+    name: 'Cielo Contact',
+    icon: '📧',
+    desc: 'Cielo Vista Contact Info',
+    category: 'contact',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'column', gap: '2rem', padding: '4rem 2rem', align: 'center' }, container: true, children: [
+        { n: 'Heading 2', t: 'h2', d: { text: 'Get In Touch' }},
+        { n: 'Grid', i: '▦', b: 'grid', t: 'div', d: { columns: '3' }, container: true, gridChildren: [
+          { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: '📍 Location', subtitle: 'Rochester, MN US' }},
+          { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: '📧 Email', subtitle: 'jwpminnesota@gmail.com' }},
+          { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: '🕒 Hours', subtitle: 'Mon-Fri: 9am-10pm\nSat: 9am-6pm\nSun: 9am-12pm' }}
+        ]}
+      ]}
+    ]
+  },
+
   // HERO SECTIONS
   {
     id: 'hero-simple',
-    name: 'Hero',
+    name: 'Hero Center',
     icon: '🦸',
-    desc: 'Eye-catching headline with CTA',
+    desc: 'Centered headline with CTA',
     category: 'hero',
     components: [
       { n: 'Hero', i: '🌌', b: 'hero', t: 'section', d: {
@@ -30,7 +129,7 @@ export const SECTION_TEMPLATES = [
   {
     id: 'hero-split',
     name: 'Hero Split',
-    icon: '🦸',
+    icon: '🌓',
     desc: 'Two-column hero with image',
     category: 'hero',
     components: [
@@ -68,11 +167,31 @@ export const SECTION_TEMPLATES = [
       ]}
     ]
   },
+  {
+    id: 'hero-form',
+    name: 'Hero Form',
+    icon: '📝',
+    desc: 'Hero with signup form',
+    category: 'hero',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'row', gap: '4rem', padding: '4rem 2rem', align: 'center', justify: 'center' }, container: true, children: [
+        { n: 'Container', b: 'container', t: 'div', d: { direction: 'column', gap: '1.5rem', width: '50%' }, container: true, children: [
+          { n: 'Heading 1', t: 'h1', d: { text: 'Join the Revolution' }},
+          { n: 'Paragraph', t: 'p', d: { text: 'Sign up today and get exclusive access to our premium features.' }}
+        ]},
+        { n: 'Card', b: 'card', t: 'div', d: { title: 'Sign Up Now', subtitle: 'Free 14-day trial' }, container: true, children: [
+           { n: 'Input', t: 'input', d: { type: 'email', placeholder: 'Email Address' }},
+           { n: 'Input', t: 'input', d: { type: 'password', placeholder: 'Password' }},
+           { n: 'Button', t: 'button', d: { text: 'Create Account', class: 'btn btn-primary btn-block' }}
+        ]}
+      ]}
+    ]
+  },
 
   // FEATURE SECTIONS
   {
     id: 'features-grid',
-    name: 'Features',
+    name: 'Features Grid',
     icon: '✨',
     desc: '3-column feature cards',
     category: 'features',
@@ -91,12 +210,37 @@ export const SECTION_TEMPLATES = [
     id: 'features-list',
     name: 'Features List',
     icon: '📋',
-    desc: 'Vertical feature list with icons',
+    desc: 'Vertical feature list',
     category: 'features',
     components: [
       { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'column', gap: '1.5rem', padding: '4rem 2rem' }, container: true, children: [
         { n: 'Heading 2', t: 'h2', d: { text: 'Everything You Need' }},
         { n: 'List', b: 'list', t: 'ul', d: { items: '✓ Easy drag-and-drop interface,✓ 100+ pre-built components,✓ Responsive design out of the box,✓ Export clean HTML/CSS,✓ No coding required' }}
+      ]}
+    ]
+  },
+  {
+    id: 'features-alternating',
+    name: 'Features Alt',
+    icon: '⇄',
+    desc: 'Alternating text and image',
+    category: 'features',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'column', gap: '4rem', padding: '4rem 2rem' }, container: true, children: [
+        { n: 'Container', b: 'container', t: 'div', d: { direction: 'row', gap: '2rem', align: 'center' }, container: true, children: [
+          { n: 'Container', b: 'container', t: 'div', d: { direction: 'column', gap: '1rem', width: '50%' }, container: true, children: [
+            { n: 'Heading 3', t: 'h3', d: { text: 'Feature One' }},
+            { n: 'Paragraph', t: 'p', d: { text: 'Detailed description of the first feature goes here.' }}
+          ]},
+          { n: 'Image', b: 'image', t: 'img', d: { src: 'https://picsum.photos/400/300?1', alt: 'Feature 1' }}
+        ]},
+        { n: 'Container', b: 'container', t: 'div', d: { direction: 'row-reverse', gap: '2rem', align: 'center' }, container: true, children: [
+          { n: 'Container', b: 'container', t: 'div', d: { direction: 'column', gap: '1rem', width: '50%' }, container: true, children: [
+            { n: 'Heading 3', t: 'h3', d: { text: 'Feature Two' }},
+            { n: 'Paragraph', t: 'p', d: { text: 'Detailed description of the second feature goes here.' }}
+          ]},
+          { n: 'Image', b: 'image', t: 'img', d: { src: 'https://picsum.photos/400/300?2', alt: 'Feature 2' }}
+        ]}
       ]}
     ]
   },
@@ -236,6 +380,178 @@ export const SECTION_TEMPLATES = [
       ]}
     ]
   },
+  {
+    id: 'cta-app',
+    name: 'App Download',
+    icon: '📱',
+    desc: 'Mobile app download CTA',
+    category: 'cta',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'row', gap: '4rem', padding: '4rem 2rem', align: 'center', justify: 'center', background: '#f8f9fa' }, container: true, children: [
+        { n: 'Container', b: 'container', t: 'div', d: { direction: 'column', gap: '1.5rem', width: '50%' }, container: true, children: [
+          { n: 'Heading 2', t: 'h2', d: { text: 'Get the App' }},
+          { n: 'Paragraph', t: 'p', d: { text: 'Experience the full power of our platform on the go. Available for iOS and Android.' }},
+          { n: 'Container', b: 'container', t: 'div', d: { direction: 'row', gap: '1rem' }, container: true, children: [
+            { n: 'Button', t: 'button', d: { text: ' App Store', class: 'btn btn-dark btn-lg' }},
+            { n: 'Button', t: 'button', d: { text: '▶ Google Play', class: 'btn btn-outline-dark btn-lg' }}
+          ]}
+        ]},
+        { n: 'Image', b: 'image', t: 'img', d: { src: 'https://picsum.photos/300/600', alt: 'App Screenshot', style: 'border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);' }}
+      ]}
+    ]
+  },
+
+  // RESTAURANT SECTIONS
+  {
+    id: 'hero-restaurant',
+    name: 'Restaurant Hero',
+    icon: '🍽️',
+    desc: 'Elegant restaurant hero',
+    category: 'hero',
+    components: [
+      { n: 'Hero', i: '🌌', b: 'hero', t: 'section', d: {
+        variant: 'centered',
+        title: 'Taste the Extraordinary',
+        subtitle: 'Experience culinary perfection in the heart of the city',
+        cta: 'Book a Table',
+        ctaHref: '#reservations',
+        height: '700px',
+        align: 'center',
+        overlay: true,
+        backgroundImage: 'https://picsum.photos/1920/1080?food'
+      }}
+    ]
+  },
+  {
+    id: 'menu-grid',
+    name: 'Menu Grid',
+    icon: '📜',
+    desc: 'Restaurant menu items',
+    category: 'content',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'column', gap: '3rem', padding: '4rem 2rem', align: 'center' }, container: true, children: [
+        { n: 'Heading 2', t: 'h2', d: { text: 'Our Signature Dishes' }},
+        { n: 'Grid', i: '▦', b: 'grid', t: 'div', d: { columns: '2', gap: '2rem' }, container: true, gridChildren: [
+          { n: 'Card Product', i: '📦', b: 'cardproduct', t: 'article', d: { title: 'Truffle Risotto', description: 'Arborio rice, black truffle, parmesan crisp', price: '$28', image: 'https://picsum.photos/300/200?food=1', cta: 'Order Now' }},
+          { n: 'Card Product', i: '📦', b: 'cardproduct', t: 'article', d: { title: 'Pan-Seared Salmon', description: 'Wild caught salmon, asparagus, lemon butter', price: '$32', image: 'https://picsum.photos/300/200?food=2', cta: 'Order Now' }},
+          { n: 'Card Product', i: '📦', b: 'cardproduct', t: 'article', d: { title: 'Wagyu Burger', description: 'A5 Wagyu, brioche bun, truffle mayo', price: '$24', image: 'https://picsum.photos/300/200?food=3', cta: 'Order Now' }},
+          { n: 'Card Product', i: '📦', b: 'cardproduct', t: 'article', d: { title: 'Chocolate Soufflé', description: 'Dark chocolate, vanilla bean ice cream', price: '$14', image: 'https://picsum.photos/300/200?food=4', cta: 'Order Now' }}
+        ]}
+      ]}
+    ]
+  },
+
+  // PORTFOLIO SECTIONS
+  {
+    id: 'hero-portfolio',
+    name: 'Portfolio Hero',
+    icon: '🎨',
+    desc: 'Minimalist portfolio hero',
+    category: 'hero',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'column', gap: '2rem', padding: '8rem 2rem', align: 'flex-start' }, container: true, children: [
+        { n: 'Heading 1', t: 'h1', d: { text: 'Hello, I\'m Alex.', style: 'font-size: 5rem; line-height: 1.1;' }},
+        { n: 'Heading 2', t: 'h2', d: { text: 'Digital Designer & Developer', style: 'font-weight: 300; color: #666;' }},
+        { n: 'Button', t: 'button', d: { text: 'View My Work', class: 'btn btn-dark btn-lg' }}
+      ]}
+    ]
+  },
+  {
+    id: 'gallery-masonry',
+    name: 'Masonry Gallery',
+    icon: '🧱',
+    desc: 'Masonry layout for images',
+    category: 'content',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'column', gap: '2rem', padding: '4rem 2rem' }, container: true, children: [
+        { n: 'Masonry', i: '🧱', b: 'masonry', t: 'div', d: { columns: 3, gap: '1rem' }, container: true, children: [
+          { n: 'Image', b: 'image', t: 'img', d: { src: 'https://picsum.photos/400/600?1', alt: 'Project 1' }},
+          { n: 'Image', b: 'image', t: 'img', d: { src: 'https://picsum.photos/400/300?2', alt: 'Project 2' }},
+          { n: 'Image', b: 'image', t: 'img', d: { src: 'https://picsum.photos/400/500?3', alt: 'Project 3' }},
+          { n: 'Image', b: 'image', t: 'img', d: { src: 'https://picsum.photos/400/400?4', alt: 'Project 4' }},
+          { n: 'Image', b: 'image', t: 'img', d: { src: 'https://picsum.photos/400/350?5', alt: 'Project 5' }},
+          { n: 'Image', b: 'image', t: 'img', d: { src: 'https://picsum.photos/400/550?6', alt: 'Project 6' }}
+        ]}
+      ]}
+    ]
+  },
+
+  // E-COMMERCE SECTIONS
+  {
+    id: 'hero-shop',
+    name: 'Shop Hero',
+    icon: '🛍️',
+    desc: 'E-commerce hero banner',
+    category: 'hero',
+    components: [
+      { n: 'Hero', i: '🌌', b: 'hero', t: 'section', d: {
+        variant: 'split',
+        title: 'Summer Collection 2025',
+        subtitle: 'Discover the hottest trends of the season. Up to 50% off.',
+        cta: 'Shop Now',
+        ctaHref: '#shop',
+        height: '600px',
+        align: 'left',
+        overlay: false,
+        backgroundImage: 'https://picsum.photos/1920/1080?fashion'
+      }}
+    ]
+  },
+  {
+    id: 'product-grid',
+    name: 'Product Grid',
+    icon: '👠',
+    desc: 'Grid of product cards',
+    category: 'content',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'column', gap: '2rem', padding: '4rem 2rem', align: 'center' }, container: true, children: [
+        { n: 'Heading 2', t: 'h2', d: { text: 'New Arrivals' }},
+        { n: 'Grid', i: '▦', b: 'grid', t: 'div', d: { columns: '4', gap: '2rem' }, container: true, gridChildren: [
+          { n: 'Card Product', i: '📦', b: 'cardproduct', t: 'article', d: { title: 'Classic Tee', price: '$29', image: 'https://picsum.photos/300/400?fashion=1', badge: 'New' }},
+          { n: 'Card Product', i: '📦', b: 'cardproduct', t: 'article', d: { title: 'Denim Jacket', price: '$89', image: 'https://picsum.photos/300/400?fashion=2' }},
+          { n: 'Card Product', i: '📦', b: 'cardproduct', t: 'article', d: { title: 'Summer Dress', price: '$59', image: 'https://picsum.photos/300/400?fashion=3', badge: 'Sale' }},
+          { n: 'Card Product', i: '📦', b: 'cardproduct', t: 'article', d: { title: 'Leather Boots', price: '$129', image: 'https://picsum.photos/300/400?fashion=4' }}
+        ]}
+      ]}
+    ]
+  },
+
+  // UTILITY SECTIONS
+  {
+    id: '404-content',
+    name: '404 Content',
+    icon: '🚫',
+    desc: 'Page not found content',
+    category: 'content',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'column', gap: '2rem', padding: '8rem 2rem', align: 'center' }, container: true, children: [
+        { n: 'Heading 1', t: 'h1', d: { text: '404', style: 'font-size: 8rem; color: #ddd;' }},
+        { n: 'Heading 2', t: 'h2', d: { text: 'Page Not Found' }},
+        { n: 'Paragraph', t: 'p', d: { text: 'The page you are looking for might have been removed or is temporarily unavailable.' }},
+        { n: 'Button', t: 'button', d: { text: 'Go Back Home', class: 'btn btn-primary' }}
+      ]}
+    ]
+  },
+  {
+    id: 'login-form',
+    name: 'Login Form',
+    icon: '🔐',
+    desc: 'Centered login form',
+    category: 'content',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'section', d: { direction: 'column', gap: '2rem', padding: '6rem 2rem', align: 'center', minHeight: '80vh', justify: 'center' }, container: true, children: [
+        { n: 'Card', b: 'card', t: 'div', d: { title: 'Welcome Back', subtitle: 'Please sign in to continue', style: 'width: 100%; max-width: 400px;' }, container: true, children: [
+          { n: 'Input', t: 'input', d: { type: 'email', placeholder: 'Email Address' }},
+          { n: 'Input', t: 'input', d: { type: 'password', placeholder: 'Password' }},
+          { n: 'Container', b: 'container', t: 'div', d: { direction: 'row', justify: 'space-between', width: '100%' }, container: true, children: [
+            { n: 'Checkbox', t: 'input', d: { type: 'checkbox', label: 'Remember me' }},
+            { n: 'Link', t: 'a', d: { text: 'Forgot Password?', href: '#' }}
+          ]},
+          { n: 'Button', t: 'button', d: { text: 'Sign In', class: 'btn btn-primary btn-block' }}
+        ]}
+      ]}
+    ]
+  },
 
   // FOOTER SECTIONS
   {
@@ -331,6 +647,22 @@ export const SECTION_TEMPLATES = [
           { n: 'Card Overlay', i: '🎨', b: 'cardoverlay', t: 'article', d: { title: 'Advanced Tips', subtitle: 'Level up your workflow', image: 'https://picsum.photos/400/250?11' }},
           { n: 'Card Overlay', i: '🎨', b: 'cardoverlay', t: 'article', d: { title: 'Case Study', subtitle: 'How Company X grew 300%', image: 'https://picsum.photos/400/250?12' }}
         ]}
+      ]}
+    ]
+  },
+  {
+    id: 'content-article',
+    name: 'Article',
+    icon: '📄',
+    desc: 'Standard article layout',
+    category: 'content',
+    components: [
+      { n: 'Container', i: '📦', b: 'container', t: 'article', d: { direction: 'column', gap: '1.5rem', padding: '4rem 2rem', maxWidth: '800px', margin: '0 auto' }, container: true, children: [
+        { n: 'Heading 1', t: 'h1', d: { text: 'Article Title' }},
+        { n: 'Paragraph', t: 'p', d: { text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }},
+        { n: 'Image', b: 'image', t: 'img', d: { src: 'https://picsum.photos/800/400', alt: 'Article Image' }},
+        { n: 'Heading 2', t: 'h2', d: { text: 'Subheading' }},
+        { n: 'Paragraph', t: 'p', d: { text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' }}
       ]}
     ]
   },
@@ -533,6 +865,380 @@ export const PAGE_TEMPLATES = [
     category: 'minimal',
     preview: 'Hero → Stats → Contact → Footer',
     sections: ['hero-split', 'stats-section', 'contact-section', 'footer-simple']
+  },
+
+  // BUSINESS PAGES
+  {
+    id: 'cielo-vista-home',
+    name: 'Cielo Vista Home',
+    icon: '🏢',
+    desc: 'Software consulting firm',
+    category: 'business',
+    preview: 'Hero → Services → About → Contact → Footer',
+    sections: ['cv-hero', 'cv-services', 'cv-about', 'cv-contact', 'footer-simple']
+  },
+  {
+    id: 'business-restaurant',
+    name: 'Restaurant',
+    icon: '🍽️',
+    desc: 'Restaurant landing page',
+    category: 'business',
+    preview: 'Hero → Gallery → Testimonials → Contact → Footer',
+    sections: ['hero-video', 'gallery-grid', 'testimonials', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'business-gym',
+    name: 'Gym / Fitness',
+    icon: '💪',
+    desc: 'Fitness center page',
+    category: 'business',
+    preview: 'Hero → Features → Team → Pricing → Footer',
+    sections: ['hero-form', 'features-grid', 'team-section', 'pricing-table', 'footer-simple']
+  },
+  {
+    id: 'event-conference',
+    name: 'Conference',
+    icon: '🎤',
+    desc: 'Event landing page',
+    category: 'business',
+    preview: 'Hero → Features → Team → Pricing → FAQ → Footer',
+    sections: ['hero-video', 'features-list', 'team-section', 'pricing-table', 'faq-section', 'footer-columns']
+  },
+
+  // NEW TEMPLATES (EXPANSION)
+  // ---------------------------------------------------------------------------
+
+  // SAAS & TECH
+  {
+    id: 'saas-modern',
+    name: 'SaaS Modern',
+    icon: '🚀',
+    desc: 'Modern SaaS landing page',
+    category: 'landing',
+    preview: 'Hero → Stats → Features → CTA → Footer',
+    sections: ['hero-simple', 'stats-section', 'features-alternating', 'cta-section', 'footer-columns']
+  },
+  {
+    id: 'saas-dark',
+    name: 'SaaS Dark Mode',
+    icon: '🌙',
+    desc: 'Dark themed SaaS page',
+    category: 'landing',
+    preview: 'Hero Video → Features → Testimonials → Pricing → Footer',
+    sections: ['hero-video', 'features-grid', 'testimonials', 'pricing-table', 'footer-simple']
+  },
+  {
+    id: 'saas-enterprise',
+    name: 'Enterprise SaaS',
+    icon: '🏢',
+    desc: 'Corporate software solution',
+    category: 'landing',
+    preview: 'Hero Split → Stats → Features → Team → CTA → Footer',
+    sections: ['hero-split', 'stats-section', 'features-list', 'team-section', 'cta-section', 'footer-columns']
+  },
+  {
+    id: 'app-landing-v2',
+    name: 'Mobile App V2',
+    icon: '📱',
+    desc: 'App showcase with download',
+    category: 'landing',
+    preview: 'Hero Split → Features → App Download → Footer',
+    sections: ['hero-split', 'features-grid', 'cta-app', 'footer-simple']
+  },
+
+  // RESTAURANT & FOOD
+  {
+    id: 'restaurant-fine',
+    name: 'Fine Dining',
+    icon: '🍷',
+    desc: 'Upscale restaurant template',
+    category: 'business',
+    preview: 'Hero → Menu → Testimonials → Contact → Footer',
+    sections: ['hero-restaurant', 'menu-grid', 'testimonials', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'restaurant-cafe',
+    name: 'Urban Cafe',
+    icon: '☕',
+    desc: 'Cozy coffee shop template',
+    category: 'business',
+    preview: 'Hero → Menu → Gallery → Contact → Footer',
+    sections: ['hero-simple', 'menu-grid', 'gallery-grid', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'restaurant-bistro',
+    name: 'Modern Bistro',
+    icon: '🍽️',
+    desc: 'Casual dining template',
+    category: 'business',
+    preview: 'Hero Split → Menu → Testimonials → Footer',
+    sections: ['hero-split', 'menu-grid', 'testimonials', 'footer-simple']
+  },
+
+  // HEALTH & WELLNESS
+  {
+    id: 'gym-crossfit',
+    name: 'CrossFit Gym',
+    icon: '🏋️',
+    desc: 'High intensity gym template',
+    category: 'business',
+    preview: 'Hero Video → Features → Pricing → Contact → Footer',
+    sections: ['hero-video', 'features-grid', 'pricing-table', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'gym-yoga',
+    name: 'Yoga Studio',
+    icon: '🧘',
+    desc: 'Calm yoga studio template',
+    category: 'business',
+    preview: 'Hero → Features → Testimonials → Pricing → Footer',
+    sections: ['hero-simple', 'features-alternating', 'testimonials', 'pricing-table', 'footer-simple']
+  },
+  {
+    id: 'spa-wellness',
+    name: 'Luxury Spa',
+    icon: '🧖',
+    desc: 'Relaxing spa template',
+    category: 'business',
+    preview: 'Hero → Features → Gallery → Contact → Footer',
+    sections: ['hero-simple', 'features-grid', 'gallery-grid', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'salon-beauty',
+    name: 'Beauty Salon',
+    icon: '💇',
+    desc: 'Hair and beauty salon',
+    category: 'business',
+    preview: 'Hero Split → Services → Gallery → Contact → Footer',
+    sections: ['hero-split', 'features-list', 'gallery-masonry', 'contact-section', 'footer-simple']
+  },
+
+  // PROFESSIONAL SERVICES
+  {
+    id: 'law-corporate',
+    name: 'Corporate Law',
+    icon: '⚖️',
+    desc: 'Professional law firm',
+    category: 'business',
+    preview: 'Hero → Practice Areas → Team → Contact → Footer',
+    sections: ['hero-simple', 'features-grid', 'team-section', 'contact-section', 'footer-columns']
+  },
+  {
+    id: 'law-boutique',
+    name: 'Boutique Firm',
+    icon: '📜',
+    desc: 'Specialized legal services',
+    category: 'business',
+    preview: 'Hero Split → Features → Testimonials → Contact → Footer',
+    sections: ['hero-split', 'features-alternating', 'testimonials', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'agency-digital',
+    name: 'Digital Agency',
+    icon: '💻',
+    desc: 'Full service digital agency',
+    category: 'business',
+    preview: 'Hero Video → Stats → Gallery → Team → Footer',
+    sections: ['hero-video', 'stats-section', 'gallery-masonry', 'team-section', 'footer-columns']
+  },
+  {
+    id: 'agency-creative',
+    name: 'Creative Studio',
+    icon: '🎨',
+    desc: 'Design and branding studio',
+    category: 'business',
+    preview: 'Hero Portfolio → Gallery → Testimonials → Contact → Footer',
+    sections: ['hero-portfolio', 'gallery-masonry', 'testimonials', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'consulting-finance',
+    name: 'Financial Consult',
+    icon: '📈',
+    desc: 'Finance and accounting',
+    category: 'business',
+    preview: 'Hero → Stats → Services → CTA → Footer',
+    sections: ['hero-simple', 'stats-section', 'features-list', 'cta-section', 'footer-columns']
+  },
+  {
+    id: 'consulting-tech',
+    name: 'Tech Consulting',
+    icon: '🔧',
+    desc: 'IT and tech solutions',
+    category: 'business',
+    preview: 'Hero Split → Features → Pricing → Contact → Footer',
+    sections: ['hero-split', 'features-grid', 'pricing-table', 'contact-section', 'footer-columns']
+  },
+
+  // PORTFOLIOS
+  {
+    id: 'portfolio-photo',
+    name: 'Photographer',
+    icon: '📷',
+    desc: 'Photography portfolio',
+    category: 'portfolio',
+    preview: 'Hero → Masonry Gallery → Contact → Footer',
+    sections: ['hero-portfolio', 'gallery-masonry', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'portfolio-design-min',
+    name: 'Minimal Designer',
+    icon: '✏️',
+    desc: 'Clean design portfolio',
+    category: 'portfolio',
+    preview: 'Hero → Gallery → Stats → Contact → Footer',
+    sections: ['hero-simple', 'gallery-grid', 'stats-section', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'portfolio-dev-dark',
+    name: 'Dark Developer',
+    icon: '👨‍💻',
+    desc: 'Dark themed dev portfolio',
+    category: 'portfolio',
+    preview: 'Hero Split → Features → Stats → Contact → Footer',
+    sections: ['hero-split', 'features-grid', 'stats-section', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'portfolio-artist',
+    name: 'Artist Gallery',
+    icon: '🖌️',
+    desc: 'Visual artist showcase',
+    category: 'portfolio',
+    preview: 'Hero → Masonry Gallery → Testimonials → Footer',
+    sections: ['hero-portfolio', 'gallery-masonry', 'testimonials', 'footer-simple']
+  },
+
+  // EVENTS
+  {
+    id: 'event-conf-tech',
+    name: 'Tech Conference',
+    icon: '🎤',
+    desc: 'Technology summit page',
+    category: 'landing',
+    preview: 'Hero Video → Features → Team → Pricing → Footer',
+    sections: ['hero-video', 'features-grid', 'team-section', 'pricing-table', 'footer-columns']
+  },
+  {
+    id: 'event-wedding',
+    name: 'Wedding',
+    icon: '💍',
+    desc: 'Wedding announcement',
+    category: 'minimal',
+    preview: 'Hero → Gallery → Details → Contact → Footer',
+    sections: ['hero-simple', 'gallery-grid', 'features-list', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'event-meetup',
+    name: 'Local Meetup',
+    icon: '🤝',
+    desc: 'Community gathering page',
+    category: 'landing',
+    preview: 'Hero Split → Features → CTA → Footer',
+    sections: ['hero-split', 'features-grid', 'cta-section', 'footer-simple']
+  },
+  {
+    id: 'event-webinar',
+    name: 'Webinar Reg',
+    icon: '📹',
+    desc: 'Webinar registration page',
+    category: 'landing',
+    preview: 'Hero Form → Agenda → Speakers → Footer',
+    sections: ['hero-form', 'features-list', 'team-section', 'footer-simple']
+  },
+
+  // BLOG & CONTENT
+  {
+    id: 'blog-magazine',
+    name: 'Magazine',
+    icon: '📰',
+    desc: 'Online magazine layout',
+    category: 'blog',
+    preview: 'Hero → Articles → Newsletter → Footer',
+    sections: ['hero-simple', 'blog-grid', 'newsletter', 'footer-columns']
+  },
+  {
+    id: 'blog-personal',
+    name: 'Personal Blog',
+    icon: '✍️',
+    desc: 'Personal writing space',
+    category: 'blog',
+    preview: 'Hero Split → Articles → Contact → Footer',
+    sections: ['hero-split', 'blog-grid', 'contact-section', 'footer-simple']
+  },
+  {
+    id: 'blog-tech',
+    name: 'Tech Blog',
+    icon: '💾',
+    desc: 'Technology news blog',
+    category: 'blog',
+    preview: 'Hero Video → Articles → CTA → Footer',
+    sections: ['hero-video', 'blog-grid', 'cta-section', 'footer-columns']
+  },
+
+  // E-COMMERCE
+  {
+    id: 'shop-storefront',
+    name: 'Storefront',
+    icon: '🏪',
+    desc: 'Main store landing page',
+    category: 'product',
+    preview: 'Hero Shop → Products → Features → Newsletter → Footer',
+    sections: ['hero-shop', 'product-grid', 'features-grid', 'newsletter', 'footer-columns']
+  },
+  {
+    id: 'shop-launch',
+    name: 'Product Launch',
+    icon: '🚀',
+    desc: 'New product announcement',
+    category: 'product',
+    preview: 'Hero Shop → Features → Products → CTA → Footer',
+    sections: ['hero-shop', 'features-alternating', 'product-grid', 'cta-section', 'footer-simple']
+  },
+  {
+    id: 'shop-collection',
+    name: 'Collection',
+    icon: '👗',
+    desc: 'Seasonal collection page',
+    category: 'product',
+    preview: 'Hero → Products → Gallery → Footer',
+    sections: ['hero-simple', 'product-grid', 'gallery-grid', 'footer-simple']
+  },
+
+  // UTILITY
+  {
+    id: 'util-404',
+    name: '404 Error',
+    icon: '🚫',
+    desc: 'Page not found template',
+    category: 'minimal',
+    preview: '404 Content → Footer',
+    sections: ['404-content', 'footer-simple']
+  },
+  {
+    id: 'util-login',
+    name: 'Login Page',
+    icon: '🔐',
+    desc: 'User authentication page',
+    category: 'minimal',
+    preview: 'Login Form → Footer',
+    sections: ['login-form', 'footer-simple']
+  },
+  {
+    id: 'util-signup',
+    name: 'Signup Page',
+    icon: '📝',
+    desc: 'User registration page',
+    category: 'minimal',
+    preview: 'Hero Form → Footer',
+    sections: ['hero-form', 'footer-simple']
+  },
+  {
+    id: 'util-maintenance',
+    name: 'Maintenance',
+    icon: '🛠️',
+    desc: 'Site under maintenance',
+    category: 'minimal',
+    preview: 'Hero → Newsletter → Footer',
+    sections: ['hero-simple', 'newsletter', 'footer-simple']
   }
 ];
 
@@ -546,7 +1252,8 @@ export const PAGE_CATEGORIES = [
   { id: 'blog', name: 'Blog', icon: '📝', desc: 'Content & article pages' },
   { id: 'company', name: 'Company', icon: '🏢', desc: 'About, pricing & contact' },
   { id: 'dashboard', name: 'Dashboard', icon: '📊', desc: 'Analytics & admin layouts' },
-  { id: 'minimal', name: 'Minimal', icon: '📄', desc: 'Simple & clean designs' }
+  { id: 'minimal', name: 'Minimal', icon: '📄', desc: 'Simple & clean designs' },
+  { id: 'business', name: 'Business', icon: '💼', desc: 'Small business templates' }
 ];
 
 export const SECTION_CATEGORIES = [

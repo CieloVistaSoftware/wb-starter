@@ -1,0 +1,452 @@
+{
+  "$schema": "./templates.schema.json",
+  "version": "1.0.0",
+  "description": "Web Behaviors (WB) Page Templates - Schema shorthand for instant page generation",
+  "categories": [
+    {
+      "id": "landing",
+      "name": "Landing Pages",
+      "icon": "🚀",
+      "description": "Full landing page layouts"
+    },
+    {
+      "id": "sections",
+      "name": "Page Sections",
+      "icon": "📐",
+      "description": "Reusable page sections"
+    },
+    {
+      "id": "cards",
+      "name": "Card Layouts",
+      "icon": "🃏",
+      "description": "Card grids and combinations"
+    },
+    {
+      "id": "heroes",
+      "name": "Hero Sections",
+      "icon": "🦸",
+      "description": "Hero banners and headers"
+    },
+    {
+      "id": "pricing",
+      "name": "Pricing",
+      "icon": "💰",
+      "description": "Pricing tables and plans"
+    },
+    {
+      "id": "testimonials",
+      "name": "Testimonials",
+      "icon": "💬",
+      "description": "Reviews and social proof"
+    },
+    {
+      "id": "features",
+      "name": "Features",
+      "icon": "✨",
+      "description": "Feature showcases"
+    },
+    {
+      "id": "forms",
+      "name": "Forms",
+      "icon": "📝",
+      "description": "Contact and input forms"
+    },
+    {
+      "id": "navigation",
+      "name": "Navigation",
+      "icon": "🧭",
+      "description": "Navbars and menus"
+    },
+    {
+      "id": "footers",
+      "name": "Footers",
+      "icon": "👟",
+      "description": "Page footers"
+    },
+    {
+      "id": "content",
+      "name": "Content Blocks",
+      "icon": "📄",
+      "description": "Text and media blocks"
+    },
+    {
+      "id": "data",
+      "name": "Data Display",
+      "icon": "📊",
+      "description": "Stats, tables, and charts"
+    }
+  ],
+  "templates": [
+    {
+      "id": "landing-startup",
+      "name": "Startup Landing",
+      "category": "landing",
+      "description": "Modern startup landing page with hero, features, pricing, and testimonials",
+      "tags": ["startup", "saas", "tech", "modern"],
+      "components": [
+        { "b": "cardhero", "d": { "title": "Launch Your Vision", "subtitle": "Build faster. Ship smarter. Scale infinitely.", "cta": "Get Started Free", "ctaHref": "#pricing", "variant": "cosmic" }},
+        { "b": "container", "d": { "columns": 3, "gap": "2rem", "padding": "4rem 2rem" }, "children": [
+          { "b": "card", "d": { "title": "Lightning Fast", "content": "Deploy in seconds with our optimized infrastructure.", "icon": "⚡" }},
+          { "b": "card", "d": { "title": "Secure by Default", "content": "Enterprise-grade security built into every layer.", "icon": "🔒" }},
+          { "b": "card", "d": { "title": "Scale Infinitely", "content": "From 10 to 10 million users without breaking a sweat.", "icon": "📈" }}
+        ]},
+        { "b": "container", "d": { "columns": 3, "gap": "2rem", "padding": "4rem 2rem" }, "children": [
+          { "b": "cardpricing", "d": { "plan": "Starter", "price": "$0", "period": "/month", "features": "5 Projects,1GB Storage,Email Support", "cta": "Start Free" }},
+          { "b": "cardpricing", "d": { "plan": "Pro", "price": "$29", "period": "/month", "features": "Unlimited Projects,100GB Storage,Priority Support,Analytics", "cta": "Go Pro", "featured": true }},
+          { "b": "cardpricing", "d": { "plan": "Enterprise", "price": "$99", "period": "/month", "features": "Everything in Pro,Dedicated Support,Custom Integrations,SLA", "cta": "Contact Sales" }}
+        ]},
+        { "b": "container", "d": { "columns": 2, "gap": "2rem", "padding": "4rem 2rem" }, "children": [
+          { "b": "cardtestimonial", "d": { "quote": "This platform transformed how we build products. We shipped 3x faster.", "author": "Sarah Chen", "role": "CTO, TechFlow", "rating": 5 }},
+          { "b": "cardtestimonial", "d": { "quote": "The best investment we made this year. ROI was immediate.", "author": "Marcus Johnson", "role": "Founder, LaunchPad", "rating": 5 }}
+        ]}
+      ]
+    },
+    {
+      "id": "landing-agency",
+      "name": "Agency Portfolio",
+      "category": "landing",
+      "description": "Creative agency landing with work showcase",
+      "tags": ["agency", "portfolio", "creative", "design"],
+      "components": [
+        { "b": "cardhero", "d": { "title": "We Create Digital Experiences", "subtitle": "Award-winning design studio crafting brands that matter", "cta": "View Our Work", "variant": "minimal" }},
+        { "b": "container", "d": { "columns": 2, "gap": "2rem", "padding": "4rem 2rem" }, "children": [
+          { "b": "cardimage", "d": { "title": "Brand Identity", "subtitle": "TechCorp Rebrand", "src": "https://picsum.photos/600/400?1" }},
+          { "b": "cardimage", "d": { "title": "Web Design", "subtitle": "E-Commerce Platform", "src": "https://picsum.photos/600/400?2" }},
+          { "b": "cardimage", "d": { "title": "Mobile App", "subtitle": "Fitness Tracker", "src": "https://picsum.photos/600/400?3" }},
+          { "b": "cardimage", "d": { "title": "Marketing", "subtitle": "Campaign Launch", "src": "https://picsum.photos/600/400?4" }}
+        ]}
+      ]
+    },
+    {
+      "id": "landing-product",
+      "name": "Product Launch",
+      "category": "landing",
+      "description": "Single product launch page",
+      "tags": ["product", "launch", "ecommerce"],
+      "components": [
+        { "b": "cardhero", "d": { "title": "Introducing ProductX", "subtitle": "The future of productivity is here", "cta": "Pre-order Now", "variant": "split", "image": "https://picsum.photos/800/600" }},
+        { "b": "container", "d": { "columns": 4, "gap": "1.5rem", "padding": "3rem 2rem" }, "children": [
+          { "b": "cardstats", "d": { "value": "10x", "label": "Faster", "icon": "🚀" }},
+          { "b": "cardstats", "d": { "value": "50%", "label": "Cheaper", "icon": "💰" }},
+          { "b": "cardstats", "d": { "value": "99.9%", "label": "Uptime", "icon": "✅" }},
+          { "b": "cardstats", "d": { "value": "24/7", "label": "Support", "icon": "🎧" }}
+        ]}
+      ]
+    },
+
+    {
+      "id": "hero-cosmic",
+      "name": "Cosmic Hero",
+      "category": "heroes",
+      "description": "Space-themed hero with particle effects",
+      "tags": ["hero", "cosmic", "animated", "dark"],
+      "components": [
+        { "b": "cardhero", "d": { "title": "Explore the Universe", "subtitle": "Your journey to the stars begins here", "cta": "Launch Mission", "variant": "cosmic" }}
+      ]
+    },
+    {
+      "id": "hero-split",
+      "name": "Split Hero",
+      "category": "heroes",
+      "description": "Hero with image on one side",
+      "tags": ["hero", "split", "image"],
+      "components": [
+        { "b": "cardhero", "d": { "title": "Design Meets Function", "subtitle": "Beautiful interfaces that work as good as they look", "cta": "See Examples", "variant": "split", "image": "https://picsum.photos/800/600" }}
+      ]
+    },
+    {
+      "id": "hero-minimal",
+      "name": "Minimal Hero",
+      "category": "heroes",
+      "description": "Clean, text-focused hero",
+      "tags": ["hero", "minimal", "clean", "simple"],
+      "components": [
+        { "b": "cardhero", "d": { "title": "Less is More", "subtitle": "Simplicity is the ultimate sophistication", "cta": "Learn More", "variant": "minimal" }}
+      ]
+    },
+    {
+      "id": "hero-video",
+      "name": "Video Hero",
+      "category": "heroes",
+      "description": "Hero with background video",
+      "tags": ["hero", "video", "media"],
+      "components": [
+        { "b": "cardhero", "d": { "title": "See It In Action", "subtitle": "Watch how it works", "cta": "Play Video", "variant": "default" }}
+      ]
+    },
+
+    {
+      "id": "pricing-three-tier",
+      "name": "Three-Tier Pricing",
+      "category": "pricing",
+      "description": "Standard 3-column pricing table",
+      "tags": ["pricing", "plans", "saas"],
+      "components": [
+        { "b": "container", "d": { "columns": 3, "gap": "2rem", "padding": "2rem" }, "children": [
+          { "b": "cardpricing", "d": { "plan": "Basic", "price": "$9", "period": "/month", "features": "10 Users,5GB Storage,Email Support", "cta": "Choose Basic" }},
+          { "b": "cardpricing", "d": { "plan": "Professional", "price": "$29", "period": "/month", "features": "50 Users,50GB Storage,Priority Support,API Access", "cta": "Choose Pro", "featured": true }},
+          { "b": "cardpricing", "d": { "plan": "Enterprise", "price": "$99", "period": "/month", "features": "Unlimited Users,500GB Storage,24/7 Support,Custom Integrations,SLA", "cta": "Contact Sales" }}
+        ]}
+      ]
+    },
+    {
+      "id": "pricing-two-tier",
+      "name": "Two-Tier Pricing",
+      "category": "pricing",
+      "description": "Simple 2-column pricing",
+      "tags": ["pricing", "simple"],
+      "components": [
+        { "b": "container", "d": { "columns": 2, "gap": "2rem", "padding": "2rem" }, "children": [
+          { "b": "cardpricing", "d": { "plan": "Monthly", "price": "$19", "period": "/month", "features": "All Features,Cancel Anytime", "cta": "Start Monthly" }},
+          { "b": "cardpricing", "d": { "plan": "Annual", "price": "$149", "period": "/year", "features": "All Features,2 Months Free,Priority Support", "cta": "Start Annual", "featured": true, "badge": "Save 35%" }}
+        ]}
+      ]
+    },
+
+    {
+      "id": "features-grid-3",
+      "name": "Features Grid (3 cols)",
+      "category": "features",
+      "description": "3-column feature showcase",
+      "tags": ["features", "grid", "icons"],
+      "components": [
+        { "b": "container", "d": { "columns": 3, "gap": "2rem", "padding": "2rem" }, "children": [
+          { "b": "card", "d": { "title": "Easy Setup", "content": "Get started in minutes with our intuitive onboarding process.", "icon": "🎯" }},
+          { "b": "card", "d": { "title": "Powerful API", "content": "Build custom integrations with our comprehensive API.", "icon": "🔌" }},
+          { "b": "card", "d": { "title": "Analytics", "content": "Track everything with real-time dashboards and reports.", "icon": "📊" }},
+          { "b": "card", "d": { "title": "Collaboration", "content": "Work together seamlessly with your team.", "icon": "👥" }},
+          { "b": "card", "d": { "title": "Security", "content": "Enterprise-grade security and compliance built-in.", "icon": "🔐" }},
+          { "b": "card", "d": { "title": "Support", "content": "24/7 support from our expert team.", "icon": "💬" }}
+        ]}
+      ]
+    },
+    {
+      "id": "features-list",
+      "name": "Features List",
+      "category": "features",
+      "description": "Vertical feature list with icons",
+      "tags": ["features", "list", "vertical"],
+      "components": [
+        { "b": "container", "d": { "columns": 1, "gap": "1rem", "padding": "2rem" }, "children": [
+          { "b": "cardhorizontal", "d": { "title": "Instant Deployment", "content": "Push to production in seconds with zero downtime.", "icon": "🚀" }},
+          { "b": "cardhorizontal", "d": { "title": "Auto Scaling", "content": "Automatically scale based on demand.", "icon": "📈" }},
+          { "b": "cardhorizontal", "d": { "title": "Global CDN", "content": "Lightning fast delivery worldwide.", "icon": "🌍" }}
+        ]}
+      ]
+    },
+
+    {
+      "id": "testimonials-grid",
+      "name": "Testimonials Grid",
+      "category": "testimonials",
+      "description": "2-column testimonial cards",
+      "tags": ["testimonials", "reviews", "social proof"],
+      "components": [
+        { "b": "container", "d": { "columns": 2, "gap": "2rem", "padding": "2rem" }, "children": [
+          { "b": "cardtestimonial", "d": { "quote": "Absolutely game-changing. We've never been more productive.", "author": "Alex Rivera", "role": "Product Manager, InnoTech", "rating": 5 }},
+          { "b": "cardtestimonial", "d": { "quote": "The best tool in our stack. Period.", "author": "Jordan Lee", "role": "Engineering Lead, StartupCo", "rating": 5 }},
+          { "b": "cardtestimonial", "d": { "quote": "Cut our development time in half.", "author": "Sam Taylor", "role": "CTO, DevHouse", "rating": 5 }},
+          { "b": "cardtestimonial", "d": { "quote": "Support team is incredible. Always there when we need them.", "author": "Casey Morgan", "role": "Operations, ScaleFast", "rating": 5 }}
+        ]}
+      ]
+    },
+    {
+      "id": "testimonials-single",
+      "name": "Featured Testimonial",
+      "category": "testimonials",
+      "description": "Single large testimonial",
+      "tags": ["testimonial", "featured", "quote"],
+      "components": [
+        { "b": "cardtestimonial", "d": { "quote": "This platform has completely transformed how we approach product development. The results speak for themselves - we've shipped 5 major features in the time it used to take us to ship one.", "author": "Dr. Emily Zhang", "role": "VP Engineering, Fortune 500 Company", "rating": 5, "featured": true }}
+      ]
+    },
+
+    {
+      "id": "cards-product-grid",
+      "name": "Product Grid",
+      "category": "cards",
+      "description": "E-commerce product card grid",
+      "tags": ["products", "ecommerce", "shop"],
+      "components": [
+        { "b": "container", "d": { "columns": 4, "gap": "1.5rem", "padding": "2rem" }, "children": [
+          { "b": "cardproduct", "d": { "title": "Premium Headphones", "price": "$299", "originalPrice": "$399", "image": "https://picsum.photos/400/400?10", "badge": "Sale" }},
+          { "b": "cardproduct", "d": { "title": "Wireless Speaker", "price": "$149", "image": "https://picsum.photos/400/400?11" }},
+          { "b": "cardproduct", "d": { "title": "Smart Watch", "price": "$199", "image": "https://picsum.photos/400/400?12", "badge": "New" }},
+          { "b": "cardproduct", "d": { "title": "Tablet Stand", "price": "$49", "image": "https://picsum.photos/400/400?13" }}
+        ]}
+      ]
+    },
+    {
+      "id": "cards-team",
+      "name": "Team Grid",
+      "category": "cards",
+      "description": "Team member profile cards",
+      "tags": ["team", "profiles", "about"],
+      "components": [
+        { "b": "container", "d": { "columns": 4, "gap": "2rem", "padding": "2rem" }, "children": [
+          { "b": "cardprofile", "d": { "name": "Jane Smith", "role": "CEO & Founder", "avatar": "https://i.pravatar.cc/200?1", "bio": "Visionary leader with 15+ years experience" }},
+          { "b": "cardprofile", "d": { "name": "John Doe", "role": "CTO", "avatar": "https://i.pravatar.cc/200?2", "bio": "Tech wizard and architecture expert" }},
+          { "b": "cardprofile", "d": { "name": "Sarah Johnson", "role": "Head of Design", "avatar": "https://i.pravatar.cc/200?3", "bio": "Award-winning designer and UX specialist" }},
+          { "b": "cardprofile", "d": { "name": "Mike Chen", "role": "Lead Developer", "avatar": "https://i.pravatar.cc/200?4", "bio": "Full-stack guru and open source contributor" }}
+        ]}
+      ]
+    },
+    {
+      "id": "cards-blog",
+      "name": "Blog Grid",
+      "category": "cards",
+      "description": "Blog post card grid",
+      "tags": ["blog", "posts", "articles"],
+      "components": [
+        { "b": "container", "d": { "columns": 3, "gap": "2rem", "padding": "2rem" }, "children": [
+          { "b": "cardimage", "d": { "title": "Getting Started Guide", "subtitle": "Learn the basics in 5 minutes", "src": "https://picsum.photos/600/400?20", "footer": "5 min read" }},
+          { "b": "cardimage", "d": { "title": "Advanced Techniques", "subtitle": "Take your skills to the next level", "src": "https://picsum.photos/600/400?21", "footer": "12 min read" }},
+          { "b": "cardimage", "d": { "title": "Best Practices", "subtitle": "Industry standards and patterns", "src": "https://picsum.photos/600/400?22", "footer": "8 min read" }}
+        ]}
+      ]
+    },
+
+    {
+      "id": "stats-row",
+      "name": "Stats Row",
+      "category": "data",
+      "description": "Horizontal stats display",
+      "tags": ["stats", "numbers", "metrics"],
+      "components": [
+        { "b": "container", "d": { "columns": 4, "gap": "2rem", "padding": "2rem" }, "children": [
+          { "b": "cardstats", "d": { "value": "10M+", "label": "Users", "icon": "👥", "trend": "up", "trendValue": "+12%" }},
+          { "b": "cardstats", "d": { "value": "$50M", "label": "Revenue", "icon": "💰", "trend": "up", "trendValue": "+23%" }},
+          { "b": "cardstats", "d": { "value": "99.9%", "label": "Uptime", "icon": "✅" }},
+          { "b": "cardstats", "d": { "value": "4.9", "label": "Rating", "icon": "⭐" }}
+        ]}
+      ]
+    },
+
+    {
+      "id": "form-contact",
+      "name": "Contact Form",
+      "category": "forms",
+      "description": "Simple contact form",
+      "tags": ["form", "contact", "input"],
+      "components": [
+        { "b": "card", "d": { "title": "Get in Touch", "subtitle": "We'd love to hear from you" }, "children": [
+          { "b": "input", "d": { "label": "Name", "placeholder": "Your name", "required": true }},
+          { "b": "input", "d": { "label": "Email", "type": "email", "placeholder": "you@example.com", "required": true }},
+          { "b": "textarea", "d": { "label": "Message", "placeholder": "How can we help?", "rows": 4 }},
+          { "b": "button", "d": { "text": "Send Message", "variant": "primary" }}
+        ]}
+      ]
+    },
+    {
+      "id": "form-newsletter",
+      "name": "Newsletter Signup",
+      "category": "forms",
+      "description": "Email signup form",
+      "tags": ["form", "newsletter", "email", "signup"],
+      "components": [
+        { "b": "container", "d": { "columns": 1, "padding": "2rem", "align": "center" }, "children": [
+          { "b": "card", "d": { "title": "Stay Updated", "subtitle": "Get the latest news and updates delivered to your inbox" }, "children": [
+            { "b": "container", "d": { "direction": "row", "gap": "1rem" }, "children": [
+              { "b": "input", "d": { "placeholder": "Enter your email", "type": "email" }},
+              { "b": "button", "d": { "text": "Subscribe", "variant": "primary" }}
+            ]}
+          ]}
+        ]}
+      ]
+    },
+
+    {
+      "id": "section-cta",
+      "name": "Call to Action",
+      "category": "sections",
+      "description": "Centered CTA section",
+      "tags": ["cta", "action", "conversion"],
+      "components": [
+        { "b": "container", "d": { "columns": 1, "padding": "4rem 2rem", "align": "center" }, "children": [
+          { "b": "card", "d": { "title": "Ready to Get Started?", "subtitle": "Join thousands of happy customers today", "elevated": true }, "children": [
+            { "b": "container", "d": { "direction": "row", "gap": "1rem", "justify": "center" }, "children": [
+              { "b": "button", "d": { "text": "Start Free Trial", "variant": "primary", "size": "lg" }},
+              { "b": "button", "d": { "text": "Schedule Demo", "variant": "secondary", "size": "lg" }}
+            ]}
+          ]}
+        ]}
+      ]
+    },
+    {
+      "id": "section-faq",
+      "name": "FAQ Section",
+      "category": "sections",
+      "description": "Frequently asked questions",
+      "tags": ["faq", "questions", "help"],
+      "components": [
+        { "b": "container", "d": { "columns": 1, "padding": "2rem", "gap": "1rem" }, "children": [
+          { "b": "details", "d": { "summary": "How do I get started?", "content": "Simply sign up for a free account and follow our quick setup wizard. You'll be up and running in minutes." }},
+          { "b": "details", "d": { "summary": "Is there a free trial?", "content": "Yes! We offer a 14-day free trial with full access to all features. No credit card required." }},
+          { "b": "details", "d": { "summary": "Can I cancel anytime?", "content": "Absolutely. You can cancel your subscription at any time with no questions asked." }},
+          { "b": "details", "d": { "summary": "Do you offer refunds?", "content": "We offer a 30-day money-back guarantee if you're not satisfied with our service." }}
+        ]}
+      ]
+    },
+
+    {
+      "id": "footer-simple",
+      "name": "Simple Footer",
+      "category": "footers",
+      "description": "Minimal footer with links",
+      "tags": ["footer", "simple", "minimal"],
+      "components": [
+        { "b": "container", "d": { "columns": 4, "gap": "2rem", "padding": "3rem 2rem" }, "children": [
+          { "b": "card", "d": { "title": "Company", "content": "About Us\nCareers\nPress\nBlog" }},
+          { "b": "card", "d": { "title": "Product", "content": "Features\nPricing\nIntegrations\nChangelog" }},
+          { "b": "card", "d": { "title": "Resources", "content": "Documentation\nTutorials\nAPI Reference\nStatus" }},
+          { "b": "card", "d": { "title": "Legal", "content": "Privacy\nTerms\nSecurity\nCookies" }}
+        ]}
+      ]
+    },
+
+    {
+      "id": "content-about",
+      "name": "About Section",
+      "category": "content",
+      "description": "About us content block",
+      "tags": ["about", "content", "text"],
+      "components": [
+        { "b": "container", "d": { "columns": 2, "gap": "3rem", "padding": "3rem 2rem" }, "children": [
+          { "b": "cardimage", "d": { "src": "https://picsum.photos/600/400?30", "alt": "Our team" }},
+          { "b": "card", "d": { "title": "About Our Company", "content": "We're a team of passionate builders dedicated to making the web a better place. Since 2020, we've helped over 10,000 companies ship faster and build better products.\n\nOur mission is simple: empower developers and designers to create amazing experiences without the complexity." }}
+        ]}
+      ]
+    },
+
+    {
+      "id": "nav-sticky",
+      "name": "Sticky Navigation",
+      "category": "navigation",
+      "description": "Navigation bar that sticks to top when scrolling",
+      "tags": ["nav", "sticky", "header", "menu"],
+      "components": [
+        { "b": "navbar", "t": "nav", "d": { "brand": "YourBrand", "items": "Home,Features,Pricing,Contact" }, "behaviors": ["navbar", "sticky"] }
+      ]
+    },
+    {
+      "id": "nav-simple",
+      "name": "Simple Navigation",
+      "category": "navigation",
+      "description": "Basic horizontal navigation",
+      "tags": ["nav", "menu", "simple"],
+      "components": [
+        { "b": "navbar", "t": "nav", "d": { "brand": "Logo", "items": "Home,About,Services,Contact" }}
+      ]
+    },
+    {
+      "id": "nav-with-cta",
+      "name": "Navigation with CTA",
+      "category": "navigation",
+      "description": "Navigation with call-to-action button",
+      "tags": ["nav", "cta", "button", "sticky"],
+      "components": [
+        { "b": "navbar", "t": "nav", "d": { "brand": "AppName", "items": "Features,Pricing,Docs", "cta": "Get Started", "ctaHref": "#signup" }, "behaviors": ["navbar", "sticky"] }
+      ]
+    }
+  ]
+}

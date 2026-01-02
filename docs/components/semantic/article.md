@@ -1,6 +1,6 @@
 # Article Element
 
-The `<article>` element is the semantic foundation for all card components in the WB Behaviors.
+The `<article>` element is the semantic foundation for all card components in the Web Behaviors (WB) library.
 
 ## Overview
 
@@ -72,7 +72,36 @@ Use `<article>` when content:
 
 ## WB Components That Extend Article
 
-All card components inherit from the article semantic element:
+All card components inherit from the article semantic element.
+
+### AutoInject Behavior
+
+With `autoInject: true`, the `<article>` element has **conditional auto-injection**:
+
+| Condition | Behavior Applied | Notes |
+|-----------|------------------|-------|
+| `<article>` | None | Plain semantic article |
+| `<article data-href="...">` | `cardlink` | Clickable link card |
+
+This safe approach preserves semantic purity:
+- Plain `<article>` elements remain standard HTML
+- Only `<article data-href>` becomes a clickable card
+
+```html
+<!-- Plain article - no behavior injected -->
+<article>
+  <h2>Blog Post Title</h2>
+  <p>Content...</p>
+</article>
+
+<!-- AutoInject: becomes cardlink -->
+<article data-href="/demos/kitchen-sink.html" data-title="Kitchen Sink" data-badge="NEW">
+</article>
+```
+
+### Explicit Card Assignment
+
+To apply card styling and behavior explicitly, add the `data-wb="card"` attribute:
 
 | Component | Purpose |
 |-----------|---------|
@@ -110,7 +139,7 @@ card variants (cardimage, cardprofile, etc.)
 ## Example
 
 ```html
-<!-- Semantic article -->
+<!-- 1. Standard Semantic Article (No Styling) -->
 <article>
   <header>
     <h2>Article Title</h2>
@@ -124,7 +153,20 @@ card variants (cardimage, cardprofile, etc.)
   </footer>
 </article>
 
-<!-- As WB Card -->
+<!-- 2. Enhanced Semantic Card (Preserves Structure) -->
+<article data-wb="card">
+  <header>
+    <h2>Card Title</h2>
+  </header>
+  <main>
+    <p>This article is now styled as a card.</p>
+  </main>
+  <footer>
+    <button>Action</button>
+  </footer>
+</article>
+
+<!-- 3. Config-Driven Card (Generates Structure) -->
 <article data-wb="card" data-title="Card Title" data-subtitle="Subtitle">
   Main content goes here...
 </article>

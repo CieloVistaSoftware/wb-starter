@@ -52,7 +52,8 @@ export default defineConfig({
   // Fail fast option via env var
   maxFailures: process.env.FAIL_FAST === 'true' ? 1 : undefined,
   
-  workers: 4,
+  fullyParallel: true,
+  workers: 8,
   retries: 1,
   timeout: 30000,
   
@@ -109,6 +110,7 @@ export default defineConfig({
       name: 'behaviors',
       testDir: './tests/behaviors',
       testMatch: [
+        'behavior-validation.spec.ts',
         'builder-api.spec.ts',
         'builder-mkel.spec.ts',
         'permutation-compliance.spec.ts',
@@ -129,6 +131,15 @@ export default defineConfig({
         'ui/behavior-verification.spec.ts',
         'ui/builder-sidebar.spec.ts',
         'ui/figure.spec.ts',
+        'behaviors-showcase.spec.ts',
+        'pill-shortcut.spec.ts',
+        'input-switch.spec.ts',
+        'scrollalong.spec.ts',
+        'header.spec.ts',
+        'components-page.spec.ts',
+        'global-attributes.spec.ts',
+        'pce.spec.ts',
+        'pce-demo.spec.ts',
       ],
       // Explicitly exclude deprecated files
       testIgnore: [
@@ -154,6 +165,16 @@ export default defineConfig({
     {
       name: 'regression',
       testDir: './tests/regression',
+      testMatch: '**/*.spec.ts',
+    },
+    
+    // ═══════════════════════════════════════════════════════════════
+    // TIER 6: PERFORMANCE TESTS
+    // Tests for load time and runtime performance
+    // ═══════════════════════════════════════════════════════════════
+    {
+      name: 'performance',
+      testDir: './tests/performance',
       testMatch: '**/*.spec.ts',
     },
   ],

@@ -2,7 +2,7 @@
 
 ## Overview
 
-WB Behaviors provides accessible, styled form controls with validation support.
+Web Behaviors (WB) provides accessible, styled form controls with validation support.
 
 ---
 

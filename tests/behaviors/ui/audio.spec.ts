@@ -190,7 +190,7 @@ async function setupAudioComponent(page: Page, props: Record<string, any>): Prom
 test.describe('Audio Component Compliance', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:3000/builder.html');
-    await page.waitForFunction(() => typeof window['add'] === 'function');
+    await page.waitForFunction(() => typeof (window as any)['add'] === 'function');
   });
 
   for (const tc of audioPermutations) {
@@ -321,7 +321,7 @@ test.describe('Audio Component Compliance', () => {
 test.describe('Audio Component Interactions', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:3000/builder.html');
-    await page.waitForFunction(() => typeof window['add'] === 'function');
+    await page.waitForFunction(() => typeof (window as any)['add'] === 'function');
   });
 
   test('EQ sliders are interactive', async ({ page }) => {
@@ -418,7 +418,7 @@ test.describe('Audio Component Interactions', () => {
 test.describe('Audio Component Accessibility', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:3000/builder.html');
-    await page.waitForFunction(() => typeof window['add'] === 'function');
+    await page.waitForFunction(() => typeof (window as any)['add'] === 'function');
   });
 
   test('Native audio has controls for keyboard access', async ({ page }) => {

@@ -9,90 +9,137 @@
   
   <h3 id="components-h3-6">Basic Cards</h3>
   <div id="components-div-7" class="page__grid">
-    <div id="components-div-8" data-wb="card" data-title="Basic Card" data-hoverable>
+    <basic-card id="components-div-8" data-title="Basic Card" data-hoverable>
       <p id="components-p-9">Simple card with title and hover effect.</p>
-    </div>
-    <div id="components-div-10" data-wb="card" data-title="Header" data-footer="Card Footer" data-hoverable>
+    </basic-card>
+    <basic-card id="components-div-10" data-title="Header" data-footer="Card Footer" data-hoverable>
       <p id="components-p-11">Card with header and footer.</p>
-    </div>
-    <div id="components-div-12" data-wb="card toast" data-title="Clickable" data-clickable data-hoverable data-message="Card clicked!" data-type="success">
+    </basic-card>
+    <basic-card id="components-div-12" data-wb="toast" data-title="Clickable" data-clickable data-hoverable data-message="Card clicked!" data-type="success">
       <p id="components-p-13">Click anywhere on this card!</p>
-    </div>
+    </basic-card>
   </div>
 
   <h3 id="components-h3-14">Media Cards</h3>
   <div id="components-div-15" class="page__grid">
-    <div id="components-div-16" data-wb="cardimage" data-src="https://picsum.photos/400/200?r=1" data-title="Image Card" data-description="Card with image header"></div>
-    <div id="components-div-17" data-wb="cardvideo" data-src="https://www.w3schools.com/html/mov_bbb.mp4" data-title="Video Card"></div>
+    <image-card id="components-div-16" data-src="https://picsum.photos/400/200?r=1" data-title="Image Card" data-description="Card with image header"></image-card>
+    <video-card id="components-div-17" data-src="https://www.w3schools.com/html/mov_bbb.mp4" data-title="Video Card"></video-card>
     <!-- Overlay card with actual background image to overlay -->
-    <div id="components-div-18" data-wb="cardoverlay" data-image="https://picsum.photos/400/300?r=2" data-title="Overlay Card" data-subtitle="Text overlays the image"></div>
+    <overlay-card id="components-div-18" data-image="https://picsum.photos/400/300?r=2" data-title="Overlay Card" data-subtitle="Text overlays the image"></overlay-card>
   </div>
 
   <h3 id="components-h3-19">Special Cards</h3>
   <div id="components-div-20" class="page__grid">
-    <div id="components-div-21" data-wb="cardhero" data-title="Hero Card" data-subtitle="Featured content" data-background="https://picsum.photos/600/400?r=hero"></div>
+    <hero-card id="components-div-21" data-title="Hero Card" data-subtitle="Featured content" data-background="https://picsum.photos/600/400?r=hero"></hero-card>
   </div>
   
   <h3 id="components-h3-22">Stock Market Indicators</h3>
   <div id="components-div-23" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
-    <div id="components-div-24" data-wb="cardstats" data-value="4,891.23" data-label="S&P 500" data-icon="📈" data-trend="up" data-trend-value="+1.2%"></div>
-    <div id="components-div-25" data-wb="cardstats" data-value="38,654" data-label="Dow Jones" data-icon="🏦" data-trend="up" data-trend-value="+0.8%"></div>
-    <div id="components-div-26" data-wb="cardstats" data-value="15,432" data-label="NASDAQ" data-icon="💻" data-trend="down" data-trend-value="-0.3%"></div>
-    <div id="components-div-27" data-wb="cardstats" data-value="$2,045" data-label="Gold" data-icon="🥇" data-trend="up" data-trend-value="+2.1%"></div>
-    <div id="components-div-28" data-wb="cardstats" data-value="$78.50" data-label="Crude Oil" data-icon="🛢️" data-trend="down" data-trend-value="-1.5%"></div>
-    <div id="components-div-29" data-wb="cardstats" data-value="4.25%" data-label="10Y Treasury" data-icon="💵" data-trend="up" data-trend-value="+0.05"></div>
-    <div id="components-div-30" data-wb="cardstats" data-value="$62,450" data-label="Bitcoin" data-icon="₿" data-trend="up" data-trend-value="+5.2%"></div>
-    <div id="components-div-31" data-wb="cardstats" data-value="1.08" data-label="EUR/USD" data-icon="💱" data-trend="down" data-trend-value="-0.2%"></div>
+    <stats-card id="components-div-24" data-value="4,891.23" data-label="S&P 500" data-icon="📈" data-trend="up" data-trend-value="+1.2%"></stats-card>
+    <stats-card id="components-div-25" data-value="38,654" data-label="Dow Jones" data-icon="🏦" data-trend="up" data-trend-value="+0.8%"></stats-card>
+    <stats-card id="components-div-26" data-value="15,432" data-label="NASDAQ" data-icon="💻" data-trend="down" data-trend-value="-0.3%"></stats-card>
+    <stats-card id="components-div-27" data-value="$2,045" data-label="Gold" data-icon="🥇" data-trend="up" data-trend-value="+2.1%"></stats-card>
+    <stats-card id="components-div-28" data-value="$78.50" data-label="Crude Oil" data-icon="🛢️" data-trend="down" data-trend-value="-1.5%"></stats-card>
+    <stats-card id="components-div-29" data-value="4.25%" data-label="10Y Treasury" data-icon="💵" data-trend="up" data-trend-value="+0.05"></stats-card>
+    <stats-card id="components-div-30" data-value="$62,450" data-label="Bitcoin" data-icon="₿" data-trend="up" data-trend-value="+5.2%"></stats-card>
+    <stats-card id="components-div-31" data-value="1.08" data-label="EUR/USD" data-icon="💱" data-trend="down" data-trend-value="-0.2%"></stats-card>
   </div>
 
   <h3 id="components-h3-new">Ads or Sales or Price Tags</h3>
   <div id="components-div-32" class="page__grid">
-    <div id="components-div-33" data-wb="cardpricing" data-plan="Starter" data-price="$9" data-period="/mo" data-features="5 projects,Basic support,1GB storage" data-cta="Start Free"></div>
-    <div id="components-div-34" data-wb="cardpricing" data-plan="Pro" data-price="$29" data-period="/mo" data-features="Unlimited projects,Priority support,10GB storage,API access" data-cta="Go Pro" data-featured></div>
+    <price-card id="components-div-33" data-plan="Starter" data-price="$9" data-period="/mo" data-features="5 projects,Basic support,1GB storage" data-cta="Start Free"></price-card>
+    <price-card id="components-div-34" data-plan="Pro" data-price="$29" data-period="/mo" data-features="Unlimited projects,Priority support,10GB storage,API access" data-cta="Go Pro" data-featured></price-card>
+    
+    <!-- Rackmount Demo -->
+    <basic-card id="components-div-rack" data-variant="rack" data-title="Control Panel" data-content="<div style='display:flex;gap:0.5rem;'><button class='wb-btn' onclick='alert(`Running...`)'>Run Test Suite</button><button class='wb-btn' onclick='alert(`Refreshing...`)'>Refresh Data</button></div>"></basic-card>
+
+    <!-- New Ads -->
+    <product-card id="components-div-ad1" 
+         data-title="Red Hot Sale 🔥" 
+         data-price="$19.99" 
+         data-original-price="$49.99" 
+         data-badge="70% OFF" 
+         data-description="Limited time offer! Everything must go."
+         data-image="https://picsum.photos/300/200?r=red"
+         data-cta="Shop Now"
+         style="background: linear-gradient(135deg, #7f1d1d 0%, #ef4444 100%); border: none;">
+    </product-card>
+    <product-card id="components-div-ad2" 
+         data-title="Grand Opening 🎉" 
+         data-price="$5.00" 
+         data-original-price="$25.00" 
+         data-badge="DOORBUSTER" 
+         data-description="Join us this weekend for exclusive deals."
+         data-image="https://picsum.photos/300/200?r=blue"
+         data-cta="Get Directions"
+         style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border: none;">
+    </product-card>
+
+    <product-card id="components-div-ad3" 
+         data-title="Furniture Blowout 🛋️" 
+         data-price="$499" 
+         data-original-price="$999" 
+         data-badge="CLEARANCE" 
+         data-description="Luxury sofas at rock bottom prices."
+         data-image="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&h=200&fit=crop"
+         data-cta="View Deals"
+         style="background: linear-gradient(135deg, #92400e 0%, #b45309 100%); border: none;">
+    </product-card>
+
+    <product-card id="components-div-ad4" 
+         data-title="Guitar World 🎸" 
+         data-price="Free Lessons" 
+         data-original-price="$50" 
+         data-badge="GRAND OPENING" 
+         data-description="Join us for live music and free workshops."
+         data-image="https://picsum.photos/300/200?r=guitar"
+         data-cta="Rock On"
+         style="background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%); border: none;">
+    </product-card>
   </div>
 
   <h3 id="components-h3-35">Testimonials</h3>
   <div id="components-div-36" style="display: flex; flex-direction: column; gap: 0;">
-    <div id="components-div-37" data-wb="cardtestimonial" data-quote="This product changed how our team works. Highly recommended!" data-author="Jane Smith" data-role="CEO, TechCorp" data-rating="5" data-avatar="https://i.pravatar.cc/150?img=5"></div>
+    <testimonial-card id="components-div-37" data-quote="The WB starter pack has completely transformed our development process. It's fast, reliable, and looks great." data-author="Jane Smith" data-role="CEO, TechCorp" data-rating="5" data-avatar="https://i.pravatar.cc/150?img=5"></testimonial-card>
     <hr id="components-hr-38" style="border: none; border-top: 1px solid var(--border-color, #374151); margin: 0;">
-    <div id="components-div-39" data-wb="cardtestimonial" data-quote="Best investment we've made this year. The ROI is incredible." data-author="Michael Chen" data-role="CTO, StartupXYZ" data-rating="5" data-avatar="https://i.pravatar.cc/150?img=11"></div>
+    <testimonial-card id="components-div-39" data-quote="The WB starter pack makes building complex UIs incredibly simple. A must-have for any developer." data-author="Michael Chen" data-role="CTO, StartupXYZ" data-rating="5" data-avatar="https://i.pravatar.cc/150?img=11"></testimonial-card>
     <hr id="components-hr-40" style="border: none; border-top: 1px solid var(--border-color, #374151); margin: 0;">
-    <div id="components-div-41" data-wb="cardtestimonial" data-quote="Outstanding support team and amazing features. A game changer!" data-author="Sarah Johnson" data-role="Product Manager, BigCo" data-rating="4" data-avatar="https://i.pravatar.cc/150?img=9"></div>
+    <testimonial-card id="components-div-41" data-quote="The WB starter pack is simply outstanding. The components are beautiful and easy to customize." data-author="Sarah Johnson" data-role="Product Manager, BigCo" data-rating="4" data-avatar="https://i.pravatar.cc/150?img=9"></testimonial-card>
     <hr id="components-hr-42" style="border: none; border-top: 1px solid var(--border-color, #374151); margin: 0;">
-    <div id="components-div-43" data-wb="cardtestimonial" data-quote="Simple, intuitive, and powerful. Exactly what we needed." data-author="David Kim" data-role="Lead Developer, DevHouse" data-rating="5" data-avatar="https://i.pravatar.cc/150?img=12"></div>
+    <testimonial-card id="components-div-43" data-quote="The WB starter pack saved us weeks of development time. Highly recommended!" data-author="David Kim" data-role="Lead Developer, DevHouse" data-rating="5" data-avatar="https://i.pravatar.cc/150?img=12"></testimonial-card>
   </div>
 
   <h3 id="components-h3-44">Product Cards (3 sizes)</h3>
   <div id="components-div-45" class="page__grid" style="grid-template-columns: repeat(3, 1fr); align-items: start;">
-    <div id="components-div-46" data-wb="cardproduct" data-title="Basic Widget" data-price="$19.99" data-image="https://picsum.photos/200/200?r=prod1" data-description="Perfect for beginners" style="height: 100%;"></div>
-    <div id="components-div-47" data-wb="cardproduct" data-title="Premium Widget" data-price="$49.99" data-original-price="$79.99" data-image="https://picsum.photos/200/200?r=prod2" data-badge="Sale" data-description="Most popular choice" data-featured style="height: 100%;"></div>
-    <div id="components-div-48" data-wb="cardproduct" data-title="Enterprise Widget" data-price="$149.99" data-image="https://picsum.photos/200/200?r=prod3" data-description="Full features for teams" data-badge="Pro" style="height: 100%;"></div>
+    <product-card id="components-div-46" data-title="Basic Widget" data-price="$19.99" data-image="https://picsum.photos/200/200?r=prod1" data-description="Perfect for beginners" style="height: 100%;"></product-card>
+    <product-card id="components-div-47" data-title="Premium Widget" data-price="$49.99" data-original-price="$79.99" data-image="https://picsum.photos/200/200?r=prod2" data-badge="Sale" data-description="Most popular choice" data-featured style="height: 100%;"></product-card>
+    <product-card id="components-div-48" data-title="Enterprise Widget" data-price="$149.99" data-image="https://picsum.photos/200/200?r=prod3" data-description="Full features for teams" data-badge="Pro" style="height: 100%;"></product-card>
   </div>
 
   <h3 id="components-h3-49">Notification Cards (4 types - same height)</h3>
-  <div id="components-div-50" class="page__grid" style="grid-template-columns: repeat(4, 1fr);">
-    <div id="components-div-51" data-wb="cardnotification" data-type="info" data-title="Info" data-message="You have a new update available" style="height: 100%;"></div>
-    <div id="components-div-52" data-wb="cardnotification" data-type="success" data-title="Success" data-message="Your changes have been saved" style="height: 100%;"></div>
-    <div id="components-div-53" data-wb="cardnotification" data-type="warning" data-title="Warning" data-message="Your subscription expires soon" style="height: 100%;"></div>
-    <div id="components-div-54" data-wb="cardnotification" data-type="error" data-title="Error" data-message="Failed to connect to server" style="height: 100%;"></div>
+  <div id="components-div-50" class="page__grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+    <notification-card id="components-div-51" data-type="info" data-title="Info" data-message="You have a new update available" style="height: 100%;"></notification-card>
+    <notification-card id="components-div-52" data-type="success" data-title="Success" data-message="Your changes have been saved" style="height: 100%;"></notification-card>
+    <notification-card id="components-div-53" data-type="warning" data-title="Warning" data-message="Your subscription expires soon" style="height: 100%;"></notification-card>
+    <notification-card id="components-div-54" data-type="error" data-title="Error" data-message="Failed to connect to server" style="height: 100%;"></notification-card>
   </div>
 
-  <h3 id="components-h3-55">File Cards (4 types - same height)</h3>
-  <div id="components-div-56" class="page__grid" style="grid-template-columns: repeat(4, 1fr);">
-    <div id="components-div-57" data-wb="cardfile toast" data-message="Downloading report.pdf (2.4 MB)..." data-filename="report.pdf" data-size="2.4 MB" data-type="pdf" style="height: 100%;"></div>
-    <div id="components-div-58" data-wb="cardfile toast" data-message="Opening presentation.doc (1.2 MB)..." data-filename="presentation.doc" data-size="1.2 MB" data-type="doc" style="height: 100%;"></div>
-    <div id="components-div-59" data-wb="cardfile toast" data-message="Previewing photo.jpg (856 KB)..." data-filename="photo.jpg" data-size="856 KB" data-type="image" style="height: 100%;"></div>
-    <div id="components-div-60" data-wb="cardfile toast" data-message="Extracting archive.zip (15.7 MB)..." data-filename="archive.zip" data-size="15.7 MB" data-type="zip" style="height: 100%;"></div>
+  <h3 id="components-h3-55">File Cards (4 types - stacked)</h3>
+  <div id="components-div-56" class="page__grid" style="grid-template-columns: 1fr; gap: 1rem;">
+    <file-card id="components-div-57" data-wb="toast" data-message="Downloading report.pdf (2.4 MB)..." data-filename="report.pdf" data-size="2.4 MB" data-type="pdf" style="background: var(--bg-tertiary, #1e293b);"></file-card>
+    <file-card id="components-div-58" data-wb="toast" data-message="Opening presentation.doc (1.2 MB)..." data-filename="presentation.doc" data-size="1.2 MB" data-type="doc" style="background: linear-gradient(135deg, var(--primary, #6366f1) 0%, #4338ca 100%);"></file-card>
+    <file-card id="components-div-59" data-wb="toast" data-message="Previewing photo.jpg (856 KB)..." data-filename="photo.jpg" data-size="856 KB" data-type="image" style="background: var(--bg-secondary, #374151);"></file-card>
+    <file-card id="components-div-60" data-wb="toast" data-message="Extracting archive.zip (15.7 MB)..." data-filename="archive.zip" data-size="15.7 MB" data-type="zip" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);"></file-card>
   </div>
 
   <div id="components-div-61" class="page__grid">
-    <div id="components-div-62" data-wb="cardlink toast" data-message="Navigating to: https://example.com" data-title="External Link" data-href="https://example.com" data-description="Click to visit"></div>
-    <div id="components-div-63" data-wb="cardhorizontal" data-title="Horizontal Card" data-image="https://picsum.photos/150/150?r=4" data-subtitle="Image on the side"></div>
+    <link-card id="components-div-62" data-wb="toast" data-message="Navigating to: https://example.com" data-title="External Link" data-href="https://example.com" data-description="Click to visit"></link-card>
+    <horizontal-card id="components-div-63" data-title="Horizontal Card" data-image="https://picsum.photos/150/150?r=4" data-subtitle="Image on the side"></horizontal-card>
   </div>
   
   <h3 id="components-h3-64">Portfolio Card (Business Card)</h3>
   <div id="components-div-65" class="page__grid">
-    <div id="components-div-66" data-wb="cardportfolio" 
+    <portfolio-card id="components-div-66" 
          data-name="Jane Smith" 
          data-title="Senior Developer" 
          data-company="Tech Corp" 
@@ -105,8 +152,8 @@
          data-linkedin="https://linkedin.com/in/janesmith"
          data-twitter="https://twitter.com/janesmith"
          data-github="https://github.com/janesmith">
-    </div>
-    <div id="components-div-67" data-wb="cardportfolio" 
+    </portfolio-card>
+    <portfolio-card id="components-div-67" 
          data-name="Bob Johnson" 
          data-title="Product Designer" 
          data-company="Design Studio" 
@@ -115,7 +162,7 @@
          data-bio="Creating beautiful user experiences."
          data-avatar="https://i.pravatar.cc/150?img=8"
          data-cover="https://picsum.photos/400/100?r=cover">
-    </div>
+    </portfolio-card>
   </div>
 </div>
 
@@ -269,16 +316,14 @@
   <div id="components-div-166" data-wb="backtotop">↑ Top</div>
 
   <h3 id="components-h3-166a">Navigation Code</h3>
-  <div id="components-div-166b" data-wb="code" data-language="html">
-&lt;!-- Breadcrumb --&gt;
+  <pre id="components-div-166b" data-wb="code" data-language="html"><code>&lt;!-- Breadcrumb --&gt;
 &lt;nav data-wb="breadcrumb" data-items="Home,Products,Category"&gt;&lt;/nav&gt;
 
 &lt;!-- Pagination --&gt;
 &lt;nav data-wb="pagination" data-total="50" data-per-page="10"&gt;&lt;/nav&gt;
 
 &lt;!-- Steps --&gt;
-&lt;div data-wb="steps" data-items="Step 1,Step 2,Step 3" data-current="1"&gt;&lt;/div&gt;
-  </div>
+&lt;div data-wb="steps" data-items="Step 1,Step 2,Step 3" data-current="1"&gt;&lt;/div&gt;</code></pre>
 </div>
 
 <!-- FORMS (28) -->
@@ -289,10 +334,10 @@
     <div id="components-div-170">
       <h3 id="components-h3-171">Text Inputs</h3>
       <div id="components-div-172" style="display: flex; flex-direction: column; gap: 1rem;">
-        <input id="components-input-173" data-wb="input" placeholder="Basic input">
-        <input id="components-input-174" data-wb="input" data-variant="success" placeholder="Success variant">
-        <input id="components-input-175" data-wb="input" data-variant="error" placeholder="Error variant">
-        <textarea id="components-textarea-176" data-wb="textarea" data-autosize placeholder="Auto-sizing textarea"></textarea>
+        <input id="components-input-173" placeholder="Basic input">
+        <input id="components-input-174" data-variant="success" placeholder="Success variant">
+        <input id="components-input-175" data-variant="error" placeholder="Error variant">
+        <textarea id="components-textarea-176" data-autosize placeholder="Auto-sizing textarea"></textarea>
         <input id="components-input-177" data-wb="password" placeholder="Password with toggle">
         <input id="components-input-178" data-wb="search" placeholder="Search input">
       </div>
@@ -312,14 +357,14 @@
     <div id="components-div-187">
       <h3 id="components-h3-188">Selection</h3>
       <div id="components-div-189" style="display: flex; flex-direction: column; gap: 1rem;">
-        <select id="components-select-190" data-wb="select">
+        <select id="components-select-190">
           <option id="components-option-191">Option 1</option>
           <option id="components-option-192">Option 2</option>
           <option id="components-option-193">Option 3</option>
         </select>
-        <input type="checkbox" id="components-div-194" data-wb="checkbox" data-label="Checkbox option">
-        <input type="radio" id="components-div-195" data-wb="radio" name="demo" data-label="Radio option 1">
-        <input type="radio" id="components-div-196" data-wb="radio" name="demo" data-label="Radio option 2">
+        <input type="checkbox" id="components-div-194" data-label="Checkbox option">
+        <input type="radio" id="components-div-195" name="demo" data-label="Radio option 1">
+        <input type="radio" id="components-div-196" name="demo" data-label="Radio option 2">
         <div id="components-div-197" data-wb="switch" data-label="Toggle switch"></div>
       </div>
     </div>
@@ -327,7 +372,7 @@
     <div id="components-div-198">
       <h3 id="components-h3-199">Range & Rating</h3>
       <div id="components-div-200" style="display: flex; flex-direction: column; gap: 1rem;">
-        <input type="range" id="components-input-201" data-wb="range" min="0" max="100" value="50">
+        <input type="range" id="components-input-201" min="0" max="100" value="50">
         <div id="components-div-202" data-wb="rating" data-value="3" data-max="5"></div>
         <div id="components-div-203" data-wb="rating" data-value="4" data-max="5" data-icon="❤️"></div>
         <div id="components-div-204" data-wb="stepper" data-value="5" data-min="0" data-max="10"></div>
@@ -405,7 +450,7 @@
   <h2 id="components-h2-254">📊 Data Display (10 types)</h2>
 
   <h3 id="components-h3-255">Table</h3>
-  <table id="components-table-256" data-wb="table" data-headers="Name,Email,Role,Status" data-rows='[["Alice","alice@email.com","Admin","Active"],["Bob","bob@email.com","User","Away"],["Carol","carol@email.com","Editor","Active"],["Dave","dave@email.com","User","Inactive"]]' data-striped data-hover></table>
+  <table id="components-table-256" data-headers="Name,Email,Role,Status" data-rows='[["Alice","alice@email.com","Admin","Active"],["Bob","bob@email.com","User","Away"],["Carol","carol@email.com","Editor","Active"],["Dave","dave@email.com","User","Inactive"]]' data-striped data-hover></table>
 
   <h3 id="components-h3-257">List</h3>
   <ul id="components-ul-258" data-wb="list" data-items="First item,Second item,Third item,Fourth item" data-dividers></ul>
@@ -500,10 +545,10 @@ console.log(sayHello("Developer"));</code></pre>
 
   <h3 id="components-h3-314">Tooltips</h3>
   <div id="components-div-315" style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-    <button id="components-button-316" class="wb-btn" data-wb="tooltip toast" data-toast-message="From: Top Tooltip Button -> To: Top Tooltip" data-tooltip="Top tooltip" data-tooltip-position="top">Top</button>
-    <button id="components-button-317" class="wb-btn" data-wb="tooltip toast" data-toast-message="From: Bottom Tooltip Button -> To: Bottom Tooltip" data-tooltip="Bottom tooltip" data-tooltip-position="bottom">Bottom</button>
-    <button id="components-button-318" class="wb-btn" data-wb="tooltip toast" data-toast-message="From: Left Tooltip Button -> To: Left Tooltip" data-tooltip="Left tooltip" data-tooltip-position="left">Left</button>
-    <button id="components-button-319" class="wb-btn" data-wb="tooltip toast" data-toast-message="From: Right Tooltip Button -> To: Right Tooltip" data-tooltip="Right tooltip" data-tooltip-position="right">Right</button>
+    <button-tooltip id="components-button-316" class="wb-btn" toast-message="From: Top Tooltip Button -> To: Top Tooltip" tooltip="Top tooltip" tooltip-position="top">Top</button-tooltip>
+    <button-tooltip id="components-button-317" class="wb-btn" toast-message="From: Bottom Tooltip Button -> To: Bottom Tooltip" tooltip="Bottom tooltip" tooltip-position="bottom">Bottom</button-tooltip>
+    <button-tooltip id="components-button-318" class="wb-btn" toast-message="From: Left Tooltip Button -> To: Left Tooltip" tooltip="Left tooltip" tooltip-position="left">Left</button-tooltip>
+    <button-tooltip id="components-button-319" class="wb-btn" toast-message="From: Right Tooltip Button -> To: Right Tooltip" tooltip="Right tooltip" tooltip-position="right">Right</button-tooltip>
   </div>
 
   <h3 id="components-h3-320">Theme Controls</h3>
@@ -537,7 +582,7 @@ console.log(sayHello("Developer"));</code></pre>
   <h3 id="components-h3-338">Images</h3>
   <div id="components-div-339" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
     <img id="components-img-340" data-wb="image" data-lazy src="https://picsum.photos/200/150?r=10" alt="Lazy loaded" style="border-radius: 8px;">
-    <figure id="components-figure-341" data-wb="figure" data-caption="Image with caption">
+    <figure id="components-figure-341" data-caption="Image with caption">
       <img id="components-img-342" src="https://picsum.photos/200/150?r=11" alt="Figure" style="border-radius: 8px;">
     </figure>
   </div>

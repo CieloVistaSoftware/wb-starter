@@ -53,6 +53,10 @@ Card Link **HAS-A** implicit click handler for navigation.
 
 ### Basic Link Card
 
+<article data-wb="cardlink"
+         data-href="https://example.com">
+</article>
+
 ```html
 <article data-wb="cardlink"
          data-href="https://example.com">
@@ -60,6 +64,11 @@ Card Link **HAS-A** implicit click handler for navigation.
 ```
 
 ### Link with Title
+
+<article data-wb="cardlink"
+         data-href="https://example.com"
+         data-title="Example Website">
+</article>
 
 ```html
 <article data-wb="cardlink"
@@ -69,6 +78,13 @@ Card Link **HAS-A** implicit click handler for navigation.
 ```
 
 ### Internal Link
+
+<article data-wb="cardlink"
+         data-href="/about"
+         data-title="About Us"
+         data-content="Learn more about our company"
+         data-target="_self">
+</article>
 
 ```html
 <article data-wb="cardlink"
@@ -80,6 +96,15 @@ Card Link **HAS-A** implicit click handler for navigation.
 ```
 
 ### Full Link Card
+
+<article data-wb="cardlink"
+         data-href="https://docs.example.com"
+         data-title="Documentation"
+         data-content="Read the full API documentation"
+         data-icon="📚"
+         data-target="_blank"
+         data-elevated="true">
+</article>
 
 ```html
 <article data-wb="cardlink"
@@ -93,6 +118,27 @@ Card Link **HAS-A** implicit click handler for navigation.
 ```
 
 ## Structure
+
+<article class="wb-card wb-card--link"
+         role="link"
+         tabindex="0">
+  <!-- Header with icon -->
+  <header class="wb-card__header">
+    <span class="wb-card__link-icon">🔗</span>
+    <h3 class="wb-card__title">Link Title</h3>
+    <p class="wb-card__subtitle">Subtitle</p>
+  </header>
+  
+  <!-- Main content -->
+  <main class="wb-card__main">
+    <p>Click to visit link</p>
+  </main>
+  
+  <!-- Footer (when set) -->
+  <footer class="wb-card__footer">
+    Footer text
+  </footer>
+</article>
 
 ```html
 <article class="wb-card wb-card--link"
@@ -237,6 +283,29 @@ Visible focus ring for keyboard users.
 
 ### Resource Links
 
+<div style="display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr);">
+  <article data-wb="cardlink"
+           data-href="https://docs.example.com"
+           data-title="Documentation"
+           data-content="API reference and guides"
+           data-icon="📚">
+  </article>
+  
+  <article data-wb="cardlink"
+           data-href="https://github.com/example"
+           data-title="GitHub"
+           data-content="View source code"
+           data-icon="💻">
+  </article>
+  
+  <article data-wb="cardlink"
+           data-href="https://discord.gg/example"
+           data-title="Community"
+           data-content="Join the discussion"
+           data-icon="💬">
+  </article>
+</div>
+
 ```html
 <div style="display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr);">
   <article data-wb="cardlink"
@@ -264,6 +333,14 @@ Visible focus ring for keyboard users.
 
 ### Internal Navigation
 
+<article data-wb="cardlink"
+         data-href="/dashboard"
+         data-title="Go to Dashboard"
+         data-content="View your projects and analytics"
+         data-icon="📊"
+         data-target="_self">
+</article>
+
 ```html
 <article data-wb="cardlink"
          data-href="/dashboard"
@@ -275,6 +352,15 @@ Visible focus ring for keyboard users.
 ```
 
 ### External Resource
+
+<article data-wb="cardlink"
+         data-href="https://developer.mozilla.org"
+         data-title="MDN Web Docs"
+         data-content="Comprehensive web development documentation"
+         data-icon="🌐"
+         data-target="_blank"
+         data-elevated="true">
+</article>
 
 ```html
 <article data-wb="cardlink"
@@ -289,6 +375,14 @@ Visible focus ring for keyboard users.
 
 ### Download Link
 
+<article data-wb="cardlink"
+         data-href="/downloads/app.zip"
+         data-title="Download App"
+         data-content="Version 2.0.0 - 15MB"
+         data-icon="⬇️"
+         data-target="_self">
+</article>
+
 ```html
 <article data-wb="cardlink"
          data-href="/downloads/app.zip"
@@ -300,6 +394,16 @@ Visible focus ring for keyboard users.
 ```
 
 ### Featured Article
+
+<article data-wb="cardlink"
+         data-href="/blog/getting-started"
+         data-title="Getting Started Guide"
+         data-subtitle="5 min read"
+         data-content="Everything you need to know to begin using our platform."
+         data-icon="📖"
+         data-target="_self"
+         data-elevated="true">
+</article>
 
 ```html
 <article data-wb="cardlink"
@@ -326,6 +430,18 @@ The builder validates URLs before saving:
 | Invalid | `example.com` | ❌ |
 
 ### Valid URL Formats
+
+<!-- Internal anchor -->
+data-href="#features"
+
+<!-- Internal path -->
+data-href="/about"
+
+<!-- External URL -->
+data-href="https://example.com"
+
+<!-- External with path -->
+data-href="https://example.com/docs/guide"
 
 ```html
 <!-- Internal anchor -->

@@ -1,6 +1,6 @@
 # Theme System Documentation
 
-The WB Behaviors uses a powerful, variable-based theming system that supports:
+The Web Behaviors (WB) library uses a powerful, variable-based theming system that supports:
 - 25+ built-in themes
 - Dark/Light mode switching
 - Nested themes (sections with different themes)

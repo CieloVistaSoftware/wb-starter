@@ -246,13 +246,20 @@ test.describe('Fix Viewer Compliance', () => {
       await page.waitForSelector('.fix-card', { timeout: 5000 });
 
       const codeIssues = await page.evaluate(() => {
-        const codeTags = Array.from(document.querySelectorAll('code'));
+        // Only check code tags that are NOT inside fix-code-block (syntax highlighted blocks are expected to have child spans)
+        const codeTags = Array.from(document.querySelectorAll('code:not(.fix-code-block code):not(.wb-code code):not(.hljs)'));
         const issues = [];
 
         codeTags.forEach((code, index) => {
-          // Check for child elements (should only be text)
-          if (code.children.length > 0) {
-            issues.push(`Code tag #${index} contains ${code.children.length} child elements (should be text only)`);
+          // Skip if this is inside a syntax-highlighted block
+          if (code.closest('.fix-code-block') || code.closest('.wb-code') || code.classList.contains('hljs')) {
+            return;
+          }
+          
+          // Check for child elements (should only be text) - skip if has hljs-* spans (syntax highlighting)
+          const nonHljsChildren = Array.from(code.children).filter(c => !c.className.startsWith('hljs'));
+          if (nonHljsChildren.length > 0) {
+            issues.push(`Code tag #${index} contains ${nonHljsChildren.length} non-syntax child elements (should be text only)`);
           }
 
           // Check for line count

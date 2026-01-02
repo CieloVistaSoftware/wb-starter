@@ -32,7 +32,13 @@ const parseBoolean = (val) => {
 
 // Semantic element validation
 const PREFERRED_TAGS = ['ARTICLE', 'SECTION'];
-const ALLOWED_TAGS = ['ARTICLE', 'SECTION', 'DIV'];
+const ALLOWED_TAGS = [
+  'ARTICLE', 'SECTION', 'DIV', 
+  'PRICE-CARD', 'PRODUCT-CARD', 'PROFILE-CARD', 'HERO-CARD', 
+  'STATS-CARD', 'TESTIMONIAL-CARD', 'VIDEO-CARD', 'FILE-CARD', 
+  'NOTIFICATION-CARD', 'PORTFOLIO-CARD', 'LINK-CARD', 'HORIZONTAL-CARD',
+  'BASIC-CARD', 'IMAGE-CARD', 'OVERLAY-CARD'
+];
 
 function validateSemanticContainer(element, behaviorName) {
   const tag = element.tagName;
@@ -84,15 +90,39 @@ export function cardBase(element, options = {}) {
   }
   
   // Apply base styles
-  Object.assign(element.style, {
+  const baseStyles = {
     transition: 'all 0.2s ease',
     borderRadius: 'var(--radius-lg, 8px)',
-    background: 'var(--bg-secondary, #1f2937)',
+    background: config.background || element.style.background || 'var(--bg-secondary, #1f2937)',
     border: '1px solid var(--border-color, #374151)',
     overflow: 'hidden',
     display: 'flex',
-    flexDirection: 'column'
-  });
+    flexDirection: 'column',
+    contain: 'layout paint', // Performance optimization
+    overflowWrap: 'anywhere', // Ensure text wraps
+    wordBreak: 'break-word'   // Ensure text wraps
+  };
+
+  // Glass variant overrides
+  if (config.variant === 'glass') {
+    baseStyles.background = 'rgba(255, 255, 255, 0.05)';
+    baseStyles.backdropFilter = 'blur(10px)';
+    baseStyles.webkitBackdropFilter = 'blur(10px)';
+    baseStyles.border = '1px solid rgba(255, 255, 255, 0.1)';
+  }
+
+  // Rack variant overrides
+  if (config.variant === 'rack') {
+    baseStyles.background = '#0f172a'; // Dark slate
+    baseStyles.border = '1px solid #334155';
+    baseStyles.borderLeft = '12px solid #1e293b'; // Rack ears
+    baseStyles.borderRight = '12px solid #1e293b';
+    baseStyles.borderRadius = '2px';
+    baseStyles.boxShadow = 'inset 0 0 20px rgba(0,0,0,0.5)';
+    baseStyles.fontFamily = 'ui-monospace, monospace';
+  }
+  
+  Object.assign(element.style, baseStyles);
   
   // Variant class
   if (config.variant !== 'default') {
@@ -299,7 +329,7 @@ export function cardBase(element, options = {}) {
           mainEl.innerHTML = mainText;
         } else {
           // Placeholder for empty main
-          mainEl.innerHTML = '<p class="wb-card__content" style="margin:0;color:var(--text-secondary,#9ca3af);font-style:italic;">Double-click to add content in Designer...</p>';
+          mainEl.innerHTML = '<p class="wb-card__content" style="margin:0;color:var(--text-secondary,#9ca3af);font-style:italic;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>';
         }
         
         main = mainEl;
@@ -340,9 +370,15 @@ export function cardBase(element, options = {}) {
 // PUBLIC: Base Card
 // ============================================
 export function card(element, options = {}) {
+  // Check for existing semantic structure (direct children)
+  const hasHeader = element.querySelector(':scope > header');
+  const hasMain = element.querySelector(':scope > main');
+  const hasFooter = element.querySelector(':scope > footer');
+  const isSemantic = hasHeader || hasMain || hasFooter;
+
   // Capture initial content if not provided in options/data
-  // This supports cases where content is set via textContent/innerHTML before behavior init
-  const initialContent = options.content || element.dataset.content || element.innerHTML;
+  // Only if NOT semantic, otherwise we leave it alone
+  const initialContent = isSemantic ? '' : (options.content || element.dataset.content || element.innerHTML);
 
   const base = cardBase(element, { 
     ...element.dataset, 
@@ -351,8 +387,45 @@ export function card(element, options = {}) {
     content: initialContent
   });
   
-  // Build standard structure - ALWAYS shows title/subtitle/content/footer
-  base.buildStructure();
+  if (isSemantic) {
+    // Enhance existing structure
+    if (hasHeader) {
+      hasHeader.classList.add('wb-card__header');
+      // Merge styles carefully
+      hasHeader.style.padding = hasHeader.style.padding || '1rem';
+      hasHeader.style.borderBottom = hasHeader.style.borderBottom || '1px solid var(--border-color,#374151)';
+      hasHeader.style.background = hasHeader.style.background || 'var(--bg-tertiary,#1e293b)';
+      
+      // Style headings inside header
+      const headings = hasHeader.querySelectorAll('h1, h2, h3, h4, h5, h6');
+      headings.forEach(h => {
+        h.classList.add('wb-card__title');
+        h.style.margin = h.style.margin || '0';
+        h.style.fontSize = h.style.fontSize || '1.1rem';
+        h.style.fontWeight = h.style.fontWeight || '600';
+        h.style.color = h.style.color || 'var(--text-primary,#f9fafb)';
+      });
+    }
+
+    if (hasMain) {
+      hasMain.classList.add('wb-card__main');
+      hasMain.style.padding = hasMain.style.padding || '1rem';
+      hasMain.style.flex = hasMain.style.flex || '1';
+      hasMain.style.color = hasMain.style.color || 'var(--text-primary,#f9fafb)';
+    }
+
+    if (hasFooter) {
+      hasFooter.classList.add('wb-card__footer');
+      hasFooter.style.padding = hasFooter.style.padding || '0.75rem 1rem';
+      hasFooter.style.borderTop = hasFooter.style.borderTop || '1px solid var(--border-color,#374151)';
+      hasFooter.style.background = hasFooter.style.background || 'var(--bg-tertiary,#1e293b)';
+      hasFooter.style.fontSize = hasFooter.style.fontSize || '0.875rem';
+      hasFooter.style.color = hasFooter.style.color || 'var(--text-secondary,#9ca3af)';
+    }
+  } else {
+    // Build standard structure - ALWAYS shows title/subtitle/content/footer
+    base.buildStructure();
+  }
   
   return base.cleanup;
 }
@@ -747,26 +820,26 @@ export function cardstats(element, options = {}) {
 
   const base = cardBase(element, { ...config, behavior: 'cardstats', hoverable: false });
   element.innerHTML = '';
-  element.style.padding = CARD_PADDING;
+  element.style.padding = 'var(--space-md, 1rem)';
   element.style.flexDirection = 'row';
   element.style.alignItems = 'center';
-  element.style.gap = '1rem';
+  element.style.gap = 'var(--space-md, 1rem)';
 
   if (config.icon) {
     const iconEl = document.createElement('span');
     iconEl.className = 'wb-card__icon';
-    iconEl.style.cssText = 'font-size:2rem;';
+    iconEl.style.cssText = 'font-size:2rem;line-height:1;';
     iconEl.textContent = config.icon;
     element.appendChild(iconEl);
   }
 
   const content = document.createElement('div');
-  content.style.cssText = 'flex:1;min-width:0;';
+  content.style.cssText = 'flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;';
 
   if (config.value) {
     const valueEl = document.createElement('div');
     valueEl.className = 'wb-card__stats-value';
-    valueEl.style.cssText = 'font-size:1.75rem;font-weight:700;color:var(--text-primary,#f9fafb);';
+    valueEl.style.cssText = 'font-size:1.75rem;font-weight:700;color:var(--text-primary,#f9fafb);line-height:1.2;';
     valueEl.textContent = config.value;
     content.appendChild(valueEl);
   }
@@ -774,7 +847,7 @@ export function cardstats(element, options = {}) {
   if (config.label) {
     const labelEl = document.createElement('div');
     labelEl.className = 'wb-card__stats-label';
-    labelEl.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.875rem;';
+    labelEl.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin-top:0.25rem;';
     labelEl.textContent = config.label;
     content.appendChild(labelEl);
   }
@@ -782,9 +855,9 @@ export function cardstats(element, options = {}) {
   if (config.trend && config.trendValue) {
     const trendEl = document.createElement('div');
     trendEl.className = 'wb-card__stats-trend';
-    const trendColor = config.trend === 'up' ? '#22c55e' : config.trend === 'down' ? '#ef4444' : '#6b7280';
+    const trendColor = config.trend === 'up' ? 'var(--success, #22c55e)' : config.trend === 'down' ? 'var(--error, #ef4444)' : 'var(--text-secondary, #6b7280)';
     const trendIcon = config.trend === 'up' ? '↑' : config.trend === 'down' ? '↓' : '→';
-    trendEl.style.cssText = `color:${trendColor};font-size:0.8rem;margin-top:0.25rem;`;
+    trendEl.style.cssText = `color:${trendColor};font-size:0.8rem;margin-top:0.25rem;font-weight:500;`;
     trendEl.textContent = `${trendIcon} ${config.trendValue}`;
     content.appendChild(trendEl);
   }
@@ -883,8 +956,14 @@ export function cardproduct(element, options = {}) {
     rating: options.rating || element.dataset.rating,
     reviews: options.reviews || element.dataset.reviews,
     cta: options.cta || element.dataset.cta || 'Add to Cart',
+    description: options.description || element.dataset.description,
     ...options
   };
+
+  // Map description to subtitle if subtitle is missing, so cardBase picks it up
+  if (config.description && !config.subtitle) {
+    config.subtitle = config.description;
+  }
 
   const base = cardBase(element, { ...config, behavior: 'cardproduct' });
   element.innerHTML = '';
@@ -1013,8 +1092,19 @@ export function cardnotification(element, options = {}) {
   };
 
   const icons = { info: 'ℹ️', success: '✅', warning: '⚠️', error: '❌' };
-  const colors = { info: '#3b82f6', success: '#22c55e', warning: '#f59e0b', error: '#ef4444' };
-  const bgColors = { info: 'rgba(59,130,246,0.15)', success: 'rgba(34,197,94,0.15)', warning: 'rgba(245,158,11,0.15)', error: 'rgba(239,68,68,0.15)' };
+  const colors = { 
+    info: 'var(--info, #3b82f6)', 
+    success: 'var(--success, #22c55e)', 
+    warning: 'var(--warning, #f59e0b)', 
+    error: 'var(--error, #ef4444)' 
+  };
+  // Use CSS variables for backgrounds if possible, or fallback to rgba
+  const bgColors = { 
+    info: 'var(--bg-info-subtle, rgba(59,130,246,0.15))', 
+    success: 'var(--bg-success-subtle, rgba(34,197,94,0.15))', 
+    warning: 'var(--bg-warning-subtle, rgba(245,158,11,0.15))', 
+    error: 'var(--bg-error-subtle, rgba(239,68,68,0.15))' 
+  };
 
   const base = cardBase(element, { ...config, behavior: 'cardnotification', hoverable: false });
   
@@ -1103,7 +1193,7 @@ export function cardfile(element, options = {}) {
   if (config.filename) {
     const nameEl = document.createElement('h3');
     nameEl.className = 'wb-card__filename';
-    nameEl.style.cssText = 'margin:0;font-size:1rem;color:var(--text-primary,#f9fafb);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+    nameEl.style.cssText = 'margin:0;font-size:1rem;color:var(--text-primary,#f9fafb);white-space:normal;word-break:break-word;';
     nameEl.textContent = config.filename;
     info.appendChild(nameEl);
   }
@@ -1144,6 +1234,8 @@ export function cardlink(element, options = {}) {
     target: options.target || element.dataset.target || '_self',
     icon: options.icon || element.dataset.icon,
     description: options.description || element.dataset.description || '',
+    badge: options.badge || element.dataset.badge || '',
+    badgeVariant: options.badgeVariant || element.dataset.badgeVariant || 'glass', // glass, gradient
     ...options
   };
 
@@ -1163,13 +1255,28 @@ export function cardlink(element, options = {}) {
   const titleGroup = document.createElement('div');
   titleGroup.style.cssText = 'flex:1;';
 
-  // Title
-  if (base.config.title) {
-    const titleEl = document.createElement('h3');
-    titleEl.className = 'wb-card__title';
-    titleEl.style.cssText = 'margin:0;font-size:1.1rem;font-weight:600;color:var(--text-primary,#f9fafb);';
-    titleEl.textContent = base.config.title;
-    titleGroup.appendChild(titleEl);
+  // Icon + Title row
+  if (config.icon || base.config.title) {
+    const titleRow = document.createElement('div');
+    titleRow.style.cssText = 'display:flex;align-items:center;gap:0.5rem;';
+    
+    if (config.icon) {
+      const iconEl = document.createElement('span');
+      iconEl.className = 'wb-card__icon';
+      iconEl.style.cssText = 'font-size:1.25rem;line-height:1;';
+      iconEl.textContent = config.icon;
+      titleRow.appendChild(iconEl);
+    }
+    
+    if (base.config.title) {
+      const titleEl = document.createElement('h3');
+      titleEl.className = 'wb-card__title';
+      titleEl.style.cssText = 'margin:0;font-size:1.1rem;font-weight:600;color:var(--text-primary,#f9fafb);';
+      titleEl.textContent = base.config.title;
+      titleRow.appendChild(titleEl);
+    }
+    
+    titleGroup.appendChild(titleRow);
   }
 
   // Description (subtitle or description)
@@ -1180,6 +1287,15 @@ export function cardlink(element, options = {}) {
     descEl.style.cssText = 'margin:0.5rem 0 0;font-size:0.875rem;color:var(--text-secondary,#9ca3af);line-height:1.5;';
     descEl.textContent = desc;
     titleGroup.appendChild(descEl);
+  }
+
+  // Badge
+  if (config.badge) {
+    const badgeEl = document.createElement('span');
+    badgeEl.className = config.badgeVariant === 'gradient' ? 'wb-badge-gradient' : 'wb-tag-glass';
+    badgeEl.style.cssText = 'margin-top:0.75rem;display:inline-block;';
+    badgeEl.textContent = config.badge;
+    titleGroup.appendChild(badgeEl);
   }
 
   headerRow.appendChild(titleGroup);

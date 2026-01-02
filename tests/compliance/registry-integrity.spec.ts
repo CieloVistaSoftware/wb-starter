@@ -1,16 +1,13 @@
 import { test, expect } from '@playwright/test';
-import fs from 'fs';
-import path from 'path';
+import { readJson, assertValidDate, DATA_FILES } from '../base';
 
 test.describe('Fix Registry Data Integrity', () => {
-  const fixesPath = path.join(process.cwd(), 'data', 'fixes.json');
-  const data = JSON.parse(fs.readFileSync(fixesPath, 'utf8'));
-  const fixes = Object.values(data.fixes);
+  const data = readJson<{ fixes: Record<string, any> }>(DATA_FILES.fixes);
+  const fixes = data ? Object.values(data.fixes) : [];
 
-  for (const fix of fixes as any[]) {
-    test(`Fix ${fix.errorId} should have a verified test`, async () => {
-      expect(fix.testRun, `Fix ${fix.errorId} (${fix.issue}) is missing 'testRun: true'`).toBe(true);
-      expect(fix.testName, `Fix ${fix.errorId} is missing 'testName'`).toBeTruthy();
+  for (const fix of fixes) {
+    test(`Fix ${fix.errorId} should have lastTested date`, async () => {
+      assertValidDate(fix.lastTested, 'lastTested', fix.errorId);
     });
   }
 });

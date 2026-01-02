@@ -282,17 +282,27 @@ export function parallax(element, options = {}) {
   const speed = parseFloat(options.speed || element.dataset.speed || '0.5');
   element.classList.add('wb-parallax');
   
+  let ticking = false;
+
   const update = () => {
     const rect = element.getBoundingClientRect();
     const offset = (window.innerHeight - rect.top) * speed * 0.1;
     element.style.transform = `translateY(${offset}px)`;
+    ticking = false;
+  };
+
+  const onScroll = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(update);
+      ticking = true;
+    }
   };
   
-  window.addEventListener('scroll', update);
+  window.addEventListener('scroll', onScroll, { passive: true });
   update();
   
   return () => {
-    window.removeEventListener('scroll', update);
+    window.removeEventListener('scroll', onScroll);
     element.classList.remove('wb-parallax');
   };
 }

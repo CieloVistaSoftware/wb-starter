@@ -1,6 +1,6 @@
 # `<time>` Element
 
-The `<time>` element represents a specific period in time. In WB Behaviors, it's used for timestamps, dates, and durations in cards and content.
+The `<time>` element represents a specific period in time. In Web Behaviors (WB), it's used for timestamps, dates, and durations in cards and content.
 
 ## Semantic Meaning
 

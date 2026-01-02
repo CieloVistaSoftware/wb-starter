@@ -1,7 +1,7 @@
-# Project Architecture (AI-Friendly)
+# Project Architecture<br>(AI-Friendly)
 
 ## Overview
-This project is a modern, config-driven website starter kit built with the WB Behaviors library. It includes a visual page builder and is designed for rapid development, high customizability, and zero build steps. The architecture is modular, declarative, and AI-friendly.
+This project is a modern, config-driven website starter kit built with the Web Behaviors (WB) library (Release 2.0). It includes a visual page builder and is designed for rapid development, high customizability, and zero build steps. The architecture is modular, declarative, and AI-friendly.
 
 ---
 
@@ -25,7 +25,7 @@ This project is a modern, config-driven website starter kit built with the WB Be
 
 - **Config-Driven**: The site is built dynamically from `config/site.json`. Navigation, theme, branding, and layout are all controlled via JSON.
 - **No Build Step**: All code runs natively in the browser using ES Modules. No bundlers or transpilers required.
-- **Auto Injection (Preview)**: Behaviors are automatically attached to standard HTML5 semantic elements (e.g., `<article>` → Card, `<nav>` → Navigation). This replaces the explicit `data-wb` attribute mechanism, enforcing semantic correctness and reducing markup noise.
+- **Auto Injection (Release 2.0)**: Behaviors are automatically attached to standard HTML5 semantic elements (e.g., `<article>` → Card, `<nav>` → Navigation, `<dialog>` → Modal). This is the primary mechanism for applying behaviors, replacing the explicit `data-wb` attribute for standard elements. This enforces semantic correctness and reduces markup noise.
 - **Modular Behaviors**: 230+ behaviors are available, organized by UI, form, animation, layout, and utility. Each is a pure function, not a class or web component.
 - **Visual Builder**: A drag-and-drop interface (`builder.html`) allows users to construct pages visually, which are then saved as JSON or exported as HTML.
 
@@ -35,8 +35,9 @@ This project is a modern, config-driven website starter kit built with the WB Be
 
 - **WB Core (`src/core/wb.js`)**: Core engine for behavior injection, cleanup, and event logging. Exposes `WB.init()` to scan and enhance the DOM.
 - **Behaviors Registry (`src/behaviors/index.js`)**: Imports and registers all available behaviors. Behaviors are lazy-loaded from `src/behaviors/js/`.
-- **Site Engine (`src/core/site-engine.js`)**: Loads config, builds navigation, header, footer, and main content dynamically. Handles routing via URL hash.
+- **Site Engine (`src/core/site-engine.js`)**: Loads config, builds navigation, header, and main content dynamically. Handles routing via URL hash.
 - **Theme Manager (`src/core/theme.js`)**: Manages current theme, persists user preference, and updates the DOM.
+- **Code Theme Manager (`src/behaviors/js/codecontrol.js`)**: A wrapper for highlight.js that manages syntax highlighting themes, providing a UI for selection and persisting user preference via `localStorage`.
 - **Error Logger (`src/core/error-logger.js`)**: Captures runtime errors, logs them to `data/errors.json`, and displays a toast.
 - **Builder Engine (`src/builder/`)**:
   - `index.js`: Entry point for the builder.
@@ -52,7 +53,7 @@ This project is a modern, config-driven website starter kit built with the WB Be
 1. **Startup**: `index.html` loads, imports `src/core/wb.js` and initializes the site engine.
 2. **Config Load**: Site engine fetches `config/site.json` and applies settings.
 3. **Page Render**: Navigation, header, and main content are rendered based on config and current URL hash.
-4. **Auto Injection (Preview)**: `WB.init()` scans the DOM for semantic elements (e.g., `article`, `nav`, `dialog`) and automatically injects the corresponding behaviors.
+4. **Auto Injection**: `WB.init()` scans the DOM for semantic elements (e.g., `article`, `nav`, `dialog`) and automatically injects the corresponding behaviors. Explicit `data-wb` attributes take precedence if present.
 5. **Error Handling**: Global handlers catch exceptions and log them to `data/errors.json` via `/api/save`.
 
 ### Builder Runtime
@@ -158,6 +159,12 @@ This project is a modern, config-driven website starter kit built with the WB Be
 <nav>
   <ul>...</ul>
 </nav>
+
+<!-- Auto-injected Modal Behavior -->
+<dialog>
+  <header><h2>Title</h2></header>
+  <main>Content</main>
+</dialog>
 ```
 
 ---

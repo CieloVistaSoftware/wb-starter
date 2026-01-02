@@ -201,41 +201,28 @@ function getSchemasWithFunctionalTests(): Array<{ file: string; schema: Schema }
 }
 
 /**
- * Build full HTML page with WB behaviors loaded
+ * Setup test container with HTML - uses the same pattern as permutation-compliance.spec.ts
+ * Navigates to index.html first, then injects test HTML via evaluate
  */
-function buildTestPage(setupHtml: string): string {
-  return `<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Functional Test</title>
-  <link rel="stylesheet" href="/src/styles/themes.css">
-  <link rel="stylesheet" href="/styles/site.css">
-  <style>
-    body { padding: 20px; }
-    .test-container { max-width: 800px; margin: 0 auto; }
-  </style>
-</head>
-<body>
-  <div class="test-container">
-    ${setupHtml}
-  </div>
-  <script type="module">
-    import WB from '/src/wb.js';
-    window.WB = WB;
-    WB.init({ debug: false });
-    window.__WB_READY__ = true;
-  </script>
-</body>
-</html>`;
-}
-
-/**
- * Wait for WB to initialize
- */
-async function waitForWB(page: Page): Promise<void> {
-  await page.waitForFunction(() => (window as any).__WB_READY__ === true, { timeout: 5000 });
+async function setupTestPage(page: Page, setupHtml: string): Promise<void> {
+  // Navigate to index.html which has WB loaded
+  await page.goto('index.html');
+  await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 5000 });
+  
+  // Remove any existing test container
+  await page.evaluate(() => {
+    document.getElementById('test-container')?.remove();
+  });
+  
+  // Inject the test HTML and scan it
+  await page.evaluate(async (html: string) => {
+    const container = document.createElement('div');
+    container.id = 'test-container';
+    container.innerHTML = html;
+    document.body.appendChild(container);
+    await (window as any).WB.scan(container);
+  }, setupHtml);
+  
   // Small delay for behavior initialization
   await page.waitForTimeout(100);
 }
@@ -386,9 +373,7 @@ for (const { file, schema } of schemasWithTests) {
       test.describe('buttons', () => {
         for (const btn of functional.buttons!) {
           test(btn.name, async ({ page }) => {
-            const html = buildTestPage(btn.setup);
-            await page.setContent(html);
-            await waitForWB(page);
+            await setupTestPage(page, btn.setup);
             
             const selector = resolveSelector(btn.selector, behavior);
             
@@ -427,9 +412,7 @@ for (const { file, schema } of schemasWithTests) {
       test.describe('interactions', () => {
         for (const interaction of functional.interactions!) {
           test(interaction.name, async ({ page }) => {
-            const html = buildTestPage(interaction.setup);
-            await page.setContent(html);
-            await waitForWB(page);
+            await setupTestPage(page, interaction.setup);
             
             const selector = resolveSelector(interaction.selector, behavior);
             
@@ -483,9 +466,7 @@ for (const { file, schema } of schemasWithTests) {
       test.describe('keyboard', () => {
         for (const kb of functional.keyboard!) {
           test(kb.name, async ({ page }) => {
-            const html = buildTestPage(kb.setup);
-            await page.setContent(html);
-            await waitForWB(page);
+            await setupTestPage(page, kb.setup);
             
             // Handle preconditions (e.g., focus first)
             if (kb.precondition?.focused) {
@@ -535,9 +516,7 @@ for (const { file, schema } of schemasWithTests) {
       test.describe('hover', () => {
         for (const hv of functional.hover!) {
           test(hv.name, async ({ page }) => {
-            const html = buildTestPage(hv.setup);
-            await page.setContent(html);
-            await waitForWB(page);
+            await setupTestPage(page, hv.setup);
             
             const selector = resolveSelector(hv.selector, behavior);
             
@@ -567,9 +546,7 @@ for (const { file, schema } of schemasWithTests) {
       test.describe('visual', () => {
         for (const vis of functional.visual!) {
           test(vis.name, async ({ page }) => {
-            const html = buildTestPage(vis.setup);
-            await page.setContent(html);
-            await waitForWB(page);
+            await setupTestPage(page, vis.setup);
             
             // Perform action if specified
             if (vis.action) {
@@ -613,9 +590,7 @@ for (const { file, schema } of schemasWithTests) {
       test.describe('dismiss', () => {
         for (const dismiss of functional.dismiss!) {
           test(dismiss.name, async ({ page }) => {
-            const html = buildTestPage(dismiss.setup);
-            await page.setContent(html);
-            await waitForWB(page);
+            await setupTestPage(page, dismiss.setup);
             
             const selector = resolveSelector(dismiss.selector, behavior);
             
@@ -646,9 +621,7 @@ for (const { file, schema } of schemasWithTests) {
       test.describe('focus', () => {
         for (const focus of functional.focus!) {
           test(focus.name, async ({ page }) => {
-            const html = buildTestPage(focus.setup);
-            await page.setContent(html);
-            await waitForWB(page);
+            await setupTestPage(page, focus.setup);
             
             if (focus.action === 'click' && focus.selector) {
               const selector = resolveSelector(focus.selector, behavior);
@@ -673,9 +646,7 @@ for (const { file, schema } of schemasWithTests) {
       test.describe('disabled', () => {
         for (const dis of functional.disabled!) {
           test(dis.name, async ({ page }) => {
-            const html = buildTestPage(dis.setup);
-            await page.setContent(html);
-            await waitForWB(page);
+            await setupTestPage(page, dis.setup);
             
             const selector = resolveSelector(dis.selector, behavior);
             
