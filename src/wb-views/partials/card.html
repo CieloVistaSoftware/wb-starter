@@ -1,0 +1,13 @@
+<template wb-part="card">
+  <article class="card">
+    <header class="card__header" wb-if="title">
+      <div class="card__header-content">
+        <h3 class="card__title">{{title}}</h3>
+        <p class="card__subtitle" wb-if="subtitle">{{subtitle}}</p>
+      </div>
+      <span class="card__badge" wb-if="badge">{{badge}}</span>
+    </header>
+    <main class="card__body">{{body}}</main>
+    <footer class="card__footer" wb-if="footer">{{footer}}</footer>
+  </article>
+</template>

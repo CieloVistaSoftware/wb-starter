@@ -49,7 +49,7 @@
   <section id="react-demo">
     <span class="framework-badge badge-react">React</span>
     <h2>React Integration</h2>
-    <p>This button is rendered by React. The <code>data-wb</code> attributes are passed as standard props.</p>
+    <p>This button is rendered by React. The <code>x-*</code> behavior attributes are passed as standard props.</p>
     
     <div id="react-root"></div>
 
@@ -67,7 +67,9 @@
           e('button', {
             key: 'btn',
             className: 'wb-btn-gradient',
-            'data-wb': 'ripple tooltip toast', // WB Behaviors
+            'x-ripple': '',
+            'x-tooltip': '',
+            'x-toast': '',
             'data-tooltip': 'I am a React button!',
             'data-message': `Count is now ${count + 1}`,
             'data-type': 'info',
@@ -82,7 +84,7 @@
 
     <div style="margin-top: 1.5rem;">
       <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
-      <pre data-wb="code" data-language="javascript" data-copy="true"><code>import React, { useState, useEffect } from 'react';
+      <wb-code language="javascript" copy="true"><code>import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import WB from 'wb-behaviors';
 
@@ -101,7 +103,9 @@ function ReactApp() {
     e('button', {
       key: 'btn',
       className: 'wb-btn-gradient',
-      'data-wb': 'ripple tooltip toast', // WB Behaviors
+      'x-ripple': '',
+      'x-tooltip': '',
+      'x-toast': '',
       'data-tooltip': 'I am a React button!',
       'data-message': `Count is now ${count + 1}`,
       'data-type': 'info',
@@ -133,7 +137,7 @@ root.render(e(ReactApp));</code></pre>
         
         <button 
           class="wb-btn-glass"
-          data-wb="ripple tooltip"
+          x-ripple x-tooltip
           :data-tooltip="'Current length: ' + message.length"
           @click="reverseMessage"
         >
@@ -161,7 +165,7 @@ root.render(e(ReactApp));</code></pre>
 
     <div style="margin-top: 1.5rem;">
       <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
-      <pre data-wb="code" data-language="html" data-copy="true"><code>&lt;div id="vue-app"&gt;
+      <wb-code language="html" copy="true"><code>&lt;div id="vue-app"&gt;
   &lt;div style="padding: 1rem; border: 1px dashed #42b883; border-radius: 8px;"&gt;
     &lt;h3&gt;Vue Message: {{ message }}&lt;/h3&gt;
     &lt;input 
@@ -173,7 +177,7 @@ root.render(e(ReactApp));</code></pre>
     
     &lt;button 
       class="wb-btn-glass"
-      data-wb="ripple tooltip"
+      x-ripple x-tooltip
       :data-tooltip="'Current length: ' + message.length"
       @click="reverseMessage"
     &gt;
@@ -213,7 +217,7 @@ root.render(e(ReactApp));</code></pre>
     <p>In Svelte, you just add the attributes to your markup. No special bindings needed.</p>
     <p class="wb-text-secondary" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>Note: This example requires a Svelte build step.</em></p>
     
-    <pre data-wb="code" data-language="html" data-copy="true"><code>&lt;script&gt;
+    <wb-code language="html" copy="true"><code>&lt;script&gt;
   import WB from 'wb-behaviors';
   import { onMount } from 'svelte';
 
@@ -229,7 +233,7 @@ root.render(e(ReactApp));</code></pre>
 
 &lt;button 
   class="wb-btn-gradient"
-  data-wb="ripple tooltip"
+  x-ripple x-tooltip
   data-tooltip="Count: {count}"
   on:click={handleClick}
 &gt;
@@ -244,7 +248,7 @@ root.render(e(ReactApp));</code></pre>
     <p>In Angular, use standard attribute binding. WB behaviors initialize automatically.</p>
     <p class="wb-text-secondary" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>Note: This example requires an Angular build step.</em></p>
     
-    <pre data-wb="code" data-language="typescript" data-copy="true"><code>import { Component, OnInit } from '@angular/core';
+    <wb-code language="typescript" copy="true"><code>import { Component, OnInit } from '@angular/core';
 import WB from 'wb-behaviors';
 
 @Component({
@@ -252,7 +256,7 @@ import WB from 'wb-behaviors';
   template: `
     &lt;button 
       class="wb-btn-gradient"
-      data-wb="ripple tooltip"
+      x-ripple x-tooltip
       [attr.data-tooltip]="'Count: ' + count"
       (click)="increment()"&gt;
       Angular Button
@@ -279,7 +283,7 @@ export class DemoComponent implements OnInit {
     <p>SolidJS uses fine-grained reactivity. Initialize WB in <code>onMount</code>.</p>
     <p class="wb-text-secondary" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>Note: This example requires a SolidJS build step.</em></p>
     
-    <pre data-wb="code" data-language="javascript" data-copy="true"><code>import { createSignal, onMount } from 'solid-js';
+    <wb-code language="javascript" copy="true"><code>import { createSignal, onMount } from 'solid-js';
 import WB from 'wb-behaviors';
 
 function Counter() {
@@ -292,7 +296,7 @@ function Counter() {
   return (
     &lt;button
       class="wb-btn-gradient"
-      data-wb="ripple tooltip"
+      x-ripple x-tooltip
       data-tooltip={`Count: ${count()}`}
       onClick={() => setCount(c => c + 1)}
     &gt;
@@ -314,7 +318,7 @@ function Counter() {
         hx-post="/clicked"
         hx-swap="outerHTML"
         class="wb-btn-gradient"
-        data-wb="ripple tooltip" 
+        x-ripple x-tooltip 
         data-tooltip="I ripple locally, but fetch remotely!"
       >
         Click Me (HTMX)
@@ -334,12 +338,12 @@ function Counter() {
     
     <div style="margin-top: 1.5rem;">
       <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
-      <pre data-wb="code" data-language="html" data-copy="true"><code>&lt;!-- HTMX loads content, WB enhances it --&gt;
+      <wb-code language="html" copy="true"><code>&lt;!-- HTMX loads content, WB enhances it --&gt;
 &lt;button 
   hx-post="/clicked"
   hx-swap="outerHTML"
   class="wb-btn-gradient"
-  data-wb="ripple tooltip" 
+  x-ripple x-tooltip 
   data-tooltip="I ripple locally, but fetch remotely!"
 &gt;
   Click Me

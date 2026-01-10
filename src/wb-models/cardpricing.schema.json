@@ -1,0 +1,288 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cardpricing.schema.json",
+  "title": "Pricing Card",
+  "description": "Pricing tier card with plan name, price, features list, and CTA",
+  
+  "behavior": "cardpricing",
+  "baseClass": "wb-pricing",
+  
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  
+  "properties": {
+    "plan": {
+      "type": "string",
+      "description": "Plan name (e.g., Basic, Pro, Enterprise)",
+      "required": true
+    },
+    "price": {
+      "type": "string",
+      "description": "Price amount (e.g., $29)",
+      "required": true
+    },
+    "period": {
+      "type": "string",
+      "description": "Billing period (e.g., /month, /year)",
+      "default": "/month"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short plan description"
+    },
+    "features": {
+      "type": "string",
+      "description": "Comma-separated list of features"
+    },
+    "cta": {
+      "type": "string",
+      "description": "Call-to-action button text",
+      "default": "Get Started"
+    },
+    "ctaHref": {
+      "type": "string",
+      "description": "Call-to-action link URL",
+      "default": "#"
+    },
+    "featured": {
+      "type": "boolean",
+      "description": "Highlight as featured/recommended plan",
+      "default": false,
+      "appliesClass": "wb-pricing--featured"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual style variant",
+      "enum": ["default", "bordered", "elevated", "minimal"],
+      "default": "default",
+      "appliesClass": "wb-pricing--{{value}}"
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "badge",
+      "tag": "span",
+      "public": true,
+      "content": "Recommended",
+      "createdWhen": "featured",
+      "description": "Featured/recommended badge"
+    },
+    {
+      "name": "header",
+      "tag": "header",
+      "public": true,
+      "required": true,
+      "description": "Plan header with name and price"
+    },
+    {
+      "name": "plan",
+      "tag": "h3",
+      "parent": "header",
+      "public": true,
+      "content": "{{plan}}",
+      "description": "Plan name"
+    },
+    {
+      "name": "price-wrapper",
+      "tag": "div",
+      "parent": "header",
+      "public": false,
+      "description": "Price layout container"
+    },
+    {
+      "name": "price",
+      "tag": "data",
+      "parent": "price-wrapper",
+      "public": true,
+      "content": "{{price}}",
+      "description": "Price amount (semantic data element)"
+    },
+    {
+      "name": "period",
+      "tag": "span",
+      "parent": "price-wrapper",
+      "public": true,
+      "content": "{{period}}",
+      "createdWhen": "period",
+      "description": "Billing period"
+    },
+    {
+      "name": "description",
+      "tag": "p",
+      "parent": "header",
+      "public": true,
+      "content": "{{description}}",
+      "createdWhen": "description",
+      "description": "Plan description"
+    },
+    {
+      "name": "features",
+      "tag": "ul",
+      "public": true,
+      "createdWhen": "features",
+      "description": "Features list"
+    },
+    {
+      "name": "footer",
+      "tag": "footer",
+      "public": true,
+      "required": true,
+      "description": "CTA button container"
+    },
+    {
+      "name": "cta",
+      "tag": "a",
+      "parent": "footer",
+      "public": true,
+      "content": "{{cta}}",
+      "description": "Call-to-action button"
+    }
+  ],
+  
+  "$methods": {
+    "show": {
+      "description": "Shows the pricing card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the pricing card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "setFeatured": {
+      "description": "Sets or removes featured state",
+      "params": ["isFeatured"]
+    },
+    "updatePrice": {
+      "description": "Updates the price and period",
+      "params": ["price", "period"]
+    }
+  },
+  
+  "$cssAPI": {
+    "--wb-pricing-padding": {
+      "default": "1.5rem",
+      "description": "Card padding"
+    },
+    "--wb-pricing-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-pricing-gap": {
+      "default": "1.5rem",
+      "description": "Gap between sections"
+    },
+    "--wb-pricing-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Card background"
+    },
+    "--wb-pricing-border": {
+      "default": "1px solid var(--border-color, #e0e0e0)",
+      "description": "Card border"
+    },
+    "--wb-pricing-plan-size": {
+      "default": "1.25rem",
+      "description": "Plan name font size"
+    },
+    "--wb-pricing-plan-weight": {
+      "default": "600",
+      "description": "Plan name font weight"
+    },
+    "--wb-pricing-price-size": {
+      "default": "2.5rem",
+      "description": "Price font size"
+    },
+    "--wb-pricing-price-weight": {
+      "default": "700",
+      "description": "Price font weight"
+    },
+    "--wb-pricing-price-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Price text color"
+    },
+    "--wb-pricing-period-size": {
+      "default": "0.875rem",
+      "description": "Period font size"
+    },
+    "--wb-pricing-period-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Period text color"
+    },
+    "--wb-pricing-feature-gap": {
+      "default": "0.5rem",
+      "description": "Gap between feature items"
+    },
+    "--wb-pricing-feature-icon": {
+      "default": "'✓'",
+      "description": "Feature list icon (CSS content)"
+    },
+    "--wb-pricing-feature-icon-color": {
+      "default": "var(--success, #4caf50)",
+      "description": "Feature icon color"
+    },
+    "--wb-pricing-cta-bg": {
+      "default": "var(--primary, #6366f1)",
+      "description": "CTA button background"
+    },
+    "--wb-pricing-cta-color": {
+      "default": "#ffffff",
+      "description": "CTA button text color"
+    },
+    "--wb-pricing-cta-padding": {
+      "default": "0.75rem 1.5rem",
+      "description": "CTA button padding"
+    },
+    "--wb-pricing-cta-radius": {
+      "default": "4px",
+      "description": "CTA button border radius"
+    },
+    "--wb-pricing-featured-border": {
+      "default": "2px solid var(--primary, #6366f1)",
+      "description": "Featured card border"
+    },
+    "--wb-pricing-featured-shadow": {
+      "default": "0 8px 24px rgba(99, 102, 241, 0.2)",
+      "description": "Featured card shadow"
+    },
+    "--wb-pricing-badge-bg": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Featured badge background"
+    },
+    "--wb-pricing-badge-color": {
+      "default": "#ffffff",
+      "description": "Featured badge text color"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-pricing plan=\"Basic\" price=\"$9\"></wb-pricing>",
+      "<wb-pricing plan=\"Pro\" price=\"$29\" featured></wb-pricing>",
+      "<wb-pricing plan=\"Pro\" price=\"$29\" features=\"Feature 1,Feature 2,Feature 3\"></wb-pricing>",
+      "<article data-wb=\"cardpricing\" data-plan=\"Basic\" data-price=\"$9\"></article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "plan": "Basic", "price": "$9" },
+        { "plan": "Pro", "price": "$29", "featured": true },
+        { "plan": "Basic", "price": "$9", "period": "/year" },
+        { "plan": "Pro", "price": "$29", "features": "Feature 1,Feature 2" },
+        { "plan": "Pro", "price": "$29", "cta": "Subscribe Now" },
+        { "plan": "Enterprise", "price": "$99", "description": "For large teams", "featured": true }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "cards",
+    "icon": "💰",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

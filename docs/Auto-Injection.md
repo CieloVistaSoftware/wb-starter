@@ -14,11 +14,25 @@ This approach promotes:
 
 ## How It Works
 
-When `WB.init({ autoInject: true })` is called (which is the default in this starter kit), the library scans the DOM for specific tags and injects the corresponding behaviors.
+When `WB.init({ autoInject: true })` is called, the library scans the DOM for specific tags and injects the corresponding behaviors. **Note: `autoInject` is `false` by default** to preserve semantic HTML behavior.
 
 ### Precedence Rule
-**Explicit overrides Implicit.**
-If an element has a `data-wb` attribute (even if empty), Auto Injection is **skipped** for that element. This allows you to opt-out or override the default behavior.
+**Auto Injection is additive.**
+It applies the default behavior for the element type. You can add *additional* behaviors using explicit attributes (like `x-ripple` or `x-as-card`).
+
+If you want to **prevent** Auto Injection for a specific element, you must use the `data-wb-ignore` attribute.
+
+```html
+<!-- This <button> gets 'button' behavior (auto) AND 'ripple' behavior (explicit) -->
+<button x-ripple>Click Me</button>
+
+<!-- This <article> gets 'card' behavior (auto) AND 'hero' behavior (explicit) -->
+<!-- Note: Be careful combining morphing behaviors! -->
+<article x-as-hero>...</article>
+
+<!-- This <nav> will NOT become a WB Navbar -->
+<nav data-wb-ignore>...</nav>
+```
 
 ---
 
@@ -64,15 +78,15 @@ The following HTML elements are automatically mapped to WB behaviors:
 ## Examples
 
 ### 1. Card Component
-**Old Way:**
+**Explicit (Shorthand):**
 ```html
-<div data-wb="card">
-  <div class="wb-card__header">Title</div>
-  <div class="wb-card__main">Content</div>
-</div>
+<article x-as-card>
+  <header><h3>Title</h3></header>
+  <main>Content</main>
+</article>
 ```
 
-**New Way (Auto Injection):**
+**Implicit (Auto Injection):**
 ```html
 <article>
   <header><h3>Title</h3></header>
@@ -81,14 +95,14 @@ The following HTML elements are automatically mapped to WB behaviors:
 ```
 
 ### 2. Navigation Bar
-**Old Way:**
+**Explicit (Shorthand):**
 ```html
-<nav data-wb="navbar">
+<nav x-as-navbar>
   <ul>...</ul>
 </nav>
 ```
 
-**New Way (Auto Injection):**
+**Implicit (Auto Injection):**
 ```html
 <nav>
   <ul>
@@ -99,12 +113,12 @@ The following HTML elements are automatically mapped to WB behaviors:
 ```
 
 ### 3. Modal Dialog
-**Old Way:**
+**Explicit (Shorthand):**
 ```html
-<div data-wb="modal">...</div>
+<dialog x-dialog>...</div>
 ```
 
-**New Way (Auto Injection):**
+**Implicit (Auto Injection):**
 ```html
 <dialog>
   <header>
@@ -119,22 +133,22 @@ The following HTML elements are automatically mapped to WB behaviors:
 
 ## Opting Out
 
-If you want to use a semantic element *without* the WB behavior, simply add an empty `data-wb` attribute.
+If you want to use a semantic element *without* the WB behavior, add the `data-wb-ignore` attribute.
 
 ```html
 <!-- This <nav> will NOT become a WB Navbar -->
-<nav data-wb="">
+<nav data-wb-ignore>
   <a href="#">Just a link</a>
 </nav>
 ```
 
 ## Overriding
 
-If you want to use a semantic element but apply a *different* behavior, specify it in `data-wb`.
+If you want to use a semantic element but apply a *different* behavior, simply use the explicit syntax.
 
 ```html
 <!-- Uses 'hero' behavior instead of 'card' -->
-<article data-wb="hero">
+<article x-as-hero>
   <h1>Welcome</h1>
 </article>
 ```

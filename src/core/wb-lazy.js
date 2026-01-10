@@ -8,28 +8,31 @@
  * @license MIT
  */
 
-import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStats, behaviorModules } from '../behaviors/index.js';
+import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStats, behaviorModules } from '../wb-viewmodels/index.js';
 import { Events } from './events.js';
 import { Theme } from './theme.js';
 import { getConfig, setConfig } from './config.js';
 
 // Auto-injection mappings
 const customElementMappings = [
-  { selector: 'price-card', behavior: 'cardpricing' },
-  { selector: 'product-card', behavior: 'cardproduct' },
-  { selector: 'profile-card', behavior: 'cardprofile' },
-  { selector: 'hero-card', behavior: 'cardhero' },
-  { selector: 'stats-card', behavior: 'cardstats' },
-  { selector: 'testimonial-card', behavior: 'cardtestimonial' },
-  { selector: 'video-card', behavior: 'cardvideo' },
-  { selector: 'file-card', behavior: 'cardfile' },
-  { selector: 'notification-card', behavior: 'cardnotification' },
-  { selector: 'portfolio-card', behavior: 'cardportfolio' },
-  { selector: 'link-card', behavior: 'cardlink' },
-  { selector: 'horizontal-card', behavior: 'cardhorizontal' },
-  { selector: 'basic-card', behavior: 'card' },
-  { selector: 'image-card', behavior: 'cardimage' },
-  { selector: 'overlay-card', behavior: 'cardoverlay' },
+  // Card custom tags (card-* namespace for autocomplete grouping)
+  { selector: 'wb-card', behavior: 'card' },
+  { selector: 'card-basic', behavior: 'card' },
+  { selector: 'card-image', behavior: 'cardimage' },
+  { selector: 'card-video', behavior: 'cardvideo' },
+  { selector: 'card-profile', behavior: 'cardprofile' },
+  { selector: 'card-pricing', behavior: 'cardpricing' },
+  { selector: 'card-product', behavior: 'cardproduct' },
+  { selector: 'card-stats', behavior: 'cardstats' },
+  { selector: 'card-testimonial', behavior: 'cardtestimonial' },
+  { selector: 'card-hero', behavior: 'cardhero' },
+  { selector: 'card-file', behavior: 'cardfile' },
+  { selector: 'card-notification', behavior: 'cardnotification' },
+  { selector: 'card-portfolio', behavior: 'cardportfolio' },
+  { selector: 'card-link', behavior: 'cardlink' },
+  { selector: 'card-horizontal', behavior: 'cardhorizontal' },
+  { selector: 'card-overlay', behavior: 'cardoverlay' },
+  { selector: 'wb-code-card', behavior: 'demo' },
   
   // === NEW LAYOUT MAPPINGS ===
   
@@ -57,6 +60,9 @@ const customElementMappings = [
   { selector: 'wb-sticky', behavior: 'sticky' },
   { selector: 'wb-drawer', behavior: 'drawerLayout' },
   { selector: 'wb-icon', behavior: 'icon' },
+  { selector: 'wb-span', behavior: 'span' },
+  { selector: 'wb-control', behavior: 'control' },
+  { selector: 'wb-repeater', behavior: 'repeater' },
 
   // Interactive Elements
   { selector: 'button-tooltip', behavior: 'tooltip' },
@@ -66,7 +72,29 @@ const customElementMappings = [
   { selector: '[tooltip]', behavior: 'tooltip' },
   { selector: '[toast-message]', behavior: 'toast' },
   { selector: '[ripple]', behavior: 'ripple' },
-  { selector: '[badge]', behavior: 'badge' }
+  { selector: '[x-ripple]', behavior: 'ripple' },
+  { selector: '[badge]', behavior: 'badge' },
+  
+  // Behavior Attributes
+  { selector: '[x-copy]', behavior: 'copy' },
+  { selector: '[x-draggable]', behavior: 'draggable' },
+  { selector: '[x-collapse]', behavior: 'collapse' },
+  { selector: '[x-fadein]', behavior: 'fadein' },
+  { selector: '[x-shake]', behavior: 'shake' },
+  { selector: '[x-confetti]', behavior: 'confetti' },
+  { selector: '[x-form]', behavior: 'form' },
+  { selector: '[x-password]', behavior: 'password' },
+  { selector: '[x-tags]', behavior: 'tags' },
+  { selector: '[x-file]', behavior: 'file' },
+
+  // New Components
+  { selector: 'wb-codecontrol', behavior: 'codecontrol' },
+  { selector: 'wb-collapse', behavior: 'collapse' },
+  { selector: 'wb-darkmode', behavior: 'darkmode' },
+  { selector: 'wb-dropdown', behavior: 'dropdown' },
+  { selector: 'wb-footer', behavior: 'footer' },
+  { selector: 'wb-header', behavior: 'header' },
+  { selector: 'wb-globe', behavior: 'globe' }
 ];
 
 const autoInjectMappings = [
@@ -123,7 +151,7 @@ function getAutoInjectBehaviors(element) {
   if (!getConfig('autoInject')) return behaviors;
   
   // Skip if data-wb is already present (explicit overrides implicit)
-  if (element.hasAttribute('data-wb')) return behaviors;
+  if (element.hasAttribute('x-behavior')) return behaviors;
   
   for (const { selector, behavior } of autoInjectMappings) {
     if (element.matches(selector)) {
@@ -313,12 +341,12 @@ const WB = {
    * @param {HTMLElement} root - Root element to scan (default: document.body)
    */
   async scan(root = document.body) {
-    const elements = root.querySelectorAll('[data-wb]');
+    const elements = root.querySelectorAll('[x-behavior]');
     const injections = [];
 
     elements.forEach(element => {
-      const behaviorList = element.dataset.wb.split(/\s+/).filter(Boolean);
-      const isEager = element.hasAttribute('data-wb-eager');
+      const behaviorList = element.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
+      const isEager = element.hasAttribute('x-eager');
 
       behaviorList.forEach(name => {
         if (isEager) {
@@ -343,7 +371,7 @@ const WB = {
         const autoElements = root.querySelectorAll(selector);
         autoElements.forEach(element => {
           // Skip if data-wb is present (already handled)
-          if (!element.hasAttribute('data-wb')) {
+          if (!element.hasAttribute('x-behavior')) {
             WB.lazyInject(element, behavior);
           }
         });
@@ -374,10 +402,10 @@ const WB = {
         // Handle added nodes
         for (const node of mutation.addedNodes) {
           if (node.nodeType === Node.ELEMENT_NODE) {
-            // Check if node itself has data-wb
-            if (node.dataset?.wb) {
-              const behaviorList = node.dataset.wb.split(/\s+/).filter(Boolean);
-              const isEager = node.hasAttribute('data-wb-eager');
+            // Check if node itself has x-behavior
+            if (node.hasAttribute('x-behavior')) {
+              const behaviorList = node.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
+              const isEager = node.hasAttribute('x-eager');
               behaviorList.forEach(name => {
                 if (isEager) WB.inject(node, name);
                 else WB.lazyInject(node, name);
@@ -390,9 +418,9 @@ const WB = {
 
             // Check descendants
             if (node.hasChildNodes?.()) {
-              node.querySelectorAll?.('[data-wb]').forEach(el => {
-                const behaviorList = el.dataset.wb.split(/\s+/).filter(Boolean);
-                const isEager = el.hasAttribute('data-wb-eager');
+              node.querySelectorAll?.('[x-behavior]').forEach(el => {
+                const behaviorList = el.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
+                const isEager = el.hasAttribute('x-eager');
                 behaviorList.forEach(name => {
                   if (isEager) WB.inject(el, name);
                   else WB.lazyInject(el, name);
@@ -413,7 +441,7 @@ const WB = {
             if (getConfig('autoInject') && node.hasChildNodes?.()) {
               autoInjectMappings.forEach(({ selector, behavior }) => {
                 node.querySelectorAll?.(selector).forEach(el => {
-                  if (!el.hasAttribute('data-wb')) {
+                  if (!el.hasAttribute('x-behavior')) {
                     WB.lazyInject(el, behavior);
                   }
                 });
@@ -422,11 +450,11 @@ const WB = {
           }
         }
 
-        // Handle attribute changes on data-wb
-        if (mutation.type === 'attributes' && mutation.attributeName === 'data-wb') {
+        // Handle attribute changes on x-behavior
+        if (mutation.type === 'attributes' && mutation.attributeName === 'x-behavior') {
           const element = mutation.target;
-          const behaviorList = element.dataset.wb?.split(/\s+/).filter(Boolean) || [];
-          const isEager = element.hasAttribute('data-wb-eager');
+          const behaviorList = element.getAttribute('x-behavior')?.split(/\s+/).filter(Boolean) || [];
+          const isEager = element.hasAttribute('x-eager');
           
           // Remove behaviors no longer in list
           const current = applied.get(element) || [];
@@ -449,7 +477,7 @@ const WB = {
       childList: true,
       subtree: true,
       attributes: true,
-      attributeFilter: ['data-wb']
+      attributeFilter: ['x-behavior']
     });
 
     WB._observer = observer;
@@ -619,7 +647,7 @@ const WB = {
     }
     
     if (behaviors.length > 0) {
-      el.dataset.wb = behaviors.join(' ');
+      el.setAttribute('x-behavior', behaviors.join(' '));
     }
 
     // 5. Apply ID and Classes

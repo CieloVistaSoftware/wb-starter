@@ -1,0 +1,112 @@
+<!-- 
+  CONTACT PAGE STUB
+  =================
+  Edit this page for your contact information.
+  
+  Suggested sections:
+  - Contact form
+  - Contact info cards
+  - Map embed
+  - FAQ
+-->
+
+<section class="page-header" style="text-align: center; padding: 3rem 2rem;">
+  <h1>Contact Us</h1>
+  <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+    Have questions? We'd love to hear from you.
+  </p>
+</section>
+
+<section class="contact-content" style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+    
+    <!-- Contact Form -->
+    <div>
+      <h2>Send a Message</h2>
+      <form style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <label style="display: block; margin-bottom: 0.5rem;">Name</label>
+          <wb-input placeholder="Your name" style="width: 100%;"></wb-input>
+        </div>
+        <div>
+          <label style="display: block; margin-bottom: 0.5rem;">Email</label>
+          <wb-input type="email" placeholder="your@email.com" style="width: 100%;"></wb-input>
+        </div>
+        <div>
+          <label style="display: block; margin-bottom: 0.5rem;">Subject</label>
+          <wb-select style="width: 100%;">
+            <option>General Inquiry</option>
+            <option>Sales</option>
+            <option>Support</option>
+            <option>Partnership</option>
+          </wb-select>
+        </div>
+        <div>
+          <label style="display: block; margin-bottom: 0.5rem;">Message</label>
+          <wb-textarea placeholder="How can we help?" rows="5" style="width: 100%;"></wb-textarea>
+        </div>
+        <wb-button variant="gradient" type="submit">Send Message</wb-button>
+      </form>
+    </div>
+    
+    <!-- Contact Info -->
+    <div>
+      <h2>Get in Touch</h2>
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <wb-card variant="glass">
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <div style="font-size: 1.5rem;">📍</div>
+            <div>
+              <h3 style="margin: 0;">Address</h3>
+              <p style="margin: 0; color: var(--text-secondary);">
+                123 Business Street<br>
+                Suite 100<br>
+                City, State 12345
+              </p>
+            </div>
+          </div>
+        </wb-card>
+        
+        <wb-card variant="glass">
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <div style="font-size: 1.5rem;">📧</div>
+            <div>
+              <h3 style="margin: 0;">Email</h3>
+              <p style="margin: 0; color: var(--text-secondary);">
+                hello@yourcompany.com
+              </p>
+            </div>
+          </div>
+        </wb-card>
+        
+        <wb-card variant="glass">
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <div style="font-size: 1.5rem;">📞</div>
+            <div>
+              <h3 style="margin: 0;">Phone</h3>
+              <p style="margin: 0; color: var(--text-secondary);">
+                +1 (555) 123-4567
+              </p>
+            </div>
+          </div>
+        </wb-card>
+        
+        <wb-card variant="glass">
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <div style="font-size: 1.5rem;">🕐</div>
+            <div>
+              <h3 style="margin: 0;">Hours</h3>
+              <p style="margin: 0; color: var(--text-secondary);">
+                Monday - Friday: 9am - 5pm<br>
+                Saturday - Sunday: Closed
+              </p>
+            </div>
+          </div>
+        </wb-card>
+        
+      </div>
+    </div>
+    
+  </div>
+</section>

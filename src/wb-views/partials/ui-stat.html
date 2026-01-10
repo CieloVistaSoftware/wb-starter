@@ -1,0 +1,12 @@
+<div class="wb-stat" style="display:flex;flex-direction:column;gap:0.25rem">
+  <div class="wb-stat__label" style="color:var(--text-secondary, #9ca3af);font-size:0.875rem;display:flex;align-items:center;gap:0.5rem;">
+    <span wb-if="icon">{{icon}}</span>
+    {{label}}
+  </div>
+  <div class="wb-stat__value" style="color:var(--text-primary, #f9fafb);font-size:1.5rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;">
+    {{value}}
+    <span wb-if="trend" style="color:{{trend == 'up' ? 'var(--success, #22c55e)' : 'var(--error, #ef4444)'}};font-size:0.875rem;">
+      {{trend == 'up' ? '↑' : '↓'}}
+    </span>
+  </div>
+</div>

@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WB Models Index",
+  "description": "Index of all component schemas for MVVM architecture (v3.0)",
+  "version": "3.0.0",
+  "updated": "2026-01-05",
+  
+  "schemas": [
+    "alert.schema.json",
+    "audio.schema.json",
+    "avatar.schema.json",
+    "badge.schema.json",
+    "button.schema.json",
+    "card.schema.json",
+    "cardbutton.schema.json",
+    "carddraggable.schema.json",
+    "cardexpandable.schema.json",
+    "cardfile.schema.json",
+
+    "cardhorizontal.schema.json",
+    "cardimage.schema.json",
+    "cardlink.schema.json",
+    "cardminimizable.schema.json",
+    "cardnotification.schema.json",
+    "cardoverlay.schema.json",
+    "cardportfolio.schema.json",
+    "cardpricing.schema.json",
+    "cardproduct.schema.json",
+    "cardprofile.schema.json",
+    "cardstats.schema.json",
+    "cardtestimonial.schema.json",
+    "cardvideo.schema.json",
+    "checkbox.schema.json",
+    "chip.schema.json",
+    "confetti.schema.json",
+    "details.schema.json",
+    "dialog.schema.json",
+    "drawer.schema.json",
+    "drawerLayout.schema.json",
+    "dropdown.schema.json",
+    "fireworks.schema.json",
+    "footer.schema.json",
+    "header.schema.json",
+    "input.schema.json",
+    "navbar.schema.json",
+    "notes.schema.json",
+    "progress.schema.json",
+    "rating.schema.json",
+    "ripple.schema.json",
+    "scrollalong.schema.json",
+    "select.schema.json",
+    "skeleton.schema.json",
+    "snow.schema.json",
+    "spinner.schema.json",
+    "sticky.schema.json",
+    "switch.schema.json",
+    "table.schema.json",
+    "tabs.schema.json",
+    "textarea.schema.json",
+    "toast.schema.json",
+    "tooltip.schema.json"
+  ],
+  
+  "categories": {
+    "cards": {
+      "description": "Card-based content components",
+      "count": 19,
+      "schemas": [
+        "card.schema.json",
+        "cardbutton.schema.json",
+        "carddraggable.schema.json",
+        "cardexpandable.schema.json",
+        "cardfile.schema.json",
+        "cardhorizontal.schema.json",
+        "cardimage.schema.json",
+        "cardlink.schema.json",
+        "cardminimizable.schema.json",
+        "cardnotification.schema.json",
+        "cardoverlay.schema.json",
+        "cardportfolio.schema.json",
+        "cardpricing.schema.json",
+        "cardproduct.schema.json",
+        "cardprofile.schema.json",
+        "cardstats.schema.json",
+        "cardtestimonial.schema.json",
+        "cardvideo.schema.json"
+      ]
+    },
+    "forms": {
+      "description": "Form input and control components",
+      "count": 6,
+      "schemas": [
+        "button.schema.json",
+        "checkbox.schema.json",
+        "input.schema.json",
+        "select.schema.json",
+        "switch.schema.json",
+        "textarea.schema.json"
+      ]
+    },
+    "feedback": {
+      "description": "User feedback and notification components",
+      "count": 10,
+      "schemas": [
+        "alert.schema.json",
+        "avatar.schema.json",
+        "badge.schema.json",
+        "chip.schema.json",
+        "progress.schema.json",
+        "rating.schema.json",
+        "skeleton.schema.json",
+        "spinner.schema.json",
+        "toast.schema.json",
+        "tooltip.schema.json"
+      ]
+    },
+    "overlay": {
+      "description": "Overlay and modal components",
+      "count": 3,
+      "schemas": [
+        "dialog.schema.json",
+        "drawer.schema.json",
+        "dropdown.schema.json"
+      ]
+    },
+    "navigation": {
+      "description": "Navigation and layout components",
+      "count": 2,
+      "schemas": [
+        "navbar.schema.json",
+        "tabs.schema.json"
+      ]
+    },
+    "layout": {
+      "description": "Layout and structural components",
+      "count": 7,
+      "schemas": [
+        "details.schema.json",
+        "drawerLayout.schema.json",
+        "footer.schema.json",
+        "header.schema.json",
+        "scrollalong.schema.json",
+        "sticky.schema.json",
+        "table.schema.json"
+      ]
+    },
+    "effects": {
+      "description": "Visual effect components",
+      "count": 4,
+      "schemas": [
+        "confetti.schema.json",
+        "fireworks.schema.json",
+        "ripple.schema.json",
+        "snow.schema.json"
+      ]
+    },
+    "media": {
+      "description": "Media playback components",
+      "count": 1,
+      "schemas": [
+        "audio.schema.json"
+      ]
+    },
+    "utility": {
+      "description": "Utility components",
+      "count": 1,
+      "schemas": [
+        "notes.schema.json"
+      ]
+    }
+  },
+  
+  "meta": {
+    "description": "Meta/system schemas (not components)",
+    "schemas": [
+      "behavior.schema.json",
+      "behaviors-showcase.schema.json",
+      "builder.schema.json",
+      "card.base.schema.json",
+      "demo.schema.json",
+      "views.schema.json"
+    ]
+  },
+  
+  "stats": {
+    "totalComponents": 53,
+    "v3Converted": 53,
+    "migrationComplete": true
+  }
+}

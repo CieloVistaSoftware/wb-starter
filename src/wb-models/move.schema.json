@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "move.schema.json",
+  "title": "Move",
+  "behavior": "move",
+  "description": "Animation behavior to move elements.",
+  "properties": {}
+}

@@ -1,6 +1,6 @@
 # Performance Improvement Plan
 
-This document tracks the performance optimization strategy and the work completed to improve the WB Starter kit.
+This document tracks the performance optimization strategy and the work completed to improve the Web Behaviors (WB) Starter kit.
 
 ## Strategy
 

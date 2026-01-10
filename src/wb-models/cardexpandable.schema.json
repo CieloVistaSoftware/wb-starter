@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cardexpandable.schema.json",
+  "title": "Expandable Card",
+  "description": "Card with collapsible/expandable content section",
+  
+  "behavior": "cardexpandable",
+  "baseClass": "wb-card-expandable",
+  
+  "semanticElement": { "tagName": "article", "implicitRole": "article" },
+  
+  "properties": {
+    "title": { "type": "string", "description": "Card title", "required": true },
+    "content": { "type": "string", "description": "Expandable content" },
+    "expanded": { "type": "boolean", "description": "Initial expanded state", "default": false, "appliesClass": "wb-card-expandable--expanded" },
+    "maxHeight": { "type": "string", "description": "Max height when collapsed", "default": "100px" },
+    "variant": { "type": "string", "enum": ["default", "elevated", "bordered"], "default": "default", "appliesClass": "wb-card-expandable--{{value}}" }
+  },
+  
+  "$view": [
+    { "name": "header", "tag": "header", "public": true, "required": true, "description": "Card header" },
+    { "name": "title", "tag": "h3", "parent": "header", "public": true, "content": "{{title}}", "description": "Card title" },
+    { "name": "content", "tag": "main", "public": true, "required": true, "content": "{{content}}{{body}}", "description": "Expandable content area" },
+    { "name": "footer", "tag": "footer", "public": true, "required": true, "description": "Expand button container" },
+    { "name": "expand-btn", "tag": "button", "parent": "footer", "public": true, "description": "Expand/collapse toggle button" },
+    { "name": "expand-icon", "tag": "span", "parent": "expand-btn", "public": false, "description": "Toggle icon" },
+    { "name": "expand-text", "tag": "span", "parent": "expand-btn", "public": true, "description": "Toggle button text" }
+  ],
+  
+  "$methods": {
+    "expand": { "description": "Expands the card", "params": [] },
+    "collapse": { "description": "Collapses the card", "params": [] },
+    "toggle": { "description": "Toggles expanded state", "params": [] },
+    "isExpanded": { "description": "Returns expanded state", "params": [], "returns": "boolean" }
+  },
+  
+  "$cssAPI": {
+    "--wb-card-expandable-padding": { "default": "1rem", "description": "Card padding" },
+    "--wb-card-expandable-radius": { "default": "8px", "description": "Border radius" },
+    "--wb-card-expandable-max-height": { "default": "100px", "description": "Collapsed max height" },
+    "--wb-card-expandable-transition": { "default": "max-height 0.3s ease", "description": "Expand transition" },
+    "--wb-card-expandable-btn-color": { "default": "var(--primary, #6366f1)", "description": "Button color" }
+  },
+  
+  "events": {
+    "wb:expandable:toggle": { "description": "Fired on expand/collapse", "detail": { "expanded": "boolean" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-card-expandable title=\"Details\">Content here</wb-card-expandable>",
+      "<article data-wb=\"cardexpandable\" data-title=\"Test\" data-expanded>Content</article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "title": "Basic", "content": "Content" },
+        { "title": "Expanded", "content": "Content", "expanded": true },
+        { "title": "Custom", "content": "Content", "maxHeight": "150px" }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "cards", "icon": "➕", "since": "1.0.0", "status": "stable" }
+}

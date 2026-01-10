@@ -1,0 +1,59 @@
+{
+  "site": {
+    "name": "Your SaaS Name",
+    "tagline": "The best solution for your needs",
+    "logo": "<span style='font-weight: bold; font-size: 1.5rem;'>🚀 YourBrand</span>",
+    "favicon": "images/favicon.png",
+    "theme": "dark",
+    "version": "1.0.0",
+    "autoInject": false
+  },
+  
+  "nav": [
+    { "id": "home", "label": "Home", "icon": "🏠", "page": "home" },
+    { "id": "features", "label": "Features", "icon": "✨", "page": "features" },
+    { "id": "pricing", "label": "Pricing", "icon": "💰", "page": "pricing" },
+    { "id": "about", "label": "About", "icon": "ℹ️", "page": "about" },
+    { "id": "blog", "label": "Blog", "icon": "📝", "page": "blog" },
+    { "id": "contact", "label": "Contact", "icon": "📧", "page": "contact" }
+  ],
+  
+  "header": {
+    "showLogo": true,
+    "showThemeSwitcher": true,
+    "showSearch": false,
+    "sticky": true,
+    "cta": {
+      "label": "Sign Up",
+      "href": "?page=signup",
+      "variant": "primary"
+    }
+  },
+  
+  "footer": {
+    "copyright": "© 2025 Your Company. All rights reserved.",
+    "showSocial": true,
+    "social": [
+      { "name": "GitHub", "icon": "🐙", "url": "https://github.com" },
+      { "name": "Twitter", "icon": "🐦", "url": "https://twitter.com" },
+      { "name": "LinkedIn", "icon": "💼", "url": "https://linkedin.com" }
+    ],
+    "links": [
+      { "label": "Privacy Policy", "page": "privacy" },
+      { "label": "Terms of Service", "page": "terms" }
+    ]
+  },
+  
+  "layout": {
+    "navPosition": "left",
+    "navWidth": "fit-content",
+    "navCollapsible": true,
+    "navDefaultCollapsed": false
+  },
+  
+  "seo": {
+    "title": "Your SaaS - Tagline Here",
+    "description": "Description of your product or service",
+    "keywords": ["saas", "product", "service"]
+  }
+}

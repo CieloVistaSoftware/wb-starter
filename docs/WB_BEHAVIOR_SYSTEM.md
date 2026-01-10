@@ -1,4 +1,5 @@
-# WB Behavior System - Technical Workflow
+# Web Behaviors (WB) Behavior System - Technical Workflow
+[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/WB_BEHAVIOR_SYSTEM.md)
 
 ## Overview
 
@@ -110,19 +111,21 @@ export function button(element, options = {}) {
 
 ### 1. HTML Declaration
 
-Mark elements with `data-wb` attribute:
+Use standard semantic HTML elements (Auto-Inject):
 
 ```html
-<!-- Single behavior -->
-<button data-wb="button" data-variant="primary">Click me</button>
-
-<!-- Multiple behaviors (space-separated) -->
-<button data-wb="button ripple tooltip" data-tooltip="Hello!">Hover</button>
-
 <!-- Semantic behaviors on native elements -->
-<img data-wb="img" data-lazy data-zoomable src="photo.jpg" alt="Photo">
-<form data-wb="form" data-ajax data-validate>...</form>
-<video data-wb="video" data-controls data-autoplay>...</video>
+<button data-variant="primary">Click me</button>
+<img data-lazy data-zoomable src="photo.jpg" alt="Photo">
+<form data-ajax data-validate>...</form>
+<video controls autoplay>...</video>
+```
+
+Or use `data-wb` for explicit behavior injection (Legacy/Override):
+
+```html
+<!-- Multiple behaviors (space-separated) -->
+<button data-wb="ripple tooltip" data-tooltip="Hello!">Hover</button>
 ```
 
 **From `src/site-engine.js:95`:**
@@ -157,12 +160,12 @@ This triggers:
 
 ### 3. WB.scan() - Discovery
 
-Finds and processes all elements with `data-wb`:
+Finds and processes all elements with `data-wb` AND auto-injects behaviors on semantic tags (if enabled):
 
 **From `src/wb.js:112-124`:**
 ```javascript
 scan(root = document.body) {
-  // Find all elements with data-wb attribute
+  // 1. Find all elements with data-wb attribute
   const elements = root.querySelectorAll('[data-wb]');
 
   elements.forEach(element => {
@@ -174,6 +177,19 @@ scan(root = document.body) {
       WB.inject(element, name);  // <-- Calls the behavior!
     });
   });
+
+  // 2. Auto-inject scan (if enabled)
+  if (getConfig('autoInject')) {
+    autoInjectMappings.forEach(({ selector, behavior }) => {
+      const autoElements = root.querySelectorAll(selector);
+      autoElements.forEach(element => {
+        // Skip if data-wb is present (already handled) or ignored
+        if (!element.hasAttribute('data-wb') && !element.hasAttribute('data-wb-ignore')) {
+          WB.inject(element, behavior);
+        }
+      });
+    });
+  }
 
   Events.log('info', 'wb', `Scanned: ${elements.length} elements`);
 }
@@ -278,15 +294,15 @@ observe(root = document.body) {
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ HTML: <button data-wb="button" data-variant="primary"> │
+│ HTML: <button data-variant="primary">                   │
 └─────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────┐
-│ Page Load → WB.init()                                   │
+│ Page Load → WB.init({ autoInject: true })               │
 └─────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────┐
-│ WB.scan() finds all [data-wb] elements                  │
+│ WB.scan() finds semantic elements (e.g. <button>)       │
 └─────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────┐
@@ -314,6 +330,39 @@ observe(root = document.body) {
 
 ---
 
+## Auto-Injection System
+
+### Overview
+
+The Auto-Injection system allows standard HTML5 semantic elements to automatically receive behaviors without explicit `data-wb` attributes. This feature was introduced to reduce markup verbosity and promote semantic HTML.
+
+### Why It Was Done & Benefits
+
+1.  **Cleaner Markup**: Removes the need to add `data-wb="card"` or `data-wb="navbar"` to every element. Your HTML looks like standard HTML.
+2.  **Semantic Correctness**: Encourages developers to use proper tags like `<article>`, `<nav>`, `<dialog>`, etc., instead of generic `<div>`s.
+3.  **Accessibility**: By targeting semantic elements, we ensure that the underlying markup is accessible by default, even before behaviors enhance it.
+4.  **Portability**: The HTML remains standard and portable. If the JS library is removed, the content structure remains valid and meaningful.
+
+### How It Works
+
+When `WB.init({ autoInject: true })` is called:
+1.  **Mapping**: The system uses a predefined map of selectors to behaviors (e.g., `article` -> `card`, `nav` -> `navbar`).
+2.  **Scanning**: During `WB.scan()`, it queries for these selectors.
+3.  **Precedence**: Explicit `data-wb` attributes **always** take precedence. If an element has `data-wb` (even empty), auto-injection is skipped.
+4.  **Opt-Out**: You can prevent auto-injection on a specific element by adding `data-wb-ignore` or an empty `data-wb=""`.
+
+**Example Mapping:**
+```javascript
+const autoInjectMappings = [
+  { selector: 'article', behavior: 'card' },
+  { selector: 'nav', behavior: 'navbar' },
+  { selector: 'dialog', behavior: 'dialog' },
+  // ...
+];
+```
+
+---
+
 ## HTML Declaration Pattern
 
 ### Data Attributes as Configuration
@@ -322,7 +371,7 @@ All behavior options can be set via `data-*` attributes:
 
 ```html
 <button
-  data-wb="button"
+
   data-variant="primary"
   data-size="lg"
   data-icon="→"
@@ -784,10 +833,10 @@ if (element.dataset.wbReady === 'behaviorName') {
 ### 6. Use Semantic HTML
 
 ```javascript
-// ✅ Good - Enhance native elements
-<button data-wb="button">Click</button>
-<img data-wb="img" src="...">
-<form data-wb="form">...</form>
+// ✅ Good - Enhance native elements (Auto-Inject)
+<button>Click</button>
+<img src="...">
+<form>...</form>
 
 // ❌ Bad - Generic divs everywhere
 <div data-wb="button">Click</div>

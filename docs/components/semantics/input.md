@@ -13,10 +13,10 @@ The `input` component enhances the standard `<input>` field by wrapping it in a 
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="input"` to an `<input>` element.
+The `input` behavior is automatically injected into `<input>` elements.
 
 ```html
-<input data-wb="input" type="text" placeholder="Enter text...">
+<input type="text" placeholder="Enter text...">
 ```
 
 ### Configuration Options
@@ -34,7 +34,6 @@ A search input with a search icon and a clear button.
 
 ```html
 <input 
-  data-wb="input" 
   type="text" 
   placeholder="Search..." 
   data-prefix="🔍" 
@@ -46,7 +45,6 @@ An input formatted for currency entry.
 
 ```html
 <input 
-  data-wb="input" 
   type="number" 
   data-prefix="$" 
   data-suffix="USD">

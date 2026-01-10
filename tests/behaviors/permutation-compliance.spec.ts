@@ -17,7 +17,7 @@ import * as path from 'path';
  * - API methods work correctly
  */
 
-const SCHEMA_DIR = path.join(process.cwd(), 'src/behaviors/schema');
+const SCHEMA_DIR = path.join(process.cwd(), 'src/wb-models');
 
 interface Schema {
   title: string;
@@ -295,7 +295,11 @@ async function runAssertions(page: Page, element: Locator, assertions: Assertion
   
   for (const [check, expected] of Object.entries(assertions.checks)) {
     try {
-      const selector = assertions.selector === 'element' ? element : element.locator(assertions.selector || '*').first();
+      // Handle empty or 'element' selector - use the element itself
+      const selectorValue = assertions.selector && assertions.selector !== '' && assertions.selector !== 'element' 
+        ? assertions.selector 
+        : null;
+      const selector = selectorValue ? element.locator(selectorValue).first() : element;
       
       switch (check) {
         case 'exists':

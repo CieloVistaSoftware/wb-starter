@@ -1,0 +1,41 @@
+<wb-hero class="wb-hero wb-hero--{{variant}}" data-variant="{{variant}}" data-video="{{video}}"
+  <!-- Backgrounds -->
+  <div wb-if="background" class="wb-hero__bg" style="background-image: url('{{background}}');"></div>
+  
+  <!-- Effect Containers -->
+  <div wb-if="variant == 'video'" class="wb-hero__video-container"></div>
+  <div wb-if="variant == 'particles'" class="wb-hero__stars"></div>
+  <div wb-if="variant == 'waves'" class="wb-hero__waves"></div>
+  <div wb-if="variant == 'aurora'" class="wb-hero__aurora"></div>
+  <div wb-if="variant == 'grid'" class="wb-hero__grid">
+    <div class="wb-hero__grid-glow"></div>
+    <div class="wb-hero__horizon"></div>
+  </div>
+  <div wb-if="variant == 'cosmic'" class="wb-hero__cosmic">
+     <div class="wb-orb wb-orb--cosmic" style="width:500px;height:500px;top:20%;left:10%;"></div>
+     <div class="wb-orb wb-orb--cosmic" style="width:300px;height:300px;bottom:10%;right:10%;animation-delay:-5s;"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="wb-hero__content">
+    <!-- Split Layout Visual -->
+    <div wb-if="variant == 'split'" class="wb-hero__visual">
+      <img src="{{image}}" alt="Hero visual">
+    </div>
+
+    <!-- Text Content -->
+    <div class="wb-hero__text">
+      <span wb-if="badge" class="wb-badge-gradient" style="margin-bottom: 1.5rem; {{badgeColor ? 'background:' + badgeColor : ''}}">{{badge}}</span>
+      
+      <h1 class="wb-hero__title">
+        <span class="wb-gradient-text">{{title}}</span>
+      </h1>
+      
+      <p wb-if="subtitle" class="wb-hero__subtitle">{{subtitle}}</p>
+      
+      <a wb-if="cta" href="{{ctaHref || '#'}}" class="wb-btn-gradient">
+        <span style="position:relative;z-index:1;">{{cta}}</span>
+      </a>
+    </div>
+  </div>
+</div>

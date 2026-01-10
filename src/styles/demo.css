@@ -447,7 +447,7 @@ input, select, textarea {
   font-size: 0.75rem; 
 }
 
-.wb-code { 
+.x-code { 
   background: var(--bg-tertiary); 
   padding: 0.75rem; 
   border-radius: 6px; 

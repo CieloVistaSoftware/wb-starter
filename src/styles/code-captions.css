@@ -1,0 +1,26 @@
+/* =============================================================================
+   CODE CAPTIONS (MDHTML)
+   ============================================================================= */
+.code-wrapper {
+  width: fit-content;
+  min-width: 50%;
+  margin: 0 auto 1.5rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.code-wrapper pre {
+  margin: 0 !important;
+  width: 100%;
+  min-width: 100%;
+}
+
+.code-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  align-self: flex-end;
+  opacity: 0.6;
+}

@@ -13,10 +13,10 @@ The `figure` component upgrades the standard `<figure>` and `<figcaption>` eleme
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="figure"` to a `<figure>` element containing an image.
+The `figure` behavior is automatically injected into `<figure>` elements.
 
 ```html
-<figure data-wb="figure">
+<figure>
   <img src="image.jpg" alt="View">
   <figcaption>A beautiful view</figcaption>
 </figure>
@@ -37,7 +37,6 @@ An image that zooms on hover and opens in a lightbox.
 
 ```html
 <figure 
-  data-wb="figure" 
   data-lightbox="true" 
   data-zoom="true">
   <img src="photo.jpg" alt="Photo">
@@ -50,7 +49,6 @@ A card-like figure with text overlay.
 
 ```html
 <figure 
-  data-wb="figure" 
   data-caption-position="overlay">
   <img src="card-bg.jpg" alt="Background">
   <figcaption>Title Text</figcaption>

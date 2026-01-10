@@ -1,0 +1,111 @@
+        body { 
+            padding: 2rem; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+        }
+        h1 { margin-bottom: 0.5rem; }
+        .subtitle { color: var(--text-secondary); margin-bottom: 3rem; font-size: 1.2rem; }
+        
+        h2 { 
+            margin-top: 4rem; 
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem; 
+            border-bottom: 1px solid var(--border-color); 
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        wb-code-card, .demo-block {
+            margin-bottom: 2rem;
+            display: block; /* Ensure custom element is block */
+        }
+
+        .demo-tag { 
+            font-family: monospace; 
+            background: rgba(0,0,0,0.2); 
+            padding: 0.2rem 0.5rem; 
+            border-radius: 4px; 
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .demo-content {
+            /* padding handled by card main */
+            position: relative;
+        }
+
+        /* Target pre inside footer */
+        wb-code-card footer pre, .demo-block footer pre {
+            background: #1e1e1e;
+            padding: 1rem;
+            overflow-x: auto;
+            /* border-top handled by footer */
+            display: none; /* Hidden by default, toggled */
+            margin: 0;
+        }
+        
+        wb-code-card footer pre.visible, .demo-block footer pre.visible { display: block; }
+
+        code { font-family: "Fira Code", monospace; font-size: 0.9rem; color: #d4d4d4; }
+
+        /* Toggle button styles handled by inline styles or button component */
+
+        /* Demo Helpers */
+        .box {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold;
+            min-width: 60px;
+            min-height: 60px;
+        }
+        .box-outline {
+            border: 2px dashed var(--border-color);
+            padding: 1rem;
+            border-radius: 4px;
+            background: var(--bg-secondary);
+        }
+
+        /* Header Styles */
+        /* .page-header styles removed as we now use */
+        
+        /* Notes Hint */
+        .notes-hint {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Layout Demo Helpers */
+        .demo-content--no-padding { padding: 0; }
+        .box--span-2 { grid-column: span 2; }
+        .box--fixed { width: 120px; }
+        .box--grow { flex: 1; }
+
+        /* Sidebar Demo */
+        .sidebar-container {
+            border: 1px solid var(--border-color);
+            height: 300px;
+            overflow: hidden;
+        }
+        .sidebar-menu {
+            background: var(--bg-tertiary);
+            height: 100%;
+            padding: 1rem;
+        }
+        .sidebar-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+        .sidebar-item { padding: 0.5rem 0; }
+        .sidebar-main {
+            padding: 2rem;
+            background: var(--bg-primary);
+        }

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hero.schema.json",
+  "title": "Hero",
+  "behavior": "hero",
+  "description": "Hero section behavior.",
+  "properties": {
+      "variant": { "type": "string", "enum": ["default", "cosmic"] }
+  }
+}

@@ -1,0 +1,318 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "toast.schema.json",
+  "title": "Toast",
+  "description": "Toast notification system for temporary messages",
+  
+  "behavior": "toast",
+  "baseClass": "wb-toast",
+  
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "alert"
+  },
+  
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Toast notification message",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "description": "Toast title (optional)"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Toast severity/type",
+      "enum": ["info", "success", "warning", "error"],
+      "default": "info",
+      "appliesClass": "wb-toast--{{value}}"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon (emoji or icon name)"
+    },
+    "duration": {
+      "type": "number",
+      "description": "Auto-dismiss duration in milliseconds (0 = no auto-dismiss)",
+      "default": 3000,
+      "minimum": 0,
+      "maximum": 30000
+    },
+    "position": {
+      "type": "string",
+      "description": "Toast container position",
+      "enum": ["top-right", "top-left", "top-center", "bottom-right", "bottom-left", "bottom-center"],
+      "default": "top-right"
+    },
+    "dismissible": {
+      "type": "boolean",
+      "description": "Show close button",
+      "default": true
+    },
+    "action": {
+      "type": "string",
+      "description": "Action button text"
+    },
+    "actionHref": {
+      "type": "string",
+      "description": "Action button link URL"
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "container",
+      "tag": "div",
+      "public": false,
+      "required": true,
+      "description": "Internal layout container"
+    },
+    {
+      "name": "icon",
+      "tag": "span",
+      "parent": "container",
+      "public": true,
+      "content": "{{icon}}",
+      "createdWhen": "icon",
+      "description": "Toast icon"
+    },
+    {
+      "name": "content",
+      "tag": "div",
+      "parent": "container",
+      "public": true,
+      "required": true,
+      "description": "Content container"
+    },
+    {
+      "name": "title",
+      "tag": "strong",
+      "parent": "content",
+      "public": true,
+      "content": "{{title}}",
+      "createdWhen": "title",
+      "description": "Toast title"
+    },
+    {
+      "name": "message",
+      "tag": "p",
+      "parent": "content",
+      "public": true,
+      "content": "{{message}}",
+      "description": "Toast message"
+    },
+    {
+      "name": "actions",
+      "tag": "div",
+      "parent": "container",
+      "public": true,
+      "createdWhen": "action OR dismissible",
+      "description": "Action buttons container"
+    },
+    {
+      "name": "action",
+      "tag": "a",
+      "parent": "actions",
+      "public": true,
+      "content": "{{action}}",
+      "createdWhen": "action",
+      "description": "Action button"
+    },
+    {
+      "name": "close",
+      "tag": "button",
+      "parent": "actions",
+      "public": true,
+      "content": "✕",
+      "createdWhen": "dismissible",
+      "description": "Close button"
+    }
+  ],
+  
+  "$methods": {
+    "show": {
+      "description": "Shows a toast notification",
+      "params": ["message", "options"],
+      "returns": "Toast instance"
+    },
+    "hide": {
+      "description": "Hides the toast",
+      "params": []
+    },
+    "update": {
+      "description": "Updates toast content",
+      "params": ["message", "options"]
+    },
+    "success": {
+      "description": "Shows a success toast",
+      "params": ["message", "options"],
+      "returns": "Toast instance"
+    },
+    "error": {
+      "description": "Shows an error toast",
+      "params": ["message", "options"],
+      "returns": "Toast instance"
+    },
+    "warning": {
+      "description": "Shows a warning toast",
+      "params": ["message", "options"],
+      "returns": "Toast instance"
+    },
+    "info": {
+      "description": "Shows an info toast",
+      "params": ["message", "options"],
+      "returns": "Toast instance"
+    },
+    "dismiss": {
+      "description": "Dismisses the toast with animation",
+      "params": [],
+      "returns": "Promise"
+    },
+    "dismissAll": {
+      "description": "Dismisses all toasts",
+      "params": [],
+      "static": true
+    }
+  },
+  
+  "$cssAPI": {
+    "--wb-toast-min-width": {
+      "default": "300px",
+      "description": "Minimum toast width"
+    },
+    "--wb-toast-max-width": {
+      "default": "400px",
+      "description": "Maximum toast width"
+    },
+    "--wb-toast-padding": {
+      "default": "1rem",
+      "description": "Toast padding"
+    },
+    "--wb-toast-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-toast-shadow": {
+      "default": "0 4px 12px rgba(0,0,0,0.15)",
+      "description": "Toast shadow"
+    },
+    "--wb-toast-gap": {
+      "default": "0.75rem",
+      "description": "Gap between icon, content, and actions"
+    },
+    "--wb-toast-stack-gap": {
+      "default": "0.5rem",
+      "description": "Gap between stacked toasts"
+    },
+    "--wb-toast-z-index": {
+      "default": "9999",
+      "description": "Toast container z-index"
+    },
+    "--wb-toast-title-size": {
+      "default": "0.875rem",
+      "description": "Title font size"
+    },
+    "--wb-toast-title-weight": {
+      "default": "600",
+      "description": "Title font weight"
+    },
+    "--wb-toast-message-size": {
+      "default": "0.875rem",
+      "description": "Message font size"
+    },
+    "--wb-toast-icon-size": {
+      "default": "1.25rem",
+      "description": "Icon size"
+    },
+    "--wb-toast-info-bg": {
+      "default": "#3b82f6",
+      "description": "Info variant background"
+    },
+    "--wb-toast-info-color": {
+      "default": "#ffffff",
+      "description": "Info variant text color"
+    },
+    "--wb-toast-success-bg": {
+      "default": "#22c55e",
+      "description": "Success variant background"
+    },
+    "--wb-toast-success-color": {
+      "default": "#ffffff",
+      "description": "Success variant text color"
+    },
+    "--wb-toast-warning-bg": {
+      "default": "#f59e0b",
+      "description": "Warning variant background"
+    },
+    "--wb-toast-warning-color": {
+      "default": "#ffffff",
+      "description": "Warning variant text color"
+    },
+    "--wb-toast-error-bg": {
+      "default": "#ef4444",
+      "description": "Error variant background"
+    },
+    "--wb-toast-error-color": {
+      "default": "#ffffff",
+      "description": "Error variant text color"
+    },
+    "--wb-toast-enter-animation": {
+      "default": "slideIn 0.3s ease",
+      "description": "Enter animation"
+    },
+    "--wb-toast-exit-animation": {
+      "default": "slideOut 0.2s ease",
+      "description": "Exit animation"
+    }
+  },
+  
+  "accessibility": {
+    "role": "alert",
+    "ariaLive": "polite"
+  },
+  
+  "events": {
+    "wb:toast:show": {
+      "description": "Fired when toast appears",
+      "detail": { "message": "string", "variant": "string" }
+    },
+    "wb:toast:hide": {
+      "description": "Fired when toast is dismissed",
+      "detail": {}
+    },
+    "wb:toast:action": {
+      "description": "Fired when action button is clicked",
+      "detail": {}
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<button data-wb=\"toast\" data-message=\"Hello!\">Show Toast</button>",
+      "<button data-wb=\"toast\" data-variant=\"success\" data-message=\"Success!\">Success</button>",
+      "<button data-wb=\"toast\" data-variant=\"error\" data-message=\"Error!\">Error</button>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "message": "Test" },
+        { "message": "Test", "variant": "info" },
+        { "message": "Test", "variant": "success" },
+        { "message": "Test", "variant": "warning" },
+        { "message": "Test", "variant": "error" },
+        { "message": "Test", "title": "Notice" },
+        { "message": "Test", "duration": 5000 },
+        { "message": "Test", "position": "bottom-right" },
+        { "message": "Test", "action": "Undo" }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "feedback",
+    "icon": "🔔",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

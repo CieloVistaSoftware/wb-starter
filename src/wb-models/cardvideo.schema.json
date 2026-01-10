@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cardvideo.schema.json",
+  "title": "Video Card",
+  "description": "Card with embedded video player",
+  
+  "behavior": "cardvideo",
+  "baseClass": "wb-card-video",
+  
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "Video source URL",
+      "required": true
+    },
+    "poster": {
+      "type": "string",
+      "description": "Poster image URL"
+    },
+    "title": {
+      "type": "string",
+      "description": "Video title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Video description"
+    },
+    "autoplay": {
+      "type": "boolean",
+      "description": "Auto-play video (requires muted)",
+      "default": false
+    },
+    "muted": {
+      "type": "boolean",
+      "description": "Mute video",
+      "default": false
+    },
+    "loop": {
+      "type": "boolean",
+      "description": "Loop video playback",
+      "default": false
+    },
+    "controls": {
+      "type": "boolean",
+      "description": "Show video controls",
+      "default": true
+    },
+    "aspect": {
+      "type": "string",
+      "description": "Video aspect ratio",
+      "enum": ["16/9", "4/3", "1/1", "21/9", "9/16"],
+      "default": "16/9"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual style variant",
+      "enum": ["default", "minimal", "bordered", "elevated"],
+      "default": "default",
+      "appliesClass": "wb-card-video--{{value}}"
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "figure",
+      "tag": "figure",
+      "public": true,
+      "required": true,
+      "description": "Video container"
+    },
+    {
+      "name": "video",
+      "tag": "video",
+      "parent": "figure",
+      "public": true,
+      "required": true,
+      "description": "Video element"
+    },
+    {
+      "name": "content",
+      "tag": "div",
+      "public": true,
+      "createdWhen": "title OR description",
+      "description": "Content container"
+    },
+    {
+      "name": "title",
+      "tag": "h3",
+      "parent": "content",
+      "public": true,
+      "content": "{{title}}",
+      "createdWhen": "title",
+      "description": "Video title"
+    },
+    {
+      "name": "description",
+      "tag": "p",
+      "parent": "content",
+      "public": true,
+      "content": "{{description}}",
+      "createdWhen": "description",
+      "description": "Video description"
+    }
+  ],
+  
+  "$methods": {
+    "play": { "description": "Plays the video", "params": [] },
+    "pause": { "description": "Pauses the video", "params": [] },
+    "stop": { "description": "Stops and resets the video", "params": [] },
+    "toggle": { "description": "Toggles play/pause", "params": [] },
+    "mute": { "description": "Mutes the video", "params": [] },
+    "unmute": { "description": "Unmutes the video", "params": [] },
+    "setSource": { "description": "Changes the video source", "params": ["src", "poster"] },
+    "getCurrentTime": { "description": "Gets current playback time", "params": [], "returns": "number" },
+    "setCurrentTime": { "description": "Seeks to time", "params": ["seconds"] },
+    "getDuration": { "description": "Gets video duration", "params": [], "returns": "number" }
+  },
+  
+  "$cssAPI": {
+    "--wb-card-video-radius": { "default": "8px", "description": "Card border radius" },
+    "--wb-card-video-bg": { "default": "#000000", "description": "Video background color" },
+    "--wb-card-video-aspect": { "default": "16/9", "description": "Video aspect ratio" },
+    "--wb-card-video-border": { "default": "none", "description": "Card border" },
+    "--wb-card-video-shadow": { "default": "none", "description": "Card shadow" },
+    "--wb-card-video-content-padding": { "default": "1rem", "description": "Content padding" },
+    "--wb-card-video-content-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Content background" },
+    "--wb-card-video-title-size": { "default": "1rem", "description": "Title font size" },
+    "--wb-card-video-title-weight": { "default": "600", "description": "Title font weight" },
+    "--wb-card-video-description-size": { "default": "0.875rem", "description": "Description font size" },
+    "--wb-card-video-description-color": { "default": "var(--text-secondary, #666)", "description": "Description color" }
+  },
+  
+  "events": {
+    "wb:video:play": { "description": "Fired when video starts playing" },
+    "wb:video:pause": { "description": "Fired when video is paused" },
+    "wb:video:ended": { "description": "Fired when video playback ends" },
+    "wb:video:timeupdate": { "description": "Fired on time update", "detail": { "currentTime": "number" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-card-video src=\"video.mp4\"></wb-card-video>",
+      "<wb-card-video src=\"video.mp4\" title=\"My Video\" poster=\"poster.jpg\"></wb-card-video>",
+      "<article data-wb=\"cardvideo\" data-src=\"video.mp4\"></article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "src": "video.mp4" },
+        { "src": "video.mp4", "title": "Video Title" },
+        { "src": "video.mp4", "poster": "poster.jpg" },
+        { "src": "video.mp4", "autoplay": true, "muted": true },
+        { "src": "video.mp4", "loop": true },
+        { "src": "video.mp4", "controls": false },
+        { "src": "video.mp4", "aspect": "4/3" }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "cards",
+    "icon": "🎬",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

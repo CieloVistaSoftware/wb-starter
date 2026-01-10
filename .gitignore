@@ -16,5 +16,10 @@ Thumbs.db
 # Test Results
 data/test-results/
 data/content-issues.json
+.test-cache.json
+.test-results-temp.json
+
+# Archive (cleanup files)
+archive/
 
 *.zip

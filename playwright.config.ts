@@ -88,6 +88,16 @@ export default defineConfig({
     },
     
     // ═══════════════════════════════════════════════════════════════
+    // VIEWS: WB Views System Tests
+    // Tests the custom element factory system
+    // ═══════════════════════════════════════════════════════════════
+    {
+      name: 'views',
+      testDir: './tests/views',
+      testMatch: '**/*.spec.ts',
+    },
+    
+    // ═══════════════════════════════════════════════════════════════
     // TIER 2: BASE BEHAVIOR TESTS
     // Tests core functionality before testing variants
     // GATE: compliance must pass first (enforced by npm scripts)
@@ -126,6 +136,7 @@ export default defineConfig({
         'ui/cardprogressbar.spec.ts',
         'ui/cardspinner.spec.ts',
         'ui/notes.spec.ts',
+        'notes-updates.spec.ts',
         'ui/audio.spec.ts',
         'ui/feedback-visual.spec.ts',
         'ui/behavior-verification.spec.ts',

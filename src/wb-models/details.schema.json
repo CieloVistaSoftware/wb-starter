@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "details.schema.json",
+  "title": "Details",
+  "description": "Native HTML5 details disclosure widget with optional animation",
+  
+  "behavior": "details",
+  "baseClass": "wb-details",
+  
+  "semanticElement": { "tagName": "details", "implicitRole": "group" },
+  
+  "properties": {
+    "summary": { "type": "string", "description": "Clickable summary text", "required": true },
+    "open": { "type": "boolean", "description": "Initially expanded", "default": false },
+    "name": { "type": "string", "description": "Accordion group name (native exclusive behavior)" },
+    "animated": { "type": "boolean", "description": "Animate open/close", "default": true },
+    "variant": { "type": "string", "enum": ["default", "bordered", "filled"], "default": "default", "appliesClass": "wb-details--{{value}}" }
+  },
+  
+  "$view": [
+    { "name": "summary", "tag": "summary", "public": true, "required": true, "content": "{{summary}}", "description": "Clickable header" },
+    { "name": "icon", "tag": "span", "parent": "summary", "public": false, "description": "Expand/collapse icon" },
+    { "name": "content", "tag": "div", "public": true, "required": true, "description": "Expandable content" }
+  ],
+  
+  "$methods": {
+    "open": { "description": "Opens the details", "params": [] },
+    "close": { "description": "Closes the details", "params": [] },
+    "toggle": { "description": "Toggles open state", "params": [] },
+    "isOpen": { "description": "Returns open state", "params": [], "returns": "boolean" }
+  },
+  
+  "$cssAPI": {
+    "--wb-details-padding": { "default": "1rem", "description": "Content padding" },
+    "--wb-details-radius": { "default": "4px", "description": "Border radius" },
+    "--wb-details-border": { "default": "1px solid var(--border-color, #e0e0e0)", "description": "Border" },
+    "--wb-details-summary-padding": { "default": "0.75rem 1rem", "description": "Summary padding" },
+    "--wb-details-summary-bg": { "default": "transparent", "description": "Summary background" },
+    "--wb-details-summary-hover-bg": { "default": "var(--bg-secondary, #f3f4f6)", "description": "Summary hover background" },
+    "--wb-details-icon-size": { "default": "1rem", "description": "Icon size" },
+    "--wb-details-transition": { "default": "all 0.2s ease", "description": "Animation transition" }
+  },
+  
+  "events": {
+    "toggle": { "description": "Native toggle event" },
+    "wb:details:toggle": { "description": "Custom toggle event", "detail": { "open": "boolean" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-details summary=\"Click to expand\">Content here</wb-details>",
+      "<details data-wb=\"details\"><summary>Summary</summary><div>Content</div></details>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "summary": "Details" },
+        { "summary": "Details", "open": true },
+        { "summary": "Details", "animated": true }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "layout", "icon": "📂", "since": "1.0.0", "status": "stable" }
+}

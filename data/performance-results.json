@@ -166,5 +166,853 @@
     "value": 6212,
     "unit": "ms",
     "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-03T02:24:51.497Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 783,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-03T02:24:53.722Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 825,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-03T02:24:54.213Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 19.2978515625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-03T02:24:54.239Z",
+    "category": "resource",
+    "name": "JS: site-engine.js",
+    "value": 11.8212890625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-03T02:24:54.811Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 591,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-03T02:24:59.455Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-03T02:24:59.528Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-03T02:24:59.627Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 38.060546875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-03T02:25:01.927Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 446,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-03T02:25:08.861Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 1040,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-03T02:25:32.911Z",
+    "category": "interaction",
+    "name": "Modal Open",
+    "value": 502,
+    "unit": "ms",
+    "threshold": 200
+  },
+  {
+    "timestamp": "2026-01-03T22:10:53.071Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 457,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-03T22:10:55.537Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 1035,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-03T22:10:56.840Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 714,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-03T22:10:57.942Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 831,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-03T22:10:58.550Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-03T22:10:58.573Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 40.6953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-03T22:10:58.599Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-03T22:10:59.009Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 19.2978515625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-03T22:10:59.035Z",
+    "category": "resource",
+    "name": "JS: site-engine.js",
+    "value": 12.884765625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-03T22:11:41.992Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 846,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-03T22:22:23.765Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 554,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-03T22:22:24.064Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 999,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-03T22:22:24.625Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-03T22:22:24.630Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 40.6953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-03T22:22:24.638Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-03T22:22:24.645Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 601,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-03T22:22:27.864Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 288,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-03T22:22:29.022Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 19.2978515625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-03T22:22:29.043Z",
+    "category": "resource",
+    "name": "JS: site-engine.js",
+    "value": 12.884765625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-03T22:22:30.897Z",
+    "category": "interaction",
+    "name": "Modal Open",
+    "value": 1265,
+    "unit": "ms",
+    "threshold": 200
+  },
+  {
+    "timestamp": "2026-01-03T22:22:38.144Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 1018,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-04T03:03:04.966Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 719,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-04T03:03:05.146Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 934,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-04T03:03:05.785Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-04T03:03:05.813Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-04T03:03:05.836Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 40.6953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-04T03:03:05.868Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 663,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-04T03:03:06.397Z",
+    "category": "resource",
+    "name": "JS: site-engine.js",
+    "value": 12.884765625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-04T03:03:06.418Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 19.2978515625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-04T03:03:16.097Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 1011,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-04T03:03:23.347Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 516,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-05T02:16:51.846Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 1042,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-05T02:16:53.087Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 692,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-05T02:16:53.962Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 590,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-05T02:16:54.467Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T02:16:54.556Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 41.4208984375,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T02:16:54.660Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T02:16:54.772Z",
+    "category": "resource",
+    "name": "CSS: atom-one-dark.css",
+    "value": 1.2841796875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T02:16:54.845Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T02:16:54.880Z",
+    "category": "resource",
+    "name": "CSS: effects.css",
+    "value": 7.1806640625,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T02:17:01.749Z",
+    "category": "resource",
+    "name": "JS: site-engine.js",
+    "value": 13.12109375,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-05T02:17:01.794Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 19.2978515625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-05T02:17:22.626Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 796,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-05T21:49:00.021Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 191,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-05T21:49:06.567Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 676,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-05T21:49:16.507Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 446,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-05T21:49:17.144Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 471,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-05T21:49:17.735Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 484,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-05T21:49:18.169Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T21:49:18.213Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 41.4208984375,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T21:49:18.238Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T21:49:18.311Z",
+    "category": "resource",
+    "name": "CSS: atom-one-dark.css",
+    "value": 1.2841796875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T21:49:18.361Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T21:49:18.400Z",
+    "category": "resource",
+    "name": "CSS: effects.css",
+    "value": 7.1806640625,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-05T21:49:18.809Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 23.4697265625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-05T21:49:18.832Z",
+    "category": "resource",
+    "name": "JS: site-engine.js",
+    "value": 13.5341796875,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-06T00:47:01.962Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 3074,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-06T00:47:33.227Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 988,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-06T00:47:34.067Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 556,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-06T00:47:44.916Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-06T00:47:44.981Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 42.6494140625,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-06T00:47:45.023Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-06T00:47:45.051Z",
+    "category": "resource",
+    "name": "CSS: atom-one-dark.css",
+    "value": 1.2841796875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-06T00:47:45.099Z",
+    "category": "resource",
+    "name": "CSS: effects.css",
+    "value": 7.1806640625,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-06T00:47:45.146Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-06T00:47:46.276Z",
+    "category": "resource",
+    "name": "JS: site-engine.js",
+    "value": 14.7119140625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-06T00:47:46.325Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 23.6845703125,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-06T00:47:57.791Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 1647,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-06T00:48:13.428Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 3136,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-09T21:09:15.026Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 872,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-09T21:09:15.593Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 925,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-09T21:09:17.470Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 521,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-09T21:09:18.505Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 833,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-09T21:09:19.147Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:09:19.206Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:09:19.279Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 42.6416015625,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:09:19.330Z",
+    "category": "resource",
+    "name": "CSS: atom-one-dark.css",
+    "value": 1.2841796875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:09:19.372Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:09:19.405Z",
+    "category": "resource",
+    "name": "CSS: effects.css",
+    "value": 0,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:09:23.266Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 23.830078125,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-09T21:09:23.292Z",
+    "category": "resource",
+    "name": "JS: site-engine.js",
+    "value": 14.5947265625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-09T21:09:50.215Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 1196,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-09T21:40:09.195Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 1007,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-09T21:40:09.493Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 1303,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-09T21:40:10.006Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:40:10.026Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 42.6416015625,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:40:10.045Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:40:10.068Z",
+    "category": "resource",
+    "name": "CSS: atom-one-dark.css",
+    "value": 1.2841796875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:40:10.093Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.26953125,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:40:10.124Z",
+    "category": "resource",
+    "name": "CSS: effects.css",
+    "value": 0,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-09T21:40:10.261Z",
+    "category": "resource",
+    "name": "JS: site-engine.js",
+    "value": 14.5947265625,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-09T21:40:10.310Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 24.0146484375,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-09T21:40:13.679Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 219,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-09T21:40:14.004Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 1057,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-09T21:40:20.113Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 312,
+    "unit": "ms",
+    "threshold": 100
   }
 ]

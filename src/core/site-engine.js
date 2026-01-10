@@ -1,12 +1,14 @@
 // Site Engine Module
 // Contains WBSite class and site logic
-import WB from './wb-lazy.js';
+import WB from './wb.js';  // v3.0: Use main wb.js with schema support
+import { initViews } from './wb-views.js';
 
 export default class WBSite {
   constructor() {
     this.config = null;
     this.currentPage = 'home';
     this.navCollapsed = false;
+    this.mobileNavOpen = false;
   }
 
   async init() {
@@ -32,9 +34,19 @@ export default class WBSite {
       this.render();
       this.initResizableNav();
       this.initStickyHeader();
+      
+      // Initialize Views System
+      await initViews({
+        registry: [
+          'src/wb-views/views-registry.json',
+          'src/wb-views/partials-registry.json'
+        ]
+      });
+
       WB.init({ 
         debug: false,
         autoInject: this.config.site.autoInject || false,
+        useSchemas: true,  // v3.0: Enable schema-based DOM building
         preload: ['ripple', 'themecontrol', 'tooltip']
       });
 
@@ -90,17 +102,24 @@ export default class WBSite {
     app.innerHTML = `
       ${this.renderHeader()}
       <div class="site__body" id="siteBody">
+        <div class="site__nav-backdrop" id="navBackdrop"></div>
         ${this.renderNav()}
         <main class="site__main" id="main">
           ${this.renderPage(this.currentPage)}
         </main>
       </div>
       ${this.renderFooter()}
-      <div data-wb="notes" data-wb-eager id="siteNotes"></div>
+      <div x-eager id="siteNotes"></div>
     `;
     const toggleBtn = app.querySelector('.nav__toggle');
     if (toggleBtn) {
       toggleBtn.onclick = () => this.toggleNav();
+    }
+    
+    // Backdrop click closes mobile nav
+    const backdrop = app.querySelector('.site__nav-backdrop');
+    if (backdrop) {
+      backdrop.onclick = () => this.closeMobileNav();
     }
     const notesToggleBtn = app.querySelector('#notesToggle');
     if (notesToggleBtn) {
@@ -108,7 +127,7 @@ export default class WBSite {
         if (window.showNotesModal) {
           window.showNotesModal();
         } else {
-          const notesEl = document.querySelector('[data-wb="notes"]');
+          const notesEl = document.querySelector('[]');
           if (notesEl && notesEl.wbNotes) {
             notesEl.wbNotes.toggle();
           }
@@ -118,7 +137,7 @@ export default class WBSite {
     this.updateActiveNav();
 
     // === Runtime check for duplicate theme switchers ===
-    const themeSwitchers = document.querySelectorAll('[data-wb="themecontrol"]');
+    const themeSwitchers = document.querySelectorAll('wb-themecontrol');
     if (themeSwitchers.length > 1) {
       console.warn(`⚠️ Found ${themeSwitchers.length} theme switchers on the page!`);
       themeSwitchers.forEach((el, i) => {
@@ -129,18 +148,24 @@ export default class WBSite {
 
   renderHeader() {
     const { site, header } = this.config;
+    // Clean header layout with proper semantics and spacing
     return `
       <header class="site__header ${header.sticky ? 'site__header--sticky' : ''}" id="siteHeader">
-        <div class="header__left" id="headerLeft">
-          <button class="nav__toggle" data-wb="ripple" title="Toggle Navigation" id="navToggle">☰</button>
-          <a href="?page=home" class="header__logo" id="headerLogo">
-            <span class="header__logo-icon" id="headerLogoIcon">${site.logo}</span>
+        <div class="header__left" id="headerLeft" style="gap: 1.5rem;">
+          <button class="nav__toggle" x-ripple title="Toggle Navigation" id="navToggle" aria-label="Toggle Navigation">☰</button>
+          <a href="?page=home" class="header__logo" id="headerLogo" style="gap: 0.75rem;">
+            ${site.logo ? `<span class="header__logo-icon" id="headerLogoIcon">${site.logo}</span>` : ''}
             <span class="header__logo-text" id="headerLogoText">${site.name}</span>
           </a>
         </div>
-        <div class="header__right" id="headerRight">
-          <button class="header__notes-btn" id="notesToggle" data-wb="ripple" title="Toggle Notes">📝</button>
-          ${header.showThemeSwitcher ? '<div data-wb="themecontrol" data-show-label="false" id="themeControl"></div>' : ''}
+        <div class="header__right" id="headerRight" style="gap: 1rem;">
+          ${header.showSearch ? `
+            <div class="header__search" id="headerSearch">
+              <input type="search" placeholder="Search..." aria-label="Search" class="wb-input-glass" style="padding: 0.4rem 0.8rem; width: 200px;">
+            </div>
+          ` : ''}
+          <button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>
+          ${header.showThemeSwitcher ? '<wb-themecontrol  data-show-label="false" id="themeControl"></div>' : ''}
         </div>
       </header>
     `;
@@ -148,14 +173,49 @@ export default class WBSite {
 
   renderNav() {
     const { nav, layout } = this.config;
-    const items = nav.map(item => `
-      <a href="?page=${item.id}" class="nav__item" data-page="${item.id}" data-wb="ripple" id="navItem-${item.id}">
-        <span class="nav__icon" id="navIcon-${item.id}">${item.icon || ''}</span>
-        <span class="nav__label" id="navLabel-${item.id}">${item.label}</span>
+    
+    // Safety check for nav config
+    if (!nav || !Array.isArray(nav)) {
+      console.error('❌ Site configuration error: "nav" is missing or not an array.', nav);
+      return '<nav class="site__nav" id="siteNav"><div class="nav__items">No navigation items found</div></nav>';
+    }
+
+    const items = nav.map(item => {
+      // Robust href handling
+      let href = '?page=home';
+      let isExternal = false;
+      
+      if (item.href) {
+        href = item.href;
+        isExternal = true;
+      } else if (item.page) {
+        href = `?page=${item.page}`;
+      } else if (item.id) {
+        href = `?page=${item.id}`;
+      }
+
+      // Safe check for target
+      let target = item.target || '';
+      if (!target && isExternal && typeof href === 'string' && href.startsWith('http')) {
+        target = '_blank';
+      }
+      
+      return `
+      <a href="${href}" 
+         class="nav__item" 
+         ${!isExternal && item.id ? `data-page="${item.id}"` : ''} 
+         ${target ? `target="${target}"` : ''} 
+         x-ripple 
+         id="navItem-${item.id || item.label || Math.random().toString(36).substr(2, 9)}">
+        <span class="nav__icon">${item.icon || ''}</span>
+        <span class="nav__label">${item.label || item.id}</span>
       </a>
-    `).join('');
+    `}).join('');
+
+    const navWidthVar = layout && layout.navWidth ? layout.navWidth : 'fit-content';
+
     return `
-      <nav class="site__nav ${this.navCollapsed ? 'site__nav--collapsed' : ''}" style="--nav-width: ${layout.navWidth}" id="siteNav" data-wb="scrollalong">
+      <nav class="site__nav ${this.navCollapsed ? 'site__nav--collapsed' : ''}" style="--nav-width: ${navWidthVar}" id="siteNav">
         <div class="nav__items" id="navItems">
           ${items}
         </div>
@@ -253,6 +313,11 @@ export default class WBSite {
   }
 
   async navigateTo(pageId) {
+    // Close mobile nav when navigating
+    if (window.innerWidth <= 768) {
+      this.closeMobileNav();
+    }
+    
     if (!this.config.nav.find(n => n.id === pageId)) {
       pageId = 'home';
     }
@@ -271,7 +336,7 @@ export default class WBSite {
     this.currentPage = pageId;
     this.updateActiveNav();
     const main = document.getElementById('main');
-    main.innerHTML = `<div class="page__loading" id="mainPageLoading"><div data-wb="spinner" id="mainSpinner"></div><p id="mainLoadingText">Loading...</p></div>`;
+    main.innerHTML = `<div class="page__loading" id="mainPageLoading"><wb-spinner  id="mainSpinner"></div><p id="mainLoadingText">Loading...</p></div>`;
     // Optimization: Don't await scan here to start fetch immediately. MutationObserver handles injection.
     // WB.scan(main); 
     
@@ -318,7 +383,7 @@ export default class WBSite {
   render404(pageId) {
     return `
       <div class="page page--404" id="page-404">
-        <div data-wb="empty" data-icon="📄" data-message="Page not found" data-description="Create pages/${pageId}.html to add content" id="empty404"></div>
+        <div x-empty data-icon="📄" data-message="Page not found" data-description="Create pages/${pageId}.html to add content" id="empty404"></div>
       </div>
     `;
   }
@@ -330,14 +395,30 @@ export default class WBSite {
   }
 
   toggleNav() {
-    this.navCollapsed = !this.navCollapsed;
     const nav = document.querySelector('.site__nav');
-    nav?.classList.toggle('site__nav--collapsed', this.navCollapsed);
-    document.body.classList.toggle('nav-collapsed', this.navCollapsed);
+    const backdrop = document.querySelector('.site__nav-backdrop');
+    const isMobile = window.innerWidth <= 768;
     
-    // Scroll page to top when nav is toggled
-    const main = document.getElementById('main');
-    if (main) main.scrollTop = 0;
-    window.scrollTo(0, 0);
+    if (isMobile) {
+      // Mobile: toggle slide-in menu
+      this.mobileNavOpen = !this.mobileNavOpen;
+      nav?.classList.toggle('site__nav--mobile-open', this.mobileNavOpen);
+      backdrop?.classList.toggle('visible', this.mobileNavOpen);
+      document.body.classList.toggle('wb-scroll-lock', this.mobileNavOpen);
+    } else {
+      // Desktop: toggle collapsed (icon-only) mode
+      this.navCollapsed = !this.navCollapsed;
+      nav?.classList.toggle('site__nav--collapsed', this.navCollapsed);
+      document.body.classList.toggle('nav-collapsed', this.navCollapsed);
+    }
+  }
+  
+  closeMobileNav() {
+    const nav = document.querySelector('.site__nav');
+    const backdrop = document.querySelector('.site__nav-backdrop');
+    this.mobileNavOpen = false;
+    nav?.classList.remove('site__nav--mobile-open');
+    backdrop?.classList.remove('visible');
+    document.body.classList.remove('wb-scroll-lock');
   }
 }

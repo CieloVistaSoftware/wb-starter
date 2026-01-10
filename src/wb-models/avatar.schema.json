@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "avatar.schema.json",
+  "title": "Avatar",
+  "description": "User avatar with image, initials fallback, and status indicator",
+  
+  "behavior": "avatar",
+  "baseClass": "wb-avatar",
+  
+  "semanticElement": { "tagName": "div", "implicitRole": "img" },
+  
+  "properties": {
+    "src": { "type": "string", "description": "Image source URL" },
+    "alt": { "type": "string", "description": "Alt text for image" },
+    "initials": { "type": "string", "description": "Fallback initials (2 chars)" },
+    "name": { "type": "string", "description": "Full name (generates initials if not provided)" },
+    "size": { "type": "string", "enum": ["xs", "sm", "md", "lg", "xl", "2xl"], "default": "md", "appliesClass": "wb-avatar--{{value}}" },
+    "shape": { "type": "string", "enum": ["circle", "square", "rounded"], "default": "circle", "appliesClass": "wb-avatar--{{value}}" },
+    "status": { "type": "string", "enum": ["online", "offline", "busy", "away"], "description": "Status indicator" },
+    "bordered": { "type": "boolean", "description": "Show border", "default": false, "appliesClass": "wb-avatar--bordered" }
+  },
+  
+  "$view": [
+    { "name": "image", "tag": "img", "public": true, "createdWhen": "src", "description": "Avatar image" },
+    { "name": "initials", "tag": "span", "public": true, "content": "{{initials}}", "createdWhen": "NOT src", "description": "Initials fallback" },
+    { "name": "status", "tag": "span", "public": true, "createdWhen": "status", "description": "Status indicator dot" }
+  ],
+  
+  "$methods": {
+    "setImage": { "description": "Sets the image source", "params": ["src", "alt"] },
+    "setInitials": { "description": "Sets initials", "params": ["initials"] },
+    "setStatus": { "description": "Sets status", "params": ["status"] },
+    "clearStatus": { "description": "Removes status indicator", "params": [] }
+  },
+  
+  "$cssAPI": {
+    "--wb-avatar-size": { "default": "40px", "description": "Avatar size" },
+    "--wb-avatar-bg": { "default": "var(--bg-secondary, #e5e7eb)", "description": "Background (for initials)" },
+    "--wb-avatar-color": { "default": "var(--text-secondary, #6b7280)", "description": "Initials text color" },
+    "--wb-avatar-font-size": { "default": "0.875rem", "description": "Initials font size" },
+    "--wb-avatar-font-weight": { "default": "600", "description": "Initials font weight" },
+    "--wb-avatar-border": { "default": "2px solid var(--bg-surface, #ffffff)", "description": "Border style" },
+    "--wb-avatar-radius": { "default": "50%", "description": "Border radius" },
+    "--wb-avatar-status-size": { "default": "12px", "description": "Status indicator size" },
+    "--wb-avatar-status-online": { "default": "#22c55e", "description": "Online status color" },
+    "--wb-avatar-status-offline": { "default": "#9ca3af", "description": "Offline status color" },
+    "--wb-avatar-status-busy": { "default": "#ef4444", "description": "Busy status color" },
+    "--wb-avatar-status-away": { "default": "#f59e0b", "description": "Away status color" }
+  },
+  
+  "accessibility": {
+    "role": "img",
+    "ariaLabel": "dynamic from name or alt"
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-avatar initials=\"JD\"></wb-avatar>",
+      "<wb-avatar src=\"avatar.jpg\" alt=\"John Doe\"></wb-avatar>",
+      "<div data-wb=\"avatar\" data-initials=\"AB\" data-status=\"online\"></div>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "initials": "JD" },
+        { "src": "avatar.jpg" },
+        { "initials": "JD", "size": "lg" },
+        { "initials": "JD", "status": "online" },
+        { "initials": "JD", "shape": "square" }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "feedback", "icon": "👤", "since": "1.0.0", "status": "stable" }
+}

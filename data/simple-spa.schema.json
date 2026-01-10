@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "simple-spa.schema.json",
+  "title": "Simple SPA Page Schema",
+  "description": "Schema for a Simple Single Page Application layout",
+  "type": "object",
+  "required": ["version", "components"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "components": {
+      "type": "array",
+      "minItems": 5,
+      "items": [
+        {
+          "type": "object",
+          "description": "Sticky Navigation Bar (Required)",
+          "properties": {
+            "b": { "const": "navbar" },
+            "d": {
+              "type": "object",
+              "required": ["sticky"],
+              "properties": {
+                "sticky": { "const": true }
+              }
+            }
+          },
+          "required": ["b", "d"]
+        },
+        {
+          "type": "object",
+          "description": "Hero Section (Required)",
+          "properties": {
+            "b": { "const": "cardhero" },
+            "d": {
+              "type": "object",
+              "required": ["cta", "ctaHref"],
+              "properties": {
+                "cta": { "type": "string" },
+                "ctaHref": { "pattern": "^#" }
+              }
+            }
+          },
+          "required": ["b", "d"]
+        },
+        {
+          "type": "object",
+          "description": "Features Section (Grid)",
+          "properties": {
+            "b": { "const": "container" },
+            "d": {
+              "type": "object",
+              "properties": {
+                "columns": { "minimum": 3 }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Content/About Section",
+          "properties": {
+            "b": { "enum": ["container", "card"] }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Contact Form",
+          "properties": {
+            "b": { "const": "form" }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Footer",
+          "properties": {
+            "b": { "pattern": "footer|card" }
+          }
+        }
+      ],
+      "additionalItems": true
+    }
+  }
+}

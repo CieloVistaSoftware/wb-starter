@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const cardsDir = path.join(__dirname, '../docs/components/cards');
 const files = fs.readdirSync(cardsDir).filter(f => f.endsWith('.md') && f.startsWith('card'));
@@ -10,21 +14,14 @@ files.forEach(file => {
   const filePath = path.join(cardsDir, file);
   let content = fs.readFileSync(filePath, 'utf-8');
   
-  // Regex to find code blocks under headers (## or ###)
-  // Handles both LF and CRLF line endings
   const regex = /(#{2,3} [^\r\n]+)(\r?\n\s*)\`\`\`html\r?\n([\s\S]+?)\r?\n\`\`\`/g;
   
   let updated = false;
   const newContent = content.replace(regex, (match, header, spacing, code) => {
     const trimmed = code.trim();
     
-    // Only process if code looks like an HTML element (starts with <)
     if (!trimmed.startsWith('<')) return match;
-    
-    // Skip if it's just a comment
     if (trimmed.startsWith('<!--')) return match;
-    
-    // Skip if it's just a script tag or style tag
     if (trimmed.startsWith('<script') || trimmed.startsWith('<style')) return match;
 
     updated = true;

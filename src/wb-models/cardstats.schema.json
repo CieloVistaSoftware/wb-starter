@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cardstats.schema.json",
+  "title": "Stats Card",
+  "description": "Statistics display card with value, label, icon, and trend indicator",
+  
+  "behavior": "cardstats",
+  "baseClass": "wb-stats",
+  
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  
+  "properties": {
+    "value": {
+      "type": "string",
+      "description": "The main statistic value (e.g., 1,234 or $50K)",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "description": "Label describing what the value represents"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon (emoji or icon name)"
+    },
+    "trend": {
+      "type": "string",
+      "description": "Trend direction",
+      "enum": ["up", "down", "neutral"],
+      "appliesClass": "wb-stats--trend-{{value}}"
+    },
+    "trendValue": {
+      "type": "string",
+      "description": "Trend amount (e.g., +12%, -5%)"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual style variant",
+      "enum": ["default", "compact", "large", "minimal"],
+      "default": "default",
+      "appliesClass": "wb-stats--{{value}}"
+    },
+    "color": {
+      "type": "string",
+      "description": "Accent color (CSS color value)"
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "header",
+      "tag": "header",
+      "public": true,
+      "createdWhen": "icon OR label",
+      "description": "Header with icon and label"
+    },
+    {
+      "name": "icon",
+      "tag": "span",
+      "parent": "header",
+      "public": true,
+      "content": "{{icon}}",
+      "createdWhen": "icon",
+      "description": "Stat icon"
+    },
+    {
+      "name": "label",
+      "tag": "span",
+      "parent": "header",
+      "public": true,
+      "content": "{{label}}",
+      "createdWhen": "label",
+      "description": "Stat label"
+    },
+    {
+      "name": "main",
+      "tag": "main",
+      "public": true,
+      "required": true,
+      "description": "Main content area"
+    },
+    {
+      "name": "value",
+      "tag": "data",
+      "parent": "main",
+      "public": true,
+      "content": "{{value}}",
+      "description": "Statistic value (semantic data element)"
+    },
+    {
+      "name": "trend",
+      "tag": "p",
+      "parent": "main",
+      "public": true,
+      "createdWhen": "trend OR trendValue",
+      "description": "Trend indicator container"
+    },
+    {
+      "name": "trend-icon",
+      "tag": "span",
+      "parent": "trend",
+      "public": false,
+      "createdWhen": "trend",
+      "description": "Trend direction arrow"
+    },
+    {
+      "name": "trend-value",
+      "tag": "span",
+      "parent": "trend",
+      "public": true,
+      "content": "{{trendValue}}",
+      "createdWhen": "trendValue",
+      "description": "Trend amount"
+    }
+  ],
+  
+  "$methods": {
+    "show": {
+      "description": "Shows the stats card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the stats card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "update": {
+      "description": "Updates the value and optionally trend",
+      "params": ["value", "trendValue"]
+    },
+    "animate": {
+      "description": "Animates the value counting up",
+      "params": ["duration"],
+      "returns": "Promise"
+    }
+  },
+  
+  "$cssAPI": {
+    "--wb-stats-padding": {
+      "default": "1rem",
+      "description": "Card padding"
+    },
+    "--wb-stats-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-stats-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Card background"
+    },
+    "--wb-stats-border": {
+      "default": "1px solid var(--border-color, #e0e0e0)",
+      "description": "Card border"
+    },
+    "--wb-stats-gap": {
+      "default": "0.5rem",
+      "description": "Gap between elements"
+    },
+    "--wb-stats-icon-size": {
+      "default": "1.5rem",
+      "description": "Icon font size"
+    },
+    "--wb-stats-icon-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Icon color"
+    },
+    "--wb-stats-label-size": {
+      "default": "0.875rem",
+      "description": "Label font size"
+    },
+    "--wb-stats-label-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Label text color"
+    },
+    "--wb-stats-value-size": {
+      "default": "2rem",
+      "description": "Value font size"
+    },
+    "--wb-stats-value-weight": {
+      "default": "700",
+      "description": "Value font weight"
+    },
+    "--wb-stats-value-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Value text color"
+    },
+    "--wb-stats-trend-size": {
+      "default": "0.875rem",
+      "description": "Trend font size"
+    },
+    "--wb-stats-trend-up-color": {
+      "default": "var(--success, #4caf50)",
+      "description": "Trend up color"
+    },
+    "--wb-stats-trend-down-color": {
+      "default": "var(--error, #f44336)",
+      "description": "Trend down color"
+    },
+    "--wb-stats-trend-neutral-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Trend neutral color"
+    },
+    "--wb-stats-accent": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Accent color (used for highlights)"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-stats value=\"1,234\" label=\"Users\"></wb-stats>",
+      "<wb-stats value=\"$50K\" label=\"Revenue\" icon=\"💰\" trend=\"up\" trend-value=\"+12%\"></wb-stats>",
+      "<article data-wb=\"cardstats\" data-value=\"1,234\" data-label=\"Users\"></article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "value": "100" },
+        { "value": "1,234", "label": "Users" },
+        { "value": "100", "icon": "📊" },
+        { "value": "100", "trend": "up", "trendValue": "+10%" },
+        { "value": "100", "trend": "down", "trendValue": "-5%" },
+        { "value": "$50K", "label": "Revenue", "icon": "💰", "trend": "up", "trendValue": "+12%" }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "cards",
+    "icon": "📊",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

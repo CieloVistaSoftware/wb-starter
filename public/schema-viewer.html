@@ -394,19 +394,46 @@
       const props = schema.properties || {};
       const propCount = Object.keys(props).length;
 
-      // Build example HTML
-      let exampleHTML = `<div data-wb="${componentName}"`;
-      Object.keys(props).slice(0, 5).forEach(key => {
-        const prop = props[key];
-        if (prop.default !== undefined && prop.default !== null) {
-          if (typeof prop.default === 'boolean') {
-            if (prop.default) exampleHTML += ` data-${key}`;
-          } else if (typeof prop.default !== 'object') {
-            exampleHTML += `\n  data-${key}="${prop.default}"`;
-          }
+      // Determine example HTML
+      let exampleHTML = '';
+      
+      // Strategy 1: Use test setup if available
+      if (schema.test && schema.test.setup && schema.test.setup.length > 0) {
+        exampleHTML = schema.test.setup[0];
+      } 
+      // Strategy 2: Construct from semantic element / properties
+      else {
+        let tagName = 'div';
+        if (schema.semanticElement && schema.semanticElement.tagName) {
+          tagName = schema.semanticElement.tagName;
+        } else if (schema.element) {
+          tagName = schema.element;
         }
-      });
-      exampleHTML += `></div>`;
+        
+        exampleHTML = `<wb-${componentName}`;
+        
+        // Add default properties
+        Object.keys(props).slice(0, 5).forEach(key => {
+          // Skip internal properties starting with _
+          if (key.startsWith('_')) return;
+          
+          const prop = props[key];
+          if (prop.default !== undefined && prop.default !== null) {
+            if (typeof prop.default === 'boolean') {
+              if (prop.default) exampleHTML += ` data-${key}`;
+            } else if (typeof prop.default !== 'object') {
+              exampleHTML += ` data-${key}="${prop.default}"`;
+            }
+          }
+        });
+        
+        // Add content based on tag
+        if (['input', 'img', 'hr', 'br'].includes(tagName)) {
+          exampleHTML += `>`;
+        } else {
+          exampleHTML += `>Example ${componentName}</${tagName}>`;
+        }
+      }
 
       panel.innerHTML = `
         <!-- Component Info -->
@@ -417,7 +444,7 @@
         
         <!-- Live Preview -->
         <div class="sv-preview has-content" id="livePreview">
-          <div data-wb="${componentName}" style="width: 100%;"></div>
+          ${exampleHTML}
         </div>
         
         <!-- Properties List -->

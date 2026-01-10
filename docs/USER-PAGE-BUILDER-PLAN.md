@@ -10,7 +10,7 @@ A drag-and-drop page builder that lets users create professional web pages witho
 
 ### What Works ✅
 - Drag components from sidebar to canvas
-- Basic component rendering via WB behaviors
+- Basic component rendering via Web Behaviors (WB) behaviors
 - Viewport switching (desktop/tablet/mobile)
 - Notes panel for user annotations
 - Component list in right panel
@@ -136,6 +136,13 @@ document.addEventListener('keydown', e => {
   if (e.ctrlKey && e.key === 'z') { e.shiftKey ? redo() : undo(); }
 });
 ```
+
+### 1.5 Schema-First Refactor (Card Component)
+Refactor `card.js` to follow MVVM/Enhancer pattern and new directory structure:
+- **Directory Structure**: Move logic to `src/wb-viewmodels/`, templates to `src/wb-views/`, and schemas to `src/wb-models/`.
+- **Decouple Validation**: Allow any Custom Element (hyphenated) or standard container.
+- **Enhancer Mode**: Bind to existing DOM structure instead of overwriting it.
+- **Builder Mode**: Only inject elements if structure is missing.
 
 ---
 
@@ -311,11 +318,14 @@ Visual hierarchy view:
 
 | File | Changes |
 |------|---------|
+| `src/wb-models/` | New directory for JSON Schemas |
+| `src/wb-views/` | Renamed from `src/parts/` (HTML Templates) |
+| `src/wb-viewmodels/` | Renamed from `src/behaviors/js/` (JS Logic) |
 | `builder.js` | Context menu, undo/redo, schema loading, save/load |
 | `builder.css` | Context menu styles, layers panel |
 | `builder.html` | Layers panel markup, toolbar buttons |
-| `src/behaviors/js/enhancements.js` | Fix invisible action components |
-| `src/behaviors/js/effects.js` | Fix confetti visibility |
+| `src/wb-viewmodels/enhancements.js` | Fix invisible action components |
+| `src/wb-viewmodels/effects.js` | Fix confetti visibility |
 | `C.All` definitions | Add missing properties, fix Container |
 
 ---

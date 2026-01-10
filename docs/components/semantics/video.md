@@ -12,10 +12,10 @@ The `video` component wraps the HTML5 `<video>` element to provide a consistent 
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="video"` to a `<video>` element.
+The `video` behavior is automatically injected into `<video>` elements.
 
 ```html
-<video data-wb="video" src="movie.mp4"></video>
+<video src="movie.mp4"></video>
 ```
 
 ### Configuration Options
@@ -40,7 +40,6 @@ A silent, looping background video.
 
 ```html
 <video 
-  data-wb="video" 
   src="bg.mp4" 
   data-autoplay="true" 
   data-muted="true" 
@@ -54,7 +53,6 @@ A video player with a poster image.
 
 ```html
 <video 
-  data-wb="video" 
   src="clip.mp4" 
   data-poster="thumb.jpg">
 </video>

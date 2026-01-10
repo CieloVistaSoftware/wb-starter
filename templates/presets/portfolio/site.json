@@ -1,0 +1,52 @@
+{
+  "site": {
+    "name": "Studio Name",
+    "tagline": "Creative Agency",
+    "logo": "<span style='font-weight: bold; font-size: 1.5rem;'>✦ Studio</span>",
+    "favicon": "images/favicon.png",
+    "theme": "dark",
+    "version": "1.0.0",
+    "autoInject": false
+  },
+  
+  "nav": [
+    { "id": "home", "label": "Home", "icon": "🏠", "page": "home" },
+    { "id": "work", "label": "Work", "icon": "💼", "page": "work" },
+    { "id": "services", "label": "Services", "icon": "⚙️", "page": "services" },
+    { "id": "about", "label": "About", "icon": "ℹ️", "page": "about" },
+    { "id": "contact", "label": "Contact", "icon": "📧", "page": "contact" }
+  ],
+  
+  "header": {
+    "showLogo": true,
+    "showThemeSwitcher": true,
+    "showSearch": false,
+    "sticky": true
+  },
+  
+  "footer": {
+    "copyright": "© 2025 Studio Name. All rights reserved.",
+    "showSocial": true,
+    "social": [
+      { "name": "Dribbble", "icon": "🏀", "url": "https://dribbble.com" },
+      { "name": "Behance", "icon": "🎨", "url": "https://behance.net" },
+      { "name": "Instagram", "icon": "📸", "url": "https://instagram.com" }
+    ],
+    "links": [
+      { "label": "Privacy Policy", "page": "privacy" }
+    ]
+  },
+  
+  "layout": {
+    "navPosition": "left",
+    "navWidth": "fit-content",
+    "navCollapsible": true,
+    "navDefaultCollapsed": false
+  },
+  
+  "seo": {
+    "title": "Studio Name - Creative Agency",
+    "description": "We create beautiful digital experiences",
+    "keywords": ["design", "agency", "creative", "portfolio"]
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tooltip.schema.json",
+  "title": "Tooltip",
+  "description": "Tooltip for displaying additional information on hover/focus",
+  
+  "behavior": "tooltip",
+  "baseClass": "wb-tooltip",
+  
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "tooltip"
+  },
+  
+  "properties": {
+    "content": {
+      "type": "string",
+      "description": "Tooltip text content",
+      "required": true
+    },
+    "position": {
+      "type": "string",
+      "description": "Tooltip position relative to trigger",
+      "enum": ["top", "bottom", "left", "right", "top-start", "top-end", "bottom-start", "bottom-end"],
+      "default": "top",
+      "appliesClass": "wb-tooltip--{{value}}"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual style variant",
+      "enum": ["default", "dark", "light", "primary"],
+      "default": "default",
+      "appliesClass": "wb-tooltip--{{value}}"
+    },
+    "delay": {
+      "type": "number",
+      "description": "Delay before showing (ms)",
+      "default": 200
+    },
+    "hideDelay": {
+      "type": "number",
+      "description": "Delay before hiding (ms)",
+      "default": 0
+    },
+    "trigger": {
+      "type": "string",
+      "description": "What triggers the tooltip",
+      "enum": ["hover", "focus", "click", "hover focus"],
+      "default": "hover focus"
+    },
+    "arrow": {
+      "type": "boolean",
+      "description": "Show arrow pointing to trigger",
+      "default": true
+    },
+    "interactive": {
+      "type": "boolean",
+      "description": "Allow hovering over tooltip content",
+      "default": false
+    },
+    "maxWidth": {
+      "type": "string",
+      "description": "Maximum tooltip width",
+      "default": "200px"
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "content",
+      "tag": "div",
+      "public": true,
+      "content": "{{content}}",
+      "required": true,
+      "description": "Tooltip content"
+    },
+    {
+      "name": "arrow",
+      "tag": "div",
+      "public": false,
+      "createdWhen": "arrow",
+      "description": "Arrow/pointer element"
+    }
+  ],
+  
+  "$methods": {
+    "show": {
+      "description": "Shows the tooltip",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the tooltip",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles tooltip visibility",
+      "params": []
+    },
+    "setContent": {
+      "description": "Updates tooltip content",
+      "params": ["content"]
+    },
+    "setPosition": {
+      "description": "Updates tooltip position",
+      "params": ["position"]
+    },
+    "enable": {
+      "description": "Enables the tooltip",
+      "params": []
+    },
+    "disable": {
+      "description": "Disables the tooltip",
+      "params": []
+    }
+  },
+  
+  "$cssAPI": {
+    "--wb-tooltip-bg": {
+      "default": "#1f2937",
+      "description": "Background color"
+    },
+    "--wb-tooltip-color": {
+      "default": "#ffffff",
+      "description": "Text color"
+    },
+    "--wb-tooltip-padding": {
+      "default": "0.5rem 0.75rem",
+      "description": "Content padding"
+    },
+    "--wb-tooltip-radius": {
+      "default": "4px",
+      "description": "Border radius"
+    },
+    "--wb-tooltip-font-size": {
+      "default": "0.75rem",
+      "description": "Font size"
+    },
+    "--wb-tooltip-line-height": {
+      "default": "1.4",
+      "description": "Line height"
+    },
+    "--wb-tooltip-max-width": {
+      "default": "200px",
+      "description": "Maximum width"
+    },
+    "--wb-tooltip-shadow": {
+      "default": "0 2px 8px rgba(0,0,0,0.15)",
+      "description": "Box shadow"
+    },
+    "--wb-tooltip-z-index": {
+      "default": "9999",
+      "description": "Z-index"
+    },
+    "--wb-tooltip-arrow-size": {
+      "default": "6px",
+      "description": "Arrow size"
+    },
+    "--wb-tooltip-offset": {
+      "default": "8px",
+      "description": "Distance from trigger"
+    },
+    "--wb-tooltip-enter-animation": {
+      "default": "fadeIn 0.15s ease",
+      "description": "Enter animation"
+    },
+    "--wb-tooltip-exit-animation": {
+      "default": "fadeOut 0.1s ease",
+      "description": "Exit animation"
+    },
+    "--wb-tooltip-dark-bg": {
+      "default": "#1f2937",
+      "description": "Dark variant background"
+    },
+    "--wb-tooltip-dark-color": {
+      "default": "#ffffff",
+      "description": "Dark variant text color"
+    },
+    "--wb-tooltip-light-bg": {
+      "default": "#ffffff",
+      "description": "Light variant background"
+    },
+    "--wb-tooltip-light-color": {
+      "default": "#1f2937",
+      "description": "Light variant text color"
+    },
+    "--wb-tooltip-light-border": {
+      "default": "1px solid #e5e7eb",
+      "description": "Light variant border"
+    },
+    "--wb-tooltip-primary-bg": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Primary variant background"
+    },
+    "--wb-tooltip-primary-color": {
+      "default": "#ffffff",
+      "description": "Primary variant text color"
+    }
+  },
+  
+  "accessibility": {
+    "role": "tooltip",
+    "ariaDescribedBy": "tooltip id on trigger element"
+  },
+  
+  "events": {
+    "wb:tooltip:show": {
+      "description": "Fired when tooltip becomes visible",
+      "detail": { "content": "string" }
+    },
+    "wb:tooltip:hide": {
+      "description": "Fired when tooltip is hidden",
+      "detail": {}
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<span data-wb=\"tooltip\" data-tooltip=\"Helpful tip\">Hover me</span>",
+      "<button data-wb=\"tooltip\" data-tooltip=\"Click help\" data-position=\"bottom\">Help</button>",
+      "<button tooltip=\"Global tooltip\">Global</button>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "content": "Tooltip text" },
+        { "content": "Tooltip text", "position": "top" },
+        { "content": "Tooltip text", "position": "bottom" },
+        { "content": "Tooltip text", "position": "left" },
+        { "content": "Tooltip text", "position": "right" },
+        { "content": "Tooltip text", "variant": "light" },
+        { "content": "Tooltip text", "variant": "primary" },
+        { "content": "Tooltip text", "arrow": false },
+        { "content": "Tooltip text", "delay": 500 }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "feedback",
+    "icon": "💬",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

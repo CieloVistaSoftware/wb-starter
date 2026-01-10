@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "drawer.schema.json",
+  "title": "Drawer",
+  "description": "Slide-out panel overlay from screen edge",
+  
+  "behavior": "drawer",
+  "baseClass": "wb-drawer",
+  
+  "semanticElement": { "tagName": "aside", "implicitRole": "complementary" },
+  
+  "properties": {
+    "title": { "type": "string", "description": "Drawer title" },
+    "content": { "type": "string", "description": "Drawer body content" },
+    "position": { "type": "string", "enum": ["left", "right", "top", "bottom"], "default": "right", "appliesClass": "wb-drawer--{{value}}" },
+    "width": { "type": "string", "description": "Drawer width (left/right)", "default": "320px" },
+    "height": { "type": "string", "description": "Drawer height (top/bottom)", "default": "auto" },
+    "closeOnBackdrop": { "type": "boolean", "description": "Close on backdrop click", "default": true },
+    "closeOnEscape": { "type": "boolean", "description": "Close on Escape key", "default": true },
+    "showClose": { "type": "boolean", "description": "Show close button", "default": true },
+    "variant": { "type": "string", "enum": ["default", "overlay", "push"], "default": "overlay", "appliesClass": "wb-drawer--{{value}}" }
+  },
+  
+  "$view": [
+    { "name": "backdrop", "tag": "div", "public": false, "description": "Backdrop overlay" },
+    { "name": "panel", "tag": "div", "public": true, "required": true, "description": "Drawer panel" },
+    { "name": "header", "tag": "header", "parent": "panel", "public": true, "createdWhen": "title OR showClose", "description": "Drawer header" },
+    { "name": "title", "tag": "h2", "parent": "header", "public": true, "content": "{{title}}", "createdWhen": "title", "description": "Drawer title" },
+    { "name": "close", "tag": "button", "parent": "header", "public": true, "createdWhen": "showClose", "description": "Close button" },
+    { "name": "body", "tag": "main", "parent": "panel", "public": true, "required": true, "content": "{{content}}{{body}}", "description": "Drawer body" },
+    { "name": "footer", "tag": "footer", "parent": "panel", "public": true, "createdWhen": "footer", "description": "Drawer footer" }
+  ],
+  
+  "$methods": {
+    "open": { "description": "Opens the drawer", "params": [], "returns": "Promise" },
+    "close": { "description": "Closes the drawer", "params": [], "returns": "Promise" },
+    "toggle": { "description": "Toggles the drawer", "params": [] },
+    "isOpen": { "description": "Returns open state", "params": [], "returns": "boolean" }
+  },
+  
+  "$cssAPI": {
+    "--wb-drawer-width": { "default": "320px", "description": "Drawer width" },
+    "--wb-drawer-max-width": { "default": "100vw", "description": "Max width" },
+    "--wb-drawer-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Background" },
+    "--wb-drawer-shadow": { "default": "-4px 0 20px rgba(0,0,0,0.15)", "description": "Box shadow" },
+    "--wb-drawer-padding": { "default": "1.5rem", "description": "Content padding" },
+    "--wb-drawer-header-gap": { "default": "1rem", "description": "Header gap" },
+    "--wb-drawer-title-size": { "default": "1.125rem", "description": "Title font size" },
+    "--wb-drawer-backdrop-bg": { "default": "rgba(0,0,0,0.5)", "description": "Backdrop background" },
+    "--wb-drawer-transition": { "default": "transform 0.3s ease", "description": "Slide transition" },
+    "--wb-drawer-z-index": { "default": "1000", "description": "Z-index" }
+  },
+  
+  "events": {
+    "wb:drawer:open": { "description": "Drawer opened" },
+    "wb:drawer:close": { "description": "Drawer closed" }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-drawer title=\"Menu\">Navigation here</wb-drawer>",
+      "<button data-wb=\"drawer\" data-drawer-title=\"Settings\">Open</button>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "title": "Right Drawer", "position": "right" },
+        { "title": "Left Drawer", "position": "left" },
+        { "title": "Wide", "width": "400px" }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "overlay", "icon": "📜", "since": "1.0.0", "status": "stable" }
+}

@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const fixesPath = path.join(__dirname, '../data/fixes.json');
 const data = JSON.parse(fs.readFileSync(fixesPath, 'utf8'));
@@ -20,7 +24,7 @@ for (const key in fixes) {
         } else if (fix.action.includes('Implemented copyToClipboard()')) {
             fix.code = "async copyToClipboard() {\n  await navigator.clipboard.writeText(this.value);\n}";
         } else if (fix.action.includes('getter and setter')) {
-             const prop = fix.action.split(' ')[1]; // e.g. "value"
+             const prop = fix.action.split(' ')[1];
              fix.code = `get ${prop}() {\n  return this.getAttribute('${prop}');\n}\n\nset ${prop}(val) {\n  this.setAttribute('${prop}', val);\n}`;
         } else if (fix.action.includes('Set role=')) {
             fix.code = "this.trigger.setAttribute('role', 'button');";

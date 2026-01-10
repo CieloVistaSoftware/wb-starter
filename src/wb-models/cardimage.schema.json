@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cardimage.schema.json",
+  "title": "Image Card",
+  "description": "Card with featured image and optional title/subtitle",
+  
+  "behavior": "cardimage",
+  "baseClass": "wb-card-image",
+  
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "Image source URL",
+      "required": true
+    },
+    "alt": {
+      "type": "string",
+      "description": "Image alt text (accessibility)",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "description": "Card title"
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Card subtitle"
+    },
+    "caption": {
+      "type": "string",
+      "description": "Image caption (displayed below image)"
+    },
+    "href": {
+      "type": "string",
+      "description": "Link URL (makes card clickable)"
+    },
+    "aspect": {
+      "type": "string",
+      "description": "Image aspect ratio",
+      "enum": ["16/9", "4/3", "1/1", "3/2", "21/9", "auto"],
+      "default": "16/9"
+    },
+    "position": {
+      "type": "string",
+      "description": "Image position relative to content",
+      "enum": ["top", "bottom", "left", "right"],
+      "default": "top",
+      "appliesClass": "wb-card-image--{{value}}"
+    },
+    "fit": {
+      "type": "string",
+      "description": "Image object-fit mode",
+      "enum": ["cover", "contain", "fill", "none"],
+      "default": "cover"
+    },
+    "loading": {
+      "type": "string",
+      "description": "Image loading strategy",
+      "enum": ["lazy", "eager"],
+      "default": "lazy"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual style variant",
+      "enum": ["default", "elevated", "bordered", "minimal"],
+      "default": "default",
+      "appliesClass": "wb-card-image--{{value}}"
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "figure",
+      "tag": "figure",
+      "public": true,
+      "required": true,
+      "description": "Semantic figure containing image"
+    },
+    {
+      "name": "image",
+      "tag": "img",
+      "parent": "figure",
+      "public": true,
+      "description": "The main image"
+    },
+    {
+      "name": "caption",
+      "tag": "figcaption",
+      "parent": "figure",
+      "public": true,
+      "content": "{{caption}}",
+      "createdWhen": "caption",
+      "description": "Image caption"
+    },
+    {
+      "name": "content",
+      "tag": "div",
+      "public": true,
+      "createdWhen": "title OR subtitle OR body",
+      "description": "Content area for title/subtitle"
+    },
+    {
+      "name": "title",
+      "tag": "h3",
+      "parent": "content",
+      "public": true,
+      "content": "{{title}}",
+      "createdWhen": "title",
+      "description": "Card title"
+    },
+    {
+      "name": "subtitle",
+      "tag": "p",
+      "parent": "content",
+      "public": true,
+      "content": "{{subtitle}}",
+      "createdWhen": "subtitle",
+      "description": "Card subtitle"
+    },
+    {
+      "name": "body",
+      "tag": "div",
+      "parent": "content",
+      "public": true,
+      "content": "{{body}}",
+      "createdWhen": "body",
+      "description": "Additional content slot"
+    }
+  ],
+  
+  "$methods": {
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "setImage": {
+      "description": "Changes the image source",
+      "params": ["src", "alt"]
+    },
+    "preload": {
+      "description": "Preloads the image",
+      "params": [],
+      "returns": "Promise"
+    }
+  },
+  
+  "$cssAPI": {
+    "--wb-card-image-radius": {
+      "default": "8px",
+      "description": "Card border radius"
+    },
+    "--wb-card-image-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Card background"
+    },
+    "--wb-card-image-border": {
+      "default": "none",
+      "description": "Card border"
+    },
+    "--wb-card-image-shadow": {
+      "default": "none",
+      "description": "Card shadow"
+    },
+    "--wb-card-image-img-radius": {
+      "default": "8px 8px 0 0",
+      "description": "Image border radius (top position)"
+    },
+    "--wb-card-image-aspect": {
+      "default": "16/9",
+      "description": "Image aspect ratio"
+    },
+    "--wb-card-image-content-padding": {
+      "default": "1rem",
+      "description": "Content area padding"
+    },
+    "--wb-card-image-content-gap": {
+      "default": "0.5rem",
+      "description": "Gap between title and subtitle"
+    },
+    "--wb-card-image-title-size": {
+      "default": "1.125rem",
+      "description": "Title font size"
+    },
+    "--wb-card-image-title-weight": {
+      "default": "600",
+      "description": "Title font weight"
+    },
+    "--wb-card-image-title-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Title text color"
+    },
+    "--wb-card-image-subtitle-size": {
+      "default": "0.875rem",
+      "description": "Subtitle font size"
+    },
+    "--wb-card-image-subtitle-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Subtitle text color"
+    },
+    "--wb-card-image-caption-size": {
+      "default": "0.75rem",
+      "description": "Caption font size"
+    },
+    "--wb-card-image-caption-color": {
+      "default": "var(--text-tertiary, #999)",
+      "description": "Caption text color"
+    },
+    "--wb-card-image-hover-transform": {
+      "default": "translateY(-2px)",
+      "description": "Hover transform effect"
+    },
+    "--wb-card-image-hover-shadow": {
+      "default": "0 4px 12px rgba(0,0,0,0.15)",
+      "description": "Hover shadow"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-card-image src=\"photo.jpg\" alt=\"Photo\"></wb-card-image>",
+      "<wb-card-image src=\"photo.jpg\" title=\"Beautiful Scene\" subtitle=\"Nature photography\"></wb-card-image>",
+      "<article data-wb=\"cardimage\" data-src=\"photo.jpg\"></article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "src": "photo.jpg" },
+        { "src": "photo.jpg", "alt": "Description" },
+        { "src": "photo.jpg", "title": "Title" },
+        { "src": "photo.jpg", "title": "Title", "subtitle": "Subtitle" },
+        { "src": "photo.jpg", "caption": "Photo by John" },
+        { "src": "photo.jpg", "aspect": "1/1" },
+        { "src": "photo.jpg", "position": "bottom", "title": "Title" },
+        { "src": "photo.jpg", "variant": "elevated" }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "cards",
+    "icon": "🖼️",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

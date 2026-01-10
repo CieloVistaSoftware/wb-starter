@@ -1,105 +1,79 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const ROOT = path.resolve(__dirname, '..');
 const DOCS_DIR = path.join(ROOT, 'docs');
-const MANIFEST_PATH = path.join(DOCS_DIR, 'manifest.json');
+const OUTPUT_FILE = path.join(ROOT, 'data', 'docs-manifest.json');
 
-const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf-8'));
-
-// Helper to find or create category
-function getCategory(name, icon) {
-  let cat = manifest.categories.find(c => c.name === name);
-  if (!cat) {
-    cat = { name, icon, docs: [] };
-    manifest.categories.push(cat);
+function getMarkdownFiles(dir, basePath = '') {
+  const results = [];
+  
+  if (!fs.existsSync(dir)) return results;
+  
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    const relativePath = basePath ? `${basePath}/${entry.name}` : entry.name;
+    
+    if (entry.isDirectory()) {
+      // Skip hidden directories and node_modules
+      if (entry.name.startsWith('.') || entry.name === 'node_modules') continue;
+      results.push(...getMarkdownFiles(fullPath, relativePath));
+    } else if (entry.name.endsWith('.md')) {
+      // Read first line for title
+      const content = fs.readFileSync(fullPath, 'utf-8');
+      const firstLine = content.split('\n')[0];
+      const title = firstLine.replace(/^#\s*/, '').trim() || entry.name.replace('.md', '');
+      
+      results.push({
+        path: `docs/${relativePath}`,
+        title,
+        name: entry.name.replace('.md', ''),
+        category: basePath.split('/')[0] || 'root'
+      });
+    }
   }
-  if (!cat.docs) cat.docs = [];
-  return cat;
+  
+  return results;
 }
 
-// Helper to check if file exists in manifest
-function isInManifest(filePath) {
-  const normalized = path.normalize(filePath);
-  for (const cat of manifest.categories) {
-    if (cat.docs) {
-      for (const doc of cat.docs) {
-        if (path.normalize(doc.file) === normalized) return true;
-      }
-    }
-    if (cat.pages) {
-        // pages usually don't have 'file' property pointing to md, but let's check
-    }
-  }
-  return false;
-}
-
-// Scan files
-function scanDir(dir, fileList = []) {
-  const files = fs.readdirSync(dir);
+function generateManifest() {
+  console.log('Scanning docs directory...');
+  
+  const files = getMarkdownFiles(DOCS_DIR);
+  
+  // Group by category
+  const byCategory = {};
   for (const file of files) {
-    const fullPath = path.join(dir, file);
-    const stat = fs.statSync(fullPath);
-    if (stat.isDirectory()) {
-      if (file !== '_today') {
-        scanDir(fullPath, fileList);
-      }
-    } else if (file.endsWith('.md')) {
-      fileList.push(path.relative(DOCS_DIR, fullPath));
+    if (!byCategory[file.category]) {
+      byCategory[file.category] = [];
     }
+    byCategory[file.category].push(file);
   }
-  return fileList;
+  
+  const manifest = {
+    generated: new Date().toISOString(),
+    totalFiles: files.length,
+    categories: Object.keys(byCategory).sort(),
+    byCategory,
+    files: files.sort((a, b) => a.path.localeCompare(b.path))
+  };
+  
+  // Ensure data directory exists
+  const dataDir = path.dirname(OUTPUT_FILE);
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+  }
+  
+  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(manifest, null, 2));
+  
+  console.log(`Generated manifest with ${files.length} files in ${Object.keys(byCategory).length} categories`);
+  console.log(`Output: ${OUTPUT_FILE}`);
 }
 
-const allFiles = scanDir(DOCS_DIR);
-
-for (const file of allFiles) {
-  if (isInManifest(file)) continue;
-  if (file === 'manifest.json') continue;
-
-  const parts = file.split(path.sep);
-  const fileName = path.basename(file, '.md');
-  
-  // Determine category
-  let categoryName = 'Uncategorized';
-  let icon = '📄';
-  
-  if (file.startsWith('components' + path.sep + 'semantic') || file.startsWith('components' + path.sep + 'semantics')) {
-    categoryName = 'Semantics';
-    icon = '🏷️';
-  } else if (file.startsWith('components' + path.sep + 'effects')) {
-    categoryName = 'Effects';
-    icon = '✨';
-  } else if (file.startsWith('compliance')) {
-    categoryName = 'Compliance';
-    icon = '⚖️';
-  } else if (file.startsWith('components')) {
-    categoryName = 'Components';
-    icon = '🧩';
-  } else if (file === 'card.md') {
-    categoryName = 'Components';
-    icon = '🧩';
-  }
-
-  const cat = getCategory(categoryName, icon);
-  
-  // Generate title
-  let title = fileName.charAt(0).toUpperCase() + fileName.slice(1);
-  if (fileName === 'index') title = parts[parts.length - 2] + ' Index';
-  if (fileName === 'README') title = parts[parts.length - 2] + ' Readme';
-  
-  // Special cases
-  if (file === 'card.md') title = 'Card Overview';
-  if (file === 'components/cards/index.md') title = 'Card Components Index';
-
-  cat.docs.push({
-    file: file.replace(/\\/g, '/'), // Ensure forward slashes
-    title: title,
-    description: `Documentation for ${title}`
-  });
-  
-  console.log(`Added ${file} to ${categoryName}`);
-}
-
-fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2));
-console.log('Manifest updated!');
+generateManifest();

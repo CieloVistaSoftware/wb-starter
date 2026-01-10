@@ -1,4 +1,5 @@
 # Card Component Documentation
+[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/card.md)
 
 ## Overview
 The Card component is a flexible UI container for displaying grouped content. It is the foundation for **19 specialized variants**, ranging from simple content containers to complex interactive elements like draggable cards, product displays, and portfolios.
@@ -17,17 +18,16 @@ There are 19 distinct card behaviors available. All inherit from the base `card`
 | **Layout** | `cardhorizontal`, `cardbutton`, `cardlink` |
 | **Interactive** | `carddraggable`, `cardexpandable`, `cardminimizable`, `cardportfolio` |
 
-### cardlink with AutoInject
+### cardlink
 
-The `cardlink` variant has special autoInject support. With `autoInject: true`:
+To create a card that acts as a link, use the `<card-link>` custom element:
 
 ```html
-<!-- This automatically becomes a cardlink -->
-<article data-href="/page" data-title="My Page" data-badge="NEW"></article>
+<card-link data-href="/page" data-title="My Page" data-badge="NEW"></card-link>
 ```
 
 Supported attributes:
-- `data-href` - Link destination (required for autoInject)
+- `data-href` - Link destination (required)
 - `data-title` - Card title
 - `data-description` - Card description
 - `data-icon` - Icon before title
@@ -35,21 +35,19 @@ Supported attributes:
 - `data-badge-variant` - Badge style: `glass` (default) or `gradient`
 - `data-target` - Link target: `_self` (default) or `_blank`
 
-**Note:** Plain `<article>` elements without `data-href` remain semantic articles.
-
 ---
 
 ## Schema
-- See: [src/behaviors/ui/schema/card.schema.json](../src/behaviors/ui/schema/card.schema.json)
+- See: [src/wb-models/card.schema.json](../src/wb-models/card.schema.json)
 - Defines base properties, styles, and test scenarios for all card types.
-- Specialized schemas (e.g., [cardimage.schema.json](../src/behaviors/ui/schema/cardimage.schema.json), [cardbutton.schema.json](../src/behaviors/ui/schema/cardbutton.schema.json)) extend this base for unique features.
+- Specialized schemas (e.g., [src/wb-models/cardimage.schema.json](../src/wb-models/cardimage.schema.json)) extend this base for unique features.
 
 ---
 
 ## Implementation
-- Source: [src/behaviors/ui/card.js](../src/behaviors/ui/card.js)
-- Playwright tests: [src/behaviors/ui/card.spec.ts](../src/behaviors/ui/card.spec.ts)
-- The card behavior is applied via the `data-wb="card"` attribute.
+- Source: [src/wb-viewmodels/card.js](../src/wb-viewmodels/card.js)
+- Playwright tests: [tests/behaviors/ui/card.spec.ts](../tests/behaviors/ui/card.spec.ts)
+- The card behavior is automatically applied to `<wb-card>` elements or `<article>` elements (if auto-inject is enabled).
 - Always adds the `wb-card` class.
 - Always adds the `wb-card--default` class if no variant is specified.
 - Supports additional classes for hoverable, clickable, elevated, and custom variants.
@@ -66,19 +64,15 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 
 ## Usage Example
 ```html
-<div data-wb="card" data-variant="primary" data-hoverable data-clickable>
+<wb-card data-variant="primary" data-hoverable data-clickable>
   <h3>Card Title</h3>
   <p>Card content goes here.</p>
-</div>
+</wb-card>
 ```
 
-> **Developer Tip:** In VS Code, type `data-wb="` (including the quote) to trigger IntelliSense and see a dropdown list of all available behaviors.
->
-> ![IntelliSense Demo](assets/images/intellisense-demo.png)
-> *(Please save your screenshot to `docs/assets/images/intellisense-demo.png` to see it here)*
+> **Developer Tip:** In VS Code, type `<wb-card` to trigger IntelliSense and see available attributes.
 
 **Attribute Definitions:**
-- `data-wb="card"`: Activates the card behavior for this element.
 - `data-variant="primary"`: Sets the card variant (e.g., primary, secondary, default). If omitted, `wb-card--default` is used.
 - `data-hoverable`: Adds the `wb-card--hoverable` class for hover effects. Omit or set to `false` to disable.
 - `data-clickable`: Adds the `wb-card--clickable` class for click interaction styling.
@@ -86,7 +80,7 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 ---
 
 ## Test Coverage
-- Playwright integration tests: `src/behaviors/ui/card.spec.ts`
+- Playwright integration tests: `tests/behaviors/ui/card.spec.ts`
 - Tests are run using `index.html` as the entry point, with test cards injected dynamically.
 - All tests must pass before documentation is updated.
 - Tests cover:
@@ -111,4 +105,4 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 ---
 
 ## Last Updated
-December 13, 2025
+January 9, 2026

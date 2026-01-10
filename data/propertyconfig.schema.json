@@ -1,0 +1,218 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "propertyconfig.schema.json",
+  "title": "WB Property Configuration Schema",
+  "description": "Schema for the WB Builder property configuration system. Defines UI types, property definitions, categories, and behaviors for component properties.",
+  "version": "1.0.0",
+  
+  "type": "object",
+  "required": ["version", "uiTypes", "properties", "categories"],
+  
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this schema file"
+    },
+    "version": {
+      "type": "string",
+      "description": "Schema version in semver format",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "updated": {
+      "type": "string",
+      "description": "Last updated date (YYYY-MM-DD format)"
+    },
+    
+    "uiTypes": {
+      "type": "object",
+      "description": "Available UI control types for property editing",
+      "additionalProperties": {
+        "$ref": "#/definitions/uiTypeDefinition"
+      }
+    },
+    
+    "properties": {
+      "type": "object",
+      "description": "Global property definitions. Each key is a property name.",
+      "additionalProperties": {
+        "$ref": "#/definitions/propertyDefinition"
+      }
+    },
+    
+    "categories": {
+      "type": "object",
+      "description": "Property category groupings for the UI. Categories are COLLAPSIBLE - clicking the header toggles visibility of child properties.",
+      "additionalProperties": {
+        "$ref": "#/definitions/categoryDefinition"
+      }
+    },
+    
+    "behaviors": {
+      "type": "object",
+      "description": "Component-specific property overrides keyed by behavior name",
+      "additionalProperties": {
+        "type": "object",
+        "description": "Property overrides for this behavior",
+        "additionalProperties": {
+          "$ref": "#/definitions/propertyDefinition"
+        }
+      }
+    },
+    
+    "componentDefaults": {
+      "type": "object",
+      "description": "Default property values keyed by component behavior",
+      "additionalProperties": {
+        "type": "object",
+        "description": "Default property values for this component type"
+      }
+    }
+  },
+  
+  "definitions": {
+    "uiTypeDefinition": {
+      "type": "object",
+      "description": "Definition of a UI control type",
+      "required": ["component"],
+      "properties": {
+        "component": {
+          "type": "string",
+          "description": "The component type to render",
+          "enum": ["input", "checkbox", "select", "textarea", "file", "iconPicker", "none"]
+        },
+        "inputType": {
+          "type": "string",
+          "description": "HTML input type (for input components)",
+          "enum": ["text", "number", "range", "url", "email", "tel", "color", "date", "time", "datetime-local"]
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Default placeholder text"
+        },
+        "accept": {
+          "type": "string",
+          "description": "File accept attribute (for file components)"
+        },
+        "preview": {
+          "type": "boolean",
+          "description": "Whether to show a preview (for media files)"
+        },
+        "rows": {
+          "type": "integer",
+          "description": "Number of rows (for textarea)"
+        },
+        "monospace": {
+          "type": "boolean",
+          "description": "Use monospace font (for code/JSON)"
+        },
+        "editOnCanvas": {
+          "type": "boolean",
+          "description": "Property is edited directly on canvas via double-click"
+        }
+      }
+    },
+    
+    "propertyDefinition": {
+      "type": "object",
+      "description": "Definition of a component property",
+      "required": ["label", "ui"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Human-readable label for the property"
+        },
+        "ui": {
+          "type": "string",
+          "description": "UI control type from uiTypes",
+          "enum": [
+            "text", "number", "range", "url", "email", "tel", "color",
+            "date", "time", "datetime", "checkbox", "boolean", "select",
+            "textarea", "file", "image", "audio", "video", "icon",
+            "json", "cssValue", "canvasEditable"
+          ]
+        },
+        "default": {
+          "description": "Default value for the property"
+        },
+        "description": {
+          "type": "string",
+          "description": "Help text describing the property"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category grouping for UI organization. Categories are COLLAPSIBLE containers.",
+          "enum": ["content", "media", "layout", "styling", "behavior", "accessibility", "data", "other"]
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Placeholder text for input fields"
+        },
+        "options": {
+          "type": "array",
+          "description": "Options for select controls",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "properties": {
+                  "value": { "type": "string" },
+                  "label": { "type": "string" }
+                },
+                "required": ["value"]
+              }
+            ]
+          }
+        },
+        "min": {
+          "type": "number",
+          "description": "Minimum value for number inputs"
+        },
+        "max": {
+          "type": "number",
+          "description": "Maximum value for number inputs"
+        },
+        "step": {
+          "type": "number",
+          "description": "Step value for number/range inputs"
+        },
+        "componentOverrides": {
+          "type": "object",
+          "description": "Component-specific overrides for this property",
+          "additionalProperties": {
+            "$ref": "#/definitions/propertyDefinition"
+          }
+        }
+      }
+    },
+    
+    "categoryDefinition": {
+      "type": "object",
+      "description": "Definition of a property category. Categories render as COLLAPSIBLE sections - clicking the category header toggles visibility of all child properties within that category.",
+      "required": ["label", "order"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Display label for the category header. Clicking this toggles collapse/expand."
+        },
+        "order": {
+          "type": "integer",
+          "description": "Sort order (lower numbers appear first)"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Optional emoji icon for the category"
+        },
+        "collapsed": {
+          "type": "boolean",
+          "description": "Whether the category starts collapsed (default: false - expanded)",
+          "default": false
+        },
+        "description": {
+          "type": "string",
+          "description": "Help text for the category"
+        }
+      }
+    }
+  }
+}

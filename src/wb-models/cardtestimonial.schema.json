@@ -1,0 +1,278 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cardtestimonial.schema.json",
+  "title": "Testimonial Card",
+  "description": "Customer testimonial/review card with quote, author, avatar, and rating",
+  
+  "behavior": "cardtestimonial",
+  "baseClass": "wb-testimonial",
+  
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  
+  "properties": {
+    "quote": {
+      "type": "string",
+      "description": "Testimonial quote text",
+      "required": true
+    },
+    "author": {
+      "type": "string",
+      "description": "Author name",
+      "required": true
+    },
+    "role": {
+      "type": "string",
+      "description": "Author role/title/company"
+    },
+    "avatar": {
+      "type": "string",
+      "description": "Author avatar image URL"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Star rating (0-5)",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual style variant",
+      "enum": ["default", "elevated", "bordered", "minimal", "centered"],
+      "default": "default",
+      "appliesClass": "wb-testimonial--{{value}}"
+    },
+    "size": {
+      "type": "string",
+      "description": "Card size",
+      "enum": ["sm", "md", "lg"],
+      "default": "md",
+      "appliesClass": "wb-testimonial--{{value}}"
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "rating",
+      "tag": "p",
+      "public": true,
+      "createdWhen": "rating",
+      "description": "Star rating display"
+    },
+    {
+      "name": "quote",
+      "tag": "blockquote",
+      "public": true,
+      "required": true,
+      "description": "Semantic blockquote for testimonial"
+    },
+    {
+      "name": "quote-text",
+      "tag": "p",
+      "parent": "quote",
+      "public": true,
+      "content": "{{quote}}",
+      "description": "Quote text content"
+    },
+    {
+      "name": "footer",
+      "tag": "footer",
+      "public": true,
+      "required": true,
+      "description": "Attribution footer"
+    },
+    {
+      "name": "avatar-wrapper",
+      "tag": "figure",
+      "parent": "footer",
+      "public": true,
+      "createdWhen": "avatar",
+      "description": "Avatar container"
+    },
+    {
+      "name": "avatar",
+      "tag": "img",
+      "parent": "avatar-wrapper",
+      "public": true,
+      "createdWhen": "avatar",
+      "description": "Author avatar image"
+    },
+    {
+      "name": "attribution",
+      "tag": "div",
+      "parent": "footer",
+      "public": false,
+      "required": true,
+      "description": "Author info container"
+    },
+    {
+      "name": "author",
+      "tag": "cite",
+      "parent": "attribution",
+      "public": true,
+      "content": "{{author}}",
+      "description": "Author name (semantic cite)"
+    },
+    {
+      "name": "role",
+      "tag": "span",
+      "parent": "attribution",
+      "public": true,
+      "content": "{{role}}",
+      "createdWhen": "role",
+      "description": "Author role/title"
+    }
+  ],
+  
+  "$methods": {
+    "show": {
+      "description": "Shows the testimonial card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the testimonial card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "setRating": {
+      "description": "Updates the star rating",
+      "params": ["rating"]
+    }
+  },
+  
+  "$cssAPI": {
+    "--wb-testimonial-padding": {
+      "default": "1.5rem",
+      "description": "Card padding"
+    },
+    "--wb-testimonial-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-testimonial-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Card background"
+    },
+    "--wb-testimonial-border": {
+      "default": "none",
+      "description": "Card border"
+    },
+    "--wb-testimonial-shadow": {
+      "default": "none",
+      "description": "Card shadow"
+    },
+    "--wb-testimonial-gap": {
+      "default": "1rem",
+      "description": "Gap between elements"
+    },
+    "--wb-testimonial-quote-size": {
+      "default": "1rem",
+      "description": "Quote text font size"
+    },
+    "--wb-testimonial-quote-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Quote text color"
+    },
+    "--wb-testimonial-quote-style": {
+      "default": "italic",
+      "description": "Quote font style"
+    },
+    "--wb-testimonial-quote-line-height": {
+      "default": "1.6",
+      "description": "Quote line height"
+    },
+    "--wb-testimonial-quote-mark": {
+      "default": "\u201C",
+      "description": "Opening quote character"
+    },
+    "--wb-testimonial-quote-mark-size": {
+      "default": "3rem",
+      "description": "Quote mark font size"
+    },
+    "--wb-testimonial-quote-mark-color": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Quote mark color"
+    },
+    "--wb-testimonial-avatar-size": {
+      "default": "48px",
+      "description": "Avatar size"
+    },
+    "--wb-testimonial-avatar-radius": {
+      "default": "50%",
+      "description": "Avatar border radius"
+    },
+    "--wb-testimonial-author-size": {
+      "default": "1rem",
+      "description": "Author name font size"
+    },
+    "--wb-testimonial-author-weight": {
+      "default": "600",
+      "description": "Author name font weight"
+    },
+    "--wb-testimonial-author-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Author name color"
+    },
+    "--wb-testimonial-role-size": {
+      "default": "0.875rem",
+      "description": "Role font size"
+    },
+    "--wb-testimonial-role-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Role text color"
+    },
+    "--wb-testimonial-star-color": {
+      "default": "var(--warning, #ffc107)",
+      "description": "Filled star color"
+    },
+    "--wb-testimonial-star-empty-color": {
+      "default": "var(--border-color, #e0e0e0)",
+      "description": "Empty star color"
+    },
+    "--wb-testimonial-star-size": {
+      "default": "1rem",
+      "description": "Star size"
+    }
+  },
+  
+  "accessibility": {
+    "avatar": {
+      "alt": "Photo of {{author}}"
+    },
+    "rating": {
+      "ariaLabel": "{{rating}} out of 5 stars"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-testimonial quote=\"Great product!\" author=\"John Doe\"></wb-testimonial>",
+      "<wb-testimonial quote=\"Amazing!\" author=\"Jane\" role=\"CEO\" avatar=\"avatar.jpg\" rating=\"5\"></wb-testimonial>",
+      "<article data-wb=\"cardtestimonial\" data-quote=\"Test\" data-author=\"John\"></article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "quote": "Great!", "author": "John" },
+        { "quote": "Great!", "author": "John", "role": "CEO" },
+        { "quote": "Great!", "author": "John", "avatar": "avatar.jpg" },
+        { "quote": "Great!", "author": "John", "rating": 5 },
+        { "quote": "Great!", "author": "John", "rating": 3 },
+        { "quote": "Excellent service!", "author": "Jane", "role": "CTO at Acme", "avatar": "jane.jpg", "rating": 5 },
+        { "quote": "Great!", "author": "John", "variant": "elevated" },
+        { "quote": "Great!", "author": "John", "variant": "centered" }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "cards",
+    "icon": "💬",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

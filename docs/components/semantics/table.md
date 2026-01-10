@@ -13,10 +13,10 @@ The `table` component transforms standard HTML tables into interactive data grid
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="table"` to a `<table>` element.
+The `table` behavior is automatically injected into `<table>` elements.
 
 ```html
-<table data-wb="table" data-striped="true" data-hover="true">
+<table data-striped="true" data-hover="true">
   <thead>
     <tr><th>Name</th><th>Age</th></tr>
   </thead>
@@ -50,7 +50,6 @@ A fully featured table with search and sorting.
 
 ```html
 <table 
-  data-wb="table" 
   data-searchable="true" 
   data-striped="true" 
   data-bordered="true">
@@ -63,7 +62,6 @@ Rendering a table from a JSON string (useful for dynamic data).
 
 ```html
 <table 
-  data-wb="table" 
   data-headers="ID,Name,Role" 
   data-rows='[[1,"John","Admin"],[2,"Jane","User"]]'>
 </table>

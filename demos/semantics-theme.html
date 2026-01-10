@@ -51,35 +51,35 @@
 <body id="semanticstheme-body-9">
   <header id="semanticstheme-header-10">
     <h1 id="semanticstheme-h1-11">🎨 Theme & Dark Mode</h1>
-    <div id="semanticstheme-div-12" data-wb="themecontrol"></div>
+    <wb-themecontrol id="semanticstheme-div-12"></div>
   </header>
   <p id="semanticstheme-p-13">Behaviors for managing themes and dark mode.</p>
 
   <!-- THEME CONTROL -->
-  <h2 id="semanticstheme-h2-14">Theme Control <code id="semanticstheme-code-15">data-wb="themecontrol"</code></h2>
+  <h2 id="semanticstheme-h2-14">Theme Control <code id="semanticstheme-code-15"></code></h2>
   <div id="semanticstheme-div-16" class="demo-section">
     <p id="semanticstheme-p-17">A dropdown to switch the global theme. Persists selection to localStorage.</p>
-    <div id="semanticstheme-div-18" data-wb="themecontrol" data-show-label="true"></div>
+    <wb-themecontrol id="semanticstheme-div-18" data-show-label="true"></div>
   </div>
 
   <!-- DARK MODE ENFORCER -->
-  <h2 id="semanticstheme-h2-19">Forced Theme <code id="semanticstheme-code-20">data-wb="darkmode"</code></h2>
+  <h2 id="semanticstheme-h2-19">Forced Theme <code id="semanticstheme-code-20">x-darkmode</code></h2>
   <div id="semanticstheme-div-21" class="demo-section">
     <p id="semanticstheme-p-22">These sections have forced themes regardless of the global setting.</p>
     
-    <div id="semanticstheme-div-23" class="card" data-wb="darkmode" data-target="self" data-theme="dark">
+    <div id="semanticstheme-div-23" class="card" x-darkmode data-target="self" data-theme="dark">
       <h3 id="semanticstheme-h3-24">Forced Dark Mode</h3>
       <p id="semanticstheme-p-25">This card will always be dark.</p>
       <button id="semanticstheme-button-26" data-variant="primary">Primary Button</button>
     </div>
 
-    <div id="semanticstheme-div-27" class="card" data-wb="darkmode" data-target="self" data-theme="light">
+    <div id="semanticstheme-div-27" class="card" x-darkmode data-target="self" data-theme="light">
       <h3 id="semanticstheme-h3-28">Forced Light Mode</h3>
       <p id="semanticstheme-p-29">This card will always be light.</p>
       <button id="semanticstheme-button-30" data-variant="primary">Primary Button</button>
     </div>
 
-    <div id="semanticstheme-div-31" class="card" data-wb="darkmode" data-target="self" data-theme="cyberpunk">
+    <div id="semanticstheme-div-31" class="card" x-darkmode data-target="self" data-theme="cyberpunk">
       <h3 id="semanticstheme-h3-32">Forced Cyberpunk</h3>
       <p id="semanticstheme-p-33">This card will always be cyberpunk.</p>
       <button id="semanticstheme-button-34" data-variant="primary">Primary Button</button>

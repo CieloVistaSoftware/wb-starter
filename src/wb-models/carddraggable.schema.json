@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "carddraggable.schema.json",
+  "title": "Draggable Card",
+  "description": "Card that can be dragged around the page",
+  
+  "behavior": "carddraggable",
+  "baseClass": "wb-card-draggable",
+  
+  "semanticElement": { "tagName": "article", "implicitRole": "article" },
+  
+  "properties": {
+    "title": { "type": "string", "description": "Card title" },
+    "content": { "type": "string", "description": "Card content" },
+    "constrain": { "type": "string", "description": "Constrain to area", "enum": ["none", "parent", "viewport"], "default": "none" },
+    "axis": { "type": "string", "description": "Drag axis", "enum": ["both", "x", "y"], "default": "both" },
+    "snapToGrid": { "type": "number", "description": "Snap grid size (0=disabled)", "default": 0 },
+    "variant": { "type": "string", "enum": ["default", "elevated"], "default": "default", "appliesClass": "wb-card-draggable--{{value}}" }
+  },
+  
+  "$view": [
+    { "name": "header", "tag": "header", "public": true, "required": true, "description": "Header with drag handle" },
+    { "name": "drag-handle", "tag": "div", "parent": "header", "public": true, "description": "Drag handle element" },
+    { "name": "title", "tag": "h3", "parent": "header", "public": true, "content": "{{title}}", "createdWhen": "title", "description": "Card title" },
+    { "name": "main", "tag": "main", "public": true, "required": true, "content": "{{content}}{{body}}", "description": "Card content" }
+  ],
+  
+  "$methods": {
+    "setPosition": { "description": "Sets card position", "params": ["x", "y"] },
+    "getPosition": { "description": "Gets current position", "params": [], "returns": "{x, y}" },
+    "reset": { "description": "Resets to original position", "params": [] }
+  },
+  
+  "$cssAPI": {
+    "--wb-card-draggable-padding": { "default": "1rem", "description": "Card padding" },
+    "--wb-card-draggable-radius": { "default": "8px", "description": "Border radius" },
+    "--wb-card-draggable-handle-cursor": { "default": "grab", "description": "Handle cursor" },
+    "--wb-card-draggable-dragging-opacity": { "default": "0.8", "description": "Opacity while dragging" },
+    "--wb-card-draggable-dragging-shadow": { "default": "0 8px 24px rgba(0,0,0,0.2)", "description": "Shadow while dragging" }
+  },
+  
+  "events": {
+    "wb:drag:start": { "description": "Drag started", "detail": { "x": "number", "y": "number" } },
+    "wb:drag:move": { "description": "During drag", "detail": { "x": "number", "y": "number" } },
+    "wb:drag:end": { "description": "Drag ended", "detail": { "x": "number", "y": "number" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-card-draggable title=\"Drag Me\">Content</wb-card-draggable>",
+      "<article data-wb=\"carddraggable\" data-title=\"Test\" data-constrain=\"parent\">Content</article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "title": "Basic", "content": "Content" },
+        { "title": "Constrained", "content": "Content", "constrain": "parent" },
+        { "title": "X Only", "content": "Content", "axis": "x" }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "cards", "icon": "🎯", "since": "1.0.0", "status": "stable" }
+}

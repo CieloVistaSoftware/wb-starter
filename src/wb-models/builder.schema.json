@@ -1,0 +1,367 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "behavior": "builder",
+  "title": "Builder Schema",
+  "description": "Unified schema for builder components and UI interactions.",
+  "type": "object",
+  "properties": {
+    "label": { 
+      "type": "string",
+      "default": "Builder",
+      "appliesAttribute": "label"
+    },
+    "icon": {
+      "type": "string",
+      "default": "🎨",
+      "appliesAttribute": "icon"
+    },
+    "components": {
+      "type": "array",
+      "description": "List of components in the builder.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "description": "Component type (e.g., 'card', 'button', etc.)" },
+          "id": { "type": "string", "description": "Unique component ID. Auto-generated as readable camelCase with counter (e.g., sidebarLeft-1, column2-1, hero-1)" },
+          "props": { "type": "object", "description": "Component properties (see individual schemas)." },
+          "children": { "$ref": "#/properties/components" }
+        },
+        "required": ["type", "id", "props"],
+        "additionalProperties": false
+      }
+    },
+    "meta": {
+      "type": "object",
+      "description": "Builder-level metadata (optional)",
+      "properties": {
+        "version": { "type": "string" },
+        "created": { "type": "string", "format": "date-time" },
+        "author": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "required": ["components"],
+  "additionalProperties": false,
+  "baseClass": "wb-builder",
+  
+  "$view": [
+    { 
+      "name": "container", 
+      "tag": "section", 
+      "class": "empty"
+    },
+    { 
+      "name": "icon", 
+      "tag": "div", 
+      "class": "empty-icon",
+      "parent": "container", 
+      "content": "{{icon}}"
+    },
+    { 
+      "name": "title", 
+      "tag": "h3", 
+      "parent": "container", 
+      "content": "{{label}}"
+    },
+    { 
+      "name": "desc", 
+      "tag": "p", 
+      "parent": "container", 
+      "content": "Builder component - Semantic View"
+    }
+  ],
+  
+  "interactions": {
+    "description": "UI interaction rules for the builder interface",
+    
+    "canvasSections": {
+      "description": "Rules for Header/Main/Footer canvas sections",
+      "rules": [
+        {
+          "id": "SECTIONS_COLLAPSED_ON_LOAD",
+          "trigger": "Page load",
+          "action": "All sections (Header/Main/Footer) display as collapsed stacked bars",
+          "details": "Canvas shows three horizontal bars. No section is expanded or focused by default. User must click to expand."
+        },
+        {
+          "id": "SECTION_TOGGLE_ON_CLICK",
+          "trigger": "Click section header bar",
+          "action": "Toggle expand/collapse for that section",
+          "details": "Clicking Header/Main/Footer bar toggles its expanded state. Only one section needs to be expanded at a time, but multiple can be expanded."
+        },
+        {
+          "id": "SECTION_IDS_VISIBLE",
+          "trigger": "Always visible",
+          "action": "Section bars display their IDs (#canvas-header, #canvas-main, #canvas-footer)",
+          "details": "Each section bar shows its HTML ID in monospace font for easy reference."
+        },
+        {
+          "id": "COMPONENT_IDS_VISIBLE",
+          "trigger": "Component added to canvas",
+          "action": "Component displays its readable ID as purple label",
+          "details": "Every dropped element shows an ID label (e.g., #sidebarLeft-1, #hero-1) in top-left corner. IDs auto-increment per component type."
+        },
+        {
+          "id": "SCROLL_WITH_OFFSET",
+          "trigger": "Section expanded or clicked",
+          "action": "Canvas scrolls to show section 5rem below builder header",
+          "details": "When a section is focused, viewport scrolls so the section bar appears 5rem (80px) below the fixed builder header."
+        }
+      ]
+    },
+    
+    "selection": {
+      "description": "Rules for component selection and focus synchronization",
+      "rules": [
+        {
+          "id": "CANVAS_TO_TREE_SYNC",
+          "trigger": "Click component on canvas",
+          "action": "Tree panel scrolls to and highlights the selected component",
+          "details": "When user clicks a .dropped element on canvas, the tree panel must scroll to show that component and apply visual highlight (green border)"
+        },
+        {
+          "id": "TREE_TO_CANVAS_SYNC", 
+          "trigger": "Click component in tree panel",
+          "action": "Canvas scrolls to and selects the component",
+          "details": "When user clicks a component row in tree panel, canvas scrolls to center that component and applies selection outline"
+        },
+        {
+          "id": "SECTION_CLICK_IMMEDIATE_FOCUS",
+          "trigger": "Click section in tree panel (Header/Main/Footer)",
+          "action": "Immediately change focus to that section",
+          "details": "Any click on Header, Main, or Footer in the tree IMMEDIATELY sets that as the active section. The section turns green, template browser updates, and canvas section expands."
+        },
+        {
+          "id": "SECTION_FOCUS_FROM_CANVAS",
+          "trigger": "Click component on canvas",
+          "action": "Parent section becomes focused in tree panel",
+          "details": "When a canvas component is selected, its parent section (Header/Main/Footer) becomes the active section with green highlight. Template browser filters to that section."
+        }
+      ]
+    },
+    
+    "sectionFocus": {
+      "description": "Rules for Header/Main/Footer section focus system",
+      "rules": [
+        {
+          "id": "GREEN_SECTION_COLOR_PALETTE",
+          "trigger": "Section is green (focused)",
+          "action": "Color palette works for components in that section",
+          "details": "When a section is focused (green highlight), the color palette and style tools apply to elements within that section."
+        },
+        {
+          "id": "SECTION_PERSISTENCE",
+          "trigger": "Add component via template browser",
+          "action": "Section focus remains unchanged",
+          "details": "Adding a component does NOT change section focus. User must explicitly click a different section to change focus."
+        },
+        {
+          "id": "SHOW_ALL_OVERRIDE",
+          "trigger": "Click 'Show All' in template browser",
+          "action": "Section filter is cleared",
+          "details": "Clicking Show All removes section filtering, showing all available components regardless of section."
+        }
+      ]
+    },
+    
+    "propertiesPanel": {
+      "description": "Rules for property panel interaction",
+      "rules": [
+        {
+          "id": "SELECTED_ELEMENT_INDICATOR",
+          "trigger": "Component selected",
+          "action": "Properties panel shows selected element indicator at top",
+          "details": "Green bordered box at top of properties panel showing: checkmark icon, element ID (#componentId), which section it's in (Header/Main/Footer), and hint that color palette applies to this element."
+        },
+        {
+          "id": "PROP_CATEGORY_TOGGLE",
+          "trigger": "Click category header in properties panel",
+          "action": "Category body collapses or expands",
+          "details": "Clicking on any category header (Content, Appearance, Layout, etc.) toggles the visibility of child property rows. Uses CSS class 'collapsed' to hide/show."
+        },
+        {
+          "id": "PROP_DEFAULT_EXPANDED",
+          "trigger": "Properties panel opens for component",
+          "action": "All categories are expanded by default",
+          "details": "When selecting a component and viewing its properties, all category groups start expanded."
+        },
+        {
+          "id": "PROP_TAB_ICONS",
+          "trigger": "Tab section display",
+          "action": "Icons display at 1.5rem height",
+          "details": "The Tree, Props, and Style tab icons in the right panel header display at 1.5rem font-size for better visibility."
+        }
+      ]
+    },
+    
+    "previewMode": {
+      "description": "Rules for preview mode behavior",
+      "rules": [
+        {
+          "id": "PREVIEW_INHERITS_THEME",
+          "trigger": "Enter preview mode",
+          "action": "Preview page uses the page's theme colors",
+          "details": "Preview does NOT force white background. It inherits whatever theme (dark/light/custom) is set on the page being previewed."
+        },
+        {
+          "id": "PREVIEW_VERTICAL_SCROLL",
+          "trigger": "Content exceeds viewport in preview",
+          "action": "Vertical scrollbar appears",
+          "details": "Preview mode must show vertical scrollbars when page content is taller than the viewport. Uses overflow-y: auto."
+        },
+        {
+          "id": "PREVIEW_EXPANDS_COLLAPSED",
+          "trigger": "Enter preview mode",
+          "action": "All collapsed sections are shown expanded",
+          "details": "Collapsed sections in the builder are automatically expanded in preview mode so all content is visible."
+        },
+        {
+          "id": "PREVIEW_HIDES_BUILDER_UI",
+          "trigger": "Enter preview mode",
+          "action": "All builder UI elements hidden",
+          "details": "Section bars, ID labels, controls, panels, menus - all hidden. Only the page content and exit button visible."
+        }
+      ]
+    },
+    
+    "events": {
+      "description": "Custom events dispatched by the builder",
+      "list": [
+        {
+          "name": "wb:section:activated",
+          "detail": "{ section: 'header' | 'main' | 'footer' }",
+          "description": "Fired when active section changes"
+        },
+        {
+          "name": "wb:canvas:section:toggled",
+          "detail": "{ section: string, expanded: boolean }",
+          "description": "Fired when canvas section is expanded or collapsed"
+        },
+        {
+          "name": "wb:component:selected",
+          "detail": "{ id: string, behavior: string }",
+          "description": "Fired when a component is selected on canvas or tree"
+        }
+      ]
+    }
+  },
+  
+  "compliance": {
+    "css": "Uses only CSS variables for colors, minimal !important usage",
+    "schema": "Includes required fields and structure for builder components",
+    "baseClass": "wb-builder"
+  },
+  
+  "test": {
+    "setup": [
+      "<div data-wb=\"builder\">Builder Test</div>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "components": [{ "type": "card", "id": "test1", "props": {} }] },
+        { "components": [{ "type": "button", "id": "test2", "props": {} }] }
+      ]
+    },
+    "functional": [
+      {
+        "name": "Canvas sections collapsed on load",
+        "type": "interactions",
+        "steps": [
+          "Load builder page",
+          "Verify Header, Main, Footer show as collapsed bars",
+          "Verify no section has green highlight"
+        ]
+      },
+      {
+        "name": "Section click toggles expand",
+        "type": "interactions",
+        "steps": [
+          "Click Main section bar",
+          "Verify Main expands and shows green highlight",
+          "Click Main again",
+          "Verify Main collapses"
+        ]
+      },
+      {
+        "name": "Component shows readable ID",
+        "type": "interactions",
+        "steps": [
+          "Add a '2 Column' layout to Main",
+          "Verify component shows ID label like #column2-1",
+          "Add another '2 Column'",
+          "Verify it shows #column2-2"
+        ]
+      },
+      {
+        "name": "Properties panel shows selected indicator",
+        "type": "interactions",
+        "steps": [
+          "Add component to Main section",
+          "Click component to select",
+          "Verify properties panel shows green 'Selected Element' box",
+          "Verify it shows component ID and section name"
+        ]
+      },
+      {
+        "name": "Preview inherits theme and scrolls",
+        "type": "interactions",
+        "steps": [
+          "Set page theme to dark",
+          "Add tall content to Main",
+          "Enter preview mode",
+          "Verify dark theme colors shown",
+          "Verify vertical scrollbar appears"
+        ]
+      },
+      {
+        "name": "Tree section click changes focus immediately",
+        "type": "interactions",
+        "steps": [
+          "Click Footer in tree panel",
+          "Verify Footer section immediately turns green",
+          "Verify canvas scrolls to Footer",
+          "Verify template browser shows footer templates"
+        ]
+      }
+    ]
+  },
+  
+  "api": {
+    "description": "Global builder API exposed as window.builderAPI for programmatic control.",
+    "methods": {
+      "add": {
+        "description": "Add a new builder component. Returns the created wrapper element.",
+        "signature": "add(component: object, parentId?: string): HTMLElement"
+      },
+      "remove": {
+        "description": "Remove a builder component by ID. Returns true if removed.",
+        "signature": "remove(id: string): boolean"
+      },
+      "update": {
+        "description": "Update properties of a builder component by ID. Returns the updated element.",
+        "signature": "update(id: string, props: object): HTMLElement | null"
+      },
+      "reset": {
+        "description": "Reset the builder canvas, removing all components. Returns true if reset.",
+        "signature": "reset(): boolean"
+      },
+      "get": {
+        "description": "Get a builder component wrapper by ID.",
+        "signature": "get(id: string): HTMLElement | null"
+      },
+      "setActiveSection": {
+        "description": "Set the active section (Header/Main/Footer). Updates tree and template browser.",
+        "signature": "setActiveSection(section: 'header' | 'main' | 'footer'): void"
+      },
+      "getActiveSection": {
+        "description": "Get the currently active section.",
+        "signature": "getActiveSection(): 'header' | 'main' | 'footer' | null"
+      },
+      "toggleCanvasSection": {
+        "description": "Toggle expand/collapse state of a canvas section.",
+        "signature": "toggleCanvasSection(section: 'header' | 'main' | 'footer'): void"
+      }
+    }
+  }
+}

@@ -1,0 +1,308 @@
+{
+  "card": {
+    "behavior": "card",
+    "baseClass": "wb-card",
+    "tagName": "wb-card",
+    "cases": [
+      {
+        "name": "renders with no props",
+        "input": {},
+        "html": "<wb-card></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card"
+          ],
+          "children": [
+            {
+              "tag": "MAIN",
+              "class": "wb-card__main"
+            }
+          ]
+        }
+      },
+      {
+        "name": "renders with title",
+        "input": {
+          "title": "Test title"
+        },
+        "html": "<wb-card title=\"Test title\"></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card"
+          ],
+          "containsText": "Test title"
+        }
+      },
+      {
+        "name": "renders with subtitle",
+        "input": {
+          "subtitle": "Test subtitle"
+        },
+        "html": "<wb-card subtitle=\"Test subtitle\"></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card"
+          ],
+          "containsText": "Test subtitle"
+        }
+      },
+      {
+        "name": "renders with footer",
+        "input": {
+          "footer": "Test footer"
+        },
+        "html": "<wb-card footer=\"Test footer\"></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card"
+          ],
+          "containsText": "Test footer"
+        }
+      },
+      {
+        "name": "applies elevated when true",
+        "input": {
+          "elevated": true
+        },
+        "html": "<wb-card elevated></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card",
+            "wb-card--elevated"
+          ]
+        }
+      },
+      {
+        "name": "does not apply elevated class when false",
+        "input": {
+          "elevated": false
+        },
+        "html": "<wb-card></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card"
+          ],
+          "notHasClass": [
+            "wb-card--elevated"
+          ]
+        }
+      },
+      {
+        "name": "applies clickable when true",
+        "input": {
+          "clickable": true
+        },
+        "html": "<wb-card clickable></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card",
+            "wb-card--clickable"
+          ]
+        }
+      },
+      {
+        "name": "does not apply clickable class when false",
+        "input": {
+          "clickable": false
+        },
+        "html": "<wb-card></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card"
+          ],
+          "notHasClass": [
+            "wb-card--clickable"
+          ]
+        }
+      },
+      {
+        "name": "renders with variant",
+        "input": {
+          "variant": "Test variant"
+        },
+        "html": "<wb-card variant=\"Test variant\"></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card"
+          ],
+          "containsText": "Test variant"
+        }
+      },
+      {
+        "name": "applies variant=\"glass\" modifier",
+        "input": {
+          "variant": "glass"
+        },
+        "html": "<wb-card variant=\"glass\"></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card",
+            "wb-card--glass"
+          ]
+        }
+      },
+      {
+        "name": "applies variant=\"bordered\" modifier",
+        "input": {
+          "variant": "bordered"
+        },
+        "html": "<wb-card variant=\"bordered\"></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card",
+            "wb-card--bordered"
+          ]
+        }
+      },
+      {
+        "name": "applies variant=\"flat\" modifier",
+        "input": {
+          "variant": "flat"
+        },
+        "html": "<wb-card variant=\"flat\"></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card",
+            "wb-card--flat"
+          ]
+        }
+      },
+      {
+        "name": "header not created when title OR subtitle is false",
+        "input": {},
+        "html": "<wb-card></wb-card>",
+        "expect": {
+          "notHasSelector": ".wb-card__header"
+        }
+      },
+      {
+        "name": "header created when title OR subtitle",
+        "input": {
+          "title": "Test title"
+        },
+        "html": "<wb-card title=\"Test title\"></wb-card>",
+        "expect": {
+          "hasSelector": ".wb-card__header",
+          "selectorTag": {
+            ".wb-card__header": "HEADER"
+          }
+        }
+      },
+      {
+        "name": "title not created when title is false",
+        "input": {},
+        "html": "<wb-card></wb-card>",
+        "expect": {
+          "notHasSelector": ".wb-card__title"
+        }
+      },
+      {
+        "name": "title created when title",
+        "input": {
+          "title": "Test title"
+        },
+        "html": "<wb-card title=\"Test title\"></wb-card>",
+        "expect": {
+          "hasSelector": ".wb-card__title",
+          "selectorTag": {
+            ".wb-card__title": "H3"
+          }
+        }
+      },
+      {
+        "name": "subtitle not created when subtitle is false",
+        "input": {},
+        "html": "<wb-card></wb-card>",
+        "expect": {
+          "notHasSelector": ".wb-card__subtitle"
+        }
+      },
+      {
+        "name": "subtitle created when subtitle",
+        "input": {
+          "subtitle": "Test subtitle"
+        },
+        "html": "<wb-card subtitle=\"Test subtitle\"></wb-card>",
+        "expect": {
+          "hasSelector": ".wb-card__subtitle",
+          "selectorTag": {
+            ".wb-card__subtitle": "P"
+          }
+        }
+      },
+      {
+        "name": "footer not created when footer is false",
+        "input": {},
+        "html": "<wb-card></wb-card>",
+        "expect": {
+          "notHasSelector": ".wb-card__footer"
+        }
+      },
+      {
+        "name": "footer created when footer",
+        "input": {
+          "footer": "Test footer"
+        },
+        "html": "<wb-card footer=\"Test footer\"></wb-card>",
+        "expect": {
+          "hasSelector": ".wb-card__footer",
+          "selectorTag": {
+            ".wb-card__footer": "FOOTER"
+          }
+        }
+      },
+      {
+        "name": "renders with all string props",
+        "input": {
+          "title": "Test title",
+          "subtitle": "Test subtitle",
+          "footer": "Test footer",
+          "variant": "Test variant"
+        },
+        "html": "<wb-card title=\"Test title\" subtitle=\"Test subtitle\" footer=\"Test footer\" variant=\"Test variant\"></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card"
+          ],
+          "children": [
+            {
+              "tag": "HEADER",
+              "class": "wb-card__header"
+            },
+            {
+              "tag": "H3",
+              "class": "wb-card__title"
+            },
+            {
+              "tag": "P",
+              "class": "wb-card__subtitle"
+            },
+            {
+              "tag": "MAIN",
+              "class": "wb-card__main"
+            },
+            {
+              "tag": "FOOTER",
+              "class": "wb-card__footer"
+            }
+          ]
+        }
+      },
+      {
+        "name": "renders with all boolean props true",
+        "input": {
+          "elevated": true,
+          "clickable": true
+        },
+        "html": "<wb-card elevated clickable></wb-card>",
+        "expect": {
+          "hasClass": [
+            "wb-card",
+            "wb-card--elevated",
+            "wb-card--clickable"
+          ]
+        }
+      }
+    ]
+  }
+}

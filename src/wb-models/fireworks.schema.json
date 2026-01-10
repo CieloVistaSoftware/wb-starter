@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fireworks.schema.json",
+  "title": "Fireworks",
+  "description": "Fireworks particle burst animation effect",
+  
+  "behavior": "fireworks",
+  "baseClass": "wb-fireworks",
+  
+  "semanticElement": { "tagName": "div" },
+  
+  "properties": {
+    "count": { "type": "number", "description": "Particles per burst", "default": 30 },
+    "label": { "type": "string", "description": "Trigger button label", "default": "Fireworks!" },
+    "showButton": { "type": "boolean", "description": "Show trigger button", "default": true },
+    "repeat": { "type": "boolean", "description": "Loop animation", "default": false },
+    "delay": { "type": "string", "description": "Start delay", "default": "0s" },
+    "duration": { "type": "string", "description": "Animation duration", "default": "1.5s" },
+    "colors": { "type": "string", "description": "Particle colors as JSON array", "default": "[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]" }
+  },
+  
+  "$view": [
+    { "name": "button", "tag": "button", "public": true, "content": "{{label}}", "createdWhen": "showButton", "description": "Trigger button" },
+    { "name": "container", "tag": "div", "public": false, "description": "Particle container" }
+  ],
+  
+  "$methods": {
+    "fire": { "description": "Triggers fireworks", "params": [] },
+    "stop": { "description": "Stops animation", "params": [] }
+  },
+  
+  "$cssAPI": {
+    "--wb-fireworks-z-index": { "default": "9999", "description": "Z-index" }
+  },
+  
+  "events": {
+    "wb:fireworks:start": { "description": "Animation started" },
+    "wb:fireworks:end": { "description": "Animation ended" }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-fireworks></wb-fireworks>",
+      "<button data-wb=\"fireworks\">Boom!</button>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        { "count": 50 },
+        { "repeat": true }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "effects", "icon": "🎆", "since": "1.0.0", "status": "stable" }
+}

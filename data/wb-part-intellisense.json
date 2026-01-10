@@ -1,0 +1,242 @@
+{
+  "version": 1.1,
+  "tags": [
+    {
+      "name": "wb-part",
+      "description": "WB Part - Reusable HTML template. First boolean attribute specifies the part name.",
+      "attributes": [
+        {
+          "name": "card-tile",
+          "description": "Use the \"card-tile\" part template. Draggable component tile for sidebar/palette",
+          "valueSet": "v"
+        },
+        {
+          "name": "alert-box",
+          "description": "Use the \"alert-box\" part template. Alert/notification message box",
+          "valueSet": "v"
+        },
+        {
+          "name": "stat-tile",
+          "description": "Use the \"stat-tile\" part template. Statistics display tile with trend indicator",
+          "valueSet": "v"
+        },
+        {
+          "name": "nav-link",
+          "description": "Use the \"nav-link\" part template. Navigation link item",
+          "valueSet": "v"
+        },
+        {
+          "name": "user-avatar",
+          "description": "Use the \"user-avatar\" part template. User avatar with optional status indicator",
+          "valueSet": "v"
+        },
+        {
+          "name": "price-tag",
+          "description": "Use the \"price-tag\" part template. Price display with optional original price",
+          "valueSet": "v"
+        },
+        {
+          "name": "feature-item",
+          "description": "Use the \"feature-item\" part template. Feature list item with icon",
+          "valueSet": "v"
+        },
+        {
+          "name": "button-primary",
+          "description": "Use the \"button-primary\" part template. Primary action button",
+          "valueSet": "v"
+        },
+        {
+          "name": "icon-button",
+          "description": "Use the \"icon-button\" part template. Icon-only button",
+          "valueSet": "v"
+        },
+        {
+          "name": "badge",
+          "description": "Use the \"badge\" part template. Small badge/tag label",
+          "valueSet": "v"
+        },
+        {
+          "name": "empty-state",
+          "description": "Use the \"empty-state\" part template. Empty state placeholder with optional action",
+          "valueSet": "v"
+        },
+        {
+          "name": "loading-skeleton",
+          "description": "Use the \"loading-skeleton\" part template. Loading placeholder skeleton",
+          "valueSet": "v"
+        },
+        {
+          "name": "src",
+          "description": "URL to fetch JSON data for the part"
+        },
+        {
+          "name": "refresh",
+          "description": "Auto-refresh interval in milliseconds (requires src)"
+        },
+        {
+          "name": "icon",
+          "description": "[card-tile] Emoji or icon for the tile (string) [required] | [stat-tile] Icon emoji | [nav-link] Icon emoji | [button-primary] Icon before label | [icon-button] Button icon [required] | [empty-state] Large icon [default: 📭]"
+        },
+        {
+          "name": "label",
+          "description": "[card-tile] Display label for the tile (string) [required] | [stat-tile] Label describing the statistic [required] | [nav-link] Link text [required] | [button-primary] Button text [required] | [badge] Badge text [required]"
+        },
+        {
+          "name": "behavior",
+          "description": "[card-tile] Behavior ID to apply when dropped (string)"
+        },
+        {
+          "name": "tag",
+          "description": "[card-tile] Custom element tag name (string)"
+        },
+        {
+          "name": "variant",
+          "description": "[alert-box] Alert style variant | [button-primary] Button style variant | [icon-button] Button style | [badge] Badge style | [loading-skeleton] Skeleton type",
+          "values": [
+            { "name": "info", "description": "variant=\"info\"" },
+            { "name": "success", "description": "variant=\"success\"" },
+            { "name": "warning", "description": "variant=\"warning\"" },
+            { "name": "error", "description": "variant=\"error\"" },
+            { "name": "primary", "description": "variant=\"primary\"" },
+            { "name": "secondary", "description": "variant=\"secondary\"" },
+            { "name": "ghost", "description": "variant=\"ghost\"" },
+            { "name": "outline", "description": "variant=\"outline\"" },
+            { "name": "default", "description": "variant=\"default\"" },
+            { "name": "text", "description": "variant=\"text\"" },
+            { "name": "heading", "description": "variant=\"heading\"" },
+            { "name": "avatar", "description": "variant=\"avatar\"" },
+            { "name": "image", "description": "variant=\"image\"" },
+            { "name": "card", "description": "variant=\"card\"" }
+          ]
+        },
+        {
+          "name": "heading",
+          "description": "[alert-box] Alert heading text (string) | [empty-state] Empty state heading [required]"
+        },
+        {
+          "name": "message",
+          "description": "[alert-box] Alert message content (string) [required] | [empty-state] Additional message text"
+        },
+        {
+          "name": "dismissible",
+          "description": "[alert-box] Show dismiss button (boolean)",
+          "valueSet": "v"
+        },
+        {
+          "name": "value",
+          "description": "[stat-tile] Main statistic value (e.g., '1,234') (string) [required]"
+        },
+        {
+          "name": "trend",
+          "description": "[stat-tile] Trend direction",
+          "values": [
+            { "name": "up", "description": "trend=\"up\"" },
+            { "name": "down", "description": "trend=\"down\"" },
+            { "name": "flat", "description": "trend=\"flat\"" }
+          ]
+        },
+        {
+          "name": "trend-value",
+          "description": "[stat-tile] Trend amount (e.g., '+12%') (string)"
+        },
+        {
+          "name": "href",
+          "description": "[nav-link] Link URL (string) [required]"
+        },
+        {
+          "name": "badge",
+          "description": "[nav-link] Badge text (e.g., notification count) (string)"
+        },
+        {
+          "name": "active",
+          "description": "[nav-link] Mark as active/current (boolean)",
+          "valueSet": "v"
+        },
+        {
+          "name": "name",
+          "description": "[user-avatar] User's name (for alt text) (string) [required]"
+        },
+        {
+          "name": "initials",
+          "description": "[user-avatar] Initials to show if no image (string)"
+        },
+        {
+          "name": "size",
+          "description": "[user-avatar] Avatar size | [button-primary] Button size | [icon-button] Button size",
+          "values": [
+            { "name": "xs", "description": "size=\"xs\"" },
+            { "name": "sm", "description": "size=\"sm\"" },
+            { "name": "md", "description": "size=\"md\"" },
+            { "name": "lg", "description": "size=\"lg\"" },
+            { "name": "xl", "description": "size=\"xl\"" }
+          ]
+        },
+        {
+          "name": "status",
+          "description": "[user-avatar] Online status indicator",
+          "values": [
+            { "name": "online", "description": "status=\"online\"" },
+            { "name": "offline", "description": "status=\"offline\"" },
+            { "name": "busy", "description": "status=\"busy\"" },
+            { "name": "away", "description": "status=\"away\"" }
+          ]
+        },
+        {
+          "name": "price",
+          "description": "[price-tag] Current price (e.g., '$29') (string) [required]"
+        },
+        {
+          "name": "original",
+          "description": "[price-tag] Original price (for discounts) (string)"
+        },
+        {
+          "name": "period",
+          "description": "[price-tag] Billing period (e.g., '/mo', '/year') (string)"
+        },
+        {
+          "name": "text",
+          "description": "[feature-item] Feature text (string) [required]"
+        },
+        {
+          "name": "included",
+          "description": "[feature-item] Whether feature is included (boolean) [default: true]",
+          "valueSet": "v"
+        },
+        {
+          "name": "disabled",
+          "description": "[button-primary] Disable the button | [icon-button] Disable the button (boolean)",
+          "valueSet": "v"
+        },
+        {
+          "name": "tooltip",
+          "description": "[icon-button] Tooltip/aria-label text (string) [required]"
+        },
+        {
+          "name": "action-label",
+          "description": "[empty-state] Action button label (enables body slot) (string)"
+        },
+        {
+          "name": "width",
+          "description": "[loading-skeleton] Width (CSS value) (string) [default: 100%]"
+        },
+        {
+          "name": "height",
+          "description": "[loading-skeleton] Height (CSS value) (string)"
+        }
+      ],
+      "references": [
+        {
+          "name": "WB Parts Documentation",
+          "url": "https://github.com/user/wb-starter#parts"
+        }
+      ]
+    }
+  ],
+  "globalAttributes": [],
+  "valueSets": [
+    {
+      "name": "v",
+      "values": [{ "name": "" }]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-01-03T05:43:41.306Z",
+  "totalIssues": 0,
+  "issues": {
+    "schemaStructure": [],
+    "missingFunction": [],
+    "missingBaseClass": [],
+    "missingStyles": [],
+    "missingElements": [],
+    "headingLevels": []
+  }
+}

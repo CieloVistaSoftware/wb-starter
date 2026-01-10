@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WB Views Demo - Complete Examples</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="wb-views-demo.css">
+</head>
+<body>
+
+  <div class="page">
+    <div class="page__hero">
+      <h1>🧩 WB Views System</h1>
+      <p><strong>Custom Element Factory:</strong> Define a template once → get a custom tag automatically. Change the template → ALL instances update.</p>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TEMPLATE DEFINITIONS                         -->
+    <!-- ============================================ -->
+    <!-- These templates are used in the "Building Custom Views" section examples -->
+
+    <!-- Demo Section: Standardized section wrapper -->
+    <template wb-view="demo-section">
+      <section class="demo-section">
+        <div class="section-header">
+          <h2>{{title}}</h2>
+          <span class="badge" wb-if="badge">{{badge}}</span>
+        </div>
+        <div class="section-content">
+          <p class="section-description" wb-if="description">{{description}}</p>
+          {{body}}
+        </div>
+      </section>
+    </template>
+
+    <!-- Example Block: Renders example and shows source code -->
+    <template wb-view="example-block">
+      <div class="example-block">
+        <div class="example-label">{{label}}</div>
+        <div class="example-render">
+          {{body}}
+        </div>
+        <div class="example-codes" wb-if="code">
+          <div class="code-tabs">
+            <button class="code-tab active">HTML</button>
+          </div>
+          <pre class="code-panel active">{{code}}</pre>
+        </div>
+      </div>
+    </template>
+
+    <!-- Component Tile -->
+    <template wb-view="component-tile">
+      <div class="tile">
+        <span class="tile__icon">{{icon}}</span>
+        <span class="tile__label">{{body || text}}</span>
+        <span class="tile__badge" wb-if="badge">{{badge}}</span>
+      </div>
+    </template>
+
+    <!-- Badge Tag -->
+    <template wb-view="badge-tag">
+      <span class="badge-tag badge-tag--{{variant || 'primary'}}">
+        <span wb-if="icon">{{icon}}</span>
+        {{body || text}}
+      </span>
+    </template>
+
+    <!-- Badge List -->
+    <template wb-view="badge-list">
+      <div class="inline-row">
+        <badge-tag wb-for="badge in badges" variant="{{badge.variant}}" icon="{{badge.icon}}">{{badge.label}}</badge-tag>
+      </div>
+    </template>
+
+    <!-- Tag List -->
+    <template wb-view="tag-list">
+      <div class="tags">
+        <span class="tag" wb-for="tag in tags">{{tag}}</span>
+      </div>
+    </template>
+
+    <!-- Button Group -->
+    <template wb-view="button-group">
+      <div class="button-group">{{body}}</div>
+    </template>
+
+    <!-- Card -->
+    <template wb-view="card">
+      <article class="card">
+        <header class="card__header" wb-if="title">
+          <div class="card__header-content">
+            <h3 class="card__title">{{title}}</h3>
+            <p class="card__subtitle" wb-if="subtitle">{{subtitle}}</p>
+          </div>
+          <span class="card__badge" wb-if="badge">{{badge}}</span>
+        </header>
+        <main class="card__body">{{body}}</main>
+        <footer class="card__footer" wb-if="footer">{{footer}}</footer>
+      </article>
+    </template>
+
+    <!-- User Card -->
+    <template wb-view="user-card">
+      <div class="user-card">
+        <user-avatar initials="{{initials}}" size="lg" status="{{status}}" name="{{name}}"></user-avatar>
+        <div class="user-card__info">
+          <div class="user-card__name">{{name}}</div>
+          <div class="user-card__role">{{role}}</div>
+        </div>
+        {{body}}
+      </div>
+    </template>
+
+    <!-- Toolbar -->
+    <template wb-view="toolbar">
+      <div class="toolbar">
+        <div class="toolbar__center">{{body}}</div>
+      </div>
+    </template>
+
+    <!-- File Toolbar -->
+    <template wb-view="file-toolbar">
+      <wb-toolbar>
+        <button-primary wb-for="item in items" icon="{{item.icon}}" variant="ghost" label="{{item.label}}"></button-primary>
+      </wb-toolbar>
+    </template>
+
+    <!-- Stat Row -->
+    <template wb-view="stat-row">
+      <div class="stat-row">{{body}}</div>
+    </template>
+
+    <!-- Alert Box -->
+    <template wb-view="alert-box">
+      <div class="alert alert--{{variant || 'info'}}">
+        <span class="alert__icon" wb-if="icon">{{icon}}</span>
+        <div class="alert__content">
+          <div class="alert__heading" wb-if="heading">{{heading}}</div>
+          <div class="alert__message">{{message}}</div>
+        </div>
+        <button class="alert__dismiss" wb-if="dismissible">✕</button>
+      </div>
+    </template>
+
+    <!-- Stat Tile -->
+    <template wb-view="stat-tile">
+      <div class="stat">
+        <span class="stat__icon" wb-if="icon">{{icon}}</span>
+        <div>
+          <div class="stat__value">{{value}}</div>
+          <div class="stat__label">{{body || text}}</div>
+          <div class="stat__trend stat__trend--{{trend}}" wb-if="trendValue">{{trendValue}}</div>
+        </div>
+      </div>
+    </template>
+
+
+    <!-- ============================================ -->
+    <!-- PART 1: PREMADE MVVM CONTROLS                -->
+    <!-- ============================================ -->
+
+    <demo-section title="🔘 Buttons" badge="variants + icons">
+        <example-block label="Standard Buttons (button-primary)">
+            <div class="inline-row">
+              <button-primary variant="primary" label="Primary"></button-primary>
+              <button-primary variant="secondary" label="Secondary"></button-primary>
+              <button-primary variant="success" label="Success"></button-primary>
+              <button-primary icon="💾" variant="primary" label="Save"></button-primary>
+              <button-primary icon="🗑️" variant="error" label="Delete"></button-primary>
+            </div>
+        </example-block>
+    </demo-section>
+
+    <demo-section title="👤 Avatars" badge="sizes + status">
+        <example-block label="User Avatars (user-avatar)">
+            <div class="inline-row">
+              <user-avatar initials="SM" size="sm" name="User"></user-avatar>
+              <user-avatar initials="MD" size="md" name="User"></user-avatar>
+              <user-avatar initials="LG" size="lg" name="User"></user-avatar>
+              <user-avatar initials="JD" size="lg" status="online" name="John Doe"></user-avatar>
+              <user-avatar initials="AS" size="lg" status="busy" name="Alice Smith"></user-avatar>
+            </div>
+        </example-block>
+    </demo-section>
+
+    <demo-section title="🧭 Navigation Links" badge="sidebar nav">
+        <example-block label="Navigation Items (nav-link)">
+            <div style="max-width: 280px;">
+              <nav-link icon="🏠" href="#" active label="Dashboard"></nav-link>
+              <nav-link icon="📊" href="#" label="Analytics"></nav-link>
+              <nav-link icon="💬" href="#" badge="5" label="Messages"></nav-link>
+              <nav-link icon="⚙️" href="#" label="Settings"></nav-link>
+            </div>
+        </example-block>
+    </demo-section>
+
+    <demo-section title="💰 Pricing" badge="prices + features">
+        <example-block label="Pricing Components (price-tag, feature-item)">
+            <div class="inline-row" style="margin-bottom: 1.5rem;">
+              <price-tag price="$29" period="/month"></price-tag>
+              <price-tag price="$19" original="$29" period="/month"></price-tag>
+              <price-tag price="Free"></price-tag>
+            </div>
+            <div style="max-width: 300px;">
+              <feature-item text="Unlimited projects" included></feature-item>
+              <feature-item text="Priority support" included></feature-item>
+              <feature-item text="Custom integrations"></feature-item>
+            </div>
+        </example-block>
+    </demo-section>
+
+
+    <!-- ============================================ -->
+    <!-- PART 2: BUILDING CUSTOM VIEWS                -->
+    <!-- ============================================ -->
+
+    <demo-section title="📖 What is a wb-view Element?" description="A wb-view element is a custom element factory. It takes a template name and attributes, renders the template with those values, and automatically registers it as a standalone custom element tag.">
+        
+        <example-block label="How It Works">
+            <pre class="template-code">&lt;!-- 1. Define a template ONCE --&gt;
+&lt;template wb-view="badge-tag"&gt;
+  &lt;span class="badge-tag badge-tag--{{variant}}"&gt;{{body}}&lt;/span&gt;
+&lt;/template&gt;
+
+&lt;!-- 2. Use it TWO ways: --&gt;
+&lt;wb-view badge-tag variant="primary"&gt;New&lt;/wb-view&gt;   &lt;!-- wrapper syntax --&gt;
+&lt;badge-tag variant="primary"&gt;New&lt;/badge-tag&gt;          &lt;!-- auto-registered tag --&gt;
+
+&lt;!-- 3. Both produce: --&gt;
+&lt;span class="badge-tag badge-tag--primary"&gt;New&lt;/span&gt;</pre>
+        </example-block>
+
+        <example-block label="Tag Naming Convention">
+            <p style="margin-bottom: 1rem; color: var(--text-muted);">Custom elements <em>require</em> a hyphen (Web Components spec). WB Views handles this automatically:</p>
+            <table style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <th style="text-align: left; padding: 0.5rem;">View Name</th>
+                  <th style="text-align: left; padding: 0.5rem;">Has Hyphen?</th>
+                  <th style="text-align: left; padding: 0.5rem;">Custom Tag</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding: 0.5rem;"><code>toolbar</code></td><td style="padding: 0.5rem; color: var(--danger-color);">No</td><td style="padding: 0.5rem;"><code>&lt;wb-toolbar&gt;</code> (auto-prefixed)</td></tr>
+                <tr><td style="padding: 0.5rem;"><code>card</code></td><td style="padding: 0.5rem; color: var(--danger-color);">No</td><td style="padding: 0.5rem;"><code>&lt;wb-card&gt;</code> (auto-prefixed)</td></tr>
+                <tr><td style="padding: 0.5rem;"><code>alert-box</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;alert-box&gt;</code> (as-is)</td></tr>
+                <tr><td style="padding: 0.5rem;"><code>stat-tile</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;stat-tile&gt;</code> (as-is)</td></tr>
+                <tr><td style="padding: 0.5rem;"><code>nav-link</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;nav-link&gt;</code> (as-is)</td></tr>
+              </tbody>
+            </table>
+            <p style="margin-top: 1rem;"><strong>The Rule:</strong> No hyphen → auto-prefix with <code>wb-</code> &nbsp;|&nbsp; Has hyphen → use as-is</p>
+        </example-block>
+    </demo-section>
+
+    <demo-section title="📦 Component Tiles" badge="4 examples" description="Reusable tiles for sidebars, palettes, and toolbars.">
+        <example-block label="1. Define Template (ONE TIME)">
+            <pre class="template-code">&lt;template wb-view="component-tile"&gt;
+  &lt;div class="tile"&gt;
+    &lt;span class="tile__icon"&gt;{{icon}}&lt;/span&gt;
+    &lt;span class="tile__label"&gt;{{body || text}}&lt;/span&gt;
+    &lt;span class="tile__badge" wb-if="badge"&gt;{{badge}}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</pre>
+        </example-block>
+
+        <example-block label="2. Use It (MANY TIMES)">
+            <div class="grid-4">
+              <component-tile icon="📝" text="Card"></component-tile>
+              <component-tile icon="⚡" text="Hero"></component-tile>
+              <component-tile icon="📦" text="Section"></component-tile>
+              <component-tile icon="📊" text="Stats" badge="New"></component-tile>
+            </div>
+        </example-block>
+    </demo-section>
+
+    <demo-section title="🚨 Alert Boxes" badge="4 variants" description="Notification messages with different severity levels.">
+        <example-block label="1. Define Template (ONE TIME)">
+            <pre class="template-code">&lt;template wb-view="alert-box"&gt;
+  &lt;div class="alert alert--{{variant || 'info'}}"&gt;
+    &lt;span class="alert__icon" wb-if="icon"&gt;{{icon}}&lt;/span&gt;
+    &lt;div class="alert__content"&gt;
+      &lt;div class="alert__heading" wb-if="heading"&gt;{{heading}}&lt;/div&gt;
+      &lt;div class="alert__message"&gt;{{message}}&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button class="alert__dismiss" wb-if="dismissible"&gt;✕&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</pre>
+        </example-block>
+
+        <example-block label="2. Use It (MANY TIMES)">
+            <alert-box variant="info" icon="ℹ️" message="This is an informational message."></alert-box>
+            <alert-box variant="success" icon="✅" heading="Success!" message="Your changes have been saved."></alert-box>
+            <alert-box variant="warning" icon="⚠️" message="This action cannot be undone." dismissible></alert-box>
+            <alert-box variant="error" icon="❌" heading="Error" message="Something went wrong."></alert-box>
+        </example-block>
+    </demo-section>
+
+    <demo-section title="📈 Stat Tiles" badge="with trends">
+        <example-block label="1. Define Template (ONE TIME)">
+            <pre class="template-code">&lt;template wb-view="stat-tile"&gt;
+  &lt;div class="stat"&gt;
+    &lt;span class="stat__icon" wb-if="icon"&gt;{{icon}}&lt;/span&gt;
+    &lt;div&gt;
+      &lt;div class="stat__value"&gt;{{value}}&lt;/div&gt;
+      &lt;div class="stat__label"&gt;{{body || text}}&lt;/div&gt;
+      &lt;div class="stat__trend stat__trend--{{trend}}" wb-if="trendValue"&gt;{{trendValue}}&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</pre>
+        </example-block>
+
+        <example-block label="2. Use It (MANY TIMES)">
+            <div class="grid-4">
+              <stat-tile icon="👥" value="1,234" label="Active Users" trend="up" trend-value="+12.5%"></stat-tile>
+              <stat-tile icon="💰" value="$52,000" label="Revenue" trend="up" trend-value="+8.2%"></stat-tile>
+              <stat-tile icon="📦" value="89" label="Orders Today" trend="down" trend-value="-3.1%"></stat-tile>
+              <stat-tile icon="⭐" value="4.8" label="Avg Rating"></stat-tile>
+            </div>
+        </example-block>
+    </demo-section>
+
+    <demo-section title="🏷️ Badges" badge="4 variants">
+        <example-block label="1. Define Template (ONE TIME)">
+            <pre class="template-code">&lt;template wb-view="badge-tag"&gt;
+  &lt;span class="badge-tag badge-tag--{{variant || 'primary'}}"&gt;
+    &lt;span wb-if="icon"&gt;{{icon}}&lt;/span&gt;
+    {{body || text}}
+  &lt;/span&gt;
+&lt;/template&gt;</pre>
+        </example-block>
+
+        <example-block label="2. Use It (Optimized with Loop)">
+            <badge-list badges='[
+              {"variant": "primary", "label": "Primary"},
+              {"variant": "success", "label": "Success"},
+              {"variant": "warning", "label": "Warning"},
+              {"variant": "error", "label": "Hot", "icon": "🔥"}
+            ]'></badge-list>
+        </example-block>
+    </demo-section>
+
+
+    <!-- ============================================ -->
+    <!-- PART 3: ADVANCED FEATURES                    -->
+    <!-- ============================================ -->
+
+    <demo-section title="🔄 Loops (wb-for)" badge="dynamic lists" description="Use wb-for to render lists from JSON arrays.">
+        <example-block label="1. Define Template with Loop (ONE TIME)">
+            <pre class="template-code">&lt;template wb-view="tag-list"&gt;
+  &lt;div class="tags"&gt;
+    &lt;span class="tag" wb-for="tag in tags"&gt;{{tag}}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</pre>
+        </example-block>
+
+        <example-block label="2. Use It with Data">
+            <tag-list tags='["JavaScript", "TypeScript", "React", "Vue", "Node.js"]'></tag-list>
+        </example-block>
+    </demo-section>
+
+    <demo-section title="🧱 Composition" badge="nested parts" description="Compose complex UIs by nesting views inside other views.">
+        
+        <example-block label="1. Define Composite Template (uses other views!)">
+            <pre class="template-code">&lt;template wb-view="user-card"&gt;
+  &lt;div class="user-card"&gt;
+    &lt;wb-avatar initials="{{initials}}" size="lg" status="{{status}}"&gt;&lt;/wb-avatar&gt;
+    &lt;div class="user-card__info"&gt;
+      &lt;div class="user-card__name"&gt;{{name}}&lt;/div&gt;
+      &lt;div class="user-card__role"&gt;{{role}}&lt;/div&gt;
+    &lt;/div&gt;
+    {{body}}
+  &lt;/div&gt;
+&lt;/template&gt;</pre>
+        </example-block>
+          
+        <example-block label="2. Use It (Views inside Views!)">
+            <div class="grid-2">
+              <user-card name="John Doe" initials="JD" role="Lead Developer" status="online">
+                <badge-tag variant="success">Pro</badge-tag>
+              </user-card>
+              <user-card name="Jane Smith" initials="JS" role="Designer" status="busy">
+                <badge-tag variant="warning">Away</badge-tag>
+              </user-card>
+            </div>
+        </example-block>
+
+        <example-block label="Button Group (Container View)">
+            <button-group>
+              <button-primary variant="primary" label="Left"></button-primary>
+              <button-primary variant="primary" label="Center"></button-primary>
+              <button-primary variant="primary" label="Right"></button-primary>
+            </button-group>
+        </example-block>
+
+        <example-block label="Card with Nested Views">
+            <wb-card title="User Settings" subtitle="Manage your preferences">
+              <p style="margin-bottom: 1rem; color: var(--text-muted);">Update your account settings and preferences below.</p>
+              <div class="inline-row">
+                <button-primary variant="primary" label="Save Changes"></button-primary>
+                <button-primary variant="secondary" label="Cancel"></button-primary>
+              </div>
+            </wb-card>
+        </example-block>
+
+        <example-block label="Stat Row (Auto-Grid Container)">
+            <stat-row>
+              <stat-tile icon="👥" value="2,451" label="Users"></stat-tile>
+              <stat-tile icon="📦" value="184" label="Orders"></stat-tile>
+              <stat-tile icon="💰" value="$12,500" label="Revenue"></stat-tile>
+            </stat-row>
+        </example-block>
+
+        <example-block label="Toolbar with Slots">
+            <file-toolbar items='[
+              {"icon": "📄", "label": "New"},
+              {"icon": "📂", "label": "Open"},
+              {"icon": "💾", "label": "Save"}
+            ]'></file-toolbar>
+        </example-block>
+
+    </demo-section>
+
+  </div>
+
+  <script type="module">
+    try {
+      // 1. Auto-generate code snippets BEFORE views render
+      // This captures the source code as written in the HTML file
+      document.querySelectorAll('example-block').forEach(block => {
+        let html = block.innerHTML;
+        const lines = html.split('\n');
+        
+        // Remove empty first/last lines
+        while(lines.length && !lines[0].trim()) lines.shift();
+        while(lines.length && !lines[lines.length-1].trim()) lines.pop();
+        
+        if (lines.length === 0) return;
+
+        // Find min indent
+        const minIndent = lines.reduce((min, line) => {
+          if (!line.trim()) return min;
+          const match = line.match(/^\s*/);
+          return Math.min(min, match ? match[0].length : Infinity);
+        }, Infinity);
+
+        // Dedent and escape
+        const formatted = lines.map(line => {
+          return line.slice(minIndent)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+        }).join('\n');
+
+        // Set as attribute for the template to use
+        block.setAttribute('code', formatted);
+      });
+
+      // 2. Initialize views system
+      const { initViews } = await import('../src/core/wb-views.js');
+      await initViews({ registry: '../src/wb-views/views-registry.json' });
+      console.log('🧩 WB Views Demo loaded!');
+
+    } catch (err) {
+      console.error('[Demo] Failed:', err);
+      document.body.innerHTML = `<pre style="color:red;padding:2rem;">ERROR: ${err.message}\n\n${err.stack}</pre>`;
+    }
+  </script>
+
+</body>
+</html>

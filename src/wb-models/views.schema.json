@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://wb-starter.dev/schemas/views.schema.json",
+  "title": "WB Views Registry Schema",
+  "description": "Schema for validating WB Views registry files. Views are reusable HTML templates that auto-register as custom elements.",
+  "type": "object",
+  "required": ["views"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this schema file"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of the views registry"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of this views registry"
+    },
+    "views": {
+      "type": "object",
+      "description": "Map of view names to their definitions",
+      "additionalProperties": {
+        "$ref": "#/definitions/ViewDefinition"
+      }
+    }
+  },
+  "definitions": {
+    "ViewDefinition": {
+      "type": "object",
+      "required": ["template"],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of this view"
+        },
+        "template": {
+          "type": "string",
+          "description": "HTML template with Mustache-style interpolation ({{variable}})",
+          "minLength": 1
+        },
+        "attributes": {
+          "type": "object",
+          "description": "Map of attribute names to their schemas",
+          "additionalProperties": {
+            "$ref": "#/definitions/AttributeDefinition"
+          }
+        },
+        "css": {
+          "type": "string",
+          "description": "Optional CSS file path for this view"
+        },
+        "behaviors": {
+          "type": "array",
+          "description": "Behaviors automatically applied to rendered content",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "AttributeDefinition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["string", "boolean", "number", "array", "object"],
+          "description": "Data type of the attribute"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description for IntelliSense"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Whether this attribute is required",
+          "default": false
+        },
+        "default": {
+          "description": "Default value if attribute is not provided"
+        },
+        "enum": {
+          "type": "array",
+          "description": "List of allowed values (creates dropdown in IntelliSense)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pattern": {
+          "type": "string",
+          "description": "Regex pattern for validation"
+        },
+        "minLength": {
+          "type": "integer",
+          "description": "Minimum string length"
+        },
+        "maxLength": {
+          "type": "integer",
+          "description": "Maximum string length"
+        },
+        "minimum": {
+          "type": "number",
+          "description": "Minimum numeric value"
+        },
+        "maximum": {
+          "type": "number",
+          "description": "Maximum numeric value"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "$schema": "./views.schema.json",
+      "version": "1.0.0",
+      "views": {
+        "btn": {
+          "description": "Button component",
+          "template": "<button class=\"btn btn--{{variant || 'primary'}}\">{{body}}</button>",
+          "attributes": {
+            "variant": {
+              "type": "string",
+              "description": "Button style variant",
+              "enum": ["primary", "secondary", "success", "error"],
+              "default": "primary"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

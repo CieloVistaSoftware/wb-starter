@@ -35,8 +35,9 @@ function initErrorDisplay() {
   
   errorContainer.innerHTML = `
     <div style="padding:10px 12px;background:#1a1a1a;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;border-radius:8px 8px 0 0;position:sticky;top:0;">
-      <span style="font-weight:bold;color:#ef4444;">❌ Errors</span>
+      <span style="font-weight:bold;color:#ef4444;">❌ Errors (<span id="wb-error-count">0</span>)</span>
       <div>
+        <button id="wb-error-copy" style="background:#3b82f6;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;margin-right:4px;">📋 Copy</button>
         <button id="wb-error-clear" style="background:#333;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;margin-right:4px;">Clear</button>
         <button id="wb-error-close" style="background:#ef4444;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;">✕</button>
       </div>
@@ -46,10 +47,38 @@ function initErrorDisplay() {
   
   document.body.appendChild(errorContainer);
   
+  // Copy button - formats errors for sharing
+  document.getElementById('wb-error-copy').onclick = async () => {
+    const copyBtn = document.getElementById('wb-error-copy');
+    const errorText = errors.map((e, i) => {
+      let text = `[${i + 1}] ${e.message}`;
+      if (e.details?.file) text += `\n    File: ${e.details.file}:${e.details.line || '?'}`;
+      if (e.details?.stack) text += `\n    Stack: ${e.details.stack.split('\n')[0]}`;
+      if (e.details?.reason) text += `\n    Reason: ${e.details.reason}`;
+      return text;
+    }).join('\n\n');
+    
+    const header = `=== ${errors.length} Error(s) at ${new Date().toLocaleString()} ===\nPage: ${window.location.href}\n\n`;
+    
+    try {
+      await navigator.clipboard.writeText(header + errorText);
+      copyBtn.textContent = '✅ Copied!';
+      copyBtn.style.background = '#22c55e';
+      setTimeout(() => {
+        copyBtn.textContent = '📋 Copy';
+        copyBtn.style.background = '#3b82f6';
+      }, 2000);
+    } catch (e) {
+      copyBtn.textContent = '❌ Failed';
+      setTimeout(() => copyBtn.textContent = '📋 Copy', 2000);
+    }
+  };
+  
   // Clear button
   document.getElementById('wb-error-clear').onclick = () => {
     errors = [];
     document.getElementById('wb-error-list').innerHTML = '';
+    updateErrorCount();
     saveErrorLog();
   };
   
@@ -75,6 +104,7 @@ export async function logError(message, details = {}) {
   };
   
   errors.push(error);
+  updateErrorCount();
   
   // Show in UI
   const list = document.getElementById('wb-error-list');
@@ -175,6 +205,7 @@ export async function clearErrors() {
   if (document.getElementById('wb-error-list')) {
     document.getElementById('wb-error-list').innerHTML = '';
   }
+  updateErrorCount();
   await saveErrorLog();
 }
 
@@ -187,6 +218,14 @@ function escapeHtml(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+/**
+ * Update the error count display
+ */
+function updateErrorCount() {
+  const countEl = document.getElementById('wb-error-count');
+  if (countEl) countEl.textContent = errors.length;
 }
 
 /**

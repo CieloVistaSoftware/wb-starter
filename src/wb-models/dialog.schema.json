@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dialog.schema.json",
+  "title": "Dialog",
+  "description": "Modal dialog using native HTML5 dialog element",
+  
+  "behavior": "dialog",
+  "baseClass": "wb-dialog",
+  
+  "semanticElement": { "tagName": "dialog", "implicitRole": "dialog" },
+  
+  "properties": {
+    "title": { "type": "string", "description": "Dialog title" },
+    "content": { "type": "string", "description": "Dialog body content" },
+    "size": { "type": "string", "enum": ["sm", "md", "lg", "xl", "full"], "default": "md", "appliesClass": "wb-dialog--{{value}}" },
+    "closeOnBackdrop": { "type": "boolean", "description": "Close on backdrop click", "default": true },
+    "closeOnEscape": { "type": "boolean", "description": "Close on Escape key", "default": true },
+    "showClose": { "type": "boolean", "description": "Show close button", "default": true },
+    "variant": { "type": "string", "enum": ["default", "centered", "fullscreen"], "default": "default", "appliesClass": "wb-dialog--{{value}}" }
+  },
+  
+  "$view": [
+    { "name": "backdrop", "tag": "div", "public": false, "description": "Backdrop overlay" },
+    { "name": "container", "tag": "div", "public": false, "required": true, "description": "Dialog container" },
+    { "name": "header", "tag": "header", "public": true, "createdWhen": "title OR showClose", "description": "Dialog header" },
+    { "name": "title", "tag": "h2", "parent": "header", "public": true, "content": "{{title}}", "createdWhen": "title", "description": "Dialog title" },
+    { "name": "close", "tag": "button", "parent": "header", "public": true, "createdWhen": "showClose", "description": "Close button" },
+    { "name": "body", "tag": "main", "public": true, "required": true, "content": "{{content}}{{body}}", "description": "Dialog body" },
+    { "name": "footer", "tag": "footer", "public": true, "createdWhen": "footer", "description": "Dialog footer" }
+  ],
+  
+  "$methods": {
+    "open": { "description": "Opens the dialog", "params": [], "returns": "Promise" },
+    "close": { "description": "Closes the dialog", "params": [], "returns": "Promise" },
+    "toggle": { "description": "Toggles the dialog", "params": [] },
+    "isOpen": { "description": "Returns open state", "params": [], "returns": "boolean" },
+    "setContent": { "description": "Updates dialog content", "params": ["content"] },
+    "setTitle": { "description": "Updates dialog title", "params": ["title"] }
+  },
+  
+  "$cssAPI": {
+    "--wb-dialog-width": { "default": "500px", "description": "Dialog width" },
+    "--wb-dialog-max-width": { "default": "90vw", "description": "Max dialog width" },
+    "--wb-dialog-max-height": { "default": "85vh", "description": "Max dialog height" },
+    "--wb-dialog-radius": { "default": "8px", "description": "Border radius" },
+    "--wb-dialog-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Background" },
+    "--wb-dialog-shadow": { "default": "0 20px 60px rgba(0,0,0,0.3)", "description": "Box shadow" },
+    "--wb-dialog-padding": { "default": "1.5rem", "description": "Content padding" },
+    "--wb-dialog-header-gap": { "default": "1rem", "description": "Header gap" },
+    "--wb-dialog-title-size": { "default": "1.25rem", "description": "Title font size" },
+    "--wb-dialog-title-weight": { "default": "600", "description": "Title font weight" },
+    "--wb-dialog-backdrop-bg": { "default": "rgba(0,0,0,0.5)", "description": "Backdrop background" },
+    "--wb-dialog-backdrop-blur": { "default": "0", "description": "Backdrop blur" },
+    "--wb-dialog-enter-animation": { "default": "dialogFadeIn 0.2s ease", "description": "Enter animation" },
+    "--wb-dialog-exit-animation": { "default": "dialogFadeOut 0.15s ease", "description": "Exit animation" },
+    "--wb-dialog-z-index": { "default": "1000", "description": "Z-index" }
+  },
+  
+  "accessibility": {
+    "role": "dialog",
+    "ariaModal": "true",
+    "ariaLabelledBy": "dialog title id"
+  },
+  
+  "events": {
+    "wb:dialog:open": { "description": "Dialog opened", "detail": { "title": "string" } },
+    "wb:dialog:close": { "description": "Dialog closed", "detail": {} },
+    "wb:dialog:cancel": { "description": "Dialog cancelled (Escape/backdrop)", "detail": {} }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-dialog title=\"Test Dialog\">Content here</wb-dialog>",
+      "<button data-wb=\"dialog\" data-dialog-title=\"Test\">Open</button>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "title": "Basic Dialog" },
+        { "title": "Large", "size": "lg" },
+        { "title": "No Close", "showClose": false },
+        { "title": "Centered", "variant": "centered" }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "overlay", "icon": "🪟", "since": "1.0.0", "status": "stable" }
+}

@@ -1,78 +1,79 @@
 {
-  "lastUpdated": "2026-01-02T05:56:22.646Z",
-  "count": 1,
+  "lastUpdated": "2026-01-09T22:50:09.473Z",
+  "count": 2,
   "errors": [
     {
-      "id": 1767333382645,
-      "timestamp": "2026-01-02T05:56:22.645Z",
+      "id": 1767998756169,
+      "timestamp": "2026-01-09T22:45:56.169Z",
       "level": "error",
-      "source": "WB:behaviors-showcase",
-      "module": "index.js",
-      "line": 205,
-      "column": 11,
-      "function": "getBehavior",
-      "message": "[WB] Unknown behavior: behaviors-showcase",
-      "stack": "Error: [WB] Unknown behavior: behaviors-showcase\n    at getBehavior (http://localhost:3000/src/behaviors/index.js:205:11)\n    at Proxy.<anonymous> (http://localhost:3000/src/behaviors/index.js:279:24)\n    at Object.inject (http://localhost:3000/src/core/wb.js:142:45)\n    at http://localhost:3000/src/core/wb.js:218:26\n    at Array.forEach (<anonymous>)\n    at http://localhost:3000/src/core/wb.js:217:20\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:214:14)\n    at eval (eval at evaluate (:291:30), <anonymous>:6:21)\n    at UtilityScript.evaluate (<anonymous>:293:16)",
+      "source": "Uncaught",
+      "module": "builder.html",
+      "line": 692,
+      "column": 176,
+      "function": "HTMLButtonElement.onclick",
+      "message": "Uncaught TypeError: window.doPreview is not a function",
+      "stack": "TypeError: window.doPreview is not a function\n    at HTMLButtonElement.onclick (http://localhost:3000/builder.html:692:176)",
       "frames": [
         {
-          "function": "getBehavior",
-          "file": "index.js",
-          "fullPath": "http://localhost:3000/src/behaviors/index.js",
-          "line": 205,
-          "column": 11
+          "function": "HTMLButtonElement.onclick",
+          "file": "builder.html",
+          "fullPath": "http://localhost:3000/builder.html",
+          "line": 692,
+          "column": 176
+        }
+      ],
+      "file": "http://localhost:3000/builder.html",
+      "url": "http://localhost:3000/builder.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1767999009473,
+      "timestamp": "2026-01-09T22:50:09.473Z",
+      "level": "error",
+      "source": "Uncaught",
+      "module": "builder-decorations.js",
+      "line": 188,
+      "column": 22,
+      "function": "getChildren",
+      "message": "Uncaught SyntaxError: Failed to execute 'querySelector' on 'Element': The provided selector is empty.",
+      "stack": "SyntaxError: Failed to execute 'querySelector' on 'Element': The provided selector is empty.\n    at getChildren (http://localhost:3000/src/wb-viewmodels/builder-app/builder-decorations.js:188:22)\n    at renderDecorationsPanel (http://localhost:3000/src/wb-viewmodels/builder-app/builder-decorations.js:129:20)\n    at window.switchPanelTab (http://localhost:3000/src/wb-viewmodels/builder-app/index.js:119:7)\n    at HTMLButtonElement.onclick (http://localhost:3000/builder.html:756:150)",
+      "frames": [
+        {
+          "function": "getChildren",
+          "file": "builder-decorations.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/builder-app/builder-decorations.js",
+          "line": 188,
+          "column": 22
         },
         {
-          "function": "Proxy.<anonymous>",
-          "file": "index.js",
-          "fullPath": "http://localhost:3000/src/behaviors/index.js",
-          "line": 279,
-          "column": 24
-        },
-        {
-          "function": "Object.inject",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 142,
-          "column": 45
-        },
-        {
-          "function": "(anonymous)",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 218,
-          "column": 26
-        },
-        {
-          "function": "(anonymous)",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 217,
+          "function": "renderDecorationsPanel",
+          "file": "builder-decorations.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/builder-app/builder-decorations.js",
+          "line": 129,
           "column": 20
         },
         {
-          "function": "Object.scan",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 214,
-          "column": 14
+          "function": "window.switchPanelTab",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/builder-app/index.js",
+          "line": 119,
+          "column": 7
         },
         {
-          "function": "eval",
-          "file": "eval at evaluate (",
-          "fullPath": "eval at evaluate (",
-          "line": 291,
-          "column": 30
-        },
-        {
-          "function": "UtilityScript.evaluate",
-          "file": "<anonymous>",
-          "fullPath": "<anonymous>",
-          "line": 293,
-          "column": 16
+          "function": "HTMLButtonElement.onclick",
+          "file": "builder.html",
+          "fullPath": "http://localhost:3000/builder.html",
+          "line": 756,
+          "column": 150
         }
       ],
-      "url": "http://localhost:3000/index.html",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
+      "file": "http://localhost:3000/src/wb-viewmodels/builder-app/builder-decorations.js",
+      "url": "http://localhost:3000/builder.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0",
       "interaction": {
         "from": "System",
         "to": "Background Process"

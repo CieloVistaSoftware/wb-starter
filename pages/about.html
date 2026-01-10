@@ -1,12 +1,15 @@
-<div id="about-div-1" class="page__hero">
-  <h1 id="about-h1-2">ℹ️ About</h1>
-  <p id="about-p-3">WB Starter is a modern website template powered by WB Behaviors.</p>
-</div>
+<wb-cardhero 
+  title="ℹ️ About" 
+  subtitle="WB Starter is a modern website template powered by WB Behaviors."
+  xalign="center"
+  height="250px"
+  background="linear-gradient(135deg, #1e293b, #0f172a)"
+></wb-cardhero>
 
 <div id="about-div-4" class="page__section">
-  <horizontal-card id="about-div-5" data-image="https://picsum.photos/200/200?r=about" data-title="Built for Speed" data-subtitle="No build step required">
+  <wb-cardhorizontal id="about-div-5" image="https://picsum.photos/200/200?r=about" title="Built for Speed" subtitle="No build step required">
     <p id="about-p-6">WB Starter is designed to get you up and running in seconds. No npm install, no webpack configuration, no waiting for builds. Just open index.html and start creating.</p>
-  </horizontal-card>
+  </div>
 </div>
 
 <div id="about-div-7" class="page__section">
@@ -25,13 +28,13 @@
   <h2 id="about-h2-16">Credits</h2>
   
   <div id="about-div-17" class="page__grid">
-    <profile-card id="about-div-18" data-name="WB Behaviors" data-role="UI Library" data-bio="235 behaviors in ~310KB" data-avatar="🧩"></profile-card>
-    <profile-card id="about-div-19" data-name="CSS Variables" data-role="Theming" data-bio="23 themes, infinite possibilities" data-avatar="🎨"></profile-card>
-    <profile-card id="about-div-20" data-name="Semantic HTML" data-role="Foundation" data-bio="Standard elements, enhanced" data-avatar="📝"></profile-card>
+    <wb-cardprofile id="about-div-18" name="WB Behaviors" role="UI Library" bio="235 behaviors in ~310KB" avatar="🧩"></div>
+    <wb-cardprofile id="about-div-19" name="CSS Variables" role="Theming" bio="23 themes, infinite possibilities" avatar="🎨"></div>
+    <wb-cardprofile id="about-div-20" name="Semantic HTML" role="Foundation" bio="Standard elements, enhanced" avatar="📝"></div>
   </div>
 </div>
 
 <div id="about-div-21" class="page__section">
   <h2 id="about-h2-22">License</h2>
-  <div id="about-div-23" data-wb="alert" data-type="info" data-message="MIT License - Use freely in personal and commercial projects."></div>
+  <wb-alert id="about-div-23" type="info" message="MIT License - Use freely in personal and commercial projects."></div>
 </div>

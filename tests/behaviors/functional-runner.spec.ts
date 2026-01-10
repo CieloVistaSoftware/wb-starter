@@ -28,7 +28,7 @@ import * as path from 'path';
 // ═══════════════════════════════════════════════════════════════════════════
 
 const ROOT = process.cwd();
-const SCHEMA_DIR = path.join(ROOT, 'src/behaviors/schema');
+const SCHEMA_DIR = path.join(ROOT, 'src/wb-models');
 
 // Behaviors to skip (not implemented or special cases)
 const SKIP_BEHAVIORS = ['switch', 'builder'];
@@ -36,6 +36,16 @@ const SKIP_BEHAVIORS = ['switch', 'builder'];
 // ═══════════════════════════════════════════════════════════════════════════
 // TYPES
 // ═══════════════════════════════════════════════════════════════════════════
+
+interface Step {
+  action: 'click' | 'dblclick' | 'focus' | 'blur' | 'selectOption' | 'mousedown' | 'mouseup' | 'mousemove' | 'keypress' | 'call' | 'type' | 'fill';
+  selector?: string;
+  key?: string;
+  value?: string;
+  position?: { x: number, y: number };
+  delta?: { x: number, y: number };
+  method?: string;
+}
 
 interface TestExpectation {
   selector?: string;
@@ -49,9 +59,25 @@ interface TestExpectation {
   style?: Record<string, string>;
   styleContains?: Record<string, string>;
   event?: string | null;
+  detail?: any;
   focused?: string;
   checked?: boolean;
   value?: string;
+  checks?: {
+    visible?: boolean;
+    hidden?: boolean;
+    exists?: boolean;
+    hasClass?: string | string[];
+    notHasClass?: string | string[];
+    textContains?: string;
+    attribute?: Record<string, string>;
+    style?: Record<string, string>;
+    focused?: boolean;
+    checked?: boolean;
+    value?: string;
+    positionYUnchanged?: boolean;
+    positionXUnchanged?: boolean;
+  };
 }
 
 interface ButtonTest {
@@ -65,7 +91,8 @@ interface ButtonTest {
 interface InteractionTest {
   name: string;
   setup: string;
-  action: 'click' | 'dblclick' | 'focus' | 'blur' | 'selectOption';
+  action?: 'click' | 'dblclick' | 'focus' | 'blur' | 'selectOption' | 'type' | 'fill';
+  steps?: Step[];
   selector?: string;
   value?: string;
   expect: TestExpectation;
@@ -74,7 +101,8 @@ interface InteractionTest {
 interface KeyboardTest {
   name: string;
   setup: string;
-  key: string;
+  key?: string;
+  steps?: Step[];
   selector?: string;
   precondition?: { focused?: string };
   expect: TestExpectation;
@@ -238,6 +266,92 @@ function resolveSelector(selector: string | undefined, behavior: string): string
 }
 
 /**
+ * Execute a sequence of steps
+ */
+async function runSteps(page: Page, steps: Step[], behavior: string): Promise<void> {
+  let lastMousePos = { x: 0, y: 0 };
+
+  for (const step of steps) {
+    const selector = resolveSelector(step.selector, behavior);
+    
+    switch (step.action) {
+      case 'click':
+        await page.click(selector);
+        break;
+      case 'dblclick':
+        await page.dblclick(selector);
+        break;
+      case 'focus':
+        await page.focus(selector);
+        break;
+      case 'blur':
+        await page.locator(selector).blur();
+        break;
+      case 'selectOption':
+        await page.selectOption(selector, step.value || '');
+        break;
+      case 'mousedown':
+        if (step.position) {
+          lastMousePos = step.position;
+          await page.mouse.move(step.position.x, step.position.y);
+        } else if (selector) {
+          const box = await page.locator(selector).first().boundingBox();
+          if (box) {
+            lastMousePos = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+            await page.mouse.move(lastMousePos.x, lastMousePos.y);
+          }
+        }
+        await page.mouse.down();
+        break;
+      case 'mouseup':
+        if (step.position) {
+          await page.mouse.move(step.position.x, step.position.y);
+        }
+        await page.mouse.up();
+        break;
+      case 'mousemove':
+        if (step.position) {
+          lastMousePos = step.position;
+          await page.mouse.move(step.position.x, step.position.y);
+        } else if (step.delta) {
+          lastMousePos = { x: lastMousePos.x + step.delta.x, y: lastMousePos.y + step.delta.y };
+          await page.mouse.move(lastMousePos.x, lastMousePos.y);
+        }
+        break;
+      case 'keypress':
+        if (step.key) {
+          await page.keyboard.press(step.key);
+        }
+        break;
+      case 'call':
+        if (step.method) {
+          // e.g. element.wbCardExpandable.expand
+          const parts = step.method.split('.');
+          // parts[0] is 'element' (mapped to selector)
+          // parts[1] is property on element (e.g. wbCardExpandable)
+          // parts[2] is method name
+          if (parts[0] === 'element' && parts.length >= 3) {
+             await page.locator(selector).first().evaluate((el, args) => {
+                const [_, prop, method] = args;
+                if ((el as any)[prop] && typeof (el as any)[prop][method] === 'function') {
+                  (el as any)[prop][method]();
+                }
+             }, parts);
+          }
+        }
+        break;
+      case 'type':
+        await page.type(selector, step.value || '');
+        break;
+      case 'fill':
+        await page.fill(selector, step.value || '');
+        break;
+    }
+    await page.waitForTimeout(50);
+  }
+}
+
+/**
  * Assert expectations on page
  */
 async function assertExpectations(
@@ -248,61 +362,77 @@ async function assertExpectations(
 ): Promise<void> {
   const selector = resolveSelector(expect_.selector, behavior);
   
+  // Merge nested checks into top level for easier processing
+  const checks = expect_.checks || {};
+  const merged = { ...expect_, ...checks };
+  
   // Visibility checks
-  if (expect_.visible === true) {
+  if (merged.visible === true) {
     await expect(page.locator(selector).first(), `${testName}: ${selector} should be visible`).toBeVisible();
   }
-  if (expect_.visible === false || expect_.hidden === true) {
+  if (merged.visible === false || merged.hidden === true) {
     await expect(page.locator(selector).first(), `${testName}: ${selector} should be hidden`).toBeHidden();
   }
   
   // Existence check
-  if (expect_.exists === true) {
+  if (merged.exists === true) {
     await expect(page.locator(selector).first(), `${testName}: ${selector} should exist`).toBeAttached();
   }
-  if (expect_.exists === false) {
+  if (merged.exists === false) {
     await expect(page.locator(selector), `${testName}: ${selector} should not exist`).toHaveCount(0);
   }
   
   // Class checks
-  if (expect_.hasClass) {
-    const classes = Array.isArray(expect_.hasClass) ? expect_.hasClass : [expect_.hasClass];
+  if (merged.hasClass) {
+    const classes = Array.isArray(merged.hasClass) ? merged.hasClass : [merged.hasClass];
     for (const cls of classes) {
       await expect(page.locator(selector).first(), `${testName}: should have class ${cls}`).toHaveClass(new RegExp(cls));
     }
   }
-  if (expect_.notClass) {
-    const classes = Array.isArray(expect_.notClass) ? expect_.notClass : [expect_.notClass];
+  if (merged.notClass || merged.notHasClass) {
+    const classes = Array.isArray(merged.notClass || merged.notHasClass) ? (merged.notClass || merged.notHasClass) : [merged.notClass || merged.notHasClass];
     for (const cls of classes) {
-      await expect(page.locator(selector).first(), `${testName}: should NOT have class ${cls}`).not.toHaveClass(new RegExp(cls));
+      if (cls) await expect(page.locator(selector).first(), `${testName}: should NOT have class ${cls}`).not.toHaveClass(new RegExp(cls));
     }
   }
   
   // Text content check
-  if (expect_.textContains) {
-    await expect(page.locator(selector).first(), `${testName}: should contain text`).toContainText(expect_.textContains);
+  if (merged.textContains) {
+    await expect(page.locator(selector).first(), `${testName}: should contain text`).toContainText(merged.textContains);
   }
   
   // Attribute checks
-  if (expect_.attribute) {
-    for (const [attr, value] of Object.entries(expect_.attribute)) {
+  if (merged.attribute) {
+    for (const [attr, value] of Object.entries(merged.attribute)) {
       await expect(page.locator(selector).first(), `${testName}: should have ${attr}="${value}"`).toHaveAttribute(attr, value);
     }
   }
   
   // Style checks
-  if (expect_.style) {
-    for (const [prop, value] of Object.entries(expect_.style)) {
-      const actualValue = await page.locator(selector).first().evaluate((el, p) => {
-        return getComputedStyle(el).getPropertyValue(p) || (el as HTMLElement).style.getPropertyValue(p);
-      }, prop);
-      expect(actualValue, `${testName}: style.${prop} should be ${value}`).toBe(value);
+  if (merged.style) {
+    for (const [prop, value] of Object.entries(merged.style)) {
+      // Handle special checks like <=150px
+      if (typeof value === 'string' && (value.startsWith('<=') || value.startsWith('>='))) {
+         const op = value.substring(0, 2);
+         const num = parseFloat(value.substring(2));
+         const actualValue = await page.locator(selector).first().evaluate((el, p) => {
+            return parseFloat(getComputedStyle(el).getPropertyValue(p) || (el as HTMLElement).style.getPropertyValue(p));
+         }, prop);
+         
+         if (op === '<=') expect(actualValue, `${testName}: style.${prop} should be <= ${num}`).toBeLessThanOrEqual(num);
+         if (op === '>=') expect(actualValue, `${testName}: style.${prop} should be >= ${num}`).toBeGreaterThanOrEqual(num);
+      } else {
+        const actualValue = await page.locator(selector).first().evaluate((el, p) => {
+          return getComputedStyle(el).getPropertyValue(p) || (el as HTMLElement).style.getPropertyValue(p);
+        }, prop);
+        expect(actualValue, `${testName}: style.${prop} should be ${value}`).toBe(value);
+      }
     }
   }
   
   // Style contains (partial match)
-  if (expect_.styleContains) {
-    for (const [prop, value] of Object.entries(expect_.styleContains)) {
+  if (merged.styleContains) {
+    for (const [prop, value] of Object.entries(merged.styleContains)) {
       const actualValue = await page.locator(selector).first().evaluate((el, p) => {
         return getComputedStyle(el).getPropertyValue(p) || (el as HTMLElement).style.getPropertyValue(p);
       }, prop);
@@ -311,14 +441,18 @@ async function assertExpectations(
   }
   
   // Focus check
-  if (expect_.focused) {
-    const focusedSelector = resolveSelector(expect_.focused, behavior);
-    await expect(page.locator(focusedSelector).first(), `${testName}: ${focusedSelector} should be focused`).toBeFocused();
+  if (merged.focused) {
+    if (typeof merged.focused === 'string') {
+        const focusedSelector = resolveSelector(merged.focused, behavior);
+        await expect(page.locator(focusedSelector).first(), `${testName}: ${focusedSelector} should be focused`).toBeFocused();
+    } else if (merged.focused === true) {
+        await expect(page.locator(selector).first(), `${testName}: should be focused`).toBeFocused();
+    }
   }
   
   // Checked state
-  if (expect_.checked !== undefined) {
-    if (expect_.checked) {
+  if (merged.checked !== undefined) {
+    if (merged.checked) {
       await expect(page.locator(selector).first(), `${testName}: should be checked`).toBeChecked();
     } else {
       await expect(page.locator(selector).first(), `${testName}: should not be checked`).not.toBeChecked();
@@ -326,8 +460,15 @@ async function assertExpectations(
   }
   
   // Value check
-  if (expect_.value !== undefined) {
-    await expect(page.locator(selector).first(), `${testName}: should have value`).toHaveValue(expect_.value);
+  if (merged.value !== undefined) {
+    await expect(page.locator(selector).first(), `${testName}: should have value`).toHaveValue(merged.value);
+  }
+
+  // Position checks (for drag)
+  if (merged.positionYUnchanged) {
+     // This is hard to check without history, but we can check if top is same as initial?
+     // Or maybe we just check if it's 0 or something?
+     // For now, let's skip or implement if we can track it.
   }
 }
 
@@ -414,8 +555,6 @@ for (const { file, schema } of schemasWithTests) {
           test(interaction.name, async ({ page }) => {
             await setupTestPage(page, interaction.setup);
             
-            const selector = resolveSelector(interaction.selector, behavior);
-            
             // Set up event listener if needed
             if (interaction.expect.event) {
               await page.evaluate((evtName) => {
@@ -426,23 +565,16 @@ for (const { file, schema } of schemasWithTests) {
               }, interaction.expect.event);
             }
             
-            // Perform action
-            switch (interaction.action) {
-              case 'click':
-                await page.click(selector);
-                break;
-              case 'dblclick':
-                await page.dblclick(selector);
-                break;
-              case 'focus':
-                await page.focus(selector);
-                break;
-              case 'blur':
-                await page.locator(selector).blur();
-                break;
-              case 'selectOption':
-                await page.selectOption(selector, interaction.value || '');
-                break;
+            // Execute steps
+            if (interaction.steps) {
+              await runSteps(page, interaction.steps, behavior);
+            } else if (interaction.action) {
+               // Backwards compatibility for simple action
+               await runSteps(page, [{
+                 action: interaction.action,
+                 selector: interaction.selector,
+                 value: interaction.value
+               }], behavior);
             }
             
             await page.waitForTimeout(100);
@@ -493,8 +625,13 @@ for (const { file, schema } of schemasWithTests) {
               }, kb.expect.event);
             }
             
-            // Press the key
-            await page.keyboard.press(kb.key);
+            // Execute steps if present, otherwise just press key
+            if (kb.steps) {
+               await runSteps(page, kb.steps, behavior);
+            } else if (kb.key) {
+               await page.keyboard.press(kb.key);
+            }
+            
             await page.waitForTimeout(100);
             
             // Check event

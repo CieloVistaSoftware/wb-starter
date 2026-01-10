@@ -238,8 +238,8 @@
       <p>Interactive demo of all available behaviors</p>
     </div>
     <div style="display: flex; gap: 1rem; align-items: center;">
-      <div data-wb="codecontrol" data-size="sm"></div>
-      <div data-wb="themecontrol"></div>
+      <wb-codecontrol data-size="sm"</div>
+      <wb-themecontrol></div>
     </div>
   </header>
 
@@ -259,7 +259,7 @@
       <strong style="color: var(--primary); font-size: 1.1rem;">🎨 Live Code Theme Preview</strong>
       <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: var(--text-secondary);">Change ANY dropdown → ALL code blocks update instantly. They're synced! Try <code>grayscale</code> for black/white.</p>
     </div>
-    <div data-wb="codecontrol" data-size="sm" data-show-label="false"></div>
+    <wb-codecontrol data-size="sm" data-show-label="false"</div>
   </div>
 
   <!-- Auto-Inject Mode Callout -->
@@ -277,20 +277,20 @@
       <div>
         <div style="font-size: 0.85rem; font-weight: 600; color: var(--danger-color); margin-bottom: 0.5rem;">❌ BEFORE (Web Behaviors v1.0)</div>
         <pre style="margin: 0; border: 1px solid var(--danger-color);"><code>&lt;!-- Every element needs data-wb --&gt;
-&lt;button data-wb="button" 
+&lt;button  
   data-variant="primary"&gt;
   Click Me
 &lt;/button&gt;
 
-&lt;input data-wb="input" 
+&lt;input  
   type="text"&gt;
 
-&lt;details data-wb="details"&gt;
+&lt;details &gt;
   &lt;summary&gt;FAQ&lt;/summary&gt;
   &lt;p&gt;Answer here&lt;/p&gt;
 &lt;/details&gt;
 
-&lt;figure data-wb="figure"&gt;
+&lt;figure &gt;
   &lt;img src=&quot;url&quot;&gt;
   &lt;figcaption&gt;Caption&lt;/figcaption&gt;
 &lt;/figure&gt;</code></pre>
@@ -381,16 +381,16 @@
       <div style="font-size: 0.9rem; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">🌐 Global Behaviors</div>
       <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0 0 0.5rem 0;">Add to <strong>any element</strong> via <code>data-wb</code> attribute — click to try:</p>
       <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.8rem;">
-        <button data-wb="ripple" style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>ripple</code></button>
-        <span data-wb="tooltip" data-tooltip="I'm a tooltip!" style="padding: 0.25rem 0.5rem; cursor: help; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>tooltip</code></span>
-        <button data-wb="copy" data-text="Copied from WB!" style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>copy</code></button>
-        <div data-wb="draggable" style="padding: 0.25rem 0.5rem; cursor: move; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>draggable</code></div>
-        <button data-wb="fullscreen" data-target="body" style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>fullscreen</code></button>
-        <button data-wb="print" style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>print</code></button>
-        <span data-wb="tooltip" data-tooltip="Press Ctrl+K to test" style="padding: 0.25rem 0.5rem; cursor: help; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);" data-hotkey="ctrl+k" onclick="alert('Hotkey triggered!')"><code>hotkey</code></span>
+        <button x-ripple style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>ripple</code></button>
+        <span x-tooltip data-tooltip="I'm a tooltip!" style="padding: 0.25rem 0.5rem; cursor: help; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>tooltip</code></span>
+        <button x-copy data-text="Copied from WB!" style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>copy</code></button>
+        <div x-draggable style="padding: 0.25rem 0.5rem; cursor: move; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>draggable</code></div>
+        <button x-fullscreen data-target="body" style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>fullscreen</code></button>
+        <button x-print style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>print</code></button>
+        <span x-tooltip data-tooltip="Press Ctrl+K to test" style="padding: 0.25rem 0.5rem; cursor: help; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);" data-hotkey="ctrl+k" onclick="alert('Hotkey triggered!')"><code>hotkey</code></span>
       </div>
       <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0.5rem 0 0 0;">
-        Example: <code>&lt;button data-wb="ripple tooltip" data-tooltip="Save changes"&gt;</code>
+        Example: <code>&lt;button x-ripple x-tooltip data-tooltip="Save changes"&gt;</code>
       </p>
     </div>
     
@@ -484,21 +484,17 @@
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Switch <span class="behavior-code">data-wb="switch"</span></div>
+      <div class="behavior-title">Switch <span class="behavior-code"></span></div>
       <div class="demo-area">
         <div class="demo-row">
           <label style="display:flex; gap:0.5rem; align-items:center;">
-            <input
-              type="checkbox"
-              id="demo-notifications-switch"
-              data-wb="switch">
+            <wb-switch type="checkbox"
+              id="demo-notifications-switch">
             <span>Notifications</span>
           </label>
           <label style="display:flex; gap:0.5rem; align-items:center;">
-            <input
-              type="checkbox"
+            <wb-switch type="checkbox"
               id="demo-dark-mode-switch"
-              data-wb="switch"
               checked>
             <span>Dark Mode</span>
           </label>
@@ -507,34 +503,20 @@
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Badge <span class="behavior-code">data-wb="badge"</span></div>
+      <div class="behavior-title">Badge <span class="behavior-code"></span></div>
       <div class="demo-area">
         <div class="demo-row">
-          <span
-            data-wb="badge"
-            data-variant="default">Default</span>
-          <span
-            data-wb="badge"
-            data-variant="primary">Primary</span>
-          <span
-            data-wb="badge"
-            data-variant="success">Success</span>
-          <span
-            data-wb="badge"
-            data-variant="warning">Warning</span>
-          <span
-            data-wb="badge"
-            data-variant="danger">Error</span>
+          <wb-badge variant="default">Default</span>
+          <wb-badge variant="primary">Primary</span>
+          <wb-badge variant="success">Success</span>
+          <wb-badge variant="warning">Warning</span>
+          <wb-badge variant="danger">Error</span>
         </div>
         <div class="demo-row">
-          <span
-            data-wb="badge"
-            data-variant="info"
-            data-pill="true">Pill</span>
-          <span
-            data-wb="badge"
-            data-variant="success"
-            data-dot="true"></span>
+          <wb-badge variant="info"
+            pill="true">Pill</span>
+          <wb-badge variant="success"
+            dot="true"></span>
           <span>Status Dot</span>
         </div>
       </div>
@@ -550,7 +532,7 @@
         </details>
         <details>
           <summary>How do I use it?</summary>
-          <p>Simply add <code>data-wb="behavior-name"</code> to any HTML element. No initialization code required!</p>
+          <p>Simply add <code></code> to any HTML element. No initialization code required!</p>
         </details>
       </div>
     </div>
@@ -562,42 +544,34 @@
   <div class="behavior-grid">
 
     <div class="behavior-card">
-      <div class="behavior-title">Spinner <span class="behavior-code">data-wb="spinner"</span></div>
+      <div class="behavior-title">Spinner <span class="behavior-code"></span></div>
       <div class="demo-area">
         <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.5rem 0; width: 100%;">
           <strong>Speeds:</strong> slow (2s), medium (1.2s), fast (0.6s)
         </p>
         <div class="demo-row" style="gap: 1.5rem; justify-content: center;">
           <div class="spinner-group">
-            <div
-              data-wb="spinner"
-              data-size="sm"
-              data-color="primary"
-              data-speed="slow"></div>
+            <wb-spinner size="sm"
+              color="primary"
+              speed="slow"></div>
             <span class="spinner-label">slow / sm</span>
           </div>
           <div class="spinner-group">
-            <div
-              data-wb="spinner"
-              data-size="md"
-              data-color="success"
-              data-speed="medium"></div>
+            <wb-spinner size="md"
+              color="success"
+              speed="medium"></div>
             <span class="spinner-label">medium / md</span>
           </div>
           <div class="spinner-group">
-            <div
-              data-wb="spinner"
-              data-size="lg"
-              data-color="warning"
-              data-speed="fast"></div>
+            <wb-spinner size="lg"
+              color="warning"
+              speed="fast"></div>
             <span class="spinner-label">fast / lg</span>
           </div>
           <div class="spinner-group">
-            <div
-              data-wb="spinner"
-              data-size="xl"
-              data-color="error"
-              data-speed="medium"></div>
+            <wb-spinner size="xl"
+              color="error"
+              speed="medium"></div>
             <span class="spinner-label">medium / xl</span>
           </div>
         </div>
@@ -606,43 +580,33 @@
         </p>
         <div class="demo-row" style="gap: 1.5rem; justify-content: center; align-items: flex-end;">
           <div class="spinner-group">
-            <div
-              data-wb="spinner"
-              data-size="xs"
-              data-color="info"
-              data-speed="medium"></div>
+            <wb-spinner size="xs"
+              color="info"
+              speed="medium"></div>
             <span class="spinner-label">xs</span>
           </div>
           <div class="spinner-group">
-            <div
-              data-wb="spinner"
-              data-size="sm"
-              data-color="secondary"
-              data-speed="medium"></div>
+            <wb-spinner size="sm"
+              color="secondary"
+              speed="medium"></div>
             <span class="spinner-label">sm</span>
           </div>
           <div class="spinner-group">
-            <div
-              data-wb="spinner"
-              data-size="md"
-              data-color="#ec4899"
-              data-speed="medium"></div>
+            <wb-spinner size="md"
+              color="#ec4899"
+              speed="medium"></div>
             <span class="spinner-label">md</span>
           </div>
           <div class="spinner-group">
-            <div
-              data-wb="spinner"
-              data-size="lg"
-              data-color="primary"
-              data-speed="medium"></div>
+            <wb-spinner size="lg"
+              color="primary"
+              speed="medium"></div>
             <span class="spinner-label">lg</span>
           </div>
           <div class="spinner-group">
-            <div
-              data-wb="spinner"
-              data-size="xl"
-              data-color="success"
-              data-speed="medium"></div>
+            <wb-spinner size="xl"
+              color="success"
+              speed="medium"></div>
             <span class="spinner-label">xl</span>
           </div>
         </div>
@@ -654,20 +618,17 @@
       <div class="demo-area" style="display:flex; flex-direction:column; gap:1rem; width: 100%;">
         <div
           id="progress-uploading"
-          data-wb="progressbar"
           data-value="0"
           data-label="Uploading..."
           data-variant="primary"></div>
         <div
           id="progress-processing"
-          data-wb="progressbar"
           data-value="0"
           data-label="Processing"
           data-striped="true"
           data-animated="true"
           data-variant="warning"></div>
         <div
-          data-wb="progressbar"
           data-value="100"
           data-label="Complete"
           data-variant="success"></div>
@@ -678,58 +639,50 @@
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Avatar <span class="behavior-code">data-wb="avatar"</span></div>
+      <div class="behavior-title">Avatar <span class="behavior-code"></span></div>
       <div class="demo-area">
         <div class="demo-row">
-          <div
-            data-wb="avatar"
-            data-initials="JD"
-            data-status="online"></div>
-          <div
-            data-wb="avatar"
-            data-src="https://i.pravatar.cc/100?u=5"
-            data-status="busy"></div>
-          <div
-            data-wb="avatar"
-            data-initials="WB"
-            data-size="lg"
-            data-status="away"></div>
-          <div
-            data-wb="avatar"
-            data-initials="XL"
-            data-size="xl"
-            data-status="offline"></div>
+          <wb-avatar initials="JD"
+            status="online"></div>
+          <wb-avatar src="https://i.pravatar.cc/100?u=5"
+            status="busy"></div>
+          <wb-avatar initials="WB"
+            size="lg"
+            status="away"></div>
+          <wb-avatar initials="XL"
+            size="xl"
+            status="offline"></div>
         </div>
       </div>
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Tooltip <span class="behavior-code">data-wb="tooltip"</span></div>
+      <div class="behavior-title">Tooltip <span class="behavior-code">x-tooltip</span></div>
       <div class="demo-area">
         <div class="demo-row" style="justify-content: center; width: 100%;">
           <button
-            data-wb="tooltip ripple"
+            x-tooltip x-ripple
             data-tooltip="I am a tooltip on top!"
             data-tooltip-position="top"
             style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
             Top
           </button>
           <button
-            data-wb="tooltip ripple"
+            x-tooltip x-ripple
             data-tooltip="I am a tooltip on right!"
             data-tooltip-position="right"
             style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
             Right
           </button>
           <button
-            data-wb="tooltip ripple"
+            x-tooltip x-ripple
             data-tooltip="I am a tooltip on bottom!"
             data-tooltip-position="bottom"
             style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
             Bottom
           </button>
           <button
-            data-wb="tooltip ripple"
+            x-tooltip x-ripple
             data-tooltip="I am a tooltip on left!"
             data-tooltip-position="left"
             style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
@@ -738,7 +691,7 @@
         </div>
         <p style="text-align: center; width: 100%; margin-top: 1rem;">
           <span
-            data-wb="tooltip"
+            x-tooltip
             data-tooltip="Inline tooltips work too!"
             style="text-decoration: underline; cursor: help;">Hover me</span> for inline help.
         </p>
@@ -746,18 +699,18 @@
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Toast & Notify <span class="behavior-code">data-wb="toast/notify"</span></div>
+      <div class="behavior-title">Toast & Notify <span class="behavior-code"></span></div>
       <div class="demo-area">
         <div class="demo-row">
           <button
-            data-wb="toast"
+            x-toast
             data-message="Action saved successfully!"
             data-type="success"
             class="wb-button">
             Show Toast
           </button>
           <button
-            data-wb="notify"
+            x-notify
             data-message="New notification received"
             class="wb-button">
             Show Notify
@@ -773,10 +726,10 @@
   <div class="behavior-grid">
 
     <div class="behavior-card">
-      <div class="behavior-title">Stack <span class="behavior-code">data-wb="stack"</span></div>
+      <div class="behavior-title">Stack <span class="behavior-code">x-stack</span></div>
       <div class="demo-area" style="display:block">
         <div
-          data-wb="stack"
+          x-stack
           data-gap="sm">
           <div style="background:var(--bg-tertiary); padding:0.5rem; border-radius: 4px;">Item 1</div>
           <div style="background:var(--bg-tertiary); padding:0.5rem; border-radius: 4px;">Item 2</div>
@@ -786,28 +739,25 @@
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Cluster <span class="behavior-code">data-wb="cluster"</span></div>
+      <div class="behavior-title">Cluster <span class="behavior-code">x-cluster</span></div>
       <div class="demo-area" style="display:block">
         <div
-          data-wb="cluster"
+          x-cluster
           data-gap="xs">
-          <span data-wb="badge">JavaScript</span>
-          <span data-wb="badge">HTML</span>
-          <span data-wb="badge">CSS</span>
-          <span data-wb="badge">Web Components</span>
-          <span data-wb="badge">Design</span>
-          <span data-wb="badge">UI/UX</span>
+          <wb-badge>JavaScript</span>
+          <wb-badge>HTML</span>
+          <wb-badge>CSS</span>
+          <wb-badge>Web Components</span>
+          <wb-badge>Design</span>
+          <wb-badge>UI/UX</span>
         </div>
       </div>
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Grid <span class="behavior-code">data-wb="grid"</span></div>
+      <div class="behavior-title">Grid <span class="behavior-code">x-grid</span></div>
       <div class="demo-area" style="display:block">
-        <div
-          data-wb="grid"
-          data-columns="2"
-          data-gap="sm">
+        <wb-grid data-columns="2" data-gap="sm"
           <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">1</div>
           <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">2</div>
           <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">3</div>
@@ -823,7 +773,7 @@
   <div class="behavior-grid">
 
     <div class="behavior-card">
-      <div class="behavior-title">Copy <span class="behavior-code">data-wb="copy"</span></div>
+      <div class="behavior-title">Copy <span class="behavior-code">x-copy</span></div>
       <div class="demo-area">
         <div style="display: flex; width: 100%; gap: 0.5rem;">
           <input
@@ -831,7 +781,7 @@
             value="Copy this text!"
             style="flex: 1; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
           <button
-            data-wb="copy ripple"
+            x-copy x-ripple
             data-target="#copy-target"
             style="padding:0.5rem 1rem; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer; overflow:hidden; position:relative;">📋 Copy</button>
         </div>
@@ -839,10 +789,10 @@
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Ripple <span class="behavior-code">data-wb="ripple"</span></div>
+      <div class="behavior-title">Ripple <span class="behavior-code">x-ripple</span></div>
       <div class="demo-area">
         <button
-          data-wb="ripple"
+          x-ripple
           style="padding:1rem 2rem; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer; overflow:hidden; position:relative; font-size: 1rem;">
           Click for Ripple Effect
         </button>
@@ -850,22 +800,22 @@
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Confetti <span class="behavior-code">data-wb="confetti"</span></div>
+      <div class="behavior-title">Confetti <span class="behavior-code">x-confetti</span></div>
       <div class="demo-area">
         <button
-          data-wb="confetti"
+          x-confetti
           data-count="100"
           data-label="Celebrate!">🎉</button>
       </div>
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Typewriter <span class="behavior-code">data-wb="typewriter"</span></div>
+      <div class="behavior-title">Typewriter <span class="behavior-code">x-typewriter</span></div>
       <div class="demo-area">
         <div style="display: flex; flex-direction: column; gap: 1rem; align-items: flex-start;">
           <span
             id="typewriter-demo"
-            data-wb="typewriter"
+            x-typewriter
             data-text="Hello! I am typing this text out character by character using WB Behaviors."
             data-speed="50"
             style="font-family: monospace; font-size: 1.1rem; color: var(--primary);"></span>
@@ -883,10 +833,10 @@
   <div class="behavior-grid">
 
     <div class="behavior-card">
-      <div class="behavior-title">Bounce <span class="behavior-code">data-wb="bounce"</span></div>
+      <div class="behavior-title">Bounce <span class="behavior-code">x-bounce</span></div>
       <div class="demo-area">
         <button
-          data-wb="bounce"
+          x-bounce
           style="width:60px; height:60px; background:var(--accent, #f472b6); border-radius:50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
           Click
         </button>
@@ -894,10 +844,10 @@
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Pulse <span class="behavior-code">data-wb="pulse"</span></div>
+      <div class="behavior-title">Pulse <span class="behavior-code">x-pulse</span></div>
       <div class="demo-area">
         <button
-          data-wb="pulse"
+          x-pulse
           style="width:60px; height:60px; background:var(--success-color); border-radius:50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
           Click
         </button>
@@ -905,10 +855,10 @@
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Shake <span class="behavior-code">data-wb="shake"</span></div>
+      <div class="behavior-title">Shake <span class="behavior-code">x-shake</span></div>
       <div class="demo-area">
         <button
-          data-wb="shake"
+          x-shake
           style="padding: 0.75rem 1.5rem; background:var(--danger-color); color: white; border-radius: 4px; border: none; cursor: pointer;">
           Shake Me
         </button>
@@ -916,10 +866,10 @@
     </div>
 
     <div class="behavior-card">
-      <div class="behavior-title">Rainbow <span class="behavior-code">data-wb="rainbow"</span></div>
+      <div class="behavior-title">Rainbow <span class="behavior-code">x-rainbow</span></div>
       <div class="demo-area">
         <h3
-          data-wb="rainbow"
+          x-rainbow
           style="font-size: 1.5rem; margin: 0;">Magical Text</h3>
       </div>
     </div>
@@ -937,10 +887,7 @@
     <div class="behavior-card">
       <div class="behavior-title">Audio <span class="behavior-code">&lt;audio&gt;</span></div>
       <div class="demo-area">
-        <div
-          data-wb="audio"
-          data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-          data-controls="true"></div>
+        <wb-audio data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" data-controls="true"</div>
       </div>
     </div>
     <div class="behavior-card">
@@ -958,7 +905,7 @@
         
         <!-- Full example -->
         <div
-          data-wb="tooltip"
+          x-tooltip
           data-tooltip="Full syntax: data-img-src, data-alt, and data-caption. The img and figcaption are auto-generated from attributes. Zero child tags needed!"
           data-tooltip-position="top"
           style="width: 150px;">
@@ -971,7 +918,7 @@
         
         <!-- Minimal example -->
         <div
-          data-wb="tooltip"
+          x-tooltip
           data-tooltip="Minimal syntax: only data-img-src required. Alt text auto-defaults to the src URL when omitted. Caption is optional."
           data-tooltip-position="top"
           style="width: 150px;">
@@ -982,7 +929,7 @@
         
         <!-- Lightbox example -->
         <div
-          data-wb="tooltip"
+          x-tooltip
           data-tooltip="Lightbox mode: add data-lightbox to enable click-to-fullscreen. Opens a modal overlay with the full-size image. Press ESC or click outside to close."
           data-tooltip-position="top"
           style="width: 150px;">
@@ -995,7 +942,7 @@
         
         <!-- Zoom example -->
         <div
-          data-wb="tooltip"
+          x-tooltip
           data-tooltip="Zoom mode: add data-zoom for hover-to-scale effect. Image scales to 1.05x on mouseenter, returns to normal on mouseleave. Great for galleries."
           data-tooltip-position="top"
           style="width: 150px;">
@@ -1008,7 +955,7 @@
         
         <!-- Overlay caption example -->
         <div
-          data-wb="tooltip"
+          x-tooltip
           data-tooltip="Overlay caption: data-caption-position='overlay' places caption over the image with a gradient background. Perfect for hero images and cards."
           data-tooltip-position="top"
           style="width: 150px;">
@@ -1021,7 +968,7 @@
         
         <!-- Lazy loading example -->
         <div
-          data-wb="tooltip"
+          x-tooltip
           data-tooltip="Lazy loading: add data-lazy for native browser lazy loading. Image only loads when scrolled into viewport. Improves page performance."
           data-tooltip-position="top"
           style="width: 150px;">
@@ -1040,17 +987,17 @@
   <h3 id="navigation">7. Navigation</h3>
   <div class="behavior-grid">
     <div class="behavior-card">
-      <div class="behavior-title">Breadcrumb <span class="behavior-code">data-wb="breadcrumb"</span></div>
+      <div class="behavior-title">Breadcrumb <span class="behavior-code">x-breadcrumb</span></div>
       <div class="demo-area">
         <nav
-          data-wb="breadcrumb"
+          x-breadcrumb
           data-items="Home, Products, Electronics, Laptops"></nav>
       </div>
     </div>
     <div class="behavior-card">
-      <div class="behavior-title">Tabs <span class="behavior-code">data-wb="tabs"</span></div>
+      <div class="behavior-title">Tabs <span class="behavior-code"></span></div>
       <div class="demo-area">
-        <div data-wb="tabs">
+        <wb-tabs>
           <div data-tab="Tab 1">Content for Tab 1</div>
           <div data-tab="Tab 2">Content for Tab 2</div>
           <div data-tab="Tab 3">Content for Tab 3</div>
@@ -1058,11 +1005,9 @@
       </div>
     </div>
     <div class="behavior-card">
-      <div class="behavior-title">Dropdown <span class="behavior-code">data-wb="dropdown"</span></div>
+      <div class="behavior-title">Dropdown <span class="behavior-code"></span></div>
       <div class="demo-area">
-        <div
-          data-wb="dropdown"
-          data-label="Options">
+        <wb-dropdown label="Options">
           <a href="#">Profile</a>
           <a href="#">Settings</a>
           <a href="#">Logout</a>
@@ -1075,10 +1020,10 @@
   <h3 id="interactive">8. Interactive</h3>
   <div class="behavior-grid">
     <div class="behavior-card">
-      <div class="behavior-title">Collapse <span class="behavior-code">data-wb="collapse"</span></div>
+      <div class="behavior-title">Collapse <span class="behavior-code">x-collapse</span></div>
       <div class="demo-area">
         <button
-          data-wb="collapse"
+          x-collapse
           data-target="#collapse-content">Toggle Content</button>
         <div
           id="collapse-content"
@@ -1100,10 +1045,9 @@
       </div>
     </div>
     <div class="behavior-card">
-      <div class="behavior-title">Drawer <span class="behavior-code">data-wb="drawer-layout"</span></div>
+      <div class="behavior-title">Drawer <span class="behavior-code"></span></div>
       <div class="demo-area" style="height: 200px; overflow: hidden; border: 1px solid var(--border-color);">
         <div
-          data-wb="drawer-layout"
           data-position="left"
           data-width="150px"
           style="height: 100%;">
@@ -1113,10 +1057,9 @@
       </div>
     </div>
     <div class="behavior-card">
-      <div class="behavior-title">Toggle <span class="behavior-code">data-wb="toggle"</span></div>
+      <div class="behavior-title">Toggle <span class="behavior-code"></span></div>
       <div class="demo-area">
         <button
-          data-wb="toggle"
           data-target="#toggle-box"
           data-class="active">Toggle Class</button>
         <div
@@ -1184,12 +1127,10 @@
       </div>
     </div>
     <div class="behavior-card">
-      <div class="behavior-title">Rating <span class="behavior-code">data-wb="rating"</span></div>
+      <div class="behavior-title">Rating <span class="behavior-code"></span></div>
       <div class="demo-area">
-        <div
-          data-wb="rating"
-          data-value="3"
-          data-max="5"></div>
+        <wb-rating value="3"
+          max="5"></div>
       </div>
     </div>
   </div>
@@ -1198,12 +1139,12 @@
   <h3 id="advanced-layout">10. Advanced Layout</h3>
   <div class="behavior-grid">
     <div class="behavior-card">
-      <div class="behavior-title">Masonry <span class="behavior-code">data-wb="masonry"</span></div>
+      <div class="behavior-title">Masonry <span class="behavior-code"></span></div>
       <div class="demo-area">
         <div
-          data-wb="masonry"
           data-columns="3"
-          data-gap="0.5rem">
+          data-gap="0.5rem"
+          style="width: 100%">
           <div style="background: #333; height: 50px;"></div>
           <div style="background: #444; height: 80px;"></div>
           <div style="background: #555; height: 40px;"></div>
@@ -1213,10 +1154,9 @@
       </div>
     </div>
     <div class="behavior-card">
-      <div class="behavior-title">Switcher <span class="behavior-code">data-wb="switcher"</span></div>
+      <div class="behavior-title">Switcher <span class="behavior-code"></span></div>
       <div class="demo-area">
         <div
-          data-wb="switcher"
           data-threshold="200px">
           <div style="background: #333; padding: 1rem;">Item 1</div>
           <div style="background: #444; padding: 1rem;">Item 2</div>
@@ -1225,10 +1165,9 @@
       </div>
     </div>
     <div class="behavior-card">
-      <div class="behavior-title">Frame <span class="behavior-code">data-wb="frame"</span></div>
+      <div class="behavior-title">Frame <span class="behavior-code"></span></div>
       <div class="demo-area">
         <div
-          data-wb="frame"
           data-ratio="16/9"
           style="width: 100%; background: #000;">
           <img
@@ -1238,10 +1177,9 @@
       </div>
     </div>
     <div class="behavior-card">
-      <div class="behavior-title">Reel <span class="behavior-code">data-wb="reel"</span></div>
+      <div class="behavior-title">Reel <span class="behavior-code"></span></div>
       <div class="demo-area">
         <div
-          data-wb="reel"
           data-item-width="100px">
           <div style="background: #333; height: 80px; width: 100px;">1</div>
           <div style="background: #444; height: 80px; width: 100px;">2</div>
@@ -1257,18 +1195,18 @@
   <h3 id="universal">11. Universal</h3>
   <div class="behavior-grid">
     <div class="behavior-card">
-      <div class="behavior-title">Draggable <span class="behavior-code">data-wb="draggable"</span></div>
+      <div class="behavior-title">Draggable <span class="behavior-code">x-draggable</span></div>
       <div class="demo-area" style="height: 150px; position: relative;">
         <div
-          data-wb="draggable"
+          x-draggable
           style="width: 50px; height: 50px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; cursor: move;">Drag</div>
       </div>
     </div>
     <div class="behavior-card">
-      <div class="behavior-title">Resizable <span class="behavior-code">data-wb="resizable"</span></div>
+      <div class="behavior-title">Resizable <span class="behavior-code">x-resizable</span></div>
       <div class="demo-area">
         <div
-          data-wb="resizable"
+          x-resizable
           style="width: 100px; height: 100px; background: var(--bg-tertiary); border: 1px solid var(--border-color); overflow: hidden;">Resize Me</div>
       </div>
     </div>
@@ -1278,10 +1216,9 @@
   <h3 id="more">12. More Components</h3>
   <div class="behavior-grid">
     <div class="behavior-card">
-      <div class="behavior-title">Sidebar Layout <span class="behavior-code">data-wb="sidebar-layout"</span></div>
+      <div class="behavior-title">Sidebar Layout <span class="behavior-code"></span></div>
       <div class="demo-area" style="height: 200px; border: 1px solid var(--border-color);">
         <div
-          data-wb="sidebar-layout"
           data-sidebar-width="100px">
           <div style="background: var(--bg-tertiary); padding: 1rem;">Side</div>
           <div style="padding: 1rem;">Main Content Area</div>
@@ -1289,21 +1226,18 @@
       </div>
     </div>
     <div class="behavior-card">
-      <div class="behavior-title">Imposter <span class="behavior-code">data-wb="imposter"</span></div>
+      <div class="behavior-title">Imposter <span class="behavior-code"></span></div>
       <div class="demo-area" style="height: 150px; position: relative;">
         <div
-          data-wb="imposter"
           style="background: rgba(0,0,0,0.5); color: white; padding: 1rem; border-radius: 4px;">
           I am centered over everything!
         </div>
       </div>
     </div>
     <div class="behavior-card">
-      <div class="behavior-title">Alert <span class="behavior-code">data-wb="alert"</span></div>
+      <div class="behavior-title">Alert <span class="behavior-code"></span></div>
       <div class="demo-area">
-        <div
-          data-wb="alert"
-          data-variant="info"
+        <wb-alert variant="info"
           style="padding: 1rem; background: var(--bg-tertiary); border-left: 4px solid var(--primary); width: 100%;">
           <strong>Info:</strong> This is an alert message.
         </div>
@@ -1342,26 +1276,26 @@
 
     // Auto-inject mapping: data-wb value -> { element, note }
     const autoinjectMap = {
-      'button': { element: 'button', note: 'Auto-injects via <button>. Explicit: data-wb="button"' },
-      'card': { element: 'article', note: 'Auto-injects via <article>. Explicit: data-wb="card"' },
-      'details': { element: 'details', note: 'Auto-injects via <details>. Explicit: data-wb="details"' },
-      'dialog': { element: 'dialog', note: 'Auto-injects via <dialog>. Explicit: data-wb="dialog"' },
-      'input': { element: 'input', note: 'Auto-injects via <input>. Explicit: data-wb="input"' },
-      'textarea': { element: 'textarea', note: 'Auto-injects via <textarea>. Explicit: data-wb="textarea"' },
-      'select': { element: 'select', note: 'Auto-injects via <select>. Explicit: data-wb="select"' },
-      'checkbox': { element: 'input type="checkbox"', note: 'Auto-injects via <input type="checkbox">. Explicit: data-wb="checkbox"' },
-      'radio': { element: 'input type="radio"', note: 'Auto-injects via <input type="radio">. Explicit: data-wb="radio"' },
-      'range': { element: 'input type="range"', note: 'Auto-injects via <input type="range">. Explicit: data-wb="range"' },
-      'switch': { element: null, note: 'No auto-inject. Use: data-wb="switch"', noAutoInject: true },
-      'audio': { element: 'audio', note: 'Auto-injects via <audio>. Explicit: data-wb="audio"' },
-      'video': { element: 'video', note: 'Auto-injects via <video>. Explicit: data-wb="video"' },
-      'figure': { element: 'figure', note: 'Auto-injects via <figure>. Explicit: data-wb="figure"' },
-      'navbar': { element: 'nav', note: 'Auto-injects via <nav>. Explicit: data-wb="navbar"' },
-      'sidebar': { element: 'aside', note: 'Auto-injects via <aside>. Explicit: data-wb="sidebar"' },
-      'table': { element: 'table', note: 'Auto-injects via <table>. Explicit: data-wb="table"' },
-      'progressbar': { element: 'progress', note: 'Auto-injects via <progress>. Explicit: data-wb="progressbar"' },
-      'kbd': { element: 'kbd', note: 'Auto-injects via <kbd>. Explicit: data-wb="kbd"' },
-      'mark': { element: 'mark', note: 'Auto-injects via <mark>. Explicit: data-wb="mark"' },
+      'button': { element: 'button', note: 'Auto-injects via <button>. Explicit: ' },
+      'card': { element: 'article', note: 'Auto-injects via <article>. Explicit:' },
+      'details': { element: 'details', note: 'Auto-injects via <details>. Explicit: ' },
+      'dialog': { element: 'dialog', note: 'Auto-injects via <dialog>. Explicit:' },
+      'input': { element: 'input', note: 'Auto-injects via <input>. Explicit: ' },
+      'textarea': { element: 'textarea', note: 'Auto-injects via <textarea>. Explicit:' },
+      'select': { element: 'select', note: 'Auto-injects via <select>. Explicit:' },
+      'checkbox': { element: 'input type="checkbox"', note: 'Auto-injects via <input type="checkbox">. Explicit:' },
+      'radio': { element: 'input type="radio"', note: 'Auto-injects via <input type="radio">. Explicit:' },
+      'range': { element: 'input type="range"', note: 'Auto-injects via <input type="range">. Explicit:' },
+      'switch': { element: null, note: 'No auto-inject. Use:', noAutoInject: true },
+      'audio': { element: 'audio', note: 'Auto-injects via <audio>. Explicit: ' },
+      'video': { element: 'video', note: 'Auto-injects via <video>. Explicit: ' },
+      'figure': { element: 'figure', note: 'Auto-injects via <figure>. Explicit: ' },
+      'navbar': { element: 'nav', note: 'Auto-injects via <nav>. Explicit:' },
+      'sidebar': { element: 'aside', note: 'Auto-injects via <aside>. Explicit:' },
+      'table': { element: 'table', note: 'Auto-injects via <table>. Explicit:' },
+      'progressbar': { element: 'progress', note: 'Auto-injects via <progress>. Explicit:' },
+      'kbd': { element: 'kbd', note: 'Auto-injects via <kbd>. Explicit: x-kbd' },
+      'mark': { element: 'mark', note: 'Auto-injects via <mark>. Explicit:' },
     };
 
     // Format HTML with ALL attributes on new lines with proper nesting indentation
@@ -1491,15 +1425,15 @@
       
       // If mapping exists but tag doesn't match (e.g. div vs audio), treat as explicit
       if (mapping && mapping.element && tagName !== mapping.element.toLowerCase()) {
-         return { html, note: `ℹ️ Explicit behavior (tag mismatch). Use: data-wb="${primaryBehavior}"` };
+         return { html, note: `ℹ️ Explicit behavior (tag mismatch). Use:` };
       }
       
       if (!mapping || mapping.noAutoInject || !codeDisplayConfig.showAutoinject) {
-        return { html, note: `ℹ️ Explicit behavior. Use: data-wb="${primaryBehavior}"` };
+        return { html, note: `ℹ️ Explicit behavior. Use:` };
       }
 
       // Remove data-wb attribute for autoinject format
-      let transformed = html.replace(/\s*data-wb="[^"]*"/g, '');
+      let transformed = html.replace(/\s*]*"/g, '');
       
       // Clean up: collapse multiple newlines into single newline
       transformed = transformed.replace(/\n\s*\n/g, '\n');
@@ -1516,8 +1450,8 @@
       if (codeSpan) {
         const text = codeSpan.textContent;
         
-        // Check for data-wb="..." pattern first
-        const wbMatch = text.match(/data-wb="([^"]+)"/);
+        // Check for pattern first
+        const wbMatch = text.match(/]+)"/);
         if (wbMatch) return wbMatch[1];
         
         // Check for <tagname> pattern (semantic HTML)

@@ -52,7 +52,7 @@ This document describes all JSON files in the `data/` folder, including their pu
 }
 ```
 
-**Created By**: Generated at runtime by tests or WB framework scan operations.
+**Created By**: Generated at runtime by tests or WB Behaviors scan operations.
 
 **Consumed By**:
 - [tests/base.ts](../tests/base.ts) - `DATA_FILES.behaviorInventory`

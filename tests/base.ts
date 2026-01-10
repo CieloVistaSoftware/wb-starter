@@ -1,5 +1,5 @@
 /**
- * Base Test Utilities for WB Framework
+ * Base Test Utilities for WB Behaviors
  * =====================================
  * Common validation functions, file utilities, and test helpers
  * used across all test suites. Import what you need.
@@ -24,8 +24,8 @@ export const PATHS = {
   pages: path.join(ROOT, 'pages'),
   demos: path.join(ROOT, 'demos'),
   public: path.join(ROOT, 'public'),
-  schemas: path.join(ROOT, 'src/behaviors/schema'),
-  behaviorsJs: path.join(ROOT, 'src/behaviors/js'),
+  schemas: path.join(ROOT, 'src/wb-models'),
+  behaviorsJs: path.join(ROOT, 'src/wb-viewmodels'),
   behaviorsCss: path.join(ROOT, 'src/behaviors/css'),
   styles: path.join(ROOT, 'src/styles'),
 } as const;
@@ -164,7 +164,7 @@ export function getJsFiles(dir: string = PATHS.behaviorsJs): string[] {
 export function getSchemaFiles(): string[] {
   if (!fs.existsSync(PATHS.schemas)) return [];
   return fs.readdirSync(PATHS.schemas)
-    .filter(f => f.endsWith('.schema.json') && !f.includes('.base.'));
+    .filter(f => f.endsWith('.schema.json') && !f.includes('.base.') && f !== 'views.schema.json' && f !== 'behavior.schema.json' && f !== 'behaviors-showcase.schema.json' && f !== 'search-index.schema.json');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -451,7 +451,7 @@ export function setsStyle(funcBody: string, styleProp: string): boolean {
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Wait for WB framework to initialize
+ * Wait for WB Behaviors to initialize
  */
 export async function waitForWB(page: Page): Promise<void> {
   await page.waitForFunction(() => (window as any).WB?.behaviors);

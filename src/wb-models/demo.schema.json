@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "demo.schema.json",
+  "title": "Demo Component",
+  "description": "A component to display a live demo and its source code.",
+  "behavior": "demo",
+  "baseClass": "wb-demo",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "region"
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the demo",
+      "default": "Demo"
+    },
+    "tag": {
+      "type": "string",
+      "description": "Tag/Category of the demo",
+      "default": "UI"
+    },
+    "contentClass": {
+      "type": "string",
+      "description": "Additional classes for the content wrapper",
+      "default": ""
+    }
+  },
+  "$view": [
+    {
+      "name": "header",
+      "tag": "header",
+      "class": "demo-header"
+    },
+    {
+      "name": "title",
+      "tag": "span",
+      "class": "demo-title",
+      "parent": "header",
+      "content": "{{title}}"
+    },
+    {
+      "name": "controls",
+      "tag": "div",
+      "parent": "header"
+    },
+    {
+      "name": "tag",
+      "tag": "span",
+      "class": "demo-tag",
+      "parent": "controls",
+      "content": "{{tag}}"
+    },
+    {
+      "name": "toggle",
+      "tag": "button",
+      "class": "toggle-code",
+      "parent": "controls",
+      "content": "View Code"
+    },
+    {
+      "name": "content",
+      "tag": "div",
+      "class": "demo-content {{contentClass}}",
+      "content": "{{slot}}"
+    },
+    {
+      "name": "pre",
+      "tag": "pre",
+      "class": "x-code"
+    },
+    {
+      "name": "code",
+      "tag": "code",
+      "parent": "pre"
+    }
+  ]
+}

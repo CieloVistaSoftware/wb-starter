@@ -13,7 +13,7 @@ let lastInteraction = { from: 'System', to: 'Idle', timestamp: 0 };
 if (typeof document !== 'undefined') {
   document.addEventListener('click', (e) => {
     try {
-      const target = e.target.closest('button, a, input, select, textarea, summary, [onclick], [data-wb]');
+      const target = e.target.closest('button, a, input, select, textarea, summary, [onclick], ');
       if (target) {
         // Determine "From" (Element name/text)
         let from = target.tagName.toLowerCase();
@@ -215,8 +215,12 @@ function showToast(level, message, data = {}) {
   }
   
   headerHTML += `
+      <button class="wb-error-copy-btn" 
+              style="margin-left:auto;margin-right:8px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:white;cursor:pointer;font-size:11px;padding:2px 8px;border-radius:4px;">
+        📋 Copy
+      </button>
       <button onclick="this.closest('.wb-error-toast').remove()" 
-              style="margin-left:auto;background:none;border:none;color:white;cursor:pointer;opacity:0.7;font-size:1.2rem;padding:0;">×</button>
+              style="background:none;border:none;color:white;cursor:pointer;opacity:0.7;font-size:1.2rem;padding:0;">×</button>
     </div>
   `;
   
@@ -243,6 +247,15 @@ function showToast(level, message, data = {}) {
     messageHTML += `
       <div style="font-size:11px;opacity:0.8;margin-bottom:0.5rem;">
         <strong>File:</strong> ${escapeHtml(filePath)}${data.line ? ':' + data.line : ''}${data.column ? ':' + data.column : ''}
+      </div>
+    `;
+  }
+  
+  // Error log location hint
+  if (level === 'error') {
+    messageHTML += `
+      <div style="font-size:10px;opacity:0.6;margin-top:0.5rem;font-style:italic;">
+        📁 Error log saved to: data/errors.json
       </div>
     `;
   }
@@ -291,6 +304,24 @@ function showToast(level, message, data = {}) {
   
   toast.innerHTML = headerHTML + messageHTML + stackHTML;
   container.appendChild(toast);
+  
+  // Attach copy handler
+  const copyBtn = toast.querySelector('.wb-error-copy-btn');
+  if (copyBtn) {
+    copyBtn.onclick = (e) => {
+      e.stopPropagation();
+      const textToCopy = `Error: ${message}\nModule: ${data.module || 'unknown'}\nFile: ${data.file || data.fullPath || 'unknown'}\nLine: ${data.line || '?'}\n\nStack:\n${data.stack || ''}`;
+      
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        copyBtn.textContent = '✔️ Copied';
+        copyBtn.style.background = 'rgba(34, 197, 94, 0.4)';
+        setTimeout(() => {
+           copyBtn.textContent = '📋 Copy';
+           copyBtn.style.background = 'rgba(255,255,255,0.2)';
+        }, 2000);
+      }).catch(err => console.error('Copy failed', err));
+    };
+  }
   
   // Auto-remove after delay (longer for errors)
   const duration = level === 'error' ? 15000 : level === 'warn' ? 8000 : 4000;

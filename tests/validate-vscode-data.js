@@ -57,7 +57,7 @@ function checkAttribute(attrName) {
     });
 }
 
-checkAttribute('data-wb');
+checkAttribute('x-behavior');
 checkAttribute('data-behavior');
 
 if (hasErrors) {

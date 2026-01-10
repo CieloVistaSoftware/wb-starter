@@ -14,10 +14,10 @@ The `button` component enhances the standard `<button>` element with a robust de
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="button"` to any `<button>` element.
+The `button` behavior is automatically injected into any `<button>` element.
 
 ```html
-<button data-wb="button">Click Me</button>
+<button>Click Me</button>
 ```
 
 ### Configuration Options
@@ -36,9 +36,9 @@ Add `data-wb="button"` to any `<button>` element.
 Different button styles for various contexts.
 
 ```html
-<button data-wb="button" data-variant="primary">Save Changes</button>
-<button data-wb="button" data-variant="danger">Delete</button>
-<button data-wb="button" data-variant="ghost">Cancel</button>
+<button data-variant="primary">Save Changes</button>
+<button data-variant="danger">Delete</button>
+<button data-variant="ghost">Cancel</button>
 ```
 
 ### Example 2: Loading State with Icon
@@ -46,7 +46,6 @@ A button that shows a loading spinner and an icon.
 
 ```html
 <button 
-  data-wb="button" 
   data-variant="success" 
   data-icon="💾" 
   data-loading="true">

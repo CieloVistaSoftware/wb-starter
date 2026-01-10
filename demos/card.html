@@ -99,7 +99,7 @@
 <body id="card-body-10">
   <header id="card-header-11">
     <h1 id="card-h1-12">🃏 Card Behaviors Demo</h1>
-    <div id="card-div-13" data-wb="themecontrol"></div>
+    <wb-themecontrol id="card-div-13"></div>
   </header>
   <p id="card-p-14">All card behavior variants with various permutations.</p>
 
@@ -124,25 +124,25 @@
     </article>
 
     <!-- 4. Theme: Ocean -->
-    <div data-wb="cardimage" data-title="Ocean Theme" data-theme="ocean" data-src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" data-alt="Ocean view" id="card-ocean">
+    <wb-cardimage title="Ocean Theme" theme="ocean" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" alt="Ocean view" id="card-ocean">
       <p id="card-p-20">This card uses the Ocean theme.</p>
     </div>
 
     <!-- 5. Theme: Sunset -->
-    <div data-wb="cardimage" data-title="Sunset Theme" data-theme="sunset" data-src="https://images.unsplash.com/photo-1472120435266-53107fd0c44a?w=500&q=80" data-alt="Sunset view" id="card-sunset">
+    <wb-cardimage title="Sunset Theme" theme="sunset" src="https://images.unsplash.com/photo-1472120435266-53107fd0c44a?w=500&q=80" alt="Sunset view" id="card-sunset">
       <p id="card-p-21">This card uses the Sunset theme.</p>
     </div>
 
     <!-- 6. Theme: Forest -->
-    <div data-wb="cardimage" data-title="Forest Theme" data-theme="forest" data-src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&q=80" data-alt="Forest view" id="card-forest">
+    <wb-cardimage title="Forest Theme" theme="forest" src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&q=80" alt="Forest view" id="card-forest">
       <p id="card-p-22">This card uses the Forest theme.</p>
     </div>
   </div>
   
-  <div id="card-div-23" data-wb="mdhtml">
+  <wb-mdhtml id="card-div-23">
 ```html
 &lt;!-- Basic Card --&gt;
-&lt;div data-wb="card" 
+&lt;div 
      id="card-basic"
      data-title="Basic Card" 
      data-subtitle="With subtitle"&gt;
@@ -151,7 +151,7 @@
 
 &lt;!-- Elevated Card --&gt;
 &lt;!-- IMPORTANT: !important required to override behavior defaults --&gt;
-&lt;div data-wb="card" 
+&lt;div 
      id="card-elevated"
      data-title="Elevated Card" 
      data-elevated
@@ -160,7 +160,7 @@
 &lt;/div&gt;
 
 &lt;!-- Clickable Card --&gt;
-&lt;div data-wb="card" 
+&lt;div 
      id="card-clickable"
      data-title="Clickable Card" 
      data-clickable&gt;
@@ -168,7 +168,7 @@
 &lt;/div&gt;
 
 &lt;!-- Ocean Theme --&gt;
-&lt;div data-wb="cardimage" 
+&lt;div 
      id="card-ocean"
      data-title="Ocean Theme" 
      data-theme="ocean"
@@ -194,23 +194,23 @@
   <h2 id="card-h2-24">cardstats</h2>
   <!-- ============================================ -->
   <div id="card-div-25" class="demo-row">
-    <div data-wb="cardstats" data-value="1,234" data-label="Total Users" id="stat-users"></div>
-    <div data-wb="cardstats" data-value="$50K" data-label="Revenue" data-icon="💰" data-trend="up" data-trend-value="+12%" id="stat-revenue"></div>
-    <div data-wb="cardstats" data-value="85%" data-label="Bounce Rate" data-icon="📉" data-trend="down" data-trend-value="-5%" id="stat-bounce"></div>
-    <div data-wb="cardstats" data-value="42" data-label="Active Projects" data-icon="🚀" id="stat-projects"></div>
+    <wb-cardstats value="1,234" label="Total Users" id="stat-users"></div>
+    <wb-cardstats value="$50K" label="Revenue" icon="💰" trend="up" data-trend-value="+12%" id="stat-revenue"></div>
+    <wb-cardstats value="85%" label="Bounce Rate" icon="📉" trend="down" data-trend-value="-5%" id="stat-bounce"></div>
+    <wb-cardstats value="42" label="Active Projects" icon="🚀" id="stat-projects"></div>
   </div>
 
-  <div id="card-div-26" data-wb="mdhtml">
+  <wb-mdhtml id="card-div-26">
 ```html
 &lt;!-- Stats Card --&gt;
-&lt;div data-wb="cardstats" 
+&lt;div 
      id="stat-users"
      data-value="1,234" 
      data-label="Total Users"&gt;
 &lt;/div&gt;
 
 &lt;!-- Stats Card with Trend Up --&gt;
-&lt;div data-wb="cardstats" 
+&lt;div 
      id="stat-revenue"
      data-value="$50K" 
      data-label="Revenue" 
@@ -220,7 +220,7 @@
 &lt;/div&gt;
 
 &lt;!-- Stats Card with Trend Down --&gt;
-&lt;div data-wb="cardstats" 
+&lt;div 
      id="stat-bounce"
      data-value="85%" 
      data-label="Bounce Rate" 
@@ -230,7 +230,7 @@
 &lt;/div&gt;
 
 &lt;!-- Stats Card Simple --&gt;
-&lt;div data-wb="cardstats" 
+&lt;div 
      id="stat-projects"
      data-value="42" 
      data-label="Active Projects" 
@@ -255,15 +255,15 @@
   <h2 id="card-h2-27">cardprofile</h2>
   <!-- ============================================ -->
   <div id="card-div-28" class="demo-grid">
-    <div data-wb="cardprofile" data-name="John Doe" data-role="Software Engineer" data-avatar="https://i.pravatar.cc/100?u=1" data-bio="Building the future of web." id="profile-john"></div>
-    <div data-wb="cardprofile" data-name="Jane Smith" data-role="Product Designer" data-avatar="https://i.pravatar.cc/100?u=49" data-bio="Designing experiences that matter." data-theme="sunset" id="profile-jane"></div>
-    <div data-wb="cardprofile" data-name="Mike Johnson" data-role="DevOps Engineer" data-avatar="https://i.pravatar.cc/100?u=33" data-bio="Keeping the lights on." id="profile-mike"></div>
+    <wb-cardprofile name="John Doe" role="Software Engineer" avatar="https://i.pravatar.cc/100?u=1" bio="Building the future of web." id="profile-john"></div>
+    <wb-cardprofile name="Jane Smith" role="Product Designer" avatar="https://i.pravatar.cc/100?u=49" bio="Designing experiences that matter." theme="sunset" id="profile-jane"></div>
+    <wb-cardprofile name="Mike Johnson" role="DevOps Engineer" avatar="https://i.pravatar.cc/100?u=33" bio="Keeping the lights on." id="profile-mike"></div>
   </div>
 
-  <div id="card-div-29" data-wb="mdhtml">
+  <wb-mdhtml id="card-div-29">
 ```html
 &lt;!-- Profile Card 1 --&gt;
-&lt;div data-wb="cardprofile" 
+&lt;div 
      id="profile-john"
      data-name="John Doe" 
      data-role="Software Engineer" 
@@ -272,7 +272,7 @@
 &lt;/div&gt;
 
 &lt;!-- Profile Card 2 (Themed) --&gt;
-&lt;div data-wb="cardprofile" 
+&lt;div 
      id="profile-jane"
      data-name="Jane Smith" 
      data-role="Product Designer" 
@@ -282,7 +282,7 @@
 &lt;/div&gt;
 
 &lt;!-- Profile Card 3 --&gt;
-&lt;div data-wb="cardprofile" 
+&lt;div 
      id="profile-mike"
      data-name="Mike Johnson" 
      data-role="DevOps Engineer" 
@@ -297,25 +297,25 @@
   <!-- ============================================ -->
   <div id="card-div-31" class="demo-grid">
     <!-- Row 1 -->
-    <div data-wb="cardpricing" data-plan="Basic" data-price="$0" data-features="1 Project,500MB Storage,Community Support" data-cta="Sign Up Free" id="pricing-basic"></div>
-    <div data-wb="cardpricing" data-plan="Pro" data-price="$29" data-features="Unlimited Projects,10GB Storage,Priority Support" data-featured="true" data-cta="Get Pro" id="pricing-pro"></div>
-    <div data-wb="cardpricing" data-plan="Enterprise" data-price="$99" data-features="Unlimited Everything,1TB Storage,24/7 Support,SSO" data-cta="Contact Sales" id="pricing-enterprise"></div>
+    <wb-cardpricing plan="Basic" price="$0" features="1 Project,500MB Storage,Community Support" cta="Sign Up Free" id="pricing-basic"></div>
+    <wb-cardpricing plan="Pro" price="$29" features="Unlimited Projects,10GB Storage,Priority Support" featured="true" cta="Get Pro" id="pricing-pro"></div>
+    <wb-cardpricing plan="Enterprise" price="$99" features="Unlimited Everything,1TB Storage,24/7 Support,SSO" cta="Contact Sales" id="pricing-enterprise"></div>
     
     <!-- Row 2: Themed with Images -->
-    <div data-wb="cardpricing" data-theme="ocean" data-plan="Ocean Plan" data-price="$49" data-features="Blue Waves,Deep Dive,Marine Life" data-cta="Dive In" data-background="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" style="color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5);" id="pricing-ocean"></div>
-    <div data-wb="cardpricing" data-theme="sunset" data-plan="Sunset Plan" data-price="$59" data-features="Golden Hour,Warm Vibes,Relaxation" data-cta="Relax" data-background="https://images.unsplash.com/photo-1472120435266-53107fd0c44a?w=500&q=80" style="color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5);" id="pricing-sunset"></div>
-    <div data-wb="cardpricing" data-theme="forest" data-plan="Forest Plan" data-price="$39" data-features="Fresh Air,Green Trees,Nature Walk" data-cta="Explore" data-background="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&q=80" style="color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5);" id="pricing-forest"></div>
+    <wb-cardpricing theme="ocean" plan="Ocean Plan" price="$49" features="Blue Waves,Deep Dive,Marine Life" cta="Dive In" background="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" style="color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5);" id="pricing-ocean"></div>
+    <wb-cardpricing theme="sunset" plan="Sunset Plan" price="$59" features="Golden Hour,Warm Vibes,Relaxation" cta="Relax" background="https://images.unsplash.com/photo-1472120435266-53107fd0c44a?w=500&q=80" style="color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5);" id="pricing-sunset"></div>
+    <wb-cardpricing theme="forest" plan="Forest Plan" price="$39" features="Fresh Air,Green Trees,Nature Walk" cta="Explore" background="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&q=80" style="color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5);" id="pricing-forest"></div>
 
     <!-- Row 3: Variants -->
-    <div data-wb="cardpricing" data-variant="success" data-plan="Success" data-price="$49" data-features="All Features,Success Support" data-cta="Start Now" id="pricing-success"></div>
-    <div data-wb="cardpricing" data-variant="warning" data-plan="Standard" data-price="$19" data-features="Standard Features,Priority Support" data-cta="Select Plan" id="pricing-warning"></div>
-    <div data-wb="cardpricing" data-variant="danger" data-plan="Premium" data-price="$999" data-features="All Features,24/7 Support" data-cta="Contact Sales" id="pricing-danger"></div>
+    <wb-cardpricing variant="success" plan="Success" price="$49" features="All Features,Success Support" cta="Start Now" id="pricing-success"></div>
+    <wb-cardpricing variant="warning" plan="Standard" price="$19" features="Standard Features,Priority Support" cta="Select Plan" id="pricing-warning"></div>
+    <wb-cardpricing variant="danger" plan="Premium" price="$999" features="All Features,24/7 Support" cta="Contact Sales" id="pricing-danger"></div>
   </div>
 
-  <div id="card-div-32" data-wb="mdhtml">
+  <wb-mdhtml id="card-div-32">
 ```html
 &lt;!-- Basic Plan --&gt;
-&lt;div data-wb="cardpricing" 
+&lt;div 
      id="pricing-basic"
      data-plan="Basic" 
      data-price="$0" 
@@ -324,7 +324,7 @@
 &lt;/div&gt;
 
 &lt;!-- Pro Plan (Featured) --&gt;
-&lt;div data-wb="cardpricing" 
+&lt;div 
      id="pricing-pro"
      data-plan="Pro" 
      data-price="$29" 
@@ -334,7 +334,7 @@
 &lt;/div&gt;
 
 &lt;!-- Enterprise Plan --&gt;
-&lt;div data-wb="cardpricing" 
+&lt;div 
      id="pricing-enterprise"
      data-plan="Enterprise" 
      data-price="$99" 
@@ -343,7 +343,7 @@
 &lt;/div&gt;
 
 &lt;!-- Ocean Plan --&gt;
-&lt;div data-wb="cardpricing" 
+&lt;div 
      id="pricing-ocean"
      data-theme="ocean" 
      data-plan="Ocean Plan" 
@@ -355,7 +355,7 @@
 &lt;/div&gt;
 
 &lt;!-- Sunset Plan --&gt;
-&lt;div data-wb="cardpricing" 
+&lt;div 
      id="pricing-sunset"
      data-theme="sunset" 
      data-plan="Sunset Plan" 
@@ -367,7 +367,7 @@
 &lt;/div&gt;
 
 &lt;!-- Forest Plan --&gt;
-&lt;div data-wb="cardpricing" 
+&lt;div 
      id="pricing-forest"
      data-theme="forest" 
      data-plan="Forest Plan" 
@@ -379,7 +379,7 @@
 &lt;/div&gt;
 
 &lt;!-- Success Variant --&gt;
-&lt;div data-wb="cardpricing" 
+&lt;div 
      id="pricing-success"
      data-variant="success" 
      data-plan="Success" 
@@ -389,7 +389,7 @@
 &lt;/div&gt;
 
 &lt;!-- Warning Variant --&gt;
-&lt;div data-wb="cardpricing" 
+&lt;div 
      id="pricing-warning"
      data-variant="warning" 
      data-plan="Standard" 
@@ -399,7 +399,7 @@
 &lt;/div&gt;
 
 &lt;!-- Danger Variant --&gt;
-&lt;div data-wb="cardpricing" 
+&lt;div 
      id="pricing-danger"
      data-variant="danger" 
      data-plan="Premium" 
@@ -429,21 +429,21 @@
   <h2 id="card-h2-33">cardbutton</h2>
   <!-- ============================================ -->
   <div id="card-div-34" class="demo-grid">
-    <div data-wb="cardbutton" data-title="Action Card" data-primary="Submit" data-secondary="Cancel" id="card-action">
+    <wb-cardbutton title="Action Card" primary="Submit" secondary="Cancel" id="card-action">
       <p id="card-p-35">Card with action buttons.</p>
     </div>
-    <div data-wb="cardbutton" data-title="Download" data-primary="Download Now" data-secondary="Learn More" data-theme="ocean" id="card-download">
+    <wb-cardbutton title="Download" primary="Download Now" secondary="Learn More" theme="ocean" id="card-download">
       <p id="card-p-36">Get the latest version.</p>
     </div>
-    <div data-wb="cardbutton" data-title="Subscribe" data-primary="Subscribe" data-secondary="No Thanks" data-theme="sunset" id="card-subscribe">
+    <wb-cardbutton title="Subscribe" primary="Subscribe" secondary="No Thanks" theme="sunset" id="card-subscribe">
       <p id="card-p-37">Join our newsletter for updates.</p>
     </div>
   </div>
 
-  <div id="card-div-38" data-wb="mdhtml">
+  <wb-mdhtml id="card-div-38">
 ```html
 &lt;!-- Card with Buttons --&gt;
-&lt;div data-wb="cardbutton" 
+&lt;div 
      id="card-action"
      data-title="Action Card" 
      data-primary="Submit" 
@@ -475,40 +475,40 @@
   <!-- ============================================ -->
   <div id="card-div-40" class="demo-row">
     <!-- Badges -->
-    <div data-wb="badge" id="badge-new">New</div>
-    <div data-wb="badge" data-variant="success" id="badge-success">Success</div>
-    <div data-wb="badge" data-variant="warning" id="badge-warning">Warning</div>
-    <div data-wb="badge" data-variant="danger" id="badge-error">Error</div>
+    <wb-badge id="badge-new">New</div>
+    <wb-badge variant="success" id="badge-success">Success</div>
+    <wb-badge variant="warning" id="badge-warning">Warning</div>
+    <wb-badge variant="danger" id="badge-error">Error</div>
     
     <!-- Spinners -->
-    <div data-wb="spinner" data-delay="0" id="spinner-default"></div>
-    <div data-wb="spinner" data-color="success" data-delay="0.2" id="spinner-success"></div>
-    <div data-wb="spinner" data-color="warning" data-delay="0.4" id="spinner-warning"></div>
-    <div data-wb="spinner" data-color="error" data-delay="0.6" id="spinner-error"></div>
+    <wb-spinner delay="0" id="spinner-default"></div>
+    <wb-spinner color="success" delay="0.2" id="spinner-success"></div>
+    <wb-spinner color="warning" delay="0.4" id="spinner-warning"></div>
+    <wb-spinner color="error" delay="0.6" id="spinner-error"></div>
     
     <!-- Tooltips -->
-    <div data-wb="tooltip" data-content="Tooltip Top" data-position="top" id="tooltip-top">Top</div>
-    <div data-wb="tooltip" data-content="Tooltip Right" data-position="right" id="tooltip-right">Right</div>
-    <div data-wb="tooltip" data-content="Tooltip Bottom" data-position="bottom" id="tooltip-bottom">Bottom</div>
-    <div data-wb="tooltip" data-content="Tooltip Left" data-position="left" id="tooltip-left">Left</div>
+    <div x-tooltip data-content="Tooltip Top" data-position="top" id="tooltip-top">Top</div>
+    <div x-tooltip data-content="Tooltip Right" data-position="right" id="tooltip-right">Right</div>
+    <div x-tooltip data-content="Tooltip Bottom" data-position="bottom" id="tooltip-bottom">Bottom</div>
+    <div x-tooltip data-content="Tooltip Left" data-position="left" id="tooltip-left">Left</div>
   </div>
   
-  <div id="card-div-41" data-wb="mdhtml">
+  <wb-mdhtml id="card-div-41">
 ```html
 &lt;!-- Badges --&gt;
-&lt;div data-wb="badge" id="badge-new"&gt;New&lt;/div&gt;
-&lt;div data-wb="badge" data-variant="success"&gt;Success&lt;/div&gt;
-&lt;div data-wb="badge" data-variant="warning"&gt;Warning&lt;/div&gt;
-&lt;div data-wb="badge" data-variant="danger"&gt;Error&lt;/div&gt;
+&lt;div id="badge-new"&gt;New&lt;/div&gt;
+&lt;div data-variant="success"&gt;Success&lt;/div&gt;
+&lt;div data-variant="warning"&gt;Warning&lt;/div&gt;
+&lt;div data-variant="danger"&gt;Error&lt;/div&gt;
 
 &lt;!-- Spinners --&gt;
-&lt;div data-wb="spinner" id="spinner-default"&gt;&lt;/div&gt;
-&lt;div data-wb="spinner" data-color="success"&gt;&lt;/div&gt;
-&lt;div data-wb="spinner" data-color="warning"&gt;&lt;/div&gt;
-&lt;div data-wb="spinner" data-color="error"&gt;&lt;/div&gt;
+&lt;div id="spinner-default"&gt;&lt;/div&gt;
+&lt;div data-color="success"&gt;&lt;/div&gt;
+&lt;div data-color="warning"&gt;&lt;/div&gt;
+&lt;div data-color="error"&gt;&lt;/div&gt;
 
 &lt;!-- Tooltip --&gt;
-&lt;div data-wb="tooltip" id="tooltip-top" data-content="Tooltip text"&gt;Hover me&lt;/div&gt;
+&lt;div x-tooltip id="tooltip-top" data-content="Tooltip text"&gt;Hover me&lt;/div&gt;
 ```
   </div>
 
@@ -518,17 +518,17 @@
   <div id="card-div-43" style="padding: 3rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 1rem; text-align: center; color: white; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
     <h3 id="card-h3-44" style="margin-top: 0; font-size: 2rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Experience the Modal</h3>
     <p id="card-p-45" style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem;">Click below to reveal the magic.</p>
-    <button data-wb="modal" data-title="✨ Magic Modal" data-message="This modal is styled with a wow factor!" style="padding: 1rem 2rem; font-size: 1.1rem; background: white; color: #764ba2; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s;" id="btn-modal-magic">Open Magic Modal</button>
+    <wb-modal title="✨ Magic Modal" message="This modal is styled with a wow factor!" style="padding: 1rem 2rem; font-size: 1.1rem; background: white; color: #764ba2; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s;" id="btn-modal-magic">Open Magic Modal</button>
   </div>
 
   <!-- ============================================ -->
   <h2 id="card-h2-46">Locations</h2>
   <!-- ============================================ -->
-  <div data-wb="stack" data-gap="0.5rem" id="stack-locations">
+  <div x-stack data-gap="0.5rem" id="stack-locations">
     <!-- United States -->
     <details id="details-us" open>
       <summary>United States</summary>
-      <div id="card-div-47" data-wb="stack" data-gap="0.5rem">
+      <div id="card-div-47" x-stack data-gap="0.5rem">
         <details id="details-ca-la">
           <summary>California</summary>
           <ul id="card-ul-49">
@@ -559,7 +559,7 @@
     <!-- Canada -->
     <details id="details-ca">
       <summary>Canada</summary>
-      <div id="card-div-63" data-wb="stack" data-gap="0.5rem">
+      <div id="card-div-63" x-stack data-gap="0.5rem">
         <details id="details-on">
           <summary>Ontario</summary>
           <ul id="card-ul-65">
@@ -578,21 +578,21 @@
     </details>
   </div>
 
-  <div id="card-div-72" data-wb="mdhtml">
+  <wb-mdhtml id="card-div-72">
 ```html
 &lt;!-- Locations Stack --&gt;
-&lt;div data-wb="stack" data-gap="0.5rem" id="stack-locations"&gt;
+&lt;div x-stack data-gap="0.5rem" id="stack-locations"&gt;
   &lt;!-- United States --&gt;
-  &lt;div data-wb="details" data-summary="United States" data-open id="details-us"&gt;
-    &lt;div data-wb="stack" data-gap="0.5rem"&gt;
-      &lt;div data-wb="details" data-summary="California"&gt;
+  &lt;div  data-summary="United States" data-open id="details-us"&gt;
+    &lt;div x-stack data-gap="0.5rem"&gt;
+      &lt;div  data-summary="California"&gt;
         &lt;ul&gt;
           &lt;li&gt;Los Angeles&lt;/li&gt;
           &lt;li&gt;San Francisco&lt;/li&gt;
           &lt;li&gt;San Diego&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/div&gt;
-      &lt;div data-wb="details" data-summary="New York"&gt;
+      &lt;div  data-summary="New York"&gt;
         &lt;ul&gt;
           &lt;li&gt;New York City&lt;/li&gt;
           &lt;li&gt;Buffalo&lt;/li&gt;
@@ -603,9 +603,9 @@
   &lt;/div&gt;
 
   &lt;!-- Canada --&gt;
-  &lt;div data-wb="details" data-summary="Canada" id="details-ca"&gt;
-    &lt;div data-wb="stack" data-gap="0.5rem"&gt;
-      &lt;div data-wb="details" data-summary="Ontario"&gt;
+  &lt;div  data-summary="Canada" id="details-ca"&gt;
+    &lt;div x-stack data-gap="0.5rem"&gt;
+      &lt;div  data-summary="Ontario"&gt;
         &lt;ul&gt;
           &lt;li&gt;Toronto&lt;/li&gt;
           &lt;li&gt;Ottawa&lt;/li&gt;

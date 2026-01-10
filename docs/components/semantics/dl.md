@@ -38,7 +38,7 @@ Perfect for metadata or specs.
 ```html
 <dl data-wb="dl" data-variant="horizontal" data-striped="true">
   <dt>Version</dt> <dd>1.0.0</dd>
-  <dt>Author</dt> <dd>WB Team</dd>
+  <dt>Author</dt> <dd>Web Behaviors (WB) Team</dd>
   <dt>License</dt> <dd>MIT</dd>
 </dl>
 ```

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "globe.schema.json",
+  "title": "Globe",
+  "behavior": "globe",
+  "description": "3D Globe visualization.",
+  "properties": {}
+}

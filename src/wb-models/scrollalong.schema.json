@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scrollalong.schema.json",
+  "title": "ScrollAlong",
+  "description": "CSS sticky positioning for sidebars that stay visible while scrolling",
+  
+  "behavior": "scrollalong",
+  "baseClass": "wb-scrollalong",
+  
+  "semanticElement": { "tagName": "aside" },
+  
+  "properties": {
+    "offset": { "type": "string", "description": "Top offset", "default": "0" }
+  },
+  
+  "$view": [],
+  
+  "$methods": {},
+  
+  "$cssAPI": {
+    "--wb-scrollalong-top": { "default": "0", "description": "Sticky top position" }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-scrollalong>Sidebar</wb-scrollalong>",
+      "<nav data-wb=\"scrollalong\">Navigation</nav>"
+    ],
+    "matrix": { "combinations": [{}] }
+  },
+  
+  "_metadata": { "category": "layout", "icon": "📜", "since": "1.0.0", "status": "stable" }
+}

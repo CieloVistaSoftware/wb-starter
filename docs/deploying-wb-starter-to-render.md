@@ -1,4 +1,4 @@
-# Deploying WB Starter to Render: A Complete Guide
+# Deploying Web Behaviors (WB) Starter to Render: A Complete Guide
 
 **Live Demo:** [https://wb-starter.onrender.com](https://wb-starter.onrender.com)
 

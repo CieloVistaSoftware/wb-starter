@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "alert.schema.json",
+  "title": "Alert",
+  "description": "Alert component for displaying messages with severity levels",
+  
+  "behavior": "alert",
+  "baseClass": "wb-alert",
+  
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "alert"
+  },
+  
+  "properties": {
+    "variant": {
+      "type": "string",
+      "description": "Alert severity/style variant",
+      "enum": ["info", "success", "warning", "error"],
+      "default": "info",
+      "appliesClass": "wb-alert--{{value}}"
+    },
+    "title": {
+      "type": "string",
+      "description": "Alert title (optional heading)"
+    },
+    "message": {
+      "type": "string",
+      "description": "Alert message content",
+      "required": true
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon (emoji or icon name)",
+      "default": ""
+    },
+    "dismissible": {
+      "type": "boolean",
+      "description": "Show close button to dismiss alert",
+      "default": false
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "container",
+      "tag": "div",
+      "public": false,
+      "required": true,
+      "description": "Internal flex layout container"
+    },
+    {
+      "name": "icon",
+      "tag": "span",
+      "parent": "container",
+      "public": true,
+      "content": "{{icon}}",
+      "createdWhen": "icon",
+      "description": "Alert icon"
+    },
+    {
+      "name": "content",
+      "tag": "div",
+      "parent": "container",
+      "public": true,
+      "required": true,
+      "description": "Content wrapper for title and message"
+    },
+    {
+      "name": "title",
+      "tag": "strong",
+      "parent": "content",
+      "public": true,
+      "content": "{{title}}",
+      "createdWhen": "title",
+      "description": "Alert title/heading"
+    },
+    {
+      "name": "message",
+      "tag": "p",
+      "parent": "content",
+      "public": true,
+      "content": "{{message}}",
+      "description": "Alert message text"
+    },
+    {
+      "name": "close",
+      "tag": "button",
+      "parent": "container",
+      "public": true,
+      "content": "✕",
+      "createdWhen": "dismissible",
+      "description": "Close/dismiss button"
+    }
+  ],
+  
+  "$methods": {
+    "show": {
+      "description": "Shows the alert",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the alert",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles alert visibility",
+      "params": []
+    },
+    "dismiss": {
+      "description": "Dismisses and removes the alert with animation",
+      "params": [],
+      "returns": "Promise"
+    }
+  },
+  
+  "$cssAPI": {
+    "--wb-alert-padding": {
+      "default": "1rem",
+      "description": "Internal padding"
+    },
+    "--wb-alert-radius": {
+      "default": "4px",
+      "description": "Border radius"
+    },
+    "--wb-alert-gap": {
+      "default": "0.75rem",
+      "description": "Gap between icon, content, and close button"
+    },
+    "--wb-alert-icon-size": {
+      "default": "1.25rem",
+      "description": "Icon font size"
+    },
+    "--wb-alert-title-weight": {
+      "default": "600",
+      "description": "Title font weight"
+    },
+    "--wb-alert-info-bg": {
+      "default": "#e3f2fd",
+      "description": "Info variant background color"
+    },
+    "--wb-alert-info-border": {
+      "default": "#2196f3",
+      "description": "Info variant border color"
+    },
+    "--wb-alert-info-color": {
+      "default": "#1565c0",
+      "description": "Info variant text color"
+    },
+    "--wb-alert-success-bg": {
+      "default": "#e8f5e9",
+      "description": "Success variant background color"
+    },
+    "--wb-alert-success-border": {
+      "default": "#4caf50",
+      "description": "Success variant border color"
+    },
+    "--wb-alert-success-color": {
+      "default": "#2e7d32",
+      "description": "Success variant text color"
+    },
+    "--wb-alert-warning-bg": {
+      "default": "#fff3e0",
+      "description": "Warning variant background color"
+    },
+    "--wb-alert-warning-border": {
+      "default": "#ff9800",
+      "description": "Warning variant border color"
+    },
+    "--wb-alert-warning-color": {
+      "default": "#e65100",
+      "description": "Warning variant text color"
+    },
+    "--wb-alert-error-bg": {
+      "default": "#ffebee",
+      "description": "Error variant background color"
+    },
+    "--wb-alert-error-border": {
+      "default": "#f44336",
+      "description": "Error variant border color"
+    },
+    "--wb-alert-error-color": {
+      "default": "#c62828",
+      "description": "Error variant text color"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-alert message=\"Info alert\"></wb-alert>",
+      "<wb-alert variant=\"success\" title=\"Success\" message=\"Done!\"></wb-alert>",
+      "<wb-alert variant=\"error\" message=\"Error\" dismissible></wb-alert>",
+      "<div data-wb=\"alert\" data-message=\"Info alert\"></div>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "variant": "info", "message": "Test" },
+        { "variant": "success", "message": "Test" },
+        { "variant": "warning", "message": "Test" },
+        { "variant": "error", "message": "Test" },
+        { "variant": "info", "title": "Title", "message": "Test" },
+        { "variant": "info", "message": "Test", "icon": "ℹ️" },
+        { "variant": "info", "message": "Test", "dismissible": true },
+        { "variant": "warning", "title": "Warning", "message": "Be careful", "icon": "⚠️", "dismissible": true }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "feedback",
+    "icon": "🔔",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

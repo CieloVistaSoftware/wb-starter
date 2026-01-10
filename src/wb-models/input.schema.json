@@ -1,0 +1,379 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "input.schema.json",
+  "title": "Input",
+  "description": "Text input field with label, helper text, and validation states",
+  
+  "behavior": "input",
+  "baseClass": "wb-input",
+  
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "textbox"
+  },
+  
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Input label text"
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "Placeholder text"
+    },
+    "value": {
+      "type": "string",
+      "description": "Input value"
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name"
+    },
+    "inputType": {
+      "type": "string",
+      "description": "HTML input type",
+      "enum": ["text", "email", "password", "number", "tel", "url", "search", "date", "time", "datetime-local"],
+      "default": "text"
+    },
+    "helper": {
+      "type": "string",
+      "description": "Helper text below input"
+    },
+    "error": {
+      "type": "string",
+      "description": "Error message (shows error state)"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual validation state",
+      "enum": ["default", "success", "error"],
+      "default": "default",
+      "appliesClass": "wb-input--{{value}}"
+    },
+    "size": {
+      "type": "string",
+      "description": "Input size",
+      "enum": ["sm", "md", "lg"],
+      "default": "md",
+      "appliesClass": "wb-input--{{value}}"
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Disabled state",
+      "default": false
+    },
+    "readonly": {
+      "type": "boolean",
+      "description": "Read-only state",
+      "default": false
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Required field",
+      "default": false
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon (emoji or icon name)"
+    },
+    "iconPosition": {
+      "type": "string",
+      "description": "Icon position",
+      "enum": ["start", "end"],
+      "default": "start"
+    },
+    "clearable": {
+      "type": "boolean",
+      "description": "Show clear button when has value",
+      "default": false
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "label",
+      "tag": "label",
+      "public": true,
+      "content": "{{label}}",
+      "createdWhen": "label",
+      "description": "Input label"
+    },
+    {
+      "name": "required-indicator",
+      "tag": "span",
+      "parent": "label",
+      "public": false,
+      "content": "*",
+      "createdWhen": "required",
+      "description": "Required field indicator"
+    },
+    {
+      "name": "wrapper",
+      "tag": "div",
+      "public": false,
+      "required": true,
+      "description": "Input wrapper for icon positioning"
+    },
+    {
+      "name": "icon-start",
+      "tag": "span",
+      "parent": "wrapper",
+      "public": true,
+      "content": "{{icon}}",
+      "createdWhen": "icon AND iconPosition == 'start'",
+      "description": "Icon before input"
+    },
+    {
+      "name": "input",
+      "tag": "input",
+      "parent": "wrapper",
+      "public": true,
+      "required": true,
+      "description": "Native input element"
+    },
+    {
+      "name": "icon-end",
+      "tag": "span",
+      "parent": "wrapper",
+      "public": true,
+      "content": "{{icon}}",
+      "createdWhen": "icon AND iconPosition == 'end'",
+      "description": "Icon after input"
+    },
+    {
+      "name": "clear",
+      "tag": "button",
+      "parent": "wrapper",
+      "public": true,
+      "content": "✕",
+      "createdWhen": "clearable",
+      "description": "Clear button"
+    },
+    {
+      "name": "helper",
+      "tag": "span",
+      "public": true,
+      "content": "{{helper}}",
+      "createdWhen": "helper AND NOT error",
+      "description": "Helper text"
+    },
+    {
+      "name": "error-text",
+      "tag": "span",
+      "public": true,
+      "content": "{{error}}",
+      "createdWhen": "error",
+      "description": "Error message"
+    }
+  ],
+  
+  "$methods": {
+    "getValue": {
+      "description": "Gets the current input value",
+      "params": [],
+      "returns": "string"
+    },
+    "setValue": {
+      "description": "Sets the input value",
+      "params": ["value"]
+    },
+    "clear": {
+      "description": "Clears the input value",
+      "params": []
+    },
+    "focus": {
+      "description": "Focuses the input",
+      "params": []
+    },
+    "blur": {
+      "description": "Removes focus from input",
+      "params": []
+    },
+    "select": {
+      "description": "Selects all text in input",
+      "params": []
+    },
+    "setError": {
+      "description": "Sets error state and message",
+      "params": ["message"]
+    },
+    "clearError": {
+      "description": "Clears error state",
+      "params": []
+    },
+    "validate": {
+      "description": "Validates the input value",
+      "params": [],
+      "returns": "boolean"
+    },
+    "enable": {
+      "description": "Enables the input",
+      "params": []
+    },
+    "disable": {
+      "description": "Disables the input",
+      "params": []
+    }
+  },
+  
+  "$cssAPI": {
+    "--wb-input-height": {
+      "default": "2.5rem",
+      "description": "Input height"
+    },
+    "--wb-input-padding-x": {
+      "default": "0.75rem",
+      "description": "Horizontal padding"
+    },
+    "--wb-input-padding-y": {
+      "default": "0.5rem",
+      "description": "Vertical padding"
+    },
+    "--wb-input-radius": {
+      "default": "4px",
+      "description": "Border radius"
+    },
+    "--wb-input-font-size": {
+      "default": "0.875rem",
+      "description": "Font size"
+    },
+    "--wb-input-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Background color"
+    },
+    "--wb-input-border": {
+      "default": "1px solid var(--border-color, #d1d5db)",
+      "description": "Border style"
+    },
+    "--wb-input-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Text color"
+    },
+    "--wb-input-placeholder-color": {
+      "default": "var(--text-tertiary, #9ca3af)",
+      "description": "Placeholder color"
+    },
+    "--wb-input-focus-border": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Focus border color"
+    },
+    "--wb-input-focus-ring": {
+      "default": "0 0 0 3px rgba(99, 102, 241, 0.2)",
+      "description": "Focus ring shadow"
+    },
+    "--wb-input-disabled-bg": {
+      "default": "var(--bg-disabled, #f3f4f6)",
+      "description": "Disabled background"
+    },
+    "--wb-input-disabled-color": {
+      "default": "var(--text-disabled, #9ca3af)",
+      "description": "Disabled text color"
+    },
+    "--wb-input-success-border": {
+      "default": "var(--success, #22c55e)",
+      "description": "Success state border color"
+    },
+    "--wb-input-success-focus-ring": {
+      "default": "0 0 0 3px rgba(34, 197, 94, 0.2)",
+      "description": "Success state focus ring"
+    },
+    "--wb-input-error-border": {
+      "default": "var(--error, #ef4444)",
+      "description": "Error state border color"
+    },
+    "--wb-input-error-focus-ring": {
+      "default": "0 0 0 3px rgba(239, 68, 68, 0.2)",
+      "description": "Error state focus ring"
+    },
+    "--wb-input-label-size": {
+      "default": "0.875rem",
+      "description": "Label font size"
+    },
+    "--wb-input-label-weight": {
+      "default": "500",
+      "description": "Label font weight"
+    },
+    "--wb-input-label-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Label color"
+    },
+    "--wb-input-label-gap": {
+      "default": "0.5rem",
+      "description": "Gap between label and input"
+    },
+    "--wb-input-helper-size": {
+      "default": "0.75rem",
+      "description": "Helper text font size"
+    },
+    "--wb-input-helper-color": {
+      "default": "var(--text-secondary, #6b7280)",
+      "description": "Helper text color"
+    },
+    "--wb-input-error-color": {
+      "default": "var(--error, #ef4444)",
+      "description": "Error text color"
+    },
+    "--wb-input-icon-size": {
+      "default": "1rem",
+      "description": "Icon size"
+    },
+    "--wb-input-icon-color": {
+      "default": "var(--text-secondary, #6b7280)",
+      "description": "Icon color"
+    }
+  },
+  
+  "accessibility": {
+    "role": "textbox",
+    "ariaRequired": "dynamic when required",
+    "ariaInvalid": "dynamic when error",
+    "ariaDescribedBy": "helper or error text id"
+  },
+  
+  "events": {
+    "input": {
+      "description": "Fired when value changes",
+      "detail": { "value": "string" }
+    },
+    "change": {
+      "description": "Fired when value is committed",
+      "detail": { "value": "string" }
+    },
+    "focus": {
+      "description": "Fired when input receives focus",
+      "detail": {}
+    },
+    "blur": {
+      "description": "Fired when input loses focus",
+      "detail": {}
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-input placeholder=\"Enter text\"></wb-input>",
+      "<wb-input label=\"Email\" input-type=\"email\" placeholder=\"you@example.com\"></wb-input>",
+      "<wb-input label=\"Password\" input-type=\"password\" helper=\"At least 8 characters\"></wb-input>",
+      "<input data-wb=\"input\" placeholder=\"Test\">"
+    ],
+    "matrix": {
+      "combinations": [
+        { "placeholder": "Enter text" },
+        { "label": "Name", "placeholder": "Your name" },
+        { "label": "Email", "inputType": "email", "required": true },
+        { "label": "Field", "helper": "Helper text" },
+        { "label": "Field", "error": "This field is required" },
+        { "label": "Field", "variant": "success" },
+        { "label": "Field", "disabled": true },
+        { "label": "Search", "icon": "🔍", "clearable": true }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "forms",
+    "icon": "📝",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rating.schema.json",
+  "title": "Rating",
+  "description": "Star rating component for displaying or collecting ratings",
+  
+  "behavior": "rating",
+  "baseClass": "wb-rating",
+  
+  "semanticElement": { "tagName": "div", "implicitRole": "slider" },
+  
+  "properties": {
+    "value": { "type": "number", "description": "Current rating value", "default": 0, "minimum": 0, "maximum": 5 },
+    "max": { "type": "number", "description": "Maximum rating", "default": 5 },
+    "readonly": { "type": "boolean", "description": "Display only, not interactive", "default": false },
+    "disabled": { "type": "boolean", "description": "Disabled state", "default": false },
+    "half": { "type": "boolean", "description": "Allow half-star ratings", "default": false },
+    "size": { "type": "string", "enum": ["sm", "md", "lg"], "default": "md", "appliesClass": "wb-rating--{{value}}" },
+    "icon": { "type": "string", "description": "Custom icon (emoji or symbol)", "default": "★" }
+  },
+  
+  "$view": [
+    { "name": "stars", "tag": "span", "public": true, "description": "Star elements (multiple)" },
+    { "name": "value", "tag": "span", "public": true, "createdWhen": "showValue", "description": "Numeric value display" }
+  ],
+  
+  "$methods": {
+    "getValue": { "description": "Gets current rating", "params": [], "returns": "number" },
+    "setValue": { "description": "Sets rating value", "params": ["value"] },
+    "clear": { "description": "Clears rating to 0", "params": [] },
+    "enable": { "description": "Enables the rating", "params": [] },
+    "disable": { "description": "Disables the rating", "params": [] }
+  },
+  
+  "$cssAPI": {
+    "--wb-rating-size": { "default": "24px", "description": "Star size" },
+    "--wb-rating-gap": { "default": "2px", "description": "Gap between stars" },
+    "--wb-rating-color": { "default": "#fbbf24", "description": "Filled star color" },
+    "--wb-rating-empty-color": { "default": "#d1d5db", "description": "Empty star color" },
+    "--wb-rating-hover-color": { "default": "#f59e0b", "description": "Hover color" }
+  },
+  
+  "accessibility": {
+    "role": "slider",
+    "ariaValueMin": "0",
+    "ariaValueMax": "dynamic from max",
+    "ariaValueNow": "dynamic from value"
+  },
+  
+  "events": {
+    "wb:rating:change": { "description": "Rating changed", "detail": { "value": "number", "previousValue": "number" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-rating value=\"3\"></wb-rating>",
+      "<wb-rating value=\"4.5\" half readonly></wb-rating>",
+      "<div data-wb=\"rating\" data-value=\"3\"></div>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "value": 0 },
+        { "value": 3 },
+        { "value": 5 },
+        { "value": 3.5, "half": true },
+        { "value": 4, "readonly": true }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "feedback", "icon": "⭐", "since": "1.0.0", "status": "stable" }
+}

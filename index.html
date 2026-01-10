@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WB Starter</title>
-  <meta name="description" content="WB Behaviors - A config-driven web component library">
+  <title>My Awesome Site - Built with WB</title>
+  <meta name="description" content="A modern website starter kit powered by WB Behaviors">
   
   <!-- Layer 1: Foundation (OOP - only 2 files needed) -->
   <link rel="preload" href="src/styles/themes.css" as="style">
@@ -54,7 +54,7 @@
   <!-- Site container - built dynamically from config -->
   <div id="app" class="site">
     <div class="site__loading">
-      <div data-wb="spinner" data-color="primary"></div>
+      <wb-spinner color="primary"></wb-spinner>
       <p>Loading...</p>
     </div>
   </div>
@@ -65,7 +65,7 @@
       <div class="error__icon">⚠️</div>
       <h1>Unable to Load Site</h1>
       <p>Could not load configuration. Please check your connection and try again.</p>
-      <button onclick="location.reload()" class="error__retry" data-wb="ripple">
+      <button onclick="location.reload()" class="error__retry" x-ripple>
         Retry
       </button>
     </div>

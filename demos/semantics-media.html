@@ -51,7 +51,7 @@
 <body id="semanticsmedia-body-9">
   <header id="semanticsmedia-header-10">
     <h1 id="semanticsmedia-h1-11">🎬 Semantic Media Demo</h1>
-    <div id="semanticsmedia-div-12" data-wb="themecontrol"></div>
+    <wb-themecontrol id="semanticsmedia-div-12"></div>
   </header>
   <p id="semanticsmedia-p-13">Enhanced media elements using standard HTML tags.</p>
 
@@ -66,11 +66,7 @@
       <div id="semanticsmedia-div-21">
         <h3 id="semanticsmedia-h3-22">Studio EQ Player</h3>
         <p id="semanticsmedia-p-23">With 15-band graphic equalizer</p>
-        <div id="semanticsmedia-div-24" 
-          data-wb="audio" 
-          data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" 
-          data-show-eq="true"
-          data-volume="0.7">
+        <wb-audio id="semanticsmedia-div-24" data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" data-show-eq="true" data-volume="0.7"
         </div>
       </div>
     </div>
@@ -110,7 +106,7 @@
       <div id="semanticsmedia-div-39">
         <h3 id="semanticsmedia-h3-40">Zoomable Image (Lightbox)</h3>
         <img id="semanticsmedia-img-41" 
-          data-wb="image" 
+          x-image 
           src="https://picsum.photos/id/1018/800/600" 
           data-zoomable="true" 
           alt="Nature Scene"
@@ -119,7 +115,7 @@
       <div id="semanticsmedia-div-42">
         <h3 id="semanticsmedia-h3-43">Lazy Loaded with Aspect Ratio</h3>
         <img id="semanticsmedia-img-44" 
-          data-wb="image" 
+          x-image 
           src="https://picsum.photos/id/1015/800/600" 
           data-lazy="true" 
           data-aspect-ratio="4/3"

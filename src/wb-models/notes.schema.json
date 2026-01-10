@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "notes.schema.json",
+  "title": "Notes",
+  "description": "Slide-out notes drawer with multiple display modes",
+  
+  "behavior": "notes",
+  "baseClass": "wb-notes",
+  
+  "semanticElement": { "tagName": "aside" },
+  
+  "properties": {
+    "position": { "type": "string", "enum": ["left", "right", "modal"], "default": "left", "appliesClass": "wb-notes--{{value}}" },
+    "maxWidth": { "type": "string", "description": "Max width when resizing", "default": "50vw" },
+    "minWidth": { "type": "string", "description": "Min width when resizing", "default": "200px" },
+    "defaultWidth": { "type": "string", "description": "Default width", "default": "320px" },
+    "autoSave": { "type": "boolean", "description": "Auto-save to localStorage", "default": true },
+    "placeholder": { "type": "string", "description": "Textarea placeholder", "default": "Add your notes here..." }
+  },
+  
+  "$view": [
+    { "name": "backdrop", "tag": "div", "public": false, "createdWhen": "position == 'modal'", "description": "Modal backdrop" },
+    { "name": "drawer", "tag": "div", "public": true, "required": true, "description": "Main drawer container" },
+    { "name": "header", "tag": "header", "parent": "drawer", "public": true, "description": "Header with title and actions" },
+    { "name": "title", "tag": "h3", "parent": "header", "public": true, "description": "Notes title" },
+    { "name": "actions", "tag": "div", "parent": "header", "public": true, "description": "Action buttons row" },
+    { "name": "textarea", "tag": "textarea", "parent": "drawer", "public": true, "required": true, "description": "Notes input" },
+    { "name": "footer", "tag": "footer", "parent": "drawer", "public": true, "description": "Footer with status" },
+    { "name": "resize-handle", "tag": "div", "parent": "drawer", "public": false, "description": "Resize handle" }
+  ],
+  
+  "$methods": {
+    "open": { "description": "Opens the drawer", "params": [] },
+    "close": { "description": "Closes the drawer", "params": [] },
+    "toggle": { "description": "Toggles drawer", "params": [] },
+    "setPosition": { "description": "Sets position", "params": ["position"] },
+    "save": { "description": "Saves notes to JSON", "params": [] },
+    "copy": { "description": "Copies notes to clipboard", "params": [] },
+    "clear": { "description": "Clears all notes", "params": [] },
+    "getContent": { "description": "Gets notes content", "params": [], "returns": "string" },
+    "setContent": { "description": "Sets notes content", "params": ["content"] }
+  },
+  
+  "$cssAPI": {
+    "--wb-notes-width": { "default": "320px", "description": "Default width" },
+    "--wb-notes-max-width": { "default": "50vw", "description": "Max width" },
+    "--wb-notes-min-width": { "default": "200px", "description": "Min width" },
+    "--wb-notes-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Background" },
+    "--wb-notes-border": { "default": "1px solid var(--border-color, #e0e0e0)", "description": "Border" },
+    "--wb-notes-shadow": { "default": "0 4px 20px rgba(0,0,0,0.15)", "description": "Shadow" },
+    "--wb-notes-header-bg": { "default": "var(--bg-secondary, #f3f4f6)", "description": "Header background" },
+    "--wb-notes-z-index": { "default": "1000", "description": "Z-index" }
+  },
+  
+  "events": {
+    "wb:notes:open": { "description": "Drawer opened" },
+    "wb:notes:close": { "description": "Drawer closed" },
+    "wb:notes:save": { "description": "Notes saved", "detail": { "content": "string" } },
+    "wb:notes:copy": { "description": "Notes copied to clipboard" },
+    "wb:notes:clear": { "description": "Notes cleared" },
+    "wb:notes:position": { "description": "Position changed", "detail": { "position": "string" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-notes></wb-notes>",
+      "<aside data-wb=\"notes\" data-position=\"right\"></aside>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        { "position": "left" },
+        { "position": "right" },
+        { "position": "modal" }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "utility", "icon": "📝", "since": "1.0.0", "status": "stable" }
+}

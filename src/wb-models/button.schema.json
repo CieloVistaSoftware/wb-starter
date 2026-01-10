@@ -1,0 +1,269 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "button.schema.json",
+  "title": "Button",
+  "description": "Interactive button with variants, sizes, and optional icon",
+  
+  "behavior": "button",
+  "baseClass": "wb-button",
+  
+  "semanticElement": {
+    "tagName": "button",
+    "implicitRole": "button"
+  },
+  
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Button text"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon (emoji or icon name)"
+    },
+    "iconPosition": {
+      "type": "string",
+      "description": "Icon position relative to label",
+      "enum": ["start", "end"],
+      "default": "start"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual style variant",
+      "enum": ["primary", "secondary", "success", "warning", "error", "ghost", "outline", "link"],
+      "default": "primary",
+      "appliesClass": "wb-button--{{value}}"
+    },
+    "size": {
+      "type": "string",
+      "description": "Button size",
+      "enum": ["xs", "sm", "md", "lg", "xl"],
+      "default": "md",
+      "appliesClass": "wb-button--{{value}}"
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Disabled state",
+      "default": false
+    },
+    "loading": {
+      "type": "boolean",
+      "description": "Loading state with spinner",
+      "default": false,
+      "appliesClass": "wb-button--loading"
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "description": "Full width button",
+      "default": false,
+      "appliesClass": "wb-button--full"
+    },
+    "iconOnly": {
+      "type": "boolean",
+      "description": "Icon-only button (square)",
+      "default": false,
+      "appliesClass": "wb-button--icon-only"
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "icon-start",
+      "tag": "span",
+      "public": true,
+      "content": "{{icon}}",
+      "createdWhen": "icon AND iconPosition == 'start'",
+      "description": "Icon before label"
+    },
+    {
+      "name": "label",
+      "tag": "span",
+      "public": true,
+      "content": "{{label}}{{body}}",
+      "createdWhen": "label OR body",
+      "description": "Button text"
+    },
+    {
+      "name": "icon-end",
+      "tag": "span",
+      "public": true,
+      "content": "{{icon}}",
+      "createdWhen": "icon AND iconPosition == 'end'",
+      "description": "Icon after label"
+    },
+    {
+      "name": "spinner",
+      "tag": "span",
+      "public": false,
+      "createdWhen": "loading",
+      "description": "Loading spinner"
+    }
+  ],
+  
+  "$methods": {
+    "enable": {
+      "description": "Enables the button",
+      "params": []
+    },
+    "disable": {
+      "description": "Disables the button",
+      "params": []
+    },
+    "startLoading": {
+      "description": "Shows loading state",
+      "params": []
+    },
+    "stopLoading": {
+      "description": "Hides loading state",
+      "params": []
+    },
+    "click": {
+      "description": "Programmatically clicks the button",
+      "params": []
+    },
+    "focus": {
+      "description": "Focuses the button",
+      "params": []
+    },
+    "blur": {
+      "description": "Removes focus from button",
+      "params": []
+    }
+  },
+  
+  "$cssAPI": {
+    "--wb-button-padding-x": {
+      "default": "1rem",
+      "description": "Horizontal padding"
+    },
+    "--wb-button-padding-y": {
+      "default": "0.5rem",
+      "description": "Vertical padding"
+    },
+    "--wb-button-radius": {
+      "default": "4px",
+      "description": "Border radius"
+    },
+    "--wb-button-font-size": {
+      "default": "0.875rem",
+      "description": "Font size"
+    },
+    "--wb-button-font-weight": {
+      "default": "600",
+      "description": "Font weight"
+    },
+    "--wb-button-gap": {
+      "default": "0.5rem",
+      "description": "Gap between icon and label"
+    },
+    "--wb-button-transition": {
+      "default": "all 0.15s ease",
+      "description": "Transition for hover/active states"
+    },
+    "--wb-button-primary-bg": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Primary variant background"
+    },
+    "--wb-button-primary-color": {
+      "default": "#ffffff",
+      "description": "Primary variant text color"
+    },
+    "--wb-button-primary-hover-bg": {
+      "default": "var(--primary-dark, #4f46e5)",
+      "description": "Primary variant hover background"
+    },
+    "--wb-button-secondary-bg": {
+      "default": "var(--secondary, #64748b)",
+      "description": "Secondary variant background"
+    },
+    "--wb-button-secondary-color": {
+      "default": "#ffffff",
+      "description": "Secondary variant text color"
+    },
+    "--wb-button-success-bg": {
+      "default": "var(--success, #4caf50)",
+      "description": "Success variant background"
+    },
+    "--wb-button-success-color": {
+      "default": "#ffffff",
+      "description": "Success variant text color"
+    },
+    "--wb-button-warning-bg": {
+      "default": "var(--warning, #ff9800)",
+      "description": "Warning variant background"
+    },
+    "--wb-button-warning-color": {
+      "default": "#ffffff",
+      "description": "Warning variant text color"
+    },
+    "--wb-button-error-bg": {
+      "default": "var(--error, #f44336)",
+      "description": "Error variant background"
+    },
+    "--wb-button-error-color": {
+      "default": "#ffffff",
+      "description": "Error variant text color"
+    },
+    "--wb-button-ghost-bg": {
+      "default": "transparent",
+      "description": "Ghost variant background"
+    },
+    "--wb-button-ghost-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Ghost variant text color"
+    },
+    "--wb-button-ghost-hover-bg": {
+      "default": "var(--bg-hover, rgba(0,0,0,0.05))",
+      "description": "Ghost variant hover background"
+    },
+    "--wb-button-outline-border": {
+      "default": "1px solid currentColor",
+      "description": "Outline variant border"
+    },
+    "--wb-button-disabled-opacity": {
+      "default": "0.5",
+      "description": "Disabled state opacity"
+    },
+    "--wb-button-focus-ring": {
+      "default": "0 0 0 3px rgba(99, 102, 241, 0.3)",
+      "description": "Focus ring box-shadow"
+    }
+  },
+  
+  "accessibility": {
+    "role": "button",
+    "ariaDisabled": "dynamic when disabled"
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-button label=\"Click me\"></wb-button>",
+      "<wb-button label=\"Primary\" variant=\"primary\"></wb-button>",
+      "<wb-button icon=\"💾\" label=\"Save\"></wb-button>",
+      "<button data-wb=\"button\">Button</button>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "label": "Button" },
+        { "label": "Primary", "variant": "primary" },
+        { "label": "Secondary", "variant": "secondary" },
+        { "label": "Outline", "variant": "outline" },
+        { "label": "Ghost", "variant": "ghost" },
+        { "label": "Small", "size": "sm" },
+        { "label": "Large", "size": "lg" },
+        { "icon": "💾", "label": "Save" },
+        { "icon": "→", "label": "Next", "iconPosition": "end" },
+        { "label": "Disabled", "disabled": true },
+        { "label": "Loading", "loading": true },
+        { "icon": "⚙️", "iconOnly": true }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "forms",
+    "icon": "🔘",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

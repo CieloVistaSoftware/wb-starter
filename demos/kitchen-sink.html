@@ -4,423 +4,218 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WB Kitchen Sink</title>
-    <link rel="stylesheet" href="../src/styles/themes.css">
-    <link rel="stylesheet" href="../src/styles/site.css">
-    <link rel="stylesheet" href="../src/behaviors/css/effects.css">
-    <script type="module">
-        import WB from "../src/core/wb-lazy.js";
-        WB.init({ debug: true, scan: true, observe: true });
-    </script>
-    <style>
-        body { 
-            padding: 2rem; 
-            max-width: 1400px; 
-            margin: 0 auto; 
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-        }
-        h1 { margin-bottom: 0.5rem; }
-        .subtitle { color: var(--text-secondary); margin-bottom: 3rem; font-size: 1.2rem; }
-        
-        h2 { 
-            margin-top: 4rem; 
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem; 
-            border-bottom: 1px solid var(--border-color); 
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .demo-block {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-        }
-
-        .demo-header {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            background: var(--bg-tertiary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .demo-title { font-weight: 600; font-size: 1.1rem; }
-        .demo-tag { 
-            font-family: monospace; 
-            background: rgba(0,0,0,0.2); 
-            padding: 0.2rem 0.5rem; 
-            border-radius: 4px; 
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .demo-content {
-            padding: 2rem;
-            background: var(--bg-primary);
-            position: relative;
-        }
-
-        .code-block {
-            background: #1e1e1e;
-            padding: 1rem;
-            overflow-x: auto;
-            border-top: 1px solid var(--border-color);
-            display: none; /* Hidden by default, toggled */
-        }
-        
-        .code-block.visible { display: block; }
-
-        pre { margin: 0; }
-        code { font-family: "Fira Code", monospace; font-size: 0.9rem; color: #d4d4d4; }
-
-        .toggle-code {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.4rem 0.8rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-        }
-        .toggle-code:hover { background: var(--bg-primary); color: var(--text-primary); }
-
-        /* Demo Helpers */
-        .box {
-            background: var(--primary);
-            color: white;
-            padding: 1rem;
-            border-radius: 4px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold;
-            min-width: 60px;
-            min-height: 60px;
-        }
-        .box-outline {
-            border: 2px dashed var(--border-color);
-            padding: 1rem;
-            border-radius: 4px;
-            background: var(--bg-secondary);
-        }
-    </style>
+    <script type="module" src="../src/core/wb-bootstrap.js" data-debug></script>
+    <link rel="stylesheet" href="css/kitchen-sink.css">
 </head>
 <body>
-    <h1>WB Kitchen Sink</h1>
-    <p class="subtitle">Comprehensive showcase of all Web Behavior components and layouts.</p>
+    <wb-view view="ui-nav" brand="WB Kitchen Sink" items='["Home", "Demos", "Docs"]' sticky="true"></wb-view>
+
+    <wb-header data-title="WB Kitchen Sink" data-subtitle="Comprehensive showcase of all Web Behavior components and layouts." data-icon="🧩"
+        <div slot="right">
+            <wb-button id="btn-log-error" data-variant="danger" onclick="console.error('Simulated Error: Something went wrong!'); alert('Error logged to console. Check DevTools.');"
+                ⚠️ Log Error
+            </button>
+            <wb-button id="btn-toggle-notes-header" data-variant="secondary" onclick="const n = document.querySelector('#global-notes-drawer'); if(n && n.wbNotes) n.wbNotes.toggle(); else console.warn('Notes not initialized');"
+                📝 Notes
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <h2>🦸 Hero</h2>
+    <!-- Hero Component Demo -->
+    <wb-view view="ui-demo" title="Hero Component" tag="&lt;wb-view view='ui-hero'&gt;" contentClass="demo-content--no-padding">
+        <wb-view view="ui-hero" title="Welcome to WB" subtitle="The Schema-First Web Component Library" 
+            ctaText="Get Started" ctaLink="#layouts" xalign="center"
+            bgImage="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80">
+        </wb-view>
+    </wb-view>
 
     <!-- LAYOUTS -->
     <h2>📐 Layouts</h2>
 
-    <div class="demo-block">
-        <div class="demo-header">
-            <span class="demo-title">Grid Layout</span>
-            <div>
-                <span class="demo-tag">&lt;wb-grid&gt;</span>
-                <button class="toggle-code" onclick="toggleCode(this)">View Code</button>
-            </div>
-        </div>
-        <div class="demo-content">
-            <wb-grid columns="4" gap="1rem">
-                <div class="box">1</div>
-                <div class="box">2</div>
-                <div class="box">3</div>
-                <div class="box">4</div>
-                <div class="box" style="grid-column: span 2">Span 2</div>
-                <div class="box">6</div>
-                <div class="box">7</div>
-            </wb-grid>
-        </div>
-        <div class="code-block"><pre><code></code></pre></div>
-    </div>
+    <!-- Grid Layout Demo -->
+    <wb-view view="ui-demo" title="Grid Layout" tag="&lt;wb-grid&gt;">
+        <wb-grid columns="4" gap="1rem">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+            <div class="box">4</div>
+            <div class="box box--span-2">Span 2</div>
+            <div class="box">6</div>
+            <div class="box">7</div>
+        </wb-grid>
+    </wb-view>
 
-    <div class="demo-block">
-        <div class="demo-header">
-            <span class="demo-title">Flex Layout</span>
-            <div>
-                <span class="demo-tag">&lt;wb-flex&gt;</span>
-                <button class="toggle-code" onclick="toggleCode(this)">View Code</button>
-            </div>
-        </div>
-        <div class="demo-content">
-            <wb-flex gap="1rem" wrap="wrap" align="center">
-                <div class="box" style="width: 120px">Fixed Width</div>
-                <div class="box" style="flex: 1">Flex Grow</div>
-                <div class="box">Auto</div>
-            </wb-flex>
-        </div>
-        <div class="code-block"><pre><code></code></pre></div>
-    </div>
+    <!-- Flex Layout Demo -->
+    <wb-view view="ui-demo" title="Flex Layout" tag="&lt;wb-flex&gt;">
+        <wb-flex gap="1rem" wrap="wrap" xalign="center">
+            <div class="box box--fixed">Fixed Width</div>
+            <div class="box box--grow">Flex Grow</div>
+            <div class="box">Auto</div>
+        </wb-flex>
+    </wb-view>
 
-    <div class="demo-block">
-        <div class="demo-header">
-            <span class="demo-title">Cluster (Tags/Chips)</span>
-            <div>
-                <span class="demo-tag">&lt;wb-cluster&gt;</span>
-                <button class="toggle-code" onclick="toggleCode(this)">View Code</button>
-            </div>
-        </div>
-        <div class="demo-content">
-            <wb-cluster gap="0.5rem">
-                <span class="wb-badge">React</span>
-                <span class="wb-badge">Vue</span>
-                <span class="wb-badge">Angular</span>
-                <span class="wb-badge">Svelte</span>
-                <span class="wb-badge">Web Components</span>
-                <span class="wb-badge">HTML</span>
-                <span class="wb-badge">CSS</span>
-                <span class="wb-badge">JavaScript</span>
-            </wb-cluster>
-        </div>
-        <div class="code-block"><pre><code></code></pre></div>
-    </div>
+    <!-- Cluster Layout Demo -->
+    <wb-view view="ui-demo" title="Cluster (Tags/Chips)" tag="&lt;wb-cluster&gt;">
+        <wb-cluster gap="0.5rem">
+            <span class="wb-badge">React</span>
+            <span class="wb-badge">Vue</span>
+            <span class="wb-badge">Angular</span>
+            <span class="wb-badge">Svelte</span>
+            <span class="wb-badge">Web Components</span>
+            <span class="wb-badge">HTML</span>
+            <span class="wb-badge">CSS</span>
+            <span class="wb-badge">JavaScript</span>
+        </wb-cluster>
+    </wb-view>
 
-    <div class="demo-block">
-        <div class="demo-header">
-            <span class="demo-title">Sidebar Layout</span>
-            <div>
-                <span class="demo-tag">&lt;wb-sidebar&gt;</span>
-                <button class="toggle-code" onclick="toggleCode(this)">View Code</button>
-            </div>
+    <!-- Sidebar Layout Demo -->
+    <wb-view view="ui-demo" title="Sidebar Layout" tag="&lt;wb-sidebar&gt;">
+        <div class="sidebar-container">
+            <wb-sidebar side="left" side-width="200px" gap="0">
+                <div class="sidebar-menu">
+                    <h4>Sidebar</h4>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">Dashboard</li>
+                        <li class="sidebar-item">Settings</li>
+                        <li class="sidebar-item">Profile</li>
+                    </ul>
+                </div>
+                <div class="sidebar-main">
+                    <h2>Main Content</h2>
+                    <p>The sidebar stays fixed width while this content fills the remaining space.</p>
+                </div>
+            </wb-sidebar>
         </div>
-        <div class="demo-content">
-            <div style="border: 1px solid var(--border-color); height: 300px; overflow: hidden;">
-                <wb-sidebar side="left" side-width="200px" gap="0">
-                    <div style="background: var(--bg-tertiary); height: 100%; padding: 1rem;">
-                        <h4>Sidebar</h4>
-                        <ul style="list-style: none; padding: 0; margin-top: 1rem;">
-                            <li style="padding: 0.5rem 0;">Dashboard</li>
-                            <li style="padding: 0.5rem 0;">Settings</li>
-                            <li style="padding: 0.5rem 0;">Profile</li>
-                        </ul>
-                    </div>
-                    <div style="padding: 2rem; background: var(--bg-primary);">
-                        <h2>Main Content</h2>
-                        <p>The sidebar stays fixed width while this content fills the remaining space.</p>
-                    </div>
-                </wb-sidebar>
-            </div>
-        </div>
-        <div class="code-block"><pre><code></code></pre></div>
-    </div>
+    </wb-view>
 
     <!-- CARDS -->
     <h2>🃏 Cards</h2>
 
-    <div class="demo-block">
-        <div class="demo-header">
-            <span class="demo-title">Card Variants</span>
-            <div>
-                <span class="demo-tag">&lt;*-card&gt;</span>
-                <button class="toggle-code" onclick="toggleCode(this)">View Code</button>
-            </div>
-        </div>
-        <div class="demo-content">
-            <wb-grid columns="3" gap="2rem" min-width="300px">
-                <!-- Profile Card -->
-                <profile-card 
-                    data-name="Sarah Connor" 
-                    data-role="Resistance Leader" 
-                    data-bio="No fate but what we make." 
-                    data-avatar="https://i.pravatar.cc/150?img=1"
-                    data-align="center">
-                </profile-card>
+    <wb-view view="ui-demo" title="Card Variants" tag="&lt;*-card&gt;">
+        <wb-grid columns="3" gap="2rem" min-width="300px">
+            <!-- Profile Card -->
+            <profile-card data-name="Sarah Connor" data-role="Resistance Leader" 
+                data-bio="No fate but what we make." data-avatar="https://i.pravatar.cc/150?img=1"
+                data-xalign="center">
+            </profile-card>
 
-                <!-- Pricing Card -->
-                <price-card 
-                    data-plan="Pro" 
-                    data-price="$29" 
-                    data-period="/mo" 
-                    data-features="Unlimited Projects,Priority Support,Analytics Dashboard" 
-                    data-cta="Get Started"
-                    data-featured="true">
-                </price-card>
+            <!-- Pricing Card -->
+            <price-card data-plan="Pro" data-price="$29" data-period="/mo" 
+                data-features="Unlimited Projects,Priority Support,Analytics Dashboard" 
+                data-cta="Get Started" data-featured="true">
+            </price-card>
 
-                <!-- Product Card -->
-                <product-card 
-                    data-title="Premium Headphones" 
-                    data-price="$299" 
-                    data-image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80"
-                    data-badge="Best Seller"
-                    data-rating="4.8">
-                </product-card>
-            </wb-grid>
-        </div>
-        <div class="code-block"><pre><code></code></pre></div>
-    </div>
+            <!-- Product Card -->
+            <product-card data-title="Premium Headphones" data-price="$299" 
+                data-image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80"
+                data-badge="Best Seller" data-rating="4.8">
+            </product-card>
+        </wb-grid>
+    </wb-view>
 
     <!-- NAVIGATION -->
     <h2>🧭 Navigation</h2>
 
-    <div class="demo-block">
-        <div class="demo-header">
-            <span class="demo-title">Navbar</span>
-            <div>
-                <span class="demo-tag">data-wb="navbar"</span>
-                <button class="toggle-code" onclick="toggleCode(this)">View Code</button>
-            </div>
-        </div>
-        <div class="demo-content">
-            <nav data-wb="navbar" data-brand="MyBrand" data-items="Home,Features,Pricing,About"></nav>
-        </div>
-        <div class="code-block"><pre><code></code></pre></div>
-    </div>
+    <wb-view view="ui-demo" title="Navbar" tag="&lt;wb-view view='ui-nav'&gt;">
+        <wb-view view="ui-nav" brand="MyBrand" items='["Home","Features","Pricing","About"]'>
+        </wb-view>
+    </wb-view>
 
-    <div class="demo-block">
-        <div class="demo-header">
-            <span class="demo-title">Breadcrumbs & Pagination</span>
-            <div>
-                <span class="demo-tag">data-wb="..."</span>
-                <button class="toggle-code" onclick="toggleCode(this)">View Code</button>
-            </div>
-        </div>
-        <div class="demo-content">
-            <wb-stack gap="2rem">
-                <nav data-wb="breadcrumb" data-items="Home,Products,Electronics,Headphones"></nav>
-                <nav data-wb="pagination" data-pages="10" data-current="4"></nav>
-                <div data-wb="steps" data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
-            </wb-stack>
-        </div>
-        <div class="code-block"><pre><code></code></pre></div>
-    </div>
+    <wb-view view="ui-demo" title="Breadcrumbs & Pagination" tag="x-breadcrumb, x-pagination">
+        <wb-stack gap="2rem">
+            <nav x-breadcrumb data-items="Home,Products,Electronics,Headphones"></nav>
+            <nav x-pagination data-pages="10" data-current="4"></nav>
+            <div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
+        </wb-stack>
+    </wb-view>
 
     <!-- INTERACTIVE -->
     <h2>⚡ Interactive</h2>
 
-    <div class="demo-block">
-        <div class="demo-header">
-            <span class="demo-title">Tooltips & Toggles</span>
-            <div>
-                <span class="demo-tag">data-wb="..."</span>
-                <button class="toggle-code" onclick="toggleCode(this)">View Code</button>
-            </div>
-        </div>
-        <div class="demo-content">
-            <wb-cluster gap="2rem" align="center">
-                <button class="wb-btn" data-wb="tooltip" title="I am a tooltip!">Hover Me</button>
-                
-                <label class="wb-switch">
-                    <input type="checkbox" data-wb="switch">
-                    <span>Toggle Me</span>
-                </label>
+    <wb-view view="ui-demo" title="Tooltips & Toggles" tag="x-tooltip, x-ripple">
+        <wb-cluster gap="2rem" xalign="center">
+            <button x-tooltip title="I am a tooltip!">Hover Me</button>
+            
+            <label class="wb-switch">
+                <wb-switch type="checkbox">
+                <span>Toggle Me</span>
+            </label>
 
-                <button class="wb-btn wb-btn--primary" data-wb="ripple">Ripple Effect</button>
-                
-                <button class="wb-btn" data-wb="confetti">🎉 Click for Confetti</button>
-            </wb-cluster>
-        </div>
-        <div class="code-block"><pre><code></code></pre></div>
-    </div>
+            <button x-ripple data-variant="primary">Ripple Effect</button>
+            
+            <button x-confetti>🎉 Click for Confetti</button>
+        </wb-cluster>
+    </wb-view>
 
-    <div class="demo-block">
-        <div class="demo-header">
-            <span class="demo-title">Details & Accordion</span>
-            <div>
-                <span class="demo-tag">&lt;details&gt;</span>
-                <button class="toggle-code" onclick="toggleCode(this)">View Code</button>
-            </div>
-        </div>
-        <div class="demo-content">
-            <wb-stack gap="1rem">
-                <details data-wb="details">
-                    <summary>Question 1: How does this work?</summary>
-                    <p>It uses native HTML details/summary tags enhanced with smooth animations.</p>
-                </details>
-                <details data-wb="details">
-                    <summary>Question 2: Is it accessible?</summary>
-                    <p>Yes! It uses standard semantic HTML elements which are accessible by default.</p>
-                </details>
-            </wb-stack>
-        </div>
-        <div class="code-block"><pre><code></code></pre></div>
-    </div>
+    <wb-view view="ui-demo" title="Details & Accordion" tag="&lt;details&gt;">
+        <wb-stack gap="1rem">
+            <wb-details>
+                <summary>Question 1: How does this work?</summary>
+                <p>It uses native HTML details/summary tags enhanced with smooth animations.</p>
+            </details>
+            <wb-details>
+                <summary>Question 2: Is it accessible?</summary>
+                <p>Yes! It uses standard semantic HTML elements which are accessible by default.</p>
+            </details>
+        </wb-stack>
+    </wb-view>
+
+    <wb-view view="ui-demo" title="Notes Drawer" tag="wb-notes">
+        <wb-button id="btn-toggle-notes-demo" onclick="document.querySelector('wb-notes').wbNotes.toggle()"
+            Toggle Notes
+        </button>
+        <p class="notes-hint">
+            The notes drawer is now global. Click the button above or in the header to toggle it.
+        </p>
+    </wb-view>
 
     <!-- FORMS -->
     <h2>📝 Forms</h2>
 
-    <div class="demo-block">
-        <div class="demo-header">
-            <span class="demo-title">Form Controls</span>
-            <div>
-                <span class="demo-tag">input/select</span>
-                <button class="toggle-code" onclick="toggleCode(this)">View Code</button>
-            </div>
-        </div>
-        <div class="demo-content">
-            <wb-grid columns="2" gap="2rem">
-                <wb-stack gap="1rem">
-                    <label>Text Input</label>
-                    <input type="text" data-wb="input" placeholder="Enter name...">
-                    
-                    <label>Select</label>
-                    <select data-wb="select">
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                        <option>Option 3</option>
-                    </select>
-                </wb-stack>
+    <wb-view view="ui-demo" title="Form Controls" tag="input/select">
+        <wb-grid columns="2" gap="2rem">
+            <wb-stack gap="1rem">
+                <label>Text Input</label>
+                <wb-input type="text" placeholder="Enter name...">
                 
-                <wb-stack gap="1rem">
-                    <label>Range Slider</label>
-                    <input type="range" data-wb="range">
-                    
-                    <label>Textarea</label>
-                    <textarea data-wb="textarea" rows="3" placeholder="Type something..."></textarea>
-                </wb-stack>
-            </wb-grid>
-        </div>
-        <div class="code-block"><pre><code></code></pre></div>
-    </div>
-
-    <script>
-        // Function to toggle code visibility
-        window.toggleCode = function(btn) {
-            const block = btn.closest(".demo-block");
-            const codeBlock = block.querySelector(".code-block");
-            codeBlock.classList.toggle("visible");
-            btn.textContent = codeBlock.classList.contains("visible") ? "Hide Code" : "View Code";
-        };
-
-        // Initialize code blocks
-        document.addEventListener("DOMContentLoaded", () => {
-            document.querySelectorAll(".demo-block").forEach(block => {
-                const demo = block.querySelector(".demo-content");
-                const code = block.querySelector("code");
+                <label>Select</label>
+                <wb-select>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                </select>
+            </wb-stack>
+            
+            <wb-stack gap="1rem">
+                <label>Range Slider</label>
+                <input type="range">
                 
-                if (demo && code) {
-                    // Get HTML and clean it up
-                    let html = demo.innerHTML;
-                    
-                    // Remove empty lines at start/end
-                    html = html.replace(/^\n+/, "").replace(/\n+$/, "");
-                    
-                    // Calculate indentation to remove
-                    const lines = html.split("\n");
-                    if (lines.length > 0) {
-                        // Find first non-empty line to determine indentation
-                        const firstLine = lines.find(l => l.trim().length > 0);
-                        if (firstLine) {
-                            const match = firstLine.match(/^\s*/);
-                            const indent = match ? match[0].length : 0;
-                            if (indent > 0) {
-                                const re = new RegExp(`^\\s{${indent}}`);
-                                html = lines.map(line => line.replace(re, "")).join("\n");
-                            }
-                        }
-                    }
-                    
-                    // Escape HTML entities
-                    code.textContent = html;
-                } else {
-                    console.warn("Missing demo content or code block in", block);
-                }
-            });
-        });
-    </script>
+                <label>Textarea</label>
+                <wb-textarea rows="3" placeholder="Type something..."></textarea>
+            </wb-stack>
+        </wb-grid>
+    </wb-view>
+
+    <!-- FOOTER -->
+    <h2>🦶 Footer</h2>
+    <wb-view view="ui-demo" title="Footer Component" tag="&lt;wb-view view='ui-footer'&gt;" contentClass="demo-content--no-padding">
+        <wb-view view="ui-footer" companyName="Web Behaviors" year="2025"
+            links='[{"text":"Privacy","href":"#"},{"text":"Terms","href":"#"},{"text":"Contact","href":"#"}]'>
+        </wb-view>
+    </wb-view>
+
+    </main>
+
+    <wb-view view="ui-footer" companyName="Web Behaviors" year="2025"
+        links='[{"text":"Privacy","href":"#"},{"text":"Terms","href":"#"},{"text":"Contact","href":"#"}]'>
+    </wb-view>
+
+    <script src="js/kitchen-sink.js"></script>
+
+    <!-- Global Notes Drawer -->
+    <wb-notes id="global-notes-drawer" x-eager="true" data-restore-state="false" data-position="right"></div>
 </body>
 </html>

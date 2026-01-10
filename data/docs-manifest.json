@@ -1,0 +1,1441 @@
+{
+  "generated": "2026-01-09T22:02:45.766Z",
+  "totalFiles": 117,
+  "categories": [
+    "_today",
+    "architecture",
+    "audits",
+    "builder",
+    "compliance",
+    "components",
+    "guides",
+    "root",
+    "standards"
+  ],
+  "byCategory": {
+    "architecture": [
+      {
+        "path": "docs/architecture/ATTRIBUTE-NAMING-STANDARD.md",
+        "title": "Web Behaviors (WB) Attribute Naming Standard",
+        "name": "ATTRIBUTE-NAMING-STANDARD",
+        "category": "architecture"
+      },
+      {
+        "path": "docs/architecture/proposed-custom-elements.md",
+        "title": "Proposed Custom HTML Tags for Layouts",
+        "name": "proposed-custom-elements",
+        "category": "architecture"
+      },
+      {
+        "path": "docs/architecture/SCHEMA-SPECIFICATION.md",
+        "title": "WB Schema Specification v3.0",
+        "name": "SCHEMA-SPECIFICATION",
+        "category": "architecture"
+      },
+      {
+        "path": "docs/architecture/WBVIEWS.md",
+        "title": "wb-views System",
+        "name": "WBVIEWS",
+        "category": "architecture"
+      }
+    ],
+    "root": [
+      {
+        "path": "docs/architecture.md",
+        "title": "Project Architecture<br>(AI-Friendly)",
+        "name": "architecture",
+        "category": "root"
+      },
+      {
+        "path": "docs/audio.md",
+        "title": "Audio Component",
+        "name": "audio",
+        "category": "root"
+      },
+      {
+        "path": "docs/Auto-Injection.md",
+        "title": "Auto Injection (Preview)",
+        "name": "Auto-Injection",
+        "category": "root"
+      },
+      {
+        "path": "docs/behavior-cross-reference.md",
+        "title": "Web Behaviors (WB) Behaviors Cross-Reference",
+        "name": "behavior-cross-reference",
+        "category": "root"
+      },
+      {
+        "path": "docs/behaviors-reference.md",
+        "title": "Web Behaviors (WB) Reference",
+        "name": "behaviors-reference",
+        "category": "root"
+      },
+      {
+        "path": "docs/builder-interaction-rules.md",
+        "title": "Builder Interaction Rules",
+        "name": "builder-interaction-rules",
+        "category": "root"
+      },
+      {
+        "path": "docs/builder-onboarding-flow.md",
+        "title": "Page Builder Onboarding Flow",
+        "name": "builder-onboarding-flow",
+        "category": "root"
+      },
+      {
+        "path": "docs/builder-properties.md",
+        "title": "WB Builder Properties Panel",
+        "name": "builder-properties",
+        "category": "root"
+      },
+      {
+        "path": "docs/builder-section-focus.md",
+        "title": "Builder Section Focus System",
+        "name": "builder-section-focus",
+        "category": "root"
+      },
+      {
+        "path": "docs/builder-testing.md",
+        "title": "Builder Component Testing",
+        "name": "builder-testing",
+        "category": "root"
+      },
+      {
+        "path": "docs/builder-workflow.md",
+        "title": "Page Builder Workflow System",
+        "name": "builder-workflow",
+        "category": "root"
+      },
+      {
+        "path": "docs/builder.todo.md",
+        "title": "Builder TODO",
+        "name": "builder.todo",
+        "category": "root"
+      },
+      {
+        "path": "docs/card.md",
+        "title": "Card Component Documentation",
+        "name": "card",
+        "category": "root"
+      },
+      {
+        "path": "docs/code-examples-standard.md",
+        "title": "Code Examples Standard",
+        "name": "code-examples-standard",
+        "category": "root"
+      },
+      {
+        "path": "docs/container-pattern.md",
+        "title": "Container Components Pattern",
+        "name": "container-pattern",
+        "category": "root"
+      },
+      {
+        "path": "docs/css-standards.md",
+        "title": "CSS Standards & OOP Architecture",
+        "name": "css-standards",
+        "category": "root"
+      },
+      {
+        "path": "docs/DATA-FILES.md",
+        "title": "Data Files Reference",
+        "name": "DATA-FILES",
+        "category": "root"
+      },
+      {
+        "path": "docs/deploying-wb-starter-to-render.md",
+        "title": "Deploying Web Behaviors (WB) Starter to Render: A Complete Guide",
+        "name": "deploying-wb-starter-to-render",
+        "category": "root"
+      },
+      {
+        "path": "docs/IMPROVEMENTS.md",
+        "title": "Potential Improvements for Web Behaviors (WB)",
+        "name": "IMPROVEMENTS",
+        "category": "root"
+      },
+      {
+        "path": "docs/index.md",
+        "title": "WB Framework Documentation",
+        "name": "index",
+        "category": "root"
+      },
+      {
+        "path": "docs/inline-editing.md",
+        "title": "Double-Click Inline Editing System",
+        "name": "inline-editing",
+        "category": "root"
+      },
+      {
+        "path": "docs/INTELLISENSE-TOOLTIPS.md",
+        "title": "Intellisense Tooltip Audit Report",
+        "name": "INTELLISENSE-TOOLTIPS",
+        "category": "root"
+      },
+      {
+        "path": "docs/MVVM-MIGRATION-PLAN.md",
+        "title": "WB Framework MVVM Migration Plan",
+        "name": "MVVM-MIGRATION-PLAN",
+        "category": "root"
+      },
+      {
+        "path": "docs/MVVM-MIGRATION.md",
+        "title": "WB Framework MVVM Migration",
+        "name": "MVVM-MIGRATION",
+        "category": "root"
+      },
+      {
+        "path": "docs/NOTES-V3-GUIDE.md",
+        "title": "Notes Component v3.0 - Updates Summary",
+        "name": "NOTES-V3-GUIDE",
+        "category": "root"
+      },
+      {
+        "path": "docs/pce-candidates.md",
+        "title": "PCE (Pseudo-Custom Elements) Candidates",
+        "name": "pce-candidates",
+        "category": "root"
+      },
+      {
+        "path": "docs/performance.md",
+        "title": "Performance Improvement Plan",
+        "name": "performance",
+        "category": "root"
+      },
+      {
+        "path": "docs/pricecard.md",
+        "title": "Price Card & PCE (Pseudo-Custom Elements) Refactor",
+        "name": "pricecard",
+        "category": "root"
+      },
+      {
+        "path": "docs/properties.md",
+        "title": "Web Behaviors (WB) - Property System Documentation",
+        "name": "properties",
+        "category": "root"
+      },
+      {
+        "path": "docs/schema-first-architecture.md",
+        "title": "Schema-First MVVM Architecture",
+        "name": "schema-first-architecture",
+        "category": "root"
+      },
+      {
+        "path": "docs/schema-first-audit-report.md",
+        "title": "Schema-First Architecture Audit Report",
+        "name": "schema-first-audit-report",
+        "category": "root"
+      },
+      {
+        "path": "docs/schemaTestValue.md",
+        "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
+        "name": "schemaTestValue",
+        "category": "root"
+      },
+      {
+        "path": "docs/semantic-audit.md",
+        "title": "Semantic HTML Audit Report",
+        "name": "semantic-audit",
+        "category": "root"
+      },
+      {
+        "path": "docs/semantic-standard.md",
+        "title": "HTML5 Semantic Standard (Mandatory)",
+        "name": "semantic-standard",
+        "category": "root"
+      },
+      {
+        "path": "docs/styles.md",
+        "title": "WB Style Constitution & Golden Rules",
+        "name": "styles",
+        "category": "root"
+      },
+      {
+        "path": "docs/templates.md",
+        "title": "Templates Reference",
+        "name": "templates",
+        "category": "root"
+      },
+      {
+        "path": "docs/test-schema-standard.md",
+        "title": "Comprehensive Test Schema Standard",
+        "name": "test-schema-standard",
+        "category": "root"
+      },
+      {
+        "path": "docs/testing-strategy.md",
+        "title": "Web Behaviors (WB) Testing Strategy",
+        "name": "testing-strategy",
+        "category": "root"
+      },
+      {
+        "path": "docs/themes.md",
+        "title": "Theme System Documentation",
+        "name": "themes",
+        "category": "root"
+      },
+      {
+        "path": "docs/USER-PAGE-BUILDER-PLAN.md",
+        "title": "User Page Builder Plan",
+        "name": "USER-PAGE-BUILDER-PLAN",
+        "category": "root"
+      },
+      {
+        "path": "docs/wb-parts-spec.md",
+        "title": "gcan# Web Behaviors (WB) Parts Specification",
+        "name": "wb-parts-spec",
+        "category": "root"
+      },
+      {
+        "path": "docs/WB_BEHAVIOR_SYSTEM.md",
+        "title": "Web Behaviors (WB) Behavior System - Technical Workflow",
+        "name": "WB_BEHAVIOR_SYSTEM",
+        "category": "root"
+      }
+    ],
+    "audits": [
+      {
+        "path": "docs/audits/X-USAGE-AUDIT.md",
+        "title": "X-Attribute Usage Audit",
+        "name": "X-USAGE-AUDIT",
+        "category": "audits"
+      }
+    ],
+    "builder": [
+      {
+        "path": "docs/builder/BUILDER-FIXES.md",
+        "title": "BUILDER BROKEN - Critical Fixes Needed",
+        "name": "BUILDER-FIXES",
+        "category": "builder"
+      }
+    ],
+    "compliance": [
+      {
+        "path": "docs/compliance/iso-42001-alignment.md",
+        "title": "ISO/IEC 42001 Alignment Report",
+        "name": "iso-42001-alignment",
+        "category": "compliance"
+      }
+    ],
+    "components": [
+      {
+        "path": "docs/components/cards/card.md",
+        "title": "Card",
+        "name": "card",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardbutton.md",
+        "title": "Card Button",
+        "name": "cardbutton",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/carddraggable.md",
+        "title": "Card Draggable Component",
+        "name": "carddraggable",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardexpandable.md",
+        "title": "Card Expandable Component",
+        "name": "cardexpandable",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardfile.md",
+        "title": "Card File Component",
+        "name": "cardfile",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardhero.md",
+        "title": "Card Hero",
+        "name": "cardhero",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardhorizontal.md",
+        "title": "Card Horizontal Component",
+        "name": "cardhorizontal",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardimage.md",
+        "title": "Card Image",
+        "name": "cardimage",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardlink.md",
+        "title": "Card Link",
+        "name": "cardlink",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardminimizable.md",
+        "title": "Card Minimizable Component",
+        "name": "cardminimizable",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardnotification.md",
+        "title": "Card Notification Component",
+        "name": "cardnotification",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardoverlay.md",
+        "title": "Card Overlay Component",
+        "name": "cardoverlay",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardportfolio.md",
+        "title": "Card Portfolio Component",
+        "name": "cardportfolio",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardpricing.md",
+        "title": "Card Pricing",
+        "name": "cardpricing",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardproduct.md",
+        "title": "Card Product Component",
+        "name": "cardproduct",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardprofile.md",
+        "title": "Card Profile",
+        "name": "cardprofile",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardstats.md",
+        "title": "Card Stats",
+        "name": "cardstats",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardtestimonial.md",
+        "title": "Card Testimonial Component",
+        "name": "cardtestimonial",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cardvideo.md",
+        "title": "Card Video Component",
+        "name": "cardvideo",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/index.md",
+        "title": "Card Components",
+        "name": "index",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/README.md",
+        "title": "Card Components",
+        "name": "README",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/drawer.md",
+        "title": "Drawer Components",
+        "name": "drawer",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/effects/confetti.md",
+        "title": "Confetti",
+        "name": "confetti",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/effects/fireworks.md",
+        "title": "Fireworks",
+        "name": "fireworks",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/effects/snow.md",
+        "title": "Snow",
+        "name": "snow",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/feedback/README.md",
+        "title": "Feedback Components",
+        "name": "README",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/forms/README.md",
+        "title": "Form Components",
+        "name": "README",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/README.md",
+        "title": "Layout Components",
+        "name": "README",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/navigation/README.md",
+        "title": "Navigation Components",
+        "name": "README",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/README.md",
+        "title": "Web Behaviors (WB) Components",
+        "name": "README",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantic/address.md",
+        "title": "`<address>` Element",
+        "name": "address",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantic/article.md",
+        "title": "Article Element",
+        "name": "article",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantic/aside.md",
+        "title": "`<aside>` Element",
+        "name": "aside",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantic/blockquote.md",
+        "title": "`<blockquote>` Element",
+        "name": "blockquote",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantic/data.md",
+        "title": "`<data>` Element",
+        "name": "data",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantic/figure.md",
+        "title": "`<figure>` and `<figcaption>` Elements",
+        "name": "figure",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantic/index.md",
+        "title": "Semantic HTML Elements",
+        "name": "index",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantic/README.md",
+        "title": "Semantic HTML Elements",
+        "name": "README",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantic/time.md",
+        "title": "`<time>` Element",
+        "name": "time",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/audio.md",
+        "title": "Audio Component Design & User Guide",
+        "name": "audio",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/button.md",
+        "title": "Button Component Design & User Guide",
+        "name": "button",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/checkbox.md",
+        "title": "Checkbox Component Design & User Guide",
+        "name": "checkbox",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/code.md",
+        "title": "Code Component Design & User Guide",
+        "name": "code",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/details.md",
+        "title": "Details Component Design & User Guide",
+        "name": "details",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/dialog.md",
+        "title": "Dialog Component Design & User Guide",
+        "name": "dialog",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/dl.md",
+        "title": "DL (Description List) Component Design & User Guide",
+        "name": "dl",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/figure.md",
+        "title": "Figure Component Design & User Guide",
+        "name": "figure",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/form.md",
+        "title": "Form Component Design & User Guide",
+        "name": "form",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/img.md",
+        "title": "Image Component Design & User Guide",
+        "name": "img",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/input.md",
+        "title": "Input Component Design & User Guide",
+        "name": "input",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/list.md",
+        "title": "List Component",
+        "name": "list",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/ol.md",
+        "title": "OL (Ordered List) Component Design & User Guide",
+        "name": "ol",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/pre.md",
+        "title": "Pre Component Design & User Guide",
+        "name": "pre",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/progress.md",
+        "title": "Progress Component Design & User Guide",
+        "name": "progress",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/radio.md",
+        "title": "Radio Component Design & User Guide",
+        "name": "radio",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/range.md",
+        "title": "Range Component Design & User Guide",
+        "name": "range",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/rating.md",
+        "title": "Rating Component Design & User Guide",
+        "name": "rating",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/select.md",
+        "title": "Select Component Design & User Guide",
+        "name": "select",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/switch.md",
+        "title": "Switch Component Design & User Guide",
+        "name": "switch",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/table.md",
+        "title": "Table Component Design & User Guide",
+        "name": "table",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/textarea.md",
+        "title": "Textarea Component Design & User Guide",
+        "name": "textarea",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/ul.md",
+        "title": "UL (Unordered List) Component Design & User Guide",
+        "name": "ul",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/semantics/video.md",
+        "title": "Video Component Design & User Guide",
+        "name": "video",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/tabs.md",
+        "title": "Tabs Component",
+        "name": "tabs",
+        "category": "components"
+      }
+    ],
+    "guides": [
+      {
+        "path": "docs/guides/search-index.md",
+        "title": "Search Index Generator",
+        "name": "search-index",
+        "category": "guides"
+      }
+    ],
+    "standards": [
+      {
+        "path": "docs/standards/V3-STANDARDS.md",
+        "title": "WB Framework v3.0 Standards",
+        "name": "V3-STANDARDS",
+        "category": "standards"
+      }
+    ],
+    "_today": [
+      {
+        "path": "docs/_today/CURRENT-STATUS.md",
+        "title": "Current Status - Web Behaviors (WB) Starter",
+        "name": "CURRENT-STATUS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/TODO.md",
+        "title": "TODO List",
+        "name": "TODO",
+        "category": "_today"
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "docs/_today/CURRENT-STATUS.md",
+      "title": "Current Status - Web Behaviors (WB) Starter",
+      "name": "CURRENT-STATUS",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/TODO.md",
+      "title": "TODO List",
+      "name": "TODO",
+      "category": "_today"
+    },
+    {
+      "path": "docs/architecture.md",
+      "title": "Project Architecture<br>(AI-Friendly)",
+      "name": "architecture",
+      "category": "root"
+    },
+    {
+      "path": "docs/architecture/ATTRIBUTE-NAMING-STANDARD.md",
+      "title": "Web Behaviors (WB) Attribute Naming Standard",
+      "name": "ATTRIBUTE-NAMING-STANDARD",
+      "category": "architecture"
+    },
+    {
+      "path": "docs/architecture/proposed-custom-elements.md",
+      "title": "Proposed Custom HTML Tags for Layouts",
+      "name": "proposed-custom-elements",
+      "category": "architecture"
+    },
+    {
+      "path": "docs/architecture/SCHEMA-SPECIFICATION.md",
+      "title": "WB Schema Specification v3.0",
+      "name": "SCHEMA-SPECIFICATION",
+      "category": "architecture"
+    },
+    {
+      "path": "docs/architecture/WBVIEWS.md",
+      "title": "wb-views System",
+      "name": "WBVIEWS",
+      "category": "architecture"
+    },
+    {
+      "path": "docs/audio.md",
+      "title": "Audio Component",
+      "name": "audio",
+      "category": "root"
+    },
+    {
+      "path": "docs/audits/X-USAGE-AUDIT.md",
+      "title": "X-Attribute Usage Audit",
+      "name": "X-USAGE-AUDIT",
+      "category": "audits"
+    },
+    {
+      "path": "docs/Auto-Injection.md",
+      "title": "Auto Injection (Preview)",
+      "name": "Auto-Injection",
+      "category": "root"
+    },
+    {
+      "path": "docs/behavior-cross-reference.md",
+      "title": "Web Behaviors (WB) Behaviors Cross-Reference",
+      "name": "behavior-cross-reference",
+      "category": "root"
+    },
+    {
+      "path": "docs/behaviors-reference.md",
+      "title": "Web Behaviors (WB) Reference",
+      "name": "behaviors-reference",
+      "category": "root"
+    },
+    {
+      "path": "docs/builder-interaction-rules.md",
+      "title": "Builder Interaction Rules",
+      "name": "builder-interaction-rules",
+      "category": "root"
+    },
+    {
+      "path": "docs/builder-onboarding-flow.md",
+      "title": "Page Builder Onboarding Flow",
+      "name": "builder-onboarding-flow",
+      "category": "root"
+    },
+    {
+      "path": "docs/builder-properties.md",
+      "title": "WB Builder Properties Panel",
+      "name": "builder-properties",
+      "category": "root"
+    },
+    {
+      "path": "docs/builder-section-focus.md",
+      "title": "Builder Section Focus System",
+      "name": "builder-section-focus",
+      "category": "root"
+    },
+    {
+      "path": "docs/builder-testing.md",
+      "title": "Builder Component Testing",
+      "name": "builder-testing",
+      "category": "root"
+    },
+    {
+      "path": "docs/builder-workflow.md",
+      "title": "Page Builder Workflow System",
+      "name": "builder-workflow",
+      "category": "root"
+    },
+    {
+      "path": "docs/builder.todo.md",
+      "title": "Builder TODO",
+      "name": "builder.todo",
+      "category": "root"
+    },
+    {
+      "path": "docs/builder/BUILDER-FIXES.md",
+      "title": "BUILDER BROKEN - Critical Fixes Needed",
+      "name": "BUILDER-FIXES",
+      "category": "builder"
+    },
+    {
+      "path": "docs/card.md",
+      "title": "Card Component Documentation",
+      "name": "card",
+      "category": "root"
+    },
+    {
+      "path": "docs/code-examples-standard.md",
+      "title": "Code Examples Standard",
+      "name": "code-examples-standard",
+      "category": "root"
+    },
+    {
+      "path": "docs/compliance/iso-42001-alignment.md",
+      "title": "ISO/IEC 42001 Alignment Report",
+      "name": "iso-42001-alignment",
+      "category": "compliance"
+    },
+    {
+      "path": "docs/components/cards/card.md",
+      "title": "Card",
+      "name": "card",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardbutton.md",
+      "title": "Card Button",
+      "name": "cardbutton",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/carddraggable.md",
+      "title": "Card Draggable Component",
+      "name": "carddraggable",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardexpandable.md",
+      "title": "Card Expandable Component",
+      "name": "cardexpandable",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardfile.md",
+      "title": "Card File Component",
+      "name": "cardfile",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardhero.md",
+      "title": "Card Hero",
+      "name": "cardhero",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardhorizontal.md",
+      "title": "Card Horizontal Component",
+      "name": "cardhorizontal",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardimage.md",
+      "title": "Card Image",
+      "name": "cardimage",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardlink.md",
+      "title": "Card Link",
+      "name": "cardlink",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardminimizable.md",
+      "title": "Card Minimizable Component",
+      "name": "cardminimizable",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardnotification.md",
+      "title": "Card Notification Component",
+      "name": "cardnotification",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardoverlay.md",
+      "title": "Card Overlay Component",
+      "name": "cardoverlay",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardportfolio.md",
+      "title": "Card Portfolio Component",
+      "name": "cardportfolio",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardpricing.md",
+      "title": "Card Pricing",
+      "name": "cardpricing",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardproduct.md",
+      "title": "Card Product Component",
+      "name": "cardproduct",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardprofile.md",
+      "title": "Card Profile",
+      "name": "cardprofile",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardstats.md",
+      "title": "Card Stats",
+      "name": "cardstats",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardtestimonial.md",
+      "title": "Card Testimonial Component",
+      "name": "cardtestimonial",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cardvideo.md",
+      "title": "Card Video Component",
+      "name": "cardvideo",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/index.md",
+      "title": "Card Components",
+      "name": "index",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/README.md",
+      "title": "Card Components",
+      "name": "README",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/drawer.md",
+      "title": "Drawer Components",
+      "name": "drawer",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/effects/confetti.md",
+      "title": "Confetti",
+      "name": "confetti",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/effects/fireworks.md",
+      "title": "Fireworks",
+      "name": "fireworks",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/effects/snow.md",
+      "title": "Snow",
+      "name": "snow",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/feedback/README.md",
+      "title": "Feedback Components",
+      "name": "README",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/forms/README.md",
+      "title": "Form Components",
+      "name": "README",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/README.md",
+      "title": "Layout Components",
+      "name": "README",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/navigation/README.md",
+      "title": "Navigation Components",
+      "name": "README",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/README.md",
+      "title": "Web Behaviors (WB) Components",
+      "name": "README",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantic/address.md",
+      "title": "`<address>` Element",
+      "name": "address",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantic/article.md",
+      "title": "Article Element",
+      "name": "article",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantic/aside.md",
+      "title": "`<aside>` Element",
+      "name": "aside",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantic/blockquote.md",
+      "title": "`<blockquote>` Element",
+      "name": "blockquote",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantic/data.md",
+      "title": "`<data>` Element",
+      "name": "data",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantic/figure.md",
+      "title": "`<figure>` and `<figcaption>` Elements",
+      "name": "figure",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantic/index.md",
+      "title": "Semantic HTML Elements",
+      "name": "index",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantic/README.md",
+      "title": "Semantic HTML Elements",
+      "name": "README",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantic/time.md",
+      "title": "`<time>` Element",
+      "name": "time",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/audio.md",
+      "title": "Audio Component Design & User Guide",
+      "name": "audio",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/button.md",
+      "title": "Button Component Design & User Guide",
+      "name": "button",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/checkbox.md",
+      "title": "Checkbox Component Design & User Guide",
+      "name": "checkbox",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/code.md",
+      "title": "Code Component Design & User Guide",
+      "name": "code",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/details.md",
+      "title": "Details Component Design & User Guide",
+      "name": "details",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/dialog.md",
+      "title": "Dialog Component Design & User Guide",
+      "name": "dialog",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/dl.md",
+      "title": "DL (Description List) Component Design & User Guide",
+      "name": "dl",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/figure.md",
+      "title": "Figure Component Design & User Guide",
+      "name": "figure",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/form.md",
+      "title": "Form Component Design & User Guide",
+      "name": "form",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/img.md",
+      "title": "Image Component Design & User Guide",
+      "name": "img",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/input.md",
+      "title": "Input Component Design & User Guide",
+      "name": "input",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/list.md",
+      "title": "List Component",
+      "name": "list",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/ol.md",
+      "title": "OL (Ordered List) Component Design & User Guide",
+      "name": "ol",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/pre.md",
+      "title": "Pre Component Design & User Guide",
+      "name": "pre",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/progress.md",
+      "title": "Progress Component Design & User Guide",
+      "name": "progress",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/radio.md",
+      "title": "Radio Component Design & User Guide",
+      "name": "radio",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/range.md",
+      "title": "Range Component Design & User Guide",
+      "name": "range",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/rating.md",
+      "title": "Rating Component Design & User Guide",
+      "name": "rating",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/select.md",
+      "title": "Select Component Design & User Guide",
+      "name": "select",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/switch.md",
+      "title": "Switch Component Design & User Guide",
+      "name": "switch",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/table.md",
+      "title": "Table Component Design & User Guide",
+      "name": "table",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/textarea.md",
+      "title": "Textarea Component Design & User Guide",
+      "name": "textarea",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/ul.md",
+      "title": "UL (Unordered List) Component Design & User Guide",
+      "name": "ul",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/semantics/video.md",
+      "title": "Video Component Design & User Guide",
+      "name": "video",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/tabs.md",
+      "title": "Tabs Component",
+      "name": "tabs",
+      "category": "components"
+    },
+    {
+      "path": "docs/container-pattern.md",
+      "title": "Container Components Pattern",
+      "name": "container-pattern",
+      "category": "root"
+    },
+    {
+      "path": "docs/css-standards.md",
+      "title": "CSS Standards & OOP Architecture",
+      "name": "css-standards",
+      "category": "root"
+    },
+    {
+      "path": "docs/DATA-FILES.md",
+      "title": "Data Files Reference",
+      "name": "DATA-FILES",
+      "category": "root"
+    },
+    {
+      "path": "docs/deploying-wb-starter-to-render.md",
+      "title": "Deploying Web Behaviors (WB) Starter to Render: A Complete Guide",
+      "name": "deploying-wb-starter-to-render",
+      "category": "root"
+    },
+    {
+      "path": "docs/guides/search-index.md",
+      "title": "Search Index Generator",
+      "name": "search-index",
+      "category": "guides"
+    },
+    {
+      "path": "docs/IMPROVEMENTS.md",
+      "title": "Potential Improvements for Web Behaviors (WB)",
+      "name": "IMPROVEMENTS",
+      "category": "root"
+    },
+    {
+      "path": "docs/index.md",
+      "title": "WB Framework Documentation",
+      "name": "index",
+      "category": "root"
+    },
+    {
+      "path": "docs/inline-editing.md",
+      "title": "Double-Click Inline Editing System",
+      "name": "inline-editing",
+      "category": "root"
+    },
+    {
+      "path": "docs/INTELLISENSE-TOOLTIPS.md",
+      "title": "Intellisense Tooltip Audit Report",
+      "name": "INTELLISENSE-TOOLTIPS",
+      "category": "root"
+    },
+    {
+      "path": "docs/MVVM-MIGRATION-PLAN.md",
+      "title": "WB Framework MVVM Migration Plan",
+      "name": "MVVM-MIGRATION-PLAN",
+      "category": "root"
+    },
+    {
+      "path": "docs/MVVM-MIGRATION.md",
+      "title": "WB Framework MVVM Migration",
+      "name": "MVVM-MIGRATION",
+      "category": "root"
+    },
+    {
+      "path": "docs/NOTES-V3-GUIDE.md",
+      "title": "Notes Component v3.0 - Updates Summary",
+      "name": "NOTES-V3-GUIDE",
+      "category": "root"
+    },
+    {
+      "path": "docs/pce-candidates.md",
+      "title": "PCE (Pseudo-Custom Elements) Candidates",
+      "name": "pce-candidates",
+      "category": "root"
+    },
+    {
+      "path": "docs/performance.md",
+      "title": "Performance Improvement Plan",
+      "name": "performance",
+      "category": "root"
+    },
+    {
+      "path": "docs/pricecard.md",
+      "title": "Price Card & PCE (Pseudo-Custom Elements) Refactor",
+      "name": "pricecard",
+      "category": "root"
+    },
+    {
+      "path": "docs/properties.md",
+      "title": "Web Behaviors (WB) - Property System Documentation",
+      "name": "properties",
+      "category": "root"
+    },
+    {
+      "path": "docs/schema-first-architecture.md",
+      "title": "Schema-First MVVM Architecture",
+      "name": "schema-first-architecture",
+      "category": "root"
+    },
+    {
+      "path": "docs/schema-first-audit-report.md",
+      "title": "Schema-First Architecture Audit Report",
+      "name": "schema-first-audit-report",
+      "category": "root"
+    },
+    {
+      "path": "docs/schemaTestValue.md",
+      "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
+      "name": "schemaTestValue",
+      "category": "root"
+    },
+    {
+      "path": "docs/semantic-audit.md",
+      "title": "Semantic HTML Audit Report",
+      "name": "semantic-audit",
+      "category": "root"
+    },
+    {
+      "path": "docs/semantic-standard.md",
+      "title": "HTML5 Semantic Standard (Mandatory)",
+      "name": "semantic-standard",
+      "category": "root"
+    },
+    {
+      "path": "docs/standards/V3-STANDARDS.md",
+      "title": "WB Framework v3.0 Standards",
+      "name": "V3-STANDARDS",
+      "category": "standards"
+    },
+    {
+      "path": "docs/styles.md",
+      "title": "WB Style Constitution & Golden Rules",
+      "name": "styles",
+      "category": "root"
+    },
+    {
+      "path": "docs/templates.md",
+      "title": "Templates Reference",
+      "name": "templates",
+      "category": "root"
+    },
+    {
+      "path": "docs/test-schema-standard.md",
+      "title": "Comprehensive Test Schema Standard",
+      "name": "test-schema-standard",
+      "category": "root"
+    },
+    {
+      "path": "docs/testing-strategy.md",
+      "title": "Web Behaviors (WB) Testing Strategy",
+      "name": "testing-strategy",
+      "category": "root"
+    },
+    {
+      "path": "docs/themes.md",
+      "title": "Theme System Documentation",
+      "name": "themes",
+      "category": "root"
+    },
+    {
+      "path": "docs/USER-PAGE-BUILDER-PLAN.md",
+      "title": "User Page Builder Plan",
+      "name": "USER-PAGE-BUILDER-PLAN",
+      "category": "root"
+    },
+    {
+      "path": "docs/WB_BEHAVIOR_SYSTEM.md",
+      "title": "Web Behaviors (WB) Behavior System - Technical Workflow",
+      "name": "WB_BEHAVIOR_SYSTEM",
+      "category": "root"
+    },
+    {
+      "path": "docs/wb-parts-spec.md",
+      "title": "gcan# Web Behaviors (WB) Parts Specification",
+      "name": "wb-parts-spec",
+      "category": "root"
+    }
+  ]
+}

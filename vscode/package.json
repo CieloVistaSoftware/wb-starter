@@ -1,0 +1,57 @@
+{
+  "name": "wb-server-opener",
+  "displayName": "WB Server Opener",
+  "description": "Opens the current HTML file in the WB Server (localhost:3000)",
+  "version": "0.0.1",
+  "publisher": "wb-starter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CieloVistaSoftware/wb-starter.git"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "scripts": {
+    "package": "npx @vscode/vsce package"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:server.js",
+    "onLanguage:html"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "wb-server.open",
+        "title": "Open with WB Server"
+      },
+      {
+        "command": "wb-server.restart",
+        "title": "Restart WB Server"
+      },
+      {
+        "command": "wb-server.showLogs",
+        "title": "Show WB Server Logs"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "wb-server.open",
+          "group": "navigation",
+          "when": "resourceExtname == .html"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "wb-server.open",
+          "group": "navigation",
+          "when": "resourceExtname == .html"
+        }
+      ]
+    }
+  }
+}

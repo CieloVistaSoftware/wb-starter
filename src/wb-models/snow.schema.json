@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "snow.schema.json",
+  "title": "Snow",
+  "description": "Falling snowflake animation effect",
+  
+  "behavior": "snow",
+  "baseClass": "wb-snow",
+  
+  "semanticElement": { "tagName": "div" },
+  
+  "properties": {
+    "count": { "type": "number", "description": "Number of snowflakes", "default": 30 },
+    "label": { "type": "string", "description": "Trigger button label", "default": "Let it Snow!" },
+    "showButton": { "type": "boolean", "description": "Show trigger button", "default": true },
+    "repeat": { "type": "boolean", "description": "Loop animation", "default": true },
+    "delay": { "type": "string", "description": "Start delay", "default": "0s" },
+    "duration": { "type": "string", "description": "Fall duration", "default": "8s" }
+  },
+  
+  "$view": [
+    { "name": "button", "tag": "button", "public": true, "content": "{{label}}", "createdWhen": "showButton", "description": "Trigger button" },
+    { "name": "container", "tag": "div", "public": false, "description": "Snowflake container" }
+  ],
+  
+  "$methods": {
+    "start": { "description": "Starts snow", "params": [] },
+    "stop": { "description": "Stops snow", "params": [] },
+    "toggle": { "description": "Toggles snow", "params": [] }
+  },
+  
+  "$cssAPI": {
+    "--wb-snow-z-index": { "default": "9999", "description": "Z-index" },
+    "--wb-snow-color": { "default": "#ffffff", "description": "Snowflake color" }
+  },
+  
+  "events": {
+    "wb:snow:start": { "description": "Animation started" },
+    "wb:snow:stop": { "description": "Animation stopped" }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-snow></wb-snow>",
+      "<button data-wb=\"snow\">Snow!</button>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        { "count": 50 },
+        { "repeat": false }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "effects", "icon": "❄️", "since": "1.0.0", "status": "stable" }
+}

@@ -9,7 +9,7 @@ test.describe('Code Behavior Scroll Options', () => {
     `);
 
     const pre = page.locator('#test-pre-default');
-    await expect(pre).toHaveClass(/wb-pre/);
+    await expect(pre).toHaveClass(/x-pre/);
     
     // Check styles
     await expect(pre).toHaveCSS('white-space', 'pre-wrap');
@@ -23,7 +23,7 @@ test.describe('Code Behavior Scroll Options', () => {
     `);
 
     const pre = page.locator('#test-pre-scroll');
-    await expect(pre).toHaveClass(/wb-pre/);
+    await expect(pre).toHaveClass(/x-pre/);
     
     // Check styles
     await expect(pre).toHaveCSS('white-space', 'pre');
@@ -37,7 +37,7 @@ test.describe('Code Behavior Scroll Options', () => {
     `);
 
     const code = page.locator('#test-code-default');
-    await expect(code).toHaveClass(/wb-code/);
+    await expect(code).toHaveClass(/x-code/);
     
     // Check styles
     await expect(code).toHaveCSS('white-space', 'pre-wrap');
@@ -51,7 +51,7 @@ test.describe('Code Behavior Scroll Options', () => {
     `);
 
     const code = page.locator('#test-code-scroll');
-    await expect(code).toHaveClass(/wb-code/);
+    await expect(code).toHaveClass(/x-code/);
     
     // Check styles
     await expect(code).toHaveCSS('white-space', 'pre');

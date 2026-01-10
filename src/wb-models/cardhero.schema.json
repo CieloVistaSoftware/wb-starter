@@ -1,0 +1,231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cardhero.schema.json",
+  "title": "Hero Card",
+  "description": "Hero banner with background image, title, subtitle, and optional CTA",
+  
+  "behavior": "cardhero",
+  "baseClass": "wb-hero",
+  
+  "semanticElement": {
+    "tagName": "section",
+    "implicitRole": "banner"
+  },
+  
+  "properties": {
+    "background": {
+      "type": "string",
+      "description": "Background image URL",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "description": "Hero headline",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Hero tagline/subheadline"
+    },
+    "cta": {
+      "type": "string",
+      "description": "Call-to-action button text"
+    },
+    "ctaHref": {
+      "type": "string",
+      "description": "Call-to-action link URL",
+      "default": "#"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual style variant",
+      "enum": ["default", "cosmic", "split", "minimal", "gradient"],
+      "default": "default",
+      "appliesClass": "wb-hero--{{value}}"
+    },
+    "xalign": {
+      "type": "string",
+      "description": "Horizontal content alignment (x-axis)",
+      "enum": ["left", "center", "right"],
+      "default": "center",
+      "appliesClass": "wb-hero--xalign-{{value}}"
+    },
+    "overlay": {
+      "type": "boolean",
+      "description": "Show gradient overlay for text readability",
+      "default": true,
+      "appliesClass": "wb-hero--overlay"
+    },
+    "fullHeight": {
+      "type": "boolean",
+      "description": "Make hero full viewport height",
+      "default": false,
+      "appliesClass": "wb-hero--full"
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "background",
+      "tag": "div",
+      "public": false,
+      "required": true,
+      "description": "Background image container"
+    },
+    {
+      "name": "overlay",
+      "tag": "div",
+      "parent": "background",
+      "public": false,
+      "createdWhen": "overlay",
+      "description": "Gradient overlay for text readability"
+    },
+    {
+      "name": "content",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "Content container for title, subtitle, CTA"
+    },
+    {
+      "name": "title",
+      "tag": "h1",
+      "parent": "content",
+      "public": true,
+      "content": "{{title}}",
+      "createdWhen": "title",
+      "description": "Hero headline"
+    },
+    {
+      "name": "subtitle",
+      "tag": "p",
+      "parent": "content",
+      "public": true,
+      "content": "{{subtitle}}",
+      "createdWhen": "subtitle",
+      "description": "Hero tagline"
+    },
+    {
+      "name": "cta",
+      "tag": "a",
+      "parent": "content",
+      "public": true,
+      "content": "{{cta}}",
+      "createdWhen": "cta",
+      "description": "Call-to-action button"
+    }
+  ],
+  
+  "$methods": {
+    "show": {
+      "description": "Shows the hero",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the hero",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles hero visibility",
+      "params": []
+    },
+    "animate": {
+      "description": "Triggers hero entrance animation",
+      "params": ["animationType"],
+      "returns": "Promise"
+    },
+    "setBackground": {
+      "description": "Changes the background image",
+      "params": ["url"]
+    }
+  },
+  
+  "$cssAPI": {
+    "--wb-hero-height": {
+      "default": "400px",
+      "description": "Hero height (ignored when fullHeight is true)"
+    },
+    "--wb-hero-min-height": {
+      "default": "300px",
+      "description": "Minimum hero height"
+    },
+    "--wb-hero-padding": {
+      "default": "2rem",
+      "description": "Content padding"
+    },
+    "--wb-hero-gap": {
+      "default": "1rem",
+      "description": "Gap between title, subtitle, and CTA"
+    },
+    "--wb-hero-title-size": {
+      "default": "3rem",
+      "description": "Title font size"
+    },
+    "--wb-hero-title-weight": {
+      "default": "700",
+      "description": "Title font weight"
+    },
+    "--wb-hero-subtitle-size": {
+      "default": "1.25rem",
+      "description": "Subtitle font size"
+    },
+    "--wb-hero-text-color": {
+      "default": "#ffffff",
+      "description": "Text color"
+    },
+    "--wb-hero-text-shadow": {
+      "default": "0 2px 4px rgba(0,0,0,0.3)",
+      "description": "Text shadow for readability"
+    },
+    "--wb-hero-overlay-start": {
+      "default": "rgba(0,0,0,0.1)",
+      "description": "Overlay gradient start color"
+    },
+    "--wb-hero-overlay-end": {
+      "default": "rgba(0,0,0,0.6)",
+      "description": "Overlay gradient end color"
+    },
+    "--wb-hero-cta-bg": {
+      "default": "var(--primary, #6366f1)",
+      "description": "CTA button background"
+    },
+    "--wb-hero-cta-color": {
+      "default": "#ffffff",
+      "description": "CTA button text color"
+    },
+    "--wb-hero-cta-padding": {
+      "default": "0.75rem 1.5rem",
+      "description": "CTA button padding"
+    },
+    "--wb-hero-cta-radius": {
+      "default": "4px",
+      "description": "CTA button border radius"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-hero background=\"hero.jpg\" title=\"Welcome\"></wb-hero>",
+      "<wb-hero background=\"hero.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></wb-hero>",
+      "<section data-wb=\"cardhero\" data-background=\"hero.jpg\" data-title=\"Test\"></section>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "background": "hero.jpg", "title": "Welcome" },
+        { "background": "hero.jpg", "title": "Welcome", "subtitle": "Subtitle" },
+        { "background": "hero.jpg", "title": "Welcome", "cta": "Click Me" },
+        { "background": "hero.jpg", "title": "Welcome", "subtitle": "Sub", "cta": "Go", "variant": "cosmic" },
+        { "background": "hero.jpg", "title": "Welcome", "xalign": "left" },
+        { "background": "hero.jpg", "title": "Welcome", "overlay": false },
+        { "background": "hero.jpg", "title": "Welcome", "fullHeight": true }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "cards",
+    "icon": "🦸",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

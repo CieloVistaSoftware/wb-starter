@@ -65,7 +65,7 @@
 <body>
   <header>
     <h1>🏗️ Semantic Structure Demo</h1>
-    <div data-wb="themecontrol"></div>
+    <wb-themecontrol></div>
   </header>
   <p>Enhanced structural and data elements using standard HTML tags.</p>
 
@@ -157,22 +157,18 @@
     <div class="demo-grid">
       <div>
         <h3>Determinate</h3>
-        <progress
-          data-wb="progress"
-          value="70"
+        <wb-progress value="70"
           max="100"
-          data-label="Loading..."
-          data-animated="true"></progress>
+          label="Loading..."
+          animated="true"></progress>
       </div>
       <div>
         <h3>Indeterminate</h3>
         <!-- Using striped animation for indeterminate state -->
-        <progress
-          data-wb="progress"
-          value="100"
+        <wb-progress value="100"
           max="100"
-          data-striped="true"
-          data-animated="true"></progress>
+          striped="true"
+          animated="true"></progress>
       </div>
     </div>
   </div>
@@ -181,17 +177,10 @@
   <h2>Code <code>&lt;code&gt;</code> & <code>&lt;pre&gt;</code></h2>
   <div class="demo-section">
     <h3>Inline Code</h3>
-    <p>Use <code
-      data-wb="code"
-      data-copy="true">npm install wb-core</code> to install.</p>
+    <p>Use <wb-code copy="true">npm install wb-core</code> to install.</p>
     
     <h3>Code Block</h3>
-    <pre
-      data-wb="pre"
-      data-copy="true"
-      data-line-numbers="true"><code
-        data-wb="code"
-        data-language="javascript">
+    <wb-pre data-copy="true" data-line-numbers="true"<wb-code language="javascript">
 function hello() {
   console.log("Hello World");
   return true;
@@ -205,9 +194,7 @@ function hello() {
     <div class="demo-grid">
       <div>
         <h3>Enhanced Unordered List</h3>
-        <ul
-          data-wb="ul"
-          data-marker="check">
+        <wb-ul data-marker="check"
           <li>Feature One</li>
           <li>Feature Two</li>
           <li>Feature Three</li>
@@ -215,9 +202,7 @@ function hello() {
       </div>
       <div>
         <h3>Enhanced Ordered List</h3>
-        <ol
-          data-wb="ol"
-          data-marker="circle">
+        <wb-ol data-marker="circle"
           <li>Step One</li>
           <li>Step Two</li>
           <li>Step Three</li>
@@ -225,9 +210,7 @@ function hello() {
       </div>
       <div>
         <h3>Description List</h3>
-        <dl
-          data-wb="dl"
-          data-layout="grid">
+        <wb-dl data-layout="grid"
           <dt>HTML</dt>
           <dd>HyperText Markup Language</dd>
           <dt>CSS</dt>

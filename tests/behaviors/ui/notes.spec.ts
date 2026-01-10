@@ -15,7 +15,13 @@ test.describe('Notes Behavior', () => {
     );
     await page.waitForTimeout(100);
     
+    // Clear localStorage to prevent state interference
+    await page.evaluate(() => localStorage.clear());
+
     await page.evaluate((html: string) => {
+      const existing = document.getElementById('test-container');
+      if (existing) existing.remove();
+      
       const container = document.createElement('div');
       container.id = 'test-container';
       container.innerHTML = html;

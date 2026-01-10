@@ -1,6 +1,7 @@
 {
   "name": "wb-starter",
-  "version": "1.0.0",
+  "version": "3.0.0",
+  "type": "module",
   "description": "Modern website starter kit powered by WB Behaviors",
   "main": "index.html",
   "scripts": {
@@ -19,6 +20,8 @@
     "test:performance": "npx playwright test --project=performance",
     "test:all": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors && npx playwright test --project=performance",
     "test:integrity": "npx playwright test tests/compliance/project-integrity.spec.ts",
+    "generate:schema-tests": "node scripts/generate-schema-tests.js",
+    "generate:search": "node scripts/generate-search-index.js",
     "precommit": "npm run test:integrity"
   },
   "keywords": [

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tabs.schema.json",
+  "title": "Tabs",
+  "description": "Tab navigation for switching between content panels",
+  
+  "behavior": "tabs",
+  "baseClass": "wb-tabs",
+  
+  "semanticElement": { "tagName": "div", "implicitRole": "tablist" },
+  
+  "properties": {
+    "activeTab": { "type": "number", "description": "Initially active tab index", "default": 0 },
+    "variant": { "type": "string", "enum": ["default", "pills", "underline", "bordered"], "default": "default", "appliesClass": "wb-tabs--{{value}}" },
+    "size": { "type": "string", "enum": ["sm", "md", "lg"], "default": "md", "appliesClass": "wb-tabs--{{value}}" },
+    "fullWidth": { "type": "boolean", "description": "Tabs fill container width", "default": false, "appliesClass": "wb-tabs--full-width" },
+    "vertical": { "type": "boolean", "description": "Vertical tab layout", "default": false, "appliesClass": "wb-tabs--vertical" }
+  },
+  
+  "$view": [
+    { "name": "nav", "tag": "div", "public": true, "required": true, "description": "Tab navigation container" },
+    { "name": "tabs", "tag": "button", "parent": "nav", "public": true, "description": "Tab buttons (multiple)" },
+    { "name": "panels", "tag": "div", "public": true, "required": true, "description": "Panel container" },
+    { "name": "panel", "tag": "div", "parent": "panels", "public": true, "description": "Tab panels (multiple)" }
+  ],
+  
+  "$methods": {
+    "setActiveTab": { "description": "Activates a tab by index", "params": ["index"] },
+    "getActiveTab": { "description": "Returns active tab index", "params": [], "returns": "number" },
+    "next": { "description": "Activates next tab", "params": [] },
+    "prev": { "description": "Activates previous tab", "params": [] },
+    "first": { "description": "Activates first tab", "params": [] },
+    "last": { "description": "Activates last tab", "params": [] }
+  },
+  
+  "$cssAPI": {
+    "--wb-tabs-gap": { "default": "0", "description": "Gap between tabs" },
+    "--wb-tabs-border": { "default": "1px solid var(--border-color, #e0e0e0)", "description": "Tab list border" },
+    "--wb-tabs-tab-padding": { "default": "0.75rem 1rem", "description": "Tab padding" },
+    "--wb-tabs-tab-color": { "default": "var(--text-secondary, #666)", "description": "Tab text color" },
+    "--wb-tabs-tab-bg": { "default": "transparent", "description": "Tab background" },
+    "--wb-tabs-tab-active-color": { "default": "var(--primary, #6366f1)", "description": "Active tab color" },
+    "--wb-tabs-tab-active-bg": { "default": "transparent", "description": "Active tab background" },
+    "--wb-tabs-tab-hover-color": { "default": "var(--text-primary, #1a1a1a)", "description": "Tab hover color" },
+    "--wb-tabs-indicator-color": { "default": "var(--primary, #6366f1)", "description": "Active indicator color" },
+    "--wb-tabs-indicator-height": { "default": "2px", "description": "Active indicator height" },
+    "--wb-tabs-panel-padding": { "default": "1rem 0", "description": "Panel padding" }
+  },
+  
+  "accessibility": {
+    "tablist": { "role": "tablist" },
+    "tab": { "role": "tab", "ariaSelected": "dynamic", "ariaControls": "panel id" },
+    "panel": { "role": "tabpanel", "ariaLabelledBy": "tab id" }
+  },
+  
+  "events": {
+    "wb:tabs:change": { "description": "Tab changed", "detail": { "index": "number", "previousIndex": "number" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-tabs><div data-tab-title=\"Tab 1\">Content 1</div><div data-tab-title=\"Tab 2\">Content 2</div></wb-tabs>",
+      "<div data-wb=\"tabs\"><div data-tab-title=\"First\">First</div><div data-tab-title=\"Second\">Second</div></div>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "activeTab": 0 },
+        { "activeTab": 1 },
+        { "variant": "pills" },
+        { "variant": "underline" },
+        { "fullWidth": true }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "navigation", "icon": "📑", "since": "1.0.0", "status": "stable" }
+}

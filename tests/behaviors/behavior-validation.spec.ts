@@ -17,7 +17,7 @@ import {
  * 5. Integration - behavior works with WB.scan()
  */
 
-const BEHAVIOR_META_PATH = path.join(PATHS.src, 'behaviorMeta.js');
+const BEHAVIOR_META_PATH = path.join(PATHS.src, 'wb-viewmodels', 'builder-app', 'behaviorMeta.js');
 const BEHAVIOR_SCHEMA_PATH = path.join(PATHS.schemas, 'behavior.schema.json');
 
 // ============================================
@@ -132,7 +132,7 @@ const VALID_TRIGGERS = ['button', 'a', 'div', 'span'];
 async function loadBehaviorMeta(page: Page): Promise<Record<string, BehaviorMeta>> {
   return await page.evaluate(async () => {
     // Import the module
-    const module = await import('/src/behaviorMeta.js');
+    const module = await import('/src/wb-viewmodels/builder-app/behaviorMeta.js');
     return module.behaviorMeta || module.default || {};
   });
 }

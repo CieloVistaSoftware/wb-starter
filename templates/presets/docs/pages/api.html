@@ -1,0 +1,140 @@
+<!-- 
+  API REFERENCE PAGE STUB
+  =======================
+  Edit this page for your API documentation.
+  
+  Suggested sections:
+  - API overview
+  - Endpoints/methods
+  - Parameters
+  - Response examples
+-->
+
+<div style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem; padding: 2rem; max-width: 1400px; margin: 0 auto;">
+  
+  <!-- Sidebar -->
+  <aside style="position: sticky; top: 2rem; height: fit-content;">
+    <nav style="display: flex; flex-direction: column; gap: 0.5rem;">
+      <p style="font-weight: bold; margin: 0 0 0.5rem; color: var(--text-secondary); font-size: 0.875rem; text-transform: uppercase;">Overview</p>
+      <a href="#authentication" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Authentication</a>
+      <a href="#errors" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Errors</a>
+      <a href="#rate-limits" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Rate Limits</a>
+      
+      <p style="font-weight: bold; margin: 1rem 0 0.5rem; color: var(--text-secondary); font-size: 0.875rem; text-transform: uppercase;">Endpoints</p>
+      <a href="#users" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Users</a>
+      <a href="#projects" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Projects</a>
+      <a href="#webhooks" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Webhooks</a>
+    </nav>
+  </aside>
+  
+  <!-- Content -->
+  <main style="max-width: 900px;">
+    
+    <h1>API Reference</h1>
+    <p style="font-size: 1.125rem; color: var(--text-secondary);">
+      Complete reference for the REST API.
+    </p>
+    
+    <wb-card variant="elevated" style="margin: 1.5rem 0;">
+      <p style="margin: 0;"><strong>Base URL:</strong></p>
+      <code>https://api.yourproject.com/v1</code>
+    </wb-card>
+    
+    <hr style="border: none; border-top: 1px solid var(--border); margin: 3rem 0;">
+    
+    <section id="authentication">
+      <h2>Authentication</h2>
+      <p>All API requests require authentication via API key:</p>
+      <wb-card variant="elevated" style="margin: 1rem 0;">
+        <code style="display: block; white-space: pre;">curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://api.yourproject.com/v1/users</code>
+      </wb-card>
+    </section>
+    
+    <hr style="border: none; border-top: 1px solid var(--border); margin: 3rem 0;">
+    
+    <section id="users">
+      <h2>Users</h2>
+      
+      <wb-card variant="elevated" style="margin: 1.5rem 0;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+          <wb-badge variant="success">GET</wb-badge>
+          <code>/users</code>
+        </div>
+        <p>List all users in your organization.</p>
+        
+        <h4>Parameters</h4>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 0.5rem 0;"><code>limit</code></td>
+            <td style="padding: 0.5rem 0; color: var(--text-secondary);">integer</td>
+            <td style="padding: 0.5rem 0;">Max results (default: 20)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 0.5rem 0;"><code>offset</code></td>
+            <td style="padding: 0.5rem 0; color: var(--text-secondary);">integer</td>
+            <td style="padding: 0.5rem 0;">Pagination offset</td>
+          </tr>
+        </table>
+        
+        <h4>Response</h4>
+        <code style="display: block; white-space: pre; background: var(--surface); padding: 1rem; border-radius: 0.25rem;">{
+  "data": [
+    { "id": "usr_123", "name": "John Doe", "email": "john@example.com" }
+  ],
+  "total": 1
+}</code>
+      </wb-card>
+      
+      <wb-card variant="elevated" style="margin: 1.5rem 0;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+          <wb-badge variant="info">POST</wb-badge>
+          <code>/users</code>
+        </div>
+        <p>Create a new user.</p>
+        
+        <h4>Body</h4>
+        <code style="display: block; white-space: pre; background: var(--surface); padding: 1rem; border-radius: 0.25rem;">{
+  "name": "Jane Doe",
+  "email": "jane@example.com"
+}</code>
+      </wb-card>
+      
+    </section>
+    
+    <hr style="border: none; border-top: 1px solid var(--border); margin: 3rem 0;">
+    
+    <section id="errors">
+      <h2>Errors</h2>
+      <p>The API uses standard HTTP status codes:</p>
+      <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+        <tr style="border-bottom: 1px solid var(--border);">
+          <td style="padding: 0.75rem 0;"><code>200</code></td>
+          <td style="padding: 0.75rem 0;">Success</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+          <td style="padding: 0.75rem 0;"><code>400</code></td>
+          <td style="padding: 0.75rem 0;">Bad Request</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+          <td style="padding: 0.75rem 0;"><code>401</code></td>
+          <td style="padding: 0.75rem 0;">Unauthorized</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+          <td style="padding: 0.75rem 0;"><code>404</code></td>
+          <td style="padding: 0.75rem 0;">Not Found</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+          <td style="padding: 0.75rem 0;"><code>429</code></td>
+          <td style="padding: 0.75rem 0;">Rate Limited</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75rem 0;"><code>500</code></td>
+          <td style="padding: 0.75rem 0;">Server Error</td>
+        </tr>
+      </table>
+    </section>
+    
+  </main>
+  
+</div>

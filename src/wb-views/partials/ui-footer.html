@@ -1,0 +1,18 @@
+<footer class="wb-footer {{sticky ? 'wb-footer--sticky' : ''}}">
+  <div class="wb-footer__left">
+    <span wb-if="brand" class="wb-footer__brand">{{brand}}</span>
+    <span wb-if="copyright" class="wb-footer__copyright">{{copyright}}</span>
+  </div>
+  
+  <div class="wb-footer__center">
+    <nav class="wb-footer__nav">
+      <a wb-for="link in links" href="{{link.href || '#'}}" class="wb-footer__link">{{link.label || link}}</a>
+    </nav>
+  </div>
+  
+  <div class="wb-footer__right">
+    <div wb-if="social" class="wb-footer__social">
+      <a wb-for="item in social" href="{{item.href || '#'}}" class="wb-footer__social-link" title="{{item.name}}" target="_blank">{{item.icon || '🔗'}}</a>
+    </div>
+  </div>
+</footer>

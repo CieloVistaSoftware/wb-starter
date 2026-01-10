@@ -1,0 +1,9 @@
+<div class="wb-timeline">
+  <div class="wb-timeline__item" wb-for="item in items" style="position:relative;padding-left:1.5rem;padding-bottom:1.5rem;">
+    <div class="wb-timeline__marker" style="position:absolute;left:0;top:0.25rem;width:0.75rem;height:0.75rem;background:var(--primary, #6366f1);border-radius:50%;z-index:1;"></div>
+    <div class="wb-timeline__line" wb-unless="itemLast" style="position:absolute;left:0.3rem;top:1rem;bottom:0;width:2px;background:var(--border-color, #374151);"></div>
+    <div class="wb-timeline__content" style="color:var(--text-primary, #f9fafb);">
+      {{item}}
+    </div>
+  </div>
+</div>

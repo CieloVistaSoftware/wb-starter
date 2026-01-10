@@ -34,7 +34,7 @@ window.WB = WB;
   function showError(message) {
     const loadingEl = document.querySelector('.site__loading');
     if (loadingEl) {
-      const spinner = loadingEl.querySelector('[data-wb="spinner"]');
+      const spinner = loadingEl.querySelector('wb-spinner');
       const text = loadingEl.querySelector('p');
       if (spinner) spinner.style.display = 'none';
       if (text) {

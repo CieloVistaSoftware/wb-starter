@@ -78,6 +78,40 @@
   ],
   "templates": [
     {
+      "id": "layout-simple-spa",
+      "name": "Simple SPA",
+      "category": "landing",
+      "description": "Complete Single Page Layout with Sticky Nav, Hero, Features, About, Contact, and Footer.",
+      "tags": ["spa", "layout", "complete", "simple"],
+      "components": [
+        { "b": "navbar", "d": { "brand": "My App", "items": "Home,Features,About,Contact", "sticky": true, "cta": "Get Started", "ctaHref": "#contact" }},
+        { "b": "cardhero", "d": { "title": "Welcome to My App", "subtitle": "A clean, simple single page application template.", "cta": "Learn More", "ctaHref": "#features", "height": "100vh", "variant": "default" }},
+        { "b": "container", "d": { "columns": 3, "gap": "2rem", "padding": "4rem 2rem", "id": "features" }, "children": [
+          { "b": "card", "d": { "title": "Feature 1", "content": "Description of your first awesome feature.", "icon": "🚀" }},
+          { "b": "card", "d": { "title": "Feature 2", "content": "Description of why your users will love this.", "icon": "❤️" }},
+          { "b": "card", "d": { "title": "Feature 3", "content": "Description of how this solves their problems.", "icon": "🛠️" }}
+        ]},
+        { "b": "container", "d": { "columns": 2, "gap": "3rem", "padding": "4rem 2rem", "id": "about" }, "children": [
+          { "b": "cardimage", "d": { "src": "https://picsum.photos/600/400", "alt": "About Us" }},
+          { "b": "card", "d": { "title": "About Us", "content": "We are a dedicated team building simple, effective solutions. This template is designed to get you up and running in minutes, not days." }}
+        ]},
+        { "b": "form", "d": { "id": "contact", "padding": "4rem 2rem" }, "children": [
+          { "b": "card", "d": { "title": "Contact Us", "subtitle": "Ready to get started? Send us a message.", "align": "center" }, "children": [
+             { "b": "input", "d": { "label": "Name", "placeholder": "Your Name" }},
+             { "b": "input", "d": { "label": "Email", "type": "email", "placeholder": "you@example.com" }},
+             { "b": "textarea", "d": { "label": "Message", "rows": 4 }},
+             { "b": "button", "d": { "text": "Send Message", "variant": "primary" }}
+          ]}
+        ]},
+        { "b": "container", "d": { "columns": 4, "gap": "1rem", "padding": "2rem", "background": "#f3f4f6" }, "children": [
+          { "b": "card", "d": { "title": "My App", "content": "© 2026 My App.\nAll rights reserved." }},
+          { "b": "list", "d": { "items": "Home,Features,Pricing" }},
+          { "b": "list", "d": { "items": "About,Contact,Blog" }},
+          { "b": "list", "d": { "items": "Privacy,Terms,Cookies" }}
+        ]}
+      ]
+    },
+    {
       "id": "landing-startup",
       "name": "Startup Landing",
       "category": "landing",

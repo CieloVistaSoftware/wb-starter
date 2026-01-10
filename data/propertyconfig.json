@@ -1105,6 +1105,47 @@
       "default": "2025-12-31T23:59:59Z",
       "description": "Countdown target date/time",
       "category": "effects"
+    },
+
+    "action": {
+      "label": "Action URL",
+      "ui": "url",
+      "default": "",
+      "description": "Form submission URL (e.g., Formspree)",
+      "category": "link"
+    },
+    "method": {
+      "label": "Method",
+      "ui": "select",
+      "default": "POST",
+      "options": [
+        { "value": "POST", "label": "POST" },
+        { "value": "GET", "label": "GET" }
+      ],
+      "description": "HTTP method",
+      "category": "logic"
+    },
+
+    "onClick": {
+      "label": "On Click",
+      "ui": "code",
+      "default": "",
+      "description": "JavaScript to execute on click",
+      "category": "events"
+    },
+    "onHover": {
+      "label": "On Hover",
+      "ui": "code",
+      "default": "",
+      "description": "JavaScript to execute on hover",
+      "category": "events"
+    },
+    "dataContext": {
+      "label": "Data Context",
+      "ui": "json",
+      "default": "{}",
+      "description": "Local state/data for this component",
+      "category": "logic"
     }
   },
 
@@ -1114,17 +1155,19 @@
     "link": { "label": "🔗 Links", "order": 3 },
     "appearance": { "label": "🎨 Appearance", "order": 4 },
     "layout": { "label": "📐 Layout", "order": 5 },
-    "style": { "label": "✨ Style", "order": 6 },
-    "behavior": { "label": "⚙️ Behavior", "order": 7 },
-    "buttons": { "label": "🔘 Buttons", "order": 8 },
-    "file": { "label": "📁 File", "order": 9 },
-    "pricing": { "label": "💰 Pricing", "order": 10 },
-    "data": { "label": "📊 Data", "order": 11 },
-    "contact": { "label": "📇 Contact", "order": 12 },
-    "feedback": { "label": "📈 Feedback", "order": 13 },
-    "display": { "label": "👁️ Display", "order": 14 },
-    "embed": { "label": "🔌 Embed", "order": 15 },
-    "effects": { "label": "🎆 Effects", "order": 16 }
+    "style": { "label": "✨ Style", "order": 6, "collapsed": true },
+    "behavior": { "label": "⚙️ Behavior", "order": 7, "collapsed": true },
+    "buttons": { "label": "🔘 Buttons", "order": 8, "collapsed": true },
+    "file": { "label": "📁 File", "order": 9, "collapsed": true },
+    "pricing": { "label": "💰 Pricing", "order": 10, "collapsed": true },
+    "data": { "label": "📊 Data", "order": 11, "collapsed": true },
+    "contact": { "label": "📇 Contact", "order": 12, "collapsed": true },
+    "feedback": { "label": "📈 Feedback", "order": 13, "collapsed": true },
+    "display": { "label": "👁️ Display", "order": 14, "collapsed": true },
+    "embed": { "label": "🔌 Embed", "order": 15, "collapsed": true },
+    "effects": { "label": "🎆 Effects", "order": 16, "collapsed": true },
+    "events": { "label": "⚡ Events", "order": 17, "collapsed": true },
+    "logic": { "label": "🧠 Logic", "order": 18, "collapsed": true }
   },
 
   "componentDefaults": {
@@ -1167,7 +1210,9 @@
       "elevated": false,
       "clickable": false,
       "href": "",
-      "hoverText": ""
+      "hoverText": "",
+      "onClick": "",
+      "dataContext": "{}"
     },
     "cardbutton": {
       "title": "Button Card",
@@ -1327,6 +1372,15 @@
     },
     "countdown": {
       "target": "2025-12-31T23:59:59Z"
+    },
+    "footer": {
+      "items": "Home,About,Contact",
+      "copyright": "© 2025 Company Name"
+    },
+    "form": {
+      "action": "",
+      "method": "POST",
+      "ajax": true
     },
     "grid": {
       "columns": "3"

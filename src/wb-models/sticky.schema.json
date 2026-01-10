@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sticky.schema.json",
+  "title": "Sticky",
+  "description": "Makes element stick to viewport on scroll",
+  
+  "behavior": "sticky",
+  "baseClass": "wb-sticky",
+  
+  "semanticElement": { "tagName": "div" },
+  
+  "properties": {
+    "offset": { "type": "string", "description": "Offset from top when stuck", "default": "0" },
+    "zIndex": { "type": "number", "description": "Z-index when stuck", "default": 100 },
+    "threshold": { "type": "number", "description": "Scroll position to trigger sticky" },
+    "stuckClass": { "type": "string", "description": "Class added when stuck", "default": "is-stuck" },
+    "animated": { "type": "boolean", "description": "Animate stick/unstick", "default": true }
+  },
+  
+  "$view": [
+    { "name": "placeholder", "tag": "div", "public": false, "description": "Placeholder to prevent layout shift" }
+  ],
+  
+  "$methods": {
+    "stick": { "description": "Forces sticky state", "params": [] },
+    "unstick": { "description": "Forces unsticky state", "params": [] },
+    "isStuck": { "description": "Returns stuck state", "params": [], "returns": "boolean" }
+  },
+  
+  "$cssAPI": {
+    "--wb-sticky-offset": { "default": "0", "description": "Top offset when stuck" },
+    "--wb-sticky-z-index": { "default": "100", "description": "Z-index when stuck" },
+    "--wb-sticky-transition": { "default": "all 0.2s ease", "description": "Transition" },
+    "--wb-sticky-shadow": { "default": "0 2px 8px rgba(0,0,0,0.1)", "description": "Shadow when stuck" }
+  },
+  
+  "events": {
+    "wb:sticky:stuck": { "description": "Element became stuck", "detail": { "offset": "number" } },
+    "wb:sticky:unstuck": { "description": "Element unstuck" }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-sticky>Navigation</wb-sticky>",
+      "<nav data-wb=\"sticky\" data-offset=\"60\">Header</nav>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        { "offset": "60" },
+        { "animated": true }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "layout", "icon": "📌", "since": "1.0.0", "status": "stable" }
+}

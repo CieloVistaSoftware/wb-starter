@@ -8,18 +8,15 @@
  * npm install sharp --save-dev
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Check if sharp is available
-let sharp;
-try {
-  sharp = require('sharp');
-} catch (e) {
-  console.log('Installing sharp...');
-  require('child_process').execSync('npm install sharp --save-dev');
-  sharp = require('sharp');
-}
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Dynamic import for sharp
+const sharp = await import('sharp').then(m => m.default);
 
 const ICON_SIZES = [72, 96, 128, 144, 152, 192, 384, 512];
 const OUTPUT_DIR = path.join(__dirname, '..', 'assets', 'icons');
@@ -63,11 +60,6 @@ async function generateIcons() {
 
   // Generate favicon.ico (16x16 and 32x32)
   try {
-    const favicon16 = await sharp(Buffer.from(SVG_ICON))
-      .resize(16, 16)
-      .png()
-      .toBuffer();
-    
     const favicon32 = await sharp(Buffer.from(SVG_ICON))
       .resize(32, 32)
       .png()

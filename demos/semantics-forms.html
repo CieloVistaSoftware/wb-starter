@@ -65,7 +65,7 @@
 <body id="semanticsforms-body-9">
   <header id="semanticsforms-header-10">
     <h1 id="semanticsforms-h1-11">📝 Semantic Forms Demo</h1>
-    <div id="semanticsforms-div-12" data-wb="themecontrol"></div>
+    <wb-themecontrol id="semanticsforms-div-12"></div>
   </header>
   <p id="semanticsforms-p-13">Enhanced form controls using standard HTML elements with <code id="semanticsforms-code-14">data-wb</code> attributes.</p>
 
@@ -151,9 +151,9 @@
   <h2 id="semanticsforms-h2-71">Switch</h2>
   <div id="semanticsforms-div-72" class="demo-section">
     <div id="semanticsforms-div-73" class="demo-row">
-      <input id="semanticsforms-input-74" type="checkbox" data-wb="switch" data-label="Notifications">
-      <input id="semanticsforms-input-75" type="checkbox" data-wb="switch" data-label="Dark Mode" checked>
-      <input id="semanticsforms-input-76" type="checkbox" data-wb="switch" data-label="Disabled" disabled>
+      <wb-switch id="semanticsforms-input-74" type="checkbox" label="Notifications">
+      <wb-switch id="semanticsforms-input-75" type="checkbox" label="Dark Mode" checked>
+      <wb-switch id="semanticsforms-input-76" type="checkbox" label="Disabled" disabled>
     </div>
   </div>
 
@@ -161,9 +161,9 @@
   <h2 id="semanticsforms-h2-77">Rating</h2>
   <div id="semanticsforms-div-78" class="demo-section">
     <div id="semanticsforms-div-79" class="demo-row">
-      <div id="semanticsforms-div-80" data-wb="rating" data-value="3" data-max="5"></div>
-      <div id="semanticsforms-div-81" data-wb="rating" data-value="4.5" data-max="5" data-precision="0.5" data-color="gold"></div>
-      <div id="semanticsforms-div-82" data-wb="rating" data-value="2" data-max="10" data-icon="heart"></div>
+      <wb-rating id="semanticsforms-div-80" value="3" max="5"></div>
+      <wb-rating id="semanticsforms-div-81" value="4.5" max="5" precision="0.5" color="gold"></div>
+      <wb-rating id="semanticsforms-div-82" value="2" max="10" icon="heart"></div>
     </div>
   </div>
 
@@ -210,7 +210,7 @@
   <!-- FORM -->
   <h2 id="semanticsforms-h2-111">Form <code id="semanticsforms-code-112">&lt;form&gt;</code></h2>
   <div id="semanticsforms-div-113" class="demo-section">
-    <form id="semanticsforms-form-114" data-wb="form" data-ajax="true" action="#" onsubmit="return false;">
+    <form id="semanticsforms-form-114" x-form data-ajax="true" action="#" onsubmit="return false;">
       <div id="semanticsforms-div-115" style="display: grid; gap: 1rem; max-width: 400px;">
         <input id="semanticsforms-input-116" name="name" placeholder="Name" required>
         <input id="semanticsforms-input-117" type="email" name="email" placeholder="Email" required>

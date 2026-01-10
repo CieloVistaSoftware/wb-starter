@@ -1,3 +1,7 @@
+@import url('/node_modules/highlight.js/styles/atom-one-dark.css');
+@import url('./themes.css');
+@import url('../behaviors/css/effects.css');
+
 /**
  * WB Starter - Site Layout Styles
  * Works with themes.css from wb-behaviors
@@ -69,11 +73,12 @@ wb-drawer.wb-drawer-layout {
   align-items: center;
   justify-content: space-between;
   padding: 0 1.5rem;
-  height: 60px;
+  height: 64px; /* Increased height slightly for better breathing room */
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
-  z-index: 100;
+  z-index: 1000; /* Increased z-index to stay above other content */
   transition: transform 0.3s ease;
+  position: relative;
 }
 
 .site__header--hidden {
@@ -88,7 +93,7 @@ wb-drawer.wb-drawer-layout {
 .header__left {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem; /* Increased gap */
 }
 
 .header__right {
@@ -96,6 +101,17 @@ wb-drawer.wb-drawer-layout {
   align-items: center;
   gap: 1rem;
 }
+
+/* Fix for potential stray toolbar buttons overlapping header */
+body > button.x-code__copy,
+body > button[x-copy] {
+  z-index: 9999; 
+}
+/* Ensure header contents don't get squished */
+.header__logo-text {
+  white-space: nowrap;
+}
+
 
 /* =============================================================================
    SPINNER
@@ -567,7 +583,20 @@ h5, h6 {
 /* =============================================================================
    RESPONSIVE
    ============================================================================= */
+
+/* Mobile-first: Safe viewport height for mobile browsers */
+@supports (height: 100dvh) {
+  .site {
+    min-height: 100dvh;
+  }
+  .site__body {
+    height: calc(100dvh - 60px);
+  }
+}
+
+/* Tablet (768px and below) */
 @media (max-width: 768px) {
+  /* Mobile nav - always starts hidden, toggle opens it */
   .site__nav {
     position: fixed;
     left: 0;
@@ -575,24 +604,165 @@ h5, h6 {
     bottom: 0;
     z-index: 99;
     transform: translateX(-100%);
+    width: 280px !important;
+    transition: transform 0.3s ease;
   }
   
-  .site__nav:not(.site__nav--collapsed) {
+  /* When nav is open on mobile (controlled by JS) */
+  .site__nav.site__nav--mobile-open {
     transform: translateX(0);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Hide desktop collapsed state on mobile */
+  .site__nav.site__nav--collapsed {
+    transform: translateX(-100%);
+    width: 280px !important;
+  }
+  
+  .site__nav.site__nav--collapsed.site__nav--mobile-open {
+    transform: translateX(0);
+  }
+  
+  /* Hide nav resizer on mobile */
+  .nav__resizer {
+    display: none;
+  }
+  
+  /* Show icons on mobile for better UX */
+  .nav__icon {
+    display: block !important;
+  }
+  
+  /* Larger touch targets */
+  .nav__item {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
   }
   
   .site__main {
-    padding: 1.5rem;
+    padding: 1rem;
   }
   
-  .page h1, .page__hero h1 {
+  .page h1 {
+    font-size: 1.75rem;
+  }
+  
+  .page__hero h1 {
     font-size: 2rem;
   }
+  
+  .page__hero {
+    padding: 2rem 0;
+  }
+  
+  .page__hero p {
+    font-size: 1rem;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.1rem; }
   
   .footer__content {
     flex-direction: column;
     text-align: center;
+  }
+  
+  /* Ensure header buttons are touch-friendly */
+  .nav__toggle,
+  .header__notes-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.3rem;
+  }
+  
+  /* Tables scroll horizontally */
+  .wb-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Page grid single column */
+  .page__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile backdrop overlay */
+.site__nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: 60px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 98;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .site__nav-backdrop {
+    display: block;
+  }
+  
+  .site__nav-backdrop.visible {
+    opacity: 1;
+  }
+}
+
+/* Small phones (480px and below) */
+@media (max-width: 480px) {
+  .site__header {
+    padding: 0 1rem;
+    height: 56px;
+  }
+  
+  .site__body {
+    height: calc(100dvh - 56px);
+    height: calc(100vh - 56px);
+  }
+  
+  .site__nav {
+    top: 56px;
+    width: 100% !important;
+    max-width: 100%;
+  }
+  
+  .site__nav-backdrop {
+    top: 56px;
+  }
+  
+  .site__main {
+    padding: 0.75rem;
+  }
+  
+  .page h1 {
+    font-size: 1.5rem;
+  }
+  
+  .page__hero h1 {
+    font-size: 1.75rem;
+  }
+  
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  
+  /* Full-width buttons on small phones */
+  .btn, .wb-btn-gradient, .wb-btn-glass {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Hide logo text on small phones */
+  .header__logo-text {
+    display: none;
+  }
+  
+  .footer__left {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
@@ -1011,7 +1181,8 @@ h5, h6 {
 /* =============================================================================
    FLOATING CARDS
    ============================================================================= */
-.wb-card-float {
+.wb-card-float,
+.wb-card--float {
   padding: 2rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1019,20 +1190,53 @@ h5, h6 {
   transition: all 0.3s ease;
 }
 
-.wb-card-float:hover {
+.wb-card-float:hover,
+.wb-card--float:hover {
   transform: translateY(-8px);
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.3);
 }
 
-.wb-card-float h3 {
+.wb-card-float h3,
+.wb-card--float h3 {
   margin: 0 0 0.75rem;
   color: var(--text-primary);
 }
 
-.wb-card-float p {
+.wb-card-float p,
+.wb-card--float p {
   margin: 0;
+}
+
+/* =============================================================================
+   WINDOW CONTROLS (Traffic Lights)
+   ============================================================================= */
+.wb-window-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.wb-window-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.wb-window-dot--red { background: #ff5f56; }
+.wb-window-dot--yellow { background: #ffbd2e; }
+.wb-window-dot--green { background: #27ca40; }
+
+/* =============================================================================
+   BADGE GROUP
+   ============================================================================= */
+.wb-badge-group {
+  display: flex;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
 }
 
 /* =============================================================================
@@ -1618,3 +1822,29 @@ h5, h6 {
   100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
 
+/* =============================================================================
+   CODE CAPTIONS (MDHTML)
+   ============================================================================= */
+.code-wrapper {
+  width: fit-content;
+  min-width: 50%;
+  margin: 0 auto 1.5rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.code-wrapper pre {
+  margin: 0 !important;
+  width: 100%;
+  min-width: 100%;
+}
+
+.code-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  align-self: flex-end;
+  opacity: 0.6;
+}

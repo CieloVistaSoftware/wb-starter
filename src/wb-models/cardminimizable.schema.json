@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cardminimizable.schema.json",
+  "title": "Minimizable Card",
+  "description": "Card with minimize/expand toggle button in header",
+  
+  "behavior": "cardminimizable",
+  "baseClass": "wb-card-minimizable",
+  
+  "semanticElement": { "tagName": "article", "implicitRole": "article" },
+  
+  "properties": {
+    "title": { "type": "string", "description": "Card title (always visible)", "required": true },
+    "content": { "type": "string", "description": "Minimizable content" },
+    "minimized": { "type": "boolean", "description": "Initial minimized state", "default": false, "appliesClass": "wb-card-minimizable--minimized" },
+    "variant": { "type": "string", "enum": ["default", "elevated", "bordered"], "default": "default", "appliesClass": "wb-card-minimizable--{{value}}" }
+  },
+  
+  "$view": [
+    { "name": "header", "tag": "header", "public": true, "required": true, "description": "Header with title and minimize button" },
+    { "name": "title", "tag": "h3", "parent": "header", "public": true, "content": "{{title}}", "description": "Card title" },
+    { "name": "minimize-btn", "tag": "button", "parent": "header", "public": true, "description": "Minimize/expand toggle" },
+    { "name": "content", "tag": "main", "public": true, "required": true, "content": "{{content}}{{body}}", "description": "Minimizable content area" }
+  ],
+  
+  "$methods": {
+    "minimize": { "description": "Minimizes the card", "params": [] },
+    "expand": { "description": "Expands the card", "params": [] },
+    "toggle": { "description": "Toggles minimized state", "params": [] },
+    "isMinimized": { "description": "Returns minimized state", "params": [], "returns": "boolean" }
+  },
+  
+  "$cssAPI": {
+    "--wb-card-minimizable-padding": { "default": "1rem", "description": "Card padding" },
+    "--wb-card-minimizable-radius": { "default": "8px", "description": "Border radius" },
+    "--wb-card-minimizable-transition": { "default": "all 0.3s ease", "description": "Minimize transition" },
+    "--wb-card-minimizable-btn-size": { "default": "24px", "description": "Button size" }
+  },
+  
+  "events": {
+    "wb:minimizable:toggle": { "description": "Fired on minimize/expand", "detail": { "minimized": "boolean" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-card-minimizable title=\"Panel\">Content</wb-card-minimizable>",
+      "<article data-wb=\"cardminimizable\" data-title=\"Test\" data-minimized>Content</article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "title": "Basic", "content": "Content" },
+        { "title": "Minimized", "content": "Content", "minimized": true }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "cards", "icon": "➖", "since": "1.0.0", "status": "stable" }
+}

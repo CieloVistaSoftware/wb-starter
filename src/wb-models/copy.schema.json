@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "copy.schema.json",
+  "title": "Copy",
+  "behavior": "copy",
+  "description": "Click to copy text to clipboard.",
+  "properties": {
+    "text": { "type": "string", "description": "Text to copy" },
+    "target": { "type": "string", "description": "Selector of element to copy from" }
+  }
+}

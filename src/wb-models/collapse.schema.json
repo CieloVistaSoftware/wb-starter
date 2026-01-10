@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "collapse.schema.json",
+  "title": "Collapse",
+  "behavior": "collapse",
+  "description": "Collapsible content area.",
+  "properties": {
+    "expanded": { "type": "boolean", "default": false, "description": "Ideally open" }
+  }
+}

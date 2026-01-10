@@ -247,12 +247,12 @@ test.describe('Fix Viewer Compliance', () => {
 
       const codeIssues = await page.evaluate(() => {
         // Only check code tags that are NOT inside fix-code-block (syntax highlighted blocks are expected to have child spans)
-        const codeTags = Array.from(document.querySelectorAll('code:not(.fix-code-block code):not(.wb-code code):not(.hljs)'));
+        const codeTags = Array.from(document.querySelectorAll('code:not(.fix-code-block code):not(.x-code code):not(.hljs)'));
         const issues = [];
 
         codeTags.forEach((code, index) => {
           // Skip if this is inside a syntax-highlighted block
-          if (code.closest('.fix-code-block') || code.closest('.wb-code') || code.classList.contains('hljs')) {
+          if (code.closest('.fix-code-block') || code.closest('.x-code') || code.classList.contains('hljs')) {
             return;
           }
           

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Legacy Syntax Check</title>
+</head>
+<body>
+    <!-- Legacy Syntax - Should Error/Not Process -->
+    <wb-card id="legacy-card" data-title="Legacy"Legacy Content</div>
+
+    <!-- Modern Syntax - Should Process -->
+    <wb-card id="modern-card" title="Modern">Modern Content</wb-card>
+
+    <script type="module">
+        console.log('TEST PAGE: Script starting...');
+        import WB from '/src/core/wb.js';
+        console.log('TEST PAGE: WB Imported');
+        WB.init({ debug: true }).then(() => {
+            console.log('TEST PAGE: WB Initialized');
+        });
+    </script>
+</body>
+</html>

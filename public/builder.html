@@ -1,236 +1,1357 @@
 <!DOCTYPE html>
-<html id="builder-html-1" lang="en" data-theme="dark">
-<head id="builder-head-2">
-  <link id="builder-link-3" rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <meta id="builder-meta-4" charset="UTF-8">
-  <meta id="builder-meta-5" name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="builder-title-6">WB Page Builder</title>
-  <link id="builder-link-7" rel="preconnect" href="https://fonts.googleapis.com">
-  <link id="builder-link-8" rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link id="builder-link-9" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link id="builder-link-10" rel="stylesheet" href="../src/styles/themes.css">
-  <link id="builder-link-11" rel="stylesheet" href="../src/styles/site.css">
-  <link id="builder-link-12" rel="stylesheet" href="../src/behaviors/css/effects.css">
-  <link id="builder-link-13" rel="stylesheet" href="../src/styles/builder.css">
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WB Page Builder</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/behaviors/effects.css">
+  <link rel="stylesheet" href="../src/styles/builder.css">
+  <style>
+    /* ===== FILE MENU BAR ===== */
+    .menu-bar {
+      display: flex;
+      background: #0d0d1a;
+      border-bottom: 1px solid #333;
+      height: 28px;
+      font-size: 13px;
+      user-select: none;
+      z-index: 1000;
+    }
+    .menu-item {
+      position: relative;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      color: #aaa;
+    }
+    .menu-item:hover, .menu-item.open { background: #252542; color: #fff; }
+    .menu-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 240px;
+      background: #1a1a2e;
+      border: 1px solid #333;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      z-index: 9999;
+    }
+    .menu-item.open .menu-dropdown { display: block; }
+    .menu-action {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 16px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .menu-action:hover { background: #6366f1; }
+    .menu-action.disabled { opacity: 0.5; pointer-events: none; }
+    .menu-shortcut { font-size: 11px; color: #888; }
+    .menu-action:hover .menu-shortcut { color: rgba(255,255,255,0.7); }
+    .menu-divider { height: 1px; background: #333; margin: 4px 0; }
+    .menu-spacer { flex: 1; }
+    .menu-submenu { position: relative; }
+    .menu-submenu::after { content: '▶'; font-size: 10px; margin-left: auto; }
+    .menu-submenu-items {
+      display: none;
+      position: absolute;
+      left: 100%;
+      top: 0;
+      min-width: 200px;
+      background: #1a1a2e;
+      border: 1px solid #333;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .menu-submenu:hover .menu-submenu-items { display: block; }
+    
+    /* ===== SIDEBAR CONTROLS ===== */
+    .sidebar, .panel-right {
+      position: relative;
+      min-width: 48px !important;
+      max-width: 80vw !important;
+    }
+    .sidebar-toggle, .panel-toggle {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 48px;
+      background: #6366f1;
+      border: none;
+      color: white;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      border-radius: 0 6px 6px 0;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+    }
+    .sidebar-toggle { right: -24px; }
+    .panel-toggle { left: -24px; border-radius: 6px 0 0 6px; }
+    .sidebar-toggle:hover, .panel-toggle:hover { background: #5558e3; }
+    
+    .sidebar.collapsed, .panel-right.collapsed {
+      width: 0 !important;
+      min-width: 0 !important;
+      padding: 0 !important;
+      overflow: hidden;
+    }
+    
+        /* ===== PREVIEW MODE ===== */
+    /* Hide ALL builder UI */
+    body.preview-mode .menu-bar,
+    body.preview-mode .builder-header,
+    body.preview-mode .sidebar,
+    body.preview-mode .panel-right,
+    body.preview-mode .toolbar,
+    body.preview-mode .builder-footer,
+    body.preview-mode .controls,
+    body.preview-mode .el-controls,
+    body.preview-mode .el-id-label,
+    body.preview-mode .insert-point-btn,
+    body.preview-mode .insert-between,
+    body.preview-mode .section-bar,
+    body.preview-mode .section-badge,
+    body.preview-mode .section-empty,
+    body.preview-mode #builder-root > .sidebar,
+    body.preview-mode #builder-root > .panel-right { 
+      display: none !important; 
+    }
+    
+    /* Make canvas full screen - INHERIT PAGE THEME */
+    body.preview-mode { 
+      overflow-y: auto !important;
+    }
+    body.preview-mode .builder-container { 
+      padding: 0 !important; 
+      min-height: 100vh;
+    }
+    body.preview-mode #builder-root {
+      display: block !important;
+    }
+    body.preview-mode .canvas-area { 
+      margin: 0 !important; 
+      width: 100% !important; 
+      flex: 1;
+    }
+    body.preview-mode .viewport {
+      overflow-y: auto !important;
+      height: 100vh !important;
+    }
+    body.preview-mode #canvas { 
+      border: none !important; 
+      box-shadow: none !important; 
+      padding-bottom: 0 !important;
+      min-height: auto !important;
+    }
+    
+    /* Canvas sections in preview - just show content, inherit theme */
+    body.preview-mode .canvas-section {
+      border: none !important;
+      box-shadow: none !important;
+    }
+    body.preview-mode .canvas-section.is-target {
+      border: none !important;
+      box-shadow: none !important;
+    }
+    body.preview-mode .canvas-section.collapsed {
+      display: block !important;
+    }
+    body.preview-mode .canvas-section.collapsed .section-content {
+      display: block !important;
+    }
+    body.preview-mode .section-content {
+      padding: 0 !important;
+    }
+    
+    /* Hide component wrapper controls in preview */
+    body.preview-mode .dropped {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    body.preview-mode .dropped.selected,
+    body.preview-mode .dropped.section-selected {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    body.preview-mode .dropped::before,
+    body.preview-mode .dropped::after {
+      display: none !important;
+    }
+    
+    .preview-exit-btn {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      padding: 12px 24px;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      z-index: 99999;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .preview-exit-btn:hover { background: #5558e3; }
+    
+    /* ===== CANVAS AUTO-SIZE ===== */
+    .viewport {
+      overflow: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: flex-start !important;
+    }
+    .frame#canvas {
+      min-height: 100%;
+      height: auto !important;
+      flex: 1 0 auto;
+      padding-bottom: 200px;
+      margin: 0 auto; /* Center horizontally if max-width set */
+    }
+    .frame#canvas:empty,
+    .frame#canvas:has(.empty) {
+      min-height: 100%;
+    }
+    
+    /* ===== INSERT POINT BUTTON ===== */
+    .insert-point-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      border: 2px dashed #4ade80;
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+    }
+    .insert-point-btn:hover {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      transform: scale(1.02);
+      box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+    }
+    .insert-point-btn::before { content: '➕'; font-size: 16px; }
+    
+    /* Insert point between elements */
+    .insert-between {
+      height: 4px;
+      margin: 2px 0;
+      background: transparent;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+    }
+    .insert-between:hover {
+      height: 40px;
+      background: rgba(34, 197, 94, 0.2);
+      border: 2px dashed #22c55e;
+    }
+    .insert-between:hover::after {
+      content: '+ Add Component';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: #22c55e;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    /* Panel header */
+    .panel-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px;
+      border-bottom: 1px solid #333;
+      background: #1a1a2e;
+    }
+    .panel-header-row h3 { margin: 0; font-size: 13px; }
+    .collapse-all-btn {
+      background: #333;
+      border: none;
+      color: #aaa;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .collapse-all-btn:hover { background: #444; color: #fff; }
+    
+    /* ===== CANVAS SECTIONS (Header/Main/Footer) ===== */
+    .canvas-section {
+      position: relative;
+      border: 2px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .canvas-section[data-section="header"] { flex-shrink: 0; }
+    .canvas-section[data-section="header"] .section-content {
+         width: 100%;
+         padding: 0 1rem !important;
+         box-sizing: border-box;
+    }
+    .canvas-section--main { flex: 1; min-height: 400px; }
+    .canvas-section[data-section="footer"] { flex-shrink: 0; margin-top: auto; }
+    .canvas-section[data-section="footer"].is-target { margin-top: 0 !important; }
+    
+    /* GREEN highlight for active/target section */
+    .canvas-section.is-target {
+      border-color: #22c55e !important;
+      background: rgba(34, 197, 94, 0.08) !important;
+      box-shadow: inset 0 0 0 2px rgba(34, 197, 94, 0.3);
+    }
+    
+    .section-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: rgba(0,0,0,0.4);
+      border-bottom: 1px solid #333;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .section-bar:hover { background: rgba(0,0,0,0.5); }
+    
+    /* GREEN section bar when active */
+    .is-target .section-bar {
+      background: rgba(34, 197, 94, 0.25) !important;
+      border-color: #22c55e !important;
+      border-left: 4px solid #22c55e;
+    }
+    
+    .section-icon { font-size: 16px; }
+    .section-name { font-size: 13px; font-weight: 600; color: #fff; flex: 1; }
+    .section-id {
+      font-family: monospace;
+      font-size: 0.65rem;
+      color: #888;
+      background: rgba(0,0,0,0.3);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    
+    /* Component ID label - visible on all dropped elements */
+    .el-id-label {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      font-family: monospace;
+      font-size: 0.6rem;
+      color: #fff;
+      background: rgba(99, 102, 241, 0.85);
+      padding: 2px 6px;
+      border-radius: 3px;
+      z-index: 99;
+      pointer-events: none;
+    }
+    .dropped {
+      position: relative;
+    }
+    
+    .section-badge {
+      margin-left: auto;
+      padding: 4px 10px;
+      background: #333;
+      border-radius: 12px;
+      font-size: 11px;
+      color: #888;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .is-target .section-badge {
+      opacity: 1;
+      background: #22c55e !important;
+      color: #fff;
+    }
+    .section-bar:hover .section-badge { opacity: 0.7; }
+    
+    .section-content { 
+      min-height: 60px; 
+      padding: 0; 
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    
+    /* Canvas section collapsed state */
+    .canvas-section.collapsed .section-content {
+      display: none !important;
+    }
+    .canvas-section.collapsed {
+      flex: 0 0 auto !important;
+      min-height: auto !important;
+    }
+    .canvas-section.collapsed .section-bar {
+      border-bottom: none;
+    }
+    
+    .section-empty {
+      padding: 40px 20px;
+      text-align: center;
+      color: #666;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .section-empty:hover { color: #22c55e; }
+    .section-empty .empty-icon { font-size: 36px; opacity: 0.4; margin-bottom: 8px; }
+    .section-empty .empty-text { font-size: 13px; }
+    
+        #canvas {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+    
+    /* ===== PROPERTY PANEL COLLAPSIBLE CATEGORIES ===== */
+    .prop-category {
+      border: 1px solid #333;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      background: #1a1a2e;
+      overflow: hidden;
+    }
+    
+    .prop-category-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: #252542;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    
+    .prop-category-header:hover {
+      background: #2a2a4a;
+    }
+    
+    .prop-category-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+    }
+    
+    .prop-category-toggle {
+      font-size: 10px;
+      color: #888;
+      transition: transform 0.2s;
+    }
+    
+    /* Collapsed state - hide body */
+    .prop-category.collapsed .prop-category-body {
+      display: none !important;
+    }
+    
+    .prop-category.collapsed .prop-category-toggle {
+      transform: rotate(-90deg);
+    }
+    
+    .prop-category-body {
+      padding: 12px;
+      border-top: 1px solid #333;
+    }
+    
+    /* ===== SELECTED ELEMENT INDICATOR ===== */
+    .prop-selected-indicator {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%);
+      border: 2px solid #22c55e;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .prop-selected-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .prop-selected-icon { font-size: 16px; }
+    .prop-selected-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #22c55e;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .prop-selected-details {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .prop-selected-id, .prop-selected-section {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .prop-selected-label {
+      color: #888;
+      font-size: 11px;
+    }
+    .prop-selected-id code {
+      font-family: monospace;
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+    .prop-selected-section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid #22c55e;
+      border-radius: 4px;
+      color: #22c55e;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .prop-selected-hint {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(34, 197, 94, 0.3);
+      font-size: 11px;
+      color: #888;
+    }
+    
+    /* ===== COMPONENT CHOOSER MODAL ===== */
+    .component-chooser {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+    }
+    .component-chooser.open { display: flex; }
+    .chooser-panel {
+      background: #1a1a2e;
+      border: 1px solid #333;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .chooser-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid #333;
+      background: #252542;
+    }
+    .chooser-header h2 { margin: 0; font-size: 18px; color: #fff; }
+    .chooser-close {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .chooser-close:hover { color: #fff; }
+    .chooser-search {
+      padding: 12px 16px;
+      border-bottom: 1px solid #333;
+    }
+    .chooser-search input {
+      width: 100%;
+      padding: 10px 12px;
+      background: #0d0d1a;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 14px;
+    }
+    .chooser-search input:focus { outline: none; border-color: #6366f1; }
+    .chooser-grid {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+    .chooser-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 12px;
+      background: #252542;
+      border: 1px solid #333;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chooser-item:hover {
+      border-color: #6366f1;
+      background: #2a2a4a;
+      transform: translateY(-2px);
+    }
+    .chooser-item-icon { font-size: 28px; }
+    .chooser-item-name { font-size: 12px; color: #fff; text-align: center; }
+  </style>
 </head>
-<body id="builder-body-14" class="wb-builder">
-  <header class="builder-header" id="builderHeader">
-    <div class="header-content" id="headerContent">
-      <h1 id="headerTitle"><span style="color: #3b82f6; font-size: 1.2em;">&#9733;</span> WB Builder</h1>
-      <div class="header-actions" id="headerActions">
-        <!-- Collaboration Status -->
-        <div class="collab-status" id="collabStatus" title="Collaboration: Offline">
-          <span class="collab-dot offline" id="collabDot"></span>
-          <span class="collab-text" id="collabText">Offline</span>
+<body class="wb-builder">
+  <!-- FILE MENU BAR -->
+  <nav class="menu-bar" id="menuBar">
+    <div class="menu-item" id="menuFile">
+      <span>File</span>
+      <div class="menu-dropdown">
+        <div class="menu-action" onclick="newPage()">📄 New Page<span class="menu-shortcut">Ctrl+N</span></div>
+        <div class="menu-divider"></div>
+        <div class="menu-action" onclick="window.openWorkspace?.()">📁 Open Workspace...</div>
+        <div class="menu-action menu-submenu">📂 Recent Workspaces
+          <div class="menu-submenu-items" id="recentWorkspaces">
+            <div class="menu-action disabled">No recent workspaces</div>
+          </div>
         </div>
-        <!-- Theme Selector -->
-        <select id="pageTheme" class="theme-select" title="Change Page Theme">
-          <!-- Options populated by JS -->
-        </select>
-        <!-- Preview Toggle -->
-        <button class="header-btn" id="previewBtn" title="Preview Mode (Ctrl+P)">
-          <span id="previewIcon">👁️</span> Preview
-        </button>
-        <!-- Keyboard Shortcuts -->
-        <button class="header-btn" id="shortcutsBtn" onclick="showShortcuts()" title="Keyboard Shortcuts">⌨️</button>
-        <!-- Notes -->
-        <button class="header-btn" id="headerNotesBtn" onclick="toggleNotesDrawer()" title="Toggle Notes (Ctrl+Shift+N)">📝 Notes</button>
+        <div class="menu-action" onclick="window.saveWorkspace?.()">💾 Save Workspace</div>
+        <div class="menu-action" onclick="window.saveWorkspaceAs?.()">💾 Save Workspace As...</div>
+        <div class="menu-divider"></div>
+        <div class="menu-action" onclick="window.importJSON()">📥 Import JSON...<span class="menu-shortcut">Ctrl+O</span></div>
+        <div class="menu-action" onclick="window.exportJSON()">📤 Export JSON<span class="menu-shortcut">Ctrl+E</span></div>
+        <div class="menu-action" onclick="window.saveAsHTML()">📄 Export HTML<span class="menu-shortcut">Ctrl+Shift+S</span></div>
+        <div class="menu-divider"></div>
+        <div class="menu-action" onclick="window.close()">🚪 Exit</div>
+      </div>
+    </div>
+    <div class="menu-item" id="menuEdit">
+      <span>Edit</span>
+      <div class="menu-dropdown">
+        <div class="menu-action" onclick="window.undo()">↩️ Undo<span class="menu-shortcut">Ctrl+Z</span></div>
+        <div class="menu-action" onclick="window.redo()">↪️ Redo<span class="menu-shortcut">Ctrl+Y</span></div>
+        <div class="menu-divider"></div>
+        <div class="menu-action" onclick="window.copyAsHTML()">📋 Copy HTML<span class="menu-shortcut">Ctrl+C</span></div>
+        <div class="menu-action" onclick="dupSelected()">⧉ Duplicate<span class="menu-shortcut">Ctrl+D</span></div>
+        <div class="menu-action" onclick="delSelected()">🗑️ Delete<span class="menu-shortcut">Del</span></div>
+        <div class="menu-divider"></div>
+        <div class="menu-action" onclick="window.resetCanvas()">🧹 Clear All</div>
+      </div>
+    </div>
+    <div class="menu-item" id="menuView">
+      <span>View</span>
+      <div class="menu-dropdown">
+        <div class="menu-action" onclick="doPreview()">👁️ Preview<span class="menu-shortcut">Ctrl+P</span></div>
+        <div class="menu-divider"></div>
+        <div class="menu-action" onclick="toggleLeft()">📑 Templates Panel<span class="menu-shortcut">\</span></div>
+        <div class="menu-action" onclick="toggleRight()">⚙️ Properties Panel<span class="menu-shortcut">]</span></div>
+        <div class="menu-divider"></div>
+        <div class="menu-action" onclick="collapseAllSections()">📁 Collapse All</div>
+        <div class="menu-action" onclick="expandAllSections()">📂 Expand All</div>
+      </div>
+    </div>
+    <div class="menu-item" id="menuHelp">
+      <span>Help</span>
+      <div class="menu-dropdown">
+        <div class="menu-action" onclick="window.showShortcuts()">⌨️ Shortcuts<span class="menu-shortcut">?</span></div>
+        <div class="menu-action" onclick="window.open('/docs/BUILDER.md')">📖 Documentation</div>
+        <div class="menu-divider"></div>
+        <div class="menu-action" onclick="alert('WB Builder v1.0')">ℹ️ About</div>
+      </div>
+    </div>
+    <div class="menu-item" id="menuTools">
+      <span>Tools</span>
+      <div class="menu-dropdown">
+        <div class="menu-action" onclick="window.exportJSON()">📤 Export JSON<span class="menu-shortcut">Ctrl+E</span></div>
+        <div class="menu-action" onclick="window.importJSON()">📥 Import JSON<span class="menu-shortcut">Ctrl+O</span></div>
+        <div class="menu-divider"></div>
+        <div class="menu-action" onclick="toggleSnapFromMenu()">
+          <span id="snapMenuIcon">☐</span> Snap to Grid<span class="menu-shortcut">G</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-spacer"></div>
+  </nav>
+
+    <header class="builder-header" id="builderHeader">
+    <div class="header-content">
+      <h1><span style="color:#3b82f6;font-size:1.2em;">★</span> WB Builder</h1>
+      <div class="header-actions">
+        <button class="header-btn" onclick="window.doPreview()" title="Preview (Ctrl+P)" style="margin-right: 0.5rem; padding: 2px 6px; font-size: 11px; height: 24px;">👁️ Preview</button>
+        <!-- Toolbar icons moved here -->
+        <button class="tool-btn" id="undoBtn" onclick="window.undo()" disabled title="Undo (Ctrl+Z)" style="padding: 2px 6px; font-size: 11px; height: 24px;">↩️</button>
+        <button class="tool-btn" id="redoBtn" onclick="window.redo()" disabled title="Redo (Ctrl+Y)" style="padding: 2px 6px; font-size: 11px; height: 24px;">↪️</button>
+        <select id="pageTheme" class="theme-select" title="Theme" style="padding: 0 4px; font-size: 11px; height: 24px;"></select>
+        <button class="header-btn" onclick="window.toggleNotesDrawer()" title="Notes (Ctrl+Shift+N)" style="padding: 2px 6px; font-size: 11px; height: 24px;">📝</button>
       </div>
     </div>
   </header>
   
   <main class="builder-container" id="builderContainer">
     <div id="builder-root">
-      <!-- LEFT SIDEBAR - Templates Library -->
-      <aside class="sidebar" id="sidebar" 
-        data-wb="drawerLayout"
-        data-position="left"
-        data-width="320px"
-        data-min-width="1.5rem"
-        data-max-width="50vw"
-        data-resizable="true"
-        data-save-state="true"
-        data-toggle-selector="#sidebarToggle"
-        data-handle-selector="#sidebarResizeHandle">
-        <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar (\)">
-          <span class="toggle-icon" id="sidebarToggleIcon">◀</span>
-        </button>
-        <div class="sidebar-collapsed-label" id="sidebarCollapsedLabel">TEMPLATES</div>
+      <!-- LEFT SIDEBAR -->
+      <aside class="sidebar" id="sidebar">
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleLeft()" title="Toggle (\\)">◀</button>
         <div class="sidebar-resize-handle" id="sidebarResizeHandle"></div>
-        
-        <!-- Template Browser renders here via JS -->
       </aside>
       
-      <!-- CENTER - Canvas Area -->
+            <!-- CENTER CANVAS -->
       <section class="canvas-area" id="canvasArea">
-        <div class="toolbar" id="toolbar">
-          <div class="toolbar-group" id="toolbarGroupUndo">
-            <button class="tool-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>
-              <span>↩️</span>
-              <span class="undo-label" id="undoLabel"></span>
-            </button>
-            <button class="tool-btn" id="redoBtn" title="Redo (Ctrl+Y)" disabled>
-              <span>↪️</span>
-              <span class="redo-label" id="redoLabel"></span>
-            </button>
-          </div>
-          <div class="toolbar-group" id="toolbarGroupSnap">
-            <label class="snap-toggle" id="snapToggleLabel" title="Snap to Grid (G)">
-              <input type="checkbox" id="snapGrid" onchange="toggleSnapGrid(this.checked)">
-              <span>📐 Snap</span>
-            </label>
-          </div>
-          <div class="toolbar-group" id="toolbarGroupIO">
-            <button class="tool-btn" id="saveHtmlBtn" title="Save as HTML">💾 HTML</button>
-            <button class="tool-btn" id="exportBtn" title="Export JSON (Ctrl+E)">📤 Export</button>
-            <button class="tool-btn" id="importBtn" title="Import JSON (Ctrl+I)">📥 Import</button>
-          </div>
-          <span class="comp-count" id="count">0 components</span>
-        </div>
         <div class="viewport" id="viewport">
           <div class="frame" id="canvas">
-            <div class="empty" id="empty">
-              <div class="empty-icon">🎨</div>
-              <h3>Select a template to start</h3>
-              <p>Choose from the sidebar or build from scratch</p>
-              <p class="empty-hint">Press <kbd>T</kbd> for quick templates</p>
-            </div>
+                        <!-- HEADER SECTION - collapsed by default -->
+            <header id="canvas-header" class="canvas-section collapsed" data-section="header">
+              <div class="section-bar" onclick="window.unifiedActivateSection && window.unifiedActivateSection('header')">
+                <span class="section-icon">🔝</span>
+                <span class="section-name">Header</span>
+                <span class="section-id">#canvas-header</span>
+              </div>
+              <div class="section-content" data-drop-zone="header"></div>
+            </header>
+            
+            <!-- MAIN SECTION - collapsed by default -->
+            <main id="canvas-main" class="canvas-section canvas-section--main collapsed" data-section="main">
+              <div class="section-bar" onclick="window.unifiedActivateSection && window.unifiedActivateSection('main')">
+                <span class="section-icon">📄</span>
+                <span class="section-name">Main Content</span>
+                <span class="section-id">#canvas-main</span>
+              </div>
+              <div class="section-content" data-drop-zone="main"></div>
+            </main>
+            
+            <!-- FOOTER SECTION - collapsed by default -->
+            <footer id="canvas-footer" class="canvas-section collapsed" data-section="footer">
+              <div class="section-bar" onclick="window.unifiedActivateSection && window.unifiedActivateSection('footer')">
+                <span class="section-icon">🔻</span>
+                <span class="section-name">Footer</span>
+                <span class="section-id">#canvas-footer</span>
+              </div>
+              <div class="section-content" data-drop-zone="footer"></div>
+            </footer>
           </div>
         </div>
       </section>
       
-      <!-- RIGHT PANEL - Properties Editor -->
-      <aside class="panel-right" id="panelRight"
-        data-wb="drawerLayout"
-        data-position="right"
-        data-width="380px"
-        data-min-width="1.5rem"
-        data-max-width="50vw"
-        data-resizable="true"
-        data-save-state="true"
-        data-toggle-selector="#panelToggle"
-        data-handle-selector="#panelResizeHandle">
-        <button class="panel-toggle" id="panelToggle" title="Toggle panel (])">
-          <span class="toggle-icon" id="panelToggleIcon">▶</span>
-        </button>
-        <div class="panel-collapsed-label" id="panelCollapsedLabel">PROPERTIES</div>
+      <!-- RIGHT PANEL -->
+      <aside class="panel-right" id="panelRight">
+        <button class="panel-toggle" id="panelToggle" onclick="toggleRight()" title="Toggle (])">▶</button>
         <div class="panel-resize-handle" id="panelResizeHandle"></div>
-        <div class="panel-right-header" id="panelRightHeader">
-          <div class="panel-tabs" id="panelTabs">
-            <button class="panel-tab active" id="tabTree" onclick="window.switchPanelTab('tree')">🌳 Tree</button>
-            <button class="panel-tab" id="tabProps" onclick="window.switchPanelTab('props')">⚙️ Properties</button>
-          </div>
-          <div class="panel-header-actions" id="panelHeaderActions">
-            <button class="btn btn-sm btn-danger" id="clearCanvasBtn" title="Clear canvas">Clear</button>
-          </div>
-        </div>
-        <div class="panel-right-list" id="componentList">
-          <div class="panel-right-empty" id="panelRightEmpty">
-            <div style="font-size:1.5rem;opacity:0.5;margin-bottom:0.5rem">🎯</div>
-            <p>Select a component to edit</p>
+        
+        <div class="panel-right-header">
+                  <div class="panel-tabs">
+            <button class="panel-tab active" id="tabTree" onclick="window.switchPanelTab('tree')" style="font-size: 1rem; padding: 2px 6px;">🌳</button>
+            <button class="panel-tab" id="tabProps" onclick="window.switchPanelTab('props')" style="font-size: 1rem; padding: 2px 6px;">⚙️</button>
+            <button class="panel-tab" id="tabDecorate" onclick="window.switchPanelTab('decorate')" style="font-size: 1rem; padding: 2px 6px;">🎨</button>
           </div>
         </div>
-        <!-- Properties Panel -->
-        <div id="propsPanel" class="props-panel"></div>
+        
+        <div class="panel-header-row">
+          <h3>Components</h3>
+          <span class="comp-count" id="count" style="margin: 0 8px; font-size: 0.7rem; color: #888;">0</span>
+          <button class="collapse-all-btn" id="collapseAllBtn" onclick="toggleAllSections()">📁 Collapse All</button>
+        </div>
+        
+        <div class="panel-right-list" id="componentList"></div>
+        <div id="propsPanel" class="props-panel" style="display:none"></div>
+        <div id="decoratePanel" class="props-panel" style="display:none"></div>
       </aside>
     </div>
   </main>
   
   <footer class="builder-footer" id="builderFooter">
-    <div class="footer-left">
-      <span id="footerCount">0 components</span>
-      <span class="footer-status" id="issueStatus" style="display:none">
-        <span class="status-dot status-dot--error"></span>
-        <span id="issueCount">0 issues</span>
-      </span>
-    </div>
-    <div class="footer-right">
-      <span id="shortcutHint">Press <kbd>?</kbd> for shortcuts</span>
-    </div>
+    <span>Press <kbd>?</kbd> for shortcuts</span>
   </footer>
   
-  <!-- Notes Modal -->
-  <div class="notes-modal" id="notesModal">
-    <div class="notes-modal-header" id="notesModalHeader">
-      <span>📝 Notes</span>
-      <div class="notes-modal-actions" id="notesModalActions">
-        <button class="notes-modal-btn" id="notesCopyBtn" onclick="copyNotes()" title="Copy to clipboard">📋</button>
-        <button class="notes-modal-btn" id="notesSaveBtn" onclick="saveNotesToFile()" title="Save notes">💾</button>
-        <button class="notes-modal-btn" id="notesClearBtn" onclick="clearNotes()" title="Clear all">🗑️</button>
-        <button class="notes-close-btn" id="notesCloseBtn" onclick="toggleNotesDrawer()" title="Close">✕</button>
+  <!-- Component Chooser Modal -->
+  <div class="component-chooser" id="componentChooser">
+    <div class="chooser-panel">
+      <div class="chooser-header">
+        <h2>➕ Add Component</h2>
+        <button class="chooser-close" onclick="closeChooser()">✕</button>
       </div>
+      <div class="chooser-search">
+        <input type="text" id="chooserSearch" placeholder="Search templates..." oninput="filterChooser(this.value)">
+      </div>
+      <div class="chooser-grid" id="chooserGrid"></div>
     </div>
-    <textarea id="notesArea" placeholder="Add your notes here..." class="notes-textarea"></textarea>
-    <div class="notes-modal-status" id="notesStatus"></div>
   </div>
   
-  <!-- Notes Backdrop -->
-  <div class="notes-backdrop" id="notesBackdrop" onclick="toggleNotesDrawer()"></div>
-  
-  <!-- Toast -->
+  <!-- Modals -->
   <div class="toast" id="toast"></div>
-  
-  <!-- Docs/Schema Viewer Modal -->
-  <div class="docs-modal" id="docsModal">
-    <div class="docs-modal-content">
-      <div class="docs-modal-header" id="docsModalHeader">
-        <div class="docs-modal-title" id="docsModalTitleContainer">
-          <span id="docsModalIcon">📖</span>
-          <span id="docsModalTitle">Component</span>
-        </div>
-        <div class="docs-modal-tabs" id="docsModalTabs">
-          <button class="docs-tab-btn active" id="docsTabBtn" data-tab="docs" onclick="switchDocsTab('docs')">📖 Docs</button>
-          <button class="docs-tab-btn" id="schemaTabBtn" data-tab="schema" onclick="switchDocsTab('schema')">📋 Schema</button>
-        </div>
-        <button class="notes-close-btn" id="docsCloseBtn" onclick="closeDocsModal()" title="Close">✕</button>
-      </div>
-      <div class="docs-modal-body" id="docsModalBody">
-        <!-- Content loaded dynamically -->
-      </div>
-    </div>
+  <div class="notes-modal" id="notesModal">
+    <div class="notes-modal-header"><span>📝 Notes</span><button onclick="window.toggleNotesDrawer()">✕</button></div>
+    <textarea id="notesArea" placeholder="Notes..."></textarea>
   </div>
-  
-  <!-- Keyboard Shortcuts Modal -->
+  <div class="notes-backdrop" id="notesBackdrop" onclick="window.toggleNotesDrawer()"></div>
   <div class="shortcuts-modal" id="shortcutsModal">
     <div class="shortcuts-modal-content">
-      <div class="shortcuts-modal-header" id="shortcutsModalHeader">
-        <span>⌨️ Keyboard Shortcuts</span>
-        <button class="notes-close-btn" id="shortcutsCloseBtn" onclick="closeShortcuts()" title="Close">✕</button>
-      </div>
-      <div class="shortcuts-list" id="shortcutsList">
-        <div class="shortcuts-group">
-          <h4>General</h4>
-          <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>Z</kbd> <span>Undo</span></div>
-          <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>Y</kbd> <span>Redo</span></div>
-          <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>S</kbd> <span>Save page</span></div>
-          <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>E</kbd> <span>Export JSON</span></div>
-          <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>I</kbd> <span>Import JSON</span></div>
-          <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>P</kbd> <span>Toggle Preview</span></div>
-        </div>
-        <div class="shortcuts-group">
-          <h4>Components</h4>
-          <div class="shortcut-item"><kbd>Delete</kbd> / <kbd>Backspace</kbd> <span>Delete selected</span></div>
-          <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>D</kbd> <span>Duplicate selected</span></div>
-          <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>C</kbd> <span>Copy as HTML</span></div>
-          <div class="shortcut-item"><kbd>↑</kbd> / <kbd>↓</kbd> <span>Move component</span></div>
-          <div class="shortcut-item"><kbd>Escape</kbd> <span>Deselect</span></div>
-        </div>
-        <div class="shortcuts-group">
-          <h4>Panels</h4>
-          <div class="shortcut-item"><kbd>\</kbd> <span>Toggle templates sidebar</span></div>
-          <div class="shortcut-item"><kbd>]</kbd> <span>Toggle properties panel</span></div>
-          <div class="shortcut-item"><kbd>P</kbd> <span>Toggle properties tab</span></div>
-          <div class="shortcut-item"><kbd>[</kbd> <span>Toggle both panels</span></div>
-          <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> <span>Toggle Notes</span></div>
-          <div class="shortcut-item"><kbd>T</kbd> <span>Quick Templates</span></div>
-          <div class="shortcut-item"><kbd>G</kbd> <span>Toggle Snap Grid</span></div>
-          <div class="shortcut-item"><kbd>?</kbd> <span>Show Shortcuts</span></div>
-        </div>
+      <div class="shortcuts-modal-header"><span>⌨️ Shortcuts</span><button onclick="window.closeShortcuts()">✕</button></div>
+      <div class="shortcuts-list">
+        <div><kbd>Ctrl+Z</kbd> Undo</div>
+        <div><kbd>Ctrl+Y</kbd> Redo</div>
+        <div><kbd>Ctrl+S</kbd> Save</div>
+        <div><kbd>Ctrl+P</kbd> Preview</div>
+        <div><kbd>Del</kbd> Delete</div>
+        <div><kbd>\\</kbd> Toggle Left</div>
+        <div><kbd>]</kbd> Toggle Right</div>
+        <div><kbd>?</kbd> Shortcuts</div>
       </div>
     </div>
   </div>
+
+  <script>
+    // ===== MENU HANDLING =====
+    document.querySelectorAll('.menu-item').forEach(item => {
+      if (!item.querySelector('.menu-dropdown')) return;
+      item.addEventListener('click', e => {
+        if (e.target.closest('.menu-dropdown')) return;
+        document.querySelectorAll('.menu-item.open').forEach(m => { if (m !== item) m.classList.remove('open'); });
+        item.classList.toggle('open');
+      });
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.menu-item')) document.querySelectorAll('.menu-item.open').forEach(m => m.classList.remove('open'));
+    });
+    document.querySelectorAll('.menu-action').forEach(a => a.addEventListener('click', () => {
+      if (!a.classList.contains('menu-submenu')) {
+        document.querySelectorAll('.menu-item.open').forEach(m => m.classList.remove('open'));
+      }
+    }));
+    
+    // ===== CANVAS SECTION TARGETING =====
+    // Legacy support wrapper
+    window.toggleCanvasSection = (sectionId) => {
+      if (window.unifiedActivateSection) window.unifiedActivateSection(sectionId);
+    };
+
+    // Sets which canvas section is "active" (highlighted green)
+    window.setTargetSection = (sectionId) => {
+      if (window.unifiedActivateSection) window.unifiedActivateSection(sectionId);
+    };
+    
+    // Get the currently active section
+    window.getActiveSection = () => {
+      const active = document.querySelector('.canvas-section.is-target');
+      return active ? active.dataset.section : 'main';
+    };
+    
+    // ===== SIDEBAR TOGGLE =====
+    function toggleLeft() {
+      const el = document.getElementById('sidebar');
+      el.classList.toggle('collapsed');
+      document.getElementById('sidebarToggle').textContent = el.classList.contains('collapsed') ? '▶' : '◀';
+    }
+    function toggleRight() {
+      const el = document.getElementById('panelRight');
+      el.classList.toggle('collapsed');
+      document.getElementById('panelToggle').textContent = el.classList.contains('collapsed') ? '◀' : '▶';
+    }
+    window.toggleSidebar = toggleLeft;
+    window.togglePanel = toggleRight;
+    
+    // ===== PREVIEW =====
+    let isPreviewMode = false;
+    function doPreview() {
+      isPreviewMode = !isPreviewMode;
+      document.body.classList.toggle('preview-mode', isPreviewMode);
+      document.getElementById('previewExitBtn')?.remove();
+      
+      if (isPreviewMode) {
+        const btn = document.createElement('button');
+        btn.id = 'previewExitBtn';
+        btn.className = 'preview-exit-btn';
+        btn.textContent = '✕ Exit Preview';
+        btn.onclick = doPreview;
+        document.body.appendChild(btn);
+      }
+    }
+    window.togglePreview = doPreview;
+    
+    // ===== SECTION COLLAPSE =====
+    let allExpanded = true;
+    function toggleAllSections() {
+      allExpanded = !allExpanded;
+      if (window.setAllTreeSections) window.setAllTreeSections(allExpanded);
+      document.getElementById('collapseAllBtn').textContent = allExpanded ? '📁 Collapse All' : '📂 Expand All';
+    }
+    function collapseAllSections() { 
+      allExpanded = false; 
+      if (window.setAllTreeSections) window.setAllTreeSections(false); 
+      document.getElementById('collapseAllBtn').textContent = '📂 Expand All';
+    }
+    function expandAllSections() { 
+      allExpanded = true; 
+      if (window.setAllTreeSections) window.setAllTreeSections(true); 
+      document.getElementById('collapseAllBtn').textContent = '📁 Collapse All';
+    }
+    
+    // ===== COMPONENT CHOOSER =====
+    let insertPosition = 'bottom';
+    let insertAfterElement = null;
+    let chooserTemplates = [];
+    let chooserCategories = [];
+    
+    function openChooser(position = 'bottom', afterElementId = null) {
+      insertPosition = position;
+      insertAfterElement = afterElementId;
+      document.getElementById('componentChooser').classList.add('open');
+      document.getElementById('chooserSearch').value = '';
+      document.getElementById('chooserSearch').focus();
+      loadChooserTemplates();
+    }
+    window.openChooser = openChooser;
+    
+    function closeChooser() {
+      document.getElementById('componentChooser').classList.remove('open');
+      insertAfterElement = null;
+    }
+    window.closeChooser = closeChooser;
+    
+    async function loadChooserTemplates() {
+      const grid = document.getElementById('chooserGrid');
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#888;padding:20px;">Loading...</div>';
+      
+      try {
+        const res = await fetch('/src/wb-views/index.json');
+        if (res.ok) {
+          const data = await res.json();
+          chooserTemplates = data.templates || [];
+          chooserCategories = data.categories || [];
+          renderChooserGrid(chooserTemplates);
+        }
+      } catch (e) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#888;">Failed to load templates</div>';
+      }
+    }
+    
+    function getCategoryIcon(categoryId) {
+      const cat = chooserCategories.find(c => c.id === categoryId);
+      return cat?.icon || '📄';
+    }
+    
+    function renderChooserGrid(templates) {
+      const grid = document.getElementById('chooserGrid');
+      if (templates.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#888;">No templates found</div>';
+        return;
+      }
+      
+      grid.innerHTML = templates.map(t => `
+        <div class="chooser-item" onclick="selectTemplate('${t.id}')">
+          <span class="chooser-item-icon">${getCategoryIcon(t.category)}</span>
+          <span class="chooser-item-name">${t.name}</span>
+        </div>
+      `).join('');
+    }
+    
+    function filterChooser(query) {
+      const q = query.toLowerCase();
+      const filtered = chooserTemplates.filter(t => 
+        t.name.toLowerCase().includes(q) || 
+        (t.category || '').toLowerCase().includes(q) ||
+        (t.tags || []).some(tag => tag.toLowerCase().includes(q))
+      );
+      renderChooserGrid(filtered);
+    }
+    window.filterChooser = filterChooser;
+    
+    async function selectTemplate(templateId) {
+      closeChooser();
+      
+      try {
+        // Try partials first
+        let res = await fetch(`/src/wb-views/partials/${templateId}.html`);
+        if (!res.ok) {
+          // Try full
+          res = await fetch(`/src/wb-views/full/${templateId}.html`);
+        }
+        if (!res.ok) {
+          // Try root
+          res = await fetch(`/src/wb-views/${templateId}.html`);
+        }
+
+        if (res.ok) {
+          const html = await res.text();
+          const template = chooserTemplates.find(t => t.id === templateId);
+          const icon = getCategoryIcon(template?.category);
+          
+          // Add the component
+          if (window.addTemplateHTML) {
+            window.addTemplateHTML(html, { name: template?.name, icon: icon });
+          } else if (window.addHTML) {
+            window.addHTML(html);
+          }
+          
+          // If inserting after a specific element, move the new component
+          if (insertAfterElement) {
+            const afterEl = document.getElementById(insertAfterElement);
+            const canvas = document.getElementById('canvas');
+            if (afterEl && canvas) {
+              // Get the last added component (should be at the end)
+              const newComp = canvas.querySelector('.dropped:last-of-type');
+              if (newComp && afterEl.nextSibling) {
+                afterEl.parentNode.insertBefore(newComp, afterEl.nextSibling.nextSibling); // Skip insert-between
+              }
+            }
+          }
+          
+          // Auto-resize canvas and update tree
+          autoResizeCanvas();
+          if (window.renderTree) window.renderTree();
+        }
+      } catch (e) {
+        console.error('Failed to load template:', e);
+        if (window.toast) window.toast('Failed to load template');
+      }
+    }
+    window.selectTemplate = selectTemplate;
+    
+    // ===== CANVAS AUTO-RESIZE =====
+    function autoResizeCanvas() {
+      const canvas = document.getElementById('canvas');
+      if (!canvas) return;
+      
+      const components = canvas.querySelectorAll('.dropped');
+      if (components.length === 0) {
+        canvas.style.minHeight = '400px';
+        return;
+      }
+      
+      // Let the canvas shrink to fit content
+      canvas.style.minHeight = '200px';
+      
+      // After layout, check actual content height
+      requestAnimationFrame(() => {
+        const contentHeight = canvas.scrollHeight;
+        canvas.style.minHeight = Math.max(200, contentHeight) + 'px';
+      });
+    }
+    window.autoResizeCanvas = autoResizeCanvas;
+    
+    // Observe canvas for changes
+    const canvasObserver = new MutationObserver(autoResizeCanvas);
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('canvas');
+      if (canvas) {
+        canvasObserver.observe(canvas, { childList: true, subtree: true });
+      }
+    });
+    
+    // ===== WORKSPACE SUPPORT =====
+    const WORKSPACE_KEY = 'wb-workspaces';
+    const RECENT_KEY = 'wb-recent-workspaces';
+    
+    window.openWorkspace = async () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json,.wb';
+      input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        try {
+          const text = await file.text();
+          const workspace = JSON.parse(text);
+          loadWorkspace(workspace, file.name);
+        } catch (err) {
+          alert('Failed to load workspace: ' + err.message);
+        }
+      };
+      input.click();
+    };
+    
+    window.saveWorkspace = () => {
+      const name = localStorage.getItem('wb-current-workspace') || 'untitled';
+      saveWorkspaceToFile(name);
+    };
+    
+    window.saveWorkspaceAs = () => {
+      const name = prompt('Workspace name:', 'my-workspace');
+      if (name) {
+        saveWorkspaceToFile(name);
+        localStorage.setItem('wb-current-workspace', name);
+      }
+    };
+    
+    function saveWorkspaceToFile(name) {
+      const canvas = document.getElementById('canvas');
+      const workspace = {
+        name: name,
+        version: '1.0',
+        created: new Date().toISOString(),
+        theme: document.documentElement.dataset.theme,
+        pageTheme: canvas?.dataset?.pageTheme || localStorage.getItem('wb-page-theme') || document.documentElement.dataset.theme,
+        components: []
+      };
+      
+      canvas.querySelectorAll('.dropped').forEach(wrapper => {
+        workspace.components.push({
+          id: wrapper.id,
+          data: wrapper.dataset.c,
+          html: wrapper.innerHTML
+        });
+      });
+      
+      const blob = new Blob([JSON.stringify(workspace, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name + '.wb.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      addRecentWorkspace(name);
+    }
+    
+    function loadWorkspace(workspace, filename) {
+      if (window.resetCanvas) window.resetCanvas();
+      
+      // Load page theme (the theme for the canvas content)
+      if (workspace.pageTheme) {
+        const canvas = document.getElementById('canvas');
+        if (canvas) {
+          canvas.dataset.pageTheme = workspace.pageTheme;
+          localStorage.setItem('wb-page-theme', workspace.pageTheme);
+        }
+      }
+      
+      workspace.components?.forEach(comp => {
+        if (window.addHTML && comp.html) {
+          // Recreate from stored HTML
+        }
+      });
+      
+      localStorage.setItem('wb-current-workspace', workspace.name || filename);
+      addRecentWorkspace(workspace.name || filename);
+      
+      if (window.toast) window.toast('Loaded: ' + (workspace.name || filename));
+    }
+    
+    function addRecentWorkspace(name) {
+      let recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
+      recent = recent.filter(n => n !== name);
+      recent.unshift(name);
+      recent = recent.slice(0, 5);
+      localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+      updateRecentMenu();
+    }
+    
+    function updateRecentMenu() {
+      const menu = document.getElementById('recentWorkspaces');
+      const recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
+      
+      if (recent.length === 0) {
+        menu.innerHTML = '<div class="menu-action disabled">No recent workspaces</div>';
+      } else {
+        menu.innerHTML = recent.map(name => 
+          `<div class="menu-action" onclick="loadRecentWorkspace('${name}')">${name}</div>`
+        ).join('');
+      }
+    }
+    
+    window.loadRecentWorkspace = (name) => {
+      // In a real app, this would load from storage
+      alert('Would load workspace: ' + name);
+    };
+    
+    // Init recent menu
+    document.addEventListener('DOMContentLoaded', updateRecentMenu);
+    
+    // ===== SNAP GRID TOGGLE FROM MENU =====
+    let snapEnabled = false;
+    function toggleSnapFromMenu() {
+      snapEnabled = !snapEnabled;
+      if (window.toggleSnapGrid) window.toggleSnapGrid(snapEnabled);
+      updateSnapMenuIcon();
+    }
+    function updateSnapMenuIcon() {
+      const icon = document.getElementById('snapMenuIcon');
+      if (icon) icon.textContent = snapEnabled ? '☑' : '☐';
+    }
+    // Sync snap state from builder
+    document.addEventListener('DOMContentLoaded', () => {
+      snapEnabled = localStorage.getItem('wb-snap-grid') === 'true';
+      updateSnapMenuIcon();
+    });
+    
+        // ===== HELPERS =====
+    function newPage() { if (confirm('Clear canvas?')) window.resetCanvas?.(); }
+    function dupSelected() { if (window.sel) window.dup?.(window.sel.id); }
+    function delSelected() { if (window.sel) window.del?.(window.sel.id); }
+    
+    // ===== PREVIEW MODE =====
+    let isPreviewMode = false;
+    let builderTheme = 'dark'; // Store original builder theme
+    
+    function doPreview() {
+      isPreviewMode = !isPreviewMode;
+      document.body.classList.toggle('preview-mode', isPreviewMode);
+      
+      if (isPreviewMode) {
+        // Store builder theme and apply page theme
+        builderTheme = document.documentElement.dataset.theme || 'dark';
+        
+        // Get the page theme from canvas (check for data-page-theme or use canvas section theme)
+        const canvas = document.getElementById('canvas');
+        const pageTheme = canvas?.dataset?.pageTheme || 
+                          document.getElementById('canvas-main')?.dataset?.theme ||
+                          localStorage.getItem('wb-page-theme') ||
+                          builderTheme;
+        
+        document.documentElement.dataset.theme = pageTheme;
+        document.body.style.background = 'var(--bg-color)';
+        document.body.style.color = 'var(--text-primary)';
+        
+        // Add exit button
+        let exitBtn = document.getElementById('previewExitBtn');
+        if (!exitBtn) {
+          exitBtn = document.createElement('button');
+          exitBtn.id = 'previewExitBtn';
+          exitBtn.className = 'preview-exit-btn';
+          exitBtn.textContent = '✕ Exit Preview';
+          exitBtn.onclick = doPreview;
+          document.body.appendChild(exitBtn);
+        }
+        exitBtn.style.display = 'block';
+      } else {
+        // Restore builder theme
+        document.documentElement.dataset.theme = builderTheme;
+        document.body.style.background = '';
+        document.body.style.color = '';
+        
+        // Hide exit button
+        const exitBtn = document.getElementById('previewExitBtn');
+        if (exitBtn) exitBtn.style.display = 'none';
+      }
+    }
+    
+    // Set page theme (separate from builder theme)
+    window.setPageTheme = function(theme) {
+      const canvas = document.getElementById('canvas');
+      if (canvas) {
+        canvas.dataset.pageTheme = theme;
+        localStorage.setItem('wb-page-theme', theme);
+        console.log('[Builder] Page theme set to:', theme);
+      }
+    };
+    
+    // Get current page theme
+    window.getPageTheme = function() {
+      const canvas = document.getElementById('canvas');
+      return canvas?.dataset?.pageTheme || 
+             localStorage.getItem('wb-page-theme') || 
+             document.documentElement.dataset.theme || 
+             'dark';
+    };
+    
+        // Expose globally
+    window.doPreview = doPreview;
+    window.togglePreview = doPreview;
+    
+    // ===== EXPAND/COLLAPSE ALL =====
+    function collapseAllSections() {
+      if (window.setAllTreeSections) window.setAllTreeSections(false);
+    }
+    function expandAllSections() {
+      if (window.setAllTreeSections) window.setAllTreeSections(true);
+    }
+    function toggleAllSections() {
+      const btn = document.getElementById('collapseAllBtn');
+      const isExpanded = btn?.textContent?.includes('Collapse');
+      if (isExpanded) {
+        collapseAllSections();
+        if (btn) btn.textContent = '📂 Expand All';
+      } else {
+        expandAllSections();
+        if (btn) btn.textContent = '📁 Collapse All';
+      }
+    }
+    window.collapseAllSections = collapseAllSections;
+    window.expandAllSections = expandAllSections;
+    window.toggleAllSections = toggleAllSections;
+    
+    // ===== KEYBOARD =====
+    document.addEventListener('keydown', e => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+      
+      if (e.ctrlKey && e.key === 'z') { e.preventDefault(); window.undo?.(); }
+      if (e.ctrlKey && e.key === 'y') { e.preventDefault(); window.redo?.(); }
+      if (e.ctrlKey && e.key === 'p') { e.preventDefault(); doPreview(); }
+      if (e.key === '\\') { e.preventDefault(); toggleLeft(); }
+      if (e.key === ']') { e.preventDefault(); toggleRight(); }
+      if (e.key === 'Escape') { closeChooser(); }
+    });
+    
+    // ===== RESIZE HANDLES =====
+    function initResize(handleId, panelId, isLeft) {
+      const handle = document.getElementById(handleId);
+      const panel = document.getElementById(panelId);
+      if (!handle || !panel) {
+        console.warn('[Resize] Missing:', handleId, panelId);
+        return;
+      }
+      
+      console.log('[Resize] Init:', handleId);
+      let startX, startW;
+      
+      handle.addEventListener('mousedown', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        startX = e.clientX;
+        startW = panel.offsetWidth;
+        
+        panel.classList.add('resizing');
+        document.body.style.cursor = 'ew-resize';
+        document.body.style.userSelect = 'none';
+        
+        const onMove = ev => {
+          const dx = isLeft ? (ev.clientX - startX) : (startX - ev.clientX);
+          const newW = Math.min(window.innerWidth * 0.5, Math.max(200, startW + dx));
+          // Override flex layout completely
+          panel.style.cssText = `flex: 0 0 ${newW}px !important; width: ${newW}px !important; min-width: ${newW}px !important; max-width: ${newW}px !important;`;
+        };
+        
+        const onUp = () => {
+          panel.classList.remove('resizing');
+          document.body.style.cursor = '';
+          document.body.style.userSelect = '';
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+        };
+        
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+    }
+    
+    // Initialize resize after DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        initResize('sidebarResizeHandle', 'sidebar', true);
+        initResize('panelResizeHandle', 'panelRight', false);
+      }, 100);
+    });
+  </script>
   
-  <script type="module" src="../src/builder/index.js"></script>
-  <script src="../src/builder/builder-tree.js"></script>
+  <script type="module" src="../src/wb-viewmodels/builder-app/index.js"></script>
 </body>
 </html>

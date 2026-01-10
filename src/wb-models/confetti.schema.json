@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "confetti.schema.json",
+  "title": "Confetti",
+  "description": "Confetti particle animation effect",
+  
+  "behavior": "confetti",
+  "baseClass": "wb-confetti",
+  
+  "semanticElement": { "tagName": "div" },
+  
+  "properties": {
+    "count": { "type": "number", "description": "Number of particles", "default": 50 },
+    "label": { "type": "string", "description": "Trigger button label", "default": "Fire Confetti!" },
+    "showButton": { "type": "boolean", "description": "Show trigger button", "default": true },
+    "repeat": { "type": "boolean", "description": "Loop animation", "default": false },
+    "delay": { "type": "string", "description": "Start delay", "default": "0s" },
+    "duration": { "type": "string", "description": "Animation duration", "default": "3s" },
+    "colors": { "type": "string", "description": "Particle colors as JSON array", "default": "[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]" }
+  },
+  
+  "$view": [
+    { "name": "button", "tag": "button", "public": true, "content": "{{label}}", "createdWhen": "showButton", "description": "Trigger button" },
+    { "name": "container", "tag": "div", "public": false, "description": "Particle container" }
+  ],
+  
+  "$methods": {
+    "fire": { "description": "Triggers confetti", "params": [] },
+    "stop": { "description": "Stops animation", "params": [] }
+  },
+  
+  "$cssAPI": {
+    "--wb-confetti-z-index": { "default": "9999", "description": "Z-index" }
+  },
+  
+  "events": {
+    "wb:confetti:start": { "description": "Animation started" },
+    "wb:confetti:end": { "description": "Animation ended" }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-confetti></wb-confetti>",
+      "<button data-wb=\"confetti\">Celebrate!</button>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        { "count": 100 },
+        { "repeat": true }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "effects", "icon": "🎉", "since": "1.0.0", "status": "stable" }
+}

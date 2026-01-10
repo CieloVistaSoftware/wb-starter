@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "checkbox.schema.json",
+  "title": "Checkbox",
+  "description": "Checkbox input with label and custom styling",
+  
+  "behavior": "checkbox",
+  "baseClass": "wb-checkbox",
+  
+  "semanticElement": { "tagName": "div", "implicitRole": "checkbox" },
+  
+  "properties": {
+    "label": { "type": "string", "description": "Label text" },
+    "checked": { "type": "boolean", "description": "Checked state", "default": false },
+    "disabled": { "type": "boolean", "description": "Disabled state", "default": false },
+    "indeterminate": { "type": "boolean", "description": "Indeterminate state", "default": false },
+    "name": { "type": "string", "description": "Form field name" },
+    "value": { "type": "string", "description": "Form field value" },
+    "required": { "type": "boolean", "description": "Required field", "default": false },
+    "size": { "type": "string", "enum": ["sm", "md", "lg"], "default": "md", "appliesClass": "wb-checkbox--{{value}}" },
+    "variant": { "type": "string", "enum": ["default", "primary", "success"], "default": "default", "appliesClass": "wb-checkbox--{{value}}" }
+  },
+  
+  "$view": [
+    { "name": "input", "tag": "input", "public": false, "required": true, "description": "Hidden native checkbox" },
+    { "name": "box", "tag": "span", "public": true, "required": true, "description": "Visual checkbox element" },
+    { "name": "check", "tag": "span", "parent": "box", "public": false, "description": "Checkmark icon" },
+    { "name": "label", "tag": "span", "public": true, "content": "{{label}}", "createdWhen": "label", "description": "Label text" }
+  ],
+  
+  "$methods": {
+    "check": { "description": "Checks the checkbox", "params": [] },
+    "uncheck": { "description": "Unchecks the checkbox", "params": [] },
+    "toggle": { "description": "Toggles checked state", "params": [] },
+    "isChecked": { "description": "Returns checked state", "params": [], "returns": "boolean" },
+    "enable": { "description": "Enables the checkbox", "params": [] },
+    "disable": { "description": "Disables the checkbox", "params": [] }
+  },
+  
+  "$cssAPI": {
+    "--wb-checkbox-size": { "default": "18px", "description": "Checkbox size" },
+    "--wb-checkbox-radius": { "default": "4px", "description": "Border radius" },
+    "--wb-checkbox-border": { "default": "2px solid var(--border-color, #d1d5db)", "description": "Border style" },
+    "--wb-checkbox-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Background" },
+    "--wb-checkbox-checked-bg": { "default": "var(--primary, #6366f1)", "description": "Checked background" },
+    "--wb-checkbox-checked-border": { "default": "var(--primary, #6366f1)", "description": "Checked border" },
+    "--wb-checkbox-check-color": { "default": "#ffffff", "description": "Checkmark color" },
+    "--wb-checkbox-disabled-opacity": { "default": "0.5", "description": "Disabled opacity" },
+    "--wb-checkbox-label-gap": { "default": "0.5rem", "description": "Gap between box and label" },
+    "--wb-checkbox-label-size": { "default": "0.875rem", "description": "Label font size" },
+    "--wb-checkbox-focus-ring": { "default": "0 0 0 3px rgba(99, 102, 241, 0.2)", "description": "Focus ring" }
+  },
+  
+  "events": {
+    "wb:checkbox:change": { "description": "Fired when state changes", "detail": { "checked": "boolean" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-checkbox label=\"Accept terms\"></wb-checkbox>",
+      "<wb-checkbox label=\"Remember me\" checked></wb-checkbox>",
+      "<input type=\"checkbox\" data-wb=\"checkbox\" data-label=\"Test\">"
+    ],
+    "matrix": {
+      "combinations": [
+        { "label": "Test" },
+        { "label": "Test", "checked": true },
+        { "label": "Test", "disabled": true },
+        { "label": "Test", "size": "lg" }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "forms", "icon": "☑️", "since": "1.0.0", "status": "stable" }
+}

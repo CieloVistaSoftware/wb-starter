@@ -14,13 +14,13 @@ The `audio` component transforms the standard HTML5 `<audio>` element into a pre
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="audio"` to an existing `<audio>` element or a `<div>` with a `data-src` attribute.
+The `audio` behavior is automatically injected into `<audio>` elements.
 
 ```html
 <!-- Using an existing audio element -->
-<audio data-wb="audio" src="music.mp3" controls></audio>
+<audio src="music.mp3" controls></audio>
 
-<!-- Using a div wrapper -->
+<!-- Using a div wrapper (Explicit) -->
 <div data-wb="audio" data-src="music.mp3" data-controls="true"></div>
 ```
 
@@ -48,7 +48,7 @@ Access the component instance via `element.wbAudio`:
 A simple audio player with custom styling.
 
 ```html
-<audio data-wb="audio" src="/assets/audio/demo.mp3" controls></audio>
+<audio src="/assets/audio/demo.mp3" controls></audio>
 ```
 
 ### Example 2: Studio Player with EQ

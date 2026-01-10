@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "table.schema.json",
+  "title": "Table",
+  "description": "Data table with sorting, filtering, and pagination",
+  
+  "behavior": "table",
+  "baseClass": "wb-table",
+  
+  "semanticElement": { "tagName": "table", "implicitRole": "table" },
+  
+  "properties": {
+    "data": { "type": "string", "description": "Table data as JSON array" },
+    "columns": { "type": "string", "description": "Column config as JSON [{key, label, sortable}]" },
+    "sortable": { "type": "boolean", "description": "Enable column sorting", "default": true },
+    "filterable": { "type": "boolean", "description": "Enable filtering", "default": false },
+    "paginated": { "type": "boolean", "description": "Enable pagination", "default": false },
+    "pageSize": { "type": "number", "description": "Rows per page", "default": 10 },
+    "striped": { "type": "boolean", "description": "Striped rows", "default": false, "appliesClass": "wb-table--striped" },
+    "hoverable": { "type": "boolean", "description": "Hover effect on rows", "default": true, "appliesClass": "wb-table--hoverable" },
+    "compact": { "type": "boolean", "description": "Compact row spacing", "default": false, "appliesClass": "wb-table--compact" },
+    "bordered": { "type": "boolean", "description": "Cell borders", "default": false, "appliesClass": "wb-table--bordered" }
+  },
+  
+  "$view": [
+    { "name": "filter", "tag": "input", "public": true, "createdWhen": "filterable", "description": "Filter input" },
+    { "name": "thead", "tag": "thead", "public": true, "required": true, "description": "Table header" },
+    { "name": "tbody", "tag": "tbody", "public": true, "required": true, "description": "Table body" },
+    { "name": "pagination", "tag": "nav", "public": true, "createdWhen": "paginated", "description": "Pagination controls" }
+  ],
+  
+  "$methods": {
+    "setData": { "description": "Sets table data", "params": ["data"] },
+    "getData": { "description": "Gets current data", "params": [], "returns": "array" },
+    "sort": { "description": "Sorts by column", "params": ["column", "direction"] },
+    "filter": { "description": "Filters data", "params": ["query"] },
+    "goToPage": { "description": "Goes to page", "params": ["page"] },
+    "refresh": { "description": "Refreshes table", "params": [] }
+  },
+  
+  "$cssAPI": {
+    "--wb-table-border": { "default": "1px solid var(--border-color, #e0e0e0)", "description": "Table border" },
+    "--wb-table-radius": { "default": "4px", "description": "Border radius" },
+    "--wb-table-header-bg": { "default": "var(--bg-secondary, #f3f4f6)", "description": "Header background" },
+    "--wb-table-header-color": { "default": "var(--text-primary, #1a1a1a)", "description": "Header text color" },
+    "--wb-table-row-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Row background" },
+    "--wb-table-row-hover-bg": { "default": "var(--bg-secondary, #f3f4f6)", "description": "Row hover background" },
+    "--wb-table-row-stripe-bg": { "default": "var(--bg-tertiary, #f9fafb)", "description": "Striped row background" },
+    "--wb-table-cell-padding": { "default": "0.75rem 1rem", "description": "Cell padding" }
+  },
+  
+  "accessibility": {
+    "role": "table",
+    "headers": "scope=\"col\" on th elements"
+  },
+  
+  "events": {
+    "wb:table:sort": { "description": "Column sorted", "detail": { "column": "string", "direction": "asc|desc" } },
+    "wb:table:filter": { "description": "Data filtered", "detail": { "query": "string" } },
+    "wb:table:page": { "description": "Page changed", "detail": { "page": "number" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-table columns='[{\"key\":\"name\",\"label\":\"Name\"}]' data='[{\"name\":\"Test\"}]'></wb-table>",
+      "<table data-wb=\"table\"><thead><tr><th>Name</th></tr></thead><tbody><tr><td>Test</td></tr></tbody></table>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        { "sortable": true },
+        { "striped": true },
+        { "paginated": true, "pageSize": 5 }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "data", "icon": "📊", "since": "1.0.0", "status": "stable" }
+}

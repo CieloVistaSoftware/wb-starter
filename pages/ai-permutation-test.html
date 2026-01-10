@@ -1,13 +1,13 @@
-<div class="page__hero">
+<header class="page__hero">
   <h1 class="wb-gradient-text">AI Permutation Testing</h1>
   <p>Automated combinatorial testing powered by Artificial Intelligence.</p>
-</div>
+</header>
 
-<div class="page__section">
-  <div class="grid" style="display: grid; grid-template-columns: 1fr 300px; gap: 2rem;">
+<section class="page__section">
+  <wb-grid columns="1fr 300px" gap="2rem">
     
     <!-- Main Content -->
-    <div>
+    <article>
       <h2>The Theory</h2>
       <p>
         Traditional testing often relies on happy-path scenarios or manually defined edge cases. 
@@ -21,23 +21,23 @@
         might miss.
       </p>
 
-      <div class="wb-card-float" style="margin-top: 2rem;">
-        <h3>Interactive Demo</h3>
+      <wb-card variant="float" title="Interactive Demo" style="margin-top: 2rem;">
         <p style="margin-bottom: 1rem;">Define your test dimensions below to see the combinatorial explosion.</p>
         
-        <div id="dimensions-container">
+        <wb-stack id="dimensions-container" gap="1rem">
           <!-- Dimensions will be injected here -->
+        </wb-stack>
+
+        <div style="margin-top: 1rem;">
+          <button class="btn btn-secondary" onclick="addDimension()">+ Add Dimension</button>
+          <button class="btn btn-primary" onclick="generatePermutations()" style="margin-left: 0.5rem;">Generate Scenarios</button>
         </div>
+      </wb-card>
 
-        <button class="btn btn-secondary" onclick="addDimension()" style="margin-top: 1rem;">+ Add Dimension</button>
-        <button class="btn btn-primary" onclick="generatePermutations()" style="margin-left: 0.5rem;">Generate Scenarios</button>
-      </div>
-
-      <div id="results-area" style="margin-top: 2rem; display: none;">
+      <wb-card id="results-area" title="Generated Scenarios" style="margin-top: 2rem; display: none;">
         <h3>Generated Scenarios (<span id="scenario-count">0</span>)</h3>
-        <div class="wb-progress-striped" style="display: none;" id="test-progress">
-          <div class="wb-progress-striped__bar" style="width: 0%"></div>
-        </div>
+        
+        <progress id="test-progress" max="100" value="0" style="width: 100%; display: none; margin-bottom: 1rem;"></progress>
         
         <div style="max-height: 300px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px;">
           <table class="wb-table wb-table--striped" id="scenario-table">
@@ -51,13 +51,12 @@
             <tbody></tbody>
           </table>
         </div>
-      </div>
-    </div>
+      </wb-card>
+    </article>
 
     <!-- Sidebar / Stats -->
-    <div>
-      <div class="card" style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px; position: sticky; top: 2rem;">
-        <h3>Coverage Analysis</h3>
+    <aside>
+      <wb-card title="Coverage Analysis" style="position: sticky; top: 2rem;">
         <canvas id="coverageChart"></canvas>
         <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
           <strong>X-Axis:</strong> The dimension being tested (e.g., Browser, Role).<br>
@@ -71,10 +70,10 @@
             <li>Recommended: Pairwise testing to reduce volume by 85%.</li>
           </ul>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+      </wb-card>
+    </aside>
+  </wb-grid>
+</section>
 
 <script>
   // Simple State Management
@@ -86,13 +85,13 @@
   function renderDimensions() {
     const container = document.getElementById('dimensions-container');
     container.innerHTML = dimensions.map((dim, idx) => `
-      <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+      <wb-card variant="glass" padding="1rem">
+        <wb-flex justify="space-between" style="margin-bottom: 0.5rem;">
           <input type="text" value="${dim.name}" class="wb-input-glass" style="width: 40%;" onchange="updateDimName(${idx}, this.value)">
           <button class="btn btn-secondary" onclick="removeDimension(${idx})" style="padding: 0.25rem 0.5rem;">×</button>
-        </div>
+        </wb-flex>
         <input type="text" value="${dim.values.join(', ')}" class="wb-input-glass" placeholder="Values (comma separated)" onchange="updateDimValues(${idx}, this.value)">
-      </div>
+      </wb-card>
     `).join('');
   }
 
@@ -114,11 +113,10 @@
     const tableBody = document.querySelector('#scenario-table tbody');
     const countSpan = document.getElementById('scenario-count');
     const progress = document.getElementById('test-progress');
-    const bar = progress.querySelector('.wb-progress-striped__bar');
 
     resultsArea.style.display = 'block';
     progress.style.display = 'block';
-    bar.style.width = '0%';
+    progress.value = 0;
 
     // Cartesian Product
     const cartesian = (...a) => a.reduce((a, b) => a.flatMap(d => b.map(e => [d, e].flat())));
@@ -144,7 +142,7 @@
       if (completed > total) completed = total;
       
       const pct = (completed / total) * 100;
-      bar.style.width = `${pct}%`;
+      progress.value = pct;
 
       // Update rows
       const rows = tableBody.querySelectorAll('tr');

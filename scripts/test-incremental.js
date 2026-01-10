@@ -1,6 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const ROOT = path.resolve(__dirname, '..');
 const CACHE_FILE = path.join(ROOT, '.test-cache.json');
@@ -39,8 +43,6 @@ const srcFiles = findFiles(SRC_DIR, '.js');
 const srcMap = {};
 srcFiles.forEach(f => {
   const base = path.basename(f, '.js');
-  // Handle duplicates? Just keep last for now, or list all.
-  // Better: list all to be safe.
   if (!srcMap[base]) srcMap[base] = [];
   srcMap[base].push(f);
 });
@@ -68,7 +70,6 @@ for (const testFile of testFiles) {
     reason = 'Test file changed';
   } else {
     // Check related source files
-    // Heuristic: test filename "card.spec.ts" -> looks for "card.js"
     const base = path.basename(testFile, '.spec.ts');
     const relatedSrcs = srcMap[base] || [];
     
@@ -83,12 +84,9 @@ for (const testFile of testFiles) {
   }
 
   if (needsRun) {
-    // Normalize to forward slashes for Playwright
     const normalizedPath = relPath.replace(/\\/g, '/');
     console.log(`[RUN] ${normalizedPath} (${reason})`);
     testsToRun.push(normalizedPath);
-  } else {
-    // console.log(`[SKIP] ${relPath}`);
   }
 }
 
@@ -106,51 +104,29 @@ const cmd = `npx playwright test ${testsToRun.join(' ')} --reporter=json --worke
 console.log('Executing Playwright...');
 
 try {
-  // We use env var to tell Playwright where to write the JSON report
-  // Note: This depends on Playwright respecting PLAYWRIGHT_JSON_OUTPUT_NAME 
-  // or we rely on standard output capture if that fails. 
-  // Actually, standard Playwright JSON reporter prints to stdout.
-  // A better way is to use the 'json' reporter option in config or via env.
-  
-  // Let's try a different approach: pipe to file in the shell command?
-  // execSync is shell-dependent.
-  
-  // Safest: Use env var for output if supported, or just try to parse stdout better.
-  // But let's try setting the env var which is common for CI.
-  
   const env = { ...process.env, PLAYWRIGHT_JSON_OUTPUT_NAME: REPORT_FILE };
-  
-  // We still capture stdio to show progress/errors to user if needed, 
-  // but we primarily want the file.
-  // Actually, if we use 'json' reporter, it goes to stdout. 
-  // If we want it in a file, we usually do: --reporter=json > file.json
-  // But let's try to just capture stdout and find the JSON start/end.
   
   const output = execSync(cmd, { 
     cwd: ROOT, 
     env: env,
     encoding: 'utf-8', 
-    stdio: 'pipe', // Capture output
+    stdio: 'pipe',
     maxBuffer: 1024 * 1024 * 10 
   });
   
-  // If successful (exit code 0), output is in stdout
   processResults(output, REPORT_FILE);
   
 } catch (e) {
-  // If failed (exit code 1), output is in e.stdout
   if (e.stdout) {
     processResults(e.stdout.toString(), REPORT_FILE);
   } else {
     console.error('Test execution failed without output.');
   }
-  // We don't exit 1 here yet, we want to save cache first
 }
 
 function processResults(stdout, reportFile) {
   let jsonStr = stdout;
   
-  // Try reading from file if it exists (if env var worked)
   if (fs.existsSync(reportFile)) {
     try {
       console.log(`Reading report file: ${reportFile} (${fs.statSync(reportFile).size} bytes)`);
@@ -163,17 +139,11 @@ function processResults(stdout, reportFile) {
   }
 
   try {
-    // Attempt to find JSON in stdout if file didn't work
-    // JSON reporter output starts with { and ends with }
-    // We look for the last occurrence of "suites" which is unique to the report
-    
     let json = null;
     
-    // 1. Try parsing full string
     try {
       json = JSON.parse(jsonStr);
     } catch (e) {
-      // 2. Try finding the JSON blob
       const start = jsonStr.indexOf('{');
       const end = jsonStr.lastIndexOf('}');
       if (start !== -1 && end !== -1) {
@@ -193,16 +163,11 @@ function processResults(stdout, reportFile) {
     
     let passedCount = 0;
     
-    // Helper to traverse the suite tree
     const traverse = (node) => {
       if (node.specs) {
         node.specs.forEach(spec => {
-          // Check if all tests in this spec passed
-          // spec.tests contains results for each project/worker
-          // We consider it passed if spec.ok is true (Playwright aggregates this)
           if (spec.ok) {
             const filePath = spec.file;
-            // Normalize path
             const relPath = path.relative(ROOT, filePath);
             cache[relPath] = now;
             passedCount++;
@@ -218,16 +183,12 @@ function processResults(stdout, reportFile) {
       json.suites.forEach(traverse);
     }
 
-    // Save cache
     fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
     console.log(`\n✅ Updated cache: ${passedCount} tests passed and saved.`);
     
     if (passedCount === 0) {
       console.log('JSON Content:', JSON.stringify(json, null, 2).substring(0, 1000));
     }
-
-    // Cleanup
-    // if (fs.existsSync(reportFile)) fs.unlinkSync(reportFile);
 
   } catch (e) {
     console.error('Error processing results:', e);

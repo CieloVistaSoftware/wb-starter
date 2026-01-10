@@ -38,6 +38,11 @@
           "description": "Complete list of all behaviors"
         },
         {
+          "file": "behavior-cross-reference.md",
+          "title": "Behavior Cross-Reference",
+          "description": "Relationships between all 168 behaviors"
+        },
+        {
           "file": "components/cards/card.md",
           "title": "Card Component",
           "description": "Base card component"
@@ -233,6 +238,11 @@
           "file": "builder-testing.md",
           "title": "Builder Testing",
           "description": "Testing the page builder"
+        },
+        {
+          "file": "schemaTestValue.md",
+          "title": "Schema Test Value",
+          "description": "Testing the schema test value"
         }
       ]
     },
@@ -535,6 +545,46 @@
           "file": "deploying-wb-starter-to-render.md",
           "title": "Deploying-wb-starter-to-render",
           "description": "Documentation for Deploying-wb-starter-to-render"
+        },
+        {
+          "file": "builder-onboarding-flow.md",
+          "title": "Builder-onboarding-flow",
+          "description": "Documentation for Builder-onboarding-flow"
+        },
+        {
+          "file": "builder-workflow.md",
+          "title": "Builder-workflow",
+          "description": "Documentation for Builder-workflow"
+        },
+        {
+          "file": "architecture/ATTRIBUTE-NAMING-STANDARD.md",
+          "title": "ATTRIBUTE-NAMING-STANDARD",
+          "description": "Documentation for ATTRIBUTE-NAMING-STANDARD"
+        },
+        {
+          "file": "architecture/WBPARTS.md",
+          "title": "WBPARTS",
+          "description": "Documentation for WBPARTS"
+        },
+        {
+          "file": "schema-first-architecture.md",
+          "title": "Schema-first-architecture",
+          "description": "Documentation for Schema-first-architecture"
+        },
+        {
+          "file": "schema-first-audit-report.md",
+          "title": "Schema-first-audit-report",
+          "description": "Documentation for Schema-first-audit-report"
+        },
+        {
+          "file": "wb-parts-spec.md",
+          "title": "Wb-parts-spec",
+          "description": "Documentation for Wb-parts-spec"
+        },
+        {
+          "file": "architecture/WBVIEWS.md",
+          "title": "WBVIEWS",
+          "description": "Documentation for WBVIEWS"
         }
       ]
     }

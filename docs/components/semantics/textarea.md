@@ -12,10 +12,10 @@ The `textarea` component improves the multi-line text input experience. Standard
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="textarea"` to a `<textarea>` element.
+The `textarea` behavior is automatically injected into `<textarea>` elements.
 
 ```html
-<textarea data-wb="textarea"></textarea>
+<textarea></textarea>
 ```
 
 ### Configuration Options
@@ -34,7 +34,6 @@ An auto-expanding box for comments.
 
 ```html
 <textarea 
-  data-wb="textarea" 
   data-autosize="true" 
   placeholder="Write a comment..."></textarea>
 ```
@@ -44,7 +43,6 @@ A bio field with a strict character limit.
 
 ```html
 <textarea 
-  data-wb="textarea" 
   data-show-count="true" 
   data-max-length="140" 
   placeholder="Short bio..."></textarea>

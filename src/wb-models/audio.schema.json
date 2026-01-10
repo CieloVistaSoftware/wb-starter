@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "audio.schema.json",
+  "title": "Audio",
+  "description": "Audio player with optional 15-band graphic equalizer",
+  
+  "behavior": "audio",
+  "baseClass": "wb-audio",
+  
+  "semanticElement": { "tagName": "div" },
+  
+  "properties": {
+    "src": { "type": "string", "description": "Audio source URL", "required": true },
+    "volume": { "type": "number", "description": "Initial volume (0-1)", "default": 0.8 },
+    "loop": { "type": "boolean", "description": "Loop playback", "default": false },
+    "autoplay": { "type": "boolean", "description": "Auto-play (requires muted)", "default": false },
+    "muted": { "type": "boolean", "description": "Start muted", "default": false },
+    "showEq": { "type": "boolean", "description": "Show 15-band equalizer", "default": false },
+    "bass": { "type": "number", "description": "Bass boost (-12 to 12 dB)", "default": 0 },
+    "treble": { "type": "number", "description": "Treble boost (-12 to 12 dB)", "default": 0 }
+  },
+  
+  "$view": [
+    { "name": "audio", "tag": "audio", "public": true, "required": true, "description": "Native audio element" },
+    { "name": "eq-container", "tag": "div", "public": true, "createdWhen": "showEq", "description": "Equalizer panel" },
+    { "name": "eq-sliders", "tag": "input", "parent": "eq-container", "public": true, "description": "15 band sliders" },
+    { "name": "presets", "tag": "div", "parent": "eq-container", "public": true, "description": "EQ preset buttons" },
+    { "name": "master-vol", "tag": "input", "parent": "eq-container", "public": true, "description": "Master volume" }
+  ],
+  
+  "$methods": {
+    "play": { "description": "Starts playback", "params": [], "returns": "Promise" },
+    "pause": { "description": "Pauses playback", "params": [] },
+    "stop": { "description": "Stops and resets", "params": [] },
+    "toggle": { "description": "Toggles play/pause", "params": [] },
+    "setVolume": { "description": "Sets volume", "params": ["volume"] },
+    "getVolume": { "description": "Gets volume", "params": [], "returns": "number" },
+    "setBand": { "description": "Sets EQ band gain", "params": ["band", "gain"] },
+    "applyPreset": { "description": "Applies EQ preset", "params": ["presetName"] },
+    "resetEq": { "description": "Resets all EQ bands to 0", "params": [] }
+  },
+  
+  "$cssAPI": {
+    "--wb-audio-bg": { "default": "linear-gradient(135deg, #1a1a2e, #16213e)", "description": "Player background" },
+    "--wb-audio-radius": { "default": "16px", "description": "Border radius" },
+    "--wb-audio-padding": { "default": "1rem", "description": "Padding" },
+    "--wb-audio-eq-slider-width": { "default": "24px", "description": "EQ slider width" },
+    "--wb-audio-eq-slider-height": { "default": "120px", "description": "EQ slider height" },
+    "--wb-audio-eq-slider-bg": { "default": "#333", "description": "Slider track background" },
+    "--wb-audio-eq-slider-fill": { "default": "#6366f1", "description": "Slider fill color" }
+  },
+  
+  "events": {
+    "wb:audio:play": { "description": "Playback started" },
+    "wb:audio:pause": { "description": "Playback paused" },
+    "wb:audio:ended": { "description": "Playback ended" },
+    "wb:audio:volumechange": { "description": "Volume changed", "detail": { "volume": "number" } },
+    "wb:audio:eqchange": { "description": "EQ band changed", "detail": { "band": "number", "gain": "number" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-audio src=\"audio.mp3\"></wb-audio>",
+      "<wb-audio src=\"audio.mp3\" show-eq></wb-audio>",
+      "<div data-wb=\"audio\" data-src=\"audio.mp3\"></div>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "src": "audio.mp3" },
+        { "src": "audio.mp3", "showEq": true },
+        { "src": "audio.mp3", "volume": 0.5 },
+        { "src": "audio.mp3", "loop": true }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "media", "icon": "🎵", "since": "1.0.0", "status": "stable" }
+}

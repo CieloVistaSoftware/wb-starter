@@ -15,7 +15,7 @@ import {
 
 // Helper: Extract behavior names from index.js
 function getRegisteredBehaviors(): Set<string> {
-  const indexPath = path.join(PATHS.src, 'behaviors', 'index.js');
+  const indexPath = path.join(PATHS.src, 'wb-viewmodels', 'index.js');
   const content = readFile(indexPath);
   const behaviors = new Set<string>();
   
@@ -71,6 +71,10 @@ test.describe('Project Integrity', () => {
       }
     }
     
+    if (issues.count > 0) {
+        console.log('Broken JS imports found:');
+        issues.all.forEach(i => console.log(i));
+    }
     issues.expectEmpty('Broken JS imports found');
   });
 
@@ -116,6 +120,10 @@ test.describe('Project Integrity', () => {
       }
     }
     
+    if (issues.count > 0) {
+        console.log('Broken HTML links found:');
+        issues.all.forEach(i => console.log(i));
+    }
     issues.expectEmpty('Broken HTML links found');
   });
 

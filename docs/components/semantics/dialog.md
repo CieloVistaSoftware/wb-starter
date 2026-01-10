@@ -13,7 +13,25 @@ The `dialog` (or `modal`) component leverages the native HTML5 `<dialog>` elemen
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="dialog"` (or `data-wb="modal"`) to any element that should trigger the dialog. The dialog itself is created dynamically.
+The `dialog` behavior is automatically injected into `<dialog>` elements.
+
+```html
+<dialog>
+  <header>
+    <h2>Title</h2>
+    <button onclick="this.closest('dialog').close()">×</button>
+  </header>
+  <main>
+    <p>Content</p>
+  </main>
+  <footer>
+    <button onclick="this.closest('dialog').close()">Close</button>
+  </footer>
+</dialog>
+```
+
+### Trigger Usage (Dynamic)
+Add `data-wb="dialog"` to a button to create a dialog dynamically.
 
 ```html
 <button 
@@ -36,8 +54,21 @@ Add `data-wb="dialog"` (or `data-wb="modal"`) to any element that should trigger
 
 ## 3. Examples
 
-### Example 1: Confirmation Modal
-A simple confirmation dialog.
+### Example 1: Semantic Dialog
+A standard HTML5 dialog.
+
+```html
+<button onclick="document.getElementById('my-dialog').showModal()">Open</button>
+
+<dialog id="my-dialog">
+  <h3>Hello!</h3>
+  <p>This is a native dialog.</p>
+  <button onclick="this.closest('dialog').close()">Close</button>
+</dialog>
+```
+
+### Example 2: Dynamic Confirmation Modal
+A simple confirmation dialog triggered by a button.
 
 ```html
 <button 
@@ -46,19 +77,6 @@ A simple confirmation dialog.
   data-content="Are you sure you want to proceed?" 
   data-size="sm">
   Delete Item
-</button>
-```
-
-### Example 2: Large Info Modal
-A larger modal for displaying detailed information.
-
-```html
-<button 
-  data-wb="modal" 
-  data-title="Terms of Service" 
-  data-content="<p>Full terms here...</p>" 
-  data-size="lg">
-  Read Terms
 </button>
 ```
 

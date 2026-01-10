@@ -135,4 +135,36 @@ Based on `docs/diagrams/builder-sections.html`:
 
 ---
 
-*Last updated: December 18, 2025*
+## Phase 6: Builder UI Fixes (January 2026)
+
+### Completed
+- [x] Tab icons 1.5rem in property panel
+- [x] Toolbar moved to builder header
+- [x] Canvas section badges ("Click to add to Header/Main/Footer")
+- [x] Preview mode CSS (hide all builder UI)
+- [x] Collapsible categories in properties panel (click header to toggle)
+- [x] Gray out components already in canvas
+- [x] Section-specific tooltips
+
+### In Progress
+- [x] Template browser: All sections (Header/Main/Footer) collapsed by default ✅
+- [x] Template browser: No filter hint shown until user clicks a section ✅
+- [x] Canvas: Header section visible and clickable ✅
+- [x] setTargetSection function added ✅
+- [ ] Tree panel: Clicking section header expands to show children
+- [ ] Tree panel: Container headers act as collapse/expand toggles
+
+### Bugs Fixed
+- [x] Canvas header section not visible - removed default is-target class
+- [x] Clicking Header in tree panel shows nothing - added setTargetSection function
+- [x] tb-filter-hint showing when it shouldn't - removed filter hint entirely
+- [x] activeTreeSection incorrectly set to 'header' on init - now null by default
+
+### Documentation Updates Needed
+- [ ] Update propertyconfig.schema.json with collapsible category behavior
+- [ ] Update builder-properties.md with toggle instructions
+- [ ] Document tree panel collapse/expand behavior
+
+---
+
+*Last updated: January 5, 2026*

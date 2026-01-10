@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "switch.schema.json",
+  "title": "Switch",
+  "description": "Toggle switch for boolean settings",
+  
+  "behavior": "switch",
+  "baseClass": "wb-switch",
+  
+  "semanticElement": { "tagName": "div", "implicitRole": "switch" },
+  
+  "properties": {
+    "label": { "type": "string", "description": "Switch label" },
+    "checked": { "type": "boolean", "description": "On/off state", "default": false },
+    "disabled": { "type": "boolean", "description": "Disabled state", "default": false },
+    "name": { "type": "string", "description": "Form field name" },
+    "value": { "type": "string", "description": "Form field value when checked" },
+    "labelPosition": { "type": "string", "enum": ["start", "end"], "default": "end" },
+    "size": { "type": "string", "enum": ["sm", "md", "lg"], "default": "md", "appliesClass": "wb-switch--{{value}}" },
+    "variant": { "type": "string", "enum": ["default", "primary", "success"], "default": "default", "appliesClass": "wb-switch--{{value}}" }
+  },
+  
+  "$view": [
+    { "name": "label-start", "tag": "span", "public": true, "content": "{{label}}", "createdWhen": "label AND labelPosition == 'start'", "description": "Label before switch" },
+    { "name": "input", "tag": "input", "public": false, "required": true, "description": "Hidden native checkbox" },
+    { "name": "track", "tag": "span", "public": true, "required": true, "description": "Switch track" },
+    { "name": "thumb", "tag": "span", "parent": "track", "public": true, "description": "Switch thumb/knob" },
+    { "name": "label-end", "tag": "span", "public": true, "content": "{{label}}", "createdWhen": "label AND labelPosition == 'end'", "description": "Label after switch" }
+  ],
+  
+  "$methods": {
+    "on": { "description": "Turns switch on", "params": [] },
+    "off": { "description": "Turns switch off", "params": [] },
+    "toggle": { "description": "Toggles switch state", "params": [] },
+    "isOn": { "description": "Returns on/off state", "params": [], "returns": "boolean" },
+    "enable": { "description": "Enables the switch", "params": [] },
+    "disable": { "description": "Disables the switch", "params": [] }
+  },
+  
+  "$cssAPI": {
+    "--wb-switch-width": { "default": "44px", "description": "Track width" },
+    "--wb-switch-height": { "default": "24px", "description": "Track height" },
+    "--wb-switch-radius": { "default": "9999px", "description": "Track border radius" },
+    "--wb-switch-track-bg": { "default": "var(--bg-tertiary, #d1d5db)", "description": "Track background (off)" },
+    "--wb-switch-track-bg-on": { "default": "var(--primary, #6366f1)", "description": "Track background (on)" },
+    "--wb-switch-thumb-size": { "default": "20px", "description": "Thumb size" },
+    "--wb-switch-thumb-bg": { "default": "#ffffff", "description": "Thumb background" },
+    "--wb-switch-thumb-shadow": { "default": "0 1px 3px rgba(0,0,0,0.2)", "description": "Thumb shadow" },
+    "--wb-switch-transition": { "default": "all 0.2s ease", "description": "Toggle transition" },
+    "--wb-switch-disabled-opacity": { "default": "0.5", "description": "Disabled opacity" },
+    "--wb-switch-label-gap": { "default": "0.5rem", "description": "Gap between switch and label" },
+    "--wb-switch-focus-ring": { "default": "0 0 0 3px rgba(99, 102, 241, 0.2)", "description": "Focus ring" }
+  },
+  
+  "events": {
+    "wb:switch:change": { "description": "Fired when state changes", "detail": { "checked": "boolean" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-switch label=\"Dark mode\"></wb-switch>",
+      "<wb-switch label=\"Notifications\" checked></wb-switch>",
+      "<div data-wb=\"switch\" data-label=\"Test\"></div>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "label": "Test" },
+        { "label": "Test", "checked": true },
+        { "label": "Test", "disabled": true },
+        { "label": "Test", "size": "lg" }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "forms", "icon": "🔘", "since": "1.0.0", "status": "stable" }
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CardLink AutoInject Repro</title>
+</head>
+<body>
+    <!-- This should theoretically become a cardlink according to docs -->
+    <article id="test-article" data-href="/some-page" data-title="Test Page"></article>
+
+    <script type="module">
+        import WB from '../src/core/wb-lazy.js';
+        
+        WB.init({ autoInject: true }).then(async () => {
+            // Wait for injections
+            setTimeout(() => {
+                const article = document.getElementById('test-article');
+                
+                // Check if it has the cardlink behavior or class
+                const isCardLink = article.dataset.wbReady && article.dataset.wbReady.includes('cardlink');
+                const hasCardLinkClass = article.classList.contains('wb-card--cardlink'); // cardBase adds wb-card--[behavior] behavior != card
+                
+                // If behavior is 'card', it adds nothing extra to class if behavior=='card' (line 86 in card.js)
+                // If behavior was 'cardlink', it would add wb-card--link (or similar, logic is replace 'card' with empty string? No.)
+                // card.js line 98: element.classList.add(`wb-card--${config.behavior.replace('card', '')}`); 
+                // So behavior='cardlink' -> wb-card--link
+                
+                // Also check if click listener is attached (hard to check directly in JS without side effects)
+                // But we can check behaviors list.
+                
+                const output = `
+                    Processed: ${article.dataset.wbReady}
+                    Classes: ${article.className}
+                    Is CardLink Behavior: ${isCardLink}
+                `;
+                
+                document.body.insertAdjacentHTML('beforeend', `<pre>${output}</pre>`);
+            }, 500);
+        });
+    </script>
+</body>
+</html>

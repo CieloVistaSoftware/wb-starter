@@ -1,58 +1,54 @@
-<div id="home-div-1" class="wb-hero">
-  <!-- Floating gradient orbs -->
-  <div id="home-div-2" class="wb-orb wb-orb--primary" style="width: 400px; height: 400px; top: -100px; right: -100px;"></div>
-  <div id="home-div-3" class="wb-orb wb-orb--ocean" style="width: 300px; height: 300px; bottom: -50px; left: -50px; animation-delay: -3s;"></div>
-  <div id="home-div-4" class="wb-orb wb-orb--sunset" style="width: 200px; height: 200px; top: 50%; left: 60%; animation-delay: -5s;"></div>
-  
-  <div id="home-div-5" class="wb-hero__content">
-    <a href="?page=components" id="home-span-6" class="wb-badge-gradient" style="margin-bottom: 1.5rem; text-decoration: none; color: inherit; cursor: pointer;">
-      <span id="home-span-7" class="wb-dot-pulse" style="width: 6px; height: 6px;"></span>
+<!--
+================================================================================
+WB Web Component Syntax Guide
+================================================================================
+Components use custom element tags:
+  - <wb-button>   for buttons
+  - <wb-card>     for cards  
+  - <wb-badge>    for badges
+  - <wb-modal>    for modals
+
+Behaviors use x-* attributes:
+  - x-ripple      for ripple effect
+  - x-tooltip     for tooltips
+  - x-toast       for notifications
+
+Class names like wb-badge-gradient are CSS classes for STYLING.
+================================================================================
+-->
+
+
+<wb-cardhero 
+  variant="cosmic" 
+  subtitle="No JavaScript knowledge required. Add behaviors to any element with simple data attributes. It just works." 
+  cta="Explore Components →" 
+  cta-href="?page=components"
+  cta-secondary="View Documentation"
+  cta-secondary-href="?page=docs"
+  background="radial-gradient(circle at 50% 50%, #1e1b4b 0%, #0f172a 100%)"
+  xalign="center"
+  height="600px"
+>
+  <div slot="pretitle">
+    <a href='?page=components' class='wb-badge-gradient' style='display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;color:inherit;font-size:1rem;font-weight:normal;'>
+      <span class='wb-dot-pulse' style='width:6px;height:6px;'></span>
       232 Components
     </a>
-    
-    <h1 id="home-h1-8">
-      Build stunning UIs with
-      <span id="home-span-9" class="wb-gradient-text">just HTML</span>
-    </h1>
-    
-    <p id="home-p-10" class="wb-hero__subtitle">
-      No JavaScript knowledge required. Add behaviors to any element with simple data attributes. It just works.
-    </p>
-    
-    <div id="home-div-11" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-      <a id="home-a-12" href="?page=components" class="wb-btn-gradient">
-        <span id="home-span-13" style="position: relative; z-index: 1;">Explore Components →</span>
-      </a>
-      <a id="home-a-14" href="?page=docs" class="wb-btn-glass">View Documentation</a>
-    </div>
   </div>
-</div>
+  <h1 slot="title">
+    Build stunning UIs with <span class='wb-gradient-text'>just HTML</span>
+  </h1>
+</wb-cardhero>
 
 <!-- Code Example -->
 <section id="home-section-15" style="padding: 4rem 0;">
   <div id="home-div-16" style="width: calc(100% - 1rem); margin: 0 auto; display: flex; justify-content: center;">
     <div id="home-div-17" class="wb-glass" style="padding: 2rem; border-radius: 20px; width: 100%; max-width: 800px;">
-      <div id="home-div-18" style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-        <span id="home-span-19" style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></span>
-        <span id="home-span-20" style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e;"></span>
-        <span id="home-span-21" style="width: 12px; height: 12px; border-radius: 50%; background: #27ca40;"></span>
+      <div id="home-div-18" class="wb-window-controls">
+        <wb-span variant="red"></wb-span>
+        <wb-span variant="yellow"></wb-span>
+        <wb-span variant="green"></wb-span>
       </div>
-      <pre id="home-pre-22" data-wb="code" data-language="html" style="margin: 0; text-align: left;"><code>&lt;!-- That's it. No JavaScript required. --&gt;
-&lt;button class="wb-btn-gradient" data-wb="ripple tooltip toast" data-tooltip="Click me!" data-message="Magic happened! ✨" data-type="success"&gt;
-  Magic Button ✨
-&lt;/button&gt;
-
-&lt;div data-wb="card draggable tooltip" data-variant="glass" data-title="Glass Card" data-tooltip="Drag me around!"&gt;
-  Beautiful by default.
-&lt;/div&gt;
-
-&lt;a href="?page=components" data-wb="cardlink tooltip" data-title="Card Link" data-description="Click to go to components" data-tooltip="I am a link!"&gt;
-  I take you places.
-&lt;/a&gt;
-
-&lt;div data-wb="modal" data-modal-title="Hello!" data-modal-content="&lt;p&gt;Welcome to the modal!&lt;/p&gt;&lt;img src='https://picsum.photos/400/300' alt='Random Image' style='width:100%;border-radius:8px;margin-top:1rem;'&gt;"&gt;
-  Open Modal
-&lt;/div&gt;</code></pre>
 
       <!-- Live Example -->
       <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
@@ -60,25 +56,34 @@
         <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center; justify-content: center; position: relative; min-height: 220px; border-radius: 12px; overflow: hidden; padding: 2rem; background: #0a0a1a;">
           
           <!-- Glass Card with Pulsing Light Behind -->
-          <div style="position: relative;">
+          <wb-column style="position: relative;">
             <!-- Pulsing Light Effect - positioned behind the card -->
             <div class="pulse-light-1" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 280px; height: 200px; border-radius: 50%; background: radial-gradient(ellipse, rgba(99,102,241,0.9) 0%, rgba(168,85,247,0.7) 30%, rgba(236,72,153,0.5) 50%, transparent 70%); filter: blur(25px); animation: color-pulse 3s ease-in-out infinite; z-index: 0;"></div>
             <div class="pulse-light-2" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 200px; height: 150px; border-radius: 50%; background: radial-gradient(ellipse, rgba(56,189,248,0.8) 0%, rgba(34,211,238,0.6) 40%, transparent 70%); filter: blur(20px); animation: color-pulse 3s ease-in-out infinite 1.5s; z-index: 0;"></div>
             
-            <!-- The Glass Card sits on top -->
-            <div data-wb="card draggable tooltip" data-variant="glass" data-title="Glass Card" data-tooltip="Drag me around!" style="width: 220px; position: relative; z-index: 1;">
+            <!-- v3.0: Using <wb-card> web component tag -->
+            <wb-card variant="glass" title="Glass Card" draggable style="width: 220px; position: relative; z-index: 1;">
               Beautiful by default.
-            </div>
-          </div>
+            </wb-card>
+          </wb-column>
 
-          <!-- Other demo elements -->
-          <button class="wb-btn-gradient" data-wb="ripple tooltip toast" data-tooltip="Click me!" data-message="Magic happened! ✨" data-type="success" style="cursor: pointer; position: relative; z-index: 1;">
-            Magic Button ✨
-          </button>
+          <!-- v3.0: Using <wb-button> web component tag -->
+       
 
-          <div data-wb="modal" data-modal-title="Hello!" data-modal-content="<p>Welcome to the modal!</p><img src='https://picsum.photos/400/300' alt='Random Image' style='width:50%;display:block;margin:1rem auto;border-radius:8px;'>" style="cursor: pointer; padding: 0.75rem 1.25rem; background: rgba(255,255,255,0.1); border-radius: 8px; position: relative; z-index: 1; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1);">
+          <!-- Badges -->
+          <wb-row gap="0.5rem" xalign="center">
+            <wb-badge variant="gradient">New</wb-badge>
+            <wb-badge variant="success">Live</wb-badge>
+          </wb-row>
+
+          <!-- Modal -->
+          <wb-modal id="welcome-modal">
+            <span slot="title">Hello!</span>
+            <p>Welcome to the modal!</p>
+          </wb-modal>
+          <wb-button variant="glass" onclick="document.getElementById('welcome-modal').showModal()" style="position: relative; z-index: 1;">
             Open Modal
-          </div>
+          </wb-button>
         </div>
       </div>
       
@@ -101,8 +106,9 @@
 </section>
 
 <!-- Features Grid -->
-<section id="home-section-23" style="padding: 4rem 2rem;">
-  <div id="home-div-24" style="max-width: 1200px; margin: 0 auto;">
+
+<wb-container id="home-section-23" data-max-width="1200px" padding="4rem 2rem">
+  <!-- Merged home-div-24 -->
     <div id="home-div-25" style="text-align: center; margin-bottom: 3rem;">
       <h2 id="home-h2-26">
         Why <span id="home-span-27" class="wb-gradient-text">WB Behaviors</span>?
@@ -114,46 +120,57 @@
     
     <div id="home-div-29" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
       
-      <div id="home-div-30" class="wb-card-float">
-        <div id="home-div-31" style="font-size: 2.5rem; margin-bottom: 1rem;">⚡</div>
-        <h3 id="home-h3-32">Zero Build Step</h3>
-        <p id="home-p-33" style="color: var(--text-secondary);">No webpack, no npm, no CLI. Just add a script tag and start building.</p>
-      </div>
+      <wb-card variant="float" id="home-div-30">
+        <main style="padding: 0">
+          <div id="home-div-31" style="font-size: 2.5rem; margin-bottom: 1rem;">⚡</div>
+          <h3 id="home-h3-32">Zero Build Step</h3>
+          <p id="home-p-33" style="color: var(--text-secondary);">No webpack, no npm, no CLI. Just add a script tag and start building.</p>
+        </main>
+      </wb-card>
       
-      <div id="home-div-34" class="wb-card-float">
-        <div id="home-div-35" style="font-size: 2.5rem; margin-bottom: 1rem;">🎨</div>
-        <h3 id="home-h3-36">30 Themes</h3>
-        <p id="home-p-37" style="color: var(--text-secondary);">From dark mode to cyberpunk. Switch themes instantly with one attribute.</p>
-      </div>
+      <wb-card variant="float" id="home-div-34">
+        <main style="padding: 0">
+          <div id="home-div-35" style="font-size: 2.5rem; margin-bottom: 1rem;">🎨</div>
+          <h3 id="home-h3-36">30 Themes</h3>
+          <p id="home-p-37" style="color: var(--text-secondary);">From dark mode to cyberpunk. Switch themes instantly with one attribute.</p>
+        </main>
+      </wb-card>
       
-      <div id="home-div-38" class="wb-card-float">
-        <div id="home-div-39" style="font-size: 2.5rem; margin-bottom: 1rem;">📦</div>
-        <h3 id="home-h3-40">232 Behaviors</h3>
-        <p id="home-p-41" style="color: var(--text-secondary);">Cards, modals, forms, animations, data display, and much more.</p>
-      </div>
+      <wb-card variant="float" id="home-div-38">
+        <main style="padding: 0">
+          <div id="home-div-39" style="font-size: 2.5rem; margin-bottom: 1rem;">📦</div>
+          <h3 id="home-h3-40">232 Behaviors</h3>
+          <p id="home-p-41" style="color: var(--text-secondary);">Cards, modals, forms, animations, data display, and much more.</p>
+        </main>
+      </wb-card>
       
-      <div id="home-div-42" class="wb-card-float" onclick="window.location.href='../demos/frameworks.html'" style="cursor: pointer;">
-        <div id="home-div-43" style="font-size: 2.5rem; margin-bottom: 1rem;">🔌</div>
-        <h3 id="home-h3-44">Framework Agnostic</h3>
-        <p id="home-p-45" style="color: var(--text-secondary);">Works with React, Vue, Svelte, or plain HTML. No lock-in.</p>
-        <p style="color: var(--primary-color); font-size: 0.9rem; margin-top: 0.5rem;">View Demos →</p>
-      </div>
+      <wb-card variant="float" id="home-div-42" onclick="window.location.href='../demos/frameworks.html'" style="cursor: pointer;">
+        <main style="padding: 0">
+          <div id="home-div-43" style="font-size: 2.5rem; margin-bottom: 1rem;">🔌</div>
+          <h3 id="home-h3-44">Framework Agnostic</h3>
+          <p id="home-p-45" style="color: var(--text-secondary);">Works with React, Vue, Svelte, or plain HTML. No lock-in.</p>
+          <p style="color: var(--primary-color); font-size: 0.9rem; margin-top: 0.5rem;">View Demos →</p>
+        </main>
+      </wb-card>
       
-      <div id="home-div-46" class="wb-card-float">
-        <div id="home-div-47" style="font-size: 2.5rem; margin-bottom: 1rem;">🪶</div>
-        <h3 id="home-h3-48">Lightweight</h3>
-        <p id="home-p-49" style="color: var(--text-secondary);">Each behavior loads only when used. No bloat, maximum performance.</p>
-      </div>
+      <wb-card variant="float" id="home-div-46">
+        <main style="padding: 0">
+          <div id="home-div-47" style="font-size: 2.5rem; margin-bottom: 1rem;">🪶</div>
+          <h3 id="home-h3-48">Lightweight</h3>
+          <p id="home-p-49" style="color: var(--text-secondary);">Each behavior loads only when used. No bloat, maximum performance.</p>
+        </main>
+      </wb-card>
       
-      <div id="home-div-50" class="wb-card-float">
-        <div id="home-div-51" style="font-size: 2.5rem; margin-bottom: 1rem;">♿</div>
-        <h3 id="home-h3-52">Accessible</h3>
-        <p id="home-p-53" style="color: var(--text-secondary);">ARIA attributes, keyboard navigation, and screen reader support built-in.</p>
-      </div>
+      <wb-card variant="float" id="home-div-50">
+        <main style="padding: 0">
+          <div id="home-div-51" style="font-size: 2.5rem; margin-bottom: 1rem;">♿</div>
+          <h3 id="home-h3-52">Accessible</h3>
+          <p id="home-p-53" style="color: var(--text-secondary);">ARIA attributes, keyboard navigation, and screen reader support built-in.</p>
+        </main>
+      </wb-card>
       
     </div>
-  </div>
-</section>
+</wb-container>
 
 <hr id="home-hr-54" class="wb-divider-gradient">
 
@@ -173,69 +190,21 @@
       </button>
     </div>
     
-    <div id="imageGrid" data-wb="grid" data-columns="3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-      
-      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img src="https://picsum.photos/300/300?random=1" alt="Image 1" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
-          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
-        </div>
-      </div>
-      
-      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img src="https://picsum.photos/300/300?random=2" alt="Image 2" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
-          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
-        </div>
-      </div>
-      
-      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img src="https://picsum.photos/300/300?random=3" alt="Image 3" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
-          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
-        </div>
-      </div>
-      
-      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img src="https://picsum.photos/300/300?random=4" alt="Image 4" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
-          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
-        </div>
-      </div>
-      
-      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img src="https://picsum.photos/300/300?random=5" alt="Image 5" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
-          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
-        </div>
-      </div>
-      
-      <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-        <img src="https://picsum.photos/300/300?random=6" alt="Image 6" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-        <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
-          <button data-wb="moveup" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↑</button>
-          <button data-wb="movedown" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">↓</button>
-          <button data-wb="moveleft" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">←</button>
-          <button data-wb="moveright" style="padding: 0.4rem 0.6rem; background: #3b82f6; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.9rem;">→</button>
-        </div>
-      </div>
-      
-    </div>
+    <wb-grid columns="3" gap="1.5rem" id="imageGrid">
+      <wb-repeater count="6">
+          <template>
+            <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
+              <img src="https://picsum.photos/300/300?random={{index}}" alt="Image {{index}}" style="width: 100%; height: auto; border-radius: 8px; display: block;">
+              <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
+                <wb-control action="move-up"></wb-control>
+                <wb-control action="move-down"></wb-control>
+                <wb-control action="move-left"></wb-control>
+                <wb-control action="move-right"></wb-control>
+              </div>
+            </div>
+          </template>
+      </wb-repeater>
+    </wb-grid>
   </div>
 </section>
 
@@ -270,6 +239,23 @@
 <hr id="home-hr-104" class="wb-divider-gradient">
 
   <style>
+    .wb-control-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.6rem;
+      background: #3b82f6; 
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    .wb-control-btn:hover {
+      opacity: 0.9;
+    }
+
     .wb-card-link {
       text-decoration: none;
       color: inherit;
@@ -314,10 +300,10 @@
         <div id="home-div-106" class="wb-glass" style="padding: 1.5rem;">
           <h3 id="home-h3-107">Buttons</h3>
           <div id="home-div-108" style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <button id="home-button-109" class="wb-btn-gradient" data-wb="ripple" onclick="event.stopPropagation(); event.preventDefault();">
+            <button id="home-button-109" class="wb-btn-gradient" x-ripple onclick="event.stopPropagation(); event.preventDefault();">
               <span id="home-span-110" style="position: relative; z-index: 1;">Gradient Button</span>
             </button>
-            <button id="home-button-111" class="wb-btn-glass" data-wb="ripple" onclick="event.stopPropagation(); event.preventDefault();">Glass Button</button>
+            <button id="home-button-111" class="wb-btn-glass" x-ripple onclick="event.stopPropagation(); event.preventDefault();">Glass Button</button>
           </div>
         </div>
       </a>
@@ -332,7 +318,7 @@
               <div class="input-pulse-light" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 100%; height: 60px; border-radius: 12px; background: radial-gradient(ellipse, rgba(99,102,241,0.8) 0%, rgba(168,85,247,0.5) 40%, transparent 70%); filter: blur(15px); animation: input-glow 2s ease-in-out infinite; z-index: 0;"></div>
               <input id="home-input-115" class="wb-input-glass" placeholder="Glass input..." onclick="event.stopPropagation();" style="position: relative; z-index: 1;">
             </div>
-            <div id="home-div-116" data-wb="rating" data-value="4" data-max="5"></div>
+            <wb-rating id="home-div-116" value="4" max="5"></div>
           </div>
         </div>
       </a>
@@ -396,8 +382,12 @@
         <div id="home-div-139" class="wb-glass" style="padding: 1.5rem;">
           <h3 id="home-h3-140">Overlays</h3>
           <div id="home-div-141" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-            <button id="home-button-142" class="wb-btn-glass" data-wb="modal" data-modal-title="Glass Modal" data-modal-content="Beautiful glassmorphism modal with blur effect." onclick="event.stopPropagation(); event.preventDefault();">Modal</button>
-            <button id="home-button-143" class="wb-btn-glass" data-wb="toast" data-message="Hello from toast! 🎉" data-type="success" onclick="event.stopPropagation(); event.preventDefault();">Toast</button>
+            <wb-modal id="glass-modal">
+              <span slot="title">Glass Modal</span>
+              <p>Beautiful glassmorphism modal with blur effect.</p>
+            </wb-modal>
+            <button id="home-button-142" class="wb-btn-glass" onclick="document.getElementById('glass-modal').showModal(); event.stopPropagation(); event.preventDefault();">Modal</button>
+            <button id="home-button-143" class="wb-btn-glass" x-toast="Hello from toast! 🎉" x-toast-type="success" onclick="event.stopPropagation(); event.preventDefault();">Toast</button>
           </div>
         </div>
       </a>

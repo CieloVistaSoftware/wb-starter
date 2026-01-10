@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const filePath = path.join(__dirname, '../docs/components/cards/carddraggable.md');
 const content = fs.readFileSync(filePath, 'utf-8');
@@ -14,7 +18,6 @@ while ((match = regex.exec(content)) !== null) {
 
 if (!regex.test(content)) {
     console.log("No matches found.");
-    // Try to see what the spacing is
     const usageIndex = content.indexOf('## Usage Example');
     if (usageIndex !== -1) {
         console.log("Context around Usage Example:");

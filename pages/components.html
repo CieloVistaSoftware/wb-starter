@@ -1,7 +1,68 @@
 <div id="components-div-1" class="page__hero">
   <h1 id="components-h1-2">🧩 Components Library</h1>
   <p id="components-p-3">Complete showcase of all 232 WB behaviors with variants and options.</p>
+  <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center;">
+    <a href="?page=docs" class="wb-btn" style="text-decoration: none;">📖 View Documentation</a>
+  </div>
 </div>
+
+<script>
+  // Auto-generate code snippets for examples
+  setTimeout(() => {
+    // Add Docs links to headers
+    document.querySelectorAll('h2, h3').forEach(header => {
+      if (header.querySelector('.docs-link')) return; // Already added
+      
+      const text = header.textContent.split('(')[0].trim(); // "Cards (18)" -> "Cards"
+      if (!text || text === 'Components Library' || text.includes('Code')) return;
+
+      const link = document.createElement('a');
+      link.href = `?page=docs&q=${encodeURIComponent(text)}`;
+      link.className = 'docs-link';
+      link.innerHTML = '📄';
+      link.title = `Search docs for ${text}`;
+      link.style.fontSize = '0.8em';
+      link.style.marginLeft = '0.5rem';
+      link.style.textDecoration = 'none';
+      link.style.opacity = '0.7';
+      
+      header.appendChild(link);
+    });
+
+    document.querySelectorAll('.page__grid, .demo-container, wb-accordion, wb-tabs').forEach(container => {
+      try {
+      // Skip if already processed
+      if (container.nextElementSibling?.classList.contains('component-code-block')) return;
+
+      const code = container.outerHTML
+        .replace(/ id="[^"]*"/g, '') // Remove IDs to clean up
+        .replace(/ class="[^"]*"/g, (match) => {
+           // Keep essential classes, remove utility/layout ones if needed
+           return match; 
+        })
+        .replace(/^\s+/gm, '') // Trim leading whitespace
+        .trim();
+
+      const codeBlock = document.createElement('div');
+      codeBlock.className = 'component-code-block';
+      codeBlock.style.marginTop = '1rem';
+      codeBlock.dataset.wb = 'mdhtml';
+      
+      // Wrap in markdown code block
+      codeBlock.textContent = '```html\n' + code + '\n```';
+      
+      container.parentNode.insertBefore(codeBlock, container.nextSibling);
+      
+      // Trigger WB scan if available
+      if (window.WB && window.WB.inject) {
+          window.WB.inject(codeBlock, 'mdhtml');
+      }
+      } catch (e) {
+        console.error('Error generating code block:', e);
+      }
+    });
+  }, 500); // Delay to ensure content is loaded
+</script>
 
 <!-- CARDS (18) -->
 <div id="components-div-4" class="page__section">
@@ -15,7 +76,7 @@
     <basic-card id="components-div-10" data-title="Header" data-footer="Card Footer" data-hoverable>
       <p id="components-p-11">Card with header and footer.</p>
     </basic-card>
-    <basic-card id="components-div-12" data-wb="toast" data-title="Clickable" data-clickable data-hoverable data-message="Card clicked!" data-type="success">
+    <basic-card id="components-div-12" x-toast data-title="Clickable" data-clickable data-hoverable data-message="Card clicked!" data-type="success">
       <p id="components-p-13">Click anywhere on this card!</p>
     </basic-card>
   </div>
@@ -126,14 +187,14 @@
 
   <h3 id="components-h3-55">File Cards (4 types - stacked)</h3>
   <div id="components-div-56" class="page__grid" style="grid-template-columns: 1fr; gap: 1rem;">
-    <file-card id="components-div-57" data-wb="toast" data-message="Downloading report.pdf (2.4 MB)..." data-filename="report.pdf" data-size="2.4 MB" data-type="pdf" style="background: var(--bg-tertiary, #1e293b);"></file-card>
-    <file-card id="components-div-58" data-wb="toast" data-message="Opening presentation.doc (1.2 MB)..." data-filename="presentation.doc" data-size="1.2 MB" data-type="doc" style="background: linear-gradient(135deg, var(--primary, #6366f1) 0%, #4338ca 100%);"></file-card>
-    <file-card id="components-div-59" data-wb="toast" data-message="Previewing photo.jpg (856 KB)..." data-filename="photo.jpg" data-size="856 KB" data-type="image" style="background: var(--bg-secondary, #374151);"></file-card>
-    <file-card id="components-div-60" data-wb="toast" data-message="Extracting archive.zip (15.7 MB)..." data-filename="archive.zip" data-size="15.7 MB" data-type="zip" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);"></file-card>
+    <file-card id="components-div-57" x-toast data-message="Downloading report.pdf (2.4 MB)..." data-filename="report.pdf" data-size="2.4 MB" data-type="pdf" style="background: var(--bg-tertiary, #1e293b);"></file-card>
+    <file-card id="components-div-58" x-toast data-message="Opening presentation.doc (1.2 MB)..." data-filename="presentation.doc" data-size="1.2 MB" data-type="doc" style="background: linear-gradient(135deg, var(--primary, #6366f1) 0%, #4338ca 100%);"></file-card>
+    <file-card id="components-div-59" x-toast data-message="Previewing photo.jpg (856 KB)..." data-filename="photo.jpg" data-size="856 KB" data-type="image" style="background: var(--bg-secondary, #374151);"></file-card>
+    <file-card id="components-div-60" x-toast data-message="Extracting archive.zip (15.7 MB)..." data-filename="archive.zip" data-size="15.7 MB" data-type="zip" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);"></file-card>
   </div>
 
   <div id="components-div-61" class="page__grid">
-    <link-card id="components-div-62" data-wb="toast" data-message="Navigating to: https://example.com" data-title="External Link" data-href="https://example.com" data-description="Click to visit"></link-card>
+    <link-card id="components-div-62" x-toast data-message="Navigating to: https://example.com" data-title="External Link" data-href="https://example.com" data-description="Click to visit"></link-card>
     <horizontal-card id="components-div-63" data-title="Horizontal Card" data-image="https://picsum.photos/150/150?r=4" data-subtitle="Image on the side"></horizontal-card>
   </div>
   
@@ -172,71 +233,71 @@
   
   <h3 id="components-h3-70">Badges</h3>
   <div id="components-div-71" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-    <span id="components-span-72" data-wb="badge">Default</span>
-    <span id="components-span-73" data-wb="badge" data-variant="success">Success</span>
-    <span id="components-span-74" data-wb="badge" data-variant="warning">Warning</span>
-    <span id="components-span-75" data-wb="badge" data-variant="error">Error</span>
-    <span id="components-span-76" data-wb="badge" data-variant="info">Info</span>
-    <span id="components-span-77" data-wb="badge" data-pill>Pill Badge</span>
+    <wb-badge id="components-span-72">Default</span>
+    <wb-badge id="components-span-73" variant="success">Success</span>
+    <wb-badge id="components-span-74" variant="warning">Warning</span>
+    <wb-badge id="components-span-75" variant="error">Error</span>
+    <wb-badge id="components-span-76" variant="info">Info</span>
+    <wb-badge id="components-span-77" data-pill>Pill Badge</span>
   </div>
 
   <h3 id="components-h3-78">Alerts</h3>
-  <div id="components-div-79" data-wb="alert" data-type="info" data-title="Info" data-message="This is an informational message." data-dismissible></div>
-  <div id="components-div-80" data-wb="alert" data-type="success" data-title="Success!" data-message="Operation completed successfully." data-dismissible></div>
-  <div id="components-div-81" data-wb="alert" data-type="warning" data-title="Warning" data-message="Please review before continuing." data-dismissible></div>
-  <div id="components-div-82" data-wb="alert" data-type="error" data-title="Error" data-message="Something went wrong." data-dismissible></div>
+  <wb-alert id="components-div-79" type="info" title="Info" message="This is an informational message." data-dismissible></div>
+  <wb-alert id="components-div-80" type="success" title="Success!" message="Operation completed successfully." data-dismissible></div>
+  <wb-alert id="components-div-81" type="warning" title="Warning" message="Please review before continuing." data-dismissible></div>
+  <wb-alert id="components-div-82" type="error" title="Error" message="Something went wrong." data-dismissible></div>
 
   <h3 id="components-h3-83">Progress Bars (click to reanimate)</h3>
   <div id="components-div-84" style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem;">
-    <div id="components-div-85" data-wb="progress" data-value="25"></div>
-    <div id="components-div-86" data-wb="progress" data-value="50"></div>
-    <div id="components-div-87" data-wb="progress" data-value="75" data-striped></div>
-    <div id="components-div-88" data-wb="progress" data-value="90"></div>
+    <wb-progress id="components-div-85" value="25"></div>
+    <wb-progress id="components-div-86" value="50"></div>
+    <wb-progress id="components-div-87" value="75" data-striped></div>
+    <wb-progress id="components-div-88" value="90"></div>
   </div>
-  <button id="components-button-89" class="wb-btn" data-wb="toast" data-message="From: Reanimate Button -> To: Progress Bars" onclick="document.querySelectorAll('[data-wb=progress]').forEach(p => { if(p.wbProgress) { const bar = p.querySelector('.wb-progress__bar'); if(bar) { bar.style.transition='none'; bar.style.width='0%'; setTimeout(() => { bar.style.transition='width 3s ease-in-out'; bar.style.width = p.dataset.value + '%'; }, 50); } } })">Reanimate All Slowly</button>
+  <button id="components-button-89" class="wb-btn" x-toast data-message="From: Reanimate Button -> To: Progress Bars" onclick="document.querySelectorAll('wb-progress').forEach(p => { if(p.wbProgress) { const bar = p.querySelector('.wb-progress__bar'); if(bar) { bar.style.transition='none'; bar.style.width='0%'; setTimeout(() => { bar.style.transition='width 3s ease-in-out'; bar.style.width = p.dataset.value + '%'; }, 50); } } })">Reanimate All Slowly</button>
 
   <h3 id="components-h3-90">Spinners (4 colors, staggered start)</h3>
   <div id="components-div-91" style="display: flex; gap: 1.5rem; align-items: center; margin-bottom: 1rem;">
-    <div id="components-div-92" data-wb="spinner" data-color="primary" data-delay="0"></div>
-    <div id="components-div-93" data-wb="spinner" data-color="success" data-delay="0.25"></div>
-    <div id="components-div-94" data-wb="spinner" data-color="warning" data-delay="0.5"></div>
-    <div id="components-div-95" data-wb="spinner" data-color="error" data-delay="0.75"></div>
-    <div id="components-div-96" data-wb="spinner" data-size="lg" data-color="primary"></div>
+    <wb-spinner id="components-div-92" color="primary" delay="0"></div>
+    <wb-spinner id="components-div-93" color="success" delay="0.25"></div>
+    <wb-spinner id="components-div-94" color="warning" delay="0.5"></div>
+    <wb-spinner id="components-div-95" color="error" delay="0.75"></div>
+    <wb-spinner id="components-div-96" size="lg" color="primary"></div>
   </div>
 
   <h3 id="components-h3-97">Avatars</h3>
   <div id="components-div-98" style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
-    <div id="components-div-99" data-wb="avatar" data-src="https://i.pravatar.cc/150?img=1"></div>
-    <div id="components-div-100" data-wb="avatar" data-src="https://i.pravatar.cc/150?img=2" data-size="lg"></div>
-    <div id="components-div-101" data-wb="avatar" data-initials="JD"></div>
-    <div id="components-div-102" data-wb="avatar" data-src="https://i.pravatar.cc/150?img=3" data-status="online"></div>
+    <wb-avatar id="components-div-99" src="https://i.pravatar.cc/150?img=1"></div>
+    <wb-avatar id="components-div-100" src="https://i.pravatar.cc/150?img=2" size="lg"></div>
+    <wb-avatar id="components-div-101" initials="JD"></div>
+    <wb-avatar id="components-div-102" src="https://i.pravatar.cc/150?img=3" status="online"></div>
   </div>
 
   <h3 id="components-h3-103">Chips</h3>
   <div id="components-div-104" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-    <span id="components-span-105" data-wb="chip">Default Chip</span>
-    <span id="components-span-106" data-wb="chip">JavaScript</span>
-    <span id="components-span-107" data-wb="chip">React</span>
-    <span id="components-span-108" data-wb="chip" data-dismissible>Removable</span>
-    <span data-wb="chip" data-variant="primary">Primary</span>
-    <span data-wb="chip" data-variant="success">Success</span>
-    <span data-wb="chip" data-variant="warning">Warning</span>
-    <span data-wb="chip" data-variant="error">Error</span>
-    <span data-wb="chip" data-variant="info" data-dismissible>Info Removable</span>
+    <wb-chip id="components-span-105">Default Chip</span>
+    <wb-chip id="components-span-106">JavaScript</span>
+    <wb-chip id="components-span-107">React</span>
+    <wb-chip id="components-span-108" data-dismissible>Removable</span>
+    <wb-chip variant="primary">Primary</span>
+    <wb-chip variant="success">Success</span>
+    <wb-chip variant="warning">Warning</span>
+    <wb-chip variant="error">Error</span>
+    <wb-chip variant="info" data-dismissible>Info Removable</span>
   </div>
 
   <h3 id="components-h3-109">Skeleton Loaders</h3>
   <div id="components-div-110" style="display: flex; flex-direction: column; gap: 0.5rem; max-width: 300px; margin-bottom: 1rem;">
-    <div id="components-div-111" data-wb="skeleton" data-variant="text" data-lines="3"></div>
-    <div id="components-div-112" data-wb="skeleton" data-variant="circle" data-width="50px"></div>
+    <wb-skeleton id="components-div-111" variant="text" lines="3"></div>
+    <wb-skeleton id="components-div-112" variant="circle" width="50px"></div>
   </div>
 
   <h3 id="components-h3-113">Toast Triggers</h3>
-  <div id="components-div-114" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-    <button id="components-button-115" class="wb-btn" data-wb="toast" data-message="From: Info Toast Button -> To: Info Toast" data-type="info">Info Toast</button>
-    <button id="components-button-116" class="wb-btn" data-wb="toast" data-message="From: Success Toast Button -> To: Success Toast" data-type="success">Success Toast</button>
-    <button id="components-button-117" class="wb-btn" data-wb="toast" data-message="From: Warning Toast Button -> To: Warning Toast" data-type="warning">Warning Toast</button>
-    <button id="components-button-118" class="wb-btn" data-wb="toast" data-message="From: Error Toast Button -> To: Error Toast" data-type="error">Error Toast</button>
+  <div id="components-div-114" class="demo-container" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <button id="components-button-115" class="wb-btn" x-toast data-message="Info Toast" data-type="info">Info Toast</button>
+    <button id="components-button-116" class="wb-btn" x-toast data-message="Success Toast" data-type="success">Success Toast</button>
+    <button id="components-button-117" class="wb-btn" x-toast data-message="Warning Toast" data-type="warning">Warning Toast</button>
+    <button id="components-button-118" class="wb-btn" x-toast data-message="Error Toast" data-type="error">Error Toast</button>
   </div>
 </div>
 
@@ -249,52 +310,52 @@
     <div id="components-div-123" class="wb-card-float" style="padding: 1rem;">
       <h4 id="components-h4-124" style="margin: 0 0 0.5rem; color: var(--primary);">Modal</h4>
       <p id="components-p-125" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Centered dialog with header, body, and footer buttons.</p>
-      <button id="components-button-126" class="wb-btn" data-wb="modal toast" data-toast-message="From: Open Modal Button -> To: Modal Dialog" data-modal-title="Modal Dialog" data-modal-content="This is modal content. The header uses the primary theme color.">Open Modal</button>
+      <wb-modal id="components-button-126" class="wb-btn" data-modal-title="Modal Dialog" data-modal-content="This is modal content. The header uses the primary theme color.">Open Modal</button>
     </div>
     
     <div id="components-div-127" class="wb-card-float" style="padding: 1rem;">
       <h4 id="components-h4-128" style="margin: 0 0 0.5rem; color: var(--primary);">Drawer</h4>
       <p id="components-p-129" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Slide-out panel from left or right edge.</p>
       <div id="components-div-130" style="display: flex; gap: 0.5rem;">
-        <button id="components-button-131" class="wb-btn" data-wb="drawer toast" data-toast-message="From: Left Drawer Button -> To: Left Drawer" data-title="Left Drawer" data-content="Panel slides from left." data-position="left">Left</button>
-        <button id="components-button-132" class="wb-btn" data-wb="drawer toast" data-toast-message="From: Right Drawer Button -> To: Right Drawer" data-title="Right Drawer" data-content="Panel slides from right." data-position="right">Right</button>
+        <wb-drawer id="components-button-131" class="wb-btn" title="Left Drawer" content="Panel slides from left." position="left">Left</button>
+        <wb-drawer id="components-button-132" class="wb-btn" title="Right Drawer" content="Panel slides from right." position="right">Right</button>
       </div>
     </div>
     
     <div id="components-div-133" class="wb-card-float" style="padding: 1rem;">
       <h4 id="components-h4-134" style="margin: 0 0 0.5rem; color: var(--primary);">Notes Panel</h4>
       <p id="components-p-135" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Resizable side panel from left. Drag edge to resize. The Notes Panel allows you to take notes for later recall.</p>
-      <button id="components-button-136" class="wb-btn" data-wb="sheet toast" data-toast-message="From: Open Notes Button -> To: Notes Panel" data-title="My Notes">Open Notes</button>
+      <button id="components-button-136" class="wb-btn" x-sheet data-title="My Notes">Open Notes</button>
     </div>
     
     <div id="components-div-137" class="wb-card-float" style="padding: 1rem;">
       <h4 id="components-h4-138" style="margin: 0 0 0.5rem; color: var(--primary);">Confirm</h4>
       <p id="components-p-139" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Yes/No confirmation dialog.</p>
-      <button id="components-button-140" class="wb-btn" data-wb="confirm toast" data-toast-message="From: Confirm Action Button -> To: Confirm Dialog" data-title="Delete Item?" data-message="This action cannot be undone.">Confirm Action</button>
+      <button id="components-button-140" class="wb-btn" x-confirm data-title="Delete Item?" data-message="This action cannot be undone.">Confirm Action</button>
     </div>
     
     <div id="components-div-141" class="wb-card-float" style="padding: 1rem;">
       <h4 id="components-h4-142" style="margin: 0 0 0.5rem; color: var(--primary);">Prompt</h4>
       <p id="components-p-143" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Input dialog to collect user text.</p>
-      <button id="components-button-144" class="wb-btn" data-wb="prompt toast" data-toast-message="From: Ask Name Button -> To: Prompt Dialog" data-title="Your Name" data-message="Please enter your name:">Ask Name</button>
+      <button id="components-button-144" class="wb-btn" x-prompt data-title="Your Name" data-message="Please enter your name:">Ask Name</button>
     </div>
     
     <div id="components-div-145" class="wb-card-float" style="padding: 1rem;">
       <h4 id="components-h4-146" style="margin: 0 0 0.5rem; color: var(--primary);">Lightbox</h4>
       <p id="components-p-147" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Full-screen image viewer with zoom.</p>
-      <button id="components-button-148" class="wb-btn" data-wb="lightbox toast" data-toast-message="From: View Image Button -> To: Lightbox" data-src="https://picsum.photos/800/600?r=5">View Image</button>
+      <button id="components-button-148" class="wb-btn" x-lightbox data-src="https://picsum.photos/800/600?r=5">View Image</button>
     </div>
     
     <div id="components-div-149" class="wb-card-float" style="padding: 1rem;">
       <h4 id="components-h4-150" style="margin: 0 0 0.5rem; color: var(--primary);">Popover</h4>
       <p id="components-p-151" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Small popup attached to element.</p>
-      <button id="components-button-152" class="wb-btn" data-wb="popover toast" data-toast-message="From: Show Popover Button -> To: Popover" data-title="Info" data-content="This is additional information.">Show Popover</button>
+      <button id="components-button-152" class="wb-btn" x-popover data-title="Info" data-content="This is additional information.">Show Popover</button>
     </div>
     
     <div id="components-div-153" class="wb-card-float" style="padding: 1rem;">
       <h4 id="components-h4-154" style="margin: 0 0 0.5rem; color: var(--primary);">Toast Notifications</h4>
       <p id="components-p-155" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Click multiple times to cycle: info → success → warning → error</p>
-      <button id="components-button-156" class="wb-btn" data-wb="notify toast" data-toast-message="From: Send Toast Button -> To: Notification Cycle">Send Toast</button>
+      <button id="components-button-156" class="wb-btn" x-notify>Send Toast</button>
     </div>
   </div>
 </div>
@@ -304,26 +365,26 @@
   <h2 id="components-h2-158">🧭 Navigation (8 types)</h2>
   
   <h3 id="components-h3-159">Breadcrumb</h3>
-  <nav id="components-nav-160" data-wb="breadcrumb" data-items="Home,Products,Category,Item"></nav>
+  <nav id="components-nav-160" x-breadcrumb data-items="Home,Products,Category,Item"></nav>
 
   <h3 id="components-h3-161">Pagination</h3>
-  <nav id="components-nav-162" data-wb="pagination" data-total="100" data-per-page="10" data-current="3"></nav>
+  <nav id="components-nav-162" x-pagination data-total="100" data-per-page="10" data-current="3"></nav>
 
   <h3 id="components-h3-163">Steps</h3>
-  <div id="components-div-164" data-wb="steps" data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
+  <div id="components-div-164" x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
 
   <h3 id="components-h3-165">Back to Top</h3>
-  <div id="components-div-166" data-wb="backtotop">↑ Top</div>
+  <div id="components-div-166" x-backtotop>↑ Top</div>
 
   <h3 id="components-h3-166a">Navigation Code</h3>
-  <pre id="components-div-166b" data-wb="code" data-language="html"><code>&lt;!-- Breadcrumb --&gt;
-&lt;nav data-wb="breadcrumb" data-items="Home,Products,Category"&gt;&lt;/nav&gt;
+  <wb-code id="components-div-166b" language="html"><code>&lt;!-- Breadcrumb --&gt;
+&lt;nav x-breadcrumb data-items="Home,Products,Category"&gt;&lt;/nav&gt;
 
 &lt;!-- Pagination --&gt;
-&lt;nav data-wb="pagination" data-total="50" data-per-page="10"&gt;&lt;/nav&gt;
+&lt;nav x-pagination data-total="50" data-per-page="10"&gt;&lt;/nav&gt;
 
 &lt;!-- Steps --&gt;
-&lt;div data-wb="steps" data-items="Step 1,Step 2,Step 3" data-current="1"&gt;&lt;/div&gt;</code></pre>
+&lt;div x-steps data-items="Step 1,Step 2,Step 3" data-current="1"&gt;&lt;/div&gt;</code></pre>
 </div>
 
 <!-- FORMS (28) -->
@@ -338,19 +399,19 @@
         <input id="components-input-174" data-variant="success" placeholder="Success variant">
         <input id="components-input-175" data-variant="error" placeholder="Error variant">
         <textarea id="components-textarea-176" data-autosize placeholder="Auto-sizing textarea"></textarea>
-        <input id="components-input-177" data-wb="password" placeholder="Password with toggle">
-        <input id="components-input-178" data-wb="search" placeholder="Search input">
+        <input id="components-input-177" x-password placeholder="Password with toggle">
+        <input id="components-input-178" x-search placeholder="Search input">
       </div>
     </div>
 
     <div id="components-div-179">
       <h3 id="components-h3-180">Masked & Special</h3>
       <div id="components-div-181" style="display: flex; flex-direction: column; gap: 1rem;">
-        <input id="components-input-182" data-wb="masked" data-mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
-        <input id="components-input-183" data-wb="masked" data-mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
-        <input id="components-input-184" data-wb="masked" data-mask="9999 9999 9999 9999" placeholder="Credit Card">
-        <div id="components-div-185" data-wb="otp" data-length="6"></div>
-        <input id="components-input-186" data-wb="colorpicker" value="#6366f1">
+        <input id="components-input-182" x-masked data-mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
+        <input id="components-input-183" x-masked data-mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
+        <input id="components-input-184" x-masked data-mask="9999 9999 9999 9999" placeholder="Credit Card">
+        <div id="components-div-185" x-otp data-length="6"></div>
+        <input id="components-input-186" x-colorpicker value="#6366f1">
       </div>
     </div>
 
@@ -365,7 +426,7 @@
         <input type="checkbox" id="components-div-194" data-label="Checkbox option">
         <input type="radio" id="components-div-195" name="demo" data-label="Radio option 1">
         <input type="radio" id="components-div-196" name="demo" data-label="Radio option 2">
-        <div id="components-div-197" data-wb="switch" data-label="Toggle switch"></div>
+        <wb-switch id="components-div-197" label="Toggle switch"></div>
       </div>
     </div>
 
@@ -373,24 +434,24 @@
       <h3 id="components-h3-199">Range & Rating</h3>
       <div id="components-div-200" style="display: flex; flex-direction: column; gap: 1rem;">
         <input type="range" id="components-input-201" min="0" max="100" value="50">
-        <div id="components-div-202" data-wb="rating" data-value="3" data-max="5"></div>
-        <div id="components-div-203" data-wb="rating" data-value="4" data-max="5" data-icon="❤️"></div>
-        <div id="components-div-204" data-wb="stepper" data-value="5" data-min="0" data-max="10"></div>
-        <div id="components-div-205" data-wb="counter" data-value="0"></div>
+        <wb-rating id="components-div-202" value="3" max="5"></div>
+        <wb-rating id="components-div-203" value="4" max="5" icon="❤️"></div>
+        <div id="components-div-204" x-stepper data-value="5" data-min="0" data-max="10"></div>
+        <div id="components-div-205" x-counter data-value="0"></div>
       </div>
     </div>
 
     <div id="components-div-206">
       <h3 id="components-h3-207">Tags & Autocomplete</h3>
       <div id="components-div-208" style="display: flex; flex-direction: column; gap: 1rem;">
-        <div id="components-div-209" data-wb="tags" data-items="JavaScript,HTML,CSS" data-editable></div>
-        <input id="components-input-210" data-wb="autocomplete" data-items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Type to search...">
+        <div id="components-div-209" x-tags data-items="JavaScript,HTML,CSS" data-editable></div>
+        <input id="components-input-210" x-autocomplete data-items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Type to search...">
       </div>
     </div>
 
     <div id="components-div-211">
       <h3 id="components-h3-212">File Upload</h3>
-      <div id="components-div-213" data-wb="file" data-accept=".jpg,.png,.pdf" data-multiple></div>
+      <div id="components-div-213" x-file data-accept=".jpg,.png,.pdf" data-multiple></div>
     </div>
   </div>
 </div>
@@ -401,47 +462,47 @@
   <p id="components-p-216" style="margin-bottom: 1rem; color: var(--text-secondary);">Click any button to trigger animation:</p>
   
   <h3 id="components-h3-217">Attention Seekers</h3>
-  <div id="components-div-218" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-    <button id="components-button-219" class="wb-btn" data-wb="bounce toast" data-toast-message="From: Bounce Button -> To: Bounce Animation">Bounce</button>
-    <button id="components-button-220" class="wb-btn" data-wb="shake toast" data-toast-message="From: Shake Button -> To: Shake Animation">Shake</button>
-    <button id="components-button-221" class="wb-btn" data-wb="pulse toast" data-toast-message="From: Pulse Button -> To: Pulse Animation">Pulse</button>
-    <button id="components-button-222" class="wb-btn" data-wb="flash toast" data-toast-message="From: Flash Button -> To: Flash Animation">Flash</button>
-    <button id="components-button-223" class="wb-btn" data-wb="tada toast" data-toast-message="From: Tada Button -> To: Tada Animation">Tada!</button>
-    <button id="components-button-224" class="wb-btn" data-wb="wobble toast" data-toast-message="From: Wobble Button -> To: Wobble Animation">Wobble</button>
-    <button id="components-button-225" class="wb-btn" data-wb="jello toast" data-toast-message="From: Jello Button -> To: Jello Animation">Jello</button>
-    <button id="components-button-226" class="wb-btn" data-wb="swing toast" data-toast-message="From: Swing Button -> To: Swing Animation">Swing</button>
-    <button id="components-button-227" class="wb-btn" data-wb="rubberband toast" data-toast-message="From: Rubberband Button -> To: Rubberband Animation">Rubberband</button>
-    <button id="components-button-228" class="wb-btn" data-wb="heartbeat toast" data-toast-message="From: Heartbeat Button -> To: Heartbeat Animation">💓 Heartbeat</button>
+  <div id="components-div-218" class="demo-container" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+    <button id="components-button-219" class="wb-btn" x-bounce>Bounce</button>
+    <button id="components-button-220" class="wb-btn" x-shake>Shake</button>
+    <button id="components-button-221" class="wb-btn" x-pulse>Pulse</button>
+    <button id="components-button-222" class="wb-btn" x-flash>Flash</button>
+    <button id="components-button-223" class="wb-btn" x-tada>Tada!</button>
+    <button id="components-button-224" class="wb-btn" x-wobble>Wobble</button>
+    <button id="components-button-225" class="wb-btn" x-jello>Jello</button>
+    <button id="components-button-226" class="wb-btn" x-swing>Swing</button>
+    <button id="components-button-227" class="wb-btn" x-rubberband>Rubberband</button>
+    <button id="components-button-228" class="wb-btn" x-heartbeat>💓 Heartbeat</button>
   </div>
 
   <h3 id="components-h3-229">Entrances</h3>
-  <div id="components-div-230" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-    <button id="components-button-231" class="wb-btn" data-wb="fadein toast" data-toast-message="From: Fade In Button -> To: Fade In Animation">Fade In</button>
-    <button id="components-button-232" class="wb-btn" data-wb="slidein toast" data-toast-message="From: Slide Left Button -> To: Slide Left Animation" data-direction="left">Slide Left</button>
-    <button id="components-button-233" class="wb-btn" data-wb="slidein toast" data-toast-message="From: Slide Right Button -> To: Slide Right Animation" data-direction="right">Slide Right</button>
-    <button id="components-button-234" class="wb-btn" data-wb="slidein toast" data-toast-message="From: Slide Up Button -> To: Slide Up Animation" data-direction="up">Slide Up</button>
-    <button id="components-button-235" class="wb-btn" data-wb="slidein toast" data-toast-message="From: Slide Down Button -> To: Slide Down Animation" data-direction="down">Slide Down</button>
-    <button id="components-button-236" class="wb-btn" data-wb="zoomin toast" data-toast-message="From: Zoom In Button -> To: Zoom In Animation">Zoom In</button>
-    <button id="components-button-237" class="wb-btn" data-wb="flip toast" data-toast-message="From: Flip Button -> To: Flip Animation">Flip</button>
-    <button id="components-button-238" class="wb-btn" data-wb="rotate toast" data-toast-message="From: Rotate Button -> To: Rotate Animation">Rotate</button>
+  <div id="components-div-230" class="demo-container" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+    <button id="components-button-231" class="wb-btn" x-fadein>Fade In</button>
+    <button id="components-button-232" class="wb-btn" x-slidein data-direction="left">Slide Left</button>
+    <button id="components-button-233" class="wb-btn" x-slidein data-direction="right">Slide Right</button>
+    <button id="components-button-234" class="wb-btn" x-slidein data-direction="up">Slide Up</button>
+    <button id="components-button-235" class="wb-btn" x-slidein data-direction="down">Slide Down</button>
+    <button id="components-button-236" class="wb-btn" x-zoomin>Zoom In</button>
+    <button id="components-button-237" class="wb-btn" x-flip>Flip</button>
+    <button id="components-button-238" class="wb-btn" x-rotate>Rotate</button>
   </div>
 
   <h3 id="components-h3-239">Special Effects</h3>
-  <div id="components-div-240" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-    <button id="components-button-241" class="wb-btn" data-wb="confetti toast" data-toast-message="From: Confetti Button -> To: Confetti Effect">🎊 Confetti</button>
-    <button id="components-button-242" class="wb-btn" data-wb="fireworks toast" data-toast-message="From: Fireworks Button -> To: Fireworks Effect">🎆 Fireworks</button>
-    <button id="components-button-243" class="wb-btn" data-wb="snow toast" data-toast-message="From: Snow Button -> To: Snow Effect">❄️ Snow</button>
-    <button id="components-button-244" class="wb-btn" data-wb="sparkle toast" data-toast-message="From: Sparkle Button -> To: Sparkle Effect">✨ Sparkle</button>
-    <button id="components-button-245" class="wb-btn" data-wb="glow toast" data-toast-message="From: Glow Button -> To: Glow Effect">💡 Glow</button>
-    <button id="components-button-246" class="wb-btn" data-wb="rainbow toast" data-toast-message="From: Rainbow Button -> To: Rainbow Effect">🌈 Rainbow</button>
-    <button id="components-button-247" class="wb-btn" data-wb="typewriter toast" data-toast-message="From: Typewriter Button -> To: Typewriter Effect" data-text="Hello World!">Typewriter</button>
+  <div id="components-div-240" class="demo-container" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+    <button id="components-button-241" class="wb-btn" x-confetti x-toast data-toast-message="From: Confetti Button -> To: Confetti Effect">🎊 Confetti</button>
+    <button id="components-button-242" class="wb-btn" x-fireworks x-toast data-toast-message="From: Fireworks Button -> To: Fireworks Effect">🎆 Fireworks</button>
+    <button id="components-button-243" class="wb-btn" x-snow x-toast data-toast-message="From: Snow Button -> To: Snow Effect">❄️ Snow</button>
+    <button id="components-button-244" class="wb-btn" x-sparkle x-toast data-toast-message="From: Sparkle Button -> To: Sparkle Effect">✨ Sparkle</button>
+    <button id="components-button-245" class="wb-btn" x-glow x-toast data-toast-message="From: Glow Button -> To: Glow Effect">💡 Glow</button>
+    <button id="components-button-246" class="wb-btn" x-rainbow x-toast data-toast-message="From: Rainbow Button -> To: Rainbow Effect">🌈 Rainbow</button>
+    <button id="components-button-247" class="wb-btn" x-typewriter x-toast data-toast-message="From: Typewriter Button -> To: Typewriter Effect" data-text="Hello World!">Typewriter</button>
   </div>
   
   <h3 id="components-h3-248">Animated Content</h3>
-  <div id="components-div-249" style="display: flex; gap: 2rem; align-items: center; margin-bottom: 1rem;">
-    <div id="components-div-250" data-wb="countup" data-from="0" data-to="1000" style="font-size: 2rem; font-weight: bold;">0</div>
-    <div id="components-div-251" data-wb="marquee" style="width: 200px; overflow: hidden;">Scrolling text marquee effect</div>
-    <div id="components-div-252" data-wb="particle" style="width: 150px; height: 80px; background: var(--bg-secondary); border-radius: 8px; display: flex; align-items: center; justify-content: center;">Particles!</div>
+  <div id="components-div-249" class="demo-container" style="display: flex; gap: 2rem; align-items: center; margin-bottom: 1rem;">
+    <div id="components-div-250" x-countup data-from="0" data-to="1000" style="font-size: 2rem; font-weight: bold;">0</div>
+    <div id="components-div-251" x-marquee style="width: 200px; overflow: hidden;">Scrolling text marquee effect</div>
+    <div id="components-div-252" x-particle style="width: 150px; height: 80px; background: var(--bg-secondary); border-radius: 8px; display: flex; align-items: center; justify-content: center;">Particles!</div>
   </div>
 </div>
 
@@ -453,42 +514,42 @@
   <table id="components-table-256" data-headers="Name,Email,Role,Status" data-rows='[["Alice","alice@email.com","Admin","Active"],["Bob","bob@email.com","User","Away"],["Carol","carol@email.com","Editor","Active"],["Dave","dave@email.com","User","Inactive"]]' data-striped data-hover></table>
 
   <h3 id="components-h3-257">List</h3>
-  <ul id="components-ul-258" data-wb="list" data-items="First item,Second item,Third item,Fourth item" data-dividers></ul>
+  <ul id="components-ul-258" x-list data-items="First item,Second item,Third item,Fourth item" data-dividers></ul>
 
   <h3 id="components-h3-259">Description List</h3>
-  <dl id="components-dl-260" data-wb="desclist" data-items='[{"term":"Name","desc":"John Doe"},{"term":"Email","desc":"john@example.com"},{"term":"Role","desc":"Developer"}]' data-horizontal></dl>
+  <dl id="components-dl-260" x-desclist data-items='[{"term":"Name","desc":"John Doe"},{"term":"Email","desc":"john@example.com"},{"term":"Role","desc":"Developer"}]' data-horizontal></dl>
 
   <h3 id="components-h3-261">Timeline</h3>
-  <div id="components-div-262" data-wb="timeline" data-items="Project kickoff,Design phase completed,Development started,Beta release,Production launch"></div>
+  <div id="components-div-262" x-timeline data-items="Project kickoff,Design phase completed,Development started,Beta release,Production launch"></div>
 
   <h3 id="components-h3-263">Stats</h3>
   <div id="components-div-264" style="display: flex; gap: 2rem; flex-wrap: wrap;">
-    <div id="components-div-265" data-wb="stat" data-value="12,345" data-label="Users" data-icon="👥"></div>
-    <div id="components-div-266" data-wb="stat" data-value="$98,765" data-label="Revenue" data-icon="💰" data-trend="up"></div>
-    <div id="components-div-267" data-wb="stat" data-value="543" data-label="Orders" data-icon="📦" data-trend="down"></div>
+    <div id="components-div-265" x-stat data-value="12,345" data-label="Users" data-icon="👥"></div>
+    <div id="components-div-266" x-stat data-value="$98,765" data-label="Revenue" data-icon="💰" data-trend="up"></div>
+    <div id="components-div-267" x-stat data-value="543" data-label="Orders" data-icon="📦" data-trend="down"></div>
   </div>
 
   <h3 id="components-h3-268">Code Block</h3>
-  <pre id="components-div-269" data-wb="code" data-language="javascript"><code>// JavaScript example
+  <wb-code id="components-div-269" language="javascript"><code>// JavaScript example
 const greeting = "Hello, World!";
 function sayHello(name) {
   return `Hello, ${name}!`;
 }
 console.log(sayHello("Developer"));</code></pre>
 
-  <pre id="components-div-270" data-wb="code" data-language="html"><code>&lt;!-- HTML example --&gt;
-&lt;button data-wb="ripple tooltip" data-tooltip="Click me!"&gt;
+  <wb-code id="components-div-270" language="html"><code>&lt;!-- HTML example --&gt;
+&lt;button x-ripple x-tooltip data-tooltip="Click me!"&gt;
   Interactive Button
 &lt;/button&gt;</code></pre>
 
   <h3 id="components-h3-271">JSON Viewer</h3>
-  <div id="components-div-272" data-wb="json">{"name": "John", "age": 30, "active": true, "roles": ["admin", "user"]}</div>
+  <div id="components-div-272" x-json>{"name": "John", "age": 30, "active": true, "roles": ["admin", "user"]}</div>
 
   <h3 id="components-h3-273">Keyboard Keys</h3>
-  <p id="components-p-274">Press <span id="components-span-275" data-wb="kbd">Ctrl</span> + <span id="components-span-276" data-wb="kbd">S</span> to save, or <span id="components-span-277" data-wb="kbd">⌘</span> + <span id="components-span-278" data-wb="kbd">K</span> on Mac.</p>
+  <p id="components-p-274">Press <span id="components-span-275" x-kbd>Ctrl</span> + <span id="components-span-276" x-kbd>S</span> to save, or <span id="components-span-277" x-kbd>⌘</span> + <span id="components-span-278" x-kbd>K</span> on Mac.</p>
 
   <h3 id="components-h3-279">Empty State</h3>
-  <div id="components-div-280" data-wb="empty" data-icon="📭" data-message="No results found" data-description="Try adjusting your search or filters"></div>
+  <div id="components-div-280" x-empty data-icon="📭" data-message="No results found" data-description="Try adjusting your search or filters"></div>
 </div>
 
 <!-- LAYOUT (19) -->
@@ -496,7 +557,7 @@ console.log(sayHello("Developer"));</code></pre>
   <h2 id="components-h2-282">📐 Layout (19 types)</h2>
 
   <h3 id="components-h3-283">Grid</h3>
-  <div id="components-div-284" data-wb="grid" data-columns="4" data-gap="1rem" style="margin-bottom: 1rem;">
+  <wb-grid id="components-div-284" data-columns="4" data-gap="1rem" style="margin-bottom: 1rem;"
     <div id="components-div-285" style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px;">1</div>
     <div id="components-div-286" style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px;">2</div>
     <div id="components-div-287" style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px;">3</div>
@@ -504,14 +565,14 @@ console.log(sayHello("Developer"));</code></pre>
   </div>
 
   <h3 id="components-h3-289">Stack</h3>
-  <div id="components-div-290" data-wb="stack" data-gap="0.5rem" style="margin-bottom: 1rem;">
+  <div id="components-div-290" x-stack data-gap="0.5rem" style="margin-bottom: 1rem;">
     <div id="components-div-291" style="background: var(--bg-secondary); padding: 0.5rem 1rem; border-radius: 4px;">Stacked Item 1</div>
     <div id="components-div-292" style="background: var(--bg-secondary); padding: 0.5rem 1rem; border-radius: 4px;">Stacked Item 2</div>
     <div id="components-div-293" style="background: var(--bg-secondary); padding: 0.5rem 1rem; border-radius: 4px;">Stacked Item 3</div>
   </div>
 
   <h3 id="components-h3-294">Cluster</h3>
-  <div id="components-div-295" data-wb="cluster" data-gap="0.5rem" style="margin-bottom: 1rem;">
+  <div id="components-div-295" x-cluster data-gap="0.5rem" style="margin-bottom: 1rem;">
     <span id="components-span-296" style="background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 999px;">Tag 1</span>
     <span id="components-span-297" style="background: var(--success); color: white; padding: 0.25rem 0.75rem; border-radius: 999px;">Tag 2</span>
     <span id="components-span-298" style="background: var(--warning); color: black; padding: 0.25rem 0.75rem; border-radius: 999px;">Tag 3</span>
@@ -521,10 +582,10 @@ console.log(sayHello("Developer"));</code></pre>
 
   <h3 id="components-h3-301">Draggable & Resizable</h3>
   <div id="components-div-302" style="position: relative; height: 200px; background: var(--bg-secondary); border-radius: 8px; margin-bottom: 1rem;">
-    <div id="components-div-303" data-wb="draggable" style="position: absolute; top: 20px; left: 20px; background: var(--primary); color: white; padding: 1rem; border-radius: 8px; cursor: move;">
+    <div id="components-div-303" x-draggable style="position: absolute; top: 20px; left: 20px; background: var(--primary); color: white; padding: 1rem; border-radius: 8px; cursor: move;">
       Drag me!
     </div>
-    <div id="components-div-304" data-wb="resizable" style="position: absolute; top: 20px; right: 20px; background: var(--success); color: white; padding: 1rem; border-radius: 8px; width: 120px; height: 80px;">
+    <div id="components-div-304" x-resizable style="position: absolute; top: 20px; right: 20px; background: var(--success); color: white; padding: 1rem; border-radius: 8px; width: 120px; height: 80px;">
       Resize me!
     </div>
   </div>
@@ -536,11 +597,11 @@ console.log(sayHello("Developer"));</code></pre>
 
   <h3 id="components-h3-307">Interactions</h3>
   <div id="components-div-308" style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem;">
-    <button id="components-button-309" class="wb-btn" data-wb="ripple toast" data-toast-message="From: Ripple Button -> To: Ripple Effect">Ripple Effect</button>
-    <button id="components-button-310" class="wb-btn" data-wb="copy toast" data-toast-message="From: Copy Text Button -> To: Clipboard" data-copy="Text copied to clipboard!">📋 Copy Text</button>
-    <button id="components-button-311" class="wb-btn" data-wb="share toast" data-toast-message="From: Share Button -> To: Share Dialog" data-share-title="Check this out!" data-share-url="https://example.com">📤 Share</button>
-    <button id="components-button-312" class="wb-btn" data-wb="print toast" data-toast-message="From: Print Button -> To: Print Dialog">🖨️ Print Page</button>
-    <button id="components-button-313" class="wb-btn" data-wb="fullscreen toast" data-toast-message="From: Fullscreen Button -> To: Fullscreen Mode">⛶ Fullscreen</button>
+    <button id="components-button-309" class="wb-btn" x-ripple x-toast data-toast-message="From: Ripple Button -> To: Ripple Effect">Ripple Effect</button>
+    <button id="components-button-310" class="wb-btn" x-copy x-toast data-toast-message="From: Copy Text Button -> To: Clipboard" data-copy="Text copied to clipboard!">📋 Copy Text</button>
+    <button id="components-button-311" class="wb-btn" x-share x-toast data-toast-message="From: Share Button -> To: Share Dialog" data-share-title="Check this out!" data-share-url="https://example.com">📤 Share</button>
+    <button id="components-button-312" class="wb-btn" x-print x-toast data-toast-message="From: Print Button -> To: Print Dialog">🖨️ Print Page</button>
+    <button id="components-button-313" class="wb-btn" x-fullscreen x-toast data-toast-message="From: Fullscreen Button -> To: Fullscreen Mode">⛶ Fullscreen</button>
   </div>
 
   <h3 id="components-h3-314">Tooltips</h3>
@@ -553,25 +614,25 @@ console.log(sayHello("Developer"));</code></pre>
 
   <h3 id="components-h3-320">Theme Controls</h3>
   <div id="components-div-321" style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
-    <button id="components-button-322" class="wb-btn" data-wb="darkmode toast" data-toast-message="From: Dark Mode Button -> To: Theme Toggle">🌙 Toggle Dark Mode</button>
-    <div id="components-div-323" data-wb="themecontrol"></div>
+    <button id="components-button-322" class="wb-btn" x-darkmode x-toast data-toast-message="From: Dark Mode Button -> To: Theme Toggle">🌙 Toggle Dark Mode</button>
+    <wb-themecontrol id="components-div-323"></div>
   </div>
 
   <h3 id="components-h3-324">Time & Countdown</h3>
   <div id="components-div-325" style="display: flex; gap: 2rem; align-items: center; margin-bottom: 1rem;">
-    <div id="components-div-326" data-wb="clock" style="font-size: 1.5rem; font-family: monospace;"></div>
-    <div id="components-div-327" data-wb="countdown" data-to="2025-12-31" style="font-size: 1.25rem;"></div>
-    <span id="components-span-328" data-wb="relativetime" data-date="2025-01-01">Jan 1, 2025</span>
+    <div id="components-div-326" x-clock style="font-size: 1.5rem; font-family: monospace;"></div>
+    <div id="components-div-327" x-countdown data-to="2025-12-31" style="font-size: 1.25rem;"></div>
+    <span id="components-span-328" x-relativetime data-date="2025-01-01">Jan 1, 2025</span>
   </div>
 
   <h3 id="components-h3-329">Text Utilities</h3>
-  <p id="components-p-330" data-wb="truncate" data-lines="2" style="max-width: 300px; background: var(--bg-secondary); padding: 1rem; border-radius: 8px;">
+  <p id="components-p-330" x-truncate data-lines="2" style="max-width: 300px; background: var(--bg-secondary); padding: 1rem; border-radius: 8px;">
     This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   </p>
 
   <h3 id="components-h3-331">Keyboard Shortcuts</h3>
-  <div id="components-div-332" data-wb="hotkey" data-key="ctrl+k" data-action="alert('Command palette!')">
-    <p id="components-p-333">Press <span id="components-span-334" data-wb="kbd">Ctrl</span> + <span id="components-span-335" data-wb="kbd">K</span> to trigger an alert</p>
+  <div id="components-div-332" x-hotkey data-key="ctrl+k" data-action="alert('Command palette!')">
+    <p id="components-p-333">Press <span id="components-span-334" x-kbd>Ctrl</span> + <span id="components-span-335" x-kbd>K</span> to trigger an alert</p>
   </div>
 </div>
 
@@ -581,14 +642,14 @@ console.log(sayHello("Developer"));</code></pre>
 
   <h3 id="components-h3-338">Images</h3>
   <div id="components-div-339" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
-    <img id="components-img-340" data-wb="image" data-lazy src="https://picsum.photos/200/150?r=10" alt="Lazy loaded" style="border-radius: 8px;">
+    <img id="components-img-340" x-image data-lazy src="https://picsum.photos/200/150?r=10" alt="Lazy loaded" style="border-radius: 8px;">
     <figure id="components-figure-341" data-caption="Image with caption">
       <img id="components-img-342" src="https://picsum.photos/200/150?r=11" alt="Figure" style="border-radius: 8px;">
     </figure>
   </div>
 
   <h3 id="components-h3-343">Gallery</h3>
-  <div id="components-div-344" data-wb="gallery" data-columns="4" style="margin-bottom: 1rem;">
+  <div id="components-div-344" x-gallery data-columns="4" style="margin-bottom: 1rem;">
     <img id="components-img-345" src="https://picsum.photos/200/200?r=20" alt="Gallery 1">
     <img id="components-img-346" src="https://picsum.photos/200/200?r=21" alt="Gallery 2">
     <img id="components-img-347" src="https://picsum.photos/200/200?r=22" alt="Gallery 3">
@@ -597,8 +658,8 @@ console.log(sayHello("Developer"));</code></pre>
 
   <h3 id="components-h3-349">Video Embeds</h3>
   <div id="components-div-350" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
-    <div id="components-div-351" data-wb="youtube" data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
-    <div id="components-div-352" data-wb="ratio" data-ratio="16:9" style="background: var(--bg-secondary); display: flex; align-items: center; justify-content: center;">
+    <div id="components-div-351" x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
+    <div id="components-div-352" x-ratio data-ratio="16:9" style="background: var(--bg-secondary); display: flex; align-items: center; justify-content: center;">
       16:9 Aspect Ratio
     </div>
   </div>
@@ -609,7 +670,7 @@ console.log(sayHello("Developer"));</code></pre>
   <h2 id="components-h2-354">📑 Tabs & Collapse</h2>
 
   <h3 id="components-h3-355">Collapsible Sections</h3>
-  <div id="components-div-356" data-wb="accordion">
+  <wb-accordion id="components-div-356">
     <div id="components-div-357" data-accordion-title="Section 1">
       <p id="components-p-358">Content for section 1. Accordion panels can contain any HTML content.</p>
     </div>
@@ -622,7 +683,7 @@ console.log(sayHello("Developer"));</code></pre>
   </div>
 
   <h3 id="components-h3-363">Tabs</h3>
-  <div id="components-div-364" data-wb="tabs">
+  <wb-tabs id="components-div-364">
     <div id="components-div-365" data-tab-title="Tab 1">
       <p id="components-p-366">Content for tab 1. Tabs switch between content panels.</p>
     </div>
@@ -635,7 +696,7 @@ console.log(sayHello("Developer"));</code></pre>
   </div>
 
   <h3 id="components-h3-371">Collapse</h3>
-  <button id="components-button-372" class="wb-btn" data-wb="collapse toast" data-toast-message="From: Toggle Content Button -> To: Collapse Section" data-target="#collapse-demo">Toggle Content</button>
+  <button id="components-button-372" class="wb-btn" x-collapse x-toast data-toast-message="From: Toggle Content Button -> To: Collapse Section" data-target="#collapse-demo">Toggle Content</button>
   <div id="collapse-demo" style="margin-top: 1rem; padding: 1rem; background: var(--bg-secondary); border-radius: 8px;">
     This content can be shown or hidden by clicking the button above.
   </div>
@@ -667,5 +728,22 @@ console.log(sayHello("Developer"));</code></pre>
 .wb-btn:hover {
   opacity: 0.9;
   transform: translateY(-1px);
+}
+.wb-btn--secondary {
+  background: var(--bg-secondary, #374151);
+  color: var(--text-primary, #f3f4f6);
+}
+.wb-btn--ghost {
+  background: transparent;
+  border: 1px solid var(--border-color, #4b5563);
+  color: var(--text-secondary, #9ca3af);
+}
+.wb-btn--ghost:hover {
+  background: var(--bg-secondary, #374151);
+  color: var(--text-primary, #f3f4f6);
+}
+.wb-btn--sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
 }
 </style>

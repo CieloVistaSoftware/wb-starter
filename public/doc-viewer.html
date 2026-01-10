@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="/src/styles/themes.css">
   <link rel="stylesheet" href="/src/styles/site.css">
   <link rel="stylesheet" href="/src/styles/transitions.css">
+  <link rel="stylesheet" href="/node_modules/highlight.js/styles/atom-one-dark.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body { 
       padding: 2rem; 
@@ -44,10 +48,10 @@
     .wb-mdhtml p { margin-bottom: 1rem; color: var(--text-secondary); }
     .wb-mdhtml ul, .wb-mdhtml ol { margin-bottom: 1rem; padding-left: 1.5rem; color: var(--text-secondary); }
     .wb-mdhtml li { margin-bottom: 0.5rem; }
-    .wb-mdhtml code { background: var(--bg-tertiary); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: var(--text-primary); font-weight: 600; }
+    .wb-mdhtml code { background: var(--bg-tertiary); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.9em; color: var(--text-primary); font-weight: 600; }
     .wb-mdhtml a { color: var(--primary-light); text-decoration: underline; }
-    .wb-mdhtml pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
-    .wb-mdhtml pre code { background: none; padding: 0; color: var(--text-primary); font-weight: normal; }
+    .wb-mdhtml pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 0 auto 1.5rem auto; border: 1px solid var(--border-color); line-height: 1.2; width: fit-content; min-width: 50%; }
+    .wb-mdhtml pre code { background: none; padding: 0; color: var(--text-primary); font-weight: normal !important; font-size: 13px; font-family: Consolas, 'Courier New', monospace; white-space: pre; font-variant-ligatures: none; tab-size: 4; letter-spacing: 0; }
     .wb-mdhtml blockquote { border-left: 4px solid var(--primary); margin: 0 0 1.5rem 0; padding-left: 1rem; color: var(--text-muted); font-style: italic; }
     .wb-mdhtml table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
     .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; }
@@ -57,15 +61,22 @@
     .error { color: var(--danger); padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 6px; border: 1px solid var(--danger); }
   </style>
 </head>
-<body>
-  <a href="javascript:window.close()" class="back-link">✕ Close</a>
+<body id="doc-viewer-body">
+  <a id="close-button" href="javascript:window.close()" class="back-link">✕ Close</a>
   <div id="content" class="wb-mdhtml">
-    <div class="loading">Loading documentation...</div>
+    <div id="loading-message" class="loading">Loading documentation...</div>
   </div>
 
   <script type="module">
     import { mdhtml } from '/src/behaviors/js/mdhtml.js';
+    import hljs from '/src/lib/highlight.js';
     
+    // Hide close button if not opened via script/link
+    if (!window.opener) {
+      const closeBtn = document.getElementById('close-button');
+      if (closeBtn) closeBtn.style.display = 'none';
+    }
+
     const params = new URLSearchParams(window.location.search);
     const file = params.get('file');
     
@@ -101,6 +112,18 @@
       const href = link.getAttribute('href');
       if (!href) return;
       
+      // Handle internal anchor links (e.g., #overview)
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        const id = decodeURIComponent(href.substring(1));
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          history.pushState(null, '', href);
+        }
+        return;
+      }
+      
       // Check if it's a relative markdown link
       // Matches .md or .md#anchor, but not http:// or /absolute
       if (href.match(/\.md(#.*)?$/) && !href.match(/^https?:/) && !href.startsWith('/')) {
@@ -134,8 +157,19 @@
       }
     });
 
-    // Scroll to hash after load
+    // Scroll to hash after load and apply highlighting
     document.addEventListener('wb:mdhtml:loaded', () => {
+      // Apply syntax highlighting
+      document.querySelectorAll('pre code').forEach((block) => {
+        // If no language class is present, force plaintext to prevent auto-detection
+        // which can mess up ASCII art alignment
+        const hasLanguage = Array.from(block.classList).some(cls => cls.startsWith('language-'));
+        if (!hasLanguage) {
+           block.classList.add('language-plaintext');
+        }
+        hljs.highlightElement(block);
+      });
+
       if (window.location.hash) {
         // Decode hash to handle special characters
         const id = decodeURIComponent(window.location.hash.substring(1));
@@ -153,7 +187,7 @@
       content.dataset.sanitize = "false";
       
       // Initialize mdhtml
-      mdhtml(content).catch(err => {
+      mdhtml(content, { size: 'md' }).catch(err => {
         content.innerHTML = `<div class="error">Failed to load documentation: ${err.message}</div>`;
       });
     } else {

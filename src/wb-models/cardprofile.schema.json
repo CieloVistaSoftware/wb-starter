@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Profile",
+  "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
+  "behavior": "cardprofile",
+  "baseClass": "wb-card",
+  
+  "$extends": "card.base.schema.json",
+  "$inheritance": {
+    "type": "IS-A",
+    "parent": "card",
+    "inherits": [
+      "semantic.element",
+      "compliance.containerTag",
+      "accessibility"
+    ]
+  },
+  
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Person's name",
+      "required": true,
+      "default": "John Doe"
+    },
+    "role": {
+      "type": "string",
+      "description": "Job title or role",
+      "default": "Designer"
+    },
+    "avatar": {
+      "type": "string",
+      "description": "Avatar image URL",
+      "default": "https://i.pravatar.cc/80?img=1"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Short biography",
+      "inputType": "textarea"
+    },
+    "cover": {
+      "type": "string",
+      "description": "Cover/banner image URL"
+    },
+    "size": {
+      "type": "string",
+      "description": "Avatar size",
+      "enum": ["sm", "md", "lg"],
+      "default": "md",
+      "inputType": "select"
+    },
+    "align": {
+      "type": "string",
+      "description": "Content alignment",
+      "enum": ["left", "center"],
+      "default": "center",
+      "inputType": "select"
+    },
+    "hoverText": {
+      "type": "string",
+      "description": "Tooltip text shown on hover",
+      "default": "",
+      "appliesAttribute": "title"
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "cover",
+      "tag": "figure",
+      "class": "wb-card__profile-cover",
+      "createdWhen": "cover",
+      "children": [
+        { "name": "cover-img", "tag": "img", "src": "{{cover}}", "alt": "" }
+      ]
+    },
+    {
+      "name": "avatar",
+      "tag": "figure",
+      "class": "wb-card__profile-avatar"
+    },
+    {
+      "name": "avatar-img",
+      "tag": "img",
+      "parent": "avatar",
+      "src": "{{avatar}}",
+      "alt": "Profile photo of {{name}}"
+    },
+    {
+      "name": "header",
+      "tag": "header",
+      "required": true
+    },
+    {
+      "name": "name",
+      "tag": "h3",
+      "parent": "header",
+      "class": "wb-card__profile-name",
+      "content": "{{name}}",
+      "required": true
+    },
+    {
+      "name": "role",
+      "tag": "p",
+      "parent": "header",
+      "class": "wb-card__profile-role",
+      "content": "{{role}}",
+      "createdWhen": "role"
+    },
+    {
+      "name": "bio",
+      "tag": "p",
+      "class": "wb-card__profile-bio",
+      "content": "{{bio}}",
+      "createdWhen": "bio"
+    }
+  ],
+  
+  "$methods": {
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "update": {
+      "description": "Updates profile properties",
+      "params": ["options"]
+    }
+  },
+  
+  "compliance": {
+    "$inherits": "card.base.schema.json#compliance",
+    "baseClass": "wb-card",
+    "additionalClasses": ["wb-card--profile"]
+  },
+  
+  "accessibility": {
+    "$inherits": "card.base.schema.json#accessibility",
+    "avatar": {
+      "alt": "Profile photo of {name}"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<article data-wb=\"cardprofile\" data-name=\"John Doe\"></article>",
+      "<wb-card-profile name=\"Jane\" role=\"Designer\" avatar=\"https://i.pravatar.cc/80\"></wb-card-profile>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "name": "John Doe" },
+        { "name": "John Doe", "role": "Developer" },
+        { "name": "John Doe", "avatar": "https://i.pravatar.cc/80" },
+        { "name": "John Doe", "bio": "Short bio." },
+        { "name": "John Doe", "cover": "https://picsum.photos/400/100" },
+        { "name": "John Doe", "size": "sm" },
+        { "name": "John Doe", "size": "lg" },
+        { "name": "John Doe", "align": "left" },
+        { "name": "Full", "role": "CEO", "avatar": "https://i.pravatar.cc/80", "bio": "Leader.", "cover": "https://picsum.photos/400/100", "size": "lg", "align": "center" }
+      ]
+    }
+  },
+  
+  "builder": {
+    "category": "Cards",
+    "icon": "👨",
+    "name": "Card Profile",
+    "description": "Simple profile card with avatar",
+    "defaults": {
+      "name": "John Doe",
+      "role": "Designer",
+      "avatar": "https://i.pravatar.cc/80?img=1",
+      "bio": "",
+      "cover": "",
+      "size": "md",
+      "align": "center"
+    }
+  }
+}

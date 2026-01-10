@@ -10,7 +10,7 @@
 
 <div id="docs-container" class="page__section">
   <div id="docs-loading" style="text-align: center; padding: 2rem;">
-    <div data-wb="spinner"></div>
+    <wb-spinner></div>
     <p style="margin-top: 1rem; color: var(--text-muted);">Loading documentation...</p>
   </div>
 </div>
@@ -134,7 +134,17 @@
       if (!res.ok) throw new Error('Failed to fetch manifest');
       fullManifest = await res.json();
       
-      renderDocs(fullManifest);
+      // Check for query param
+      const urlParams = new URLSearchParams(window.location.search);
+      const query = urlParams.get('q');
+      
+      if (query && searchInput) {
+        searchInput.value = query;
+        const filtered = filterManifest(query);
+        renderDocs(filtered);
+      } else {
+        renderDocs(fullManifest);
+      }
 
       if (searchInput) {
         searchInput.addEventListener('input', (e) => {

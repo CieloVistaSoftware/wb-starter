@@ -13,10 +13,10 @@ The `details` component enhances the native HTML5 `<details>` and `<summary>` el
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="details"` to a `<details>` element or any container you want to convert.
+The `details` behavior is automatically injected into `<details>` elements.
 
 ```html
-<details data-wb="details">
+<details>
   <summary>More Info</summary>
   <p>Hidden content here.</p>
 </details>
@@ -42,7 +42,7 @@ Access via `element.wbDetails`:
 A standard expandable section.
 
 ```html
-<details data-wb="details">
+<details>
   <summary>System Requirements</summary>
   <ul>
     <li>Node.js 14+</li>

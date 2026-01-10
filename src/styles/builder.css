@@ -186,6 +186,10 @@ body {
   box-sizing: border-box;
 }
 
+.sidebar.resizing, .panel-right.resizing {
+  transition: none !important;
+}
+
 /* Collapsed state */
 .sidebar.collapsed {
   width: 1.5rem !important;
@@ -279,25 +283,25 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-  width: 8px;
+  width: 12px;
   cursor: col-resize;
   background: transparent;
-  z-index: 20;
+  z-index: 1000;
   transition: background 0.2s;
 }
 
 .sidebar-resize-handle::before {
   content: '';
   position: absolute;
-  right: 2px;
+  right: 4px;
   top: 50%;
   transform: translateY(-50%);
   width: 4px;
   height: 40px;
   background: var(--border-color);
   border-radius: 2px;
-  opacity: 0;
-  transition: opacity 0.2s;
+  opacity: 0.5;
+  transition: opacity 0.2s, background 0.2s;
 }
 
 .sidebar-resize-handle:hover::before,
@@ -307,7 +311,7 @@ body {
 }
 
 .sidebar-resize-handle:hover {
-  background: linear-gradient(to left, hsla(var(--hue-primary), 70%, 50%, 0.15), transparent);
+  background: linear-gradient(to left, hsla(var(--hue-primary), 70%, 50%, 0.2), transparent);
 }
 
 .sidebar.collapsed .sidebar-resize-handle {
@@ -794,25 +798,25 @@ body {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 8px;
+  width: 12px;
   cursor: col-resize;
   background: transparent;
-  z-index: 20;
+  z-index: 1000;
   transition: background 0.2s;
 }
 
 .panel-resize-handle::before {
   content: '';
   position: absolute;
-  left: 2px;
+  left: 4px;
   top: 50%;
   transform: translateY(-50%);
   width: 4px;
   height: 40px;
   background: var(--border-color);
   border-radius: 2px;
-  opacity: 0;
-  transition: opacity 0.2s;
+  opacity: 0.5;
+  transition: opacity 0.2s, background 0.2s;
 }
 
 .panel-resize-handle:hover::before,
@@ -822,7 +826,7 @@ body {
 }
 
 .panel-resize-handle:hover {
-  background: linear-gradient(to right, hsla(var(--hue-primary), 70%, 50%, 0.15), transparent);
+  background: linear-gradient(to right, hsla(var(--hue-primary), 70%, 50%, 0.2), transparent);
 }
 
 .panel-right.collapsed .panel-resize-handle {
@@ -1070,6 +1074,14 @@ body {
   border-radius: 6px;
   margin-bottom: 0.5rem;
   transition: all 0.15s;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.dropped > * {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .dropped:hover { border-color: var(--primary); }
@@ -1731,7 +1743,7 @@ body {
 }
 
 /* Ensure builder component is always visible for tests */
-[data-wb="builder"] {
+wb-builder {
   display: block !important;
   visibility: visible !important;
 }

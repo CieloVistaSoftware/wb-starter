@@ -9,8 +9,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { PATHS, readFile, fileExists } from '../base';
 
-const INDEX_PATH = path.join(PATHS.src, 'behaviors', 'index.js');
-const JS_DIR = path.join(PATHS.src, 'behaviors', 'js');
+const INDEX_PATH = path.join(PATHS.src, 'wb-viewmodels', 'index.js');
+const JS_DIR = path.join(PATHS.src, 'wb-viewmodels');
 
 function extractBehaviorModules(source: string): Record<string, string> {
   const match = source.match(/const behaviorModules = ({[\s\S]*?});/);

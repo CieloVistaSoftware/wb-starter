@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "card.schema.json",
+  "title": "Card Component",
+  "description": "Base card component. IS-A article, HAS-A header, main, footer.",
+  "behavior": "card",
+  "baseClass": "wb-card",
+  
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Card title displayed in header",
+      "default": ""
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Card subtitle displayed below title",
+      "default": ""
+    },
+    "footer": {
+      "type": "string",
+      "description": "Card footer text",
+      "default": ""
+    },
+    "elevated": {
+      "type": "boolean",
+      "description": "Add drop shadow",
+      "default": false,
+      "appliesClass": "wb-card--elevated"
+    },
+    "clickable": {
+      "type": "boolean",
+      "description": "Make card clickable",
+      "default": false,
+      "appliesClass": "wb-card--clickable"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual style variant",
+      "enum": ["default", "glass", "bordered", "flat"],
+      "default": "default"
+    }
+  },
+  
+  "$view": [
+    { 
+      "name": "header", 
+      "tag": "header", 
+      "createdWhen": "title OR subtitle"
+    },
+    { 
+      "name": "title", 
+      "tag": "h3", 
+      "parent": "header", 
+      "content": "{{title}}",
+      "createdWhen": "title"
+    },
+    { 
+      "name": "subtitle", 
+      "tag": "p", 
+      "parent": "header", 
+      "content": "{{subtitle}}",
+      "createdWhen": "subtitle"
+    },
+    { 
+      "name": "main", 
+      "tag": "main", 
+      "required": true, 
+      "content": "{{slot}}"
+    },
+    { 
+      "name": "footer", 
+      "tag": "footer", 
+      "content": "{{footer}}",
+      "createdWhen": "footer"
+    }
+  ],
+  
+  "$methods": {
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles card visibility",
+      "params": []
+    },
+    "update": {
+      "description": "Updates card properties",
+      "params": ["options"]
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-card title=\"Test\">Content</wb-card>",
+      "<article data-wb=\"card\" data-title=\"Test\">Content</article>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "title": "Card" },
+        { "title": "Card", "subtitle": "Subtitle" },
+        { "title": "Card", "footer": "Footer" },
+        { "title": "Card", "subtitle": "Sub", "footer": "Foot" },
+        { "title": "Card", "elevated": true }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "cards",
+    "icon": "🃏",
+    "variants": ["cardprofile", "cardpricing", "cardstats", "cardimage"]
+  }
+}

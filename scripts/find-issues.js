@@ -1,7 +1,11 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const ROOT = '.';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const ROOT = path.resolve(__dirname, '..');
 const PATHS = {
   src: path.join(ROOT, 'src'),
   pages: path.join(ROOT, 'pages'),
@@ -68,6 +72,6 @@ for (const file of htmlFiles) {
 }
 
 const output = { jsIssues, htmlIssues };
-fs.writeFileSync('data/integrity-issues.json', JSON.stringify(output, null, 2));
+fs.writeFileSync(path.join(ROOT, 'data/integrity-issues.json'), JSON.stringify(output, null, 2));
 console.log('Issues written to data/integrity-issues.json');
 console.log(`Found ${jsIssues.length} broken JS imports and ${htmlIssues.length} broken HTML links`);

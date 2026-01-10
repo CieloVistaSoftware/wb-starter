@@ -180,7 +180,7 @@ test.describe('Fix Verification Tests', () => {
     await expect(page.locator('#test-empty')).toHaveClass(/wb-empty/);
 
     // 039: Code on PRE
-    await expect(page.locator('#test-code')).toHaveClass(/wb-code/);
+    await expect(page.locator('#test-code')).toHaveClass(/x-code/);
 
     // 042: Stat
     await expect(page.locator('#test-stat')).toHaveClass(/wb-stat/);

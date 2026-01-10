@@ -12,10 +12,10 @@ The `select` component enhances the native `<select>` element with consistent st
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="select"` to a `<select>` element.
+The `select` behavior is automatically injected into `<select>` elements.
 
 ```html
-<select data-wb="select">
+<select>
   <option>Option 1</option>
   <option>Option 2</option>
 </select>
@@ -39,7 +39,7 @@ Access via `element.wbSelect`:
 A standard dropdown with custom styles.
 
 ```html
-<select data-wb="select">
+<select>
   <option value="1">One</option>
   <option value="2">Two</option>
 </select>
@@ -49,7 +49,7 @@ A standard dropdown with custom styles.
 Visually distinct to indicate search capability.
 
 ```html
-<select data-wb="select" data-searchable="true">
+<select data-searchable="true">
   <!-- options -->
 </select>
 ```

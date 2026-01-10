@@ -1,0 +1,145 @@
+<!-- 
+  EXAMPLES PAGE STUB
+  ==================
+  Edit this page to showcase code examples.
+  
+  Suggested sections:
+  - Example cards with live demos
+  - Code snippets
+  - Sandbox links
+-->
+
+<section class="page-header" style="text-align: center; padding: 3rem 2rem;">
+  <h1>Examples</h1>
+  <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+    Learn by example. Copy, paste, and customize.
+  </p>
+</section>
+
+<section class="examples-grid" style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+    
+    <wb-card variant="elevated">
+      <h3 style="margin-top: 0;">Basic Setup</h3>
+      <p style="color: var(--text-secondary);">
+        A minimal example showing the basic configuration.
+      </p>
+      <wb-card variant="glass" style="margin: 1rem 0;">
+        <code style="display: block; white-space: pre; font-size: 0.875rem;">import { init } from 'package';
+
+init({
+  debug: true
+});</code>
+      </wb-card>
+      <div style="display: flex; gap: 0.5rem;">
+        <wb-button variant="outline" size="sm">View Code</wb-button>
+        <wb-button variant="ghost" size="sm">CodeSandbox</wb-button>
+      </div>
+    </wb-card>
+    
+    <wb-card variant="elevated">
+      <h3 style="margin-top: 0;">With React</h3>
+      <p style="color: var(--text-secondary);">
+        Integration example for React applications.
+      </p>
+      <wb-card variant="glass" style="margin: 1rem 0;">
+        <code style="display: block; white-space: pre; font-size: 0.875rem;">import { useFeature } from 'package/react';
+
+function App() {
+  const feature = useFeature();
+  return &lt;div&gt;{feature}&lt;/div&gt;;
+}</code>
+      </wb-card>
+      <div style="display: flex; gap: 0.5rem;">
+        <wb-button variant="outline" size="sm">View Code</wb-button>
+        <wb-button variant="ghost" size="sm">CodeSandbox</wb-button>
+      </div>
+    </wb-card>
+    
+    <wb-card variant="elevated">
+      <h3 style="margin-top: 0;">With Vue</h3>
+      <p style="color: var(--text-secondary);">
+        Integration example for Vue applications.
+      </p>
+      <wb-card variant="glass" style="margin: 1rem 0;">
+        <code style="display: block; white-space: pre; font-size: 0.875rem;">&lt;script setup&gt;
+import { useFeature } from 'package/vue';
+const feature = useFeature();
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div&gt;{{ feature }}&lt;/div&gt;
+&lt;/template&gt;</code>
+      </wb-card>
+      <div style="display: flex; gap: 0.5rem;">
+        <wb-button variant="outline" size="sm">View Code</wb-button>
+        <wb-button variant="ghost" size="sm">CodeSandbox</wb-button>
+      </div>
+    </wb-card>
+    
+    <wb-card variant="elevated">
+      <h3 style="margin-top: 0;">Custom Theming</h3>
+      <p style="color: var(--text-secondary);">
+        How to customize colors and styling.
+      </p>
+      <wb-card variant="glass" style="margin: 1rem 0;">
+        <code style="display: block; white-space: pre; font-size: 0.875rem;">init({
+  theme: {
+    primary: '#6366f1',
+    secondary: '#8b5cf6',
+    radius: '8px'
+  }
+});</code>
+      </wb-card>
+      <div style="display: flex; gap: 0.5rem;">
+        <wb-button variant="outline" size="sm">View Code</wb-button>
+        <wb-button variant="ghost" size="sm">CodeSandbox</wb-button>
+      </div>
+    </wb-card>
+    
+    <wb-card variant="elevated">
+      <h3 style="margin-top: 0;">API Integration</h3>
+      <p style="color: var(--text-secondary);">
+        Connecting to external APIs and services.
+      </p>
+      <wb-card variant="glass" style="margin: 1rem 0;">
+        <code style="display: block; white-space: pre; font-size: 0.875rem;">const client = createClient({
+  apiKey: process.env.API_KEY,
+  baseUrl: 'https://api.example.com'
+});
+
+const data = await client.fetch();</code>
+      </wb-card>
+      <div style="display: flex; gap: 0.5rem;">
+        <wb-button variant="outline" size="sm">View Code</wb-button>
+        <wb-button variant="ghost" size="sm">CodeSandbox</wb-button>
+      </div>
+    </wb-card>
+    
+    <wb-card variant="elevated">
+      <h3 style="margin-top: 0;">Full Application</h3>
+      <p style="color: var(--text-secondary);">
+        A complete application example with all features.
+      </p>
+      <wb-card variant="glass" style="margin: 1rem 0;">
+        <code style="display: block; white-space: pre; font-size: 0.875rem;">// See repository for full example
+git clone https://github.com/...
+cd example-app
+npm install && npm run dev</code>
+      </wb-card>
+      <div style="display: flex; gap: 0.5rem;">
+        <wb-button variant="outline" size="sm">View Code</wb-button>
+        <wb-button variant="ghost" size="sm">Live Demo</wb-button>
+      </div>
+    </wb-card>
+    
+  </div>
+</section>
+
+<section class="more-examples" style="padding: 3rem 2rem; background: var(--surface-elevated); text-align: center;">
+  <h2>Want More Examples?</h2>
+  <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+    Check out our GitHub repository for additional examples and templates.
+  </p>
+  <wb-button variant="gradient">View All Examples on GitHub</wb-button>
+</section>

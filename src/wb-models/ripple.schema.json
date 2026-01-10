@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ripple.schema.json",
+  "title": "Ripple",
+  "description": "Material Design ripple effect on click",
+  
+  "behavior": "ripple",
+  "baseClass": "wb-ripple",
+  
+  "semanticElement": { "tagName": "div" },
+  
+  "properties": {
+    "color": { "type": "string", "description": "Ripple color", "default": "rgba(255,255,255,0.3)" },
+    "duration": { "type": "number", "description": "Animation duration (ms)", "default": 600 },
+    "centered": { "type": "boolean", "description": "Center ripple instead of click position", "default": false }
+  },
+  
+  "$view": [
+    { "name": "effect", "tag": "span", "public": false, "description": "Ripple effect element (created on click)" }
+  ],
+  
+  "$methods": {
+    "trigger": { "description": "Manually triggers ripple", "params": ["x", "y"] }
+  },
+  
+  "$cssAPI": {
+    "--wb-ripple-color": { "default": "rgba(255,255,255,0.3)", "description": "Ripple color" },
+    "--wb-ripple-duration": { "default": "600ms", "description": "Animation duration" }
+  },
+  
+  "events": {
+    "wb:ripple:show": { "description": "Ripple started", "detail": { "x": "number", "y": "number" } }
+  },
+  
+  "test": {
+    "setup": [
+      "<button data-wb=\"ripple\">Click me</button>",
+      "<div data-wb=\"ripple\" data-color=\"rgba(0,0,0,0.2)\">Dark</div>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        { "color": "rgba(0,0,0,0.2)" },
+        { "duration": 300 }
+      ]
+    }
+  },
+  
+  "_metadata": { "category": "effects", "icon": "💧", "since": "1.0.0", "status": "stable" }
+}

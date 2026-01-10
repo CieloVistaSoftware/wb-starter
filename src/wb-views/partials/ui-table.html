@@ -1,0 +1,15 @@
+<wb-table class="wb-table-wrapper"
+  <input wb-if="searchable" type="search" placeholder="Search..." class="wb-table__search" style="width:100%;padding:0.5rem;margin-bottom:0.5rem;border:1px solid var(--border-color,#374151);border-radius:6px;background:var(--bg-secondary,#1f2937);color:var(--text-primary,#f9fafb);">
+  <table class="wb-table {{striped ? 'wb-table--striped' : ''}} {{hover ? 'wb-table--hover' : ''}} {{bordered ? 'wb-table--bordered' : ''}} {{compact ? 'wb-table--compact' : ''}}">
+    <thead>
+      <tr>
+        <th wb-for="header in headers" data-col="{{headerIndex}}">{{header}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr wb-for="row in rows">
+        <td wb-for="cell in row">{{cell}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,18 +1,88 @@
 # Web Behaviors (WB) Reference
 
-This document lists all available behaviors in the WB Behaviors, categorized by function.
+This document lists all available behaviors in the WB Starter kit, categorized by function.
 
-## Usage
+---
 
-### Auto Injection (Preview)
-Behaviors are automatically attached to standard HTML5 semantic elements. This is the recommended way to use WB Behaviors.
+## What is a Behavior?
+
+A **behavior** is a JavaScript function that **enhances** an HTML element by adding:
+- CSS classes (styling hooks)
+- Inline styles (visual enhancement)
+- Event listeners (interactivity)
+- ARIA attributes (accessibility)
+- Data attributes (state tracking)
+
+A behavior does **NOT** change what the element fundamentally is - it enhances it.
+
+---
+
+## Syntax & Usage
+
+Behaviors are applied using attributes with a configurable prefix (default: `x-`).
+
+### 1. Decoration (`x-{behavior}`)
+Enhances an element without changing its fundamental structure.
 
 ```html
-<!-- Automatically becomes a Card -->
-<article>...</article>
+<!-- Add ripple effect to a button -->
+<button x-ripple>Click Me</button>
 
-<!-- Automatically becomes a Navigation Bar -->
-<nav>...</nav>
+<!-- Add tooltip -->
+<div x-tooltip="Hello World">Hover Me</div>
+```
+
+| Element | Behavior | Result |
+|---------|----------|--------|
+| `<button>` | `button` | Button with variants, sizes, loading state |
+| `<table>` | `table` | Table with sorting, striping, hover |
+| `<details>` | `details` | Details with smooth animation |
+| `<dialog>` | `dialog` | Dialog with backdrop, animations |
+| `<img>` | `image` | Lazy loading, fade-in, lightbox |
+
+### 2. Morphing (`x-as-{behavior}`)
+Transforms an element into a complex component. The `-as-` infix is required for morphing behaviors to make the transformation explicit.
+
+```html
+<!-- Explicitly morph an article into a card -->
+<article x-as-card>
+  <header><h3>Title</h3></header>
+  <main>Content</main>
+</article>
+```
+
+| Element | Behavior | Result |
+|---------|----------|--------|
+| `<article>` | `card` | Morphs into card component |
+| `<nav>` | `navbar` | Morphs into navigation bar |
+| `<aside>` | `sidebar` | Morphs into sidebar component |
+
+### 3. Configuration (Optional)
+If the `x-` prefix conflicts with other libraries (like Alpine.js), you can change it globally.
+
+```javascript
+// In your main entry point
+WB.init({
+  prefix: 'b' // Changes syntax to b-ripple, b-as-card, etc.
+});
+```
+
+---
+
+## Auto Injection
+
+Behaviors can be configured to automatically attach to standard HTML5 semantic elements. This feature is **optional** and disabled by default.
+
+To enable, set `"autoInject": true` in your `config/site.json` or pass it to `WB.init()`.
+
+```html
+<!-- When autoInject is enabled: -->
+
+<!-- Decorating: dialog gets backdrop and animations -->
+<dialog>...</dialog>
+
+<!-- Decorating: img gets lazy loading and lightbox -->
+<img src="...">
 ```
 
 ### Custom Tags (Declarative)
@@ -21,7 +91,7 @@ For layouts and specific components, you can use custom `<wb-*>` tags. This prov
 ```html
 <!-- Declarative Layout -->
 <wb-grid columns="3">
-  <wb-card>...</wb-card>
+  <article>...</article>
 </wb-grid>
 
 <!-- Semantic Aliases -->
@@ -29,166 +99,172 @@ For layouts and specific components, you can use custom `<wb-*>` tags. This prov
 <wb-column>...</wb-column> <!-- Vertical Stack -->
 ```
 
-### Explicit Injection (Legacy)
-You can also apply any behavior by adding the `data-wb` attribute to an HTML element:
+**Note:** `<wb-row>` is an alias for `flex` behavior and can be used anywhere to create horizontal layouts.
 
-```html
-<div 
-  data-wb="behavior-name" 
-  data-option="value">
-</div>
-```
-
-You can combine multiple behaviors:
-
-```html
-<div 
-  data-wb="card animate" 
-  data-animation="fadein">
-</div>
-```
+---
 
 ## Categories
 
 ### 1. Semantic HTML & Forms
 Enhances standard HTML elements with better styling and functionality.
 
-| Behavior | Description | Semantic Element (Auto) | Usage (Explicit) |
-|----------|-------------|-------------------------|------------------|
-| `audio` | Enhanced audio player | `<audio>` | `<audio data-wb="audio">` |
-| `video` | Enhanced video player | `<video>` | `<video data-wb="video">` |
-| `img` | Enhanced image with lazy loading | `<img>` | `<img data-wb="img">` |
-| `figure` | Figure with caption support | `<figure>` | `<figure data-wb="figure">` |
-| `table` | Sortable, responsive tables | `<table>` | `<table data-wb="table">` |
-| `code` | Inline code styling | `<code>` | `<code data-wb="code">` |
-| `pre` | Code block with copy button | `<pre>` | `<pre data-wb="pre">` |
-| `input` | Styled input field | `<input>` | `<input data-wb="input">` |
-| `textarea` | Styled textarea | `<textarea>` | `<textarea data-wb="textarea">` |
-| `select` | Custom select dropdown | `<select>` | `<select data-wb="select">` |
-| `checkbox` | Custom checkbox | `<input type="checkbox">` | `<input type="checkbox" data-wb="checkbox">` |
-| `radio` | Custom radio button | `<input type="radio">` | `<input type="radio" data-wb="radio">` |
-| `button` | Styled button with states | `<button>` | `<button data-wb="button">` |
-| `switch` | Toggle switch | - | `<input type="checkbox" data-wb="switch">` |
-| `range` | Range slider | `<input type="range">` | `<input type="range" data-wb="range">` |
-| `rating` | Star rating input | - | `<div data-wb="rating">` |
-| `form` | Form validation and handling | `<form>` | `<form data-wb="form">` |
-| `details` | Animated details/summary | `<details>` | `<details data-wb="details">` |
-| `dialog` | Dialog/Modal trigger | `<dialog>` | `<button data-wb="dialog">` |
+| Behavior | Element | Type | Description |
+|----------|---------|------|-------------|
+| [`audio`](components/semantics/audio.md) | `<audio>` | Decorate | Enhanced audio player styling |
+| [`video`](components/semantics/video.md) | `<video>` | Decorate | Enhanced video player styling |
+| [`img`](components/semantics/img.md) | `<img>` | **Morph** → `image` | Lazy loading, fade-in, lightbox |
+| [`figure`](components/semantics/figure.md) | `<figure>` | Decorate | Figure with caption styling |
+| [`table`](components/semantics/table.md) | `<table>` | Decorate | Sortable headers, striped rows |
+| [`code`](components/semantics/code.md) | `<code>` | Decorate | Inline code styling |
+| [`pre`](components/semantics/pre.md) | `<pre>` | Decorate | Code block with copy button |
+| [`input`](components/semantics/input.md) | `<input>` | Decorate | Styled input with variants |
+| [`textarea`](components/semantics/textarea.md) | `<textarea>` | Decorate | Auto-resize, counter |
+| [`select`](components/semantics/select.md) | `<select>` | Decorate | Custom dropdown styling |
+| [`checkbox`](components/semantics/checkbox.md) | `<input type="checkbox">` | Decorate | Custom checkbox styling |
+| [`radio`](components/semantics/radio.md) | `<input type="radio">` | Decorate | Custom radio styling |
+| [`button`](components/semantics/button.md) | `<button>` | Decorate | Variants, sizes, loading state |
+| [`switch`](components/semantics/switch.md) | `<input type="checkbox">` | Decorate | Toggle switch UI |
+| [`range`](components/semantics/range.md) | `<input type="range">` | Decorate | Custom track/thumb styling |
+| [`rating`](components/semantics/rating.md) | `<div>` | - | Star rating input |
+| [`form`](components/semantics/form.md) | `<form>` | Decorate | Validation UI, loading states |
+| [`details`](components/semantics/details.md) | `<details>` | Decorate | Smooth expand/collapse animation |
+| [`dialog`](components/semantics/dialog.md) | `<dialog>` | Decorate | Backdrop, close button, animations |
 
 ### 2. UI Components
 Rich interactive components.
 
-| Behavior | Description | Semantic Element (Auto) | Usage (Explicit) |
-|----------|-------------|-------------------------|------------------|
-| `hero` | Hero section component | - | `<section data-wb="hero">` |
-| `card` | Versatile card component | `<article>` | `<div data-wb="card">` |
-| `card*` | Card variants (image, video, etc.) | - | `<div data-wb="cardimage">` |
-| `progressbar` | Progress bar | `<progress>` | `<div data-wb="progressbar">` |
-| `spinner` | Loading spinner | - | `<div data-wb="spinner">` |
-| `toast` | Toast notification | `<output>` | `<div data-wb="toast">` |
-| `notify` | Cycling notification | - | `<div data-wb="notify">` |
-| `badge` | Status badge | - | `<span data-wb="badge">` |
-| `chip` | Interactive chip/tag | - | `<span data-wb="chip">` |
-| `alert` | Alert message | - | `<div data-wb="alert">` |
-| `skeleton` | Loading placeholder | - | `<div data-wb="skeleton">` |
-| `divider` | Styled divider | `<hr>` | `<hr data-wb="divider">` |
-| `breadcrumb` | Breadcrumb navigation | - | `<nav data-wb="breadcrumb">` |
-| `avatar` | User avatar | - | `<div data-wb="avatar">` |
-| `tooltip` | Tooltip on hover | - | `<span data-wb="tooltip" title="Hi">` |
-| `dropdown` | Dropdown menu | - | `<div data-wb="dropdown">` |
-| `accordion` | Accordion list | - | `<div data-wb="accordion">` |
-| `tabs` | Tabbed interface | - | `<div data-wb="tabs">` |
-| `navbar` | Navigation bar | `<nav>` | `<nav data-wb="navbar">` |
-| `sidebar` | Sidebar navigation | `<aside>` | `<aside data-wb="sidebar">` |
-| `menu` | Menu list | `<menu>` | `<ul data-wb="menu">` |
-| `pagination` | Pagination controls | - | `<nav data-wb="pagination">` |
-| `steps` | Step wizard | - | `<div data-wb="steps">` |
+| Behavior | Element | Type | Description |
+|----------|---------|------|-------------|
+| `hero` | `<section>` | - | Hero section component |
+| [`card`](components/cards/card.md) | `<article>` | - | Card component |
+| `cardlink` | `<article data-href>` | - | Clickable card |
+| [`card*`](components/cards/index.md) | `<article>` | - | Card variants (image, video, etc.) |
+| [`progressbar`](components/semantics/progress.md) | `<progress>` | Decorate | Progress bar styling |
+| `spinner` | `<div>` | - | Loading spinner |
+| `toast` | `<div>` | - | Toast notification |
+| `notify` | `<div>` | - | Cycling notification |
+| `badge` | `<span>` | - | Status badge |
+| `chip` | `<span>` | - | Interactive chip/tag |
+| `alert` | `<div>` | - | Alert message |
+| `skeleton` | `<div>` | - | Loading placeholder |
+| `divider` | `<hr>` | Decorate | Styled divider |
+| `breadcrumb` | `<nav>` | - | Breadcrumb navigation |
+| `avatar` | `<div>` | - | User avatar |
+| `tooltip` | any | - | Tooltip on hover |
+| `dropdown` | `<div>` | - | Dropdown menu |
+| `accordion` | `<div>` | - | Accordion list |
+| [`tabs`](components/tabs.md) | `<div>` | - | Tabbed interface |
+| `navbar` | `<nav>` | - | Navigation bar |
+| `sidebar` | `<aside>` | - | Sidebar component |
+| `menu` | `<menu>` | Decorate | Menu list styling |
+| `pagination` | `<nav>` | - | Pagination controls |
+| `steps` | `<div>` | - | Step wizard |
 
 ### 3. Layout & Structure
 Tools for arranging content.
 
-| Behavior | Description | Custom Tag | Usage (Explicit) |
-|----------|-------------|------------|------------------|
-| `grid` | CSS Grid layout | `<wb-grid>` | `<div data-wb="grid">` |
-| `flex` | Flexbox layout | `<wb-flex>`, `<wb-row>` | `<div data-wb="flex">` |
-| `container` | Responsive container | `<wb-container>` | `<div data-wb="container">` |
-| `stack` | Vertical stack | `<wb-stack>`, `<wb-column>` | `<div data-wb="stack">` |
-| `cluster` | Horizontal cluster | `<wb-cluster>` | `<div data-wb="cluster">` |
-| `center` | Centered content | `<wb-center>` | `<div data-wb="center">` |
-| `masonry` | Masonry grid layout | `<wb-masonry>` | `<div data-wb="masonry">` |
-| `sticky` | Sticky positioning | `<wb-sticky>` | `<div data-wb="sticky">` |
-| `scrollable` | Scrollable area | - | `<div data-wb="scrollable">` |
-| `drawerLayout` | App layout with drawer | `<wb-drawer>` | `<div data-wb="drawerLayout">` |
-| `sidebarlayout` | Sidebar layout | `<wb-sidebar>` | `<div data-wb="sidebarlayout">` |
-| `switcher` | Responsive switcher | `<wb-switcher>` | `<div data-wb="switcher">` |
-| `cover` | Full-screen cover | `<wb-cover>` | `<div data-wb="cover">` |
-| `frame` | Aspect ratio frame | `<wb-frame>` | `<div data-wb="frame">` |
-| `reel` | Horizontal reel | `<wb-reel>` | `<div data-wb="reel">` |
-| `icon` | Icon wrapper | `<wb-icon>` | `<div data-wb="icon">` |
-| `draggable` | Draggable element | - | `<div data-wb="draggable">` |
-| `resizable` | Resizable element | - | `<div data-wb="resizable">` |
+| Behavior | Element | Type | Description |
+|----------|---------|------|-------------|
+| `grid` | `<wb-grid>` | - | CSS Grid layout |
+| `flex` | `<wb-flex>`, `<wb-row>` | - | Flexbox layout |
+| `container` | `<wb-container>` | - | Responsive container |
+| `stack` | `<wb-stack>`, `<wb-column>` | - | Vertical stack |
+| `cluster` | `<wb-cluster>` | - | Horizontal cluster |
+| `center` | `<wb-center>` | - | Centered content |
+| `masonry` | `<wb-masonry>` | - | Masonry grid layout |
+| `sticky` | `<wb-sticky>` | - | Sticky positioning |
+| `scrollable` | `<div>` | - | Scrollable area |
+| [`drawerLayout`](components/drawer.md) | `<wb-drawer>` | - | App layout with drawer |
+| `sidebarlayout` | `<wb-sidebar>` | - | Sidebar layout |
+| `switcher` | `<wb-switcher>` | - | Responsive switcher |
+| `cover` | `<wb-cover>` | - | Full-screen cover |
+| `frame` | `<wb-frame>` | - | Aspect ratio frame |
+| `reel` | `<wb-reel>` | - | Horizontal reel |
+| `icon` | `<wb-icon>` | - | Icon wrapper |
+| [`draggable`](components/cards/carddraggable.md) | any | - | Draggable element |
+| `resizable` | any | - | Resizable element |
 
 ### 4. Media & Overlays
 Handling media content and overlaying views.
 
-| Behavior | Description | Semantic Element (Auto) | Usage (Explicit) |
-|----------|-------------|-------------------------|------------------|
-| `gallery` | Image gallery | - | `<div data-wb="gallery">` |
-| `youtube` | YouTube embed | - | `<div data-wb="youtube" data-id="...">` |
-| `vimeo` | Vimeo embed | - | `<div data-wb="vimeo" data-id="...">` |
-| `carousel` | Image/Content carousel | - | `<div data-wb="carousel">` |
-| `popover` | Popover content | - | `<button data-wb="popover">` |
-| `drawer` | Slide-out drawer | - | `<div data-wb="drawer">` |
-| `lightbox` | Image lightbox | - | `<a data-wb="lightbox">` |
-| `offcanvas` | Off-canvas sidebar | - | `<div data-wb="offcanvas">` |
-| `sheet` | Bottom sheet | - | `<div data-wb="sheet">` |
+| Behavior | Element | Type | Description |
+|----------|---------|------|-------------|
+| `gallery` | `<div>` | - | Image gallery |
+| `youtube` | `<div>` | - | YouTube embed |
+| `vimeo` | `<div>` | - | Vimeo embed |
+| `carousel` | `<div>` | - | Image/Content carousel |
+| `popover` | any | - | Popover content |
+| [`drawer`](components/drawer.md) | `<div>` | - | Slide-out drawer |
+| `lightbox` | `<img>` | - | Image lightbox |
+| `offcanvas` | `<div>` | - | Off-canvas sidebar |
+| `sheet` | `<div>` | - | Bottom sheet |
 
 ### 5. Utilities & Helpers
 Functional utilities.
 
-| Behavior | Description | Semantic Element (Auto) | Usage (Explicit) |
-|----------|-------------|-------------------------|------------------|
-| `copy` | Copy to clipboard button | - | `<button data-wb="copy">` |
-| `toggle` | Toggle visibility/state | - | `<button data-wb="toggle">` |
-| `ripple` | Material ripple effect | - | `<button data-wb="ripple">` |
-| `darkmode` | Dark mode toggle/enforcer | - | `<div data-wb="darkmode">` |
-| `themecontrol` | Theme switcher | - | `<div data-wb="themecontrol">` |
-| `lazy` | Lazy loading content | - | `<div data-wb="lazy">` |
-| `print` | Print button | - | `<button data-wb="print">` |
-| `share` | Share button | - | `<button data-wb="share">` |
-| `fullscreen` | Fullscreen toggle | - | `<button data-wb="fullscreen">` |
-| `scroll` | Scroll to anchor | - | `<a data-wb="scroll">` |
-| `truncate` | Text truncation | - | `<p data-wb="truncate">` |
-| `highlight` | Text highlighting | `<mark>` | `<span data-wb="highlight">` |
-| `countdown` | Countdown timer | `<time>` | `<div data-wb="countdown">` |
-| `clock` | Live clock | `<time>` | `<div data-wb="clock">` |
-| `relativetime` | "5 mins ago" format | `<time>` | `<time data-wb="relativetime">` |
-| `visible` | Visibility observer | - | `<div data-wb="visible">` |
-| `validator` | Input validator | - | `<input data-wb="validator">` |
-| `notes` | Notes system | - | `<div data-wb="notes">` |
-| `mdhtml` | Markdown renderer | - | `<div data-wb="mdhtml">` |
-| `builder` | Page builder container | - | `<div data-wb="builder">` |
+| Behavior | Element | Type | Description |
+|----------|---------|------|-------------|
+| `copy` | `<button>` | - | Copy to clipboard button |
+| `toggle` | any | - | Toggle visibility/state |
+| `ripple` | any | - | Material ripple effect |
+| `darkmode` | `<button>` | - | Dark mode toggle |
+| `themecontrol` | `<div>` | - | Theme switcher |
+| `lazy` | any | - | Lazy loading content |
+| `print` | `<button>` | - | Print button |
+| `share` | `<button>` | - | Share button |
+| `fullscreen` | `<button>` | - | Fullscreen toggle |
+| `scroll` | `<a>` | - | Scroll to anchor |
+| `truncate` | any | - | Text truncation |
+| `highlight` | `<mark>` | Decorate | Text highlighting |
+| `countdown` | `<time>` | Decorate | Countdown timer |
+| `clock` | `<time>` | Decorate | Live clock |
+| `relativetime` | `<time>` | Decorate | "5 mins ago" format |
+| `visible` | any | - | Visibility observer |
+| `validator` | `<input>` | - | Input validator |
+| `notes` | `<div>` | - | Notes system |
+| `mdhtml` | `<div>` | - | Markdown renderer |
+| `builder` | `<div>` | - | Page builder container |
 
 ### 6. Animations (Effects)
 Apply animations to elements.
 
-| Behavior | Description | Semantic Element (Auto) | Usage (Explicit) |
-|----------|-------------|-------------------------|------------------|
-| `animate` | Generic animation | - | `<div data-wb="animate" data-effect="...">` |
-| `fadein` | Fade in | - | `<div data-wb="fadein">` |
-| `slidein` | Slide in | - | `<div data-wb="slidein">` |
-| `zoomin` | Zoom in | - | `<div data-wb="zoomin">` |
-| `bounce` | Bounce effect | - | `<div data-wb="bounce">` |
-| `shake` | Shake effect | - | `<div data-wb="shake">` |
-| `pulse` | Pulse effect | - | `<div data-wb="pulse">` |
-| `flip` | Flip effect | - | `<div data-wb="flip">` |
-| `confetti` | Confetti explosion | - | `<button data-wb="confetti">` |
-| `sparkle` | Sparkle effect | - | `<span data-wb="sparkle">` |
-| `glow` | Glow effect | - | `<div data-wb="glow">` |
-| `rainbow` | Rainbow text/bg | - | `<span data-wb="rainbow">` |
-| `typewriter` | Typewriter text effect | - | `<span data-wb="typewriter">` |
-| `parallax` | Parallax scroll effect | - | `<div data-wb="parallax">` |
-| `reveal` | Scroll reveal effect | - | `<div data-wb="reveal">` |
+| Behavior | Element | Type | Description |
+|----------|---------|------|-------------|
+| `animate` | any | - | Generic animation |
+| `fadein` | any | - | Fade in |
+| `slidein` | any | - | Slide in |
+| `zoomin` | any | - | Zoom in |
+| `bounce` | any | - | Bounce effect |
+| `shake` | any | - | Shake effect |
+| `pulse` | any | - | Pulse effect |
+| `flip` | any | - | Flip effect |
+| [`confetti`](components/effects/confetti.md) | any | - | Confetti explosion |
+| [`sparkle`](components/effects/sparkle.md) | any | - | Sparkle effect |
+| `glow` | any | - | Glow effect |
+| `rainbow` | any | - | Rainbow text/bg |
+| `typewriter` | any | - | Typewriter text effect |
+| `parallax` | any | - | Parallax scroll effect |
+| `reveal` | any | - | Scroll reveal effect |
+
+### Quick Reference: Auto-Injection Mappings
+
+| Element | Behavior | Type |
+|---------|----------|------|
+| `<img>` | [`image`](components/semantics/img.md) | Decorate |
+| `<audio>` | [`audio`](components/semantics/audio.md) | Decorate |
+| `<video>` | [`video`](components/semantics/video.md) | Decorate |
+| `<figure>` | [`figure`](components/semantics/figure.md) | Decorate |
+| `<table>` | [`table`](components/semantics/table.md) | Decorate |
+| `<code>` | [`code`](components/semantics/code.md) | Decorate |
+| `<pre>` | [`pre`](components/semantics/pre.md) | Decorate |
+| `<input>` | [`input`](components/semantics/input.md) | Decorate |
+| `<textarea>` | [`textarea`](components/semantics/textarea.md) | Decorate |
+| `<select>` | [`select`](components/semantics/select.md) | Decorate |
+| `<button>` | [`button`](components/semantics/button.md) | Decorate |
+| `<form>` | [`form`](components/semantics/form.md) | Decorate |
+| `<details>` | [`details`](components/semantics/details.md) | Decorate |
+| `<dialog>` | [`dialog`](components/semantics/dialog.md) | Decorate |
 
 ---
-*Generated automatically from `src/behaviors/index.js`*
+
+*Document Version: 3.0.1*

@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "badge.schema.json",
+  "title": "Badge",
+  "description": "Small label/tag for status indicators, counts, or categories",
+  
+  "behavior": "badge",
+  "baseClass": "wb-badge",
+  
+  "semanticElement": {
+    "tagName": "span",
+    "implicitRole": "status"
+  },
+  
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Badge text content"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Color variant",
+      "enum": ["default", "primary", "secondary", "success", "warning", "error", "info"],
+      "default": "default",
+      "appliesClass": "wb-badge--{{value}}"
+    },
+    "size": {
+      "type": "string",
+      "description": "Badge size",
+      "enum": ["xs", "sm", "md", "lg"],
+      "default": "md",
+      "appliesClass": "wb-badge--{{value}}"
+    },
+    "pill": {
+      "type": "boolean",
+      "description": "Pill shape with full border radius",
+      "default": false,
+      "appliesClass": "wb-badge--pill"
+    },
+    "dot": {
+      "type": "boolean",
+      "description": "Dot indicator (no text)",
+      "default": false,
+      "appliesClass": "wb-badge--dot"
+    },
+    "outline": {
+      "type": "boolean",
+      "description": "Outline style (transparent background)",
+      "default": false,
+      "appliesClass": "wb-badge--outline"
+    },
+    "removable": {
+      "type": "boolean",
+      "description": "Show remove/close button",
+      "default": false
+    }
+  },
+  
+  "$view": [
+    {
+      "name": "text",
+      "tag": "span",
+      "public": true,
+      "content": "{{label}}{{body}}",
+      "createdWhen": "label OR body",
+      "description": "Badge text content"
+    },
+    {
+      "name": "remove",
+      "tag": "button",
+      "public": true,
+      "content": "✕",
+      "createdWhen": "removable",
+      "description": "Remove/close button"
+    }
+  ],
+  
+  "$methods": {
+    "show": {
+      "description": "Shows the badge",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the badge",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "remove": {
+      "description": "Removes the badge from DOM with animation",
+      "params": [],
+      "returns": "Promise"
+    },
+    "update": {
+      "description": "Updates the badge label",
+      "params": ["label"]
+    }
+  },
+  
+  "$cssAPI": {
+    "--wb-badge-padding-x": {
+      "default": "0.5rem",
+      "description": "Horizontal padding"
+    },
+    "--wb-badge-padding-y": {
+      "default": "0.25rem",
+      "description": "Vertical padding"
+    },
+    "--wb-badge-radius": {
+      "default": "4px",
+      "description": "Border radius"
+    },
+    "--wb-badge-font-size": {
+      "default": "0.75rem",
+      "description": "Font size"
+    },
+    "--wb-badge-font-weight": {
+      "default": "600",
+      "description": "Font weight"
+    },
+    "--wb-badge-gap": {
+      "default": "0.25rem",
+      "description": "Gap between text and remove button"
+    },
+    "--wb-badge-default-bg": {
+      "default": "var(--bg-secondary, #e0e0e0)",
+      "description": "Default variant background"
+    },
+    "--wb-badge-default-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Default variant text color"
+    },
+    "--wb-badge-primary-bg": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Primary variant background"
+    },
+    "--wb-badge-primary-color": {
+      "default": "#ffffff",
+      "description": "Primary variant text color"
+    },
+    "--wb-badge-success-bg": {
+      "default": "var(--success, #4caf50)",
+      "description": "Success variant background"
+    },
+    "--wb-badge-success-color": {
+      "default": "#ffffff",
+      "description": "Success variant text color"
+    },
+    "--wb-badge-warning-bg": {
+      "default": "var(--warning, #ff9800)",
+      "description": "Warning variant background"
+    },
+    "--wb-badge-warning-color": {
+      "default": "#ffffff",
+      "description": "Warning variant text color"
+    },
+    "--wb-badge-error-bg": {
+      "default": "var(--error, #f44336)",
+      "description": "Error variant background"
+    },
+    "--wb-badge-error-color": {
+      "default": "#ffffff",
+      "description": "Error variant text color"
+    },
+    "--wb-badge-info-bg": {
+      "default": "var(--info, #2196f3)",
+      "description": "Info variant background"
+    },
+    "--wb-badge-info-color": {
+      "default": "#ffffff",
+      "description": "Info variant text color"
+    },
+    "--wb-badge-dot-size": {
+      "default": "0.5rem",
+      "description": "Dot indicator size"
+    }
+  },
+  
+  "test": {
+    "setup": [
+      "<wb-badge label=\"New\"></wb-badge>",
+      "<wb-badge label=\"5\" variant=\"error\" pill></wb-badge>",
+      "<wb-badge variant=\"success\">Active</wb-badge>",
+      "<span data-wb=\"badge\">Badge</span>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "label": "New" },
+        { "label": "Done", "variant": "success" },
+        { "label": "Warning", "variant": "warning" },
+        { "label": "Error", "variant": "error" },
+        { "label": "5", "variant": "primary", "pill": true },
+        { "variant": "success", "dot": true },
+        { "label": "Tag", "variant": "info", "removable": true },
+        { "label": "Outline", "variant": "primary", "outline": true }
+      ]
+    }
+  },
+  
+  "_metadata": {
+    "category": "feedback",
+    "icon": "🏷️",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}
