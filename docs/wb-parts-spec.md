@@ -91,14 +91,14 @@ Iterate over arrays using `wb-for`.
 ```
 
 ### Content Projection (Slots)
-The special variable `{{body}}` contains the inner HTML content passed to the component.
+Use the standard HTML `<slot>` element to project inner content passed to the component.
 
 **Definition:**
 ```html
 <template wb-part="alert">
   <div class="alert">
     <strong>{{title}}</strong>
-    <div class="content">{{body}}</div>
+    <div class="content"><slot></slot></div>
   </div>
 </template>
 ```
@@ -108,6 +108,19 @@ The special variable `{{body}}` contains the inner HTML content passed to the co
 <wb-alert title="Warning">
   This is the <em>body</em> content.
 </wb-alert>
+```
+
+You can also use named slots:
+```html
+<template wb-part="card">
+  <header><slot name="header"></slot></header>
+  <main><slot></slot></main>
+</template>
+
+<wb-card>
+  <h1 slot="header">My Title</h1>
+  <p>Body content</p>
+</wb-card>
 ```
 
 ---

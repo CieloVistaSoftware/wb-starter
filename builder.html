@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏗️ WB Page Builder</title>
+  
+  <link rel="stylesheet" href="src/styles/themes.css">
+  <link rel="stylesheet" href="src/styles/site.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background: var(--bg-color);
+      color: var(--text-primary);
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      height: 60px;
+    }
+
+    .top-bar h1 {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .top-bar-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--border-color);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: 1px solid #ef4444;
+    }
+
+    .btn-danger:hover {
+      background: #ef4444;
+      color: white;
+    }
+
+    /* Main Layout */
+    .builder-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Left Sidebar - Component Library */
+    .sidebar-left {
+      width: 280px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      overflow-y: auto;
+      padding: 1rem;
+    }
+
+    .sidebar-left h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin: 1.5rem 0 0.75rem 0;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar-left h3:first-child {
+      margin-top: 0;
+    }
+
+    .component-item {
+      padding: 0.75rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: move;
+      user-select: none;
+      margin-bottom: 0.75rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .component-item:hover {
+      background: var(--border-color);
+      border-color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    /* Center Canvas */
+    .canvas-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .canvas-toolbar {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      gap: 1rem;
+      height: 45px;
+    }
+
+    .canvas-toolbar span {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .canvas-viewport {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem;
+      background: linear-gradient(45deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+                  linear-gradient(-45deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .canvas {
+      width: 100%;
+      max-width: 1200px;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .canvas-section {
+      padding: 2rem;
+      border-bottom: 2px solid rgba(99, 102, 241, 0.2);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .canvas-section:last-child {
+      border-bottom: none;
+    }
+
+    .canvas-section.header {
+      background: var(--bg-secondary);
+    }
+
+    .canvas-section.main {
+      background: var(--bg-color);
+      flex: 1;
+    }
+
+    .canvas-section.footer {
+      background: var(--bg-secondary);
+    }
+
+    .section-label {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      background: var(--bg-tertiary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .components-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .canvas-drop-zone {
+      min-height: 60px;
+      padding: 1rem;
+      border: 2px dashed var(--border-color);
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .canvas-drop-zone:hover,
+    .canvas-drop-zone.drag-over {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.08);
+    }
+
+    .canvas-drop-zone.has-items {
+      min-height: 50px;
+    }
+
+    .canvas-component {
+      padding: 1rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .canvas-component:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+
+    .canvas-component.selected {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+      outline: none;
+    }
+
+    .canvas-component:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .component-delete-btn {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: 1px solid #ef4444;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .component-delete-btn:hover {
+      background: #ef4444;
+      color: white;
+    }
+
+    /* Right Sidebar - Properties */
+    .sidebar-right {
+      width: 300px;
+      background: var(--bg-secondary);
+      border-left: 1px solid var(--border-color);
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+
+    .properties-section {
+      margin-bottom: 2rem;
+    }
+
+    .properties-section h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 1rem 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .property {
+      margin-bottom: 1rem;
+    }
+
+    .property label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .property input,
+    .property textarea,
+    .property select {
+      width: 100%;
+      padding: 0.5rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .property input:focus,
+    .property textarea:focus,
+    .property select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+
+    .property textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .properties-empty {
+      text-align: center;
+      color: var(--text-secondary);
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    /* Status Bar */
+    .status-bar {
+      padding: 0.75rem 2rem;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-tertiary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <h1>🏗️ WB Page Builder</h1>
+    <div class="top-bar-actions">
+      <button class="btn btn-secondary" onclick="previewSite()">👁️ Preview</button>
+      <button class="btn btn-secondary" onclick="exportSite()">📤 Export</button>
+      <button class="btn btn-primary" onclick="saveSite()">💾 Save</button>
+    </div>
+  </div>
+
+  <!-- Main Builder Layout -->
+  <div class="builder-layout">
+    
+    <!-- Left Sidebar - Components -->
+    <div class="sidebar-left">
+      <h3>🔝 Header Components</h3>
+      <div class="component-item" draggable="true" data-component="navbar">🔝 Navigation Bar</div>
+      <div class="component-item" draggable="true" data-component="header-logo">📍 Logo & Title</div>
+      
+      <h3>📄 Main Content</h3>
+      <div class="component-item" draggable="true" data-component="hero">🦸 Hero Section</div>
+      <div class="component-item" draggable="true" data-component="features">✨ Features</div>
+      <div class="component-item" draggable="true" data-component="testimonials">💬 Testimonials</div>
+      <div class="component-item" draggable="true" data-component="pricing">💰 Pricing Table</div>
+      <div class="component-item" draggable="true" data-component="team">👥 Team Members</div>
+      <div class="component-item" draggable="true" data-component="gallery">🖼️ Image Gallery</div>
+      <div class="component-item" draggable="true" data-component="faq">❓ FAQ Section</div>
+      <div class="component-item" draggable="true" data-component="cta">📢 Call to Action</div>
+      <div class="component-item" draggable="true" data-component="card">🃏 Card</div>
+      
+      <h3>🔻 Footer Components</h3>
+      <div class="component-item" draggable="true" data-component="footer">🔻 Footer</div>
+      <div class="component-item" draggable="true" data-component="newsletter">📧 Newsletter</div>
+    </div>
+
+    <!-- Center Canvas -->
+    <div class="canvas-area">
+      <div class="canvas-toolbar">
+        <span>Canvas</span>
+        <span id="componentCount">0 components</span>
+      </div>
+      
+      <div class="canvas-viewport">
+        <div class="canvas">
+          <!-- Header Section -->
+          <div class="canvas-section header">
+            <div class="section-label">Header</div>
+            <div class="components-container" id="header-container">
+              <div class="canvas-drop-zone" data-section="header">
+                💡 Drop header components here
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Section -->
+          <div class="canvas-section main">
+            <div class="section-label">Main Content</div>
+            <div class="components-container" id="main-container">
+              <div class="canvas-drop-zone" data-section="main">
+                💡 Drop content components here
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Section -->
+          <div class="canvas-section footer">
+            <div class="section-label">Footer</div>
+            <div class="components-container" id="footer-container">
+              <div class="canvas-drop-zone" data-section="footer">
+                💡 Drop footer components here
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Sidebar - Properties -->
+    <div class="sidebar-right">
+      <div id="propertiesPanel" class="properties-empty">
+        Click a component to edit its properties
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span>Ready to build</span>
+    <span id="status">Select a component to start editing</span>
+  </div>
+
+  <script>
+    let draggedComponent = null;
+    let selectedComponent = null;
+    let components = [];
+    let componentIdCounter = 0;
+
+    // Component templates
+    const componentTemplates = {
+      hero: {
+        name: 'Hero Section',
+        icon: '🦸',
+        html: `<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 4rem 2rem; text-align: center; color: white; border-radius: 8px;">
+          <h2 style="font-size: 2.5rem; margin: 0 0 1rem 0;">Welcome to Your Site</h2>
+          <p style="font-size: 1.1rem; margin: 0;">Your value proposition goes here</p>
+        </div>`
+      },
+      navbar: {
+        name: 'Navigation Bar',
+        icon: '🔝',
+        html: `<div style="display: flex; gap: 2rem; padding: 1rem; background: var(--bg-tertiary); border-radius: 6px; align-items: center;">
+          <span style="font-weight: 700;">Logo</span>
+          <a href="#" style="color: var(--text-secondary); text-decoration: none;">Home</a>
+          <a href="#" style="color: var(--text-secondary); text-decoration: none;">About</a>
+          <a href="#" style="color: var(--text-secondary); text-decoration: none;">Contact</a>
+        </div>`
+      },
+      'header-logo': {
+        name: 'Logo & Title',
+        icon: '📍',
+        html: `<div style="display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: var(--bg-tertiary); border-radius: 8px;">
+          <div style="font-size: 2.5rem; width: 60px; height: 60px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">▯</div>
+          <div>
+            <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800;">Your Brand</h1>
+            <p style="margin: 0.25rem 0 0 0; color: var(--text-secondary); font-size: 0.95rem;">Tagline goes here</p>
+          </div>
+        </div>`
+      },
+      features: {
+        name: 'Features',
+        icon: '✨',
+        html: `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+          <div style="padding: 1.5rem; background: var(--bg-tertiary); border-radius: 8px; text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">✨</div>
+            <h3 style="margin: 0 0 0.5rem 0;">Feature 1</h3>
+            <p style="margin: 0; color: var(--text-secondary);">Description goes here</p>
+          </div>
+          <div style="padding: 1.5rem; background: var(--bg-tertiary); border-radius: 8px; text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚡</div>
+            <h3 style="margin: 0 0 0.5rem 0;">Feature 2</h3>
+            <p style="margin: 0; color: var(--text-secondary);">Description goes here</p>
+          </div>
+          <div style="padding: 1.5rem; background: var(--bg-tertiary); border-radius: 8px; text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🚀</div>
+            <h3 style="margin: 0 0 0.5rem 0;">Feature 3</h3>
+            <p style="margin: 0; color: var(--text-secondary);">Description goes here</p>
+          </div>
+        </div>`
+      },
+      testimonials: {
+        name: 'Testimonials',
+        icon: '💬',
+        html: `<div style="padding: 2rem; background: var(--bg-secondary); border-radius: 8px;">
+          <p style="font-style: italic; margin: 0 0 1rem 0; color: var(--text-secondary);">"Great service! Highly recommended."</p>
+          <p style="margin: 0; font-weight: 600;">— John Doe, CEO at TechCorp</p>
+        </div>`
+      },
+      pricing: {
+        name: 'Pricing Table',
+        icon: '💰',
+        html: `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+          <div style="padding: 2rem; border: 1px solid var(--border-color); border-radius: 8px; text-align: center;">
+            <h3 style="margin: 0 0 0.5rem 0;">Basic</h3>
+            <div style="font-size: 2rem; font-weight: 700; margin: 1rem 0;">$29</div>
+            <ul style="text-align: left; margin: 1rem 0; color: var(--text-secondary);">
+              <li>Feature 1</li>
+              <li>Feature 2</li>
+            </ul>
+          </div>
+          <div style="padding: 2rem; border: 2px solid var(--primary); border-radius: 8px; text-align: center;">
+            <h3 style="margin: 0 0 0.5rem 0;">Pro</h3>
+            <div style="font-size: 2rem; font-weight: 700; margin: 1rem 0;">$99</div>
+            <ul style="text-align: left; margin: 1rem 0; color: var(--text-secondary);">
+              <li>All Basic features</li>
+              <li>Feature 3</li>
+            </ul>
+          </div>
+          <div style="padding: 2rem; border: 1px solid var(--border-color); border-radius: 8px; text-align: center;">
+            <h3 style="margin: 0 0 0.5rem 0;">Enterprise</h3>
+            <div style="font-size: 2rem; font-weight: 700; margin: 1rem 0;">Custom</div>
+            <p style="color: var(--text-secondary); margin: 0;">Contact us for pricing</p>
+          </div>
+        </div>`
+      },
+      team: {
+        name: 'Team Members',
+        icon: '👥',
+        html: `<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+          <div style="text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">👩‍💼</div>
+            <h3 style="margin: 0 0 0.5rem 0;">Sarah Johnson</h3>
+            <p style="margin: 0; color: var(--primary);">CEO & Founder</p>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">👨‍💻</div>
+            <h3 style="margin: 0 0 0.5rem 0;">Mike Chen</h3>
+            <p style="margin: 0; color: var(--primary);">CTO</p>
+          </div>
+        </div>`
+      },
+      gallery: {
+        name: 'Image Gallery',
+        icon: '🖼️',
+        html: `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+          <div style="aspect-ratio: 1; background: var(--bg-tertiary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">📷</div>
+          <div style="aspect-ratio: 1; background: var(--bg-tertiary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🖼️</div>
+          <div style="aspect-ratio: 1; background: var(--bg-tertiary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🎨</div>
+        </div>`
+      },
+      faq: {
+        name: 'FAQ Section',
+        icon: '❓',
+        html: `<div style="max-width: 600px;">
+          <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 1rem;">
+            <h4 style="margin: 0 0 0.5rem 0;">What is this?</h4>
+            <p style="margin: 0; color: var(--text-secondary);">This is an example FAQ item. Click to expand for more details.</p>
+          </div>
+          <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px;">
+            <h4 style="margin: 0 0 0.5rem 0;">How do I get started?</h4>
+            <p style="margin: 0; color: var(--text-secondary);">Instructions for getting started will go here.</p>
+          </div>
+        </div>`
+      },
+      cta: {
+        name: 'Call to Action',
+        icon: '📢',
+        html: `<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 3rem 2rem; border-radius: 8px; text-align: center; color: white;">
+          <h2 style="margin: 0 0 1rem 0;">Ready to get started?</h2>
+          <p style="margin: 0 0 1.5rem 0; font-size: 1.1rem;">Join thousands of satisfied customers.</p>
+          <button style="padding: 0.75rem 2rem; background: white; color: #667eea; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Get Started →</button>
+        </div>`
+      },
+      card: {
+        name: 'Card',
+        icon: '🃏',
+        html: `<div style="padding: 1.5rem; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden;">
+          <div style="margin-bottom: 1rem; background: var(--bg-secondary); border-radius: 6px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 3rem;">
+            🖼️
+          </div>
+          <h3 style="margin: 0 0 0.75rem 0;">Card Title</h3>
+          <p style="margin: 0; color: var(--text-secondary);">Card content goes here</p>
+        </div>`
+      },
+      footer: {
+        name: 'Footer',
+        icon: '🔻',
+        html: `<div style="padding: 2rem; text-align: center; border-top: 1px solid var(--border-color);">
+          <p style="margin: 0; color: var(--text-secondary);">© 2025 Your Company. All rights reserved.</p>
+        </div>`
+      },
+      newsletter: {
+        name: 'Newsletter Signup',
+        icon: '📧',
+        html: `<div style="padding: 2rem; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+          <h3 style="margin: 0 0 1rem 0;">Subscribe to our newsletter</h3>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="email" placeholder="your@email.com" style="flex: 1; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-tertiary); color: var(--text-primary);">
+            <button style="padding: 0.75rem 1.5rem; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Subscribe</button>
+          </div>
+        </div>`
+      }
+    };
+
+    // Drag handlers
+    document.addEventListener('dragstart', (e) => {
+      if (e.target.classList.contains('component-item')) {
+        draggedComponent = e.target.dataset.component;
+        e.dataTransfer.effectAllowed = 'copy';
+      }
+    });
+
+    document.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      const dropZone = e.target.closest('.canvas-drop-zone');
+      if (dropZone) {
+        dropZone.classList.add('drag-over');
+        e.dataTransfer.dropEffect = 'copy';
+      }
+    });
+
+    document.addEventListener('dragleave', (e) => {
+      const dropZone = e.target.closest('.canvas-drop-zone');
+      if (dropZone) {
+        dropZone.classList.remove('drag-over');
+      }
+    });
+
+    document.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const dropZone = e.target.closest('.canvas-drop-zone');
+      if (dropZone && draggedComponent) {
+        const section = dropZone.dataset.section;
+        addComponentToCanvas(draggedComponent, section);
+        draggedComponent = null;
+        dropZone.classList.remove('drag-over');
+      }
+    });
+
+    // Add component to canvas
+    function addComponentToCanvas(componentType, section) {
+      const template = componentTemplates[componentType];
+      if (!template) return;
+
+      // Restrict Features to main section only
+      if (componentType === 'features' && section !== 'main') {
+        alert('⚠️ Features component can only be added to the Main Content section');
+        return;
+      }
+
+      // Check if component of same type already exists in this section
+      const existingComponent = components.find(c => c.section === section && c.type === componentType);
+      if (existingComponent) {
+        const confirmed = confirm(`A "${template.name}" already exists in the ${section} section.\n\nAdd another one?`);
+        if (!confirmed) return;
+      }
+
+      const componentId = `comp-${componentIdCounter++}`;
+      
+      // Create component element
+      const componentEl = document.createElement('div');
+      componentEl.className = 'canvas-component';
+      componentEl.id = componentId;
+      componentEl.tabIndex = 0;
+      componentEl.innerHTML = `<div>${template.icon} ${template.name}</div><div style="display: flex; gap: 0.5rem;"><button class="component-delete-btn" onclick="deleteComponent('${componentId}', event)">🗑️ Delete</button></div>`;
+      componentEl.onclick = (e) => {
+        if (!e.target.classList.contains('component-delete-btn')) {
+          e.stopPropagation();
+          selectComponent(componentEl, componentType, template);
+        }
+      };
+      
+      // Add keyboard shortcut for delete when focused
+      componentEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Delete' && selectedComponent && selectedComponent.id === componentId) {
+          deleteComponent(componentId);
+        }
+      });
+
+      // Get the container for this section
+      const container = document.getElementById(`${section}-container`);
+      const dropZone = container.querySelector('.canvas-drop-zone');
+      
+      // Insert before drop zone so it stays at the bottom
+      container.insertBefore(componentEl, dropZone);
+      dropZone.classList.add('has-items');
+
+      // Track component
+      components.push({
+        id: componentId,
+        type: componentType,
+        section: section,
+        element: componentEl,
+        template: template
+      });
+
+      updateComponentCount();
+      updateStatus(`Added ${template.name}`);
+    }
+
+    // Select component
+    function selectComponent(element, componentType, template) {
+      // Remove previous selection
+      document.querySelectorAll('.canvas-component.selected').forEach(el => {
+        el.classList.remove('selected');
+      });
+
+      // Select new
+      element.classList.add('selected');
+      selectedComponent = {
+        id: element.id,
+        type: componentType,
+        element: element,
+        template: template
+      };
+
+      // Show properties
+      showProperties(template);
+    }
+
+    // Show properties panel
+    function showProperties(template) {
+      const panel = document.getElementById('propertiesPanel');
+      const isCard = selectedComponent && selectedComponent.type === 'card';
+
+      let mediaSection = '';
+      if (isCard) {
+        mediaSection = `
+          <div class="properties-section">
+            <h4>🖼️ Media Options</h4>
+            
+            <div class="property">
+              <label>Media Type</label>
+              <select onchange="updateCardMedia('type', this.value)">
+                <option value="image" selected>📸 Image</option>
+                <option value="video">🎥 Video</option>
+                <option value="figure">🎨 Figure/Icon</option>
+              </select>
+            </div>
+
+            <div class="property">
+              <label>Image URL</label>
+              <input type="text" placeholder="https://example.com/image.jpg" onchange="updateCardMedia('imageUrl', this.value)">
+            </div>
+
+            <div class="property">
+              <label>Video URL</label>
+              <input type="text" placeholder="https://youtube.com/embed/..." onchange="updateCardMedia('videoUrl', this.value)">
+            </div>
+
+            <div class="property">
+              <label>Alt Text / Figure Emoji</label>
+              <input type="text" placeholder="e.g., 🚀 or Description of image" onchange="updateCardMedia('altText', this.value)" value="🖼️">
+            </div>
+          </div>
+        `;
+      }
+
+      panel.innerHTML = `
+        <div class="properties-section">
+          <h4>${template.icon} ${template.name}</h4>
+          
+          <div class="property">
+            <label>Title</label>
+            <input type="text" placeholder="Component title" onchange="updateComponentProperty('title', this.value)">
+          </div>
+
+          <div class="property">
+            <label>Background Color</label>
+            <input type="color" value="#667eea" onchange="updateComponentProperty('bgColor', this.value)">
+          </div>
+
+          <div class="property">
+            <label>Text Color</label>
+            <input type="color" value="#ffffff" onchange="updateComponentProperty('textColor', this.value)">
+          </div>
+
+          <div class="property">
+            <label>Padding</label>
+            <select onchange="updateComponentProperty('padding', this.value)">
+              <option value="1rem">Small</option>
+              <option value="1.5rem" selected>Medium</option>
+              <option value="2rem">Large</option>
+              <option value="3rem">Extra Large</option>
+            </select>
+          </div>
+        </div>
+        ${mediaSection}
+        <button class="btn btn-danger" style="width: 100%; margin-top: 1rem;" onclick="deleteComponent('${selectedComponent.id}')">🗑️ Delete (or press Delete key)</button>
+      `;
+      
+      // Focus the canvas so keyboard events work
+      if (selectedComponent && selectedComponent.element) {
+        selectedComponent.element.focus();
+      }
+    }
+
+    // Update card media
+    function updateCardMedia(property, value) {
+      if (!selectedComponent || selectedComponent.type !== 'card') return;
+      
+      const el = selectedComponent.element;
+      const mediaDiv = el.querySelector('div > div');
+      
+      if (!mediaDiv) return;
+
+      if (property === 'type') {
+        selectedComponent.mediaType = value;
+        if (value === 'image') {
+          mediaDiv.innerHTML = `<img src="${selectedComponent.imageUrl || 'https://via.placeholder.com/400x300?text=Card+Image'}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 6px;" alt="${selectedComponent.altText || 'Card image'}">`;
+        } else if (value === 'video') {
+          mediaDiv.innerHTML = `<iframe width="100%" height="100%" src="${selectedComponent.videoUrl || ''}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="border-radius: 6px;"></iframe>`;
+        } else if (value === 'figure') {
+          mediaDiv.innerHTML = `<div style="font-size: 4rem;">${selectedComponent.altText || '🎨'}</div>`;
+        }
+        updateStatus(`Updated card media type`);
+      } else if (property === 'imageUrl') {
+        selectedComponent.imageUrl = value;
+        if (selectedComponent.mediaType === 'image' || !selectedComponent.mediaType) {
+          mediaDiv.innerHTML = `<img src="${value || 'https://via.placeholder.com/400x300?text=Card+Image'}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 6px;" alt="${selectedComponent.altText || 'Card image'}">`;
+        }
+        updateStatus(`Updated card image URL`);
+      } else if (property === 'videoUrl') {
+        selectedComponent.videoUrl = value;
+        if (selectedComponent.mediaType === 'video') {
+          mediaDiv.innerHTML = `<iframe width="100%" height="100%" src="${value}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="border-radius: 6px;"></iframe>`;
+        }
+        updateStatus(`Updated card video URL`);
+      } else if (property === 'altText') {
+        selectedComponent.altText = value;
+        if (selectedComponent.mediaType === 'figure' || !selectedComponent.mediaType) {
+          mediaDiv.innerHTML = `<div style="font-size: 4rem;">${value || '🎨'}</div>`;
+        }
+        updateStatus(`Updated card figure/icon`);
+      }
+    }
+
+    // Update component property
+    function updateComponentProperty(property, value) {
+      if (!selectedComponent) return;
+      
+      const el = selectedComponent.element;
+      
+      switch (property) {
+        case 'bgColor':
+          el.style.backgroundColor = value;
+          break;
+        case 'textColor':
+          el.style.color = value;
+          break;
+        case 'padding':
+          el.style.padding = value;
+          break;
+      }
+      
+      updateStatus(`Updated ${property}`);
+    }
+
+    // Delete component
+    function deleteComponent(id, event) {
+      if (event) event.stopPropagation();
+      
+      const component = components.find(c => c.id === id);
+      if (component) {
+        component.element.remove();
+        components = components.filter(c => c.id !== id);
+        selectedComponent = null;
+        document.getElementById('propertiesPanel').innerHTML = 
+          `<div class="properties-empty">Click a component to edit its properties</div>`;
+        updateComponentCount();
+        updateStatus('Component deleted');
+      }
+    }
+
+    // Update component count
+    function updateComponentCount() {
+      document.getElementById('componentCount').textContent = 
+        `${components.length} component${components.length !== 1 ? 's' : ''}`;
+    }
+
+    // Update status
+    function updateStatus(message) {
+      document.getElementById('status').textContent = message;
+    }
+
+    // Save site
+    function saveSite() {
+      const siteData = {
+        title: 'My Website',
+        components: components.map(c => ({
+          id: c.id,
+          type: c.type,
+          section: c.section
+        }))
+      };
+      
+      console.log('Saving site:', siteData);
+      updateStatus('✅ Site saved!');
+      alert('Site saved! (Check console for data)');
+    }
+
+    // Preview site - Generate HTML and open in new window
+    function previewSite() {
+      // Build HTML from components
+      let headerHTML = '';
+      let mainHTML = '';
+      let footerHTML = '';
+
+      components.forEach(comp => {
+        const template = componentTemplates[comp.type];
+        if (!template) return;
+
+        if (comp.section === 'header') {
+          headerHTML += template.html;
+        } else if (comp.section === 'main') {
+          mainHTML += `<div style="margin-bottom: 2rem;">${template.html}</div>`;
+        } else if (comp.section === 'footer') {
+          footerHTML += template.html;
+        }
+      });
+
+      // Create full HTML page
+      const previewHTML = `
+        <!DOCTYPE html>
+        <html lang="en" data-theme="dark">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>My Website Preview</title>
+          <link rel="stylesheet" href="${window.location.origin}/src/styles/themes.css">
+          <link rel="stylesheet" href="${window.location.origin}/src/styles/site.css">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+          <style>
+            * { box-sizing: border-box; }
+            body { margin: 0; padding: 0; background: var(--bg-color); color: var(--text-primary); font-family: 'Inter', sans-serif; }
+            header { background: var(--bg-secondary); padding: 2rem; border-bottom: 1px solid var(--border-color); }
+            main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+            footer { background: var(--bg-secondary); padding: 2rem; border-top: 1px solid var(--border-color); margin-top: 3rem; }
+          </style>
+        </head>
+        <body>
+          <header>${headerHTML || '<p>No header components</p>'}</header>
+          <main>${mainHTML || '<p>No main content components</p>'}</main>
+          <footer>${footerHTML || '<p>No footer components</p>'}</footer>
+        </body>
+        </html>
+      `;
+
+      // Open in new window
+      const previewWindow = window.open('', 'preview', 'width=1200,height=800');
+      previewWindow.document.write(previewHTML);
+      previewWindow.document.close();
+      updateStatus('✅ Preview opened in new window');
+    }
+
+    // Export site
+    function exportSite() {
+      const siteData = {
+        title: 'My Website',
+        components: components.map(c => ({
+          type: c.type,
+          section: c.section
+        }))
+      };
+      
+      const json = JSON.stringify(siteData, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'website.json';
+      a.click();
+      updateStatus('✅ Site exported!');
+    }
+
+    // Initialize
+    updateComponentCount();
+  </script>
+</body>
+</html>

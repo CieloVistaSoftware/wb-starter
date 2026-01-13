@@ -3,48 +3,156 @@
   "$id": "cardfile.schema.json",
   "title": "File Card",
   "description": "File display card with icon, name, size, and download",
-  
   "behavior": "cardfile",
   "baseClass": "wb-card-file",
-  
-  "semanticElement": { "tagName": "article", "implicitRole": "article" },
-  
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  "compliance": {
+    "baseClass": "wb-card-file",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "filename": { "type": "string", "description": "File name", "required": true },
-    "fileType": { "type": "string", "description": "File type for icon", "enum": ["pdf", "doc", "image", "video", "audio", "zip", "file"], "default": "file" },
-    "size": { "type": "string", "description": "File size (e.g., 2.4 MB)" },
-    "date": { "type": "string", "description": "File date" },
-    "href": { "type": "string", "description": "Download URL" },
-    "downloadable": { "type": "boolean", "description": "Show download link", "default": true },
-    "variant": { "type": "string", "enum": ["default", "compact", "elevated"], "default": "default", "appliesClass": "wb-card-file--{{value}}" }
+    "filename": {
+      "type": "string",
+      "description": "File name",
+      "required": true
+    },
+    "fileType": {
+      "type": "string",
+      "description": "File type for icon",
+      "enum": [
+        "pdf",
+        "doc",
+        "image",
+        "video",
+        "audio",
+        "zip",
+        "file"
+      ],
+      "default": "file"
+    },
+    "size": {
+      "type": "string",
+      "description": "File size (e.g., 2.4 MB)"
+    },
+    "date": {
+      "type": "string",
+      "description": "File date"
+    },
+    "href": {
+      "type": "string",
+      "description": "Download URL"
+    },
+    "downloadable": {
+      "type": "boolean",
+      "description": "Show download link",
+      "default": true
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "default",
+        "compact",
+        "elevated"
+      ],
+      "default": "default",
+      "appliesClass": "wb-card-file--{{value}}"
+    }
   },
-  
   "$view": [
-    { "name": "icon", "tag": "div", "public": true, "required": true, "description": "File type icon" },
-    { "name": "info", "tag": "div", "public": true, "required": true, "description": "File info container" },
-    { "name": "filename", "tag": "span", "parent": "info", "public": true, "content": "{{filename}}", "description": "File name" },
-    { "name": "meta", "tag": "span", "parent": "info", "public": true, "createdWhen": "size OR date", "description": "File metadata" },
-    { "name": "download", "tag": "a", "public": true, "createdWhen": "downloadable AND href", "description": "Download link" }
+    {
+      "name": "icon",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "File type icon"
+    },
+    {
+      "name": "info",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "File info container"
+    },
+    {
+      "name": "filename",
+      "tag": "span",
+      "parent": "info",
+      "public": true,
+      "content": "{{filename}}",
+      "description": "File name"
+    },
+    {
+      "name": "meta",
+      "tag": "span",
+      "parent": "info",
+      "public": true,
+      "createdWhen": "size OR date",
+      "description": "File metadata"
+    },
+    {
+      "name": "download",
+      "tag": "a",
+      "public": true,
+      "createdWhen": "downloadable AND href",
+      "description": "Download link"
+    }
   ],
-  
   "$methods": {
-    "show": { "description": "Shows the card", "params": [] },
-    "hide": { "description": "Hides the card", "params": [] },
-    "download": { "description": "Triggers download", "params": [] }
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "download": {
+      "description": "Triggers download",
+      "params": []
+    }
   },
-  
   "$cssAPI": {
-    "--wb-card-file-padding": { "default": "1rem", "description": "Card padding" },
-    "--wb-card-file-radius": { "default": "8px", "description": "Border radius" },
-    "--wb-card-file-gap": { "default": "1rem", "description": "Gap between elements" },
-    "--wb-card-file-icon-size": { "default": "40px", "description": "Icon size" },
-    "--wb-card-file-icon-bg": { "default": "var(--bg-secondary, #f3f4f6)", "description": "Icon background" },
-    "--wb-card-file-name-size": { "default": "0.875rem", "description": "Filename font size" },
-    "--wb-card-file-name-weight": { "default": "600", "description": "Filename font weight" },
-    "--wb-card-file-meta-size": { "default": "0.75rem", "description": "Meta font size" },
-    "--wb-card-file-meta-color": { "default": "var(--text-secondary, #666)", "description": "Meta text color" }
+    "--wb-card-file-padding": {
+      "default": "1rem",
+      "description": "Card padding"
+    },
+    "--wb-card-file-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-card-file-gap": {
+      "default": "1rem",
+      "description": "Gap between elements"
+    },
+    "--wb-card-file-icon-size": {
+      "default": "40px",
+      "description": "Icon size"
+    },
+    "--wb-card-file-icon-bg": {
+      "default": "var(--bg-secondary, #f3f4f6)",
+      "description": "Icon background"
+    },
+    "--wb-card-file-name-size": {
+      "default": "0.875rem",
+      "description": "Filename font size"
+    },
+    "--wb-card-file-name-weight": {
+      "default": "600",
+      "description": "Filename font weight"
+    },
+    "--wb-card-file-meta-size": {
+      "default": "0.75rem",
+      "description": "Meta font size"
+    },
+    "--wb-card-file-meta-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Meta text color"
+    }
   },
-  
   "test": {
     "setup": [
       "<wb-card-file filename=\"report.pdf\" file-type=\"pdf\"></wb-card-file>",
@@ -52,12 +160,27 @@
     ],
     "matrix": {
       "combinations": [
-        { "filename": "document.pdf" },
-        { "filename": "document.pdf", "fileType": "pdf", "size": "1.2 MB" },
-        { "filename": "photo.jpg", "fileType": "image", "size": "2.4 MB", "href": "/files/photo.jpg" }
+        {
+          "filename": "document.pdf"
+        },
+        {
+          "filename": "document.pdf",
+          "fileType": "pdf",
+          "size": "1.2 MB"
+        },
+        {
+          "filename": "photo.jpg",
+          "fileType": "image",
+          "size": "2.4 MB",
+          "href": "/files/photo.jpg"
+        }
       ]
     }
   },
-  
-  "_metadata": { "category": "cards", "icon": "📄", "since": "1.0.0", "status": "stable" }
+  "_metadata": {
+    "category": "cards",
+    "icon": "📄",
+    "since": "1.0.0",
+    "status": "stable"
+  }
 }

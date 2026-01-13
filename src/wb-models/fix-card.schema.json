@@ -4,5 +4,13 @@
   "title": "Fix Card",
   "behavior": "fix-card",
   "description": "Component for displaying fix/remediation details.",
-  "properties": {}
+  "compliance": {
+    "baseClass": "wb-fix-card",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

@@ -14,11 +14,11 @@
  * v3.0 Syntax Strategy:
  * =====================
  * PRIMARY (use in new code):
- *   1. <wb-card title="Hello"> - Web component tags for components
+ *   1. wb-card title="Hello"> - Web component tags for components
  *   2. <button x-ripple> - x- prefix for adding behaviors
  * 
  * DEPRECATED (legacy fallback):
- *   3. <wb-card > - Still works but avoid in new code
+ *   3. wb-card > - Still works but avoid in new code
  * 
  * Schema Format:
  *   {
@@ -187,6 +187,19 @@ function extractData(element, schema) {
   
   // Store original content as 'slot'
   data.slot = element.innerHTML.trim();
+
+  // Extract named slots from children (v3.0 feature)
+  element.querySelectorAll('[slot]').forEach(child => {
+    const slotName = child.getAttribute('slot');
+    if (slotName) {
+      data[slotName] = child.innerHTML.trim();
+    }
+  });
+
+  // Alias slot to body if not defined (common in v3 schemas)
+  if (data.body === undefined && data.slot) {
+    data.body = data.slot;
+  }
   
   return data;
 }
@@ -330,10 +343,11 @@ function buildFromView(element, schema, data) {
     // Handle content
     if (part.content) {
       const content = interpolate(part.content, data);
-      if (part.content === '{{slot}}') {
+      // Use innerHTML if it's the slot OR looks like HTML
+      if (part.content === '{{slot}}' || /<[a-z][\s\S]*>/i.test(content)) {
         el.innerHTML = content;
       } else if (content) {
-        el.textContent = content;
+        el.textContent = content; // strict text for everything else
       }
     }
     
@@ -485,6 +499,9 @@ function evaluateCondition(condition, data) {
   }
   if (condition.includes(' AND ')) {
     return condition.split(' AND ').every(part => evaluateCondition(part.trim(), data));
+  }
+  if (condition.startsWith('NOT ')) {
+    return !evaluateCondition(condition.substring(4).trim(), data);
   }
   const value = data[condition];
   return value !== undefined && value !== null && value !== '' && value !== false;
@@ -665,7 +682,7 @@ function bindSchemaMethodsToElement(element, schema, data) {
  * Detect schema from element
  * 
  * v3.0 Priority:
- *   1. <wb-card> - Web component tag (PRIMARY)
+ *   1. wb-card> - Web component tag (PRIMARY)
  *   2. - Data attribute (DEPRECATED - legacy fallback)
  * 
  * Note: Class detection was removed - classes are for CSS only
@@ -673,7 +690,7 @@ function bindSchemaMethodsToElement(element, schema, data) {
 function detectSchema(element) {
   const tagName = element.tagName.toLowerCase();
   
-  // 1. Web component tag: <wb-card>
+  // 1. Web component tag: wb-card>
   if (tagName.startsWith('wb-')) {
     const mapped = tagToSchema.get(tagName);
     if (mapped) return mapped;

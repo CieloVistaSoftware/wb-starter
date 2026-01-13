@@ -528,6 +528,20 @@
       "description": "Primary color",
       "category": "style"
     },
+    "backgroundColor": {
+      "label": "Bg Color",
+      "ui": "color",
+      "default": "",
+      "description": "Background color",
+      "category": "style"
+    },
+    "textColor": {
+      "label": "Text Color",
+      "ui": "color",
+      "default": "",
+      "description": "Text color",
+      "category": "style"
+    },
     "badgeColor": {
       "label": "Badge Color",
       "ui": "color",
@@ -1359,7 +1373,10 @@
       "align": "stretch",
       "justify": "start",
       "wrap": true,
-      "padding": "1rem"
+      "padding": "1rem",
+      "backgroundColor": "",
+      "textColor": "",
+      "background": ""
     },
     "drawerLayout": {
       "position": "left",

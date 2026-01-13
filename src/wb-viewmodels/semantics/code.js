@@ -6,8 +6,9 @@ if (!document.querySelector('link[data-highlight-theme]')) {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   // Check localStorage for saved preference from codecontrol
-  const savedTheme = localStorage.getItem('x-code-theme') || 'atom-one-dark';
-  link.href = `/node_modules/highlight.js/styles/${savedTheme}.css`;
+  const savedTheme = localStorage.getItem('x-code-theme') || 'atom-one-dark-reasonable';
+  // Use CDNJS for reliable loading
+  link.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${savedTheme}.min.css`;
   link.setAttribute('data-highlight-theme', 'true');
   document.head.appendChild(link);
   

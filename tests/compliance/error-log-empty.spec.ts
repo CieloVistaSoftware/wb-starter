@@ -50,8 +50,11 @@ test.describe('Error Log Compliance', () => {
       return;
     }
     
-    const errors = data.errors || [];
+    let errors = data.errors || [];
     
+    // Ignore expected errors from compliance tests
+    errors = errors.filter(e => !e.url?.includes('legacy-syntax-check.html'));
+
     if (errors.length > 0) {
       // Format errors for clear reporting
       const errorReport = errors.map((e, i) => {

@@ -1,48 +1,12 @@
 <!-- SPA Pricing Section - id="pricing" -->
-<wb-container id="pricing" style="padding: 5rem 2rem; background: var(--bg-primary, #fff);"
-  <div style="max-width: 1200px; margin: 0 auto;">
-    <div style="text-align: center; margin-bottom: 3rem;">
-      <h2 style="font-size: 2.5rem; font-weight: 700; color: var(--text-primary, #1a1a2e); margin-bottom: 1rem;">Simple, Transparent Pricing</h2>
-      <p style="font-size: 1.1rem; color: var(--text-secondary, #666); max-width: 600px; margin: 0 auto;">Choose the plan that's right for you.</p>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto;">
-      <div style="background: var(--bg-secondary, #f8fafc); padding: 2rem; border-radius: 12px; text-align: center;">
-        <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Starter</h3>
-        <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;">$29<span style="font-size: 1rem; font-weight: 400; color: var(--text-secondary, #666);">/mo</span></div>
-        <p style="color: var(--text-secondary, #666); margin-bottom: 1.5rem;">Perfect for individuals</p>
-        <ul style="list-style: none; padding: 0; margin: 0 0 1.5rem; text-align: left;">
-          <li style="padding: 0.5rem 0; border-bottom: 1px solid #e5e7eb;">✓ Up to 5 projects</li>
-          <li style="padding: 0.5rem 0; border-bottom: 1px solid #e5e7eb;">✓ Basic analytics</li>
-          <li style="padding: 0.5rem 0; border-bottom: 1px solid #e5e7eb;">✓ Email support</li>
-          <li style="padding: 0.5rem 0;">✓ 1GB storage</li>
-        </ul>
-        <a href="#contact" style="display: block; padding: 1rem; background: transparent; color: var(--primary, #6366f1); text-decoration: none; border-radius: 8px; font-weight: 600; border: 2px solid var(--primary, #6366f1);">Get Started</a>
-      </div>
-      <div style="background: var(--primary, #6366f1); padding: 2rem; border-radius: 12px; text-align: center; color: white; transform: scale(1.05);">
-        <div style="background: rgba(255,255,255,0.2); padding: 0.25rem 1rem; border-radius: 20px; font-size: 0.8rem; display: inline-block; margin-bottom: 1rem;">Most Popular</div>
-        <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Professional</h3>
-        <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;">$79<span style="font-size: 1rem; font-weight: 400; opacity: 0.8;">/mo</span></div>
-        <p style="opacity: 0.8; margin-bottom: 1.5rem;">For growing teams</p>
-        <ul style="list-style: none; padding: 0; margin: 0 0 1.5rem; text-align: left;">
-          <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.2);">✓ Unlimited projects</li>
-          <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.2);">✓ Advanced analytics</li>
-          <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.2);">✓ Priority support</li>
-          <li style="padding: 0.5rem 0;">✓ 10GB storage</li>
-        </ul>
-        <a href="#contact" style="display: block; padding: 1rem; background: white; color: var(--primary, #6366f1); text-decoration: none; border-radius: 8px; font-weight: 600;">Get Started</a>
-      </div>
-      <div style="background: var(--bg-secondary, #f8fafc); padding: 2rem; border-radius: 12px; text-align: center;">
-        <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Enterprise</h3>
-        <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;">$199<span style="font-size: 1rem; font-weight: 400; color: var(--text-secondary, #666);">/mo</span></div>
-        <p style="color: var(--text-secondary, #666); margin-bottom: 1.5rem;">For large organizations</p>
-        <ul style="list-style: none; padding: 0; margin: 0 0 1.5rem; text-align: left;">
-          <li style="padding: 0.5rem 0; border-bottom: 1px solid #e5e7eb;">✓ Everything in Pro</li>
-          <li style="padding: 0.5rem 0; border-bottom: 1px solid #e5e7eb;">✓ Custom integrations</li>
-          <li style="padding: 0.5rem 0; border-bottom: 1px solid #e5e7eb;">✓ 24/7 phone support</li>
-          <li style="padding: 0.5rem 0;">✓ Unlimited storage</li>
-        </ul>
-        <a href="#contact" style="display: block; padding: 1rem; background: transparent; color: var(--primary, #6366f1); text-decoration: none; border-radius: 8px; font-weight: 600; border: 2px solid var(--primary, #6366f1);">Contact Sales</a>
-      </div>
-    </div>
-  </div>
-</section>
+<wb-container data-id="pricing" data-direction="column" data-gap="2rem" data-padding="5rem 2rem" data-align="center" data-max-width="1200px">
+  <header style="text-align: center; margin-bottom: 2rem;">
+    <h2>Simple, Transparent Pricing</h2>
+    <p>Choose the plan that's right for you.</p>
+  </header>
+  <wb-grid data-columns="3" data-gap="1.5rem">
+    <wb-cardpricing data-plan="Starter" data-price="$29" data-period="/mo" data-description="Perfect for individuals" data-features="Up to 5 projects,Basic analytics,Email support,1GB storage" data-cta="Get Started" data-cta-href="#contact"></wb-cardpricing>
+    <wb-cardpricing data-plan="Professional" data-price="$79" data-period="/mo" data-description="For growing teams" data-features="Unlimited projects,Advanced analytics,Priority support,10GB storage" data-cta="Get Started" data-cta-href="#contact" data-featured="true" data-badge="Most Popular"></wb-cardpricing>
+    <wb-cardpricing data-plan="Enterprise" data-price="$199" data-period="/mo" data-description="For large organizations" data-features="Everything in Pro,Custom integrations,24/7 phone support,Unlimited storage" data-cta="Contact Sales" data-cta-href="#contact"></wb-cardpricing>
+  </wb-grid>
+</wb-container>

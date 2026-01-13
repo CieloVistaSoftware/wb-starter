@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stagelight.schema.json",
+  "title": "Stage Light",
+  "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
+  "behavior": "stagelight",
+  "compliance": {
+    "baseClass": "wb-stagelight",
+    "supportLevel": "experimental",
+    "accessibility": "presentation"
+  },
+  "baseClass": "wb-stagelight",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "presentation"
+  },
+  "properties": {
+    "variant": {
+      "type": "string",
+      "description": "Type of light effect",
+      "enum": ["beam", "spotlight", "fixture"],
+      "default": "beam",
+      "appliesClass": "wb-stagelight--{{value}}"
+    },
+    "color": {
+      "type": "string",
+      "description": "Color of the light (hex, rgb, or named)",
+      "default": "#ffffff"
+    },
+    "intensity": {
+      "type": "number",
+      "description": "Brightness/Opacity (0-1)",
+      "default": 0.5
+    },
+    "size": {
+      "type": "string",
+      "description": "Size of the light/beam",
+      "default": "300px"
+    },
+    "speed": {
+      "type": "string",
+      "description": "Animation speed (e.g., 3s)",
+      "default": "3s"
+    },
+    "target": {
+      "type": "string",
+      "description": "Selector for element to track (for spotlight/fixture)",
+      "default": "mouse"
+    },
+    "label": {
+      "type": "string",
+      "description": "Label for the fixture variant",
+      "default": ""
+    }
+  },
+  "$view": [
+    {
+      "name": "source",
+      "tag": "div",
+      "class": "wb-stagelight__source",
+      "createdWhen": "variant == 'fixture' OR variant == 'beam'"
+    },
+    {
+      "name": "beam",
+      "tag": "div",
+      "class": "wb-stagelight__beam",
+      "createdWhen": "variant == 'beam'"
+    },
+    {
+      "name": "spot",
+      "tag": "div",
+      "class": "wb-stagelight__spot",
+      "createdWhen": "variant == 'spotlight'"
+    },
+    {
+      "name": "housing",
+      "tag": "div",
+      "class": "wb-stagelight__housing",
+      "createdWhen": "variant == 'fixture'"
+    },
+    {
+      "name": "label",
+      "tag": "span",
+      "content": "{{label}}",
+      "createdWhen": "variant == 'fixture' AND label"
+    }
+  ],
+  "$methods": {},
+  "$cssAPI": {
+    "--wb-stagelight-color": {
+      "description": "Main color of the light"
+    },
+    "--wb-stagelight-size": {
+      "description": "Size of the light beam or spot"
+    },
+    "--wb-stagelight-intensity": {
+      "description": "Opacity of the light"
+    }
+  }
+}

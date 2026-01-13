@@ -3,15 +3,17 @@
   "$id": "cardpricing.schema.json",
   "title": "Pricing Card",
   "description": "Pricing tier card with plan name, price, features list, and CTA",
-  
   "behavior": "cardpricing",
   "baseClass": "wb-pricing",
-  
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
-  
+  "compliance": {
+    "baseClass": "wb-pricing",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "plan": {
       "type": "string",
@@ -55,12 +57,16 @@
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["default", "bordered", "elevated", "minimal"],
+      "enum": [
+        "default",
+        "bordered",
+        "elevated",
+        "minimal"
+      ],
       "default": "default",
       "appliesClass": "wb-pricing--{{value}}"
     }
   },
-  
   "$view": [
     {
       "name": "badge",
@@ -141,7 +147,6 @@
       "description": "Call-to-action button"
     }
   ],
-  
   "$methods": {
     "show": {
       "description": "Shows the pricing card",
@@ -157,14 +162,18 @@
     },
     "setFeatured": {
       "description": "Sets or removes featured state",
-      "params": ["isFeatured"]
+      "params": [
+        "isFeatured"
+      ]
     },
     "updatePrice": {
       "description": "Updates the price and period",
-      "params": ["price", "period"]
+      "params": [
+        "price",
+        "period"
+      ]
     }
   },
-  
   "$cssAPI": {
     "--wb-pricing-padding": {
       "default": "1.5rem",
@@ -259,7 +268,6 @@
       "description": "Featured badge text color"
     }
   },
-  
   "test": {
     "setup": [
       "<wb-pricing plan=\"Basic\" price=\"$9\"></wb-pricing>",
@@ -269,16 +277,39 @@
     ],
     "matrix": {
       "combinations": [
-        { "plan": "Basic", "price": "$9" },
-        { "plan": "Pro", "price": "$29", "featured": true },
-        { "plan": "Basic", "price": "$9", "period": "/year" },
-        { "plan": "Pro", "price": "$29", "features": "Feature 1,Feature 2" },
-        { "plan": "Pro", "price": "$29", "cta": "Subscribe Now" },
-        { "plan": "Enterprise", "price": "$99", "description": "For large teams", "featured": true }
+        {
+          "plan": "Basic",
+          "price": "$9"
+        },
+        {
+          "plan": "Pro",
+          "price": "$29",
+          "featured": true
+        },
+        {
+          "plan": "Basic",
+          "price": "$9",
+          "period": "/year"
+        },
+        {
+          "plan": "Pro",
+          "price": "$29",
+          "features": "Feature 1,Feature 2"
+        },
+        {
+          "plan": "Pro",
+          "price": "$29",
+          "cta": "Subscribe Now"
+        },
+        {
+          "plan": "Enterprise",
+          "price": "$99",
+          "description": "For large teams",
+          "featured": true
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "cards",
     "icon": "💰",

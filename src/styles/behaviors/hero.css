@@ -1,0 +1,207 @@
+/**
+ * Hero Component Styles
+ * Handles height, layout, and responsiveness
+ */
+
+wb-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+/* Apply height from data attribute */
+wb-hero[data-height="100vh"] {
+  height: 100vh;
+  min-height: 100vh;
+}
+
+wb-hero[data-height="80vh"] {
+  height: 80vh;
+  min-height: 80vh;
+}
+
+wb-hero[data-height="60vh"] {
+  height: 60vh;
+  min-height: 60vh;
+}
+
+wb-hero[data-height="50vh"] {
+  height: 50vh;
+  min-height: 50vh;
+}
+
+/* Alignment */
+wb-hero[data-align="center"] {
+  text-align: center;
+}
+
+wb-hero[data-align="left"] {
+  text-align: left;
+}
+
+wb-hero[data-align="right"] {
+  text-align: right;
+}
+
+/* Variants - Always ensure visible background */
+wb-hero[data-variant="gradient"] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+wb-hero[data-variant="dark"] {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: white;
+}
+
+wb-hero[data-variant="light"] {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #0f172a;
+}
+
+/* Default gradient if no variant */
+wb-hero:not([data-variant]) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* Hero Content Container */
+wb-hero > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+}
+
+wb-hero h1 {
+  font-size: clamp(2rem, 8vw, 4rem);
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+wb-hero h2 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+wb-hero p {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+/* CTA Buttons */
+wb-hero .cta-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+wb-hero .cta-button,
+wb-hero button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+wb-hero .cta-button--primary,
+wb-hero button[data-primary] {
+  background: white;
+  color: #667eea;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+wb-hero .cta-button--primary:hover,
+wb-hero button[data-primary]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+wb-hero .cta-button--secondary,
+wb-hero button[data-secondary] {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+wb-hero .cta-button--secondary:hover,
+wb-hero button[data-secondary]:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  wb-hero {
+    min-height: 300px;
+  }
+
+  wb-hero[data-height="100vh"] {
+    height: auto;
+    min-height: 60vh;
+  }
+
+  wb-hero > div {
+    padding: 1.5rem;
+  }
+
+  wb-hero h1 {
+    font-size: clamp(1.5rem, 7vw, 2.5rem);
+  }
+
+  wb-hero p {
+    font-size: clamp(0.9rem, 4vw, 1.1rem);
+  }
+
+  wb-hero .cta-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  wb-hero .cta-button,
+  wb-hero button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  wb-hero {
+    min-height: 250px;
+  }
+
+  wb-hero > div {
+    padding: 1rem;
+  }
+
+  wb-hero h1 {
+    font-size: 1.5rem;
+  }
+
+  wb-hero p {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+}

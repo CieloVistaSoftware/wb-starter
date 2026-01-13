@@ -19,7 +19,7 @@ const WORKFLOWS = {
     subtitle: 'Landing, About, Contact, etc',
     color: '#6366f1',
     options: [
-      { id: 'landing', icon: '🚀', name: 'Landing Page', templates: ['landing-saas', 'landing-agency', 'landing-app', 'landing-startup'] },
+      { id: 'landing', icon: '🚀', name: 'Landing Page', templates: ['novice-business-starter', 'landing-saas', 'landing-agency', 'landing-app', 'landing-startup'] },
       { id: 'portfolio', icon: '💼', name: 'Portfolio', templates: ['portfolio-creative', 'portfolio-developer', 'portfolio-photo'] },
       { id: 'blog', icon: '📝', name: 'Blog Post', templates: ['blog-home', 'blog-personal', 'content-article'] },
       { id: 'contact', icon: '📞', name: 'Contact Page', templates: ['contact-page'] },
@@ -36,7 +36,7 @@ const WORKFLOWS = {
     subtitle: 'Multi-page with navigation',
     color: '#10b981',
     options: [
-      { id: 'business', icon: '🏢', name: 'Business Site', templates: ['full-company-site', 'cielo-vista-home'] },
+      { id: 'business', icon: '🏢', name: 'Business Site', templates: ['novice-business-starter', 'full-company-site', 'cielo-vista-home'] },
       { id: 'store', icon: '🛍️', name: 'Online Store', templates: ['shop-storefront', 'shop-launch'] },
       { id: 'restaurant', icon: '🍽️', name: 'Restaurant', templates: ['restaurant-fine', 'restaurant-cafe', 'business-restaurant'] },
       { id: 'portfolio', icon: '💼', name: 'Portfolio', templates: ['portfolio-creative', 'portfolio-developer'] },

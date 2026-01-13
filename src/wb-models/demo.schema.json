@@ -9,6 +9,11 @@
     "tagName": "div",
     "implicitRole": "region"
   },
+  "compliance": {
+    "baseClass": "wb-demo",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "title": {
       "type": "string",
@@ -24,6 +29,14 @@
       "type": "string",
       "description": "Additional classes for the content wrapper",
       "default": ""
+    }
+  },
+  "$cssAPI": {
+    "--bg-ternary": {
+      "description": "Header background"
+    },
+    "--border-color": {
+      "description": "Border color"
     }
   },
   "$view": [
@@ -74,5 +87,6 @@
       "tag": "code",
       "parent": "pre"
     }
-  ]
+  ],
+  "$methods": {}
 }

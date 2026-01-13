@@ -4,5 +4,13 @@
   "title": "Globe",
   "behavior": "globe",
   "description": "3D Globe visualization.",
-  "properties": {}
+  "compliance": {
+    "baseClass": "wb-globe",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

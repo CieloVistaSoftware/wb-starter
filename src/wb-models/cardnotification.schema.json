@@ -3,20 +3,27 @@
   "$id": "cardnotification.schema.json",
   "title": "Notification Card",
   "description": "Dismissible notification card with type-based styling",
-  
   "behavior": "cardnotification",
   "baseClass": "wb-notification",
-  
   "semanticElement": {
     "tagName": "aside",
     "implicitRole": "alert"
   },
-  
+  "compliance": {
+    "baseClass": "wb-notification",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "variant": {
       "type": "string",
       "description": "Notification type/severity",
-      "enum": ["info", "success", "warning", "error"],
+      "enum": [
+        "info",
+        "success",
+        "warning",
+        "error"
+      ],
       "default": "info",
       "appliesClass": "wb-notification--{{value}}"
     },
@@ -45,7 +52,6 @@
       "appliesClass": "wb-notification--elevated"
     }
   },
-  
   "$view": [
     {
       "name": "icon",
@@ -87,47 +93,109 @@
       "description": "Dismiss button"
     }
   ],
-  
   "$methods": {
-    "show": { "description": "Shows the notification", "params": [] },
-    "hide": { "description": "Hides the notification", "params": [] },
-    "toggle": { "description": "Toggles visibility", "params": [] },
-    "dismiss": { "description": "Dismisses and removes the notification", "params": [], "returns": "Promise" }
+    "show": {
+      "description": "Shows the notification",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the notification",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "dismiss": {
+      "description": "Dismisses and removes the notification",
+      "params": [],
+      "returns": "Promise"
+    }
   },
-  
   "$cssAPI": {
-    "--wb-notification-padding": { "default": "1rem", "description": "Card padding" },
-    "--wb-notification-radius": { "default": "8px", "description": "Border radius" },
-    "--wb-notification-gap": { "default": "0.75rem", "description": "Gap between elements" },
-    "--wb-notification-icon-size": { "default": "1.25rem", "description": "Icon size" },
-    "--wb-notification-title-weight": { "default": "600", "description": "Title font weight" },
-    "--wb-notification-info-bg": { "default": "#e3f2fd", "description": "Info background" },
-    "--wb-notification-info-border": { "default": "#2196f3", "description": "Info border color" },
-    "--wb-notification-info-color": { "default": "#1565c0", "description": "Info text color" },
-    "--wb-notification-success-bg": { "default": "#e8f5e9", "description": "Success background" },
-    "--wb-notification-success-border": { "default": "#4caf50", "description": "Success border" },
-    "--wb-notification-success-color": { "default": "#2e7d32", "description": "Success text color" },
-    "--wb-notification-warning-bg": { "default": "#fff3e0", "description": "Warning background" },
-    "--wb-notification-warning-border": { "default": "#ff9800", "description": "Warning border" },
-    "--wb-notification-warning-color": { "default": "#e65100", "description": "Warning text color" },
-    "--wb-notification-error-bg": { "default": "#ffebee", "description": "Error background" },
-    "--wb-notification-error-border": { "default": "#f44336", "description": "Error border" },
-    "--wb-notification-error-color": { "default": "#c62828", "description": "Error text color" }
+    "--wb-notification-padding": {
+      "default": "1rem",
+      "description": "Card padding"
+    },
+    "--wb-notification-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-notification-gap": {
+      "default": "0.75rem",
+      "description": "Gap between elements"
+    },
+    "--wb-notification-icon-size": {
+      "default": "1.25rem",
+      "description": "Icon size"
+    },
+    "--wb-notification-title-weight": {
+      "default": "600",
+      "description": "Title font weight"
+    },
+    "--wb-notification-info-bg": {
+      "default": "#e3f2fd",
+      "description": "Info background"
+    },
+    "--wb-notification-info-border": {
+      "default": "#2196f3",
+      "description": "Info border color"
+    },
+    "--wb-notification-info-color": {
+      "default": "#1565c0",
+      "description": "Info text color"
+    },
+    "--wb-notification-success-bg": {
+      "default": "#e8f5e9",
+      "description": "Success background"
+    },
+    "--wb-notification-success-border": {
+      "default": "#4caf50",
+      "description": "Success border"
+    },
+    "--wb-notification-success-color": {
+      "default": "#2e7d32",
+      "description": "Success text color"
+    },
+    "--wb-notification-warning-bg": {
+      "default": "#fff3e0",
+      "description": "Warning background"
+    },
+    "--wb-notification-warning-border": {
+      "default": "#ff9800",
+      "description": "Warning border"
+    },
+    "--wb-notification-warning-color": {
+      "default": "#e65100",
+      "description": "Warning text color"
+    },
+    "--wb-notification-error-bg": {
+      "default": "#ffebee",
+      "description": "Error background"
+    },
+    "--wb-notification-error-border": {
+      "default": "#f44336",
+      "description": "Error border"
+    },
+    "--wb-notification-error-color": {
+      "default": "#c62828",
+      "description": "Error text color"
+    }
   },
-  
   "accessibility": {
     "role": "alert",
     "ariaLive": "polite",
     "dismissAriaLabel": "Dismiss notification"
   },
-  
   "events": {
     "wb:notification:dismiss": {
       "description": "Fired when notification is dismissed",
-      "detail": { "variant": "string", "title": "string" }
+      "detail": {
+        "variant": "string",
+        "title": "string"
+      }
     }
   },
-  
   "test": {
     "setup": [
       "<wb-notification message=\"Info message\"></wb-notification>",
@@ -136,15 +204,32 @@
     ],
     "matrix": {
       "combinations": [
-        { "message": "Info message" },
-        { "variant": "success", "title": "Success", "message": "Done!" },
-        { "variant": "warning", "message": "Warning!" },
-        { "variant": "error", "message": "Error!", "dismissible": false },
-        { "variant": "info", "title": "Notice", "message": "Info", "icon": "🔔" }
+        {
+          "message": "Info message"
+        },
+        {
+          "variant": "success",
+          "title": "Success",
+          "message": "Done!"
+        },
+        {
+          "variant": "warning",
+          "message": "Warning!"
+        },
+        {
+          "variant": "error",
+          "message": "Error!",
+          "dismissible": false
+        },
+        {
+          "variant": "info",
+          "title": "Notice",
+          "message": "Info",
+          "icon": "🔔"
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "cards",
     "icon": "🔔",

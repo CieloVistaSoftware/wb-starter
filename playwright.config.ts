@@ -142,6 +142,7 @@ export default defineConfig({
         'ui/behavior-verification.spec.ts',
         'ui/builder-sidebar.spec.ts',
         'ui/figure.spec.ts',
+        'ui/all-components.spec.ts',
         'behaviors-showcase.spec.ts',
         'pill-shortcut.spec.ts',
         'input-switch.spec.ts',

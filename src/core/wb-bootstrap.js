@@ -84,7 +84,7 @@ const defaults = {
 };
 
 /**
- * Bootstrap the WB Framework
+ * Bootstrap the WB Behaviors
  * @param {Object} options - Configuration options
  * @returns {Promise<{WB: Object, Views: Object}>} Initialized modules
  */

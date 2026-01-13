@@ -1,46 +1,26 @@
 <!-- SPA Footer - Navigation with anchor links -->
-<footer style="background: var(--bg-primary, #1a1a2e); padding: 3rem 2rem; color: white;">
-  <div style="max-width: 1200px; margin: 0 auto;">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
-      <div>
-        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary, #6366f1); margin-bottom: 1rem;">Brand</div>
-        <p style="color: var(--text-secondary, #aaa); font-size: 0.9rem; line-height: 1.6;">Building amazing digital experiences since 2020.</p>
-      </div>
-      <div>
-        <h4 style="font-weight: 600; margin-bottom: 1rem;">Quick Links</h4>
-        <nav style="display: flex; flex-direction: column; gap: 0.5rem;">
-          <a href="#home" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 0.9rem;">Home</a>
-          <a href="#about" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 0.9rem;">About</a>
-          <a href="#services" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 0.9rem;">Services</a>
-          <a href="#portfolio" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 0.9rem;">Portfolio</a>
-        </nav>
-      </div>
-      <div>
-        <h4 style="font-weight: 600; margin-bottom: 1rem;">Resources</h4>
-        <nav style="display: flex; flex-direction: column; gap: 0.5rem;">
-          <a href="#team" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 0.9rem;">Team</a>
-          <a href="#pricing" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 0.9rem;">Pricing</a>
-          <a href="#faq" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 0.9rem;">FAQ</a>
-          <a href="#blog" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 0.9rem;">Blog</a>
-        </nav>
-      </div>
-      <div>
-        <h4 style="font-weight: 600; margin-bottom: 1rem;">Contact</h4>
-        <nav style="display: flex; flex-direction: column; gap: 0.5rem;">
-          <a href="#contact" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 0.9rem;">Get in Touch</a>
-          <span style="color: var(--text-secondary, #aaa); font-size: 0.9rem;">hello@example.com</span>
-          <span style="color: var(--text-secondary, #aaa); font-size: 0.9rem;">(123) 456-7890</span>
-        </nav>
-      </div>
-    </div>
-    <div style="border-top: 1px solid #333; padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-      <p style="color: var(--text-secondary, #666); font-size: 0.85rem;">© 2025 Brand. All rights reserved.</p>
-      <div style="display: flex; gap: 1rem;">
-        <a href="#" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 1.25rem;">🐦</a>
-        <a href="#" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 1.25rem;">📘</a>
-        <a href="#" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 1.25rem;">📷</a>
-        <a href="#" style="color: var(--text-secondary, #aaa); text-decoration: none; font-size: 1.25rem;">💼</a>
-      </div>
-    </div>
-  </div>
-</footer>
+<wb-footer data-logo="Brand" data-tagline="Building amazing digital experiences since 2020." data-copyright="© 2025 Brand. All rights reserved.">
+  <wb-footer-column data-title="Quick Links">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+  </wb-footer-column>
+  <wb-footer-column data-title="Resources">
+    <a href="#team">Team</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="#blog">Blog</a>
+  </wb-footer-column>
+  <wb-footer-column data-title="Contact">
+    <a href="#contact">Get in Touch</a>
+    <span>hello@example.com</span>
+    <span>(123) 456-7890</span>
+  </wb-footer-column>
+  <wb-social-links>
+    <a href="#" data-icon="twitter">Twitter</a>
+    <a href="#" data-icon="facebook">Facebook</a>
+    <a href="#" data-icon="instagram">Instagram</a>
+    <a href="#" data-icon="linkedin">LinkedIn</a>
+  </wb-social-links>
+</wb-footer>

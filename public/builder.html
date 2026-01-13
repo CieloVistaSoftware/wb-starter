@@ -124,31 +124,38 @@
       display: none !important; 
     }
     
-    /* Make canvas full screen - INHERIT PAGE THEME */
+    /* PREVIEW: Body scrolls the whole page */
+    html:has(body.preview-mode) {
+      overflow-y: scroll !important;
+      overflow-x: hidden !important;
+    }
     body.preview-mode { 
-      overflow-y: auto !important;
+      overflow-y: scroll !important;
+      overflow-x: hidden !important;
+      height: auto !important;
+      min-height: 100vh !important;
     }
-    body.preview-mode .builder-container { 
-      padding: 0 !important; 
-      min-height: 100vh;
-    }
-    body.preview-mode #builder-root {
+    
+    /* PREVIEW: Remove all height constraints so content flows */
+    body.preview-mode .builder-container,
+    body.preview-mode #builder-root,
+    body.preview-mode .canvas-area,
+    body.preview-mode .viewport,
+    body.preview-mode #canvas,
+    body.preview-mode .canvas-section,
+    body.preview-mode .section-content { 
       display: block !important;
-    }
-    body.preview-mode .canvas-area { 
-      margin: 0 !important; 
-      width: 100% !important; 
-      flex: 1;
-    }
-    body.preview-mode .viewport {
-      overflow-y: auto !important;
-      height: 100vh !important;
-    }
-    body.preview-mode #canvas { 
-      border: none !important; 
-      box-shadow: none !important; 
-      padding-bottom: 0 !important;
+      position: static !important;
+      height: auto !important;
       min-height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+      flex: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      width: 100% !important;
     }
     
     /* Canvas sections in preview - just show content, inherit theme */
@@ -196,9 +203,10 @@
       border-radius: 8px;
       font-size: 14px;
       font-weight: 600;
-      cursor: pointer;
+      cursor: move;
       z-index: 99999;
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      user-select: none;
     }
     .preview-exit-btn:hover { background: #5558e3; }
     
@@ -684,6 +692,7 @@
         <div class="menu-action" onclick="window.exportJSON()">📤 Export JSON<span class="menu-shortcut">Ctrl+E</span></div>
         <div class="menu-action" onclick="window.importJSON()">📥 Import JSON<span class="menu-shortcut">Ctrl+O</span></div>
         <div class="menu-divider"></div>
+        <div class="menu-action" onclick="window.toggleContentBuilder()">📋 Content Builder</div>
         <div class="menu-action" onclick="toggleSnapFromMenu()">
           <span id="snapMenuIcon">☐</span> Snap to Grid<span class="menu-shortcut">G</span>
         </div>
@@ -759,20 +768,11 @@
         <div class="panel-right-header">
                   <div class="panel-tabs">
             <button class="panel-tab active" id="tabTree" onclick="window.switchPanelTab('tree')" style="font-size: 1rem; padding: 2px 6px;">🌳</button>
-            <button class="panel-tab" id="tabProps" onclick="window.switchPanelTab('props')" style="font-size: 1rem; padding: 2px 6px;">⚙️</button>
             <button class="panel-tab" id="tabDecorate" onclick="window.switchPanelTab('decorate')" style="font-size: 1rem; padding: 2px 6px;">🎨</button>
           </div>
         </div>
         
-        <div class="panel-header-row">
-          <h3>Components</h3>
-          <span class="comp-count" id="count" style="margin: 0 8px; font-size: 0.7rem; color: #888;">0</span>
-          <button class="collapse-all-btn" id="collapseAllBtn" onclick="toggleAllSections()">📁 Collapse All</button>
-        </div>
-        
-        <div class="panel-right-list" id="componentList"></div>
-        <div id="propsPanel" class="props-panel" style="display:none"></div>
-        <div id="decoratePanel" class="props-panel" style="display:none"></div>
+        <div class="panel-right-list" id="componentList" style="display:flex; flex:1; overflow-y:auto;"></div>
       </aside>
     </div>
   </main>
@@ -795,8 +795,60 @@
     </div>
   </div>
   
-  <!-- Modals -->
-  <div class="toast" id="toast"></div>
+  <!-- Content Builder Panel -->
+  <div id="contentBuilderPanel" style="
+    position: fixed;
+    left: 0;
+    top: 28px;
+    width: 320px;
+    height: calc(100vh - 28px);
+    background: #1a1a2e;
+    border-right: 1px solid #333;
+    padding: 16px;
+    z-index: 500;
+    overflow-y: auto;
+    display: none;
+  ">
+    <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 14px;">📋 Content Builder</h3>
+    <div style="color: #aaa; font-size: 13px; line-height: 1.6;">
+      <p>Select a page type to get started:</p>
+      <button onclick="window.showContentBuilder()" style="
+        width: 100%;
+        padding: 12px;
+        background: #6366f1;
+        border: none;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-bottom: 8px;
+        font-weight: 500;
+      ">Home Page</button>
+      <button onclick="window.showContentBuilder()" style="
+        width: 100%;
+        padding: 12px;
+        background: #6366f1;
+        border: none;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-bottom: 8px;
+        font-weight: 500;
+      ">About Page</button>
+      <button onclick="window.showContentBuilder()" style="
+        width: 100%;
+        padding: 12px;
+        background: #6366f1;
+        border: none;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-bottom: 8px;
+        font-weight: 500;
+      ">Services Page</button>
+    </div>
+  </div>
+  
+  
   <div class="notes-modal" id="notesModal">
     <div class="notes-modal-header"><span>📝 Notes</span><button onclick="window.toggleNotesDrawer()">✕</button></div>
     <textarea id="notesArea" placeholder="Notes..."></textarea>
@@ -817,6 +869,8 @@
       </div>
     </div>
   </div>
+
+  <div id="toast"></div>
 
   <script>
     // ===== MENU HANDLING =====
@@ -868,41 +922,7 @@
     window.toggleSidebar = toggleLeft;
     window.togglePanel = toggleRight;
     
-    // ===== PREVIEW =====
-    let isPreviewMode = false;
-    function doPreview() {
-      isPreviewMode = !isPreviewMode;
-      document.body.classList.toggle('preview-mode', isPreviewMode);
-      document.getElementById('previewExitBtn')?.remove();
-      
-      if (isPreviewMode) {
-        const btn = document.createElement('button');
-        btn.id = 'previewExitBtn';
-        btn.className = 'preview-exit-btn';
-        btn.textContent = '✕ Exit Preview';
-        btn.onclick = doPreview;
-        document.body.appendChild(btn);
-      }
-    }
-    window.togglePreview = doPreview;
-    
-    // ===== SECTION COLLAPSE =====
-    let allExpanded = true;
-    function toggleAllSections() {
-      allExpanded = !allExpanded;
-      if (window.setAllTreeSections) window.setAllTreeSections(allExpanded);
-      document.getElementById('collapseAllBtn').textContent = allExpanded ? '📁 Collapse All' : '📂 Expand All';
-    }
-    function collapseAllSections() { 
-      allExpanded = false; 
-      if (window.setAllTreeSections) window.setAllTreeSections(false); 
-      document.getElementById('collapseAllBtn').textContent = '📂 Expand All';
-    }
-    function expandAllSections() { 
-      allExpanded = true; 
-      if (window.setAllTreeSections) window.setAllTreeSections(true); 
-      document.getElementById('collapseAllBtn').textContent = '📁 Collapse All';
-    }
+    // ===== PREVIEW & SECTION COLLAPSE (Removed duplicate legacy implementations) =====
     
     // ===== COMPONENT CHOOSER =====
     let insertPosition = 'bottom';
@@ -1198,11 +1218,129 @@
     function dupSelected() { if (window.sel) window.dup?.(window.sel.id); }
     function delSelected() { if (window.sel) window.del?.(window.sel.id); }
     
+    // ===== COPY DEBUG INFO =====
+    window.copyComponentDebugInfo = function(wrapperId) {
+      const wrapper = document.getElementById(wrapperId);
+      if (!wrapper) {
+        if (window.toast) window.toast('Element not found');
+        return;
+      }
+      
+      const debugInfo = {
+        id: wrapperId,
+        componentData: null,
+        outerHTML: wrapper.outerHTML,
+        computedStyle: {},
+        parentInfo: null,
+        childCount: wrapper.querySelectorAll('.dropped').length
+      };
+      
+      // Parse component data
+      try {
+        debugInfo.componentData = JSON.parse(wrapper.dataset.c || '{}');
+      } catch (e) {
+        debugInfo.componentData = { error: e.message, raw: wrapper.dataset.c };
+      }
+      
+      // Get relevant computed styles
+      const cs = window.getComputedStyle(wrapper);
+      debugInfo.computedStyle = {
+        display: cs.display,
+        visibility: cs.visibility,
+        opacity: cs.opacity,
+        overflow: cs.overflow,
+        height: cs.height,
+        maxHeight: cs.maxHeight,
+        position: cs.position
+      };
+      
+      // Parent info
+      const parent = wrapper.parentElement;
+      if (parent) {
+        debugInfo.parentInfo = {
+          id: parent.id,
+          className: parent.className,
+          tagName: parent.tagName
+        };
+      }
+      
+      const text = JSON.stringify(debugInfo, null, 2);
+      navigator.clipboard.writeText(text).then(() => {
+        if (window.toast) window.toast('Debug info copied!');
+      }).catch(err => {
+        console.error('Copy failed:', err);
+        // Fallback: show in console
+        console.log('=== DEBUG INFO ===');
+        console.log(text);
+        if (window.toast) window.toast('Check console for debug info');
+      });
+    };
+    
     // ===== PREVIEW MODE =====
     let isPreviewMode = false;
     let builderTheme = 'dark'; // Store original builder theme
     
+    function makeDraggable(el) {
+      let isDragging = false;
+      let startX, startY, initialLeft, initialTop;
+
+      el.addEventListener('mousedown', (e) => {
+        // Only trigger if left mouse button
+        if (e.button !== 0) return;
+        
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        
+        // Get current position - must be computed styles or simple getBoundingClientRect
+        const rect = el.getBoundingClientRect();
+        initialLeft = rect.left;
+        initialTop = rect.top;
+        
+        // Switch to explicit left/top positioning to allow movement
+        // We set these explicitly so the 'right' property doesn't fight us
+        el.style.right = 'auto';
+        el.style.left = `${initialLeft}px`;
+        el.style.top = `${initialTop}px`;
+        
+        el.style.cursor = 'grabbing';
+        e.preventDefault(); // Prevent selection
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        
+        el.style.left = `${initialLeft + dx}px`;
+        el.style.top = `${initialTop + dy}px`;
+      });
+
+      document.addEventListener('mouseup', () => {
+        if (isDragging) {
+          isDragging = false;
+          el.style.cursor = 'move';
+        }
+      });
+    }
+
     function doPreview() {
+      // If not in preview mode, check if there's content before allowing preview
+      if (!isPreviewMode) {
+        const canvas = document.getElementById('canvas');
+        const droppedComponents = canvas?.querySelectorAll('.dropped');
+        
+        if (!droppedComponents || droppedComponents.length === 0) {
+          if (window.toast) {
+            window.toast('Nothing to preview! Add components to Header, Main, or Footer first.');
+          } else {
+            alert('Nothing to preview! Add components to Header, Main, or Footer first.');
+          }
+          return;
+        }
+      }
+      
       isPreviewMode = !isPreviewMode;
       document.body.classList.toggle('preview-mode', isPreviewMode);
       
@@ -1228,11 +1366,22 @@
           exitBtn.id = 'previewExitBtn';
           exitBtn.className = 'preview-exit-btn';
           exitBtn.textContent = '✕ Exit Preview';
-          exitBtn.onclick = doPreview;
+          
+          // Separate click handler to distinguish from drag
+          exitBtn.addEventListener('click', (e) => {
+             // Only exit if not dragging (simple heuristic: mouse didn't move much)
+             // or just let simple click work since we preventDefault on mousedown for drag
+             doPreview();
+          });
+          
           document.body.appendChild(exitBtn);
+          makeDraggable(exitBtn);
         }
         exitBtn.style.display = 'block';
+        // Reset position if it was hidden? Optional. keeping previous position is nice.
+        
       } else {
+        // ... rest of function
         // Restore builder theme
         document.documentElement.dataset.theme = builderTheme;
         document.body.style.background = '';
@@ -1353,5 +1502,6 @@
   </script>
   
   <script type="module" src="../src/wb-viewmodels/builder-app/index.js"></script>
+  <script type="module" src="../src/wb-viewmodels/builder-app/content-builder-toggle.js"></script>
 </body>
 </html>

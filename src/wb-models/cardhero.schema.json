@@ -3,15 +3,17 @@
   "$id": "cardhero.schema.json",
   "title": "Hero Card",
   "description": "Hero banner with background image, title, subtitle, and optional CTA",
-  
   "behavior": "cardhero",
   "baseClass": "wb-hero",
-  
   "semanticElement": {
     "tagName": "section",
     "implicitRole": "banner"
   },
-  
+  "compliance": {
+    "baseClass": "wb-hero",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "background": {
       "type": "string",
@@ -39,14 +41,24 @@
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["default", "cosmic", "split", "minimal", "gradient"],
+      "enum": [
+        "default",
+        "cosmic",
+        "split",
+        "minimal",
+        "gradient"
+      ],
       "default": "default",
       "appliesClass": "wb-hero--{{value}}"
     },
     "xalign": {
       "type": "string",
       "description": "Horizontal content alignment (x-axis)",
-      "enum": ["left", "center", "right"],
+      "enum": [
+        "left",
+        "center",
+        "right"
+      ],
       "default": "center",
       "appliesClass": "wb-hero--xalign-{{value}}"
     },
@@ -63,7 +75,6 @@
       "appliesClass": "wb-hero--full"
     }
   },
-  
   "$view": [
     {
       "name": "background",
@@ -86,6 +97,15 @@
       "public": true,
       "required": true,
       "description": "Content container for title, subtitle, CTA"
+    },
+    {
+      "name": "pretitle",
+      "tag": "div",
+      "parent": "content",
+      "public": true,
+      "content": "{{pretitle}}",
+      "createdWhen": "pretitle",
+      "description": "Content above title"
     },
     {
       "name": "title",
@@ -115,7 +135,6 @@
       "description": "Call-to-action button"
     }
   ],
-  
   "$methods": {
     "show": {
       "description": "Shows the hero",
@@ -131,15 +150,18 @@
     },
     "animate": {
       "description": "Triggers hero entrance animation",
-      "params": ["animationType"],
+      "params": [
+        "animationType"
+      ],
       "returns": "Promise"
     },
     "setBackground": {
       "description": "Changes the background image",
-      "params": ["url"]
+      "params": [
+        "url"
+      ]
     }
   },
-  
   "$cssAPI": {
     "--wb-hero-height": {
       "default": "400px",
@@ -202,7 +224,6 @@
       "description": "CTA button border radius"
     }
   },
-  
   "test": {
     "setup": [
       "<wb-hero background=\"hero.jpg\" title=\"Welcome\"></wb-hero>",
@@ -211,17 +232,45 @@
     ],
     "matrix": {
       "combinations": [
-        { "background": "hero.jpg", "title": "Welcome" },
-        { "background": "hero.jpg", "title": "Welcome", "subtitle": "Subtitle" },
-        { "background": "hero.jpg", "title": "Welcome", "cta": "Click Me" },
-        { "background": "hero.jpg", "title": "Welcome", "subtitle": "Sub", "cta": "Go", "variant": "cosmic" },
-        { "background": "hero.jpg", "title": "Welcome", "xalign": "left" },
-        { "background": "hero.jpg", "title": "Welcome", "overlay": false },
-        { "background": "hero.jpg", "title": "Welcome", "fullHeight": true }
+        {
+          "background": "hero.jpg",
+          "title": "Welcome"
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "subtitle": "Subtitle"
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "cta": "Click Me"
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "subtitle": "Sub",
+          "cta": "Go",
+          "variant": "cosmic"
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "xalign": "left"
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "overlay": false
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "fullHeight": true
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "cards",
     "icon": "🦸",

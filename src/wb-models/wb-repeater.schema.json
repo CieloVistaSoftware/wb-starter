@@ -4,5 +4,13 @@
   "title": "Repeater",
   "behavior": "repeater",
   "description": "Repeat content based on data.",
-  "properties": {}
+  "compliance": {
+    "baseClass": "wb-wb-repeater",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

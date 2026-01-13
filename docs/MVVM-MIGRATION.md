@@ -1,4 +1,4 @@
-# WB Framework MVVM Migration
+# Web Behaviors (WB) MVVM Migration
 
 ## Architecture Overview
 

@@ -11,6 +11,21 @@
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
   gap: 1rem;
+  font-size: 0.8em; /* 20% smaller text */
+}
+
+/* Canvas header section - 20% smaller text */
+#canvas-header,
+.canvas-section[data-section="header"],
+[data-section="header"] {
+  font-size: 0.8em;
+}
+
+/* Ensure nested elements in header don't compound the reduction */
+#canvas-header *,
+.canvas-section[data-section="header"] *,
+[data-section="header"] * {
+  font-size: inherit;
 }
 
 .wb-header--sticky {

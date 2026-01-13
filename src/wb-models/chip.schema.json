@@ -3,49 +3,146 @@
   "$id": "chip.schema.json",
   "title": "Chip",
   "description": "Small pill-shaped tag/label, optionally dismissible",
-  
   "behavior": "chip",
   "baseClass": "wb-chip",
-  
-  "semanticElement": { "tagName": "span", "implicitRole": "status" },
-  
+  "semanticElement": {
+    "tagName": "span",
+    "implicitRole": "status"
+  },
+  "compliance": {
+    "baseClass": "wb-chip",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "label": { "type": "string", "description": "Chip text content" },
-    "icon": { "type": "string", "description": "Leading icon" },
-    "dismissible": { "type": "boolean", "description": "Show dismiss button", "default": false },
-    "disabled": { "type": "boolean", "description": "Disabled state", "default": false },
-    "variant": { "type": "string", "enum": ["default", "primary", "success", "warning", "error", "info"], "default": "default", "appliesClass": "wb-chip--{{value}}" },
-    "size": { "type": "string", "enum": ["sm", "md", "lg"], "default": "md", "appliesClass": "wb-chip--{{value}}" },
-    "outlined": { "type": "boolean", "description": "Outlined style", "default": false, "appliesClass": "wb-chip--outlined" }
+    "label": {
+      "type": "string",
+      "description": "Chip text content"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Leading icon"
+    },
+    "dismissible": {
+      "type": "boolean",
+      "description": "Show dismiss button",
+      "default": false
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Disabled state",
+      "default": false
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "default",
+        "primary",
+        "success",
+        "warning",
+        "error",
+        "info"
+      ],
+      "default": "default",
+      "appliesClass": "wb-chip--{{value}}"
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "appliesClass": "wb-chip--{{value}}"
+    },
+    "outlined": {
+      "type": "boolean",
+      "description": "Outlined style",
+      "default": false,
+      "appliesClass": "wb-chip--outlined"
+    }
   },
-  
   "$view": [
-    { "name": "icon", "tag": "span", "public": true, "content": "{{icon}}", "createdWhen": "icon", "description": "Leading icon" },
-    { "name": "label", "tag": "span", "public": true, "content": "{{label}}", "description": "Chip text" },
-    { "name": "dismiss", "tag": "button", "public": true, "createdWhen": "dismissible", "description": "Dismiss button" }
+    {
+      "name": "icon",
+      "tag": "span",
+      "public": true,
+      "content": "{{icon}}",
+      "createdWhen": "icon",
+      "description": "Leading icon"
+    },
+    {
+      "name": "label",
+      "tag": "span",
+      "public": true,
+      "content": "{{label}}",
+      "description": "Chip text"
+    },
+    {
+      "name": "dismiss",
+      "tag": "button",
+      "public": true,
+      "createdWhen": "dismissible",
+      "description": "Dismiss button"
+    }
   ],
-  
   "$methods": {
-    "dismiss": { "description": "Removes the chip", "params": [] },
-    "enable": { "description": "Enables the chip", "params": [] },
-    "disable": { "description": "Disables the chip", "params": [] }
+    "dismiss": {
+      "description": "Removes the chip",
+      "params": []
+    },
+    "enable": {
+      "description": "Enables the chip",
+      "params": []
+    },
+    "disable": {
+      "description": "Disables the chip",
+      "params": []
+    }
   },
-  
   "$cssAPI": {
-    "--wb-chip-height": { "default": "28px", "description": "Chip height" },
-    "--wb-chip-padding": { "default": "0 12px", "description": "Chip padding" },
-    "--wb-chip-radius": { "default": "9999px", "description": "Border radius" },
-    "--wb-chip-font-size": { "default": "0.75rem", "description": "Font size" },
-    "--wb-chip-bg": { "default": "var(--bg-secondary, #f3f4f6)", "description": "Background" },
-    "--wb-chip-color": { "default": "var(--text-primary, #1a1a1a)", "description": "Text color" },
-    "--wb-chip-border": { "default": "none", "description": "Border" },
-    "--wb-chip-gap": { "default": "4px", "description": "Gap between elements" }
+    "--wb-chip-height": {
+      "default": "28px",
+      "description": "Chip height"
+    },
+    "--wb-chip-padding": {
+      "default": "0 12px",
+      "description": "Chip padding"
+    },
+    "--wb-chip-radius": {
+      "default": "9999px",
+      "description": "Border radius"
+    },
+    "--wb-chip-font-size": {
+      "default": "0.75rem",
+      "description": "Font size"
+    },
+    "--wb-chip-bg": {
+      "default": "var(--bg-secondary, #f3f4f6)",
+      "description": "Background"
+    },
+    "--wb-chip-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Text color"
+    },
+    "--wb-chip-border": {
+      "default": "none",
+      "description": "Border"
+    },
+    "--wb-chip-gap": {
+      "default": "4px",
+      "description": "Gap between elements"
+    }
   },
-  
   "events": {
-    "wb:chip:dismiss": { "description": "Chip dismissed", "detail": { "label": "string" } }
+    "wb:chip:dismiss": {
+      "description": "Chip dismissed",
+      "detail": {
+        "label": "string"
+      }
+    }
   },
-  
   "test": {
     "setup": [
       "<wb-chip label=\"Tag\"></wb-chip>",
@@ -54,13 +151,28 @@
     ],
     "matrix": {
       "combinations": [
-        { "label": "Tag" },
-        { "label": "Tag", "dismissible": true },
-        { "label": "Tag", "variant": "primary" },
-        { "label": "Tag", "icon": "🏷️" }
+        {
+          "label": "Tag"
+        },
+        {
+          "label": "Tag",
+          "dismissible": true
+        },
+        {
+          "label": "Tag",
+          "variant": "primary"
+        },
+        {
+          "label": "Tag",
+          "icon": "🏷️"
+        }
       ]
     }
   },
-  
-  "_metadata": { "category": "feedback", "icon": "🏷️", "since": "1.0.0", "status": "stable" }
+  "_metadata": {
+    "category": "feedback",
+    "icon": "🏷️",
+    "since": "1.0.0",
+    "status": "stable"
+  }
 }

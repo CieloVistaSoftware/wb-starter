@@ -4,7 +4,21 @@
   "title": "Hero",
   "behavior": "hero",
   "description": "Hero section behavior.",
+  "compliance": {
+    "baseClass": "wb-hero",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-      "variant": { "type": "string", "enum": ["default", "cosmic"] }
-  }
+    "variant": {
+      "type": "string",
+      "enum": [
+        "default",
+        "cosmic"
+      ]
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

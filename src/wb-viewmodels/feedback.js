@@ -98,8 +98,12 @@ export function toast(element, options = {}) {
  * Attribute: [badge]
  */
 export function badge(element, options = {}) {
+  const rawVariant = options.variant || element.dataset.variant || element.getAttribute('badge') || 'default';
+  // Sanitize variant for use as CSS class (replace spaces with dashes, lowercase)
+  const sanitizedVariant = rawVariant.replace(/\s+/g, '-').toLowerCase();
+  
   const config = {
-    variant: options.variant || element.dataset.variant || element.getAttribute('badge') || 'default',
+    variant: sanitizedVariant,
     size: options.size || element.dataset.size || element.getAttribute('size') || 'md',
     pill: options.pill ?? (element.hasAttribute('data-pill') || element.hasAttribute('pill')),
     dot: options.dot ?? (element.hasAttribute('data-dot') || element.hasAttribute('dot')),

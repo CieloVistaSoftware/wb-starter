@@ -4,8 +4,22 @@
   "title": "Copy",
   "behavior": "copy",
   "description": "Click to copy text to clipboard.",
+  "compliance": {
+    "baseClass": "wb-copy",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "text": { "type": "string", "description": "Text to copy" },
-    "target": { "type": "string", "description": "Selector of element to copy from" }
-  }
+    "text": {
+      "type": "string",
+      "description": "Text to copy"
+    },
+    "target": {
+      "type": "string",
+      "description": "Selector of element to copy from"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

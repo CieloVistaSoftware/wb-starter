@@ -1,421 +1,48 @@
-<!--
-================================================================================
-WB Web Component Syntax Guide
-================================================================================
-Components use custom element tags:
-  - <wb-button>   for buttons
-  - <wb-card>     for cards  
-  - <wb-badge>    for badges
-  - <wb-modal>    for modals
+<div style="padding: 3rem 2rem; text-align: center; background: var(--bg-secondary);">
+  <div style="font-size: 5rem; margin-bottom: 1rem;">🚀</div>
+  <h1 style="font-size: 2.5rem; margin: 0 0 0.5rem 0; color: var(--primary);">Acme Co</h1>
+  <p style="font-size: 1.1rem; color: var(--text-secondary); margin: 0;">Building the future</p>
+</div>
 
-Behaviors use x-* attributes:
-  - x-ripple      for ripple effect
-  - x-tooltip     for tooltips
-  - x-toast       for notifications
-
-Class names like wb-badge-gradient are CSS classes for STYLING.
-================================================================================
--->
-
-
-<wb-cardhero 
-  variant="cosmic" 
-  subtitle="No JavaScript knowledge required. Add behaviors to any element with simple data attributes. It just works." 
-  cta="Explore Components →" 
-  cta-href="?page=components"
-  cta-secondary="View Documentation"
-  cta-secondary-href="?page=docs"
-  background="radial-gradient(circle at 50% 50%, #1e1b4b 0%, #0f172a 100%)"
-  xalign="center"
-  height="600px"
->
-  <div slot="pretitle">
-    <a href='?page=components' class='wb-badge-gradient' style='display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;color:inherit;font-size:1rem;font-weight:normal;'>
-      <span class='wb-dot-pulse' style='width:6px;height:6px;'></span>
-      232 Components
-    </a>
-  </div>
-  <h1 slot="title">
-    Build stunning UIs with <span class='wb-gradient-text'>just HTML</span>
-  </h1>
-</wb-cardhero>
-
-<!-- Code Example -->
-<section id="home-section-15" style="padding: 4rem 0;">
-  <div id="home-div-16" style="width: calc(100% - 1rem); margin: 0 auto; display: flex; justify-content: center;">
-    <div id="home-div-17" class="wb-glass" style="padding: 2rem; border-radius: 20px; width: 100%; max-width: 800px;">
-      <div id="home-div-18" class="wb-window-controls">
-        <wb-span variant="red"></wb-span>
-        <wb-span variant="yellow"></wb-span>
-        <wb-span variant="green"></wb-span>
-      </div>
-
-      <!-- Live Example -->
-      <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-        <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">Live Result:</p>
-        <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center; justify-content: center; position: relative; min-height: 220px; border-radius: 12px; overflow: hidden; padding: 2rem; background: #0a0a1a;">
-          
-          <!-- Glass Card with Pulsing Light Behind -->
-          <wb-column style="position: relative;">
-            <!-- Pulsing Light Effect - positioned behind the card -->
-            <div class="pulse-light-1" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 280px; height: 200px; border-radius: 50%; background: radial-gradient(ellipse, rgba(99,102,241,0.9) 0%, rgba(168,85,247,0.7) 30%, rgba(236,72,153,0.5) 50%, transparent 70%); filter: blur(25px); animation: color-pulse 3s ease-in-out infinite; z-index: 0;"></div>
-            <div class="pulse-light-2" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 200px; height: 150px; border-radius: 50%; background: radial-gradient(ellipse, rgba(56,189,248,0.8) 0%, rgba(34,211,238,0.6) 40%, transparent 70%); filter: blur(20px); animation: color-pulse 3s ease-in-out infinite 1.5s; z-index: 0;"></div>
-            
-            <!-- v3.0: Using <wb-card> web component tag -->
-            <wb-card variant="glass" title="Glass Card" draggable style="width: 220px; position: relative; z-index: 1;">
-              Beautiful by default.
-            </wb-card>
-          </wb-column>
-
-          <!-- v3.0: Using <wb-button> web component tag -->
-       
-
-          <!-- Badges -->
-          <wb-row gap="0.5rem" xalign="center">
-            <wb-badge variant="gradient">New</wb-badge>
-            <wb-badge variant="success">Live</wb-badge>
-          </wb-row>
-
-          <!-- Modal -->
-          <wb-modal id="welcome-modal">
-            <span slot="title">Hello!</span>
-            <p>Welcome to the modal!</p>
-          </wb-modal>
-          <wb-button variant="glass" onclick="document.getElementById('welcome-modal').showModal()" style="position: relative; z-index: 1;">
-            Open Modal
-          </wb-button>
-        </div>
-      </div>
-      
-      <style>
-        @keyframes color-pulse {
-          0%, 100% { 
-            opacity: 0.5; 
-            transform: translate(-50%, -50%) scale(0.9); 
-            filter: blur(25px) hue-rotate(0deg);
-          }
-          50% { 
-            opacity: 1; 
-            transform: translate(-50%, -50%) scale(1.15); 
-            filter: blur(30px) hue-rotate(30deg);
-          }
-        }
-      </style>
-    </div>
-  </div>
-</section>
-
-<!-- Features Grid -->
-
-<wb-container id="home-section-23" data-max-width="1200px" padding="4rem 2rem">
-  <!-- Merged home-div-24 -->
-    <div id="home-div-25" style="text-align: center; margin-bottom: 3rem;">
-      <h2 id="home-h2-26">
-        Why <span id="home-span-27" class="wb-gradient-text">WB Behaviors</span>?
-      </h2>
-      <p id="home-p-28" style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
-        The simplest way to add interactivity to your websites.
-      </p>
-    </div>
-    
-    <div id="home-div-29" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-      
-      <wb-card variant="float" id="home-div-30">
-        <main style="padding: 0">
-          <div id="home-div-31" style="font-size: 2.5rem; margin-bottom: 1rem;">⚡</div>
-          <h3 id="home-h3-32">Zero Build Step</h3>
-          <p id="home-p-33" style="color: var(--text-secondary);">No webpack, no npm, no CLI. Just add a script tag and start building.</p>
-        </main>
-      </wb-card>
-      
-      <wb-card variant="float" id="home-div-34">
-        <main style="padding: 0">
-          <div id="home-div-35" style="font-size: 2.5rem; margin-bottom: 1rem;">🎨</div>
-          <h3 id="home-h3-36">30 Themes</h3>
-          <p id="home-p-37" style="color: var(--text-secondary);">From dark mode to cyberpunk. Switch themes instantly with one attribute.</p>
-        </main>
-      </wb-card>
-      
-      <wb-card variant="float" id="home-div-38">
-        <main style="padding: 0">
-          <div id="home-div-39" style="font-size: 2.5rem; margin-bottom: 1rem;">📦</div>
-          <h3 id="home-h3-40">232 Behaviors</h3>
-          <p id="home-p-41" style="color: var(--text-secondary);">Cards, modals, forms, animations, data display, and much more.</p>
-        </main>
-      </wb-card>
-      
-      <wb-card variant="float" id="home-div-42" onclick="window.location.href='../demos/frameworks.html'" style="cursor: pointer;">
-        <main style="padding: 0">
-          <div id="home-div-43" style="font-size: 2.5rem; margin-bottom: 1rem;">🔌</div>
-          <h3 id="home-h3-44">Framework Agnostic</h3>
-          <p id="home-p-45" style="color: var(--text-secondary);">Works with React, Vue, Svelte, or plain HTML. No lock-in.</p>
-          <p style="color: var(--primary-color); font-size: 0.9rem; margin-top: 0.5rem;">View Demos →</p>
-        </main>
-      </wb-card>
-      
-      <wb-card variant="float" id="home-div-46">
-        <main style="padding: 0">
-          <div id="home-div-47" style="font-size: 2.5rem; margin-bottom: 1rem;">🪶</div>
-          <h3 id="home-h3-48">Lightweight</h3>
-          <p id="home-p-49" style="color: var(--text-secondary);">Each behavior loads only when used. No bloat, maximum performance.</p>
-        </main>
-      </wb-card>
-      
-      <wb-card variant="float" id="home-div-50">
-        <main style="padding: 0">
-          <div id="home-div-51" style="font-size: 2.5rem; margin-bottom: 1rem;">♿</div>
-          <h3 id="home-h3-52">Accessible</h3>
-          <p id="home-p-53" style="color: var(--text-secondary);">ARIA attributes, keyboard navigation, and screen reader support built-in.</p>
-        </main>
-      </wb-card>
-      
-    </div>
-</wb-container>
-
-<hr id="home-hr-54" class="wb-divider-gradient">
-
-<!-- Image Grid with Move Behaviors -->
-<section id="home-section-55" style="padding: 4rem 2rem;">
-  <div id="home-div-56" style="max-width: 1200px; margin: 0 auto;">
-    <div id="home-div-57" style="text-align: center; margin-bottom: 2rem;">
-      <h2 id="home-h2-58">
-        Rearrange <span id="home-span-59" class="wb-gradient-text">Images</span>
-      </h2>
-      <p id="home-p-60" style="color: var(--text-secondary); margin-bottom: 1.5rem;">Toggle edit mode to rearrange images in the grid.</p>
-      
-      <!-- Edit Mode Toggle -->
-      <button id="editModeToggle" class="wb-btn-glass" style="display: inline-flex; align-items: center; gap: 0.5rem;" onclick="toggleEditMode()">
-        <span id="editModeIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: #64748b; transition: background 0.2s;"></span>
-        <span id="editModeLabel">Edit Mode: Off</span>
-      </button>
-    </div>
-    
-    <wb-grid columns="3" gap="1.5rem" id="imageGrid">
-      <wb-repeater count="6">
-          <template>
-            <div data-grid-item style="position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); padding: 0.5rem;">
-              <img src="https://picsum.photos/300/300?random={{index}}" alt="Image {{index}}" style="width: 100%; height: auto; border-radius: 8px; display: block;">
-              <div class="move-controls" style="display: none; gap: 0.25rem; justify-content: center; padding: 0.75rem; background: rgba(0,0,0,0.5);">
-                <wb-control action="move-up"></wb-control>
-                <wb-control action="move-down"></wb-control>
-                <wb-control action="move-left"></wb-control>
-                <wb-control action="move-right"></wb-control>
-              </div>
-            </div>
-          </template>
-      </wb-repeater>
-    </wb-grid>
-  </div>
-</section>
-
-<script>
-  // Edit Mode Toggle
-  let editModeActive = false;
+<div style="width: 100%; height: 500px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop') center/cover; background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 2rem; margin: 2rem 0;">
   
-  function toggleEditMode() {
-    editModeActive = !editModeActive;
-    
-    const indicator = document.getElementById('editModeIndicator');
-    const label = document.getElementById('editModeLabel');
-    const controls = document.querySelectorAll('#imageGrid .move-controls');
-    
-    if (editModeActive) {
-      indicator.style.background = '#22c55e';
-      label.textContent = 'Edit Mode: On';
-      controls.forEach(c => c.style.display = 'flex');
-      
-      // Re-initialize WB behaviors for the move buttons
-      if (window.WB) {
-        window.WB.scan(document.getElementById('imageGrid'));
-      }
-    } else {
-      indicator.style.background = '#64748b';
-      label.textContent = 'Edit Mode: Off';
-      controls.forEach(c => c.style.display = 'none');
-    }
-  }
-</script>
-
-<hr id="home-hr-104" class="wb-divider-gradient">
-
-  <style>
-    .wb-control-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.4rem 0.6rem;
-      background: #3b82f6; 
-      border: none;
-      border-radius: 4px;
-      color: white;
-      cursor: pointer;
-      font-size: 0.9rem;
-      user-select: none;
-    }
-    .wb-control-btn:hover {
-      opacity: 0.9;
-    }
-
-    .wb-card-link {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .wb-card-link:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.3);
-    }
-    .wb-card-link .wb-glass { height: 100%; }
-    .wb-card-link h3::after { content: ' →'; opacity: 0; transition: opacity 0.2s; }
-    .wb-card-link:hover h3::after { opacity: 1; }
-
-    @keyframes flash-red-green {
-      0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); background-color: rgba(255, 0, 0, 0.2); border-color: rgba(255, 0, 0, 0.5); }
-      50% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.6); background-color: rgba(0, 255, 0, 0.2); border-color: rgba(0, 255, 0, 0.5); }
-      100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); background-color: rgba(255, 0, 0, 0.2); border-color: rgba(255, 0, 0, 0.5); }
-    }
-    #home-button-111 {
-      animation: flash-red-green 1s infinite;
-    }
-    
-    @keyframes input-glow {
-      0%, 100% { 
-        opacity: 0.4; 
-        transform: translate(-50%, -50%) scale(0.95); 
-        filter: blur(12px) hue-rotate(0deg);
-      }
-      50% { 
-        opacity: 1; 
-        transform: translate(-50%, -50%) scale(1.05); 
-        filter: blur(18px) hue-rotate(40deg);
-      }
-    }
-  </style>
-    
-    <div id="home-div-105" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-      
-      <!-- Glass Buttons -->
-      <a href="#schema-viewer" onclick="window.open('public/schema-viewer.html?schema=button', '_blank'); return false;" class="wb-card-link">
-        <div id="home-div-106" class="wb-glass" style="padding: 1.5rem;">
-          <h3 id="home-h3-107">Buttons</h3>
-          <div id="home-div-108" style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <button id="home-button-109" class="wb-btn-gradient" x-ripple onclick="event.stopPropagation(); event.preventDefault();">
-              <span id="home-span-110" style="position: relative; z-index: 1;">Gradient Button</span>
-            </button>
-            <button id="home-button-111" class="wb-btn-glass" x-ripple onclick="event.stopPropagation(); event.preventDefault();">Glass Button</button>
-          </div>
-        </div>
-      </a>
-      
-      <!-- Inputs -->
-      <a href="#schema-viewer" onclick="window.open('public/schema-viewer.html?schema=input', '_blank'); return false;" class="wb-card-link">
-        <div id="home-div-112" class="wb-glass" style="padding: 1.5rem;">
-          <h3 id="home-h3-113">Inputs</h3>
-          <div id="home-div-114" style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <div style="position: relative;">
-              <!-- Pulsing light behind glass input -->
-              <div class="input-pulse-light" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 100%; height: 60px; border-radius: 12px; background: radial-gradient(ellipse, rgba(99,102,241,0.8) 0%, rgba(168,85,247,0.5) 40%, transparent 70%); filter: blur(15px); animation: input-glow 2s ease-in-out infinite; z-index: 0;"></div>
-              <input id="home-input-115" class="wb-input-glass" placeholder="Glass input..." onclick="event.stopPropagation();" style="position: relative; z-index: 1;">
-            </div>
-            <wb-rating id="home-div-116" value="4" max="5"></div>
-          </div>
-        </div>
-      </a>
-      
-      <!-- Badges -->
-      <a href="#schema-viewer" onclick="window.open('public/schema-viewer.html?schema=badge', '_blank'); return false;" class="wb-card-link">
-        <div id="home-div-117" class="wb-glass" style="padding: 1.5rem;">
-          <h3 id="home-h3-118">Badges</h3>
-          <div id="home-div-119" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-            <span id="home-span-120" class="wb-badge-gradient">New</span>
-            <span id="home-span-121" class="wb-tag-glass">Tag</span>
-            <span id="home-span-122" class="wb-tag-glass">🔥 Hot</span>
-            <span id="home-span-123" class="wb-tag-glass">✨ Pro</span>
-          </div>
-        </div>
-      </a>
-      
-      <!-- Progress -->
-      <a href="#schema-viewer" onclick="window.open('public/schema-viewer.html?schema=progressbar', '_blank'); return false;" class="wb-card-link">
-        <div id="home-div-124" class="wb-glass" style="padding: 1.5rem;">
-          <h3 id="home-h3-125">Progress</h3>
-          <div id="home-div-126" class="wb-progress-gradient" style="margin-bottom: 0.75rem;">
-            <div id="home-div-127" class="wb-progress-gradient__bar" style="width: 75%;"></div>
-          </div>
-          
-          <!-- Striped Animated Bars -->
-          <div class="wb-progress-striped">
-            <div class="wb-progress-striped__bar wb-progress-striped__bar--gradient" style="--target-width: 100%;"></div>
-          </div>
-          
-          <div class="wb-progress-striped">
-            <div class="wb-progress-striped__bar wb-progress-striped__bar--success" style="--target-width: 85%;"></div>
-          </div>
-
-          <div class="wb-progress-striped" style="margin-bottom: 0;">
-            <div class="wb-progress-striped__bar wb-progress-striped__bar--info" style="--target-width: 60%;"></div>
-          </div>
-        </div>
-      </a>
-      
-      <!-- Avatars -->
-      <a href="#schema-viewer" onclick="window.open('public/schema-viewer.html?schema=avatar', '_blank'); return false;" class="wb-card-link">
-        <div id="home-div-130" class="wb-glass" style="padding: 1.5rem;">
-          <h3 id="home-h3-131">Avatars</h3>
-          <div id="home-div-132" style="display: flex; gap: 0.75rem;">
-            <div id="home-div-133" class="wb-avatar-gradient">
-              <img id="home-img-134" src="https://i.pravatar.cc/150?img=1" alt="Avatar">
-            </div>
-            <div id="home-div-135" class="wb-avatar-gradient">
-              <img id="home-img-136" src="https://i.pravatar.cc/150?img=2" alt="Avatar">
-            </div>
-            <div id="home-div-137" class="wb-avatar-gradient">
-              <img id="home-img-138" src="https://i.pravatar.cc/150?img=3" alt="Avatar">
-            </div>
-          </div>
-        </div>
-      </a>
-      
-      <!-- Modal Trigger -->
-      <a href="#schema-viewer" onclick="window.open('public/schema-viewer.html?schema=modal', '_blank'); return false;" class="wb-card-link">
-        <div id="home-div-139" class="wb-glass" style="padding: 1.5rem;">
-          <h3 id="home-h3-140">Overlays</h3>
-          <div id="home-div-141" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-            <wb-modal id="glass-modal">
-              <span slot="title">Glass Modal</span>
-              <p>Beautiful glassmorphism modal with blur effect.</p>
-            </wb-modal>
-            <button id="home-button-142" class="wb-btn-glass" onclick="document.getElementById('glass-modal').showModal(); event.stopPropagation(); event.preventDefault();">Modal</button>
-            <button id="home-button-143" class="wb-btn-glass" x-toast="Hello from toast! 🎉" x-toast-type="success" onclick="event.stopPropagation(); event.preventDefault();">Toast</button>
-          </div>
-        </div>
-      </a>
-      
-    </div>
-  </div>
-</section>
-
-<hr id="home-hr-144" class="wb-divider-gradient">
-
-<!-- CTA Section -->
-<section id="home-section-145" style="padding: 6rem 2rem; position: relative; overflow: hidden;">
-  <div id="home-div-146" class="wb-orb wb-orb--cosmic" style="width: 500px; height: 500px; top: -200px; left: 50%; transform: translateX(-50%); opacity: 0.3;"></div>
-  
-  <div id="home-div-147" style="max-width: 600px; margin: 0 auto; text-align: center; position: relative; z-index: 1;">
-    <h2 id="home-h2-148">
-      Ready to build something <span id="home-span-149" class="wb-gradient-text">amazing</span>?
+  <div style="max-width: 600px;">
+    <h2 style="font-size: 3.5rem; margin: 0 0 1.5rem 0; font-weight: 700; line-height: 1.2; text-shadow: 2px 2px 8px rgba(0,0,0,0.5);">
+      Transform Your Vision Into Reality
     </h2>
-    <p id="home-p-150" style="color: var(--text-secondary); margin-bottom: 2rem;">
-      Start using WB Behaviors today. No signup required.
-    </p>
-    <div id="home-div-151" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-      <a id="home-a-152" href="?page=docs" class="wb-btn-gradient">
-        <span id="home-span-153" style="position: relative; z-index: 1;">Get Started Free →</span>
-      </a>
-      <a id="home-a-154" href="https://github.com/CieloVistaSoftware/wb-starter" class="wb-btn-glass" target="_blank">
-        ⭐ Star on GitHub
-      </a>
+    
+    <blockquote style="font-size: 1.3rem; font-style: italic; color: rgba(255,255,255,0.95); margin: 2rem 0; border-left: 4px solid white; padding-left: 2rem; text-align: left; text-shadow: 1px 1px 4px rgba(0,0,0,0.5);">
+      "The best way to predict the future is to invent it." 
+      <br/>
+      <span style="font-size: 1rem; font-style: normal; color: rgba(255,255,255,0.9);">— Alan Kay</span>
+    </blockquote>
+    
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+      <a href="?page=services" style="display: inline-block; padding: 1rem 2rem; background: white; color: #667eea; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)'">Explore Services</a>
+      
+      <a href="#contact" style="display: inline-block; padding: 1rem 2rem; border: 2px solid white; color: white; background: transparent; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">Get in Touch</a>
     </div>
   </div>
-</section>
+  
+</div>
+
+<div id="contact" style="max-width: 600px; margin: 4rem auto; padding: 3rem 2rem; background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color);">
+  <h2 style="text-align: center; margin-bottom: 2rem; color: var(--primary); font-size: 1.8rem;">📞 Contact Us</h2>
+  
+  <div style="display: flex; flex-direction: column; gap: 2rem;">
+    <div>
+      <h3 style="margin: 0 0 0.5rem 0; color: var(--text-primary); font-size: 1.1rem;">Email</h3>
+      <a href="mailto:hello@acmeco.com" style="color: var(--primary); text-decoration: none; font-weight: 600; font-size: 1.05rem;">hello@acmeco.com</a>
+    </div>
+    
+    <div>
+      <h3 style="margin: 0 0 0.5rem 0; color: var(--text-primary); font-size: 1.1rem;">Phone</h3>
+      <a href="tel:+1234567890" style="color: var(--primary); text-decoration: none; font-weight: 600; font-size: 1.05rem;">+1 (234) 567-890</a>
+    </div>
+    
+    <div>
+      <h3 style="margin: 0 0 0.5rem 0; color: var(--text-primary); font-size: 1.1rem;">Hours</h3>
+      <p style="margin: 0; color: var(--text-secondary); font-size: 1.05rem;">Monday - Friday: 9am - 6pm EST</p>
+    </div>
+  </div>
+</div>

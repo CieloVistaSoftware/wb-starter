@@ -1094,6 +1094,17 @@ export const PAGE_TEMPLATES = [
     sections: ['spa-header', 'spa-home', 'spa-about', 'spa-services', 'spa-contact', 'spa-footer']
   },
 
+  // NOVICE TEMPLATES
+  {
+    id: 'novice-business-starter',
+    name: 'Business Starter',
+    icon: '🚀',
+    desc: 'Complete business website in one click',
+    category: 'landing',
+    preview: 'Header → Home → Services → Contact → Footer',
+    sections: ['spa-header', 'spa-home', 'spa-services', 'spa-contact', 'spa-footer']
+  },
+
   // LANDING PAGES
   {
     id: 'landing-saas',

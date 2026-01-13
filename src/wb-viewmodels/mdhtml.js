@@ -13,6 +13,8 @@
  * 
  * Or with external file:
  *   <wb-mdhtml data-src="./docs/readme.md"></wb-mdhtml>
+ * Or with absolute path:
+ *   <wb-mdhtml data-src="/docs/architecture.md"></wb-mdhtml>
  * -----------------------------------------------------------------------------
  */
 
@@ -40,7 +42,7 @@ async function loadMarked() {
       markedLoaded = true;
       resolve(window.marked);
     };
-    script.onerror = () => reject(new Error('Failed to load marked.js'));
+    script.onerror = () => reject(new Error('Failed to load marked.js from CDN'));
     document.head.appendChild(script);
   });
   
@@ -49,7 +51,7 @@ async function loadMarked() {
 
 export async function mdhtml(element, options = {}) {
   const config = {
-    src: options.src || element.dataset.src,
+    src: options.src || element.dataset.src || element.getAttribute('src'),
     sanitize: options.sanitize ?? (element.dataset.sanitize !== 'false'),
     breaks: options.breaks ?? (element.dataset.breaks !== 'false'),
     gfm: options.gfm ?? (element.dataset.gfm !== 'false'),
@@ -95,16 +97,58 @@ export async function mdhtml(element, options = {}) {
     if (config.src) {
       // Load from external file
       try {
-        const response = await fetch(config.src);
+        // Normalize path: handle both /docs/file.md and docs/file.md
+        let fetchPath = config.src;
+        
+        // If it's an HTTP URL, use as-is
+        if (fetchPath.startsWith('http://') || fetchPath.startsWith('https://')) {
+          // Use as-is
+        } else if (!fetchPath.startsWith('/')) {
+          // Relative path - prepend / for absolute resolution
+          fetchPath = '/' + fetchPath;
+        }
+        
+        // Log for debugging
+        console.log('[mdhtml] Fetching:', fetchPath, '(original:', config.src + ')');
+        
+        const response = await fetch(fetchPath);
         if (!response.ok) {
-          throw new Error(`Failed to load ${config.src}: ${response.status}`);
+          throw new Error(`HTTP ${response.status} ${response.statusText} when fetching ${fetchPath}`);
         }
         markdown = await response.text();
+        
+        console.log('[mdhtml] ✓ Loaded', markdown.length, 'characters');
       } catch (err) {
         element.classList.remove('wb-mdhtml--loading');
         element.classList.add('wb-mdhtml--error');
-        element.innerHTML = `<div class="wb-mdhtml__error">Failed to load: ${config.src}</div>`;
-        console.error('[WB] mdhtml:', err);
+        
+        // Show detailed error message
+        const errorHtml = `
+          <div class="wb-mdhtml__error" style="padding: 1.5rem; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 6px; font-family: system-ui;">
+            <div style="font-weight: 600; color: #dc2626; margin-bottom: 0.5rem;">📄 Unable to Load Documentation</div>
+            <div style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">
+              <div><strong>File:</strong> <code style="background: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 3px;">${config.src}</code></div>
+              <div><strong>Error:</strong> ${err.message}</div>
+            </div>
+            <div style="font-size: 0.75rem; color: #999;">
+              <p style="margin: 0.5rem 0;">Troubleshooting:</p>
+              <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                <li>Check file path is correct</li>
+                <li>Ensure docs/ folder exists</li>
+                <li>Check browser console for more details</li>
+              </ul>
+            </div>
+          </div>
+        `;
+        element.innerHTML = errorHtml;
+        console.error('[mdhtml] Error loading file:', err);
+        
+        // Dispatch error event
+        element.dispatchEvent(new CustomEvent('wb:mdhtml:error', {
+          bubbles: true,
+          detail: { src: config.src, error: err.message }
+        }));
+        
         return () => {};
       }
     } else {
@@ -179,14 +223,14 @@ export async function mdhtml(element, options = {}) {
                 el.dataset.showCopy = "true";
                 
                 // Mark for injection (WB.scan will pick this up)
-                el.dataset.wb = "pre";
-                code.dataset.wb = "code";
+                el.setAttribute('x-pre', '');
+                code.setAttribute('x-code', '');
             }
         });
 
         // 2. Pre-process inline code
         element.querySelectorAll('code:not(pre code)').forEach(el => {
-             el.dataset.wb = "code";
+             el.setAttribute('x-code', '');
         });
 
         // 3. Scan the entire element for behaviors (including the ones we just marked)
@@ -207,8 +251,6 @@ export async function mdhtml(element, options = {}) {
     
     // Ensure no overflow
     element.style.maxWidth = '100%';
-    // element.style.overflowWrap = 'break-word';
-    // element.style.wordBreak = 'break-word';
 
     // Dispatch event
     element.dispatchEvent(new CustomEvent('wb:mdhtml:loaded', {
@@ -219,8 +261,8 @@ export async function mdhtml(element, options = {}) {
   } catch (err) {
     element.classList.remove('wb-mdhtml--loading');
     element.classList.add('wb-mdhtml--error');
-    element.innerHTML = `<div class="wb-mdhtml__error">Error: ${err.message}</div>`;
-    console.error('[WB] mdhtml:', err);
+    element.innerHTML = `<div class="wb-mdhtml__error" style="color: #dc2626; padding: 1rem;">⚠️ Error: ${err.message}</div>`;
+    console.error('[mdhtml] Unexpected error:', err);
   }
 
   // Mark as ready

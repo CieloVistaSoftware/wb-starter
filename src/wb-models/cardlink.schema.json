@@ -3,15 +3,17 @@
   "$id": "cardlink.schema.json",
   "title": "Link Card",
   "description": "Clickable card that navigates to a URL",
-  
   "behavior": "cardlink",
   "baseClass": "wb-card-link",
-  
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "link"
   },
-  
+  "compliance": {
+    "baseClass": "wb-card-link",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "href": {
       "type": "string",
@@ -37,18 +39,26 @@
     "target": {
       "type": "string",
       "description": "Link target",
-      "enum": ["_self", "_blank"],
+      "enum": [
+        "_self",
+        "_blank"
+      ],
       "default": "_self"
     },
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["default", "elevated", "bordered", "minimal", "glass"],
+      "enum": [
+        "default",
+        "elevated",
+        "bordered",
+        "minimal",
+        "glass"
+      ],
       "default": "default",
       "appliesClass": "wb-card-link--{{value}}"
     }
   },
-  
   "$view": [
     {
       "name": "icon",
@@ -99,46 +109,109 @@
       "description": "Navigation arrow indicator"
     }
   ],
-  
   "$methods": {
-    "show": { "description": "Shows the card", "params": [] },
-    "hide": { "description": "Hides the card", "params": [] },
-    "toggle": { "description": "Toggles visibility", "params": [] },
-    "navigate": { "description": "Triggers navigation to href", "params": [] },
-    "setHref": { "description": "Updates the href", "params": ["url"] }
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "navigate": {
+      "description": "Triggers navigation to href",
+      "params": []
+    },
+    "setHref": {
+      "description": "Updates the href",
+      "params": [
+        "url"
+      ]
+    }
   },
-  
   "$cssAPI": {
-    "--wb-card-link-padding": { "default": "1rem", "description": "Card padding" },
-    "--wb-card-link-radius": { "default": "8px", "description": "Border radius" },
-    "--wb-card-link-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Background" },
-    "--wb-card-link-border": { "default": "1px solid var(--border-color, #e0e0e0)", "description": "Border" },
-    "--wb-card-link-shadow": { "default": "none", "description": "Box shadow" },
-    "--wb-card-link-hover-border": { "default": "var(--primary, #6366f1)", "description": "Hover border color" },
-    "--wb-card-link-hover-shadow": { "default": "0 4px 12px rgba(0,0,0,0.1)", "description": "Hover shadow" },
-    "--wb-card-link-hover-transform": { "default": "translateY(-2px)", "description": "Hover transform" },
-    "--wb-card-link-transition": { "default": "all 0.2s ease", "description": "Transition" },
-    "--wb-card-link-icon-size": { "default": "1.5rem", "description": "Icon size" },
-    "--wb-card-link-icon-color": { "default": "var(--primary, #6366f1)", "description": "Icon color" },
-    "--wb-card-link-title-size": { "default": "1rem", "description": "Title font size" },
-    "--wb-card-link-title-weight": { "default": "600", "description": "Title font weight" },
-    "--wb-card-link-description-size": { "default": "0.875rem", "description": "Description font size" },
-    "--wb-card-link-description-color": { "default": "var(--text-secondary, #666)", "description": "Description color" },
-    "--wb-card-link-arrow-color": { "default": "var(--text-tertiary, #999)", "description": "Arrow color" }
+    "--wb-card-link-padding": {
+      "default": "1rem",
+      "description": "Card padding"
+    },
+    "--wb-card-link-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-card-link-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Background"
+    },
+    "--wb-card-link-border": {
+      "default": "1px solid var(--border-color, #e0e0e0)",
+      "description": "Border"
+    },
+    "--wb-card-link-shadow": {
+      "default": "none",
+      "description": "Box shadow"
+    },
+    "--wb-card-link-hover-border": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Hover border color"
+    },
+    "--wb-card-link-hover-shadow": {
+      "default": "0 4px 12px rgba(0,0,0,0.1)",
+      "description": "Hover shadow"
+    },
+    "--wb-card-link-hover-transform": {
+      "default": "translateY(-2px)",
+      "description": "Hover transform"
+    },
+    "--wb-card-link-transition": {
+      "default": "all 0.2s ease",
+      "description": "Transition"
+    },
+    "--wb-card-link-icon-size": {
+      "default": "1.5rem",
+      "description": "Icon size"
+    },
+    "--wb-card-link-icon-color": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Icon color"
+    },
+    "--wb-card-link-title-size": {
+      "default": "1rem",
+      "description": "Title font size"
+    },
+    "--wb-card-link-title-weight": {
+      "default": "600",
+      "description": "Title font weight"
+    },
+    "--wb-card-link-description-size": {
+      "default": "0.875rem",
+      "description": "Description font size"
+    },
+    "--wb-card-link-description-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Description color"
+    },
+    "--wb-card-link-arrow-color": {
+      "default": "var(--text-tertiary, #999)",
+      "description": "Arrow color"
+    }
   },
-  
   "accessibility": {
     "role": "link",
     "tabindex": "0"
   },
-  
   "events": {
     "wb:cardlink:click": {
       "description": "Fired when card is clicked",
-      "detail": { "href": "string", "title": "string" }
+      "detail": {
+        "href": "string",
+        "title": "string"
+      }
     }
   },
-  
   "test": {
     "setup": [
       "<wb-card-link href=\"/page\" title=\"My Page\"></wb-card-link>",
@@ -146,16 +219,33 @@
     ],
     "matrix": {
       "combinations": [
-        { "href": "/page" },
-        { "href": "/page", "title": "Link Title" },
-        { "href": "/page", "title": "Title", "description": "Description" },
-        { "href": "/page", "icon": "🔗" },
-        { "href": "/page", "badge": "NEW" },
-        { "href": "/page", "target": "_blank" }
+        {
+          "href": "/page"
+        },
+        {
+          "href": "/page",
+          "title": "Link Title"
+        },
+        {
+          "href": "/page",
+          "title": "Title",
+          "description": "Description"
+        },
+        {
+          "href": "/page",
+          "icon": "🔗"
+        },
+        {
+          "href": "/page",
+          "badge": "NEW"
+        },
+        {
+          "href": "/page",
+          "target": "_blank"
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "cards",
     "icon": "🔗",

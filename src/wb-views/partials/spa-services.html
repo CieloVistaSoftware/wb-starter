@@ -1,41 +1,15 @@
 <!-- SPA Services Section - id="services" -->
-<section id="services" style="padding: 5rem 2rem; background: var(--bg-primary, #fff);">
-  <div style="max-width: 1200px; margin: 0 auto;">
-    <div style="text-align: center; margin-bottom: 3rem;">
-      <h2 style="font-size: 2.5rem; font-weight: 700; color: var(--text-primary, #1a1a2e); margin-bottom: 1rem;">Our Services</h2>
-      <p style="font-size: 1.1rem; color: var(--text-secondary, #666); max-width: 600px; margin: 0 auto;">Comprehensive solutions tailored to meet your business needs.</p>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-      <div style="background: var(--bg-secondary, #f8fafc); padding: 2rem; border-radius: 12px; text-align: center;">
-        <div style="width: 64px; height: 64px; background: var(--primary, #6366f1); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">🎨</div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Web Design</h3>
-        <p style="color: var(--text-secondary, #666); font-size: 0.95rem;">Beautiful, responsive designs that captivate your audience.</p>
-      </div>
-      <div style="background: var(--bg-secondary, #f8fafc); padding: 2rem; border-radius: 12px; text-align: center;">
-        <div style="width: 64px; height: 64px; background: var(--primary, #6366f1); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">💻</div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Development</h3>
-        <p style="color: var(--text-secondary, #666); font-size: 0.95rem;">Clean, efficient code that powers your digital presence.</p>
-      </div>
-      <div style="background: var(--bg-secondary, #f8fafc); padding: 2rem; border-radius: 12px; text-align: center;">
-        <div style="width: 64px; height: 64px; background: var(--primary, #6366f1); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">📱</div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Mobile Apps</h3>
-        <p style="color: var(--text-secondary, #666); font-size: 0.95rem;">Native and cross-platform apps for iOS and Android.</p>
-      </div>
-      <div style="background: var(--bg-secondary, #f8fafc); padding: 2rem; border-radius: 12px; text-align: center;">
-        <div style="width: 64px; height: 64px; background: var(--primary, #6366f1); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">📈</div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">SEO & Marketing</h3>
-        <p style="color: var(--text-secondary, #666); font-size: 0.95rem;">Drive traffic and grow your online presence.</p>
-      </div>
-      <div style="background: var(--bg-secondary, #f8fafc); padding: 2rem; border-radius: 12px; text-align: center;">
-        <div style="width: 64px; height: 64px; background: var(--primary, #6366f1); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">☁️</div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Cloud Services</h3>
-        <p style="color: var(--text-secondary, #666); font-size: 0.95rem;">Scalable infrastructure for your applications.</p>
-      </div>
-      <div style="background: var(--bg-secondary, #f8fafc); padding: 2rem; border-radius: 12px; text-align: center;">
-        <div style="width: 64px; height: 64px; background: var(--primary, #6366f1); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">🛡️</div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Security</h3>
-        <p style="color: var(--text-secondary, #666); font-size: 0.95rem;">Protect your data and your customers.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<wb-container data-id="services" data-direction="column" data-gap="2rem" data-padding="5rem 2rem" data-align="center" data-max-width="1200px">
+  <header style="text-align: center; margin-bottom: 2rem;">
+    <h2>Our Services</h2>
+    <p>Comprehensive solutions tailored to meet your business needs.</p>
+  </header>
+  <wb-grid data-columns="3" data-gap="1.5rem">
+    <wb-card data-icon="🎨" data-title="Web Design" data-content="Beautiful, responsive designs that captivate your audience."></wb-card>
+    <wb-card data-icon="💻" data-title="Development" data-content="Clean, efficient code that powers your digital presence."></wb-card>
+    <wb-card data-icon="📱" data-title="Mobile Apps" data-content="Native and cross-platform apps for iOS and Android."></wb-card>
+    <wb-card data-icon="📈" data-title="SEO & Marketing" data-content="Drive traffic and grow your online presence."></wb-card>
+    <wb-card data-icon="☁️" data-title="Cloud Services" data-content="Scalable infrastructure for your applications."></wb-card>
+    <wb-card data-icon="🛡️" data-title="Security" data-content="Protect your data and your customers."></wb-card>
+  </wb-grid>
+</wb-container>

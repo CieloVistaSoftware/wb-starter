@@ -3,15 +3,17 @@
   "$id": "badge.schema.json",
   "title": "Badge",
   "description": "Small label/tag for status indicators, counts, or categories",
-  
   "behavior": "badge",
   "baseClass": "wb-badge",
-  
   "semanticElement": {
     "tagName": "span",
     "implicitRole": "status"
   },
-  
+  "compliance": {
+    "baseClass": "wb-badge",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "label": {
       "type": "string",
@@ -20,14 +22,27 @@
     "variant": {
       "type": "string",
       "description": "Color variant",
-      "enum": ["default", "primary", "secondary", "success", "warning", "error", "info"],
+      "enum": [
+        "default",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "error",
+        "info"
+      ],
       "default": "default",
       "appliesClass": "wb-badge--{{value}}"
     },
     "size": {
       "type": "string",
       "description": "Badge size",
-      "enum": ["xs", "sm", "md", "lg"],
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
       "default": "md",
       "appliesClass": "wb-badge--{{value}}"
     },
@@ -55,13 +70,12 @@
       "default": false
     }
   },
-  
   "$view": [
     {
       "name": "text",
       "tag": "span",
       "public": true,
-      "content": "{{label}}{{body}}",
+      "content": "<slot>{{label}}</slot>",
       "createdWhen": "label OR body",
       "description": "Badge text content"
     },
@@ -74,7 +88,6 @@
       "description": "Remove/close button"
     }
   ],
-  
   "$methods": {
     "show": {
       "description": "Shows the badge",
@@ -95,10 +108,11 @@
     },
     "update": {
       "description": "Updates the badge label",
-      "params": ["label"]
+      "params": [
+        "label"
+      ]
     }
   },
-  
   "$cssAPI": {
     "--wb-badge-padding-x": {
       "default": "0.5rem",
@@ -177,7 +191,6 @@
       "description": "Dot indicator size"
     }
   },
-  
   "test": {
     "setup": [
       "<wb-badge label=\"New\"></wb-badge>",
@@ -187,18 +200,43 @@
     ],
     "matrix": {
       "combinations": [
-        { "label": "New" },
-        { "label": "Done", "variant": "success" },
-        { "label": "Warning", "variant": "warning" },
-        { "label": "Error", "variant": "error" },
-        { "label": "5", "variant": "primary", "pill": true },
-        { "variant": "success", "dot": true },
-        { "label": "Tag", "variant": "info", "removable": true },
-        { "label": "Outline", "variant": "primary", "outline": true }
+        {
+          "label": "New"
+        },
+        {
+          "label": "Done",
+          "variant": "success"
+        },
+        {
+          "label": "Warning",
+          "variant": "warning"
+        },
+        {
+          "label": "Error",
+          "variant": "error"
+        },
+        {
+          "label": "5",
+          "variant": "primary",
+          "pill": true
+        },
+        {
+          "variant": "success",
+          "dot": true
+        },
+        {
+          "label": "Tag",
+          "variant": "info",
+          "removable": true
+        },
+        {
+          "label": "Outline",
+          "variant": "primary",
+          "outline": true
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "feedback",
     "icon": "🏷️",

@@ -167,4 +167,28 @@ Based on `docs/diagrams/builder-sections.html`:
 
 ---
 
-*Last updated: January 5, 2026*
+## Phase 7: Unified Property Viewer & Documentation (Jan 11, 2026)
+
+### Completed
+- [x] **Split View Architecture**: Unified Component Tree and Property Panel into a single column (Tree top, Properties bottom).
+- [x] **Independent Scrolling**: Flexbox implementation allows independent scrolling for tree and properties.
+- [x] **State Management**: Panel clears correctly on `Escape` or `Reset` (UX Polish).
+- [x] **Documentation**: Created `docs/property-viewer.md` detailing the split view UX and technical implementation.
+- [x] **Marketing**: Created `docs/linkedin-framework-agnostic.md` article.
+- [x] **Documentation Manifest**: Updated `manifest.json`.
+
+---
+
+## Phase 8: Framework Compliance & Testing (Jan 13, 2026)
+
+### Completed
+- [x] **Base Class Audit**: Audited and fixed 22 missing `baseClass` assignments across all behaviors (card, checkbox, demo, span, etc.) to ensure schema compliance.
+- [x] **Functional Test Schema Support**: Established pattern for `test.functional` in schemas.
+- [x] **Initial Functional Tests**: Added full functional test coverage for `button`, `card`, `checkbox`, and `input`.
+
+### In Progress
+- [ ] Expand functional test coverage to remaining components.
+
+---
+
+*Last updated: January 13, 2026*

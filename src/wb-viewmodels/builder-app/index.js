@@ -32,6 +32,7 @@ import {
 import {
   loadPropertyConfig,
   renderPropertiesPanel,
+  renderDOMElementProperties,
   getDefaultValue
 } from './builder-properties.js';
 import { showDocs, closeDocsModal, switchDocsTab } from './builder-docs.js';
@@ -53,6 +54,66 @@ window.onerror = function(msg, url, line, col, error) {
     window.toast('Error: ' + msg, 'error');
   }
   return false;
+};
+
+// =============================================================================
+// COPY DEBUG INFO - For debugging component issues
+// =============================================================================
+window.copyComponentDebugInfo = function(wrapperId) {
+  const wrapper = document.getElementById(wrapperId);
+  if (!wrapper) {
+    if (window.toast) window.toast('Element not found');
+    return;
+  }
+  
+  const debugInfo = {
+    id: wrapperId,
+    componentData: null,
+    outerHTML: wrapper.outerHTML,
+    computedStyle: {},
+    parentInfo: null,
+    childCount: wrapper.querySelectorAll('.dropped').length
+  };
+  
+  // Parse component data
+  try {
+    debugInfo.componentData = JSON.parse(wrapper.dataset.c || '{}');
+  } catch (e) {
+    debugInfo.componentData = { error: e.message, raw: wrapper.dataset.c };
+  }
+  
+  // Get relevant computed styles
+  const cs = window.getComputedStyle(wrapper);
+  debugInfo.computedStyle = {
+    display: cs.display,
+    visibility: cs.visibility,
+    opacity: cs.opacity,
+    overflow: cs.overflow,
+    height: cs.height,
+    maxHeight: cs.maxHeight,
+    position: cs.position
+  };
+  
+  // Parent info
+  const parent = wrapper.parentElement;
+  if (parent) {
+    debugInfo.parentInfo = {
+      id: parent.id,
+      className: parent.className,
+      tagName: parent.tagName
+    };
+  }
+  
+  const text = JSON.stringify(debugInfo, null, 2);
+  navigator.clipboard.writeText(text).then(() => {
+    if (window.toast) window.toast('Debug info copied!');
+  }).catch(err => {
+    console.error('Copy failed:', err);
+    // Fallback: show in console
+    console.log('=== DEBUG INFO ===');
+    console.log(text);
+    if (window.toast) window.toast('Check console for debug info');
+  });
 };
 
 // =============================================================================
@@ -89,18 +150,22 @@ window.togglePanel = () => {
   }
 };
 
-// Switch between Tree, Properties, and Decorate tabs in Right Panel
+// Switch between Tree+Props (combined) and Decorate tabs in Right Panel
+// CRITICAL: Tree tab is DEFAULT. NEVER auto-switch tabs. User controls tabs.
 window.switchPanelTab = (tab) => {
   const treeTab = document.getElementById('tabTree');
-  const propsTab = document.getElementById('tabProps');
   const decorateTab = document.getElementById('tabDecorate');
   const componentList = document.getElementById('componentList');
   const propsPanel = document.getElementById('propsPanel');
   const decoratePanel = document.getElementById('decoratePanel');
+  
+  // Headers for each tab
+  const treeHeader = document.getElementById('treeHeader');
+  const propsHeader = document.getElementById('propsHeader');
+  const decorateHeader = document.getElementById('decorateHeader');
 
-  // Reset all tabs and panels
+  // Reset all tabs, panels, and headers
   treeTab?.classList.remove('active');
-  propsTab?.classList.remove('active');
   decorateTab?.classList.remove('active');
   if (componentList) componentList.style.display = 'none';
   if (propsPanel) {
@@ -111,16 +176,33 @@ window.switchPanelTab = (tab) => {
     decoratePanel.style.display = 'none';
     decoratePanel.classList.remove('open');
   }
+  if (treeHeader) treeHeader.style.display = 'none';
+  if (propsHeader) propsHeader.style.display = 'none';
+  if (decorateHeader) decorateHeader.style.display = 'none';
+
+  // Handle 'props' as alias for 'tree' (combined view)
+  if (tab === 'props') tab = 'tree';
 
   // Activate selected tab
   if (tab === 'tree') {
     treeTab?.classList.add('active');
+    // Show BOTH tree and props in combined view
     if (componentList) componentList.style.display = 'flex';
-  } else if (tab === 'props') {
-    propsTab?.classList.add('active');
+    if (treeHeader) treeHeader.style.display = 'flex';
+    
+    // Explicitly show Properties header to distinguish the section
+    if (propsHeader) {
+      propsHeader.style.display = 'flex';
+      propsHeader.style.borderTop = '1px solid var(--border-color)';
+    }
+
+    // Also show props panel below tree with shared space
     if (propsPanel) {
       propsPanel.style.display = 'flex';
       propsPanel.classList.add('open');
+      propsPanel.style.flex = '1'; // Share space 50/50
+      propsPanel.style.overflowY = 'auto';
+      propsPanel.style.minHeight = '0';
     }
     // Render props if we have a selection
     if (window.sel) {
@@ -132,6 +214,7 @@ window.switchPanelTab = (tab) => {
       decoratePanel.style.display = 'flex';
       decoratePanel.classList.add('open');
     }
+    if (decorateHeader) decorateHeader.style.display = 'flex';
     // Render decorations if we have a selection
     if (window.sel && typeof renderDecorationsPanel === 'function') {
       renderDecorationsPanel(window.sel, decoratePanel);
@@ -263,11 +346,11 @@ document.addEventListener('keydown', (e) => {
     e.preventDefault();
     togglePanel();
   }
-  // P = Toggle properties panel
+  // P = Toggle between tree and decorate tabs
   if (e.key === 'p' || e.key === 'P') {
     e.preventDefault();
     const currentTab = localStorage.getItem('wb-active-panel-tab') || 'tree';
-    window.switchPanelTab(currentTab === 'tree' ? 'props' : 'tree');
+    window.switchPanelTab(currentTab === 'tree' ? 'decorate' : 'tree');
   }
   // [ = Toggle both panels
   if (e.key === '[') {
@@ -279,6 +362,7 @@ document.addEventListener('keydown', (e) => {
 
 // Expose property functions for builder-tree.js
 window.renderPropertiesPanel = renderPropertiesPanel;
+window.renderDOMElementProperties = renderDOMElementProperties;
 window.loadPropertyConfig = loadPropertyConfig;
 window.showDocs = showDocs;
 window.closeDocsModal = closeDocsModal;
@@ -401,6 +485,8 @@ async function start() {
   // The workflow system handles both new users and returning users
   setTimeout(() => {
     initWorkflow();
+    // Initialize content builder for wizard-completed users
+    // initContentBuilder();
   }, 200);
 }
 
@@ -913,6 +999,16 @@ function enableBuilderInteractions() {
         sel.classList.remove('selected');
         sel = null;
         renderTree();
+        
+        // Restore properties panel state
+        const propsPanel = document.getElementById('propsPanel');
+        if (propsPanel) propsPanel.innerHTML = '';
+        
+        const propsHeader = document.getElementById('propsHeader');
+        if (propsHeader) {
+           const subtitle = propsHeader.querySelector('span');
+           if (subtitle) subtitle.style.display = '';
+        }
       }
       return;
     }
@@ -1219,6 +1315,9 @@ window.toast = toast;
 /**
  * Add HTML template content to the canvas
  * Used by the new HTML-based template browser
+ * 
+ * IMPORTANT: The actual element (section, nav, etc.) BECOMES the .dropped wrapper.
+ * We do NOT wrap elements in a div - the element itself gets the .dropped class.
  */
 window.addTemplateHTML = (html, templateMeta = {}) => {
   const cv = document.getElementById('canvas');
@@ -1233,30 +1332,32 @@ window.addTemplateHTML = (html, templateMeta = {}) => {
   
   // Process each top-level element
   const elements = Array.from(temp.children);
-  let lastWrapper = null;
+  let lastElement = null;
   
   elements.forEach(el => {
     // Skip comments
     if (el.nodeType === Node.COMMENT_NODE) return;
     
-    // Create wrapper for builder
-    const id = genId({ b: el.dataset?.wb || el.tagName.toLowerCase(), t: el.tagName.toLowerCase() });
-    const wrapper = document.createElement('div');
-    wrapper.className = 'dropped';
-    wrapper.id = id;
+    // PRESERVE original ID if it exists (for anchor links like #home, #about)
+    const originalId = el.id;
+    
+    // Generate a wrapper ID for builder tracking
+    const wrapperId = genId({ b: el.dataset?.wb || el.tagName.toLowerCase(), t: el.tagName.toLowerCase() });
     
     // Store component data - USE TEMPLATE NAME if provided
     const componentData = {
-      n: templateMeta.name || el.dataset?.wb || el.tagName, // Template name takes priority!
+      n: templateMeta.name || el.dataset?.wb || el.tagName.toUpperCase(), // Template name takes priority!
       i: templateMeta.icon || '📄',
       b: el.dataset?.wb || null,
       t: el.tagName.toLowerCase(),
       d: {}
     };
     
-    // Extract data attributes
+    // Extract data attributes and style
     Array.from(el.attributes).forEach(attr => {
-      if (attr.name.startsWith('data-') && attr.name !== 'x-behavior') {
+      if (attr.name === 'style') {
+        componentData.d.style = attr.value;
+      } else if (attr.name.startsWith('data-') && attr.name !== 'x-behavior') {
         const key = attr.name.replace('data-', '');
         componentData.d[key] = attr.value;
       }
@@ -1267,36 +1368,39 @@ window.addTemplateHTML = (html, templateMeta = {}) => {
       componentData.d.text = el.textContent.trim();
     }
     
-    wrapper.dataset.c = JSON.stringify(componentData);
+    // THE ELEMENT ITSELF becomes the .dropped wrapper - NO extra div!
+    el.classList.add('dropped');
+    el.id = wrapperId; // Use generated ID for builder
+    el.dataset.c = JSON.stringify(componentData);
+    el.draggable = true;
     
-    // Add controls (using text labels to avoid encoding issues)
-    let controls = '<div class="controls">';
-    controls += '<button class="ctrl-btn" onclick="moveUp(\'' + id + '\')" title="Move up">Up</button>';
-    controls += '<button class="ctrl-btn" onclick="moveDown(\'' + id + '\')" title="Move down">Dn</button>';
-    controls += '<button class="ctrl-btn" onclick="dup(\'' + id + '\')" title="Duplicate">Dup</button>';
-    controls += '<button class="ctrl-btn del" onclick="del(\'' + id + '\')" title="Delete">Del</button>';
-    controls += '</div>';
-    wrapper.innerHTML = controls;
-    
-    // Set element ID and append
-    el.id = id + '-el';
-    wrapper.appendChild(el);
+    // Store original ID in data attribute for anchor links
+    if (originalId) {
+      componentData.d._originalId = originalId;
+      el.dataset.c = JSON.stringify(componentData);
+      // Also create an anchor target inside for navigation
+      const anchor = document.createElement('span');
+      anchor.id = originalId;
+      anchor.style.cssText = 'position:absolute;top:0;left:0;';
+      el.style.position = 'relative';
+      el.insertBefore(anchor, el.firstChild);
+    }
     
     // Add to current section
-    addElementToCanvas(wrapper);
+    addElementToCanvas(el);
     
     // Initialize WB behaviors
-    WB.scan(wrapper);
-    addResizeHandle(wrapper);
+    WB.scan(el);
+    addResizeHandle(el);
     
-    lastWrapper = wrapper;
+    lastElement = el;
   });
   
   // Select the last added element
-  if (lastWrapper) {
-    selComp(lastWrapper);
+  if (lastElement) {
+    selComp(lastElement);
     setTimeout(() => {
-      lastWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      lastElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
   }
   
@@ -1756,6 +1860,7 @@ function mkEl(c, id) {
     for (const [k, v] of Object.entries(c.d)) {
       if (k === 'text') el.textContent = v;
       else if (k === 'class') el.className = v;
+      else if (k === 'style') el.style.cssText = v;
       else if (k === 'hoverText') el.setAttribute('title', v);
       else if (k === 'src' && ['IMG', 'AUDIO', 'VIDEO', 'SOURCE', 'IFRAME'].includes(el.tagName)) el.src = v;
       else if (k === 'placeholder') el.placeholder = v;
@@ -1898,7 +2003,7 @@ function mkEl(c, id) {
   return el;
 }
 
-function selComp(w, scrollToProperty = null, switchTab = true) {
+function selComp(w, scrollToProperty = null, switchTab = false) {
   // Remove selection from all
   document.querySelectorAll('.dropped').forEach(d => d.classList.remove('selected'));
   
@@ -1914,25 +2019,19 @@ function selComp(w, scrollToProperty = null, switchTab = true) {
     if (window.scrollTreeToSelected) window.scrollTreeToSelected(w.id);
   }, 50);
 
-  // Get current tab
+  // CRITICAL: NEVER auto-switch tabs. User controls tabs.
+  // Only re-render current panel content
   const currentTab = localStorage.getItem('wb-active-panel-tab') || 'tree';
 
-  // Auto-switch to properties tab (or decorate if that's active)
-  if (switchTab && window.switchPanelTab) {
-    if (currentTab === 'decorate') {
-      window.switchPanelTab('decorate'); // Stay on decorate, will re-render
-    } else {
-      window.switchPanelTab('props');
-    }
-  } else if (currentTab === 'decorate') {
-    // Re-render decorations panel if already on that tab
+  if (currentTab === 'decorate') {
+    // Re-render decorations panel if on that tab
     const decoratePanel = document.getElementById('decoratePanel');
     if (decoratePanel && typeof renderDecorationsPanel === 'function') {
       renderDecorationsPanel(w, decoratePanel);
     }
   }
 
-  // Render properties for selected component
+  // Render properties for selected component (shows in tree tab's props section)
   renderProps(w, scrollToProperty);
 }
 
@@ -1942,6 +2041,13 @@ window.selComp = selComp;
 function renderProps(w, scrollToProperty = null) {
   const p = document.getElementById('propsPanel');
   if (!p) return;
+
+  // Cleanup header subtitle when a component is selected
+  const propsHeader = document.getElementById('propsHeader');
+  if (propsHeader) {
+     const subtitle = propsHeader.querySelector('span');
+     if (subtitle) subtitle.style.display = 'none';
+  }
 
   // Use the new enhanced property panel system
   renderPropertiesPanel(w, p, (wid, key, value) => {
@@ -2126,7 +2232,7 @@ window.updP = async (wid, k, v) => {
     w.style.height = v;
   }
 
-  const el = w.querySelector('');
+  const el = w.firstElementChild;
   if (el) {
     // Update the data attribute
     if (k === 'text') {
@@ -2159,6 +2265,14 @@ window.updP = async (wid, k, v) => {
         el.style.justifyContent = justifyMap[v] || v;
       } else if (k === 'padding') {
         el.style.padding = v;
+      } else if (k === 'backgroundColor') {
+        el.style.backgroundColor = v;
+      } else if (k === 'textColor') {
+        el.style.color = v;
+      } else if (k === 'background') {
+        el.style.backgroundImage = v ? `url('${v}')` : '';
+        el.style.backgroundSize = 'cover';
+        el.style.backgroundPosition = 'center';
       }
     }
 
@@ -2453,6 +2567,15 @@ window.resetCanvas = () => {
     cid = 0;
     updCount();
     renderTree(); // Update right panel
+    
+    // Clear properties panel
+    const propsPanel = document.getElementById('propsPanel');
+    if (propsPanel) propsPanel.innerHTML = '';
+    const propsHeader = document.getElementById('propsHeader');
+    if (propsHeader) {
+       const subtitle = propsHeader.querySelector('span');
+       if (subtitle) subtitle.style.display = '';
+    }
   }
   document.getElementById('saveMenu')?.classList.remove('show');
 };
@@ -2697,7 +2820,8 @@ window.importJSON = () => {
 
 function updCount() {
   const n = document.querySelectorAll('.dropped').length;
-  document.getElementById('count').textContent = n + ' component' + (n !== 1 ? 's' : '');
+  const countEl = document.getElementById('count');
+  if (countEl) countEl.textContent = n + ' component' + (n !== 1 ? 's' : '');
 }
 
 // Alias for updCount plus tree refresh
@@ -2716,6 +2840,7 @@ function chkEmpty() {
 
 function toast(m, type = 'info') {
   const t = document.getElementById('toast');
+  if (!t) return;
   
   // Clear any pending timeout to prevent premature closing
   if (t.dataset.timeoutId) {
@@ -3085,7 +3210,43 @@ start();
 
 window.togglePreview = () => {
   const body = document.body;
+  const isCurrentlyPreview = body.classList.contains('preview-mode');
+  
+  // If not in preview mode, check if there's content before allowing preview
+  if (!isCurrentlyPreview) {
+    const canvas = document.getElementById('canvas');
+    const droppedComponents = canvas?.querySelectorAll('.dropped');
+    
+    if (!droppedComponents || droppedComponents.length === 0) {
+      toast('Nothing to preview! Add components to Header, Main, or Footer first.');
+      return;
+    }
+  }
+  
   const isPreview = body.classList.toggle('preview-mode');
+  
+  // Handle page theme inheritance (matching inline script behavior)
+  if (isPreview) {
+    // Store builder theme
+    window._builderTheme = document.documentElement.dataset.theme || 'dark';
+    
+    // Apply page theme to preview
+    const canvas = document.getElementById('canvas');
+    const pageTheme = canvas?.dataset?.pageTheme || 
+                      localStorage.getItem('wb-page-theme') ||
+                      window._builderTheme;
+    
+    document.documentElement.dataset.theme = pageTheme;
+    document.body.style.background = 'var(--bg-color)';
+    document.body.style.color = 'var(--text-primary)';
+  } else {
+    // Restore builder theme
+    if (window._builderTheme) {
+      document.documentElement.dataset.theme = window._builderTheme;
+    }
+    document.body.style.background = '';
+    document.body.style.color = '';
+  }
   
   // Update button state
   const btn = document.getElementById('previewBtn');
@@ -3105,19 +3266,88 @@ window.togglePreview = () => {
     if (!exitBtn) {
       exitBtn = document.createElement('button');
       exitBtn.id = 'previewExitBtn';
-      exitBtn.className = 'preview-exit';
+      exitBtn.className = 'preview-exit-btn';
       exitBtn.innerHTML = '✕ Exit Preview';
-      exitBtn.onclick = window.togglePreview;
+      exitBtn.style.cssText = `
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        padding: 12px 24px;
+        background: #6366f1;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: move;
+        z-index: 99999;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      `;
+      
+      // Click handler (only fires if not dragging)
+      let wasDragging = false;
+      exitBtn.addEventListener('click', () => {
+        if (!wasDragging) {
+          window.togglePreview();
+        }
+        wasDragging = false;
+      });
+      
+      // Make draggable - only attach document listeners during drag
+      exitBtn.addEventListener('mousedown', (e) => {
+        const startX = e.clientX;
+        const startY = e.clientY;
+        
+        const rect = exitBtn.getBoundingClientRect();
+        const initialLeft = rect.left;
+        const initialTop = rect.top;
+        
+        // Switch to left/top positioning
+        exitBtn.style.right = 'auto';
+        exitBtn.style.left = `${initialLeft}px`;
+        exitBtn.style.top = `${initialTop}px`;
+        exitBtn.style.cursor = 'grabbing';
+        
+        const onMouseMove = (moveEvent) => {
+          const dx = moveEvent.clientX - startX;
+          const dy = moveEvent.clientY - startY;
+          
+          // If moved more than 5px, consider it a drag
+          if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+            wasDragging = true;
+          }
+          
+          exitBtn.style.left = `${initialLeft + dx}px`;
+          exitBtn.style.top = `${initialTop + dy}px`;
+        };
+        
+        const onMouseUp = () => {
+          exitBtn.style.cursor = 'move';
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+        };
+        
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+        
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      
       document.body.appendChild(exitBtn);
     }
+    exitBtn.style.display = 'block';
     toast('Preview Mode Active');
   } else {
-    if (exitBtn) exitBtn.remove();
+    if (exitBtn) exitBtn.style.display = 'none';
   }
   
   // Trigger resize to fix layout issues
   window.dispatchEvent(new Event('resize'));
 };
+
+// Alias for compatibility with inline script calls
+window.doPreview = window.togglePreview;
 
 // =============================================================================
 // FAVORITES SYSTEM

@@ -4,5 +4,13 @@
   "title": "Theme Control",
   "behavior": "themecontrol",
   "description": "Theme switcher control.",
-  "properties": {}
+  "compliance": {
+    "baseClass": "wb-themecontrol",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

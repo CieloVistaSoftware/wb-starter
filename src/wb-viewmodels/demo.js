@@ -11,6 +11,7 @@ import { cardBase } from './card.js';
 
 export function demo(element, options = {}) {
     // If element is <wb-code-card>, apply card behavior first
+    element.classList.add('wb-demo');
     let cleanupCard = null;
     if (element.tagName === 'WB-CODE-CARD' || element.classList.contains('wb-code-card')) {
         // Ensure card structure if missing

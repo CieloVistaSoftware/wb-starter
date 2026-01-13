@@ -1,22 +1,28 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "WB Models Index",
-  "description": "Index of all component schemas for MVVM architecture (v3.0)",
+  "title": "WB Models Index - Complete",
+  "description": "Complete index of all component schemas for MVVM architecture (v3.0)",
   "version": "3.0.0",
-  "updated": "2026-01-05",
+  "updated": "2026-01-12",
   
   "schemas": [
     "alert.schema.json",
+    "article.schema.json",
+    "articles.schema.json",
     "audio.schema.json",
     "avatar.schema.json",
     "badge.schema.json",
+    "behavior.schema.json",
+    "behaviors-showcase.schema.json",
+    "builder.schema.json",
     "button.schema.json",
+    "card.base.schema.json",
     "card.schema.json",
     "cardbutton.schema.json",
     "carddraggable.schema.json",
     "cardexpandable.schema.json",
     "cardfile.schema.json",
-
+    "cardhero.schema.json",
     "cardhorizontal.schema.json",
     "cardimage.schema.json",
     "cardlink.schema.json",
@@ -32,45 +38,67 @@
     "cardvideo.schema.json",
     "checkbox.schema.json",
     "chip.schema.json",
+    "codecontrol.schema.json",
+    "collapse.schema.json",
     "confetti.schema.json",
+    "copy.schema.json",
+    "darkmode.schema.json",
+    "demo.schema.json",
     "details.schema.json",
     "dialog.schema.json",
+    "draggable.schema.json",
     "drawer.schema.json",
     "drawerLayout.schema.json",
     "dropdown.schema.json",
     "fireworks.schema.json",
+    "fix-card.schema.json",
     "footer.schema.json",
+    "globe.schema.json",
     "header.schema.json",
+    "hero.schema.json",
     "input.schema.json",
+    "mdhtml.schema.json",
+    "move.schema.json",
     "navbar.schema.json",
     "notes.schema.json",
     "progress.schema.json",
     "rating.schema.json",
+    "resizable.schema.json",
     "ripple.schema.json",
     "scrollalong.schema.json",
+    "search-index.schema.json",
     "select.schema.json",
     "skeleton.schema.json",
+    "slider.schema.json",
     "snow.schema.json",
+    "span.schema.json",
     "spinner.schema.json",
+    "stagelight.schema.json",
     "sticky.schema.json",
     "switch.schema.json",
     "table.schema.json",
     "tabs.schema.json",
     "textarea.schema.json",
+    "themecontrol.schema.json",
     "toast.schema.json",
-    "tooltip.schema.json"
+    "toggle.schema.json",
+    "tooltip.schema.json",
+    "views.schema.json",
+    "wb-control.schema.json",
+    "wb-repeater.schema.json"
   ],
   
   "categories": {
     "cards": {
       "description": "Card-based content components",
-      "count": 19,
+      "count": 20,
       "schemas": [
         "card.schema.json",
         "cardbutton.schema.json",
         "carddraggable.schema.json",
         "cardexpandable.schema.json",
         "cardfile.schema.json",
+        "cardhero.schema.json",
         "cardhorizontal.schema.json",
         "cardimage.schema.json",
         "cardlink.schema.json",
@@ -83,7 +111,8 @@
         "cardprofile.schema.json",
         "cardstats.schema.json",
         "cardtestimonial.schema.json",
-        "cardvideo.schema.json"
+        "cardvideo.schema.json",
+        "fix-card.schema.json"
       ]
     },
     "forms": {
@@ -100,7 +129,7 @@
     },
     "feedback": {
       "description": "User feedback and notification components",
-      "count": 10,
+      "count": 11,
       "schemas": [
         "alert.schema.json",
         "avatar.schema.json",
@@ -111,7 +140,8 @@
         "skeleton.schema.json",
         "spinner.schema.json",
         "toast.schema.json",
-        "tooltip.schema.json"
+        "tooltip.schema.json",
+        "copy.schema.json"
       ]
     },
     "overlay": {
@@ -133,7 +163,7 @@
     },
     "layout": {
       "description": "Layout and structural components",
-      "count": 7,
+      "count": 8,
       "schemas": [
         "details.schema.json",
         "drawerLayout.schema.json",
@@ -141,17 +171,19 @@
         "header.schema.json",
         "scrollalong.schema.json",
         "sticky.schema.json",
-        "table.schema.json"
+        "table.schema.json",
+        "hero.schema.json"
       ]
     },
     "effects": {
       "description": "Visual effect components",
-      "count": 4,
+      "count": 5,
       "schemas": [
         "confetti.schema.json",
         "fireworks.schema.json",
         "ripple.schema.json",
-        "snow.schema.json"
+        "snow.schema.json",
+        "stagelight.schema.json"
       ]
     },
     "media": {
@@ -161,11 +193,38 @@
         "audio.schema.json"
       ]
     },
-    "utility": {
-      "description": "Utility components",
-      "count": 1,
+    "interactive": {
+      "description": "Interactive and control components",
+      "count": 8,
       "schemas": [
-        "notes.schema.json"
+        "collapse.schema.json",
+        "draggable.schema.json",
+        "move.schema.json",
+        "resizable.schema.json",
+        "scrollalong.schema.json",
+        "toggle.schema.json",
+        "codecontrol.schema.json",
+        "globe.schema.json"
+      ]
+    },
+    "utility": {
+      "description": "Utility and content components",
+      "count": 5,
+      "schemas": [
+        "notes.schema.json",
+        "span.schema.json",
+        "darkmode.schema.json",
+        "themecontrol.schema.json",
+        "search-index.schema.json"
+      ]
+    },
+    "content": {
+      "description": "Content and documentation components",
+      "count": 3,
+      "schemas": [
+        "article.schema.json",
+        "articles.schema.json",
+        "mdhtml.schema.json"
       ]
     }
   },
@@ -178,13 +237,16 @@
       "builder.schema.json",
       "card.base.schema.json",
       "demo.schema.json",
-      "views.schema.json"
+      "views.schema.json",
+      "wb-control.schema.json",
+      "wb-repeater.schema.json"
     ]
   },
   
   "stats": {
-    "totalComponents": 53,
-    "v3Converted": 53,
-    "migrationComplete": true
+    "totalComponents": 71,
+    "v3Converted": 71,
+    "migrationComplete": true,
+    "lastUpdated": "2026-01-12T00:00:00Z"
   }
 }

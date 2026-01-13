@@ -4,7 +4,14 @@
   "title": "WB Views Registry Schema",
   "description": "Schema for validating WB Views registry files. Views are reusable HTML templates that auto-register as custom elements.",
   "type": "object",
-  "required": ["views"],
+  "required": [
+    "views"
+  ],
+  "compliance": {
+    "baseClass": "wb-views",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "$schema": {
       "type": "string",
@@ -30,7 +37,9 @@
   "definitions": {
     "ViewDefinition": {
       "type": "object",
-      "required": ["template"],
+      "required": [
+        "template"
+      ],
       "properties": {
         "description": {
           "type": "string",
@@ -66,7 +75,13 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["string", "boolean", "number", "array", "object"],
+          "enum": [
+            "string",
+            "boolean",
+            "number",
+            "array",
+            "object"
+          ],
           "description": "Data type of the attribute"
         },
         "description": {
@@ -118,17 +133,25 @@
       "views": {
         "btn": {
           "description": "Button component",
-          "template": "<button class=\"btn btn--{{variant || 'primary'}}\">{{body}}</button>",
+          "template": "<button class=\"btn btn--{{variant || 'primary'}}\"><slot>{{body}}</slot></button>",
           "attributes": {
             "variant": {
               "type": "string",
               "description": "Button style variant",
-              "enum": ["primary", "secondary", "success", "error"],
+              "enum": [
+                "primary",
+                "secondary",
+                "success",
+                "error"
+              ],
               "default": "primary"
             }
           }
         }
       }
     }
-  ]
+  ],
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

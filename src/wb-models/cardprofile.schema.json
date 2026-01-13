@@ -144,6 +144,18 @@
     }
   },
   
+  "$cssAPI": {
+    "--bg-secondary": {
+      "description": "Avatar border color"
+    },
+    "--primary": {
+      "description": "Role text color"
+    },
+    "--text-secondary": {
+      "description": "Bio text color"
+    }
+  },
+  
   "test": {
     "setup": [
       "<article data-wb=\"cardprofile\" data-name=\"John Doe\"></article>",

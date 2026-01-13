@@ -190,30 +190,30 @@ async function loadDocsContent(behavior, tab = 'docs') {
       paths.push(`docs/components/${lowerBehavior}.md`);
       paths.push(`docs/${lowerBehavior}.md`);
       
-      let response = null;
+      let docResponse = null;
       let foundPath = '';
       
       for (const path of paths) {
         try {
           const r = await fetch(path + '?caller=builder-docs');
           if (r.ok) {
-            response = r;
+            docResponse = r;
             foundPath = path;
             break;
           }
         } catch (e) { continue; }
       }
       
-      if (response && response.ok) {
-        const text = await response.text();
+      if (docResponse && docResponse.ok) {
+        const text = await docResponse.text();
         content = mdhtml(text);
         content += `<div class="docs-source">Source: ${foundPath}</div>`;
       } else {
         // Fallback: Generate docs from schema if available
         const schemaResponse = await fetch(`src/behaviors/schema/${behavior}.schema.json?caller=builder-docs-fallback`);
         if (schemaResponse.ok) {
-          const schema = await schemaResponse.json();
-          content = generateDocsFromSchema(behavior, schema);
+          const fallbackSchema = await schemaResponse.json();
+          content = generateDocsFromSchema(behavior, fallbackSchema);
           content += `<div class="docs-source">Generated from Schema</div>`;
         } else {
           content = `<div class="docs-error">

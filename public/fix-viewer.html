@@ -322,7 +322,7 @@
 
   <script type="module">
     import WB from '/src/core/wb-lazy.js';
-    import '/src/behaviors/js/fix-card.js';
+    import '/src/wb-viewmodels/fix-card.js';
 
     // Initialize WB to enable behaviors like mdhtml, code, pre
     WB.init({ autoInject: true });
@@ -363,7 +363,7 @@
       const statusCounts = {};
       fixesData.forEach(fix => {
         let effectiveStatus = (fix.status || 'INCOMPLETE').toLowerCase();
-        if (!fix.testRun) effectiveStatus = 'failed';
+        if (!fix.testRun && effectiveStatus !== 'pending') effectiveStatus = 'failed';
         statusCounts[effectiveStatus] = (statusCounts[effectiveStatus] || 0) + 1;
       });
 
@@ -432,8 +432,8 @@
         else if (groupType === 'status') {
           // Match logic in fix-card.js
           let effectiveStatus = fix.status || 'INCOMPLETE';
-          if (!fix.testRun) effectiveStatus = 'TEST MISSING';
-          key = effectiveStatus;
+          if (!fix.testRun && effectiveStatus.toUpperCase() !== 'PENDING') effectiveStatus = 'TEST MISSING';
+          key = effectiveStatus.toUpperCase();
         }
         else if (groupType === 'date') key = new Date(fix.date).toLocaleDateString();
 
@@ -491,7 +491,7 @@
       return fixes.filter(fix => {
         // Logic must match fix-card.js display logic
         let effectiveStatus = (fix.status || 'INCOMPLETE').toLowerCase();
-        if (!fix.testRun) effectiveStatus = 'failed'; 
+        if (!fix.testRun && effectiveStatus !== 'pending') effectiveStatus = 'failed'; 
         
         if (status === 'failed') {
              return effectiveStatus === 'failed';

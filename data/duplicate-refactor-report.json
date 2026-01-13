@@ -1,0 +1,1394 @@
+{
+  "summary": {
+    "totalDuplicates": 103,
+    "filesAffected": 16,
+    "target": 10,
+    "status": "FAILING"
+  },
+  "topFiles": [
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "duplicateCount": 35,
+      "uniqueVariables": 34,
+      "variables": [
+        "a",
+        "alignMap",
+        "allWrappers",
+        "analysis",
+        "blob",
+        "c",
+        "canvas",
+        "clone",
+        "cv",
+        "data",
+        "desc",
+        "dropZone",
+        "el",
+        "isCollapsed",
+        "issueCount",
+        "item",
+        "justifyMap",
+        "key",
+        "pageTheme",
+        "parent",
+        "proceed",
+        "propsHeader",
+        "propsPanel",
+        "rect",
+        "response",
+        "result",
+        "templateComp",
+        "templateName",
+        "text",
+        "theme",
+        "toggleBtn",
+        "url",
+        "w",
+        "wrapper"
+      ]
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "duplicateCount": 21,
+      "uniqueVariables": 21,
+      "variables": [
+        "avatarImg",
+        "badgeEl",
+        "bioEl",
+        "btn",
+        "content",
+        "coverFig",
+        "ctaBtn",
+        "descEl",
+        "figure",
+        "footer",
+        "header",
+        "iconEl",
+        "img",
+        "info",
+        "nameEl",
+        "priceEl",
+        "priceWrap",
+        "roleEl",
+        "subtitleEl",
+        "titleEl",
+        "toggle"
+      ]
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "duplicateCount": 13,
+      "uniqueVariables": 13,
+      "variables": [
+        "angle",
+        "color",
+        "colors",
+        "container",
+        "delay",
+        "duration",
+        "fire",
+        "observer",
+        "particle",
+        "play",
+        "size",
+        "startX",
+        "update"
+      ]
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "duplicateCount": 7,
+      "uniqueVariables": 7,
+      "variables": [
+        "days",
+        "hours",
+        "interval",
+        "minutes",
+        "now",
+        "seconds",
+        "update"
+      ]
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "duplicateCount": 5,
+      "uniqueVariables": 5,
+      "variables": [
+        "container",
+        "currentIndex",
+        "handler",
+        "item",
+        "targetIndex"
+      ]
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-workflow.js",
+      "duplicateCount": 4,
+      "uniqueVariables": 4,
+      "variables": [
+        "info",
+        "input",
+        "name",
+        "workflow"
+      ]
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-template-browser.js",
+      "duplicateCount": 3,
+      "uniqueVariables": 3,
+      "variables": [
+        "html",
+        "isCollapsed",
+        "section"
+      ]
+    },
+    {
+      "file": "src\\wb-viewmodels\\overlay.js",
+      "duplicateCount": 3,
+      "uniqueVariables": 3,
+      "variables": [
+        "hide",
+        "show",
+        "toggle"
+      ]
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-quick-edit.js",
+      "duplicateCount": 2,
+      "uniqueVariables": 2,
+      "variables": [
+        "behavior",
+        "mapping"
+      ]
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-tree.js",
+      "duplicateCount": 2,
+      "uniqueVariables": 2,
+      "variables": [
+        "expanded",
+        "html"
+      ]
+    }
+  ],
+  "allDuplicates": [
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-canvas-sections.js",
+      "variable": "section",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        185,
+        283
+      ],
+      "suggestion": "Rename to: globalSection"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-editing.js",
+      "variable": "observer",
+      "function": "observer",
+      "occurrences": 2,
+      "lines": [
+        1335,
+        1850
+      ],
+      "suggestion": "Use numbered suffix: observer1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-quick-edit.js",
+      "variable": "behavior",
+      "function": "global",
+      "occurrences": 3,
+      "lines": [
+        360,
+        426,
+        527
+      ],
+      "suggestion": "Use numbered suffix: behavior1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-quick-edit.js",
+      "variable": "mapping",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        362,
+        427
+      ],
+      "suggestion": "Use numbered suffix: mapping1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-template-browser.js",
+      "variable": "html",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        648,
+        1594
+      ],
+      "suggestion": "Rename to: globalHtml"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-template-browser.js",
+      "variable": "isCollapsed",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        560,
+        605
+      ],
+      "suggestion": "Use numbered suffix: isCollapsed1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-template-browser.js",
+      "variable": "section",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        558,
+        645
+      ],
+      "suggestion": "Rename to: globalSection"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-tree.js",
+      "variable": "expanded",
+      "function": "initTree",
+      "occurrences": 2,
+      "lines": [
+        1099,
+        1110
+      ],
+      "suggestion": "Use numbered suffix: expanded1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-tree.js",
+      "variable": "html",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        559,
+        635
+      ],
+      "suggestion": "Rename to: globalHtml"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-welcome.js",
+      "variable": "template",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        206,
+        245
+      ],
+      "suggestion": "Rename to: globalTemplate"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-workflow.js",
+      "variable": "info",
+      "function": "global",
+      "occurrences": 3,
+      "lines": [
+        306,
+        386,
+        475
+      ],
+      "suggestion": "Use numbered suffix: info1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-workflow.js",
+      "variable": "input",
+      "function": "global",
+      "occurrences": 3,
+      "lines": [
+        287,
+        421,
+        437
+      ],
+      "suggestion": "Use numbered suffix: input1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-workflow.js",
+      "variable": "name",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        288,
+        438
+      ],
+      "suggestion": "Use numbered suffix: name1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-workflow.js",
+      "variable": "workflow",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        587,
+        660
+      ],
+      "suggestion": "Use numbered suffix: workflow1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "a",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        2547,
+        2741
+      ],
+      "suggestion": "Use numbered suffix: a1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "alignMap",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        1993,
+        2261
+      ],
+      "suggestion": "Use numbered suffix: alignMap1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "allWrappers",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        2672,
+        3870
+      ],
+      "suggestion": "Use numbered suffix: allWrappers1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "analysis",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        2677,
+        3874
+      ],
+      "suggestion": "Use numbered suffix: analysis1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "blob",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        2545,
+        2739
+      ],
+      "suggestion": "Use numbered suffix: blob1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "c",
+      "function": "global",
+      "occurrences": 6,
+      "lines": [
+        954,
+        2147,
+        2199,
+        3527,
+        3573,
+        3591
+      ],
+      "suggestion": "Use numbered suffix: c1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "canvas",
+      "function": "global",
+      "occurrences": 3,
+      "lines": [
+        3217,
+        3234,
+        3867
+      ],
+      "suggestion": "Use numbered suffix: canvas1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "clone",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        3531,
+        3609
+      ],
+      "suggestion": "Use numbered suffix: clone1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "cv",
+      "function": "global",
+      "occurrences": 5,
+      "lines": [
+        1323,
+        1436,
+        2389,
+        2411,
+        2668
+      ],
+      "suggestion": "Use numbered suffix: cv1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "data",
+      "function": "global",
+      "occurrences": 4,
+      "lines": [
+        2390,
+        2669,
+        2762,
+        3151
+      ],
+      "suggestion": "Rename to: globalData"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "desc",
+      "function": "renderList",
+      "occurrences": 2,
+      "lines": [
+        578,
+        600
+      ],
+      "suggestion": "Use numbered suffix: desc1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "dropZone",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        853,
+        917
+      ],
+      "suggestion": "Use numbered suffix: dropZone1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "el",
+      "function": "global",
+      "occurrences": 8,
+      "lines": [
+        972,
+        1805,
+        2165,
+        2235,
+        3558,
+        3579,
+        3605,
+        3684
+      ],
+      "suggestion": "Rename to: globalElement"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "isCollapsed",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        133,
+        147
+      ],
+      "suggestion": "Use numbered suffix: isCollapsed1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "issueCount",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        2673,
+        3871
+      ],
+      "suggestion": "Use numbered suffix: issueCount1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "item",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        2392,
+        2695
+      ],
+      "suggestion": "Rename to: globalItem"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "item",
+      "function": "enableBuilderInteractions",
+      "occurrences": 2,
+      "lines": [
+        727,
+        741
+      ],
+      "suggestion": "Rename to: enableBuilderInteractionsItem"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "justifyMap",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        1994,
+        2264
+      ],
+      "suggestion": "Use numbered suffix: justifyMap1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "key",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        974,
+        1361
+      ],
+      "suggestion": "Use numbered suffix: key1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "pageTheme",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        2403,
+        3235
+      ],
+      "suggestion": "Use numbered suffix: pageTheme1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "parent",
+      "function": "add",
+      "occurrences": 2,
+      "lines": [
+        1140,
+        1172
+      ],
+      "suggestion": "Use numbered suffix: parent1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "proceed",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        2684,
+        3879
+      ],
+      "suggestion": "Use numbered suffix: proceed1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "propsHeader",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        164,
+        2574
+      ],
+      "suggestion": "Use numbered suffix: propsHeader1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "propsPanel",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        159,
+        2572
+      ],
+      "suggestion": "Use numbered suffix: propsPanel1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "rect",
+      "function": "initNotes",
+      "occurrences": 2,
+      "lines": [
+        3042,
+        3062
+      ],
+      "suggestion": "Use numbered suffix: rect1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "response",
+      "function": "response",
+      "occurrences": 2,
+      "lines": [
+        3156,
+        3898
+      ],
+      "suggestion": "Use numbered suffix: response1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "result",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        837,
+        3171
+      ],
+      "suggestion": "Rename to: globalResult"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "templateComp",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        863,
+        889
+      ],
+      "suggestion": "Use numbered suffix: templateComp1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "templateName",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        2404,
+        2513
+      ],
+      "suggestion": "Use numbered suffix: templateName1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "text",
+      "function": "global",
+      "occurrences": 4,
+      "lines": [
+        107,
+        2761,
+        3135,
+        3144
+      ],
+      "suggestion": "Rename to: globalText"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "theme",
+      "function": "global",
+      "occurrences": 5,
+      "lines": [
+        412,
+        1486,
+        2512,
+        2904,
+        2911
+      ],
+      "suggestion": "Use numbered suffix: theme1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "toggleBtn",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        134,
+        148
+      ],
+      "suggestion": "Use numbered suffix: toggleBtn1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "url",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        2546,
+        2740
+      ],
+      "suggestion": "Use numbered suffix: url1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "w",
+      "function": "global",
+      "occurrences": 7,
+      "lines": [
+        934,
+        969,
+        1757,
+        1789,
+        2144,
+        2197,
+        2347
+      ],
+      "suggestion": "Use numbered suffix: w1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "variable": "wrapper",
+      "function": "global",
+      "occurrences": 4,
+      "lines": [
+        63,
+        1052,
+        1264,
+        1684
+      ],
+      "suggestion": "Use numbered suffix: wrapper1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "avatarImg",
+      "function": "global",
+      "occurrences": 3,
+      "lines": [
+        921,
+        1188,
+        2196
+      ],
+      "suggestion": "Use numbered suffix: avatarImg1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "badgeEl",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        309,
+        1594
+      ],
+      "suggestion": "Use numbered suffix: badgeEl1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "bioEl",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        946,
+        2237
+      ],
+      "suggestion": "Use numbered suffix: bioEl1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "btn",
+      "function": "global",
+      "occurrences": 3,
+      "lines": [
+        868,
+        876,
+        1806
+      ],
+      "suggestion": "Use numbered suffix: btn1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "content",
+      "function": "global",
+      "occurrences": 8,
+      "lines": [
+        811,
+        916,
+        1104,
+        1400,
+        1667,
+        1737,
+        1928,
+        2032
+      ],
+      "suggestion": "Use numbered suffix: content1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "coverFig",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        909,
+        2185
+      ],
+      "suggestion": "Use numbered suffix: coverFig1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "ctaBtn",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        1055,
+        1327
+      ],
+      "suggestion": "Use numbered suffix: ctaBtn1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "descEl",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        1277,
+        1585
+      ],
+      "suggestion": "Use numbered suffix: descEl1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "figure",
+      "function": "global",
+      "occurrences": 4,
+      "lines": [
+        604,
+        657,
+        1247,
+        1654
+      ],
+      "suggestion": "Use numbered suffix: figure1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "footer",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        1050,
+        1974
+      ],
+      "suggestion": "Use numbered suffix: footer1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "header",
+      "function": "global",
+      "occurrences": 4,
+      "lines": [
+        999,
+        1091,
+        1893,
+        2010
+      ],
+      "suggestion": "Use numbered suffix: header1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "iconEl",
+      "function": "global",
+      "occurrences": 4,
+      "lines": [
+        1094,
+        1393,
+        1482,
+        1564
+      ],
+      "suggestion": "Use numbered suffix: iconEl1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "img",
+      "function": "global",
+      "occurrences": 3,
+      "lines": [
+        606,
+        1250,
+        1658
+      ],
+      "suggestion": "Use numbered suffix: img1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "info",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        1264,
+        1488
+      ],
+      "suggestion": "Use numbered suffix: info1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "nameEl",
+      "function": "global",
+      "occurrences": 3,
+      "lines": [
+        930,
+        1492,
+        2205
+      ],
+      "suggestion": "Use numbered suffix: nameEl1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "priceEl",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        1019,
+        1309
+      ],
+      "suggestion": "Use numbered suffix: priceEl1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "priceWrap",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        1015,
+        1304
+      ],
+      "suggestion": "Use numbered suffix: priceWrap1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "roleEl",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        938,
+        1206
+      ],
+      "suggestion": "Use numbered suffix: roleEl1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "subtitleEl",
+      "function": "global",
+      "occurrences": 5,
+      "lines": [
+        293,
+        853,
+        1680,
+        1756,
+        1909
+      ],
+      "suggestion": "Use numbered suffix: subtitleEl1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "titleEl",
+      "function": "global",
+      "occurrences": 10,
+      "lines": [
+        285,
+        840,
+        1269,
+        1405,
+        1572,
+        1672,
+        1748,
+        1901,
+        2022,
+        2213
+      ],
+      "suggestion": "Use numbered suffix: titleEl1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "variable": "toggle",
+      "function": "toggle",
+      "occurrences": 2,
+      "lines": [
+        1829,
+        1938
+      ],
+      "suggestion": "Use numbered suffix: toggle1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "angle",
+      "function": "i",
+      "occurrences": 2,
+      "lines": [
+        412,
+        523
+      ],
+      "suggestion": "Use numbered suffix: angle1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "color",
+      "function": "i",
+      "occurrences": 2,
+      "lines": [
+        185,
+        526
+      ],
+      "suggestion": "Use numbered suffix: color1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "colors",
+      "function": "fire",
+      "occurrences": 2,
+      "lines": [
+        181,
+        519
+      ],
+      "suggestion": "Use numbered suffix: colors1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "container",
+      "function": "fire",
+      "occurrences": 3,
+      "lines": [
+        176,
+        516,
+        575
+      ],
+      "suggestion": "Use numbered suffix: container1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "delay",
+      "function": "i",
+      "occurrences": 2,
+      "lines": [
+        583,
+        634
+      ],
+      "suggestion": "Use numbered suffix: delay1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "duration",
+      "function": "i",
+      "occurrences": 4,
+      "lines": [
+        189,
+        415,
+        582,
+        635
+      ],
+      "suggestion": "Use numbered suffix: duration1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "fire",
+      "function": "fire",
+      "occurrences": 4,
+      "lines": [
+        174,
+        407,
+        511,
+        574
+      ],
+      "suggestion": "Use numbered suffix: fire1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "observer",
+      "function": "observer",
+      "occurrences": 2,
+      "lines": [
+        286,
+        347
+      ],
+      "suggestion": "Use numbered suffix: observer1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "particle",
+      "function": "i",
+      "occurrences": 2,
+      "lines": [
+        183,
+        522
+      ],
+      "suggestion": "Use numbered suffix: particle1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "play",
+      "function": "play",
+      "occurrences": 2,
+      "lines": [
+        29,
+        53
+      ],
+      "suggestion": "Use numbered suffix: play1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "size",
+      "function": "i",
+      "occurrences": 5,
+      "lines": [
+        184,
+        414,
+        525,
+        580,
+        632
+      ],
+      "suggestion": "Use numbered suffix: size1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "startX",
+      "function": "i",
+      "occurrences": 2,
+      "lines": [
+        186,
+        581
+      ],
+      "suggestion": "Use numbered suffix: startX1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "variable": "update",
+      "function": "update",
+      "occurrences": 2,
+      "lines": [
+        275,
+        310
+      ],
+      "suggestion": "Use numbered suffix: update1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "variable": "days",
+      "function": "update",
+      "occurrences": 2,
+      "lines": [
+        522,
+        660
+      ],
+      "suggestion": "Use numbered suffix: days1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "variable": "hours",
+      "function": "update",
+      "occurrences": 3,
+      "lines": [
+        523,
+        610,
+        659
+      ],
+      "suggestion": "Use numbered suffix: hours1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "variable": "interval",
+      "function": "global",
+      "occurrences": 3,
+      "lines": [
+        558,
+        625,
+        669
+      ],
+      "suggestion": "Use numbered suffix: interval1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "variable": "minutes",
+      "function": "update",
+      "occurrences": 3,
+      "lines": [
+        524,
+        611,
+        658
+      ],
+      "suggestion": "Use numbered suffix: minutes1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "variable": "now",
+      "function": "update",
+      "occurrences": 2,
+      "lines": [
+        609,
+        654
+      ],
+      "suggestion": "Use numbered suffix: now1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "variable": "seconds",
+      "function": "update",
+      "occurrences": 3,
+      "lines": [
+        525,
+        612,
+        657
+      ],
+      "suggestion": "Use numbered suffix: seconds1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "variable": "update",
+      "function": "update",
+      "occurrences": 4,
+      "lines": [
+        519,
+        608,
+        647,
+        687
+      ],
+      "suggestion": "Use numbered suffix: update1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\media.js",
+      "variable": "iframe",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        921,
+        965
+      ],
+      "suggestion": "Use numbered suffix: iframe1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\media.js",
+      "variable": "params",
+      "function": "params",
+      "occurrences": 2,
+      "lines": [
+        910,
+        959
+      ],
+      "suggestion": "Use numbered suffix: params1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "variable": "container",
+      "function": "handler",
+      "occurrences": 4,
+      "lines": [
+        99,
+        130,
+        159,
+        186
+      ],
+      "suggestion": "Use numbered suffix: container1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "variable": "currentIndex",
+      "function": "handler",
+      "occurrences": 4,
+      "lines": [
+        101,
+        132,
+        161,
+        188
+      ],
+      "suggestion": "Use numbered suffix: currentIndex1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "variable": "handler",
+      "function": "handler",
+      "occurrences": 4,
+      "lines": [
+        92,
+        123,
+        152,
+        179
+      ],
+      "suggestion": "Use numbered suffix: handler1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "variable": "item",
+      "function": "handler",
+      "occurrences": 4,
+      "lines": [
+        96,
+        127,
+        156,
+        183
+      ],
+      "suggestion": "Rename to: handlerItem"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "variable": "targetIndex",
+      "function": "handler",
+      "occurrences": 2,
+      "lines": [
+        105,
+        134
+      ],
+      "suggestion": "Use numbered suffix: targetIndex1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\navigation.js",
+      "variable": "render",
+      "function": "render",
+      "occurrences": 2,
+      "lines": [
+        259,
+        433
+      ],
+      "suggestion": "Use numbered suffix: render1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\overlay.js",
+      "variable": "hide",
+      "function": "hide",
+      "occurrences": 4,
+      "lines": [
+        86,
+        189,
+        339,
+        438
+      ],
+      "suggestion": "Use numbered suffix: hide1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\overlay.js",
+      "variable": "show",
+      "function": "show",
+      "occurrences": 4,
+      "lines": [
+        62,
+        155,
+        305,
+        370
+      ],
+      "suggestion": "Use numbered suffix: show1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\overlay.js",
+      "variable": "toggle",
+      "function": "global",
+      "occurrences": 2,
+      "lines": [
+        195,
+        444
+      ],
+      "suggestion": "Use numbered suffix: toggle1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\semantics\\table.js",
+      "variable": "rows",
+      "function": "table",
+      "occurrences": 3,
+      "lines": [
+        54,
+        82,
+        113
+      ],
+      "suggestion": "Use numbered suffix: rows1"
+    },
+    {
+      "file": "src\\wb-viewmodels\\semantics\\table.js",
+      "variable": "text",
+      "function": "table",
+      "occurrences": 2,
+      "lines": [
+        57,
+        133
+      ],
+      "suggestion": "Rename to: tableText"
+    }
+  ]
+}

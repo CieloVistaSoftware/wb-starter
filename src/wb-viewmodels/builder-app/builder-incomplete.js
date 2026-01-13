@@ -184,9 +184,9 @@ function analyzeComponent(wrapper) {
     // Check required fields
     const required = REQUIRED_FIELDS[behavior] || [];
     for (const field of required) {
-      const value = data[field];
+      const reqValue = data[field];
       const fieldType = getFieldType(field);
-      const check = isPlaceholder(value, fieldType);
+      const check = isPlaceholder(reqValue, fieldType);
       
       if (check.isEmpty) {
         result.issues.push({
@@ -202,7 +202,7 @@ function analyzeComponent(wrapper) {
           field,
           type: 'placeholder',
           message: `${formatFieldName(field)} has a placeholder value`,
-          value: value,
+          value: reqValue,
           severity: 'warning'
         });
         // result.isComplete = false; // Don't mark as incomplete, just warn
@@ -212,13 +212,13 @@ function analyzeComponent(wrapper) {
     // Check href anchors
     const hrefFields = ['href', 'primaryHref', 'secondaryHref', 'ctaHref'];
     for (const field of hrefFields) {
-      const value = data[field];
-      if (value && value.startsWith('#') && !isValidAnchor(value)) {
+      const hrefValue = data[field];
+      if (hrefValue && hrefValue.startsWith('#') && !isValidAnchor(hrefValue)) {
         result.warnings.push({
           field,
           type: 'broken-anchor',
-          message: `${formatFieldName(field)} points to "${value}" which doesn't exist`,
-          value: value,
+          message: `${formatFieldName(field)} points to "${hrefValue}" which doesn't exist`,
+          value: hrefValue,
           severity: 'warning'
         });
       }
@@ -227,23 +227,23 @@ function analyzeComponent(wrapper) {
     // Check attention fields (warnings)
     const attention = ATTENTION_FIELDS[behavior] || [];
     for (const field of attention) {
-      const value = data[field];
-      const fieldType = getFieldType(field);
-      const check = isPlaceholder(value, fieldType);
+      const attValue = data[field];
+      const attFieldType = getFieldType(field);
+      const attCheck = isPlaceholder(attValue, attFieldType);
       
-      if (check.isEmpty) {
+      if (attCheck.isEmpty) {
         result.suggestions.push({
           field,
           type: 'empty',
           message: `Consider adding ${formatFieldName(field)}`,
           severity: 'info'
         });
-      } else if (check.isPlaceholder) {
+      } else if (attCheck.isPlaceholder) {
         result.warnings.push({
           field,
           type: 'placeholder',
           message: `${formatFieldName(field)} appears to be a placeholder`,
-          value: value,
+          value: attValue,
           severity: 'warning'
         });
       }
@@ -253,10 +253,10 @@ function analyzeComponent(wrapper) {
     for (const [field, value] of Object.entries(data)) {
       if (!value) continue;
       
-      const fieldType = getFieldType(field);
-      if (fieldType === 'src' && !required.includes(field)) {
-        const check = isPlaceholder(value, 'src');
-        if (check.isPlaceholder) {
+      const entryFieldType = getFieldType(field);
+      if (entryFieldType === 'src' && !required.includes(field)) {
+        const entryCheck = isPlaceholder(value, 'src');
+        if (entryCheck.isPlaceholder) {
           result.warnings.push({
             field,
             type: 'placeholder-image',
@@ -601,10 +601,10 @@ function showTemplateChecklist(templateName, componentIds) {
   const allIssues = [];
   
   componentIds.forEach(id => {
-    const wrapper = document.getElementById(id);
-    if (!wrapper) return;
+    const checklistWrapper = document.getElementById(id);
+    if (!checklistWrapper) return;
     
-    const analysis = analyzeComponent(wrapper);
+    const analysis = analyzeComponent(checklistWrapper);
     if (analysis.issues.length > 0 || analysis.warnings.length > 0) {
       allIssues.push(analysis);
     }

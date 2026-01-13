@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,7 @@
         </div>
         <div class="section-content">
           <p class="section-description" wb-if="description">{{description}}</p>
-          {{body}}
+          <slot></slot>
         </div>
       </section>
     </template>
@@ -40,7 +40,7 @@
       <div class="example-block">
         <div class="example-label">{{label}}</div>
         <div class="example-render">
-          {{body}}
+          <slot></slot>
         </div>
         <div class="example-codes" wb-if="code">
           <div class="code-tabs">
@@ -55,7 +55,7 @@
     <template wb-view="component-tile">
       <div class="tile">
         <span class="tile__icon">{{icon}}</span>
-        <span class="tile__label">{{body || text}}</span>
+        <span class="tile__label"><slot>{{text}}</slot></span>
         <span class="tile__badge" wb-if="badge">{{badge}}</span>
       </div>
     </template>
@@ -64,7 +64,7 @@
     <template wb-view="badge-tag">
       <span class="badge-tag badge-tag--{{variant || 'primary'}}">
         <span wb-if="icon">{{icon}}</span>
-        {{body || text}}
+        <slot>{{text}}</slot>
       </span>
     </template>
 
@@ -84,7 +84,7 @@
 
     <!-- Button Group -->
     <template wb-view="button-group">
-      <div class="button-group">{{body}}</div>
+      <div class="button-group"><slot></slot></div>
     </template>
 
     <!-- Card -->
@@ -97,7 +97,7 @@
           </div>
           <span class="card__badge" wb-if="badge">{{badge}}</span>
         </header>
-        <main class="card__body">{{body}}</main>
+        <main class="card__body"><slot></slot></main>
         <footer class="card__footer" wb-if="footer">{{footer}}</footer>
       </article>
     </template>
@@ -110,27 +110,27 @@
           <div class="user-card__name">{{name}}</div>
           <div class="user-card__role">{{role}}</div>
         </div>
-        {{body}}
+        <slot></slot>
       </div>
     </template>
 
     <!-- Toolbar -->
     <template wb-view="toolbar">
       <div class="toolbar">
-        <div class="toolbar__center">{{body}}</div>
+        <div class="toolbar__center"><slot></slot></div>
       </div>
     </template>
 
     <!-- File Toolbar -->
     <template wb-view="file-toolbar">
       <wb-toolbar>
-        <button-primary wb-for="item in items" icon="{{item.icon}}" variant="ghost" label="{{item.label}}"></button-primary>
+        <wb-button wb-for="item in items" icon="{{item.icon}}" variant="ghost" label="{{item.label}}"></wb-button>
       </wb-toolbar>
     </template>
 
     <!-- Stat Row -->
     <template wb-view="stat-row">
-      <div class="stat-row">{{body}}</div>
+      <div class="stat-row"><slot></slot></div>
     </template>
 
     <!-- Alert Box -->
@@ -151,7 +151,7 @@
         <span class="stat__icon" wb-if="icon">{{icon}}</span>
         <div>
           <div class="stat__value">{{value}}</div>
-          <div class="stat__label">{{body || text}}</div>
+          <div class="stat__label"><slot>{{text}}</slot></div>
           <div class="stat__trend stat__trend--{{trend}}" wb-if="trendValue">{{trendValue}}</div>
         </div>
       </div>
@@ -163,13 +163,13 @@
     <!-- ============================================ -->
 
     <demo-section title="🔘 Buttons" badge="variants + icons">
-        <example-block label="Standard Buttons (button-primary)">
+        <example-block label="Standard Buttons (wb-button)">
             <div class="inline-row">
-              <button-primary variant="primary" label="Primary"></button-primary>
-              <button-primary variant="secondary" label="Secondary"></button-primary>
-              <button-primary variant="success" label="Success"></button-primary>
-              <button-primary icon="💾" variant="primary" label="Save"></button-primary>
-              <button-primary icon="🗑️" variant="error" label="Delete"></button-primary>
+              <wb-button label="Primary"></wb-button>
+              <wb-button variant="secondary" label="Secondary"></wb-button>
+              <wb-button variant="success" label="Success"></wb-button>
+              <wb-button icon="💾" label="Save"></wb-button>
+              <wb-button icon="🗑️" variant="error" label="Delete"></wb-button>
             </div>
         </example-block>
     </demo-section>
@@ -222,7 +222,7 @@
         <example-block label="How It Works">
             <pre class="template-code">&lt;!-- 1. Define a template ONCE --&gt;
 &lt;template wb-view="badge-tag"&gt;
-  &lt;span class="badge-tag badge-tag--{{variant}}"&gt;{{body}}&lt;/span&gt;
+  &lt;span class="badge-tag badge-tag--{{variant}}"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/span&gt;
 &lt;/template&gt;
 
 &lt;!-- 2. Use it TWO ways: --&gt;
@@ -260,7 +260,7 @@
             <pre class="template-code">&lt;template wb-view="component-tile"&gt;
   &lt;div class="tile"&gt;
     &lt;span class="tile__icon"&gt;{{icon}}&lt;/span&gt;
-    &lt;span class="tile__label"&gt;{{body || text}}&lt;/span&gt;
+    &lt;span class="tile__label"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/span&gt;
     &lt;span class="tile__badge" wb-if="badge"&gt;{{badge}}&lt;/span&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
@@ -305,7 +305,7 @@
     &lt;span class="stat__icon" wb-if="icon"&gt;{{icon}}&lt;/span&gt;
     &lt;div&gt;
       &lt;div class="stat__value"&gt;{{value}}&lt;/div&gt;
-      &lt;div class="stat__label"&gt;{{body || text}}&lt;/div&gt;
+      &lt;div class="stat__label"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/div&gt;
       &lt;div class="stat__trend stat__trend--{{trend}}" wb-if="trendValue"&gt;{{trendValue}}&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -327,7 +327,7 @@
             <pre class="template-code">&lt;template wb-view="badge-tag"&gt;
   &lt;span class="badge-tag badge-tag--{{variant || 'primary'}}"&gt;
     &lt;span wb-if="icon"&gt;{{icon}}&lt;/span&gt;
-    {{body || text}}
+    &lt;slot&gt;{{text}}&lt;/slot&gt;
   &lt;/span&gt;
 &lt;/template&gt;</pre>
         </example-block>
@@ -371,7 +371,7 @@
       &lt;div class="user-card__name"&gt;{{name}}&lt;/div&gt;
       &lt;div class="user-card__role"&gt;{{role}}&lt;/div&gt;
     &lt;/div&gt;
-    {{body}}
+    &lt;slot&gt;&lt;/slot&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
         </example-block>
@@ -389,9 +389,9 @@
 
         <example-block label="Button Group (Container View)">
             <button-group>
-              <button-primary variant="primary" label="Left"></button-primary>
-              <button-primary variant="primary" label="Center"></button-primary>
-              <button-primary variant="primary" label="Right"></button-primary>
+              <wb-button label="Left"></wb-button>
+              <wb-button label="Center"></wb-button>
+              <wb-button label="Right"></wb-button>
             </button-group>
         </example-block>
 
@@ -399,8 +399,8 @@
             <wb-card title="User Settings" subtitle="Manage your preferences">
               <p style="margin-bottom: 1rem; color: var(--text-muted);">Update your account settings and preferences below.</p>
               <div class="inline-row">
-                <button-primary variant="primary" label="Save Changes"></button-primary>
-                <button-primary variant="secondary" label="Cancel"></button-primary>
+                <wb-button label="Save Changes"></wb-button>
+                <wb-button variant="secondary" label="Cancel"></wb-button>
               </div>
             </wb-card>
         </example-block>
@@ -421,6 +421,14 @@
             ]'></file-toolbar>
         </example-block>
 
+    </demo-section>
+
+    <!-- ============================================ -->
+    <!-- PART 4: DOCUMENTATION                        -->
+    <!-- ============================================ -->
+
+    <demo-section title="📚 Documentation" badge="Read Me" description="Overview of the WB Views system features and usage.">
+        <wb-mdhtml data-src="wb-views-demo.md" data-size="md"></wb-mdhtml>
     </demo-section>
 
   </div>
@@ -456,12 +464,20 @@
         }).join('\n');
 
         // Set as attribute for the template to use
-        block.setAttribute('code', formatted);
+        // Add a hidden span with a tag character to bypass wb-views auto-escaping
+        // 'cause wb-views assumes "no tags = safe to escape" which ruins already-escaped code
+        block.setAttribute('code', formatted + '<span style="display:none"></span>');
       });
 
       // 2. Initialize views system
       const { initViews } = await import('../src/core/wb-views.js');
       await initViews({ registry: '../src/wb-views/views-registry.json' });
+
+      // 3. Initialize core WB (for wb-mdhtml)
+      const WB = await import('../src/core/wb-lazy.js').then(m => m.default);
+      await WB.init();
+      await WB.scan();
+
       console.log('🧩 WB Views Demo loaded!');
 
     } catch (err) {

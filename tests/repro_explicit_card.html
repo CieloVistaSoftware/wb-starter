@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Explicit Card Test</title>
@@ -8,17 +9,23 @@
         WB.init({ debug: true, autoInject: true });
     </script>
 </head>
+
 <body>
     <!-- 1. Plain Article (Should NOT be a card anymore) -->
     <article id="plain">
-        <header><h3>Plain Article</h3></header>
+        <header>
+            <h3>Plain Article</h3>
+        </header>
         <p>Just text.</p>
     </article>
 
     <!-- 2. Explicit Card (Should BE a card) -->
-    <wb-card id="explicit"
-        <header><h3>Explicit Card</h3></header>
+    <wb-card id="explicit">
+        <header>
+            <h3>Explicit Card</h3>
+        </header>
         <p>I have the behavior.</p>
-    </article>
+    </wb-card>
 </body>
+
 </html>

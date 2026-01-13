@@ -5,7 +5,7 @@
   "description": "Unified schema for builder components and UI interactions.",
   "type": "object",
   "properties": {
-    "label": { 
+    "label": {
       "type": "string",
       "default": "Builder",
       "appliesAttribute": "label"
@@ -21,12 +21,27 @@
       "items": {
         "type": "object",
         "properties": {
-          "type": { "type": "string", "description": "Component type (e.g., 'card', 'button', etc.)" },
-          "id": { "type": "string", "description": "Unique component ID. Auto-generated as readable camelCase with counter (e.g., sidebarLeft-1, column2-1, hero-1)" },
-          "props": { "type": "object", "description": "Component properties (see individual schemas)." },
-          "children": { "$ref": "#/properties/components" }
+          "type": {
+            "type": "string",
+            "description": "Component type (e.g., 'card', 'button', etc.)"
+          },
+          "id": {
+            "type": "string",
+            "description": "Unique component ID. Auto-generated as readable camelCase with counter (e.g., sidebarLeft-1, column2-1, hero-1)"
+          },
+          "props": {
+            "type": "object",
+            "description": "Component properties (see individual schemas)."
+          },
+          "children": {
+            "$ref": "#/properties/components"
+          }
         },
-        "required": ["type", "id", "props"],
+        "required": [
+          "type",
+          "id",
+          "props"
+        ],
         "additionalProperties": false
       }
     },
@@ -34,47 +49,53 @@
       "type": "object",
       "description": "Builder-level metadata (optional)",
       "properties": {
-        "version": { "type": "string" },
-        "created": { "type": "string", "format": "date-time" },
-        "author": { "type": "string" }
+        "version": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "author": {
+          "type": "string"
+        }
       },
       "additionalProperties": true
     }
   },
-  "required": ["components"],
+  "required": [
+    "components"
+  ],
   "additionalProperties": false,
   "baseClass": "wb-builder",
-  
   "$view": [
-    { 
-      "name": "container", 
-      "tag": "section", 
+    {
+      "name": "container",
+      "tag": "section",
       "class": "empty"
     },
-    { 
-      "name": "icon", 
-      "tag": "div", 
+    {
+      "name": "icon",
+      "tag": "div",
       "class": "empty-icon",
-      "parent": "container", 
+      "parent": "container",
       "content": "{{icon}}"
     },
-    { 
-      "name": "title", 
-      "tag": "h3", 
-      "parent": "container", 
+    {
+      "name": "title",
+      "tag": "h3",
+      "parent": "container",
       "content": "{{label}}"
     },
-    { 
-      "name": "desc", 
-      "tag": "p", 
-      "parent": "container", 
+    {
+      "name": "desc",
+      "tag": "p",
+      "parent": "container",
       "content": "Builder component - Semantic View"
     }
   ],
-  
   "interactions": {
     "description": "UI interaction rules for the builder interface",
-    
     "canvasSections": {
       "description": "Rules for Header/Main/Footer canvas sections",
       "rules": [
@@ -110,7 +131,6 @@
         }
       ]
     },
-    
     "selection": {
       "description": "Rules for component selection and focus synchronization",
       "rules": [
@@ -121,7 +141,7 @@
           "details": "When user clicks a .dropped element on canvas, the tree panel must scroll to show that component and apply visual highlight (green border)"
         },
         {
-          "id": "TREE_TO_CANVAS_SYNC", 
+          "id": "TREE_TO_CANVAS_SYNC",
           "trigger": "Click component in tree panel",
           "action": "Canvas scrolls to and selects the component",
           "details": "When user clicks a component row in tree panel, canvas scrolls to center that component and applies selection outline"
@@ -140,7 +160,6 @@
         }
       ]
     },
-    
     "sectionFocus": {
       "description": "Rules for Header/Main/Footer section focus system",
       "rules": [
@@ -164,7 +183,6 @@
         }
       ]
     },
-    
     "propertiesPanel": {
       "description": "Rules for property panel interaction",
       "rules": [
@@ -194,7 +212,6 @@
         }
       ]
     },
-    
     "previewMode": {
       "description": "Rules for preview mode behavior",
       "rules": [
@@ -224,7 +241,6 @@
         }
       ]
     },
-    
     "events": {
       "description": "Custom events dispatched by the builder",
       "list": [
@@ -246,21 +262,35 @@
       ]
     }
   },
-  
   "compliance": {
     "css": "Uses only CSS variables for colors, minimal !important usage",
     "schema": "Includes required fields and structure for builder components",
     "baseClass": "wb-builder"
   },
-  
   "test": {
     "setup": [
       "<div data-wb=\"builder\">Builder Test</div>"
     ],
     "matrix": {
       "combinations": [
-        { "components": [{ "type": "card", "id": "test1", "props": {} }] },
-        { "components": [{ "type": "button", "id": "test2", "props": {} }] }
+        {
+          "components": [
+            {
+              "type": "card",
+              "id": "test1",
+              "props": {}
+            }
+          ]
+        },
+        {
+          "components": [
+            {
+              "type": "button",
+              "id": "test2",
+              "props": {}
+            }
+          ]
+        }
       ]
     },
     "functional": [
@@ -326,7 +356,6 @@
       }
     ]
   },
-  
   "api": {
     "description": "Global builder API exposed as window.builderAPI for programmatic control.",
     "methods": {
@@ -363,5 +392,7 @@
         "signature": "toggleCanvasSection(section: 'header' | 'main' | 'footer'): void"
       }
     }
-  }
+  },
+  "$methods": {},
+  "$cssAPI": {}
 }

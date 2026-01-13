@@ -170,9 +170,9 @@ export async function initTemplateBrowser() {
     if (section) {
       activeTreeSection = section;
       // Update collapsed state - expand clicked section
-      const collapsed = JSON.parse(localStorage.getItem('tb-collapsed-sections') || '{}');
-      collapsed[section] = false;
-      localStorage.setItem('tb-collapsed-sections', JSON.stringify(collapsed));
+      const storedCollapsed = JSON.parse(localStorage.getItem('tb-collapsed-sections') || '{}');
+      storedCollapsed[section] = false;
+      localStorage.setItem('tb-collapsed-sections', JSON.stringify(storedCollapsed));
       render();
     }
   });
@@ -209,9 +209,9 @@ async function loadTemplates() {
     
     res = await fetch('/data/templates.json?caller=builder-template-browser');
     if (res.ok) {
-      const data = await res.json();
-      templates = data.templates || [];
-      categories = data.categories || [];
+      const fallbackData = await res.json();
+      templates = fallbackData.templates || [];
+      categories = fallbackData.categories || [];
     }
   } catch (err) {
     console.error('[Templates] Load failed:', err);
@@ -287,8 +287,8 @@ function getTemplatesInCanvas() {
     try {
       const c = JSON.parse(wrapper.dataset.c || '{}');
       if (c.n) {
-        const matchingTemplate = templates.find(t => t.name === c.n);
-        if (matchingTemplate) used.add(matchingTemplate.id);
+        const componentTemplate = templates.find(t => t.name === c.n);
+        if (componentTemplate) used.add(componentTemplate.id);
       }
     } catch {}
   });
@@ -532,7 +532,7 @@ function renderSiteMode(container) {
   const templatesInCanvas = getTemplatesInCanvas();
   
   // Get collapsed state - ALL COLLAPSED BY DEFAULT
-  const collapsed = JSON.parse(localStorage.getItem('tb-collapsed-sections') || '{"header":true,"main":true,"footer":true}');
+  const sectionCollapsedState = JSON.parse(localStorage.getItem('tb-collapsed-sections') || '{"header":true,"main":true,"footer":true}');
 
   // Section order and subtitles
   const sectionOrder = ['header', 'main', 'footer'];
@@ -557,7 +557,7 @@ function renderSiteMode(container) {
       ${sectionOrder.map(id => {
         const section = SITE_SECTIONS[id];
         const items = sections[id] || [];
-        const isCollapsed = collapsed[id] !== false; // Default to collapsed
+        const isCollapsed = sectionCollapsedState[id] !== false; // Default to collapsed
         const isActive = activeTreeSection === id;
         const isHorizontal = section.layout === 'horizontal';
         const layoutClass = isHorizontal ? 'tb-grid-horizontal' : 'tb-grid-compact';
@@ -602,10 +602,10 @@ function renderSiteMode(container) {
  */
 function renderSectionsRow() {
   const sectionsCollapsed = JSON.parse(localStorage.getItem('tb-collapsed-sections') || '{}');
-  const isCollapsed = sectionsCollapsed['sections-row'];
+  const sectionsRowCollapsed = sectionsCollapsed['sections-row'];
   
   return `
-    <div class="tb-sections-row ${isCollapsed ? 'collapsed' : ''}">
+    <div class="tb-sections-row ${sectionsRowCollapsed ? 'collapsed' : ''}">
       <button id="tb-sections-header" class="tb-sections-header" tabindex="-1" onclick="window.tbToggleSectionsRow()">
         <span class="tb-section-icon">📏</span>
         <div class="tb-section-info">
@@ -613,7 +613,7 @@ function renderSectionsRow() {
           <span class="tb-section-subtitle">Empty containers for content</span>
         </div>
         <span class="tb-section-count">${SECTION_CONTAINERS.length}</span>
-        <span class="tb-section-arrow">${isCollapsed ? '▶' : '▼'}</span>
+        <span class="tb-section-arrow">${sectionsRowCollapsed ? '▶' : '▼'}</span>
       </button>
       <div class="tb-sections-content">
         <div class="tb-sections-grid">
@@ -634,9 +634,9 @@ function renderSectionsRow() {
 
 // Toggle sections row collapse
 window.tbToggleSectionsRow = () => {
-  const collapsed = JSON.parse(localStorage.getItem('tb-collapsed-sections') || '{}');
-  collapsed['sections-row'] = !collapsed['sections-row'];
-  localStorage.setItem('tb-collapsed-sections', JSON.stringify(collapsed));
+  const rowCollapsed = JSON.parse(localStorage.getItem('tb-collapsed-sections') || '{}');
+  rowCollapsed['sections-row'] = !rowCollapsed['sections-row'];
+  localStorage.setItem('tb-collapsed-sections', JSON.stringify(rowCollapsed));
   render();
 };
 
@@ -794,12 +794,12 @@ window.tbToggleMode = () => {
 };
 
 window.tbToggleSection = (sectionId) => {
-  const collapsed = JSON.parse(localStorage.getItem('tb-collapsed-sections') || '{}');
-  const wasCollapsed = collapsed[sectionId] !== false;
+  const sectionCollapsed = JSON.parse(localStorage.getItem('tb-collapsed-sections') || '{}');
+  const wasCollapsed = sectionCollapsed[sectionId] !== false;
   
   // Toggle collapsed state
-  collapsed[sectionId] = !wasCollapsed;
-  localStorage.setItem('tb-collapsed-sections', JSON.stringify(collapsed));
+  sectionCollapsed[sectionId] = !wasCollapsed;
+  localStorage.setItem('tb-collapsed-sections', JSON.stringify(sectionCollapsed));
   
   // When EXPANDING a section, also activate it in the canvas (make it green)
   if (wasCollapsed) {
@@ -840,9 +840,9 @@ function bindEvents() {
   document.querySelectorAll('.tb-card').forEach(card => {
     // Single click - add to canvas (default behavior)
     card.onclick = () => {
-      const id = card.dataset.id;
-      console.log('[Templates] Clicked:', id);
-      useTemplate(id);
+      const clickId = card.dataset.id;
+      console.log('[Templates] Clicked:', clickId);
+      useTemplate(clickId);
       card.blur(); // Remove focus after click
     };
     
@@ -850,10 +850,10 @@ function bindEvents() {
     card.ondblclick = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const id = card.dataset.id;
+      const dblClickId = card.dataset.id;
       const section = activeTreeSection || window.getActiveSection?.() || 'main';
-      console.log('[Templates] Double-clicked:', id, 'for section:', section);
-      useTemplateInSection(id, section);
+      console.log('[Templates] Double-clicked:', dblClickId, 'for section:', section);
+      useTemplateInSection(dblClickId, section);
     };
   });
 }
@@ -915,11 +915,20 @@ async function useTemplate(id) {
   const cat = categories.find(c => c.id === template.category);
   const icon = cat?.icon || '📄';
   
+  // AUTO-DETECT TARGET SECTION based on template type (header/main/footer)
+  const targetSection = getSiteSection(template);
+  console.log('[Templates] Auto-routing to section:', targetSection);
+  
+  // Set the target section BEFORE adding - this ensures addElementToCanvas routes correctly
+  if (window.setTargetSection) {
+    window.setTargetSection(targetSection);
+  }
+  
   // HTML template
   if (!template.components) {
     const html = await fetchTemplateHTML(id);
     if (html) {
-      // Pass template name and icon to addTemplateHTML
+      // Use addTemplateHTML - it will use the targetSection we just set
       if (window.addTemplateHTML) {
         window.addTemplateHTML(html, { name: template.name, icon: icon });
       } else if (window.addHTML) {
@@ -934,6 +943,7 @@ async function useTemplate(id) {
       if (window.toast) window.toast('Template file not found');
     }
     triggerOnboardingHint();
+    render(); // Re-render to update "in-canvas" badges
     return;
   }
   
@@ -942,6 +952,7 @@ async function useTemplate(id) {
     window.addTemplate(template);
   }
   triggerOnboardingHint();
+  render(); // Re-render to update "in-canvas" badges
 }
 
 /**
@@ -978,6 +989,11 @@ async function autoScaffoldFromLinks(html, template) {
   if (linkedSections.length === 0) return;
   
   console.log('[Templates] Found nav links to scaffold:', linkedSections);
+  
+  // Set target to main section for all scaffolded content
+  if (window.setTargetSection) {
+    window.setTargetSection('main');
+  }
   
   // Create a section for each link
   for (const section of linkedSections) {

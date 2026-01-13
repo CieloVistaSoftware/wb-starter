@@ -25,9 +25,9 @@ async function findCssDuplicates() {
   const cssFiles = getAllFiles('src');
   
   const rulesMap = new Map(); // selector -> [{ file, content }]
-  const contentMap = new Map(); // content -> [{ file, selector }]
+  const contentMap = new Map(); // content -> [file]
 
-  console.log(\Scanning \ CSS files...\);
+  console.log('Scanning CSS files...');
 
   for (const file of cssFiles) {
     const content = fs.readFileSync(file, 'utf-8');
@@ -50,8 +50,8 @@ async function findCssDuplicates() {
       rulesMap.get(selector).push({ file, body });
 
       // Check for duplicate content (exact rule body match)
-      // We key by body + selector to find exact rule duplicates
-      const fullRule = \\ { \ }\;
+      // We key by full rule to find exact duplicates
+      const fullRule = `${selector} { ${body} }`;
       if (!contentMap.has(fullRule)) {
         contentMap.set(fullRule, []);
       }
@@ -66,9 +66,9 @@ async function findCssDuplicates() {
       // Filter out duplicates within the same file (rare but possible)
       const uniqueFiles = [...new Set(files)];
       if (uniqueFiles.length > 1) {
-        console.log(\\nRule: \...\);
-        console.log(\Found in:\);
-        uniqueFiles.forEach(f => console.log(\  - \\));
+        console.log(`\nRule: ${rule.substring(0, 50)}...`);
+        console.log('Found in:');
+        uniqueFiles.forEach(f => console.log('  - ' + f));
         dupCount++;
       }
     }
@@ -85,9 +85,9 @@ async function findCssDuplicates() {
     const uniqueFiles = [...new Set(files)];
     
     if (uniqueFiles.length > 1) {
-      console.log(\\nSelector: \\);
-      console.log(\Found in:\);
-      uniqueFiles.forEach(f => console.log(\  - \\));
+      console.log(`\nSelector: ${selector}`);
+      console.log('Found in:');
+      uniqueFiles.forEach(f => console.log('  - ' + f));
       selectorDupCount++;
     }
   }

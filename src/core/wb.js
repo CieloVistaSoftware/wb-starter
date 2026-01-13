@@ -324,7 +324,7 @@ const WB = {
       const val = element.dataset.wb || '';
       const name = val.split(/\s+/)[0] || 'unknown';
       
-      const errorMsg = `Legacy syntax detected on <${element.tagName.toLowerCase()}>. Please use <wb-${name}> instead.`;
+      const errorMsg = `Legacy syntax data-wb="${val}" detected on <${element.tagName.toLowerCase()}>. Please use :lt.wb-${name}> instead.`;
       console.error(`[WB] ${errorMsg}`);
       
       Events.error('WB:LegacySyntax', new Error(errorMsg), {
@@ -675,7 +675,7 @@ const WB = {
     // v3.0: Initialize Schema Builder
     if (useSchemas) {
       console.log('═══════════════════════════════════════════════════════');
-      console.log('  WB Framework v3.0 - MVVM Architecture');
+      console.log('  WB Behaviors v3.0 - MVVM Architecture');
       console.log('═══════════════════════════════════════════════════════');
       
       try {

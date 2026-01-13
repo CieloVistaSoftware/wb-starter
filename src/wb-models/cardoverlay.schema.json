@@ -3,15 +3,17 @@
   "$id": "cardoverlay.schema.json",
   "title": "Overlay Card",
   "description": "Card with text overlaid on background image",
-  
   "behavior": "cardoverlay",
   "baseClass": "wb-card-overlay",
-  
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
-  
+  "compliance": {
+    "baseClass": "wb-card-overlay",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "image": {
       "type": "string",
@@ -29,14 +31,22 @@
     "position": {
       "type": "string",
       "description": "Content position",
-      "enum": ["top", "center", "bottom"],
+      "enum": [
+        "top",
+        "center",
+        "bottom"
+      ],
       "default": "bottom",
       "appliesClass": "wb-card-overlay--{{value}}"
     },
     "xalign": {
       "type": "string",
       "description": "Horizontal text alignment (x-axis)",
-      "enum": ["left", "center", "right"],
+      "enum": [
+        "left",
+        "center",
+        "right"
+      ],
       "default": "left",
       "appliesClass": "wb-card-overlay--xalign-{{value}}"
     },
@@ -54,12 +64,16 @@
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["default", "dark", "light", "blur"],
+      "enum": [
+        "default",
+        "dark",
+        "light",
+        "blur"
+      ],
       "default": "default",
       "appliesClass": "wb-card-overlay--{{value}}"
     }
   },
-  
   "$view": [
     {
       "name": "background",
@@ -105,33 +119,77 @@
       "tag": "div",
       "parent": "content",
       "public": true,
-      "content": "{{body}}",
+      "content": "<slot></slot>",
       "createdWhen": "body",
       "description": "Additional content slot"
     }
   ],
-  
   "$methods": {
-    "show": { "description": "Shows the card", "params": [] },
-    "hide": { "description": "Hides the card", "params": [] },
-    "toggle": { "description": "Toggles visibility", "params": [] },
-    "setImage": { "description": "Changes background image", "params": ["url"] }
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "setImage": {
+      "description": "Changes background image",
+      "params": [
+        "url"
+      ]
+    }
   },
-  
   "$cssAPI": {
-    "--wb-card-overlay-height": { "default": "300px", "description": "Card height" },
-    "--wb-card-overlay-radius": { "default": "8px", "description": "Border radius" },
-    "--wb-card-overlay-padding": { "default": "1.5rem", "description": "Content padding" },
-    "--wb-card-overlay-text-color": { "default": "#ffffff", "description": "Text color" },
-    "--wb-card-overlay-text-shadow": { "default": "0 1px 3px rgba(0,0,0,0.3)", "description": "Text shadow" },
-    "--wb-card-overlay-gradient-start": { "default": "transparent", "description": "Gradient start color" },
-    "--wb-card-overlay-gradient-end": { "default": "rgba(0,0,0,0.7)", "description": "Gradient end color" },
-    "--wb-card-overlay-title-size": { "default": "1.5rem", "description": "Title font size" },
-    "--wb-card-overlay-title-weight": { "default": "700", "description": "Title font weight" },
-    "--wb-card-overlay-subtitle-size": { "default": "1rem", "description": "Subtitle font size" },
-    "--wb-card-overlay-subtitle-opacity": { "default": "0.9", "description": "Subtitle opacity" }
+    "--wb-card-overlay-height": {
+      "default": "300px",
+      "description": "Card height"
+    },
+    "--wb-card-overlay-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-card-overlay-padding": {
+      "default": "1.5rem",
+      "description": "Content padding"
+    },
+    "--wb-card-overlay-text-color": {
+      "default": "#ffffff",
+      "description": "Text color"
+    },
+    "--wb-card-overlay-text-shadow": {
+      "default": "0 1px 3px rgba(0,0,0,0.3)",
+      "description": "Text shadow"
+    },
+    "--wb-card-overlay-gradient-start": {
+      "default": "transparent",
+      "description": "Gradient start color"
+    },
+    "--wb-card-overlay-gradient-end": {
+      "default": "rgba(0,0,0,0.7)",
+      "description": "Gradient end color"
+    },
+    "--wb-card-overlay-title-size": {
+      "default": "1.5rem",
+      "description": "Title font size"
+    },
+    "--wb-card-overlay-title-weight": {
+      "default": "700",
+      "description": "Title font weight"
+    },
+    "--wb-card-overlay-subtitle-size": {
+      "default": "1rem",
+      "description": "Subtitle font size"
+    },
+    "--wb-card-overlay-subtitle-opacity": {
+      "default": "0.9",
+      "description": "Subtitle opacity"
+    }
   },
-  
   "test": {
     "setup": [
       "<wb-card-overlay image=\"bg.jpg\" title=\"Overlay Title\"></wb-card-overlay>",
@@ -139,16 +197,38 @@
     ],
     "matrix": {
       "combinations": [
-        { "image": "bg.jpg", "title": "Title" },
-        { "image": "bg.jpg", "title": "Title", "subtitle": "Subtitle" },
-        { "image": "bg.jpg", "title": "Title", "position": "top" },
-        { "image": "bg.jpg", "title": "Title", "position": "center" },
-        { "image": "bg.jpg", "title": "Title", "gradient": false },
-        { "image": "bg.jpg", "title": "Title", "xalign": "center" }
+        {
+          "image": "bg.jpg",
+          "title": "Title"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "subtitle": "Subtitle"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "position": "top"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "position": "center"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "gradient": false
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "xalign": "center"
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "cards",
     "icon": "🖼️",

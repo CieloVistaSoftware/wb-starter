@@ -1096,3 +1096,27 @@
   --transition-slow: 0.5s ease;
   --transition-all: all 0.2s ease;
 }
+
+/* =============================================================================
+   COMPONENT SPECIFIC VARIABLES
+   (To avoid hardcoded colors in component CSS files)
+   ============================================================================= */
+[data-theme] {
+  /* Code blocks */
+  --code-bg: #1e1e1e;
+  --code-text: #d4d4d4;
+  
+  /* Card Rack Variant */
+  --rack-bg: #0f172a;
+  --rack-border: #334155;
+  --rack-side: #1e293b;
+  --rack-text: #ffffff;
+  
+  /* Card Dark Mode Overrides (used in card.css) */
+  --card-dark-bg-secondary: #1e293b;
+  --card-dark-bg-tertiary: #0f172a;
+  --card-dark-bg-elevated: #64748b;
+  --card-dark-text-primary: #f1f5f9;
+  --card-dark-text-secondary: #94a3b8;
+  --card-dark-border: #334155;
+}

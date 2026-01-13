@@ -3,15 +3,17 @@
   "$id": "cardtestimonial.schema.json",
   "title": "Testimonial Card",
   "description": "Customer testimonial/review card with quote, author, avatar, and rating",
-  
   "behavior": "cardtestimonial",
   "baseClass": "wb-testimonial",
-  
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
-  
+  "compliance": {
+    "baseClass": "wb-testimonial",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "quote": {
       "type": "string",
@@ -40,19 +42,28 @@
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["default", "elevated", "bordered", "minimal", "centered"],
+      "enum": [
+        "default",
+        "elevated",
+        "bordered",
+        "minimal",
+        "centered"
+      ],
       "default": "default",
       "appliesClass": "wb-testimonial--{{value}}"
     },
     "size": {
       "type": "string",
       "description": "Card size",
-      "enum": ["sm", "md", "lg"],
+      "enum": [
+        "sm",
+        "md",
+        "lg"
+      ],
       "default": "md",
       "appliesClass": "wb-testimonial--{{value}}"
     }
   },
-  
   "$view": [
     {
       "name": "rating",
@@ -125,7 +136,6 @@
       "description": "Author role/title"
     }
   ],
-  
   "$methods": {
     "show": {
       "description": "Shows the testimonial card",
@@ -141,10 +151,11 @@
     },
     "setRating": {
       "description": "Updates the star rating",
-      "params": ["rating"]
+      "params": [
+        "rating"
+      ]
     }
   },
-  
   "$cssAPI": {
     "--wb-testimonial-padding": {
       "default": "1.5rem",
@@ -187,7 +198,7 @@
       "description": "Quote line height"
     },
     "--wb-testimonial-quote-mark": {
-      "default": "\u201C",
+      "default": "“",
       "description": "Opening quote character"
     },
     "--wb-testimonial-quote-mark-size": {
@@ -239,7 +250,6 @@
       "description": "Star size"
     }
   },
-  
   "accessibility": {
     "avatar": {
       "alt": "Photo of {{author}}"
@@ -248,7 +258,6 @@
       "ariaLabel": "{{rating}} out of 5 stars"
     }
   },
-  
   "test": {
     "setup": [
       "<wb-testimonial quote=\"Great product!\" author=\"John Doe\"></wb-testimonial>",
@@ -257,18 +266,50 @@
     ],
     "matrix": {
       "combinations": [
-        { "quote": "Great!", "author": "John" },
-        { "quote": "Great!", "author": "John", "role": "CEO" },
-        { "quote": "Great!", "author": "John", "avatar": "avatar.jpg" },
-        { "quote": "Great!", "author": "John", "rating": 5 },
-        { "quote": "Great!", "author": "John", "rating": 3 },
-        { "quote": "Excellent service!", "author": "Jane", "role": "CTO at Acme", "avatar": "jane.jpg", "rating": 5 },
-        { "quote": "Great!", "author": "John", "variant": "elevated" },
-        { "quote": "Great!", "author": "John", "variant": "centered" }
+        {
+          "quote": "Great!",
+          "author": "John"
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "role": "CEO"
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "avatar": "avatar.jpg"
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "rating": 5
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "rating": 3
+        },
+        {
+          "quote": "Excellent service!",
+          "author": "Jane",
+          "role": "CTO at Acme",
+          "avatar": "jane.jpg",
+          "rating": 5
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "variant": "elevated"
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "variant": "centered"
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "cards",
     "icon": "💬",

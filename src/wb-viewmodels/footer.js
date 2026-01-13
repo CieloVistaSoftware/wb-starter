@@ -17,7 +17,7 @@ if (!document.getElementById(CSS_ID)) {
   const link = document.createElement('link');
   link.id = CSS_ID;
   link.rel = 'stylesheet';
-  link.href = '/src/behaviors/css/footer.css';
+  link.href = '/src/styles/behaviors/footer.css';
   document.head.appendChild(link);
 }
 

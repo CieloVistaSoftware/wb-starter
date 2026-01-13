@@ -2,10 +2,14 @@
 // BUILDER TREE - Compact 1rem rows, canvas-order sync, green selection
 // =============================================================================
 
-let expandedSections = { header: true, main: false, footer: false };
+let expandedSections = { header: false, main: true, footer: false }; // Main expanded by default
 let expandedContainers = {}; // Track expanded state of container components
-let activeSection = 'header';
-let allSectionsExpanded = true;
+let autoExpandedIds = new Set(); // Track which components we auto-expanded
+let activeSection = null;
+let allSectionsExpanded = false;
+let domElementRegistry = new Map(); // Store DOM element references for highlighting
+window._domElementRegistry = domElementRegistry; // Expose for properties panel
+let highlightedDomKey = null; // Currently highlighted DOM element key
 
 // Inject compact styles
 (function injectTreeStyles() {
@@ -107,8 +111,7 @@ let allSectionsExpanded = true;
 
     .tree-item-icon { font-size: 12px; flex-shrink: 0; }
     .tree-item-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .tree-item-id { font-size: 9px; color: var(--text-muted); font-family: monospace; display: none; }
-    .tree-item:hover .tree-item-id { display: inline; }
+    .tree-item-id { font-size: 9px; color: var(--text-muted); font-family: monospace; margin-left: auto; }
     
     .tree-item-del {
       opacity: 0;
@@ -122,6 +125,21 @@ let allSectionsExpanded = true;
     }
     .tree-item:hover .tree-item-del { opacity: 0.6; }
     .tree-item-del:hover { opacity: 1 !important; color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+    
+    /* Edit button for text elements */
+    .tree-item-edit {
+      opacity: 0;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 10px;
+      padding: 2px 4px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .tree-item:hover .tree-item-edit { opacity: 0.6; }
+    .tree-item-edit:hover { opacity: 1 !important; color: #3b82f6; background: rgba(59, 130, 246, 0.15); }
     
     /* Canvas selection - GREEN for individual components */
     .dropped.selected {
@@ -143,21 +161,45 @@ let allSectionsExpanded = true;
       color: var(--text-muted);
       font-size: 11px;
     }
+    
+    /* DOM element highlight on canvas - GREEN like components */
+    .dom-highlight {
+      outline: 2px solid #22c55e !important;
+      outline-offset: 2px;
+    }
+    
+    /* Tree item for DOM children - clickable */
+    .tree-item-dom {
+      opacity: 0.8;
+    }
+    .tree-item-dom:hover {
+      opacity: 1;
+      background: var(--bg-tertiary);
+    }
+    .tree-item-dom.highlighted {
+      background: rgba(34, 197, 94, 0.15) !important;
+      border-color: #22c55e !important;
+      color: #22c55e;
+      opacity: 1;
+    }
   `;
   document.head.appendChild(style);
 })();
 
 // Get components in canvas order (top to bottom)
 function getCanvasComponents() {
-  const canvas = document.getElementById('canvas');
-  if (!canvas) return [];
-  return Array.from(canvas.querySelectorAll('.dropped:not(.grid-child):not(.container-child)'));
+  const canvasCompEl = document.getElementById('canvas');
+  if (!canvasCompEl) return [];
+  return Array.from(canvasCompEl.querySelectorAll('.dropped:not(.grid-child):not(.container-child)'));
 }
 
 // Categorize component into header/main/footer
 function categorizeComponent(wrapper) {
   const c = JSON.parse(wrapper.dataset.c || '{}');
-  const el = wrapper.firstElementChild;  // Get actual component element
+  // Handle both: div.dropped > section OR section.dropped (wrapper IS the element)
+  const wrapperTag = wrapper.tagName?.toLowerCase();
+  const isSemanticWrapper = ['section', 'nav', 'header', 'footer', 'main', 'article', 'aside'].includes(wrapperTag);
+  const el = isSemanticWrapper ? wrapper : wrapper.firstElementChild;
   const tag = el?.tagName?.toLowerCase() || c.t || 'div';
   const behavior = (c.b || '').toLowerCase();
   const name = (c.n || '').toLowerCase();
@@ -188,6 +230,9 @@ function renderTree() {
   const panel = document.getElementById('componentList');
   if (!panel) return;
   
+  // Clear DOM element registry
+  domElementRegistry.clear();
+  
   const components = getCanvasComponents();
   const selectedId = window.sel?.id || null;
   
@@ -210,7 +255,7 @@ function renderTree() {
 }
 
 function renderSection(key, icon, title, subtitle, items, selectedId) {
-  const isExpanded = expandedSections[key];
+  const isSectionExpanded = expandedSections[key];
   const isActive = activeSection === key;
   
   let itemsHtml = '';
@@ -221,7 +266,7 @@ function renderSection(key, icon, title, subtitle, items, selectedId) {
   }
   
   // Use 'collapsed' class when NOT expanded
-  const collapsedClass = isExpanded ? '' : 'collapsed';
+  const collapsedClass = isSectionExpanded ? '' : 'collapsed';
   
   // Click on header toggles expand/collapse and syncs canvas
   return `
@@ -240,35 +285,273 @@ function renderSection(key, icon, title, subtitle, items, selectedId) {
   `;
 }
 
+// Icon map for semantic HTML elements
+const ELEMENT_ICONS = {
+  // Structure
+  section: '📑', article: '📰', aside: '📌', header: '🔝', footer: '🔻', nav: '🧭', main: '📄',
+  div: '📦', span: '🏷️',
+  // Text
+  h1: '🔤', h2: '🔤', h3: '🔤', h4: '🔤', h5: '🔤', h6: '🔤',
+  p: '📝', a: '🔗', strong: '💪', em: '✨', blockquote: '💬', code: '💻', pre: '📋',
+  // Media
+  img: '🖼️', picture: '🖼️', video: '🎬', audio: '🔊', svg: '🎨', canvas: '🎨', iframe: '🪟',
+  // Forms
+  form: '📋', input: '✏️', textarea: '📝', button: '🔘', select: '📋', label: '🏷️',
+  // Lists
+  ul: '📋', ol: '🔢', li: '•',
+  // Table
+  table: '📊', tr: '➡️', td: '📦', th: '📦',
+  // Other
+  figure: '🖼️', figcaption: '📝', hr: '➖', br: '↵'
+};
+
+// Get display info for any DOM element
+// CRITICAL: Must show meaningful content - text, alt text, titles, etc.
+function getElementDisplayInfo(el) {
+  const tag = el.tagName?.toLowerCase() || 'element';
+  const icon = ELEMENT_ICONS[tag] || '📦';
+  
+  // Build display name from tag + meaningful content
+  let name = tag;
+  
+  // Special handling for specific elements - show actual content
+  if (tag === 'img') {
+    const alt = el.alt || el.title || el.src?.split('/')?.pop()?.slice(0, 20) || 'image';
+    name = `img: ${alt}`;
+  } else if (tag === 'svg') {
+    // Check for title or aria-label
+    const title = el.querySelector('title')?.textContent || el.getAttribute('aria-label') || 'icon';
+    name = `svg: ${title.slice(0, 15)}`;
+  } else if (tag === 'a') {
+    const linkText = el.textContent?.trim()?.slice(0, 20) || el.title || el.href?.split('/')?.pop()?.slice(0, 15) || 'link';
+    name = linkText + (linkText.length >= 20 ? '…' : '');
+  } else if (['h1','h2','h3','h4','h5','h6'].includes(tag)) {
+    const headingText = el.textContent?.trim()?.slice(0, 30) || 'Heading';
+    name = `${tag}: "${headingText}${headingText.length >= 30 ? '…' : ''}"`;
+  } else if (['p','span','label','figcaption'].includes(tag)) {
+    const paraText = el.textContent?.trim()?.slice(0, 30);
+    if (paraText) name = `${tag}: "${paraText}${paraText.length >= 30 ? '…' : ''}"`;
+  } else if (tag === 'button') {
+    // Get actual button text, excluding icon pseudo-elements
+    let btnText = '';
+    for (const node of el.childNodes) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        btnText += node.textContent;
+      } else if (node.nodeType === Node.ELEMENT_NODE && !['SVG', 'I', 'SPAN'].includes(node.tagName)) {
+        btnText += node.textContent;
+      }
+    }
+    btnText = btnText.trim().slice(0, 20) || el.title || el.value || el.getAttribute('aria-label') || 'button';
+    name = `button: "${btnText}"`;
+  } else if (tag === 'input') {
+    const type = el.type || 'text';
+    const placeholder = el.placeholder?.slice(0, 15) || '';
+    name = placeholder ? `input[${type}]: "${placeholder}"` : `input[${type}]`;
+  } else if (tag === 'textarea') {
+    const areaText = el.placeholder?.slice(0, 20) || el.textContent?.trim()?.slice(0, 20) || '';
+    name = areaText ? `textarea: "${areaText}"` : 'textarea';
+  } else if (tag === 'select') {
+    const selected = el.options?.[el.selectedIndex]?.text?.slice(0, 15) || '';
+    name = selected ? `select: "${selected}"` : 'select';
+  } else if (tag === 'li') {
+    const liText = el.textContent?.trim()?.slice(0, 25);
+    if (liText) name = `• ${liText}${liText.length >= 25 ? '…' : ''}`;
+  } else if (tag === 'th' || tag === 'td') {
+    const cellText = el.textContent?.trim()?.slice(0, 20);
+    if (cellText) name = `${tag}: "${cellText}"`;
+  } else if (tag === 'video') {
+    const videoSrc = el.src || el.querySelector('source')?.src || '';
+    name = `video: ${videoSrc.split('/').pop()?.slice(0, 15) || 'video'}`;
+  } else if (tag === 'audio') {
+    const audioSrc = el.src || el.querySelector('source')?.src || '';
+    name = `audio: ${audioSrc.split('/').pop()?.slice(0, 15) || 'audio'}`;
+  } else if (tag === 'iframe') {
+    const iframeSrc = el.src?.slice(0, 25) || 'iframe';
+    name = `iframe: ${iframeSrc}`;
+  } else {
+    // For divs and other containers, show class hint
+    const firstClass = el.className?.split?.(' ')?.[0];
+    if (firstClass && !firstClass.startsWith('dropped') && !firstClass.startsWith('selected') && !firstClass.startsWith('dom-')) {
+      name = `.${firstClass.slice(0, 20)}`;
+    }
+  }
+  
+  return { tag, icon, name };
+}
+
+// Check if element has meaningful children to show
+function hasVisibleChildren(el) {
+  if (!el.children || el.children.length === 0) return false;
+  // Skip if only whitespace text nodes or script/style
+  const dominated = Array.from(el.children).filter(c => 
+    !['SCRIPT', 'STYLE', 'BR', 'HR'].includes(c.tagName)
+  );
+  return dominated.length > 0;
+}
+
+// CRITICAL: Find ALL meaningful content elements anywhere in the component
+// This finds h1, h2, p, button, a, img, svg, etc. - the ACTUAL CONTENT users care about
+const MEANINGFUL_TAGS = new Set([
+  'H1', 'H2', 'H3', 'H4', 'H5', 'H6',  // Headings
+  'P', 'SPAN', 'LABEL', 'FIGCAPTION',  // Text
+  'A', 'BUTTON',                        // Interactive
+  'IMG', 'SVG', 'VIDEO', 'AUDIO', 'PICTURE', 'CANVAS', // Media
+  'INPUT', 'TEXTAREA', 'SELECT',        // Forms
+  'LI', 'TH', 'TD',                     // List/table items
+  'BLOCKQUOTE', 'CODE', 'PRE'           // Special text
+]);
+
+function findMeaningfulContent(root) {
+  const results = [];
+  
+  function walk(el) {
+    if (!el || !el.children) return;
+    
+    for (const child of el.children) {
+      // Skip script, style, etc.
+      if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE', 'BR'].includes(child.tagName)) continue;
+      
+      // Skip dropped wrappers (handled separately)
+      if (child.classList.contains('dropped')) continue;
+      
+      // Skip builder UI controls
+      if (child.classList.contains('resize-handle') || 
+          child.classList.contains('delete-btn') ||
+          child.classList.contains('component-toolbar') ||
+          child.classList.contains('insert-between') ||
+          child.classList.contains('el-controls') ||
+          child.classList.contains('el-id-label') ||
+          child.classList.contains('wb-resize-handle') ||
+          child.classList.contains('wb-width-indicator') ||
+          child.classList.contains('wb-width-presets') ||
+          child.classList.contains('controls') ||
+          child.dataset.builderUi) continue;
+      
+      // Is this a meaningful content element?
+      if (MEANINGFUL_TAGS.has(child.tagName)) {
+        // Skip tiny buttons that are likely UI controls (like hamburger menus)
+        if (child.tagName === 'BUTTON') {
+          const btnText = child.textContent?.trim();
+          const ariaLabel = child.getAttribute('aria-label')?.toLowerCase() || '';
+          // Skip if: hamburger menu, close button, or text is just symbols/icons
+          if (ariaLabel.includes('menu') || ariaLabel.includes('toggle') || ariaLabel.includes('close') ||
+              !btnText || btnText.length <= 2 || /^[\:\+\-\x\×\=\|\<\>\☰\≡]+$/i.test(btnText)) {
+            // But still check inside for nested content
+            walk(child);
+            continue;
+          }
+        }
+        
+        // Skip anchor links that are just # or icons
+        if (child.tagName === 'A') {
+          const anchorText = child.textContent?.trim();
+          const href = child.getAttribute('href') || '';
+          // Skip if no real text and just a hash link
+          if ((!anchorText || anchorText.length <= 1) && (href === '#' || href.startsWith('#'))) {
+            walk(child);
+            continue;
+          }
+        }
+        
+        results.push(child);
+        // Don't recurse into meaningful elements - they're leaf nodes for display
+        if (child.tagName === 'A' || child.tagName === 'BUTTON') {
+          // Links and buttons might contain icons - but we show the button itself
+          continue;
+        }
+      }
+      
+      // Recurse into containers (div, section, nav, etc.) to find nested content
+      walk(child);
+    }
+  }
+  
+  walk(root);
+  return results;
+}
+
+// Helper to find the ACTUAL component element inside a wrapper
+// Skips all builder UI elements (controls, labels, resize handles, etc.)
+function getActualComponentElement(wrapper) {
+  const wrapperTag = wrapper.tagName?.toLowerCase();
+  
+  // If wrapper IS a semantic element (new structure), return it
+  const semanticTags = ['section', 'nav', 'header', 'footer', 'main', 'article', 'aside', 'wb-container'];
+  if (semanticTags.includes(wrapperTag)) {
+    return wrapper;
+  }
+  
+  // Old structure: div.dropped > (UI elements) > actual-component
+  // Find the first non-UI child that's an actual component element
+  for (const child of wrapper.children) {
+    // Skip all builder UI elements using classList.contains (safer)
+    if (child.classList?.contains('el-controls') ||
+        child.classList?.contains('el-id-label') ||
+        child.classList?.contains('controls') ||
+        child.classList?.contains('wb-resize-handle') ||
+        child.classList?.contains('wb-width-indicator') ||
+        child.classList?.contains('wb-width-presets') ||
+        child.classList?.contains('insert-between') ||
+        child.classList?.contains('ctrl-btn') ||
+        child.dataset?.builderUi) {
+      continue;
+    }
+    
+    // Found the actual component element
+    return child;
+  }
+  
+  // Fallback: return wrapper itself
+  return wrapper;
+}
+
 function renderTreeItem(wrapper, selectedId, level = 0) {
   const c = JSON.parse(wrapper.dataset.c || '{}');
   const id = wrapper.id;
-  const isSelected = selectedId === wrapper.id;
+  if (!id) return '';
+  
+  const isSelected = selectedId === id;
   const shortId = id.length > 12 ? id.slice(0, 10) + '…' : id;
   
-  // Use the component name (n) which should match template browser name
-  const displayName = c.n || c.b || 'Component';
+  // Get the actual component element (handles both old and new structures)
+  const componentEl = getActualComponentElement(wrapper);
   
-  // Checking for container capability
-  const isContainer = wrapper.classList.contains('is-container') || c.t === 'section' || c.b === 'container' || c.b === 'grid';
-  // Check for ANY children with matching parent ID
-  // Note: getCanvasComponents() returns roots, but querySelectorAll('.dropped') gets descendants.
-  // We need to find direct children of *this* component.
-  const allDropped = Array.from(document.querySelectorAll('.dropped'));
-  const children = allDropped.filter(el => el.dataset.parent === id);
-  const hasChildren = children.length > 0;
+  // Use component name from data, or derive from element
+  let displayName = c.n || c.b || '';
+  let icon = c.i || '📦';
   
-  const isExpanded = expandedContainers[id] === true;
+  if (!displayName && componentEl) {
+    const info = getElementDisplayInfo(componentEl);
+    displayName = info.name;
+    icon = info.icon;
+  }
+  if (!displayName) displayName = 'Element';
   
-  // Indentation
+  // Check for children - both .dropped wrappers AND actual DOM children
+  const droppedChildren = Array.from(wrapper.querySelectorAll(':scope > .dropped, :scope > * > .dropped')).slice(0, 10);
+  
+  // Get actual DOM children - search the component element for meaningful content
+  // CRITICAL: Show ALL meaningful content - find text, images, buttons, headings ANYWHERE in the tree
+  const domChildren = componentEl ? findMeaningfulContent(componentEl) : [];
+  
+  const hasChildren = droppedChildren.length > 0 || domChildren.length > 0;
+  
+  // AUTO-EXPAND components with meaningful content by default
+  // Only if user hasn't explicitly collapsed it (expandedContainers[id] === false)
+  let isItemExpanded = expandedContainers[id];
+  if (isItemExpanded === undefined && hasChildren) {
+    // Auto-expand if has content and user hasn't toggled it
+    isItemExpanded = true;
+    autoExpandedIds.add(id);
+  }
+  
   const indentStyle = `width: ${level * 12}px;`;
   
-  // Toggle button or spacer
   let toggleHtml = '<span class="tree-toggle-spacer"></span>';
-  if (isContainer || hasChildren) {
+  if (hasChildren) {
     toggleHtml = `
       <span class="tree-toggle-btn" onclick="event.stopPropagation(); window.toggleContainerExpand('${id}')">
-        ${isExpanded ? '▼' : '▶'}
+        ${isItemExpanded ? '▼' : '▶'}
       </span>
     `;
   }
@@ -277,16 +560,92 @@ function renderTreeItem(wrapper, selectedId, level = 0) {
     <div class="tree-item ${isSelected ? 'selected' : ''}" data-id="${id}" onclick="window.selectFromTree('${id}')">
       <span class="tree-item-indent" style="${indentStyle}"></span>
       ${toggleHtml}
-      <span class="tree-item-icon">${c.i || '📦'}</span>
+      <span class="tree-item-icon">${icon}</span>
       <span class="tree-item-name">${displayName}</span>
       <span class="tree-item-id">#${shortId}</span>
       <button class="tree-item-del" onclick="event.stopPropagation(); window.del('${id}')" title="Delete">✕</button>
     </div>
   `;
   
+  // Render children if expanded
+  if (isItemExpanded && hasChildren) {
+    // First render any .dropped children
+    html += droppedChildren.map(child => renderTreeItem(child, selectedId, level + 1)).join('');
+    
+    // Then render actual DOM content (can be expanded to show nested elements)
+    html += domChildren.map(child => renderDOMChild(child, level + 1, 6, id, true)).join('');
+  }
+  
+  return html;
+}
+
+// Render a DOM child element (clickable, highlights on canvas)
+// CRITICAL: Must show meaningful content - text, images, icons, headings, buttons, etc.
+// showChildren = false means this is a flattened content item (no expansion needed)
+function renderDOMChild(el, level = 1, maxDepth = 6, parentPath = 'root', showChildren = true) {
+  if (level > maxDepth) return ''; // Prevent infinite depth
+  
+  const info = getElementDisplayInfo(el);
+  const indentStyle = `width: ${level * 12}px;`;
+  
+  // For flattened content display, don't show expand toggle
+  const children = showChildren ? Array.from(el.children).filter(c => 
+    !['SCRIPT', 'STYLE', 'BR', 'NOSCRIPT', 'TEMPLATE'].includes(c.tagName)
+  ) : [];
+  const hasChildren = showChildren && children.length > 0;
+  
+  // Create stable key from element path (tag + index among siblings)
+  const siblingIndex = el.parentElement ? Array.from(el.parentElement.children).indexOf(el) : 0;
+  const elKey = `${parentPath}/${info.tag}-${siblingIndex}`;
+  const escapedKey = elKey.replace(/'/g, "\\'");
+  const isDomExpanded = expandedContainers[elKey] === true;
+  const isHighlighted = highlightedDomKey === elKey;
+  
+  // Register this element for click handling
+  domElementRegistry.set(elKey, el);
+  
+  // Get element ID or first class for display
+  let idDisplay = '';
+  if (el.id) {
+    idDisplay = `#${el.id.slice(0, 12)}${el.id.length > 12 ? '…' : ''}`;
+  } else if (el.className && typeof el.className === 'string') {
+    const firstClass = el.className.split(' ')[0];
+    if (firstClass && !firstClass.startsWith('dom-')) {
+      idDisplay = `.${firstClass.slice(0, 12)}${firstClass.length > 12 ? '…' : ''}`;
+    }
+  }
+  if (!idDisplay) {
+    idDisplay = info.tag;
+  }
+  
+  let toggleHtml = '<span class="tree-toggle-spacer"></span>';
+  if (hasChildren) {
+    toggleHtml = `
+      <span class="tree-toggle-btn" onclick="event.stopPropagation(); window.toggleContainerExpand('${escapedKey}')">
+        ${isDomExpanded ? '▼' : '▶'}
+      </span>
+    `;
+  }
+  
+  // Determine if this element has editable text
+  const editableTags = ['A', 'BUTTON', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'LABEL', 'LI'];
+  const isEditable = editableTags.includes(el.tagName);
+  const editBtn = isEditable ? `<button class="tree-item-edit" onclick="event.stopPropagation(); window.editDOMElementText('${escapedKey}')" title="Edit text">✏️</button>` : '';
+  
+  let html = `
+    <div class="tree-item tree-item-dom ${isHighlighted ? 'highlighted' : ''}" data-dom-key="${elKey}" onclick="window.highlightDOMElement('${escapedKey}')" ondblclick="window.inspectDOMElement('${escapedKey}')">
+      <span class="tree-item-indent" style="${indentStyle}"></span>
+      ${toggleHtml}
+      <span class="tree-item-icon">${info.icon}</span>
+      <span class="tree-item-name">${info.name}</span>
+      ${editBtn}
+      <span class="tree-item-id">${idDisplay}</span>
+    </div>
+  `;
+  
   // Recursively render children if expanded
-  if (isExpanded && hasChildren) {
-    html += children.map(child => renderTreeItem(child, selectedId, level + 1)).join('');
+  if (isDomExpanded && hasChildren) {
+    html += children.map(child => renderDOMChild(child, level + 1, maxDepth, elKey)).join('');
   }
   
   return html;
@@ -294,8 +653,159 @@ function renderTreeItem(wrapper, selectedId, level = 0) {
 
 // Toggle container expansion
 window.toggleContainerExpand = (id) => {
-  expandedContainers[id] = !expandedContainers[id];
+  // If undefined (auto-expanded), set to false (collapse)
+  // If true, set to false
+  // If false, set to true
+  const current = expandedContainers[id];
+  if (current === undefined || current === true) {
+    expandedContainers[id] = false;
+  } else {
+    expandedContainers[id] = true;
+  }
   renderTree();
+};
+
+// Highlight a DOM element on canvas (for non-dropped elements)
+window.highlightDOMElement = (elKey) => {
+  // Clear previous DOM highlight
+  document.querySelectorAll('.dom-highlight').forEach(e => e.classList.remove('dom-highlight'));
+  
+  // Clear previous tree highlight
+  document.querySelectorAll('.tree-item-dom.highlighted').forEach(e => e.classList.remove('highlighted'));
+  
+  // Get the element from registry
+  const highlightEl = domElementRegistry.get(elKey);
+  if (!highlightEl) {
+    console.warn('[Tree] DOM element not found in registry:', elKey);
+    return;
+  }
+  
+  // Update state
+  highlightedDomKey = elKey;
+  
+  // Highlight on canvas
+  highlightEl.classList.add('dom-highlight');
+  
+  // Highlight in tree
+  const treeItem = document.querySelector(`.tree-item-dom[data-dom-key="${elKey}"]`);
+  if (treeItem) {
+    treeItem.classList.add('highlighted');
+  }
+  
+  // Scroll into view on canvas
+  highlightEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  
+  console.log('[Tree] Highlighted DOM element:', elKey, highlightEl);
+};
+
+// Inspect a DOM element - show debug info (double-click handler)
+window.inspectDOMElement = (elKey) => {
+  const inspectEl = domElementRegistry.get(elKey);
+  if (!inspectEl) {
+    console.warn('[Tree] DOM element not found for inspection:', elKey);
+    return;
+  }
+  
+  // Build comprehensive debug info
+  const cs = window.getComputedStyle(inspectEl);
+  const debugInfo = {
+    key: elKey,
+    tagName: inspectEl.tagName,
+    id: inspectEl.id || '(none)',
+    className: inspectEl.className || '(none)',
+    textContent: inspectEl.textContent?.trim()?.slice(0, 100) || '(empty)',
+    attributes: {},
+    computedStyle: {
+      display: cs.display,
+      visibility: cs.visibility,
+      opacity: cs.opacity,
+      overflow: cs.overflow,
+      height: cs.height,
+      width: cs.width,
+      maxHeight: cs.maxHeight,
+      position: cs.position,
+      color: cs.color,
+      backgroundColor: cs.backgroundColor,
+      fontSize: cs.fontSize
+    },
+    boundingRect: inspectEl.getBoundingClientRect(),
+    parentTag: inspectEl.parentElement?.tagName || '(none)',
+    parentId: inspectEl.parentElement?.id || '(none)',
+    childCount: inspectEl.children?.length || 0,
+    outerHTML: inspectEl.outerHTML?.slice(0, 500) + (inspectEl.outerHTML?.length > 500 ? '...' : '')
+  };
+  
+  // Collect all attributes
+  for (const attr of inspectEl.attributes || []) {
+    debugInfo.attributes[attr.name] = attr.value;
+  }
+  
+  const text = JSON.stringify(debugInfo, null, 2);
+  
+  // Copy to clipboard
+  navigator.clipboard.writeText(text).then(() => {
+    if (window.toast) window.toast('Element debug info copied!');
+  }).catch(err => {
+    console.error('Copy failed:', err);
+    console.log('=== DOM ELEMENT DEBUG INFO ===');
+    console.log(text);
+    if (window.toast) window.toast('Check console for debug info');
+  });
+  
+  // Also log to console for easy viewing
+  console.log('[Tree] Inspecting DOM element:', elKey);
+  console.log(debugInfo);
+  console.log('Actual element:', inspectEl);
+};
+
+// Edit DOM element text - inline editing without triggering element actions
+window.editDOMElementText = (elKey) => {
+  const editEl = domElementRegistry.get(elKey);
+  if (!editEl) {
+    console.warn('[Tree] DOM element not found for editing:', elKey);
+    return;
+  }
+  
+  // Get current text (direct text content, not nested)
+  let currentText = '';
+  for (const node of editEl.childNodes) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      currentText += node.textContent;
+    }
+  }
+  currentText = currentText.trim() || editEl.textContent?.trim() || '';
+  
+  // Prompt for new text
+  const newText = prompt('Edit text:', currentText);
+  
+  if (newText !== null && newText !== currentText) {
+    // Find and update the text node, or set textContent if simple element
+    let updated = false;
+    for (const node of editEl.childNodes) {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+        node.textContent = newText;
+        updated = true;
+        break;
+      }
+    }
+    
+    // If no text node found, and element has no child elements, set textContent directly
+    if (!updated && editEl.children.length === 0) {
+      editEl.textContent = newText;
+    } else if (!updated) {
+      // Prepend text node if element has children but no text node
+      editEl.insertBefore(document.createTextNode(newText), editEl.firstChild);
+    }
+    
+    // Save history
+    if (window.saveHist) window.saveHist();
+    
+    // Refresh tree to show updated text
+    renderTree();
+    
+    if (window.toast) window.toast('Text updated');
+    console.log('[Tree] Updated text for:', elKey, '->', newText);
+  }
 };
 
 // Toggle section expand/collapse - clicking header toggles expand state
@@ -404,9 +914,10 @@ window.unifiedActivateSection = (sectionId) => {
   }));
 };
 
-// SELECT a section - calls unified activator
+// SELECT a section - just toggles expand/collapse
 window.selectSection = (section) => {
-  window.unifiedActivateSection(section);
+  expandedSections[section] = !expandedSections[section];
+  renderTree();
 };
 
 // Legacy function - now calls selectSection
@@ -421,11 +932,11 @@ window.scrollCanvasToSection = (section) => {
   if (sectionComponents.length > 0) {
     sectionComponents[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else {
-    const canvas = document.getElementById('canvas');
-    if (canvas) {
+    const canvasScrollEl = document.getElementById('canvas');
+    if (canvasScrollEl) {
       const positions = { header: 0, main: 0.3, footer: 0.85 };
-      const scrollTarget = canvas.scrollHeight * (positions[section] || 0);
-      canvas.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+      const scrollToPos = canvasScrollEl.scrollHeight * (positions[section] || 0);
+      canvasScrollEl.scrollTo({ top: scrollToPos, behavior: 'smooth' });
     }
   }
 };
@@ -435,6 +946,36 @@ window.selectFromTree = (id) => {
   const wrapper = document.getElementById(id);
   if (!wrapper) return;
   
+  // Clear DOM element highlights
+  document.querySelectorAll('.dom-highlight').forEach(el => el.classList.remove('dom-highlight'));
+  document.querySelectorAll('.tree-item-dom.highlighted').forEach(el => el.classList.remove('highlighted'));
+  highlightedDomKey = null;
+  
+  // Check if it's a container and toggle expansion
+  // We want clicking the row to toggle containers for better UX
+  const c = JSON.parse(wrapper.dataset.c || '{}');
+  const isContainer = wrapper.classList.contains('is-container') || c.t === 'section' || c.b === 'container' || c.b === 'grid';
+  
+  // Only toggle if we are NOT just selecting (optional refinement, but for now always toggle)
+  // Logic: If I click a container, I likely want to see its children or hide them.
+  if (isContainer) {
+    // If it's already selected, just toggle. 
+    // If it's not selected, select AND expand (if not expanded).
+    // But the simple requirement "act as toggle" suggests simplest impl: toggle.
+    if (window.sel === wrapper) {
+       // Already selected, just toggle
+       window.toggleContainerExpand(id);
+       return; // Don't scroll/re-select if already selected? Or let it fall through?
+    } else {
+       // New selection. If collapsed, expand it.
+       if (!expandedContainers[id]) {
+         expandedContainers[id] = true;
+       }
+       // If already expanded, leave it expanded. 
+       // (Don't auto-collapse on selection as that's annoying)
+    }
+  }
+
   // Clear section selection
   document.querySelectorAll('.dropped.section-selected').forEach(el => el.classList.remove('section-selected'));
   activeSection = null;
@@ -458,9 +999,9 @@ window.selectFromTree = (id) => {
 
 // Scroll tree to selected item
 window.scrollTreeToSelected = (id) => {
-  const treeItem = document.querySelector(`.tree-item[data-id="${id}"]`);
-  if (treeItem) {
-    treeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  const selectedTreeItem = document.querySelector(`.tree-item[data-id="${id}"]`);
+  if (selectedTreeItem) {
+    selectedTreeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 };
 
@@ -495,13 +1036,13 @@ window.initTree = initTree;
 
 // Update insert points on canvas between components
 function updateCanvasInsertPoints() {
-  const canvas = document.getElementById('canvas');
-  if (!canvas) return;
+  const canvasPointsEl = document.getElementById('canvas');
+  if (!canvasPointsEl) return;
   
   // Remove existing insert points (except the main button)
-  canvas.querySelectorAll('.insert-between').forEach(el => el.remove());
+  canvasPointsEl.querySelectorAll('.insert-between').forEach(el => el.remove());
   
-  const components = Array.from(canvas.querySelectorAll('.dropped'));
+  const components = Array.from(canvasPointsEl.querySelectorAll('.dropped'));
   
   // Add insert points between each component
   components.forEach((comp, index) => {
@@ -520,11 +1061,11 @@ window.updateCanvasInsertPoints = updateCanvasInsertPoints;
 
 // Auto-extend canvas
 window.autoExtendCanvas = function() {
-  const canvas = document.getElementById('canvas');
-  if (!canvas) return;
+  const canvasExtendEl = document.getElementById('canvas');
+  if (!canvasExtendEl) return;
   
   // Enforce 100% height at all times
-  canvas.style.minHeight = '100%';
+  canvasExtendEl.style.minHeight = '100%';
 };
 
 // Initialize
@@ -543,33 +1084,33 @@ function initTree() {
   
   // Listen for canvas section clicks to sync state
   document.addEventListener('wb:canvas:section:clicked', (e) => {
-    const section = e.detail.section;
-    if (section) {
+    const clickedSection = e.detail.section;
+    if (clickedSection) {
       // Expand this section in tree
-      expandedSections[section] = true;
-      activeSection = section;
+      expandedSections[clickedSection] = true;
+      activeSection = clickedSection;
       renderTree();
     }
   });
   
   // Listen for canvas section toggle events
   document.addEventListener('wb:canvas:section:toggled', (e) => {
-    const section = e.detail.section;
+    const canvasToggledSection = e.detail.section;
     const expanded = e.detail.expanded;
-    if (section) {
-      expandedSections[section] = expanded;
-      if (expanded) activeSection = section;
+    if (canvasToggledSection) {
+      expandedSections[canvasToggledSection] = expanded;
+      if (expanded) activeSection = canvasToggledSection;
       renderTree();
     }
   });
   
   // Listen for template browser section toggles to sync state
   document.addEventListener('wb:template:section:toggled', (e) => {
-    const section = e.detail.section;
+    const templateToggledSection = e.detail.section;
     const expanded = e.detail.expanded;
-    if (section) {
-      expandedSections[section] = expanded;
-      if (expanded) activeSection = section;
+    if (templateToggledSection) {
+      expandedSections[templateToggledSection] = expanded;
+      if (expanded) activeSection = templateToggledSection;
       renderTree();
     }
   });

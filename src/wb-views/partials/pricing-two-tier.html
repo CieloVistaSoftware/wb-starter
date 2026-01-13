@@ -1,5 +1,11 @@
 <!-- Two-Tier Pricing Template -->
-<wb-container data-columns="2" data-gap="2rem" style="padding: 2rem;"
-  <wb-cardpricing data-plan="Monthly" data-price="$19" data-period="/month" data-features="All Features,Cancel Anytime" data-cta="Start Monthly"</div>
-  <wb-cardpricing data-plan="Annual" data-price="$149" data-period="/year" data-features="All Features,2 Months Free,Priority Support" data-cta="Start Annual" data-featured="true" data-badge="Save 35%"</div>
-</div>
+<wb-container data-direction="column" data-gap="2rem" data-padding="3rem 2rem" data-align="center" data-max-width="800px">
+  <header style="text-align: center; margin-bottom: 2rem;">
+    <h2>Simple Pricing</h2>
+    <p>Choose the plan that works for you.</p>
+  </header>
+  <wb-grid data-columns="2" data-gap="2rem">
+    <wb-card data-variant="pricing" data-plan="Monthly" data-price="$19" data-period="/month" data-features="All Features,Cancel Anytime" data-cta="Start Monthly" data-cta-href="#"></wb-card>
+    <wb-card data-variant="pricing" data-plan="Annual" data-price="$149" data-period="/year" data-features="All Features,2 Months Free,Priority Support" data-cta="Start Annual" data-cta-href="#" data-featured="true" data-badge="Save 35%"></wb-card>
+  </wb-grid>
+</wb-container>

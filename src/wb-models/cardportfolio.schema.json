@@ -3,62 +3,230 @@
   "$id": "cardportfolio.schema.json",
   "title": "Portfolio Card",
   "description": "Professional portfolio/profile card with cover, avatar, bio, contact, and social",
-  
   "behavior": "cardportfolio",
   "baseClass": "wb-portfolio",
-  
-  "semanticElement": { "tagName": "article", "implicitRole": "article" },
-  
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  "compliance": {
+    "baseClass": "wb-portfolio",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "name": { "type": "string", "description": "Full name", "required": true },
-    "title": { "type": "string", "description": "Job title" },
-    "company": { "type": "string", "description": "Company name" },
-    "location": { "type": "string", "description": "Location" },
-    "cover": { "type": "string", "description": "Cover image URL" },
-    "avatar": { "type": "string", "description": "Avatar image URL" },
-    "bio": { "type": "string", "description": "Biography text" },
-    "email": { "type": "string", "description": "Email address" },
-    "phone": { "type": "string", "description": "Phone number" },
-    "website": { "type": "string", "description": "Website URL" },
-    "social": { "type": "string", "description": "Social links as JSON [{name, url, icon}]" },
-    "variant": { "type": "string", "enum": ["default", "compact", "horizontal"], "default": "default", "appliesClass": "wb-portfolio--{{value}}" }
+    "name": {
+      "type": "string",
+      "description": "Full name",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "description": "Job title"
+    },
+    "company": {
+      "type": "string",
+      "description": "Company name"
+    },
+    "location": {
+      "type": "string",
+      "description": "Location"
+    },
+    "cover": {
+      "type": "string",
+      "description": "Cover image URL"
+    },
+    "avatar": {
+      "type": "string",
+      "description": "Avatar image URL"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Biography text"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "website": {
+      "type": "string",
+      "description": "Website URL"
+    },
+    "social": {
+      "type": "string",
+      "description": "Social links as JSON [{name, url, icon}]"
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "default",
+        "compact",
+        "horizontal"
+      ],
+      "default": "default",
+      "appliesClass": "wb-portfolio--{{value}}"
+    }
   },
-  
   "$view": [
-    { "name": "cover", "tag": "figure", "public": true, "createdWhen": "cover", "description": "Cover image" },
-    { "name": "cover-img", "tag": "img", "parent": "cover", "public": true, "createdWhen": "cover", "description": "Cover image element" },
-    { "name": "avatar-wrapper", "tag": "figure", "public": true, "createdWhen": "avatar", "description": "Avatar container" },
-    { "name": "avatar", "tag": "img", "parent": "avatar-wrapper", "public": true, "createdWhen": "avatar", "description": "Avatar image" },
-    { "name": "header", "tag": "header", "public": true, "required": true, "description": "Identity section" },
-    { "name": "name", "tag": "h2", "parent": "header", "public": true, "content": "{{name}}", "description": "Full name" },
-    { "name": "title", "tag": "p", "parent": "header", "public": true, "content": "{{title}}", "createdWhen": "title", "description": "Job title" },
-    { "name": "company", "tag": "p", "parent": "header", "public": true, "content": "{{company}}", "createdWhen": "company", "description": "Company" },
-    { "name": "location", "tag": "p", "parent": "header", "public": true, "content": "{{location}}", "createdWhen": "location", "description": "Location" },
-    { "name": "bio", "tag": "p", "public": true, "content": "{{bio}}", "createdWhen": "bio", "description": "Biography" },
-    { "name": "contact", "tag": "address", "public": true, "createdWhen": "email OR phone OR website", "description": "Contact info (semantic address)" },
-    { "name": "social", "tag": "nav", "public": true, "createdWhen": "social", "description": "Social links (semantic nav)" }
+    {
+      "name": "cover",
+      "tag": "figure",
+      "public": true,
+      "createdWhen": "cover",
+      "description": "Cover image"
+    },
+    {
+      "name": "cover-img",
+      "tag": "img",
+      "parent": "cover",
+      "public": true,
+      "createdWhen": "cover",
+      "description": "Cover image element"
+    },
+    {
+      "name": "avatar-wrapper",
+      "tag": "figure",
+      "public": true,
+      "createdWhen": "avatar",
+      "description": "Avatar container"
+    },
+    {
+      "name": "avatar",
+      "tag": "img",
+      "parent": "avatar-wrapper",
+      "public": true,
+      "createdWhen": "avatar",
+      "description": "Avatar image"
+    },
+    {
+      "name": "header",
+      "tag": "header",
+      "public": true,
+      "required": true,
+      "description": "Identity section"
+    },
+    {
+      "name": "name",
+      "tag": "h2",
+      "parent": "header",
+      "public": true,
+      "content": "{{name}}",
+      "description": "Full name"
+    },
+    {
+      "name": "title",
+      "tag": "p",
+      "parent": "header",
+      "public": true,
+      "content": "{{title}}",
+      "createdWhen": "title",
+      "description": "Job title"
+    },
+    {
+      "name": "company",
+      "tag": "p",
+      "parent": "header",
+      "public": true,
+      "content": "{{company}}",
+      "createdWhen": "company",
+      "description": "Company"
+    },
+    {
+      "name": "location",
+      "tag": "p",
+      "parent": "header",
+      "public": true,
+      "content": "{{location}}",
+      "createdWhen": "location",
+      "description": "Location"
+    },
+    {
+      "name": "bio",
+      "tag": "p",
+      "public": true,
+      "content": "{{bio}}",
+      "createdWhen": "bio",
+      "description": "Biography"
+    },
+    {
+      "name": "contact",
+      "tag": "address",
+      "public": true,
+      "createdWhen": "email OR phone OR website",
+      "description": "Contact info (semantic address)"
+    },
+    {
+      "name": "social",
+      "tag": "nav",
+      "public": true,
+      "createdWhen": "social",
+      "description": "Social links (semantic nav)"
+    }
   ],
-  
   "$methods": {
-    "show": { "description": "Shows the card", "params": [] },
-    "hide": { "description": "Hides the card", "params": [] },
-    "toggle": { "description": "Toggles visibility", "params": [] }
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    }
   },
-  
   "$cssAPI": {
-    "--wb-portfolio-radius": { "default": "8px", "description": "Card border radius" },
-    "--wb-portfolio-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Card background" },
-    "--wb-portfolio-cover-height": { "default": "150px", "description": "Cover image height" },
-    "--wb-portfolio-avatar-size": { "default": "80px", "description": "Avatar size" },
-    "--wb-portfolio-avatar-border": { "default": "3px solid var(--bg-surface, #ffffff)", "description": "Avatar border" },
-    "--wb-portfolio-name-size": { "default": "1.25rem", "description": "Name font size" },
-    "--wb-portfolio-name-weight": { "default": "700", "description": "Name font weight" },
-    "--wb-portfolio-title-size": { "default": "0.875rem", "description": "Title font size" },
-    "--wb-portfolio-title-color": { "default": "var(--text-secondary, #666)", "description": "Title color" },
-    "--wb-portfolio-bio-size": { "default": "0.875rem", "description": "Bio font size" },
-    "--wb-portfolio-social-gap": { "default": "0.5rem", "description": "Gap between social icons" }
+    "--wb-portfolio-radius": {
+      "default": "8px",
+      "description": "Card border radius"
+    },
+    "--wb-portfolio-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Card background"
+    },
+    "--wb-portfolio-cover-height": {
+      "default": "150px",
+      "description": "Cover image height"
+    },
+    "--wb-portfolio-avatar-size": {
+      "default": "80px",
+      "description": "Avatar size"
+    },
+    "--wb-portfolio-avatar-border": {
+      "default": "3px solid var(--bg-surface, #ffffff)",
+      "description": "Avatar border"
+    },
+    "--wb-portfolio-name-size": {
+      "default": "1.25rem",
+      "description": "Name font size"
+    },
+    "--wb-portfolio-name-weight": {
+      "default": "700",
+      "description": "Name font weight"
+    },
+    "--wb-portfolio-title-size": {
+      "default": "0.875rem",
+      "description": "Title font size"
+    },
+    "--wb-portfolio-title-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Title color"
+    },
+    "--wb-portfolio-bio-size": {
+      "default": "0.875rem",
+      "description": "Bio font size"
+    },
+    "--wb-portfolio-social-gap": {
+      "default": "0.5rem",
+      "description": "Gap between social icons"
+    }
   },
-  
   "test": {
     "setup": [
       "<wb-portfolio name=\"John Doe\"></wb-portfolio>",
@@ -67,13 +235,30 @@
     ],
     "matrix": {
       "combinations": [
-        { "name": "John Doe" },
-        { "name": "John Doe", "title": "Developer" },
-        { "name": "John Doe", "avatar": "avatar.jpg", "bio": "Short bio" },
-        { "name": "John Doe", "email": "john@test.com", "website": "https://john.com" }
+        {
+          "name": "John Doe"
+        },
+        {
+          "name": "John Doe",
+          "title": "Developer"
+        },
+        {
+          "name": "John Doe",
+          "avatar": "avatar.jpg",
+          "bio": "Short bio"
+        },
+        {
+          "name": "John Doe",
+          "email": "john@test.com",
+          "website": "https://john.com"
+        }
       ]
     }
   },
-  
-  "_metadata": { "category": "cards", "icon": "💼", "since": "1.0.0", "status": "stable" }
+  "_metadata": {
+    "category": "cards",
+    "icon": "💼",
+    "since": "1.0.0",
+    "status": "stable"
+  }
 }

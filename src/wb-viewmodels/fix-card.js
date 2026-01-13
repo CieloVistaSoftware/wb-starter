@@ -187,8 +187,8 @@ export class WBFixCard extends WBCard {
     let statusDisplay = fix.status || 'INCOMPLETE';
     let statusClass = `status-${(statusDisplay).toLowerCase().replace(/\s+/g, '-')}`;
 
-    // Enforce test requirement: No test = Failed
-    if (!fix.testRun) {
+    // Enforce test requirement: No test = Failed (unless Pending)
+    if (!fix.testRun && statusDisplay.toUpperCase() !== 'PENDING') {
       statusDisplay = 'TEST MISSING';
       statusClass = 'status-failed'; // Or status-test-missing if preferred, but CSS uses status-failed
     }
@@ -307,9 +307,8 @@ export class WBFixCard extends WBCard {
     const codeBlocks = this.querySelectorAll('.fix-code-block');
     codeBlocks.forEach(block => mdhtml(block));
 
-    // Allow full height
-    this.style.maxHeight = 'none';
-    this.style.height = 'auto';
+    // Let CSS handle max-height constraints (750px in injected styles)
+    // this.style.maxHeight is NOT overridden here to respect the CSS limit
 
     // Ensure the main content area expands
     if (main) {

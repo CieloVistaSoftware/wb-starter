@@ -11,6 +11,7 @@
  *   <wb-span variant="red"></wb-span>              <!-- Window control dot -->
  */
 export function span(element, options = {}) {
+  element.classList.add('wb-span');
   const variant = options.variant || element.dataset.variant;
   
   if (variant) {

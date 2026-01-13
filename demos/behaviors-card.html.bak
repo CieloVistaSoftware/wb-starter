@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html id="card-html-1" lang="en" data-theme="dark">
+<head id="card-head-2">
+  <meta id="card-meta-3" charset="UTF-8">
+  <meta id="card-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="card-title-5">Card Behaviors Demo</title>
+  <link id="card-link-6" rel="stylesheet" href="../src/styles/themes.css">
+  <link id="card-link-7" rel="stylesheet" href="../src/styles/behaviors/card.css">
+  <style id="card-style-8">
+    body { 
+      padding: 2rem; 
+      background: var(--bg-color); 
+      color: var(--text-primary);
+      font-family: system-ui, sans-serif;
+    }
+    h1 { margin-bottom: 2rem; }
+    h2 { 
+      margin: 2rem 0 1rem; 
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body id="card-body-9">
+  <h1 id="card-h1-10">🃏 Card Behaviors Demo</h1>
+  <p id="card-p-11">All 19 card behavior variants with various permutations.</p>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-12">card (base)</h2>
+  <!-- ============================================ -->
+  <div id="card-div-13" class="demo-grid">
+    <wb-card id="card-div-14" data-title="Basic Card" data-subtitle="With subtitle">
+      <p id="card-p-15">Card content goes here.</p>
+    </wb-card>
+    <wb-card id="card-div-16" data-title="Elevated Card" data-elevated>
+      <p id="card-p-17">This card has elevation shadow.</p>
+    </wb-card>
+    <wb-card id="card-div-18" data-title="Clickable Card" data-clickable>
+      <p id="card-p-19">Click me! I'm interactive.</p>
+    </wb-card>
+    <wb-card id="card-div-20" data-title="With Footer" data-footer="Last updated: Today">
+      <p id="card-p-21">This card has a footer section.</p>
+    </wb-card>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-22">cardstats</h2>
+  <!-- ============================================ -->
+  <div id="card-div-23" class="demo-row">
+    <wb-cardstats id="card-div-24" data-value="1,234" data-label="Total Users"></wb-cardstats>
+    <wb-cardstats id="card-div-25" data-value="$50K" data-label="Revenue" data-icon="💰" data-trend="up" data-trend-value="+12%"></wb-cardstats>
+    <wb-cardstats id="card-div-26" data-value="89%" data-label="Completion" data-trend="down" data-trend-value="-3%"></wb-cardstats>
+    <wb-cardstats id="card-div-27" data-value="42" data-label="Active" data-icon="🔥" data-trend="neutral" data-trend-value="0%"></wb-cardstats>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-28">cardprofile</h2>
+  <!-- ============================================ -->
+  <div id="card-div-29" class="demo-grid">
+    <wb-cardprofile id="card-div-30" data-name="John Doe" data-role="Software Engineer" data-avatar="https://i.pravatar.cc/100?u=1"></wb-cardprofile>
+    <wb-cardprofile id="card-div-31" data-name="Jane Smith" data-role="Product Manager" data-avatar="https://i.pravatar.cc/100?u=2" data-bio="Building great products."></wb-cardprofile>
+    <wb-cardprofile id="card-div-32" data-name="Bob Wilson" data-role="Designer" data-avatar="https://i.pravatar.cc/100?u=3" data-cover="https://picsum.photos/400/100?random=1"></wb-cardprofile>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-33">cardpricing</h2>
+  <!-- ============================================ -->
+  <div id="card-div-34" class="demo-grid">
+    <wb-cardpricing id="card-div-35" data-plan="Basic" data-price="$9" data-features="5 Projects,1GB Storage,Email Support"></wb-cardpricing>
+    <wb-cardpricing id="card-div-36" data-plan="Pro" data-price="$29" data-features="Unlimited Projects,10GB Storage,Priority Support,API Access" data-featured></wb-cardpricing>
+    <wb-cardpricing id="card-div-37" data-plan="Enterprise" data-price="Custom" data-period="/year" data-features="Everything,Custom SLA,Dedicated Support" data-cta="Contact Sales"></wb-cardpricing>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-38">cardtestimonial</h2>
+  <!-- ============================================ -->
+  <div id="card-div-39" class="demo-grid">
+    <wb-cardtestimonial id="card-div-40" data-quote="This product changed my workflow completely!" data-author="Alice Johnson" data-role="CEO, TechCorp" data-rating="5"></wb-cardtestimonial>
+    <wb-cardtestimonial id="card-div-41" data-quote="Highly recommended for any team." data-author="Bob Smith" data-avatar="https://i.pravatar.cc/100?u=4" data-rating="4"></wb-cardtestimonial>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-42">cardproduct</h2>
+  <!-- ============================================ -->
+  <div id="card-div-43" class="demo-grid">
+    <wb-cardproduct id="card-div-44" data-image="https://picsum.photos/300/300?random=2" data-title="Product Name" data-price="$99" data-rating="4.5" data-reviews="128"></wb-cardproduct>
+    <wb-cardproduct id="card-div-45" data-image="https://picsum.photos/300/300?random=3" data-title="Featured Item" data-price="$149" data-original-price="$199" data-badge="Sale" data-featured></wb-cardproduct>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-46">cardnotification</h2>
+  <!-- ============================================ -->
+  <div id="card-div-47" class="demo-row" style="flex-direction: column; max-width: 400px;">
+    <wb-cardnotification id="card-div-48" data-type="info" data-title="Info" data-message="This is an informational message."></wb-cardnotification>
+    <wb-cardnotification id="card-div-49" data-type="success" data-title="Success" data-message="Operation completed successfully!"></wb-cardnotification>
+    <wb-cardnotification id="card-div-50" data-type="warning" data-title="Warning" data-message="Please review before continuing."></wb-cardnotification>
+    <wb-cardnotification id="card-div-51" data-type="error" data-title="Error" data-message="Something went wrong." data-dismissible="false"></wb-cardnotification>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-52">cardimage</h2>
+  <!-- ============================================ -->
+  <div id="card-div-53" class="demo-grid">
+    <wb-cardimage id="card-div-54" data-src="https://picsum.photos/400/200?random=4" data-title="Image Card" data-subtitle="With overlay text"></wb-cardimage>
+    <wb-cardimage id="card-div-55" data-src="https://picsum.photos/400/200?random=5" data-title="Bottom Position" data-position="bottom"></wb-cardimage>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-video">cardvideo</h2>
+  <!-- ============================================ -->
+  <div id="card-div-video" class="demo-grid">
+    <wb-cardvideo data-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" data-title="Video Card" data-subtitle="With controls enabled" data-controls></wb-cardvideo>
+    <wb-cardvideo data-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" data-title="Autoplay Muted" data-autoplay data-muted></wb-cardvideo>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-button">cardbutton</h2>
+  <!-- ============================================ -->
+  <div id="card-div-button" class="demo-grid">
+     <wb-cardbutton data-title="Action Card" data-content="This card prompts the user for action." data-primary="Submit" data-secondary="Cancel"></wb-cardbutton>
+     <wb-cardbutton data-title="Confirmation" data-content="Are you sure you want to proceed?" data-primary="Yes, Proceed" data-primary-href="#proceed" data-variant="danger"></wb-cardbutton>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-56">cardhero</h2>
+  <!-- ============================================ -->
+  <wb-cardhero id="card-div-57" data-title="Hero Card" data-subtitle="Full-width hero section" data-background="https://picsum.photos/1200/400?random=6" data-height="300px"></wb-cardhero>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-58">cardoverlay</h2>
+  <!-- ============================================ -->
+  <div id="card-div-59" class="demo-grid">
+    <wb-cardoverlay id="card-div-60" data-image="https://picsum.photos/400/300?random=7" data-title="Overlay Bottom" data-position="bottom"></wb-cardoverlay>
+    <wb-cardoverlay id="card-div-61" data-image="https://picsum.photos/400/300?random=8" data-title="Overlay Center" data-position="center"></wb-cardoverlay>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-62">cardhorizontal</h2>
+  <!-- ============================================ -->
+  <div id="card-div-63" style="max-width: 600px;">
+    <wb-cardhorizontal id="card-div-64" data-image="https://picsum.photos/200/150?random=9" data-title="Horizontal Card" data-subtitle="Image on the left">
+      <p id="card-p-65">Content flows to the right of the image.</p>
+    </wb-cardhorizontal>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-66">cardfile</h2>
+  <!-- ============================================ -->
+  <div id="card-div-67" class="demo-row">
+    <wb-cardfile id="card-div-68" data-filename="document.pdf" data-type="pdf" data-size="2.4 MB" data-date="Dec 14, 2025"></wb-cardfile>
+    <wb-cardfile id="card-div-69" data-filename="photo.jpg" data-type="image" data-size="1.2 MB"></wb-cardfile>
+    <wb-cardfile id="card-div-70" data-filename="archive.zip" data-type="zip" data-size="50 MB" data-href="#" data-downloadable></wb-cardfile>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-71">cardlink</h2>
+  <!-- ============================================ -->
+  <div id="card-div-72" class="demo-row">
+    <wb-cardlink id="card-div-73" data-title="External Link" data-description="Opens in new tab" data-href="https://example.com" data-external></wb-cardlink>
+    <wb-cardlink id="card-div-74" data-title="Internal Link" data-description="Same window" data-href="#" data-icon="📄"></wb-cardlink>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-75">cardexpandable</h2>
+  <!-- ============================================ -->
+  <div id="card-div-76" style="max-width: 400px;">
+    <wb-cardexpandable id="card-div-77" data-title="Expandable Card" data-max-height="60px">
+      <p id="card-p-78">This is the visible preview content.</p>
+      <p id="card-p-79">This content is hidden until expanded.</p>
+      <p id="card-p-80">Click "Show More" to reveal all content.</p>
+      <p id="card-p-81">Additional details go here.</p>
+    </wb-cardexpandable>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-82">cardminimizable</h2>
+  <!-- ============================================ -->
+  <div id="card-div-83" style="max-width: 400px;">
+    <wb-cardminimizable id="card-div-84" data-title="Minimizable Card">
+      <p id="card-p-85">This card can be minimized to just the header.</p>
+      <p id="card-p-86">Click the minus button to collapse.</p>
+    </wb-cardminimizable>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-87">carddraggable</h2>
+  <!-- ============================================ -->
+  <div id="card-div-88" style="position: relative; height: 200px; border: 1px dashed var(--border-color); border-radius: 8px;">
+    <wb-carddraggable id="card-div-89" data-title="Drag Me" style="width: 200px;">
+      <p id="card-p-90">Drag by the header!</p>
+    </wb-carddraggable>
+  </div>
+
+  <!-- ============================================ -->
+  <h2 id="card-h2-91">cardportfolio</h2>
+  <!-- ============================================ -->
+  <div id="card-div-92" class="demo-grid">
+    <wb-cardportfolio id="card-div-93" data-name="John Developer" data-title="Full Stack Engineer" data-company="TechCorp" data-email="john@example.com" data-phone="+1 234 567 8900" data-avatar="https://i.pravatar.cc/100?u=10" data-cover="https://picsum.photos/400/100?random=10" data-bio="Passionate about building great software." data-location="San Francisco, CA" data-github="https://github.com" data-linkedin="https://linkedin.com" data-twitter="https://twitter.com">
+    </wb-cardportfolio>
+  </div>
+
+  <!-- Load WB -->
+  <script id="card-script-94" type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    WB.init();
+  </script>
+</body>
+</html>

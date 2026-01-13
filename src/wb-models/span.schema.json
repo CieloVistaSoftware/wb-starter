@@ -3,30 +3,45 @@
   "$id": "span.schema.json",
   "title": "Span",
   "description": "A generic inline container for applying utility classes and variants. Useful for traffic lights (window controls), badges, and status indicators.",
-  
   "behavior": "span",
   "baseClass": "wb-span",
-  
   "semanticElement": {
     "tagName": "span",
     "implicitRole": "generic"
   },
-  
+  "compliance": {
+    "baseClass": "wb-span",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["red", "yellow", "green", "dot", "primary", "secondary", "success", "error", "warning", "info"],
+      "enum": [
+        "red",
+        "yellow",
+        "green",
+        "dot",
+        "primary",
+        "secondary",
+        "success",
+        "error",
+        "warning",
+        "info"
+      ],
       "default": "default",
       "appliesClass": "wb-span--{{value}}"
     }
   },
-  
   "_metadata": {
     "category": "layout",
     "icon": "📝",
     "since": "1.0.0",
     "status": "stable",
     "generateAttribute": false
-  }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

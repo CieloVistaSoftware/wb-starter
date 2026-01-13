@@ -4,66 +4,221 @@
   "description": "Master schema defining all behavior metadata, properties, interactions, accessibility, and test requirements",
   "behavior": "behavior",
   "version": "3.0.0",
-  
   "definitions": {
     "behaviorType": {
       "type": "string",
-      "enum": ["element", "container", "modifier", "action"],
+      "enum": [
+        "element",
+        "container",
+        "modifier",
+        "action"
+      ],
       "description": "The fundamental type of this behavior"
     },
-    
     "htmlElement": {
       "type": "string",
       "enum": [
-        "div", "span", "section", "article", "aside", "nav", "header", "footer", "main",
-        "button", "a", "input", "textarea", "select", "form", "fieldset", "label",
-        "img", "video", "audio", "iframe", "figure", "picture",
-        "table", "ul", "ol", "dl", "li", "dt", "dd",
-        "details", "summary", "dialog", "menu",
-        "h1", "h2", "h3", "h4", "h5", "h6", "p", "blockquote", "pre", "code",
-        "time", "progress", "meter", "output", "search", "address", "mark", "kbd", "hr"
+        "div",
+        "span",
+        "section",
+        "article",
+        "aside",
+        "nav",
+        "header",
+        "footer",
+        "main",
+        "button",
+        "a",
+        "input",
+        "textarea",
+        "select",
+        "form",
+        "fieldset",
+        "label",
+        "img",
+        "video",
+        "audio",
+        "iframe",
+        "figure",
+        "picture",
+        "table",
+        "ul",
+        "ol",
+        "dl",
+        "li",
+        "dt",
+        "dd",
+        "details",
+        "summary",
+        "dialog",
+        "menu",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "p",
+        "blockquote",
+        "pre",
+        "code",
+        "time",
+        "progress",
+        "meter",
+        "output",
+        "search",
+        "address",
+        "mark",
+        "kbd",
+        "hr"
       ],
       "description": "Valid HTML element tags for behaviors"
     },
-    
     "inputType": {
       "type": "string",
-      "enum": ["text", "password", "email", "number", "tel", "url", "search", "date", "time", "datetime-local", "month", "week", "color", "file", "checkbox", "radio", "range", "hidden"],
+      "enum": [
+        "text",
+        "password",
+        "email",
+        "number",
+        "tel",
+        "url",
+        "search",
+        "date",
+        "time",
+        "datetime-local",
+        "month",
+        "week",
+        "color",
+        "file",
+        "checkbox",
+        "radio",
+        "range",
+        "hidden"
+      ],
       "description": "HTML input type attribute values"
     },
-    
     "attachTarget": {
       "type": "string",
-      "enum": ["any", "text", "clickable", "img", "iframe", "img,iframe", "textarea", "form,input", "input", "input,textarea", "input,textarea,select"],
+      "enum": [
+        "any",
+        "text",
+        "clickable",
+        "img",
+        "iframe",
+        "img,iframe",
+        "textarea",
+        "form,input",
+        "input",
+        "input,textarea",
+        "input,textarea,select"
+      ],
       "description": "What elements a modifier can attach to"
     },
-    
     "ariaRole": {
       "type": "string",
-      "enum": ["alert", "alertdialog", "button", "checkbox", "dialog", "grid", "gridcell", "link", "listbox", "menu", "menuitem", "option", "progressbar", "radio", "radiogroup", "region", "slider", "spinbutton", "status", "switch", "tab", "tablist", "tabpanel", "textbox", "timer", "tooltip", "tree", "treeitem", "article", "navigation", "complementary", "banner", "contentinfo", "main", "search", "form", "img", "list", "listitem", "group"],
+      "enum": [
+        "alert",
+        "alertdialog",
+        "button",
+        "checkbox",
+        "dialog",
+        "grid",
+        "gridcell",
+        "link",
+        "listbox",
+        "menu",
+        "menuitem",
+        "option",
+        "progressbar",
+        "radio",
+        "radiogroup",
+        "region",
+        "slider",
+        "spinbutton",
+        "status",
+        "switch",
+        "tab",
+        "tablist",
+        "tabpanel",
+        "textbox",
+        "timer",
+        "tooltip",
+        "tree",
+        "treeitem",
+        "article",
+        "navigation",
+        "complementary",
+        "banner",
+        "contentinfo",
+        "main",
+        "search",
+        "form",
+        "img",
+        "list",
+        "listitem",
+        "group"
+      ],
       "description": "Valid ARIA roles"
     },
-    
     "eventTrigger": {
       "type": "string",
-      "enum": ["click", "hover", "focus", "blur", "keydown", "keyup", "keypress", "change", "input", "submit", "scroll", "resize", "load", "unload", "custom"],
+      "enum": [
+        "click",
+        "hover",
+        "focus",
+        "blur",
+        "keydown",
+        "keyup",
+        "keypress",
+        "change",
+        "input",
+        "submit",
+        "scroll",
+        "resize",
+        "load",
+        "unload",
+        "custom"
+      ],
       "description": "DOM event types that can trigger actions"
     },
-    
     "animationType": {
       "type": "string",
-      "enum": ["fadeIn", "fadeOut", "slideIn", "slideOut", "zoomIn", "zoomOut", "bounce", "shake", "pulse", "flip", "rotate", "swing", "tada", "wobble", "jello", "heartbeat", "flash", "rubberBand"],
+      "enum": [
+        "fadeIn",
+        "fadeOut",
+        "slideIn",
+        "slideOut",
+        "zoomIn",
+        "zoomOut",
+        "bounce",
+        "shake",
+        "pulse",
+        "flip",
+        "rotate",
+        "swing",
+        "tada",
+        "wobble",
+        "jello",
+        "heartbeat",
+        "flash",
+        "rubberBand"
+      ],
       "description": "Built-in animation types"
     }
   },
-  
   "behaviors": {
     "description": "Complete catalog of all WB behaviors with metadata",
-    
     "types": {
       "element": {
         "description": "Standalone components with a preferred HTML element",
-        "examples": ["card", "button", "badge", "input", "alert"],
+        "examples": [
+          "card",
+          "button",
+          "badge",
+          "input",
+          "alert"
+        ],
         "characteristics": {
           "hasPreferredElement": true,
           "canDropOnCanvas": true,
@@ -72,7 +227,13 @@
       },
       "container": {
         "description": "Components that hold child elements with drop zones",
-        "examples": ["accordion", "tabs", "grid", "container", "flex"],
+        "examples": [
+          "accordion",
+          "tabs",
+          "grid",
+          "container",
+          "flex"
+        ],
         "characteristics": {
           "hasDropZone": true,
           "canContainChildren": true,
@@ -81,7 +242,12 @@
       },
       "modifier": {
         "description": "Effects that attach to existing elements",
-        "examples": ["animate", "parallax", "tooltip", "draggable"],
+        "examples": [
+          "animate",
+          "parallax",
+          "tooltip",
+          "draggable"
+        ],
         "characteristics": {
           "requiresExistingElement": true,
           "canStackMultiple": "varies",
@@ -90,7 +256,13 @@
       },
       "action": {
         "description": "Interactive triggers that perform actions",
-        "examples": ["copy", "share", "fullscreen", "modal", "toast"],
+        "examples": [
+          "copy",
+          "share",
+          "fullscreen",
+          "modal",
+          "toast"
+        ],
         "characteristics": {
           "hasTriggerElement": true,
           "mayRequireTarget": "varies",
@@ -98,62 +270,245 @@
         }
       }
     },
-    
     "categories": {
       "cards": {
         "description": "Card-based content components",
-        "behaviors": ["card", "cardimage", "cardvideo", "cardbutton", "cardhero", "cardprofile", "cardpricing", "cardstats", "cardtestimonial", "cardproduct", "cardnotification", "cardfile", "cardlink", "cardhorizontal", "carddraggable", "cardexpandable", "cardminimizable", "cardoverlay", "cardportfolio"]
+        "behaviors": [
+          "card",
+          "cardimage",
+          "cardvideo",
+          "cardbutton",
+          "cardhero",
+          "cardprofile",
+          "cardpricing",
+          "cardstats",
+          "cardtestimonial",
+          "cardproduct",
+          "cardnotification",
+          "cardfile",
+          "cardlink",
+          "cardhorizontal",
+          "carddraggable",
+          "cardexpandable",
+          "cardminimizable",
+          "cardoverlay",
+          "cardportfolio"
+        ]
       },
       "forms": {
         "description": "Form input and control components",
-        "behaviors": ["input", "textarea", "select", "checkbox", "radio", "switch", "range", "colorpicker", "datepicker", "timepicker", "file", "password", "search", "autocomplete", "otp", "rating", "tags", "form", "fieldset", "label", "help", "error", "inputgroup", "formrow", "stepper"]
+        "behaviors": [
+          "input",
+          "textarea",
+          "select",
+          "checkbox",
+          "radio",
+          "switch",
+          "range",
+          "colorpicker",
+          "datepicker",
+          "timepicker",
+          "file",
+          "password",
+          "search",
+          "autocomplete",
+          "otp",
+          "rating",
+          "tags",
+          "form",
+          "fieldset",
+          "label",
+          "help",
+          "error",
+          "inputgroup",
+          "formrow",
+          "stepper"
+        ]
       },
       "navigation": {
         "description": "Navigation and wayfinding components",
-        "behaviors": ["breadcrumb", "navbar", "sidebar", "menu", "pagination", "steps", "treeview", "link", "tabs", "accordion"]
+        "behaviors": [
+          "breadcrumb",
+          "navbar",
+          "sidebar",
+          "menu",
+          "pagination",
+          "steps",
+          "treeview",
+          "link",
+          "tabs",
+          "accordion"
+        ]
       },
       "feedback": {
         "description": "User feedback and notification components",
-        "behaviors": ["badge", "avatar", "chip", "alert", "skeleton", "divider", "spinner", "toast", "notify", "confirm", "prompt"]
+        "behaviors": [
+          "badge",
+          "avatar",
+          "chip",
+          "alert",
+          "skeleton",
+          "divider",
+          "spinner",
+          "toast",
+          "notify",
+          "confirm",
+          "prompt"
+        ]
       },
       "layout": {
         "description": "Layout and container components",
-        "behaviors": ["container", "grid", "flex", "stack", "cluster", "center", "sidebarlayout", "drawerLayout", "switcher", "masonry", "scrollable", "cover", "frame", "reel", "imposter"]
+        "behaviors": [
+          "container",
+          "grid",
+          "flex",
+          "stack",
+          "cluster",
+          "center",
+          "sidebarlayout",
+          "drawerLayout",
+          "switcher",
+          "masonry",
+          "scrollable",
+          "cover",
+          "frame",
+          "reel",
+          "imposter"
+        ]
       },
       "media": {
         "description": "Media display components",
-        "behaviors": ["image", "video", "audio", "youtube", "vimeo", "embed", "figure", "ratio", "icon", "gallery", "carousel", "lightbox"]
+        "behaviors": [
+          "image",
+          "video",
+          "audio",
+          "youtube",
+          "vimeo",
+          "embed",
+          "figure",
+          "ratio",
+          "icon",
+          "gallery",
+          "carousel",
+          "lightbox"
+        ]
       },
       "overlays": {
         "description": "Overlay and modal components",
-        "behaviors": ["modal", "dialog", "drawer", "offcanvas", "sheet", "popover", "dropdown", "tooltip"]
+        "behaviors": [
+          "modal",
+          "dialog",
+          "drawer",
+          "offcanvas",
+          "sheet",
+          "popover",
+          "dropdown",
+          "tooltip"
+        ]
       },
       "effects": {
         "description": "Visual effect modifiers",
-        "behaviors": ["animate", "fadein", "fadeout", "slidein", "slideout", "zoomin", "zoomout", "bounce", "shake", "pulse", "flip", "rotate", "swing", "tada", "wobble", "jello", "heartbeat", "flash", "rubberband", "typewriter", "countup", "marquee", "parallax", "reveal", "sparkle", "glow", "rainbow", "ripple", "confetti", "fireworks", "snow", "particle"]
+        "behaviors": [
+          "animate",
+          "fadein",
+          "fadeout",
+          "slidein",
+          "slideout",
+          "zoomin",
+          "zoomout",
+          "bounce",
+          "shake",
+          "pulse",
+          "flip",
+          "rotate",
+          "swing",
+          "tada",
+          "wobble",
+          "jello",
+          "heartbeat",
+          "flash",
+          "rubberband",
+          "typewriter",
+          "countup",
+          "marquee",
+          "parallax",
+          "reveal",
+          "sparkle",
+          "glow",
+          "rainbow",
+          "ripple",
+          "confetti",
+          "fireworks",
+          "snow",
+          "particle"
+        ]
       },
       "actions": {
         "description": "Action trigger components",
-        "behaviors": ["copy", "clipboard", "print", "fullscreen", "scroll", "toggle", "share", "darkmode", "themecontrol", "backtotop", "external"]
+        "behaviors": [
+          "copy",
+          "clipboard",
+          "print",
+          "fullscreen",
+          "scroll",
+          "toggle",
+          "share",
+          "darkmode",
+          "themecontrol",
+          "backtotop",
+          "external"
+        ]
       },
       "data": {
         "description": "Data display components",
-        "behaviors": ["table", "list", "desclist", "timeline", "stat", "empty", "code", "json", "diff", "kbd", "progressbar", "progress"]
+        "behaviors": [
+          "table",
+          "list",
+          "desclist",
+          "timeline",
+          "stat",
+          "empty",
+          "code",
+          "json",
+          "diff",
+          "kbd",
+          "progressbar",
+          "progress"
+        ]
       },
       "time": {
         "description": "Time-related components",
-        "behaviors": ["clock", "countdown", "relativetime"]
+        "behaviors": [
+          "clock",
+          "countdown",
+          "relativetime"
+        ]
       },
       "utility": {
         "description": "Utility modifiers",
-        "behaviors": ["draggable", "resizable", "sticky", "fixed", "lazy", "truncate", "highlight", "visible", "autosize", "validator", "masked", "counter", "floatinglabel", "hotkey", "offline", "debug"]
+        "behaviors": [
+          "draggable",
+          "resizable",
+          "sticky",
+          "fixed",
+          "lazy",
+          "truncate",
+          "highlight",
+          "visible",
+          "autosize",
+          "validator",
+          "masked",
+          "counter",
+          "floatinglabel",
+          "hotkey",
+          "offline",
+          "debug"
+        ]
       }
     }
   },
-  
   "behaviorProperties": {
     "description": "Common properties shared across behaviors",
-    
     "commonDataAttributes": {
       "data-wb": {
         "type": "string",
@@ -170,7 +525,13 @@
       },
       "data-size": {
         "type": "string",
-        "enum": ["xs", "sm", "md", "lg", "xl"],
+        "enum": [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl"
+        ],
         "description": "Size variant"
       },
       "data-disabled": {
@@ -182,36 +543,44 @@
         "description": "Loading state"
       }
     },
-    
     "commonCSSClasses": {
       "baseClass": "wb-{behavior}",
       "variantClass": "wb-{behavior}--{variant}",
       "sizeClass": "wb-{behavior}--{size}",
-      "stateClasses": ["wb-{behavior}--active", "wb-{behavior}--disabled", "wb-{behavior}--loading", "wb-{behavior}--expanded", "wb-{behavior}--collapsed"]
+      "stateClasses": [
+        "wb-{behavior}--active",
+        "wb-{behavior}--disabled",
+        "wb-{behavior}--loading",
+        "wb-{behavior}--expanded",
+        "wb-{behavior}--collapsed"
+      ]
     }
   },
-  
   "interactions": {
     "description": "Standard interaction patterns for behaviors",
-    
     "clickPatterns": {
       "toggle": {
         "description": "Click toggles state",
-        "events": ["click"],
+        "events": [
+          "click"
+        ],
         "resultClass": "wb-{behavior}--active"
       },
       "trigger": {
         "description": "Click triggers action",
-        "events": ["click"],
+        "events": [
+          "click"
+        ],
         "firesEvent": "wb:{behavior}:action"
       },
       "navigate": {
         "description": "Click navigates to target",
-        "events": ["click"],
+        "events": [
+          "click"
+        ],
         "requiresHref": true
       }
     },
-    
     "keyboardPatterns": {
       "focusable": {
         "tabindex": "0",
@@ -243,7 +612,6 @@
         }
       }
     },
-    
     "hoverPatterns": {
       "elevate": {
         "transform": "translateY(-2px)",
@@ -256,7 +624,6 @@
         "transform": "scale(1.02)"
       }
     },
-    
     "focusPatterns": {
       "outline": {
         "outline": "2px solid var(--focus-ring)",
@@ -267,10 +634,8 @@
       }
     }
   },
-  
   "accessibility": {
     "description": "Accessibility requirements for behaviors",
-    
     "requiredByType": {
       "interactive": {
         "role": "required when non-native element",
@@ -305,7 +670,6 @@
         "aria-label": "descriptive label"
       }
     },
-    
     "screenReaderText": {
       "srOnly": {
         "description": "Visually hidden but screen reader accessible",
@@ -313,12 +677,9 @@
       }
     }
   },
-  
   "events": {
     "description": "Standard custom events dispatched by behaviors",
-    
     "namingConvention": "wb:{behavior}:{action}",
-    
     "commonEvents": {
       "init": {
         "name": "wb:{behavior}:init",
@@ -340,7 +701,9 @@
         "name": "wb:{behavior}:action",
         "description": "Fired when action is triggered",
         "bubbles": true,
-        "detail": { "action": "string" }
+        "detail": {
+          "action": "string"
+        }
       },
       "open": {
         "name": "wb:{behavior}:open",
@@ -354,10 +717,8 @@
       }
     }
   },
-  
   "styling": {
     "description": "CSS styling conventions for behaviors",
-    
     "cssVariables": {
       "colors": {
         "--wb-primary": "Primary brand color",
@@ -390,75 +751,151 @@
         "--wb-shadow-lg": "Large shadow"
       }
     },
-    
     "bemConvention": {
       "block": "wb-{behavior}",
       "element": "wb-{behavior}__{element}",
       "modifier": "wb-{behavior}--{modifier}"
     }
   },
-  
   "testing": {
     "description": "Testing requirements for behaviors",
-    
     "requiredTests": {
       "initialization": {
         "description": "Verify behavior initializes correctly",
-        "checks": ["baseClass applied", "data-wb-ready set", "required children created"]
+        "checks": [
+          "baseClass applied",
+          "data-wb-ready set",
+          "required children created"
+        ]
       },
       "properties": {
         "description": "Verify all properties work",
-        "checks": ["enum values", "boolean toggles", "boundary values", "null handling"]
+        "checks": [
+          "enum values",
+          "boolean toggles",
+          "boundary values",
+          "null handling"
+        ]
       },
       "interactions": {
         "description": "Verify all interactions work",
-        "checks": ["click handlers", "keyboard navigation", "focus management", "hover states"]
+        "checks": [
+          "click handlers",
+          "keyboard navigation",
+          "focus management",
+          "hover states"
+        ]
       },
       "accessibility": {
         "description": "Verify accessibility requirements",
-        "checks": ["ARIA attributes", "keyboard accessible", "focus visible", "screen reader text"]
+        "checks": [
+          "ARIA attributes",
+          "keyboard accessible",
+          "focus visible",
+          "screen reader text"
+        ]
       },
       "events": {
         "description": "Verify custom events fire",
-        "checks": ["event name correct", "event detail correct", "bubbles as expected"]
+        "checks": [
+          "event name correct",
+          "event detail correct",
+          "bubbles as expected"
+        ]
       },
       "cleanup": {
         "description": "Verify cleanup works",
-        "checks": ["event listeners removed", "DOM cleaned up", "memory freed"]
+        "checks": [
+          "event listeners removed",
+          "DOM cleaned up",
+          "memory freed"
+        ]
       }
     },
-    
     "testMatrix": {
       "description": "Property combinations to test",
       "strategy": "Test all enum values + boundary conditions + null states"
     }
   },
-  
   "metadataSchema": {
     "description": "Schema for individual behavior metadata in behaviorMeta.js",
     "type": "object",
     "properties": {
-      "type": { "$ref": "#/definitions/behaviorType" },
-      "element": { "$ref": "#/definitions/htmlElement" },
-      "inputType": { "$ref": "#/definitions/inputType" },
-      "canContain": { "type": "boolean", "description": "Can contain child elements" },
-      "dropZone": { "type": "boolean", "description": "Has drop zone for builder" },
-      "attachTo": { "$ref": "#/definitions/attachTarget" },
-      "multiple": { "type": "boolean", "description": "Can have multiple instances on one element" },
-      "trigger": { "type": "string", "description": "Trigger element type for actions" },
-      "target": { "type": ["string", "null"], "description": "Target requirement for actions" },
-      "group": { "type": "boolean", "description": "Creates action group with target" },
-      "createsOverlay": { "type": "boolean", "description": "Creates overlay/modal" },
-      "template": { "type": "string", "description": "HTML template for complex behaviors" },
-      "role": { "$ref": "#/definitions/ariaRole" },
-      "ariaLabel": { "type": "string", "description": "Default ARIA label" },
-      "fallback": { "$ref": "#/definitions/htmlElement" },
-      "usesDatalist": { "type": "boolean", "description": "Uses native datalist" },
-      "nativeElement": { "$ref": "#/definitions/htmlElement" },
-      "childElement": { "$ref": "#/definitions/htmlElement" },
-      "builderOnly": { "type": "boolean", "description": "Only available in builder" }
+      "type": {
+        "$ref": "#/definitions/behaviorType"
+      },
+      "element": {
+        "$ref": "#/definitions/htmlElement"
+      },
+      "inputType": {
+        "$ref": "#/definitions/inputType"
+      },
+      "canContain": {
+        "type": "boolean",
+        "description": "Can contain child elements"
+      },
+      "dropZone": {
+        "type": "boolean",
+        "description": "Has drop zone for builder"
+      },
+      "attachTo": {
+        "$ref": "#/definitions/attachTarget"
+      },
+      "multiple": {
+        "type": "boolean",
+        "description": "Can have multiple instances on one element"
+      },
+      "trigger": {
+        "type": "string",
+        "description": "Trigger element type for actions"
+      },
+      "target": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Target requirement for actions"
+      },
+      "group": {
+        "type": "boolean",
+        "description": "Creates action group with target"
+      },
+      "createsOverlay": {
+        "type": "boolean",
+        "description": "Creates overlay/modal"
+      },
+      "template": {
+        "type": "string",
+        "description": "HTML template for complex behaviors"
+      },
+      "role": {
+        "$ref": "#/definitions/ariaRole"
+      },
+      "ariaLabel": {
+        "type": "string",
+        "description": "Default ARIA label"
+      },
+      "fallback": {
+        "$ref": "#/definitions/htmlElement"
+      },
+      "usesDatalist": {
+        "type": "boolean",
+        "description": "Uses native datalist"
+      },
+      "nativeElement": {
+        "$ref": "#/definitions/htmlElement"
+      },
+      "childElement": {
+        "$ref": "#/definitions/htmlElement"
+      },
+      "builderOnly": {
+        "type": "boolean",
+        "description": "Only available in builder"
+      }
     },
-    "required": ["type"]
+    "required": [
+      "type"
+    ]
   },
   "compliance": {
     "baseClass": "wb-behavior"
@@ -466,5 +903,8 @@
   "test": {
     "setup": [],
     "matrix": {}
-  }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

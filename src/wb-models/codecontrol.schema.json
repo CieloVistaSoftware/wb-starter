@@ -4,5 +4,13 @@
   "title": "Code Control",
   "behavior": "codecontrol",
   "description": "Interactive code editor/viewer control.",
-  "properties": {}
+  "compliance": {
+    "baseClass": "wb-codecontrol",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

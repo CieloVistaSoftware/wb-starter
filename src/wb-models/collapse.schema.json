@@ -4,7 +4,19 @@
   "title": "Collapse",
   "behavior": "collapse",
   "description": "Collapsible content area.",
+  "compliance": {
+    "baseClass": "wb-collapse",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "expanded": { "type": "boolean", "default": false, "description": "Ideally open" }
-  }
+    "expanded": {
+      "type": "boolean",
+      "default": false,
+      "description": "Ideally open"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

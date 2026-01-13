@@ -4,5 +4,13 @@
   "title": "WB Control",
   "behavior": "control",
   "description": "Base control interaction behavior.",
-  "properties": {}
+  "compliance": {
+    "baseClass": "wb-wb-control",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

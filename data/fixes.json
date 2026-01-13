@@ -771,6 +771,198 @@
       "status": "APPLIED",
       "appliedDate": "2025-12-31T07:00:00Z"
     },
+    "WB_ABBREVIATION_WB_UNDEFINED_049": {
+      "errorId": "WB_ABBREVIATION_WB_UNDEFINED_049",
+      "component": "docs/property-viewer.md",
+      "errorSignature": "Found: 'WB' Expected: 'Web Behaviors (WB)'",
+      "issue": "Line 5: First use of 'WB' abbreviation not properly defined with full form",
+      "cause": "Abbreviation used before definition",
+      "priority": "MEDIUM",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "data/docs-manifest.json",
+        "action": "Change line 5 to define WB: 'Web Behaviors (WB)' before using it",
+        "verify": "abbreviation-definitions test passes",
+        "code": "// manual fix"
+      }
+    },
+    "WB_CSS_IMPORTANT_OVERUSE_050": {
+      "errorId": "WB_CSS_IMPORTANT_OVERUSE_050",
+      "component": "CSS files",
+      "errorSignature": "Total !important usage should be minimal - Found: 51, Expected: < 50",
+      "issue": "One extra !important declaration in CSS files",
+      "cause": "CSS files exceed !important limit by 1",
+      "priority": "MEDIUM",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "src/styles/*.css or src/behaviors/css/*.css",
+        "action": "Find one !important and remove it or refactor to avoid",
+        "verify": "css-oop-compliance test passes",
+        "code": "// manual fix"
+      }
+    },
+    "WB_VIEWS_KITCHEN_SINK_NO_NAME_051": {
+      "errorId": "WB_VIEWS_KITCHEN_SINK_NO_NAME_051",
+      "component": "demos/kitchen-sink.html",
+      "errorSignature": "[WB Views] No view name found - 18 errors",
+      "issue": "wb-views elements missing proper view name attribute",
+      "cause": "View attributes incomplete or malformed",
+      "priority": "HIGH",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "demos/kitchen-sink.html",
+        "action": "Find all <wb-views> tags and ensure each has a proper view name",
+        "verify": "dark-mode test passes",
+        "code": "// manual fix"
+      }
+    },
+    "WB_VIEWS_UNIFIED_COMPONENTS_NO_NAME_052": {
+      "errorId": "WB_VIEWS_UNIFIED_COMPONENTS_NO_NAME_052",
+      "component": "demos/unified-components.html",
+      "errorSignature": "[WB Views] No view name found - 8 errors",
+      "issue": "wb-views elements missing proper view name attribute",
+      "cause": "View attributes incomplete or malformed",
+      "priority": "HIGH",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "demos/unified-components.html",
+        "action": "Find all <wb-views> tags and ensure each has a proper view name",
+        "verify": "dark-mode test passes",
+        "code": "// manual fix"
+      }
+    },
+    "WB_PAGE_DEMOS_NAVIGATION_DESTROYED_053": {
+      "errorId": "WB_PAGE_DEMOS_NAVIGATION_DESTROYED_053",
+      "component": "pages/demos.html",
+      "errorSignature": "Execution context was destroyed, most likely because of a navigation",
+      "issue": "Page navigation causes test execution context to be destroyed",
+      "cause": "pages/demos.html may contain links that trigger navigation during test",
+      "priority": "HIGH",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "pages/demos.html or test",
+        "action": "Add waitForLoadState after setting dark mode, or prevent unwanted navigation",
+        "verify": "dark-mode test completes without context destruction",
+        "code": "// manual fix"
+      }
+    },
+    "WB_BUILDER_COMPONENTS_JSON_404_054": {
+      "errorId": "WB_BUILDER_COMPONENTS_JSON_404_054",
+      "component": "builder.html",
+      "errorSignature": "404 Not Found: http://localhost:3000/src/builder/components.json?caller=builder-index",
+      "issue": "builder.html loads but fails to fetch components.json, causing console error",
+      "cause": "components.json file missing from src/builder/ or not served by server",
+      "priority": "HIGH",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "src/builder/components.json or server.js",
+        "action": "Create src/builder/components.json or add route in server.js to serve it",
+        "verify": "debug-builder-syntax test passes without 404 error",
+        "code": "// manual fix"
+      }
+    },
+    "WB_DOCS_MANIFEST_BUILDER_TREE_MISSING_055": {
+      "errorId": "WB_DOCS_MANIFEST_BUILDER_TREE_MISSING_055",
+      "component": "docs/manifest.json",
+      "errorSignature": "Found markdown file not in manifest: builder/builder-tree.md",
+      "issue": "docs/builder/builder-tree.md exists but not listed in docs/manifest.json",
+      "cause": "New doc file created without updating manifest",
+      "priority": "MEDIUM",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "docs/manifest.json",
+        "action": "Add entry for builder/builder-tree.md to appropriate category",
+        "verify": "docs-manifest-integrity test passes",
+        "code": "// manual fix"
+      }
+    },
+    "WB_LEGACY_SYNTAX_ERROR_LOG_056": {
+      "errorId": "WB_LEGACY_SYNTAX_ERROR_LOG_056",
+      "component": "index.html",
+      "errorSignature": "2 runtime errors: 'Legacy syntax detected on <div>. Please use <wb-card> instead.'",
+      "issue": "index.html contains legacy data-wb=\"card\" syntax that triggers errors",
+      "cause": "Home page uses old syntax instead of new <wb-card> component",
+      "priority": "HIGH",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "index.html",
+        "action": "Replace data-wb='card' with <wb-card> or remove legacy cards",
+        "verify": "error-log-empty test passes",
+        "code": "// manual fix"
+      }
+    },
+    "WB_HOME_PAGE_MISSING_MODAL_BUTTON_057": {
+      "errorId": "WB_HOME_PAGE_MISSING_MODAL_BUTTON_057",
+      "component": "index.html or pages/home.html",
+      "errorSignature": "Locator('wb-button:has-text(\"Open Modal\")') not found",
+      "issue": "Home page missing 'Open Modal' button in live demo section",
+      "cause": "Glass card demo section incomplete or button missing",
+      "priority": "MEDIUM",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "index.html or src/wb-views/partials/spa-home.html",
+        "action": "Add <wb-button>Open Modal</wb-button> to live demo section with glass card",
+        "verify": "home-page test passes",
+        "code": "// manual fix"
+      }
+    },
+    "WB_DUPLICATE_VARIABLES_BUILDER_APP_058": {
+      "errorId": "WB_DUPLICATE_VARIABLES_BUILDER_APP_058",
+      "component": "builder-app/builder-canvas-sections.js",
+      "errorSignature": "141 duplicate const/let declarations (limit: 10)",
+      "issue": "builder-canvas-sections.js has 141 duplicate variable declarations",
+      "cause": "Variables redeclared in different scopes (el, element, dropped, etc.)",
+      "priority": "CRITICAL",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "src/builder/builder-app/builder-canvas-sections.js",
+        "action": "Scan file for duplicate variable declarations and consolidate/rename them. Focus on: el, element, dropped",
+        "verify": "source-schema-compliance test expects < 10 duplicates",
+        "code": "// manual fix"
+      }
+    },
+    "WB_MISSING_BASE_CLASSES_BEHAVIORS_059": {
+      "errorId": "WB_MISSING_BASE_CLASSES_BEHAVIORS_059",
+      "component": "multiple behavior files",
+      "errorSignature": "65 missing base class assignments (limit: 50)",
+      "issue": "65 behavior functions don't add baseClass from schema",
+      "cause": "Behaviors not properly adding classList.add(baseClass) from their schema",
+      "priority": "HIGH",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "src/behaviors/js/**/*.js",
+        "action": "Review 65 behavior functions and add: element.classList.add(config.behavior) or similar baseClass from schema",
+        "verify": "source-schema-compliance test expects < 50 missing",
+        "code": "// manual fix"
+      }
+    },
+    "WB_LEGACY_SYNTAX_NOT_THROWING_ERROR_060": {
+      "errorId": "WB_LEGACY_SYNTAX_NOT_THROWING_ERROR_060",
+      "component": "src/core/wb.js or legacy handler",
+      "errorSignature": "Should throw error for legacy data-wb usage but doesn't",
+      "issue": "Legacy syntax data-wb=\"card\" not triggering expected error message",
+      "cause": "Strict mode error handling not detecting or logging legacy syntax",
+      "priority": "HIGH",
+      "status": "PENDING",
+      "lastTested": "2026-01-11",
+      "fix": {
+        "file": "src/core/wb.js",
+        "action": "Ensure legacy data-wb attributes trigger 'Legacy syntax detected' error log",
+        "verify": "strict-mode-runtime test detects and logs legacy syntax error",
+        "code": "// manual fix"
+      }
+    },
     "WB_DOCS_MANIFEST_MISSING_FILE_046": {
       "errorId": "WB_DOCS_MANIFEST_MISSING_FILE_046",
       "component": "docs/manifest.json",
@@ -803,6 +995,32 @@
       "priority": "CRITICAL",
       "status": "APPLIED",
       "appliedDate": "2026-01-01T12:00:00Z"
+    },
+    "WB_DOC_VIEWER_PATH_RESOLUTION_048": {
+      "errorId": "WB_DOC_VIEWER_PATH_RESOLUTION_048",
+      "component": "mdhtml.js",
+      "errorSignature": "Documentation links fail to load - 'Failed to load: /docs/...' errors",
+      "issue": "Documentation viewer (doc-viewer.html) failed to load markdown files with poor error messages",
+      "cause": "mdhtml.js had no path normalization logic and displayed generic error messages without file paths or HTTP status codes, making debugging impossible",
+      "lastTested": "2026-01-12",
+      "fix": {
+        "file": "src/wb-viewmodels/mdhtml.js",
+        "action": "Added smart path handling + detailed error messages + console logging",
+        "details": [
+          "✓ Automatically prepends '/' to relative paths (handles both docs/file.md and /docs/file.md)",
+          "✓ Supports HTTP URLs as-is without modification",
+          "✓ Shows detailed error with file path, HTTP status, and troubleshooting tips",
+          "✓ Console logs fetch attempts and success with file size",
+          "✓ Dispatches new wb:mdhtml:error event on failure"
+        ],
+        "verify": "Documentation loads without errors; error messages are clear and helpful",
+        "code": "let fetchPath = config.src; if (!fetchPath.startsWith('/') && !fetchPath.startsWith('http')) { fetchPath = '/' + fetchPath; } console.log('[mdhtml] Fetching:', fetchPath);",
+        "errorDisplay": "Shows file path, HTTP status, and troubleshooting steps in styled error box"
+      },
+      "priority": "HIGH",
+      "status": "APPLIED",
+      "appliedDate": "2026-01-12T15:30:00Z",
+      "docFile": "DOC-VIEWER-FIX.md"
     }
   },
   "stats": {

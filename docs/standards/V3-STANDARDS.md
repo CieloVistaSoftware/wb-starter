@@ -1,4 +1,4 @@
-# WB Framework v3.0 Standards
+# Web Behaviors (WB) v3.0 Standards
 
 ## Overview
 

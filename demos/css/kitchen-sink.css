@@ -40,7 +40,7 @@
 
         /* Target pre inside footer */
         wb-code-card footer pre, .demo-block footer pre {
-            background: #1e1e1e;
+            background: var(--code-bg);
             padding: 1rem;
             overflow-x: auto;
             /* border-top handled by footer */
@@ -50,7 +50,7 @@
         
         wb-code-card footer pre.visible, .demo-block footer pre.visible { display: block; }
 
-        code { font-family: "Fira Code", monospace; font-size: 0.9rem; color: #d4d4d4; }
+        code { font-family: "Fira Code", monospace; font-size: 0.9rem; color: var(--code-text); }
 
         /* Toggle button styles handled by inline styles or button component */
 

@@ -4,5 +4,13 @@
   "title": "Move",
   "behavior": "move",
   "description": "Animation behavior to move elements.",
-  "properties": {}
+  "compliance": {
+    "baseClass": "wb-move",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

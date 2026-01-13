@@ -437,7 +437,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
         const textElements = document.querySelectorAll('p, span, div, button, a, h1, h2, h3, h4, h5, h6, li, td, th');
         
         textElements.forEach((el, i) => {
-          if (el.closest('[data-wb="mdhtml"]')) return; // Skip code blocks
+          if (el.closest('[data-wb="mdhtml"], wb-mdhtml')) return; // Skip code blocks
           
           const style = getComputedStyle(el);
           if (style.overflow === 'hidden' || style.display === 'none') return;

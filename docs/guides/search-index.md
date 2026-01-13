@@ -1,6 +1,6 @@
 # Search Index Generator
 
-Generate a client-side search index for WB Framework sites.
+Generate a client-side search index for Web Behaviors (WB) Framework sites.
 
 ## Overview
 
@@ -86,7 +86,7 @@ See `src/wb-models/search-index.schema.json` for the complete schema.
   "id": "pages/home",
   "url": "?page=home",
   "title": "Home",
-  "description": "Welcome to the WB Framework",
+  "description": "Welcome to the WB Behaviors",
   "headings": [
     { "level": 1, "text": "Welcome", "id": "welcome" },
     { "level": 2, "text": "Getting Started", "id": "getting-started" }

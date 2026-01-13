@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "articles.schema.json",
+  "title": "Articles List Component",
+  "description": "A wrapper component to display a list or grid of articles.",
+  "behavior": "articles",
+  "baseClass": "wb-articles",
+  "semanticElement": {
+    "tagName": "section",
+    "implicitRole": "feed"
+  },
+  "compliance": {
+    "baseClass": "wb-articles",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "layout": {
+      "type": "string",
+      "description": "Layout mode: grid, list, or masonry",
+      "enum": [
+        "grid",
+        "list",
+        "masonry"
+      ],
+      "default": "grid"
+    },
+    "columns": {
+      "type": "number",
+      "description": "Number of columns for grid layout",
+      "default": 3
+    },
+    "limit": {
+      "type": "number",
+      "description": "Maximum number of articles to show",
+      "default": 10
+    },
+    "source": {
+      "type": "string",
+      "description": "Data source URL for fetching articles dynamically",
+      "default": ""
+    },
+    "pagination": {
+      "type": "boolean",
+      "description": "Enable pagination",
+      "default": false
+    }
+  },
+  "$view": [
+    {
+      "name": "header",
+      "tag": "header",
+      "class": "wb-articles__header",
+      "createdWhen": "title"
+    },
+    {
+      "name": "title",
+      "tag": "h2",
+      "parent": "header",
+      "content": "{{title}}",
+      "createdWhen": "title"
+    },
+    {
+      "name": "list",
+      "tag": "div",
+      "class": "wb-articles__list wb-articles--{{layout}}",
+      "content": "{{slot}}"
+    }
+  ],
+  "$cssAPI": {
+    "vars": {
+      "--gap": "Gap between articles",
+      "--col-min-width": "Minimum column width for responsive grid"
+    },
+    "parts": [
+      "list",
+      "article"
+    ]
+  },
+  "test": {
+    "setup": [
+      "<wb-articles layout=\"grid\"><wb-article title=\"1\"></wb-article><wb-article title=\"2\"></wb-article></wb-articles>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "layout": "grid"
+        },
+        {
+          "layout": "list"
+        },
+        {
+          "layout": "grid",
+          "columns": 2
+        }
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "layout",
+    "icon": "📰",
+    "related": [
+      "article",
+      "grid"
+    ]
+  },
+  "$methods": {}
+}

@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const modelsDir = path.join(__dirname, '../src/wb-models');
 const vscodeDataPath = path.join(__dirname, '../.vscode/html-custom-data.json');
@@ -85,37 +89,40 @@ function updateIntellisense() {
                  }
             }
 
+            // Construct attributes list for the tag
+            const tagAttributes = [];
+            if (schema.properties) {
+                for (const [propKey, propDef] of Object.entries(schema.properties)) {
+                    const attrDef = {
+                        name: propKey,
+                        description: propDef.description || propKey
+                    };
+                    
+                    if (propDef.enum) {
+                        attrDef.values = propDef.enum.map(e => ({ name: e }));
+                    }
+                    
+                    if (propDef.type === 'boolean') {
+                        attrDef.valueSet = 'v';
+                    }
+                    
+                    tagAttributes.push(attrDef);
+                }
+            }
+
             // --- 3. ADD MISSING TAG (wb-*) ---
             const existingTagIndex = vscodeData.tags.findIndex(t => t.name === tagName);
             
             if (existingTagIndex === -1) {
-                // Construct attributes list for the tag
-                const tagAttributes = [];
-                if (schema.properties) {
-                    for (const [propKey, propDef] of Object.entries(schema.properties)) {
-                        const attrDef = {
-                            name: propKey,
-                            description: propDef.description || propKey
-                        };
-                        
-                        if (propDef.enum) {
-                            attrDef.values = propDef.enum.map(e => ({ name: e }));
-                        }
-                        
-                        if (propDef.type === 'boolean') {
-                            attrDef.valueSet = 'v';
-                        }
-                        
-                        tagAttributes.push(attrDef);
-                    }
-                }
-
                 vscodeData.tags.push({
                     name: tagName,
                     description: (schema.title ? `${schema.title}\n\n` : '') + (schema.description || '') + variantInfo + cssInfo,
                     attributes: tagAttributes
                 });
                 addedTags++;
+            } else {
+                 vscodeData.tags[existingTagIndex].description = (schema.title ? `${schema.title}\n\n` : '') + (schema.description || '') + variantInfo + cssInfo;
+                 // We could update attributes too, but for now just description to fix the Forbidden Term
             }
 
         } catch (e) {

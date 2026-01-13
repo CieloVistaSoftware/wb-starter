@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node scripts/update-docs-manifest.js && node server.js",
     "dev": "npx serve . -p 3000",
-    "test": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors",
+    "test:duplicates": "node scripts/test-duplicates.mjs",
+    "test": "npm run test:duplicates && npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors",
     "test:fast": "npx playwright test --max-failures=1",
     "test:dev": "npx playwright test --project=base --project=behaviors",
     "test:inc": "node scripts/test-incremental.js",

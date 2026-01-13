@@ -1,45 +1,27 @@
 {
   "$schema": "../wb-models/views.schema.json",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "WB Views Registry - Reusable HTML templates with IntelliSense support",
   
   "views": {
-    "demo-section": {
-      "description": "Standardized section wrapper for demos",
-      "template": "<section class=\"demo-section\">\n  <div class=\"section-header\">\n    <h2>{{title}}</h2>\n    <span class=\"badge\" wb-if=\"badge\">{{badge}}</span>\n  </div>\n  <div class=\"section-content\">\n    <p class=\"section-description\" wb-if=\"description\">{{description}}</p>\n    {{body}}\n  </div>\n</section>",
+    "alert-box": {
+      "description": "Alert/notification message box",
+      "template": "<div class=\"alert alert--{{variant || 'info'}}\" role=\"alert\">\n  <span class=\"alert__icon\" wb-if=\"icon\">{{icon}}</span>\n  <div class=\"alert__content\">\n    <strong class=\"alert__heading\" wb-if=\"heading\">{{heading}}</strong>\n    <div class=\"alert__message\"><slot>{{message}}</slot></div>\n  </div>\n  <button class=\"alert__dismiss\" wb-if=\"dismissible\" aria-label=\"Dismiss\">✕</button>\n</div>",
       "attributes": {
-        "title": { "type": "string", "required": true },
-        "badge": { "type": "string" },
-        "description": { "type": "string" }
+        "variant": { "type": "string", "enum": ["info", "success", "warning", "error"], "default": "info" },
+        "heading": { "type": "string" },
+        "message": { "type": "string" },
+        "icon": { "type": "string" },
+        "dismissible": { "type": "boolean" }
       }
     },
 
-    "example-block": {
-      "description": "Renders example and shows source code",
-      "template": "<div class=\"example-block\">\n  <div class=\"example-label\">{{label}}</div>\n  <div class=\"example-render\">\n    {{body}}\n  </div>\n  <div class=\"example-codes\" wb-if=\"code\">\n    <div class=\"code-tabs\">\n      <button class=\"code-tab active\">HTML</button>\n    </div>\n    <pre class=\"code-panel active\">{{code}}</pre>\n  </div>\n</div>",
+    "badge": {
+      "description": "Small badge/tag label",
+      "template": "<span class=\"badge badge--{{variant || 'default'}}\"><slot>{{label}}</slot></span>",
       "attributes": {
         "label": { "type": "string", "required": true },
-        "code": { "type": "string" }
-      }
-    },
-
-    "component-tile": {
-      "description": "A small card with icon and label",
-      "template": "<div class=\"tile\">\n  <span class=\"tile__icon\">{{icon}}</span>\n  <span class=\"tile__label\">{{body || text}}</span>\n  <span class=\"tile__badge\" wb-if=\"badge\">{{badge}}</span>\n</div>",
-      "attributes": {
-        "icon": { "type": "string", "required": true },
-        "text": { "type": "string" },
-        "badge": { "type": "string" }
-      }
-    },
-
-    "badge-tag": {
-      "description": "Small status indicator/label",
-      "template": "<span class=\"badge-tag badge-tag--{{variant || 'primary'}}\">\n  <span wb-if=\"icon\">{{icon}}</span>\n  {{body || text}}\n</span>",
-      "attributes": {
-        "variant": { "type": "string", "enum": ["primary", "secondary", "success", "warning", "error"], "default": "primary" },
-        "icon": { "type": "string" },
-        "text": { "type": "string" }
+        "variant": { "type": "string", "enum": ["default", "primary", "success", "warning", "error", "info"], "default": "default" }
       }
     },
 
@@ -51,59 +33,42 @@
       }
     },
 
-    "tag-list": {
-      "description": "Simple list of string tags",
-      "template": "<div class=\"tags\">\n  <span class=\"tag\" wb-for=\"tag in tags\">{{tag}}</span>\n</div>",
+    "badge-tag": {
+      "description": "Small status indicator/label",
+      "template": "<span class=\"badge-tag badge-tag--{{variant || 'primary'}}\">\n  <span wb-if=\"icon\">{{icon}}</span>\n  <slot>{{text}}</slot>\n</span>",
       "attributes": {
-        "tags": { "type": "array", "required": true }
+        "variant": { "type": "string", "enum": ["primary", "secondary", "success", "warning", "error"], "default": "primary" },
+        "icon": { "type": "string" },
+        "text": { "type": "string" }
+      }
+    },
+
+    "button": {
+      "description": "Primary action button",
+      "template": "<button class=\"btn btn--{{variant || 'primary'}} btn--{{size || 'md'}}\" x-ripple {{disabled ? 'disabled' : ''}}>\n  <span class=\"btn__icon\" wb-if=\"icon\">{{icon}}</span>\n  <span class=\"btn__label\"><slot>{{label}}</slot></span>\n</button>",
+      "attributes": {
+        "label": { "type": "string", "required": true },
+        "variant": { "type": "string", "enum": ["primary", "secondary", "success", "warning", "error", "ghost", "outline"], "default": "primary" },
+        "size": { "type": "string", "enum": ["xs", "sm", "md", "lg", "xl"], "default": "md" },
+        "icon": { "type": "string" },
+        "disabled": { "type": "boolean" }
       }
     },
 
     "button-group": {
       "description": "Container for buttons",
-      "template": "<div class=\"button-group\">{{body}}</div>",
+      "template": "<div class=\"button-group\"><slot></slot></div>",
       "attributes": {}
     },
 
     "card": {
       "description": "Container with header and body",
-      "template": "<div class=\"card\">\n  <div class=\"card__header\" wb-if=\"title\">\n    <div class=\"card__header-content\">\n      <span class=\"card__title\">{{title}}</span>\n      <span class=\"card__subtitle\" wb-if=\"subtitle\">{{subtitle}}</span>\n    </div>\n    <span class=\"card__badge\" wb-if=\"badge\">{{badge}}</span>\n  </div>\n  <div class=\"card__body\">{{body}}</div>\n</div>",
+      "template": "<div class=\"card\">\n  <div class=\"card__header\" wb-if=\"title\">\n    <div class=\"card__header-content\">\n      <span class=\"card__title\">{{title}}</span>\n      <span class=\"card__subtitle\" wb-if=\"subtitle\">{{subtitle}}</span>\n    </div>\n    <span class=\"card__badge\" wb-if=\"badge\">{{badge}}</span>\n  </div>\n  <div class=\"card__body\"><slot></slot></div>\n</div>",
       "attributes": {
         "title": { "type": "string" },
         "subtitle": { "type": "string" },
         "badge": { "type": "string" }
       }
-    },
-
-    "user-card": {
-      "description": "Profile card with avatar and info",
-      "template": "<div class=\"user-card\">\n  <user-avatar initials=\"{{initials}}\" size=\"lg\" status=\"{{status}}\" name=\"{{name}}\"></user-avatar>\n  <div class=\"user-card__info\">\n    <div class=\"user-card__name\">{{name}}</div>\n    <div class=\"user-card__role\">{{role}}</div>\n  </div>\n  {{body}}\n</div>",
-      "attributes": {
-        "name": { "type": "string", "required": true },
-        "initials": { "type": "string" },
-        "role": { "type": "string" },
-        "status": { "type": "string", "enum": ["online", "offline", "busy", "away"] }
-      }
-    },
-
-    "toolbar": {
-      "description": "Container for actions",
-      "template": "<div class=\"toolbar\">\n  <div class=\"toolbar__center\">{{body}}</div>\n</div>",
-      "attributes": {}
-    },
-
-    "file-toolbar": {
-      "description": "Specialized toolbar for file actions",
-      "template": "<wb-toolbar>\n  <button-primary wb-for=\"item in items\" icon=\"{{item.icon}}\" variant=\"ghost\" label=\"{{item.label}}\"></button-primary>\n</wb-toolbar>",
-      "attributes": {
-        "items": { "type": "array", "required": true }
-      }
-    },
-
-    "stat-row": {
-      "description": "Grid container for stat tiles",
-      "template": "<div class=\"stat-row\">{{body}}</div>",
-      "attributes": {}
     },
 
     "card-tile": {
@@ -116,86 +81,64 @@
         "tag": { "type": "string" }
       }
     },
-    
-    "alert-box": {
-      "description": "Alert/notification message box",
-      "template": "<div class=\"alert alert--{{variant || 'info'}}\" role=\"alert\" x-ripple>\n  <span class=\"alert__icon\" wb-if=\"icon\">{{icon}}</span>\n  <div class=\"alert__content\">\n    <strong class=\"alert__heading\" wb-if=\"heading\">{{heading}}</strong>\n    <p class=\"alert__message\">{{message}}</p>\n  </div>\n  <button class=\"alert__dismiss\" wb-if=\"dismissible\" aria-label=\"Dismiss\">✕</button>\n</div>",
+
+    "component-tile": {
+      "description": "A small card with icon and label",
+      "template": "<div class=\"tile\">\n  <span class=\"tile__icon\">{{icon}}</span>\n  <span class=\"tile__label\"><slot>{{text}}</slot></span>\n  <span class=\"tile__badge\" wb-if=\"badge\">{{badge}}</span>\n</div>",
       "attributes": {
-        "variant": { "type": "string", "enum": ["info", "success", "warning", "error"], "default": "info" },
-        "heading": { "type": "string" },
-        "message": { "type": "string", "required": true },
-        "icon": { "type": "string" },
-        "dismissible": { "type": "boolean" }
+        "icon": { "type": "string", "required": true },
+        "text": { "type": "string" },
+        "badge": { "type": "string" }
       }
     },
-    
-    "stat-tile": {
-      "description": "Statistics display tile with trend indicator",
-      "template": "<div class=\"stat-tile\" x-ripple>\n  <span class=\"stat-tile__icon\" wb-if=\"icon\">{{icon}}</span>\n  <div class=\"stat-tile__content\">\n    <span class=\"stat-tile__value\">{{value}}</span>\n    <span class=\"stat-tile__label\">{{label}}</span>\n  </div>\n  <span class=\"stat-tile__trend stat-tile__trend--{{trend}}\" wb-if=\"trend\">{{trendValue}}</span>\n</div>",
+
+    "demo-section": {
+      "description": "Standardized section wrapper for demos",
+      "template": "<section class=\"demo-section\">\n  <div class=\"section-header\">\n    <h2>{{title}}</h2>\n    <span class=\"badge\" wb-if=\"badge\">{{badge}}</span>\n  </div>\n  <div class=\"section-content\">\n    <p class=\"section-description\" wb-if=\"description\">{{description}}</p>\n    <slot></slot>\n  </div>\n</section>",
       "attributes": {
-        "value": { "type": "string", "required": true },
-        "label": { "type": "string", "required": true },
-        "icon": { "type": "string" },
-        "trend": { "type": "string", "enum": ["up", "down", "flat"] },
-        "trend-value": { "type": "string" }
-      }
-    },
-    
-    "nav-link": {
-      "description": "Navigation link item",
-      "template": "<a href=\"{{href}}\" class=\"nav-link {{active ? 'nav-link--active' : ''}}\" x-ripple>\n  <span class=\"nav-link__icon\" wb-if=\"icon\">{{icon}}</span>\n  <span class=\"nav-link__label\">{{label}}</span>\n  <span class=\"nav-link__badge\" wb-if=\"badge\">{{badge}}</span>\n</a>",
-      "attributes": {
-        "href": { "type": "string", "required": true },
-        "label": { "type": "string", "required": true },
-        "icon": { "type": "string" },
+        "title": { "type": "string", "required": true },
         "badge": { "type": "string" },
-        "active": { "type": "boolean" }
+        "description": { "type": "string" }
       }
     },
-    
-    "user-avatar": {
-      "description": "User avatar with optional status indicator",
-      "template": "<div class=\"avatar avatar--{{size || 'md'}}\">\n  <img src=\"{{src}}\" alt=\"{{name}}\" class=\"avatar__image\" wb-if=\"src\">\n  <span class=\"avatar__initials\" wb-unless=\"src\">{{initials}}</span>\n  <span class=\"avatar__status avatar__status--{{status}}\" wb-if=\"status\"></span>\n</div>",
+
+    "empty-state": {
+      "description": "Empty state placeholder with optional action",
+      "template": "<div class=\"empty-state\">\n  <span class=\"empty-state__icon\">{{icon || '📭'}}</span>\n  <h3 class=\"empty-state__heading\">{{heading}}</h3>\n  <p class=\"empty-state__message\" wb-if=\"message\">{{message}}</p>\n  <div class=\"empty-state__action\" wb-if=\"actionLabel\"><slot>{{actionLabel}}</slot></div>\n</div>",
       "attributes": {
-        "src": { "type": "string" },
-        "name": { "type": "string", "required": true },
-        "initials": { "type": "string" },
-        "size": { "type": "string", "enum": ["xs", "sm", "md", "lg", "xl"], "default": "md" },
-        "status": { "type": "string", "enum": ["online", "offline", "busy", "away"] }
+        "heading": { "type": "string", "required": true },
+        "message": { "type": "string" },
+        "icon": { "type": "string", "default": "📭" },
+        "action-label": { "type": "string" }
       }
     },
-    
-    "price-tag": {
-      "description": "Price display with optional original price",
-      "template": "<div class=\"price-tag\">\n  <span class=\"price-tag__original\" wb-if=\"original\">{{original}}</span>\n  <span class=\"price-tag__current\">{{price}}</span>\n  <span class=\"price-tag__period\" wb-if=\"period\">{{period}}</span>\n</div>",
+
+    "example-block": {
+      "description": "Renders example and shows source code",
+      "template": "<div class=\"example-block\">\n  <div class=\"example-label\">{{label}}</div>\n  <div class=\"example-render\">\n    <slot></slot>\n  </div>\n  <div class=\"example-codes\" wb-if=\"code\">\n    <div class=\"code-tabs\">\n      <button class=\"code-tab active\">HTML</button>\n    </div>\n    <pre class=\"code-panel active\">{{code}}</pre>\n  </div>\n</div>",
       "attributes": {
-        "price": { "type": "string", "required": true },
-        "original": { "type": "string" },
-        "period": { "type": "string" }
+        "label": { "type": "string", "required": true },
+        "code": { "type": "string" }
       }
     },
-    
+
     "feature-item": {
       "description": "Feature list item with icon",
-      "template": "<li class=\"feature-item feature-item--{{included ? 'included' : 'excluded'}}\">\n  <span class=\"feature-item__icon\">{{included ? '✓' : '✗'}}</span>\n  <span class=\"feature-item__text\">{{text}}</span>\n</li>",
+      "template": "<li class=\"feature-item feature-item--{{included ? 'included' : 'excluded'}}\">\n  <span class=\"feature-item__icon\">{{included ? '✓' : '✗'}}</span>\n  <span class=\"feature-item__text\"><slot>{{text}}</slot></span>\n</li>",
       "attributes": {
         "text": { "type": "string", "required": true },
         "included": { "type": "boolean", "default": true }
       }
     },
-    
-    "button-primary": {
-      "description": "Primary action button",
-      "template": "<button class=\"btn btn--{{variant || 'primary'}} btn--{{size || 'md'}}\" x-ripple {{disabled ? 'disabled' : ''}}>\n  <span class=\"btn__icon\" wb-if=\"icon\">{{icon}}</span>\n  <span class=\"btn__label\">{{label}}</span>\n</button>",
+
+    "file-toolbar": {
+      "description": "Specialized toolbar for file actions",
+      "template": "<wb-toolbar>\n  <wb-button wb-for=\"item in items\" icon=\"{{item.icon}}\" variant=\"ghost\" label=\"{{item.label}}\"></wb-button>\n</wb-toolbar>",
       "attributes": {
-        "label": { "type": "string", "required": true },
-        "variant": { "type": "string", "enum": ["primary", "secondary", "success", "warning", "error", "ghost", "outline"], "default": "primary" },
-        "size": { "type": "string", "enum": ["xs", "sm", "md", "lg", "xl"], "default": "md" },
-        "icon": { "type": "string" },
-        "disabled": { "type": "boolean" }
+        "items": { "type": "array", "required": true }
       }
     },
-    
+
     "icon-button": {
       "description": "Icon-only button",
       "template": "<button class=\"icon-btn icon-btn--{{variant || 'ghost'}} icon-btn--{{size || 'md'}}\" x-ripple x-tooltip=\"{{tooltip}}\" aria-label=\"{{tooltip}}\" {{disabled ? 'disabled' : ''}}>\n  {{icon}}\n</button>",
@@ -207,27 +150,7 @@
         "disabled": { "type": "boolean" }
       }
     },
-    
-    "badge": {
-      "description": "Small badge/tag label",
-      "template": "<span class=\"badge badge--{{variant || 'default'}}\">{{label}}</span>",
-      "attributes": {
-        "label": { "type": "string", "required": true },
-        "variant": { "type": "string", "enum": ["default", "primary", "success", "warning", "error", "info"], "default": "default" }
-      }
-    },
-    
-    "empty-state": {
-      "description": "Empty state placeholder with optional action",
-      "template": "<div class=\"empty-state\">\n  <span class=\"empty-state__icon\">{{icon || '📭'}}</span>\n  <h3 class=\"empty-state__heading\">{{heading}}</h3>\n  <p class=\"empty-state__message\" wb-if=\"message\">{{message}}</p>\n  <div class=\"empty-state__action\" wb-if=\"actionLabel\">{{body}}</div>\n</div>",
-      "attributes": {
-        "heading": { "type": "string", "required": true },
-        "message": { "type": "string" },
-        "icon": { "type": "string", "default": "📭" },
-        "action-label": { "type": "string" }
-      }
-    },
-    
+
     "loading-skeleton": {
       "description": "Loading placeholder skeleton",
       "template": "<div class=\"skeleton skeleton--{{variant || 'text'}}\" style=\"width: {{width || '100%'}}; height: {{height || 'auto'}}\"></div>",
@@ -235,6 +158,83 @@
         "variant": { "type": "string", "enum": ["text", "heading", "avatar", "image", "card"], "default": "text" },
         "width": { "type": "string", "default": "100%" },
         "height": { "type": "string" }
+      }
+    },
+
+    "nav-link": {
+      "description": "Navigation link item",
+      "template": "<a href=\"{{href}}\" class=\"nav-link {{active ? 'nav-link--active' : ''}}\" x-ripple>\n  <span class=\"nav-link__icon\" wb-if=\"icon\">{{icon}}</span>\n  <span class=\"nav-link__label\"><slot>{{label}}</slot></span>\n  <span class=\"nav-link__badge\" wb-if=\"badge\">{{badge}}</span>\n</a>",
+      "attributes": {
+        "href": { "type": "string", "required": true },
+        "label": { "type": "string", "required": true },
+        "icon": { "type": "string" },
+        "badge": { "type": "string" },
+        "active": { "type": "boolean" }
+      }
+    },
+
+    "price-tag": {
+      "description": "Price display with optional original price",
+      "template": "<div class=\"price-tag\">\n  <span class=\"price-tag__original\" wb-if=\"original\">{{original}}</span>\n  <span class=\"price-tag__current\">{{price}}</span>\n  <span class=\"price-tag__period\" wb-if=\"period\">{{period}}</span>\n</div>",
+      "attributes": {
+        "price": { "type": "string", "required": true },
+        "original": { "type": "string" },
+        "period": { "type": "string" }
+      }
+    },
+
+    "stat-row": {
+      "description": "Grid container for stat tiles",
+      "template": "<div class=\"stat-row\"><slot></slot></div>",
+      "attributes": {}
+    },
+
+    "stat-tile": {
+      "description": "Statistics display tile with trend indicator",
+      "template": "<div class=\"stat-tile\" x-ripple>\n  <span class=\"stat-tile__icon\" wb-if=\"icon\">{{icon}}</span>\n  <div class=\"stat-tile__content\">\n    <span class=\"stat-tile__value\">{{value}}</span>\n    <span class=\"stat-tile__label\"><slot>{{label}}</slot></span>\n  </div>\n  <span class=\"stat-tile__trend stat-tile__trend--{{trend}}\" wb-if=\"trend\">{{trendValue}}</span>\n</div>",
+      "attributes": {
+        "value": { "type": "string", "required": true },
+        "label": { "type": "string", "required": true },
+        "icon": { "type": "string" },
+        "trend": { "type": "string", "enum": ["up", "down", "flat"] },
+        "trend-value": { "type": "string" }
+      }
+    },
+
+    "tag-list": {
+      "description": "Simple list of string tags",
+      "template": "<div class=\"tags\">\n  <span class=\"tag\" wb-for=\"tag in tags\">{{tag}}</span>\n</div>",
+      "attributes": {
+        "tags": { "type": "array", "required": true }
+      }
+    },
+
+    "toolbar": {
+      "description": "Container for actions",
+      "template": "<div class=\"toolbar\">\n  <div class=\"toolbar__center\"><slot></slot></div>\n</div>",
+      "attributes": {}
+    },
+
+    "user-avatar": {
+      "description": "User avatar with optional status indicator",
+      "template": "<div class=\"avatar avatar--{{size || 'md'}}\">\n  <img src=\"{{src}}\" alt=\"{{name}}\" class=\"avatar__image\" wb-if=\"src\">\n  <span class=\"avatar__initials\" wb-unless=\"src\">{{initials}}</span>\n  <span class=\"avatar__status avatar__status--{{status}}\" wb-if=\"status\"></span>\n</div>",
+      "attributes": {
+        "src": { "type": "string" },
+        "name": { "type": "string", "required": true },
+        "initials": { "type": "string" },
+        "size": { "type": "string", "enum": ["xs", "sm", "md", "lg", "xl"], "default": "md" },
+        "status": { "type": "string", "enum": ["online", "offline", "busy", "away"] }
+      }
+    },
+
+    "user-card": {
+      "description": "Profile card with avatar and info",
+      "template": "<div class=\"user-card\">\n  <user-avatar initials=\"{{initials}}\" size=\"lg\" status=\"{{status}}\" name=\"{{name}}\"></user-avatar>\n  <div class=\"user-card__info\">\n    <div class=\"user-card__name\">{{name}}</div>\n    <div class=\"user-card__role\">{{role}}</div>\n  </div>\n  <slot></slot>\n</div>",
+      "attributes": {
+        "name": { "type": "string", "required": true },
+        "initials": { "type": "string" },
+        "role": { "type": "string" },
+        "status": { "type": "string", "enum": ["online", "offline", "busy", "away"] }
       }
     }
   }

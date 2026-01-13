@@ -3,74 +3,265 @@
   "$id": "select.schema.json",
   "title": "Select",
   "description": "Enhanced select dropdown with search, clear, and multi-select",
-  
   "behavior": "select",
   "baseClass": "wb-select",
-  
-  "semanticElement": { "tagName": "div", "implicitRole": "combobox" },
-  
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "combobox"
+  },
+  "compliance": {
+    "baseClass": "wb-select",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "label": { "type": "string", "description": "Select label" },
-    "placeholder": { "type": "string", "description": "Placeholder text", "default": "Select..." },
-    "options": { "type": "string", "description": "Options as JSON [{value, label}]" },
-    "value": { "type": "string", "description": "Selected value" },
-    "name": { "type": "string", "description": "Form field name" },
-    "searchable": { "type": "boolean", "description": "Enable search", "default": false, "appliesClass": "wb-select--searchable" },
-    "clearable": { "type": "boolean", "description": "Enable clear button", "default": false, "appliesClass": "wb-select--clearable" },
-    "multiple": { "type": "boolean", "description": "Allow multiple selection", "default": false, "appliesClass": "wb-select--multiple" },
-    "disabled": { "type": "boolean", "description": "Disabled state", "default": false },
-    "required": { "type": "boolean", "description": "Required field", "default": false },
-    "size": { "type": "string", "enum": ["sm", "md", "lg"], "default": "md", "appliesClass": "wb-select--{{value}}" },
-    "variant": { "type": "string", "enum": ["default", "success", "error"], "default": "default", "appliesClass": "wb-select--{{value}}" }
+    "label": {
+      "type": "string",
+      "description": "Select label"
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "Placeholder text",
+      "default": "Select..."
+    },
+    "options": {
+      "type": "string",
+      "description": "Options as JSON [{value, label}]"
+    },
+    "value": {
+      "type": "string",
+      "description": "Selected value"
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name"
+    },
+    "searchable": {
+      "type": "boolean",
+      "description": "Enable search",
+      "default": false,
+      "appliesClass": "wb-select--searchable"
+    },
+    "clearable": {
+      "type": "boolean",
+      "description": "Enable clear button",
+      "default": false,
+      "appliesClass": "wb-select--clearable"
+    },
+    "multiple": {
+      "type": "boolean",
+      "description": "Allow multiple selection",
+      "default": false,
+      "appliesClass": "wb-select--multiple"
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Disabled state",
+      "default": false
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Required field",
+      "default": false
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "appliesClass": "wb-select--{{value}}"
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "default",
+        "success",
+        "error"
+      ],
+      "default": "default",
+      "appliesClass": "wb-select--{{value}}"
+    }
   },
-  
   "$view": [
-    { "name": "label", "tag": "label", "public": true, "content": "{{label}}", "createdWhen": "label", "description": "Select label" },
-    { "name": "trigger", "tag": "button", "public": true, "required": true, "description": "Dropdown trigger" },
-    { "name": "value-display", "tag": "span", "parent": "trigger", "public": true, "description": "Selected value display" },
-    { "name": "arrow", "tag": "span", "parent": "trigger", "public": false, "description": "Dropdown arrow" },
-    { "name": "clear", "tag": "button", "parent": "trigger", "public": true, "createdWhen": "clearable AND value", "description": "Clear button" },
-    { "name": "dropdown", "tag": "div", "public": true, "description": "Dropdown container" },
-    { "name": "search", "tag": "input", "parent": "dropdown", "public": true, "createdWhen": "searchable", "description": "Search input" },
-    { "name": "options", "tag": "ul", "parent": "dropdown", "public": true, "description": "Options list" }
+    {
+      "name": "label",
+      "tag": "label",
+      "public": true,
+      "content": "{{label}}",
+      "createdWhen": "label",
+      "description": "Select label"
+    },
+    {
+      "name": "trigger",
+      "tag": "button",
+      "public": true,
+      "required": true,
+      "description": "Dropdown trigger"
+    },
+    {
+      "name": "value-display",
+      "tag": "span",
+      "parent": "trigger",
+      "public": true,
+      "description": "Selected value display"
+    },
+    {
+      "name": "arrow",
+      "tag": "span",
+      "parent": "trigger",
+      "public": false,
+      "description": "Dropdown arrow"
+    },
+    {
+      "name": "clear",
+      "tag": "button",
+      "parent": "trigger",
+      "public": true,
+      "createdWhen": "clearable AND value",
+      "description": "Clear button"
+    },
+    {
+      "name": "dropdown",
+      "tag": "div",
+      "public": true,
+      "description": "Dropdown container"
+    },
+    {
+      "name": "search",
+      "tag": "input",
+      "parent": "dropdown",
+      "public": true,
+      "createdWhen": "searchable",
+      "description": "Search input"
+    },
+    {
+      "name": "options",
+      "tag": "ul",
+      "parent": "dropdown",
+      "public": true,
+      "description": "Options list"
+    }
   ],
-  
   "$methods": {
-    "getValue": { "description": "Gets selected value(s)", "params": [], "returns": "string | string[]" },
-    "setValue": { "description": "Sets selected value(s)", "params": ["value"] },
-    "clear": { "description": "Clears selection", "params": [] },
-    "open": { "description": "Opens dropdown", "params": [] },
-    "close": { "description": "Closes dropdown", "params": [] },
-    "toggle": { "description": "Toggles dropdown", "params": [] },
-    "focus": { "description": "Focuses the select", "params": [] },
-    "enable": { "description": "Enables the select", "params": [] },
-    "disable": { "description": "Disables the select", "params": [] },
-    "setOptions": { "description": "Updates options", "params": ["options"] }
+    "getValue": {
+      "description": "Gets selected value(s)",
+      "params": [],
+      "returns": "string | string[]"
+    },
+    "setValue": {
+      "description": "Sets selected value(s)",
+      "params": [
+        "value"
+      ]
+    },
+    "clear": {
+      "description": "Clears selection",
+      "params": []
+    },
+    "open": {
+      "description": "Opens dropdown",
+      "params": []
+    },
+    "close": {
+      "description": "Closes dropdown",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles dropdown",
+      "params": []
+    },
+    "focus": {
+      "description": "Focuses the select",
+      "params": []
+    },
+    "enable": {
+      "description": "Enables the select",
+      "params": []
+    },
+    "disable": {
+      "description": "Disables the select",
+      "params": []
+    },
+    "setOptions": {
+      "description": "Updates options",
+      "params": [
+        "options"
+      ]
+    }
   },
-  
   "$cssAPI": {
-    "--wb-select-height": { "default": "2.5rem", "description": "Select height" },
-    "--wb-select-padding": { "default": "0 0.75rem", "description": "Select padding" },
-    "--wb-select-radius": { "default": "4px", "description": "Border radius" },
-    "--wb-select-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Background" },
-    "--wb-select-border": { "default": "1px solid var(--border-color, #d1d5db)", "description": "Border" },
-    "--wb-select-focus-border": { "default": "var(--primary, #6366f1)", "description": "Focus border color" },
-    "--wb-select-focus-ring": { "default": "0 0 0 3px rgba(99, 102, 241, 0.2)", "description": "Focus ring" },
-    "--wb-select-dropdown-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Dropdown background" },
-    "--wb-select-dropdown-shadow": { "default": "0 4px 12px rgba(0,0,0,0.15)", "description": "Dropdown shadow" },
-    "--wb-select-dropdown-radius": { "default": "4px", "description": "Dropdown radius" },
-    "--wb-select-option-padding": { "default": "0.5rem 0.75rem", "description": "Option padding" },
-    "--wb-select-option-hover-bg": { "default": "var(--bg-secondary, #f3f4f6)", "description": "Option hover background" },
-    "--wb-select-option-selected-bg": { "default": "var(--primary-light, #e0e7ff)", "description": "Selected option background" }
+    "--wb-select-height": {
+      "default": "2.5rem",
+      "description": "Select height"
+    },
+    "--wb-select-padding": {
+      "default": "0 0.75rem",
+      "description": "Select padding"
+    },
+    "--wb-select-radius": {
+      "default": "4px",
+      "description": "Border radius"
+    },
+    "--wb-select-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Background"
+    },
+    "--wb-select-border": {
+      "default": "1px solid var(--border-color, #d1d5db)",
+      "description": "Border"
+    },
+    "--wb-select-focus-border": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Focus border color"
+    },
+    "--wb-select-focus-ring": {
+      "default": "0 0 0 3px rgba(99, 102, 241, 0.2)",
+      "description": "Focus ring"
+    },
+    "--wb-select-dropdown-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Dropdown background"
+    },
+    "--wb-select-dropdown-shadow": {
+      "default": "0 4px 12px rgba(0,0,0,0.15)",
+      "description": "Dropdown shadow"
+    },
+    "--wb-select-dropdown-radius": {
+      "default": "4px",
+      "description": "Dropdown radius"
+    },
+    "--wb-select-option-padding": {
+      "default": "0.5rem 0.75rem",
+      "description": "Option padding"
+    },
+    "--wb-select-option-hover-bg": {
+      "default": "var(--bg-secondary, #f3f4f6)",
+      "description": "Option hover background"
+    },
+    "--wb-select-option-selected-bg": {
+      "default": "var(--primary-light, #e0e7ff)",
+      "description": "Selected option background"
+    }
   },
-  
   "events": {
-    "wb:select:change": { "description": "Selection changed", "detail": { "value": "string | string[]" } },
-    "wb:select:open": { "description": "Dropdown opened" },
-    "wb:select:close": { "description": "Dropdown closed" }
+    "wb:select:change": {
+      "description": "Selection changed",
+      "detail": {
+        "value": "string | string[]"
+      }
+    },
+    "wb:select:open": {
+      "description": "Dropdown opened"
+    },
+    "wb:select:close": {
+      "description": "Dropdown closed"
+    }
   },
-  
   "test": {
+    "functional": true,
     "setup": [
       "<wb-select options='[{\"value\":\"1\",\"label\":\"Option 1\"}]'></wb-select>",
       "<select data-wb=\"select\"><option value=\"1\">One</option></select>"
@@ -78,13 +269,25 @@
     "matrix": {
       "combinations": [
         {},
-        { "searchable": true },
-        { "clearable": true },
-        { "multiple": true },
-        { "disabled": true }
+        {
+          "searchable": true
+        },
+        {
+          "clearable": true
+        },
+        {
+          "multiple": true
+        },
+        {
+          "disabled": true
+        }
       ]
     }
   },
-  
-  "_metadata": { "category": "forms", "icon": "📋", "since": "1.0.0", "status": "stable" }
+  "_metadata": {
+    "category": "forms",
+    "icon": "📋",
+    "since": "1.0.0",
+    "status": "stable"
+  }
 }

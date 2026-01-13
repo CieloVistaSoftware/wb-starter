@@ -1,54 +1,21 @@
 <!-- SPA Contact Section - id="contact" -->
-<section id="contact" style="padding: 5rem 2rem; background: var(--bg-primary, #fff);">
-  <div style="max-width: 1000px; margin: 0 auto;">
-    <div style="text-align: center; margin-bottom: 3rem;">
-      <h2 style="font-size: 2.5rem; font-weight: 700; color: var(--text-primary, #1a1a2e); margin-bottom: 1rem;">Get In Touch</h2>
-      <p style="font-size: 1.1rem; color: var(--text-secondary, #666); max-width: 600px; margin: 0 auto;">Have a question or want to work together? We'd love to hear from you.</p>
-    </div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
-      <div>
-        <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem;">Contact Information</h3>
-        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <div style="width: 48px; height: 48px; background: var(--primary, #6366f1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">📍</div>
-            <div>
-              <div style="font-weight: 600;">Address</div>
-              <div style="color: var(--text-secondary, #666);">123 Business Street, Suite 100<br>City, State 12345</div>
-            </div>
-          </div>
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <div style="width: 48px; height: 48px; background: var(--primary, #6366f1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">📧</div>
-            <div>
-              <div style="font-weight: 600;">Email</div>
-              <div style="color: var(--text-secondary, #666);">hello@example.com</div>
-            </div>
-          </div>
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <div style="width: 48px; height: 48px; background: var(--primary, #6366f1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">📞</div>
-            <div>
-              <div style="font-weight: 600;">Phone</div>
-              <div style="color: var(--text-secondary, #666);">(123) 456-7890</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <form style="display: flex; flex-direction: column; gap: 1rem;">
-          <div>
-            <label style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-primary, #1a1a2e);">Name</label>
-            <input type="text" placeholder="Your name" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem;">
-          </div>
-          <div>
-            <label style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-primary, #1a1a2e);">Email</label>
-            <input type="email" placeholder="your@email.com" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem;">
-          </div>
-          <div>
-            <label style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-primary, #1a1a2e);">Message</label>
-            <textarea placeholder="Your message..." rows="4" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; resize: vertical;"></textarea>
-          </div>
-          <button type="submit" style="padding: 1rem 2rem; background: var(--primary, #6366f1); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;">Send Message</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
+<wb-container data-id="contact" data-direction="column" data-gap="2rem" data-padding="5rem 2rem" data-align="center" data-max-width="1200px">
+  <header style="text-align: center; margin-bottom: 2rem;">
+    <h2>Get In Touch</h2>
+    <p>Have a question or want to work together? We'd love to hear from you.</p>
+  </header>
+  <wb-grid data-columns="2" data-gap="3rem">
+    <wb-container data-direction="column" data-gap="1.5rem">
+      <h3>Contact Information</h3>
+      <wb-cardhorizontal data-icon="📍" data-title="Address" data-subtitle="123 Business Street, Suite 100, City, State 12345"></wb-cardhorizontal>
+      <wb-cardhorizontal data-icon="📧" data-title="Email" data-subtitle="hello@example.com"></wb-cardhorizontal>
+      <wb-cardhorizontal data-icon="📞" data-title="Phone" data-subtitle="(123) 456-7890"></wb-cardhorizontal>
+    </wb-container>
+    <form action="#" method="post" style="display: flex; flex-direction: column; gap: 1rem;">
+      <wb-input data-label="Name" data-name="name" data-placeholder="Your name"></wb-input>
+      <wb-input data-label="Email" data-name="email" data-input-type="email" data-placeholder="your@email.com"></wb-input>
+      <wb-textarea data-label="Message" data-name="message" data-placeholder="Your message..." data-rows="4"></wb-textarea>
+      <wb-button data-type="submit" data-variant="primary">Send Message</wb-button>
+    </form>
+  </wb-grid>
+</wb-container>

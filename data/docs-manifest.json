@@ -1,6 +1,6 @@
 {
-  "generated": "2026-01-09T22:02:45.766Z",
-  "totalFiles": 117,
+  "generated": "2026-01-13T22:40:59.060Z",
+  "totalFiles": 121,
   "categories": [
     "_today",
     "architecture",
@@ -28,7 +28,7 @@
       },
       {
         "path": "docs/architecture/SCHEMA-SPECIFICATION.md",
-        "title": "WB Schema Specification v3.0",
+        "title": "Web Behaviors (WB) Schema Specification v3.0",
         "name": "SCHEMA-SPECIFICATION",
         "category": "architecture"
       },
@@ -156,7 +156,7 @@
       },
       {
         "path": "docs/index.md",
-        "title": "WB Framework Documentation",
+        "title": "Web Behaviors (WB) Documentation",
         "name": "index",
         "category": "root"
       },
@@ -173,14 +173,26 @@
         "category": "root"
       },
       {
+        "path": "docs/linkedin-framework-agnostic.md",
+        "title": "LinkedIn Article: The AI Architect: Why the Future of Web Tools is Framework Agnostic",
+        "name": "linkedin-framework-agnostic",
+        "category": "root"
+      },
+      {
+        "path": "docs/linkedin-standards-article.md",
+        "title": "LinkedIn Article: The 3 Non-Negotiable Standards of Our Front-End Architecture",
+        "name": "linkedin-standards-article",
+        "category": "root"
+      },
+      {
         "path": "docs/MVVM-MIGRATION-PLAN.md",
-        "title": "WB Framework MVVM Migration Plan",
+        "title": "Web Behaviors (WB) MVVM Migration Plan",
         "name": "MVVM-MIGRATION-PLAN",
         "category": "root"
       },
       {
         "path": "docs/MVVM-MIGRATION.md",
-        "title": "WB Framework MVVM Migration",
+        "title": "Web Behaviors (WB) MVVM Migration",
         "name": "MVVM-MIGRATION",
         "category": "root"
       },
@@ -212,6 +224,12 @@
         "path": "docs/properties.md",
         "title": "Web Behaviors (WB) - Property System Documentation",
         "name": "properties",
+        "category": "root"
+      },
+      {
+        "path": "docs/property-viewer.md",
+        "title": "Property Viewer (Right Panel)",
+        "name": "property-viewer",
         "category": "root"
       },
       {
@@ -306,6 +324,12 @@
         "path": "docs/builder/BUILDER-FIXES.md",
         "title": "BUILDER BROKEN - Critical Fixes Needed",
         "name": "BUILDER-FIXES",
+        "category": "builder"
+      },
+      {
+        "path": "docs/builder/builder-tree.md",
+        "title": "WB Builder Tree Panel - Comprehensive Schema",
+        "name": "builder-tree",
         "category": "builder"
       }
     ],
@@ -714,7 +738,7 @@
     "standards": [
       {
         "path": "docs/standards/V3-STANDARDS.md",
-        "title": "WB Framework v3.0 Standards",
+        "title": "Web Behaviors (WB) v3.0 Standards",
         "name": "V3-STANDARDS",
         "category": "standards"
       }
@@ -722,7 +746,7 @@
     "_today": [
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "Current Status - Web Behaviors (WB) Starter",
+        "title": "# WB Framework v3.0 - Duplicate Variables Fix Status",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -737,7 +761,7 @@
   "files": [
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "Current Status - Web Behaviors (WB) Starter",
+      "title": "# WB Framework v3.0 - Duplicate Variables Fix Status",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -767,7 +791,7 @@
     },
     {
       "path": "docs/architecture/SCHEMA-SPECIFICATION.md",
-      "title": "WB Schema Specification v3.0",
+      "title": "Web Behaviors (WB) Schema Specification v3.0",
       "name": "SCHEMA-SPECIFICATION",
       "category": "architecture"
     },
@@ -853,6 +877,12 @@
       "path": "docs/builder/BUILDER-FIXES.md",
       "title": "BUILDER BROKEN - Critical Fixes Needed",
       "name": "BUILDER-FIXES",
+      "category": "builder"
+    },
+    {
+      "path": "docs/builder/builder-tree.md",
+      "title": "WB Builder Tree Panel - Comprehensive Schema",
+      "name": "builder-tree",
       "category": "builder"
     },
     {
@@ -1295,7 +1325,7 @@
     },
     {
       "path": "docs/index.md",
-      "title": "WB Framework Documentation",
+      "title": "Web Behaviors (WB) Documentation",
       "name": "index",
       "category": "root"
     },
@@ -1312,14 +1342,26 @@
       "category": "root"
     },
     {
+      "path": "docs/linkedin-framework-agnostic.md",
+      "title": "LinkedIn Article: The AI Architect: Why the Future of Web Tools is Framework Agnostic",
+      "name": "linkedin-framework-agnostic",
+      "category": "root"
+    },
+    {
+      "path": "docs/linkedin-standards-article.md",
+      "title": "LinkedIn Article: The 3 Non-Negotiable Standards of Our Front-End Architecture",
+      "name": "linkedin-standards-article",
+      "category": "root"
+    },
+    {
       "path": "docs/MVVM-MIGRATION-PLAN.md",
-      "title": "WB Framework MVVM Migration Plan",
+      "title": "Web Behaviors (WB) MVVM Migration Plan",
       "name": "MVVM-MIGRATION-PLAN",
       "category": "root"
     },
     {
       "path": "docs/MVVM-MIGRATION.md",
-      "title": "WB Framework MVVM Migration",
+      "title": "Web Behaviors (WB) MVVM Migration",
       "name": "MVVM-MIGRATION",
       "category": "root"
     },
@@ -1354,6 +1396,12 @@
       "category": "root"
     },
     {
+      "path": "docs/property-viewer.md",
+      "title": "Property Viewer (Right Panel)",
+      "name": "property-viewer",
+      "category": "root"
+    },
+    {
       "path": "docs/schema-first-architecture.md",
       "title": "Schema-First MVVM Architecture",
       "name": "schema-first-architecture",
@@ -1385,7 +1433,7 @@
     },
     {
       "path": "docs/standards/V3-STANDARDS.md",
-      "title": "WB Framework v3.0 Standards",
+      "title": "Web Behaviors (WB) v3.0 Standards",
       "name": "V3-STANDARDS",
       "category": "standards"
     },

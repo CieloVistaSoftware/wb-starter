@@ -142,6 +142,7 @@ export function checkbox(element, options = {}) {
   };
 
   element.classList.add('wb-checkbox-input');
+  element.classList.add('wb-checkbox');
 
   // Set indeterminate state
   if (config.indeterminate) {

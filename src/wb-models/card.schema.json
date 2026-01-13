@@ -5,12 +5,15 @@
   "description": "Base card component. IS-A article, HAS-A header, main, footer.",
   "behavior": "card",
   "baseClass": "wb-card",
-  
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
-  
+  "compliance": {
+    "baseClass": "wb-card",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "title": {
       "type": "string",
@@ -42,45 +45,48 @@
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["default", "glass", "bordered", "flat"],
+      "enum": [
+        "default",
+        "glass",
+        "bordered",
+        "flat"
+      ],
       "default": "default"
     }
   },
-  
   "$view": [
-    { 
-      "name": "header", 
-      "tag": "header", 
+    {
+      "name": "header",
+      "tag": "header",
       "createdWhen": "title OR subtitle"
     },
-    { 
-      "name": "title", 
-      "tag": "h3", 
-      "parent": "header", 
+    {
+      "name": "title",
+      "tag": "h3",
+      "parent": "header",
       "content": "{{title}}",
       "createdWhen": "title"
     },
-    { 
-      "name": "subtitle", 
-      "tag": "p", 
-      "parent": "header", 
+    {
+      "name": "subtitle",
+      "tag": "p",
+      "parent": "header",
       "content": "{{subtitle}}",
       "createdWhen": "subtitle"
     },
-    { 
-      "name": "main", 
-      "tag": "main", 
-      "required": true, 
+    {
+      "name": "main",
+      "tag": "main",
+      "required": true,
       "content": "{{slot}}"
     },
-    { 
-      "name": "footer", 
-      "tag": "footer", 
+    {
+      "name": "footer",
+      "tag": "footer",
       "content": "{{footer}}",
       "createdWhen": "footer"
     }
   ],
-  
   "$methods": {
     "show": {
       "description": "Shows the card",
@@ -96,29 +102,72 @@
     },
     "update": {
       "description": "Updates card properties",
-      "params": ["options"]
-    }
-  },
-  
-  "test": {
-    "setup": [
-      "<wb-card title=\"Test\">Content</wb-card>",
-      "<article data-wb=\"card\" data-title=\"Test\">Content</article>"
-    ],
-    "matrix": {
-      "combinations": [
-        { "title": "Card" },
-        { "title": "Card", "subtitle": "Subtitle" },
-        { "title": "Card", "footer": "Footer" },
-        { "title": "Card", "subtitle": "Sub", "footer": "Foot" },
-        { "title": "Card", "elevated": true }
+      "params": [
+        "options"
       ]
     }
   },
-  
+  "$cssAPI": {
+    "--bg-secondary": {
+      "description": "Card background color"
+    },
+    "--border-color": {
+      "description": "Card border color"
+    },
+    "--radius-lg": {
+      "description": "Card border radius"
+    },
+    "--shadow-elevated": {
+      "description": "Box shadow for elevated state; 0 4px 12px rgba(0,0,0,0.15)"
+    },
+    "--shadow-hover": {
+      "description": "Box shadow on hover; 0 8px 24px rgba(0,0,0,0.2)"
+    }
+  },
+  "test": {
+    "functional": {
+      "visual": [
+        {
+          "name": "Basic Card",
+          "setup": "<article data-wb='card'>Content</article>",
+          "expect": {
+            "visible": true,
+            "hasClass": "wb-card"
+          }
+        },
+        {
+          "name": "Card with Header/Footer",
+          "setup": "<article data-wb='card' data-wb-title='Title' data-wb-footer='Footer'>Content</article>",
+          "expect": {
+            "textContains": "Title"
+          },
+          "checks": [
+            { "selector": "header", "visible": true },
+            { "selector": "footer", "visible": true, "textContains": "Footer" }
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "name": "Clickable Card",
+          "setup": "<article data-wb='card' data-wb-clickable='true'>Click Me</article>",
+          "action": "click",
+          "expect": {
+            "event": "click",
+            "hasClass": "wb-card--clickable"
+          }
+        }
+      ]
+    }
+  },
   "_metadata": {
     "category": "cards",
     "icon": "🃏",
-    "variants": ["cardprofile", "cardpricing", "cardstats", "cardimage"]
+    "variants": [
+      "cardprofile",
+      "cardpricing",
+      "cardstats",
+      "cardimage"
+    ]
   }
 }

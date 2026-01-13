@@ -72,8 +72,6 @@ export function renderPropertyControl(wrapperId, propName, currentValue, compone
   let value = currentValue ?? defaultValue ?? '';
   const id = `prop-${wrapperId}-${propName}`;
 
-  // If the current value matches the default value, show it as placeholder instead
-  // This applies to text-like inputs where we want to show the default as a hint
   const isTextLike = ['text', 'number', 'email', 'url', 'tel', 'cssValue', 'textarea'].includes(uiType) || !['checkbox', 'boolean', 'select', 'color', 'date', 'time', 'datetime', 'file', 'image', 'audio', 'video', 'canvasEditable'].includes(uiType);
   
   let placeholder = def.placeholder || (defaultValue !== undefined && defaultValue !== null ? String(defaultValue) : '');
@@ -82,23 +80,20 @@ export function renderPropertyControl(wrapperId, propName, currentValue, compone
     value = '';
   }
 
-  // if (uiType === 'icon') return ''; // Explicitly exclude icon - User wants ALL fields editable
-
   switch (uiType) {
     case 'canvasEditable':
-      // User requested input fields for everything, even canvas-editable content
       return `<textarea class="prop-input" id="${id}" rows="3" placeholder="${escapeHtml(placeholder)}" oninput="updP('${wrapperId}','${propName}',this.value)">${escapeHtml(value)}</textarea>`;
     case 'checkbox': {
-      const checked = value === 'true' || value === true;
-      return `<label class="prop-toggle"><input type="checkbox" id="${id}" ${checked ? 'checked' : ''} onchange="updP('${wrapperId}','${propName}',this.checked)"><span class="prop-toggle-slider"></span><span class="prop-toggle-label">${checked ? 'On' : 'Off'}</span></label>`;
+      const isChecked = value === 'true' || value === true;
+      return `<label class="prop-toggle"><input type="checkbox" id="${id}" ${isChecked ? 'checked' : ''} onchange="updP('${wrapperId}','${propName}',this.checked)"><span class="prop-toggle-slider"></span><span class="prop-toggle-label">${isChecked ? 'On' : 'Off'}</span></label>`;
     }
     case 'text':
       return `<input type="text" class="prop-input" id="${id}" value="${escapeHtml(value)}" placeholder="${escapeHtml(placeholder)}" oninput="updP('${wrapperId}','${propName}',this.value)">`;
     case 'number':
       return `<input type="number" class="prop-input" id="${id}" value="${value}" placeholder="${escapeHtml(placeholder)}" oninput="updP('${wrapperId}','${propName}',this.value)">`;
     case 'boolean': {
-      const checked = value === 'true' || value === true;
-      return `<label class="prop-toggle"><input type="checkbox" id="${id}" ${checked ? 'checked' : ''} onchange="updP('${wrapperId}','${propName}',this.checked)"><span class="prop-toggle-slider"></span><span class="prop-toggle-label">${checked ? 'On' : 'Off'}</span></label>`;
+      const boolChecked = value === 'true' || value === true;
+      return `<label class="prop-toggle"><input type="checkbox" id="${id}" ${boolChecked ? 'checked' : ''} onchange="updP('${wrapperId}','${propName}',this.checked)"><span class="prop-toggle-slider"></span><span class="prop-toggle-label">${boolChecked ? 'On' : 'Off'}</span></label>`;
     }
     case 'select':
       return `<select class="prop-input" id="${id}" onchange="updP('${wrapperId}','${propName}',this.value)">${(def.options || []).map(opt => {
@@ -167,7 +162,11 @@ function renderFileControl(wrapperId, propName, value, uiType, def) {
     </div>`;
 }
 
+// Stub - Properties panel feature removed
 export function renderPropertiesPanel(wrapper, panelElement, onChange = null, scrollToProperty = null) {
+  // Feature removed
+  return;
+  /*
   try {
   if (!propertyConfig) {
     panelElement.innerHTML = '<div class="prop-loading">Loading properties...</div>';
@@ -179,23 +178,14 @@ export function renderPropertiesPanel(wrapper, panelElement, onChange = null, sc
   const behavior = componentData.b || '';
   const currentProps = componentData.d || {};
   
-  // Determine which section this element is in
   const section = wrapper.closest('.canvas-section');
   const sectionId = section?.dataset?.section || 'main';
-  const sectionName = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
-  const sectionIcon = sectionId === 'header' ? '🔝' : sectionId === 'footer' ? '🔻' : '📄';
   
-  // Merge current props with defaults for this component type
   const defaultProps = (propertyConfig.componentDefaults && propertyConfig.componentDefaults[behavior]) || {};
-  
-  // Create a unified set of all property names
   const allPropNames = new Set([...Object.keys(currentProps), ...Object.keys(defaultProps)]);
   
-  // FORCE: Always include Universal Properties (Layout) so user can resize anything
-  // This addresses user request to see width/height for header/parts
   const universalProps = ['width', 'height', 'minWidth', 'maxWidth', 'minHeight', 'maxHeight', 'padding', 'gap', 'margin', 'position', 'align', 'justify'];
   universalProps.forEach(p => {
-    // Only add if defined in config to avoid empty undefined props
     if (getPropertyDef(p, behavior)) {
       allPropNames.add(p);
     }
@@ -209,7 +199,6 @@ export function renderPropertiesPanel(wrapper, panelElement, onChange = null, sc
   
   for (const propName of allPropNames) {
     const def = getPropertyDef(propName, behavior);
-    // Use current value if set, otherwise use default from config
     const propValue = currentProps.hasOwnProperty(propName) ? currentProps[propName] : (defaultProps[propName] ?? def?.default);
     
     const category = def?.category || 'other';
@@ -232,16 +221,14 @@ export function renderPropertiesPanel(wrapper, panelElement, onChange = null, sc
   
   let html = '<div class="prop-panel-flexcol">';
   
-  
-  // Header with component type
   html += `<div class="prop-header">
     <div class="prop-header-left">
       <span class="prop-header-title">${behavior || componentData.n || 'Component'}</span>
     </div>
+    <button class="prop-header-btn" onclick="copyComponentDebugInfo('${wrapperId}')" title="Copy All (Debug Info)">📋</button>
     <button class="prop-header-help" onclick="showDocs('${behavior}')" title="View Documentation">❓</button>
   </div>`;
   
-  // Element ID field - can be overridden by user
   html += `<div class="prop-category">
     <div class="prop-category-header" onclick="this.parentElement.classList.toggle('collapsed')">
       <span class="prop-category-label">🆔 Element ID</span>
@@ -262,7 +249,6 @@ export function renderPropertiesPanel(wrapper, panelElement, onChange = null, sc
     </div>
   </div>`;
 
-  // Special "Morph" dropdown for Cards
   if (behavior.startsWith('card')) {
     const cardTypes = CARD_TYPES;
     
@@ -296,7 +282,6 @@ export function renderPropertiesPanel(wrapper, panelElement, onChange = null, sc
       <div class="prop-category-body">`;
       
     for (const prop of grouped[cat]) {
-      // STRICT MODE: Use exact property name as requested
       const label = prop.name;
       
       html += `<div class="prop-row">
@@ -315,9 +300,7 @@ export function renderPropertiesPanel(wrapper, panelElement, onChange = null, sc
   html += '</div>';
   panelElement.innerHTML = html;
 
-  // Scroll to specific property if requested
   if (scrollToProperty) {
-    // Small delay to ensure DOM is ready
     setTimeout(() => {
       const propId = `prop-${wrapperId}-${scrollToProperty}`;
       const propEl = document.getElementById(propId);
@@ -325,7 +308,6 @@ export function renderPropertiesPanel(wrapper, panelElement, onChange = null, sc
         const row = propEl.closest('.prop-row');
         if (row) {
           row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          // Add highlight effect
           row.style.transition = 'background 0.3s';
           row.style.background = 'rgba(59, 130, 246, 0.2)';
           setTimeout(() => {
@@ -339,6 +321,7 @@ export function renderPropertiesPanel(wrapper, panelElement, onChange = null, sc
     console.error('Error rendering properties:', err);
     panelElement.innerHTML = `<div class="prop-error">Error: ${err.message}</div>`;
   }
+  */
 }
 
 function escapeHtml(str) {
@@ -351,6 +334,11 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
+// Stub - DOM element properties feature removed
+export function renderDOMElementProperties(el, elKey, panelElement) {
+  // Feature removed - clicking DOM elements just highlights them
+}
+
 export default {
   loadPropertyConfig,
   getPropertyDef,
@@ -358,5 +346,6 @@ export default {
   getCategory,
   isCanvasEditable,
   renderPropertyControl,
-  renderPropertiesPanel
+  renderPropertiesPanel,
+  renderDOMElementProperties
 };

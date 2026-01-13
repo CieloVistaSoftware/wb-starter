@@ -3,15 +3,17 @@
   "$id": "input.schema.json",
   "title": "Input",
   "description": "Text input field with label, helper text, and validation states",
-  
   "behavior": "input",
   "baseClass": "wb-input",
-  
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "textbox"
   },
-  
+  "compliance": {
+    "baseClass": "wb-input",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "label": {
       "type": "string",
@@ -32,7 +34,18 @@
     "inputType": {
       "type": "string",
       "description": "HTML input type",
-      "enum": ["text", "email", "password", "number", "tel", "url", "search", "date", "time", "datetime-local"],
+      "enum": [
+        "text",
+        "email",
+        "password",
+        "number",
+        "tel",
+        "url",
+        "search",
+        "date",
+        "time",
+        "datetime-local"
+      ],
       "default": "text"
     },
     "helper": {
@@ -46,14 +59,22 @@
     "variant": {
       "type": "string",
       "description": "Visual validation state",
-      "enum": ["default", "success", "error"],
+      "enum": [
+        "default",
+        "success",
+        "error"
+      ],
       "default": "default",
       "appliesClass": "wb-input--{{value}}"
     },
     "size": {
       "type": "string",
       "description": "Input size",
-      "enum": ["sm", "md", "lg"],
+      "enum": [
+        "sm",
+        "md",
+        "lg"
+      ],
       "default": "md",
       "appliesClass": "wb-input--{{value}}"
     },
@@ -79,7 +100,10 @@
     "iconPosition": {
       "type": "string",
       "description": "Icon position",
-      "enum": ["start", "end"],
+      "enum": [
+        "start",
+        "end"
+      ],
       "default": "start"
     },
     "clearable": {
@@ -88,7 +112,6 @@
       "default": false
     }
   },
-  
   "$view": [
     {
       "name": "label",
@@ -166,7 +189,6 @@
       "description": "Error message"
     }
   ],
-  
   "$methods": {
     "getValue": {
       "description": "Gets the current input value",
@@ -175,7 +197,9 @@
     },
     "setValue": {
       "description": "Sets the input value",
-      "params": ["value"]
+      "params": [
+        "value"
+      ]
     },
     "clear": {
       "description": "Clears the input value",
@@ -195,7 +219,9 @@
     },
     "setError": {
       "description": "Sets error state and message",
-      "params": ["message"]
+      "params": [
+        "message"
+      ]
     },
     "clearError": {
       "description": "Clears error state",
@@ -215,7 +241,6 @@
       "params": []
     }
   },
-  
   "$cssAPI": {
     "--wb-input-height": {
       "default": "2.5rem",
@@ -322,22 +347,24 @@
       "description": "Icon color"
     }
   },
-  
   "accessibility": {
     "role": "textbox",
     "ariaRequired": "dynamic when required",
     "ariaInvalid": "dynamic when error",
     "ariaDescribedBy": "helper or error text id"
   },
-  
   "events": {
     "input": {
       "description": "Fired when value changes",
-      "detail": { "value": "string" }
+      "detail": {
+        "value": "string"
+      }
     },
     "change": {
       "description": "Fired when value is committed",
-      "detail": { "value": "string" }
+      "detail": {
+        "value": "string"
+      }
     },
     "focus": {
       "description": "Fired when input receives focus",
@@ -348,28 +375,69 @@
       "detail": {}
     }
   },
-  
   "test": {
-    "setup": [
-      "<wb-input placeholder=\"Enter text\"></wb-input>",
-      "<wb-input label=\"Email\" input-type=\"email\" placeholder=\"you@example.com\"></wb-input>",
-      "<wb-input label=\"Password\" input-type=\"password\" helper=\"At least 8 characters\"></wb-input>",
-      "<input data-wb=\"input\" placeholder=\"Test\">"
-    ],
-    "matrix": {
-      "combinations": [
-        { "placeholder": "Enter text" },
-        { "label": "Name", "placeholder": "Your name" },
-        { "label": "Email", "inputType": "email", "required": true },
-        { "label": "Field", "helper": "Helper text" },
-        { "label": "Field", "error": "This field is required" },
-        { "label": "Field", "variant": "success" },
-        { "label": "Field", "disabled": true },
-        { "label": "Search", "icon": "🔍", "clearable": true }
+    "functional": {
+      "interactions": [
+        {
+          "name": "Input Typing",
+          "setup": "<wb-input label='Type here'></wb-input>",
+          "action": "type",
+          "value": "Hello",
+          "expect": {
+            "value": "Hello",
+            "event": "input"
+          }
+        },
+        {
+          "name": "Clear Button",
+          "setup": "<wb-input label='Clear' value='Text' clearable></wb-input>",
+          "steps": [
+            { "action": "click", "selector": "button" }
+          ],
+          "expect": {
+            "value": ""
+          }
+        }
+      ],
+      "visual": [
+        {
+          "name": "Error State",
+          "setup": "<wb-input label='Error' error='Invalid' variant='error'></wb-input>",
+          "expect": {
+            "textContains": "Invalid",
+            "hasClass": "wb-input--error"
+          }
+        },
+        {
+          "name": "Helper Text",
+          "setup": "<wb-input label='Helper' helper='Help text'></wb-input>",
+          "expect": {
+            "textContains": "Help text"
+          }
+        }
+      ],
+      "disabled": [
+        {
+          "name": "Disabled Input",
+          "setup": "<wb-input label='Disabled' disabled></wb-input>",
+          "action": "click",
+          "expect": {
+            "attribute": { "disabled": "" }
+          }
+        }
+      ],
+      "focus": [
+        {
+          "name": "Focus Input",
+          "setup": "<wb-input label='Focus'></wb-input>",
+          "action": "click",
+          "expect": {
+            "focused": "input"
+          }
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "forms",
     "icon": "📝",

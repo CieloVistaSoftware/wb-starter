@@ -3,15 +3,17 @@
   "$id": "cardstats.schema.json",
   "title": "Stats Card",
   "description": "Statistics display card with value, label, icon, and trend indicator",
-  
   "behavior": "cardstats",
   "baseClass": "wb-stats",
-  
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
-  
+  "compliance": {
+    "baseClass": "wb-stats",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "value": {
       "type": "string",
@@ -29,7 +31,11 @@
     "trend": {
       "type": "string",
       "description": "Trend direction",
-      "enum": ["up", "down", "neutral"],
+      "enum": [
+        "up",
+        "down",
+        "neutral"
+      ],
       "appliesClass": "wb-stats--trend-{{value}}"
     },
     "trendValue": {
@@ -39,7 +45,12 @@
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["default", "compact", "large", "minimal"],
+      "enum": [
+        "default",
+        "compact",
+        "large",
+        "minimal"
+      ],
       "default": "default",
       "appliesClass": "wb-stats--{{value}}"
     },
@@ -48,7 +59,6 @@
       "description": "Accent color (CSS color value)"
     }
   },
-  
   "$view": [
     {
       "name": "header",
@@ -116,7 +126,6 @@
       "description": "Trend amount"
     }
   ],
-  
   "$methods": {
     "show": {
       "description": "Shows the stats card",
@@ -132,15 +141,19 @@
     },
     "update": {
       "description": "Updates the value and optionally trend",
-      "params": ["value", "trendValue"]
+      "params": [
+        "value",
+        "trendValue"
+      ]
     },
     "animate": {
       "description": "Animates the value counting up",
-      "params": ["duration"],
+      "params": [
+        "duration"
+      ],
       "returns": "Promise"
     }
   },
-  
   "$cssAPI": {
     "--wb-stats-padding": {
       "default": "1rem",
@@ -211,7 +224,6 @@
       "description": "Accent color (used for highlights)"
     }
   },
-  
   "test": {
     "setup": [
       "<wb-stats value=\"1,234\" label=\"Users\"></wb-stats>",
@@ -220,16 +232,37 @@
     ],
     "matrix": {
       "combinations": [
-        { "value": "100" },
-        { "value": "1,234", "label": "Users" },
-        { "value": "100", "icon": "📊" },
-        { "value": "100", "trend": "up", "trendValue": "+10%" },
-        { "value": "100", "trend": "down", "trendValue": "-5%" },
-        { "value": "$50K", "label": "Revenue", "icon": "💰", "trend": "up", "trendValue": "+12%" }
+        {
+          "value": "100"
+        },
+        {
+          "value": "1,234",
+          "label": "Users"
+        },
+        {
+          "value": "100",
+          "icon": "📊"
+        },
+        {
+          "value": "100",
+          "trend": "up",
+          "trendValue": "+10%"
+        },
+        {
+          "value": "100",
+          "trend": "down",
+          "trendValue": "-5%"
+        },
+        {
+          "value": "$50K",
+          "label": "Revenue",
+          "icon": "💰",
+          "trend": "up",
+          "trendValue": "+12%"
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "cards",
     "icon": "📊",

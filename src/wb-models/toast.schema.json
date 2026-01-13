@@ -3,15 +3,17 @@
   "$id": "toast.schema.json",
   "title": "Toast",
   "description": "Toast notification system for temporary messages",
-  
   "behavior": "toast",
-  "baseClass": "wb-toast",
-  
+  "baseClass": "wb-toast-trigger",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "alert"
   },
-  
+  "compliance": {
+    "baseClass": "wb-toast",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "message": {
       "type": "string",
@@ -25,7 +27,12 @@
     "variant": {
       "type": "string",
       "description": "Toast severity/type",
-      "enum": ["info", "success", "warning", "error"],
+      "enum": [
+        "info",
+        "success",
+        "warning",
+        "error"
+      ],
       "default": "info",
       "appliesClass": "wb-toast--{{value}}"
     },
@@ -43,7 +50,14 @@
     "position": {
       "type": "string",
       "description": "Toast container position",
-      "enum": ["top-right", "top-left", "top-center", "bottom-right", "bottom-left", "bottom-center"],
+      "enum": [
+        "top-right",
+        "top-left",
+        "top-center",
+        "bottom-right",
+        "bottom-left",
+        "bottom-center"
+      ],
       "default": "top-right"
     },
     "dismissible": {
@@ -60,7 +74,6 @@
       "description": "Action button link URL"
     }
   },
-  
   "$view": [
     {
       "name": "container",
@@ -130,11 +143,13 @@
       "description": "Close button"
     }
   ],
-  
   "$methods": {
     "show": {
       "description": "Shows a toast notification",
-      "params": ["message", "options"],
+      "params": [
+        "message",
+        "options"
+      ],
       "returns": "Toast instance"
     },
     "hide": {
@@ -143,26 +158,41 @@
     },
     "update": {
       "description": "Updates toast content",
-      "params": ["message", "options"]
+      "params": [
+        "message",
+        "options"
+      ]
     },
     "success": {
       "description": "Shows a success toast",
-      "params": ["message", "options"],
+      "params": [
+        "message",
+        "options"
+      ],
       "returns": "Toast instance"
     },
     "error": {
       "description": "Shows an error toast",
-      "params": ["message", "options"],
+      "params": [
+        "message",
+        "options"
+      ],
       "returns": "Toast instance"
     },
     "warning": {
       "description": "Shows a warning toast",
-      "params": ["message", "options"],
+      "params": [
+        "message",
+        "options"
+      ],
       "returns": "Toast instance"
     },
     "info": {
       "description": "Shows an info toast",
-      "params": ["message", "options"],
+      "params": [
+        "message",
+        "options"
+      ],
       "returns": "Toast instance"
     },
     "dismiss": {
@@ -176,7 +206,6 @@
       "static": true
     }
   },
-  
   "$cssAPI": {
     "--wb-toast-min-width": {
       "default": "300px",
@@ -267,16 +296,17 @@
       "description": "Exit animation"
     }
   },
-  
   "accessibility": {
     "role": "alert",
     "ariaLive": "polite"
   },
-  
   "events": {
     "wb:toast:show": {
       "description": "Fired when toast appears",
-      "detail": { "message": "string", "variant": "string" }
+      "detail": {
+        "message": "string",
+        "variant": "string"
+      }
     },
     "wb:toast:hide": {
       "description": "Fired when toast is dismissed",
@@ -287,7 +317,6 @@
       "detail": {}
     }
   },
-  
   "test": {
     "setup": [
       "<button data-wb=\"toast\" data-message=\"Hello!\">Show Toast</button>",
@@ -296,19 +325,44 @@
     ],
     "matrix": {
       "combinations": [
-        { "message": "Test" },
-        { "message": "Test", "variant": "info" },
-        { "message": "Test", "variant": "success" },
-        { "message": "Test", "variant": "warning" },
-        { "message": "Test", "variant": "error" },
-        { "message": "Test", "title": "Notice" },
-        { "message": "Test", "duration": 5000 },
-        { "message": "Test", "position": "bottom-right" },
-        { "message": "Test", "action": "Undo" }
+        {
+          "message": "Test"
+        },
+        {
+          "message": "Test",
+          "variant": "info"
+        },
+        {
+          "message": "Test",
+          "variant": "success"
+        },
+        {
+          "message": "Test",
+          "variant": "warning"
+        },
+        {
+          "message": "Test",
+          "variant": "error"
+        },
+        {
+          "message": "Test",
+          "title": "Notice"
+        },
+        {
+          "message": "Test",
+          "duration": 5000
+        },
+        {
+          "message": "Test",
+          "position": "bottom-right"
+        },
+        {
+          "message": "Test",
+          "action": "Undo"
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "feedback",
     "icon": "🔔",

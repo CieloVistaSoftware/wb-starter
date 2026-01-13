@@ -1,4 +1,4 @@
-# WB Schema Specification v3.0
+# Web Behaviors (WB) Schema Specification v3.0
 
 **Version:** 3.0  
 **Created:** 2026-01-05  

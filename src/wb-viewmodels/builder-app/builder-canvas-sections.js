@@ -10,6 +10,28 @@ let insertMode = 'append'; // 'append', 'before', 'after', 'inside'
 let insertTarget = null;
 let idCounter = Date.now();
 
+// --- Helpers ---
+
+function saveHistory() {
+  if (window.saveHist) window.saveHist();
+}
+
+function showToast(msg) {
+  if (window.toast) window.toast(msg);
+}
+
+function cleanupDragIndicators() {
+  document.querySelectorAll('.drag-above, .drag-below, .drag-target').forEach(el => {
+    el.classList.remove('drag-above', 'drag-below', 'drag-target');
+  });
+}
+
+function removeEmptyState(container) {
+  container?.querySelector('.section-empty')?.remove();
+}
+
+// --- Main Logic ---
+
 /**
  * Initialize section-based canvas
  */
@@ -85,7 +107,7 @@ export function setCanvasView(view) {
     initComponentsView();
   }
   
-  if (window.toast) window.toast(`${view === 'site' ? 'Page' : 'Components'} View`);
+  showToast(`${view === 'site' ? 'Page' : 'Components'} View`);
 }
 
 /**
@@ -165,8 +187,6 @@ function initSiteView() {
           section.classList.remove('collapsed');
           section.classList.add('is-target');
       }
-  } else {
-      // Fallback if no target section
   }
   
   // Show empty states
@@ -213,6 +233,18 @@ function initComponentsView() {
  * Set target section for new elements
  */
 export function setTargetSection(sectionId) {
+  // Prefer unified activator if available (Maintains single source of truth)
+  if (window.unifiedActivateSection) {
+    window.unifiedActivateSection(sectionId);
+    
+    // Also update local state
+    targetSection = sectionId;
+    insertMode = 'append';
+    insertTarget = null;
+    updateInsertIndicator();
+    return;
+  }
+
   targetSection = sectionId;
   insertMode = 'append';
   insertTarget = null;
@@ -221,9 +253,12 @@ export function setTargetSection(sectionId) {
   document.querySelectorAll('.canvas-section').forEach(section => {
     const isTarget = section.dataset.section === sectionId;
     section.classList.toggle('is-target', isTarget);
+    
     // Expand target section, collapse others
     if (isTarget) {
       section.classList.remove('collapsed');
+    } else {
+      section.classList.add('collapsed');
     }
   });
   
@@ -289,7 +324,7 @@ export function setInsertPoint(elementId, mode) {
   updateInsertIndicator();
   closeAllMenus();
   
-  if (window.toast) window.toast(`Insert ${mode} this element`);
+  showToast(`Insert ${mode} this element`);
 }
 
 /**
@@ -414,8 +449,7 @@ export function addHTMLToSection(html, section, template = null) {
   // Re-init behaviors
   if (window.WB?.scan) window.WB.scan(wrapper);
   
-  // Save history
-  if (window.saveHist) window.saveHist();
+  saveHistory();
   
   // Refresh tree
   if (window.renderComponentList) window.renderComponentList();
@@ -459,7 +493,7 @@ export function addElementToCanvas(element) {
     clearInsertPoint();
   } else {
     // Remove empty state if present
-    dropZone.querySelector('.section-empty')?.remove();
+    removeEmptyState(dropZone);
     dropZone.appendChild(element);
   }
   
@@ -593,9 +627,8 @@ export function removeCanvasElement(id) {
   // Update empty states
   updateEmptyStates();
   
-  // Save history
-  if (window.saveHist) window.saveHist();
-  if (window.toast) window.toast('Removed');
+  saveHistory();
+  showToast('Removed');
   
   closeAllMenus();
 }
@@ -603,7 +636,7 @@ export function removeCanvasElement(id) {
 /**
  * Show insert menu for element
  */
-window.showInsertMenu = (id, event) => {
+function showInsertMenu(id, event) {
   closeAllMenus();
   
   const element = document.getElementById(id);
@@ -679,7 +712,8 @@ window.showInsertMenu = (id, event) => {
       }
     });
   }, 10);
-};
+}
+window.showInsertMenu = showInsertMenu;
 
 /**
  * Close all menus
@@ -692,7 +726,7 @@ window.closeAllMenus = closeAllMenus;
 /**
  * Move element up/down
  */
-window.moveCanvasElement = (id, direction) => {
+function moveCanvasElement(id, direction) {
   const el = document.getElementById(id);
   if (!el) return;
   
@@ -703,14 +737,15 @@ window.moveCanvasElement = (id, direction) => {
     } else {
       sibling.after(el);
     }
-    if (window.saveHist) window.saveHist();
+    saveHistory();
   }
-};
+}
+window.moveCanvasElement = moveCanvasElement;
 
 /**
  * Move element to different section
  */
-window.moveToSection = (id, sectionId) => {
+function moveToSection(id, sectionId) {
   const el = document.getElementById(id);
   if (!el) return;
   
@@ -718,19 +753,20 @@ window.moveToSection = (id, sectionId) => {
   if (!dropZone) return;
   
   // Remove empty state
-  dropZone.querySelector('.section-empty')?.remove();
+  removeEmptyState(dropZone);
   
   dropZone.appendChild(el);
   updateEmptyStates();
   
-  if (window.saveHist) window.saveHist();
-  if (window.toast) window.toast(`Moved to ${sectionId}`);
-};
+  saveHistory();
+  showToast(`Moved to ${sectionId}`);
+}
+window.moveToSection = moveToSection;
 
 /**
  * Duplicate element
  */
-window.duplicateCanvasElement = (id) => {
+function duplicateCanvasElement(id) {
   const el = document.getElementById(id);
   if (!el) return;
   
@@ -755,9 +791,10 @@ window.duplicateCanvasElement = (id) => {
   // Re-init behaviors
   if (window.WB?.scan) window.WB.scan(clone);
   
-  if (window.saveHist) window.saveHist();
-  if (window.toast) window.toast('Duplicated');
-};
+  saveHistory();
+  showToast('Duplicated');
+}
+window.duplicateCanvasElement = duplicateCanvasElement;
 
 /**
  * Update empty states for sections
@@ -767,13 +804,8 @@ function updateEmptyStates() {
     const dropZone = document.querySelector(`[data-drop-zone="${sectionId}"]`);
     if (!dropZone) return;
     
-    const hasContent = dropZone.querySelector('.dropped');
-    const hasEmpty = dropZone.querySelector('.section-empty');
-    
     // Remove empty states - we don't show "click to add" messages anymore
-    if (hasEmpty) {
-      hasEmpty.remove();
-    }
+    removeEmptyState(dropZone);
   });
 }
 
@@ -785,15 +817,11 @@ function updateSectionUI() {
     const isTarget = section.dataset.section === targetSection;
     section.classList.toggle('is-target', isTarget);
     
-    // Ensure the target is expanded
+    // Ensure the target is expanded, others collapsed
     if (isTarget) {
       section.classList.remove('collapsed');
-      
-      // Dispatch event to sync legacy listeners or unified activator
-      if (window.unifiedActivateSection) {
-        // We don't call unifiedActivateSection here to avoid loops if it calls us, 
-        // but we ensure DOM is correct.
-      }
+    } else {
+      section.classList.add('collapsed');
     }
   });
 }
@@ -804,26 +832,26 @@ function updateSectionUI() {
 function setupCanvasInteractions(canvas) {
   // Click to select element
   canvas.addEventListener('click', (e) => {
-    const element = e.target.closest('.dropped');
-    if (!element) return;
+    const clickedElement = e.target.closest('.dropped');
+    if (!clickedElement) return;
     if (e.target.closest('.el-controls, .el-btn')) return;
     
     // Deselect others
     canvas.querySelectorAll('.dropped.selected').forEach(el => el.classList.remove('selected'));
-    element.classList.add('selected');
+    clickedElement.classList.add('selected');
     
     // Update properties panel
     if (window.selComp) {
-      window.selComp(element);
+      window.selComp(clickedElement);
     }
   });
   
   // Right-click context menu
   canvas.addEventListener('contextmenu', (e) => {
-    const element = e.target.closest('.dropped');
-    if (element) {
+    const contextElement = e.target.closest('.dropped');
+    if (contextElement) {
       e.preventDefault();
-      window.showInsertMenu(element.id, e);
+      window.showInsertMenu(contextElement.id, e);
     }
   });
   
@@ -838,12 +866,12 @@ function setupDragReorder(canvas) {
   let draggedElement = null;
   
   canvas.addEventListener('dragstart', (e) => {
-    const dropped = e.target.closest('.dropped');
-    if (dropped) {
-      draggedElement = dropped;
-      dropped.classList.add('dragging');
+    const droppedStart = e.target.closest('.dropped');
+    if (droppedStart) {
+      draggedElement = droppedStart;
+      droppedStart.classList.add('dragging');
       e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', dropped.id);
+      e.dataTransfer.setData('text/plain', droppedStart.id);
     }
   });
   
@@ -851,34 +879,32 @@ function setupDragReorder(canvas) {
     e.preventDefault();
     if (!draggedElement) return;
     
-    const dropped = e.target.closest('.dropped');
-    if (dropped && dropped !== draggedElement) {
-      const rect = dropped.getBoundingClientRect();
-      const midY = rect.top + rect.height / 2;
+    const droppedOver = e.target.closest('.dropped');
+    if (droppedOver && droppedOver !== draggedElement) {
+      const overRect = droppedOver.getBoundingClientRect();
+      const overMidY = overRect.top + overRect.height / 2;
       
       // Clear previous indicators
-      document.querySelectorAll('.drag-above, .drag-below').forEach(el => {
-        el.classList.remove('drag-above', 'drag-below');
-      });
+      cleanupDragIndicators();
       
-      dropped.classList.add(e.clientY < midY ? 'drag-above' : 'drag-below');
+      droppedOver.classList.add(e.clientY < overMidY ? 'drag-above' : 'drag-below');
     }
     
     // Also allow dropping on sections
-    const section = e.target.closest('.canvas-section');
-    if (section && !e.target.closest('.dropped')) {
-      section.classList.add('drag-target');
+    const overSection = e.target.closest('.canvas-section');
+    if (overSection && !e.target.closest('.dropped')) {
+      overSection.classList.add('drag-target');
     }
   });
   
   canvas.addEventListener('dragleave', (e) => {
-    const dropped = e.target.closest('.dropped');
-    if (dropped) {
-      dropped.classList.remove('drag-above', 'drag-below');
+    const droppedLeave = e.target.closest('.dropped');
+    if (droppedLeave) {
+      droppedLeave.classList.remove('drag-above', 'drag-below');
     }
-    const section = e.target.closest('.canvas-section');
-    if (section) {
-      section.classList.remove('drag-target');
+    const leaveSection = e.target.closest('.canvas-section');
+    if (leaveSection) {
+      leaveSection.classList.remove('drag-target');
     }
   });
   
@@ -886,34 +912,32 @@ function setupDragReorder(canvas) {
     e.preventDefault();
     
     // Clear all indicators
-    document.querySelectorAll('.drag-above, .drag-below, .drag-target').forEach(el => {
-      el.classList.remove('drag-above', 'drag-below', 'drag-target');
-    });
+    cleanupDragIndicators();
     
     if (!draggedElement) return;
     
-    const dropped = e.target.closest('.dropped');
-    if (dropped && dropped !== draggedElement) {
-      const rect = dropped.getBoundingClientRect();
-      const midY = rect.top + rect.height / 2;
+    const droppedTarget = e.target.closest('.dropped');
+    if (droppedTarget && droppedTarget !== draggedElement) {
+      const dropRect = droppedTarget.getBoundingClientRect();
+      const dropMidY = dropRect.top + dropRect.height / 2;
       
-      if (e.clientY < midY) {
-        dropped.before(draggedElement);
+      if (e.clientY < dropMidY) {
+        droppedTarget.before(draggedElement);
       } else {
-        dropped.after(draggedElement);
+        droppedTarget.after(draggedElement);
       }
       
-      if (window.saveHist) window.saveHist();
+      saveHistory();
     } else {
       // Dropped on section directly
-      const section = e.target.closest('.canvas-section');
-      if (section) {
-        const dropZone = section.querySelector('[data-drop-zone]');
+      const dropSection = e.target.closest('.canvas-section');
+      if (dropSection) {
+        const dropZone = dropSection.querySelector('[data-drop-zone]');
         if (dropZone) {
-          dropZone.querySelector('.section-empty')?.remove();
+          removeEmptyState(dropZone);
           dropZone.appendChild(draggedElement);
           updateEmptyStates();
-          if (window.saveHist) window.saveHist();
+          saveHistory();
         }
       }
     }
@@ -924,9 +948,7 @@ function setupDragReorder(canvas) {
       draggedElement.classList.remove('dragging');
       draggedElement = null;
     }
-    document.querySelectorAll('.drag-above, .drag-below, .drag-target').forEach(el => {
-      el.classList.remove('drag-above', 'drag-below', 'drag-target');
-    });
+    cleanupDragIndicators();
   });
 }
 
@@ -1440,3 +1462,4 @@ export default {
   removeElement: removeCanvasElement,
   getDropConfig
 };
+

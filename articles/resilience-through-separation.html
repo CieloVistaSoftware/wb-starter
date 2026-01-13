@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resilience Through Separation - Cielo Vista Software</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.8;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Background Ambience */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: -10%;
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+      filter: blur(80px);
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -10%;
+      right: -10%;
+      width: 50%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
+      filter: blur(60px);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .article-container {
+      max-width: 800px;
+      margin: 4rem 1rem;
+      position: relative;
+    }
+
+    /* Glass Panel Effect for Content */
+    .content-card {
+      background: rgba(30, 41, 59, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 3rem;
+      border-radius: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    header {
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+    
+    .meta {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 500;
+    }
+
+    .meta-pip {
+        color: var(--border-color);
+    }
+    
+    .lead {
+        font-size: 1.35rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        margin-bottom: 2.5rem;
+        font-weight: 300;
+        border-left: 4px solid var(--primary);
+        padding-left: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.125rem;
+      color: rgba(249, 250, 251, 0.9);
+    }
+    
+    /* Pull Quote Style for Key Concepts */
+    .highlight-box {
+        margin: 2.5rem 0;
+        padding: 2rem;
+        background: rgba(99, 102, 241, 0.05);
+        border-radius: 16px;
+        border-left: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    
+    .highlight-box p {
+        margin: 0;
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    /* The "Mic Drop" conclusion */
+    .conclusion {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+        background: linear-gradient(to right, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    <div class="content-card">
+      <header>
+        <wb-badge label="Architecture Series" variant="gradient" style="margin-bottom: 1rem; display: inline-block;"></wb-badge>
+        <h1>Resilience Through Separation</h1>
+        <div class="meta">
+            January 10, 2026
+            <span class="meta-pip">•</span>
+            Cielo Vista Software
+        </div>
+      </header>
+    
+      <main>
+        <p class="lead">Experience teaches that most failures don’t arrive loudly. They seep in—through assumptions, shortcuts, and behaviors coupled too tightly without notice.</p>
+        
+        <p>At Cielo Vista Software, our team brings over 35 years of collective experience in IT. We've seen how one issue (tight coupling) allows a small change to ripple outward. A single bug grows a blast radius larger than the failure itself.</p>
+
+        <p>Yet to the average programmer this code looks fine.</p>
+
+        <wb-mdhtml src="resilience-through-separation-code.md"></wb-mdhtml>
+
+        <p>Is an OrderService a payment? Is a payment an order service? No they have different concerns.</p>
+
+        <wb-mdhtml src="resilience-through-separation-decoupled.md"></wb-mdhtml>
+    
+        <p><a href="https://en.wikipedia.org/wiki/SOLID" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">SOLID</a> gave our team language to resist that decay. Composition gave them the discipline to contain it.</p>
+
+        <p>This is where dependency injection proves vital. By passing dependencies in rather than hard-coding them, we strip a component of its hidden assumptions. It no longer controls its environment; it simply reacts to the tools it is given.</p>
+    
+        <div class="highlight-box">
+            <p>Injected behaviors are bullet-proofed before they ever touch the system. Hardened behind contracts. Tested in isolation. Each capability knows where it may act—and where it must not.</p>
+        </div>
+    
+        <p>When something fails, it fails alone. Self-isolating. One component misbehaves while the rest keep breathing.</p>
+    
+        <p>But isolation without visibility is just silence. That’s where the <strong>bug queue</strong> becomes essential—not as a dumping ground, but as a living ledger of reality. Every failure leaves a fingerprint. Every fingerprint becomes an error signature. Every signature earns a unique error ID.</p>
+    
+        <p>With that, chaos turns into data. Recurring failures announce themselves. Patterns emerge. Root causes stop hiding behind symptoms. A system that can name its failures can eventually outgrow them.</p>
+    
+        <p>Error IDs create a shared language between code, tests, logs, dashboards, and humans. A bug is no longer “something broke,” but this exact thing broke, in this exact way, under these exact conditions. Debugging becomes archaeology instead of guesswork.</p>
+
+        <p>This clarity paves the way for Artificial Intelligence to act not just as an observer, but as a healer. When errors are distinct and cataloged, AI agents can instantly match a live failure to a known solution. Instead of waiting for a human on-call, the system can leverage AI to apply verified fixes for known issues, turning potential outages into brief, self-corrected events.</p>
+    
+        <p>In composed systems, resilience isn’t enforced by control—it’s earned through separation. Behavior is replaceable. Responsibility is bounded. Change becomes a swap, not a rewrite.</p>
+    
+        <p>Over time, our team at Cielo Vista Software has learned this truth applies beyond software. Teams, projects, and processes fail for the same reasons systems do: too many responsibilities, brittle connections, and failures that cascade instead of stopping.</p>
+    
+        <p>Good architecture doesn’t pretend bugs won’t happen. It designs a place for them to go.</p>
+    
+        <div class="conclusion">
+            Great architecture makes sure they know exactly where to stop.
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <script type="module">
+    import WB from '../src/core/wb.js';
+    WB.init();
+  </script>
+</body>
+</html>

@@ -12,22 +12,39 @@
     "setup": [],
     "matrix": {}
   },
-  
   "pageStructure": {
     "header": {
       "selector": "header",
       "description": "Page header with title and theme controls",
       "children": {
-        "title": { "selector": "h1", "text": "WB Behaviors Showcase" },
-        "subtitle": { "selector": "p", "text": "Interactive demo of all behaviors" },
-        "codecontrol": { "selector": "[data-wb='codecontrol']" },
-        "themecontrol": { "selector": "[data-wb='themecontrol']" }
+        "title": {
+          "selector": "h1",
+          "text": "WB Behaviors Showcase"
+        },
+        "subtitle": {
+          "selector": "p",
+          "text": "Interactive demo of all behaviors"
+        },
+        "codecontrol": {
+          "selector": "[data-wb='codecontrol']"
+        },
+        "themecontrol": {
+          "selector": "[data-wb='themecontrol']"
+        }
       }
     },
     "navLinks": {
       "selector": ".nav-links",
       "description": "Quick jump navigation links",
-      "children": ["#semantic", "#ui", "#layout", "#utilities", "#effects", "code.html", "card.html"]
+      "children": [
+        "#semantic",
+        "#ui",
+        "#layout",
+        "#utilities",
+        "#effects",
+        "code.html",
+        "card.html"
+      ]
     },
     "codeThemeControl": {
       "selector": "div:has([data-wb='codecontrol'])",
@@ -45,7 +62,12 @@
         },
         "behaviorReferenceCallout": {
           "description": "Complete behavior reference with 4 sections",
-          "sections": ["Auto-Injected", "Global Behaviors", "Animation Effects", "Explicit Behaviors"]
+          "sections": [
+            "Auto-Injected",
+            "Global Behaviors",
+            "Animation Effects",
+            "Explicit Behaviors"
+          ]
         }
       }
     },
@@ -53,88 +75,155 @@
       "selector": ".resizable-container",
       "description": "Two-column resizable layout",
       "children": {
-        "columnLeft": { "selector": "#column-left", "sections": 5 },
-        "resizeHandle": { "selector": "#resize-handle" },
-        "columnRight": { "selector": "#column-right", "sections": 7 }
+        "columnLeft": {
+          "selector": "#column-left",
+          "sections": 5
+        },
+        "resizeHandle": {
+          "selector": "#resize-handle"
+        },
+        "columnRight": {
+          "selector": "#column-right",
+          "sections": 7
+        }
       }
     }
   },
-
   "sections": [
     {
       "id": "semantic",
       "title": "1. Semantic HTML & Forms",
       "column": "left",
-      "behaviors": ["button", "input", "switch", "badge", "details"]
+      "behaviors": [
+        "button",
+        "input",
+        "switch",
+        "badge",
+        "details"
+      ]
     },
     {
       "id": "ui",
       "title": "2. UI Components",
       "column": "left",
-      "behaviors": ["spinner", "progress", "avatar", "tooltip", "toast", "notify"]
+      "behaviors": [
+        "spinner",
+        "progress",
+        "avatar",
+        "tooltip",
+        "toast",
+        "notify"
+      ]
     },
     {
       "id": "layout",
       "title": "3. Layout",
       "column": "left",
-      "behaviors": ["stack", "cluster", "grid"]
+      "behaviors": [
+        "stack",
+        "cluster",
+        "grid"
+      ]
     },
     {
       "id": "utilities",
       "title": "4. Utilities",
       "column": "left",
-      "behaviors": ["copy", "ripple", "confetti", "typewriter"]
+      "behaviors": [
+        "copy",
+        "ripple",
+        "confetti",
+        "typewriter"
+      ]
     },
     {
       "id": "effects",
       "title": "5. Effects",
       "column": "left",
-      "behaviors": ["bounce", "pulse", "shake", "rainbow"]
+      "behaviors": [
+        "bounce",
+        "pulse",
+        "shake",
+        "rainbow"
+      ]
     },
     {
       "id": "media",
       "title": "6. Media",
       "column": "right",
-      "behaviors": ["audio", "video", "figure"]
+      "behaviors": [
+        "audio",
+        "video",
+        "figure"
+      ]
     },
     {
       "id": "navigation",
       "title": "7. Navigation",
       "column": "right",
-      "behaviors": ["breadcrumb", "tabs", "dropdown"]
+      "behaviors": [
+        "breadcrumb",
+        "tabs",
+        "dropdown"
+      ]
     },
     {
       "id": "interactive",
       "title": "8. Interactive",
       "column": "right",
-      "behaviors": ["collapse", "dialog", "drawer-layout", "toggle"]
+      "behaviors": [
+        "collapse",
+        "dialog",
+        "drawer-layout",
+        "toggle"
+      ]
     },
     {
       "id": "forms",
       "title": "9. Forms",
       "column": "right",
-      "behaviors": ["checkbox", "radio", "range", "select", "textarea", "rating"]
+      "behaviors": [
+        "checkbox",
+        "radio",
+        "range",
+        "select",
+        "textarea",
+        "rating"
+      ]
     },
     {
       "id": "advanced-layout",
       "title": "10. Advanced Layout",
       "column": "right",
-      "behaviors": ["masonry", "switcher", "frame", "reel"]
+      "behaviors": [
+        "masonry",
+        "switcher",
+        "frame",
+        "reel"
+      ]
     },
     {
       "id": "universal",
       "title": "11. Universal",
       "column": "right",
-      "behaviors": ["draggable", "resizable"]
+      "behaviors": [
+        "draggable",
+        "resizable"
+      ]
     },
     {
       "id": "more",
       "title": "12. More Components",
       "column": "right",
-      "behaviors": ["sidebar-layout", "imposter", "alert", "kbd", "mark"]
+      "behaviors": [
+        "sidebar-layout",
+        "imposter",
+        "alert",
+        "kbd",
+        "mark"
+      ]
     }
   ],
-
   "behaviors": {
     "dropdown": {
       "selector": "[data-wb='dropdown']",
@@ -167,7 +256,7 @@
           },
           "hasMenu": {
             "description": "Dropdown must render a menu container",
-            "check": "element-exists", 
+            "check": "element-exists",
             "selector": ".wb-dropdown__menu"
           },
           "menuHiddenInitially": {
@@ -186,16 +275,19 @@
           "opensOnClick": {
             "action": "click",
             "selector": ".wb-dropdown__trigger",
-            "expect": { "visible": ".wb-dropdown__menu" }
+            "expect": {
+              "visible": ".wb-dropdown__menu"
+            }
           },
           "closesOnOutsideClick": {
             "action": "click-outside",
-            "expect": { "hidden": ".wb-dropdown__menu" }
+            "expect": {
+              "hidden": ".wb-dropdown__menu"
+            }
           }
         }
       }
     },
-
     "tabs": {
       "selector": "[data-wb='tabs']",
       "requiredClass": "wb-tabs",
@@ -257,7 +349,6 @@
         }
       }
     },
-
     "toggle": {
       "selector": "[data-wb='toggle']",
       "description": "Button that toggles a CSS class on a target element",
@@ -276,13 +367,20 @@
             "description": "Toggle button should have visible background color (not transparent)",
             "check": "has-style",
             "property": "background-color",
-            "notValue": ["transparent", "rgba(0, 0, 0, 0)", ""]
+            "notValue": [
+              "transparent",
+              "rgba(0, 0, 0, 0)",
+              ""
+            ]
           },
           "hasTextColor": {
             "description": "Toggle button should have visible text color",
             "check": "has-style",
             "property": "color",
-            "notValue": ["transparent", "rgba(0, 0, 0, 0)"]
+            "notValue": [
+              "transparent",
+              "rgba(0, 0, 0, 0)"
+            ]
           },
           "notBlackAndWhite": {
             "description": "Toggle button should NOT appear as plain black text on white (unstyled)",
@@ -295,12 +393,13 @@
             "action": "click",
             "selector": "[data-wb='toggle']",
             "targetSelector": "#toggle-box",
-            "expect": { "classToggle": "active" }
+            "expect": {
+              "classToggle": "active"
+            }
           }
         }
       }
     },
-
     "collapse": {
       "selector": "[data-wb='collapse']",
       "htmlUsage": {
@@ -322,12 +421,13 @@
         "functional": {
           "togglesTarget": {
             "action": "click",
-            "expect": { "toggleVisibility": "#collapse-content" }
+            "expect": {
+              "toggleVisibility": "#collapse-content"
+            }
           }
         }
       }
     },
-
     "masonry": {
       "selector": "[data-wb='masonry']",
       "requiredClass": "wb-masonry",
@@ -352,7 +452,11 @@
             "description": "Masonry must have CSS columns set (not auto)",
             "check": "has-style",
             "property": "column-count",
-            "notValue": ["auto", "1", ""]
+            "notValue": [
+              "auto",
+              "1",
+              ""
+            ]
           },
           "childrenVisible": {
             "description": "All children should be visible (not hidden/collapsed)",
@@ -367,7 +471,6 @@
         }
       }
     },
-
     "drawer-layout": {
       "selector": "[data-wb='drawer-layout']",
       "requiredClass": "wb-drawer-layout",
@@ -396,7 +499,10 @@
           "textNotCovered": {
             "description": "Toggle arrow must not overlap 'Sidebar' text",
             "check": "no-overlap",
-            "elements": [".wb-drawer-toggle", ":text('Sidebar')"]
+            "elements": [
+              ".wb-drawer-toggle",
+              ":text('Sidebar')"
+            ]
           },
           "sidebarTextVisible": {
             "description": "'Sidebar' text must be fully visible",
@@ -418,12 +524,13 @@
             "description": "Clicking toggle should collapse/expand drawer",
             "action": "click",
             "selector": ".wb-drawer-toggle",
-            "expect": { "classToggle": "collapsed" }
+            "expect": {
+              "classToggle": "collapsed"
+            }
           }
         }
       }
     },
-
     "spinner": {
       "selector": "[data-wb='spinner']",
       "requiredClass": "wb-spinner",
@@ -441,7 +548,6 @@
         }
       }
     },
-
     "sidebar-layout": {
       "selector": "[data-wb='sidebar-layout']",
       "requiredClass": "wb-sidebar-layout",
@@ -454,7 +560,6 @@
         }
       }
     },
-
     "button": {
       "selector": "button[data-variant]",
       "tests": {
@@ -466,7 +571,6 @@
         }
       }
     },
-
     "typewriter": {
       "selector": "[data-wb='typewriter']",
       "htmlUsage": {
@@ -485,20 +589,54 @@
         }
       }
     },
-
     "figure": {
       "selector": "figure[data-img-src], [data-wb='figure']",
       "variants": [
-        { "name": "Full syntax", "attrs": ["data-img-src", "data-alt", "data-caption"] },
-        { "name": "Minimal", "attrs": ["data-img-src"] },
-        { "name": "Lightbox", "attrs": ["data-img-src", "data-lightbox"] },
-        { "name": "Zoom", "attrs": ["data-img-src", "data-zoom"] },
-        { "name": "Overlay caption", "attrs": ["data-img-src", "data-caption-position='overlay'"] },
-        { "name": "Lazy loading", "attrs": ["data-img-src", "data-lazy"] }
+        {
+          "name": "Full syntax",
+          "attrs": [
+            "data-img-src",
+            "data-alt",
+            "data-caption"
+          ]
+        },
+        {
+          "name": "Minimal",
+          "attrs": [
+            "data-img-src"
+          ]
+        },
+        {
+          "name": "Lightbox",
+          "attrs": [
+            "data-img-src",
+            "data-lightbox"
+          ]
+        },
+        {
+          "name": "Zoom",
+          "attrs": [
+            "data-img-src",
+            "data-zoom"
+          ]
+        },
+        {
+          "name": "Overlay caption",
+          "attrs": [
+            "data-img-src",
+            "data-caption-position='overlay'"
+          ]
+        },
+        {
+          "name": "Lazy loading",
+          "attrs": [
+            "data-img-src",
+            "data-lazy"
+          ]
+        }
       ]
     }
   },
-
   "codeExamples": {
     "description": "All code examples shown in behavior cards and info callouts",
     "selector": ".wb-mdhtml pre, .behavior-card pre, .info-callout pre",
@@ -531,7 +669,6 @@
       }
     }
   },
-
   "jsCodeExamples": {
     "description": "JavaScript code in page that must be valid and runnable",
     "examples": [
@@ -549,14 +686,13 @@
         "test": "Native dialog API - should work"
       },
       {
-        "location": "dialog close button onclick", 
+        "location": "dialog close button onclick",
         "code": "this.closest('dialog').close()",
         "expectedApi": "dialog.close()",
         "test": "Native dialog API - should work"
       }
     ]
   },
-
   "globalTests": {
     "noTextOverflow": {
       "description": "No text should overflow its container on the page",
@@ -578,7 +714,6 @@
       "check": "no-console-errors"
     }
   },
-
   "knownIssues": [
     {
       "behavior": "dropdown",
@@ -625,7 +760,6 @@
       "actualBehavior": "Text may extend beyond visible area with narrow widths"
     }
   ],
-
   "fixedIssues": [
     {
       "behavior": "masonry",
@@ -633,5 +767,8 @@
       "currentStatus": "IMPLEMENTED in layouts.js",
       "implementation": "masonry() function applies column-count CSS and break-inside: avoid to children"
     }
-  ]
+  ],
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

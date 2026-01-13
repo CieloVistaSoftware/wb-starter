@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WB Stage Light Demo</title>
+    <!-- Core styles -->
+    <link rel="stylesheet" href="../src/styles/site.css">
+    
+    <!-- WB Core -->
+    <script type="module">
+        import WB from '../src/core/wb.js';
+        WB.init();
+    </script>
+
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            padding: 2rem;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: sans-serif;
+        }
+
+        .fixture-row {
+            display: gap;
+            gap: 2rem;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Sweeping Spot glow effect */
+        .sweep-container {
+            position: relative;
+            height: 400px;
+            border: 2px solid #222;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            background: rgba(0,0,0,0.9);
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.8);
+            border-radius: 8px;
+        }
+
+        /* Spotlight Glows - Much More Dramatic */
+        #yellowSpot {
+            filter: drop-shadow(0 0 40px #ffff00) drop-shadow(0 0 80px rgba(255,255,0,0.5)) drop-shadow(0 0 120px rgba(255,255,0,0.3));
+            mix-blend-mode: screen;
+        }
+
+        #cyanSpot {
+            filter: drop-shadow(0 0 40px #00ffff) drop-shadow(0 0 80px rgba(0,255,255,0.5)) drop-shadow(0 0 120px rgba(0,255,255,0.3));
+            mix-blend-mode: screen;
+        }
+
+        #greenSpot {
+            filter: drop-shadow(0 0 40px #00ff00) drop-shadow(0 0 80px rgba(0,255,0,0.5)) drop-shadow(0 0 120px rgba(0,255,0,0.3));
+            mix-blend-mode: screen;
+        }
+
+        #magentaSpot {
+            filter: drop-shadow(0 0 40px #ff00ff) drop-shadow(0 0 80px rgba(255,0,255,0.5)) drop-shadow(0 0 120px rgba(255,0,255,0.3));
+            mix-blend-mode: screen;
+        }
+
+        /* Wooden Stage Floor */
+        .stage-floor {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 140px;
+            background: 
+                /* Subtle scuff marks */
+                repeating-linear-gradient(
+                    20deg,
+                    transparent 0px,
+                    transparent 30px,
+                    rgba(0,0,0,0.03) 30px,
+                    rgba(0,0,0,0.03) 35px
+                ),
+                /* Wood grain texture - light variation */
+                repeating-linear-gradient(
+                    90deg,
+                    #8B6F47 0px,
+                    #8B6F47 2px,
+                    #A0825D 2px,
+                    #A0825D 4px,
+                    #7A5C3A 4px,
+                    #7A5C3A 7px,
+                    #8B6F47 7px,
+                    #8B6F47 9px,
+                    #96704D 9px,
+                    #96704D 11px,
+                    #7A5C3A 11px,
+                    #7A5C3A 14px,
+                    #856535 14px,
+                    #856535 16px
+                ),
+                /* Board seams */
+                repeating-linear-gradient(
+                    0deg,
+                    #4A3A25 0px,
+                    #4A3A25 3px,
+                    transparent 3px,
+                    transparent 50px
+                ),
+                /* Dust/dirt accumulation */
+                repeating-linear-gradient(
+                    90deg,
+                    transparent 0px,
+                    rgba(0,0,0,0.08) 2px,
+                    transparent 6px
+                ),
+                /* Age variation */
+                radial-gradient(
+                    ellipse at 30% 50%,
+                    rgba(101,51,0,0.1) 0%,
+                    transparent 40%
+                ),
+                radial-gradient(
+                    ellipse at 70% 50%,
+                    rgba(50,30,10,0.1) 0%,
+                    transparent 40%
+                );
+            background-size: 100% 100%, 16px 100%, 100% 50px, 6px 100%, 100% 100%, 100% 100%, 100% 100%;
+            box-shadow: 
+                inset 0 10px 20px rgba(0,0,0,0.7),
+                inset 0 -4px 10px rgba(255,255,255,0.05),
+                inset 0 0 100px rgba(0,0,0,0.6);
+            border-top: 2px solid rgba(0,0,0,0.5);
+            transform: perspective(1200px) rotateX(35deg);
+            transform-origin: bottom center;
+        }
+
+        /* Light pools on floor */
+        .stage-floor::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 140px 50px at 15% 0%, rgba(255, 255, 0, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 140px 50px at 40% 0%, rgba(0, 255, 255, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 140px 50px at 65% 0%, rgba(0, 255, 0, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 140px 50px at 85% 0%, rgba(255, 0, 255, 0.2) 0%, transparent 60%);
+            pointer-events: none;
+            animation: floorGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes floorGlow {
+            0%, 100% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Stage Light Component</h1>
+        <p>A versatile lighting effect component for dramatic presentations.</p>
+
+        <!-- BEAM EXAMPLE -->
+        <h2>1. Beam (Default)</h2>
+        <p>Auto-sweeping light beam.</p>
+        <div style="position: relative; height: 300px; border: 1px dashed #333; overflow: hidden; margin-bottom: 2rem;">
+            <!-- Red Beam -->
+            <wb-stagelight variant="beam" color="#ff0000" speed="4s" intensity="0.6" style="left: 30%"></wb-stagelight>
+            
+            <!-- Blue Beam (faster) -->
+            <wb-stagelight variant="beam" color="#0088ff" speed="2.5s" intensity="0.6" style="left: 70%"></wb-stagelight>
+        </div>
+
+        <!-- SWEEPING SPOTS EXAMPLE -->
+        <h2>2. Sweeping Spots (Scan Effect)</h2>
+        <p>High-powered stage scanners - concert-grade lighting rigs.</p>
+        <div class="sweep-container" style="background: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(10,5,20,0.95) 100%); position: relative;">
+            <!-- Stage fog simulation -->
+            <div style="position: absolute; inset: 0; opacity: 0.3; background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.1), transparent 70%); pointer-events: none; z-index: 5;"></div>
+            
+            <!-- Yellow Spot: Left Stage -->
+            <wb-stagelight id="yellowSpot" variant="beam" 
+              color="#ffff00" speed="2.5s" intensity="0.8" 
+              style="left: 15%; top: -50px; width: 300px; height: 400px; clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%);"></wb-stagelight>
+            
+            <!-- Cyan Spot: Center-Left (staggered) -->
+            <wb-stagelight id="cyanSpot" variant="beam" 
+              color="#00ffff" speed="3s" intensity="0.7" 
+              style="left: 40%; top: -50px; width: 300px; height: 400px; clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%); animation-delay: 0.8s;"></wb-stagelight>
+            
+            <!-- Green Spot: Center-Right (staggered) -->
+            <wb-stagelight id="greenSpot" variant="beam" 
+              color="#00ff00" speed="3.2s" intensity="0.75" 
+              style="left: 65%; top: -50px; width: 300px; height: 400px; clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%); animation-delay: 1.6s;"></wb-stagelight>
+            
+            <!-- Magenta Spot: Right Stage (staggered) -->
+            <wb-stagelight id="magentaSpot" variant="beam" 
+              color="#ff00ff" speed="2.8s" intensity="0.75" 
+              style="left: 85%; top: -50px; width: 300px; height: 400px; clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%); animation-delay: 2.4s;"></wb-stagelight>
+            
+            <!-- Wooden Stage Floor with 25' depth perspective -->
+            <div class="stage-floor"></div>
+        </div>
+
+        <!-- FIXTURE EXAMPLE -->
+        <h2>3. Fixture (Interactive)</h2>
+        <p>Click the lights to toggle them.</p>
+        
+        <div class="fixture-row">
+            <wb-stagelight variant="fixture" color="#00ff00" label="Green"></wb-stagelight>
+            <wb-stagelight variant="fixture" color="#ff00ff" label="Magenta"></wb-stagelight>
+            <wb-stagelight variant="fixture" color="#ffff00" label="Yellow"></wb-stagelight>
+        </div>
+
+        <!-- SPOTLIGHT CONTROLS -->
+        <h2>4. Spotlight</h2>
+        <p>Mouse-tracking spotlight overlay.</p>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="toggleSpotlight">
+            <label class="form-check-label" for="toggleSpotlight">
+                Enable Spotlight Overlay
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="toggleSpotlightMode">
+            <label class="form-check-label" for="toggleSpotlightMode">
+                Toggle "Add" Mode (Light beam in dark vs Darkroom)
+            </label>
+        </div>
+
+        <!-- HIDDEN SPOTLIGHT (Enabled via JS) -->
+        <wb-stagelight id="demoSpotlight" variant="spotlight" style="display: none;"></wb-stagelight>
+
+    </div>
+
+    <script type="module">
+        import { getBehavior } from '../src/wb-viewmodels/index.js';
+        
+        // Wait for WB to initialize
+        window.addEventListener('load', async () => {
+            const spotlight = document.getElementById('demoSpotlight');
+            
+            // Ensure spotlight has the stagelight behavior applied
+            if (spotlight && !spotlight.dataset.wbReady) {
+                const stagelight = await getBehavior('stagelight');
+                stagelight(spotlight);
+            }
+            
+            const checkbox = document.getElementById('toggleSpotlight');
+            const modeCheckbox = document.getElementById('toggleSpotlightMode');
+
+            checkbox.addEventListener('change', (e) => {
+                spotlight.style.display = e.target.checked ? 'block' : 'none';
+            });
+
+            modeCheckbox.addEventListener('change', (e) => {
+                if(e.target.checked) {
+                    spotlight.classList.add('mode-add');
+                } else {
+                    spotlight.classList.remove('mode-add');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

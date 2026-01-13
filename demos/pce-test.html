@@ -40,6 +40,52 @@
 </head>
 <body>
     <h1>PCE Test Suite</h1>
+    
+    <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--primary);">
+        <h3 style="margin-top: 0;">What is this?</h3>
+        <p>This page demonstrates <strong>Pseudo-Custom Elements (PCE)</strong>. Instead of using standard HTML with <code>x-behavior</code> attributes (e.g., <code>&lt;div x-behavior="card"&gt;</code>), we use custom tag names like <code>&lt;profile-card&gt;</code>.</p>
+        
+        <h3>How it works</h3>
+        <p>The core library (<code>wb-lazy.js</code>) maintains a mapping of these custom tags to their corresponding behaviors. The process is fully automated:</p>
+        <ol style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+            <li><strong>Detection:</strong> The <code>IntersectionObserver</code> (lazy) or initial scan (eager) identifies the custom tag in the DOM.</li>
+            <li><strong>Lookup:</strong> The system checks the <code>customElementMappings</code> registry to find which behavior module (e.g., <code>cardprofile</code>) matches the tag (e.g., <code>profile-card</code>).</li>
+            <li><strong>Dynamic Import:</strong> The JavaScript module for that behavior is fetched <em>only if it hasn't been loaded yet</em>. This keeps the initial page load fast.</li>
+            <li><strong>Hydration:</strong> The behavior function is called with the element as its argument. It utilizes the properties defined in <code>data-</code> attributes to render internal HTML, apply CSS classes, and attach event listeners in-place.</li>
+        </ol>
+        <p style="margin-top: 1rem; font-size: 0.9em; border-left: 3px solid var(--text-muted); padding-left: 1rem;">
+            <strong>Note:</strong> Unlike native Web Components, this does not use Shadow DOM. The element is enhanced in standard DOM, preserving global styles and simplicity while offering a component-like developer experience.
+        </p>
+
+        <h3>Is the startup quicker?</h3>
+        <p><strong>Yes.</strong> Traditional frameworks often download a large "bundle" of JavaScript containing every possible component before the page can start. This approach uses <strong>Lazy Loading</strong>:</p>
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+            <li><strong>Initial Load:</strong> Only the tiny core library (<code>wb-lazy.js</code>) is downloaded.</li>
+            <li><strong>On Scroll:</strong> The code for <code>&lt;profile-card&gt;</code> is ignored until you actually scroll it into view.</li>
+            <li><strong>Result:</strong> Near-instant page startup, even with hundreds of available component types.</li>
+        </ul>
+
+        <h3>Behind the Scenes</h3>
+        <p>The registry in <code>src/core/wb-lazy.js</code> defines these mappings:</p>
+        <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 4px; overflow-x: auto; font-family: monospace; font-size: 0.9em; margin: 0.5rem 0;">
+<pre style="margin: 0;">const customElementMappings = [
+  { selector: 'profile-card', behavior: 'cardprofile' },
+  { selector: 'hero-card',    behavior: 'cardhero' },
+  { selector: 'stats-card',   behavior: 'cardstats' },
+  // ... and so on
+];</pre>
+        </div>
+
+        <h3>Configuration</h3>
+        <p>Attributes on the custom element are automatically passed to the behavior function as configuration. For example:</p>
+        <p>
+            <code>&lt;profile-card data-name="Sarah"&gt;</code> is functionally equivalent to<br> 
+            <code>&lt;div x-behavior="cardprofile" data-name="Sarah"&gt;</code>.
+        </p>
+
+        <p style="margin-top: 1rem;">This allows for a cleaner, more semantic HTML syntax while maintaining the benefits of the behavior-driven architecture (lazy loading, encapsulation, separation of concerns).</p>
+    </div>
+
     <p>Verifying that custom tags automatically inject behaviors.</p>
 
     <h2>1. Profile Card (&lt;profile-card&gt;)</h2>

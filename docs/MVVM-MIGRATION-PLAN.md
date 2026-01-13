@@ -1,4 +1,4 @@
-# WB Framework MVVM Migration Plan
+# Web Behaviors (WB) MVVM Migration Plan
 
 ## Overview
 

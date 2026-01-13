@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "article.schema.json",
+  "title": "Article Component",
+  "description": "Semantic article component for blog posts, news, and documentation pages.",
+  "behavior": "article",
+  "baseClass": "wb-article",
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  "compliance": {
+    "baseClass": "wb-article",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Article title",
+      "default": ""
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Article subtitle or deck",
+      "default": ""
+    },
+    "author": {
+      "type": "string",
+      "description": "Author name",
+      "default": ""
+    },
+    "date": {
+      "type": "string",
+      "description": "Publication date",
+      "default": ""
+    },
+    "category": {
+      "type": "string",
+      "description": "Category or tag",
+      "default": ""
+    },
+    "image": {
+      "type": "string",
+      "description": "Cover image URL",
+      "default": ""
+    },
+    "imageAlt": {
+      "type": "string",
+      "description": "Cover image alt text",
+      "default": ""
+    },
+    "readingTime": {
+      "type": "string",
+      "description": "Estimated reading time",
+      "default": ""
+    },
+    "featured": {
+      "type": "boolean",
+      "description": "Whether the article is featured",
+      "default": false,
+      "appliesClass": "wb-article--featured"
+    }
+  },
+  "$view": [
+    {
+      "name": "header",
+      "tag": "header",
+      "class": "wb-article__header"
+    },
+    {
+      "name": "media",
+      "tag": "figure",
+      "class": "wb-article__media",
+      "parent": "header",
+      "createdWhen": "image"
+    },
+    {
+      "name": "cover",
+      "tag": "img",
+      "parent": "media",
+      "text": "",
+      "attrs": {
+        "src": "{{image}}",
+        "alt": "{{imageAlt}}"
+      }
+    },
+    {
+      "name": "meta",
+      "tag": "div",
+      "class": "wb-article__meta",
+      "parent": "header"
+    },
+    {
+      "name": "category",
+      "tag": "span",
+      "class": "wb-article__category",
+      "parent": "meta",
+      "content": "{{category}}",
+      "createdWhen": "category"
+    },
+    {
+      "name": "date",
+      "tag": "time",
+      "class": "wb-article__date",
+      "parent": "meta",
+      "content": "{{date}}",
+      "createdWhen": "date"
+    },
+    {
+      "name": "title",
+      "tag": "h1",
+      "class": "wb-article__title",
+      "parent": "header",
+      "content": "{{title}}",
+      "createdWhen": "title"
+    },
+    {
+      "name": "subtitle",
+      "tag": "p",
+      "class": "wb-article__subtitle",
+      "parent": "header",
+      "content": "{{subtitle}}",
+      "createdWhen": "subtitle"
+    },
+    {
+      "name": "byline",
+      "tag": "div",
+      "class": "wb-article__byline",
+      "parent": "header",
+      "createdWhen": "author"
+    },
+    {
+      "name": "authorLabel",
+      "tag": "span",
+      "parent": "byline",
+      "content": "By {{author}}"
+    },
+    {
+      "name": "main",
+      "tag": "div",
+      "class": "wb-article__content",
+      "required": true,
+      "content": "{{slot}}"
+    },
+    {
+      "name": "footer",
+      "tag": "footer",
+      "class": "wb-article__footer",
+      "content": "{{footer}}",
+      "createdWhen": "footer"
+    }
+  ],
+  "$cssAPI": {
+    "vars": {
+      "--text-primary": "Main text color",
+      "--text-secondary": "Meta/Subtitle text color",
+      "--bg-primary": "Article background",
+      "--font-heading": "Heading font family",
+      "--font-body": "Body font family"
+    },
+    "parts": [
+      "header",
+      "meta",
+      "title",
+      "content",
+      "footer"
+    ]
+  },
+  "test": {
+    "setup": [
+      "<wb-article title=\"Test Article\">Content</wb-article>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "title": "Article"
+        },
+        {
+          "title": "Article",
+          "subtitle": "Deck"
+        },
+        {
+          "title": "Article",
+          "image": "cover.jpg"
+        },
+        {
+          "title": "Article",
+          "author": "John Doe",
+          "date": "2026-01-01"
+        },
+        {
+          "title": "Article",
+          "featured": true
+        }
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "content",
+    "icon": "📄",
+    "related": [
+      "card",
+      "hero"
+    ]
+  },
+  "$methods": {}
+}

@@ -42,7 +42,7 @@ function categorize(filePath, line, lineNum, text) {
       file.includes('scripts/')) {
     // Check if it's code processing vs actual usage
     if (line.includes('querySelector') || line.includes('getAttribute') ||
-        line.includes('dataset.wb') || line.includes(''") ||
+        line.includes('dataset.wb') || line.includes('"') ||
         line.includes('[data-wb') || line.includes('hasAttribute')) {
       categories.codeHandlers.push(entry);
       return;

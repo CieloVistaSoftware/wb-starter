@@ -34,6 +34,7 @@
     { "id": "landing-product", "name": "Product Launch", "category": "landing", "tags": ["product", "launch", "ecommerce"] },
     { "id": "hero-cosmic", "name": "Cosmic Hero", "category": "heroes", "tags": ["hero", "cosmic", "animated"] },
     { "id": "hero-split", "name": "Split Hero", "category": "heroes", "tags": ["hero", "split", "image"] },
+    { "id": "hero-brand-gradient", "name": "Brand Gradient Hero", "category": "heroes", "tags": ["hero", "brand", "gradient"] },
     { "id": "hero-minimal", "name": "Minimal Hero", "category": "heroes", "tags": ["hero", "minimal", "clean"] },
     { "id": "pricing-three-tier", "name": "Three-Tier Pricing", "category": "pricing", "tags": ["pricing", "plans", "saas"] },
     { "id": "pricing-two-tier", "name": "Two-Tier Pricing", "category": "pricing", "tags": ["pricing", "simple"] },

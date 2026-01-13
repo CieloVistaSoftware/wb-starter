@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../src/styles/themes.css">
   <link rel="stylesheet" href="../src/styles/site.css">
   <link rel="stylesheet" href="../src/styles/components.css">
-  <link rel="stylesheet" href="../src/behaviors/css/effects.css">
+  <link rel="stylesheet" href="../src/styles/behaviors/effects.css">
   <style>
     body {
       padding: 2rem;
@@ -222,6 +222,7 @@
     /* Effect demo clickable styles */
     .effect-demo {
       transition: transform 0.2s, background 0.2s;
+      display: inline-block; /* Required for transforms to work */
     }
     .effect-demo:hover {
       background: var(--primary) !important;
@@ -250,7 +251,7 @@
     <a href="#utilities">Utilities</a>
     <a href="#effects">Effects</a>
     <a href="code.html">Code Demo</a>
-    <a href="card.html">Card Demo</a>
+    <a href="cards-showcase.html">Card Demo</a>
   </div>
 
   <!-- Code Theme Control - Prominent at top -->
@@ -1261,7 +1262,7 @@
 
   <script type="module">
     import WB from "../src/core/wb-lazy.js";
-    import { createToast } from "../src/behaviors/js/feedback.js";
+    import { createToast } from "../src/wb-viewmodels/feedback.js";
     
     // Initialize WB in autoinject mode
     await WB.init({ autoInject: true });
@@ -1450,8 +1451,8 @@
       if (codeSpan) {
         const text = codeSpan.textContent;
         
-        // Check for pattern first
-        const wbMatch = text.match(/]+)"/);
+        // Check for data-wb pattern first
+        const wbMatch = text.match(/data-wb="([^"]+)"/);
         if (wbMatch) return wbMatch[1];
         
         // Check for <tagname> pattern (semantic HTML)

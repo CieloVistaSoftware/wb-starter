@@ -3,15 +3,17 @@
   "$id": "button.schema.json",
   "title": "Button",
   "description": "Interactive button with variants, sizes, and optional icon",
-  
   "behavior": "button",
   "baseClass": "wb-button",
-  
   "semanticElement": {
     "tagName": "button",
     "implicitRole": "button"
   },
-  
+  "compliance": {
+    "baseClass": "wb-button",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "label": {
       "type": "string",
@@ -24,20 +26,38 @@
     "iconPosition": {
       "type": "string",
       "description": "Icon position relative to label",
-      "enum": ["start", "end"],
+      "enum": [
+        "start",
+        "end"
+      ],
       "default": "start"
     },
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["primary", "secondary", "success", "warning", "error", "ghost", "outline", "link"],
+      "enum": [
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "error",
+        "ghost",
+        "outline",
+        "link"
+      ],
       "default": "primary",
       "appliesClass": "wb-button--{{value}}"
     },
     "size": {
       "type": "string",
       "description": "Button size",
-      "enum": ["xs", "sm", "md", "lg", "xl"],
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
       "default": "md",
       "appliesClass": "wb-button--{{value}}"
     },
@@ -65,7 +85,6 @@
       "appliesClass": "wb-button--icon-only"
     }
   },
-  
   "$view": [
     {
       "name": "icon-start",
@@ -79,9 +98,17 @@
       "name": "label",
       "tag": "span",
       "public": true,
-      "content": "{{label}}{{body}}",
-      "createdWhen": "label OR body",
-      "description": "Button text"
+      "content": "{{label}}",
+      "createdWhen": "label",
+      "description": "Button text from attribute"
+    },
+    {
+      "name": "label",
+      "tag": "span",
+      "public": true,
+      "content": "{{slot}}",
+      "createdWhen": "slot AND NOT label",
+      "description": "Button text from content"
     },
     {
       "name": "icon-end",
@@ -99,7 +126,6 @@
       "description": "Loading spinner"
     }
   ],
-  
   "$methods": {
     "enable": {
       "description": "Enables the button",
@@ -130,7 +156,6 @@
       "params": []
     }
   },
-  
   "$cssAPI": {
     "--wb-button-padding-x": {
       "default": "1rem",
@@ -229,37 +254,74 @@
       "description": "Focus ring box-shadow"
     }
   },
-  
   "accessibility": {
     "role": "button",
     "ariaDisabled": "dynamic when disabled"
   },
-  
   "test": {
-    "setup": [
-      "<wb-button label=\"Click me\"></wb-button>",
-      "<wb-button label=\"Primary\" variant=\"primary\"></wb-button>",
-      "<wb-button icon=\"💾\" label=\"Save\"></wb-button>",
-      "<button data-wb=\"button\">Button</button>"
-    ],
-    "matrix": {
-      "combinations": [
-        { "label": "Button" },
-        { "label": "Primary", "variant": "primary" },
-        { "label": "Secondary", "variant": "secondary" },
-        { "label": "Outline", "variant": "outline" },
-        { "label": "Ghost", "variant": "ghost" },
-        { "label": "Small", "size": "sm" },
-        { "label": "Large", "size": "lg" },
-        { "icon": "💾", "label": "Save" },
-        { "icon": "→", "label": "Next", "iconPosition": "end" },
-        { "label": "Disabled", "disabled": true },
-        { "label": "Loading", "loading": true },
-        { "icon": "⚙️", "iconOnly": true }
+    "functional": {
+      "buttons": [
+        {
+          "name": "Basic Click",
+          "setup": "<button data-wb='button'>Click Me</button>",
+          "selector": "element",
+          "expect": {
+            "textContains": "Click Me",
+            "event": "click"
+          }
+        },
+        {
+          "name": "Variant Classes",
+          "setup": "<button data-wb='button' data-wb-variant='primary'>Primary</button>",
+          "selector": "element",
+          "expect": {
+            "hasClass": "wb-button--primary"
+          }
+        }
+      ],
+      "focus": [
+        {
+          "name": "Focus State",
+          "setup": "<button data-wb='button'>Focus Me</button>",
+          "action": "click",
+          "selector": "element",
+          "expect": {
+            "focused": true
+          }
+        }
+      ],
+      "disabled": [
+        {
+          "name": "Disabled State",
+          "setup": "<button data-wb='button' disabled>Disabled</button>",
+          "action": "click",
+          "selector": "element",
+          "expect": {
+            "event": null,
+            "attribute": { "disabled": "" }
+          }
+        }
+      ],
+      "keyboard": [
+        {
+          "name": "Enter Key",
+          "setup": "<button data-wb='button'>Enter Me</button>",
+          "key": "Enter",
+          "expect": {
+            "event": "click"
+          }
+        },
+        {
+          "name": "Space Key",
+          "setup": "<button data-wb='button'>Space Me</button>",
+          "key": "Space",
+          "expect": {
+            "event": "click"
+          }
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "forms",
     "icon": "🔘",

@@ -274,6 +274,7 @@ test.describe('Stock Indicator Spacing - Live Component Check', () => {
       <head>
         <link rel="stylesheet" href="/src/styles/themes.css">
         <link rel="stylesheet" href="/src/styles/site.css">
+        <link rel="stylesheet" href="/src/styles/behaviors/stock.css">
         <style>
           .test-container { 
             width: 300px; 
@@ -330,6 +331,10 @@ test.describe('Stock Indicator Spacing - Live Component Check', () => {
         
         const childId = await child.getAttribute('id') || await child.evaluate(el => el.className || el.tagName);
         
+        // DEBUG: Computed Style
+        const paddingLeft = await child.evaluate(el => window.getComputedStyle(el).paddingLeft);
+        console.log(`DEBUG: ${childId} padding-left: ${paddingLeft}`);
+
         if (leftSpacing < SPACING_MIN_PX) {
           const errorId = `SMI_DYNAMIC_LEFT_${violations.length + 1}`;
           violations.push(`${errorId}: ${childId} has ${leftSpacing.toFixed(1)}px left spacing (need ${SPACING_MIN_PX}px)`);

@@ -1,4 +1,4 @@
-# CLAUDE.md - WB Framework Project
+# CLAUDE.md - WB Behaviors Project
 
 ## Session Start (DO THIS FIRST - NO EXCEPTIONS)
 
@@ -21,7 +21,7 @@
 
 ---
 
-## Project: WB Framework v3.0
+## Project: WB Behaviors v3.0
 
 **Owner:** John (Cielo Vista Software)
 **Architecture:** WBServices pattern, Light DOM only, proper HTMLElement inheritance

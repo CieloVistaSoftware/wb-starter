@@ -3,15 +3,17 @@
   "$id": "cardimage.schema.json",
   "title": "Image Card",
   "description": "Card with featured image and optional title/subtitle",
-  
   "behavior": "cardimage",
   "baseClass": "wb-card-image",
-  
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
-  
+  "compliance": {
+    "baseClass": "wb-card-image",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "src": {
       "type": "string",
@@ -42,37 +44,61 @@
     "aspect": {
       "type": "string",
       "description": "Image aspect ratio",
-      "enum": ["16/9", "4/3", "1/1", "3/2", "21/9", "auto"],
+      "enum": [
+        "16/9",
+        "4/3",
+        "1/1",
+        "3/2",
+        "21/9",
+        "auto"
+      ],
       "default": "16/9"
     },
     "position": {
       "type": "string",
       "description": "Image position relative to content",
-      "enum": ["top", "bottom", "left", "right"],
+      "enum": [
+        "top",
+        "bottom",
+        "left",
+        "right"
+      ],
       "default": "top",
       "appliesClass": "wb-card-image--{{value}}"
     },
     "fit": {
       "type": "string",
       "description": "Image object-fit mode",
-      "enum": ["cover", "contain", "fill", "none"],
+      "enum": [
+        "cover",
+        "contain",
+        "fill",
+        "none"
+      ],
       "default": "cover"
     },
     "loading": {
       "type": "string",
       "description": "Image loading strategy",
-      "enum": ["lazy", "eager"],
+      "enum": [
+        "lazy",
+        "eager"
+      ],
       "default": "lazy"
     },
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["default", "elevated", "bordered", "minimal"],
+      "enum": [
+        "default",
+        "elevated",
+        "bordered",
+        "minimal"
+      ],
       "default": "default",
       "appliesClass": "wb-card-image--{{value}}"
     }
   },
-  
   "$view": [
     {
       "name": "figure",
@@ -127,12 +153,11 @@
       "tag": "div",
       "parent": "content",
       "public": true,
-      "content": "{{body}}",
+      "content": "<slot></slot>",
       "createdWhen": "body",
       "description": "Additional content slot"
     }
   ],
-  
   "$methods": {
     "show": {
       "description": "Shows the card",
@@ -148,7 +173,10 @@
     },
     "setImage": {
       "description": "Changes the image source",
-      "params": ["src", "alt"]
+      "params": [
+        "src",
+        "alt"
+      ]
     },
     "preload": {
       "description": "Preloads the image",
@@ -156,7 +184,6 @@
       "returns": "Promise"
     }
   },
-  
   "$cssAPI": {
     "--wb-card-image-radius": {
       "default": "8px",
@@ -227,7 +254,6 @@
       "description": "Hover shadow"
     }
   },
-  
   "test": {
     "setup": [
       "<wb-card-image src=\"photo.jpg\" alt=\"Photo\"></wb-card-image>",
@@ -236,18 +262,42 @@
     ],
     "matrix": {
       "combinations": [
-        { "src": "photo.jpg" },
-        { "src": "photo.jpg", "alt": "Description" },
-        { "src": "photo.jpg", "title": "Title" },
-        { "src": "photo.jpg", "title": "Title", "subtitle": "Subtitle" },
-        { "src": "photo.jpg", "caption": "Photo by John" },
-        { "src": "photo.jpg", "aspect": "1/1" },
-        { "src": "photo.jpg", "position": "bottom", "title": "Title" },
-        { "src": "photo.jpg", "variant": "elevated" }
+        {
+          "src": "photo.jpg"
+        },
+        {
+          "src": "photo.jpg",
+          "alt": "Description"
+        },
+        {
+          "src": "photo.jpg",
+          "title": "Title"
+        },
+        {
+          "src": "photo.jpg",
+          "title": "Title",
+          "subtitle": "Subtitle"
+        },
+        {
+          "src": "photo.jpg",
+          "caption": "Photo by John"
+        },
+        {
+          "src": "photo.jpg",
+          "aspect": "1/1"
+        },
+        {
+          "src": "photo.jpg",
+          "position": "bottom",
+          "title": "Title"
+        },
+        {
+          "src": "photo.jpg",
+          "variant": "elevated"
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "cards",
     "icon": "🖼️",

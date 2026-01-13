@@ -36,6 +36,7 @@ export function navbar(element, options = {}) {
     brandHref: options.brandHref || element.dataset.brandHref || '/',
     logo: options.logo || element.dataset.logo || '',
     logoSize: options.logoSize || element.dataset.logoSize || '32',
+    tagline: options.tagline || element.dataset.tagline || '',
     items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
     sticky: options.sticky ?? element.hasAttribute('data-sticky'),
     ...options
@@ -69,7 +70,17 @@ export function navbar(element, options = {}) {
     const brandTextHTML = config.brand ? 
       `<span class="wb-navbar__brand-text">${config.brand}</span>` : '';
     
+    const taglineHTML = config.tagline ?
+      `<span class="wb-navbar__tagline" style="font-size: 0.75rem; opacity: 0.7; font-weight: 400;">${config.tagline}</span>` : '';
+    
     // Brand is always a link
+    const hasTextContent = config.brand || config.tagline;
+    const textWrapperHTML = hasTextContent ? `
+      <div class="wb-navbar__brand-wrap" style="display: flex; flex-direction: column; line-height: 1.2;">
+        ${brandTextHTML}
+        ${taglineHTML}
+      </div>` : '';
+    
     return `
       <a class="wb-navbar__brand" href="${config.brandHref}" style="
         font-weight: 700;
@@ -83,7 +94,7 @@ export function navbar(element, options = {}) {
         transition: opacity 0.15s ease;
       " onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">
         ${logoHTML}
-        ${brandTextHTML}
+        ${textWrapperHTML}
       </a>
     `;
   };

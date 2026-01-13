@@ -10,7 +10,7 @@
  * - Template interpolation ({{variable}})
  * - Conditionals (wb-if, wb-unless)
  * - Loops (wb-for)
- * - Body slot ({{body}})
+ * - Default slot content
  * - Default values ({{var || 'default'}})
  * - Nested views (composition)
  * - Behavior integration
@@ -91,11 +91,13 @@ test.describe('Template Rendering', () => {
   });
 
   test('basic interpolation works', async ({ page }) => {
-    const btn = page.locator('wb-btn[variant="primary"]').first();
+    // Check first button (Primary)
+    const btn = page.locator('wb-button').first();
     await expect(btn).toBeVisible();
     
     // Should render as a button with the variant class
     const rendered = await btn.evaluate(el => el.innerHTML);
+    // Primary is default, so it should have btn--primary
     expect(rendered).toContain('btn--primary');
   });
 
@@ -134,22 +136,22 @@ test.describe('Template Rendering', () => {
   test('default values work with || syntax', async ({ page }) => {
     // btn without variant should get primary (default)
     const rendered = await page.evaluate(() => {
-      const btn = document.querySelector('wb-btn:not([variant])');
+      const btn = document.querySelector('wb-button:not([variant])');
       if (!btn) return null;
       return btn.innerHTML;
     });
     
     // Most buttons have variant, so this might be null
     // But buttons with variant="primary" explicitly should work
-    const primaryBtn = page.locator('wb-btn[variant="primary"]').first();
+    const primaryBtn = page.locator('wb-button[variant="primary"]').first();
     const hasPrimaryClass = await primaryBtn.evaluate(el => {
       return el.innerHTML.includes('btn--primary');
     });
     expect(hasPrimaryClass).toBe(true);
   });
 
-  test('body slot renders inner content', async ({ page }) => {
-    const btn = page.locator('wb-btn').first();
+  test('default slot renders inner content', async ({ page }) => {
+    const btn = page.locator('wb-button').first();
     await expect(btn).toBeVisible();
     
     // Body content should be rendered
@@ -170,16 +172,20 @@ test.describe('Tag Naming Convention', () => {
   });
 
   test('non-hyphenated views get wb- prefix', async ({ page }) => {
-    // btn -> wb-btn
-    const wbBtn = page.locator('wb-btn');
+    // button -> wb-button
+    const wbBtn = page.locator('wb-button');
     expect(await wbBtn.count()).toBeGreaterThan(0);
     
-    // avatar -> wb-avatar
-    const wbAvatar = page.locator('wb-avatar');
-    expect(await wbAvatar.count()).toBeGreaterThan(0);
+    // card -> wb-card
+    const wbCard = page.locator('wb-card');
+    expect(await wbCard.count()).toBeGreaterThan(0);
   });
 
   test('hyphenated views keep original name', async ({ page }) => {
+    // user-avatar stays user-avatar
+    const userAvatar = page.locator('user-avatar');
+    expect(await userAvatar.count()).toBeGreaterThan(0);
+
     // alert-box stays alert-box
     const alertBox = page.locator('alert-box');
     expect(await alertBox.count()).toBeGreaterThan(0);
@@ -200,16 +206,16 @@ test.describe('Tag Naming Convention', () => {
   test('custom elements are properly registered', async ({ page }) => {
     const customElements = await page.evaluate(() => {
       return {
-        'wb-btn': customElements.get('wb-btn') !== undefined,
-        'wb-avatar': customElements.get('wb-avatar') !== undefined,
+        'wb-button': customElements.get('wb-button') !== undefined,
+        'user-avatar': customElements.get('user-avatar') !== undefined,
         'alert-box': customElements.get('alert-box') !== undefined,
         'stat-tile': customElements.get('stat-tile') !== undefined,
         'nav-link': customElements.get('nav-link') !== undefined,
       };
     });
     
-    expect(customElements['wb-btn']).toBe(true);
-    expect(customElements['wb-avatar']).toBe(true);
+    expect(customElements['wb-button']).toBe(true);
+    expect(customElements['user-avatar']).toBe(true);
     expect(customElements['alert-box']).toBe(true);
     expect(customElements['stat-tile']).toBe(true);
     expect(customElements['nav-link']).toBe(true);
@@ -264,7 +270,8 @@ test.describe('View Composition', () => {
     await expect(statRow).toBeVisible();
     
     const statCount = await statRow.evaluate(el => {
-      return el.querySelectorAll('.stat').length;
+      // Check for both legacy .stat and new .stat-tile classes
+      return el.querySelectorAll('.stat, .stat-tile').length;
     });
     expect(statCount).toBeGreaterThanOrEqual(2);
   });
@@ -309,7 +316,7 @@ test.describe('Attribute Handling', () => {
     
     // Should not have trend element
     const hasTrend = await statWithoutTrend.evaluate(el => {
-      return el.querySelector('.stat__trend') !== null;
+      return el.querySelector('.stat__trend, .stat-tile__trend') !== null;
     });
     expect(hasTrend).toBe(false);
   });

@@ -15,9 +15,50 @@ import { getConfig, setConfig } from './config.js';
 
 // Auto-injection mappings
 const customElementMappings = [
-  // Card custom tags (card-* namespace for autocomplete grouping)
+  // Card custom tags - BOTH wb-* AND card-* namespaces for flexibility
   { selector: 'wb-card', behavior: 'card' },
   { selector: 'card-basic', behavior: 'card' },
+  
+  // wb-* prefix (primary)
+  { selector: 'wb-cardimage', behavior: 'cardimage' },
+  { selector: 'wb-cardvideo', behavior: 'cardvideo' },
+  { selector: 'wb-cardprofile', behavior: 'cardprofile' },
+  { selector: 'wb-cardpricing', behavior: 'cardpricing' },
+  { selector: 'wb-cardproduct', behavior: 'cardproduct' },
+  { selector: 'wb-cardstats', behavior: 'cardstats' },
+  { selector: 'wb-cardtestimonial', behavior: 'cardtestimonial' },
+  { selector: 'wb-cardhero', behavior: 'cardhero' },
+  { selector: 'wb-cardfile', behavior: 'cardfile' },
+  { selector: 'wb-cardnotification', behavior: 'cardnotification' },
+  { selector: 'wb-cardportfolio', behavior: 'cardportfolio' },
+  { selector: 'wb-cardlink', behavior: 'cardlink' },
+  { selector: 'wb-cardhorizontal', behavior: 'cardhorizontal' },
+  { selector: 'wb-cardoverlay', behavior: 'cardoverlay' },
+  { selector: 'wb-cardbutton', behavior: 'cardbutton' },
+  { selector: 'wb-cardexpandable', behavior: 'cardexpandable' },
+  { selector: 'wb-cardminimizable', behavior: 'cardminimizable' },
+  { selector: 'wb-carddraggable', behavior: 'carddraggable' },
+  
+  // Feedback Components
+  { selector: 'wb-spinner', behavior: 'spinner' },
+  { selector: 'wb-avatar', behavior: 'avatar' },
+  { selector: 'wb-badge', behavior: 'badge' },
+  { selector: 'wb-alert', behavior: 'alert' },
+  { selector: 'wb-progress', behavior: 'progress' },
+  { selector: 'wb-rating', behavior: 'rating' },
+  { selector: 'wb-tabs', behavior: 'tabs' },
+  { selector: 'wb-switch', behavior: 'switch' },
+  
+  // Attributes
+  { selector: '[x-breadcrumb]', behavior: 'breadcrumb' },
+  { selector: '[x-toast]', behavior: 'toast' },
+  { selector: '[x-notify]', behavior: 'notify' },
+  { selector: '[x-typewriter]', behavior: 'typewriter' },
+  { selector: '[x-bounce]', behavior: 'bounce' },
+  { selector: '[x-pulse]', behavior: 'pulse' },
+  { selector: '[x-rainbow]', behavior: 'rainbow' },
+  
+  // card-* prefix (alternative/legacy)
   { selector: 'card-image', behavior: 'cardimage' },
   { selector: 'card-video', behavior: 'cardvideo' },
   { selector: 'card-profile', behavior: 'cardprofile' },
@@ -32,7 +73,28 @@ const customElementMappings = [
   { selector: 'card-link', behavior: 'cardlink' },
   { selector: 'card-horizontal', behavior: 'cardhorizontal' },
   { selector: 'card-overlay', behavior: 'cardoverlay' },
+  { selector: 'card-button', behavior: 'cardbutton' },
+  { selector: 'card-expandable', behavior: 'cardexpandable' },
+  { selector: 'card-minimizable', behavior: 'cardminimizable' },
+  { selector: 'card-draggable', behavior: 'carddraggable' },
+  
+  // Custom Card Names (noun-first)
+  { selector: 'profile-card', behavior: 'cardprofile' },
+  { selector: 'hero-card', behavior: 'cardhero' },
+  { selector: 'stats-card', behavior: 'cardstats' },
+  { selector: 'testimonial-card', behavior: 'cardtestimonial' },
+  { selector: 'video-card', behavior: 'cardvideo' },
+  { selector: 'file-card', behavior: 'cardfile' },
+  { selector: 'notification-card', behavior: 'cardnotification' },
+  { selector: 'basic-card', behavior: 'card' },
+  { selector: 'image-card', behavior: 'cardimage' },
+  { selector: 'overlay-card', behavior: 'cardoverlay' },
+  { selector: 'portfolio-card', behavior: 'cardportfolio' },
+  { selector: 'link-card', behavior: 'cardlink' },
+  { selector: 'horizontal-card', behavior: 'cardhorizontal' },
+  
   { selector: 'wb-code-card', behavior: 'demo' },
+  { selector: 'wb-mdhtml', behavior: 'mdhtml' },
   
   // === NEW LAYOUT MAPPINGS ===
   
@@ -70,6 +132,7 @@ const customElementMappings = [
 
   // Generic Attributes (Always Active)
   { selector: '[tooltip]', behavior: 'tooltip' },
+  { selector: '[x-tooltip]', behavior: 'tooltip' },
   { selector: '[toast-message]', behavior: 'toast' },
   { selector: '[ripple]', behavior: 'ripple' },
   { selector: '[x-ripple]', behavior: 'ripple' },
@@ -682,7 +745,11 @@ const WB = {
 
 // Global export
 if (typeof window !== 'undefined') {
-  window.WB = WB;
+  if (window.WB) {
+    Object.assign(window.WB, WB);
+  } else {
+    window.WB = WB;
+  }
 }
 
 export { WB };

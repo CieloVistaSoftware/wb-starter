@@ -4,5 +4,13 @@
   "title": "Dark Mode Toggle",
   "behavior": "darkmode",
   "description": "Button to toggle dark/light theme.",
-  "properties": {}
+  "compliance": {
+    "baseClass": "wb-darkmode",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

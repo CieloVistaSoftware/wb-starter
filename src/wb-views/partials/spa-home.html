@@ -1,11 +1,13 @@
 <!-- SPA Home Section - Hero with id="home" -->
-<section id="home" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 5rem 2rem; background: linear-gradient(135deg, var(--bg-primary, #1a1a2e) 0%, var(--bg-secondary, #252542) 100%);">
-  <div style="max-width: 800px; text-align: center;">
-    <h1 style="font-size: 3.5rem; font-weight: 800; color: var(--text-primary, #fff); margin-bottom: 1.5rem; line-height: 1.2;">Welcome to Our Platform</h1>
-    <p style="font-size: 1.25rem; color: var(--text-secondary, #aaa); margin-bottom: 2rem; line-height: 1.7;">Build beautiful single-page applications with smooth anchor navigation. Click the links above to scroll to each section.</p>
-    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-      <a href="#services" style="padding: 1rem 2rem; background: var(--primary, #6366f1); color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">Explore Services</a>
-      <a href="#contact" style="padding: 1rem 2rem; background: transparent; color: var(--primary, #6366f1); text-decoration: none; border-radius: 8px; font-weight: 600; border: 2px solid var(--primary, #6366f1);">Contact Us</a>
-    </div>
-  </div>
-</section>
+<wb-hero 
+  data-id="home"
+  data-title="Welcome to Our Platform" 
+  data-subtitle="Build beautiful single-page applications with smooth anchor navigation. Click the links above to scroll to each section."
+  data-cta="Explore Services"
+  data-cta-href="#services"
+  data-cta-secondary="Contact Us"
+  data-cta-secondary-href="#contact"
+  data-height="100vh"
+  data-align="center"
+  data-variant="gradient">
+</wb-hero>

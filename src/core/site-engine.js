@@ -21,13 +21,13 @@ export default class WBSite {
     try {
       const res = await fetch('config/site.json');
       this.config = await res.json();
-      document.documentElement.dataset.theme = this.config.site.theme;
-      document.title = this.config.seo?.title || this.config.site.name;
+      document.documentElement.dataset.theme = this.config.branding.colorTheme;
+      document.title = this.config.searchEngineOptimization?.pageTitle || this.config.branding.companyName;
       this.updateFavicon();
       
       const params = new URLSearchParams(window.location.search);
       const pageParam = params.get('page');
-      if (pageParam && this.config.nav.find(n => n.id === pageParam)) {
+      if (pageParam && this.config.navigationMenu.find(n => n.menuItemId === pageParam)) {
         this.currentPage = pageParam;
       }
 
@@ -45,7 +45,7 @@ export default class WBSite {
 
       WB.init({ 
         debug: false,
-        autoInject: this.config.site.autoInject || false,
+        autoInject: this.config.branding.autoInjectComponents || false,
         useSchemas: true,  // v3.0: Enable schema-based DOM building
         preload: ['ripple', 'themecontrol', 'tooltip']
       });
@@ -73,7 +73,7 @@ export default class WBSite {
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
-      console.log('✅ WB Site initialized:', this.config.site.name);
+      console.log('✅ WB Site initialized:', this.config.branding.companyName);
     } catch (error) {
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
@@ -86,7 +86,7 @@ export default class WBSite {
   }
 
   updateFavicon() {
-    if (!this.config.site.favicon) return;
+    if (!this.config.branding.browserTabIcon) return;
     
     let link = document.querySelector("link[rel~='icon']");
     if (!link) {
@@ -94,7 +94,7 @@ export default class WBSite {
       link.rel = 'icon';
       document.head.appendChild(link);
     }
-    link.href = this.config.site.favicon;
+    link.href = this.config.branding.browserTabIcon;
   }
 
   render() {
@@ -147,40 +147,41 @@ export default class WBSite {
   }
 
   renderHeader() {
-    const { site, header } = this.config;
+    const { branding, headerSettings } = this.config;
     // Clean header layout with proper semantics and spacing
     return `
-      <header class="site__header ${header.sticky ? 'site__header--sticky' : ''}" id="siteHeader">
+      <header class="site__header ${headerSettings.keepHeaderAtTop ? 'site__header--sticky' : ''}" id="siteHeader">
         <div class="header__left" id="headerLeft" style="gap: 1.5rem;">
           <button class="nav__toggle" x-ripple title="Toggle Navigation" id="navToggle" aria-label="Toggle Navigation">☰</button>
           <a href="?page=home" class="header__logo" id="headerLogo" style="gap: 0.75rem;">
-            ${site.logo ? `<span class="header__logo-icon" id="headerLogoIcon">${site.logo}</span>` : ''}
-            <span class="header__logo-text" id="headerLogoText">${site.name}</span>
+            ${branding.headerLogoImage ? `<span class="header__logo-icon" id="headerLogoIcon">${branding.headerLogoImage}</span>` : ''}
+            <span class="header__logo-text" id="headerLogoText">${branding.companyName}</span>
           </a>
         </div>
         <div class="header__right" id="headerRight" style="gap: 1rem;">
-          ${header.showSearch ? `
+          ${headerSettings.displaySearchBar ? `
             <div class="header__search" id="headerSearch">
               <input type="search" placeholder="Search..." aria-label="Search" class="wb-input-glass" style="padding: 0.4rem 0.8rem; width: 200px;">
             </div>
           ` : ''}
           <button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>
-          ${header.showThemeSwitcher ? '<wb-themecontrol  data-show-label="false" id="themeControl"></div>' : ''}
+          ${headerSettings.displayThemeSwitcher ? '<wb-themecontrol data-show-label="false" id="themeControl"></wb-themecontrol>' : ''}
+          <button class="navbar-cta" id="ctaButton" x-ripple title="Get Started">Get Started</button>
         </div>
       </header>
     `;
   }
 
   renderNav() {
-    const { nav, layout } = this.config;
+    const { navigationMenu, navigationLayout } = this.config;
     
     // Safety check for nav config
-    if (!nav || !Array.isArray(nav)) {
-      console.error('❌ Site configuration error: "nav" is missing or not an array.', nav);
+    if (!navigationMenu || !Array.isArray(navigationMenu)) {
+      console.error('❌ Site configuration error: "navigationMenu" is missing or not an array.', navigationMenu);
       return '<nav class="site__nav" id="siteNav"><div class="nav__items">No navigation items found</div></nav>';
     }
 
-    const items = nav.map(item => {
+    const items = navigationMenu.map(item => {
       // Robust href handling
       let href = '?page=home';
       let isExternal = false;
@@ -188,10 +189,10 @@ export default class WBSite {
       if (item.href) {
         href = item.href;
         isExternal = true;
-      } else if (item.page) {
-        href = `?page=${item.page}`;
-      } else if (item.id) {
-        href = `?page=${item.id}`;
+      } else if (item.pageToLoad) {
+        href = `?page=${item.pageToLoad}`;
+      } else if (item.menuItemId) {
+        href = `?page=${item.menuItemId}`;
       }
 
       // Safe check for target
@@ -203,16 +204,16 @@ export default class WBSite {
       return `
       <a href="${href}" 
          class="nav__item" 
-         ${!isExternal && item.id ? `data-page="${item.id}"` : ''} 
+         ${!isExternal && item.menuItemId ? `data-page="${item.menuItemId}"` : ''} 
          ${target ? `target="${target}"` : ''} 
          x-ripple 
-         id="navItem-${item.id || item.label || Math.random().toString(36).substr(2, 9)}">
-        <span class="nav__icon">${item.icon || ''}</span>
-        <span class="nav__label">${item.label || item.id}</span>
+         id="navItem-${item.menuItemId || item.menuItemText || Math.random().toString(36).substr(2, 9)}">
+        <span class="nav__icon">${item.menuItemEmoji || ''}</span>
+        <span class="nav__label">${item.menuItemText || item.menuItemId}</span>
       </a>
     `}).join('');
 
-    const navWidthVar = layout && layout.navWidth ? layout.navWidth : 'fit-content';
+    const navWidthVar = navigationLayout && navigationLayout.navigationWidth ? navigationLayout.navigationWidth : 'fit-content';
 
     return `
       <nav class="site__nav ${this.navCollapsed ? 'site__nav--collapsed' : ''}" style="--nav-width: ${navWidthVar}" id="siteNav">
@@ -286,18 +287,18 @@ export default class WBSite {
   }
 
   renderFooter() {
-    const { footer, site } = this.config;
-    const socialLinks = footer.showSocial ? footer.social.map(s => 
-      `<a href="${s.url}" class="footer__social-link" target="_blank" title="${s.name}" id="footerSocialLink-${s.name}">${s.icon}</a>`
+    const { footerSettings, socialMediaLinks, additionalFooterLinks } = this.config;
+    const socialLinks = footerSettings.displaySocialMediaLinks ? socialMediaLinks.map(s => 
+      `<a href="${s.profileUrl}" class="footer__social-link" target="_blank" title="${s.platform}" id="footerSocialLink-${s.platform}">${s.icon}</a>`
     ).join('') : '';
-    const footerLinks = footer.links?.map(l => 
-      `<a href="?page=${l.page}" class="footer__link" id="footerLink-${l.page}">${l.label}</a>`
+    const footerLinks = additionalFooterLinks?.map(l => 
+      `<a href="?page=${l.pageToLoad}" class="footer__link" id="footerLink-${l.pageToLoad}">${l.linkText}</a>`
     ).join(' · ') || '';
     return `
       <footer class="site__footer" id="siteFooter">
         <div class="footer__content" id="footerContent">
           <div class="footer__left" id="footerLeft">
-            <span id="footerCopyright">${footer.copyright}</span>
+            <span id="footerCopyright">${footerSettings.footerCopyrightText}</span>
             ${footerLinks ? `<span class="footer__links" id="footerLinks">${footerLinks}</span>` : ''}
           </div>
           <div class="footer__right" id="footerRight">
@@ -318,7 +319,7 @@ export default class WBSite {
       this.closeMobileNav();
     }
     
-    if (!this.config.nav.find(n => n.id === pageId)) {
+    if (!this.config.navigationMenu.find(n => n.menuItemId === pageId)) {
       pageId = 'home';
     }
     if (pageId === 'builder') {

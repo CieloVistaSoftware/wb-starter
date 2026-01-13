@@ -37,8 +37,31 @@ const parseBoolean = (val) => {
   return val;
 };
 
+// Helper to get attribute from options, dataset, or direct attribute
+// Supports: options.src, element.dataset.src (data-src), element.getAttribute('src')
+const getAttr = (element, options, name) => {
+  return options[name] || element.dataset[name] || element.getAttribute(name) || '';
+};
+
 // Semantic element validation
 const PREFERRED_TAGS = ['ARTICLE', 'SECTION'];
+
+// Common CSS Variables
+const VAR_TEXT_PRIMARY = 'var(--text-primary,#f9fafb)';
+const VAR_TEXT_SECONDARY = 'var(--text-secondary,#9ca3af)';
+const VAR_BORDER_COLOR = 'var(--border-color,#374151)';
+const VAR_BG_TERTIARY = 'var(--bg-tertiary,#1e293b)';
+const VAR_BG_SECONDARY = 'var(--bg-secondary,#1f2937)';
+const VAR_PRIMARY = 'var(--primary,#6366f1)';
+
+// Common Component Styles
+const STYLE_HEADER = `padding:1rem;border-bottom:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;`;
+const STYLE_FOOTER = `padding:0.75rem 1rem;border-top:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
+const STYLE_MAIN = `padding:1rem;flex:1;color:${VAR_TEXT_PRIMARY};`;
+const STYLE_TITLE = `margin:0;font-size:1.1rem;font-weight:600;color:${VAR_TEXT_PRIMARY};`;
+const STYLE_SUBTITLE = `margin:0.25rem 0 0;font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
+const STYLE_BADGE = `display:inline-block;padding:0.25rem 0.75rem;border-radius:999px;font-size:0.75rem;font-weight:600;background:${VAR_PRIMARY};color:white;white-space:nowrap;`;
+
 
 function validateSemanticContainer(element, behaviorName) {
   const tag = element.tagName;
@@ -67,10 +90,10 @@ export function cardBase(element, options = {}) {
     behavior: options.behavior || 'card',
     title: options.title || element.dataset.title || element.getAttribute('title') || '',
     subtitle: options.subtitle || element.dataset.subtitle || '',
-    content: options.content || element.dataset.content || '',
+    content: options.content || element.dataset.content || element.getAttribute('content') || '',
     footer: options.footer || element.dataset.footer || '',
     variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
-    badge: options.badge || element.dataset.badge || '',
+    badge: options.badge || element.dataset.badge || element.getAttribute('badge') || '',
     clickable: parseBoolean(options.clickable) ?? (element.dataset.clickable === 'true' || (element.hasAttribute('data-clickable') && element.dataset.clickable !== 'false') || element.hasAttribute('clickable')),
     hoverable: parseBoolean(options.hoverable) ?? (element.dataset.hoverable !== 'false'),
     elevated: parseBoolean(options.elevated) ?? (element.dataset.elevated === 'true' || (element.hasAttribute('data-elevated') && element.dataset.elevated !== 'false') || element.hasAttribute('elevated')),
@@ -142,10 +165,11 @@ export function cardBase(element, options = {}) {
     element.classList.add(`wb-card--${config.variant}`);
   }
   
-  // Elevated
+  // Elevated - lighter background to appear raised
   if (config.elevated) {
     element.classList.add('wb-card--elevated');
     element.style.boxShadow = 'var(--shadow-elevated, 0 4px 12px rgba(0,0,0,0.15))';
+    element.style.background = 'var(--bg-elevated, #334155)'; // LIGHTER than base
   }
   
   // Hoverable
@@ -251,7 +275,7 @@ export function cardBase(element, options = {}) {
     createHeader: (extraContent = '') => {
       const h = document.createElement('header');
       h.className = 'wb-card__header';
-      h.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;';
+      h.style.cssText = STYLE_HEADER;
       
       const contentDiv = document.createElement('div');
       contentDiv.className = 'wb-card__header-content';
@@ -260,7 +284,7 @@ export function cardBase(element, options = {}) {
       if (config.title) {
         const titleEl = document.createElement('h3');
         titleEl.className = 'wb-card__title';
-        titleEl.style.cssText = 'margin:0;font-size:1.1rem;font-weight:600;color:var(--text-primary,#f9fafb);';
+        titleEl.style.cssText = STYLE_TITLE;
         titleEl.textContent = config.title;
         contentDiv.appendChild(titleEl);
       }
@@ -268,7 +292,7 @@ export function cardBase(element, options = {}) {
       if (config.subtitle) {
         const subtitleEl = document.createElement('p');
         subtitleEl.className = 'wb-card__subtitle';
-        subtitleEl.style.cssText = 'margin:0.25rem 0 0;font-size:0.875rem;color:var(--text-secondary,#9ca3af);';
+        subtitleEl.style.cssText = STYLE_SUBTITLE;
         subtitleEl.textContent = config.subtitle;
         contentDiv.appendChild(subtitleEl);
       }
@@ -284,7 +308,7 @@ export function cardBase(element, options = {}) {
       if (config.badge) {
         const badgeEl = document.createElement('span');
         badgeEl.className = 'wb-card__badge';
-        badgeEl.style.cssText = 'display:inline-block;padding:0.25rem 0.75rem;border-radius:999px;font-size:0.75rem;font-weight:600;background:var(--primary,#6366f1);color:white;white-space:nowrap;';
+        badgeEl.style.cssText = STYLE_BADGE;
         badgeEl.textContent = config.badge;
         h.appendChild(badgeEl);
       }
@@ -298,7 +322,7 @@ export function cardBase(element, options = {}) {
     createMain: (content = '') => {
       const m = document.createElement('main');
       m.className = 'wb-card__main';
-      m.style.cssText = 'padding:1rem;flex:1;color:var(--text-primary,#f9fafb);';
+      m.style.cssText = STYLE_MAIN;
       
       // Use config.content if no content passed
       const finalContent = content || config.content;
@@ -316,7 +340,7 @@ export function cardBase(element, options = {}) {
     createFooter: (content = '') => {
       const footEl = document.createElement('footer');
       footEl.className = 'wb-card__footer';
-      footEl.style.cssText = 'padding:0.75rem 1rem;border-top:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);font-size:0.875rem;color:var(--text-secondary,#9ca3af);';
+      footEl.style.cssText = STYLE_FOOTER;
       
       const footerText = content || config.footer;
       if (footerText) {
@@ -361,7 +385,7 @@ export function cardBase(element, options = {}) {
         if (!header) {
           const headerEl = document.createElement('header');
           headerEl.className = 'wb-card__header';
-          headerEl.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;';
+          headerEl.style.cssText = STYLE_HEADER;
           
           const headerContentWrap = document.createElement('div');
           headerContentWrap.className = 'wb-card__header-content';
@@ -370,7 +394,7 @@ export function cardBase(element, options = {}) {
           if (config.title) {
             const titleElem = document.createElement('h3');
             titleElem.className = 'wb-card__title';
-            titleElem.style.cssText = 'margin:0;font-size:1.1rem;font-weight:600;color:var(--text-primary,#f9fafb);';
+            titleElem.style.cssText = STYLE_TITLE;
             titleElem.textContent = config.title;
             headerContentWrap.appendChild(titleElem);
           }
@@ -378,7 +402,7 @@ export function cardBase(element, options = {}) {
           if (config.subtitle) {
             const subtitleElem = document.createElement('p');
             subtitleElem.className = 'wb-card__subtitle';
-            subtitleElem.style.cssText = 'margin:0.25rem 0 0;font-size:0.875rem;color:var(--text-secondary,#9ca3af);';
+            subtitleElem.style.cssText = STYLE_SUBTITLE;
             subtitleElem.textContent = config.subtitle;
             headerContentWrap.appendChild(subtitleElem);
           }
@@ -395,7 +419,7 @@ export function cardBase(element, options = {}) {
           if (config.badge) {
             const headerBadge = document.createElement('span');
             headerBadge.className = 'wb-card__badge';
-            headerBadge.style.cssText = 'display:inline-block;padding:0.25rem 0.75rem;border-radius:999px;font-size:0.75rem;font-weight:600;background:var(--primary,#6366f1);color:white;white-space:nowrap;';
+            headerBadge.style.cssText = STYLE_BADGE;
             headerBadge.textContent = config.badge;
             headerEl.appendChild(headerBadge);
           }
@@ -411,13 +435,13 @@ export function cardBase(element, options = {}) {
           header.classList.add('wb-card__header');
           header.style.padding = header.style.padding || '1rem';
           header.style.borderBottom = header.style.borderBottom || '1px solid var(--border-color,#374151)';
-          header.style.background = header.style.background || 'var(--bg-tertiary,#1e293b)';
+          header.style.background = header.style.background || VAR_BG_TERTIARY;
           
           // Inject badge if missing
           if (config.badge && !header.querySelector('.wb-card__badge')) {
             const existingHeaderBadge = document.createElement('span');
             existingHeaderBadge.className = 'wb-card__badge';
-            existingHeaderBadge.style.cssText = 'display:inline-block;padding:0.25rem 0.75rem;border-radius:999px;font-size:0.75rem;font-weight:600;background:var(--primary,#6366f1);color:white;white-space:nowrap;';
+            existingHeaderBadge.style.cssText = STYLE_BADGE;
             existingHeaderBadge.textContent = config.badge;
             header.appendChild(existingHeaderBadge);
           }
@@ -429,7 +453,7 @@ export function cardBase(element, options = {}) {
         if (!main) {
           const mainEl = document.createElement('main');
           mainEl.className = 'wb-card__main';
-          mainEl.style.cssText = 'padding:1rem;flex:1;color:var(--text-primary,#f9fafb);';
+          mainEl.style.cssText = STYLE_MAIN;
           
           const mainText = mainContent || config.content;
           if (mainText) {
@@ -450,7 +474,13 @@ export function cardBase(element, options = {}) {
           main.classList.add('wb-card__main');
           main.style.padding = main.style.padding || '1rem';
           main.style.flex = main.style.flex || '1';
-          main.style.color = main.style.color || 'var(--text-primary,#f9fafb)';
+          main.style.color = main.style.color || VAR_TEXT_PRIMARY;
+
+          // If main is empty (e.g. created by SchemaBuilder with empty slot)
+          // but we have config.content, inject it.
+          if (!main.innerHTML.trim() && config.content) {
+             main.innerHTML = config.content;
+          }
         }
       }
       
@@ -459,7 +489,7 @@ export function cardBase(element, options = {}) {
         if (!footer) {
           const footerEl = document.createElement('footer');
           footerEl.className = 'wb-card__footer';
-          footerEl.style.cssText = 'padding:0.75rem 1rem;border-top:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);font-size:0.875rem;color:var(--text-secondary,#9ca3af);';
+          footerEl.style.cssText = STYLE_FOOTER;
           footerEl.textContent = footerContent || config.footer;
           
           footer = footerEl;
@@ -469,7 +499,7 @@ export function cardBase(element, options = {}) {
           footer.classList.add('wb-card__footer');
           footer.style.padding = footer.style.padding || '0.75rem 1rem';
           footer.style.borderTop = footer.style.borderTop || '1px solid var(--border-color,#374151)';
-          footer.style.background = footer.style.background || 'var(--bg-tertiary,#1e293b)';
+          footer.style.background = footer.style.background || VAR_BG_TERTIARY;
         }
       }
       
@@ -497,14 +527,32 @@ export function cardBase(element, options = {}) {
  * Custom Tag: <wb-card>
  */
 export function card(element, options = {}) {
+  // FIX: Un-wrap auto-generated main if it contains semantic elements
+  // This happens because SchemaBuilder wraps ALL content in the 'main' part defined in schema
+  const autoMain = element.querySelector(':scope > .wb-card__main');
+  if (autoMain && (autoMain.querySelector('header') || autoMain.querySelector('main'))) {
+    const fragment = document.createDocumentFragment();
+    while (autoMain.firstChild) {
+      fragment.appendChild(autoMain.firstChild);
+    }
+    autoMain.remove();
+    element.appendChild(fragment);
+  }
+
   // Check for existing semantic structure (direct children)
   const hasHeader = element.querySelector(':scope > header');
   const hasMain = element.querySelector(':scope > main');
   const hasFooter = element.querySelector(':scope > footer');
   
-  // Capture initial content if not provided in options/data
-  // Only if NOT semantic, otherwise we leave it alone
-  const initialContent = (hasHeader || hasMain || hasFooter) ? '' : (options.content || element.dataset.content || element.innerHTML);
+  // Determine if we are upgrading raw content
+  const isSemantic = hasHeader || hasMain || hasFooter;
+  const hasContent = options.content || element.dataset.content;
+  
+  // Capture content:
+  // 1. If semantic structure exists, we don't capture innerHTML (it's already in the structure)
+  // 2. If valid content option/data provided, use it
+  // 3. Fallback to innerHTML (raw content mode)
+  const initialContent = isSemantic ? '' : (hasContent || element.innerHTML);
 
   const base = cardBase(element, { 
     ...element.dataset, 
@@ -515,6 +563,12 @@ export function card(element, options = {}) {
     existingMain: hasMain,
     existingFooter: hasFooter
   });
+
+  // FIX: Clear existing HTML if we captured it from innerHTML (raw mode)
+  // This prevents buildStructure() from duplicating it inside the new <main>
+  if (!isSemantic && !hasContent && initialContent) {
+    element.innerHTML = '';
+  }
   
   // Build structure handles both creation and enhancement
   base.buildStructure();
@@ -528,15 +582,18 @@ export function card(element, options = {}) {
  */
 export function cardimage(element, options = {}) {
   const config = {
-    src: options.src || element.dataset.src,
-    alt: options.alt || element.dataset.alt || '',
-    aspect: options.aspect || element.dataset.aspect || '16/9',
-    position: options.position || element.dataset.position || 'top',
-    fit: options.fit || element.dataset.fit || 'cover',
+    src: getAttr(element, options, 'src'),
+    alt: getAttr(element, options, 'alt'),
+    aspect: getAttr(element, options, 'aspect') || '16/9',
+    position: getAttr(element, options, 'position') || 'top',
+    fit: getAttr(element, options, 'fit') || 'cover',
+    title: getAttr(element, options, 'title'),
+    subtitle: getAttr(element, options, 'subtitle'),
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardimage' });
+  element.classList.add('wb-card-image');
   element.innerHTML = '';
 
   // Build header/main/footer structure
@@ -577,16 +634,19 @@ export function cardimage(element, options = {}) {
  */
 export function cardvideo(element, options = {}) {
   const config = {
-    src: options.src || element.dataset.src,
-    poster: options.poster || element.dataset.poster,
-    autoplay: parseBoolean(options.autoplay) ?? (element.dataset.autoplay === 'true' || (element.hasAttribute('data-autoplay') && element.dataset.autoplay !== 'false')),
-    muted: parseBoolean(options.muted) ?? (element.dataset.muted === 'true' || (element.hasAttribute('data-muted') && element.dataset.muted !== 'false')),
-    loop: parseBoolean(options.loop) ?? (element.dataset.loop === 'true' || (element.hasAttribute('data-loop') && element.dataset.loop !== 'false')),
-    controls: parseBoolean(options.controls) ?? (element.dataset.controls !== 'false'),
+    src: getAttr(element, options, 'src'),
+    poster: getAttr(element, options, 'poster'),
+    title: getAttr(element, options, 'title'),
+    subtitle: getAttr(element, options, 'subtitle'),
+    autoplay: parseBoolean(options.autoplay) ?? (element.dataset.autoplay === 'true' || element.getAttribute('autoplay') === 'true' || (element.hasAttribute('data-autoplay') && element.dataset.autoplay !== 'false')),
+    muted: parseBoolean(options.muted) ?? (element.dataset.muted === 'true' || element.getAttribute('muted') === 'true' || (element.hasAttribute('data-muted') && element.dataset.muted !== 'false')),
+    loop: parseBoolean(options.loop) ?? (element.dataset.loop === 'true' || element.getAttribute('loop') === 'true' || (element.hasAttribute('data-loop') && element.dataset.loop !== 'false')),
+    controls: parseBoolean(options.controls) ?? (element.dataset.controls !== 'false' && element.getAttribute('controls') !== 'false'),
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardvideo' });
+  element.classList.add('wb-card-video');
   element.innerHTML = '';
 
   // Build header/main/footer
@@ -634,10 +694,15 @@ export function cardbutton(element, options = {}) {
   const config = {
     ...element.dataset,
     ...options,
+    primary: options.primary || element.dataset.primary || element.getAttribute('primary'),
+    secondary: options.secondary || element.dataset.secondary || element.getAttribute('secondary'),
+    primaryHref: options.primaryHref || element.dataset.primaryHref || element.getAttribute('primary-href'),
+    secondaryHref: options.secondaryHref || element.dataset.secondaryHref || element.getAttribute('secondary-href'),
     behavior: 'cardbutton'
   };
 
   const base = cardBase(element, config);
+  element.classList.add('wb-card-button');
   element.innerHTML = '';
   base.buildStructure();
 
@@ -673,19 +738,20 @@ export function cardbutton(element, options = {}) {
  */
 export function cardhero(element, options = {}) {
   const config = {
-    background: options.background || element.dataset.background,
-    overlay: parseBoolean(options.overlay) ?? (element.dataset.overlay !== 'false'),
-    xalign: options.xalign || element.dataset.xalign || 'center',
-    height: options.height || element.dataset.height || '400px',
-    cta: options.cta || element.dataset.cta,
-    ctaHref: options.ctaHref || element.dataset.ctaHref,
-    ctaSecondary: options.ctaSecondary || element.dataset.ctaSecondary,
-    ctaSecondaryHref: options.ctaSecondaryHref || element.dataset.ctaSecondaryHref,
-    pretitle: options.pretitle || element.dataset.pretitle,
+    background: options.background || element.dataset.background || element.getAttribute('background'),
+    overlay: parseBoolean(options.overlay) ?? (element.dataset.overlay !== 'false' && element.getAttribute('overlay') !== 'false'),
+    xalign: options.xalign || element.dataset.xalign || element.getAttribute('xalign') || 'center',
+    height: options.height || element.dataset.height || element.getAttribute('height') || '400px',
+    cta: options.cta || element.dataset.cta || element.getAttribute('cta'),
+    ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href'),
+    ctaSecondary: options.ctaSecondary || element.dataset.ctaSecondary || element.getAttribute('cta-secondary'),
+    ctaSecondaryHref: options.ctaSecondaryHref || element.dataset.ctaSecondaryHref || element.getAttribute('cta-secondary-href'),
+    pretitle: options.pretitle || element.dataset.pretitle || element.getAttribute('pretitle'),
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardhero', hoverable: false });
+  element.classList.add('wb-hero');
 
   // CHECK FOR SLOTS/CHILDREN BEFORE CLEARING
   // ----------------------------------------
@@ -699,6 +765,11 @@ export function cardhero(element, options = {}) {
     // Fallback to data-slot
     if (!slotEl) slotEl = element.querySelector(`[data-slot="${slotName}"]`);
     
+    // Helper Log
+    if (!slotEl && element.tagName === 'WB-CARDHERO' && slotName === 'title') {
+      console.log('WB-CARDHERO: Title slot NOT FOUND. Current HTML:', element.innerHTML.substring(0, 150));
+    }
+
     if (slotEl) {
       slots[slotName] = slotEl.cloneNode(true);
       // Remove slot attribute for cleaner DOM in result
@@ -822,11 +893,11 @@ export function cardhero(element, options = {}) {
  */
 export function cardprofile(element, options = {}) {
   const config = {
-    avatar: options.avatar || element.dataset.avatar,
-    name: options.name || element.dataset.name,
-    role: options.role || element.dataset.role,
-    bio: options.bio || element.dataset.bio,
-    cover: options.cover || element.dataset.cover,
+    avatar: options.avatar || element.dataset.avatar || element.getAttribute('avatar'),
+    name: options.name || element.dataset.name || element.getAttribute('name'),
+    role: options.role || element.dataset.role || element.getAttribute('role'),
+    bio: options.bio || element.dataset.bio || element.getAttribute('bio'),
+    cover: options.cover || element.dataset.cover || element.getAttribute('cover'),
     ...options
   };
 
@@ -895,18 +966,19 @@ export function cardprofile(element, options = {}) {
  */
 export function cardpricing(element, options = {}) {
   const config = {
-    plan: options.plan || element.dataset.plan || 'Basic Plan',
-    price: options.price || element.dataset.price || '$0',
-    period: options.period || element.dataset.period || '/month',
-    features: options.features || element.dataset.features?.split(',') || ['Feature 1', 'Feature 2'],
-    cta: options.cta || element.dataset.cta || 'Get Started',
-    ctaHref: options.ctaHref || element.dataset.ctaHref || '#',
-    featured: parseBoolean(options.featured) ?? (element.dataset.featured === 'true' || (element.hasAttribute('data-featured') && element.dataset.featured !== 'false')),
-    background: options.background || element.dataset.background,
+    plan: options.plan || element.dataset.plan || element.getAttribute('plan') || 'Basic Plan',
+    price: options.price || element.dataset.price || element.getAttribute('price') || '$0',
+    period: options.period || element.dataset.period || element.getAttribute('period') || '/month',
+    features: options.features || element.dataset.features?.split(',') || element.getAttribute('features')?.split(',') || ['Feature 1', 'Feature 2'],
+    cta: options.cta || element.dataset.cta || element.getAttribute('cta') || 'Get Started',
+    ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href') || '#',
+    featured: parseBoolean(options.featured) ?? (element.dataset.featured === 'true' || element.getAttribute('featured') === 'true' || (element.hasAttribute('data-featured') && element.dataset.featured !== 'false')),
+    background: options.background || element.dataset.background || element.getAttribute('background'),
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardpricing' });
+  element.classList.add('wb-pricing');
   element.innerHTML = '';
   element.style.textAlign = 'center';
   element.style.padding = '0'; // Reset padding as we use header/main
@@ -998,54 +1070,63 @@ export function cardpricing(element, options = {}) {
  */
 export function cardstats(element, options = {}) {
   const config = {
-    value: options.value || element.dataset.value,
-    label: options.label || element.dataset.label,
-    icon: options.icon || element.dataset.icon,
-    trend: options.trend || element.dataset.trend,
-    trendValue: options.trendValue || element.dataset.trendValue,
+    value: options.value || element.dataset.value || element.getAttribute('value'),
+    label: options.label || element.dataset.label || element.getAttribute('label'),
+    icon: options.icon || element.dataset.icon || element.getAttribute('icon'),
+    trend: options.trend || element.dataset.trend || element.getAttribute('trend'),
+    trendValue: options.trendValue || element.dataset.trendValue || element.getAttribute('data-trend-value'),
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardstats', hoverable: false });
+  element.classList.add('wb-stats');
   element.innerHTML = '';
   element.style.padding = 'var(--space-md, 1rem)';
   element.style.flexDirection = 'row';
   element.style.alignItems = 'center';
   element.style.gap = 'var(--space-md, 1rem)';
 
+  // Semantic: Icon belongs in header
   if (config.icon) {
+    const header = document.createElement('header');
+    header.style.cssText = 'padding:0;border:none;background:transparent;margin:0;';
+    
     const iconEl = document.createElement('span');
     iconEl.className = 'wb-card__icon';
-    iconEl.style.cssText = 'font-size:2rem;line-height:1;';
+    iconEl.style.cssText = 'font-size:2rem;line-height:1;display:block;';
     iconEl.textContent = config.icon;
-    element.appendChild(iconEl);
+    
+    header.appendChild(iconEl);
+    element.appendChild(header);
   }
 
-  const content = document.createElement('div');
-  content.style.cssText = 'flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;';
+  // Semantic: Main content
+  const content = document.createElement('main');
+  content.style.cssText = 'flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:0;';
 
   if (config.value) {
-    const valueEl = document.createElement('div');
+    const valueEl = document.createElement('data');
+    valueEl.value = config.value.replace(/[^0-9.-]/g, '') || config.value;
     valueEl.className = 'wb-card__stats-value';
-    valueEl.style.cssText = 'font-size:1.75rem;font-weight:700;color:var(--text-primary,#f9fafb);line-height:1.2;';
+    valueEl.style.cssText = 'font-size:1.75rem;font-weight:700;color:var(--text-primary,#f9fafb);line-height:1.2;display:block;';
     valueEl.textContent = config.value;
     content.appendChild(valueEl);
   }
 
   if (config.label) {
-    const labelEl = document.createElement('div');
+    const labelEl = document.createElement('p');
     labelEl.className = 'wb-card__stats-label';
-    labelEl.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin-top:0.25rem;';
+    labelEl.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin:0.25rem 0 0 0;';
     labelEl.textContent = config.label;
     content.appendChild(labelEl);
   }
 
   if (config.trend && config.trendValue) {
-    const trendEl = document.createElement('div');
+    const trendEl = document.createElement('p');
     trendEl.className = 'wb-card__stats-trend';
     const trendColor = config.trend === 'up' ? 'var(--success, #22c55e)' : config.trend === 'down' ? 'var(--error, #ef4444)' : 'var(--text-secondary, #6b7280)';
     const trendIcon = config.trend === 'up' ? '↑' : config.trend === 'down' ? '↓' : '→';
-    trendEl.style.cssText = `color:${trendColor};font-size:0.8rem;margin-top:0.25rem;font-weight:500;`;
+    trendEl.style.cssText = `color:${trendColor};font-size:0.8rem;margin:0.25rem 0 0 0;font-weight:500;`;
     trendEl.textContent = `${trendIcon} ${config.trendValue}`;
     content.appendChild(trendEl);
   }
@@ -1061,15 +1142,16 @@ export function cardstats(element, options = {}) {
  */
 export function cardtestimonial(element, options = {}) {
   const config = {
-    quote: options.quote || element.dataset.quote || element.textContent,
-    author: options.author || element.dataset.author,
-    role: options.role || element.dataset.role,
-    avatar: options.avatar || element.dataset.avatar,
-    rating: options.rating || element.dataset.rating,
+    quote: options.quote || element.dataset.quote || element.getAttribute('quote') || element.textContent,
+    author: options.author || element.dataset.author || element.getAttribute('author'),
+    role: options.role || element.dataset.role || element.getAttribute('role'),
+    avatar: options.avatar || element.dataset.avatar || element.getAttribute('avatar'),
+    rating: options.rating || element.dataset.rating || element.getAttribute('rating'),
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardtestimonial', hoverable: false });
+  element.classList.add('wb-testimonial');
   element.innerHTML = '';
   element.style.padding = CARD_PADDING;
 
@@ -1140,14 +1222,14 @@ export function cardtestimonial(element, options = {}) {
  */
 export function cardproduct(element, options = {}) {
   const config = {
-    image: options.image || element.dataset.image,
-    price: options.price || element.dataset.price,
-    originalPrice: options.originalPrice || element.dataset.originalPrice,
-    badge: options.badge || element.dataset.badge,
-    rating: options.rating || element.dataset.rating,
-    reviews: options.reviews || element.dataset.reviews,
-    cta: options.cta || element.dataset.cta || 'Add to Cart',
-    description: options.description || element.dataset.description,
+    image: options.image || element.dataset.image || element.getAttribute('image'),
+    price: options.price || element.dataset.price || element.getAttribute('price'),
+    originalPrice: options.originalPrice || element.dataset.originalPrice || element.getAttribute('data-original-price'), // Special case
+    badge: options.badge || element.dataset.badge || element.getAttribute('badge'),
+    rating: options.rating || element.dataset.rating || element.getAttribute('rating'),
+    reviews: options.reviews || element.dataset.reviews || element.getAttribute('reviews'),
+    cta: options.cta || element.dataset.cta || element.getAttribute('cta') || 'Add to Cart',
+    description: options.description || element.dataset.description || element.getAttribute('description'),
     ...options
   };
 
@@ -1157,6 +1239,7 @@ export function cardproduct(element, options = {}) {
   }
 
   const base = cardBase(element, { ...config, behavior: 'cardproduct' });
+  element.classList.add('wb-product');
   element.innerHTML = '';
 
   // Product image
@@ -1272,10 +1355,10 @@ export function cardproduct(element, options = {}) {
  */
 export function cardnotification(element, options = {}) {
   const config = {
-    type: options.type || element.dataset.type || 'info',
-    message: options.message || element.dataset.message || element.textContent,
-    dismissible: parseBoolean(options.dismissible) ?? (element.dataset.dismissible !== 'false'),
-    icon: options.icon || element.dataset.icon,
+    type: options.type || element.dataset.type || element.getAttribute('type') || 'info',
+    message: options.message || element.dataset.message || element.getAttribute('message') || element.textContent,
+    dismissible: parseBoolean(options.dismissible) ?? (element.dataset.dismissible !== 'false' && element.getAttribute('dismissible') !== 'false'),
+    icon: options.icon || element.dataset.icon || element.getAttribute('icon'),
     ...options
   };
 
@@ -1295,6 +1378,7 @@ export function cardnotification(element, options = {}) {
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardnotification', hoverable: false });
+  element.classList.add('wb-notification');
   
   element.innerHTML = '';
   element.setAttribute('role', 'alert');
@@ -1375,18 +1459,19 @@ export function cardnotification(element, options = {}) {
  */
 export function cardfile(element, options = {}) {
   const config = {
-    filename: options.filename || element.dataset.filename,
-    type: options.type || element.dataset.type || 'file',
-    size: options.size || element.dataset.size,
-    date: options.date || element.dataset.date,
-    downloadable: parseBoolean(options.downloadable) ?? (element.dataset.downloadable !== 'false'),
-    href: options.href || element.dataset.href,
+    filename: options.filename || element.dataset.filename || element.getAttribute('filename'),
+    type: options.type || element.dataset.type || element.getAttribute('type') || 'file',
+    size: options.size || element.dataset.size || element.getAttribute('size'),
+    date: options.date || element.dataset.date || element.getAttribute('date'),
+    downloadable: parseBoolean(options.downloadable) ?? (element.dataset.downloadable !== 'false' && element.getAttribute('downloadable') !== 'false'),
+    href: options.href || element.dataset.href || element.getAttribute('href'),
     ...options
   };
 
   const icons = { pdf: '📄', doc: '📝', image: '🖼️', video: '🎬', audio: '🎵', zip: '📦', file: '📁' };
 
   const base = cardBase(element, { ...config, behavior: 'cardfile', hoverable: false });
+  element.classList.add('wb-card-file');
   element.innerHTML = '';
   element.style.padding = CARD_PADDING;
   element.style.flexDirection = 'row';
@@ -1444,16 +1529,17 @@ export function cardfile(element, options = {}) {
  */
 export function cardlink(element, options = {}) {
   const config = {
-    href: options.href || element.dataset.href || '#',
-    target: options.target || element.dataset.target || '_self',
-    icon: options.icon || element.dataset.icon,
-    description: options.description || element.dataset.description || '',
-    badge: options.badge || element.dataset.badge || '',
-    badgeVariant: options.badgeVariant || element.dataset.badgeVariant || 'glass', // glass, gradient
+    href: options.href || element.dataset.href || element.getAttribute('href') || '#',
+    target: options.target || element.dataset.target || element.getAttribute('target') || '_self',
+    icon: options.icon || element.dataset.icon || element.getAttribute('icon'),
+    description: options.description || element.dataset.description || element.getAttribute('description') || '',
+    badge: options.badge || element.dataset.badge || element.getAttribute('badge') || '',
+    badgeVariant: options.badgeVariant || element.dataset.badgeVariant || element.getAttribute('badge-variant') || 'glass', // glass, gradient
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardlink' });
+  element.classList.add('wb-card-link');
   
   element.innerHTML = '';
   element.style.cursor = 'pointer';
@@ -1485,7 +1571,7 @@ export function cardlink(element, options = {}) {
     if (base.config.title) {
       const titleEl = document.createElement('h3');
       titleEl.className = 'wb-card__title';
-      titleEl.style.cssText = 'margin:0;font-size:1.1rem;font-weight:600;color:var(--text-primary,#f9fafb);';
+      titleEl.style.cssText = STYLE_TITLE;
       titleEl.textContent = base.config.title;
       titleRow.appendChild(titleEl);
     }
@@ -1552,13 +1638,14 @@ export function cardlink(element, options = {}) {
  */
 export function cardhorizontal(element, options = {}) {
   const config = {
-    image: options.image || element.dataset.image,
-    imagePosition: options.imagePosition || element.dataset.imagePosition || 'left',
-    imageWidth: options.imageWidth || element.dataset.imageWidth || '40%',
+    image: options.image || element.dataset.image || element.getAttribute('image'),
+    imagePosition: options.imagePosition || element.dataset.imagePosition || element.getAttribute('image-position') || 'left',
+    imageWidth: options.imageWidth || element.dataset.imageWidth || element.getAttribute('image-width') || '40%',
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardhorizontal' });
+  element.classList.add('wb-card-horizontal');
   element.innerHTML = '';
   element.style.flexDirection = config.imagePosition === 'right' ? 'row-reverse' : 'row';
 
@@ -1616,14 +1703,15 @@ export function cardhorizontal(element, options = {}) {
  */
 export function cardoverlay(element, options = {}) {
   const config = {
-    image: options.image || element.dataset.image,
-    position: options.position || element.dataset.position || 'bottom',
-    gradient: parseBoolean(options.gradient) ?? (element.dataset.gradient !== 'false'),
-    height: options.height || element.dataset.height || '300px',
+    image: options.image || element.dataset.image || element.getAttribute('image'),
+    position: options.position || element.dataset.position || element.getAttribute('position') || 'bottom',
+    gradient: parseBoolean(options.gradient) ?? (element.dataset.gradient !== 'false' && element.getAttribute('gradient') !== 'false'),
+    height: options.height || element.dataset.height || element.getAttribute('height') || '300px',
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardoverlay', hoverable: false });
+  element.classList.add('wb-card-overlay');
   element.classList.add('wb-card--overlay-card');
   element.classList.add(`wb-card--overlay-${config.position}`);
   element.innerHTML = '';
@@ -1682,13 +1770,17 @@ export function cardoverlay(element, options = {}) {
  * Custom Tag: <card-expandable>
  */
 export function cardexpandable(element, options = {}) {
+  // Capture existing content as fallback before clearing
+  const rawContent = element.innerHTML.trim();
+
   const config = {
-    expanded: parseBoolean(options.expanded) ?? (element.dataset.expanded === 'true' || (element.hasAttribute('data-expanded') && element.dataset.expanded !== 'false')),
-    maxHeight: options.maxHeight || element.dataset.maxHeight || '100px',
+    expanded: parseBoolean(options.expanded) ?? (element.dataset.expanded === 'true' || element.getAttribute('expanded') === 'true' || (element.hasAttribute('data-expanded') && element.dataset.expanded !== 'false')),
+    maxHeight: options.maxHeight || element.dataset.maxHeight || element.getAttribute('max-height') || '100px',
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardexpandable' });
+  element.classList.add('wb-card-expandable');
   element.innerHTML = '';
 
   // Build header
@@ -1700,7 +1792,7 @@ export function cardexpandable(element, options = {}) {
   const contentWrap = document.createElement('main');
   contentWrap.className = 'wb-card__expandable-content';
   contentWrap.style.cssText = `padding:1rem;overflow:hidden;transition:max-height 0.3s ease;max-height:${config.expanded ? '1000px' : config.maxHeight};`;
-  contentWrap.innerHTML = base.config.content || '<p style="margin:0;color:var(--text-secondary);">Add content here...</p>';
+  contentWrap.innerHTML = base.config.content || rawContent || '<p style="margin:0;color:var(--text-secondary);">Add content here...</p>';
   // Generate ID for aria-controls
   const contentId = 'expandable-content-' + Math.random().toString(36).substr(2, 9);
   contentWrap.id = contentId;
@@ -1784,12 +1876,16 @@ export function cardexpandable(element, options = {}) {
  * Custom Tag: <card-minimizable>
  */
 export function cardminimizable(element, options = {}) {
+  // Capture existing content as fallback before clearing
+  const rawContent = element.innerHTML.trim();
+
   const config = {
-    minimized: parseBoolean(options.minimized) ?? (element.dataset.minimized === 'true' || (element.hasAttribute('data-minimized') && element.dataset.minimized !== 'false')),
+    minimized: parseBoolean(options.minimized) ?? (element.dataset.minimized === 'true' || element.getAttribute('minimized') === 'true' || (element.hasAttribute('data-minimized') && element.dataset.minimized !== 'false')),
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardminimizable' });
+  element.classList.add('wb-card-minimizable');
   element.classList.add('wb-card--minimizable'); // Explicitly add for compliance
   element.innerHTML = '';
 
@@ -1832,7 +1928,7 @@ export function cardminimizable(element, options = {}) {
   const content = document.createElement('main');
   content.className = 'wb-card__minimizable-content';
   content.style.cssText = `padding:1rem;overflow:hidden;transition:all 0.3s ease;${config.minimized ? 'max-height:0;padding:0 1rem;opacity:0;' : ''}`;
-  content.innerHTML = base.config.content || '<p style="margin:0;color:var(--text-secondary);">Add content here...</p>';
+  content.innerHTML = base.config.content || rawContent || '<p style="margin:0;color:var(--text-secondary);">Add content here...</p>';
   element.appendChild(content);
 
   // Toggle
@@ -1897,13 +1993,14 @@ export function cardminimizable(element, options = {}) {
  */
 export function carddraggable(element, options = {}) {
   const config = {
-    constrain: options.constrain || element.dataset.constrain || 'none',
-    axis: options.axis || element.dataset.axis || 'both',
-    snapToGrid: parseInt(options.snapToGrid || element.dataset.snapToGrid || 0),
+    constrain: options.constrain || element.dataset.constrain || element.getAttribute('constrain') || 'none',
+    axis: options.axis || element.dataset.axis || element.getAttribute('axis') || 'both',
+    snapToGrid: parseInt(options.snapToGrid || element.dataset.snapToGrid || element.getAttribute('snap-to-grid') || 0),
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'carddraggable' });
+  element.classList.add('wb-card-draggable');
   
   element.innerHTML = '';
   element.style.position = 'relative'; // Or absolute, depending on layout
@@ -2079,6 +2176,7 @@ export function cardportfolio(element, options = {}) {
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardportfolio', hoverable: false });
+  element.classList.add('wb-portfolio');
   element.innerHTML = '';
   element.style.maxWidth = '400px';
 

@@ -3,20 +3,27 @@
   "$id": "alert.schema.json",
   "title": "Alert",
   "description": "Alert component for displaying messages with severity levels",
-  
   "behavior": "alert",
   "baseClass": "wb-alert",
-  
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "alert"
   },
-  
+  "compliance": {
+    "baseClass": "wb-alert",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "variant": {
       "type": "string",
       "description": "Alert severity/style variant",
-      "enum": ["info", "success", "warning", "error"],
+      "enum": [
+        "info",
+        "success",
+        "warning",
+        "error"
+      ],
       "default": "info",
       "appliesClass": "wb-alert--{{value}}"
     },
@@ -40,7 +47,6 @@
       "default": false
     }
   },
-  
   "$view": [
     {
       "name": "container",
@@ -93,7 +99,6 @@
       "description": "Close/dismiss button"
     }
   ],
-  
   "$methods": {
     "show": {
       "description": "Shows the alert",
@@ -113,7 +118,6 @@
       "returns": "Promise"
     }
   },
-  
   "$cssAPI": {
     "--wb-alert-padding": {
       "default": "1rem",
@@ -184,7 +188,6 @@
       "description": "Error variant text color"
     }
   },
-  
   "test": {
     "setup": [
       "<wb-alert message=\"Info alert\"></wb-alert>",
@@ -194,18 +197,47 @@
     ],
     "matrix": {
       "combinations": [
-        { "variant": "info", "message": "Test" },
-        { "variant": "success", "message": "Test" },
-        { "variant": "warning", "message": "Test" },
-        { "variant": "error", "message": "Test" },
-        { "variant": "info", "title": "Title", "message": "Test" },
-        { "variant": "info", "message": "Test", "icon": "ℹ️" },
-        { "variant": "info", "message": "Test", "dismissible": true },
-        { "variant": "warning", "title": "Warning", "message": "Be careful", "icon": "⚠️", "dismissible": true }
+        {
+          "variant": "info",
+          "message": "Test"
+        },
+        {
+          "variant": "success",
+          "message": "Test"
+        },
+        {
+          "variant": "warning",
+          "message": "Test"
+        },
+        {
+          "variant": "error",
+          "message": "Test"
+        },
+        {
+          "variant": "info",
+          "title": "Title",
+          "message": "Test"
+        },
+        {
+          "variant": "info",
+          "message": "Test",
+          "icon": "ℹ️"
+        },
+        {
+          "variant": "info",
+          "message": "Test",
+          "dismissible": true
+        },
+        {
+          "variant": "warning",
+          "title": "Warning",
+          "message": "Be careful",
+          "icon": "⚠️",
+          "dismissible": true
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "feedback",
     "icon": "🔔",

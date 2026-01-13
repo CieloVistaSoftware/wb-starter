@@ -1,4 +1,4 @@
-# WB Framework Documentation
+# Web Behaviors (WB) Documentation
 
 > A comprehensive web component library featuring 41+ custom components, Harmonic Color System, and Light DOM architecture.
 
@@ -163,4 +163,4 @@ See [DATA-FILES.md](./DATA-FILES.md) for documentation on JSON data outputs in `
 
 ---
 
-*Last updated: Generated index for WB Framework documentation*
+*Last updated: Generated index for WB Behaviors documentation*

@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WB Cards & Behaviors Showcase</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/components.css">
+  <link rel="stylesheet" href="../src/styles/behaviors/card.css">
+  <link rel="stylesheet" href="../src/styles/behaviors/effects.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════════
+       ALL STYLING USES THEME VARIABLES - NO HARDCODED VALUES
+       ═══════════════════════════════════════════════════════════════════ */
+    body {
+      padding: var(--space-xl);
+      background: var(--bg-color);
+      color: var(--text-primary);
+      font-family: system-ui, sans-serif;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-xl);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: var(--space-lg);
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--primary);
+      font-size: var(--text-2xl);
+    }
+
+    h2 {
+      margin: var(--space-xl) 0 var(--space-lg);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--primary);
+      color: var(--text-primary);
+      font-size: var(--text-xl);
+    }
+
+    h3 {
+      margin: var(--space-lg) 0 var(--space-md);
+      color: var(--accent);
+      font-size: var(--text-lg);
+    }
+
+    /* Navigation */
+    nav.nav-links {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xl);
+      flex-wrap: wrap;
+      padding: var(--space-md);
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    nav.nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      transition: var(--transition-base);
+      font-size: var(--text-sm);
+    }
+
+    nav.nav-links a:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Demo Grids */
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-bottom: var(--space-lg);
+    }
+
+    .demo-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: var(--space-lg);
+    }
+
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+      align-items: stretch;
+    }
+
+    .demo-full {
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Section notes */
+    .section-note {
+      background: var(--bg-secondary);
+      border-left: 4px solid var(--primary);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    .section-note strong {
+      color: var(--primary);
+    }
+
+    /* Hero constraints */
+    .hero-demo {
+      max-height: 350px;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Animation demo buttons */
+    .effect-demo {
+      padding: var(--space-md) var(--space-lg);
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition-base);
+      font-family: monospace;
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+    }
+
+    .effect-demo:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Draggable container */
+    .drag-container {
+      position: relative;
+      height: 250px;
+      background: var(--bg-tertiary);
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Toast animation */
+    @keyframes fadeInOut {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      10% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      90% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+    }
+
+    /* Red Tooltip Example */
+    .wb-tooltip-red {
+      background-color: #ef4444 !important;
+      color: white !important;
+    }
+    .wb-tooltip-red .wb-tooltip__arrow {
+      background-color: #ef4444 !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div>
+      <h1>🎴 WB Cards & Behaviors Showcase</h1>
+      <p style="margin: var(--space-sm) 0 0 0; color: var(--text-secondary);">All 19 card types with live demos and code
+        examples</p>
+    </div>
+    <wb-themecontrol></wb-themecontrol>
+  </header>
+
+  <nav class="nav-links">
+    <a href="#card">🃏 card</a>
+    <a href="#cardstats">📊 cardstats</a>
+    <a href="#cardprofile">👤 cardprofile</a>
+    <a href="#cardpricing">💰 cardpricing</a>
+    <a href="#cardimage">🖼️ cardimage</a>
+    <a href="#cardvideo">🎬 cardvideo</a>
+    <a href="#cardbutton">🔘 cardbutton</a>
+    <a href="#cardhero">🦸 cardhero</a>
+    <a href="#cardtestimonial">💬 cardtestimonial</a>
+    <a href="#cardproduct">🛒 cardproduct</a>
+    <a href="#cardnotification">🔔 cardnotification</a>
+    <a href="#cardfile">📁 cardfile</a>
+    <a href="#cardlink">🔗 cardlink</a>
+    <a href="#cardhorizontal">↔️ cardhorizontal</a>
+    <a href="#cardoverlay">📷 cardoverlay</a>
+    <a href="#cardexpandable">📖 cardexpandable</a>
+    <a href="#cardminimizable">➖ cardminimizable</a>
+    <a href="#carddraggable">✋ carddraggable</a>
+    <a href="#effects">✨ effects</a>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARD (BASE) -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="card">🃏 card (base)</h2>
+  <div class="section-note">
+    <strong>Base Card:</strong> Foundation for all card types. Supports title, subtitle, footer, elevated, clickable,
+    and hoverable options.
+  </div>
+
+
+  <wb-card 
+  data-title=" wb-card title goes here" 
+  data-subtitle="The wb-card subTitle is here" 
+  data-elevated="false"
+  data-clickable="true"
+  data-on-click="alert('You clicked the card!')" 
+  data-hoverable="true" 
+  data-tooltip="This is a tooltip" 
+  data-footer="Start using cards today">
+    <p>This single card demonstrates <strong>all</strong> supported properties of the base component simultaneously.
+      It
+      casts a shadow, reacts to hover, handles clicks, and displays a footerre.</p>
+  </wb-card>
+
+  <wb-mdhtml>
+    ```html
+    <wb-card 
+      data-title=" The Title Goes Here" 
+      data-subtitle="The SubTitle is next" 
+      data-elevated="false"
+      data-clickable="true"
+      data-on-click="alert('You clicked the card!')" 
+      data-hoverable="true" 
+      data-tooltip="This is a tooltip" 
+      data-footer="Start using cards today">
+      <p>This single card demonstrates <strong>all</strong> supported properties of the base component simultaneously.
+        It
+        casts a shadow, reacts to hover, handles clicks, and displays a footer.</p>
+    </wb-card>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDSTATS -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardstats">📊 cardstats</h2>
+  <div class="section-note">
+    <strong>Stats Card:</strong> Display KPIs and metrics with optional icons and trend indicators (up/down/neutral).
+  </div>
+
+  <div class="demo-row" id="demo-cardstats">
+    <wb-cardstats value="1,234" label="Total Users"></wb-cardstats>
+    <wb-cardstats value="$50K" label="Revenue" icon="💰" trend="up" data-trend-value="+12%"></wb-cardstats>
+    <wb-cardstats value="85%" label="Bounce Rate" icon="📉" trend="down" data-trend-value="-5%"></wb-cardstats>
+    <wb-cardstats value="42" label="Active Projects" icon="🚀"></wb-cardstats>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <!-- Basic Stats -->
+    <wb-cardstats value="1,234" label="Total Users"></wb-cardstats>
+
+    <!-- Stats with Trend Up -->
+    <wb-cardstats value="$50K" label="Revenue" icon="💰" trend="up" data-trend-value="+12%">
+    </wb-cardstats>
+
+    <!-- Stats with Trend Down -->
+    <wb-cardstats value="85%" label="Bounce Rate" icon="📉" trend="down" data-trend-value="-5%">
+    </wb-cardstats>
+
+    <!-- Stats with Icon Only -->
+    <wb-cardstats value="42" label="Active Projects" icon="🚀"></wb-cardstats>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDPROFILE -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardprofile">👤 cardprofile</h2>
+  <div class="section-note">
+    <strong>Profile Card:</strong> Display user/team member info with avatar, name, role, bio, and optional cover image.
+  </div>
+
+  <div class="demo-grid" id="demo-cardprofile">
+    <wb-cardprofile name="John Doe" role="Software Engineer" avatar="https://i.pravatar.cc/100?u=1"
+      bio="Building the future of web.">
+    </wb-cardprofile>
+
+    <wb-cardprofile name="Jane Smith" role="Product Designer" avatar="https://i.pravatar.cc/100?u=49"
+      bio="Designing experiences that matter." theme="sunset">
+    </wb-cardprofile>
+
+    <wb-cardprofile name="Mike Johnson" role="DevOps Engineer" avatar="https://i.pravatar.cc/100?u=33"
+      bio="Keeping the lights on." theme="ocean">
+    </wb-cardprofile>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <!-- Basic Profile -->
+    <wb-cardprofile name="John Doe" role="Software Engineer" avatar="https://i.pravatar.cc/100?u=1"
+      bio="Building the future of web.">
+    </wb-cardprofile>
+
+    <!-- Themed Profile (Sunset) -->
+    <wb-cardprofile name="Jane Smith" role="Product Designer" avatar="https://i.pravatar.cc/100?u=49"
+      bio="Designing experiences that matter." theme="sunset">
+    </wb-cardprofile>
+
+    <!-- Themed Profile (Ocean) -->
+    <wb-cardprofile name="Mike Johnson" role="DevOps Engineer" avatar="https://i.pravatar.cc/100?u=33"
+      bio="Keeping the lights on." theme="ocean">
+    </wb-cardprofile>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDPRICING -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardpricing">💰 cardpricing</h2>
+  <div class="section-note">
+    <strong>Pricing Card:</strong> Display pricing tiers with plan name, price, features list, and CTA button.
+  </div>
+
+  <div class="demo-grid" id="demo-cardpricing">
+    <wb-cardpricing plan="Basic" price="$0" features="1 Project,500MB Storage,Community Support" cta="Sign Up Free">
+    </wb-cardpricing>
+
+    <wb-cardpricing plan="Pro" price="$29" features="Unlimited Projects,10GB Storage,Priority Support,API Access"
+      featured="true" cta="Get Pro">
+    </wb-cardpricing>
+
+    <wb-cardpricing plan="Enterprise" price="$99"
+      features="Unlimited Everything,1TB Storage,24/7 Support,SSO,Custom Integrations" cta="Contact Sales">
+    </wb-cardpricing>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <!-- Basic Plan -->
+    <wb-cardpricing plan="Basic" price="$0" features="1 Project,500MB Storage,Community Support" cta="Sign Up Free">
+    </wb-cardpricing>
+
+    <!-- Featured Pro Plan -->
+    <wb-cardpricing plan="Pro" price="$29" features="Unlimited Projects,10GB Storage,Priority Support,API Access"
+      featured="true" cta="Get Pro">
+    </wb-cardpricing>
+
+    <!-- Enterprise Plan -->
+    <wb-cardpricing plan="Enterprise" price="$99"
+      features="Unlimited Everything,1TB Storage,24/7 Support,SSO,Custom Integrations" cta="Contact Sales">
+    </wb-cardpricing>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDIMAGE -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardimage">🖼️ cardimage</h2>
+  <div class="section-note">
+    <strong>Image Card:</strong> Display images with title, subtitle, and configurable aspect ratios.
+  </div>
+
+  <div class="demo-grid" id="demo-cardimage">
+    <wb-cardimage title="Mountain Vista" subtitle="Nature photography"
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Mountain landscape"
+      aspect="16/9">
+    </wb-cardimage>
+
+    <wb-cardimage title="Ocean Sunset" subtitle="Beach vibes"
+      src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" alt="Ocean view" aspect="4/3">
+    </wb-cardimage>
+
+    <wb-cardimage title="City Lights" subtitle="Urban exploration"
+      src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=500&q=80" alt="City skyline" aspect="1/1">
+    </wb-cardimage>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <!-- Image Card with 16:9 aspect -->
+    <wb-cardimage title="Mountain Vista" subtitle="Nature photography"
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Mountain landscape"
+      aspect="16/9">
+    </wb-cardimage>
+
+    <!-- Image Card with 4:3 aspect -->
+    <wb-cardimage title="Ocean Sunset" subtitle="Beach vibes"
+      src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" alt="Ocean view" aspect="4/3">
+    </wb-cardimage>
+
+    <!-- Image Card with 1:1 aspect -->
+    <wb-cardimage title="City Lights" subtitle="Urban exploration"
+      src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=500&q=80" alt="City skyline" aspect="1/1">
+    </wb-cardimage>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDVIDEO -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardvideo">🎬 cardvideo</h2>
+  <div class="section-note">
+    <strong>Video Card:</strong> Embed videos with poster, controls, autoplay, and loop options.
+  </div>
+
+  <div class="demo-grid-2" id="demo-cardvideo">
+    <wb-cardvideo title="Sample Video" subtitle="With controls" src="https://www.w3schools.com/html/mov_bbb.mp4"
+      poster="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500&q=80" controls="true">
+    </wb-cardvideo>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <wb-cardvideo title="Sample Video" subtitle="With controls" src="https://www.w3schools.com/html/mov_bbb.mp4"
+      poster="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500&q=80" controls="true">
+    </wb-cardvideo>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDBUTTON -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardbutton">🔘 cardbutton</h2>
+  <div class="section-note">
+    <strong>Button Card:</strong> Card with primary and secondary action buttons in footer.
+  </div>
+
+  <div class="demo-grid" id="demo-cardbutton">
+    <wb-cardbutton title="Confirm Action" subtitle="Please review before continuing" primary="Submit"
+      secondary="Cancel">
+      <p>Are you sure you want to proceed with this action?</p>
+    </wb-cardbutton>
+
+    <wb-cardbutton title="Download Package" subtitle="Latest version available" primary="Download Now"
+      secondary="Learn More">
+      <p>Get the latest version with all new features.</p>
+    </wb-cardbutton>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <wb-cardbutton title="Confirm Action" subtitle="Please review before continuing" primary="Submit"
+      secondary="Cancel">
+      <p>Are you sure you want to proceed with this action?</p>
+    </wb-cardbutton>
+
+    <wb-cardbutton title="Download Package" subtitle="Latest version available" primary="Download Now"
+      secondary="Learn More">
+      <p>Get the latest version with all new features.</p>
+    </wb-cardbutton>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDHERO -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardhero">🦸 cardhero</h2>
+  <div class="section-note">
+    <strong>Hero Card:</strong> Large banner-style cards with background images, overlays, and CTAs.
+  </div>
+
+  <div class="hero-demo" id="demo-cardhero-1">
+    <wb-cardhero title="Welcome to the Future" subtitle="Build amazing web experiences with WB Behaviors"
+      background="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80" overlay="true"
+      cta="Get Started" cta-secondary="Learn More" height="300px">
+    </wb-cardhero>
+  </div>
+
+  <div class="hero-demo" id="demo-cardhero-2">
+    <wb-cardhero title="Cosmic Design System" subtitle="Powered by Harmonic Color System"
+      background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)" overlay="false" xalign="left" cta="Explore Themes"
+      height="280px">
+    </wb-cardhero>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <!-- Hero with background image -->
+    <wb-cardhero title="Welcome to the Future" subtitle="Build amazing web experiences with WB Behaviors"
+      background="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80" overlay="true"
+      cta="Get Started" cta-secondary="Learn More" height="300px">
+    </wb-cardhero>
+
+    <!-- Hero with gradient and left align -->
+    <wb-cardhero title="Cosmic Design System" subtitle="Powered by Harmonic Color System"
+      background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)" overlay="false" xalign="left" cta="Explore Themes"
+      height="280px">
+    </wb-cardhero>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDTESTIMONIAL -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardtestimonial">💬 cardtestimonial</h2>
+  <div class="section-note">
+    <strong>Testimonial Card:</strong> Display customer reviews with quote, author, role, avatar, and star rating.
+  </div>
+
+  <div class="demo-grid" id="demo-cardtestimonial">
+    <wb-cardtestimonial quote="This framework changed how I build web apps. Incredibly intuitive and powerful."
+      author="Sarah Chen" role="Frontend Developer" avatar="https://i.pravatar.cc/100?u=sarah" rating="5">
+    </wb-cardtestimonial>
+
+    <wb-cardtestimonial
+      quote="The component library is extensive and well-documented. Saved us weeks of development time."
+      author="Marcus Johnson" role="Tech Lead at Acme Inc" avatar="https://i.pravatar.cc/100?u=marcus" rating="4">
+    </wb-cardtestimonial>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <wb-cardtestimonial quote="This framework changed how I build web apps. Incredibly intuitive and powerful."
+      author="Sarah Chen" role="Frontend Developer" avatar="https://i.pravatar.cc/100?u=sarah" rating="5">
+    </wb-cardtestimonial>
+
+    <wb-cardtestimonial
+      quote="The component library is extensive and well-documented. Saved us weeks of development time."
+      author="Marcus Johnson" role="Tech Lead at Acme Inc" avatar="https://i.pravatar.cc/100?u=marcus" rating="4">
+    </wb-cardtestimonial>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDPRODUCT -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardproduct">🛒 cardproduct</h2>
+  <div class="section-note">
+    <strong>Product Card:</strong> E-commerce product display with image, price, original price, rating, and add to
+    cart.
+  </div>
+
+  <div class="demo-grid" id="demo-cardproduct">
+    <wb-cardproduct title="Wireless Headphones" description="Premium sound quality"
+      image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80" price="$149.99" rating="4.5"
+      reviews="128" cta="Add to Cart">
+    </wb-cardproduct>
+
+    <wb-cardproduct title="Smart Watch Pro" description="Track your fitness goals"
+      image="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" price="$299.99"
+      data-original-price="$399.99" badge="SALE" rating="4.8" reviews="256" cta="Add to Cart">
+    </wb-cardproduct>
+
+    <wb-cardproduct title="Mechanical Keyboard" description="RGB backlit, Cherry MX switches"
+      image="https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500&q=80" price="$179.99" rating="4.7"
+      reviews="89" cta="Add to Cart">
+    </wb-cardproduct>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <wb-cardproduct title="Wireless Headphones" description="Premium sound quality"
+      image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80" price="$149.99" rating="4.5"
+      reviews="128" cta="Add to Cart">
+    </wb-cardproduct>
+
+    <!-- With sale badge and original price -->
+    <wb-cardproduct title="Smart Watch Pro" description="Track your fitness goals"
+      image="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" price="$299.99"
+      data-original-price="$399.99" badge="SALE" rating="4.8" reviews="256" cta="Add to Cart">
+    </wb-cardproduct>
+
+    <!-- Keyboard -->
+    <wb-cardproduct title="Mechanical Keyboard" description="RGB backlit, Cherry MX switches"
+      image="https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500&q=80" price="$179.99" rating="4.7"
+      reviews="89" cta="Add to Cart">
+    </wb-cardproduct>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDNOTIFICATION -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardnotification">🔔 cardnotification</h2>
+  <div class="section-note">
+    <strong>Notification Card:</strong> Alert messages with variants (info, success, warning, error) and dismissible
+    option.
+  </div>
+
+  <div class="demo-full" id="demo-cardnotification-1">
+    <wb-cardnotification type="info" title="Information" message="This is an informational notification."
+      dismissible="true">
+    </wb-cardnotification>
+  </div>
+
+  <div class="demo-full" id="demo-cardnotification-2">
+    <wb-cardnotification type="success" title="Success!" message="Your changes have been saved successfully."
+      dismissible="true">
+    </wb-cardnotification>
+  </div>
+
+  <div class="demo-full" id="demo-cardnotification-3">
+    <wb-cardnotification type="warning" title="Warning" message="Please review your input before continuing."
+      dismissible="true">
+    </wb-cardnotification>
+  </div>
+
+  <div class="demo-full" id="demo-cardnotification-4">
+    <wb-cardnotification type="error" title="Error" message="Something went wrong. Please try again."
+      dismissible="true">
+    </wb-cardnotification>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <wb-cardnotification type="info" title="Information" message="This is an informational notification."
+      dismissible="true">
+    </wb-cardnotification>
+
+    <wb-cardnotification type="success" title="Success!" message="Your changes have been saved." dismissible="true">
+    </wb-cardnotification>
+
+    <wb-cardnotification type="warning" title="Warning" message="Please review your input." dismissible="true">
+    </wb-cardnotification>
+
+    <wb-cardnotification type="error" title="Error" message="Something went wrong." dismissible="true">
+    </wb-cardnotification>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDFILE -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardfile">📁 cardfile</h2>
+  <div class="section-note">
+    <strong>File Card:</strong> Display file attachments with type icon, filename, size, and download link.
+  </div>
+
+  <div class="demo-grid-2" id="demo-cardfile">
+    <wb-cardfile filename="annual-report-2024.pdf" type="pdf" size="2.4 MB" date="Jan 15, 2024" href="#"
+      downloadable="true">
+    </wb-cardfile>
+
+    <wb-cardfile filename="project-screenshot.png" type="image" size="856 KB" date="Jan 10, 2024" href="#"
+      downloadable="true">
+    </wb-cardfile>
+
+    <wb-cardfile filename="meeting-notes.doc" type="doc" size="124 KB" date="Jan 8, 2024" href="#" downloadable="true">
+    </wb-cardfile>
+
+    <wb-cardfile filename="assets-bundle.zip" type="zip" size="15.2 MB" date="Jan 5, 2024" href="#" downloadable="true">
+    </wb-cardfile>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <wb-cardfile filename="annual-report-2024.pdf" type="pdf" size="2.4 MB" date="Jan 15, 2024" href="#"
+      downloadable="true">
+    </wb-cardfile>
+
+    <wb-cardfile filename="project-screenshot.png" type="image" size="856 KB" date="Jan 10, 2024" href="#"
+      downloadable="true">
+    </wb-cardfile>
+
+    <wb-cardfile filename="meeting-notes.doc" type="doc" size="124 KB" date="Jan 8, 2024" href="#" downloadable="true">
+    </wb-cardfile>
+
+    <wb-cardfile filename="assets-bundle.zip" type="zip" size="15.2 MB" date="Jan 5, 2024" href="#" downloadable="true">
+    </wb-cardfile>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDLINK -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardlink">🔗 cardlink</h2>
+  <div class="section-note">
+    <strong>Link Card:</strong> Clickable navigation cards with icon, title, description, and external link indicator.
+  </div>
+
+  <div class="demo-grid" id="demo-cardlink">
+    <wb-cardlink title="Documentation" description="Learn how to use all WB components and behaviors" icon="📚"
+      href="https://docs.example.com" target="_blank">
+    </wb-cardlink>
+
+    <wb-cardlink title="GitHub Repository" description="View source code and contribute" icon="🐙"
+      href="https://github.com/example/wb" target="_blank">
+    </wb-cardlink>
+
+    <wb-cardlink title="Community Discord" description="Join our developer community" icon="💬"
+      href="https://discord.gg/example" target="_blank">
+    </wb-cardlink>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <wb-cardlink title="Documentation" description="Learn how to use all WB components and behaviors" icon="📚"
+      href="https://docs.example.com" target="_blank">
+    </wb-cardlink>
+
+    <wb-cardlink title="GitHub Repository" description="View source code and contribute" icon="🐙"
+      href="https://github.com/example/wb" target="_blank">
+    </wb-cardlink>
+
+    <wb-cardlink title="Community Discord" description="Join our developer community" icon="💬"
+      href="https://discord.gg/example" target="_blank">
+    </wb-cardlink>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDHORIZONTAL -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardhorizontal">↔️ cardhorizontal</h2>
+  <div class="section-note">
+    <strong>Horizontal Card:</strong> Side-by-side layout with image on left or right.
+  </div>
+
+  <div class="demo-full" id="demo-cardhorizontal-1">
+    <wb-cardhorizontal title="Featured Article" subtitle="Technology News"
+      content="<p>Discover the latest trends in web development and how WB Behaviors is revolutionizing the way developers build applications.</p>"
+      image="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=500&q=80" image-width="40%">
+    </wb-cardhorizontal>
+  </div>
+
+  <div class="demo-full" id="demo-cardhorizontal-2">
+    <wb-cardhorizontal title="Right-Aligned Image" subtitle="Alternative layout"
+      content="<p>The image can be positioned on either side using the imagePosition attribute.</p>"
+      image="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&q=80" image-position="right"
+      image-width="35%">
+    </wb-cardhorizontal>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <wb-cardhorizontal title="Featured Article" subtitle="Technology News"
+      content="<p>Discover the latest trends in web development and how WB Behaviors is revolutionizing the way developers build applications.</p>"
+      image="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=500&q=80" image-width="40%">
+    </wb-cardhorizontal>
+
+    <!-- Image on right -->
+    <wb-cardhorizontal title="Right-Aligned Image" subtitle="Alternative layout"
+      content="<p>The image can be positioned on either side using the imagePosition attribute.</p>"
+      image="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&q=80" image-position="right"
+      image-width="35%">
+    </wb-cardhorizontal>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDOVERLAY -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardoverlay">📷 cardoverlay</h2>
+  <div class="section-note">
+    <strong>Overlay Card:</strong> Background image with text overlay at top, center, or bottom.
+  </div>
+
+  <div class="demo-grid" id="demo-cardoverlay">
+    <wb-cardoverlay title="Bottom Overlay" subtitle="Text appears at the bottom"
+      image="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=500&q=80" position="bottom" height="250px"
+      gradient="true">
+    </wb-cardoverlay>
+
+    <wb-cardoverlay title="Center Overlay" subtitle="Text appears in the center"
+      image="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=500&q=80" position="center" height="250px"
+      gradient="false">
+    </wb-cardoverlay>
+
+    <wb-cardoverlay title="Top Overlay" subtitle="Text appears at the top"
+      image="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=500&q=80" position="top" height="250px"
+      gradient="true">
+    </wb-cardoverlay>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <wb-cardoverlay title="Bottom Overlay" subtitle="Text appears at the bottom"
+      image="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=500&q=80" position="bottom" height="250px"
+      gradient="true">
+    </wb-cardoverlay>
+
+    <wb-cardoverlay title="Center Overlay" subtitle="Text appears in the center"
+      image="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=500&q=80" position="center" height="250px"
+      gradient="false">
+    </wb-cardoverlay>
+
+    <wb-cardoverlay title="Top Overlay" subtitle="Text appears at the top"
+      image="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=500&q=80" position="top" height="250px"
+      gradient="true">
+    </wb-cardoverlay>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDEXPANDABLE -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardexpandable">📖 cardexpandable</h2>
+  <div class="section-note">
+    <strong>Expandable Card:</strong> Collapsible content with show more/less toggle button.
+  </div>
+
+  <div class="demo-grid-2" id="demo-cardexpandable">
+    <wb-cardexpandable title="FAQ: Getting Started" subtitle="Common questions" max-height="80px" expanded="false">
+      <p>WB Behaviors is a lightweight, modular web component library built on native browser APIs. It provides a set of
+        behaviors and custom elements that enhance your HTML without heavy dependencies.</p>
+      <p>To get started, simply include the WB bootstrap script and start using wb-* custom elements or x-* behavior
+        attributes on your existing HTML.</p>
+      <p>The framework automatically discovers and initializes components, making it easy to progressively enhance your
+        pages.</p>
+    </wb-cardexpandable>
+
+    <wb-cardexpandable title="Pre-Expanded" subtitle="Starts open" max-height="60px" expanded="true">
+      <p>This card starts in the expanded state. Click 'Show Less' to collapse it.</p>
+      <p>You can toggle between states using the button below.</p>
+    </wb-cardexpandable>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <!-- Standard -->
+    &lt;wb-cardexpandable title="FAQ: Getting Started" subtitle="Common questions" max-height="80px" expanded="false"&gt;
+      &lt;p&gt;WB Behaviors is a lightweight, modular web component library built on native browser APIs.&lt;/p&gt;
+      &lt;p&gt;It provides a set of behaviors and custom elements that enhance your HTML without heavy dependencies.&lt;/p&gt;
+    &lt;/wb-cardexpandable&gt;
+
+    <!-- Pre-Expanded -->
+    &lt;wb-cardexpandable title="Pre-Expanded" subtitle="Starts open" max-height="60px" expanded="true"&gt;
+      &lt;p&gt;This card starts in the expanded state.&lt;/p&gt;
+    &lt;/wb-cardexpandable&gt;
+    ```
+  </wb-mdhtml>
+
+  <!-- Advanced Examples -->
+  <h3 style="margin-top: 2rem;">Expanded Examples</h3>
+  <div class="demo-grid-2" id="demo-cardexpandable-extended">
+    <!-- Image Content -->
+    <wb-cardexpandable title="Rich Media Content" subtitle="Images and Text" max-height="120px">
+        <div style="display: flex; gap: 1rem; align-items: start;">
+            <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=100&q=80" style="width: 80px; height: 80px; border-radius: 8px; object-fit: cover;">
+            <div>
+                <p style="margin-top: 0"><strong>Programming is Art</strong></p>
+                <p>Coding is not just about logic, it is about creativity and expression.</p>
+                <p>When we build software, we are sculpting logic into useful forms.</p>
+            </div>
+        </div>
+    </wb-cardexpandable>
+
+    <!-- List Content -->
+    <wb-cardexpandable title="Feature List" subtitle="What's included" max-height="60px">
+        <ul style="padding-left: 1.2rem; margin: 0;">
+            <li>Unlimited Projects</li>
+            <li>Priority Support</li>
+            <li>Custom Domains</li>
+            <li>Analytics Dashboard</li>
+            <li>Team Collaboration</li>
+            <li>Audit Logs</li>
+        </ul>
+    </wb-cardexpandable>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDMINIMIZABLE -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="cardminimizable">➖ cardminimizable</h2>
+  <div class="section-note">
+    <strong>Minimizable Card:</strong> Widget-style card that can be minimized to header only.
+  </div>
+
+  <div class="demo-grid-2" id="demo-cardminimizable">
+    <wb-cardminimizable title="Activity Feed" subtitle="Recent updates" minimized="false">
+      <p>• User John logged in</p>
+      <p>• New comment on Post #42</p>
+      <p>• File uploaded: report.pdf</p>
+      <p>• Settings updated</p>
+    </wb-cardminimizable>
+
+    <wb-cardminimizable title="Minimized Widget" subtitle="Click + to expand" minimized="true">
+      <p>This content is hidden by default. Click the + button to reveal it.</p>
+    </wb-cardminimizable>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <wb-cardminimizable title="Activity Feed" subtitle="Recent updates" minimized="false">
+      <p>• User John logged in</p>
+      <p>• New comment on Post #42</p>
+      <p>• File uploaded: report.pdf</p>
+    </wb-cardminimizable>
+
+    <wb-cardminimizable title="Minimized Widget" subtitle="Click + to expand" minimized="true">
+      <p>This content is hidden by default. Click the + button to reveal it.</p>
+    </wb-cardminimizable>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CARDDRAGGABLE -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="carddraggable">✋ carddraggable</h2>
+  <div class="section-note">
+    <strong>Draggable Card:</strong> Cards that can be dragged and repositioned within a container.
+  </div>
+
+  <div class="drag-container" id="demo-carddraggable">
+    <wb-carddraggable title="Drag Me!" content="<p>Grab the header to drag this card around the container.</p>"
+      style="position: absolute; left: 20px; top: 20px; width: 250px;" constrain="parent">
+    </wb-carddraggable>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <div class="drag-container">
+      <wb-carddraggable title="Drag Me!" content="<p>Grab the header to drag this card around the container.</p>"
+        style="position: absolute; left: 20px; top: 20px; width: 250px;" constrain="parent">
+      </wb-carddraggable>
+    </div>
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- EFFECTS & ANIMATIONS -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2 id="effects">✨ Effects & Animations</h2>
+  <div class="section-note">
+    <strong>Behaviors:</strong> Add x-* attributes to any element for ripple effects, tooltips, and animations.
+  </div>
+
+  <h3>Ripple & Tooltip</h3>
+  <div class="demo-row" id="demo-effects-ripple">
+    <button x-ripple class="effect-demo">x-ripple (click me)</button>
+    <span x-tooltip data-content="Hello! I'm a tooltip" data-position="top" data-tooltip-class="wb-tooltip-red" class="effect-demo">x-tooltip (hover me)</span>
+    <button x-ripple x-tooltip data-content="Both effects!" class="effect-demo">Combined</button>
+  </div>
+
+  <h3>Animations (click to trigger)</h3>
+  <div class="demo-row" id="demo-effects-animations">
+    <div class="effect-demo"
+      onclick="this.classList.add('wb-animate-bounce'); setTimeout(() => this.classList.remove('wb-animate-bounce'), 1000)">
+      x-bounce
+    </div>
+    <div class="effect-demo"
+      onclick="this.classList.add('wb-animate-shake'); setTimeout(() => this.classList.remove('wb-animate-shake'), 800)">
+      x-shake
+    </div>
+    <div class="effect-demo"
+      onclick="this.classList.add('wb-animate-pulse'); setTimeout(() => this.classList.remove('wb-animate-pulse'), 1000)">
+      x-pulse
+    </div>
+    <div class="effect-demo"
+      onclick="this.classList.add('wb-animate-tada'); setTimeout(() => this.classList.remove('wb-animate-tada'), 1000)">
+      x-tada
+    </div>
+    <div class="effect-demo"
+      onclick="this.classList.add('wb-animate-wobble'); setTimeout(() => this.classList.remove('wb-animate-wobble'), 1000)">
+      x-wobble
+    </div>
+    <div class="effect-demo"
+      onclick="this.classList.add('wb-animate-heartbeat'); setTimeout(() => this.classList.remove('wb-animate-heartbeat'), 1300)">
+      x-heartbeat
+    </div>
+  </div>
+
+  <wb-mdhtml>
+    ```html
+    <!-- Ripple effect on click -->
+    &lt;button x-ripple class="effect-demo"&gt;x-ripple (click me)&lt;/button&gt;
+
+    <!-- Tooltip on hover -->
+    &lt;span x-tooltip data-content="Hello! I'm a tooltip" data-position="top" data-tooltip-class="wb-tooltip-red" class="effect-demo"&gt;
+      x-tooltip (hover me)
+    &lt;/span&gt;
+
+    <!-- Animation classes (click to trigger) -->
+    &lt;div class="effect-demo wb-animate-bounce"&gt;x-bounce&lt;/div&gt;
+    &lt;div class="effect-demo wb-animate-shake"&gt;x-shake&lt;/div&gt;
+    &lt;div class="effect-demo wb-animate-pulse"&gt;x-pulse&lt;/div&gt;
+    &lt;div class="effect-demo wb-animate-tada"&gt;x-tada&lt;/div&gt;
+    &lt;div class="effect-demo wb-animate-wobble"&gt;x-wobble&lt;/div&gt;
+    &lt;div class="effect-demo wb-animate-heartbeat"&gt;x-heartbeat&lt;/div&gt;
+    ```
+  </wb-mdhtml>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SUMMARY TABLE -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <h2>📋 Card Types Summary</h2>
+  <div style="overflow-x: auto;">
+    <table
+      style="width: 100%; border-collapse: collapse; background: var(--bg-secondary); border-radius: var(--radius-lg); overflow: hidden;">
+      <thead>
+        <tr style="background: var(--bg-tertiary);">
+          <th style="padding: var(--space-md); text-align: left; border-bottom: 1px solid var(--border-color);">Tag</th>
+          <th style="padding: var(--space-md); text-align: left; border-bottom: 1px solid var(--border-color);">Purpose
+          </th>
+          <th style="padding: var(--space-md); text-align: left; border-bottom: 1px solid var(--border-color);">Key
+            Attributes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-card&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">Base card
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">title,
+            subtitle, elevated, clickable</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardstats&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">KPI
+            metrics</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">value,
+            label, icon, trend</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardprofile&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">User
+            profiles</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">name,
+            role, avatar, bio, cover</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardpricing&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">Pricing
+            tiers</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">plan,
+            price, features, featured, cta</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardimage&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">Image
+            gallery</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">src, alt,
+            aspect, position</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardvideo&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">Video
+            embed</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">src,
+            poster, controls, autoplay</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardbutton&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">Action
+            buttons</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">primary,
+            secondary</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardhero&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">Hero
+            banner</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            background, overlay, cta, xalign</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardtestimonial&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">Customer
+            reviews</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">quote,
+            author, role, rating</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardproduct&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">E-commerce
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">image,
+            price, rating, badge</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardnotification&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">Alerts
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">type,
+            message, dismissible</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardfile&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">File
+            display</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">filename,
+            type, size, href</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardlink&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">Navigation
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">href,
+            target, icon</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardhorizontal&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            Side-by-side</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">image,
+            image-position</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardoverlay&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">Image
+            overlay</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">image,
+            position, gradient</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardexpandable&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            Collapsible</td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">expanded,
+            max-height</td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">
+            <code>&lt;wb-cardminimizable&gt;</code>
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">Widget
+          </td>
+          <td style="padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-color);">minimized
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: var(--space-sm) var(--space-md);"><code>&lt;wb-carddraggable&gt;</code></td>
+          <td style="padding: var(--space-sm) var(--space-md);">Movable</td>
+          <td style="padding: var(--space-sm) var(--space-md);">constrain, axis</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Load WB -->
+  <script type="module">
+    import WB from "../src/core/wb-lazy.js";
+    window.WB = WB;
+
+    await WB.init({ autoInject: true });
+    await WB.scan();
+
+    console.log('✅ WB Behaviors initialized - Cards Showcase ready');
+  </script>
+</body>
+
+</html>

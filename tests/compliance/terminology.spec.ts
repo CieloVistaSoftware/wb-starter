@@ -58,7 +58,7 @@ test.describe('Terminology Compliance', () => {
       }
     }
 
-    issues.expectEmpty(`Found usage of forbidden term "${FORBIDDEN_TERM}". Please use "WB Behaviors" instead.`);
+    issues.expectEmpty(`Found usage of forbidden term "${FORBIDDEN_TERM}". Please use "WB Behaviors" instead.\n\nDetails:\n` + issues.format());
   });
 
 });

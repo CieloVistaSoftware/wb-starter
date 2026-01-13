@@ -3,15 +3,17 @@
   "$id": "progress.schema.json",
   "title": "Progress",
   "description": "Progress bar with determinate and indeterminate states",
-  
   "behavior": "progress",
   "baseClass": "wb-progress",
-  
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "progressbar"
   },
-  
+  "compliance": {
+    "baseClass": "wb-progress",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "value": {
       "type": "number",
@@ -37,14 +39,27 @@
     "variant": {
       "type": "string",
       "description": "Color variant",
-      "enum": ["default", "primary", "success", "warning", "error", "info"],
+      "enum": [
+        "default",
+        "primary",
+        "success",
+        "warning",
+        "error",
+        "info"
+      ],
       "default": "primary",
       "appliesClass": "wb-progress--{{value}}"
     },
     "size": {
       "type": "string",
       "description": "Bar height size",
-      "enum": ["xs", "sm", "md", "lg", "xl"],
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
       "default": "md",
       "appliesClass": "wb-progress--{{value}}"
     },
@@ -66,7 +81,6 @@
       "appliesClass": "wb-progress--indeterminate"
     }
   },
-  
   "$view": [
     {
       "name": "header",
@@ -108,7 +122,6 @@
       "description": "Progress indicator bar"
     }
   ],
-  
   "$methods": {
     "getValue": {
       "description": "Gets the current progress value",
@@ -117,15 +130,21 @@
     },
     "setValue": {
       "description": "Sets the progress value",
-      "params": ["value"]
+      "params": [
+        "value"
+      ]
     },
     "increment": {
       "description": "Increments the progress value",
-      "params": ["amount"]
+      "params": [
+        "amount"
+      ]
     },
     "decrement": {
       "description": "Decrements the progress value",
-      "params": ["amount"]
+      "params": [
+        "amount"
+      ]
     },
     "reset": {
       "description": "Resets progress to 0",
@@ -137,10 +156,11 @@
     },
     "setIndeterminate": {
       "description": "Sets indeterminate state",
-      "params": ["isIndeterminate"]
+      "params": [
+        "isIndeterminate"
+      ]
     }
   },
-  
   "$cssAPI": {
     "--wb-progress-height": {
       "default": "8px",
@@ -211,7 +231,6 @@
       "description": "Gap between label and bar"
     }
   },
-  
   "accessibility": {
     "role": "progressbar",
     "ariaValueMin": "0",
@@ -219,8 +238,8 @@
     "ariaValueNow": "dynamic from value",
     "ariaLabel": "dynamic from label or default"
   },
-  
   "test": {
+    "functional": true,
     "setup": [
       "<wb-progress value=\"50\"></wb-progress>",
       "<wb-progress value=\"75\" show-value></wb-progress>",
@@ -229,24 +248,59 @@
     ],
     "matrix": {
       "combinations": [
-        { "value": 0 },
-        { "value": 25 },
-        { "value": 50 },
-        { "value": 75 },
-        { "value": 100 },
-        { "value": 50, "label": "Loading..." },
-        { "value": 50, "showValue": true },
-        { "value": 50, "striped": true },
-        { "value": 50, "variant": "success" },
-        { "value": 50, "variant": "warning" },
-        { "value": 50, "variant": "error" },
-        { "value": 50, "size": "sm" },
-        { "value": 50, "size": "lg" },
-        { "indeterminate": true }
+        {
+          "value": 0
+        },
+        {
+          "value": 25
+        },
+        {
+          "value": 50
+        },
+        {
+          "value": 75
+        },
+        {
+          "value": 100
+        },
+        {
+          "value": 50,
+          "label": "Loading..."
+        },
+        {
+          "value": 50,
+          "showValue": true
+        },
+        {
+          "value": 50,
+          "striped": true
+        },
+        {
+          "value": 50,
+          "variant": "success"
+        },
+        {
+          "value": 50,
+          "variant": "warning"
+        },
+        {
+          "value": 50,
+          "variant": "error"
+        },
+        {
+          "value": 50,
+          "size": "sm"
+        },
+        {
+          "value": 50,
+          "size": "lg"
+        },
+        {
+          "indeterminate": true
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "feedback",
     "icon": "📊",

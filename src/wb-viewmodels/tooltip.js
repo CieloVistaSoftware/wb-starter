@@ -95,6 +95,7 @@ export async function tooltip(element, options = {}) {
       ? (options.position ?? element.dataset.tooltipPosition ?? element.getAttribute('tooltip-position')) : 'top',
     delay: Math.max(0, parseInt(options.delay ?? element.dataset.tooltipDelay ?? '200', 10)),
     hideDelay: Math.max(0, parseInt(options.hideDelay ?? element.dataset.tooltipHideDelay ?? '100', 10)),
+    customClass: options.customClass ?? element.dataset.tooltipClass ?? '',
   };
 
   // Remove native title
@@ -112,6 +113,9 @@ export async function tooltip(element, options = {}) {
   // Create tooltip element
   const tip = document.createElement('div');
   tip.className = `wb-tooltip wb-tooltip--${config.position}`;
+  if (config.customClass) {
+    tip.classList.add(...config.customClass.split(' '));
+  }
   
   const contentDiv = document.createElement('div');
   contentDiv.className = 'wb-tooltip__content';

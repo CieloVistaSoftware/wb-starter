@@ -490,6 +490,48 @@ export function renderView(viewName, data, target, body = '') {
   
   processConditionals(temp, fullData);
   processLoops(temp, fullData);
+
+  // Process Slots (Emulation)
+  // 1. Named Slots: <slot name="foo"> -> content with slot="foo"
+  const slots = temp.querySelectorAll('slot');
+  if (slots.length > 0) {
+    const bodyContainer = document.createElement('div');
+    bodyContainer.innerHTML = body;
+
+    slots.forEach(slot => {
+      const slotName = slot.getAttribute('name');
+      
+      if (slotName) {
+        // Find matching content: [slot="name"]
+        const filler = bodyContainer.querySelectorAll(`[slot="${slotName}"]`);
+        if (filler.length > 0) {
+          const frag = document.createDocumentFragment();
+          filler.forEach(el => frag.appendChild(el));
+          slot.replaceWith(frag);
+        } else {
+          // Keep default content (children of slot)
+          const frag = document.createDocumentFragment();
+          while (slot.firstChild) frag.appendChild(slot.firstChild);
+          slot.replaceWith(frag);
+        }
+      } else {
+        // Default Slot: Everything else not marked with slot=""
+        // Remove named slots from the body container first so we don't duplicate
+        bodyContainer.querySelectorAll('[slot]').forEach(el => el.remove());
+        
+        if (bodyContainer.childNodes.length > 0) {
+          const frag = document.createDocumentFragment();
+          while (bodyContainer.firstChild) frag.appendChild(bodyContainer.firstChild);
+          slot.replaceWith(frag);
+        } else {
+           // Keep default content
+          const frag = document.createDocumentFragment();
+          while (slot.firstChild) frag.appendChild(slot.firstChild);
+          slot.replaceWith(frag);         
+        }
+      }
+    });
+  }
   
   // Interpolate remaining placeholders
   let html = interpolate(temp.innerHTML, fullData);
@@ -521,6 +563,11 @@ export function renderView(viewName, data, target, body = '') {
  * or first boolean attribute (empty value)
  */
 function getViewName(element) {
+  // 0. Explicit 'view' attribute (Standard usage)
+  if (element.hasAttribute('view')) {
+    return element.getAttribute('view');
+  }
+
   const attrs = Array.from(element.attributes);
   
   // First, check if any attribute name matches a registered view
@@ -831,6 +878,24 @@ export async function initViews(options = {}) {
   console.log('[WB Views] ═══════════════════════════════════');
   console.log('[WB Views] Ready!');
   console.log('[WB Views] ═══════════════════════════════════');
+}
+
+// =============================================================================
+// GLOBAL EXPORT
+// =============================================================================
+
+if (typeof window !== 'undefined') {
+  window.WB = window.WB || {};
+  window.WB.views = {
+    registerView,
+    loadViewsFromDOM,
+    loadViewsFromURL,
+    renderView,
+    scanViews,
+    initViews,
+    registry: viewRegistry,
+    meta: viewMeta
+  };
 }
 
 // =============================================================================

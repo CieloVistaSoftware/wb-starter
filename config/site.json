@@ -1,59 +1,167 @@
 {
-  "site": {
-    "name": "My Awesome Site",
-    "tagline": "Built with WB Behaviors",
-    "logo": "<img src='images/wb.png' alt='WB Logo' style='height: 2rem; width: auto;' />",
-    "favicon": "images/wb.png",
-    "theme": "dark",
-    "version": "1.0.0",
-    "autoInject": false
+  "branding": {
+    "companyName": "Acme Co",
+    "headerSubtitle": "Building the future",
+    "headerLogoImage": "<img src='images/wb.png' alt='WB Logo' style='height: 2rem; width: auto;' />",
+    "browserTabIcon": "images/wb.png",
+    "colorTheme": "dark",
+    "appVersion": "1.0.0",
+    "autoInjectComponents": false,
+    "adminEditMode": true
   },
-  
-  "nav": [
-    { "id": "home", "label": "Home", "icon": "🏠", "page": "home" },
-    { "id": "links", "label": "Links", "icon": "🔗", "page": "links" },
-    { "id": "builder", "label": "Page Builder", "icon": "🎨", "page": "builder" },
-    { "id": "schema-viewer", "label": "Schema Viewer", "icon": "📋", "page": "schema-viewer" },
-    { "id": "features", "label": "Features", "icon": "✨", "page": "features" },
-    { "id": "components", "label": "Components", "icon": "🧩", "page": "components" },
-    { "id": "demos", "label": "Demos", "icon": "🎮", "page": "demos" },
-    { "id": "hero-variants", "label": "Hero Variants", "icon": "🦸", "page": "hero-variants" },
-    { "id": "docs", "label": "Docs", "icon": "📖", "page": "docs" },
-    { "id": "about", "label": "About", "icon": "ℹ️", "page": "about" },
-    { "id": "contact", "label": "Contact", "icon": "📧", "page": "contact" }
+
+  "headerSettings": {
+    "displayHeaderLogo": true,
+    "displayThemeSwitcher": true,
+    "displaySearchBar": false,
+    "keepHeaderAtTop": true
+  },
+
+  "navigationMenu": [
+    {
+      "menuItemId": "home",
+      "menuItemText": "Home",
+      "menuItemEmoji": "🏠",
+      "pageToLoad": "home"
+    },
+    {
+      "menuItemId": "about",
+      "menuItemText": "About",
+      "menuItemEmoji": "ℹ️",
+      "pageToLoad": "about"
+    },
+    {
+      "menuItemId": "services",
+      "menuItemText": "Services",
+      "menuItemEmoji": "✨",
+      "pageToLoad": "services"
+    }
   ],
-  
-  "header": {
-    "showLogo": true,
-    "showThemeSwitcher": true,
-    "showSearch": false,
-    "sticky": true
+
+  "navigationLayout": {
+    "navigationPosition": "left",
+    "navigationWidth": "fit-content",
+    "navigationCanCollapse": true,
+    "navigationStartCollapsed": false
   },
-  
-  "footer": {
-    "copyright": "© 2025 Your Company. All rights reserved.",
-    "showSocial": true,
-    "social": [
-      { "name": "GitHub", "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='currentColor'><path d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/></svg>", "url": "https://github.com" },
-      { "name": "Twitter", "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='currentColor'><path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'/></svg>", "url": "https://twitter.com" },
-      { "name": "LinkedIn", "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='currentColor'><path d='M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z'/></svg>", "url": "https://linkedin.com" }
-    ],
-    "links": [
-      { "label": "Privacy Policy", "page": "privacy" },
-      { "label": "Terms of Service", "page": "terms" }
-    ]
+
+  "footerSettings": {
+    "footerCopyrightText": "© 2025 Your Company. All rights reserved.",
+    "displaySocialMediaLinks": true
   },
-  
-  "layout": {
-    "navPosition": "left",
-    "navWidth": "fit-content",
-    "navCollapsible": true,
-    "navDefaultCollapsed": false
+
+  "socialMediaLinks": [
+    {
+      "platform": "GitHub",
+      "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='currentColor'><path d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/></svg>",
+      "profileUrl": "https://github.com"
+    },
+    {
+      "platform": "Twitter",
+      "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='currentColor'><path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'/></svg>",
+      "profileUrl": "https://twitter.com"
+    },
+    {
+      "platform": "LinkedIn",
+      "icon": "<svg viewBox='0 0 24 24' width='24' height='24' fill='currentColor'><path d='M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z'/></svg>",
+      "profileUrl": "https://linkedin.com"
+    }
+  ],
+
+  "additionalFooterLinks": [
+    {
+      "linkText": "Privacy Policy",
+      "pageToLoad": "privacy"
+    },
+    {
+      "linkText": "Terms of Service",
+      "pageToLoad": "terms"
+    }
+  ],
+
+  "companyInfo": {
+    "businessName": "Acme Co",
+    "businessTagline": "Building the future",
+    "businessDescription": "We provide innovative solutions for modern businesses, combining cutting-edge technology with exceptional service.",
+    "valueProposition": "Industry expertise, customer-focused approach, cutting-edge technology, 24/7 support, transparent communication"
   },
-  
-  "seo": {
-    "title": "My Awesome Site - Built with WB",
-    "description": "A modern website starter kit powered by WB Behaviors",
-    "keywords": ["website", "starter", "wb-behaviors", "components"]
+
+  "contactInfo": {
+    "businessEmail": "hello@acmeco.com",
+    "phoneNumber": "+1 (234) 567-890",
+    "businessAddress": "123 Business Street, Suite 100, City, State 12345",
+    "businessHours": "Monday - Friday: 9am - 6pm EST"
+  },
+
+  "servicesList": [
+    {
+      "serviceIcon": "🎨",
+      "serviceName": "Web Design",
+      "serviceDescription": "Beautiful, modern interfaces crafted to engage and convert your users."
+    },
+    {
+      "serviceIcon": "⚙️",
+      "serviceName": "Development",
+      "serviceDescription": "Robust, scalable applications built with modern technologies and best practices."
+    },
+    {
+      "serviceIcon": "🚀",
+      "serviceName": "Deployment",
+      "serviceDescription": "Fast, secure deployment with continuous monitoring and optimization."
+    },
+    {
+      "serviceIcon": "📞",
+      "serviceName": "Support",
+      "serviceDescription": "Comprehensive support and maintenance to keep your platform running smoothly."
+    }
+  ],
+
+  "teamMembers": [
+    {
+      "memberAvatar": "👩‍💼",
+      "memberName": "Sarah Johnson",
+      "memberRole": "CEO & Founder",
+      "memberBio": "Visionary leader with 15+ years in tech and a passion for innovation."
+    },
+    {
+      "memberAvatar": "👨‍💻",
+      "memberName": "Mike Chen",
+      "memberRole": "CTO",
+      "memberBio": "Full-stack expert and architecture wizard building tomorrow's solutions."
+    }
+  ],
+
+  "customerTestimonials": [
+    {
+      "testimonialQuote": "Working with this team has been a game-changer for our business. Highly professional and results-driven.",
+      "testimonialAuthor": "Alex Martinez",
+      "authorCompany": "Founder, TechStart Inc"
+    },
+    {
+      "testimonialQuote": "Exceptional service and attention to detail. They delivered exactly what we needed, on time and on budget.",
+      "testimonialAuthor": "Jennifer Lee",
+      "authorCompany": "Director, Digital First Co"
+    }
+  ],
+
+  "frequentlyAskedQuestions": [
+    {
+      "questionText": "What is your pricing?",
+      "answerText": "Our pricing is transparent and flexible. We offer custom packages based on your needs. Contact us for a personalized quote."
+    },
+    {
+      "questionText": "How long does a project take?",
+      "answerText": "Project timelines vary depending on scope. Simple projects take 2-4 weeks, while complex solutions typically take 4-8 weeks."
+    },
+    {
+      "questionText": "Do you provide ongoing support?",
+      "answerText": "Yes! We provide 24/7 support to all our clients. Your success is our success, and we're here to help whenever you need us."
+    }
+  ],
+
+  "searchEngineOptimization": {
+    "pageTitle": "My Awesome Site - Built with WB",
+    "pageDescription": "A modern website starter kit powered by WB Behaviors",
+    "seoKeywords": ["website", "starter", "wb-behaviors", "components"]
   }
 }

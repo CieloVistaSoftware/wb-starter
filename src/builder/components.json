@@ -1,0 +1,83 @@
+{
+  "components": [
+    {
+      "name": "card",
+      "tag": "wb-card",
+      "category": "card",
+      "icon": "📇",
+      "description": "Generic card container",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "icon": { "type": "string" },
+        "clickable": { "type": "boolean" }
+      }
+    },
+    {
+      "name": "button",
+      "tag": "wb-button",
+      "category": "form",
+      "icon": "🔘",
+      "description": "Interactive button",
+      "properties": {
+        "label": { "type": "string" },
+        "variant": { "type": "string", "enum": ["primary", "secondary", "danger"] },
+        "disabled": { "type": "boolean" }
+      }
+    },
+    {
+      "name": "input",
+      "tag": "wb-input",
+      "category": "form",
+      "icon": "⌨️",
+      "description": "Text input field",
+      "properties": {
+        "placeholder": { "type": "string" },
+        "type": { "type": "string" },
+        "required": { "type": "boolean" }
+      }
+    },
+    {
+      "name": "hero",
+      "tag": "wb-hero",
+      "category": "layout",
+      "icon": "🦸",
+      "description": "Hero section with title and image",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "image": { "type": "string" }
+      }
+    },
+    {
+      "name": "spinner",
+      "tag": "wb-spinner",
+      "category": "feedback",
+      "icon": "⏳",
+      "description": "Loading spinner",
+      "properties": {
+        "color": { "type": "string" }
+      }
+    },
+    {
+      "name": "dialog",
+      "tag": "wb-dialog",
+      "category": "overlay",
+      "icon": "🪟",
+      "description": "Modal dialog",
+      "properties": {
+        "title": { "type": "string" },
+        "open": { "type": "boolean" }
+      }
+    }
+  ],
+  "categories": [
+    { "id": "card", "name": "Cards", "count": 20 },
+    { "id": "form", "name": "Forms", "count": 6 },
+    { "id": "layout", "name": "Layout", "count": 8 },
+    { "id": "feedback", "name": "Feedback", "count": 11 },
+    { "id": "overlay", "name": "Overlay", "count": 3 }
+  ],
+  "total": 71,
+  "version": "3.0.0"
+}

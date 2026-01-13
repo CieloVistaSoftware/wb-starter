@@ -23,7 +23,10 @@ function findHtmlFiles(dir: string, files: string[] = []): string[] {
         findHtmlFiles(fullPath, files);
       }
     } else if (entry.name.endsWith('.html')) {
-      files.push(fullPath);
+      // Exclude tests that intentionally error
+      if (!entry.name.includes('legacy-syntax-check.html')) {
+        files.push(fullPath);
+      }
     }
   }
   

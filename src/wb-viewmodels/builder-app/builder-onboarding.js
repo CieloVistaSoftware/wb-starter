@@ -170,13 +170,13 @@ window.showExportModal = () => {
   // Remove existing
   document.getElementById('exportModal')?.remove();
   
-  const modal = document.createElement('div');
-  modal.id = 'exportModal';
-  modal.className = 'export-modal';
+  const exportModalEl = document.createElement('div');
+  exportModalEl.id = 'exportModal';
+  exportModalEl.className = 'export-modal';
   
   const componentCount = document.querySelectorAll('.dropped').length;
   
-  modal.innerHTML = `
+  exportModalEl.innerHTML = `
     <div class="export-modal-backdrop" onclick="window.closeExportModal()"></div>
     <div class="export-modal-content">
       <div class="export-modal-header">
@@ -221,18 +221,18 @@ window.showExportModal = () => {
     </div>
   `;
   
-  document.body.appendChild(modal);
+  document.body.appendChild(exportModalEl);
   
   requestAnimationFrame(() => {
-    modal.classList.add('visible');
+    exportModalEl.classList.add('visible');
   });
 };
 
 window.closeExportModal = () => {
-  const modal = document.getElementById('exportModal');
-  if (modal) {
-    modal.classList.remove('visible');
-    setTimeout(() => modal.remove(), 300);
+  const closeModalEl = document.getElementById('exportModal');
+  if (closeModalEl) {
+    closeModalEl.classList.remove('visible');
+    setTimeout(() => closeModalEl.remove(), 300);
   }
 };
 
@@ -246,21 +246,21 @@ function initEditableHighlights() {
   
   // Add hover effect for editable elements
   canvas.addEventListener('mouseover', (e) => {
-    const editable = e.target.closest('[contenteditable="true"], .canvas-editable');
-    if (editable && !editable.classList.contains('editing')) {
-      editable.classList.add('hover-highlight');
+    const hoverEditable = e.target.closest('[contenteditable="true"], .canvas-editable');
+    if (hoverEditable && !hoverEditable.classList.contains('editing')) {
+      hoverEditable.classList.add('hover-highlight');
       
       // Show edit tooltip on first hover
       if (!hintsShown.has('edit-tooltip-shown')) {
-        showEditTooltip(editable);
+        showEditTooltip(hoverEditable);
       }
     }
   });
   
   canvas.addEventListener('mouseout', (e) => {
-    const editable = e.target.closest('[contenteditable="true"], .canvas-editable');
-    if (editable) {
-      editable.classList.remove('hover-highlight');
+    const outEditable = e.target.closest('[contenteditable="true"], .canvas-editable');
+    if (outEditable) {
+      outEditable.classList.remove('hover-highlight');
       hideEditTooltip();
     }
   });

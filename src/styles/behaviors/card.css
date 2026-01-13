@@ -1,1 +1,300 @@
-/* Card styles */
+/**
+ * Card Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Styles for the wb-card component and its variants.
+ * Working in tandem with src/wb-viewmodels/card.js
+ * 
+ * CRITICAL RULE: ALL CARDS MUST HAVE 1REM PADDING LEFT AND RIGHT
+ * -----------------------------------------------------------------------------
+ */
+
+/* Map Global Variables to Component Variables */
+:root {
+  --bg-secondary: var(--color-surface, #f8fafc);
+  --bg-tertiary: var(--color-bg, #ffffff);
+  --bg-elevated: var(--color-elevated, #ffffff);
+  --text-primary: var(--color-text, #1e293b);
+  --text-secondary: var(--color-text-muted, #64748b);
+  --border-color: var(--color-border, #e2e8f0);
+  --primary: var(--color-primary, #3b82f6);
+  --shadow-elevated: var(--shadow-md);
+}
+
+[data-theme="dark"] {
+  --bg-secondary: var(--card-dark-bg-secondary);
+  --bg-tertiary: var(--card-dark-bg-tertiary);
+  --bg-elevated: var(--card-dark-bg-elevated); /* Lighter (Slate 500) to show shadow */
+  --text-primary: var(--card-dark-text-primary);
+  --text-secondary: var(--card-dark-text-secondary);
+  --border-color: var(--card-dark-border);
+  --shadow-elevated: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-secondary: var(--card-dark-bg-secondary);
+    --bg-tertiary: var(--card-dark-bg-tertiary);
+    --bg-elevated: var(--card-dark-bg-elevated);
+    --text-primary: var(--card-dark-text-primary);
+    --text-secondary: var(--card-dark-text-secondary);
+    --border-color: var(--card-dark-border);
+    --shadow-elevated: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE CARD - ALL CARDS INHERIT FROM THIS
+   CRITICAL: 1rem padding on left and right is MANDATORY
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg, 0.5rem);
+  overflow: hidden;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CARD PARTS - Each part has 1rem horizontal padding
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-card__header {
+  padding: 1rem; /* 1rem all sides */
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.wb-card__main {
+  padding: 1rem; /* 1rem all sides */
+  flex: 1;
+  color: var(--text-primary);
+}
+
+.wb-card__footer {
+  padding: 0.75rem 1rem; /* 1rem horizontal */
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Cards WITHOUT header/main/footer need padding on the card itself */
+.wb-card:not(:has(.wb-card__header)):not(:has(.wb-card__main)) {
+  padding: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-card__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.wb-card__subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MODIFIERS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Elevated - lighter background to appear raised */
+.wb-card--elevated {
+  box-shadow: var(--shadow-elevated, 0 4px 12px rgba(0,0,0,0.15));
+  border-color: transparent;
+  background: var(--bg-elevated);
+}
+
+/* Hoverable */
+.wb-card--hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  border-color: var(--primary);
+}
+
+/* Clickable */
+.wb-card--clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.wb-card--clickable:active,
+.wb-card--active {
+  transform: scale(0.98);
+  box-shadow: none;
+  border-color: var(--primary);
+  filter: brightness(1.1);
+}
+
+.wb-card--clickable:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VARIANTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Glass */
+.wb-card--glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Rack */
+.wb-card--rack {
+  background: var(--rack-bg);
+  border: 1px solid var(--rack-border);
+  border-left: 12px solid var(--rack-side);
+  border-right: 12px solid var(--rack-side);
+  border-radius: 2px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  font-family: ui-monospace, monospace;
+  color: var(--rack-text);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SPECIFIC CARD TYPES - ALL MUST HAVE 1REM HORIZONTAL PADDING
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Stats card - horizontal layout with padding */
+.wb-card--stats {
+  padding: 1rem; /* Force 1rem padding */
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Testimonial card */
+.wb-card--testimonial {
+  padding: 1rem;
+}
+
+/* Notification card */
+.wb-card--notification {
+  padding: 1rem; /* Fixed 1rem all sides */
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+/* File card */
+.wb-card--file {
+  padding: 1rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Link card */
+.wb-card--link {
+  padding: 1rem; /* Fixed 1rem all sides */
+}
+
+/* Profile card content */
+.wb-card__profile-content {
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Horizontal card content */
+.wb-card__horizontal-content {
+  padding: 1rem;
+}
+
+/* Overlay card content */
+.wb-card__overlay-content {
+  padding: 1rem; /* Fixed 1rem all sides */
+}
+
+/* Hero card content */
+.wb-card__hero-content {
+  padding: 1rem; /* Fixed 1rem all sides */
+}
+
+/* Product info */
+.wb-card__product-info {
+  padding: 1rem;
+}
+
+/* Pricing main */
+.wb-card--pricing .wb-card__main {
+  padding: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMPONENT SPECIFICS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-card__hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.wb-card__avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--bg-secondary);
+}
+
+.wb-card__price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.wb-card__price-current {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.wb-card__notification-dismiss:hover {
+  opacity: 1;
+  background: rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+/* Figure elements */
+.wb-card__figure {
+  margin: 0;
+  overflow: hidden;
+  display: block;
+}
+
+.wb-card__figure img,
+.wb-card__figure video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FALLBACK: Force 1rem padding on ALL wb-* card custom elements
+   This catches any card that doesn't have internal structure
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+wb-card:not(:has(header)):not(:has(main)),
+wb-cardstats,
+wb-cardtestimonial,
+wb-cardnotification,
+wb-cardfile {
+  padding: 1rem;
+}

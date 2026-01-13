@@ -3,38 +3,103 @@
   "$id": "spinner.schema.json",
   "title": "Spinner",
   "description": "Loading spinner indicator",
-  
   "behavior": "spinner",
   "baseClass": "wb-spinner",
-  
-  "semanticElement": { "tagName": "div", "implicitRole": "status" },
-  
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "status"
+  },
+  "compliance": {
+    "baseClass": "wb-spinner",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "size": { "type": "string", "enum": ["xs", "sm", "md", "lg", "xl"], "default": "md", "appliesClass": "wb-spinner--{{value}}" },
-    "variant": { "type": "string", "enum": ["default", "primary", "success", "warning", "error"], "default": "primary", "appliesClass": "wb-spinner--{{value}}" },
-    "speed": { "type": "string", "enum": ["slow", "medium", "fast"], "default": "medium", "appliesClass": "wb-spinner--{{value}}" },
-    "label": { "type": "string", "description": "Accessible label", "default": "Loading" }
+    "size": {
+      "type": "string",
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
+      "default": "md",
+      "appliesClass": "wb-spinner--{{value}}"
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "default",
+        "primary",
+        "success",
+        "warning",
+        "error"
+      ],
+      "default": "primary",
+      "appliesClass": "wb-spinner--{{value}}"
+    },
+    "speed": {
+      "type": "string",
+      "enum": [
+        "slow",
+        "medium",
+        "fast"
+      ],
+      "default": "medium",
+      "appliesClass": "wb-spinner--{{value}}"
+    },
+    "label": {
+      "type": "string",
+      "description": "Accessible label",
+      "default": "Loading"
+    }
   },
-  
   "$view": [
-    { "name": "spinner", "tag": "div", "public": true, "required": true, "description": "Spinning element" }
+    {
+      "name": "spinner",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "Spinning element"
+    }
   ],
-  
   "$methods": {
-    "show": { "description": "Shows the spinner", "params": [] },
-    "hide": { "description": "Hides the spinner", "params": [] }
+    "show": {
+      "description": "Shows the spinner",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the spinner",
+      "params": []
+    }
   },
-  
   "$cssAPI": {
-    "--wb-spinner-size": { "default": "24px", "description": "Spinner size" },
-    "--wb-spinner-border-width": { "default": "3px", "description": "Border width" },
-    "--wb-spinner-color": { "default": "var(--primary, #6366f1)", "description": "Spinner color" },
-    "--wb-spinner-track-color": { "default": "rgba(0,0,0,0.1)", "description": "Track color" },
-    "--wb-spinner-speed": { "default": "0.8s", "description": "Animation duration" }
+    "--wb-spinner-size": {
+      "default": "24px",
+      "description": "Spinner size"
+    },
+    "--wb-spinner-border-width": {
+      "default": "3px",
+      "description": "Border width"
+    },
+    "--wb-spinner-color": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Spinner color"
+    },
+    "--wb-spinner-track-color": {
+      "default": "rgba(0,0,0,0.1)",
+      "description": "Track color"
+    },
+    "--wb-spinner-speed": {
+      "default": "0.8s",
+      "description": "Animation duration"
+    }
   },
-  
-  "accessibility": { "role": "status", "ariaLabel": "dynamic from label" },
-  
+  "accessibility": {
+    "role": "status",
+    "ariaLabel": "dynamic from label"
+  },
   "test": {
     "setup": [
       "<wb-spinner></wb-spinner>",
@@ -44,13 +109,25 @@
     "matrix": {
       "combinations": [
         {},
-        { "size": "sm" },
-        { "size": "lg" },
-        { "variant": "success" },
-        { "speed": "fast" }
+        {
+          "size": "sm"
+        },
+        {
+          "size": "lg"
+        },
+        {
+          "variant": "success"
+        },
+        {
+          "speed": "fast"
+        }
       ]
     }
   },
-  
-  "_metadata": { "category": "feedback", "icon": "⏳", "since": "1.0.0", "status": "stable" }
+  "_metadata": {
+    "category": "feedback",
+    "icon": "⏳",
+    "since": "1.0.0",
+    "status": "stable"
+  }
 }

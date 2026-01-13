@@ -1,44 +1,12 @@
 <!-- SPA Testimonials Section - id="testimonials" -->
-<section id="testimonials" style="padding: 5rem 2rem; background: var(--bg-secondary, #f8fafc);">
-  <div style="max-width: 1200px; margin: 0 auto;">
-    <div style="text-align: center; margin-bottom: 3rem;">
-      <h2 style="font-size: 2.5rem; font-weight: 700; color: var(--text-primary, #1a1a2e); margin-bottom: 1rem;">What Our Clients Say</h2>
-      <p style="font-size: 1.1rem; color: var(--text-secondary, #666); max-width: 600px; margin: 0 auto;">Don't just take our word for it.</p>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
-      <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-        <div style="display: flex; gap: 0.25rem; margin-bottom: 1rem;">⭐⭐⭐⭐⭐</div>
-        <p style="color: var(--text-primary, #333); font-style: italic; margin-bottom: 1.5rem; line-height: 1.6;">"Working with this team was an absolute pleasure. They delivered beyond our expectations and on time."</p>
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">👤</div>
-          <div>
-            <div style="font-weight: 600;">John Smith</div>
-            <div style="font-size: 0.85rem; color: var(--text-secondary, #666);">CEO, TechCorp</div>
-          </div>
-        </div>
-      </div>
-      <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-        <div style="display: flex; gap: 0.25rem; margin-bottom: 1rem;">⭐⭐⭐⭐⭐</div>
-        <p style="color: var(--text-primary, #333); font-style: italic; margin-bottom: 1.5rem; line-height: 1.6;">"Our website traffic increased by 200% after the redesign. The ROI has been incredible."</p>
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #11998e, #38ef7d); border-radius: 50%; display: flex; align-items: center; justify-content: center;">👤</div>
-          <div>
-            <div style="font-weight: 600;">Lisa Anderson</div>
-            <div style="font-size: 0.85rem; color: var(--text-secondary, #666);">Marketing Director, StartupXYZ</div>
-          </div>
-        </div>
-      </div>
-      <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-        <div style="display: flex; gap: 0.25rem; margin-bottom: 1rem;">⭐⭐⭐⭐⭐</div>
-        <p style="color: var(--text-primary, #333); font-style: italic; margin-bottom: 1.5rem; line-height: 1.6;">"Professional, responsive, and highly skilled. I couldn't recommend them more highly."</p>
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #ee0979, #ff6a00); border-radius: 50%; display: flex; align-items: center; justify-content: center;">👤</div>
-          <div>
-            <div style="font-weight: 600;">David Brown</div>
-            <div style="font-size: 0.85rem; color: var(--text-secondary, #666);">Founder, Creative Agency</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<wb-container data-id="testimonials" data-direction="column" data-gap="2rem" data-padding="5rem 2rem" data-align="center" data-max-width="1200px" data-background="var(--bg-secondary, #f8fafc)">
+  <header style="text-align: center; margin-bottom: 2rem;">
+    <h2>What Our Clients Say</h2>
+    <p>Don't just take our word for it.</p>
+  </header>
+  <wb-grid data-columns="3" data-gap="1.5rem">
+    <wb-cardtestimonial data-quote="Working with this team was an absolute pleasure. They delivered beyond our expectations and on time." data-author="John Smith" data-role="CEO, TechCorp" data-rating="5"></wb-cardtestimonial>
+    <wb-cardtestimonial data-quote="Our website traffic increased by 200% after the redesign. The ROI has been incredible." data-author="Lisa Anderson" data-role="Marketing Director, StartupXYZ" data-rating="5"></wb-cardtestimonial>
+    <wb-cardtestimonial data-quote="Professional, responsive, and highly skilled. I couldn't recommend them more highly." data-author="David Brown" data-role="Founder, Creative Agency" data-rating="5"></wb-cardtestimonial>
+  </wb-grid>
+</wb-container>

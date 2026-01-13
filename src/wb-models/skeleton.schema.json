@@ -3,42 +3,116 @@
   "$id": "skeleton.schema.json",
   "title": "Skeleton",
   "description": "Loading skeleton placeholder with shimmer animation",
-  
   "behavior": "skeleton",
   "baseClass": "wb-skeleton",
-  
-  "semanticElement": { "tagName": "div", "implicitRole": "status" },
-  
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "status"
+  },
+  "compliance": {
+    "baseClass": "wb-skeleton",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "variant": { "type": "string", "enum": ["text", "circle", "rect", "card"], "default": "text", "appliesClass": "wb-skeleton--{{value}}" },
-    "lines": { "type": "number", "description": "Number of text lines", "default": 1 },
-    "width": { "type": "string", "description": "Width (CSS value)", "default": "100%" },
-    "height": { "type": "string", "description": "Height (CSS value)", "default": "1em" },
-    "animated": { "type": "boolean", "description": "Enable shimmer animation", "default": true }
+    "variant": {
+      "type": "string",
+      "enum": [
+        "text",
+        "circle",
+        "rect",
+        "card"
+      ],
+      "default": "text",
+      "appliesClass": "wb-skeleton--{{value}}"
+    },
+    "lines": {
+      "type": "number",
+      "description": "Number of text lines",
+      "default": 1
+    },
+    "width": {
+      "type": "string",
+      "description": "Width (CSS value)",
+      "default": "100%"
+    },
+    "height": {
+      "type": "string",
+      "description": "Height (CSS value)",
+      "default": "1em"
+    },
+    "animated": {
+      "type": "boolean",
+      "description": "Enable shimmer animation",
+      "default": true
+    }
   },
-  
   "$view": [
-    { "name": "lines", "tag": "div", "public": true, "createdWhen": "variant == 'text'", "description": "Text line placeholders" },
-    { "name": "circle", "tag": "div", "public": true, "createdWhen": "variant == 'circle'", "description": "Circle placeholder" },
-    { "name": "rect", "tag": "div", "public": true, "createdWhen": "variant == 'rect'", "description": "Rectangle placeholder" },
-    { "name": "card", "tag": "div", "public": true, "createdWhen": "variant == 'card'", "description": "Card placeholder" }
+    {
+      "name": "lines",
+      "tag": "div",
+      "public": true,
+      "createdWhen": "variant == 'text'",
+      "description": "Text line placeholders"
+    },
+    {
+      "name": "circle",
+      "tag": "div",
+      "public": true,
+      "createdWhen": "variant == 'circle'",
+      "description": "Circle placeholder"
+    },
+    {
+      "name": "rect",
+      "tag": "div",
+      "public": true,
+      "createdWhen": "variant == 'rect'",
+      "description": "Rectangle placeholder"
+    },
+    {
+      "name": "card",
+      "tag": "div",
+      "public": true,
+      "createdWhen": "variant == 'card'",
+      "description": "Card placeholder"
+    }
   ],
-  
   "$methods": {
-    "show": { "description": "Shows the skeleton", "params": [] },
-    "hide": { "description": "Hides the skeleton", "params": [] }
+    "show": {
+      "description": "Shows the skeleton",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the skeleton",
+      "params": []
+    }
   },
-  
   "$cssAPI": {
-    "--wb-skeleton-bg": { "default": "linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)", "description": "Shimmer gradient" },
-    "--wb-skeleton-radius": { "default": "4px", "description": "Border radius" },
-    "--wb-skeleton-line-height": { "default": "1em", "description": "Text line height" },
-    "--wb-skeleton-line-gap": { "default": "0.5em", "description": "Gap between lines" },
-    "--wb-skeleton-animation": { "default": "shimmer 1.5s infinite", "description": "Animation" }
+    "--wb-skeleton-bg": {
+      "default": "linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)",
+      "description": "Shimmer gradient"
+    },
+    "--wb-skeleton-radius": {
+      "default": "4px",
+      "description": "Border radius"
+    },
+    "--wb-skeleton-line-height": {
+      "default": "1em",
+      "description": "Text line height"
+    },
+    "--wb-skeleton-line-gap": {
+      "default": "0.5em",
+      "description": "Gap between lines"
+    },
+    "--wb-skeleton-animation": {
+      "default": "shimmer 1.5s infinite",
+      "description": "Animation"
+    }
   },
-  
-  "accessibility": { "role": "status", "ariaLabel": "Loading content" },
-  
+  "accessibility": {
+    "role": "status",
+    "ariaLabel": "Loading content"
+  },
   "test": {
     "setup": [
       "<wb-skeleton></wb-skeleton>",
@@ -47,14 +121,30 @@
     ],
     "matrix": {
       "combinations": [
-        { "variant": "text" },
-        { "variant": "text", "lines": 3 },
-        { "variant": "circle" },
-        { "variant": "rect", "height": "150px" },
-        { "variant": "card" }
+        {
+          "variant": "text"
+        },
+        {
+          "variant": "text",
+          "lines": 3
+        },
+        {
+          "variant": "circle"
+        },
+        {
+          "variant": "rect",
+          "height": "150px"
+        },
+        {
+          "variant": "card"
+        }
       ]
     }
   },
-  
-  "_metadata": { "category": "feedback", "icon": "▓", "since": "1.0.0", "status": "stable" }
+  "_metadata": {
+    "category": "feedback",
+    "icon": "▓",
+    "since": "1.0.0",
+    "status": "stable"
+  }
 }

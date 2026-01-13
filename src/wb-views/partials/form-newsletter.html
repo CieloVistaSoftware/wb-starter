@@ -1,9 +1,11 @@
 <!-- Newsletter Signup Template -->
-<wb-container data-columns="1" style="padding: 2rem; text-align: center;"
-  <wb-card data-title="Stay Updated" data-subtitle="Get the latest news and updates delivered to your inbox"
-    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-      <input type="email" placeholder="Enter your email" style="flex: 1; min-width: 200px; max-width: 300px; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); color: var(--text-primary);">
-      <button x-ripple style="padding: 0.75rem 2rem; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer;">Subscribe</button>
-    </div>
-  </div>
-</div>
+<wb-container data-direction="column" data-gap="1.5rem" data-padding="2rem" data-align="center" data-max-width="600px">
+  <header style="text-align: center;">
+    <h2>Stay Updated</h2>
+    <p>Get the latest news and updates delivered to your inbox</p>
+  </header>
+  <form action="#" method="post" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+    <wb-input data-name="email" data-input-type="email" data-placeholder="Enter your email" data-required="true"></wb-input>
+    <wb-button data-type="submit" data-variant="primary">Subscribe</wb-button>
+  </form>
+</wb-container>

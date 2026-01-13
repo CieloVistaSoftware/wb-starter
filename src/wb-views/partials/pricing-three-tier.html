@@ -1,6 +1,12 @@
 <!-- Three-Tier Pricing Template -->
-<wb-container data-columns="3" data-gap="2rem" style="padding: 2rem;"
-  <wb-cardpricing data-plan="Basic" data-price="$9" data-period="/month" data-features="10 Users,5GB Storage,Email Support" data-cta="Choose Basic"</div>
-  <wb-cardpricing data-plan="Professional" data-price="$29" data-period="/month" data-features="50 Users,50GB Storage,Priority Support,API Access" data-cta="Choose Pro" data-featured="true"</div>
-  <wb-cardpricing data-plan="Enterprise" data-price="$99" data-period="/month" data-features="Unlimited Users,500GB Storage,24/7 Support,Custom Integrations,SLA" data-cta="Contact Sales"</div>
-</div>
+<wb-container data-direction="column" data-gap="2rem" data-padding="3rem 2rem" data-align="center" data-max-width="1000px">
+  <header style="text-align: center; margin-bottom: 2rem;">
+    <h2>Pricing Plans</h2>
+    <p>Find the perfect plan for your needs.</p>
+  </header>
+  <wb-grid data-columns="3" data-gap="1.5rem">
+    <wb-card data-variant="pricing" data-plan="Basic" data-price="$9" data-period="/month" data-features="10 Users,5GB Storage,Email Support" data-cta="Choose Basic" data-cta-href="#"></wb-card>
+    <wb-card data-variant="pricing" data-plan="Professional" data-price="$29" data-period="/month" data-features="50 Users,50GB Storage,Priority Support,API Access" data-cta="Choose Pro" data-cta-href="#" data-featured="true"></wb-card>
+    <wb-card data-variant="pricing" data-plan="Enterprise" data-price="$99" data-period="/month" data-features="Unlimited Users,500GB Storage,24/7 Support,Custom Integrations,SLA" data-cta="Contact Sales" data-cta-href="#"></wb-card>
+  </wb-grid>
+</wb-container>

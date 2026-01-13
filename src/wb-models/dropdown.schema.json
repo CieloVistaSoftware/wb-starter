@@ -3,71 +3,187 @@
   "$id": "dropdown.schema.json",
   "title": "Dropdown",
   "description": "Toggleable dropdown menu",
-  
   "behavior": "dropdown",
   "baseClass": "wb-dropdown",
-  
-  "semanticElement": { "tagName": "div", "implicitRole": "menu" },
-  
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "menu"
+  },
+  "compliance": {
+    "baseClass": "wb-dropdown",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "position": { "type": "string", "enum": ["bottom-start", "bottom-end", "top-start", "top-end"], "default": "bottom-start", "appliesClass": "wb-dropdown--{{value}}" },
-    "trigger": { "type": "string", "enum": ["click", "hover"], "default": "click" },
-    "closeOnSelect": { "type": "boolean", "description": "Close on item select", "default": true },
-    "closeOnOutside": { "type": "boolean", "description": "Close on outside click", "default": true },
-    "offset": { "type": "number", "description": "Offset from trigger (px)", "default": 4 }
+    "position": {
+      "type": "string",
+      "enum": [
+        "bottom-start",
+        "bottom-end",
+        "top-start",
+        "top-end"
+      ],
+      "default": "bottom-start",
+      "appliesClass": "wb-dropdown--{{value}}"
+    },
+    "trigger": {
+      "type": "string",
+      "enum": [
+        "click",
+        "hover"
+      ],
+      "default": "click"
+    },
+    "closeOnSelect": {
+      "type": "boolean",
+      "description": "Close on item select",
+      "default": true
+    },
+    "closeOnOutside": {
+      "type": "boolean",
+      "description": "Close on outside click",
+      "default": true
+    },
+    "offset": {
+      "type": "number",
+      "description": "Offset from trigger (px)",
+      "default": 4
+    }
   },
-  
   "$view": [
-    { "name": "trigger", "tag": "button", "public": true, "required": true, "description": "Dropdown trigger button" },
-    { "name": "menu", "tag": "div", "public": true, "required": true, "description": "Dropdown menu container" },
-    { "name": "items", "tag": "slot", "parent": "menu", "public": true, "description": "Menu items slot" }
+    {
+      "name": "trigger",
+      "tag": "button",
+      "public": true,
+      "required": true,
+      "description": "Dropdown trigger button"
+    },
+    {
+      "name": "menu",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "Dropdown menu container"
+    },
+    {
+      "name": "items",
+      "tag": "slot",
+      "parent": "menu",
+      "public": true,
+      "description": "Menu items slot"
+    }
   ],
-  
   "$methods": {
-    "open": { "description": "Opens the dropdown", "params": [] },
-    "close": { "description": "Closes the dropdown", "params": [] },
-    "toggle": { "description": "Toggles the dropdown", "params": [] },
-    "isOpen": { "description": "Returns open state", "params": [], "returns": "boolean" }
+    "open": {
+      "description": "Opens the dropdown",
+      "params": []
+    },
+    "close": {
+      "description": "Closes the dropdown",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles the dropdown",
+      "params": []
+    },
+    "isOpen": {
+      "description": "Returns open state",
+      "params": [],
+      "returns": "boolean"
+    }
   },
-  
   "$cssAPI": {
-    "--wb-dropdown-min-width": { "default": "180px", "description": "Menu min width" },
-    "--wb-dropdown-max-height": { "default": "300px", "description": "Menu max height" },
-    "--wb-dropdown-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Menu background" },
-    "--wb-dropdown-border": { "default": "1px solid var(--border-color, #e0e0e0)", "description": "Menu border" },
-    "--wb-dropdown-radius": { "default": "4px", "description": "Border radius" },
-    "--wb-dropdown-shadow": { "default": "0 4px 12px rgba(0,0,0,0.15)", "description": "Box shadow" },
-    "--wb-dropdown-padding": { "default": "0.25rem", "description": "Menu padding" },
-    "--wb-dropdown-item-padding": { "default": "0.5rem 0.75rem", "description": "Item padding" },
-    "--wb-dropdown-item-hover-bg": { "default": "var(--bg-secondary, #f3f4f6)", "description": "Item hover background" },
-    "--wb-dropdown-z-index": { "default": "100", "description": "Z-index" }
+    "--wb-dropdown-min-width": {
+      "default": "180px",
+      "description": "Menu min width"
+    },
+    "--wb-dropdown-max-height": {
+      "default": "300px",
+      "description": "Menu max height"
+    },
+    "--wb-dropdown-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Menu background"
+    },
+    "--wb-dropdown-border": {
+      "default": "1px solid var(--border-color, #e0e0e0)",
+      "description": "Menu border"
+    },
+    "--wb-dropdown-radius": {
+      "default": "4px",
+      "description": "Border radius"
+    },
+    "--wb-dropdown-shadow": {
+      "default": "0 4px 12px rgba(0,0,0,0.15)",
+      "description": "Box shadow"
+    },
+    "--wb-dropdown-padding": {
+      "default": "0.25rem",
+      "description": "Menu padding"
+    },
+    "--wb-dropdown-item-padding": {
+      "default": "0.5rem 0.75rem",
+      "description": "Item padding"
+    },
+    "--wb-dropdown-item-hover-bg": {
+      "default": "var(--bg-secondary, #f3f4f6)",
+      "description": "Item hover background"
+    },
+    "--wb-dropdown-z-index": {
+      "default": "100",
+      "description": "Z-index"
+    }
   },
-  
   "accessibility": {
-    "trigger": { "ariaHaspopup": "menu", "ariaExpanded": "dynamic" },
-    "menu": { "role": "menu" },
-    "item": { "role": "menuitem" }
+    "trigger": {
+      "ariaHaspopup": "menu",
+      "ariaExpanded": "dynamic"
+    },
+    "menu": {
+      "role": "menu"
+    },
+    "item": {
+      "role": "menuitem"
+    }
   },
-  
   "events": {
-    "wb:dropdown:open": { "description": "Dropdown opened" },
-    "wb:dropdown:close": { "description": "Dropdown closed" },
-    "wb:dropdown:select": { "description": "Item selected", "detail": { "value": "string" } }
+    "wb:dropdown:open": {
+      "description": "Dropdown opened"
+    },
+    "wb:dropdown:close": {
+      "description": "Dropdown closed"
+    },
+    "wb:dropdown:select": {
+      "description": "Item selected",
+      "detail": {
+        "value": "string"
+      }
+    }
   },
-  
   "test": {
+    "functional": true,
     "setup": [
       "<wb-dropdown><button slot=\"trigger\">Menu</button><button>Item 1</button></wb-dropdown>",
       "<div data-wb=\"dropdown\"><button class=\"wb-dropdown-trigger\">Menu</button><div class=\"wb-dropdown-menu\"><button>Item</button></div></div>"
     ],
     "matrix": {
       "combinations": [
-        { "position": "bottom-start" },
-        { "position": "bottom-end" },
-        { "trigger": "hover" }
+        {
+          "position": "bottom-start"
+        },
+        {
+          "position": "bottom-end"
+        },
+        {
+          "trigger": "hover"
+        }
       ]
     }
   },
-  
-  "_metadata": { "category": "overlay", "icon": "📋", "since": "1.0.0", "status": "stable" }
+  "_metadata": {
+    "category": "overlay",
+    "icon": "📋",
+    "since": "1.0.0",
+    "status": "stable"
+  }
 }

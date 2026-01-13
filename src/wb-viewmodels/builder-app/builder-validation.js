@@ -17,11 +17,11 @@ const BuilderValidation = {
     }
 
     try {
-      const response = await fetch(`src/behaviors/schema/${behavior}.schema.json?caller=builder-validation`);
-      if (response.ok) {
-        const schema = await response.json();
-        this.schemaCache[behavior] = schema;
-        return schema;
+      const fetchResponse = await fetch(`src/behaviors/schema/${behavior}.schema.json?caller=builder-validation`);
+      if (fetchResponse.ok) {
+        const fetchedSchema = await fetchResponse.json();
+        this.schemaCache[behavior] = fetchedSchema;
+        return fetchedSchema;
       }
     } catch (err) {
       console.warn(`[Validation] No schema for ${behavior}:`, err.message);
@@ -132,9 +132,9 @@ const BuilderValidation = {
     };
 
     // 1. Schema Validation
-    const schema = await this.getSchema(behavior);
-    if (schema && schema.properties && schema.properties[propName]) {
-      const validation = this.validateValue(newValue, schema.properties[propName], propName);
+    const validationSchema = await this.getSchema(behavior);
+    if (validationSchema && validationSchema.properties && validationSchema.properties[propName]) {
+      const validation = this.validateValue(newValue, validationSchema.properties[propName], propName);
       testResult.schemaValid = validation.valid;
       if (!validation.valid) {
         testResult.errors.push(...validation.errors.map(e => ({
@@ -196,15 +196,15 @@ const BuilderValidation = {
     this.testQueue.push(testResult);
     
     // Save to localStorage immediately for persistence
-    const failures = JSON.parse(localStorage.getItem('wb-test-failures') || '[]');
-    failures.push(testResult);
+    const failuresList = JSON.parse(localStorage.getItem('wb-test-failures') || '[]');
+    failuresList.push(testResult);
     
     // Keep only last 100 failures
-    if (failures.length > 100) {
-      failures.splice(0, failures.length - 100);
+    if (failuresList.length > 100) {
+      failuresList.splice(0, failuresList.length - 100);
     }
     
-    localStorage.setItem('wb-test-failures', JSON.stringify(failures));
+    localStorage.setItem('wb-test-failures', JSON.stringify(failuresList));
     
     // Try to save to server
     this.saveToServer();
@@ -217,11 +217,11 @@ const BuilderValidation = {
     if (this.isProcessing || this.testQueue.length === 0) return;
     
     this.isProcessing = true;
-    const failures = [...this.testQueue];
+    const failuresToSave = [...this.testQueue];
     this.testQueue = [];
     
     try {
-      const response = await fetch('/api/save', {
+      const saveResponse = await fetch('/api/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -229,12 +229,12 @@ const BuilderValidation = {
           data: {
             lastUpdated: new Date().toISOString(),
             source: 'builder-validation',
-            failures: failures
+            failures: failuresToSave
           }
         })
       });
       
-      if (!response.ok) {
+      if (!saveResponse.ok) {
         console.warn('[Validation] Failed to save test failures to server');
       }
     } catch (err) {
@@ -284,11 +284,11 @@ const BuilderValidation = {
   async logFix(fix) {
     try {
       // Load existing fixes
-      const response = await fetch('data/fixes.json');
+      const fixesResponse = await fetch('data/fixes.json');
       let fixesData = { fixes: {}, stats: { totalFixes: 0 } };
       
-      if (response.ok) {
-        fixesData = await response.json();
+      if (fixesResponse.ok) {
+        fixesData = await fixesResponse.json();
       }
 
       // Generate fix ID
@@ -317,7 +317,7 @@ const BuilderValidation = {
       fixesData.metadata.lastUpdated = new Date().toISOString();
 
       // Save
-      await fetch('/api/save', {
+      const fixResponse = await fetch('/api/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

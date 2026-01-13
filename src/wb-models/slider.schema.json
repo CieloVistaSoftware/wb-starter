@@ -4,5 +4,13 @@
   "title": "Slider",
   "behavior": "slider",
   "description": "Image comparison slider or carousel.",
-  "properties": {}
+  "compliance": {
+    "baseClass": "wb-slider",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

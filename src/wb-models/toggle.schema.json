@@ -4,7 +4,18 @@
   "title": "Toggle",
   "behavior": "toggle",
   "description": "Toggle visibility or state of another element.",
+  "compliance": {
+    "baseClass": "wb-toggle",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-      "target": { "type": "string", "description": "Selector of target element" }
-  }
+    "target": {
+      "type": "string",
+      "description": "Selector of target element"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WB Views Registry Browser</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="wb-views-demo.css">
+  <style>
+    /* Registry Browser Specific Styles */
+    .registry-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .registry-table th, 
+    .registry-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+    }
+    .registry-table th {
+      background: var(--bg-tertiary);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    .registry-table tr:last-child td { border-bottom: none; }
+    
+    .view-name {
+      font-family: 'Fira Code', monospace;
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .view-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .attr-tag {
+      display: inline-block;
+      padding: 2px 6px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      margin-right: 4px;
+      margin-bottom: 4px;
+      color: var(--text-primary);
+    }
+    .attr-tag--required {
+      border-color: var(--danger-color);
+      color: var(--danger-color);
+    }
+
+    .code-preview {
+      background: var(--bg-code, #111);
+      padding: 0.5rem;
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--text-code, #a5d6ff);
+      overflow-x: auto;
+      white-space: pre-wrap;
+      max-height: 150px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <div class="page__hero">
+      <h1>📚 WB Views Registry Browser</h1>
+      <p>Live documentation of all registered views in <code>src/wb-views/views-registry.json</code>.</p>
+    </div>
+
+    <div id="registry-container" class="demo-section">
+      <div class="section-content">
+        <p>Loading registry...</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    async function loadRegistry() {
+      const container = document.getElementById('registry-container');
+      
+      try {
+        const response = await fetch('../src/wb-views/views-registry.json');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const data = await response.json();
+        const views = data.views;
+        
+        // Sort views by name
+        const sortedKeys = Object.keys(views).sort();
+        
+        let html = `
+          <div class="section-header">
+            <h2>Registered Views</h2>
+            <span class="badge">${sortedKeys.length} items</span>
+          </div>
+          <table class="registry-table">
+            <thead>
+              <tr>
+                <th style="width: 200px;">View Name</th>
+                <th>Description & Attributes</th>
+                <th>Template Source</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+        
+        sortedKeys.forEach(key => {
+          const view = views[key];
+          
+          // Format Attributes
+          let attributesHtml = '';
+          if (view.attributes && Object.keys(view.attributes).length > 0) {
+            attributesHtml = '<div style="margin-top: 0.5rem;"><strong>Attributes:</strong><br>';
+            for (const [attrName, attrDetails] of Object.entries(view.attributes)) {
+              const isRequired = attrDetails.required;
+              attributesHtml += `<span class="attr-tag ${isRequired ? 'attr-tag--required' : ''}" title="${JSON.stringify(attrDetails).replace(/"/g, '&quot;')}">${attrName}${isRequired ? '*' : ''}</span>`;
+            }
+            attributesHtml += '</div>';
+          }
+
+          // Escape HTML for display
+          const templateEscaped = view.template
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+
+          html += `
+            <tr>
+              <td>
+                <div class="view-name">${key}</div>
+                <div style="margin-top:0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+                   &lt;${key.includes('-') ? key : 'wb-' + key}&gt;
+                </div>
+              </td>
+              <td>
+                <div class="view-desc">${view.description || 'No description provided.'}</div>
+                ${attributesHtml}
+              </td>
+              <td>
+                <details>
+                  <summary style="cursor: pointer; font-size: 0.8rem; color: var(--primary);">Show Template Source</summary>
+                  <div class="code-preview" style="margin-top: 0.5rem;">${templateEscaped}</div>
+                </details>
+              </td>
+            </tr>
+          `;
+        });
+        
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+        
+      } catch (err) {
+        container.innerHTML = `<div class="alert alert--error">
+          <span class="alert__icon">❌</span>
+          <div class="alert__content">
+            <strong>Error loading registry</strong>
+            <p>${err.message}</p>
+          </div>
+        </div>`;
+        console.error(err);
+      }
+    }
+
+    loadRegistry();
+  </script>
+
+</body>
+</html>

@@ -232,7 +232,7 @@ export function findContainerFromTarget(target) {
  * Find the drop zone within a container
  */
 export function findDropZone(containerWrapper, containerConfig) {
-  const wbEl = containerWrapper.querySelector('');
+  const wbEl = containerWrapper.querySelector('[data-c]');
   if (!wbEl) return null;
   
   const selectors = containerConfig.dropZone.split(',').map(s => s.trim());
@@ -473,7 +473,7 @@ const EDITABLE_KEY_MAP = {
  * Initialize inline editing for a canvas element
  */
 export function initInlineEditing(canvas, { onSave, WB } = {}) {
-  // Double-click to edit
+  // Double-click to edit text
   const handleDblClick = (e) => {
     const editableEl = findEditableElement(e.target);
     if (!editableEl) return;
@@ -486,16 +486,16 @@ export function initInlineEditing(canvas, { onSave, WB } = {}) {
   
   // Mark editable elements on hover (visual hint)
   const handleMouseOver = (e) => {
-    const editableEl = findEditableElement(e.target);
-    if (editableEl && !editableEl.classList.contains('editing')) {
-      editableEl.classList.add('editable-hover');
+    const overEl = findEditableElement(e.target);
+    if (overEl && !overEl.classList.contains('editing')) {
+      overEl.classList.add('editable-hover');
     }
   };
   
   const handleMouseOut = (e) => {
-    const editableEl = findEditableElement(e.target);
-    if (editableEl) {
-      editableEl.classList.remove('editable-hover');
+    const outEl = findEditableElement(e.target);
+    if (outEl) {
+      outEl.classList.remove('editable-hover');
     }
   };
 
@@ -631,10 +631,31 @@ function enableTextEditing(el, { onSave, WB } = {}) {
   const originalValue = el.textContent;
   el.dataset.originalValue = originalValue;
   
+  // For links, also track href
+  const isLink = el.tagName === 'A';
+  const originalHref = isLink ? el.getAttribute('href') || '' : null;
+  let hrefInput = null;
+  
   // Enable editing
   el.setAttribute('contenteditable', 'true');
   el.classList.add('editing');
   el.classList.remove('editable-hover');
+  
+  // ===== FOCUS & SCROLL INTO VIEW =====
+  // 1. Mark the parent component as selected/active
+  const wrapper = el.closest('.dropped');
+  if (wrapper) {
+    // Remove selection from other elements
+    document.querySelectorAll('.dropped.selected').forEach(elem => {
+      if (elem !== wrapper) elem.classList.remove('selected');
+    });
+    wrapper.classList.add('selected');
+  }
+  
+  // 2. Scroll the element into view smoothly and center it
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  
+  // 3. Focus the element
   el.focus();
   
   // Select all text
@@ -644,37 +665,90 @@ function enableTextEditing(el, { onSave, WB } = {}) {
   sel.removeAllRanges();
   sel.addRange(range);
   
+  // For links, show href input
+  if (isLink) {
+    hrefInput = document.createElement('input');
+    hrefInput.type = 'text';
+    hrefInput.value = originalHref;
+    hrefInput.placeholder = 'href';
+    hrefInput.className = 'wb-href-input';
+    hrefInput.style.cssText = 'display:block;margin-top:4px;padding:4px 6px;font-size:12px;background:#1a1a2e;border:1px solid #6366f1;border-radius:3px;color:#fff;width:100%;box-sizing:border-box;';
+    el.insertAdjacentElement('afterend', hrefInput);
+  }
+  
   // Handle blur (save)
-  const handleBlur = () => {
-    finishEditing(el, { onSave, WB });
+  const handleBlur = (e) => {
+    // Don't close if moving to href input
+    if (hrefInput && e.relatedTarget === hrefInput) return;
+    finishEditing(el, { onSave, WB, hrefInput });
   };
   
   // Handle keydown
   const handleKeydown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      // Single line - save on Enter
       e.preventDefault();
-      el.blur();
+      // For links, tab to href input first
+      if (hrefInput) {
+        hrefInput.focus();
+      } else {
+        el.blur();
+      }
     } else if (e.key === 'Escape') {
       // Cancel editing
       el.textContent = originalValue;
+      if (hrefInput) {
+        hrefInput.value = originalHref;
+        hrefInput.remove();
+      }
       el.blur();
     } else if (e.key === 'Tab') {
-      // Tab to next editable field
       e.preventDefault();
-      el.blur(); // This triggers save
-      
-      const nextEl = findNextEditable(el);
-      if (nextEl) {
-        // Small delay to allow blur/save to complete
-        setTimeout(() => {
-          enableTextEditing(nextEl, { onSave, WB });
-          // Also scroll into view if needed
-          nextEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 10);
+      if (hrefInput) {
+        hrefInput.focus();
+      } else {
+        el.blur();
+        const nextEl = findNextEditable(el);
+        if (nextEl) {
+          setTimeout(() => {
+            enableTextEditing(nextEl, { onSave, WB });
+            nextEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 10);
+        }
       }
     }
   };
+  
+  // Href input handlers
+  if (hrefInput) {
+    hrefInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        finishEditing(el, { onSave, WB, hrefInput });
+      } else if (e.key === 'Escape') {
+        el.textContent = originalValue;
+        hrefInput.value = originalHref;
+        hrefInput.remove();
+        el.removeAttribute('contenteditable');
+        el.classList.remove('editing');
+      } else if (e.key === 'Tab' && e.shiftKey) {
+        e.preventDefault();
+        el.focus();
+      } else if (e.key === 'Tab' && !e.shiftKey) {
+        e.preventDefault();
+        finishEditing(el, { onSave, WB, hrefInput });
+      }
+    });
+    
+    hrefInput.addEventListener('blur', (e) => {
+      // Don't close if moving back to text
+      if (e.relatedTarget === el) return;
+      setTimeout(() => {
+        if (document.activeElement !== el && document.activeElement !== hrefInput) {
+          finishEditing(el, { onSave, WB, hrefInput });
+        }
+      }, 50);
+    });
+  }
   
   el.addEventListener('blur', handleBlur, { once: true });
   el.addEventListener('keydown', handleKeydown);
@@ -686,7 +760,7 @@ function enableTextEditing(el, { onSave, WB } = {}) {
 /**
  * Finish editing and sync to data attributes
  */
-function finishEditing(el, { onSave, WB } = {}) {
+function finishEditing(el, { onSave, WB, hrefInput } = {}) {
   el.removeAttribute('contenteditable');
   el.classList.remove('editing');
   
@@ -694,6 +768,15 @@ function finishEditing(el, { onSave, WB } = {}) {
   if (el._editKeydownHandler) {
     el.removeEventListener('keydown', el._editKeydownHandler);
     delete el._editKeydownHandler;
+  }
+  
+  // Handle href for links
+  const isLink = el.tagName === 'A';
+  let newHref = null;
+  if (isLink && hrefInput) {
+    newHref = hrefInput.value.trim() || '#';
+    el.setAttribute('href', newHref);
+    hrefInput.remove();
   }
   
   // Get the wrapper and sync data
@@ -710,11 +793,14 @@ function finishEditing(el, { onSave, WB } = {}) {
     // Update component data
     if (c.d) {
       c.d[key] = newValue;
+      if (isLink && newHref) {
+        c.d.href = newHref;
+      }
       wrapper.dataset.c = JSON.stringify(c);
     }
     
     // Update the actual data attribute on the wb element
-    const wbEl = wrapper.querySelector('');
+    const wbEl = wrapper.querySelector('[data-c]');
     if (wbEl) {
       wbEl.dataset[key] = newValue;
       
@@ -1116,7 +1202,7 @@ export function addResizeHandle(wrapper) {
       // Handle Flex Direction
       if (btn.dataset.flex) {
         const dir = btn.dataset.flex;
-        const wbEl = wrapper.querySelector('');
+        const wbEl = wrapper.querySelector('[data-c]');
         if (wbEl) {
           wbEl.style.flexDirection = dir;
           // Ensure it's flex
@@ -1186,13 +1272,13 @@ export function addResizeHandle(wrapper) {
     const parentWidth = wrapper.parentElement?.offsetWidth || window.innerWidth;
     const maxWidth = parentWidth - 20;
     
-    const finalWidth = Math.min(newWidth, maxWidth);
-    wrapper.style.width = finalWidth + 'px';
-    wrapper.style.maxWidth = finalWidth + 'px';
+    const computedWidth = Math.min(newWidth, maxWidth);
+    wrapper.style.width = computedWidth + 'px';
+    wrapper.style.maxWidth = computedWidth + 'px';
     
     // Update indicator
-    const percent = Math.round((finalWidth / parentWidth) * 100);
-    indicator.textContent = `${finalWidth}px (${percent}%)`;
+    const percent = Math.round((computedWidth / parentWidth) * 100);
+    indicator.textContent = `${computedWidth}px (${percent}%)`;
   };
   
   const onMouseUp = () => {
@@ -1202,9 +1288,9 @@ export function addResizeHandle(wrapper) {
       document.body.style.cursor = '';
       
       // Save final width
-      const width = wrapper.style.width;
-      if (width) {
-        saveWidthToComponent(wrapper, width);
+      const savedWidth = wrapper.style.width;
+      if (savedWidth) {
+        saveWidthToComponent(wrapper, savedWidth);
       }
     }
   };
@@ -1224,7 +1310,7 @@ function saveWidthToComponent(wrapper, width) {
     wrapper.dataset.c = JSON.stringify(c);
     
     // Also set as data attribute
-    const wbEl = wrapper.querySelector('');
+    const wbEl = wrapper.querySelector('[data-c]');
     if (wbEl) {
       wbEl.dataset.width = width;
     }
@@ -1635,7 +1721,7 @@ export function initKeyboardMove(canvas) {
     e.preventDefault();
     
     // Get the actual component element (not the wrapper)
-    const component = selected.querySelector('') || selected;
+    const component = selected.querySelector('[data-c]') || selected;
     
     // Determine move step
     let step = MOVE_STEP;
@@ -1702,8 +1788,8 @@ export function initKeyboardMove(canvas) {
       width: component.offsetWidth,
       height: component.offsetHeight
     };
-    const canvasRect = canvas.getBoundingClientRect();
-    const { snapX, snapY, guides } = findSnapPoints(dragRect, snapTargets, canvasRect);
+    const snapCanvasRect = canvas.getBoundingClientRect();
+    const { snapX, snapY, guides } = findSnapPoints(dragRect, snapTargets, snapCanvasRect);
     
     // Show guides briefly
     if (guides.length > 0) {
@@ -1810,7 +1896,7 @@ export function initSnapGrid(canvas) {
       if (e.target.isContentEditable || 
           ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A'].includes(e.target.tagName)) return;
           
-      targetEl = wrapper.querySelector('') || wrapper.firstElementChild || wrapper;
+      targetEl = wrapper.querySelector('[data-c]') || wrapper.firstElementChild || wrapper;
     } else {
       return;
     }
@@ -1877,18 +1963,18 @@ export function initSnapGrid(canvas) {
 
     // Smart Snap Highlight
     if (canvas.classList.contains('snap-enabled')) {
-        let highlight = document.getElementById('snap-guide-lines');
-        if (!highlight) {
-            highlight = document.createElement('div');
-            highlight.id = 'snap-guide-lines';
-            highlight.className = 'snap-guide-lines';
-            canvas.appendChild(highlight);
+        let snapHighlight = document.getElementById('snap-guide-lines');
+        if (!snapHighlight) {
+            snapHighlight = document.createElement('div');
+            snapHighlight.id = 'snap-guide-lines';
+            snapHighlight.className = 'snap-guide-lines';
+            canvas.appendChild(snapHighlight);
         }
         
         // Highlight the snap position (grid or element)
-        highlight.style.left = newX + 'px';
-        highlight.style.top = newY + 'px';
-        highlight.style.display = 'block';
+        snapHighlight.style.left = newX + 'px';
+        snapHighlight.style.top = newY + 'px';
+        snapHighlight.style.display = 'block';
     }
     
     // Apply position
@@ -1911,11 +1997,11 @@ export function initSnapGrid(canvas) {
       // Save position to component data
       if (draggedWrapper) {
         try {
-          const c = JSON.parse(draggedWrapper.dataset.c);
-          if (!c.d) c.d = {};
-          c.d._posX = draggedEl.style.left;
-          c.d._posY = draggedEl.style.top;
-          draggedWrapper.dataset.c = JSON.stringify(c);
+          const dragConfig = JSON.parse(draggedWrapper.dataset.c);
+          if (!dragConfig.d) dragConfig.d = {};
+          dragConfig.d._posX = draggedEl.style.left;
+          dragConfig.d._posY = draggedEl.style.top;
+          draggedWrapper.dataset.c = JSON.stringify(dragConfig);
         } catch (err) {}
       }
     }

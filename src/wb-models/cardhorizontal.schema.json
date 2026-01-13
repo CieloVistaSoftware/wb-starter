@@ -3,15 +3,17 @@
   "$id": "cardhorizontal.schema.json",
   "title": "Horizontal Card",
   "description": "Card with horizontal layout - image on side, content on other",
-  
   "behavior": "cardhorizontal",
   "baseClass": "wb-card-horizontal",
-  
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
-  
+  "compliance": {
+    "baseClass": "wb-card-horizontal",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "image": {
       "type": "string",
@@ -25,7 +27,10 @@
     "imagePosition": {
       "type": "string",
       "description": "Image position",
-      "enum": ["left", "right"],
+      "enum": [
+        "left",
+        "right"
+      ],
       "default": "left",
       "appliesClass": "wb-card-horizontal--image-{{value}}"
     },
@@ -45,12 +50,16 @@
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["default", "elevated", "bordered", "minimal"],
+      "enum": [
+        "default",
+        "elevated",
+        "bordered",
+        "minimal"
+      ],
       "default": "default",
       "appliesClass": "wb-card-horizontal--{{value}}"
     }
   },
-  
   "$view": [
     {
       "name": "figure",
@@ -97,34 +106,82 @@
       "tag": "div",
       "parent": "content",
       "public": true,
-      "content": "{{body}}",
+      "content": "<slot></slot>",
       "createdWhen": "body",
       "description": "Additional content slot"
     }
   ],
-  
   "$methods": {
-    "show": { "description": "Shows the card", "params": [] },
-    "hide": { "description": "Hides the card", "params": [] },
-    "toggle": { "description": "Toggles visibility", "params": [] },
-    "setImage": { "description": "Changes the image", "params": ["src", "alt"] }
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "setImage": {
+      "description": "Changes the image",
+      "params": [
+        "src",
+        "alt"
+      ]
+    }
   },
-  
   "$cssAPI": {
-    "--wb-card-horizontal-gap": { "default": "1rem", "description": "Gap between image and content" },
-    "--wb-card-horizontal-radius": { "default": "8px", "description": "Border radius" },
-    "--wb-card-horizontal-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Background" },
-    "--wb-card-horizontal-border": { "default": "none", "description": "Border" },
-    "--wb-card-horizontal-shadow": { "default": "none", "description": "Box shadow" },
-    "--wb-card-horizontal-image-width": { "default": "40%", "description": "Image width" },
-    "--wb-card-horizontal-image-radius": { "default": "8px 0 0 8px", "description": "Image border radius" },
-    "--wb-card-horizontal-content-padding": { "default": "1rem", "description": "Content padding" },
-    "--wb-card-horizontal-title-size": { "default": "1.125rem", "description": "Title font size" },
-    "--wb-card-horizontal-title-weight": { "default": "600", "description": "Title font weight" },
-    "--wb-card-horizontal-subtitle-size": { "default": "0.875rem", "description": "Subtitle font size" },
-    "--wb-card-horizontal-subtitle-color": { "default": "var(--text-secondary, #666)", "description": "Subtitle color" }
+    "--wb-card-horizontal-gap": {
+      "default": "1rem",
+      "description": "Gap between image and content"
+    },
+    "--wb-card-horizontal-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-card-horizontal-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Background"
+    },
+    "--wb-card-horizontal-border": {
+      "default": "none",
+      "description": "Border"
+    },
+    "--wb-card-horizontal-shadow": {
+      "default": "none",
+      "description": "Box shadow"
+    },
+    "--wb-card-horizontal-image-width": {
+      "default": "40%",
+      "description": "Image width"
+    },
+    "--wb-card-horizontal-image-radius": {
+      "default": "8px 0 0 8px",
+      "description": "Image border radius"
+    },
+    "--wb-card-horizontal-content-padding": {
+      "default": "1rem",
+      "description": "Content padding"
+    },
+    "--wb-card-horizontal-title-size": {
+      "default": "1.125rem",
+      "description": "Title font size"
+    },
+    "--wb-card-horizontal-title-weight": {
+      "default": "600",
+      "description": "Title font weight"
+    },
+    "--wb-card-horizontal-subtitle-size": {
+      "default": "0.875rem",
+      "description": "Subtitle font size"
+    },
+    "--wb-card-horizontal-subtitle-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Subtitle color"
+    }
   },
-  
   "test": {
     "setup": [
       "<wb-card-horizontal image=\"photo.jpg\" title=\"Title\"></wb-card-horizontal>",
@@ -132,14 +189,28 @@
     ],
     "matrix": {
       "combinations": [
-        { "image": "photo.jpg", "title": "Title" },
-        { "image": "photo.jpg", "title": "Title", "subtitle": "Subtitle" },
-        { "image": "photo.jpg", "title": "Title", "imagePosition": "right" },
-        { "image": "photo.jpg", "title": "Title", "variant": "elevated" }
+        {
+          "image": "photo.jpg",
+          "title": "Title"
+        },
+        {
+          "image": "photo.jpg",
+          "title": "Title",
+          "subtitle": "Subtitle"
+        },
+        {
+          "image": "photo.jpg",
+          "title": "Title",
+          "imagePosition": "right"
+        },
+        {
+          "image": "photo.jpg",
+          "title": "Title",
+          "variant": "elevated"
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "cards",
     "icon": "↔️",

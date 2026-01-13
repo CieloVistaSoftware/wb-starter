@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mdhtml.schema.json",
+  "title": "Markdown to HTML",
+  "description": "Renders Markdown content as HTML, either from inline content or external source",
+  "behavior": "mdhtml",
+  "baseClass": "wb-mdhtml",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "generic"
+  },
+  "compliance": {
+    "baseClass": "wb-mdhtml",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "Path to external markdown file",
+      "attribute": "src"
+    },
+    "sanitize": {
+      "type": "boolean",
+      "default": true,
+      "attribute": "data-sanitize"
+    },
+    "gfm": {
+      "type": "boolean",
+      "default": true,
+      "attribute": "data-gfm"
+    }
+  },
+  "_metadata": {
+    "category": "content",
+    "icon": "📝",
+    "since": "2.0.0",
+    "status": "stable"
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
+}

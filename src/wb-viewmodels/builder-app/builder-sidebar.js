@@ -460,9 +460,9 @@ function attachDragHandlers(container) {
       e.dataTransfer.setData('c', item.dataset.c);
       
       // Track usage
-      const comp = JSON.parse(item.dataset.c);
-      if (comp.b) {
-        trackComponentUsage(comp.b);
+      const dragComp = JSON.parse(item.dataset.c);
+      if (dragComp.b) {
+        trackComponentUsage(dragComp.b);
       }
     });
     
@@ -472,10 +472,10 @@ function attachDragHandlers(container) {
     
     // Click to add (in addition to drag)
     item.addEventListener('click', () => {
-      const comp = JSON.parse(item.dataset.c);
+      const clickComp = JSON.parse(item.dataset.c);
       if (window.add) {
-        window.add(comp);
-        if (comp.b) trackComponentUsage(comp.b);
+        window.add(clickComp);
+        if (clickComp.b) trackComponentUsage(clickComp.b);
       }
     });
   });

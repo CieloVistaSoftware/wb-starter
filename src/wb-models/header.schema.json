@@ -3,51 +3,167 @@
   "$id": "header.schema.json",
   "title": "Header",
   "description": "Page header with logo, title, and optional navigation",
-  
   "behavior": "header",
   "baseClass": "wb-header",
-  
-  "semanticElement": { "tagName": "header", "implicitRole": "banner" },
-  
+  "semanticElement": {
+    "tagName": "header",
+    "implicitRole": "banner"
+  },
+  "compliance": {
+    "baseClass": "wb-header",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "icon": { "type": "string", "description": "Logo icon (emoji or text)" },
-    "title": { "type": "string", "description": "Header title" },
-    "subtitle": { "type": "string", "description": "Subtitle text" },
-    "badge": { "type": "string", "description": "Badge text (e.g., version)" },
-    "logoHref": { "type": "string", "description": "Logo link URL", "default": "/" },
-    "sticky": { "type": "boolean", "description": "Sticky at top", "default": false, "appliesClass": "wb-header--sticky" }
+    "icon": {
+      "type": "string",
+      "description": "Logo icon (emoji or text)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Header title"
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Subtitle text"
+    },
+    "badge": {
+      "type": "string",
+      "description": "Badge text (e.g., version)"
+    },
+    "logoHref": {
+      "type": "string",
+      "description": "Logo link URL",
+      "default": "/"
+    },
+    "sticky": {
+      "type": "boolean",
+      "description": "Sticky at top",
+      "default": false,
+      "appliesClass": "wb-header--sticky"
+    }
   },
-  
   "$view": [
-    { "name": "left", "tag": "div", "public": true, "description": "Left section" },
-    { "name": "logo", "tag": "a", "parent": "left", "public": true, "createdWhen": "icon OR title", "description": "Logo link" },
-    { "name": "icon", "tag": "span", "parent": "logo", "public": true, "content": "{{icon}}", "createdWhen": "icon", "description": "Logo icon" },
-    { "name": "title", "tag": "span", "parent": "logo", "public": true, "content": "{{title}}", "createdWhen": "title", "description": "Title" },
-    { "name": "subtitle", "tag": "span", "parent": "left", "public": true, "content": "{{subtitle}}", "createdWhen": "subtitle", "description": "Subtitle" },
-    { "name": "center", "tag": "div", "public": true, "description": "Center section slot" },
-    { "name": "right", "tag": "div", "public": true, "description": "Right section" },
-    { "name": "badge", "tag": "span", "parent": "right", "public": true, "content": "{{badge}}", "createdWhen": "badge", "description": "Badge" }
+    {
+      "name": "left",
+      "tag": "div",
+      "public": true,
+      "description": "Left section"
+    },
+    {
+      "name": "logo",
+      "tag": "a",
+      "parent": "left",
+      "public": true,
+      "createdWhen": "icon OR title",
+      "description": "Logo link"
+    },
+    {
+      "name": "icon",
+      "tag": "span",
+      "parent": "logo",
+      "public": true,
+      "content": "{{icon}}",
+      "createdWhen": "icon",
+      "description": "Logo icon"
+    },
+    {
+      "name": "title",
+      "tag": "span",
+      "parent": "logo",
+      "public": true,
+      "content": "{{title}}",
+      "createdWhen": "title",
+      "description": "Title"
+    },
+    {
+      "name": "subtitle",
+      "tag": "span",
+      "parent": "left",
+      "public": true,
+      "content": "{{subtitle}}",
+      "createdWhen": "subtitle",
+      "description": "Subtitle"
+    },
+    {
+      "name": "center",
+      "tag": "div",
+      "public": true,
+      "description": "Center section slot"
+    },
+    {
+      "name": "right",
+      "tag": "div",
+      "public": true,
+      "description": "Right section"
+    },
+    {
+      "name": "badge",
+      "tag": "span",
+      "parent": "right",
+      "public": true,
+      "content": "{{badge}}",
+      "createdWhen": "badge",
+      "description": "Badge"
+    }
   ],
-  
   "$methods": {
-    "setTitle": { "description": "Updates title", "params": ["title"] },
-    "setIcon": { "description": "Updates icon", "params": ["icon"] },
-    "setBadge": { "description": "Updates badge", "params": ["badge"] }
+    "setTitle": {
+      "description": "Updates title",
+      "params": [
+        "title"
+      ]
+    },
+    "setIcon": {
+      "description": "Updates icon",
+      "params": [
+        "icon"
+      ]
+    },
+    "setBadge": {
+      "description": "Updates badge",
+      "params": [
+        "badge"
+      ]
+    }
   },
-  
   "$cssAPI": {
-    "--wb-header-height": { "default": "60px", "description": "Header height" },
-    "--wb-header-padding": { "default": "0 1rem", "description": "Padding" },
-    "--wb-header-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Background" },
-    "--wb-header-border": { "default": "1px solid var(--border-color, #e0e0e0)", "description": "Border" },
-    "--wb-header-shadow": { "default": "none", "description": "Shadow" },
-    "--wb-header-title-size": { "default": "1.25rem", "description": "Title font size" },
-    "--wb-header-title-weight": { "default": "700", "description": "Title font weight" },
-    "--wb-header-icon-size": { "default": "1.5rem", "description": "Icon size" }
+    "--wb-header-height": {
+      "default": "60px",
+      "description": "Header height"
+    },
+    "--wb-header-padding": {
+      "default": "0 1rem",
+      "description": "Padding"
+    },
+    "--wb-header-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Background"
+    },
+    "--wb-header-border": {
+      "default": "1px solid var(--border-color, #e0e0e0)",
+      "description": "Border"
+    },
+    "--wb-header-shadow": {
+      "default": "none",
+      "description": "Shadow"
+    },
+    "--wb-header-title-size": {
+      "default": "1.25rem",
+      "description": "Title font size"
+    },
+    "--wb-header-title-weight": {
+      "default": "700",
+      "description": "Title font weight"
+    },
+    "--wb-header-icon-size": {
+      "default": "1.5rem",
+      "description": "Icon size"
+    }
   },
-  
-  "accessibility": { "role": "banner" },
-  
+  "accessibility": {
+    "role": "banner"
+  },
   "test": {
     "setup": [
       "<wb-header icon=\"📂\" title=\"Project\"></wb-header>",
@@ -55,13 +171,29 @@
     ],
     "matrix": {
       "combinations": [
-        { "title": "Title" },
-        { "icon": "📂", "title": "Title" },
-        { "icon": "🚀", "title": "App", "badge": "v1.0" },
-        { "title": "Site", "sticky": true }
+        {
+          "title": "Title"
+        },
+        {
+          "icon": "📂",
+          "title": "Title"
+        },
+        {
+          "icon": "🚀",
+          "title": "App",
+          "badge": "v1.0"
+        },
+        {
+          "title": "Site",
+          "sticky": true
+        }
       ]
     }
   },
-  
-  "_metadata": { "category": "layout", "icon": "📰", "since": "1.0.0", "status": "stable" }
+  "_metadata": {
+    "category": "layout",
+    "icon": "📰",
+    "since": "1.0.0",
+    "status": "stable"
+  }
 }

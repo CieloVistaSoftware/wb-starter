@@ -3,46 +3,140 @@
   "$id": "navbar.schema.json",
   "title": "Navbar",
   "description": "Navigation bar with brand, links, and responsive menu",
-  
   "behavior": "navbar",
   "baseClass": "wb-navbar",
-  
-  "semanticElement": { "tagName": "nav", "implicitRole": "navigation" },
-  
+  "semanticElement": {
+    "tagName": "nav",
+    "implicitRole": "navigation"
+  },
+  "compliance": {
+    "baseClass": "wb-navbar",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "brand": { "type": "string", "description": "Brand text or logo" },
-    "brandHref": { "type": "string", "description": "Brand link URL", "default": "/" },
-    "items": { "type": "string", "description": "Navigation items as JSON [{label, href}]" },
-    "sticky": { "type": "boolean", "description": "Sticky positioning", "default": false, "appliesClass": "wb-navbar--sticky" },
-    "variant": { "type": "string", "enum": ["default", "dark", "transparent"], "default": "default", "appliesClass": "wb-navbar--{{value}}" }
+    "brand": {
+      "type": "string",
+      "description": "Brand text"
+    },
+    "brandHref": {
+      "type": "string",
+      "description": "Brand link URL",
+      "default": "/"
+    },
+    "logo": {
+      "type": "string",
+      "description": "Logo image URL"
+    },
+    "logoSize": {
+      "type": "string",
+      "description": "Logo size in pixels",
+      "default": "32"
+    },
+    "tagline": {
+      "type": "string",
+      "description": "Brand tagline or subtitle"
+    },
+    "items": {
+      "type": "string",
+      "description": "Navigation items as JSON [{label, href}]"
+    },
+    "sticky": {
+      "type": "boolean",
+      "description": "Sticky positioning",
+      "default": false,
+      "appliesClass": "wb-navbar--sticky"
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "default",
+        "dark",
+        "transparent"
+      ],
+      "default": "default",
+      "appliesClass": "wb-navbar--{{value}}"
+    }
   },
-  
   "$view": [
-    { "name": "brand", "tag": "a", "public": true, "content": "{{brand}}", "createdWhen": "brand", "description": "Brand link" },
-    { "name": "nav", "tag": "div", "public": true, "required": true, "description": "Navigation links container" },
-    { "name": "toggle", "tag": "button", "public": true, "description": "Mobile menu toggle" }
+    {
+      "name": "brand",
+      "tag": "a",
+      "public": true,
+      "content": "{{brand}}",
+      "createdWhen": "brand",
+      "description": "Brand link"
+    },
+    {
+      "name": "nav",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "Navigation links container"
+    },
+    {
+      "name": "toggle",
+      "tag": "button",
+      "public": true,
+      "description": "Mobile menu toggle"
+    }
   ],
-  
   "$methods": {
-    "openMenu": { "description": "Opens mobile menu", "params": [] },
-    "closeMenu": { "description": "Closes mobile menu", "params": [] },
-    "toggleMenu": { "description": "Toggles mobile menu", "params": [] }
+    "openMenu": {
+      "description": "Opens mobile menu",
+      "params": []
+    },
+    "closeMenu": {
+      "description": "Closes mobile menu",
+      "params": []
+    },
+    "toggleMenu": {
+      "description": "Toggles mobile menu",
+      "params": []
+    }
   },
-  
   "$cssAPI": {
-    "--wb-navbar-height": { "default": "60px", "description": "Navbar height" },
-    "--wb-navbar-padding": { "default": "0 1rem", "description": "Navbar padding" },
-    "--wb-navbar-bg": { "default": "var(--bg-surface, #ffffff)", "description": "Background" },
-    "--wb-navbar-border": { "default": "1px solid var(--border-color, #e0e0e0)", "description": "Border" },
-    "--wb-navbar-shadow": { "default": "0 1px 3px rgba(0,0,0,0.1)", "description": "Shadow" },
-    "--wb-navbar-brand-size": { "default": "1.25rem", "description": "Brand font size" },
-    "--wb-navbar-brand-weight": { "default": "700", "description": "Brand font weight" },
-    "--wb-navbar-link-color": { "default": "var(--text-primary, #1a1a1a)", "description": "Link color" },
-    "--wb-navbar-link-hover-color": { "default": "var(--primary, #6366f1)", "description": "Link hover color" }
+    "--wb-navbar-height": {
+      "default": "60px",
+      "description": "Navbar height"
+    },
+    "--wb-navbar-padding": {
+      "default": "0 1rem",
+      "description": "Navbar padding"
+    },
+    "--wb-navbar-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Background"
+    },
+    "--wb-navbar-border": {
+      "default": "1px solid var(--border-color, #e0e0e0)",
+      "description": "Border"
+    },
+    "--wb-navbar-shadow": {
+      "default": "0 1px 3px rgba(0,0,0,0.1)",
+      "description": "Shadow"
+    },
+    "--wb-navbar-brand-size": {
+      "default": "1.25rem",
+      "description": "Brand font size"
+    },
+    "--wb-navbar-brand-weight": {
+      "default": "700",
+      "description": "Brand font weight"
+    },
+    "--wb-navbar-link-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Link color"
+    },
+    "--wb-navbar-link-hover-color": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Link hover color"
+    }
   },
-  
-  "accessibility": { "role": "navigation", "ariaLabel": "Main navigation" },
-  
+  "accessibility": {
+    "role": "navigation",
+    "ariaLabel": "Main navigation"
+  },
   "test": {
     "setup": [
       "<wb-navbar brand=\"MySite\"></wb-navbar>",
@@ -50,12 +144,24 @@
     ],
     "matrix": {
       "combinations": [
-        { "brand": "MySite" },
-        { "brand": "MySite", "sticky": true },
-        { "brand": "MySite", "variant": "dark" }
+        {
+          "brand": "MySite"
+        },
+        {
+          "brand": "MySite",
+          "sticky": true
+        },
+        {
+          "brand": "MySite",
+          "variant": "dark"
+        }
       ]
     }
   },
-  
-  "_metadata": { "category": "layout", "icon": "🧭", "since": "1.0.0", "status": "stable" }
+  "_metadata": {
+    "category": "layout",
+    "icon": "🧭",
+    "since": "1.0.0",
+    "status": "stable"
+  }
 }

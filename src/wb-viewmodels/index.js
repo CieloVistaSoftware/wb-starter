@@ -147,6 +147,7 @@ const behaviorModules = {
   imposter: 'layouts', icon: 'layouts', drawerLayout: 'layouts', 'drawer-layout': 'layouts',
   
   // Utility → helpers.js + standalone
+  stagelight: 'stagelight',
   span: 'span',
   control: 'wb-control',
   repeater: 'wb-repeater',

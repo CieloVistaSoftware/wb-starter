@@ -25,6 +25,36 @@
           "file": "semantic-standard.md",
           "title": "Semantic Standard",
           "description": "HTML5 semantic guidelines"
+        },
+        {
+          "file": "architecture/proposed-custom-elements.md",
+          "title": "Proposed Custom Elements",
+          "description": "Documentation for Proposed Custom Elements"
+        },
+        {
+          "file": "architecture/SCHEMA-SPECIFICATION.md",
+          "title": "SCHEMA SPECIFICATION",
+          "description": "Documentation for SCHEMA SPECIFICATION"
+        },
+        {
+          "file": "index.md",
+          "title": "Index",
+          "description": "Documentation for Index"
+        },
+        {
+          "file": "linkedin-standards-article.md",
+          "title": "Linkedin Standards Article",
+          "description": "Documentation for Linkedin Standards Article"
+        },
+        {
+          "file": "linkedin-framework-agnostic.md",
+          "title": "The AI Architect (LinkedIn)",
+          "description": "Article: Why AI tools must be framework agnostic"
+        },
+        {
+          "file": "standards/V3-STANDARDS.md",
+          "title": "V3 STANDARDS",
+          "description": "Documentation for V3 STANDARDS"
         }
       ]
     },
@@ -264,6 +294,16 @@
           "file": "NOTES-V3-GUIDE.md",
           "title": "Notes System",
           "description": "Notes feature guide"
+        },
+        {
+          "file": "guides/search-index.md",
+          "title": "Search Index",
+          "description": "Documentation for Search Index"
+        },
+        {
+          "file": "property-viewer.md",
+          "title": "Property Viewer",
+          "description": "Documentation for the Unified Split View/Property Panel"
         }
       ]
     },
@@ -290,6 +330,46 @@
           "file": "semantic-audit.md",
           "title": "Semantic Audit",
           "description": "HTML audit results"
+        },
+        {
+          "file": "audits/X-USAGE-AUDIT.md",
+          "title": "X USAGE AUDIT",
+          "description": "Documentation for X USAGE AUDIT"
+        },
+        {
+          "file": "builder/BUILDER-FIXES.md",
+          "title": "BUILDER FIXES",
+          "description": "Documentation for BUILDER FIXES"
+        },
+        {
+          "file": "builder-interaction-rules.md",
+          "title": "Builder Interaction Rules",
+          "description": "Documentation for Builder Interaction Rules"
+        },
+        {
+          "file": "builder-properties.md",
+          "title": "Builder Properties",
+          "description": "Documentation for Builder Properties"
+        },
+        {
+          "file": "builder-section-focus.md",
+          "title": "Builder Section Focus",
+          "description": "Documentation for Builder Section Focus"
+        },
+        {
+          "file": "builder/builder-tree.md",
+          "title": "Builder Tree",
+          "description": "Documentation for Builder Tree"
+        },
+        {
+          "file": "MVVM-MIGRATION-PLAN.md",
+          "title": "MVVM MIGRATION PLAN",
+          "description": "Documentation for MVVM MIGRATION PLAN"
+        },
+        {
+          "file": "MVVM-MIGRATION.md",
+          "title": "MVVM MIGRATION",
+          "description": "Documentation for MVVM MIGRATION"
         }
       ]
     },
@@ -585,6 +665,11 @@
           "file": "architecture/WBVIEWS.md",
           "title": "WBVIEWS",
           "description": "Documentation for WBVIEWS"
+        },
+        {
+          "file": "INTELLISENSE-TOOLTIPS.md",
+          "title": "INTELLISENSE TOOLTIPS",
+          "description": "Documentation for INTELLISENSE TOOLTIPS"
         }
       ]
     }

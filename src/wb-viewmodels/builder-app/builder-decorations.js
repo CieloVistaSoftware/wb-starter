@@ -211,7 +211,7 @@ window.decAddChild = (parentId, encodedComp) => {
   
   const comp = JSON.parse(decodeURIComponent(encodedComp));
   const c = JSON.parse(wrapper.dataset.c || '{}');
-  const el = wrapper.querySelector('');
+  const childEl = wrapper.querySelector('');
   
   // Find drop zone
   let dropZone = null;
@@ -219,14 +219,14 @@ window.decAddChild = (parentId, encodedComp) => {
   if (config) dropZone = findDropZone(wrapper, config);
   
   // Fallbacks
-  if (!dropZone && el) {
+  if (!dropZone && childEl) {
     const selectors = ['.wb-card__main', '.wb-card__content', '.wb-hero__content', '.wb-navbar__menu'];
     for (const sel of selectors) {
-      dropZone = el.querySelector(sel);
+      dropZone = childEl.querySelector(sel);
       if (dropZone) break;
     }
   }
-  if (!dropZone) dropZone = el || wrapper;
+  if (!dropZone) dropZone = childEl || wrapper;
   
   if (window.addToContainer) {
     window.addToContainer(comp, wrapper, dropZone);

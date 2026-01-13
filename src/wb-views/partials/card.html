@@ -7,7 +7,7 @@
       </div>
       <span class="card__badge" wb-if="badge">{{badge}}</span>
     </header>
-    <main class="card__body">{{body}}</main>
+    <main class="card__body"><slot></slot></main>
     <footer class="card__footer" wb-if="footer">{{footer}}</footer>
   </article>
 </template>

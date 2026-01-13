@@ -5,11 +5,17 @@
   "description": "Tooltip for displaying additional information on hover/focus",
   
   "behavior": "tooltip",
-  "baseClass": "wb-tooltip",
+  "baseClass": "wb-tooltip-trigger",
   
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "tooltip"
+  },
+  
+  "compliance": {
+    "baseClass": "wb-tooltip",
+    "supportLevel": "stable",
+    "accessibility": "high"
   },
   
   "properties": {
@@ -217,7 +223,7 @@
     "setup": [
       "<span data-wb=\"tooltip\" data-tooltip=\"Helpful tip\">Hover me</span>",
       "<button data-wb=\"tooltip\" data-tooltip=\"Click help\" data-position=\"bottom\">Help</button>",
-      "<button tooltip=\"Global tooltip\">Global</button>"
+      "<button data-wb=\"tooltip\" tooltip=\"Global tooltip\">Global</button>"
     ],
     "matrix": {
       "combinations": [

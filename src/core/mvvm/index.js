@@ -1,7 +1,7 @@
 /**
  * WB MVVM System
  * ==============
- * Model-View-ViewModel architecture for WB Framework.
+ * Model-View-ViewModel architecture for WB Behaviors.
  * 
  * - Models: JSON Schemas define data structure (wb-models/)
  * - Views: DOM structure built from schema $view (no separate templates!)
@@ -24,7 +24,7 @@
  *   WB.init({ useSchemas: true });
  *   
  *   // Or standalone
- *   import SchemaBuilder from './mvvm/index.js';
+ *   import SchemaBuilder from '/src/core/mvvm/index.js';
  *   await SchemaBuilder.init();
  *   
  *   // Then just write HTML:

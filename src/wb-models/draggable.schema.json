@@ -4,8 +4,27 @@
   "title": "Draggable",
   "behavior": "draggable",
   "description": "Make an element draggable.",
+  "compliance": {
+    "baseClass": "wb-draggable",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
-    "axis": { "type": "string", "enum": ["x", "y", "both"], "default": "both" },
-    "handle": { "type": "string", "description": "Selector for drag handle" }
-  }
+    "axis": {
+      "type": "string",
+      "enum": [
+        "x",
+        "y",
+        "both"
+      ],
+      "default": "both"
+    },
+    "handle": {
+      "type": "string",
+      "description": "Selector for drag handle"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {}
 }
