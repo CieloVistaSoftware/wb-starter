@@ -71,30 +71,7 @@
       "appliesClass": "wb-avatar--bordered"
     }
   },
-  "$view": [
-    {
-      "name": "image",
-      "tag": "img",
-      "public": true,
-      "createdWhen": "src",
-      "description": "Avatar image"
-    },
-    {
-      "name": "initials",
-      "tag": "span",
-      "public": true,
-      "content": "{{initials}}",
-      "createdWhen": "NOT src",
-      "description": "Initials fallback"
-    },
-    {
-      "name": "status",
-      "tag": "span",
-      "public": true,
-      "createdWhen": "status",
-      "description": "Status indicator dot"
-    }
-  ],
+  "$view": [],
   "$methods": {
     "setImage": {
       "description": "Sets the image source",
@@ -176,9 +153,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"avatar\" x-initials=\"JD\"></div>",
-      "<div x-behavior=\"avatar\" x-src=\"avatar.jpg\" x-alt=\"John Doe\"></div>",
-      "<div x-behavior=\"avatar\" x-initials=\"AB\" x-status=\"online\"></div>"
+      "<wb-avatar>Basic avatar content</wb-avatar>",
+      "<wb-avatar size=\"xs\">size=xs</wb-avatar>",
+      "<wb-avatar size=\"sm\">size=sm</wb-avatar>",
+      "<wb-avatar size=\"md\">size=md</wb-avatar>",
+      "<wb-avatar shape=\"circle\">shape=circle</wb-avatar>",
+      "<wb-avatar shape=\"square\">shape=square</wb-avatar>",
+      "<wb-avatar shape=\"rounded\">shape=rounded</wb-avatar>",
+      "<wb-avatar status=\"online\">status=online</wb-avatar>"
     ],
     "matrix": {
       "combinations": [

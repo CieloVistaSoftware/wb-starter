@@ -182,9 +182,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"checkbox\" x-label=\"Accept terms\"></div>",
-      "<div x-behavior=\"checkbox\" x-label=\"Checked\" x-checked=\"true\"></div>",
-      "<div x-behavior=\"checkbox\" x-label=\"Disabled\" x-disabled=\"true\"></div>"
+      "<wb-checkbox>Basic checkbox content</wb-checkbox>",
+      "<wb-checkbox size=\"sm\">size=sm</wb-checkbox>",
+      "<wb-checkbox size=\"md\">size=md</wb-checkbox>",
+      "<wb-checkbox size=\"lg\">size=lg</wb-checkbox>",
+      "<wb-checkbox variant=\"default\">variant=default</wb-checkbox>",
+      "<wb-checkbox variant=\"primary\">variant=primary</wb-checkbox>",
+      "<wb-checkbox variant=\"success\">variant=success</wb-checkbox>",
+      "<wb-checkbox checked>with checked</wb-checkbox>"
     ],
     "functional": {
       "interactions": [

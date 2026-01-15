@@ -233,9 +233,17 @@
   },
   "test": {
     "setup": [
+      "<wb-cardvideo>Basic cardvideo content</wb-cardvideo>",
+      "<wb-cardvideo aspect=\"16/9\">aspect=16/9</wb-cardvideo>",
+      "<wb-cardvideo aspect=\"4/3\">aspect=4/3</wb-cardvideo>",
+      "<wb-cardvideo aspect=\"1/1\">aspect=1/1</wb-cardvideo>",
+      "<wb-cardvideo variant=\"default\">variant=default</wb-cardvideo>",
+      "<wb-cardvideo variant=\"minimal\">variant=minimal</wb-cardvideo>",
+      "<wb-cardvideo variant=\"bordered\">variant=bordered</wb-cardvideo>",
+      "<wb-cardvideo autoplay>with autoplay</wb-cardvideo>",
+      "<wb-cardvideo title=\"Test Title\">With title attribute</wb-cardvideo>",
       "<wb-card-video src=\"video.mp4\"></wb-card-video>",
-      "<wb-card-video src=\"video.mp4\" title=\"My Video\" poster=\"poster.jpg\"></wb-card-video>",
-      "<article data-wb=\"cardvideo\" data-src=\"video.mp4\"></article>"
+      "<wb-card-video src=\"video.mp4\" title=\"My Video\" poster=\"poster.jpg\"></wb-card-video>"
     ],
     "matrix": {
       "combinations": [

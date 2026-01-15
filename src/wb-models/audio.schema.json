@@ -195,9 +195,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"audio\" data-src=\"audio.mp3\"></div>",
-      "<div x-behavior=\"audio\" data-src=\"audio.mp3\" data-showEq=\"true\"></div>",
-      "<div x-behavior=\"audio\" data-src=\"audio.mp3\"></div>"
+      "<wb-audio>Basic audio content</wb-audio>",
+      "<wb-audio loop>with loop</wb-audio>",
+      "<wb-audio autoplay>with autoplay</wb-audio>",
+      "<wb-audio muted>with muted</wb-audio>",
+      "<wb-audio show-eq>with showEq</wb-audio>",
+      "<wb-audio src=\"Sample src\">src=\"Sample src\"</wb-audio>",
+      "<wb-audio volume=\"0.8\">volume=0.8</wb-audio>",
+      "<wb-audio bass=\"0\">bass=0</wb-audio>"
     ],
     "matrix": {
       "combinations": [

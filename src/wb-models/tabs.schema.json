@@ -54,36 +54,7 @@
       "appliesClass": "wb-tabs--vertical"
     }
   },
-  "$view": [
-    {
-      "name": "nav",
-      "tag": "div",
-      "public": true,
-      "required": true,
-      "description": "Tab navigation container"
-    },
-    {
-      "name": "tabs",
-      "tag": "button",
-      "parent": "nav",
-      "public": true,
-      "description": "Tab buttons (multiple)"
-    },
-    {
-      "name": "panels",
-      "tag": "div",
-      "public": true,
-      "required": true,
-      "description": "Panel container"
-    },
-    {
-      "name": "panel",
-      "tag": "div",
-      "parent": "panels",
-      "public": true,
-      "description": "Tab panels (multiple)"
-    }
-  ],
+  "$view": [],
   "$methods": {
     "setActiveTab": {
       "description": "Activates a tab by index",
@@ -185,8 +156,14 @@
   "test": {
     "functional": true,
     "setup": [
-      "<div x-behavior=\"tabs\"><div data-tab-title=\"Tab 1\">Content 1</div><div data-tab-title=\"Tab 2\">Content 2</div></div>",
-      "<div x-behavior=\"tabs\"><div data-tab-title=\"First\">First</div><div data-tab-title=\"Second\">Second</div></div>"
+      "<wb-tabs>Basic tabs content</wb-tabs>",
+      "<wb-tabs variant=\"default\">variant=default</wb-tabs>",
+      "<wb-tabs variant=\"pills\">variant=pills</wb-tabs>",
+      "<wb-tabs variant=\"underline\">variant=underline</wb-tabs>",
+      "<wb-tabs size=\"sm\">size=sm</wb-tabs>",
+      "<wb-tabs size=\"md\">size=md</wb-tabs>",
+      "<wb-tabs size=\"lg\">size=lg</wb-tabs>",
+      "<wb-tabs full-width>with fullWidth</wb-tabs>"
     ],
     "matrix": {
       "combinations": [

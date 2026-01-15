@@ -192,9 +192,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"switch\" data-label=\"Dark mode\"></div>",
-      "<div x-behavior=\"switch\" data-label=\"Notifications\" data-checked></div>",
-      "<div x-behavior=\"switch\" data-label=\"Test\"></div>"
+      "<wb-switch>Basic switch content</wb-switch>",
+      "<wb-switch label-position=\"start\">labelPosition=start</wb-switch>",
+      "<wb-switch label-position=\"end\">labelPosition=end</wb-switch>",
+      "<wb-switch size=\"sm\">size=sm</wb-switch>",
+      "<wb-switch size=\"md\">size=md</wb-switch>",
+      "<wb-switch size=\"lg\">size=lg</wb-switch>",
+      "<wb-switch variant=\"default\">variant=default</wb-switch>",
+      "<wb-switch variant=\"primary\">variant=primary</wb-switch>"
     ],
     "matrix": {
       "combinations": [

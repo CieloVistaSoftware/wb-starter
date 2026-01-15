@@ -12,5 +12,14 @@
   "properties": {},
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-repeater>Basic repeater content</wb-repeater>",
+      "<wb-repeater>Test permutation 2</wb-repeater>",
+      "<wb-repeater>Test permutation 3</wb-repeater>",
+      "<wb-repeater>Test permutation 4</wb-repeater>",
+      "<wb-repeater>Test permutation 5</wb-repeater>"
+    ]
+  }
 }

@@ -93,8 +93,13 @@
   },
   "test": {
     "setup": [
-      "<wb-sticky>Navigation</wb-sticky>",
-      "<nav data-wb=\"sticky\" data-offset=\"60\">Header</nav>"
+      "<wb-sticky>Basic sticky content</wb-sticky>",
+      "<wb-sticky animated>with animated</wb-sticky>",
+      "<wb-sticky offset=\"0\">offset=\"0\"</wb-sticky>",
+      "<wb-sticky z-index=\"100\">zIndex=100</wb-sticky>",
+      "<wb-sticky threshold=\"50\">threshold=50</wb-sticky>",
+      "<wb-sticky stuck-class=\"is-stuck\">stuckClass=\"is-stuck\"</wb-sticky>",
+      "<wb-sticky>Navigation</wb-sticky>"
     ],
     "matrix": {
       "combinations": [

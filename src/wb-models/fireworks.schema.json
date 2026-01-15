@@ -92,8 +92,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"fireworks\"></div>",
-      "<button x-behavior=\"fireworks\">Boom!</button>"
+      "<wb-fireworks>Basic fireworks content</wb-fireworks>",
+      "<wb-fireworks show-button>with showButton</wb-fireworks>",
+      "<wb-fireworks repeat>with repeat</wb-fireworks>",
+      "<wb-fireworks count=\"30\">count=30</wb-fireworks>",
+      "<wb-fireworks label=\"Fireworks!\">label=\"Fireworks!\"</wb-fireworks>",
+      "<wb-fireworks delay=\"0s\">delay=\"0s\"</wb-fireworks>",
+      "<wb-fireworks duration=\"1.5s\">duration=\"1.5s\"</wb-fireworks>",
+      "<wb-fireworks colors=\"[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]\">colors=\"[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]\"</wb-fireworks>"
     ],
     "matrix": {
       "combinations": [

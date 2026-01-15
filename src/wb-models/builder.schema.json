@@ -269,7 +269,11 @@
   },
   "test": {
     "setup": [
-      "<div data-wb=\"builder\">Builder Test</div>"
+      "<wb-builder>Basic builder content</wb-builder>",
+      "<wb-builder label=\"Builder\">label=\"Builder\"</wb-builder>",
+      "<wb-builder icon=\"🎨\">icon=\"🎨\"</wb-builder>",
+      "<wb-builder label=\"Builder\" icon=\"🎨\">Combined: label=\"Builder\", icon=\"🎨\"</wb-builder>",
+      "<wb-builder>Test permutation 5</wb-builder>"
     ],
     "matrix": {
       "combinations": [

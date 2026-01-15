@@ -3,21 +3,17 @@
   "$id": "tooltip.schema.json",
   "title": "Tooltip",
   "description": "Tooltip for displaying additional information on hover/focus",
-  
   "behavior": "tooltip",
   "baseClass": "wb-tooltip-trigger",
-  
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "tooltip"
   },
-  
   "compliance": {
     "baseClass": "wb-tooltip",
     "supportLevel": "stable",
     "accessibility": "high"
   },
-  
   "properties": {
     "content": {
       "type": "string",
@@ -27,14 +23,28 @@
     "position": {
       "type": "string",
       "description": "Tooltip position relative to trigger",
-      "enum": ["top", "bottom", "left", "right", "top-start", "top-end", "bottom-start", "bottom-end"],
+      "enum": [
+        "top",
+        "bottom",
+        "left",
+        "right",
+        "top-start",
+        "top-end",
+        "bottom-start",
+        "bottom-end"
+      ],
       "default": "top",
       "appliesClass": "wb-tooltip--{{value}}"
     },
     "variant": {
       "type": "string",
       "description": "Visual style variant",
-      "enum": ["default", "dark", "light", "primary"],
+      "enum": [
+        "default",
+        "dark",
+        "light",
+        "primary"
+      ],
       "default": "default",
       "appliesClass": "wb-tooltip--{{value}}"
     },
@@ -51,8 +61,13 @@
     "trigger": {
       "type": "string",
       "description": "What triggers the tooltip",
-      "enum": ["hover", "focus", "click", "hover focus"],
-      "default": "hover focus"
+      "enum": [
+        "hover",
+        "focus",
+        "click",
+        "hover-focus"
+      ],
+      "default": "hover"
     },
     "arrow": {
       "type": "boolean",
@@ -70,25 +85,7 @@
       "default": "200px"
     }
   },
-  
-  "$view": [
-    {
-      "name": "content",
-      "tag": "div",
-      "public": true,
-      "content": "{{content}}",
-      "required": true,
-      "description": "Tooltip content"
-    },
-    {
-      "name": "arrow",
-      "tag": "div",
-      "public": false,
-      "createdWhen": "arrow",
-      "description": "Arrow/pointer element"
-    }
-  ],
-  
+  "$view": [],
   "$methods": {
     "show": {
       "description": "Shows the tooltip",
@@ -104,11 +101,15 @@
     },
     "setContent": {
       "description": "Updates tooltip content",
-      "params": ["content"]
+      "params": [
+        "content"
+      ]
     },
     "setPosition": {
       "description": "Updates tooltip position",
-      "params": ["position"]
+      "params": [
+        "position"
+      ]
     },
     "enable": {
       "description": "Enables the tooltip",
@@ -119,7 +120,6 @@
       "params": []
     }
   },
-  
   "$cssAPI": {
     "--wb-tooltip-bg": {
       "default": "#1f2937",
@@ -202,44 +202,73 @@
       "description": "Primary variant text color"
     }
   },
-  
   "accessibility": {
     "role": "tooltip",
     "ariaDescribedBy": "tooltip id on trigger element"
   },
-  
   "events": {
     "wb:tooltip:show": {
       "description": "Fired when tooltip becomes visible",
-      "detail": { "content": "string" }
+      "detail": {
+        "content": "string"
+      }
     },
     "wb:tooltip:hide": {
       "description": "Fired when tooltip is hidden",
       "detail": {}
     }
   },
-  
   "test": {
     "setup": [
-      "<span x-behavior=\"tooltip\" x-content=\"Helpful tip\">Hover me</span>",
-      "<button x-behavior=\"tooltip\" x-content=\"Click help\" x-position=\"bottom\">Help</button>",
-      "<button x-behavior=\"tooltip\" x-content=\"Global tooltip\">Global</button>"
+      "<wb-tooltip>Basic tooltip content</wb-tooltip>",
+      "<wb-tooltip position=\"top\">position=top</wb-tooltip>",
+      "<wb-tooltip position=\"bottom\">position=bottom</wb-tooltip>",
+      "<wb-tooltip position=\"left\">position=left</wb-tooltip>",
+      "<wb-tooltip variant=\"default\">variant=default</wb-tooltip>",
+      "<wb-tooltip variant=\"dark\">variant=dark</wb-tooltip>",
+      "<wb-tooltip variant=\"light\">variant=light</wb-tooltip>",
+      "<wb-tooltip trigger=\"hover\">trigger=hover</wb-tooltip>"
     ],
     "matrix": {
       "combinations": [
-        { "content": "Tooltip text" },
-        { "content": "Tooltip text", "position": "top" },
-        { "content": "Tooltip text", "position": "bottom" },
-        { "content": "Tooltip text", "position": "left" },
-        { "content": "Tooltip text", "position": "right" },
-        { "content": "Tooltip text", "variant": "light" },
-        { "content": "Tooltip text", "variant": "primary" },
-        { "content": "Tooltip text", "arrow": false },
-        { "content": "Tooltip text", "delay": 500 }
+        {
+          "content": "Tooltip text"
+        },
+        {
+          "content": "Tooltip text",
+          "position": "top"
+        },
+        {
+          "content": "Tooltip text",
+          "position": "bottom"
+        },
+        {
+          "content": "Tooltip text",
+          "position": "left"
+        },
+        {
+          "content": "Tooltip text",
+          "position": "right"
+        },
+        {
+          "content": "Tooltip text",
+          "variant": "light"
+        },
+        {
+          "content": "Tooltip text",
+          "variant": "primary"
+        },
+        {
+          "content": "Tooltip text",
+          "arrow": false
+        },
+        {
+          "content": "Tooltip text",
+          "delay": 500
+        }
       ]
     }
   },
-  
   "_metadata": {
     "category": "feedback",
     "icon": "💬",

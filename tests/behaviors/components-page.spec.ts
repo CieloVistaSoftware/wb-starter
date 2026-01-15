@@ -55,46 +55,46 @@ test.describe('Components Page', () => {
   test.describe('Cards Section', () => {
     
     test('basic cards render correctly', async ({ page }) => {
-      const basicCard = page.locator('basic-card[title="Basic Card"]');
+      const basicCard = page.locator('wb-card[title="Basic Card"]');
       await basicCard.scrollIntoViewIfNeeded();
       await expect(basicCard).toBeVisible();
     });
 
     test('card with header and footer renders', async ({ page }) => {
-      const card = page.locator('basic-card[title="With Footer"][footer="Card Footer"]');
+      const card = page.locator('wb-card[title="With Footer"][footer="Card Footer"]');
       await card.scrollIntoViewIfNeeded();
       await expect(card).toBeVisible();
     });
 
     test('image-card renders', async ({ page }) => {
-      const imageCard = page.locator('image-card').first();
+      const imageCard = page.locator('wb-cardimage').first();
       await imageCard.scrollIntoViewIfNeeded();
       await expect(imageCard).toBeVisible();
     });
 
     test('overlay-card renders correctly', async ({ page }) => {
-      const overlayCard = page.locator('overlay-card');
+      const overlayCard = page.locator('wb-cardoverlay');
       await overlayCard.scrollIntoViewIfNeeded();
       await expect(overlayCard).toBeVisible();
     });
 
     test('stats-card (stock indicators) render', async ({ page }) => {
-      const statsCards = page.locator('stats-card');
+      const statsCards = page.locator('wb-cardstats');
       await statsCards.first().scrollIntoViewIfNeeded();
       await expect(statsCards).toHaveCount(4); 
     });
 
     test('price-card renders with features', async ({ page }) => {
-      const pricingCards = page.locator('price-card');
+      const pricingCards = page.locator('wb-cardpricing');
       await pricingCards.first().scrollIntoViewIfNeeded();
       await expect(pricingCards.first()).toBeVisible();
     });
 
     // Modified to scroll to the container likely to hold these cards
     test('product-card renders', async ({ page }) => {
-      const productCards = page.locator('product-card');
+      const productCards = page.locator('wb-cardproduct');
       // Scroll to the section header to trigger loading
-      await page.locator('h3:has-text("Store & Data")').scrollIntoViewIfNeeded();
+      await page.locator('h3:has-text("Product Cards")').scrollIntoViewIfNeeded();
       
       // Wait for at least one to be attached
       await productCards.first().waitFor({ state: 'attached' });
@@ -106,25 +106,25 @@ test.describe('Components Page', () => {
     });
 
     test('testimonial-card renders', async ({ page }) => {
-      const testimonialCards = page.locator('testimonial-card');
+      const testimonialCards = page.locator('wb-cardtestimonial');
       await testimonialCards.first().scrollIntoViewIfNeeded();
       await expect(testimonialCards.first()).toBeVisible();
     });
 
     test('notification-card renders all types', async ({ page }) => {
-      const notificationCards = page.locator('notification-card');
+      const notificationCards = page.locator('wb-cardnotification');
       await notificationCards.first().scrollIntoViewIfNeeded();
       await expect(notificationCards).toHaveCount(4); // info, success, warning, error
     });
 
     test('file-card renders', async ({ page }) => {
-      const fileCards = page.locator('file-card');
+      const fileCards = page.locator('wb-cardfile');
       await fileCards.first().scrollIntoViewIfNeeded();
       await expect(fileCards.count()).resolves.toBeGreaterThan(0);
     });
 
     test('portfolio-card (business cards) render', async ({ page }) => {
-      const portfolioCards = page.locator('portfolio-card');
+      const portfolioCards = page.locator('wb-cardportfolio');
       await portfolioCards.first().scrollIntoViewIfNeeded();
       await expect(portfolioCards).toHaveCount(1);
     });
@@ -383,7 +383,7 @@ test.describe('Components Page', () => {
     });
 
     test('tooltip buttons exist', async ({ page }) => {
-      const tooltipBtns = page.locator('[x-tooltip]');
+      const tooltipBtns = page.locator('wb-tooltip');
       await tooltipBtns.first().scrollIntoViewIfNeeded();
       await expect(tooltipBtns.count()).resolves.toBeGreaterThanOrEqual(4);
     });

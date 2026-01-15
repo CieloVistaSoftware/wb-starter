@@ -18,7 +18,11 @@
     "variant": {
       "type": "string",
       "description": "Type of light effect",
-      "enum": ["beam", "spotlight", "fixture"],
+      "enum": [
+        "beam",
+        "spotlight",
+        "fixture"
+      ],
       "default": "beam",
       "appliesClass": "wb-stagelight--{{value}}"
     },
@@ -96,5 +100,17 @@
     "--wb-stagelight-intensity": {
       "description": "Opacity of the light"
     }
+  },
+  "test": {
+    "setup": [
+      "<wb-stagelight>Basic stagelight content</wb-stagelight>",
+      "<wb-stagelight variant=\"beam\">variant=beam</wb-stagelight>",
+      "<wb-stagelight variant=\"spotlight\">variant=spotlight</wb-stagelight>",
+      "<wb-stagelight variant=\"fixture\">variant=fixture</wb-stagelight>",
+      "<wb-stagelight color=\"#ffffff\">color=\"#ffffff\"</wb-stagelight>",
+      "<wb-stagelight intensity=\"0.5\">intensity=0.5</wb-stagelight>",
+      "<wb-stagelight size=\"300px\">size=\"300px\"</wb-stagelight>",
+      "<wb-stagelight speed=\"3s\">speed=\"3s\"</wb-stagelight>"
+    ]
   }
 }

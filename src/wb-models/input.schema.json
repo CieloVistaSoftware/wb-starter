@@ -377,12 +377,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"input\" data-label=\"Type here\"></div>",
-      "<div x-behavior=\"input\" data-label=\"Clear\" data-value=\"Text\" data-clearable=\"true\"></div>",
-      "<div x-behavior=\"input\" data-label=\"Error\" data-error=\"Invalid\" data-variant=\"error\"></div>",
-      "<div x-behavior=\"input\" data-label=\"Helper\" data-helper=\"Help text\"></div>",
-      "<div x-behavior=\"input\" data-label=\"Disabled\" data-disabled=\"true\"></div>",
-      "<div x-behavior=\"input\" data-label=\"Focus\"></div>"
+      "<wb-input>Basic input content</wb-input>",
+      "<wb-input input-type=\"text\">inputType=text</wb-input>",
+      "<wb-input input-type=\"email\">inputType=email</wb-input>",
+      "<wb-input input-type=\"password\">inputType=password</wb-input>",
+      "<wb-input variant=\"default\">variant=default</wb-input>",
+      "<wb-input variant=\"success\">variant=success</wb-input>",
+      "<wb-input variant=\"error\">variant=error</wb-input>",
+      "<wb-input size=\"sm\">size=sm</wb-input>"
     ],
     "functional": {
       "interactions": [
@@ -400,7 +402,10 @@
           "name": "Clear Button",
           "setup": "<wb-input label='Clear' value='Text' clearable></wb-input>",
           "steps": [
-            { "action": "click", "selector": "button" }
+            {
+              "action": "click",
+              "selector": "button"
+            }
           ],
           "expect": {
             "value": ""
@@ -430,7 +435,9 @@
           "setup": "<wb-input label='Disabled' disabled></wb-input>",
           "action": "click",
           "expect": {
-            "attribute": { "disabled": "" }
+            "attribute": {
+              "disabled": ""
+            }
           }
         }
       ],

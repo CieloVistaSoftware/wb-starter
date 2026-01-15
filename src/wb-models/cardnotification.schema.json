@@ -198,9 +198,16 @@
   },
   "test": {
     "setup": [
+      "<wb-cardnotification>Basic cardnotification content</wb-cardnotification>",
+      "<wb-cardnotification variant=\"info\">variant=info</wb-cardnotification>",
+      "<wb-cardnotification variant=\"success\">variant=success</wb-cardnotification>",
+      "<wb-cardnotification variant=\"warning\">variant=warning</wb-cardnotification>",
+      "<wb-cardnotification dismissible>with dismissible</wb-cardnotification>",
+      "<wb-cardnotification elevated>with elevated</wb-cardnotification>",
+      "<wb-cardnotification title=\"Sample title\">title=\"Sample title\"</wb-cardnotification>",
+      "<wb-cardnotification message=\"Sample message\">message=\"Sample message\"</wb-cardnotification>",
       "<wb-notification message=\"Info message\"></wb-notification>",
-      "<wb-notification variant=\"success\" title=\"Success\" message=\"Done!\"></wb-notification>",
-      "<aside data-wb=\"cardnotification\" data-message=\"Test\"></aside>"
+      "<wb-notification variant=\"success\" title=\"Success\" message=\"Done!\"></wb-notification>"
     ],
     "matrix": {
       "combinations": [

@@ -1,6 +1,10 @@
-# Web Behaviors (WB) MVVM Migration
+# WB Framework v3.0 - MVVM Architecture
 
-## Architecture Overview
+## Overview
+
+WB Framework v3.0 implements a **Schema-Driven MVVM Architecture** that eliminates the need for build steps while providing a robust, type-safe component system. This document describes the architecture, migration status, and implementation details.
+
+## Architecture Diagram
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -8,217 +12,351 @@
 ├─────────────────────────────────────────────────────────────┤
 │  <wb-card title="Hello">Content</wb-card>                  │
 │                        OR                                   │
-│  <article data-wb="card" data-title="Hello">Content        │
+│  <button x-ripple>Click</button>  (behaviors)              │
 └─────────────────────────────────────────────────────────────┘
                             │
                             ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                   SCHEMA BUILDER v3.0                       │
-│  src/core/mvvm/schema-builder.js                           │
-│  - Detects wb-* tags or data-wb attributes                 │
-│  - Loads schema from wb-models/                            │
-│  - Builds DOM from $view structure                         │
-│  - Binds $methods to element                               │
+│                    WB.init() Pipeline                       │
+│  1. Load schemas from /src/wb-models/*.schema.json         │
+│  2. Scan DOM for wb-* elements                             │
+│  3. Process through Schema Builder                         │
+│  4. Apply behaviors from wb-viewmodels                     │
+│  5. Auto-load CSS from /src/styles/components              │
 └─────────────────────────────────────────────────────────────┘
                             │
                             ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    MVVM LAYERS                              │
 ├─────────────────────────────────────────────────────────────┤
-│  MODEL (properties)                                         │
-│  - Defines data inputs, types, defaults                    │
-│  - Standard JSON Schema format                             │
+│  MODEL (properties in schema)                               │
+│  - Type definitions, defaults, enums                       │
+│  - Attribute → property mapping                            │
 ├─────────────────────────────────────────────────────────────┤
-│  VIEW ($view)                                               │
-│  - DOM structure with lowercase HTML5 tags                 │
-│  - Built from schema, NOT from innerHTML in JS             │
-│  - Classes auto-generated: baseClass__name                 │
+│  VIEW ($view in schema)                                     │
+│  - DOM structure defined declaratively                     │
+│  - Light DOM only - no Shadow DOM                          │
+│  - BEM classes: {baseClass}__{name}                        │
 ├─────────────────────────────────────────────────────────────┤
-│  VIEWMODEL ($methods + wb-viewmodels/*.js)                 │
-│  - Callable functions defined in schema                    │
-│  - Implementation in viewmodel files                       │
-│  - Bound to element: element.show(), element.hide()        │
+│  VIEWMODEL (wb-viewmodels/*.js)                            │
+│  - Behavior functions that enhance elements                │
+│  - Event handlers, state management                        │
+│  - $methods binding for callable APIs                      │
 └─────────────────────────────────────────────────────────────┘
-```
-
-## MVVM Schema Structure
-
-```json
-{
-  "behavior": "card",
-  "baseClass": "wb-card",
-  
-  "properties": {
-    "title":    { "type": "string" },
-    "subtitle": { "type": "string" },
-    "elevated": { "type": "boolean", "default": false },
-    "variant":  { "enum": ["default", "glass", "bordered"] }
-  },
-  
-  "$view": [
-    { "name": "header",   "tag": "header", "createdWhen": "title OR subtitle" },
-    { "name": "title",    "tag": "h3",     "parent": "header", "content": "{{title}}" },
-    { "name": "subtitle", "tag": "p",      "parent": "header", "content": "{{subtitle}}", "createdWhen": "subtitle" },
-    { "name": "main",     "tag": "main",   "required": true, "content": "{{slot}}" },
-    { "name": "footer",   "tag": "footer", "createdWhen": "footer", "content": "{{footer}}" }
-  ],
-  
-  "$methods": {
-    "show":   { "description": "Shows the card", "params": [] },
-    "hide":   { "description": "Hides the card", "params": [] },
-    "toggle": { "description": "Toggles visibility", "params": [] },
-    "update": { "description": "Updates card properties", "params": ["options"] }
-  }
-}
 ```
 
 ## Key Principles
 
-### 1. Golden Rule: Attributes Over Slots
+### 1. Light DOM Architecture
+
+WB v3.0 uses **Light DOM exclusively**. No Shadow DOM.
+
+**Benefits:**
+- CSS works naturally (no piercing)
+- DevTools show real DOM structure
+- Screen readers understand content
+- Query selectors work as expected
+
+```html
+<!-- User writes this -->
+<wb-card title="Hello">Content</wb-card>
+
+<!-- DOM becomes (Light DOM) -->
+<wb-card title="Hello" class="wb-card">
+  <header class="wb-card__header">
+    <h3 class="wb-card__title">Hello</h3>
+  </header>
+  <main class="wb-card__body">Content</main>
+</wb-card>
+```
+
+### 2. Schema-First Development
+
+Every component is defined by a JSON schema that serves as the single source of truth:
+
+```json
+{
+  "$component": "card",
+  "$tagName": "wb-card",
+  "behavior": "card",
+  "baseClass": "wb-card",
+  
+  "properties": {
+    "title": { "type": "string", "description": "Card header text" },
+    "elevated": { "type": "boolean", "default": false },
+    "variant": { "enum": ["default", "glass", "bordered"] }
+  },
+  
+  "$view": [
+    { "name": "header", "tag": "header", "createdWhen": "title" },
+    { "name": "title", "tag": "h3", "parent": "header", "content": "{{title}}" },
+    { "name": "body", "tag": "main", "required": true, "content": "{{slot}}" }
+  ],
+  
+  "$methods": {
+    "show": { "description": "Shows the card" },
+    "hide": { "description": "Hides the card" }
+  },
+  
+  "$cssAPI": {
+    "--wb-card-padding": "Internal padding",
+    "--wb-card-radius": "Border radius"
+  }
+}
+```
+
+### 3. Golden Rule: Attributes Over Slots
 
 > **Attribute name = what it is for**  
 > **Schema = where it goes**
 
-Users provide simple attribute values. The schema defines how those values become DOM structure. Users should **never need to know component internals**.
-
 ```html
-<!-- ✅ CLEAN: User just sets values -->
-<wb-hero title="Explore" subtitle="Your journey" cta="Launch"></wb-hero>
+<!-- ✅ CLEAN: User sets attributes -->
+<wb-card title="Hello" subtitle="World" elevated>
+  <p>Content here</p>
+</wb-card>
 
-<!-- ❌ UGLY: User must know internal slots -->
-<wb-hero>
-  <h1 slot="title">Explore</h1>
-  <p slot="subtitle">Your journey</p>
-  <button slot="cta">Launch</button>
-</wb-hero>
+<!-- ❌ DON'T: Force users to know internals -->
+<wb-card>
+  <h3 slot="title">Hello</h3>
+  <p slot="subtitle">World</p>
+  <p>Content here</p>
+</wb-card>
 ```
 
-| Content Type | Use | Example |
-|--------------|-----|-------|
-| Simple text | **Attributes** | `title="Hello"` |
-| Enum choices | **Attributes** | `variant="cosmic"` |
-| Boolean flags | **Attributes** | `elevated` |
-| Arbitrary rich content | **Body only** | `<wb-card>Any HTML</wb-card>` |
+### 4. Behaviors vs Components
 
-### 2. MVVM Alignment
-| Layer | Schema Section | Purpose |
-|-------|----------------|---------|
-| **M**odel | `properties` | Data inputs |
-| **V**iew | `$view` | DOM structure |
-| **V**iew**M**odel | `$methods` | Callable functions |
-
-### 3. HTML5 Standards
-- Tags are lowercase: `"tag": "header"` not `"tag": "HEADER"`
-- Classes auto-generated: `{baseClass}__{name}` → `wb-card__header`
-
-### 4. Detection Triggers (2 only)
-```html
-<!-- 1. Web component tag -->
-<wb-card title="Hello">Content</wb-card>
-
-<!-- 2. Data attribute -->
-<article data-wb="card" data-title="Hello">Content</article>
-```
-~~Class-based detection dropped~~ (classes are for CSS only)
-
-### 5. No innerHTML in JavaScript
-```javascript
-// ❌ OLD WAY - Don't do this
-element.innerHTML = `<div class="card">${title}</div>`;
-
-// ✅ NEW WAY - Schema defines structure
-const schema = getSchema('card');
-buildFromView(element, schema, data);
-bindMethods(element, schema, viewModel);
-```
-
-## $view Properties
-
-| Property | Purpose | Example |
-|----------|---------|---------|
-| `name` | Part identifier → generates class | `"name": "header"` → `.wb-card__header` |
-| `tag` | HTML element (lowercase) | `"tag": "header"` |
-| `parent` | Nest inside another part | `"parent": "header"` |
-| `content` | Template with `{{prop}}` interpolation | `"content": "{{title}}"` |
-| `createdWhen` | Conditional creation | `"createdWhen": "title OR subtitle"` |
-| `required` | Always create this element | `"required": true` |
-| `class` | Additional CSS classes | `"class": "custom-class"` |
-
-## $methods Properties
-
-| Property | Purpose | Example |
-|----------|---------|---------|
-| `description` | What the method does | `"Shows the card"` |
-| `params` | Expected parameters | `["options"]` |
-| `returns` | Return type (optional) | `"Promise"` |
-
-## Migration Status
-
-### ✅ Complete
-- [x] Schema Builder v3.0 (`src/core/mvvm/schema-builder.js`)
-- [x] Schema index (`src/wb-models/index.json`)
-- [x] Test page (`src/core/mvvm-test.html`)
-- [x] Migration plan (`docs/MVVM-MIGRATION-PLAN.md`)
-- [x] card.schema.json → `$view` format
-- [x] cardprofile.schema.json → `$view` format
-
-### 🔄 In Progress
-- [ ] Convert remaining card schemas to `$view` format
-- [ ] Wire schema-builder into main WB.init()
-- [ ] Implement $methods binding in viewmodels
-
-### 📋 TODO
-- [ ] Migrate all behaviors to use schema-builder
-- [ ] Remove innerHTML from wb-viewmodels/*.js
-- [ ] Add CSS for all component tags
-- [ ] Update documentation
-- [ ] Create auto-generated tests from schema
+| Type | Tag | Purpose | Example |
+|------|-----|---------|---------|
+| **Component** | `<wb-*>` | Creates new DOM structure | `<wb-card title="Hi">` |
+| **Behavior** | `x-*` attribute | Enhances existing element | `<button x-ripple>` |
 
 ## File Structure
 
 ```
 src/
 ├── core/
+│   ├── wb.js                    # Main WB initialization
 │   ├── mvvm/
-│   │   ├── index.js           # MVVM exports
-│   │   └── schema-builder.js  # Core builder v3.0
-│   ├── mvvm-test.html         # Test page
-│   └── wb.js                  # Main WB
-├── wb-models/                  # JSON Schemas (Model + View + Methods)
-│   ├── index.json             # Schema index
-│   ├── card.schema.json       # ✅ Converted
-│   ├── cardprofile.schema.json # ✅ Converted
+│   │   └── schema-builder.js    # DOM generation from schemas
+│   ├── config.js                # Global configuration
+│   └── pubsub.js                # Event system
+│
+├── wb-models/                   # JSON Schemas (41+ components)
+│   ├── card.schema.json
+│   ├── cardimage.schema.json
+│   ├── modal.schema.json
 │   └── ...
-├── wb-viewmodels/             # Behavior implementations
-│   ├── card.js
+│
+├── wb-viewmodels/               # Behavior implementations
+│   ├── index.js                 # Lazy-loading registry
+│   ├── card.js                  # Card family behaviors
+│   ├── feedback.js              # Badge, toast, progress, etc.
+│   ├── navigation.js            # Navbar, tabs, pagination
+│   ├── semantics/               # HTML5 semantic enhancements
+│   │   ├── code.js              # <code> highlighting
+│   │   ├── pre.js               # <pre> formatting
+│   │   └── ...
 │   └── ...
-└── styles/                    # CSS
-    └── components.css
+│
+└── styles/
+    ├── themes.css               # 23 theme definitions
+    ├── site.css                 # Site-wide styles
+    └── components/              # Per-component CSS (auto-loaded)
+        ├── card.css
+        ├── modal.css
+        └── ...
 ```
 
-## Testing
+## Schema Properties Reference
 
-1. Start server: `npm start`
-2. Open: `http://localhost:3000/src/core/mvvm-test.html`
-3. Check console for schema loading
-4. Verify DOM structure matches schema
-5. Test methods: `document.querySelector('wb-card').show()`
+### Root Properties
 
-## Auto-Generated Tests
+| Property | Purpose | Example |
+|----------|---------|---------|
+| `$component` | Component identifier | `"card"` |
+| `$tagName` | Custom element tag | `"wb-card"` |
+| `behavior` | Viewmodel function name | `"card"` |
+| `baseClass` | BEM block class | `"wb-card"` |
 
-Since props, view, and methods are defined in schema, tests auto-generate:
+### $view Properties
 
-| Test Type | Input | Expected |
-|-----------|-------|----------|
-| No props | `<wb-card>` | main only |
-| Title | `title="X"` | header + main |
-| Variant | `variant="glass"` | has `.wb-card--glass` |
-| Method | `card.show()` | card visible |
-| Method | `card.hide()` | card hidden |
+| Property | Purpose | Example |
+|----------|---------|---------|
+| `name` | Part identifier → BEM element | `"header"` → `.wb-card__header` |
+| `tag` | HTML element (lowercase) | `"header"`, `"main"`, `"footer"` |
+| `parent` | Nest inside another part | `"parent": "header"` |
+| `content` | Template interpolation | `"{{title}}"` or `"{{slot}}"` |
+| `createdWhen` | Conditional creation | `"title OR subtitle"` |
+| `required` | Always create | `true` |
+| `class` | Additional classes | `"custom-class"` |
 
-## Next Steps
+### $methods Properties
 
-1. **Convert remaining schemas** - All card variants to `$view` format
-2. **Implement method binding** - Connect $methods to viewmodel implementations
-3. **Wire into WB.init()** - Make it part of normal startup
-4. **Auto-generate tests** - Read schema, output test cases
+| Property | Purpose | Example |
+|----------|---------|---------|
+| `description` | Method documentation | `"Shows the card"` |
+| `params` | Parameter names | `["options"]` |
+| `returns` | Return type | `"Promise<void>"` |
+
+### $cssAPI Properties
+
+Documents CSS custom properties for theming:
+
+```json
+"$cssAPI": {
+  "--wb-card-padding": "Internal padding (default: 1.5rem)",
+  "--wb-card-radius": "Border radius (default: 8px)",
+  "--wb-card-bg": "Background color"
+}
+```
+
+## Migration Status
+
+### ✅ Complete (v3.0 Core)
+
+- [x] Schema Builder integrated into WB.init()
+- [x] Light DOM architecture enforced
+- [x] CSS auto-loading from /src/styles/components
+- [x] 41+ component schemas created
+- [x] Lazy-loading behavior registry
+- [x] Cross-browser support infrastructure
+- [x] Feature detection (no UA sniffing)
+- [x] Custom Elements Manifest for VS Code
+
+### ✅ Components Migrated
+
+| Category | Components | Status |
+|----------|------------|--------|
+| Cards | 19 variants (card, cardimage, cardvideo, etc.) | ✅ |
+| Feedback | badge, toast, progress, spinner, avatar, skeleton | ✅ |
+| Navigation | tabs, accordion, breadcrumb, pagination, steps | ✅ |
+| Overlays | modal, drawer, lightbox, popover, confirm | ✅ |
+| Forms | input, select, checkbox, radio, switch, rating | ✅ |
+| Media | gallery, youtube, audio, video | ✅ |
+| Semantics | code, pre, table, details, kbd | ✅ |
+
+### 🔄 Ongoing
+
+- [ ] Remove remaining innerHTML patterns in viewmodels
+- [ ] Complete $methods binding for all components
+- [ ] Auto-generate Playwright tests from schemas
+- [ ] VS Code extension for IntelliSense
+
+## Usage Examples
+
+### Basic Component
+
+```html
+<wb-card title="Hello World" elevated>
+  <p>Card content goes here.</p>
+</wb-card>
+```
+
+### With Behaviors
+
+```html
+<wb-card title="Interactive Card" x-draggable x-ripple>
+  <p>This card is draggable with ripple effect.</p>
+</wb-card>
+```
+
+### Behavior Only (No Component)
+
+```html
+<button x-ripple x-tooltip="Click to save">
+  💾 Save
+</button>
+```
+
+### CSS Customization
+
+```css
+/* Override via CSS variables */
+wb-card {
+  --wb-card-padding: 2rem;
+  --wb-card-radius: 16px;
+  --wb-card-bg: var(--bg-tertiary);
+}
+```
+
+## Testing Strategy
+
+### Schema-Driven Tests
+
+Since schemas define the contract, tests can be auto-generated:
+
+```javascript
+// Auto-generated from card.schema.json
+test('card with title shows header', async () => {
+  const card = await renderComponent('wb-card', { title: 'Test' });
+  expect(card.querySelector('.wb-card__header')).toBeTruthy();
+});
+
+test('card without title hides header', async () => {
+  const card = await renderComponent('wb-card', {});
+  expect(card.querySelector('.wb-card__header')).toBeFalsy();
+});
+```
+
+### Compliance Tests
+
+Automated tests verify all components meet standards:
+
+- Base class present
+- Proper ARIA attributes
+- Keyboard accessibility
+- Theme compatibility
+
+## Debugging
+
+### Console Logging
+
+```javascript
+WB.init({ debug: true }); // Enable verbose logging
+```
+
+### Inspect Schemas
+
+```javascript
+// Get loaded schema
+const schema = WB.schema.getSchema('card');
+console.log(schema);
+
+// List all schemas
+console.log(WB.schema.registry);
+```
+
+### Check Applied Behaviors
+
+```javascript
+// See what behaviors are on an element
+const card = document.querySelector('wb-card');
+console.log(card.dataset.wbReady); // Lists applied behaviors
+```
+
+## Resources
+
+- [Builder Documentation](/docs/builder.md) - The heart of WB Framework
+- [Behaviors Reference](/docs/behaviors-reference.md) - All 170+ behaviors
+- [Theme System](/docs/themes.md) - 23 themes and customization
+- [Testing Strategy](/docs/testing-strategy.md) - How to test components
+
+## Changelog
+
+### v3.0.0 (Current)
+- Light DOM architecture (no Shadow DOM)
+- Schema-driven DOM generation
+- CSS auto-loading
+- 41+ component schemas
+- 170+ behaviors
+- Cross-browser support
+- Custom Elements Manifest
+
+### v2.x
+- Mixed Shadow/Light DOM
+- Manual DOM construction
+- Behavior-only system
+
+### v1.x
+- Initial behavior injection system

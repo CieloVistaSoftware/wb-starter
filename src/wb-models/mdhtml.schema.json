@@ -39,5 +39,14 @@
   },
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-mdhtml>Basic mdhtml content</wb-mdhtml>",
+      "<wb-mdhtml sanitize>with sanitize</wb-mdhtml>",
+      "<wb-mdhtml gfm>with gfm</wb-mdhtml>",
+      "<wb-mdhtml src=\"Sample src\">src=\"Sample src\"</wb-mdhtml>",
+      "<wb-mdhtml sanitize gfm>Combined: with sanitize, with gfm</wb-mdhtml>"
+    ]
+  }
 }

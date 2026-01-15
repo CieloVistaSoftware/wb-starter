@@ -135,8 +135,14 @@
   },
   "test": {
     "setup": [
-      "<details x-behavior=\"details\" x-summary=\"Click to expand\">Content here</details>",
-      "<details x-behavior=\"details\" x-summary=\"Summary\" x-open=\"true\"><div>Content</div></details>"
+      "<wb-details>Basic details content</wb-details>",
+      "<wb-details variant=\"default\">variant=default</wb-details>",
+      "<wb-details variant=\"bordered\">variant=bordered</wb-details>",
+      "<wb-details variant=\"filled\">variant=filled</wb-details>",
+      "<wb-details open>with open</wb-details>",
+      "<wb-details animated>with animated</wb-details>",
+      "<wb-details summary=\"Sample summary\">summary=\"Sample summary\"</wb-details>",
+      "<wb-details name=\"Sample name\">name=\"Sample name\"</wb-details>"
     ],
     "matrix": {
       "combinations": [

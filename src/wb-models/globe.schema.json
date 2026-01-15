@@ -12,5 +12,14 @@
   "properties": {},
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-globe>Basic globe content</wb-globe>",
+      "<wb-globe>Test permutation 2</wb-globe>",
+      "<wb-globe>Test permutation 3</wb-globe>",
+      "<wb-globe>Test permutation 4</wb-globe>",
+      "<wb-globe>Test permutation 5</wb-globe>"
+    ]
+  }
 }

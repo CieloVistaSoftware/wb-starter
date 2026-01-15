@@ -145,9 +145,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"chip\" data-label=\"Tag\"></div>",
-      "<div x-behavior=\"chip\" data-label=\"Dismissible\" data-dismissible></div>",
-      "<span x-behavior=\"chip\">Tag</span>"
+      "<wb-chip>Basic chip content</wb-chip>",
+      "<wb-chip variant=\"default\">variant=default</wb-chip>",
+      "<wb-chip variant=\"primary\">variant=primary</wb-chip>",
+      "<wb-chip variant=\"success\">variant=success</wb-chip>",
+      "<wb-chip size=\"sm\">size=sm</wb-chip>",
+      "<wb-chip size=\"md\">size=md</wb-chip>",
+      "<wb-chip size=\"lg\">size=lg</wb-chip>",
+      "<wb-chip dismissible>with dismissible</wb-chip>"
     ],
     "matrix": {
       "combinations": [

@@ -150,8 +150,15 @@
   },
   "test": {
     "setup": [
-      "<wb-card-expandable title=\"Details\">Content here</wb-card-expandable>",
-      "<article data-wb=\"cardexpandable\" data-title=\"Test\" data-expanded>Content</article>"
+      "<wb-cardexpandable>Basic cardexpandable content</wb-cardexpandable>",
+      "<wb-cardexpandable variant=\"default\">variant=default</wb-cardexpandable>",
+      "<wb-cardexpandable variant=\"elevated\">variant=elevated</wb-cardexpandable>",
+      "<wb-cardexpandable variant=\"bordered\">variant=bordered</wb-cardexpandable>",
+      "<wb-cardexpandable expanded>with expanded</wb-cardexpandable>",
+      "<wb-cardexpandable title=\"Sample title\">title=\"Sample title\"</wb-cardexpandable>",
+      "<wb-cardexpandable content=\"Sample content\">content=\"Sample content\"</wb-cardexpandable>",
+      "<wb-cardexpandable max-height=\"100px\">maxHeight=\"100px\"</wb-cardexpandable>",
+      "<wb-card-expandable title=\"Details\">Content here</wb-card-expandable>"
     ],
     "matrix": {
       "combinations": [

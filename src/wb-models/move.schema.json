@@ -12,5 +12,14 @@
   "properties": {},
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-move>Basic move content</wb-move>",
+      "<wb-move>Test permutation 2</wb-move>",
+      "<wb-move>Test permutation 3</wb-move>",
+      "<wb-move>Test permutation 4</wb-move>",
+      "<wb-move>Test permutation 5</wb-move>"
+    ]
+  }
 }

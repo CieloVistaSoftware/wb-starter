@@ -17,5 +17,14 @@
   },
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-resizable>Basic resizable content</wb-resizable>",
+      "<wb-resizable handles=\"se\">handles=\"se\"</wb-resizable>",
+      "<wb-resizable>Test permutation 3</wb-resizable>",
+      "<wb-resizable>Test permutation 4</wb-resizable>",
+      "<wb-resizable>Test permutation 5</wb-resizable>"
+    ]
+  }
 }

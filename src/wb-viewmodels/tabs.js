@@ -31,6 +31,10 @@ export function tabs(element, options = {}) {
 
     panelsContainer = document.createElement('div');
     panelsContainer.className = 'wb-tabs__panels';
+    Object.assign(panelsContainer.style, {
+      width: '100%',
+      marginTop: '0.5rem'
+    });
 
     // Process Panels
     originalPanels.forEach((panel, i) => {
@@ -73,7 +77,13 @@ export function tabs(element, options = {}) {
       panelWrapper.dataset.index = i;
       panelWrapper.id = `panel-${i}`;
       panelWrapper.setAttribute('aria-labelledby', `tab-${i}`);
-      panelWrapper.style.display = isActive ? 'block' : 'none';
+      Object.assign(panelWrapper.style, {
+        padding: '1rem',
+        border: '1px solid var(--border-color, #e0e0e0)',
+        borderRadius: '4px',
+        background: 'var(--bg-primary, #fff)',
+        display: isActive ? 'block' : 'none'
+      });
       
       // Move all children of the original panel to the new wrapper
       while (panel.firstChild) {

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "cardportfolio.schema.json",
   "title": "Portfolio Card",
-  "description": "Professional portfolio/profile card with cover, avatar, bio, contact, and social",
+  "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
   "behavior": "cardportfolio",
   "baseClass": "wb-portfolio",
   "semanticElement": {
@@ -22,27 +22,37 @@
     },
     "title": {
       "type": "string",
-      "description": "Job title"
+      "description": "Job title / role"
     },
     "company": {
       "type": "string",
-      "description": "Company name"
+      "description": "Current company name"
     },
     "location": {
       "type": "string",
-      "description": "Location"
+      "description": "Location (city, country)"
     },
     "cover": {
       "type": "string",
-      "description": "Cover image URL"
+      "description": "Cover/banner image URL"
     },
     "avatar": {
       "type": "string",
-      "description": "Avatar image URL"
+      "description": "Profile photo URL"
     },
     "bio": {
       "type": "string",
-      "description": "Biography text"
+      "description": "Short biography / summary"
+    },
+    "tagline": {
+      "type": "string",
+      "description": "Professional tagline or motto"
+    },
+    "availability": {
+      "type": "string",
+      "enum": ["available", "busy", "not-available", "open-to-opportunities"],
+      "default": "available",
+      "description": "Current availability status"
     },
     "email": {
       "type": "string",
@@ -54,21 +64,74 @@
     },
     "website": {
       "type": "string",
-      "description": "Website URL"
+      "description": "Personal website URL"
     },
-    "social": {
+    "linkedin": {
       "type": "string",
-      "description": "Social links as JSON [{name, url, icon}]"
+      "description": "LinkedIn profile URL"
+    },
+    "twitter": {
+      "type": "string",
+      "description": "Twitter/X profile URL"
+    },
+    "github": {
+      "type": "string",
+      "description": "GitHub profile URL"
+    },
+    "dribbble": {
+      "type": "string",
+      "description": "Dribbble profile URL"
+    },
+    "skills": {
+      "type": "string",
+      "description": "Comma-separated list of skills"
+    },
+    "skillLevels": {
+      "type": "string",
+      "description": "JSON array of {name, level (0-100)} for skill bars"
+    },
+    "experience": {
+      "type": "string",
+      "description": "JSON array of {company, role, period, description}"
+    },
+    "education": {
+      "type": "string",
+      "description": "JSON array of {school, degree, year}"
+    },
+    "projects": {
+      "type": "string",
+      "description": "JSON array of {name, description, url, image}"
+    },
+    "certifications": {
+      "type": "string",
+      "description": "Comma-separated list of certifications"
+    },
+    "languages": {
+      "type": "string",
+      "description": "Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)')"
+    },
+    "stats": {
+      "type": "string",
+      "description": "JSON array of {label, value} for stats display"
+    },
+    "cta": {
+      "type": "string",
+      "description": "Call-to-action button text"
+    },
+    "ctaHref": {
+      "type": "string",
+      "description": "Call-to-action button link"
     },
     "variant": {
       "type": "string",
-      "enum": [
-        "default",
-        "compact",
-        "horizontal"
-      ],
+      "enum": ["default", "compact", "horizontal", "full"],
       "default": "default",
       "appliesClass": "wb-portfolio--{{value}}"
+    },
+    "size": {
+      "type": "string",
+      "enum": ["sm", "md", "lg", "xl", "full", "auto"],
+      "default": "auto"
     }
   },
   "$view": [
@@ -77,183 +140,106 @@
       "tag": "figure",
       "public": true,
       "createdWhen": "cover",
-      "description": "Cover image"
-    },
-    {
-      "name": "cover-img",
-      "tag": "img",
-      "parent": "cover",
-      "public": true,
-      "createdWhen": "cover",
-      "description": "Cover image element"
-    },
-    {
-      "name": "avatar-wrapper",
-      "tag": "figure",
-      "public": true,
-      "createdWhen": "avatar",
-      "description": "Avatar container"
-    },
-    {
-      "name": "avatar",
-      "tag": "img",
-      "parent": "avatar-wrapper",
-      "public": true,
-      "createdWhen": "avatar",
-      "description": "Avatar image"
+      "description": "Cover/banner image"
     },
     {
       "name": "header",
       "tag": "header",
       "public": true,
       "required": true,
-      "description": "Identity section"
+      "description": "Identity section with avatar, name, title"
     },
     {
-      "name": "name",
-      "tag": "h2",
-      "parent": "header",
+      "name": "main",
+      "tag": "main",
       "public": true,
-      "content": "{{name}}",
-      "description": "Full name"
+      "required": true,
+      "description": "Main content area"
     },
     {
-      "name": "title",
-      "tag": "p",
-      "parent": "header",
-      "public": true,
-      "content": "{{title}}",
-      "createdWhen": "title",
-      "description": "Job title"
-    },
-    {
-      "name": "company",
-      "tag": "p",
-      "parent": "header",
-      "public": true,
-      "content": "{{company}}",
-      "createdWhen": "company",
-      "description": "Company"
-    },
-    {
-      "name": "location",
-      "tag": "p",
-      "parent": "header",
-      "public": true,
-      "content": "{{location}}",
-      "createdWhen": "location",
-      "description": "Location"
-    },
-    {
-      "name": "bio",
-      "tag": "p",
-      "public": true,
-      "content": "{{bio}}",
+      "name": "bio-section",
+      "tag": "section",
+      "parent": "main",
       "createdWhen": "bio",
-      "description": "Biography"
+      "description": "Biography section"
+    },
+    {
+      "name": "skills-section",
+      "tag": "section",
+      "parent": "main",
+      "createdWhen": "skills OR skillLevels",
+      "description": "Skills section"
+    },
+    {
+      "name": "experience-section",
+      "tag": "section",
+      "parent": "main",
+      "createdWhen": "experience",
+      "description": "Work experience section"
+    },
+    {
+      "name": "education-section",
+      "tag": "section",
+      "parent": "main",
+      "createdWhen": "education",
+      "description": "Education section"
+    },
+    {
+      "name": "projects-section",
+      "tag": "section",
+      "parent": "main",
+      "createdWhen": "projects",
+      "description": "Projects showcase section"
+    },
+    {
+      "name": "stats-section",
+      "tag": "section",
+      "parent": "main",
+      "createdWhen": "stats",
+      "description": "Stats/metrics section"
     },
     {
       "name": "contact",
       "tag": "address",
       "public": true,
       "createdWhen": "email OR phone OR website",
-      "description": "Contact info (semantic address)"
+      "description": "Contact information"
     },
     {
       "name": "social",
       "tag": "nav",
       "public": true,
-      "createdWhen": "social",
-      "description": "Social links (semantic nav)"
+      "createdWhen": "linkedin OR twitter OR github OR dribbble",
+      "description": "Social media links"
+    },
+    {
+      "name": "footer",
+      "tag": "footer",
+      "public": true,
+      "createdWhen": "cta",
+      "description": "Footer with CTA"
     }
   ],
   "$methods": {
-    "show": {
-      "description": "Shows the card",
-      "params": []
-    },
-    "hide": {
-      "description": "Hides the card",
-      "params": []
-    },
-    "toggle": {
-      "description": "Toggles visibility",
-      "params": []
-    }
+    "show": { "description": "Shows the card", "params": [] },
+    "hide": { "description": "Hides the card", "params": [] },
+    "toggle": { "description": "Toggles visibility", "params": [] },
+    "setAvailability": { "description": "Updates availability status", "params": ["status"] }
   },
   "$cssAPI": {
-    "--wb-portfolio-radius": {
-      "default": "8px",
-      "description": "Card border radius"
-    },
-    "--wb-portfolio-bg": {
-      "default": "var(--bg-surface, #ffffff)",
-      "description": "Card background"
-    },
-    "--wb-portfolio-cover-height": {
-      "default": "150px",
-      "description": "Cover image height"
-    },
-    "--wb-portfolio-avatar-size": {
-      "default": "80px",
-      "description": "Avatar size"
-    },
-    "--wb-portfolio-avatar-border": {
-      "default": "3px solid var(--bg-surface, #ffffff)",
-      "description": "Avatar border"
-    },
-    "--wb-portfolio-name-size": {
-      "default": "1.25rem",
-      "description": "Name font size"
-    },
-    "--wb-portfolio-name-weight": {
-      "default": "700",
-      "description": "Name font weight"
-    },
-    "--wb-portfolio-title-size": {
-      "default": "0.875rem",
-      "description": "Title font size"
-    },
-    "--wb-portfolio-title-color": {
-      "default": "var(--text-secondary, #666)",
-      "description": "Title color"
-    },
-    "--wb-portfolio-bio-size": {
-      "default": "0.875rem",
-      "description": "Bio font size"
-    },
-    "--wb-portfolio-social-gap": {
-      "default": "0.5rem",
-      "description": "Gap between social icons"
-    }
+    "--wb-portfolio-radius": { "default": "12px", "description": "Card border radius" },
+    "--wb-portfolio-bg": { "default": "var(--bg-secondary)", "description": "Card background" },
+    "--wb-portfolio-cover-height": { "default": "150px", "description": "Cover image height" },
+    "--wb-portfolio-avatar-size": { "default": "120px", "description": "Avatar size" },
+    "--wb-portfolio-avatar-border": { "default": "4px solid var(--bg-secondary)", "description": "Avatar border" },
+    "--wb-portfolio-section-gap": { "default": "1.5rem", "description": "Gap between sections" }
   },
   "test": {
     "setup": [
-      "<wb-portfolio name=\"John Doe\"></wb-portfolio>",
-      "<wb-portfolio name=\"Jane\" title=\"Designer\" avatar=\"avatar.jpg\"></wb-portfolio>",
-      "<article data-wb=\"cardportfolio\" data-name=\"Test\"></article>"
-    ],
-    "matrix": {
-      "combinations": [
-        {
-          "name": "John Doe"
-        },
-        {
-          "name": "John Doe",
-          "title": "Developer"
-        },
-        {
-          "name": "John Doe",
-          "avatar": "avatar.jpg",
-          "bio": "Short bio"
-        },
-        {
-          "name": "John Doe",
-          "email": "john@test.com",
-          "website": "https://john.com"
-        }
-      ]
-    }
+      "<wb-cardportfolio name=\"John Doe\"></wb-cardportfolio>",
+      "<wb-cardportfolio name=\"Jane Smith\" title=\"Designer\" skills=\"UI/UX,Figma,CSS\"></wb-cardportfolio>",
+      "<wb-cardportfolio name=\"Dev\" variant=\"full\" experience='[{\"company\":\"ACME\",\"role\":\"Engineer\"}]'></wb-cardportfolio>"
+    ]
   },
   "_metadata": {
     "category": "cards",

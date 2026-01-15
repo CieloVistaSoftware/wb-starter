@@ -190,10 +190,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"alert\" data-message=\"Info alert\"></div>",
-      "<div x-behavior=\"alert\" data-variant=\"success\" data-title=\"Success\" data-message=\"Done!\"></div>",
-      "<div x-behavior=\"alert\" data-variant=\"error\" data-message=\"Error\" data-dismissible></div>",
-      "<div x-behavior=\"alert\" data-message=\"Info alert\"></div>"
+      "<wb-alert>Basic alert content</wb-alert>",
+      "<wb-alert variant=\"info\">variant=info</wb-alert>",
+      "<wb-alert variant=\"success\">variant=success</wb-alert>",
+      "<wb-alert variant=\"warning\">variant=warning</wb-alert>",
+      "<wb-alert dismissible>with dismissible</wb-alert>",
+      "<wb-alert title=\"Sample title\">title=\"Sample title\"</wb-alert>",
+      "<wb-alert message=\"Sample message\">message=\"Sample message\"</wb-alert>",
+      "<wb-alert icon=\"Sample icon\">icon=\"Sample icon\"</wb-alert>"
     ],
     "matrix": {
       "combinations": [

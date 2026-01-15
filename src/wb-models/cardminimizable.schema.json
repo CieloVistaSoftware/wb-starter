@@ -120,8 +120,14 @@
   },
   "test": {
     "setup": [
-      "<wb-card-minimizable title=\"Panel\">Content</wb-card-minimizable>",
-      "<article data-wb=\"cardminimizable\" data-title=\"Test\" data-minimized>Content</article>"
+      "<wb-cardminimizable>Basic cardminimizable content</wb-cardminimizable>",
+      "<wb-cardminimizable variant=\"default\">variant=default</wb-cardminimizable>",
+      "<wb-cardminimizable variant=\"elevated\">variant=elevated</wb-cardminimizable>",
+      "<wb-cardminimizable variant=\"bordered\">variant=bordered</wb-cardminimizable>",
+      "<wb-cardminimizable minimized>with minimized</wb-cardminimizable>",
+      "<wb-cardminimizable title=\"Sample title\">title=\"Sample title\"</wb-cardminimizable>",
+      "<wb-cardminimizable content=\"Sample content\">content=\"Sample content\"</wb-cardminimizable>",
+      "<wb-card-minimizable title=\"Panel\">Content</wb-card-minimizable>"
     ],
     "matrix": {
       "combinations": [

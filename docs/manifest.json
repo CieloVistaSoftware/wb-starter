@@ -7,6 +7,11 @@
       "icon": "🏗️",
       "docs": [
         {
+          "file": "builder.md",
+          "title": "WB Builder",
+          "description": "The heart of WB Framework - Schema-driven architecture explained"
+        },
+        {
           "file": "architecture.md",
           "title": "System Architecture",
           "description": "Overview of the WB system design"

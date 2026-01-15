@@ -79,6 +79,14 @@
   },
   "test": {
     "setup": [
+      "<wb-articles>Basic articles content</wb-articles>",
+      "<wb-articles layout=\"grid\">layout=grid</wb-articles>",
+      "<wb-articles layout=\"list\">layout=list</wb-articles>",
+      "<wb-articles layout=\"masonry\">layout=masonry</wb-articles>",
+      "<wb-articles pagination>with pagination</wb-articles>",
+      "<wb-articles columns=\"3\">columns=3</wb-articles>",
+      "<wb-articles limit=\"10\">limit=10</wb-articles>",
+      "<wb-articles source=\"Sample source\">source=\"Sample source\"</wb-articles>",
       "<wb-articles layout=\"grid\"><wb-article title=\"1\"></wb-article><wb-article title=\"2\"></wb-article></wb-articles>"
     ],
     "matrix": {

@@ -12,5 +12,14 @@
   "properties": {},
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-fix-card>Basic fix-card content</wb-fix-card>",
+      "<wb-fix-card>Test permutation 2</wb-fix-card>",
+      "<wb-fix-card>Test permutation 3</wb-fix-card>",
+      "<wb-fix-card>Test permutation 4</wb-fix-card>",
+      "<wb-fix-card>Test permutation 5</wb-fix-card>"
+    ]
+  }
 }

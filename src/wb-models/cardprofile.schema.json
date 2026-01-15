@@ -4,7 +4,6 @@
   "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
   "behavior": "cardprofile",
   "baseClass": "wb-card",
-  
   "$extends": "card.base.schema.json",
   "$inheritance": {
     "type": "IS-A",
@@ -15,7 +14,6 @@
       "accessibility"
     ]
   },
-  
   "properties": {
     "name": {
       "type": "string",
@@ -45,14 +43,21 @@
     "size": {
       "type": "string",
       "description": "Avatar size",
-      "enum": ["sm", "md", "lg"],
+      "enum": [
+        "sm",
+        "md",
+        "lg"
+      ],
       "default": "md",
       "inputType": "select"
     },
     "align": {
       "type": "string",
       "description": "Content alignment",
-      "enum": ["left", "center"],
+      "enum": [
+        "left",
+        "center"
+      ],
       "default": "center",
       "inputType": "select"
     },
@@ -63,7 +68,6 @@
       "appliesAttribute": "title"
     }
   },
-  
   "$view": [
     {
       "name": "cover",
@@ -71,7 +75,12 @@
       "class": "wb-card__profile-cover",
       "createdWhen": "cover",
       "children": [
-        { "name": "cover-img", "tag": "img", "src": "{{cover}}", "alt": "" }
+        {
+          "name": "cover-img",
+          "tag": "img",
+          "src": "{{cover}}",
+          "alt": ""
+        }
       ]
     },
     {
@@ -115,7 +124,6 @@
       "createdWhen": "bio"
     }
   ],
-  
   "$methods": {
     "show": {
       "description": "Shows the card",
@@ -127,23 +135,24 @@
     },
     "update": {
       "description": "Updates profile properties",
-      "params": ["options"]
+      "params": [
+        "options"
+      ]
     }
   },
-  
   "compliance": {
     "$inherits": "card.base.schema.json#compliance",
     "baseClass": "wb-card",
-    "additionalClasses": ["wb-card--profile"]
+    "additionalClasses": [
+      "wb-card--profile"
+    ]
   },
-  
   "accessibility": {
     "$inherits": "card.base.schema.json#accessibility",
     "avatar": {
       "alt": "Profile photo of {name}"
     }
   },
-  
   "$cssAPI": {
     "--bg-secondary": {
       "description": "Avatar border color"
@@ -155,27 +164,63 @@
       "description": "Bio text color"
     }
   },
-  
   "test": {
     "setup": [
-      "<article data-wb=\"cardprofile\" data-name=\"John Doe\"></article>",
+      "<wb-cardprofile>Basic cardprofile content</wb-cardprofile>",
+      "<wb-cardprofile size=\"sm\">size=sm</wb-cardprofile>",
+      "<wb-cardprofile size=\"md\">size=md</wb-cardprofile>",
+      "<wb-cardprofile size=\"lg\">size=lg</wb-cardprofile>",
+      "<wb-cardprofile align=\"left\">align=left</wb-cardprofile>",
+      "<wb-cardprofile align=\"center\">align=center</wb-cardprofile>",
+      "<wb-cardprofile name=\"John Doe\">name=\"John Doe\"</wb-cardprofile>",
+      "<wb-cardprofile role=\"Designer\">role=\"Designer\"</wb-cardprofile>",
       "<wb-card-profile name=\"Jane\" role=\"Designer\" avatar=\"https://i.pravatar.cc/80\"></wb-card-profile>"
     ],
     "matrix": {
       "combinations": [
-        { "name": "John Doe" },
-        { "name": "John Doe", "role": "Developer" },
-        { "name": "John Doe", "avatar": "https://i.pravatar.cc/80" },
-        { "name": "John Doe", "bio": "Short bio." },
-        { "name": "John Doe", "cover": "https://picsum.photos/400/100" },
-        { "name": "John Doe", "size": "sm" },
-        { "name": "John Doe", "size": "lg" },
-        { "name": "John Doe", "align": "left" },
-        { "name": "Full", "role": "CEO", "avatar": "https://i.pravatar.cc/80", "bio": "Leader.", "cover": "https://picsum.photos/400/100", "size": "lg", "align": "center" }
+        {
+          "name": "John Doe"
+        },
+        {
+          "name": "John Doe",
+          "role": "Developer"
+        },
+        {
+          "name": "John Doe",
+          "avatar": "https://i.pravatar.cc/80"
+        },
+        {
+          "name": "John Doe",
+          "bio": "Short bio."
+        },
+        {
+          "name": "John Doe",
+          "cover": "https://picsum.photos/400/100"
+        },
+        {
+          "name": "John Doe",
+          "size": "sm"
+        },
+        {
+          "name": "John Doe",
+          "size": "lg"
+        },
+        {
+          "name": "John Doe",
+          "align": "left"
+        },
+        {
+          "name": "Full",
+          "role": "CEO",
+          "avatar": "https://i.pravatar.cc/80",
+          "bio": "Leader.",
+          "cover": "https://picsum.photos/400/100",
+          "size": "lg",
+          "align": "center"
+        }
       ]
     }
   },
-  
   "builder": {
     "category": "Cards",
     "icon": "👨",

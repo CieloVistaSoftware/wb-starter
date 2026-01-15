@@ -56,7 +56,7 @@ const VAR_PRIMARY = 'var(--primary,#6366f1)';
 
 // Common Component Styles
 const STYLE_HEADER = `padding:1rem;border-bottom:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;`;
-const STYLE_FOOTER = `padding:0.75rem 1rem;border-top:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
+const STYLE_FOOTER = `padding:1rem;border-top:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
 const STYLE_MAIN = `padding:1rem;flex:1;color:${VAR_TEXT_PRIMARY};`;
 const STYLE_TITLE = `margin:0;font-size:1.1rem;font-weight:600;color:${VAR_TEXT_PRIMARY};`;
 const STYLE_SUBTITLE = `margin:0.25rem 0 0;font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
@@ -97,6 +97,7 @@ export function cardBase(element, options = {}) {
     clickable: parseBoolean(options.clickable) ?? (element.dataset.clickable === 'true' || (element.hasAttribute('data-clickable') && element.dataset.clickable !== 'false') || element.hasAttribute('clickable')),
     hoverable: parseBoolean(options.hoverable) ?? (element.dataset.hoverable !== 'false'),
     elevated: parseBoolean(options.elevated) ?? (element.dataset.elevated === 'true' || (element.hasAttribute('data-elevated') && element.dataset.elevated !== 'false') || element.hasAttribute('elevated')),
+    size: options.size || element.dataset.size || element.getAttribute('size') || 'auto',
     hoverText: options.hoverText || element.dataset.hoverText || '',
     onClick: options.onClick || element.dataset.onClick || '',
     dataContext: options.dataContext || element.dataset.dataContext || '{}',
@@ -163,6 +164,12 @@ export function cardBase(element, options = {}) {
   // Variant class
   if (config.variant !== 'default') {
     element.classList.add(`wb-card--${config.variant}`);
+  }
+  
+  // Size class
+  // Only add valid size classes (e.g., 'sm', 'md', 'lg')
+  if (config.size && ['sm','md','lg','xl'].includes(config.size)) {
+    element.classList.add(`wb-card--${config.size}`);
   }
   
   // Elevated - lighter background to appear raised
@@ -509,7 +516,7 @@ export function cardBase(element, options = {}) {
     // Cleanup function
     cleanup: () => {
       element.classList.remove('wb-card', `wb-card--${config.behavior.replace('card', '')}`,
-        `wb-card--${config.variant}`, 'wb-card--hoverable', 'wb-card--elevated', 
+        `wb-card--${config.variant}`, `wb-card--${config.size}`, 'wb-card--hoverable', 'wb-card--elevated', 
         'wb-card--clickable', 'wb-card--active');
       if (config.hoverable) {
         element.removeEventListener('mouseenter', hoverEnter);
@@ -675,11 +682,11 @@ export function cardvideo(element, options = {}) {
       warning.className = 'wb-card__video-warning';
       warning.style.cssText = 'display:none;'; // Hidden but present for tests/SR
       warning.textContent = 'Video missing captions';
-      figure.appendChild(warning);
+      coverFigure.appendChild(warning);
     }
 
-    figure.appendChild(video);
-    element.insertBefore(figure, element.firstChild);
+    coverFigure.appendChild(video);
+    element.insertBefore(coverFigure, element.firstChild);
   }
 
   return base.cleanup;
@@ -765,11 +772,6 @@ export function cardhero(element, options = {}) {
     // Fallback to data-slot
     if (!slotEl) slotEl = element.querySelector(`[data-slot="${slotName}"]`);
     
-    // Helper Log
-    if (!slotEl && element.tagName === 'WB-CARDHERO' && slotName === 'title') {
-      console.log('WB-CARDHERO: Title slot NOT FOUND. Current HTML:', element.innerHTML.substring(0, 150));
-    }
-
     if (slotEl) {
       slots[slotName] = slotEl.cloneNode(true);
       // Remove slot attribute for cleaner DOM in result
@@ -1304,7 +1306,7 @@ export function cardproduct(element, options = {}) {
   }
 
   // Price
-  const priceWrapper = document.createElement('div');
+  const priceWrap = document.createElement('div');
   priceWrap.className = 'wb-card__price-wrap';
   priceWrap.style.cssText = 'margin:0.75rem 0;display:flex;align-items:center;gap:0.5rem;';
 
@@ -1365,19 +1367,23 @@ export function cardnotification(element, options = {}) {
     ...options
   };
 
-  const icons = { info: 'ℹ️', success: '✅', warning: '⚠️', error: '❌' };
+  const icons = { info: 'ℹ️', success: '✅', warning: '⚠️', error: '❌', primary: '🔵', secondary: '⚪' };
   const colors = { 
     info: 'var(--info, #3b82f6)', 
     success: 'var(--success, #22c55e)', 
     warning: 'var(--warning, #f59e0b)', 
-    error: 'var(--error, #ef4444)' 
+    error: 'var(--error, #ef4444)',
+    primary: 'var(--primary, #6366f1)',
+    secondary: 'var(--text-secondary, #6b7280)'
   };
   // Use CSS variables for backgrounds if possible, or fallback to rgba
   const bgColors = { 
     info: 'var(--bg-info-subtle, rgba(59,130,246,0.15))', 
     success: 'var(--bg-success-subtle, rgba(34,197,94,0.15))', 
     warning: 'var(--bg-warning-subtle, rgba(245,158,11,0.15))', 
-    error: 'var(--bg-error-subtle, rgba(239,68,68,0.15))' 
+    error: 'var(--bg-error-subtle, rgba(239,68,68,0.15))',
+    primary: 'var(--bg-primary-subtle, rgba(99,102,241,0.15))',
+    secondary: 'var(--bg-secondary-subtle, rgba(107,114,128,0.15))'
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardnotification', hoverable: false });
@@ -1585,7 +1591,7 @@ export function cardlink(element, options = {}) {
   // Description (subtitle or description)
   const desc = config.description || base.config.subtitle;
   if (desc) {
-    const descriptionEl = document.createElement('p');
+    const descEl = document.createElement('p');
     descEl.className = 'wb-card__description';
     descEl.style.cssText = 'margin:0.5rem 0 0;font-size:0.875rem;color:var(--text-secondary,#9ca3af);line-height:1.5;';
     descEl.textContent = desc;
@@ -1806,7 +1812,7 @@ export function cardexpandable(element, options = {}) {
   btnWrap.className = 'wb-card__footer';
   btnWrap.style.cssText = 'padding:0.75rem 1rem;border-top:1px solid var(--border-color,#374151);';
 
-  const button = document.createElement('button');
+  const btn = document.createElement('button');
   btn.className = 'wb-card__expand-btn';
   btn.style.cssText = 'width:100%;padding:0.5rem;background:var(--bg-tertiary,#374151);border:none;border-radius:6px;color:var(--text-primary,#f9fafb);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;';
   btn.setAttribute('aria-expanded', config.expanded);
@@ -1893,7 +1899,7 @@ export function cardminimizable(element, options = {}) {
   element.innerHTML = '';
 
   // Header with minimize button
-  const headerSection = document.createElement('header');
+  const header = document.createElement('header');
   header.className = 'wb-card__header';
   header.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);display:flex;align-items:center;gap:0.75rem;';
 
@@ -1938,7 +1944,7 @@ export function cardminimizable(element, options = {}) {
   let isMinimized = config.minimized;
   if (isMinimized) element.classList.add('wb-card--minimized');
 
-  const toggleBtn = () => {
+  const toggle = () => {
     isMinimized = !isMinimized;
     content.style.maxHeight = isMinimized ? '0' : '1000px';
     content.style.padding = isMinimized ? '0 1rem' : '1rem';
@@ -1949,9 +1955,9 @@ export function cardminimizable(element, options = {}) {
     element.classList.toggle('wb-card--minimized', isMinimized);
     
     // Update footer visibility if it exists
-    const footer = element.querySelector('.wb-card__footer');
-    if (footer) {
-      footer.style.display = isMinimized ? 'none' : '';
+    const footerEl = element.querySelector('.wb-card__footer');
+    if (footerEl) {
+      footerEl.style.display = isMinimized ? 'none' : '';
     }
 
     element.dispatchEvent(new CustomEvent('wb:cardminimizable:toggle', { 
@@ -2157,157 +2163,530 @@ export function carddraggable(element, options = {}) {
 }
 
 // ============================================
-// PORTFOLIO CARD
-// Custom Tag: <card-portfolio>
+// PORTFOLIO CARD - FULL-FEATURED
+// Custom Tag: <wb-cardportfolio>
 // ============================================
 export function cardportfolio(element, options = {}) {
+  // Parse JSON attributes safely
+  const parseJSON = (val) => {
+    if (!val) return null;
+    try { return JSON.parse(val); } catch { return null; }
+  };
+
   const config = {
-    name: options.name || element.dataset.name,
-    title: options.title || element.dataset.title,
-    company: options.company || element.dataset.company,
-    email: options.email || element.dataset.email,
-    phone: options.phone || element.dataset.phone,
-    website: options.website || element.dataset.website,
-    linkedin: options.linkedin || element.dataset.linkedin,
-    twitter: options.twitter || element.dataset.twitter,
-    github: options.github || element.dataset.github,
-    avatar: options.avatar || element.dataset.avatar,
-    cover: options.cover || element.dataset.cover,
-    bio: options.bio || element.dataset.bio,
-    location: options.location || element.dataset.location,
+    // Identity
+    name: options.name || element.dataset.name || element.getAttribute('name'),
+    title: options.title || element.dataset.title || element.getAttribute('title'),
+    company: options.company || element.dataset.company || element.getAttribute('company'),
+    location: options.location || element.dataset.location || element.getAttribute('location'),
+    tagline: options.tagline || element.dataset.tagline || element.getAttribute('tagline'),
+    availability: options.availability || element.dataset.availability || element.getAttribute('availability') || 'available',
+    
+    // Media
+    avatar: options.avatar || element.dataset.avatar || element.getAttribute('avatar'),
+    cover: options.cover || element.dataset.cover || element.getAttribute('cover'),
+    bio: options.bio || element.dataset.bio || element.getAttribute('bio'),
+    
+    // Contact
+    email: options.email || element.dataset.email || element.getAttribute('email'),
+    phone: options.phone || element.dataset.phone || element.getAttribute('phone'),
+    website: options.website || element.dataset.website || element.getAttribute('website'),
+    
+    // Social
+    linkedin: options.linkedin || element.dataset.linkedin || element.getAttribute('linkedin'),
+    twitter: options.twitter || element.dataset.twitter || element.getAttribute('twitter'),
+    github: options.github || element.dataset.github || element.getAttribute('github'),
+    dribbble: options.dribbble || element.dataset.dribbble || element.getAttribute('dribbble'),
+    
+    // Skills & Experience
+    skills: options.skills || element.dataset.skills || element.getAttribute('skills'),
+    skillLevels: parseJSON(options.skillLevels || element.dataset.skillLevels || element.getAttribute('skill-levels')),
+    experience: parseJSON(options.experience || element.dataset.experience || element.getAttribute('experience')),
+    education: parseJSON(options.education || element.dataset.education || element.getAttribute('education')),
+    projects: parseJSON(options.projects || element.dataset.projects || element.getAttribute('projects')),
+    certifications: options.certifications || element.dataset.certifications || element.getAttribute('certifications'),
+    languages: options.languages || element.dataset.languages || element.getAttribute('languages'),
+    stats: parseJSON(options.stats || element.dataset.stats || element.getAttribute('stats')),
+    
+    // CTA
+    cta: options.cta || element.dataset.cta || element.getAttribute('cta'),
+    ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href'),
+    
+    // Variant
+    variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
+    size: options.size || element.dataset.size || element.getAttribute('size') || 'auto',
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardportfolio', hoverable: false });
   element.classList.add('wb-portfolio');
+  if (config.variant !== 'default') {
+    element.classList.add(`wb-portfolio--${config.variant}`);
+  }
   element.innerHTML = '';
-  element.style.maxWidth = '400px';
-
-  // Cover
-  if (config.cover) {
-    const coverFigure = base.createFigure();
-    coverFig.className = 'wb-card__figure wb-card__portfolio-cover';
-    coverFig.style.cssText = `margin:0;height:120px;background-image:url(${config.cover});background-size:cover;background-position:center;`;
-    element.appendChild(coverFig);
+  
+  // Size handling
+  if (config.variant === 'full') {
+    element.style.maxWidth = '800px';
+  } else if (config.size === 'auto') {
+    element.style.maxWidth = '400px';
   }
 
-  // Profile section
-  const profile = document.createElement('header');
-  profile.style.cssText = `text-align:center;padding:1.5rem;${config.cover ? 'margin-top:-50px;' : ''}`;
+  // Availability colors
+  const availabilityConfig = {
+    'available': { color: '#22c55e', label: 'Available for work', icon: '🟢' },
+    'busy': { color: '#f59e0b', label: 'Currently busy', icon: '🟡' },
+    'not-available': { color: '#ef4444', label: 'Not available', icon: '🔴' },
+    'open-to-opportunities': { color: '#3b82f6', label: 'Open to opportunities', icon: '🔵' }
+  };
 
+  // ==================== COVER ====================
+  if (config.cover) {
+    const coverFigure = document.createElement('figure');
+    coverFigure.className = 'wb-portfolio__cover';
+    coverFigure.style.cssText = `margin:0;height:150px;background-image:url(${config.cover});background-size:cover;background-position:center;position:relative;`;
+    element.appendChild(coverFigure);
+  }
+
+  // ==================== HEADER ====================
+  const header = document.createElement('header');
+  header.className = 'wb-portfolio__header';
+  header.style.cssText = `text-align:center;padding:1.5rem;${config.cover ? 'margin-top:-60px;' : ''}`;
+
+  // Avatar
   if (config.avatar) {
-    const profileAvatar = document.createElement('img');
-    avatarImg.className = 'wb-card__portfolio-avatar';
+    const avatarWrap = document.createElement('figure');
+    avatarWrap.className = 'wb-portfolio__avatar-wrap';
+    avatarWrap.style.cssText = 'margin:0 auto;position:relative;display:inline-block;';
+    
+    const avatarImg = document.createElement('img');
+    avatarImg.className = 'wb-portfolio__avatar';
     avatarImg.src = config.avatar;
     avatarImg.alt = config.name || 'Avatar';
-    avatarImg.style.cssText = 'width:100px;height:100px;border-radius:50%;border:4px solid var(--bg-secondary,#1f2937);object-fit:cover;';
-    profile.appendChild(avatarImg);
+    avatarImg.style.cssText = 'width:120px;height:120px;border-radius:50%;border:4px solid var(--bg-secondary,#1f2937);object-fit:cover;display:block;';
+    avatarWrap.appendChild(avatarImg);
+
+    // Availability indicator
+    if (config.availability && availabilityConfig[config.availability]) {
+      const availDot = document.createElement('span');
+      availDot.className = 'wb-portfolio__availability';
+      availDot.title = availabilityConfig[config.availability].label;
+      availDot.style.cssText = `position:absolute;bottom:8px;right:8px;width:24px;height:24px;border-radius:50%;background:${availabilityConfig[config.availability].color};border:3px solid var(--bg-secondary,#1f2937);cursor:help;`;
+      avatarWrap.appendChild(availDot);
+    }
+    
+    header.appendChild(avatarWrap);
   }
 
+  // Name
   if (config.name) {
-    const profileName = document.createElement('h2');
-    nameEl.className = 'wb-card__portfolio-name';
-    nameEl.style.cssText = 'margin:1rem 0 0;font-size:1.5rem;color:var(--text-primary,#f9fafb);';
+    const nameEl = document.createElement('h2');
+    nameEl.className = 'wb-portfolio__name';
+    nameEl.style.cssText = 'margin:1rem 0 0;font-size:1.75rem;font-weight:700;color:var(--text-primary,#f9fafb);';
     nameEl.textContent = config.name;
-    profile.appendChild(nameEl);
+    header.appendChild(nameEl);
   }
 
+  // Title & Company
   if (config.title) {
-    const cardTitle = document.createElement('p');
-    titleEl.className = 'wb-card__portfolio-title';
-    titleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--primary,#6366f1);font-weight:500;';
-    titleEl.textContent = config.title;
-    profile.appendChild(titleEl);
-  }
-
-  if (config.company) {
+    const titleEl = document.createElement('p');
+    titleEl.className = 'wb-portfolio__title';
+    titleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--primary,#6366f1);font-weight:600;font-size:1.1rem;';
+    titleEl.textContent = config.title + (config.company ? ` at ${config.company}` : '');
+    header.appendChild(titleEl);
+  } else if (config.company) {
     const companyEl = document.createElement('p');
-    companyEl.className = 'wb-card__portfolio-company';
+    companyEl.className = 'wb-portfolio__company';
     companyEl.style.cssText = 'margin:0.25rem 0 0;color:var(--text-secondary,#9ca3af);';
     companyEl.textContent = config.company;
-    profile.appendChild(companyEl);
+    header.appendChild(companyEl);
   }
 
+  // Location
   if (config.location) {
     const locEl = document.createElement('p');
-    locEl.className = 'wb-card__portfolio-location';
+    locEl.className = 'wb-portfolio__location';
     locEl.style.cssText = 'margin:0.5rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.9rem;';
     locEl.textContent = `📍 ${config.location}`;
-    profile.appendChild(locEl);
+    header.appendChild(locEl);
   }
 
+  // Tagline
+  if (config.tagline) {
+    const tagEl = document.createElement('p');
+    tagEl.className = 'wb-portfolio__tagline';
+    tagEl.style.cssText = 'margin:0.75rem 0 0;color:var(--text-secondary,#9ca3af);font-style:italic;font-size:0.95rem;';
+    tagEl.textContent = `"${config.tagline}"`;
+    header.appendChild(tagEl);
+  }
+
+  element.appendChild(header);
+
+  // ==================== MAIN CONTENT ====================
+  const main = document.createElement('main');
+  main.className = 'wb-portfolio__main';
+  main.style.cssText = 'padding:0 1.5rem 1.5rem;';
+
+  // Bio Section
   if (config.bio) {
-    const profileBio = document.createElement('p');
-    bioEl.className = 'wb-card__portfolio-bio';
-    bioEl.style.cssText = 'margin:1rem 0 0;color:var(--text-primary,#f9fafb);font-size:0.9rem;line-height:1.6;';
-    bioEl.textContent = config.bio;
-    profile.appendChild(bioEl);
+    const bioSection = document.createElement('section');
+    bioSection.className = 'wb-portfolio__bio';
+    bioSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const bioText = document.createElement('p');
+    bioText.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);font-size:0.95rem;line-height:1.7;';
+    bioText.textContent = config.bio;
+    bioSection.appendChild(bioText);
+    main.appendChild(bioSection);
   }
 
-  element.appendChild(profile);
+  // Stats Section
+  if (config.stats && config.stats.length > 0) {
+    const statsSection = document.createElement('section');
+    statsSection.className = 'wb-portfolio__stats';
+    statsSection.style.cssText = 'display:flex;justify-content:space-around;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:8px;margin-bottom:1.5rem;';
+    
+    config.stats.forEach(stat => {
+      const statItem = document.createElement('div');
+      statItem.style.cssText = 'text-align:center;';
+      
+      const valueEl = document.createElement('div');
+      valueEl.style.cssText = 'font-size:1.5rem;font-weight:700;color:var(--primary,#6366f1);';
+      valueEl.textContent = stat.value;
+      statItem.appendChild(valueEl);
+      
+      const labelEl = document.createElement('div');
+      labelEl.style.cssText = 'font-size:0.8rem;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+      labelEl.textContent = stat.label;
+      statItem.appendChild(labelEl);
+      
+      statsSection.appendChild(statItem);
+    });
+    main.appendChild(statsSection);
+  }
 
-  // Contact info
+  // Skills Section
+  if (config.skills || config.skillLevels) {
+    const skillsSection = document.createElement('section');
+    skillsSection.className = 'wb-portfolio__skills';
+    skillsSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const skillsTitle = document.createElement('h3');
+    skillsTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    skillsTitle.textContent = '🛠️ Skills';
+    skillsSection.appendChild(skillsTitle);
+
+    // Skill pills (from comma-separated string)
+    if (config.skills) {
+      const skillPills = document.createElement('div');
+      skillPills.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;';
+      
+      config.skills.split(',').forEach(skill => {
+        const pill = document.createElement('span');
+        pill.style.cssText = 'padding:0.35rem 0.75rem;background:var(--bg-tertiary,#374151);color:var(--text-primary,#f9fafb);border-radius:999px;font-size:0.85rem;';
+        pill.textContent = skill.trim();
+        skillPills.appendChild(pill);
+      });
+      skillsSection.appendChild(skillPills);
+    }
+
+    // Skill bars (from JSON array)
+    if (config.skillLevels && config.skillLevels.length > 0) {
+      const skillBars = document.createElement('div');
+      skillBars.style.cssText = 'margin-top:0.75rem;';
+      
+      config.skillLevels.forEach(skill => {
+        const skillRow = document.createElement('div');
+        skillRow.style.cssText = 'margin-bottom:0.5rem;';
+        
+        const skillHeader = document.createElement('div');
+        skillHeader.style.cssText = 'display:flex;justify-content:space-between;margin-bottom:0.25rem;font-size:0.85rem;';
+        skillHeader.innerHTML = `<span style="color:var(--text-primary,#f9fafb);">${skill.name}</span><span style="color:var(--text-secondary,#9ca3af);">${skill.level}%</span>`;
+        skillRow.appendChild(skillHeader);
+        
+        const barBg = document.createElement('div');
+        barBg.style.cssText = 'height:6px;background:var(--bg-tertiary,#374151);border-radius:3px;overflow:hidden;';
+        
+        const barFill = document.createElement('div');
+        barFill.style.cssText = `width:${skill.level}%;height:100%;background:var(--primary,#6366f1);border-radius:3px;transition:width 0.5s ease;`;
+        barBg.appendChild(barFill);
+        skillRow.appendChild(barBg);
+        
+        skillBars.appendChild(skillRow);
+      });
+      skillsSection.appendChild(skillBars);
+    }
+    
+    main.appendChild(skillsSection);
+  }
+
+  // Experience Section
+  if (config.experience && config.experience.length > 0) {
+    const expSection = document.createElement('section');
+    expSection.className = 'wb-portfolio__experience';
+    expSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const expTitle = document.createElement('h3');
+    expTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    expTitle.textContent = '💼 Experience';
+    expSection.appendChild(expTitle);
+
+    config.experience.forEach((exp, i) => {
+      const expItem = document.createElement('div');
+      expItem.style.cssText = `padding:0.75rem 0;${i > 0 ? 'border-top:1px solid var(--border-color,#374151);' : ''}`;
+      
+      const expHeader = document.createElement('div');
+      expHeader.style.cssText = 'display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;';
+      
+      const expRole = document.createElement('strong');
+      expRole.style.cssText = 'color:var(--text-primary,#f9fafb);';
+      expRole.textContent = exp.role || exp.title;
+      expHeader.appendChild(expRole);
+      
+      if (exp.period) {
+        const expPeriod = document.createElement('span');
+        expPeriod.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.85rem;';
+        expPeriod.textContent = exp.period;
+        expHeader.appendChild(expPeriod);
+      }
+      expItem.appendChild(expHeader);
+      
+      if (exp.company) {
+        const expCompany = document.createElement('div');
+        expCompany.style.cssText = 'color:var(--primary,#6366f1);font-size:0.9rem;margin-top:0.25rem;';
+        expCompany.textContent = exp.company;
+        expItem.appendChild(expCompany);
+      }
+      
+      if (exp.description) {
+        const expDesc = document.createElement('p');
+        expDesc.style.cssText = 'margin:0.5rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.9rem;line-height:1.5;';
+        expDesc.textContent = exp.description;
+        expItem.appendChild(expDesc);
+      }
+      
+      expSection.appendChild(expItem);
+    });
+    main.appendChild(expSection);
+  }
+
+  // Education Section
+  if (config.education && config.education.length > 0) {
+    const eduSection = document.createElement('section');
+    eduSection.className = 'wb-portfolio__education';
+    eduSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const eduTitle = document.createElement('h3');
+    eduTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    eduTitle.textContent = '🎓 Education';
+    eduSection.appendChild(eduTitle);
+
+    config.education.forEach(edu => {
+      const eduItem = document.createElement('div');
+      eduItem.style.cssText = 'padding:0.5rem 0;';
+      
+      const eduDegree = document.createElement('strong');
+      eduDegree.style.cssText = 'color:var(--text-primary,#f9fafb);display:block;';
+      eduDegree.textContent = edu.degree;
+      eduItem.appendChild(eduDegree);
+      
+      const eduSchool = document.createElement('span');
+      eduSchool.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.9rem;';
+      eduSchool.textContent = edu.school + (edu.year ? ` • ${edu.year}` : '');
+      eduItem.appendChild(eduSchool);
+      
+      eduSection.appendChild(eduItem);
+    });
+    main.appendChild(eduSection);
+  }
+
+  // Projects Section
+  if (config.projects && config.projects.length > 0) {
+    const projSection = document.createElement('section');
+    projSection.className = 'wb-portfolio__projects';
+    projSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const projTitle = document.createElement('h3');
+    projTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    projTitle.textContent = '🚀 Projects';
+    projSection.appendChild(projTitle);
+
+    const projGrid = document.createElement('div');
+    projGrid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;';
+
+    config.projects.forEach(proj => {
+      const projCard = document.createElement('a');
+      projCard.href = proj.url || '#';
+      projCard.target = proj.url ? '_blank' : '_self';
+      projCard.style.cssText = 'display:block;background:var(--bg-tertiary,#374151);border-radius:8px;overflow:hidden;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;';
+      projCard.onmouseenter = () => { projCard.style.transform = 'translateY(-2px)'; projCard.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)'; };
+      projCard.onmouseleave = () => { projCard.style.transform = ''; projCard.style.boxShadow = ''; };
+      
+      if (proj.image) {
+        const projImg = document.createElement('img');
+        projImg.src = proj.image;
+        projImg.alt = proj.name;
+        projImg.style.cssText = 'width:100%;height:100px;object-fit:cover;';
+        projCard.appendChild(projImg);
+      }
+      
+      const projInfo = document.createElement('div');
+      projInfo.style.cssText = 'padding:0.75rem;';
+      
+      const projName = document.createElement('strong');
+      projName.style.cssText = 'color:var(--text-primary,#f9fafb);display:block;margin-bottom:0.25rem;';
+      projName.textContent = proj.name;
+      projInfo.appendChild(projName);
+      
+      if (proj.description) {
+        const projDesc = document.createElement('span');
+        projDesc.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.8rem;';
+        projDesc.textContent = proj.description;
+        projInfo.appendChild(projDesc);
+      }
+      
+      projCard.appendChild(projInfo);
+      projGrid.appendChild(projCard);
+    });
+    
+    projSection.appendChild(projGrid);
+    main.appendChild(projSection);
+  }
+
+  // Certifications
+  if (config.certifications) {
+    const certSection = document.createElement('section');
+    certSection.className = 'wb-portfolio__certifications';
+    certSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const certTitle = document.createElement('h3');
+    certTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    certTitle.textContent = '🏆 Certifications';
+    certSection.appendChild(certTitle);
+    
+    const certList = document.createElement('ul');
+    certList.style.cssText = 'margin:0;padding-left:1.25rem;color:var(--text-primary,#f9fafb);font-size:0.9rem;';
+    
+    config.certifications.split(',').forEach(cert => {
+      const li = document.createElement('li');
+      li.style.cssText = 'margin-bottom:0.25rem;';
+      li.textContent = cert.trim();
+      certList.appendChild(li);
+    });
+    certSection.appendChild(certList);
+    main.appendChild(certSection);
+  }
+
+  // Languages
+  if (config.languages) {
+    const langSection = document.createElement('section');
+    langSection.className = 'wb-portfolio__languages';
+    langSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const langTitle = document.createElement('h3');
+    langTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    langTitle.textContent = '🌐 Languages';
+    langSection.appendChild(langTitle);
+    
+    const langPills = document.createElement('div');
+    langPills.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;';
+    
+    config.languages.split(',').forEach(lang => {
+      const pill = document.createElement('span');
+      pill.style.cssText = 'padding:0.35rem 0.75rem;background:var(--bg-tertiary,#374151);color:var(--text-primary,#f9fafb);border-radius:999px;font-size:0.85rem;';
+      pill.textContent = lang.trim();
+      langPills.appendChild(pill);
+    });
+    langSection.appendChild(langPills);
+    main.appendChild(langSection);
+  }
+
+  element.appendChild(main);
+
+  // ==================== CONTACT ====================
   if (config.email || config.phone || config.website) {
     const contact = document.createElement('address');
-    contact.style.cssText = 'padding:1rem;border-top:1px solid var(--border-color,#374151);font-style:normal;';
+    contact.className = 'wb-portfolio__contact';
+    contact.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);font-style:normal;display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;';
 
-    if (config.email) {
-      const emailLink = document.createElement('a');
-      emailLink.className = 'wb-card__portfolio-email';
-      emailLink.href = `mailto:${config.email}`;
-      emailLink.style.cssText = 'display:block;padding:0.5rem 0;color:var(--text-primary,#f9fafb);text-decoration:none;';
-      emailLink.textContent = `📧 ${config.email}`;
-      contact.appendChild(emailLink);
-    }
+    const contactItems = [
+      { value: config.email, href: `mailto:${config.email}`, icon: '📧' },
+      { value: config.phone, href: `tel:${config.phone}`, icon: '📱' },
+      { value: config.website, href: config.website, icon: '🌐', external: true }
+    ];
 
-    if (config.phone) {
-      const phoneLink = document.createElement('a');
-      phoneLink.className = 'wb-card__portfolio-phone';
-      phoneLink.href = `tel:${config.phone}`;
-      phoneLink.style.cssText = 'display:block;padding:0.5rem 0;color:var(--text-primary,#f9fafb);text-decoration:none;';
-      phoneLink.textContent = `📱 ${config.phone}`;
-      contact.appendChild(phoneLink);
-    }
-
-    if (config.website) {
-      const webLink = document.createElement('a');
-      webLink.className = 'wb-card__portfolio-website';
-      webLink.href = config.website;
-      webLink.target = '_blank';
-      webLink.style.cssText = 'display:block;padding:0.5rem 0;color:var(--text-primary,#f9fafb);text-decoration:none;';
-      webLink.textContent = `🌐 ${config.website}`;
-      contact.appendChild(webLink);
-    }
+    contactItems.forEach(item => {
+      if (item.value) {
+        const link = document.createElement('a');
+        link.href = item.href;
+        if (item.external) link.target = '_blank';
+        link.style.cssText = 'color:var(--text-primary,#f9fafb);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:0.25rem;';
+        link.innerHTML = `${item.icon} <span>${item.value}</span>`;
+        contact.appendChild(link);
+      }
+    });
 
     element.appendChild(contact);
   }
 
-  // Social links
-  if (config.linkedin || config.twitter || config.github) {
-    const social = document.createElement('div');
-    social.className = 'wb-card__portfolio-social';
-    social.style.cssText = 'padding:1rem;border-top:1px solid var(--border-color,#374151);display:flex;justify-content:center;gap:1rem;';
+  // ==================== SOCIAL ====================
+  const socialLinks = [
+    { url: config.linkedin, icon: '💼', label: 'LinkedIn' },
+    { url: config.twitter, icon: '🐦', label: 'Twitter' },
+    { url: config.github, icon: '🐙', label: 'GitHub' },
+    { url: config.dribbble, icon: '🏀', label: 'Dribbble' }
+  ].filter(s => s.url);
 
-    const links = [
-      { url: config.linkedin, icon: '💼', label: 'LinkedIn' },
-      { url: config.twitter, icon: '🐦', label: 'Twitter' },
-      { url: config.github, icon: '🐙', label: 'GitHub' }
-    ];
+  if (socialLinks.length > 0) {
+    const social = document.createElement('nav');
+    social.className = 'wb-portfolio__social';
+    social.setAttribute('aria-label', 'Social links');
+    social.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);display:flex;justify-content:center;gap:0.75rem;';
 
-    links.forEach(({ url, icon, label }) => {
-      if (url) {
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        link.title = label;
-        link.style.cssText = 'width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--bg-tertiary,#374151);border-radius:50%;text-decoration:none;font-size:1.25rem;';
-        link.textContent = icon;
-        social.appendChild(link);
-      }
+    socialLinks.forEach(({ url, icon, label }) => {
+      const link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.title = label;
+      link.setAttribute('aria-label', label);
+      link.style.cssText = 'width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--bg-tertiary,#374151);border-radius:50%;text-decoration:none;font-size:1.25rem;transition:transform 0.2s,background 0.2s;';
+      link.onmouseenter = () => { link.style.transform = 'scale(1.1)'; link.style.background = 'var(--primary,#6366f1)'; };
+      link.onmouseleave = () => { link.style.transform = ''; link.style.background = 'var(--bg-tertiary,#374151)'; };
+      link.textContent = icon;
+      social.appendChild(link);
     });
 
     element.appendChild(social);
   }
+
+  // ==================== CTA FOOTER ====================
+  if (config.cta) {
+    const footer = document.createElement('footer');
+    footer.className = 'wb-portfolio__footer';
+    footer.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);';
+    
+    const ctaBtn = document.createElement('a');
+    ctaBtn.href = config.ctaHref || '#';
+    ctaBtn.className = 'wb-portfolio__cta';
+    ctaBtn.style.cssText = 'display:block;text-align:center;padding:0.875rem;background:var(--primary,#6366f1);color:white;text-decoration:none;border-radius:8px;font-weight:600;transition:all 0.2s;';
+    ctaBtn.onmouseenter = () => { ctaBtn.style.background = 'var(--primary-hover,#4f46e5)'; ctaBtn.style.transform = 'translateY(-1px)'; };
+    ctaBtn.onmouseleave = () => { ctaBtn.style.background = 'var(--primary,#6366f1)'; ctaBtn.style.transform = ''; };
+    ctaBtn.textContent = config.cta;
+    footer.appendChild(ctaBtn);
+    
+    element.appendChild(footer);
+  }
+
+  // API
+  element.wbPortfolio = {
+    setAvailability: (status) => {
+      const dot = element.querySelector('.wb-portfolio__availability');
+      if (dot && availabilityConfig[status]) {
+        dot.style.background = availabilityConfig[status].color;
+        dot.title = availabilityConfig[status].label;
+      }
+    }
+  };
 
   return base.cleanup;
 }

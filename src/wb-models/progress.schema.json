@@ -81,47 +81,7 @@
       "appliesClass": "wb-progress--indeterminate"
     }
   },
-  "$view": [
-    {
-      "name": "header",
-      "tag": "div",
-      "public": false,
-      "createdWhen": "label OR showValue",
-      "description": "Header with label and value"
-    },
-    {
-      "name": "label",
-      "tag": "span",
-      "parent": "header",
-      "public": true,
-      "content": "{{label}}",
-      "createdWhen": "label",
-      "description": "Progress label"
-    },
-    {
-      "name": "value-text",
-      "tag": "span",
-      "parent": "header",
-      "public": true,
-      "createdWhen": "showValue",
-      "description": "Percentage value display"
-    },
-    {
-      "name": "track",
-      "tag": "div",
-      "public": true,
-      "required": true,
-      "description": "Background track"
-    },
-    {
-      "name": "bar",
-      "tag": "div",
-      "parent": "track",
-      "public": true,
-      "required": true,
-      "description": "Progress indicator bar"
-    }
-  ],
+  "$view": [],
   "$methods": {
     "getValue": {
       "description": "Gets the current progress value",
@@ -241,10 +201,14 @@
   "test": {
     "functional": true,
     "setup": [
-      "<div x-behavior=\"progress\" data-value=\"50\"></div>",
-      "<div x-behavior=\"progress\" data-value=\"75\" data-show-value=\"true\"></div>",
-      "<div x-behavior=\"progress\" data-value=\"25\" data-striped=\"true\"></div>",
-      "<progress x-behavior=\"progress\" value=\"50\" max=\"100\"></progress>"
+      "<wb-progress>Basic progress content</wb-progress>",
+      "<wb-progress variant=\"default\">variant=default</wb-progress>",
+      "<wb-progress variant=\"primary\">variant=primary</wb-progress>",
+      "<wb-progress variant=\"success\">variant=success</wb-progress>",
+      "<wb-progress size=\"xs\">size=xs</wb-progress>",
+      "<wb-progress size=\"sm\">size=sm</wb-progress>",
+      "<wb-progress size=\"md\">size=md</wb-progress>",
+      "<wb-progress show-value>with showValue</wb-progress>"
     ],
     "matrix": {
       "combinations": [

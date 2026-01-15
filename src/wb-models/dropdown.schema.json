@@ -163,8 +163,14 @@
   "test": {
     "functional": true,
     "setup": [
-      "<div x-behavior=\"dropdown\"><button x-slot=\"trigger\">Menu</button><button>Item 1</button></div>",
-      "<div x-behavior=\"dropdown\"><button class=\"wb-dropdown-trigger\">Menu</button><div class=\"wb-dropdown-menu\"><button>Item</button></div></div>"
+      "<wb-dropdown>Basic dropdown content</wb-dropdown>",
+      "<wb-dropdown position=\"bottom-start\">position=bottom-start</wb-dropdown>",
+      "<wb-dropdown position=\"bottom-end\">position=bottom-end</wb-dropdown>",
+      "<wb-dropdown position=\"top-start\">position=top-start</wb-dropdown>",
+      "<wb-dropdown trigger=\"click\">trigger=click</wb-dropdown>",
+      "<wb-dropdown trigger=\"hover\">trigger=hover</wb-dropdown>",
+      "<wb-dropdown close-on-select>with closeOnSelect</wb-dropdown>",
+      "<wb-dropdown close-on-outside>with closeOnOutside</wb-dropdown>"
     ],
     "matrix": {
       "combinations": [

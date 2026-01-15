@@ -70,24 +70,7 @@
       "default": false
     }
   },
-  "$view": [
-    {
-      "name": "text",
-      "tag": "span",
-      "public": true,
-      "content": "<slot>{{label}}</slot>",
-      "createdWhen": "label OR body",
-      "description": "Badge text content"
-    },
-    {
-      "name": "remove",
-      "tag": "button",
-      "public": true,
-      "content": "✕",
-      "createdWhen": "removable",
-      "description": "Remove/close button"
-    }
-  ],
+  "$view": [],
   "$methods": {
     "show": {
       "description": "Shows the badge",
@@ -193,10 +176,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"badge\" data-label=\"New\"></div>",
-      "<div x-behavior=\"badge\" data-label=\"5\" data-variant=\"error\" data-pill></div>",
-      "<div x-behavior=\"badge\" data-variant=\"success\">Active</div>",
-      "<span x-behavior=\"badge\">Badge</span>"
+      "<wb-badge>Basic badge content</wb-badge>",
+      "<wb-badge variant=\"default\">variant=default</wb-badge>",
+      "<wb-badge variant=\"primary\">variant=primary</wb-badge>",
+      "<wb-badge variant=\"secondary\">variant=secondary</wb-badge>",
+      "<wb-badge size=\"xs\">size=xs</wb-badge>",
+      "<wb-badge size=\"sm\">size=sm</wb-badge>",
+      "<wb-badge size=\"md\">size=md</wb-badge>",
+      "<wb-badge pill>with pill</wb-badge>"
     ],
     "matrix": {
       "combinations": [

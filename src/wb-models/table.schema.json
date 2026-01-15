@@ -195,8 +195,14 @@
   },
   "test": {
     "setup": [
-      "<table x-behavior=\"table\" data-columns='[{\"key\":\"name\",\"label\":\"Name\"}]' data-data='[{\"name\":\"Test\"}]'></table>",
-      "<table x-behavior=\"table\"><thead><tr><th>Name</th></tr></thead><tbody><tr><td>Test</td></tr></tbody></table>"
+      "<wb-table>Basic table content</wb-table>",
+      "<wb-table sortable>with sortable</wb-table>",
+      "<wb-table filterable>with filterable</wb-table>",
+      "<wb-table paginated>with paginated</wb-table>",
+      "<wb-table striped>with striped</wb-table>",
+      "<wb-table hoverable>with hoverable</wb-table>",
+      "<wb-table compact>with compact</wb-table>",
+      "<wb-table bordered>with bordered</wb-table>"
     ],
     "matrix": {
       "combinations": [

@@ -270,10 +270,17 @@
   },
   "test": {
     "setup": [
+      "<wb-cardpricing>Basic cardpricing content</wb-cardpricing>",
+      "<wb-cardpricing variant=\"default\">variant=default</wb-cardpricing>",
+      "<wb-cardpricing variant=\"bordered\">variant=bordered</wb-cardpricing>",
+      "<wb-cardpricing variant=\"elevated\">variant=elevated</wb-cardpricing>",
+      "<wb-cardpricing featured>with featured</wb-cardpricing>",
+      "<wb-cardpricing plan=\"Sample plan\">plan=\"Sample plan\"</wb-cardpricing>",
+      "<wb-cardpricing price=\"Sample price\">price=\"Sample price\"</wb-cardpricing>",
+      "<wb-cardpricing period=\"/month\">period=\"/month\"</wb-cardpricing>",
       "<wb-pricing plan=\"Basic\" price=\"$9\"></wb-pricing>",
       "<wb-pricing plan=\"Pro\" price=\"$29\" featured></wb-pricing>",
-      "<wb-pricing plan=\"Pro\" price=\"$29\" features=\"Feature 1,Feature 2,Feature 3\"></wb-pricing>",
-      "<article data-wb=\"cardpricing\" data-plan=\"Basic\" data-price=\"$9\"></article>"
+      "<wb-pricing plan=\"Pro\" price=\"$29\" features=\"Feature 1,Feature 2,Feature 3\"></wb-pricing>"
     ],
     "matrix": {
       "combinations": [

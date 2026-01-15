@@ -201,8 +201,15 @@
   "test": {
     "functional": true,
     "setup": [
-      "<aside x-behavior=\"drawer\" x-title=\"Menu\">Navigation here</aside>",
-      "<button x-behavior=\"drawer\" x-title=\"Settings\">Open</button>"
+      "<wb-drawer>Basic drawer content</wb-drawer>",
+      "<wb-drawer position=\"left\">position=left</wb-drawer>",
+      "<wb-drawer position=\"right\">position=right</wb-drawer>",
+      "<wb-drawer position=\"top\">position=top</wb-drawer>",
+      "<wb-drawer variant=\"default\">variant=default</wb-drawer>",
+      "<wb-drawer variant=\"overlay\">variant=overlay</wb-drawer>",
+      "<wb-drawer variant=\"push\">variant=push</wb-drawer>",
+      "<wb-drawer close-on-backdrop>with closeOnBackdrop</wb-drawer>",
+      "<wb-drawer title=\"Test Title\">With title attribute</wb-drawer>"
     ],
     "matrix": {
       "combinations": [

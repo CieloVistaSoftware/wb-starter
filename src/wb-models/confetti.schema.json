@@ -92,8 +92,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"confetti\"></div>",
-      "<button x-behavior=\"confetti\">Celebrate!</button>"
+      "<wb-confetti>Basic confetti content</wb-confetti>",
+      "<wb-confetti show-button>with showButton</wb-confetti>",
+      "<wb-confetti repeat>with repeat</wb-confetti>",
+      "<wb-confetti count=\"50\">count=50</wb-confetti>",
+      "<wb-confetti label=\"Fire Confetti!\">label=\"Fire Confetti!\"</wb-confetti>",
+      "<wb-confetti delay=\"0s\">delay=\"0s\"</wb-confetti>",
+      "<wb-confetti duration=\"3s\">duration=\"3s\"</wb-confetti>",
+      "<wb-confetti colors=\"[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]\">colors=\"[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]\"</wb-confetti>"
     ],
     "matrix": {
       "combinations": [

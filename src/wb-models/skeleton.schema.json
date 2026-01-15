@@ -115,9 +115,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"skeleton\"></div>",
-      "<div x-behavior=\"skeleton\" x-variant=\"circle\" x-width=\"50px\"></div>",
-      "<div x-behavior=\"skeleton\" x-variant=\"text\" x-lines=\"3\"></div>"
+      "<wb-skeleton>Basic skeleton content</wb-skeleton>",
+      "<wb-skeleton variant=\"text\">variant=text</wb-skeleton>",
+      "<wb-skeleton variant=\"circle\">variant=circle</wb-skeleton>",
+      "<wb-skeleton variant=\"rect\">variant=rect</wb-skeleton>",
+      "<wb-skeleton animated>with animated</wb-skeleton>",
+      "<wb-skeleton lines=\"1\">lines=1</wb-skeleton>",
+      "<wb-skeleton width=\"100%\">width=\"100%\"</wb-skeleton>",
+      "<wb-skeleton height=\"1em\">height=\"1em\"</wb-skeleton>"
     ],
     "matrix": {
       "combinations": [

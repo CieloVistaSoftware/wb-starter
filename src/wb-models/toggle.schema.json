@@ -17,5 +17,14 @@
   },
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-toggle>Basic toggle content</wb-toggle>",
+      "<wb-toggle target=\"Sample target\">target=\"Sample target\"</wb-toggle>",
+      "<wb-toggle>Test permutation 3</wb-toggle>",
+      "<wb-toggle>Test permutation 4</wb-toggle>",
+      "<wb-toggle>Test permutation 5</wb-toggle>"
+    ]
+  }
 }

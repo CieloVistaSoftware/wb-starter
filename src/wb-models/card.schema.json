@@ -52,6 +52,13 @@
         "flat"
       ],
       "default": "default"
+    },
+    "size": {
+      "type": "string",
+      "description": "Card size variant controlling max/min width",
+      "enum": ["xs", "sm", "md", "lg", "xl", "full", "auto"],
+      "default": "auto",
+      "appliesClass": "wb-card--{value}"
     }
   },
   "$view": [
@@ -126,9 +133,14 @@
   },
   "test": {
     "setup": [
-      "<article x-behavior=\"card\">Basic card content</article>",
-      "<article x-behavior=\"card\" x-title=\"Card Title\" x-elevated=\"true\">Elevated card</article>",
-      "<article x-behavior=\"card\" x-title=\"Clickable\" x-clickable=\"true\">Clickable card</article>"
+      "<wb-card>Basic card content</wb-card>",
+      "<wb-card variant=\"default\">variant=default</wb-card>",
+      "<wb-card variant=\"glass\">variant=glass</wb-card>",
+      "<wb-card variant=\"bordered\">variant=bordered</wb-card>",
+      "<wb-card elevated>with elevated</wb-card>",
+      "<wb-card clickable>with clickable</wb-card>",
+      "<wb-card title=\"Sample title\">title=\"Sample title\"</wb-card>",
+      "<wb-card subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</wb-card>"
     ],
     "functional": {
       "visual": [
@@ -147,8 +159,15 @@
             "textContains": "Title"
           },
           "checks": [
-            { "selector": "header", "visible": true },
-            { "selector": "footer", "visible": true, "textContains": "Footer" }
+            {
+              "selector": "header",
+              "visible": true
+            },
+            {
+              "selector": "footer",
+              "visible": true,
+              "textContains": "Footer"
+            }
           ]
         }
       ],

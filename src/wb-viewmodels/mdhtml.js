@@ -157,7 +157,7 @@ export async function mdhtml(element, options = {}) {
     }
 
     // Parse markdown to HTML
-    const html = marked.parse(markdown);
+    const html = await marked.parse(markdown);
 
     // Basic XSS protection if sanitize is enabled
     let safeHtml = html;
@@ -222,20 +222,19 @@ export async function mdhtml(element, options = {}) {
                 el.dataset.showLineNumbers = "true";
                 el.dataset.showCopy = "true";
                 
-                // Mark for injection (WB.scan will pick this up)
-                // Use x-behavior attribute which WB.scan() looks for
-                el.setAttribute('x-behavior', 'pre');
-                code.setAttribute('x-behavior', 'code');
+                // Mark for injection with x-{behavior} attributes
+                // WB.scan() looks for selectors like [x-pre], [x-code] etc.
+                el.setAttribute('x-pre', '');
+                code.setAttribute('x-code', '');
             }
         });
 
         // 2. Pre-process inline code
         element.querySelectorAll('code:not(pre code)').forEach(el => {
-             el.setAttribute('x-behavior', 'code');
+             el.setAttribute('x-code', '');
         });
 
         // 3. Scan the entire element for behaviors (including the ones we just marked)
-        // This avoids double-injection issues
         window.WB.scan(element);
     }
 

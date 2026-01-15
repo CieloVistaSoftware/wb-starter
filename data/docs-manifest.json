@@ -1,6 +1,6 @@
 {
-  "generated": "2026-01-14T23:47:16.103Z",
-  "totalFiles": 121,
+  "generated": "2026-01-15T03:19:32.127Z",
+  "totalFiles": 122,
   "categories": [
     "_today",
     "architecture",
@@ -149,6 +149,12 @@
         "category": "root"
       },
       {
+        "path": "docs/escape-hatches.md",
+        "title": "WB Framework Escape Hatches",
+        "name": "escape-hatches",
+        "category": "root"
+      },
+      {
         "path": "docs/IMPROVEMENTS.md",
         "title": "Potential Improvements for Web Behaviors (WB)",
         "name": "IMPROVEMENTS",
@@ -204,7 +210,7 @@
       },
       {
         "path": "docs/pce-candidates.md",
-        "title": "PCE (Pseudo-Custom Elements) Candidates",
+        "title": "PCE (Pseudo-Custom Elements) - WB v3.0",
         "name": "pce-candidates",
         "category": "root"
       },
@@ -746,7 +752,7 @@
     "_today": [
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "# WB Framework v3.0 - Builder Module Split Status",
+        "title": "# WB Framework v3.0 - Current Status",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -761,7 +767,7 @@
   "files": [
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "# WB Framework v3.0 - Builder Module Split Status",
+      "title": "# WB Framework v3.0 - Current Status",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -1312,6 +1318,12 @@
       "category": "root"
     },
     {
+      "path": "docs/escape-hatches.md",
+      "title": "WB Framework Escape Hatches",
+      "name": "escape-hatches",
+      "category": "root"
+    },
+    {
       "path": "docs/guides/search-index.md",
       "title": "Search Index Generator",
       "name": "search-index",
@@ -1373,7 +1385,7 @@
     },
     {
       "path": "docs/pce-candidates.md",
-      "title": "PCE (Pseudo-Custom Elements) Candidates",
+      "title": "PCE (Pseudo-Custom Elements) - WB v3.0",
       "name": "pce-candidates",
       "category": "root"
     },

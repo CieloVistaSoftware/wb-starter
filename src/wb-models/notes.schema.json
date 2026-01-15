@@ -214,8 +214,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"notes\"></div>",
-      "<aside x-behavior=\"notes\" data-position=\"right\"></aside>"
+      "<wb-notes>Basic notes content</wb-notes>",
+      "<wb-notes position=\"left\">position=left</wb-notes>",
+      "<wb-notes position=\"right\">position=right</wb-notes>",
+      "<wb-notes position=\"modal\">position=modal</wb-notes>",
+      "<wb-notes auto-save>with autoSave</wb-notes>",
+      "<wb-notes max-width=\"50vw\">maxWidth=\"50vw\"</wb-notes>",
+      "<wb-notes min-width=\"200px\">minWidth=\"200px\"</wb-notes>",
+      "<wb-notes default-width=\"320px\">defaultWidth=\"320px\"</wb-notes>"
     ],
     "matrix": {
       "combinations": [

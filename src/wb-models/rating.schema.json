@@ -137,9 +137,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"rating\" x-value=\"3\"></div>",
-      "<div x-behavior=\"rating\" x-value=\"4.5\" x-half=\"true\" x-readonly=\"true\"></div>",
-      "<div x-behavior=\"rating\" x-value=\"3\" x-max=\"5\"></div>"
+      "<wb-rating>Basic rating content</wb-rating>",
+      "<wb-rating size=\"sm\">size=sm</wb-rating>",
+      "<wb-rating size=\"md\">size=md</wb-rating>",
+      "<wb-rating size=\"lg\">size=lg</wb-rating>",
+      "<wb-rating readonly>with readonly</wb-rating>",
+      "<wb-rating disabled>with disabled</wb-rating>",
+      "<wb-rating half>with half</wb-rating>",
+      "<wb-rating value=\"0\">value=0</wb-rating>"
     ],
     "matrix": {
       "combinations": [

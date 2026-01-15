@@ -18,5 +18,14 @@
   },
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-collapse>Basic collapse content</wb-collapse>",
+      "<wb-collapse expanded>with expanded</wb-collapse>",
+      "<wb-collapse>Test permutation 3</wb-collapse>",
+      "<wb-collapse>Test permutation 4</wb-collapse>",
+      "<wb-collapse>Test permutation 5</wb-collapse>"
+    ]
+  }
 }

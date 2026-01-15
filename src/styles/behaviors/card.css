@@ -108,6 +108,46 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   SIZE VARIANTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-card--xs {
+  max-width: 200px;
+  min-width: 160px;
+}
+
+.wb-card--sm {
+  max-width: 280px;
+  min-width: 220px;
+}
+
+.wb-card--md {
+  max-width: 360px;
+  min-width: 280px;
+}
+
+.wb-card--lg {
+  max-width: 480px;
+  min-width: 360px;
+}
+
+.wb-card--xl {
+  max-width: 600px;
+  min-width: 480px;
+}
+
+.wb-card--full {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Auto size - no constraints, fills container */
+.wb-card--auto {
+  max-width: none;
+  min-width: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    MODIFIERS
    ═══════════════════════════════════════════════════════════════════════════ */
 

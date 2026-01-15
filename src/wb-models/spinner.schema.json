@@ -102,9 +102,14 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"spinner\"></div>",
-      "<div x-behavior=\"spinner\" x-size=\"lg\" x-variant=\"success\"></div>",
-      "<div x-behavior=\"spinner\" x-size=\"sm\" x-speed=\"fast\"></div>"
+      "<wb-spinner>Basic spinner content</wb-spinner>",
+      "<wb-spinner size=\"xs\">size=xs</wb-spinner>",
+      "<wb-spinner size=\"sm\">size=sm</wb-spinner>",
+      "<wb-spinner size=\"md\">size=md</wb-spinner>",
+      "<wb-spinner variant=\"default\">variant=default</wb-spinner>",
+      "<wb-spinner variant=\"primary\">variant=primary</wb-spinner>",
+      "<wb-spinner variant=\"success\">variant=success</wb-spinner>",
+      "<wb-spinner speed=\"slow\">speed=slow</wb-spinner>"
     ],
     "matrix": {
       "combinations": [

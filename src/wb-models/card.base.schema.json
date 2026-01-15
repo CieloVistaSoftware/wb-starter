@@ -86,6 +86,12 @@
       "type": "boolean",
       "description": "Whether the card has an elevated shadow",
       "default": false
+    },
+    "size": {
+      "type": "string",
+      "description": "Card size variant controlling max/min width",
+      "enum": ["xs", "sm", "md", "lg", "xl", "full", "auto"],
+      "default": "auto"
     }
   },
   "compliance": {

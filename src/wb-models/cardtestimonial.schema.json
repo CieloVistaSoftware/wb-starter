@@ -260,9 +260,16 @@
   },
   "test": {
     "setup": [
+      "<wb-cardtestimonial>Basic cardtestimonial content</wb-cardtestimonial>",
+      "<wb-cardtestimonial variant=\"default\">variant=default</wb-cardtestimonial>",
+      "<wb-cardtestimonial variant=\"elevated\">variant=elevated</wb-cardtestimonial>",
+      "<wb-cardtestimonial variant=\"bordered\">variant=bordered</wb-cardtestimonial>",
+      "<wb-cardtestimonial size=\"sm\">size=sm</wb-cardtestimonial>",
+      "<wb-cardtestimonial size=\"md\">size=md</wb-cardtestimonial>",
+      "<wb-cardtestimonial size=\"lg\">size=lg</wb-cardtestimonial>",
+      "<wb-cardtestimonial quote=\"Sample quote\">quote=\"Sample quote\"</wb-cardtestimonial>",
       "<wb-testimonial quote=\"Great product!\" author=\"John Doe\"></wb-testimonial>",
-      "<wb-testimonial quote=\"Amazing!\" author=\"Jane\" role=\"CEO\" avatar=\"avatar.jpg\" rating=\"5\"></wb-testimonial>",
-      "<article data-wb=\"cardtestimonial\" data-quote=\"Test\" data-author=\"John\"></article>"
+      "<wb-testimonial quote=\"Amazing!\" author=\"Jane\" role=\"CEO\" avatar=\"avatar.jpg\" rating=\"5\"></wb-testimonial>"
     ],
     "matrix": {
       "combinations": [

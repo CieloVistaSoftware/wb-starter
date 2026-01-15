@@ -95,8 +95,13 @@
   },
   "test": {
     "setup": [
-      "<div x-behavior=\"snow\"></div>",
-      "<button x-behavior=\"snow\">Snow!</button>"
+      "<wb-snow>Basic snow content</wb-snow>",
+      "<wb-snow show-button>with showButton</wb-snow>",
+      "<wb-snow repeat>with repeat</wb-snow>",
+      "<wb-snow count=\"30\">count=30</wb-snow>",
+      "<wb-snow label=\"Let it Snow!\">label=\"Let it Snow!\"</wb-snow>",
+      "<wb-snow delay=\"0s\">delay=\"0s\"</wb-snow>",
+      "<wb-snow duration=\"8s\">duration=\"8s\"</wb-snow>"
     ],
     "matrix": {
       "combinations": [

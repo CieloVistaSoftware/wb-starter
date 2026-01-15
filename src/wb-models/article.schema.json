@@ -169,6 +169,14 @@
   },
   "test": {
     "setup": [
+      "<wb-article>Basic article content</wb-article>",
+      "<wb-article featured>with featured</wb-article>",
+      "<wb-article title=\"Sample title\">title=\"Sample title\"</wb-article>",
+      "<wb-article subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</wb-article>",
+      "<wb-article author=\"Sample author\">author=\"Sample author\"</wb-article>",
+      "<wb-article date=\"Sample date\">date=\"Sample date\"</wb-article>",
+      "<wb-article category=\"Sample category\">category=\"Sample category\"</wb-article>",
+      "<wb-article image=\"Sample image\">image=\"Sample image\"</wb-article>",
       "<wb-article title=\"Test Article\">Content</wb-article>"
     ],
     "matrix": {

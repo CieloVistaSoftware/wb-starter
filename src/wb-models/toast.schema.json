@@ -319,9 +319,15 @@
   },
   "test": {
     "setup": [
-      "<button x-behavior=\"toast\" x-message=\"Hello!\">Show Toast</button>",
-      "<button x-behavior=\"toast\" x-variant=\"success\" x-message=\"Success!\">Success</button>",
-      "<button x-behavior=\"toast\" x-variant=\"error\" x-message=\"Error!\">Error</button>"
+      "<wb-toast>Basic toast content</wb-toast>",
+      "<wb-toast variant=\"info\">variant=info</wb-toast>",
+      "<wb-toast variant=\"success\">variant=success</wb-toast>",
+      "<wb-toast variant=\"warning\">variant=warning</wb-toast>",
+      "<wb-toast position=\"top-right\">position=top-right</wb-toast>",
+      "<wb-toast position=\"top-left\">position=top-left</wb-toast>",
+      "<wb-toast position=\"top-center\">position=top-center</wb-toast>",
+      "<wb-toast dismissible>with dismissible</wb-toast>",
+      "<wb-toast title=\"Test Title\">With title attribute</wb-toast>"
     ],
     "matrix": {
       "combinations": [

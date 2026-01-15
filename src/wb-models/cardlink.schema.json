@@ -214,8 +214,15 @@
   },
   "test": {
     "setup": [
-      "<wb-card-link href=\"/page\" title=\"My Page\"></wb-card-link>",
-      "<article data-wb=\"cardlink\" data-href=\"/page\" data-title=\"My Page\"></article>"
+      "<wb-cardlink>Basic cardlink content</wb-cardlink>",
+      "<wb-cardlink target=\"_self\">target=_self</wb-cardlink>",
+      "<wb-cardlink target=\"_blank\">target=_blank</wb-cardlink>",
+      "<wb-cardlink variant=\"default\">variant=default</wb-cardlink>",
+      "<wb-cardlink variant=\"elevated\">variant=elevated</wb-cardlink>",
+      "<wb-cardlink variant=\"bordered\">variant=bordered</wb-cardlink>",
+      "<wb-cardlink href=\"Sample href\">href=\"Sample href\"</wb-cardlink>",
+      "<wb-cardlink title=\"Sample title\">title=\"Sample title\"</wb-cardlink>",
+      "<wb-card-link href=\"/page\" title=\"My Page\"></wb-card-link>"
     ],
     "matrix": {
       "combinations": [

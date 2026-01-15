@@ -226,9 +226,16 @@
   },
   "test": {
     "setup": [
+      "<wb-cardstats>Basic cardstats content</wb-cardstats>",
+      "<wb-cardstats trend=\"up\">trend=up</wb-cardstats>",
+      "<wb-cardstats trend=\"down\">trend=down</wb-cardstats>",
+      "<wb-cardstats trend=\"neutral\">trend=neutral</wb-cardstats>",
+      "<wb-cardstats variant=\"default\">variant=default</wb-cardstats>",
+      "<wb-cardstats variant=\"compact\">variant=compact</wb-cardstats>",
+      "<wb-cardstats variant=\"large\">variant=large</wb-cardstats>",
+      "<wb-cardstats value=\"Sample value\">value=\"Sample value\"</wb-cardstats>",
       "<wb-stats value=\"1,234\" label=\"Users\"></wb-stats>",
-      "<wb-stats value=\"$50K\" label=\"Revenue\" icon=\"💰\" trend=\"up\" trend-value=\"+12%\"></wb-stats>",
-      "<article data-wb=\"cardstats\" data-value=\"1,234\" data-label=\"Users\"></article>"
+      "<wb-stats value=\"$50K\" label=\"Revenue\" icon=\"💰\" trend=\"up\" trend-value=\"+12%\"></wb-stats>"
     ],
     "matrix": {
       "combinations": [

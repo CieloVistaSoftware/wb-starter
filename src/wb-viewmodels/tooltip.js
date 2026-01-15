@@ -83,7 +83,7 @@ export async function tooltip(element, options = {}) {
   injectStyles();
 
   // Config
-  const content = String(options.content ?? element.dataset.content ?? element.dataset.tooltip ?? element.getAttribute('tooltip') ?? element.getAttribute('title') ?? '');
+  const content = String(options.content ?? element.dataset.content ?? element.getAttribute('x-content') ?? element.dataset.tooltip ?? element.getAttribute('tooltip') ?? element.getAttribute('title') ?? element.innerText.trim() ?? '');
   if (!content) {
     console.warn('[WB:tooltip] No content');
     return () => {};
@@ -91,11 +91,11 @@ export async function tooltip(element, options = {}) {
 
   const config = {
     content,
-    position: ['top', 'bottom', 'left', 'right'].includes(options.position ?? element.dataset.tooltipPosition ?? element.getAttribute('tooltip-position'))
-      ? (options.position ?? element.dataset.tooltipPosition ?? element.getAttribute('tooltip-position')) : 'top',
-    delay: Math.max(0, parseInt(options.delay ?? element.dataset.tooltipDelay ?? '200', 10)),
-    hideDelay: Math.max(0, parseInt(options.hideDelay ?? element.dataset.tooltipHideDelay ?? '100', 10)),
-    customClass: options.customClass ?? element.dataset.tooltipClass ?? '',
+    position: ['top', 'bottom', 'left', 'right'].includes(options.position ?? element.getAttribute('x-position') ?? element.dataset.tooltipPosition ?? element.getAttribute('tooltip-position'))
+      ? (options.position ?? element.getAttribute('x-position') ?? element.dataset.tooltipPosition ?? element.getAttribute('tooltip-position')) : 'top',
+    delay: Math.max(0, parseInt(options.delay ?? element.getAttribute('x-delay') ?? element.dataset.tooltipDelay ?? '200', 10)),
+    hideDelay: Math.max(0, parseInt(options.hideDelay ?? element.getAttribute('x-hide-delay') ?? element.dataset.tooltipHideDelay ?? '100', 10)),
+    customClass: options.customClass ?? element.getAttribute('x-custom-class') ?? element.dataset.tooltipClass ?? '',
   };
 
   // Remove native title

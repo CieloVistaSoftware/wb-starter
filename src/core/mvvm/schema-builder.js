@@ -258,6 +258,11 @@ function buildStructure(element, schema, data) {
   // Build from $view (MVVM format)
   if (schema.$view) {
     buildFromView(element, schema, data);
+    // If $view is empty, restore original slot content
+    // This is common for components that process their content (like mdhtml)
+    if (schema.$view.length === 0 && data.slot) {
+      element.innerHTML = data.slot;
+    }
     return;
   }
   

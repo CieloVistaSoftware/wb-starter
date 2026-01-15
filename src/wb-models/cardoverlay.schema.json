@@ -192,8 +192,16 @@
   },
   "test": {
     "setup": [
-      "<wb-card-overlay image=\"bg.jpg\" title=\"Overlay Title\"></wb-card-overlay>",
-      "<article data-wb=\"cardoverlay\" data-image=\"bg.jpg\" data-title=\"Test\"></article>"
+      "<wb-cardoverlay>Basic cardoverlay content</wb-cardoverlay>",
+      "<wb-cardoverlay position=\"top\">position=top</wb-cardoverlay>",
+      "<wb-cardoverlay position=\"center\">position=center</wb-cardoverlay>",
+      "<wb-cardoverlay position=\"bottom\">position=bottom</wb-cardoverlay>",
+      "<wb-cardoverlay xalign=\"left\">xalign=left</wb-cardoverlay>",
+      "<wb-cardoverlay xalign=\"center\">xalign=center</wb-cardoverlay>",
+      "<wb-cardoverlay xalign=\"right\">xalign=right</wb-cardoverlay>",
+      "<wb-cardoverlay variant=\"default\">variant=default</wb-cardoverlay>",
+      "<wb-cardoverlay title=\"Test Title\">With title attribute</wb-cardoverlay>",
+      "<wb-card-overlay image=\"bg.jpg\" title=\"Overlay Title\"></wb-card-overlay>"
     ],
     "matrix": {
       "combinations": [

@@ -30,8 +30,12 @@
   },
   "test": {
     "setup": [
-      "<wb-scrollalong>Sidebar</wb-scrollalong>",
-      "<nav data-wb=\"scrollalong\">Navigation</nav>"
+      "<wb-scrollalong>Basic scrollalong content</wb-scrollalong>",
+      "<wb-scrollalong offset=\"0\">offset=\"0\"</wb-scrollalong>",
+      "<wb-scrollalong>Test permutation 3</wb-scrollalong>",
+      "<wb-scrollalong>Test permutation 4</wb-scrollalong>",
+      "<wb-scrollalong>Test permutation 5</wb-scrollalong>",
+      "<wb-scrollalong>Sidebar</wb-scrollalong>"
     ],
     "matrix": {
       "combinations": [

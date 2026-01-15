@@ -172,8 +172,15 @@
   },
   "test": {
     "setup": [
-      "<wb-card-button title=\"Confirm\" primary=\"Yes\" secondary=\"No\"></wb-card-button>",
-      "<article data-wb=\"cardbutton\" data-title=\"Test\" data-primary=\"OK\"></article>"
+      "<wb-cardbutton>Basic cardbutton content</wb-cardbutton>",
+      "<wb-cardbutton variant=\"default\">variant=default</wb-cardbutton>",
+      "<wb-cardbutton variant=\"elevated\">variant=elevated</wb-cardbutton>",
+      "<wb-cardbutton variant=\"bordered\">variant=bordered</wb-cardbutton>",
+      "<wb-cardbutton title=\"Sample title\">title=\"Sample title\"</wb-cardbutton>",
+      "<wb-cardbutton content=\"Sample content\">content=\"Sample content\"</wb-cardbutton>",
+      "<wb-cardbutton primary=\"Sample primary\">primary=\"Sample primary\"</wb-cardbutton>",
+      "<wb-cardbutton primary-href=\"Sample primaryHref\">primaryHref=\"Sample primaryHref\"</wb-cardbutton>",
+      "<wb-card-button title=\"Confirm\" primary=\"Yes\" secondary=\"No\"></wb-card-button>"
     ],
     "matrix": {
       "combinations": [

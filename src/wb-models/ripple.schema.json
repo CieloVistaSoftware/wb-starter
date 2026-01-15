@@ -68,8 +68,11 @@
   },
   "test": {
     "setup": [
-      "<button data-wb=\"ripple\">Click me</button>",
-      "<div data-wb=\"ripple\" data-color=\"rgba(0,0,0,0.2)\">Dark</div>"
+      "<wb-ripple>Basic ripple content</wb-ripple>",
+      "<wb-ripple centered>with centered</wb-ripple>",
+      "<wb-ripple color=\"rgba(255,255,255,0.3)\">color=\"rgba(255,255,255,0.3)\"</wb-ripple>",
+      "<wb-ripple duration=\"600\">duration=600</wb-ripple>",
+      "<wb-ripple centered color=\"rgba(255,255,255,0.3)\">Combined: with centered, color=\"rgba(255,255,255,0.3)\"</wb-ripple>"
     ],
     "matrix": {
       "combinations": [

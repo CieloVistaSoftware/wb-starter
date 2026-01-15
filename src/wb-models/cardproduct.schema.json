@@ -299,9 +299,16 @@
   },
   "test": {
     "setup": [
+      "<wb-cardproduct>Basic cardproduct content</wb-cardproduct>",
+      "<wb-cardproduct variant=\"default\">variant=default</wb-cardproduct>",
+      "<wb-cardproduct variant=\"compact\">variant=compact</wb-cardproduct>",
+      "<wb-cardproduct variant=\"horizontal\">variant=horizontal</wb-cardproduct>",
+      "<wb-cardproduct featured>with featured</wb-cardproduct>",
+      "<wb-cardproduct image=\"Sample image\">image=\"Sample image\"</wb-cardproduct>",
+      "<wb-cardproduct title=\"Sample title\">title=\"Sample title\"</wb-cardproduct>",
+      "<wb-cardproduct description=\"Sample description\">description=\"Sample description\"</wb-cardproduct>",
       "<wb-product title=\"Widget\" price=\"$29\"></wb-product>",
-      "<wb-product image=\"product.jpg\" title=\"Widget\" price=\"$19\" badge=\"Sale\"></wb-product>",
-      "<article data-wb=\"cardproduct\" data-title=\"Test\" data-price=\"$10\"></article>"
+      "<wb-product image=\"product.jpg\" title=\"Widget\" price=\"$19\" badge=\"Sale\"></wb-product>"
     ],
     "matrix": {
       "combinations": [

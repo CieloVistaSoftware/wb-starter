@@ -80,6 +80,7 @@
     "tabs.schema.json",
     "textarea.schema.json",
     "themecontrol.schema.json",
+    "timeline.schema.json",
     "toast.schema.json",
     "toggle.schema.json",
     "tooltip.schema.json",
@@ -163,7 +164,7 @@
     },
     "layout": {
       "description": "Layout and structural components",
-      "count": 8,
+      "count": 9,
       "schemas": [
         "details.schema.json",
         "drawerLayout.schema.json",
@@ -172,6 +173,7 @@
         "scrollalong.schema.json",
         "sticky.schema.json",
         "table.schema.json",
+        "timeline.schema.json",
         "hero.schema.json"
       ]
     },
@@ -244,9 +246,9 @@
   },
   
   "stats": {
-    "totalComponents": 71,
-    "v3Converted": 71,
+    "totalComponents": 72,
+    "v3Converted": 72,
     "migrationComplete": true,
-    "lastUpdated": "2026-01-12T00:00:00Z"
+    "lastUpdated": "2026-01-14T00:00:00Z"
   }
 }

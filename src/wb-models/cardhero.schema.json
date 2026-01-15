@@ -226,9 +226,17 @@
   },
   "test": {
     "setup": [
+      "<wb-cardhero>Basic cardhero content</wb-cardhero>",
+      "<wb-cardhero variant=\"default\">variant=default</wb-cardhero>",
+      "<wb-cardhero variant=\"cosmic\">variant=cosmic</wb-cardhero>",
+      "<wb-cardhero variant=\"split\">variant=split</wb-cardhero>",
+      "<wb-cardhero xalign=\"left\">xalign=left</wb-cardhero>",
+      "<wb-cardhero xalign=\"center\">xalign=center</wb-cardhero>",
+      "<wb-cardhero xalign=\"right\">xalign=right</wb-cardhero>",
+      "<wb-cardhero overlay>with overlay</wb-cardhero>",
+      "<wb-cardhero title=\"Test Title\">With title attribute</wb-cardhero>",
       "<wb-hero background=\"hero.jpg\" title=\"Welcome\"></wb-hero>",
-      "<wb-hero background=\"hero.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></wb-hero>",
-      "<section data-wb=\"cardhero\" data-background=\"hero.jpg\" data-title=\"Test\"></section>"
+      "<wb-hero background=\"hero.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></wb-hero>"
     ],
     "matrix": {
       "combinations": [

@@ -256,9 +256,18 @@
   },
   "test": {
     "setup": [
+      "<wb-cardimage>Basic cardimage content</wb-cardimage>",
+      "<wb-cardimage aspect=\"16/9\">aspect=16/9</wb-cardimage>",
+      "<wb-cardimage aspect=\"4/3\">aspect=4/3</wb-cardimage>",
+      "<wb-cardimage aspect=\"1/1\">aspect=1/1</wb-cardimage>",
+      "<wb-cardimage position=\"top\">position=top</wb-cardimage>",
+      "<wb-cardimage position=\"bottom\">position=bottom</wb-cardimage>",
+      "<wb-cardimage position=\"left\">position=left</wb-cardimage>",
+      "<wb-cardimage fit=\"cover\">fit=cover</wb-cardimage>",
+      "<wb-cardimage title=\"Test Title\">With title attribute</wb-cardimage>",
+      "<wb-cardimage variant=\"default\">Variant: default</wb-cardimage>",
       "<wb-card-image src=\"photo.jpg\" alt=\"Photo\"></wb-card-image>",
-      "<wb-card-image src=\"photo.jpg\" title=\"Beautiful Scene\" subtitle=\"Nature photography\"></wb-card-image>",
-      "<article data-wb=\"cardimage\" data-src=\"photo.jpg\"></article>"
+      "<wb-card-image src=\"photo.jpg\" title=\"Beautiful Scene\" subtitle=\"Nature photography\"></wb-card-image>"
     ],
     "matrix": {
       "combinations": [

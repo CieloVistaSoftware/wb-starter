@@ -155,8 +155,15 @@
   },
   "test": {
     "setup": [
-      "<wb-card-file filename=\"report.pdf\" file-type=\"pdf\"></wb-card-file>",
-      "<article data-wb=\"cardfile\" data-filename=\"photo.jpg\" data-size=\"2.4 MB\"></article>"
+      "<wb-cardfile>Basic cardfile content</wb-cardfile>",
+      "<wb-cardfile file-type=\"pdf\">fileType=pdf</wb-cardfile>",
+      "<wb-cardfile file-type=\"doc\">fileType=doc</wb-cardfile>",
+      "<wb-cardfile file-type=\"image\">fileType=image</wb-cardfile>",
+      "<wb-cardfile variant=\"default\">variant=default</wb-cardfile>",
+      "<wb-cardfile variant=\"compact\">variant=compact</wb-cardfile>",
+      "<wb-cardfile variant=\"elevated\">variant=elevated</wb-cardfile>",
+      "<wb-cardfile downloadable>with downloadable</wb-cardfile>",
+      "<wb-card-file filename=\"report.pdf\" file-type=\"pdf\"></wb-card-file>"
     ],
     "matrix": {
       "combinations": [

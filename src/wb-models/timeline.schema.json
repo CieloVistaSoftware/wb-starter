@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://wb-starter.dev/schemas/timeline.schema.json",
+  "title": "WB Timeline Schema",
+  "description": "Schema for validating WB Timeline component",
+  "type": "object",
+  "required": [
+    "items"
+  ],
+  "compliance": {
+    "baseClass": "wb-timeline",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this schema file"
+    },
+    "items": {
+      "type": "string",
+      "description": "Comma-separated list of timeline items",
+      "minLength": 1
+    }
+  },
+  "examples": [
+    {
+      "items": "Project kickoff,Design phase,Development,Testing,Launch"
+    }
+  ],
+  "$view": [
+    {
+      "template": "<div class=\"wb-timeline\">\n  <div class=\"wb-timeline__item\" wb-for=\"item in items\" style=\"position:relative;padding-left:1.5rem;padding-bottom:1.5rem;\">\n    <div class=\"wb-timeline__marker\" style=\"position:absolute;left:0;top:0.25rem;width:0.75rem;height:0.75rem;background:var(--primary, #6366f1);border-radius:50%;z-index:1;\"></div>\n    <div class=\"wb-timeline__line\" wb-unless=\"itemLast\" style=\"position:absolute;left:0.3rem;top:1rem;bottom:0;width:2px;background:var(--border-color, #374151);\"></div>\n    <div class=\"wb-timeline__content\" style=\"color:var(--text-primary, #f9fafb);\">\n      {{item}}\n    </div>\n  </div>\n</div>"
+    }
+  ],
+  "$methods": {
+    "timeline": "timeline"
+  },
+  "$cssAPI": {}
+}

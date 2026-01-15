@@ -88,5 +88,14 @@
       "parent": "pre"
     }
   ],
-  "$methods": {}
+  "$methods": {},
+  "test": {
+    "setup": [
+      "<wb-demo>Basic demo content</wb-demo>",
+      "<wb-demo title=\"Demo\">title=\"Demo\"</wb-demo>",
+      "<wb-demo tag=\"UI\">tag=\"UI\"</wb-demo>",
+      "<wb-demo content-class=\"Sample contentClass\">contentClass=\"Sample contentClass\"</wb-demo>",
+      "<wb-demo title=\"Demo\" tag=\"UI\">Combined: title=\"Demo\", tag=\"UI\"</wb-demo>"
+    ]
+  }
 }

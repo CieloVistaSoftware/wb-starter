@@ -156,8 +156,16 @@
   },
   "test": {
     "setup": [
-      "<wb-card-draggable title=\"Drag Me\">Content</wb-card-draggable>",
-      "<article data-wb=\"carddraggable\" data-title=\"Test\" data-constrain=\"parent\">Content</article>"
+      "<wb-carddraggable>Basic carddraggable content</wb-carddraggable>",
+      "<wb-carddraggable constrain=\"none\">constrain=none</wb-carddraggable>",
+      "<wb-carddraggable constrain=\"parent\">constrain=parent</wb-carddraggable>",
+      "<wb-carddraggable constrain=\"viewport\">constrain=viewport</wb-carddraggable>",
+      "<wb-carddraggable axis=\"both\">axis=both</wb-carddraggable>",
+      "<wb-carddraggable axis=\"x\">axis=x</wb-carddraggable>",
+      "<wb-carddraggable axis=\"y\">axis=y</wb-carddraggable>",
+      "<wb-carddraggable variant=\"default\">variant=default</wb-carddraggable>",
+      "<wb-carddraggable title=\"Test Title\">With title attribute</wb-carddraggable>",
+      "<wb-card-draggable title=\"Drag Me\">Content</wb-card-draggable>"
     ],
     "matrix": {
       "combinations": [

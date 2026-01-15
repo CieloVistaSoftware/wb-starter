@@ -260,9 +260,14 @@
   },
   "test": {
     "setup": [
-      "<button x-behavior=\"button\">Click Me</button>",
-      "<button x-behavior=\"button\" x-variant=\"primary\" x-size=\"lg\">Primary</button>",
-      "<button x-behavior=\"button\" x-icon=\"🚀\" x-icon-position=\"start\">Launch</button>"
+      "<wb-button>Basic button content</wb-button>",
+      "<wb-button icon-position=\"start\">iconPosition=start</wb-button>",
+      "<wb-button icon-position=\"end\">iconPosition=end</wb-button>",
+      "<wb-button variant=\"primary\">variant=primary</wb-button>",
+      "<wb-button variant=\"secondary\">variant=secondary</wb-button>",
+      "<wb-button variant=\"success\">variant=success</wb-button>",
+      "<wb-button size=\"xs\">size=xs</wb-button>",
+      "<wb-button size=\"sm\">size=sm</wb-button>"
     ],
     "functional": {
       "buttons": [
@@ -303,7 +308,9 @@
           "selector": "element",
           "expect": {
             "event": null,
-            "attribute": { "disabled": "" }
+            "attribute": {
+              "disabled": ""
+            }
           }
         }
       ],

@@ -184,8 +184,16 @@
   },
   "test": {
     "setup": [
-      "<wb-card-horizontal image=\"photo.jpg\" title=\"Title\"></wb-card-horizontal>",
-      "<article data-wb=\"cardhorizontal\" data-image=\"photo.jpg\" data-title=\"Title\"></article>"
+      "<wb-cardhorizontal>Basic cardhorizontal content</wb-cardhorizontal>",
+      "<wb-cardhorizontal image-position=\"left\">imagePosition=left</wb-cardhorizontal>",
+      "<wb-cardhorizontal image-position=\"right\">imagePosition=right</wb-cardhorizontal>",
+      "<wb-cardhorizontal variant=\"default\">variant=default</wb-cardhorizontal>",
+      "<wb-cardhorizontal variant=\"elevated\">variant=elevated</wb-cardhorizontal>",
+      "<wb-cardhorizontal variant=\"bordered\">variant=bordered</wb-cardhorizontal>",
+      "<wb-cardhorizontal image=\"Sample image\">image=\"Sample image\"</wb-cardhorizontal>",
+      "<wb-cardhorizontal image-alt=\"Sample imageAlt\">imageAlt=\"Sample imageAlt\"</wb-cardhorizontal>",
+      "<wb-cardhorizontal title=\"Test Title\">With title attribute</wb-cardhorizontal>",
+      "<wb-card-horizontal image=\"photo.jpg\" title=\"Title\"></wb-card-horizontal>"
     ],
     "matrix": {
       "combinations": [

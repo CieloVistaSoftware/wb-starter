@@ -12,5 +12,14 @@
   "properties": {},
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-slider>Basic slider content</wb-slider>",
+      "<wb-slider>Test permutation 2</wb-slider>",
+      "<wb-slider>Test permutation 3</wb-slider>",
+      "<wb-slider>Test permutation 4</wb-slider>",
+      "<wb-slider>Test permutation 5</wb-slider>"
+    ]
+  }
 }

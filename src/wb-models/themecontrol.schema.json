@@ -12,5 +12,14 @@
   "properties": {},
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-themecontrol>Basic themecontrol content</wb-themecontrol>",
+      "<wb-themecontrol>Test permutation 2</wb-themecontrol>",
+      "<wb-themecontrol>Test permutation 3</wb-themecontrol>",
+      "<wb-themecontrol>Test permutation 4</wb-themecontrol>",
+      "<wb-themecontrol>Test permutation 5</wb-themecontrol>"
+    ]
+  }
 }

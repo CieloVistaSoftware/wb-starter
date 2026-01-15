@@ -110,14 +110,14 @@ export function badge(element, options = {}) {
     ...options
   };
 
-  // Use CSS variables with theme colors
+  // Use solid colors for better visibility
   const colors = {
-    default: { bg: 'var(--bg-tertiary)', text: 'var(--text-primary)' },
-    primary: { bg: 'var(--primary)', text: 'white' },
-    success: { bg: 'var(--success-color)', text: 'white' },
-    warning: { bg: 'var(--warning-color)', text: 'white' },
-    error: { bg: 'var(--danger-color)', text: 'white' },
-    info: { bg: 'var(--info-color)', text: 'white' }
+    default: { bg: '#6b7280', text: 'white' },
+    primary: { bg: '#6366f1', text: 'white' },
+    success: { bg: '#22c55e', text: 'white' },
+    warning: { bg: '#f59e0b', text: 'white' },
+    error: { bg: '#ef4444', text: 'white' },
+    info: { bg: '#3b82f6', text: 'white' }
   };
   const c = colors[config.variant] || colors.default;
 
@@ -177,7 +177,7 @@ export function progress(element, options = {}) {
   const config = {
     value: parseInt(options.value || element.dataset.value || '0'),
     max: parseInt(options.max || element.dataset.max || '100'),
-    animated: options.animated ?? element.dataset.animated !== 'false',
+    animated: options.animated ?? element.hasAttribute('data-animated') ?? false,
     striped: options.striped ?? element.hasAttribute('data-striped'),
     showLabel: options.showLabel ?? element.dataset.showLabel !== 'false',
     ...options
@@ -423,19 +423,19 @@ export function chip(element, options = {}) {
  */
 export function alert(element, options = {}) {
   const config = {
-    type: options.type || element.dataset.type || 'info',
+    type: options.variant || element.dataset.type || 'info',
     message: options.message || element.dataset.message || '',
     title: options.title || element.dataset.title || '',
     dismissible: options.dismissible ?? element.hasAttribute('data-dismissible'),
     ...options
   };
 
-  // Use rgba backgrounds for semi-transparency
+  // Use solid backgrounds for better visibility
   const colors = {
-    info: { bg: 'rgba(59, 130, 246, 0.1)', border: '#3b82f6', text: '#1e40af', icon: 'ℹ️' },
-    success: { bg: 'rgba(34, 197, 94, 0.1)', border: '#22c55e', text: '#166534', icon: '✓' },
-    warning: { bg: 'rgba(245, 158, 11, 0.1)', border: '#f59e0b', text: '#92400e', icon: '⚠️' },
-    error: { bg: 'rgba(239, 68, 68, 0.1)', border: '#ef4444', text: '#991b1b', icon: '✕' }
+    info: { bg: '#3b82f6', border: '#1e40af', text: 'white', icon: 'ℹ️' },
+    success: { bg: '#22c55e', border: '#166534', text: 'white', icon: '✓' },
+    warning: { bg: '#f59e0b', border: '#92400e', text: 'white', icon: '⚠️' },
+    error: { bg: '#ef4444', border: '#991b1b', text: 'white', icon: '✕' }
   };
   const c = colors[config.type] || colors.info;
 

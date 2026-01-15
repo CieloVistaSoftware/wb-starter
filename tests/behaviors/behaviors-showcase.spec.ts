@@ -15,7 +15,7 @@ test.describe('Behaviors Showcase Page', () => {
 
   test.describe('Page Structure', () => {
     test('page loads without console errors', async ({ page }) => {
-      const errors = [];
+      const errors: string[] = [];
       page.on('console', msg => {
         if (msg.type() === 'error' && !msg.text().includes('favicon')) {
           errors.push(msg.text());

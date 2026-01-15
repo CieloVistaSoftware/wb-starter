@@ -166,8 +166,14 @@
   },
   "test": {
     "setup": [
-      "<wb-header icon=\"📂\" title=\"Project\"></wb-header>",
-      "<header data-wb=\"header\" data-icon=\"🚀\" data-title=\"App\" data-badge=\"v1.0\"></header>"
+      "<wb-header>Basic header content</wb-header>",
+      "<wb-header sticky>with sticky</wb-header>",
+      "<wb-header icon=\"Sample icon\">icon=\"Sample icon\"</wb-header>",
+      "<wb-header title=\"Sample title\">title=\"Sample title\"</wb-header>",
+      "<wb-header subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</wb-header>",
+      "<wb-header badge=\"Sample badge\">badge=\"Sample badge\"</wb-header>",
+      "<wb-header logo-href=\"/\">logoHref=\"/\"</wb-header>",
+      "<wb-header icon=\"📂\" title=\"Project\"></wb-header>"
     ],
     "matrix": {
       "combinations": [

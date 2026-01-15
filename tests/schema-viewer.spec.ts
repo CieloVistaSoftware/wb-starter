@@ -29,10 +29,14 @@ test.describe('Schema Viewer Rendering Tests', () => {
 
     await page.goto('http://localhost:3000/public/schema-viewer.html');
     await page.waitForLoadState('networkidle');
+    await page.waitForFunction(() => (window as any).WB);
   });
 
   for (const schemaName of schemas) {
     test(`renders ${schemaName} schema correctly`, async ({ page }) => {
+      // Wait for schema selector to be populated
+      await page.waitForFunction(() => document.querySelectorAll('#schemaSelector option').length > 1);
+
       // Select the schema
       await page.selectOption('#schemaSelector', { label: schemaName.charAt(0).toUpperCase() + schemaName.slice(1) });
 

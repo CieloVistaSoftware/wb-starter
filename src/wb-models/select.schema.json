@@ -263,8 +263,14 @@
   "test": {
     "functional": true,
     "setup": [
-      "<div x-behavior=\"select\" data-options=\"[{\\\"value\\\":\\\"1\\\",\\\"label\\\":\\\"Option 1\\\"}]></div>",
-      "<select x-behavior=\"select\"><option value=\"1\">One</option></select>"
+      "<wb-select>Basic select content</wb-select>",
+      "<wb-select size=\"sm\">size=sm</wb-select>",
+      "<wb-select size=\"md\">size=md</wb-select>",
+      "<wb-select size=\"lg\">size=lg</wb-select>",
+      "<wb-select variant=\"default\">variant=default</wb-select>",
+      "<wb-select variant=\"success\">variant=success</wb-select>",
+      "<wb-select variant=\"error\">variant=error</wb-select>",
+      "<wb-select searchable>with searchable</wb-select>"
     ],
     "matrix": {
       "combinations": [

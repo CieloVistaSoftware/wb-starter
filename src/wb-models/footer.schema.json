@@ -130,8 +130,13 @@
   },
   "test": {
     "setup": [
-      "<wb-footer copyright=\"© 2025 Acme\"></wb-footer>",
-      "<footer data-wb=\"footer\" data-copyright=\"© 2025\" data-brand=\"Acme\"></footer>"
+      "<wb-footer>Basic footer content</wb-footer>",
+      "<wb-footer sticky>with sticky</wb-footer>",
+      "<wb-footer copyright=\"Sample copyright\">copyright=\"Sample copyright\"</wb-footer>",
+      "<wb-footer brand=\"Sample brand\">brand=\"Sample brand\"</wb-footer>",
+      "<wb-footer links=\"Sample links\">links=\"Sample links\"</wb-footer>",
+      "<wb-footer social=\"Sample social\">social=\"Sample social\"</wb-footer>",
+      "<wb-footer copyright=\"© 2025 Acme\"></wb-footer>"
     ],
     "matrix": {
       "combinations": [

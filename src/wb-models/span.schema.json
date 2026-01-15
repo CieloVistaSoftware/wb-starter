@@ -43,5 +43,14 @@
   },
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-span>Basic span content</wb-span>",
+      "<wb-span variant=\"red\">variant=red</wb-span>",
+      "<wb-span variant=\"yellow\">variant=yellow</wb-span>",
+      "<wb-span variant=\"green\">variant=green</wb-span>",
+      "<wb-span variant=\"red\" variant=\"yellow\">Combined: variant=red, variant=yellow</wb-span>"
+    ]
+  }
 }

@@ -21,5 +21,14 @@
   },
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-copy>Basic copy content</wb-copy>",
+      "<wb-copy text=\"Sample text\">text=\"Sample text\"</wb-copy>",
+      "<wb-copy target=\"Sample target\">target=\"Sample target\"</wb-copy>",
+      "<wb-copy text=\"Sample text\" target=\"Sample target\">Combined: text=\"Sample text\", target=\"Sample target\"</wb-copy>",
+      "<wb-copy>Test permutation 5</wb-copy>"
+    ]
+  }
 }

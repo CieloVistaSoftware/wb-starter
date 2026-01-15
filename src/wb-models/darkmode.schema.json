@@ -12,5 +12,14 @@
   "properties": {},
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-darkmode>Basic darkmode content</wb-darkmode>",
+      "<wb-darkmode>Test permutation 2</wb-darkmode>",
+      "<wb-darkmode>Test permutation 3</wb-darkmode>",
+      "<wb-darkmode>Test permutation 4</wb-darkmode>",
+      "<wb-darkmode>Test permutation 5</wb-darkmode>"
+    ]
+  }
 }

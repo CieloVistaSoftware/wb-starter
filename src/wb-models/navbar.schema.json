@@ -139,8 +139,15 @@
   },
   "test": {
     "setup": [
-      "<wb-navbar brand=\"MySite\"></wb-navbar>",
-      "<nav data-wb=\"navbar\" data-brand=\"Brand\" data-items='[{\"label\":\"Home\",\"href\":\"/\"}]'></nav>"
+      "<wb-navbar>Basic navbar content</wb-navbar>",
+      "<wb-navbar variant=\"default\">variant=default</wb-navbar>",
+      "<wb-navbar variant=\"dark\">variant=dark</wb-navbar>",
+      "<wb-navbar variant=\"transparent\">variant=transparent</wb-navbar>",
+      "<wb-navbar sticky>with sticky</wb-navbar>",
+      "<wb-navbar brand=\"Sample brand\">brand=\"Sample brand\"</wb-navbar>",
+      "<wb-navbar brand-href=\"/\">brandHref=\"/\"</wb-navbar>",
+      "<wb-navbar logo=\"Sample logo\">logo=\"Sample logo\"</wb-navbar>",
+      "<wb-navbar brand=\"MySite\"></wb-navbar>"
     ],
     "matrix": {
       "combinations": [

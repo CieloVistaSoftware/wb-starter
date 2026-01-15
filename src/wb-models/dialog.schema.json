@@ -234,8 +234,15 @@
   "test": {
     "functional": true,
     "setup": [
-      "<dialog x-behavior=\"dialog\" x-title=\"Test Dialog\">Content here</dialog>",
-      "<button x-behavior=\"dialog\" x-title=\"Test\">Open</button>"
+      "<wb-dialog>Basic dialog content</wb-dialog>",
+      "<wb-dialog size=\"sm\">size=sm</wb-dialog>",
+      "<wb-dialog size=\"md\">size=md</wb-dialog>",
+      "<wb-dialog size=\"lg\">size=lg</wb-dialog>",
+      "<wb-dialog variant=\"default\">variant=default</wb-dialog>",
+      "<wb-dialog variant=\"centered\">variant=centered</wb-dialog>",
+      "<wb-dialog variant=\"fullscreen\">variant=fullscreen</wb-dialog>",
+      "<wb-dialog close-on-backdrop>with closeOnBackdrop</wb-dialog>",
+      "<wb-dialog title=\"Test Title\">With title attribute</wb-dialog>"
     ],
     "matrix": {
       "combinations": [

@@ -26,5 +26,14 @@
   },
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-draggable>Basic draggable content</wb-draggable>",
+      "<wb-draggable axis=\"x\">axis=x</wb-draggable>",
+      "<wb-draggable axis=\"y\">axis=y</wb-draggable>",
+      "<wb-draggable axis=\"both\">axis=both</wb-draggable>",
+      "<wb-draggable handle=\"Sample handle\">handle=\"Sample handle\"</wb-draggable>"
+    ]
+  }
 }
