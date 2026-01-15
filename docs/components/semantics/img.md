@@ -1,55 +1,153 @@
-# Image Component Design & User Guide
+# Image - WB Framework v3.0
 
-## 1. Design Philosophy
+Enhanced image component with lazy loading, aspect ratio, and fallback support.
 
-The `img` component is a utility wrapper for the `<img>` tag. It addresses common performance and UX issues associated with images on the web: layout shifts, slow loading, and lack of interactivity.
+## Overview
 
-### Key Features
-- **Lazy Loading**: Easy toggle for native lazy loading.
-- **Aspect Ratio**: Prevents layout shifts (CLS) by enforcing dimensions.
-- **Fallback Support**: Automatically swaps the source if the image fails to load.
-- **Zoom/Lightbox**: Click-to-expand functionality.
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-img>` |
+| Behavior | `img` |
+| Semantic | `<img>` |
+| Base Class | `wb-img` |
+| Category | Media |
 
-## 2. User Guide
+## Properties
 
-### Basic Usage
-Add `data-wb="img"` to an `<img>` tag.
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `src` | string | Required | Image source URL |
+| `alt` | string | `""` | Alt text for accessibility |
+| `lazy` | boolean | `false` | Enable lazy loading |
+| `zoomable` | boolean | `false` | Enable click-to-zoom lightbox |
+| `aspectRatio` | string | `""` | CSS aspect ratio (e.g., "16/9") |
+| `fallback` | string | `""` | URL of fallback image on error |
+| `fit` | string | `"cover"` | Object-fit: `cover`, `contain`, `fill` |
+
+## Usage
+
+### Custom Element
 
 ```html
-<img data-wb="img" src="photo.jpg">
+<wb-img src="photo.jpg" alt="Photo description"></wb-img>
 ```
 
-### Configuration Options
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data-lazy` | Boolean | `false` | Enable lazy loading. |
-| `data-zoomable` | Boolean | `false` | Enable click-to-zoom lightbox. |
-| `data-aspect-ratio` | String | `''` | CSS aspect ratio (e.g., "16/9"). |
-| `data-fallback` | String | `''` | URL of image to show on error. |
-
-## 3. Examples
-
-### Example 1: Performance Optimized
-An image that loads lazily and reserves space to prevent layout shifts.
+### Native Image (Enhanced)
 
 ```html
-<img 
-  data-wb="img" 
+<img data-wb="img" src="photo.jpg" alt="Photo">
+```
+
+### Lazy Loading
+
+```html
+<wb-img src="large-image.jpg" lazy alt="Large photo"></wb-img>
+```
+
+### With Aspect Ratio
+
+```html
+<wb-img 
   src="banner.jpg" 
-  data-lazy="true" 
-  data-aspect-ratio="16/9">
+  aspectRatio="16/9" 
+  alt="Banner">
+</wb-img>
 ```
 
-### Example 2: Robust Profile Picture
-A user avatar with a fallback in case the link is broken.
+### Zoomable
 
 ```html
-<img 
-  data-wb="img" 
-  src="user-123.jpg" 
-  data-fallback="/assets/default-avatar.png" 
-  alt="User Avatar">
+<wb-img src="artwork.jpg" zoomable alt="Click to zoom"></wb-img>
 ```
 
-## 4. Why It Works
-The component sets the `loading="lazy"` attribute and applies `aspect-ratio` styles directly to the element. The fallback mechanism uses the native `onerror` event handler to swap the `src` attribute if the browser fails to load the initial image.
+### With Fallback
+
+```html
+<wb-img 
+  src="user-avatar.jpg" 
+  fallback="/assets/default-avatar.png"
+  alt="User avatar">
+</wb-img>
+```
+
+### Object Fit
+
+```html
+<wb-img src="photo.jpg" fit="contain" alt="Photo"></wb-img>
+<wb-img src="photo.jpg" fit="cover" alt="Photo"></wb-img>
+```
+
+## Generated Structure
+
+```html
+<div class="wb-img" style="aspect-ratio: 16/9">
+  <img 
+    class="wb-img__image"
+    src="photo.jpg"
+    alt="Description"
+    loading="lazy">
+</div>
+```
+
+## CSS Classes
+
+| Class | Applied When | Description |
+|-------|--------------|-------------|
+| `.wb-img` | Always | Base styling |
+| `.wb-img--lazy` | `lazy` | Lazy loading enabled |
+| `.wb-img--zoomable` | `zoomable` | Click-to-zoom enabled |
+| `.wb-img--loading` | Loading | Image loading |
+| `.wb-img--loaded` | Loaded | Image loaded |
+| `.wb-img--error` | Error | Failed to load |
+
+## Methods
+
+| Method | Description |
+|--------|-------------|
+| `zoom()` | Opens lightbox (if zoomable) |
+| `load()` | Forces image load |
+
+```javascript
+const img = document.querySelector('wb-img');
+
+// Open lightbox
+img.zoom();
+```
+
+## Events
+
+| Event | Description |
+|-------|-------------|
+| `load` | Image loaded successfully |
+| `error` | Image failed to load |
+| `wb:img:zoom` | Lightbox opened |
+
+```javascript
+img.addEventListener('load', () => {
+  console.log('Image loaded');
+});
+
+img.addEventListener('error', () => {
+  console.log('Image failed to load');
+});
+```
+
+## CSS API
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--wb-img-radius` | `0` | Border radius |
+| `--wb-img-bg` | `var(--bg-secondary)` | Placeholder background |
+| `--wb-img-transition` | `opacity 0.3s ease` | Load transition |
+
+## Accessibility
+
+| Attribute | Value |
+|-----------|-------|
+| `alt` | Always required for meaningful images |
+| `role` | `img` (implicit) |
+
+Best practices:
+- Always provide descriptive `alt` text
+- Use empty `alt=""` for decorative images
+- Use `aspectRatio` to prevent layout shifts

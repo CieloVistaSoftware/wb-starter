@@ -68,7 +68,7 @@
   </div>
 
   <script type="module">
-    import { mdhtml } from '/src/behaviors/js/mdhtml.js';
+    import { mdhtml } from '/src/wb-viewmodels/mdhtml.js';
     import hljs from '/src/lib/highlight.js';
     
     // Hide close button if not opened via script/link
@@ -78,7 +78,11 @@
     }
 
     const params = new URLSearchParams(window.location.search);
-    const file = params.get('file');
+    let file = params.get('file') || '/docs/index.md';
+    // If file is not an absolute path, prefix with /docs/
+    if (file && !file.startsWith('/') && !file.startsWith('docs/')) {
+      file = '/docs/' + file.replace(/^\/?/, '');
+    }
     
     // Helper to resolve relative paths
     function resolveRelativePath(base, relative) {

@@ -1,73 +1,83 @@
-# Card Minimizable Component
+# Card Minimizable - WB Framework v3.0
+
+Card that can be minimized like a window.
 
 ## Overview
-The `cardminimizable` component allows the user to collapse the card body entirely, leaving only the header visible. This is common in dashboard widgets or accordion-like interfaces.
 
-## Internals & Lifecycle
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-cardminimizable>` |
+| Behavior | `cardminimizable` |
+| Semantic | `<article>` |
+| Base Class | `wb-card wb-card-minimizable wb-card--minimizable` |
+| Inherits | card |
 
-### Initialization
-1.  **Header Controls**: Injects a minimize button (`−` or `+`) into the header, aligned to the right.
-2.  **Content Transition**:
-    - The main content area is styled with `transition: all 0.3s ease`.
-    - When minimized, it applies: `max-height: 0`, `padding: 0 1rem`, `opacity: 0`.
-3.  **Footer Handling**: If a footer exists, it is hidden (`display: none`) when the card is minimized.
-4.  **Event Handling**:
-    - Toggles the `wb-card--minimized` class.
-    - Dispatches a custom event.
+## Properties
 
-### Events
-- **Event Name**: `wb:cardminimizable:toggle`
-- **Bubbles**: `true`
-- **Detail Object**: `{ minimized: boolean }`
+Inherits all [card properties](./card.md) plus:
 
-### DOM Structure
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `minimized` | boolean | `false` | Initial minimized state |
 
-<article class="wb-card wb-card--minimizable">
-  <header class="wb-card__header">
-    <h3>Title</h3>
-    <!-- Toggle Button -->
-    <button class="wb-card__minimize-btn">−</button>
-  </header>
-  
-  <!-- Collapsible Body -->
-  <main class="wb-card__minimizable-content" style="max-height: 1000px; opacity: 1;">
-    ...
-  </main>
-</article>
+## Usage
+
+### Basic Minimizable
 
 ```html
-<article class="wb-card wb-card--minimizable">
-  <header class="wb-card__header">
-    <h3>Title</h3>
-    <!-- Toggle Button -->
-    <button class="wb-card__minimize-btn">−</button>
-  </header>
-  
-  <!-- Collapsible Body -->
-  <main class="wb-card__minimizable-content" style="max-height: 1000px; opacity: 1;">
-    ...
-  </main>
-</article>
+<wb-cardminimizable 
+  title="Dashboard Widget">
+  Widget content here.
+</wb-cardminimizable>
 ```
 
-## Attributes
-
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data-minimized` | boolean | `false` | Initial state. |
-
-## Usage Example
-
-<div data-wb="cardminimizable" 
-     data-title="Widget A" 
-     data-content="Widget content..."
-     data-minimized="false">
-</div>
+### Initially Minimized
 
 ```html
-<div data-wb="cardminimizable" 
-     data-title="Widget A" 
-     data-content="Widget content..."
-     data-minimized="false">
-</div>
+<wb-cardminimizable 
+  title="Collapsed Widget"
+  minimized>
+  This content is hidden initially.
+</wb-cardminimizable>
 ```
+
+## Events
+
+### wb:cardminimizable:toggle
+
+```javascript
+document.querySelector('wb-cardminimizable').addEventListener('wb:cardminimizable:toggle', (e) => {
+  console.log('Minimized:', e.detail.minimized);
+});
+```
+
+## JavaScript API
+
+```javascript
+const card = document.querySelector('wb-cardminimizable');
+
+// Control minimization
+card.wbCardMinimizable.minimize();
+card.wbCardMinimizable.expand();
+card.wbCardMinimizable.toggle();
+
+// Get state
+console.log(card.wbCardMinimizable.minimized);
+```
+
+## Accessibility
+
+- Minimize button has `aria-expanded` attribute
+- Minimize button has `aria-label` for screen readers
+- Keyboard: `Enter` or `Space` toggles state
+
+## CSS Classes
+
+| Class | Applied When |
+|-------|--------------|
+| `.wb-card--minimizable` | Always |
+| `.wb-card--minimized` | When minimized |
+
+## Schema
+
+Location: `src/wb-models/cardminimizable.schema.json`

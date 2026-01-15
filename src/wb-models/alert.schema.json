@@ -190,10 +190,10 @@
   },
   "test": {
     "setup": [
-      "<wb-alert message=\"Info alert\"></wb-alert>",
-      "<wb-alert variant=\"success\" title=\"Success\" message=\"Done!\"></wb-alert>",
-      "<wb-alert variant=\"error\" message=\"Error\" dismissible></wb-alert>",
-      "<div data-wb=\"alert\" data-message=\"Info alert\"></div>"
+      "<div x-behavior=\"alert\" data-message=\"Info alert\"></div>",
+      "<div x-behavior=\"alert\" data-variant=\"success\" data-title=\"Success\" data-message=\"Done!\"></div>",
+      "<div x-behavior=\"alert\" data-variant=\"error\" data-message=\"Error\" data-dismissible></div>",
+      "<div x-behavior=\"alert\" data-message=\"Info alert\"></div>"
     ],
     "matrix": {
       "combinations": [

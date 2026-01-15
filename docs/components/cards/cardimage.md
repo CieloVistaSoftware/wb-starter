@@ -1,379 +1,78 @@
-# Card Image
+# Card Image - WB Framework v3.0
 
-An image card component with optional title and subtitle. Perfect for galleries, portfolios, and media-rich content.
+Card with a featured image. Uses `<figure>` for semantic image containment.
 
 ## Overview
 
 | Property | Value |
 |----------|-------|
+| Custom Tag | `<wb-cardimage>` |
 | Behavior | `cardimage` |
-| Semantic | `<article>` |
-| Base Class | `wb-card` |
-| Category | Cards |
-| Icon | 🖼️ |
-
-## Inheritance
-
-```
-article (semantic) → card.base → cardimage
-```
-
-Card Image **IS-A** card, inheriting all base properties.
-Card Image **HAS-A** figure element containing the image.
+| Semantic | `<article>` + `<figure>` |
+| Base Class | `wb-card wb-card-image` |
+| Inherits | card |
 
 ## Properties
 
-### Inherited from Card Base
+Inherits all [card properties](./card.md) plus:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `title` | string | `""` | Card title below/above image |
-| `subtitle` | string | `""` | Subtitle below title |
-| `elevated` | boolean | `false` | Add drop shadow |
-| `hoverable` | boolean | `true` | Enable hover effects |
-
-### Card Image Specific
-
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `src` | string | **required** | Image source URL |
-| `alt` | string | `""` | Image alt text (accessibility) |
-| `aspect` | enum | `"16/9"` | Image aspect ratio |
-| `position` | enum | `"top"` | Image position relative to content |
-| `fit` | enum | `"cover"` | Image object-fit mode |
-
-### Aspect Ratio Options
-
-| Value | Description |
-|-------|-------------|
-| `16/9` | Widescreen (default) |
-| `4/3` | Standard |
-| `1/1` | Square |
-| `3/2` | Classic photo |
-| `21/9` | Ultra-wide |
-
-### Position Options
-
-| Value | Description |
-|-------|-------------|
-| `top` | Image above content (default) |
-| `bottom` | Image below content |
-
-### Fit Options
-
-| Value | Description |
-|-------|-------------|
-| `cover` | Fill container, crop if needed (default) |
-| `contain` | Fit within container, may letterbox |
-| `fill` | Stretch to fill |
-| `none` | Natural size |
+| `src` | string | `""` | Image URL |
+| `alt` | string | `""` | Image alt text |
+| `aspect` | string | `"16/9"` | Aspect ratio |
+| `position` | string | `"top"` | Image position: `top`, `bottom` |
+| `fit` | string | `"cover"` | Object fit: `cover`, `contain`, `fill` |
 
 ## Usage
 
 ### Basic Image Card
 
-<article 
-  data-wb="cardimage" 
-  data-src="photo.jpg">
-</article>
-
 ```html
-<article 
-  data-wb="cardimage" 
-  data-src="photo.jpg">
-</article>
+<wb-cardimage 
+  src="/images/hero.jpg" 
+  alt="Hero image"
+  title="Featured Image">
+  Optional content below the image.
+</wb-cardimage>
 ```
 
-### Image with Title
-
-<article 
-  data-wb="cardimage" 
-  data-src="photo.jpg" 
-  data-title="Beautiful Sunset"
-  data-alt="Orange sunset over mountains">
-</article>
+### With Custom Aspect Ratio
 
 ```html
-<article 
-  data-wb="cardimage" 
-  data-src="photo.jpg" 
-  data-title="Beautiful Sunset"
-  data-alt="Orange sunset over mountains">
-</article>
-```
-
-### Image with Full Details
-
-<article 
-  data-wb="cardimage" 
-  data-src="photo.jpg"
-  data-alt="Product photo"
-  data-title="Product Name"
-  data-subtitle="Category"
-  data-aspect="1/1"
-  data-position="top"
-  data-fit="cover">
-</article>
-
-```html
-<article 
-  data-wb="cardimage" 
-  data-src="photo.jpg"
-  data-alt="Product photo"
-  data-title="Product Name"
-  data-subtitle="Category"
-  data-aspect="1/1"
-  data-position="top"
-  data-fit="cover">
-</article>
-```
-
-### Square Image Card
-
-<article 
-  data-wb="cardimage" 
-  data-src="avatar.jpg"
-  data-aspect="1/1"
-  data-title="Team Member">
-</article>
-
-```html
-<article 
-  data-wb="cardimage" 
-  data-src="avatar.jpg"
-  data-aspect="1/1"
-  data-title="Team Member">
-</article>
+<wb-cardimage 
+  src="/images/square.jpg"
+  alt="Square image"
+  aspect="1/1"
+  title="Square Image Card">
+</wb-cardimage>
 ```
 
 ### Image at Bottom
 
-<article 
-  data-wb="cardimage" 
-  data-src="diagram.png"
-  data-position="bottom"
-  data-title="How It Works"
-  data-subtitle="Step-by-step guide">
-</article>
-
 ```html
-<article 
-  data-wb="cardimage" 
-  data-src="diagram.png"
-  data-position="bottom"
-  data-title="How It Works"
-  data-subtitle="Step-by-step guide">
-</article>
+<wb-cardimage 
+  src="/images/footer.jpg"
+  position="bottom"
+  title="Image Below Content">
+  Content appears above the image.
+</wb-cardimage>
 ```
 
-## Structure
+## Generated Structure
 
-<article class="wb-card wb-card--image">
-  <!-- Image in semantic figure -->
-  <figure class="wb-card__figure">
-    <img src="photo.jpg" 
-         alt="Description" 
-         class="wb-card__image"
-         style="aspect-ratio: 16/9; object-fit: cover;">
+```html
+<article class="wb-card wb-card-image">
+  <figure class="wb-card__figure" style="aspect-ratio: 16/9">
+    <img src="..." alt="..." loading="lazy">
   </figure>
-  
-  <!-- Header (when title is set) -->
   <header class="wb-card__header">
     <h3 class="wb-card__title">Title</h3>
-    <p class="wb-card__subtitle">Subtitle</p>
   </header>
-</article>
-
-```html
-<article class="wb-card wb-card--image">
-  <!-- Image in semantic figure -->
-  <figure class="wb-card__figure">
-    <img src="photo.jpg" 
-         alt="Description" 
-         class="wb-card__image"
-         style="aspect-ratio: 16/9; object-fit: cover;">
-  </figure>
-  
-  <!-- Header (when title is set) -->
-  <header class="wb-card__header">
-    <h3 class="wb-card__title">Title</h3>
-    <p class="wb-card__subtitle">Subtitle</p>
-  </header>
+  <main class="wb-card__main">Content</main>
 </article>
 ```
 
-## CSS Classes
+## Schema
 
-| Class | Description |
-|-------|-------------|
-| `.wb-card` | Base card styling |
-| `.wb-card--image` | Image card variant |
-| `.wb-card__figure` | Figure container |
-| `.wb-card__image` | Image element |
-
-## Containment (HAS-A)
-
-| Element | Selector | Description |
-|---------|----------|-------------|
-| Figure | `figure.wb-card__figure` | Semantic container for image |
-| Image | `img.wb-card__image` | The actual image |
-| Header | `header.wb-card__header` | Title and subtitle (inherited) |
-
-## Accessibility
-
-| Requirement | Implementation |
-|-------------|----------------|
-| Alt text | Set via `data-alt` attribute |
-| Figure | Uses semantic `<figure>` element |
-| Decorative images | Use empty alt (`data-alt=""`) |
-
-### Good Alt Text Examples
-
-<!-- Informative -->
-<article 
-  data-wb="cardimage" 
-  data-src="chart.png"
-  data-alt="Sales increased 25% in Q4 2024">
-</article>
-
-<!-- Decorative (empty alt) -->
-<article 
-  data-wb="cardimage" 
-  data-src="pattern.jpg"
-  data-alt="">
-</article>
-
-```html
-<!-- Informative -->
-<article 
-  data-wb="cardimage" 
-  data-src="chart.png"
-  data-alt="Sales increased 25% in Q4 2024">
-</article>
-
-<!-- Decorative (empty alt) -->
-<article 
-  data-wb="cardimage" 
-  data-src="pattern.jpg"
-  data-alt="">
-</article>
-```
-
-## Builder Integration
-
-### Sidebar
-
-```
-📁 Cards
-└── 🖼️ Card Image
-```
-
-### Property Panel
-
-| Group | Properties |
-|-------|------------|
-| Image | src, alt, aspect, position, fit |
-| Content | title, subtitle |
-| Style | elevated, hoverable |
-
-### Defaults
-
-```json
-{
-  "src": "",
-  "alt": "",
-  "aspect": "16/9",
-  "position": "top",
-  "fit": "cover",
-  "title": "",
-  "subtitle": ""
-}
-```
-
-## Test Matrix
-
-| Combination | Expected |
-|-------------|----------|
-| `src="test.jpg"` | Image displayed in figure |
-| `src="test.jpg" alt="Test"` | Image has alt attribute |
-| `src="test.jpg" title="Title"` | Header with title |
-| `src="test.jpg" title="T" subtitle="S"` | Header with both |
-| `src="test.jpg" aspect="1/1"` | Square aspect ratio |
-| `src="test.jpg" position="bottom"` | Image after content |
-
-## Examples
-
-### Photo Gallery Card
-
-<article 
-  data-wb="cardimage"
-  data-src="https://picsum.photos/400/300"
-  data-alt="Random nature photo"
-  data-title="Nature Collection"
-  data-subtitle="12 photos"
-  data-aspect="4/3">
-</article>
-
-```html
-<article 
-  data-wb="cardimage"
-  data-src="https://picsum.photos/400/300"
-  data-alt="Random nature photo"
-  data-title="Nature Collection"
-  data-subtitle="12 photos"
-  data-aspect="4/3">
-</article>
-```
-
-### Product Card
-
-<article 
-  data-wb="cardimage"
-  data-src="product.jpg"
-  data-alt="Blue wireless headphones"
-  data-title="Wireless Headphones"
-  data-subtitle="$99.99"
-  data-aspect="1/1"
-  data-elevated="true">
-</article>
-
-```html
-<article 
-  data-wb="cardimage"
-  data-src="product.jpg"
-  data-alt="Blue wireless headphones"
-  data-title="Wireless Headphones"
-  data-subtitle="$99.99"
-  data-aspect="1/1"
-  data-elevated="true">
-</article>
-```
-
-### Blog Post Card
-
-<article 
-  data-wb="cardimage"
-  data-src="blog-header.jpg"
-  data-alt="Person typing on laptop"
-  data-title="Getting Started with Web Components"
-  data-subtitle="5 min read"
-  data-aspect="16/9">
-</article>
-
-```html
-<article 
-  data-wb="cardimage"
-  data-src="blog-header.jpg"
-  data-alt="Person typing on laptop"
-  data-title="Getting Started with Web Components"
-  data-subtitle="5 min read"
-  data-aspect="16/9">
-</article>
-```
-
-## Related
-
-- [Card](./card.md) - Base card component
-- [Card Hero](./cardhero.md) - Background image card
-- [Card Overlay](./cardoverlay.md) - Text over image
-- [Figure Element](../semantic/figure.md) - Semantic figure
+Location: `src/wb-models/cardimage.schema.json`

@@ -43,10 +43,7 @@
           <slot></slot>
         </div>
         <div class="example-codes" wb-if="code">
-          <div class="code-tabs">
-            <button class="code-tab active">HTML</button>
-          </div>
-          <pre class="code-panel active">{{code}}</pre>
+          <wb-mdhtml data-size="sm" data-highlight data-captions="true">{{code}}</wb-mdhtml>
         </div>
       </div>
     </template>
@@ -220,7 +217,6 @@
     <demo-section title="📖 What is a wb-view Element?" description="A wb-view element is a custom element factory. It takes a template name and attributes, renders the template with those values, and automatically registers it as a standalone custom element tag.">
         
         <example-block label="How It Works">
-            <pre class="template-code">&lt;!-- 1. Define a template ONCE --&gt;
 &lt;template wb-view="badge-tag"&gt;
   &lt;span class="badge-tag badge-tag--{{variant}}"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/span&gt;
 &lt;/template&gt;
@@ -231,6 +227,21 @@
 
 &lt;!-- 3. Both produce: --&gt;
 &lt;span class="badge-tag badge-tag--primary"&gt;New&lt;/span&gt;</pre>
+            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+```html
+<!-- 1. Define a template ONCE -->
+<template wb-view="badge-tag">
+  <span class="badge-tag badge-tag--{{variant}}"><slot>{{text}}</slot></span>
+</template>
+
+<!-- 2. Use it TWO ways: -->
+<wb-view badge-tag variant="primary">New</wb-view>   <!-- wrapper syntax -->
+<badge-tag variant="primary">New</badge-tag>          <!-- auto-registered tag -->
+
+<!-- 3. Both produce: -->
+<span class="badge-tag badge-tag--primary">New</span>
+```
+            </wb-mdhtml>
         </example-block>
 
         <example-block label="Tag Naming Convention">
@@ -257,13 +268,23 @@
 
     <demo-section title="📦 Component Tiles" badge="4 examples" description="Reusable tiles for sidebars, palettes, and toolbars.">
         <example-block label="1. Define Template (ONE TIME)">
-            <pre class="template-code">&lt;template wb-view="component-tile"&gt;
   &lt;div class="tile"&gt;
     &lt;span class="tile__icon"&gt;{{icon}}&lt;/span&gt;
     &lt;span class="tile__label"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/span&gt;
     &lt;span class="tile__badge" wb-if="badge"&gt;{{badge}}&lt;/span&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
+            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+```html
+<template wb-view="component-tile">
+  <div class="tile">
+    <span class="tile__icon">{{icon}}</span>
+    <span class="tile__label"><slot>{{text}}</slot></span>
+    <span class="tile__badge" wb-if="badge">{{badge}}</span>
+  </div>
+</template>
+```
+            </wb-mdhtml>
         </example-block>
 
         <example-block label="2. Use It (MANY TIMES)">
@@ -278,7 +299,6 @@
 
     <demo-section title="🚨 Alert Boxes" badge="4 variants" description="Notification messages with different severity levels.">
         <example-block label="1. Define Template (ONE TIME)">
-            <pre class="template-code">&lt;template wb-view="alert-box"&gt;
   &lt;div class="alert alert--{{variant || 'info'}}"&gt;
     &lt;span class="alert__icon" wb-if="icon"&gt;{{icon}}&lt;/span&gt;
     &lt;div class="alert__content"&gt;
@@ -288,6 +308,20 @@
     &lt;button class="alert__dismiss" wb-if="dismissible"&gt;✕&lt;/button&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
+            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+```html
+<template wb-view="alert-box">
+  <div class="alert alert--{{variant || 'info'}}">
+    <span class="alert__icon" wb-if="icon">{{icon}}</span>
+    <div class="alert__content">
+      <div class="alert__heading" wb-if="heading">{{heading}}</div>
+      <div class="alert__message">{{message}}</div>
+    </div>
+    <button class="alert__dismiss" wb-if="dismissible">✕</button>
+  </div>
+</template>
+```
+            </wb-mdhtml>
         </example-block>
 
         <example-block label="2. Use It (MANY TIMES)">
@@ -300,7 +334,6 @@
 
     <demo-section title="📈 Stat Tiles" badge="with trends">
         <example-block label="1. Define Template (ONE TIME)">
-            <pre class="template-code">&lt;template wb-view="stat-tile"&gt;
   &lt;div class="stat"&gt;
     &lt;span class="stat__icon" wb-if="icon"&gt;{{icon}}&lt;/span&gt;
     &lt;div&gt;
@@ -310,6 +343,20 @@
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
+            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+```html
+<template wb-view="stat-tile">
+  <div class="stat">
+    <span class="stat__icon" wb-if="icon">{{icon}}</span>
+    <div>
+      <div class="stat__value">{{value}}</div>
+      <div class="stat__label"><slot>{{text}}</slot></div>
+      <div class="stat__trend stat__trend--{{trend}}" wb-if="trendValue">{{trendValue}}</div>
+    </div>
+  </div>
+</template>
+```
+            </wb-mdhtml>
         </example-block>
 
         <example-block label="2. Use It (MANY TIMES)">
@@ -324,12 +371,21 @@
 
     <demo-section title="🏷️ Badges" badge="4 variants">
         <example-block label="1. Define Template (ONE TIME)">
-            <pre class="template-code">&lt;template wb-view="badge-tag"&gt;
   &lt;span class="badge-tag badge-tag--{{variant || 'primary'}}"&gt;
     &lt;span wb-if="icon"&gt;{{icon}}&lt;/span&gt;
     &lt;slot&gt;{{text}}&lt;/slot&gt;
   &lt;/span&gt;
 &lt;/template&gt;</pre>
+            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+```html
+<template wb-view="badge-tag">
+  <span class="badge-tag badge-tag--{{variant || 'primary'}}">
+    <span wb-if="icon">{{icon}}</span>
+    <slot>{{text}}</slot>
+  </span>
+</template>
+```
+            </wb-mdhtml>
         </example-block>
 
         <example-block label="2. Use It (Optimized with Loop)">
@@ -349,11 +405,19 @@
 
     <demo-section title="🔄 Loops (wb-for)" badge="dynamic lists" description="Use wb-for to render lists from JSON arrays.">
         <example-block label="1. Define Template with Loop (ONE TIME)">
-            <pre class="template-code">&lt;template wb-view="tag-list"&gt;
   &lt;div class="tags"&gt;
     &lt;span class="tag" wb-for="tag in tags"&gt;{{tag}}&lt;/span&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
+            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+```html
+<template wb-view="tag-list">
+  <div class="tags">
+    <span class="tag" wb-for="tag in tags">{{tag}}</span>
+  </div>
+</template>
+```
+            </wb-mdhtml>
         </example-block>
 
         <example-block label="2. Use It with Data">
@@ -364,7 +428,6 @@
     <demo-section title="🧱 Composition" badge="nested parts" description="Compose complex UIs by nesting views inside other views.">
         
         <example-block label="1. Define Composite Template (uses other views!)">
-            <pre class="template-code">&lt;template wb-view="user-card"&gt;
   &lt;div class="user-card"&gt;
     &lt;wb-avatar initials="{{initials}}" size="lg" status="{{status}}"&gt;&lt;/wb-avatar&gt;
     &lt;div class="user-card__info"&gt;
@@ -374,6 +437,20 @@
     &lt;slot&gt;&lt;/slot&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
+            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+```html
+<template wb-view="user-card">
+  <div class="user-card">
+    <wb-avatar initials="{{initials}}" size="lg" status="{{status}}"></wb-avatar>
+    <div class="user-card__info">
+      <div class="user-card__name">{{name}}</div>
+      <div class="user-card__role">{{role}}</div>
+    </div>
+    <slot></slot>
+  </div>
+</template>
+```
+            </wb-mdhtml>
         </example-block>
           
         <example-block label="2. Use It (Views inside Views!)">
@@ -440,33 +517,21 @@
       document.querySelectorAll('example-block').forEach(block => {
         let html = block.innerHTML;
         const lines = html.split('\n');
-        
         // Remove empty first/last lines
         while(lines.length && !lines[0].trim()) lines.shift();
         while(lines.length && !lines[lines.length-1].trim()) lines.pop();
-        
         if (lines.length === 0) return;
-
         // Find min indent
         const minIndent = lines.reduce((min, line) => {
           if (!line.trim()) return min;
           const match = line.match(/^\s*/);
           return Math.min(min, match ? match[0].length : Infinity);
         }, Infinity);
-
-        // Dedent and escape
-        const formatted = lines.map(line => {
-          return line.slice(minIndent)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;');
-        }).join('\n');
-
-        // Set as attribute for the template to use
-        // Add a hidden span with a tag character to bypass wb-views auto-escaping
-        // 'cause wb-views assumes "no tags = safe to escape" which ruins already-escaped code
-        block.setAttribute('code', formatted + '<span style="display:none"></span>');
+        // Dedent and join
+        const formatted = lines.map(line => line.slice(minIndent)).join('\n');
+        // Wrap in markdown code block for mdhtml
+        const md = '```html\n' + formatted + '\n```';
+        block.setAttribute('code', md);
       });
 
       // 2. Initialize views system

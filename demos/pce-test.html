@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PCE (Pseudo-Custom Elements) Test</title>
+    <title>PCE (Pseudo-Custom Elements) Test - v3.0</title>
+    <link rel="stylesheet" href="../src/styles/normalize.css">
     <link rel="stylesheet" href="../src/styles/themes.css">
     <link rel="stylesheet" href="../src/styles/site.css">
+    <link rel="stylesheet" href="../src/styles/safari-fixes.css">
     <script type="module">
         import WB from '../src/core/wb-lazy.js';
         
-        // Initialize WB directly for this demo
+        // Initialize WB v3.0
         WB.init({
             debug: true,
             scan: true,
@@ -25,214 +27,396 @@
             background: var(--bg-color); 
             color: var(--text-primary);
         }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
-        h2 { margin-bottom: 1rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 2rem; 
+            margin-bottom: 3rem; 
+        }
+        h2 { 
+            margin-bottom: 1rem; 
+            border-bottom: 2px solid var(--border-color, #e5e7eb); 
+            padding-bottom: 0.5rem; 
+        }
+        .version-badge {
+            display: inline-block;
+            background: var(--primary, #6366f1);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        .syntax-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .syntax-comparison > div {
+            background: rgba(0,0,0,0.2);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .syntax-comparison h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        .syntax-comparison code {
+            font-size: 0.85rem;
+        }
+        @media (max-width: 600px) {
+            .syntax-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
 
         /* Ensure custom elements are block-level so IntersectionObserver sees them */
-        profile-card, hero-card, stats-card, testimonial-card, 
-        video-card, file-card, notification-card, basic-card, 
-        image-card, overlay-card, portfolio-card, link-card, 
-        horizontal-card, button-tooltip {
+        wb-cardprofile, wb-cardhero, wb-cardstats, wb-cardtestimonial, 
+        wb-cardvideo, wb-cardfile, wb-cardnotification, wb-card, 
+        wb-cardimage, wb-cardoverlay, wb-cardportfolio, wb-cardlink, 
+        wb-cardhorizontal, profile-card, hero-card, stats-card,
+        testimonial-card, video-card, file-card, notification-card,
+        basic-card, image-card, overlay-card, portfolio-card,
+        link-card, horizontal-card {
             display: block;
-            min-height: 50px; /* Give them some initial size */
+            min-height: 50px;
         }
     </style>
 </head>
 <body>
-    <h1>PCE Test Suite</h1>
+    <h1>PCE Test Suite <span class="version-badge">v3.0</span></h1>
     
     <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--primary);">
-        <h3 style="margin-top: 0;">What is this?</h3>
-        <p>This page demonstrates <strong>Pseudo-Custom Elements (PCE)</strong>. Instead of using standard HTML with <code>x-behavior</code> attributes (e.g., <code>&lt;div x-behavior="card"&gt;</code>), we use custom tag names like <code>&lt;profile-card&gt;</code>.</p>
+        <h3 style="margin-top: 0;">What is PCE? (Pseudo-Custom Elements)</h3>
+        <p>PCE allows you to use <strong>semantic tag names</strong> instead of generic divs with behavior attributes. WB v3.0 supports two naming conventions:</p>
         
-        <h3>How it works</h3>
-        <p>The core library (<code>wb-lazy.js</code>) maintains a mapping of these custom tags to their corresponding behaviors. The process is fully automated:</p>
-        <ol style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-            <li><strong>Detection:</strong> The <code>IntersectionObserver</code> (lazy) or initial scan (eager) identifies the custom tag in the DOM.</li>
-            <li><strong>Lookup:</strong> The system checks the <code>customElementMappings</code> registry to find which behavior module (e.g., <code>cardprofile</code>) matches the tag (e.g., <code>profile-card</code>).</li>
-            <li><strong>Dynamic Import:</strong> The JavaScript module for that behavior is fetched <em>only if it hasn't been loaded yet</em>. This keeps the initial page load fast.</li>
-            <li><strong>Hydration:</strong> The behavior function is called with the element as its argument. It utilizes the properties defined in <code>data-</code> attributes to render internal HTML, apply CSS classes, and attach event listeners in-place.</li>
-        </ol>
-        <p style="margin-top: 1rem; font-size: 0.9em; border-left: 3px solid var(--text-muted); padding-left: 1rem;">
-            <strong>Note:</strong> Unlike native Web Components, this does not use Shadow DOM. The element is enhanced in standard DOM, preserving global styles and simplicity while offering a component-like developer experience.
-        </p>
+        <div class="syntax-comparison">
+            <div>
+                <h4>✅ WB Namespace (Recommended)</h4>
+                <code>&lt;wb-cardprofile data-name="Sarah"&gt;</code>
+            </div>
+            <div>
+                <h4>✅ Noun-First (Also Supported)</h4>
+                <code>&lt;profile-card data-name="Sarah"&gt;</code>
+            </div>
+        </div>
+        
+        <p style="font-size: 0.9rem; color: var(--text-muted);">Both are equivalent to: <code>&lt;div x-behavior="cardprofile" data-name="Sarah"&gt;</code></p>
 
-        <h3>Is the startup quicker?</h3>
-        <p><strong>Yes.</strong> Traditional frameworks often download a large "bundle" of JavaScript containing every possible component before the page can start. This approach uses <strong>Lazy Loading</strong>:</p>
+        <h3>WB v3.0 Architecture</h3>
         <ul style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-            <li><strong>Initial Load:</strong> Only the tiny core library (<code>wb-lazy.js</code>) is downloaded.</li>
-            <li><strong>On Scroll:</strong> The code for <code>&lt;profile-card&gt;</code> is ignored until you actually scroll it into view.</li>
-            <li><strong>Result:</strong> Near-instant page startup, even with hundreds of available component types.</li>
+            <li><strong>Light DOM Only:</strong> No Shadow DOM - all elements enhanced in standard DOM</li>
+            <li><strong>Lazy Loading:</strong> Behaviors loaded on-demand via IntersectionObserver</li>
+            <li><strong>WBServices Pattern:</strong> Dependency injection for shared services</li>
+            <li><strong>HTMLElement Inheritance:</strong> Components extend HTMLElement properly</li>
+            <li><strong>x-behavior Attribute:</strong> Standard attribute for behavior declaration</li>
         </ul>
 
-        <h3>Behind the Scenes</h3>
-        <p>The registry in <code>src/core/wb-lazy.js</code> defines these mappings:</p>
-        <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 4px; overflow-x: auto; font-family: monospace; font-size: 0.9em; margin: 0.5rem 0;">
-<pre style="margin: 0;">const customElementMappings = [
-  { selector: 'profile-card', behavior: 'cardprofile' },
-  { selector: 'hero-card',    behavior: 'cardhero' },
-  { selector: 'stats-card',   behavior: 'cardstats' },
-  // ... and so on
+        <h3>How It Works</h3>
+        <ol style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+            <li><strong>Detection:</strong> IntersectionObserver (lazy) or WB.scan() (eager) identifies custom tags</li>
+            <li><strong>Lookup:</strong> <code>customElementMappings</code> registry maps tag → behavior</li>
+            <li><strong>Dynamic Import:</strong> Behavior module fetched only when needed</li>
+            <li><strong>Hydration:</strong> Behavior function enhances element with data-* attributes</li>
+        </ol>
+
+        <h3>Registry Example</h3>
+        <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 4px; overflow-x: auto; font-family: monospace; font-size: 0.85em; margin: 0.5rem 0;">
+<pre style="margin: 0;">// src/core/wb-lazy.js
+const customElementMappings = [
+  // wb-* namespace (primary)
+  { selector: 'wb-cardprofile', behavior: 'cardprofile' },
+  { selector: 'wb-cardhero',    behavior: 'cardhero' },
+  { selector: 'wb-cardstats',   behavior: 'cardstats' },
+  
+  // noun-first aliases (also supported)
+  { selector: 'profile-card',   behavior: 'cardprofile' },
+  { selector: 'hero-card',      behavior: 'cardhero' },
+  { selector: 'stats-card',     behavior: 'cardstats' },
 ];</pre>
         </div>
 
-        <h3>Configuration</h3>
-        <p>Attributes on the custom element are automatically passed to the behavior function as configuration. For example:</p>
-        <p>
-            <code>&lt;profile-card data-name="Sarah"&gt;</code> is functionally equivalent to<br> 
-            <code>&lt;div x-behavior="cardprofile" data-name="Sarah"&gt;</code>.
-        </p>
-
-        <p style="margin-top: 1rem;">This allows for a cleaner, more semantic HTML syntax while maintaining the benefits of the behavior-driven architecture (lazy loading, encapsulation, separation of concerns).</p>
+        <h3>Performance Benefits</h3>
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+            <li><strong>Initial Load:</strong> Only core library (~15KB) loads upfront</li>
+            <li><strong>On Scroll:</strong> Component code loads when element enters viewport</li>
+            <li><strong>Caching:</strong> Loaded behaviors cached for instant reuse</li>
+            <li><strong>Result:</strong> Near-instant page startup with 100+ component types</li>
+        </ul>
     </div>
 
-    <p>Verifying that custom tags automatically inject behaviors.</p>
-
-    <h2>1. Profile Card (&lt;profile-card&gt;)</h2>
+    <h2>1. Profile Card</h2>
+    <p>Using <code>&lt;wb-cardprofile&gt;</code> and <code>&lt;profile-card&gt;</code> (both work):</p>
     <div class="grid">
-        <profile-card 
-            id="profile-card-1"
+        <wb-cardprofile 
+            id="wb-cardprofile-1"
             data-name="Sarah Connor" 
             data-role="Resistance Leader" 
             data-bio="No fate but what we make." 
             data-avatar="https://i.pravatar.cc/150?img=1"
             data-cover="https://picsum.photos/400/100?r=1">
+        </wb-cardprofile>
+        
+        <profile-card 
+            id="profile-card-1"
+            data-name="John Connor" 
+            data-role="Future Leader" 
+            data-bio="The future is not set." 
+            data-avatar="https://i.pravatar.cc/150?img=3"
+            data-cover="https://picsum.photos/400/100?r=2">
         </profile-card>
     </div>
 
-    <h2>2. Hero Card (&lt;hero-card&gt;)</h2>
+    <h2>2. Hero Card</h2>
+    <p>Using <code>&lt;wb-cardhero&gt;</code>:</p>
     <div class="grid">
-        <hero-card 
-            id="hero-card-1"
-            data-title="Welcome to the Future" 
-            data-subtitle="It's brighter than you think." 
+        <wb-cardhero 
+            id="wb-cardhero-1"
+            data-title="Welcome to WB v3.0" 
+            data-subtitle="Light DOM • Lazy Loading • Zero Dependencies" 
             data-height="300px"
             data-align="center"
             data-overlay="true">
-        </hero-card>
+        </wb-cardhero>
     </div>
 
-    <h2>3. Stats Card (&lt;stats-card&gt;)</h2>
+    <h2>3. Stats Card</h2>
+    <p>Using <code>&lt;wb-cardstats&gt;</code>:</p>
     <div class="grid">
-        <stats-card 
-            id="stats-card-1"
+        <wb-cardstats 
+            id="wb-cardstats-1"
             data-label="Total Users" 
             data-value="1,234,567" 
             data-icon="👥" 
             data-trend="up" 
             data-trend-value="12%">
-        </stats-card>
-        <stats-card 
-            id="stats-card-2"
+        </wb-cardstats>
+        <wb-cardstats 
+            id="wb-cardstats-2"
             data-label="Bounce Rate" 
             data-value="42%" 
             data-icon="📉" 
             data-trend="down" 
             data-trend-value="5%">
-        </stats-card>
+        </wb-cardstats>
+        <wb-cardstats 
+            id="wb-cardstats-3"
+            data-label="Page Views" 
+            data-value="8.2M" 
+            data-icon="👁️" 
+            data-trend="up" 
+            data-trend-value="24%">
+        </wb-cardstats>
     </div>
 
-    <h2>4. Testimonial Card (&lt;testimonial-card&gt;)</h2>
+    <h2>4. Testimonial Card</h2>
+    <p>Using <code>&lt;wb-cardtestimonial&gt;</code>:</p>
     <div class="grid">
-        <testimonial-card 
-            id="testimonial-card-1"
-            data-quote="This library saved me hours of work. Highly recommended!" 
+        <wb-cardtestimonial 
+            id="wb-cardtestimonial-1"
+            data-quote="WB v3.0 changed how we build UIs. The lazy loading alone saved us 2 seconds on initial load!" 
             data-author="Jane Doe" 
             data-role="CTO, TechCorp" 
             data-rating="5"
             data-avatar="https://i.pravatar.cc/150?img=5">
-        </testimonial-card>
+        </wb-cardtestimonial>
     </div>
 
-    <h2>5. Video Card (&lt;video-card&gt;)</h2>
+    <h2>5. Video Card</h2>
+    <p>Using <code>&lt;wb-cardvideo&gt;</code>:</p>
     <div class="grid">
-        <video-card 
-            id="video-card-1"
+        <wb-cardvideo 
+            id="wb-cardvideo-1"
             data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" 
             data-title="Blooming Flower"
             data-controls="true">
-        </video-card>
+        </wb-cardvideo>
     </div>
 
-    <h2>6. File Card (&lt;file-card&gt;)</h2>
+    <h2>6. File Card</h2>
+    <p>Using <code>&lt;wb-cardfile&gt;</code>:</p>
     <div class="grid">
-        <file-card 
-            id="file-card-1"
-            data-filename="project-specs-v2.pdf" 
+        <wb-cardfile 
+            id="wb-cardfile-1"
+            data-filename="wb-framework-v3.0-docs.pdf" 
             data-type="pdf" 
             data-size="2.4 MB" 
-            data-date="Jan 1, 2026"
+            data-date="Jan 14, 2026"
             data-downloadable="true">
-        </file-card>
+        </wb-cardfile>
+        <wb-cardfile 
+            id="wb-cardfile-2"
+            data-filename="component-library.zip" 
+            data-type="zip" 
+            data-size="8.1 MB" 
+            data-date="Jan 14, 2026"
+            data-downloadable="true">
+        </wb-cardfile>
     </div>
 
-    <h2>7. Notification Card (&lt;notification-card&gt;)</h2>
+    <h2>7. Notification Card</h2>
+    <p>Using <code>&lt;wb-cardnotification&gt;</code>:</p>
     <div class="grid">
-        <notification-card 
-            id="notification-card-1"
+        <wb-cardnotification 
+            id="wb-cardnotification-1"
             data-type="info" 
-            data-title="Update Available" 
-            data-message="A new version of the software is ready to install."
+            data-title="WB v3.0 Released" 
+            data-message="The new version includes Light DOM architecture and improved lazy loading."
             data-dismissible="true">
-        </notification-card>
-        <notification-card 
-            id="notification-card-2"
+        </wb-cardnotification>
+        <wb-cardnotification 
+            id="wb-cardnotification-2"
+            data-type="success" 
+            data-title="Tests Passing" 
+            data-message="All 26 cross-browser tests are passing."
+            data-dismissible="true">
+        </wb-cardnotification>
+        <wb-cardnotification 
+            id="wb-cardnotification-3"
+            data-type="warning" 
+            data-title="Legacy Syntax Detected" 
+            data-message="Please migrate from data-wb to wb-* tags."
+            data-dismissible="true">
+        </wb-cardnotification>
+        <wb-cardnotification 
+            id="wb-cardnotification-4"
             data-type="error" 
             data-title="Connection Lost" 
             data-message="Please check your internet connection."
             data-dismissible="true">
-        </notification-card>
+        </wb-cardnotification>
     </div>
 
-    <h2>8. Phase 2 Tags</h2>
+    <h2>8. Basic Card Variants</h2>
+    <p>Using <code>&lt;wb-card&gt;</code>, <code>&lt;wb-cardimage&gt;</code>, <code>&lt;wb-cardoverlay&gt;</code>:</p>
     <div class="grid">
-        <basic-card id="basic-card-1" data-title="Basic Card">
-            <p>This is a basic card.</p>
-        </basic-card>
+        <wb-card id="wb-card-1" data-title="Basic Card">
+            <p>This is a basic card with the wb-* namespace.</p>
+        </wb-card>
 
-        <image-card id="image-card-1" data-src="https://picsum.photos/400/200" data-title="Image Card"></image-card>
+        <wb-cardimage 
+            id="wb-cardimage-1" 
+            data-src="https://picsum.photos/400/200" 
+            data-title="Image Card">
+        </wb-cardimage>
 
-        <overlay-card id="overlay-card-1" data-image="https://picsum.photos/400/300" data-title="Overlay Card" data-subtitle="Subtitle"></overlay-card>
-
-        <portfolio-card 
-             id="portfolio-card-1"
-             data-name="Portfolio User" 
-             data-title="Developer" 
-             data-company="Company" 
-             data-email="user@example.com">
-        </portfolio-card>
-
-        <link-card id="link-card-1" data-title="Link Card" data-href="#" data-description="Click me"></link-card>
-
-        <horizontal-card id="horizontal-card-1" data-title="Horizontal Card" data-image="https://picsum.photos/150/150" data-subtitle="Subtitle"></horizontal-card>
+        <wb-cardoverlay 
+            id="wb-cardoverlay-1" 
+            data-image="https://picsum.photos/400/300" 
+            data-title="Overlay Card" 
+            data-subtitle="With gradient overlay">
+        </wb-cardoverlay>
     </div>
 
-    <h2>9. Interactive Elements</h2>
+    <h2>9. Portfolio & Link Cards</h2>
+    <p>Using <code>&lt;wb-cardportfolio&gt;</code>, <code>&lt;wb-cardlink&gt;</code>, <code>&lt;wb-cardhorizontal&gt;</code>:</p>
     <div class="grid">
-        <button-tooltip id="btn-tooltip-1" class="wb-btn" 
-            tooltip="I am a tooltip" 
-            tooltip-position="top" 
-            toast-message="Button clicked!">
-            Hover & Click Me (Custom Element)
-        </button-tooltip>
+        <wb-cardportfolio 
+            id="wb-cardportfolio-1"
+            data-name="John Developer" 
+            data-title="Senior Engineer" 
+            data-company="Cielo Vista Software" 
+            data-email="john@example.com">
+        </wb-cardportfolio>
 
-        <button id="btn-generic-1" class="wb-btn" 
-            tooltip="I am a generic button tooltip" 
-            tooltip-position="bottom"
-            toast-message="Generic button clicked!">
-            Hover & Click Me (Generic Attribute)
+        <wb-cardlink 
+            id="wb-cardlink-1" 
+            data-title="View Documentation" 
+            data-href="/docs" 
+            data-description="Complete WB v3.0 API reference">
+        </wb-cardlink>
+
+        <wb-cardhorizontal 
+            id="wb-cardhorizontal-1" 
+            data-title="Horizontal Card" 
+            data-image="https://picsum.photos/150/150" 
+            data-subtitle="Side-by-side layout">
+        </wb-cardhorizontal>
+    </div>
+
+    <h2>10. Interactive Elements</h2>
+    <p>Using <code>x-behavior</code> attributes for behaviors:</p>
+    <div class="grid">
+        <button id="btn-tooltip-1" class="wb-btn" 
+            x-behavior="tooltip toast"
+            data-tooltip="I am a tooltip" 
+            data-tooltip-position="top" 
+            data-toast-message="Button clicked!">
+            Hover & Click Me (x-behavior)
         </button>
 
-        <span id="span-tooltip-1" tooltip="I am a span tooltip" style="padding: 1rem; background: white; border-radius: 4px; display: inline-block;">
-            Hover Me (Span)
+        <button id="btn-ripple-1" class="wb-btn" x-behavior="ripple">
+            Ripple Button (x-behavior)
+        </button>
+
+        <span id="span-tooltip-1" 
+            x-behavior="tooltip"
+            data-tooltip="Tooltips work on any element" 
+            style="padding: 1rem; background: var(--bg-secondary); border-radius: 4px; display: inline-block; cursor: help;">
+            Hover Me (Span with tooltip)
         </span>
 
-        <button id="btn-ripple-1" class="wb-btn" ripple>
-            Ripple Button (Attribute)
-        </button>
-
-        <span id="span-badge-1" badge="success">Success Badge</span>
+        <wb-badge id="wb-badge-1" data-variant="success">Success Badge</wb-badge>
     </div>
+
+    <h2>11. Layout Components</h2>
+    <p>Using <code>&lt;wb-grid&gt;</code>, <code>&lt;wb-stack&gt;</code>, <code>&lt;wb-flex&gt;</code>:</p>
+    
+    <wb-grid id="wb-grid-1" data-cols="3" data-gap="1rem" style="margin-bottom: 2rem;">
+        <wb-card data-title="Grid Item 1"><p>Content</p></wb-card>
+        <wb-card data-title="Grid Item 2"><p>Content</p></wb-card>
+        <wb-card data-title="Grid Item 3"><p>Content</p></wb-card>
+    </wb-grid>
+
+    <wb-stack id="wb-stack-1" data-gap="0.5rem" style="margin-bottom: 2rem;">
+        <wb-alert data-type="info" data-message="Stack item 1"></wb-alert>
+        <wb-alert data-type="success" data-message="Stack item 2"></wb-alert>
+        <wb-alert data-type="warning" data-message="Stack item 3"></wb-alert>
+    </wb-stack>
+
+    <h2>12. Feedback Components</h2>
+    <p>Using <code>&lt;wb-spinner&gt;</code>, <code>&lt;wb-progress&gt;</code>, <code>&lt;wb-avatar&gt;</code>:</p>
+    <div class="grid" style="align-items: center;">
+        <wb-spinner id="wb-spinner-1" data-size="lg"></wb-spinner>
+        <wb-progress id="wb-progress-1" data-value="75" data-max="100"></wb-progress>
+        <wb-avatar id="wb-avatar-1" data-src="https://i.pravatar.cc/150?img=8" data-size="lg"></wb-avatar>
+        <wb-rating id="wb-rating-1" data-value="4" data-max="5"></wb-rating>
+    </div>
+
+    <hr style="margin: 3rem 0; border: none; border-top: 1px solid var(--border-color);">
+
+    <h2>Debug: Check Behavior Status</h2>
+    <button class="wb-btn" onclick="checkStatus()">Check All Elements</button>
+    <pre id="status-output" style="background: var(--bg-secondary); padding: 1rem; border-radius: 4px; margin-top: 1rem; overflow-x: auto;"></pre>
+
+    <script>
+        function checkStatus() {
+            const elements = document.querySelectorAll('[id]');
+            const results = [];
+            
+            elements.forEach(el => {
+                if (el.id.startsWith('wb-') || el.id.includes('-card-') || el.id.includes('btn-') || el.id.includes('span-')) {
+                    const ready = el.dataset.wbReady || el.hasAttribute('data-wb-ready');
+                    const tag = el.tagName.toLowerCase();
+                    results.push({
+                        id: el.id,
+                        tag: tag,
+                        ready: ready ? '✅' : '❌',
+                        behavior: el.dataset.wbReady || el.getAttribute('x-behavior') || 'auto'
+                    });
+                }
+            });
+            
+            document.getElementById('status-output').textContent = JSON.stringify(results, null, 2);
+        }
+        
+        // Auto-check after 2 seconds
+        setTimeout(checkStatus, 2000);
+    </script>
 
 </body>
 </html>

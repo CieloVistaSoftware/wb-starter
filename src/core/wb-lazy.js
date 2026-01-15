@@ -157,7 +157,8 @@ const customElementMappings = [
   { selector: 'wb-dropdown', behavior: 'dropdown' },
   { selector: 'wb-footer', behavior: 'footer' },
   { selector: 'wb-header', behavior: 'header' },
-  { selector: 'wb-globe', behavior: 'globe' }
+  { selector: 'wb-globe', behavior: 'globe' },
+  { selector: 'wb-stagelight', behavior: 'stagelight' }
 ];
 
 const autoInjectMappings = [

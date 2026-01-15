@@ -632,7 +632,7 @@ function renderDOMChild(el, level = 1, maxDepth = 6, parentPath = 'root', showCh
   const isEditable = editableTags.includes(el.tagName);
   const editBtn = isEditable ? `<button class="tree-item-edit" onclick="event.stopPropagation(); window.editDOMElementText('${escapedKey}')" title="Edit text">✏️</button>` : '';
   
-  let html = `
+  let templateHtml = `
     <div class="tree-item tree-item-dom ${isHighlighted ? 'highlighted' : ''}" data-dom-key="${elKey}" onclick="window.highlightDOMElement('${escapedKey}')" ondblclick="window.inspectDOMElement('${escapedKey}')">
       <span class="tree-item-indent" style="${indentStyle}"></span>
       ${toggleHtml}
@@ -1107,7 +1107,7 @@ function initTree() {
   // Listen for template browser section toggles to sync state
   document.addEventListener('wb:template:section:toggled', (e) => {
     const templateToggledSection = e.detail.section;
-    const expanded = e.detail.expanded;
+    const isExpanded = e.detail.expanded;
     if (templateToggledSection) {
       expandedSections[templateToggledSection] = expanded;
       if (expanded) activeSection = templateToggledSection;

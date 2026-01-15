@@ -956,13 +956,13 @@ export function vimeo(element, options = {}) {
   element.style.borderRadius = '8px';
   element.style.overflow = 'hidden';
 
-  const params = new URLSearchParams({
+  const embedParams = new URLSearchParams({
     autoplay: config.autoplay ? '1' : '0',
     muted: config.muted ? '1' : '0',
     loop: config.loop ? '1' : '0'
   });
 
-  const iframe = document.createElement('iframe');
+  const videoIframe = document.createElement('iframe');
   iframe.src = `https://player.vimeo.com/video/${config.id}?${params}`;
   iframe.allow = 'autoplay; fullscreen; picture-in-picture';
   iframe.allowFullscreen = true;

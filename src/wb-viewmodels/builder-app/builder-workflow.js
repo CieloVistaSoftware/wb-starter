@@ -383,7 +383,7 @@ function showWelcomeBack() {
  * Name workspace from welcome screen
  */
 window.wfNameFromWelcome = () => {
-  const info = getWorkInfo();
+  const detailsInfo = getWorkInfo();
   
   // Replace the container content with name input
   const container = document.querySelector('.wf-container');
@@ -418,7 +418,7 @@ window.wfNameFromWelcome = () => {
   
   // Focus input
   setTimeout(() => {
-    const input = document.getElementById('wfWorkspaceName');
+    const formInput = document.getElementById('wfWorkspaceName');
     if (input) {
       input.focus();
     }
@@ -434,8 +434,8 @@ window.wfNameFromWelcome = () => {
 };
 
 window.wfSaveNameAndContinue = () => {
-  const input = document.getElementById('wfWorkspaceName');
-  const name = input?.value?.trim();
+  const workflowInput = document.getElementById('wfWorkspaceName');
+  const workflowName = input?.value?.trim();
   
   if (name) {
     setWorkspaceName(name);
@@ -472,7 +472,7 @@ window.wfStartNew = () => {
   const overlay = document.getElementById('wfOverlay');
   if (!overlay) return;
   
-  const info = getWorkInfo();
+  const infoBlock = getWorkInfo();
   const displayName = info.workspaceName || 'Your workspace';
   
   overlay.querySelector('.wf-container').outerHTML = `
@@ -657,7 +657,7 @@ window.wfBack = () => {
  * User selected a specific type - show templates or take action
  */
 window.wfSelectType = (intentId, typeId) => {
-  const workflow = WORKFLOWS[intentId];
+  const activeWorkflow = WORKFLOWS[intentId];
   const option = workflow?.options?.find(o => o.id === typeId);
   if (!option) return;
   

@@ -1,6 +1,6 @@
-# Article Element
+# Article Element - WB Framework v3.0
 
-The `<article>` element is the semantic foundation for all card components in the Web Behaviors (WB) library.
+The `<article>` element is the semantic foundation for all card components.
 
 ## Overview
 
@@ -15,17 +15,11 @@ Use `<article>` when content:
 - Represents a complete, independent piece of content
 
 ### Good Examples
-
-- Blog posts
-- News articles
-- Product cards
-- User comments
-- Forum posts
-- Social media posts
-- Profile cards
+- Blog posts, news articles, product cards
+- User comments, forum posts, social media posts
+- Profile cards, widgets
 
 ### Avoid Using For
-
 - Navigation sections (use `<nav>`)
 - Sidebars (use `<aside>`)
 - Generic containers (use `<div>`)
@@ -46,135 +40,87 @@ Use `<article>` when content:
 </article>
 ```
 
-### Children
+## WB Components Using Article
 
-| Element | Purpose | Required |
-|---------|---------|----------|
-| `<header>` | Title, subtitle, metadata | No |
-| `<main>` | Primary content area | No |
-| `<footer>` | Actions, author info, timestamps | No |
-| `<section>` | Content sections within article | No |
-| `<aside>` | Related but separate content | No |
-| `<figure>` | Images, diagrams with captions | No |
+All card components use the `<article>` semantic element:
 
-## Accessibility
+| Component | Custom Tag | Usage |
+|-----------|------------|-------|
+| card | `<wb-card>` | Base card |
+| cardimage | `<wb-cardimage>` | Image card |
+| cardvideo | `<wb-cardvideo>` | Video card |
+| cardbutton | `<wb-cardbutton>` | Action buttons |
+| cardhero | `<wb-cardhero>` | Hero banner |
+| cardprofile | `<wb-cardprofile>` | User profile |
+| cardtestimonial | `<wb-cardtestimonial>` | Testimonials |
+| cardportfolio | `<wb-cardportfolio>` | Portfolio |
+| cardpricing | `<wb-cardpricing>` | Pricing |
+| cardproduct | `<wb-cardproduct>` | Products |
+| cardfile | `<wb-cardfile>` | File downloads |
+| cardlink | `<wb-cardlink>` | Link cards |
+| cardhorizontal | `<wb-cardhorizontal>` | Horizontal layout |
+| cardoverlay | `<wb-cardoverlay>` | Image overlays |
+| carddraggable | `<wb-carddraggable>` | Draggable |
+| cardexpandable | `<wb-cardexpandable>` | Expandable |
+| cardminimizable | `<wb-cardminimizable>` | Minimizable |
+| cardstats | `<wb-cardstats>` | Statistics |
 
-| Attribute | Value | Purpose |
-|-----------|-------|---------|
-| Role | `article` (implicit) | Landmark role for assistive technology |
-| Labelled by | Heading in header | Screen readers announce the article title |
+## Usage Examples
 
-### Requirements
-
-1. Should contain a heading (`<h1>`-`<h6>`) in the header
-2. Heading level should be appropriate to document outline
-3. Content should be understandable when extracted from page context
-
-## WB Components That Extend Article
-
-All card components inherit from the article semantic element.
-
-### AutoInject Behavior
-
-With `autoInject: true`, the `<article>` element has **conditional auto-injection**:
-
-| Condition | Behavior Applied | Notes |
-|-----------|------------------|-------|
-| `<article>` | None | Plain semantic article |
-| `<article data-href="...">` | `cardlink` | Clickable link card |
-
-This safe approach preserves semantic purity:
-- Plain `<article>` elements remain standard HTML
-- Only `<article data-href>` becomes a clickable card
-
+### Standard Semantic Article
 ```html
-<!-- Plain article - no behavior injected -->
-<article>
-  <h2>Blog Post Title</h2>
-  <p>Content...</p>
-</article>
-
-<!-- AutoInject: becomes cardlink -->
-<article data-href="/demos/kitchen-sink.html" data-title="Kitchen Sink" data-badge="NEW">
-</article>
-```
-
-### Explicit Card Assignment
-
-To apply card styling and behavior explicitly, add the `data-wb="card"` attribute:
-
-| Component | Purpose |
-|-----------|---------|
-| `card` | Base card with header/main/footer |
-| `cardimage` | Card with featured image |
-| `cardvideo` | Card with embedded video |
-| `cardbutton` | Card with action buttons |
-| `cardhero` | Hero banner card |
-| `cardprofile` | User profile card |
-| `cardtestimonial` | Quote/testimonial card |
-| `cardportfolio` | Portfolio item card |
-| `cardpricing` | Pricing tier card |
-| `cardproduct` | E-commerce product card |
-| `cardfile` | File/document card |
-| `cardlink` | Clickable link card |
-| `cardhorizontal` | Horizontal layout card |
-| `cardoverlay` | Image with text overlay |
-| `carddraggable` | Draggable card |
-| `cardexpandable` | Expandable/collapsible card |
-| `cardminimizable` | Minimizable card |
-| `cardstats` | Statistics display card |
-
-## Inheritance Chain
-
-```
-article (HTML5 semantic element)
-    ↓
-card.base (WB base schema)
-    ↓
-card (WB component)
-    ↓
-card variants (cardimage, cardprofile, etc.)
-```
-
-## Example
-
-```html
-<!-- 1. Standard Semantic Article (No Styling) -->
 <article>
   <header>
     <h2>Article Title</h2>
-    <p>Subtitle or description</p>
   </header>
   <main>
-    <p>Main content goes here...</p>
+    <p>Content goes here...</p>
   </main>
   <footer>
     <time datetime="2024-12-18">December 18, 2024</time>
   </footer>
 </article>
+```
 
-<!-- 2. Enhanced Semantic Card (Preserves Structure) -->
-<article data-wb="card">
-  <header>
-    <h2>Card Title</h2>
-  </header>
-  <main>
-    <p>This article is now styled as a card.</p>
-  </main>
-  <footer>
-    <button>Action</button>
-  </footer>
-</article>
-
-<!-- 3. Config-Driven Card (Generates Structure) -->
-<article data-wb="card" data-title="Card Title" data-subtitle="Subtitle">
+### WB Card (Custom Element)
+```html
+<wb-card title="Card Title" subtitle="Subtitle">
   Main content goes here...
+</wb-card>
+```
+
+### WB Card (Data Attributes)
+```html
+<article data-wb="card" data-wb-title="Card Title">
+  Content here...
 </article>
 ```
 
+## Inheritance Chain
+
+```
+<article> (HTML5 semantic)
+    ↓
+cardBase (WB base)
+    ↓
+card (WB component)
+    ↓
+card variants
+```
+
+## Accessibility
+
+| Attribute | Value | Purpose |
+|-----------|-------|---------|
+| Role | `article` (implicit) | Landmark for assistive technology |
+| Labelled by | Heading in header | Screen readers announce title |
+
+### Requirements
+1. Should contain a heading (`<h1>`-`<h6>`)
+2. Heading level appropriate to document outline
+3. Content understandable when extracted from context
+
 ## Related
 
-- [Card Base](../cards/index.md) - Base card component
-- [Header Element](./header.md) - Semantic header
-- [Footer Element](./footer.md) - Semantic footer
-- [Figure Element](./figure.md) - Semantic figure
+- [Cards Overview](../cards/index.md)
+- [Figure Element](./figure.md)

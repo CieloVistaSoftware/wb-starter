@@ -92,8 +92,8 @@
   },
   "test": {
     "setup": [
-      "<wb-confetti></wb-confetti>",
-      "<button data-wb=\"confetti\">Celebrate!</button>"
+      "<div x-behavior=\"confetti\"></div>",
+      "<button x-behavior=\"confetti\">Celebrate!</button>"
     ],
     "matrix": {
       "combinations": [

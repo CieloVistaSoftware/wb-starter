@@ -120,18 +120,18 @@ export function moveup(button) {
 export function movedown(button) {
   if (!button) return;
   
-  const handler = (e) => {
+  const eventHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
     
-    const item = findMoveableParent(button);
+    const dataItem = findMoveableParent(button);
     if (!item) return;
     
-    const container = item.parentElement;
+    const moveContainer = item.parentElement;
     const { columns, items } = getGridInfo(container);
-    const currentIndex = items.indexOf(item);
+    const focusIndex = items.indexOf(item);
     
-    const targetIndex = columns > 1 ? currentIndex + columns : currentIndex + 1;
+    const destinationIndex = columns > 1 ? currentIndex + columns : currentIndex + 1;
     
     if (targetIndex >= 0 && targetIndex < items.length) {
       swapElements(item, items[targetIndex]);
@@ -149,16 +149,16 @@ export function movedown(button) {
 export function moveleft(button) {
   if (!button) return;
   
-  const handler = (e) => {
+  const keyHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
     
-    const item = findMoveableParent(button);
+    const dataItem = findMoveableParent(button);
     if (!item) return;
     
-    const container = item.parentElement;
+    const animContainer = item.parentElement;
     const { items } = getGridInfo(container);
-    const currentIndex = items.indexOf(item);
+    const selectedIndex = items.indexOf(item);
     
     if (currentIndex > 0) {
       swapElements(item, items[currentIndex - 1]);
@@ -176,16 +176,16 @@ export function moveleft(button) {
 export function moveright(button) {
   if (!button) return;
   
-  const handler = (e) => {
+  const moveHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
     
-    const item = findMoveableParent(button);
+    const listItem = findMoveableParent(button);
     if (!item) return;
     
-    const container = item.parentElement;
+    const effectContainer = item.parentElement;
     const { items } = getGridInfo(container);
-    const currentIndex = items.indexOf(item);
+    const activeIndex = items.indexOf(item);
     
     if (currentIndex < items.length - 1) {
       swapElements(item, items[currentIndex + 1]);

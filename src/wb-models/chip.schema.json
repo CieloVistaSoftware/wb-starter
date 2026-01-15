@@ -145,9 +145,9 @@
   },
   "test": {
     "setup": [
-      "<wb-chip label=\"Tag\"></wb-chip>",
-      "<wb-chip label=\"Dismissible\" dismissible></wb-chip>",
-      "<span data-wb=\"chip\">Tag</span>"
+      "<div x-behavior=\"chip\" data-label=\"Tag\"></div>",
+      "<div x-behavior=\"chip\" data-label=\"Dismissible\" data-dismissible></div>",
+      "<span x-behavior=\"chip\">Tag</span>"
     ],
     "matrix": {
       "combinations": [

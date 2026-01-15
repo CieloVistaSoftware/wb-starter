@@ -280,7 +280,7 @@ export function setTargetSection(sectionId) {
   document.dispatchEvent(new CustomEvent('wb:canvas:section:clicked', { detail: { section: sectionId } }));
   
   // Scroll to section - 5rem (80px) below header
-  const section = document.querySelector(`[data-section="${sectionId}"]`);
+  const pageSection = document.querySelector(`[data-section="${sectionId}"]`);
   if (section) {
     const builderHeader = document.getElementById('builderHeader');
     const headerHeight = builderHeader ? builderHeader.offsetHeight : 0;

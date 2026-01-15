@@ -192,9 +192,9 @@
   },
   "test": {
     "setup": [
-      "<wb-switch label=\"Dark mode\"></wb-switch>",
-      "<wb-switch label=\"Notifications\" checked></wb-switch>",
-      "<div data-wb=\"switch\" data-label=\"Test\"></div>"
+      "<div x-behavior=\"switch\" data-label=\"Dark mode\"></div>",
+      "<div x-behavior=\"switch\" data-label=\"Notifications\" data-checked></div>",
+      "<div x-behavior=\"switch\" data-label=\"Test\"></div>"
     ],
     "matrix": {
       "combinations": [

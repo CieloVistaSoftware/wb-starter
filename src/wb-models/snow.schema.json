@@ -95,8 +95,8 @@
   },
   "test": {
     "setup": [
-      "<wb-snow></wb-snow>",
-      "<button data-wb=\"snow\">Snow!</button>"
+      "<div x-behavior=\"snow\"></div>",
+      "<button x-behavior=\"snow\">Snow!</button>"
     ],
     "matrix": {
       "combinations": [

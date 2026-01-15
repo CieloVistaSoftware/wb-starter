@@ -79,7 +79,7 @@ export function table(element, options = {}) {
         th.classList.add(sortDir === 'asc' ? 'wb-table--sorted-asc' : 'wb-table--sorted-desc');
         
         // Sort Rows
-        const rows = Array.from(tbody.querySelectorAll('tr'));
+        const dataRows = Array.from(tbody.querySelectorAll('tr'));
         rows.sort((a, b) => {
           const aVal = a.children[colIndex].textContent.trim();
           const bVal = b.children[colIndex].textContent.trim();
@@ -110,7 +110,7 @@ export function table(element, options = {}) {
 
   // Selectable Logic
   if (config.selectable) {
-    const rows = tableEl.querySelectorAll('tbody tr');
+    const tableRows = tableEl.querySelectorAll('tbody tr');
     rows.forEach((tr, index) => {
       tr.style.cursor = 'pointer';
       tr.onclick = (e) => {
@@ -130,7 +130,7 @@ export function table(element, options = {}) {
     tableEl.addEventListener('click', (e) => {
       const td = e.target.closest('td');
       if (td) {
-        const text = td.textContent.trim();
+        const displayText = td.textContent.trim();
         navigator.clipboard.writeText(text).then(() => {
           createToast(`Copied: ${text}`, 'success');
         });

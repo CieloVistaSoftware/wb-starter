@@ -1,73 +1,18 @@
 {
-  "lastUpdated": "2026-01-13T22:41:51.198Z",
-  "count": 2,
+  "lastUpdated": "2026-01-15T01:32:09.397Z",
+  "count": 1,
   "errors": [
     {
-      "id": 1768344108272,
-      "timestamp": "2026-01-13T22:41:48.272Z",
+      "id": 1768440729397,
+      "timestamp": "2026-01-15T01:32:09.397Z",
       "level": "error",
       "source": "WB:LegacySyntax",
       "module": "wb.js",
       "line": 330,
       "column": 39,
       "function": "(anonymous)",
-      "message": "Legacy syntax data-wb=\"notes\" detected on <div>. Please use :lt.wb-notes> instead.",
-      "stack": "Error: Legacy syntax data-wb=\"notes\" detected on <div>. Please use :lt.wb-notes> instead.\n    at http://localhost:3000/src/core/wb.js:330:39\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:323:40)\n    at eval (eval at evaluate (:291:30), <anonymous>:2:17)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
-      "frames": [
-        {
-          "function": "(anonymous)",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 330,
-          "column": 39
-        },
-        {
-          "function": "Object.scan",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 323,
-          "column": 40
-        },
-        {
-          "function": "eval",
-          "file": "eval at evaluate (",
-          "fullPath": "eval at evaluate (",
-          "line": 291,
-          "column": 30
-        },
-        {
-          "function": "UtilityScript.evaluate",
-          "file": "<anonymous>",
-          "fullPath": "<anonymous>",
-          "line": 293,
-          "column": 16
-        },
-        {
-          "function": "UtilityScript.<anonymous>",
-          "file": "<anonymous>",
-          "fullPath": "<anonymous>",
-          "line": 1,
-          "column": 44
-        }
-      ],
-      "url": "http://localhost:3000/index.html",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
-      "interaction": {
-        "from": "System",
-        "to": "Background Process"
-      }
-    },
-    {
-      "id": 1768344111198,
-      "timestamp": "2026-01-13T22:41:51.198Z",
-      "level": "error",
-      "source": "WB:LegacySyntax",
-      "module": "wb.js",
-      "line": 330,
-      "column": 39,
-      "function": "(anonymous)",
-      "message": "Legacy syntax data-wb=\"notes\" detected on <div>. Please use :lt.wb-notes> instead.",
-      "stack": "Error: Legacy syntax data-wb=\"notes\" detected on <div>. Please use :lt.wb-notes> instead.\n    at http://localhost:3000/src/core/wb.js:330:39\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:323:40)\n    at Object.init (http://localhost:3000/src/core/wb.js:696:18)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use :lt.wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use :lt.wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:330:39\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:323:40)\n    at Object.init (http://localhost:3000/src/core/wb.js:696:18)",
       "frames": [
         {
           "function": "(anonymous)",
@@ -91,7 +36,7 @@
           "column": 18
         }
       ],
-      "url": "http://localhost:3000/index.html",
+      "url": "http://localhost:3000/tests/compliance/legacy-syntax-check.html",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
       "interaction": {
         "from": "System",

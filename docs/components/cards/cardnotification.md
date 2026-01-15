@@ -1,79 +1,98 @@
-# Card Notification Component
+# Card Notification - WB Framework v3.0
+
+Alert/notification card using semantic `<aside>` element.
 
 ## Overview
-The `cardnotification` component is a specialized card used for alerts, notices, and status updates. It supports semantic coloring, icons, and dismissibility.
 
-## Internals & Lifecycle
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-cardnotification>` |
+| Behavior | `cardnotification` |
+| Semantic | `<aside>` with `role="alert"` |
+| Base Class | `wb-card wb-notification` |
+| Inherits | card |
 
-### Initialization
-1.  **Role Assignment**: Automatically sets `role="alert"` for accessibility.
-2.  **Theme Application**:
-    - Maps `data-type` (info, success, warning, error) to specific color palettes.
-    - Applies a left border (`4px solid`) and a light background tint (`rgba(..., 0.15)`).
-3.  **Icon Logic**: Uses a default emoji map based on type if no custom `data-icon` is provided.
-    - `info` → ℹ️
-    - `success` → ✅
-    - `warning` → ⚠️
-    - `error` → ❌
-4.  **Dismissal Logic**:
-    - If `data-dismissible` is true, adds a close button (`×`).
-    - Attaches a click handler to the close button that calls `element.remove()`, removing the card from the DOM entirely.
+## Properties
 
-### DOM Structure
+Inherits all [card properties](./card.md) plus:
 
-<article class="wb-card wb-card--notification" role="alert" style="border-left: 4px solid ...">
-  <!-- Icon -->
-  <span>ℹ️</span>
-  
-  <!-- Content -->
-  <div>
-    <strong class="wb-card__notif-title">Title</strong>
-    <p class="wb-card__notif-message">Message content...</p>
-  </div>
-  
-  <!-- Close Button (Optional) -->
-  <button>×<button>
-</article>
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `type` | string | `"info"` | Type: `info`, `success`, `warning`, `error` |
+| `message` | string | `""` | Notification message |
+| `dismissible` | boolean | `true` | Show dismiss button |
+| `icon` | string | auto | Custom icon |
+
+## Usage
+
+### Info Notification
 
 ```html
-<article class="wb-card wb-card--notification" role="alert" style="border-left: 4px solid ...">
-  <!-- Icon -->
-  <span>ℹ️</span>
-  
-  <!-- Content -->
-  <div>
-    <strong class="wb-card__notif-title">Title</strong>
-    <p class="wb-card__notif-message">Message content...</p>
-  </div>
-  
-  <!-- Close Button (Optional) -->
-  <button>×<button>
-</article>
+<wb-cardnotification 
+  type="info"
+  title="Information"
+  message="This is an informational message.">
+</wb-cardnotification>
 ```
 
-## Attributes
-
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data-type` | enum | `info` | Alert type: `info`, `success`, `warning`, `error`. |
-| `data-message` | string | textContent | The main notification text. |
-| `data-dismissible` | boolean | `true` | Whether to show the close button. |
-| `data-icon` | string | auto | Custom icon to override the default. |
-
-## Usage Example
-
-<div data-wb="cardnotification" 
-     data-type="warning" 
-     data-title="System Maintenance"
-     data-message="Scheduled maintenance will occur tonight at 2 AM."
-     data-dismissible="true">
-</div>
+### Success Notification
 
 ```html
-<div data-wb="cardnotification" 
-     data-type="warning" 
-     data-title="System Maintenance"
-     data-message="Scheduled maintenance will occur tonight at 2 AM."
-     data-dismissible="true">
-</div>
+<wb-cardnotification 
+  type="success"
+  title="Success!"
+  message="Your changes have been saved.">
+</wb-cardnotification>
 ```
+
+### Warning Notification
+
+```html
+<wb-cardnotification 
+  type="warning"
+  title="Warning"
+  message="Please review your input.">
+</wb-cardnotification>
+```
+
+### Error Notification
+
+```html
+<wb-cardnotification 
+  type="error"
+  title="Error"
+  message="Something went wrong. Please try again.">
+</wb-cardnotification>
+```
+
+### Non-Dismissible
+
+```html
+<wb-cardnotification 
+  type="info"
+  message="This notification cannot be dismissed."
+  dismissible="false">
+</wb-cardnotification>
+```
+
+## Events
+
+### wb:cardnotification:dismiss
+
+Fired when notification is dismissed:
+
+```javascript
+document.querySelector('wb-cardnotification').addEventListener('wb:cardnotification:dismiss', (e) => {
+  console.log('Dismissed:', e.detail.type, e.detail.title);
+});
+```
+
+## Accessibility
+
+- Uses `role="alert"` for screen readers
+- Dismiss button has `aria-label="Dismiss notification"`
+- Keyboard: `Escape` key dismisses the notification
+
+## Schema
+
+Location: `src/wb-models/cardnotification.schema.json`

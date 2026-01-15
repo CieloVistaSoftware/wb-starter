@@ -163,8 +163,8 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-dropdown><button slot=\"trigger\">Menu</button><button>Item 1</button></wb-dropdown>",
-      "<div data-wb=\"dropdown\"><button class=\"wb-dropdown-trigger\">Menu</button><div class=\"wb-dropdown-menu\"><button>Item</button></div></div>"
+      "<div x-behavior=\"dropdown\"><button x-slot=\"trigger\">Menu</button><button>Item 1</button></div>",
+      "<div x-behavior=\"dropdown\"><button class=\"wb-dropdown-trigger\">Menu</button><div class=\"wb-dropdown-menu\"><button>Item</button></div></div>"
     ],
     "matrix": {
       "combinations": [

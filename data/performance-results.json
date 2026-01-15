@@ -1374,5 +1374,127 @@
     "value": 4515,
     "unit": "ms",
     "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-14T02:57:00.151Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 532,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-14T22:41:31.947Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 281,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-14T22:41:39.094Z",
+    "category": "load",
+    "name": "Home Page Load",
+    "value": 1158,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-14T22:41:39.724Z",
+    "category": "load",
+    "name": "Components Page Load",
+    "value": 1485,
+    "unit": "ms",
+    "threshold": 2000
+  },
+  {
+    "timestamp": "2026-01-14T22:41:40.145Z",
+    "category": "interaction",
+    "name": "Nav Toggle",
+    "value": 654,
+    "unit": "ms",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-14T22:41:42.898Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.9833984375,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-14T22:41:43.000Z",
+    "category": "resource",
+    "name": "CSS: site.css",
+    "value": 45.8759765625,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-14T22:41:43.039Z",
+    "category": "resource",
+    "name": "CSS: transitions.css",
+    "value": 5.07421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-14T22:41:43.097Z",
+    "category": "resource",
+    "name": "CSS: navbar.css",
+    "value": 6.357421875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-14T22:41:43.140Z",
+    "category": "resource",
+    "name": "CSS: stock.css",
+    "value": 0.591796875,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-14T22:41:43.190Z",
+    "category": "resource",
+    "name": "CSS: themes.css",
+    "value": 31.9833984375,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-14T22:41:43.232Z",
+    "category": "resource",
+    "name": "CSS: effects.css",
+    "value": 7.1806640625,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-14T22:41:43.299Z",
+    "category": "resource",
+    "name": "CSS: hero.css",
+    "value": 3.56640625,
+    "unit": "KB",
+    "threshold": 50
+  },
+  {
+    "timestamp": "2026-01-14T22:41:43.940Z",
+    "category": "resource",
+    "name": "JS: wb.js",
+    "value": 24.0341796875,
+    "unit": "KB",
+    "threshold": 100
+  },
+  {
+    "timestamp": "2026-01-14T22:41:43.995Z",
+    "category": "load",
+    "name": "Docs Page Load",
+    "value": 573,
+    "unit": "ms",
+    "threshold": 2000
+  }
+]hold": 100
   }
 ]

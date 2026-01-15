@@ -234,8 +234,8 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-dialog title=\"Test Dialog\">Content here</wb-dialog>",
-      "<button data-wb=\"dialog\" data-dialog-title=\"Test\">Open</button>"
+      "<dialog x-behavior=\"dialog\" x-title=\"Test Dialog\">Content here</dialog>",
+      "<button x-behavior=\"dialog\" x-title=\"Test\">Open</button>"
     ],
     "matrix": {
       "combinations": [

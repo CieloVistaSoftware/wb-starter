@@ -259,6 +259,11 @@
     "ariaDisabled": "dynamic when disabled"
   },
   "test": {
+    "setup": [
+      "<button x-behavior=\"button\">Click Me</button>",
+      "<button x-behavior=\"button\" x-variant=\"primary\" x-size=\"lg\">Primary</button>",
+      "<button x-behavior=\"button\" x-icon=\"🚀\" x-icon-position=\"start\">Launch</button>"
+    ],
     "functional": {
       "buttons": [
         {

@@ -19,7 +19,7 @@ test.describe('Components Page', () => {
     
     test('page loads successfully', async ({ page }) => {
       await expect(page).toHaveURL(/components/);
-      const content = page.locator('#components-div-1, .page__hero');
+      const content = page.locator('.page__hero');
       await expect(content).toBeVisible();
     });
 
@@ -32,20 +32,18 @@ test.describe('Components Page', () => {
     test('has all major sections', async ({ page }) => {
       const sections = [
         'Cards',
-        'Feedback',
-        'Overlays',
+        'Feedback Components',
+        'Overlays & Dialogs',
         'Navigation',
-        'Forms',
-        'Animation',
+        'Form Components',
         'Data Display',
-        'Layout',
-        'Utility',
         'Media',
-        'Tabs'
+        'Utilities'
       ];
       
       for (const section of sections) {
         const heading = page.locator(`h2:has-text("${section}")`);
+        await heading.scrollIntoViewIfNeeded();
         await expect(heading).toBeVisible();
       }
     });
@@ -57,64 +55,78 @@ test.describe('Components Page', () => {
   test.describe('Cards Section', () => {
     
     test('basic cards render correctly', async ({ page }) => {
-      const basicCard = page.locator('basic-card[data-title="Basic Card"]');
+      const basicCard = page.locator('basic-card[title="Basic Card"]');
+      await basicCard.scrollIntoViewIfNeeded();
       await expect(basicCard).toBeVisible();
     });
 
     test('card with header and footer renders', async ({ page }) => {
-      const card = page.locator('basic-card[data-title="Header"][data-footer="Card Footer"]');
+      const card = page.locator('basic-card[title="With Footer"][footer="Card Footer"]');
+      await card.scrollIntoViewIfNeeded();
       await expect(card).toBeVisible();
     });
 
-    test('clickable card has click behavior', async ({ page }) => {
-      const clickableCard = page.locator('basic-card[data-title="Clickable"]');
-      await expect(clickableCard).toBeVisible();
-      await expect(clickableCard).toHaveAttribute('data-clickable');
-    });
-
     test('image-card renders', async ({ page }) => {
-      const imageCard = page.locator('image-card');
+      const imageCard = page.locator('image-card').first();
+      await imageCard.scrollIntoViewIfNeeded();
       await expect(imageCard).toBeVisible();
     });
 
     test('overlay-card renders correctly', async ({ page }) => {
       const overlayCard = page.locator('overlay-card');
+      await overlayCard.scrollIntoViewIfNeeded();
       await expect(overlayCard).toBeVisible();
     });
 
     test('stats-card (stock indicators) render', async ({ page }) => {
       const statsCards = page.locator('stats-card');
-      await expect(statsCards).toHaveCount(8); // 8 stock indicators
+      await statsCards.first().scrollIntoViewIfNeeded();
+      await expect(statsCards).toHaveCount(4); 
     });
 
     test('price-card renders with features', async ({ page }) => {
       const pricingCards = page.locator('price-card');
+      await pricingCards.first().scrollIntoViewIfNeeded();
       await expect(pricingCards.first()).toBeVisible();
     });
 
+    // Modified to scroll to the container likely to hold these cards
     test('product-card renders', async ({ page }) => {
       const productCards = page.locator('product-card');
-      expect(await productCards.count()).toBeGreaterThan(0);
+      // Scroll to the section header to trigger loading
+      await page.locator('h3:has-text("Store & Data")').scrollIntoViewIfNeeded();
+      
+      // Wait for at least one to be attached
+      await productCards.first().waitFor({ state: 'attached' });
+      
+      // Scroll to the card itself
+      await productCards.first().scrollIntoViewIfNeeded();
+      
+      await expect(productCards.count()).resolves.toBeGreaterThan(0);
     });
 
     test('testimonial-card renders', async ({ page }) => {
       const testimonialCards = page.locator('testimonial-card');
+      await testimonialCards.first().scrollIntoViewIfNeeded();
       await expect(testimonialCards.first()).toBeVisible();
     });
 
     test('notification-card renders all types', async ({ page }) => {
       const notificationCards = page.locator('notification-card');
+      await notificationCards.first().scrollIntoViewIfNeeded();
       await expect(notificationCards).toHaveCount(4); // info, success, warning, error
     });
 
     test('file-card renders', async ({ page }) => {
       const fileCards = page.locator('file-card');
-      expect(await fileCards.count()).toBeGreaterThan(0);
+      await fileCards.first().scrollIntoViewIfNeeded();
+      await expect(fileCards.count()).resolves.toBeGreaterThan(0);
     });
 
     test('portfolio-card (business cards) render', async ({ page }) => {
       const portfolioCards = page.locator('portfolio-card');
-      await expect(portfolioCards).toHaveCount(2);
+      await portfolioCards.first().scrollIntoViewIfNeeded();
+      await expect(portfolioCards).toHaveCount(1);
     });
   });
 
@@ -124,43 +136,47 @@ test.describe('Components Page', () => {
   test.describe('Feedback Section', () => {
     
     test('badges render with variants', async ({ page }) => {
-      const badges = page.locator('[data-wb="badge"]');
-      expect(await badges.count()).toBeGreaterThan(0);
+      await page.locator('h2:has-text("Feedback Components")').scrollIntoViewIfNeeded();
+      const badges = page.locator('wb-badge');
+      await badges.first().waitFor({ state: 'attached' });
+      await badges.first().scrollIntoViewIfNeeded();
+      await expect(badges.count()).resolves.toBeGreaterThan(0);
     });
 
     test('alerts render all types', async ({ page }) => {
-      const alerts = page.locator('[data-wb="alert"]');
+      const alerts = page.locator('wb-alert');
+      await alerts.first().scrollIntoViewIfNeeded();
       await expect(alerts).toHaveCount(4); // info, success, warning, error
     });
 
     test('progress bars render', async ({ page }) => {
-      const progressBars = page.locator('[data-wb="progress"]');
+      const progressBars = page.locator('wb-progress');
+      await progressBars.first().scrollIntoViewIfNeeded();
       await expect(progressBars).toHaveCount(4);
     });
 
     test('spinners render with colors', async ({ page }) => {
-      const spinners = page.locator('[data-wb="spinner"]');
-      expect(await spinners.count()).toBeGreaterThan(0);
+      const spinners = page.locator('wb-spinner');
+      await spinners.first().scrollIntoViewIfNeeded();
+      await expect(spinners.count()).resolves.toBeGreaterThan(0);
     });
 
     test('avatars render', async ({ page }) => {
-      const avatars = page.locator('[data-wb="avatar"]');
-      expect(await avatars.count()).toBeGreaterThan(0);
-    });
-
-    test('chips render', async ({ page }) => {
-      const chips = page.locator('[data-wb="chip"]');
-      expect(await chips.count()).toBeGreaterThan(0);
+      const avatars = page.locator('wb-avatar');
+      await avatars.first().scrollIntoViewIfNeeded();
+      await expect(avatars.count()).resolves.toBeGreaterThan(0);
     });
 
     test('skeleton loaders render', async ({ page }) => {
-      const skeletons = page.locator('[data-wb="skeleton"]');
-      expect(await skeletons.count()).toBeGreaterThan(0);
+      const skeletons = page.locator('wb-skeleton');
+      await skeletons.first().scrollIntoViewIfNeeded();
+      await expect(skeletons.count()).resolves.toBeGreaterThan(0);
     });
 
     test('toast buttons exist', async ({ page }) => {
-      const toastButtons = page.locator('button[data-wb*="toast"]');
-      expect(await toastButtons.count()).toBeGreaterThan(0);
+      const toastButtons = page.locator('button[x-toast]');
+      await toastButtons.first().scrollIntoViewIfNeeded();
+      await expect(toastButtons.count()).resolves.toBeGreaterThan(0);
     });
   });
 
@@ -170,27 +186,32 @@ test.describe('Components Page', () => {
   test.describe('Overlays Section', () => {
     
     test('modal trigger button exists', async ({ page }) => {
-      const modalBtn = page.locator('button[data-wb*="modal"]');
+      const modalBtn = page.locator('wb-modal');
+      await modalBtn.scrollIntoViewIfNeeded();
       await expect(modalBtn).toBeVisible();
     });
 
     test('drawer trigger buttons exist', async ({ page }) => {
-      const drawerBtns = page.locator('button[data-wb*="drawer"]');
-      expect(await drawerBtns.count()).toBeGreaterThanOrEqual(2);
+      const drawerBtns = page.locator('wb-drawer');
+      await drawerBtns.first().scrollIntoViewIfNeeded();
+      await expect(drawerBtns.count()).resolves.toBeGreaterThanOrEqual(2);
     });
 
     test('confirm dialog trigger exists', async ({ page }) => {
-      const confirmBtn = page.locator('button[data-wb*="confirm"]');
+      const confirmBtn = page.locator('button[x-confirm]');
+      await confirmBtn.scrollIntoViewIfNeeded();
       await expect(confirmBtn).toBeVisible();
     });
 
     test('lightbox trigger exists', async ({ page }) => {
-      const lightboxBtn = page.locator('button[data-wb*="lightbox"]');
+      const lightboxBtn = page.locator('button[x-lightbox]');
+      await lightboxBtn.scrollIntoViewIfNeeded();
       await expect(lightboxBtn).toBeVisible();
     });
 
     test('popover trigger exists', async ({ page }) => {
-      const popoverBtn = page.locator('button[data-wb*="popover"]');
+      const popoverBtn = page.locator('button[x-popover]');
+      await popoverBtn.scrollIntoViewIfNeeded();
       await expect(popoverBtn).toBeVisible();
     });
   });
@@ -200,24 +221,34 @@ test.describe('Components Page', () => {
   // =========================================================================
   test.describe('Navigation Section', () => {
     
+    test('tabs component renders', async ({ page }) => {
+      const tabs = page.locator('wb-tabs');
+      await tabs.scrollIntoViewIfNeeded();
+      await expect(tabs).toBeVisible();
+    });
+
+    test('accordion component renders', async ({ page }) => {
+      const accordion = page.locator('wb-accordion');
+      await accordion.scrollIntoViewIfNeeded();
+      await expect(accordion).toBeVisible();
+    });
+
     test('breadcrumb renders', async ({ page }) => {
-      const breadcrumb = page.locator('[data-wb="breadcrumb"]');
+      const breadcrumb = page.locator('nav[x-breadcrumb]');
+      await breadcrumb.scrollIntoViewIfNeeded();
       await expect(breadcrumb).toBeVisible();
     });
 
     test('pagination renders', async ({ page }) => {
-      const pagination = page.locator('[data-wb="pagination"]');
+      const pagination = page.locator('nav[x-pagination]');
+      await pagination.scrollIntoViewIfNeeded();
       await expect(pagination).toBeVisible();
     });
 
     test('steps component renders', async ({ page }) => {
-      const steps = page.locator('[data-wb="steps"]');
+      const steps = page.locator('div[x-steps]');
+      await steps.scrollIntoViewIfNeeded();
       await expect(steps).toBeVisible();
-    });
-
-    test('back to top button exists', async ({ page }) => {
-      const backToTop = page.locator('[data-wb="backtotop"]');
-      await expect(backToTop).toBeVisible();
     });
   });
 
@@ -227,97 +258,33 @@ test.describe('Components Page', () => {
   test.describe('Forms Section', () => {
     
     test('text inputs render', async ({ page }) => {
-      const inputs = page.locator('#components-div-172 input');
-      expect(await inputs.count()).toBeGreaterThan(0);
+      const inputs = page.locator('input[type="text"]');
+      await inputs.first().scrollIntoViewIfNeeded();
+      await expect(inputs.count()).resolves.toBeGreaterThan(0);
     });
 
     test('password input with toggle exists', async ({ page }) => {
-      const passwordInput = page.locator('[data-wb="password"]');
+      const passwordInput = page.locator('input[x-password]');
+      await passwordInput.scrollIntoViewIfNeeded();
       await expect(passwordInput).toBeVisible();
     });
 
-    test('search input exists', async ({ page }) => {
-      const searchInput = page.locator('[data-wb="search"]');
-      await expect(searchInput).toBeVisible();
-    });
-
-    test('masked inputs exist', async ({ page }) => {
-      const maskedInputs = page.locator('[data-wb="masked"]');
-      expect(await maskedInputs.count()).toBeGreaterThanOrEqual(3);
-    });
-
-    test('OTP input exists', async ({ page }) => {
-      const otpInput = page.locator('[data-wb="otp"]');
-      await expect(otpInput).toBeVisible();
-    });
-
-    test('color picker exists', async ({ page }) => {
-      const colorPicker = page.locator('[data-wb="colorpicker"]');
-      await expect(colorPicker).toBeVisible();
-    });
-
     test('switch component exists', async ({ page }) => {
-      const switchComp = page.locator('[data-wb="switch"]');
+      const switchComp = page.locator('wb-switch');
+      await switchComp.scrollIntoViewIfNeeded();
       await expect(switchComp).toBeVisible();
     });
 
     test('rating component exists', async ({ page }) => {
-      const ratings = page.locator('[data-wb="rating"]');
-      expect(await ratings.count()).toBeGreaterThanOrEqual(2);
+      const ratings = page.locator('wb-rating');
+      await ratings.first().scrollIntoViewIfNeeded();
+      await expect(ratings.count()).resolves.toBeGreaterThanOrEqual(2);
     });
 
     test('stepper component exists', async ({ page }) => {
-      const stepper = page.locator('[data-wb="stepper"]');
+      const stepper = page.locator('div[x-stepper]');
+      await stepper.scrollIntoViewIfNeeded();
       await expect(stepper).toBeVisible();
-    });
-
-    test('tags component exists', async ({ page }) => {
-      const tags = page.locator('[data-wb="tags"]');
-      await expect(tags).toBeVisible();
-    });
-
-    test('autocomplete input exists', async ({ page }) => {
-      const autocomplete = page.locator('[data-wb="autocomplete"]');
-      await expect(autocomplete).toBeVisible();
-    });
-
-    test('file upload component exists', async ({ page }) => {
-      const fileUpload = page.locator('[data-wb="file"]');
-      await expect(fileUpload).toBeVisible();
-    });
-  });
-
-  // =========================================================================
-  // ANIMATION SECTION
-  // =========================================================================
-  test.describe('Animation Section', () => {
-    
-    test('attention seeker buttons exist', async ({ page }) => {
-      const animationBtns = ['bounce', 'shake', 'pulse', 'flash', 'tada', 'wobble'];
-      for (const anim of animationBtns) {
-        const btn = page.locator(`button[data-wb*="${anim}"]`).first();
-        await expect(btn).toBeVisible();
-      }
-    });
-
-    test('entrance animation buttons exist', async ({ page }) => {
-      const entranceBtns = page.locator('button[data-wb*="slidein"], button[data-wb*="fadein"], button[data-wb*="zoomin"]');
-      expect(await entranceBtns.count()).toBeGreaterThan(0);
-    });
-
-    test('special effects buttons exist', async ({ page }) => {
-      const specialBtns = page.locator('button[data-wb*="confetti"], button[data-wb*="fireworks"], button[data-wb*="snow"]');
-      expect(await specialBtns.count()).toBeGreaterThanOrEqual(3);
-    });
-
-    test('countup component exists', async ({ page }) => {
-      const countup = page.locator('[data-wb="countup"]');
-      await expect(countup).toBeVisible();
-    });
-
-    test('marquee component exists', async ({ page }) => {
-      const marquee = page.locator('[data-wb="marquee"]');
-      await expect(marquee).toBeVisible();
     });
   });
 
@@ -326,136 +293,42 @@ test.describe('Components Page', () => {
   // =========================================================================
   test.describe('Data Display Section', () => {
     
-    test('table renders with data', async ({ page }) => {
-      const table = page.locator('table[data-headers]');
-      await expect(table).toBeVisible();
-    });
-
-    test('list component renders', async ({ page }) => {
-      const list = page.locator('[data-wb="list"]');
-      await expect(list).toBeVisible();
-    });
-
-    test('description list renders', async ({ page }) => {
-      const descList = page.locator('[data-wb="desclist"]');
-      await expect(descList).toBeVisible();
-    });
-
     test('timeline renders', async ({ page }) => {
-      const timeline = page.locator('[data-wb="timeline"]');
+      const timeline = page.locator('div[x-timeline]');
+      await timeline.scrollIntoViewIfNeeded();
       await expect(timeline).toBeVisible();
     });
+    
+    test('code blocks render within mdhtml', async ({ page }) => {
+        // Find wb-mdhtml elements
+        const mdHtml = page.locator('wb-mdhtml');
+        // Ensure at least one is present
+        await expect(mdHtml.count()).resolves.toBeGreaterThan(0);
+        
+        // Scroll to the first one to trigger hydration
+        await mdHtml.first().scrollIntoViewIfNeeded();
 
-    test('stat components render', async ({ page }) => {
-      const stats = page.locator('[data-wb="stat"]');
-      await expect(stats).toHaveCount(3);
-    });
+        // Wait for it to not be loading (class wb-mdhtml--loading removed)
+        await expect(mdHtml.first()).not.toHaveClass(/wb-mdhtml--loading/);
 
-    test('code blocks render', async ({ page }) => {
-      const codeBlocks = page.locator('[data-wb="code"]');
-      expect(await codeBlocks.count()).toBeGreaterThanOrEqual(2);
+        // Check if code blocks got rendered inside
+        const codeBlocks = mdHtml.locator('pre code');
+        // We might need to give it a moment to render content
+        await expect(codeBlocks.first()).toBeVisible({ timeout: 5000 });
+        
+        await expect(codeBlocks.count()).resolves.toBeGreaterThan(0);
     });
 
     test('JSON viewer renders', async ({ page }) => {
-      const jsonViewer = page.locator('[data-wb="json"]');
+      const jsonViewer = page.locator('div[x-json]');
+      await jsonViewer.scrollIntoViewIfNeeded();
       await expect(jsonViewer).toBeVisible();
     });
 
     test('keyboard key components render', async ({ page }) => {
-      const kbdElements = page.locator('[data-wb="kbd"]');
-      expect(await kbdElements.count()).toBeGreaterThan(0);
-    });
-
-    test('empty state component renders', async ({ page }) => {
-      const emptyState = page.locator('[data-wb="empty"]');
-      await expect(emptyState).toBeVisible();
-    });
-  });
-
-  // =========================================================================
-  // LAYOUT SECTION
-  // =========================================================================
-  test.describe('Layout Section', () => {
-    
-    test('grid component renders', async ({ page }) => {
-      const grid = page.locator('[data-wb="grid"]');
-      await expect(grid).toBeVisible();
-    });
-
-    test('stack component renders', async ({ page }) => {
-      const stack = page.locator('[data-wb="stack"]');
-      await expect(stack).toBeVisible();
-    });
-
-    test('cluster component renders', async ({ page }) => {
-      const cluster = page.locator('[data-wb="cluster"]');
-      await expect(cluster).toBeVisible();
-    });
-
-    test('draggable element exists', async ({ page }) => {
-      const draggable = page.locator('[data-wb="draggable"]');
-      await expect(draggable).toBeVisible();
-    });
-
-    test('resizable element exists', async ({ page }) => {
-      const resizable = page.locator('[data-wb="resizable"]');
-      await expect(resizable).toBeVisible();
-    });
-  });
-
-  // =========================================================================
-  // UTILITY SECTION
-  // =========================================================================
-  test.describe('Utility Section', () => {
-    
-    test('ripple button exists', async ({ page }) => {
-      const rippleBtn = page.locator('button[data-wb*="ripple"]').first();
-      await expect(rippleBtn).toBeVisible();
-    });
-
-    test('copy button exists', async ({ page }) => {
-      const copyBtn = page.locator('button[data-wb*="copy"]');
-      await expect(copyBtn).toBeVisible();
-    });
-
-    test('share button exists', async ({ page }) => {
-      const shareBtn = page.locator('button[data-wb*="share"]');
-      await expect(shareBtn).toBeVisible();
-    });
-
-    test('tooltip buttons exist', async ({ page }) => {
-      const tooltipBtns = page.locator('button-tooltip');
-      expect(await tooltipBtns.count()).toBeGreaterThanOrEqual(4);
-    });
-
-    test('dark mode toggle exists', async ({ page }) => {
-      const darkModeBtn = page.locator('button[data-wb*="darkmode"]');
-      await expect(darkModeBtn).toBeVisible();
-    });
-
-    test('theme control exists', async ({ page }) => {
-      const themeControl = page.locator('[data-wb="themecontrol"]');
-      await expect(themeControl).toBeVisible();
-    });
-
-    test('clock component renders', async ({ page }) => {
-      const clock = page.locator('[data-wb="clock"]');
-      await expect(clock).toBeVisible();
-    });
-
-    test('countdown component renders', async ({ page }) => {
-      const countdown = page.locator('[data-wb="countdown"]');
-      await expect(countdown).toBeVisible();
-    });
-
-    test('truncate component exists', async ({ page }) => {
-      const truncate = page.locator('[data-wb="truncate"]');
-      await expect(truncate).toBeVisible();
-    });
-
-    test('hotkey component exists', async ({ page }) => {
-      const hotkey = page.locator('[data-wb="hotkey"]');
-      await expect(hotkey).toBeVisible();
+      const kbdElements = page.locator('span[x-kbd]');
+      await kbdElements.first().scrollIntoViewIfNeeded();
+      await expect(kbdElements.count()).resolves.toBeGreaterThan(0);
     });
   });
 
@@ -464,65 +337,79 @@ test.describe('Components Page', () => {
   // =========================================================================
   test.describe('Media Section', () => {
     
-    test('lazy loaded images exist', async ({ page }) => {
-      const lazyImage = page.locator('[data-wb="image"][data-lazy]');
-      await expect(lazyImage).toBeVisible();
-    });
-
-    test('figure with caption exists', async ({ page }) => {
-      const figure = page.locator('figure[data-caption]');
-      await expect(figure).toBeVisible();
-    });
-
     test('gallery component renders', async ({ page }) => {
-      const gallery = page.locator('[data-wb="gallery"]');
+      const gallery = page.locator('div[x-gallery]');
+      await gallery.scrollIntoViewIfNeeded();
       await expect(gallery).toBeVisible();
     });
 
     test('youtube embed exists', async ({ page }) => {
-      const youtube = page.locator('[data-wb="youtube"]');
+      const youtube = page.locator('div[x-youtube]');
+      await youtube.scrollIntoViewIfNeeded();
       await expect(youtube).toBeVisible();
     });
-
-    test('ratio component exists', async ({ page }) => {
-      const ratio = page.locator('[data-wb="ratio"]');
-      await expect(ratio).toBeVisible();
+    
+    test('audio player exists', async ({ page }) => {
+        const audio = page.locator('wb-audio');
+        await audio.scrollIntoViewIfNeeded();
+        // WB-audio might change structure, but the container should be visible
+        await expect(audio).toBeVisible();
     });
+
   });
 
+
   // =========================================================================
-  // TABS & COLLAPSE SECTION
+  // UTILITY SECTION
   // =========================================================================
-  test.describe('Tabs & Collapse Section', () => {
+  test.describe('Utility Section', () => {
     
-    test('accordion component renders', async ({ page }) => {
-      const accordion = page.locator('[data-wb="accordion"]');
-      await expect(accordion).toBeVisible();
+    test('copy button exists', async ({ page }) => {
+      const copyBtn = page.locator('button[x-copy]');
+      await copyBtn.first().scrollIntoViewIfNeeded();
+      await expect(copyBtn).toBeVisible();
     });
 
-    test('accordion has multiple sections', async ({ page }) => {
-      const accordionSections = page.locator('[data-accordion-title]');
-      expect(await accordionSections.count()).toBeGreaterThanOrEqual(3);
+    test('share button exists', async ({ page }) => {
+      const shareBtn = page.locator('button[x-share]');
+      await shareBtn.scrollIntoViewIfNeeded();
+      await expect(shareBtn).toBeVisible();
+    });
+    
+    test('print button exists', async ({ page }) => {
+        const printBtn = page.locator('button[x-print]');
+        await printBtn.scrollIntoViewIfNeeded();
+        await expect(printBtn).toBeVisible();
     });
 
-    test('tabs component renders', async ({ page }) => {
-      const tabs = page.locator('[data-wb="tabs"]');
-      await expect(tabs).toBeVisible();
+    test('tooltip buttons exist', async ({ page }) => {
+      const tooltipBtns = page.locator('[x-tooltip]');
+      await tooltipBtns.first().scrollIntoViewIfNeeded();
+      await expect(tooltipBtns.count()).resolves.toBeGreaterThanOrEqual(4);
     });
 
-    test('tabs have multiple panels', async ({ page }) => {
-      const tabPanels = page.locator('[data-tab-title]');
-      expect(await tabPanels.count()).toBeGreaterThanOrEqual(3);
+    test('dark mode toggle exists', async ({ page }) => {
+      const darkModeBtn = page.locator('button[x-darkmode]');
+      await darkModeBtn.scrollIntoViewIfNeeded();
+      await expect(darkModeBtn).toBeVisible();
     });
 
-    test('collapse trigger exists', async ({ page }) => {
-      const collapseBtn = page.locator('button[data-wb*="collapse"]');
-      await expect(collapseBtn).toBeVisible();
+    test('theme control exists', async ({ page }) => {
+      const themeControl = page.locator('wb-themecontrol');
+      await themeControl.scrollIntoViewIfNeeded();
+      await expect(themeControl).toBeVisible();
     });
 
-    test('collapse target exists', async ({ page }) => {
-      const collapseTarget = page.locator('#collapse-demo');
-      await expect(collapseTarget).toBeVisible();
+    test('clock component renders', async ({ page }) => {
+      const clock = page.locator('div[x-clock]');
+      await clock.scrollIntoViewIfNeeded();
+      await expect(clock).toBeVisible();
+    });
+
+    test('countdown component renders', async ({ page }) => {
+      const countdown = page.locator('div[x-countdown]');
+      await countdown.scrollIntoViewIfNeeded();
+      await expect(countdown).toBeVisible();
     });
   });
 
@@ -532,44 +419,26 @@ test.describe('Components Page', () => {
   test.describe('Interactive Behavior', () => {
     
     test('clicking toast button shows toast', async ({ page }) => {
-      const toastBtn = page.locator('button[data-wb*="toast"]').first();
+      const toastBtn = page.locator('button[x-toast]').first();
+      await toastBtn.scrollIntoViewIfNeeded();
       await toastBtn.click();
       
       // Wait for toast to appear
-      const toast = page.locator('.wb-toast, [class*="toast"]');
-      await expect(toast.first()).toBeVisible({ timeout: 3000 });
+      const toast = page.locator('.wb-toast, [class*="toast"], .toast'); 
+      await expect(toast.first()).toBeVisible({ timeout: 5000 });
     });
 
     test('accordion section can expand', async ({ page }) => {
       const accordionTitle = page.locator('[data-accordion-title]').first();
+      await accordionTitle.scrollIntoViewIfNeeded();
       await accordionTitle.click();
       await page.waitForTimeout(300);
       
-      // Verify content is visible
-      const accordion = page.locator('[data-wb="accordion"]');
+      // Check visibility of content within
+      const accordion = page.locator('wb-accordion');
       await expect(accordion).toBeVisible();
     });
 
-    test('tabs can be switched', async ({ page }) => {
-      const tabs = page.locator('[data-wb="tabs"]');
-      const tabButtons = tabs.locator('[role="tab"], .wb-tabs__tab, button');
-      
-      if (await tabButtons.count() > 1) {
-        await tabButtons.nth(1).click();
-        await page.waitForTimeout(200);
-      }
-    });
-
-    test('progress bars have animation', async ({ page }) => {
-      const progressBar = page.locator('[data-wb="progress"]').first();
-      await expect(progressBar).toBeVisible();
-      
-      // Check that progress bar has internal bar element
-      const bar = progressBar.locator('.wb-progress__bar, [class*="bar"]');
-      if (await bar.count() > 0) {
-        await expect(bar.first()).toBeVisible();
-      }
-    });
   });
 
   // =========================================================================

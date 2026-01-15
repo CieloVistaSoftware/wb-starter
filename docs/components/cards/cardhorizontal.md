@@ -1,79 +1,77 @@
-# Card Horizontal Component
+# Card Horizontal - WB Framework v3.0
+
+Card with side-by-side image and content layout.
 
 ## Overview
-The `cardhorizontal` component arranges the image and content side-by-side instead of vertically. It is ideal for list views, search results, or featured articles.
 
-## Internals & Lifecycle
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-cardhorizontal>` |
+| Behavior | `cardhorizontal` |
+| Semantic | `<article>` + `<figure>` |
+| Base Class | `wb-card wb-card-horizontal` |
+| Inherits | card |
 
-### Initialization
-1.  **Layout Direction**:
-    - Default: `flex-direction: row` (Image Left).
-    - If `data-image-position="right"`: `flex-direction: row-reverse`.
-2.  **Image Sizing**:
-    - The image container (`figure`) is set to a fixed width defined by `data-image-width` (default `40%`).
-    - `flex-shrink: 0` is applied to prevent the image from squishing.
-3.  **Content Alignment**:
-    - The content area uses `display: flex` and `flex-direction: column`.
-    - `justify-content: center` is applied to vertically center the text relative to the image.
+## Properties
 
-### DOM Structure
+Inherits all [card properties](./card.md) plus:
 
-<article class="wb-card wb-card--horizontal" style="flex-direction: row;">
-  <!-- Image Container -->
-  <figure style="width: 40%; flex-shrink: 0;">
-    <img src="..." style="object-fit: cover; height: 100%;">
-  </figure>
-  
-  <!-- Content Container -->
-  <div class="wb-card__horizontal-content">
-    <h3 class="wb-card__title">Title</h3>
-    <p class="wb-card__subtitle">Subtitle</p>
-    <div class="wb-card__horiz-body">Content...</div>
-  </div>
-</article>
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `image` | string | `""` | Image URL |
+| `imagePosition` | string | `"left"` | Position: `left`, `right` |
+| `imageWidth` | string | `"40%"` | Image width |
+
+## Usage
+
+### Basic Horizontal Card
 
 ```html
-<article class="wb-card wb-card--horizontal" style="flex-direction: row;">
-  <!-- Image Container -->
-  <figure style="width: 40%; flex-shrink: 0;">
-    <img src="..." style="object-fit: cover; height: 100%;">
+<wb-cardhorizontal 
+  title="Feature Title"
+  subtitle="Feature description"
+  image="/images/feature.jpg">
+  Detailed content here.
+</wb-cardhorizontal>
+```
+
+### Image on Right
+
+```html
+<wb-cardhorizontal 
+  title="Right Image"
+  image="/images/feature.jpg"
+  imagePosition="right">
+  Content appears on the left.
+</wb-cardhorizontal>
+```
+
+### Custom Image Width
+
+```html
+<wb-cardhorizontal 
+  title="Large Image"
+  image="/images/wide.jpg"
+  imageWidth="60%">
+  Narrower content area.
+</wb-cardhorizontal>
+```
+
+## Generated Structure
+
+```html
+<article class="wb-card wb-card-horizontal" style="flex-direction: row">
+  <figure class="wb-card__figure" style="width: 40%">
+    <img src="...">
   </figure>
-  
-  <!-- Content Container -->
   <div class="wb-card__horizontal-content">
     <h3 class="wb-card__title">Title</h3>
     <p class="wb-card__subtitle">Subtitle</p>
-    <div class="wb-card__horiz-body">Content...</div>
+    <div class="wb-card__horiz-body">Content</div>
   </div>
 </article>
 ```
 
-## Attributes
+## Schema
 
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data-image` | string | required | URL of the image. |
-| `data-image-position` | enum | `left` | Position of the image: `left` or `right`. |
-| `data-image-width` | string | `40%` | CSS width of the image column. |
-
-## Usage Example
-
-<div data-wb="cardhorizontal" 
-     data-title="Blog Post Title"
-     data-subtitle="Published yesterday"
-     data-content="A brief excerpt of the article goes here..."
-     data-image="/assets/thumb.jpg" 
-     data-image-position="left"
-     data-image-width="30%">
-</div>
-
-```html
-<div data-wb="cardhorizontal" 
-     data-title="Blog Post Title"
-     data-subtitle="Published yesterday"
-     data-content="A brief excerpt of the article goes here..."
-     data-image="/assets/thumb.jpg" 
-     data-image-position="left"
-     data-image-width="30%">
-</div>
-```
+Location: `src/wb-models/cardhorizontal.schema.json`

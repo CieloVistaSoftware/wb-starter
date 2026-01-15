@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WB Behaviors Showcase</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/components.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════════
+       SHOWCASE LAYOUT - SPACIOUS & PROFESSIONAL
+       All styling uses theme variables
+       ═══════════════════════════════════════════════════════════════════ */
+    
+    body {
+      background: var(--bg-color);
+      color: var(--text-primary);
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header */
+    .showcase-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-xl) var(--space-2xl);
+      background: var(--bg-primary);
+      border-bottom: 2px solid var(--primary);
+      flex-wrap: wrap;
+      gap: var(--space-lg);
+    }
+
+    .showcase-header h1 {
+      margin: 0;
+      font-size: var(--text-3xl);
+      color: var(--primary);
+    }
+
+    .showcase-header p {
+      margin: var(--space-xs) 0 0;
+      color: var(--text-secondary);
+      font-size: var(--text-lg);
+    }
+
+    /* Navigation */
+    .showcase-nav {
+      display: flex;
+      gap: var(--space-sm);
+      padding: var(--space-lg) var(--space-2xl);
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .showcase-nav a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      transition: var(--transition-base);
+      font-size: var(--text-sm);
+      white-space: nowrap;
+    }
+
+    .showcase-nav a:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Stats Row */
+    .showcase-stats {
+      display: flex;
+      gap: var(--space-lg);
+      padding: var(--space-xl) var(--space-2xl);
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Sections */
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-3xl) var(--space-2xl);
+    }
+
+    section + section {
+      border-top: 1px solid var(--border-color);
+    }
+
+    section h2 {
+      margin: 0 0 var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: 3px solid var(--primary);
+      color: var(--text-primary);
+      font-size: var(--text-2xl);
+    }
+
+    section h3 {
+      margin: var(--space-2xl) 0 var(--space-lg);
+      color: var(--accent, var(--secondary));
+      font-size: var(--text-lg);
+      font-weight: 600;
+    }
+
+    section h3:first-of-type {
+      margin-top: var(--space-xl);
+    }
+
+    /* Section Note */
+    .section-note {
+      background: var(--bg-secondary);
+      border-left: 4px solid var(--primary);
+      padding: var(--space-lg) var(--space-xl);
+      margin-bottom: var(--space-xl);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .section-note strong {
+      color: var(--primary);
+    }
+
+    /* Demo Container - The key to spacious layout */
+    .demo-container {
+      margin-bottom: var(--space-2xl);
+    }
+
+    .demo-area {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-md);
+    }
+
+    /* Demo Layouts */
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      align-items: center;
+    }
+
+    .demo-row + .demo-row {
+      margin-top: var(--space-lg);
+    }
+
+    .demo-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .demo-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .demo-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .demo-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    /* Button Styles */
+    .wb-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-lg);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition-base);
+      font-family: inherit;
+    }
+
+    .wb-btn--primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .wb-btn--primary:hover:not(:disabled) {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .wb-btn--secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .wb-btn--secondary:hover:not(:disabled) {
+      background: var(--bg-secondary);
+      border-color: var(--primary);
+    }
+
+    .wb-btn--ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+    }
+
+    .wb-btn--ghost:hover:not(:disabled) {
+      background: var(--bg-secondary);
+    }
+
+    .wb-btn--sm {
+      padding: var(--space-xs) var(--space-md);
+      font-size: var(--text-xs);
+    }
+
+    .wb-btn--lg {
+      padding: var(--space-md) var(--space-xl);
+      font-size: var(--text-base);
+    }
+
+    .wb-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Form Elements */
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+    textarea,
+    select {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-family: inherit;
+      width: 100%;
+      box-sizing: border-box;
+      transition: var(--transition-base);
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    input[data-variant="success"] {
+      border-color: var(--success-color);
+    }
+
+    input[data-variant="warning"] {
+      border-color: var(--warning-color);
+    }
+
+    input[data-variant="error"] {
+      border-color: var(--error-color);
+    }
+
+    label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: var(--text-sm);
+    }
+
+    /* Special Elements */
+    .clock-display,
+    .countdown-display {
+      font-size: var(--text-xl);
+      font-family: monospace;
+      background: var(--bg-tertiary);
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+    }
+
+    .ripple-box {
+      padding: var(--space-xl);
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      text-align: center;
+      transition: var(--transition-base);
+    }
+
+    .ripple-box:hover {
+      border-color: var(--primary);
+    }
+
+    .truncate-box {
+      max-width: 600px;
+      background: var(--bg-tertiary);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .showcase-footer {
+      text-align: center;
+      padding: var(--space-2xl);
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      margin-top: var(--space-2xl);
+    }
+
+    .showcase-footer p {
+      margin: var(--space-sm) 0;
+      color: var(--text-secondary);
+    }
+
+    .showcase-footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .showcase-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .showcase-header,
+      .showcase-nav,
+      section {
+        padding-left: var(--space-lg);
+        padding-right: var(--space-lg);
+      }
+
+      .showcase-header h1 {
+        font-size: var(--text-2xl);
+      }
+
+      section h2 {
+        font-size: var(--text-xl);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- HEADER -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <header id="header" class="showcase-header">
+    <div>
+      <h1>⚡ WB Behaviors Showcase</h1>
+      <p>232 behaviors with interactive examples and copy-ready code</p>
+    </div>
+    <wb-themecontrol></wb-themecontrol>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- NAVIGATION -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <nav id="nav" class="showcase-nav">
+    <a href="#buttons">🔘 Buttons</a>
+    <a href="#inputs">📝 Inputs</a>
+    <a href="#selection">☑️ Selection</a>
+    <a href="#feedback">📢 Feedback</a>
+    <a href="#overlays">🪟 Overlays</a>
+    <a href="#navigation">🧭 Navigation</a>
+    <a href="#data">📊 Data</a>
+    <a href="#media">🖼️ Media</a>
+    <a href="#effects">✨ Effects</a>
+    <a href="#utilities">🔧 Utilities</a>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- STATS -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <div id="stats" class="showcase-stats">
+    <wb-cardstats value="232" label="Total Behaviors" icon="⚡"></wb-cardstats>
+    <wb-cardstats value="19" label="Form Elements" icon="📝"></wb-cardstats>
+    <wb-cardstats value="25" label="UI Components" icon="🎯"></wb-cardstats>
+    <wb-cardstats value="15" label="Effects" icon="✨"></wb-cardstats>
+    <wb-cardstats value="12" label="Utilities" icon="🔧"></wb-cardstats>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- BUTTONS -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section id="buttons">
+    <h2>🔘 Buttons</h2>
+    <div class="section-note">
+      <strong>Button behaviors:</strong> Buttons support variants (primary, secondary, ghost), sizes (sm, md, lg), 
+      and interactive behaviors like ripple effects and toast notifications.
+    </div>
+
+    <h3>Button Variants</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--primary">Primary</button>
+          <button class="wb-btn wb-btn--secondary">Secondary</button>
+          <button class="wb-btn wb-btn--ghost">Ghost</button>
+          <button class="wb-btn wb-btn--primary" disabled>Disabled</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button class="wb-btn wb-btn--primary">Primary</button>
+<button class="wb-btn wb-btn--secondary">Secondary</button>
+<button class="wb-btn wb-btn--ghost">Ghost</button>
+<button class="wb-btn wb-btn--primary" disabled>Disabled</button>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Button Sizes</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--primary wb-btn--sm">Small</button>
+          <button class="wb-btn wb-btn--primary">Medium (Default)</button>
+          <button class="wb-btn wb-btn--primary wb-btn--lg">Large</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button class="wb-btn wb-btn--primary wb-btn--sm">Small</button>
+<button class="wb-btn wb-btn--primary">Medium</button>
+<button class="wb-btn wb-btn--primary wb-btn--lg">Large</button>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Buttons with Behaviors</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--primary" x-ripple>With Ripple Effect</button>
+          <button class="wb-btn wb-btn--primary" x-toast data-message="Action completed successfully!" data-type="success">Shows Toast</button>
+          <button class="wb-btn wb-btn--secondary" x-tooltip="Helpful information here" data-position="top">With Tooltip</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- Ripple effect on click -->
+<button class="wb-btn wb-btn--primary" x-ripple>
+  With Ripple Effect
+</button>
+
+<!-- Toast notification on click -->
+<button class="wb-btn wb-btn--primary" 
+  x-toast 
+  data-message="Action completed!" 
+  data-type="success">
+  Shows Toast
+</button>
+
+<!-- Tooltip on hover -->
+<button class="wb-btn wb-btn--secondary" 
+  x-tooltip="Helpful information" 
+  data-position="top">
+  With Tooltip
+</button>
+```
+      </wb-mdhtml>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- INPUTS -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section id="inputs">
+    <h2>📝 Text Inputs</h2>
+    <div class="section-note">
+      <strong>Input behaviors:</strong> Inputs are automatically enhanced with consistent styling. 
+      Special behaviors include password visibility toggle, search icons, color pickers, and input masking.
+    </div>
+
+    <h3>Basic Inputs</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-grid-3">
+          <input type="text" placeholder="Text input">
+          <input type="email" placeholder="Email input">
+          <input type="number" placeholder="Number input">
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- All inputs auto-enhanced on page load -->
+<input type="text" placeholder="Text input">
+<input type="email" placeholder="Email input">
+<input type="number" placeholder="Number input">
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Validation States</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-grid-3">
+          <input type="text" placeholder="Success state" data-variant="success">
+          <input type="text" placeholder="Warning state" data-variant="warning">
+          <input type="text" placeholder="Error state" data-variant="error">
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<input type="text" placeholder="Success" data-variant="success">
+<input type="text" placeholder="Warning" data-variant="warning">
+<input type="text" placeholder="Error" data-variant="error">
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Special Input Behaviors</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-grid-3">
+          <input type="password" x-password placeholder="Password with toggle">
+          <input type="text" x-search placeholder="Search with icon">
+          <input type="text" x-colorpicker value="#6366f1">
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- Password with visibility toggle -->
+<input type="password" x-password placeholder="Password">
+
+<!-- Search with icon -->
+<input type="text" x-search placeholder="Search...">
+
+<!-- Color picker -->
+<input type="text" x-colorpicker value="#6366f1">
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Masked Inputs</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-grid-3">
+          <input x-masked data-mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
+          <input x-masked data-mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
+          <input x-masked data-mask="9999 9999 9999 9999" placeholder="Credit Card">
+        </div>
+        <div class="demo-grid-3" style="margin-top: var(--space-md);">
+          <input x-masked data-mask="999-99-9999" placeholder="SSN: 999-99-9999">
+          <input x-masked data-mask="99999" placeholder="ZIP Code">
+          <input x-masked data-mask="AA-9999" placeholder="License: AA-9999">
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- 9 = any digit, A = any letter -->
+<input x-masked data-mask="(999) 999-9999" placeholder="Phone">
+<input x-masked data-mask="99/99/9999" placeholder="Date">
+<input x-masked data-mask="9999 9999 9999 9999" placeholder="Card">
+<input x-masked data-mask="AA-9999" placeholder="License Plate">
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Textarea</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-grid-2">
+          <textarea placeholder="Standard textarea with fixed rows" rows="4"></textarea>
+          <textarea data-autosize placeholder="Auto-sizing textarea - grows as you type more content into it"></textarea>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- Standard textarea -->
+<textarea placeholder="Standard textarea" rows="4"></textarea>
+
+<!-- Auto-sizing textarea -->
+<textarea data-autosize placeholder="Grows as you type..."></textarea>
+```
+      </wb-mdhtml>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SELECTION -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section id="selection">
+    <h2>☑️ Selection Controls</h2>
+    <div class="section-note">
+      <strong>Selection behaviors:</strong> Checkboxes, radios, switches, selects, and specialized controls 
+      like ratings, steppers, and range sliders.
+    </div>
+
+    <h3>Checkboxes</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <label><input type="checkbox"> Unchecked</label>
+          <label><input type="checkbox" checked> Checked</label>
+          <label><input type="checkbox" disabled> Disabled</label>
+          <label><input type="checkbox" checked disabled> Checked Disabled</label>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<label><input type="checkbox"> Unchecked</label>
+<label><input type="checkbox" checked> Checked</label>
+<label><input type="checkbox" disabled> Disabled</label>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Radio Buttons</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <label><input type="radio" name="demo-radio" checked> Option A</label>
+          <label><input type="radio" name="demo-radio"> Option B</label>
+          <label><input type="radio" name="demo-radio"> Option C</label>
+          <label><input type="radio" name="demo-radio" disabled> Disabled</label>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- Radio buttons share the same name to form a group -->
+<label><input type="radio" name="choice" checked> Option A</label>
+<label><input type="radio" name="choice"> Option B</label>
+<label><input type="radio" name="choice"> Option C</label>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Switch Toggle</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <wb-switch label="Dark Mode"></wb-switch>
+          <wb-switch label="Notifications" checked></wb-switch>
+          <wb-switch label="Disabled" disabled></wb-switch>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-switch label="Dark Mode"></wb-switch>
+<wb-switch label="Notifications" checked></wb-switch>
+<wb-switch label="Disabled" disabled></wb-switch>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Select Dropdown</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-grid-2">
+          <select>
+            <option value="">Select an option...</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
+          <select multiple size="4">
+            <option>Multiple Select 1</option>
+            <option>Multiple Select 2</option>
+            <option>Multiple Select 3</option>
+            <option>Multiple Select 4</option>
+          </select>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- Single select -->
+<select>
+  <option value="">Select an option...</option>
+  <option value="1">Option 1</option>
+  <option value="2">Option 2</option>
+</select>
+
+<!-- Multiple select -->
+<select multiple size="4">
+  <option>Item 1</option>
+  <option>Item 2</option>
+  <option>Item 3</option>
+</select>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Rating</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <wb-rating value="3" max="5"></wb-rating>
+          <wb-rating value="4" max="5" icon="❤️"></wb-rating>
+          <wb-rating value="2" max="5" icon="👍"></wb-rating>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-rating value="3" max="5"></wb-rating>
+<wb-rating value="4" max="5" icon="❤️"></wb-rating>
+<wb-rating value="2" max="5" icon="👍"></wb-rating>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Stepper & Range</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-grid-2" style="align-items: center;">
+          <div x-stepper data-value="5" data-min="0" data-max="10"></div>
+          <input type="range" min="0" max="100" value="50">
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- Stepper with min/max bounds -->
+<div x-stepper data-value="5" data-min="0" data-max="10"></div>
+
+<!-- Range slider -->
+<input type="range" min="0" max="100" value="50">
+```
+      </wb-mdhtml>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- FEEDBACK -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section id="feedback">
+    <h2>📢 Feedback Components</h2>
+    <div class="section-note">
+      <strong>Feedback behaviors:</strong> Communicate status and results to users with alerts, badges, 
+      progress indicators, spinners, and toast notifications.
+    </div>
+
+    <h3>Alerts</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-stack">
+          <wb-alert type="info" title="Information" message="This is an informational message for the user." data-dismissible></wb-alert>
+          <wb-alert type="success" title="Success" message="The operation completed successfully." data-dismissible></wb-alert>
+          <wb-alert type="warning" title="Warning" message="Please review this before continuing." data-dismissible></wb-alert>
+          <wb-alert type="error" title="Error" message="Something went wrong. Please try again." data-dismissible></wb-alert>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-alert type="info" title="Information" 
+  message="Informational message." data-dismissible></wb-alert>
+
+<wb-alert type="success" title="Success" 
+  message="Operation completed." data-dismissible></wb-alert>
+
+<wb-alert type="warning" title="Warning" 
+  message="Please review."></wb-alert>
+
+<wb-alert type="error" title="Error" 
+  message="Something went wrong."></wb-alert>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Badges</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <wb-badge>Default</wb-badge>
+          <wb-badge variant="success">Success</wb-badge>
+          <wb-badge variant="warning">Warning</wb-badge>
+          <wb-badge variant="error">Error</wb-badge>
+          <wb-badge variant="info">Info</wb-badge>
+          <wb-badge data-pill>Pill Style</wb-badge>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-badge>Default</wb-badge>
+<wb-badge variant="success">Success</wb-badge>
+<wb-badge variant="warning">Warning</wb-badge>
+<wb-badge variant="error">Error</wb-badge>
+<wb-badge variant="info">Info</wb-badge>
+<wb-badge data-pill>Pill Style</wb-badge>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Progress Bars</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-stack">
+          <wb-progress value="25"></wb-progress>
+          <wb-progress value="50"></wb-progress>
+          <wb-progress value="75" data-striped></wb-progress>
+          <wb-progress value="100"></wb-progress>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-progress value="25"></wb-progress>
+<wb-progress value="50"></wb-progress>
+<wb-progress value="75" data-striped></wb-progress>
+<wb-progress value="100"></wb-progress>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Spinners</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <wb-spinner></wb-spinner>
+          <wb-spinner color="success"></wb-spinner>
+          <wb-spinner color="warning"></wb-spinner>
+          <wb-spinner color="error"></wb-spinner>
+          <wb-spinner size="lg"></wb-spinner>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-spinner></wb-spinner>
+<wb-spinner color="success"></wb-spinner>
+<wb-spinner color="warning"></wb-spinner>
+<wb-spinner color="error"></wb-spinner>
+<wb-spinner size="lg"></wb-spinner>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Toast Notifications</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--secondary" x-toast data-message="This is an info message" data-type="info">Info Toast</button>
+          <button class="wb-btn wb-btn--secondary" x-toast data-message="Action completed successfully!" data-type="success">Success Toast</button>
+          <button class="wb-btn wb-btn--secondary" x-toast data-message="Please check your input" data-type="warning">Warning Toast</button>
+          <button class="wb-btn wb-btn--secondary" x-toast data-message="An error occurred" data-type="error">Error Toast</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button x-toast data-message="Info message" data-type="info">
+  Info Toast
+</button>
+
+<button x-toast data-message="Success!" data-type="success">
+  Success Toast
+</button>
+
+<button x-toast data-message="Warning!" data-type="warning">
+  Warning Toast
+</button>
+
+<button x-toast data-message="Error!" data-type="error">
+  Error Toast
+</button>
+```
+      </wb-mdhtml>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- OVERLAYS -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section id="overlays">
+    <h2>🪟 Overlays & Dialogs</h2>
+    <div class="section-note">
+      <strong>Overlay behaviors:</strong> Modal dialogs, slide-out drawers, tooltips, popovers, 
+      confirm dialogs, and image lightboxes for focused interactions.
+    </div>
+
+    <h3>Modal Dialog</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <wb-modal class="wb-btn wb-btn--primary" data-modal-title="Modal Dialog" data-modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-modal 
+  class="wb-btn wb-btn--primary" 
+  data-modal-title="Modal Dialog" 
+  data-modal-content="Modal content goes here.">
+  Open Modal
+</wb-modal>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Drawer</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <wb-drawer class="wb-btn wb-btn--primary" title="Left Drawer" content="This is a slide-out panel from the left side of the screen." position="left">Left Drawer</wb-drawer>
+          <wb-drawer class="wb-btn wb-btn--primary" title="Right Drawer" content="This is a slide-out panel from the right side of the screen." position="right">Right Drawer</wb-drawer>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-drawer 
+  class="wb-btn wb-btn--primary" 
+  title="Left Drawer" 
+  content="Panel content here." 
+  position="left">
+  Left Drawer
+</wb-drawer>
+
+<wb-drawer 
+  class="wb-btn wb-btn--primary" 
+  title="Right Drawer" 
+  content="Panel content here." 
+  position="right">
+  Right Drawer
+</wb-drawer>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Tooltips</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--secondary" x-tooltip="Tooltip on top" data-position="top">Top</button>
+          <button class="wb-btn wb-btn--secondary" x-tooltip="Tooltip on bottom" data-position="bottom">Bottom</button>
+          <button class="wb-btn wb-btn--secondary" x-tooltip="Tooltip on left" data-position="left">Left</button>
+          <button class="wb-btn wb-btn--secondary" x-tooltip="Tooltip on right" data-position="right">Right</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button x-tooltip="Tooltip text" data-position="top">Top</button>
+<button x-tooltip="Tooltip text" data-position="bottom">Bottom</button>
+<button x-tooltip="Tooltip text" data-position="left">Left</button>
+<button x-tooltip="Tooltip text" data-position="right">Right</button>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Popover</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--primary" x-popover data-title="Popover Title" data-content="This is additional information displayed in a popover. It can contain longer content than a tooltip.">Show Popover</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button 
+  x-popover 
+  data-title="Popover Title" 
+  data-content="Additional information here.">
+  Show Popover
+</button>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Confirm & Prompt Dialogs</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--primary" x-confirm data-title="Confirm Action" data-message="Are you sure you want to proceed with this action?">Confirm Dialog</button>
+          <button class="wb-btn wb-btn--primary" x-prompt data-title="Enter Value" data-message="Please enter your name:">Prompt Dialog</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button 
+  x-confirm 
+  data-title="Confirm Action" 
+  data-message="Are you sure?">
+  Confirm Dialog
+</button>
+
+<button 
+  x-prompt 
+  data-title="Enter Value" 
+  data-message="Please enter your name:">
+  Prompt Dialog
+</button>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Lightbox</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>
+          <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb2">View Image 2</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button 
+  x-lightbox 
+  data-src="https://example.com/large-image.jpg">
+  View Image
+</button>
+```
+      </wb-mdhtml>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- NAVIGATION -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section id="navigation">
+    <h2>🧭 Navigation Components</h2>
+    <div class="section-note">
+      <strong>Navigation behaviors:</strong> Organize content and guide users with tabs, accordions, 
+      breadcrumbs, pagination, and step wizards.
+    </div>
+
+    <h3>Tabs</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <wb-tabs>
+          <div data-tab-title="Overview">
+            <p style="padding: var(--space-md) 0;">This is the overview tab content. Tabs organize content into separate views with keyboard navigation and full ARIA accessibility support.</p>
+          </div>
+          <div data-tab-title="Features">
+            <p style="padding: var(--space-md) 0;">Features include smooth transitions, responsive design, keyboard navigation, and accessibility compliance.</p>
+          </div>
+          <div data-tab-title="Usage">
+            <p style="padding: var(--space-md) 0;">Simply wrap your content panels in a wb-tabs element and add data-tab-title to each panel.</p>
+          </div>
+        </wb-tabs>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-tabs>
+  <div data-tab-title="Overview">
+    <p>Overview content...</p>
+  </div>
+  <div data-tab-title="Features">
+    <p>Features content...</p>
+  </div>
+  <div data-tab-title="Usage">
+    <p>Usage content...</p>
+  </div>
+</wb-tabs>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Accordion</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <wb-accordion>
+          <div data-accordion-title="What is WB Framework?">
+            <p>WB Framework is a zero-build web component library with 232 behaviors and 23 themes. It uses Light DOM architecture for easy styling and debugging.</p>
+          </div>
+          <div data-accordion-title="How do I install it?">
+            <p>No installation or build step required! Just include the script tag and start using components immediately. Works with any HTML page.</p>
+          </div>
+          <div data-accordion-title="Is it production ready?">
+            <p>Yes! WB Framework is schema-driven, fully tested, and enterprise hardened. It's used in production applications.</p>
+          </div>
+        </wb-accordion>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-accordion>
+  <div data-accordion-title="Section 1">
+    <p>Content for section 1...</p>
+  </div>
+  <div data-accordion-title="Section 2">
+    <p>Content for section 2...</p>
+  </div>
+  <div data-accordion-title="Section 3">
+    <p>Content for section 3...</p>
+  </div>
+</wb-accordion>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Breadcrumb</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones,iPhone 15"></nav>
+      </div>
+      <wb-mdhtml>
+```html
+<nav 
+  x-breadcrumb 
+  data-items="Home,Products,Electronics,Smartphones">
+</nav>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Pagination</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <nav x-pagination data-total="100" data-per-page="10" data-current="5"></nav>
+      </div>
+      <wb-mdhtml>
+```html
+<nav 
+  x-pagination 
+  data-total="100" 
+  data-per-page="10" 
+  data-current="5">
+</nav>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Steps Wizard</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div x-steps data-items="Cart,Shipping,Payment,Review,Confirm" data-current="3"></div>
+      </div>
+      <wb-mdhtml>
+```html
+<div 
+  x-steps 
+  data-items="Cart,Shipping,Payment,Review,Confirm" 
+  data-current="3">
+</div>
+```
+      </wb-mdhtml>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- DATA DISPLAY -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section id="data">
+    <h2>📊 Data Display</h2>
+    <div class="section-note">
+      <strong>Data behaviors:</strong> Present information effectively with avatars, skeleton loaders, 
+      timelines, keyboard key indicators, and more.
+    </div>
+
+    <h3>Avatars</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <wb-avatar src="https://i.pravatar.cc/150?img=1"></wb-avatar>
+          <wb-avatar src="https://i.pravatar.cc/150?img=2" size="lg"></wb-avatar>
+          <wb-avatar initials="JD"></wb-avatar>
+          <wb-avatar src="https://i.pravatar.cc/150?img=3" status="online"></wb-avatar>
+          <wb-avatar src="https://i.pravatar.cc/150?img=4" status="away"></wb-avatar>
+          <wb-avatar src="https://i.pravatar.cc/150?img=5" status="busy"></wb-avatar>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-avatar src="photo.jpg"></wb-avatar>
+<wb-avatar src="photo.jpg" size="lg"></wb-avatar>
+<wb-avatar initials="JD"></wb-avatar>
+<wb-avatar src="photo.jpg" status="online"></wb-avatar>
+<wb-avatar src="photo.jpg" status="away"></wb-avatar>
+<wb-avatar src="photo.jpg" status="busy"></wb-avatar>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Skeleton Loaders</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row" style="align-items: flex-start; gap: var(--space-xl);">
+          <wb-skeleton variant="text" lines="3" style="width: 250px;"></wb-skeleton>
+          <wb-skeleton variant="circle" width="80px"></wb-skeleton>
+          <wb-skeleton variant="rect" width="200px" height="120px"></wb-skeleton>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- Text skeleton with multiple lines -->
+<wb-skeleton variant="text" lines="3" style="width: 250px;"></wb-skeleton>
+
+<!-- Circle skeleton (for avatars) -->
+<wb-skeleton variant="circle" width="80px"></wb-skeleton>
+
+<!-- Rectangle skeleton (for images/cards) -->
+<wb-skeleton variant="rect" width="200px" height="120px"></wb-skeleton>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Timeline</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div x-timeline data-items="Project Kickoff,Design Phase,Development Sprint,Testing & QA,Launch Day"></div>
+      </div>
+      <wb-mdhtml>
+```html
+<div 
+  x-timeline 
+  data-items="Kickoff,Design,Development,Testing,Launch">
+</div>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Keyboard Keys</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <p style="font-size: var(--text-base); line-height: 2;">
+          Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, 
+          <span x-kbd>Ctrl</span> + <span x-kbd>Z</span> to undo, or 
+          <span x-kbd>⌘</span> + <span x-kbd>K</span> to open command palette.
+        </p>
+      </div>
+      <wb-mdhtml>
+```html
+<p>
+  Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save.
+</p>
+```
+      </wb-mdhtml>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- MEDIA -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section id="media">
+    <h2>🖼️ Media Components</h2>
+    <div class="section-note">
+      <strong>Media behaviors:</strong> Enhanced images with lazy loading and zoom, image galleries, 
+      audio players with equalizer visualization, and YouTube embeds.
+    </div>
+
+    <h3>Enhanced Images</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row" style="align-items: flex-start;">
+          <img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded image" data-lazy style="border-radius: var(--radius-lg);">
+          <img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable image" data-zoomable style="border-radius: var(--radius-lg); cursor: zoom-in;">
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- Lazy loaded image -->
+<img x-image src="image.jpg" alt="Description" data-lazy>
+
+<!-- Zoomable image (click to zoom) -->
+<img x-image src="image.jpg" alt="Description" data-zoomable>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Gallery</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div x-gallery data-columns="4">
+          <img src="https://picsum.photos/200/200?r=gal1" alt="Gallery 1">
+          <img src="https://picsum.photos/200/200?r=gal2" alt="Gallery 2">
+          <img src="https://picsum.photos/200/200?r=gal3" alt="Gallery 3">
+          <img src="https://picsum.photos/200/200?r=gal4" alt="Gallery 4">
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<div x-gallery data-columns="4">
+  <img src="img1.jpg" alt="Image 1">
+  <img src="img2.jpg" alt="Image 2">
+  <img src="img3.jpg" alt="Image 3">
+  <img src="img4.jpg" alt="Image 4">
+</div>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Audio Player with EQ</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <wb-audio 
+          data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" 
+          data-show-eq="true" 
+          data-volume="0.7"></wb-audio>
+      </div>
+      <wb-mdhtml>
+```html
+<wb-audio 
+  data-src="audio-file.mp3" 
+  data-show-eq="true" 
+  data-volume="0.7">
+</wb-audio>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>YouTube Embed</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9" style="max-width: 560px;"></div>
+      </div>
+      <wb-mdhtml>
+```html
+<div 
+  x-youtube 
+  data-id="dQw4w9WgXcQ" 
+  data-ratio="16:9">
+</div>
+```
+      </wb-mdhtml>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- EFFECTS -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section id="effects">
+    <h2>✨ Effects & Animations</h2>
+    <div class="section-note">
+      <strong>Effect behaviors:</strong> Add visual flair with attention-seeking animations, entrance effects, 
+      particle effects like confetti and fireworks, and material-style ripples.
+    </div>
+
+    <h3>Attention Seekers</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--primary" x-bounce>Bounce</button>
+          <button class="wb-btn wb-btn--primary" x-shake>Shake</button>
+          <button class="wb-btn wb-btn--primary" x-pulse>Pulse</button>
+          <button class="wb-btn wb-btn--primary" x-flash>Flash</button>
+          <button class="wb-btn wb-btn--primary" x-tada>Tada!</button>
+          <button class="wb-btn wb-btn--primary" x-wobble>Wobble</button>
+          <button class="wb-btn wb-btn--primary" x-jello>Jello</button>
+          <button class="wb-btn wb-btn--primary" x-heartbeat>💓 Heartbeat</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button x-bounce>Bounce</button>
+<button x-shake>Shake</button>
+<button x-pulse>Pulse</button>
+<button x-flash>Flash</button>
+<button x-tada>Tada!</button>
+<button x-wobble>Wobble</button>
+<button x-jello>Jello</button>
+<button x-heartbeat>Heartbeat</button>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Entrance Animations</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--secondary" x-fadein>Fade In</button>
+          <button class="wb-btn wb-btn--secondary" x-slidein data-direction="left">Slide Left</button>
+          <button class="wb-btn wb-btn--secondary" x-slidein data-direction="right">Slide Right</button>
+          <button class="wb-btn wb-btn--secondary" x-slidein data-direction="up">Slide Up</button>
+          <button class="wb-btn wb-btn--secondary" x-zoomin>Zoom In</button>
+          <button class="wb-btn wb-btn--secondary" x-flip>Flip</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button x-fadein>Fade In</button>
+<button x-slidein data-direction="left">Slide Left</button>
+<button x-slidein data-direction="right">Slide Right</button>
+<button x-slidein data-direction="up">Slide Up</button>
+<button x-zoomin>Zoom In</button>
+<button x-flip>Flip</button>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Special Effects</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--primary" x-confetti>🎊 Confetti</button>
+          <button class="wb-btn wb-btn--primary" x-fireworks>🎆 Fireworks</button>
+          <button class="wb-btn wb-btn--primary" x-snow>❄️ Snow</button>
+          <button class="wb-btn wb-btn--primary" x-sparkle>✨ Sparkle</button>
+          <button class="wb-btn wb-btn--primary" x-glow>💡 Glow</button>
+          <button class="wb-btn wb-btn--primary" x-rainbow>🌈 Rainbow</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button x-confetti>🎊 Confetti</button>
+<button x-fireworks>🎆 Fireworks</button>
+<button x-snow>❄️ Snow</button>
+<button x-sparkle>✨ Sparkle</button>
+<button x-glow>💡 Glow</button>
+<button x-rainbow>🌈 Rainbow</button>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Ripple Effect</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--primary" x-ripple>Button with Ripple</button>
+          <div class="ripple-box" x-ripple>Click anywhere on this box for ripple effect</div>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- Ripple on button -->
+<button class="wb-btn wb-btn--primary" x-ripple>
+  Button with Ripple
+</button>
+
+<!-- Ripple on any element -->
+<div x-ripple style="padding: 2rem; cursor: pointer;">
+  Click for ripple effect
+</div>
+```
+      </wb-mdhtml>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- UTILITIES -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section id="utilities">
+    <h2>🔧 Utilities</h2>
+    <div class="section-note">
+      <strong>Utility behaviors:</strong> Helpful tools including clipboard copy, native share, print, 
+      fullscreen toggle, live clock, countdowns, dark mode toggle, and text truncation.
+    </div>
+
+    <h3>Copy to Clipboard</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--primary" x-copy data-copy="Hello, this text was copied to your clipboard!">📋 Copy Text</button>
+          <button class="wb-btn wb-btn--primary" x-copy data-copy="npm install wb-framework">📋 Copy Install Command</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button x-copy data-copy="Text to copy">
+  📋 Copy Text
+</button>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Share, Print & Fullscreen</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--secondary" x-share data-share-title="WB Framework" data-share-url="https://example.com">📤 Share</button>
+          <button class="wb-btn wb-btn--secondary" x-print>🖨️ Print Page</button>
+          <button class="wb-btn wb-btn--secondary" x-fullscreen>⛶ Fullscreen</button>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<button x-share data-share-title="Title" data-share-url="https://...">
+  📤 Share
+</button>
+
+<button x-print>🖨️ Print Page</button>
+
+<button x-fullscreen>⛶ Fullscreen</button>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Clock & Countdown</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row" style="align-items: center;">
+          <div x-clock class="clock-display"></div>
+          <div x-countdown data-to="2026-12-31" class="countdown-display"></div>
+          <span x-relativetime data-date="2025-01-01" style="font-size: var(--text-base);">Jan 1, 2025</span>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- Live clock -->
+<div x-clock></div>
+
+<!-- Countdown to specific date -->
+<div x-countdown data-to="2026-12-31"></div>
+
+<!-- Relative time display -->
+<span x-relativetime data-date="2025-01-01"></span>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Dark Mode Toggle</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <div class="demo-row">
+          <button class="wb-btn wb-btn--primary" x-darkmode>🌙 Toggle Dark Mode</button>
+          <wb-themecontrol></wb-themecontrol>
+        </div>
+      </div>
+      <wb-mdhtml>
+```html
+<!-- Simple dark mode toggle -->
+<button x-darkmode>🌙 Toggle Dark Mode</button>
+
+<!-- Full theme control dropdown -->
+<wb-themecontrol></wb-themecontrol>
+```
+      </wb-mdhtml>
+    </div>
+
+    <h3>Text Truncate</h3>
+    <div class="demo-container">
+      <div class="demo-area">
+        <p x-truncate data-lines="2" class="truncate-box">
+          This is a very long paragraph of text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        </p>
+      </div>
+      <wb-mdhtml>
+```html
+<p x-truncate data-lines="2">
+  Long text that will be truncated after 2 lines...
+</p>
+```
+      </wb-mdhtml>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- FOOTER -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <footer id="footer" class="showcase-footer">
+    <p><strong>WB Framework v3.0</strong> • 232 Behaviors • 23 Themes • Zero Build</p>
+    <p>
+      <a href="/?page=home">Home</a> • 
+      <a href="/?page=components">Components</a> • 
+      <a href="/?page=themes">Themes</a> • 
+      <a href="/?page=docs">Documentation</a>
+    </p>
+  </footer>
+
+  <!-- Load WB Framework -->
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+
+    await WB.init({ autoInject: true });
+    await WB.scan();
+
+    console.log('✅ WB Behaviors Showcase initialized');
+  </script>
+
+</body>
+</html>

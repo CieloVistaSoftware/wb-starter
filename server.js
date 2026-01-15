@@ -121,6 +121,8 @@ const cacheConfig = isProduction ? {
     res.setHeader('Expires', '0');
   }
 };
+// Serve wb-models for schema viewer
+app.use('/src/wb-models', express.static(path.join(rootDir, 'src', 'wb-models'), cacheConfig));
 // Auto-wrap /pages/*.html when accessed directly (Browser Navigation)
 // This allows "pure" HTML fragments in /pages/ to be viewed standalone
 app.get('/pages/:page', (req, res, next) => {
@@ -140,17 +142,25 @@ app.get('/pages/:page', (req, res, next) => {
     if (pageName.includes('/') || pageName.includes('\\')) return next();
 
     // Read config/site.json to support dynamic theme/title
-    let siteConfig = { site: { theme: 'dark', name: 'WB Site' } };
+    let theme = 'dark';
+    let siteName = 'WB Site';
+    
     try {
       const configPath = path.join(rootDir, 'config', 'site.json');
       if (fs.existsSync(configPath)) {
-        siteConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        const siteConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        // Support both old schema (site.theme) and new schema (branding.colorTheme)
+        if (siteConfig.site) {
+             theme = siteConfig.site.theme || theme;
+             siteName = siteConfig.site.name || siteName;
+        } else if (siteConfig.branding) {
+             theme = siteConfig.branding.colorTheme || theme;
+             siteName = siteConfig.branding.companyName || siteName;
+        }
       }
     } catch (e) {
       console.warn('Failed to read dynamic site config:', e);
     }
-
-    const theme = siteConfig.site.theme || 'dark';
 
     fs.readFile(filePath, 'utf8', (err, content) => {
       if (err) return next(); // File not found, pass to static handler
@@ -160,7 +170,7 @@ app.get('/pages/:page', (req, res, next) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${pageName.replace('.html', '')} - ${siteConfig.site.name}</title>
+  <title>${pageName.replace('.html', '')} - ${siteName}</title>
   <link rel="stylesheet" href="/src/styles/themes.css">
   <link rel="stylesheet" href="/src/styles/site.css">
   <script type="module">
@@ -381,11 +391,16 @@ app.post("/api/rename-page", (req, res) => {
 app.use((req, res, next) => {
   const staticExtensions = ['.js', '.css', '.json', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.eot', '.map'];
   const ext = path.extname(req.path).toLowerCase();
-  
+
+  // Allow .json files from /src/wb-models/ to be served
+  if (ext === '.json' && req.path.startsWith('/src/wb-models/')) {
+    return res.sendFile(path.join(rootDir, req.path));
+  }
+
   if (staticExtensions.includes(ext)) {
     return res.status(404).send(`File not found: ${req.path}`);
   }
-  
+
   res.sendFile(path.join(rootDir, 'index.html'));
 });
 

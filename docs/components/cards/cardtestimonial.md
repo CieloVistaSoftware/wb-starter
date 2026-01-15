@@ -1,87 +1,70 @@
-# Card Testimonial Component
+# Card Testimonial - WB Framework v3.0
+
+Quote/testimonial card using semantic `<blockquote>` and `<cite>` elements.
 
 ## Overview
-The `cardtestimonial` component is designed to display user feedback, reviews, or quotes. It includes built-in support for star ratings, author attribution, and avatars.
 
-## Internals & Lifecycle
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-cardtestimonial>` |
+| Behavior | `cardtestimonial` |
+| Semantic | `<article>` + `<blockquote>` + `<cite>` |
+| Base Class | `wb-card wb-testimonial` |
+| Inherits | card |
 
-### Initialization
-1.  **Content Extraction**: If `data-quote` is not provided, it attempts to use the element's `textContent` as the quote.
-2.  **Visual Construction**:
-    - **Quote Icon**: Injects a large, decorative quotation mark (opacity 0.3) at the top.
-    - **Rating Logic**: Parses `data-rating` as an integer. Generates a string of filled (★) and empty (☆) stars to match a 5-star scale.
-    - **Author Layout**: Creates a flex container to align the avatar (circle cropped) next to the author name and role.
+## Properties
 
-### DOM Structure
+Inherits all [card properties](./card.md) plus:
 
-<article class="wb-card wb-card--testimonial">
-  <!-- Decorative Icon -->
-  <div style="font-size:3rem;...">"</div>
-  
-  <!-- Quote Body -->
-  <blockquote class="wb-card__quote">...</blockquote>
-  
-  <!-- Star Rating -->
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `quote` | string | `""` | Testimonial text |
+| `author` | string | `""` | Author name |
+| `role` | string | `""` | Author title/role |
+| `avatar` | string | `""` | Author avatar URL |
+| `rating` | number | `""` | Star rating (1-5) |
+
+## Usage
+
+### Basic Testimonial
+
+```html
+<wb-cardtestimonial 
+  quote="This product changed my life!"
+  author="Jane Doe"
+  role="CEO, TechCorp">
+</wb-cardtestimonial>
+```
+
+### With Avatar and Rating
+
+```html
+<wb-cardtestimonial 
+  quote="Absolutely incredible experience. Would recommend to everyone."
+  author="John Smith"
+  role="Product Manager"
+  avatar="/images/john.jpg"
+  rating="5">
+</wb-cardtestimonial>
+```
+
+## Generated Structure
+
+```html
+<article class="wb-card wb-testimonial">
+  <div>"</div>
+  <blockquote class="wb-card__quote">Quote text...</blockquote>
   <div class="wb-card__rating">★★★★★</div>
-  
-  <!-- Author Section -->
-  <div style="display:flex;...">
+  <footer class="wb-card__footer">
     <img class="wb-card__avatar" src="...">
     <div>
       <cite class="wb-card__author">Author Name</cite>
-      <span class="wb-card__author-role">Job Title</span>
+      <span class="wb-card__author-role">Role</span>
     </div>
-  </div>
-</article>
-
-```html
-<article class="wb-card wb-card--testimonial">
-  <!-- Decorative Icon -->
-  <div style="font-size:3rem;...">"</div>
-  
-  <!-- Quote Body -->
-  <blockquote class="wb-card__quote">...</blockquote>
-  
-  <!-- Star Rating -->
-  <div class="wb-card__rating">★★★★★</div>
-  
-  <!-- Author Section -->
-  <div style="display:flex;...">
-    <img class="wb-card__avatar" src="...">
-    <div>
-      <cite class="wb-card__author">Author Name</cite>
-      <span class="wb-card__author-role">Job Title</span>
-    </div>
-  </div>
+  </footer>
 </article>
 ```
 
-## Attributes
+## Schema
 
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data-quote` | string | textContent | The main testimonial text. |
-| `data-author` | string | - | Name of the person giving the testimonial. |
-| `data-role` | string | - | Job title or relationship (e.g., "CEO", "Customer"). |
-| `data-avatar` | string | - | URL to the author's photo. |
-| `data-rating` | number | - | Integer 1-5 for the star rating. |
-
-## Usage Example
-
-<div data-wb="cardtestimonial" 
-     data-quote="This product completely changed our workflow. Highly recommended!" 
-     data-author="Sarah Connor" 
-     data-role="Director of Ops"
-     data-avatar="/assets/sarah.jpg"
-     data-rating="5">
-</div>
-
-```html
-<div data-wb="cardtestimonial" 
-     data-quote="This product completely changed our workflow. Highly recommended!" 
-     data-author="Sarah Connor" 
-     data-role="Director of Ops"
-     data-avatar="/assets/sarah.jpg"
-     data-rating="5">
-</div>
-```
+Location: `src/wb-models/cardtestimonial.schema.json`

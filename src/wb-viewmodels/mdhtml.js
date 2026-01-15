@@ -223,14 +223,15 @@ export async function mdhtml(element, options = {}) {
                 el.dataset.showCopy = "true";
                 
                 // Mark for injection (WB.scan will pick this up)
-                el.setAttribute('x-pre', '');
-                code.setAttribute('x-code', '');
+                // Use x-behavior attribute which WB.scan() looks for
+                el.setAttribute('x-behavior', 'pre');
+                code.setAttribute('x-behavior', 'code');
             }
         });
 
         // 2. Pre-process inline code
         element.querySelectorAll('code:not(pre code)').forEach(el => {
-             el.setAttribute('x-code', '');
+             el.setAttribute('x-behavior', 'code');
         });
 
         // 3. Scan the entire element for behaviors (including the ones we just marked)

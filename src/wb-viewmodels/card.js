@@ -654,7 +654,7 @@ export function cardvideo(element, options = {}) {
 
   // Video figure
   if (config.src) {
-    const figure = base.createFigure();
+    const coverFigure = base.createFigure();
     const video = document.createElement('video');
     video.src = config.src;
     video.style.cssText = 'width:100%;display:block;';
@@ -981,6 +981,7 @@ export function cardpricing(element, options = {}) {
   element.classList.add('wb-pricing');
   element.innerHTML = '';
   element.style.textAlign = 'center';
+  element.style.containerType = 'inline-size'; // Enable container queries for responsive text
   element.style.padding = '0'; // Reset padding as we use header/main
 
   if (config.featured) {
@@ -1018,7 +1019,8 @@ export function cardpricing(element, options = {}) {
 
   const priceEl = document.createElement('span');
   priceEl.className = 'wb-card__amount';
-  priceEl.style.cssText = 'font-size:3rem;font-weight:700;color:var(--text-primary,#f9fafb);';
+  // Use container query units (cqi) to scale text relative to card width
+  priceEl.style.cssText = 'font-size:clamp(1.5rem, 18cqi, 3rem);font-weight:700;color:var(--text-primary,#f9fafb);white-space:nowrap;';
   priceEl.textContent = config.price;
   priceWrap.appendChild(priceEl);
 
@@ -1081,6 +1083,7 @@ export function cardstats(element, options = {}) {
   const base = cardBase(element, { ...config, behavior: 'cardstats', hoverable: false });
   element.classList.add('wb-stats');
   element.innerHTML = '';
+  element.style.containerType = 'inline-size';
   element.style.padding = 'var(--space-md, 1rem)';
   element.style.flexDirection = 'row';
   element.style.alignItems = 'center';
@@ -1108,7 +1111,7 @@ export function cardstats(element, options = {}) {
     const valueEl = document.createElement('data');
     valueEl.value = config.value.replace(/[^0-9.-]/g, '') || config.value;
     valueEl.className = 'wb-card__stats-value';
-    valueEl.style.cssText = 'font-size:1.75rem;font-weight:700;color:var(--text-primary,#f9fafb);line-height:1.2;display:block;';
+    valueEl.style.cssText = 'font-size:clamp(1.25rem, 15cqi, 1.75rem);font-weight:700;color:var(--text-primary,#f9fafb);line-height:1.2;display:block;white-space:nowrap;';
     valueEl.textContent = config.value;
     content.appendChild(valueEl);
   }
@@ -1301,7 +1304,7 @@ export function cardproduct(element, options = {}) {
   }
 
   // Price
-  const priceWrap = document.createElement('div');
+  const priceWrapper = document.createElement('div');
   priceWrap.className = 'wb-card__price-wrap';
   priceWrap.style.cssText = 'margin:0.75rem 0;display:flex;align-items:center;gap:0.5rem;';
 
@@ -1582,7 +1585,7 @@ export function cardlink(element, options = {}) {
   // Description (subtitle or description)
   const desc = config.description || base.config.subtitle;
   if (desc) {
-    const descEl = document.createElement('p');
+    const descriptionEl = document.createElement('p');
     descEl.className = 'wb-card__description';
     descEl.style.cssText = 'margin:0.5rem 0 0;font-size:0.875rem;color:var(--text-secondary,#9ca3af);line-height:1.5;';
     descEl.textContent = desc;
@@ -1803,7 +1806,7 @@ export function cardexpandable(element, options = {}) {
   btnWrap.className = 'wb-card__footer';
   btnWrap.style.cssText = 'padding:0.75rem 1rem;border-top:1px solid var(--border-color,#374151);';
 
-  const btn = document.createElement('button');
+  const button = document.createElement('button');
   btn.className = 'wb-card__expand-btn';
   btn.style.cssText = 'width:100%;padding:0.5rem;background:var(--bg-tertiary,#374151);border:none;border-radius:6px;color:var(--text-primary,#f9fafb);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;';
   btn.setAttribute('aria-expanded', config.expanded);
@@ -1890,7 +1893,7 @@ export function cardminimizable(element, options = {}) {
   element.innerHTML = '';
 
   // Header with minimize button
-  const header = document.createElement('header');
+  const headerSection = document.createElement('header');
   header.className = 'wb-card__header';
   header.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);display:flex;align-items:center;gap:0.75rem;';
 
@@ -1935,7 +1938,7 @@ export function cardminimizable(element, options = {}) {
   let isMinimized = config.minimized;
   if (isMinimized) element.classList.add('wb-card--minimized');
 
-  const toggle = () => {
+  const toggleBtn = () => {
     isMinimized = !isMinimized;
     content.style.maxHeight = isMinimized ? '0' : '1000px';
     content.style.padding = isMinimized ? '0 1rem' : '1rem';
@@ -1971,7 +1974,7 @@ export function cardminimizable(element, options = {}) {
 
   // Footer
   if (base.config.footer) {
-    const footer = base.createFooter();
+    const footerEl = base.createFooter();
     footer.style.display = isMinimized ? 'none' : '';
     element.appendChild(footer);
   }
@@ -2007,7 +2010,7 @@ export function carddraggable(element, options = {}) {
   element.classList.add('wb-card--draggable');
 
   // Header with drag handle
-  const header = document.createElement('header');
+  const headerEl = document.createElement('header');
   header.className = 'wb-card__header wb-card__drag-handle';
   header.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);cursor:grab;display:flex;align-items:center;gap:0.5rem;';
   header.setAttribute('aria-label', 'Drag to move card');
@@ -2019,7 +2022,7 @@ export function carddraggable(element, options = {}) {
   header.appendChild(handleIcon);
 
   if (base.config.title) {
-    const titleEl = document.createElement('h3');
+    const headerTitle = document.createElement('h3');
     titleEl.className = 'wb-card__title';
     titleEl.style.cssText = 'margin:0;flex:1;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
@@ -2029,7 +2032,7 @@ export function carddraggable(element, options = {}) {
   element.appendChild(header);
 
   // Content
-  const content = base.createMain();
+  const contentArea = base.createMain();
   element.appendChild(content);
 
   // Footer
@@ -2182,7 +2185,7 @@ export function cardportfolio(element, options = {}) {
 
   // Cover
   if (config.cover) {
-    const coverFig = base.createFigure();
+    const coverFigure = base.createFigure();
     coverFig.className = 'wb-card__figure wb-card__portfolio-cover';
     coverFig.style.cssText = `margin:0;height:120px;background-image:url(${config.cover});background-size:cover;background-position:center;`;
     element.appendChild(coverFig);
@@ -2193,7 +2196,7 @@ export function cardportfolio(element, options = {}) {
   profile.style.cssText = `text-align:center;padding:1.5rem;${config.cover ? 'margin-top:-50px;' : ''}`;
 
   if (config.avatar) {
-    const avatarImg = document.createElement('img');
+    const profileAvatar = document.createElement('img');
     avatarImg.className = 'wb-card__portfolio-avatar';
     avatarImg.src = config.avatar;
     avatarImg.alt = config.name || 'Avatar';
@@ -2202,7 +2205,7 @@ export function cardportfolio(element, options = {}) {
   }
 
   if (config.name) {
-    const nameEl = document.createElement('h2');
+    const profileName = document.createElement('h2');
     nameEl.className = 'wb-card__portfolio-name';
     nameEl.style.cssText = 'margin:1rem 0 0;font-size:1.5rem;color:var(--text-primary,#f9fafb);';
     nameEl.textContent = config.name;
@@ -2210,7 +2213,7 @@ export function cardportfolio(element, options = {}) {
   }
 
   if (config.title) {
-    const titleEl = document.createElement('p');
+    const cardTitle = document.createElement('p');
     titleEl.className = 'wb-card__portfolio-title';
     titleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--primary,#6366f1);font-weight:500;';
     titleEl.textContent = config.title;
@@ -2234,7 +2237,7 @@ export function cardportfolio(element, options = {}) {
   }
 
   if (config.bio) {
-    const bioEl = document.createElement('p');
+    const profileBio = document.createElement('p');
     bioEl.className = 'wb-card__portfolio-bio';
     bioEl.style.cssText = 'margin:1rem 0 0;color:var(--text-primary,#f9fafb);font-size:0.9rem;line-height:1.6;';
     bioEl.textContent = config.bio;

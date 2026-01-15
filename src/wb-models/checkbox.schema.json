@@ -181,6 +181,11 @@
     }
   },
   "test": {
+    "setup": [
+      "<div x-behavior=\"checkbox\" x-label=\"Accept terms\"></div>",
+      "<div x-behavior=\"checkbox\" x-label=\"Checked\" x-checked=\"true\"></div>",
+      "<div x-behavior=\"checkbox\" x-label=\"Disabled\" x-disabled=\"true\"></div>"
+    ],
     "functional": {
       "interactions": [
         {

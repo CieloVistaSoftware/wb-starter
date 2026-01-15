@@ -1,0 +1,1394 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     WB FRAMEWORK - THEMES SHOWCASE
+     Complete showcase of all 23 themes with live previews
+     ═══════════════════════════════════════════════════════════════════════════ -->
+
+<!-- HERO -->
+<div class="page__hero">
+  <h1>🎨 Themes Showcase</h1>
+  <p>23 beautiful themes powered by the Harmonic Color System (HCS)</p>
+  <div style="margin-top: 1rem;">
+    <wb-themecontrol></wb-themecontrol>
+  </div>
+</div>
+
+<!-- QUICK STATS -->
+<div class="themes-stats">
+  <stats-card value="23" label="Total Themes" icon="🎨"></stats-card>
+  <stats-card value="12" label="Dark Themes" icon="🌙"></stats-card>
+  <stats-card value="11" label="Light Themes" icon="☀️"></stats-card>
+  <stats-card value="∞" label="CSS Variables" icon="🎯"></stats-card>
+</div>
+
+<!-- HARMONIC COLOR SYSTEM DEMO -->
+<div class="page__section">
+  <h2 class="section-title">Harmonic Color System</h2>
+  <p class="section-subtitle">Every theme is built on wave-based color mathematics for perfect harmony</p>
+  
+  <!-- HCS Visual Demo -->
+  <div class="hcs-demo">
+    <div class="hcs-demo__visual">
+      <h3>🌊 Wave-Based Color Derivation</h3>
+      <p>Colors are derived using wave frequencies. The primary hue acts as the fundamental frequency, with secondary and accent colors as harmonics.</p>
+      
+      <div class="hcs-wave-demo">
+        <div class="hcs-wave" style="--hue: 240;"><!-- Primary wave --></div>
+        <div class="hcs-wave hcs-wave--secondary" style="--hue: 60;"><!-- Complementary --></div>
+        <div class="hcs-wave hcs-wave--accent" style="--hue: 210;"><!-- Accent --></div>
+      </div>
+      
+      <div class="hcs-color-output">
+        <div class="hcs-color-swatch" style="background: hsl(240, 70%, 50%);">
+          <span>Primary</span>
+          <code>240°</code>
+        </div>
+        <div class="hcs-color-swatch" style="background: hsl(60, 60%, 50%);">
+          <span>Secondary</span>
+          <code>60° (+180°)</code>
+        </div>
+        <div class="hcs-color-swatch" style="background: hsl(210, 60%, 50%);">
+          <span>Accent</span>
+          <code>210° (-30°)</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Harmony Types -->
+  <h3 style="text-align: center; margin: 2rem 0 1rem; color: var(--text-secondary);">Color Harmony Types Used in Themes</h3>
+  
+  <div class="harmony-grid">
+    <!-- Complementary -->
+    <div class="harmony-card">
+      <h4>Complementary</h4>
+      <p>Opposite colors on the wheel (180° apart)</p>
+      <div class="harmony-visual">
+        <div class="color-wheel color-wheel--complementary">
+          <div class="wheel-dot" style="--angle: 0deg; background: hsl(240, 70%, 50%);"></div>
+          <div class="wheel-dot" style="--angle: 180deg; background: hsl(60, 70%, 50%);"></div>
+        </div>
+        <div class="harmony-swatches">
+          <span style="background: hsl(240, 70%, 50%);"></span>
+          <span style="background: hsl(60, 70%, 50%);"></span>
+        </div>
+      </div>
+      <code class="harmony-formula">Secondary = Primary + 180°</code>
+      <p class="harmony-themes">Used in: <strong>Dark, Light</strong></p>
+    </div>
+
+    <!-- Analogous -->
+    <div class="harmony-card">
+      <h4>Analogous</h4>
+      <p>Adjacent colors on the wheel (±30°)</p>
+      <div class="harmony-visual">
+        <div class="color-wheel color-wheel--analogous">
+          <div class="wheel-dot" style="--angle: 0deg; background: hsl(200, 80%, 50%);"></div>
+          <div class="wheel-dot" style="--angle: 30deg; background: hsl(230, 80%, 50%);"></div>
+          <div class="wheel-dot" style="--angle: -30deg; background: hsl(170, 70%, 45%);"></div>
+        </div>
+        <div class="harmony-swatches">
+          <span style="background: hsl(170, 70%, 45%);"></span>
+          <span style="background: hsl(200, 80%, 50%);"></span>
+          <span style="background: hsl(230, 80%, 50%);"></span>
+        </div>
+      </div>
+      <code class="harmony-formula">Colors = Primary ± 30°</code>
+      <p class="harmony-themes">Used in: <strong>Ocean, Midnight</strong></p>
+    </div>
+
+    <!-- Triadic -->
+    <div class="harmony-card">
+      <h4>Triadic</h4>
+      <p>Three colors equally spaced (120° apart)</p>
+      <div class="harmony-visual">
+        <div class="color-wheel color-wheel--triadic">
+          <div class="wheel-dot" style="--angle: 0deg; background: hsl(25, 90%, 55%);"></div>
+          <div class="wheel-dot" style="--angle: 120deg; background: hsl(145, 80%, 45%);"></div>
+          <div class="wheel-dot" style="--angle: 240deg; background: hsl(265, 70%, 55%);"></div>
+        </div>
+        <div class="harmony-swatches">
+          <span style="background: hsl(25, 90%, 55%);"></span>
+          <span style="background: hsl(145, 80%, 45%);"></span>
+          <span style="background: hsl(265, 70%, 55%);"></span>
+        </div>
+      </div>
+      <code class="harmony-formula">Colors = Primary + 0°, 120°, 240°</code>
+      <p class="harmony-themes">Used in: <strong>Sunset, Aurora</strong></p>
+    </div>
+
+    <!-- Split-Complementary -->
+    <div class="harmony-card">
+      <h4>Split-Complementary</h4>
+      <p>Primary + two adjacent to complement</p>
+      <div class="harmony-visual">
+        <div class="color-wheel color-wheel--split">
+          <div class="wheel-dot" style="--angle: 0deg; background: hsl(140, 60%, 45%);"></div>
+          <div class="wheel-dot" style="--angle: 150deg; background: hsl(320, 55%, 50%);"></div>
+          <div class="wheel-dot" style="--angle: 210deg; background: hsl(20, 60%, 50%);"></div>
+        </div>
+        <div class="harmony-swatches">
+          <span style="background: hsl(140, 60%, 45%);"></span>
+          <span style="background: hsl(320, 55%, 50%);"></span>
+          <span style="background: hsl(20, 60%, 50%);"></span>
+        </div>
+      </div>
+      <code class="harmony-formula">Colors = Primary, (Primary+180°)±30°</code>
+      <p class="harmony-themes">Used in: <strong>Forest, Twilight</strong></p>
+    </div>
+  </div>
+
+  <!-- The Math -->
+  <div class="hcs-math-section">
+    <h3>📐 The Mathematics</h3>
+    <div class="math-grid">
+      <div class="math-card">
+        <h4>Wave Frequency Formula</h4>
+        <code class="math-formula">f = c / λ</code>
+        <p>Color hue mapped to wave frequency. Primary color establishes the base frequency.</p>
+      </div>
+      <div class="math-card">
+        <h4>Harmonic Relationship</h4>
+        <code class="math-formula">H<sub>n</sub> = H<sub>1</sub> × n</code>
+        <p>Secondary and accent colors derived as harmonic multiples of primary.</p>
+      </div>
+      <div class="math-card">
+        <h4>Lightness Derivation</h4>
+        <code class="math-formula">L = 50% + (amplitude × sin(θ))</code>
+        <p>Light/dark variants calculated using sine wave amplitude modulation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Code Example -->
+  <h3 style="text-align: center; margin: 2rem 0 1rem; color: var(--text-secondary);">Implementation Example</h3>
+  
+  <wb-mdhtml>
+```javascript
+// Harmonic Color System - Theme Generation
+function generateHarmonicPalette(primaryHue, harmonyType = 'complementary') {
+  const palette = { primary: primaryHue };
+  
+  switch (harmonyType) {
+    case 'complementary':
+      palette.secondary = (primaryHue + 180) % 360;
+      palette.accent = (primaryHue - 30 + 360) % 360;
+      break;
+    case 'analogous':
+      palette.secondary = (primaryHue + 30) % 360;
+      palette.accent = (primaryHue - 30 + 360) % 360;
+      break;
+    case 'triadic':
+      palette.secondary = (primaryHue + 120) % 360;
+      palette.accent = (primaryHue + 240) % 360;
+      break;
+    case 'split-complementary':
+      palette.secondary = (primaryHue + 150) % 360;
+      palette.accent = (primaryHue + 210) % 360;
+      break;
+  }
+  
+  return palette;
+}
+
+// Example: Generate Ocean theme (Analogous Blues)
+const oceanPalette = generateHarmonicPalette(200, 'analogous');
+// Result: { primary: 200, secondary: 230, accent: 170 }
+```
+  </wb-mdhtml>
+</div>
+
+<!-- THEME GRID -->
+<div class="page__section">
+  <h2 class="section-title">All 23 Themes</h2>
+  <p class="section-subtitle">Click any theme card to switch to that theme</p>
+  
+  <div class="themes-grid">
+    
+    <!-- DARK (Default) -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'dark')" data-preview-theme="dark">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(240, 70%, 50%);"></span>
+          <span style="background: hsl(60, 60%, 50%);"></span>
+          <span style="background: hsl(210, 60%, 50%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(220, 25%, 10%); color: hsl(0, 0%, 98%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Dark</h3>
+        <p>Default • Complementary</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- LIGHT -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'light')" data-preview-theme="light">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(240, 70%, 50%);"></span>
+          <span style="background: hsl(60, 60%, 45%);"></span>
+          <span style="background: hsl(210, 60%, 50%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(0, 0%, 98%); color: hsl(220, 25%, 15%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Light</h3>
+        <p>Classic • Complementary</p>
+        <span class="theme-card__tag">☀️ Light</span>
+      </div>
+    </div>
+
+    <!-- CYBERPUNK -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'cyberpunk')" data-preview-theme="cyberpunk">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(320, 100%, 50%);"></span>
+          <span style="background: hsl(180, 100%, 50%);"></span>
+          <span style="background: hsl(290, 90%, 50%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(270, 40%, 8%); color: hsl(180, 100%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Cyberpunk</h3>
+        <p>Vibrant • Magenta/Cyan</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- OCEAN -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'ocean')" data-preview-theme="ocean">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(200, 80%, 50%);"></span>
+          <span style="background: hsl(230, 80%, 50%);"></span>
+          <span style="background: hsl(170, 70%, 45%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(200, 40%, 10%); color: hsl(200, 20%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Ocean</h3>
+        <p>Calm • Analogous Blues</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- SUNSET -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'sunset')" data-preview-theme="sunset">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(25, 90%, 55%);"></span>
+          <span style="background: hsl(145, 80%, 45%);"></span>
+          <span style="background: hsl(265, 70%, 55%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(15, 30%, 10%); color: hsl(40, 30%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Sunset</h3>
+        <p>Warm • Triadic Orange</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- FOREST -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'forest')" data-preview-theme="forest">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(140, 60%, 45%);"></span>
+          <span style="background: hsl(320, 55%, 50%);"></span>
+          <span style="background: hsl(20, 60%, 50%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(140, 30%, 8%); color: hsl(80, 20%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Forest</h3>
+        <p>Natural • Split-Complementary</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- MIDNIGHT -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'midnight')" data-preview-theme="midnight">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(230, 85%, 35%);"></span>
+          <span style="background: hsl(230, 75%, 50%);"></span>
+          <span style="background: hsl(230, 60%, 65%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(230, 40%, 6%); color: hsl(230, 30%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Midnight</h3>
+        <p>Calm • Monochromatic Blue</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- SAKURA -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'sakura')" data-preview-theme="sakura">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(340, 70%, 70%);"></span>
+          <span style="background: hsl(70, 60%, 60%);"></span>
+          <span style="background: hsl(160, 50%, 60%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(350, 25%, 96%); color: hsl(340, 40%, 20%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Sakura</h3>
+        <p>Elegant • Tetradic Pink</p>
+        <span class="theme-card__tag">☀️ Light</span>
+      </div>
+    </div>
+
+    <!-- ARCTIC -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'arctic')" data-preview-theme="arctic">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(190, 75%, 65%);"></span>
+          <span style="background: hsl(210, 70%, 60%);"></span>
+          <span style="background: hsl(170, 65%, 55%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(190, 20%, 95%); color: hsl(200, 40%, 20%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Arctic</h3>
+        <p>Ice Blue • Doppler Shift</p>
+        <span class="theme-card__tag">☀️ Light</span>
+      </div>
+    </div>
+
+    <!-- DESERT -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'desert')" data-preview-theme="desert">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(35, 65%, 60%);"></span>
+          <span style="background: hsl(45, 60%, 55%);"></span>
+          <span style="background: hsl(15, 55%, 55%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(40, 25%, 92%); color: hsl(30, 40%, 20%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Desert</h3>
+        <p>Sand • Standing Wave</p>
+        <span class="theme-card__tag">☀️ Light</span>
+      </div>
+    </div>
+
+    <!-- NEON DREAMS -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'neon-dreams')" data-preview-theme="neon-dreams">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(280, 95%, 55%);"></span>
+          <span style="background: hsl(320, 95%, 55%);"></span>
+          <span style="background: hsl(240, 90%, 60%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(270, 35%, 8%); color: hsl(280, 50%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Neon Dreams</h3>
+        <p>Neon Purple • Beat Pattern</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- RETRO WAVE -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'retro-wave')" data-preview-theme="retro-wave">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(330, 85%, 60%);"></span>
+          <span style="background: hsl(300, 80%, 55%);"></span>
+          <span style="background: hsl(260, 75%, 60%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(260, 30%, 12%); color: hsl(330, 40%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Retro Wave</h3>
+        <p>80s Pink • Harmonic Series</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- LAVENDER -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'lavender')" data-preview-theme="lavender">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(270, 60%, 70%);"></span>
+          <span style="background: hsl(300, 50%, 65%);"></span>
+          <span style="background: hsl(240, 50%, 70%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(270, 30%, 95%); color: hsl(270, 40%, 20%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Lavender</h3>
+        <p>Soft Purple Pastels</p>
+        <span class="theme-card__tag">☀️ Light</span>
+      </div>
+    </div>
+
+    <!-- EMERALD -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'emerald')" data-preview-theme="emerald">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(160, 85%, 40%);"></span>
+          <span style="background: hsl(180, 75%, 35%);"></span>
+          <span style="background: hsl(140, 70%, 45%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(160, 35%, 8%); color: hsl(160, 20%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Emerald</h3>
+        <p>Jewel-Toned Green</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- RUBY -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'ruby')" data-preview-theme="ruby">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(350, 80%, 45%);"></span>
+          <span style="background: hsl(330, 70%, 50%);"></span>
+          <span style="background: hsl(15, 75%, 50%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(350, 30%, 8%); color: hsl(350, 20%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Ruby</h3>
+        <p>Deep Red Elegance</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- GOLDEN -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'golden')" data-preview-theme="golden">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(45, 90%, 50%);"></span>
+          <span style="background: hsl(30, 85%, 50%);"></span>
+          <span style="background: hsl(60, 70%, 45%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(40, 30%, 8%); color: hsl(45, 30%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Golden</h3>
+        <p>Luxurious Gold & Amber</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- SLATE -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'slate')" data-preview-theme="slate">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(215, 20%, 50%);"></span>
+          <span style="background: hsl(215, 25%, 45%);"></span>
+          <span style="background: hsl(200, 30%, 50%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(215, 15%, 12%); color: hsl(215, 10%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Slate</h3>
+        <p>Professional Gray Tones</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- COFFEE -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'coffee')" data-preview-theme="coffee">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(25, 50%, 40%);"></span>
+          <span style="background: hsl(35, 45%, 45%);"></span>
+          <span style="background: hsl(15, 55%, 45%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(25, 25%, 10%); color: hsl(30, 25%, 92%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Coffee</h3>
+        <p>Warm Brown Tones</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- MINT -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'mint')" data-preview-theme="mint">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(165, 60%, 50%);"></span>
+          <span style="background: hsl(180, 55%, 45%);"></span>
+          <span style="background: hsl(150, 50%, 50%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(165, 30%, 95%); color: hsl(165, 40%, 15%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Mint</h3>
+        <p>Fresh Mint Green</p>
+        <span class="theme-card__tag">☀️ Light</span>
+      </div>
+    </div>
+
+    <!-- NOIR -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'noir')" data-preview-theme="noir">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(0, 0%, 100%);"></span>
+          <span style="background: hsl(0, 0%, 70%);"></span>
+          <span style="background: hsl(0, 0%, 50%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(0, 0%, 4%); color: hsl(0, 0%, 98%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Noir</h3>
+        <p>High Contrast B&W</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- AURORA -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'aurora')" data-preview-theme="aurora">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(160, 80%, 55%);"></span>
+          <span style="background: hsl(280, 70%, 60%);"></span>
+          <span style="background: hsl(200, 75%, 55%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(240, 30%, 8%); color: hsl(160, 30%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Aurora</h3>
+        <p>Northern Lights</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- TWILIGHT -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'twilight')" data-preview-theme="twilight">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(250, 70%, 45%);"></span>
+          <span style="background: hsl(280, 60%, 52%);"></span>
+          <span style="background: hsl(25, 85%, 55%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(245, 35%, 7%); color: hsl(245, 25%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Twilight</h3>
+        <p>Purple-Blue Gradients</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+    <!-- GRAPE -->
+    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'grape')" data-preview-theme="grape">
+      <div class="theme-card__preview">
+        <div class="theme-card__colors">
+          <span style="background: hsl(280, 70%, 50%);"></span>
+          <span style="background: hsl(260, 65%, 55%);"></span>
+          <span style="background: hsl(300, 60%, 50%);"></span>
+        </div>
+        <div class="theme-card__sample" style="background: hsl(280, 35%, 8%); color: hsl(280, 25%, 95%);">
+          <div class="sample-text">Aa</div>
+        </div>
+      </div>
+      <div class="theme-card__info">
+        <h3>Grape</h3>
+        <p>Deep Purple Vibes</p>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LIVE PREVIEW SECTION -->
+<div class="page__section">
+  <h2 class="section-title">Live Preview</h2>
+  <p class="section-subtitle">See how components look in the current theme</p>
+  
+  <div class="preview-container">
+    <!-- Cards -->
+    <div class="preview-row">
+      <basic-card title="Card Title" hoverable>
+        <p>This card adapts to the current theme colors and styling.</p>
+      </basic-card>
+      <stats-card value="1,234" label="Total Users" icon="👥" trend="up" trend-value="+12%"></stats-card>
+      <price-card plan="Pro" price="$29" period="/mo" features="Feature 1,Feature 2,Feature 3" cta="Get Started" featured></price-card>
+    </div>
+    
+    <!-- Buttons -->
+    <h3 class="preview-label">Buttons</h3>
+    <div class="preview-row-inline">
+      <button class="wb-btn wb-btn--primary">Primary</button>
+      <button class="wb-btn wb-btn--secondary">Secondary</button>
+      <button class="wb-btn wb-btn--ghost">Ghost</button>
+      <button class="wb-btn wb-btn--primary" x-ripple>With Ripple</button>
+    </div>
+    
+    <!-- Badges & Chips -->
+    <h3 class="preview-label">Badges & Status</h3>
+    <div class="preview-row-inline">
+      <wb-badge label="Default"></wb-badge>
+      <wb-badge label="Primary" variant="primary"></wb-badge>
+      <wb-badge label="Success" variant="success"></wb-badge>
+      <wb-badge label="Warning" variant="warning"></wb-badge>
+      <wb-badge label="Error" variant="error"></wb-badge>
+      <wb-badge label="Info" variant="info"></wb-badge>
+      <wb-spinner></wb-spinner>
+    </div>
+    
+    <!-- Alerts - All 4 Variants -->
+    <h3 class="preview-label">Alerts (All Variants)</h3>
+    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <wb-alert variant="info" title="Info Alert" message="This is an informational message using theme colors." dismissible></wb-alert>
+      <wb-alert variant="success" title="Success Alert" message="Operation completed successfully!" dismissible></wb-alert>
+      <wb-alert variant="warning" title="Warning Alert" message="Please review before proceeding." dismissible></wb-alert>
+      <wb-alert variant="error" title="Error Alert" message="Something went wrong. Please try again." dismissible></wb-alert>
+    </div>
+    
+    <!-- Progress Bars - All Variants -->
+    <h3 class="preview-label">Progress Bars</h3>
+    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <div class="progress-demo-row">
+        <span class="progress-label">Default (25%)</span>
+        <wb-progress value="25" variant="primary"></wb-progress>
+      </div>
+      <div class="progress-demo-row">
+        <span class="progress-label">Success (50%)</span>
+        <wb-progress value="50" variant="success"></wb-progress>
+      </div>
+      <div class="progress-demo-row">
+        <span class="progress-label">Warning (75%)</span>
+        <wb-progress value="75" variant="warning"></wb-progress>
+      </div>
+      <div class="progress-demo-row">
+        <span class="progress-label">Error (90%)</span>
+        <wb-progress value="90" variant="error"></wb-progress>
+      </div>
+      <div class="progress-demo-row">
+        <span class="progress-label">Striped</span>
+        <wb-progress value="60" striped></wb-progress>
+      </div>
+    </div>
+    
+    <!-- Form Elements -->
+    <h3 class="preview-label">Form Elements</h3>
+    <div class="preview-form-row">
+      <input type="text" placeholder="Text input">
+      <select>
+        <option>Select option</option>
+        <option>Option 1</option>
+        <option>Option 2</option>
+      </select>
+      <wb-switch label="Toggle"></wb-switch>
+    </div>
+  </div>
+</div>
+
+<!-- USAGE SECTION -->
+<div class="page__section">
+  <h2 class="section-title">How to Use Themes</h2>
+  <p class="section-subtitle">Simple implementation with CSS custom properties</p>
+  
+  <div class="page__grid">
+    <div class="usage-card">
+      <h3>1. Set Theme Attribute</h3>
+      <wb-code language="html"><code>&lt;html data-theme="ocean"&gt;
+  ...
+&lt;/html&gt;</code></wb-code>
+    </div>
+    
+    <div class="usage-card">
+      <h3>2. Switch via JavaScript</h3>
+      <wb-code language="javascript"><code>// Switch theme programmatically
+document.documentElement
+  .setAttribute('data-theme', 'cyberpunk');</code></wb-code>
+    </div>
+    
+    <div class="usage-card">
+      <h3>3. Use CSS Variables</h3>
+      <wb-code language="css"><code>.my-component {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}</code></wb-code>
+    </div>
+  </div>
+</div>
+
+<!-- CSS VARIABLES REFERENCE -->
+<div class="page__section">
+  <h2 class="section-title">CSS Variables Reference</h2>
+  <p class="section-subtitle">All available CSS custom properties</p>
+  
+  <div class="variables-grid">
+    <div class="variables-group">
+      <h3>Colors</h3>
+      <ul>
+        <li><code>--primary</code></li>
+        <li><code>--primary-dark</code></li>
+        <li><code>--primary-light</code></li>
+        <li><code>--secondary</code></li>
+        <li><code>--accent</code></li>
+      </ul>
+    </div>
+    
+    <div class="variables-group">
+      <h3>Backgrounds</h3>
+      <ul>
+        <li><code>--bg-color</code></li>
+        <li><code>--bg-primary</code></li>
+        <li><code>--bg-secondary</code></li>
+        <li><code>--bg-tertiary</code></li>
+      </ul>
+    </div>
+    
+    <div class="variables-group">
+      <h3>Text</h3>
+      <ul>
+        <li><code>--text-primary</code></li>
+        <li><code>--text-secondary</code></li>
+        <li><code>--text-muted</code></li>
+      </ul>
+    </div>
+    
+    <div class="variables-group">
+      <h3>Borders</h3>
+      <ul>
+        <li><code>--border-color</code></li>
+        <li><code>--border-light</code></li>
+        <li><code>--border-dark</code></li>
+      </ul>
+    </div>
+    
+    <div class="variables-group">
+      <h3>Status</h3>
+      <ul>
+        <li><code>--success-color</code></li>
+        <li><code>--warning-color</code></li>
+        <li><code>--danger-color</code></li>
+        <li><code>--info-color</code></li>
+      </ul>
+    </div>
+    
+    <div class="variables-group">
+      <h3>Spacing</h3>
+      <ul>
+        <li><code>--space-xs</code> (0.25rem)</li>
+        <li><code>--space-sm</code> (0.5rem)</li>
+        <li><code>--space-md</code> (1rem)</li>
+        <li><code>--space-lg</code> (1.5rem)</li>
+        <li><code>--space-xl</code> (2rem)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- STYLES -->
+<style>
+.page__hero {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page__hero h1 {
+  font-size: 2.5rem;
+  margin: 0 0 0.5rem;
+  color: var(--text-primary);
+}
+
+.page__hero p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.themes-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page__section {
+  padding: 3rem 2rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  text-align: center;
+  margin: 0 0 0.5rem;
+  color: var(--text-primary);
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  margin: 0 0 2rem;
+}
+
+.page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Theme Cards Grid */
+.themes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.theme-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border-color: var(--primary);
+}
+
+.theme-card__preview {
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.theme-card__colors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.theme-card__colors span {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+.theme-card__sample {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.sample-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: Georgia, serif;
+}
+
+.theme-card__info {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+}
+
+.theme-card__info h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.theme-card__info p {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.theme-card__tag {
+  display: inline-block;
+  font-size: 0.625rem;
+  padding: 0.125rem 0.5rem;
+  background: var(--bg-secondary);
+  border-radius: 999px;
+  color: var(--text-secondary);
+}
+
+/* Preview Section */
+.preview-container {
+  background: var(--bg-secondary);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.preview-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.preview-row-inline {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.preview-label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 1.5rem 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.preview-label:first-of-type {
+  margin-top: 0;
+}
+
+.preview-form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Usage Cards */
+.usage-card {
+  background: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.usage-card h3 {
+  margin: 0 0 1rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+/* Variables Grid */
+.variables-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.variables-group {
+  background: var(--bg-secondary);
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.variables-group h3 {
+  margin: 0 0 0.75rem;
+  color: var(--primary);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.variables-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.variables-group li {
+  margin-bottom: 0.375rem;
+}
+
+.variables-group code {
+  background: var(--bg-tertiary);
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* HCS Demo Styles */
+.hcs-demo {
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  margin-bottom: 2rem;
+}
+
+.hcs-demo__visual h3 {
+  margin: 0 0 0.5rem;
+  color: var(--text-primary);
+}
+
+.hcs-demo__visual > p {
+  color: var(--text-secondary);
+  margin: 0 0 1.5rem;
+}
+
+.hcs-wave-demo {
+  position: relative;
+  height: 120px;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.hcs-wave {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    hsl(var(--hue), 70%, 50%) 25%, 
+    transparent 50%, 
+    hsl(var(--hue), 70%, 50%) 75%, 
+    transparent 100%);
+  opacity: 0.6;
+  animation: waveMove 4s ease-in-out infinite;
+}
+
+.hcs-wave--secondary {
+  animation-delay: -1.3s;
+  opacity: 0.4;
+}
+
+.hcs-wave--accent {
+  animation-delay: -2.6s;
+  opacity: 0.5;
+}
+
+@keyframes waveMove {
+  0%, 100% { transform: translateX(-10%); }
+  50% { transform: translateX(10%); }
+}
+
+.hcs-color-output {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hcs-color-swatch {
+  width: 120px;
+  height: 80px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.hcs-color-swatch span {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.hcs-color-swatch code {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  background: rgba(0,0,0,0.2);
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+}
+
+/* Harmony Cards */
+.harmony-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.harmony-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.harmony-card h4 {
+  margin: 0 0 0.5rem;
+  color: var(--primary);
+  font-size: 1.125rem;
+}
+
+.harmony-card > p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 0 0 1rem;
+}
+
+.harmony-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.color-wheel {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: conic-gradient(
+    hsl(0, 70%, 50%),
+    hsl(60, 70%, 50%),
+    hsl(120, 70%, 50%),
+    hsl(180, 70%, 50%),
+    hsl(240, 70%, 50%),
+    hsl(300, 70%, 50%),
+    hsl(360, 70%, 50%)
+  );
+  opacity: 0.3;
+}
+
+.wheel-dot {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-32px);
+}
+
+.harmony-swatches {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.harmony-swatches span {
+  width: 48px;
+  height: 24px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.harmony-formula {
+  display: block;
+  background: var(--bg-tertiary);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.harmony-themes {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.harmony-themes strong {
+  color: var(--primary);
+}
+
+/* Math Section */
+.hcs-math-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.hcs-math-section h3 {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.math-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.math-card {
+  text-align: center;
+  padding: 1rem;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+}
+
+.math-card h4 {
+  margin: 0 0 0.75rem;
+  color: var(--primary);
+  font-size: 0.875rem;
+}
+
+.math-formula {
+  display: block;
+  font-size: 1.25rem;
+  padding: 0.75rem;
+  background: var(--bg-primary);
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  font-family: 'Times New Roman', serif;
+}
+
+.math-card p {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Progress Demo Row */
+.progress-demo-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.progress-demo-row .progress-label {
+  min-width: 120px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.progress-demo-row wb-progress {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Ensure badges display properly */
+wb-badge {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+/* Variables group overflow fix */
+.variables-group {
+  overflow: hidden;
+}
+
+.variables-group code {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Button styles */
+.wb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.wb-btn--primary {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.wb-btn--primary:hover {
+  opacity: 0.9;
+}
+
+.wb-btn--secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.wb-btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* Form elements */
+input, select {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.625rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+</style>

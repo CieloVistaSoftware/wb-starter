@@ -176,9 +176,9 @@
   },
   "test": {
     "setup": [
-      "<wb-avatar initials=\"JD\"></wb-avatar>",
-      "<wb-avatar src=\"avatar.jpg\" alt=\"John Doe\"></wb-avatar>",
-      "<div data-wb=\"avatar\" data-initials=\"AB\" data-status=\"online\"></div>"
+      "<div x-behavior=\"avatar\" x-initials=\"JD\"></div>",
+      "<div x-behavior=\"avatar\" x-src=\"avatar.jpg\" x-alt=\"John Doe\"></div>",
+      "<div x-behavior=\"avatar\" x-initials=\"AB\" x-status=\"online\"></div>"
     ],
     "matrix": {
       "combinations": [

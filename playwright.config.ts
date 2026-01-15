@@ -1,4 +1,4 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
 /**
  * TIERED TEST EXECUTION WITH STOP GATES
@@ -152,6 +152,7 @@ export default defineConfig({
         'global-attributes.spec.ts',
         'pce.spec.ts',
         'pce-demo.spec.ts',
+        'autoinject.spec.ts',
       ],
       // Explicitly exclude deprecated files
       testIgnore: [
@@ -181,13 +182,66 @@ export default defineConfig({
     },
     
     // ═══════════════════════════════════════════════════════════════
-    // TIER 6: PERFORMANCE TESTS
-    // Tests for load time and runtime performance
+    // SCHEMA VIEWER TESTS
+    // Tests that all schemas render correctly in the schema viewer
+    // ═══════════════════════════════════════════════════════════════
+    {
+      name: 'schema-viewer',
+      testDir: './tests',
+      testMatch: 'schema-viewer.spec.ts',
+    },
+    
+    // ═══════════════════════════════════════════════════════════════
+    // CROSS-BROWSER TESTING
+    // Run critical tests on Firefox and Safari/WebKit
+    // Use: npm run test:firefox, npm run test:webkit, npm run test:browsers
+    // ═══════════════════════════════════════════════════════════════
+    {
+      name: 'firefox',
+      testDir: './tests/behaviors/ui',
+      testMatch: [
+        'card.spec.ts',
+        'behaviors.spec.ts',
+        'all-components.spec.ts',
+      ],
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      testDir: './tests/behaviors/ui',
+      testMatch: [
+        'card.spec.ts',
+        'behaviors.spec.ts',
+        'all-components.spec.ts',
+      ],
+      use: { ...devices['Desktop Safari'] },
+    },
+    {
+      name: 'mobile-chrome',
+      testDir: './tests/behaviors/ui',
+      testMatch: [
+        'card.spec.ts',
+        'behaviors.spec.ts',
+      ],
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'mobile-safari',
+      testDir: './tests/behaviors/ui',
+      testMatch: [
+        'card.spec.ts',
+        'behaviors.spec.ts',
+      ],
+      use: { ...devices['iPhone 12'] },
+    },
+    
+    // ═══════════════════════════════════════════════════════════════
+    // PERFORMANCE TESTS (optional)
     // ═══════════════════════════════════════════════════════════════
     {
       name: 'performance',
-      testDir: './tests/performance',
-      testMatch: '**/*.spec.ts',
+      testDir: './tests',
+      testMatch: 'performance.spec.ts',
     },
   ],
 });

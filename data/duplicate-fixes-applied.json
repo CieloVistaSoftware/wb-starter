@@ -1,0 +1,1133 @@
+{
+  "totalFixed": 188,
+  "changes": [
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-canvas-sections.js",
+      "line": 283,
+      "from": "section",
+      "to": "pageSection"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-editing.js",
+      "line": 1850,
+      "from": "observer",
+      "to": "intersectionObserver"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-quick-edit.js",
+      "line": 527,
+      "from": "behavior",
+      "to": "activeBehavior"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-quick-edit.js",
+      "line": 426,
+      "from": "behavior",
+      "to": "mappedBehavior"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-quick-edit.js",
+      "line": 427,
+      "from": "mapping",
+      "to": "behaviorMapping"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-template-browser.js",
+      "line": 1594,
+      "from": "html",
+      "to": "templateHtml"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-template-browser.js",
+      "line": 645,
+      "from": "section",
+      "to": "pageSection"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-tree.js",
+      "line": 1110,
+      "from": "expanded",
+      "to": "isExpanded"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-tree.js",
+      "line": 635,
+      "from": "html",
+      "to": "templateHtml"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-welcome.js",
+      "line": 245,
+      "from": "template",
+      "to": "pageTemplate"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-workflow.js",
+      "line": 475,
+      "from": "info",
+      "to": "infoBlock"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-workflow.js",
+      "line": 386,
+      "from": "info",
+      "to": "detailsInfo"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-workflow.js",
+      "line": 437,
+      "from": "input",
+      "to": "workflowInput"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-workflow.js",
+      "line": 421,
+      "from": "input",
+      "to": "formInput"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-workflow.js",
+      "line": 438,
+      "from": "name",
+      "to": "workflowName"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\builder-workflow.js",
+      "line": 660,
+      "from": "workflow",
+      "to": "activeWorkflow"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2741,
+      "from": "a",
+      "to": "anchorEl"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2261,
+      "from": "alignMap",
+      "to": "alignmentMap"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3870,
+      "from": "allWrappers",
+      "to": "componentWrappers"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3874,
+      "from": "analysis",
+      "to": "validationAnalysis"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2739,
+      "from": "blob",
+      "to": "dataBlob"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3591,
+      "from": "c",
+      "to": "component"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3573,
+      "from": "c",
+      "to": "childComponent"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3527,
+      "from": "c",
+      "to": "containerComponent"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2199,
+      "from": "c",
+      "to": "configComponent"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2147,
+      "from": "c",
+      "to": "clonedComponent"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3867,
+      "from": "canvas",
+      "to": "drawCanvas"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3234,
+      "from": "canvas",
+      "to": "exportCanvas"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3609,
+      "from": "clone",
+      "to": "elementClone"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2668,
+      "from": "cv",
+      "to": "canvasView"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2411,
+      "from": "cv",
+      "to": "contentView"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2389,
+      "from": "cv",
+      "to": "containerView"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 1436,
+      "from": "cv",
+      "to": "componentView"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3151,
+      "from": "data",
+      "to": "responseData"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2762,
+      "from": "data",
+      "to": "configData"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2669,
+      "from": "data",
+      "to": "templateData"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 600,
+      "from": "desc",
+      "to": "description"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 917,
+      "from": "dropZone",
+      "to": "primaryDropZone"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3684,
+      "from": "el",
+      "to": "element"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3605,
+      "from": "el",
+      "to": "targetElement"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3579,
+      "from": "el",
+      "to": "sourceElement"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3558,
+      "from": "el",
+      "to": "clonedElement"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2235,
+      "from": "el",
+      "to": "selectedElement"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2165,
+      "from": "el",
+      "to": "activeElement"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 1805,
+      "from": "el",
+      "to": "domElement"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 147,
+      "from": "isCollapsed",
+      "to": "panelCollapsed"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3871,
+      "from": "issueCount",
+      "to": "validationIssues"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2695,
+      "from": "item",
+      "to": "listItem"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2392,
+      "from": "item",
+      "to": "dataItem"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 741,
+      "from": "item",
+      "to": "dataItem"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2264,
+      "from": "justifyMap",
+      "to": "justifyMapping"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 1361,
+      "from": "key",
+      "to": "configKey"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3235,
+      "from": "pageTheme",
+      "to": "documentTheme"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 1172,
+      "from": "parent",
+      "to": "parentEl"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3879,
+      "from": "proceed",
+      "to": "shouldProceed"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2574,
+      "from": "propsHeader",
+      "to": "propertiesHeader"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2572,
+      "from": "propsPanel",
+      "to": "propertiesPanel"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3062,
+      "from": "rect",
+      "to": "boundingRect"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3898,
+      "from": "response",
+      "to": "apiResponse"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3171,
+      "from": "result",
+      "to": "queryResult"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 889,
+      "from": "templateComp",
+      "to": "templateComponent"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2513,
+      "from": "templateName",
+      "to": "selectedTemplate"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3144,
+      "from": "text",
+      "to": "displayText"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 3135,
+      "from": "text",
+      "to": "contentText"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2761,
+      "from": "text",
+      "to": "labelText"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2911,
+      "from": "theme",
+      "to": "pageTheme"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2904,
+      "from": "theme",
+      "to": "colorTheme"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2512,
+      "from": "theme",
+      "to": "appTheme"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 1486,
+      "from": "theme",
+      "to": "selectedTheme"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 148,
+      "from": "toggleBtn",
+      "to": "collapseToggle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2740,
+      "from": "url",
+      "to": "resourceUrl"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2347,
+      "from": "w",
+      "to": "wrapper"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2197,
+      "from": "w",
+      "to": "widgetWrapper"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 2144,
+      "from": "w",
+      "to": "wrapperEl"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 1789,
+      "from": "w",
+      "to": "workWrapper"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 1757,
+      "from": "w",
+      "to": "windowWrapper"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 969,
+      "from": "w",
+      "to": "webWrapper"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 1684,
+      "from": "wrapper",
+      "to": "elementWrapper"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 1264,
+      "from": "wrapper",
+      "to": "componentWrapper"
+    },
+    {
+      "file": "src\\wb-viewmodels\\builder-app\\index.js",
+      "line": 1052,
+      "from": "wrapper",
+      "to": "sectionWrapper"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 2196,
+      "from": "avatarImg",
+      "to": "profileAvatar"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1188,
+      "from": "avatarImg",
+      "to": "userAvatar"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1594,
+      "from": "badgeEl",
+      "to": "statusBadge"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 2237,
+      "from": "bioEl",
+      "to": "profileBio"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1806,
+      "from": "btn",
+      "to": "button"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 876,
+      "from": "btn",
+      "to": "actionBtn"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 2032,
+      "from": "content",
+      "to": "contentArea"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1928,
+      "from": "content",
+      "to": "contentBlock"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1737,
+      "from": "content",
+      "to": "contentSection"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1667,
+      "from": "content",
+      "to": "contentWrapper"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1400,
+      "from": "content",
+      "to": "mainContent"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1104,
+      "from": "content",
+      "to": "innerContent"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 916,
+      "from": "content",
+      "to": "bodyContent"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 2185,
+      "from": "coverFig",
+      "to": "coverFigure"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1327,
+      "from": "ctaBtn",
+      "to": "callToAction"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1585,
+      "from": "descEl",
+      "to": "descriptionEl"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1654,
+      "from": "figure",
+      "to": "figureEl"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1247,
+      "from": "figure",
+      "to": "imageFigure"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 657,
+      "from": "figure",
+      "to": "coverFigure"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1974,
+      "from": "footer",
+      "to": "footerEl"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 2010,
+      "from": "header",
+      "to": "headerEl"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1893,
+      "from": "header",
+      "to": "headerSection"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1091,
+      "from": "header",
+      "to": "headerBlock"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1564,
+      "from": "iconEl",
+      "to": "statusIcon"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1482,
+      "from": "iconEl",
+      "to": "actionIcon"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1393,
+      "from": "iconEl",
+      "to": "menuIcon"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1658,
+      "from": "img",
+      "to": "imageEl"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1250,
+      "from": "img",
+      "to": "coverImage"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1488,
+      "from": "info",
+      "to": "infoBlock"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 2205,
+      "from": "nameEl",
+      "to": "profileName"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1492,
+      "from": "nameEl",
+      "to": "userName"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1309,
+      "from": "priceEl",
+      "to": "priceDisplay"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1304,
+      "from": "priceWrap",
+      "to": "priceWrapper"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1206,
+      "from": "roleEl",
+      "to": "profileRole"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1909,
+      "from": "subtitleEl",
+      "to": "cardSubtitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1756,
+      "from": "subtitleEl",
+      "to": "headerSubtitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1680,
+      "from": "subtitleEl",
+      "to": "itemSubtitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 853,
+      "from": "subtitleEl",
+      "to": "sectionSubtitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 2213,
+      "from": "titleEl",
+      "to": "cardTitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 2022,
+      "from": "titleEl",
+      "to": "headerTitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1901,
+      "from": "titleEl",
+      "to": "mainTitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1748,
+      "from": "titleEl",
+      "to": "itemTitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1672,
+      "from": "titleEl",
+      "to": "sectionTitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1572,
+      "from": "titleEl",
+      "to": "blockTitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1405,
+      "from": "titleEl",
+      "to": "entryTitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1269,
+      "from": "titleEl",
+      "to": "listTitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 840,
+      "from": "titleEl",
+      "to": "featuredTitle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\card.js",
+      "line": 1938,
+      "from": "toggle",
+      "to": "toggleBtn"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 523,
+      "from": "angle",
+      "to": "rotationAngle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 526,
+      "from": "color",
+      "to": "particleColor"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 519,
+      "from": "colors",
+      "to": "colorPalette"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 575,
+      "from": "container",
+      "to": "effectContainer"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 516,
+      "from": "container",
+      "to": "animContainer"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 634,
+      "from": "delay",
+      "to": "animDelay"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 635,
+      "from": "duration",
+      "to": "animDuration"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 582,
+      "from": "duration",
+      "to": "effectDuration"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 415,
+      "from": "duration",
+      "to": "transitionDuration"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 574,
+      "from": "fire",
+      "to": "fireEffect"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 511,
+      "from": "fire",
+      "to": "triggerFire"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 407,
+      "from": "fire",
+      "to": "confettiFire"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 347,
+      "from": "observer",
+      "to": "intersectionObserver"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 522,
+      "from": "particle",
+      "to": "confettiParticle"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 53,
+      "from": "play",
+      "to": "playAnimation"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 632,
+      "from": "size",
+      "to": "particleSize"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 580,
+      "from": "size",
+      "to": "effectSize"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 525,
+      "from": "size",
+      "to": "elementSize"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 414,
+      "from": "size",
+      "to": "displaySize"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 581,
+      "from": "startX",
+      "to": "initialX"
+    },
+    {
+      "file": "src\\wb-viewmodels\\effects.js",
+      "line": 310,
+      "from": "update",
+      "to": "updateFn"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 660,
+      "from": "days",
+      "to": "displayDays"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 659,
+      "from": "hours",
+      "to": "displayHours"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 610,
+      "from": "hours",
+      "to": "remainingHours"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 669,
+      "from": "interval",
+      "to": "timerInterval"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 625,
+      "from": "interval",
+      "to": "updateInterval"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 658,
+      "from": "minutes",
+      "to": "displayMinutes"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 611,
+      "from": "minutes",
+      "to": "remainingMinutes"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 654,
+      "from": "now",
+      "to": "currentTime"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 657,
+      "from": "seconds",
+      "to": "displaySeconds"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 612,
+      "from": "seconds",
+      "to": "remainingSeconds"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 687,
+      "from": "update",
+      "to": "updateFn"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 647,
+      "from": "update",
+      "to": "refreshUpdate"
+    },
+    {
+      "file": "src\\wb-viewmodels\\helpers.js",
+      "line": 608,
+      "from": "update",
+      "to": "timerUpdate"
+    },
+    {
+      "file": "src\\wb-viewmodels\\media.js",
+      "line": 965,
+      "from": "iframe",
+      "to": "videoIframe"
+    },
+    {
+      "file": "src\\wb-viewmodels\\media.js",
+      "line": 959,
+      "from": "params",
+      "to": "embedParams"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 186,
+      "from": "container",
+      "to": "effectContainer"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 159,
+      "from": "container",
+      "to": "animContainer"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 130,
+      "from": "container",
+      "to": "moveContainer"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 188,
+      "from": "currentIndex",
+      "to": "activeIndex"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 161,
+      "from": "currentIndex",
+      "to": "selectedIndex"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 132,
+      "from": "currentIndex",
+      "to": "focusIndex"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 179,
+      "from": "handler",
+      "to": "moveHandler"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 152,
+      "from": "handler",
+      "to": "keyHandler"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 123,
+      "from": "handler",
+      "to": "eventHandler"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 183,
+      "from": "item",
+      "to": "listItem"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 156,
+      "from": "item",
+      "to": "dataItem"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 127,
+      "from": "item",
+      "to": "dataItem"
+    },
+    {
+      "file": "src\\wb-viewmodels\\move.js",
+      "line": 134,
+      "from": "targetIndex",
+      "to": "destinationIndex"
+    },
+    {
+      "file": "src\\wb-viewmodels\\navigation.js",
+      "line": 433,
+      "from": "render",
+      "to": "renderNav"
+    },
+    {
+      "file": "src\\wb-viewmodels\\overlay.js",
+      "line": 438,
+      "from": "hide",
+      "to": "hideOverlay"
+    },
+    {
+      "file": "src\\wb-viewmodels\\overlay.js",
+      "line": 339,
+      "from": "hide",
+      "to": "hideModal"
+    },
+    {
+      "file": "src\\wb-viewmodels\\overlay.js",
+      "line": 189,
+      "from": "hide",
+      "to": "hidePopup"
+    },
+    {
+      "file": "src\\wb-viewmodels\\overlay.js",
+      "line": 370,
+      "from": "show",
+      "to": "showOverlay"
+    },
+    {
+      "file": "src\\wb-viewmodels\\overlay.js",
+      "line": 305,
+      "from": "show",
+      "to": "showModal"
+    },
+    {
+      "file": "src\\wb-viewmodels\\overlay.js",
+      "line": 155,
+      "from": "show",
+      "to": "showPopup"
+    },
+    {
+      "file": "src\\wb-viewmodels\\overlay.js",
+      "line": 444,
+      "from": "toggle",
+      "to": "toggleBtn"
+    },
+    {
+      "file": "src\\wb-viewmodels\\semantics\\table.js",
+      "line": 113,
+      "from": "rows",
+      "to": "tableRows"
+    },
+    {
+      "file": "src\\wb-viewmodels\\semantics\\table.js",
+      "line": 82,
+      "from": "rows",
+      "to": "dataRows"
+    },
+    {
+      "file": "src\\wb-viewmodels\\semantics\\table.js",
+      "line": 133,
+      "from": "text",
+      "to": "displayText"
+    }
+  ]
+}

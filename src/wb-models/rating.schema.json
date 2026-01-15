@@ -137,9 +137,9 @@
   },
   "test": {
     "setup": [
-      "<wb-rating value=\"3\"></wb-rating>",
-      "<wb-rating value=\"4.5\" half readonly></wb-rating>",
-      "<div data-wb=\"rating\" data-value=\"3\"></div>"
+      "<div x-behavior=\"rating\" x-value=\"3\"></div>",
+      "<div x-behavior=\"rating\" x-value=\"4.5\" x-half=\"true\" x-readonly=\"true\"></div>",
+      "<div x-behavior=\"rating\" x-value=\"3\" x-max=\"5\"></div>"
     ],
     "matrix": {
       "combinations": [

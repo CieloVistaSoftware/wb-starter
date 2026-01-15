@@ -195,9 +195,9 @@
   },
   "test": {
     "setup": [
-      "<wb-audio src=\"audio.mp3\"></wb-audio>",
-      "<wb-audio src=\"audio.mp3\" show-eq></wb-audio>",
-      "<div data-wb=\"audio\" data-src=\"audio.mp3\"></div>"
+      "<div x-behavior=\"audio\" data-src=\"audio.mp3\"></div>",
+      "<div x-behavior=\"audio\" data-src=\"audio.mp3\" data-showEq=\"true\"></div>",
+      "<div x-behavior=\"audio\" data-src=\"audio.mp3\"></div>"
     ],
     "matrix": {
       "combinations": [

@@ -1,68 +1,90 @@
-# Card Overlay Component
+# Card Overlay - WB Framework v3.0
+
+Image card with text overlay.
 
 ## Overview
-The `cardoverlay` component creates a "hero-like" card where the content is overlaid on top of a background image. It is useful for featured content or visual navigation items.
 
-## Internals & Lifecycle
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-cardoverlay>` |
+| Behavior | `cardoverlay` |
+| Semantic | `<article>` |
+| Base Class | `wb-card wb-card-overlay` |
+| Inherits | card |
 
-### Initialization
-1.  **Style Application**: 
-    - Sets `position: relative` and `min-height` (default 300px).
-    - Applies the background image via inline `background-image` style.
-    - Sets `background-size: cover` and `background-position: center`.
-2.  **Layout Logic**:
-    - Uses Flexbox (`flex-direction: row`) to manage content positioning.
-    - **Vertical Alignment**: Controlled via `align-items` based on the `data-position` attribute:
-        - `top` -> `align-items: flex-start`
-        - `center` -> `align-items: center`
-        - `bottom` -> `align-items: flex-end`
-3.  **Gradient Generation**: If `data-gradient` is true, it generates a linear gradient overlay to ensure text readability against the image.
+## Properties
 
-### DOM Structure
+Inherits all [card properties](./card.md) plus:
 
-<article class="wb-card wb-card--overlay-card wb-card--overlay-bottom" style="background-image: url(...)">
-  <!-- Content Container -->
-  <div class="wb-card__overlay-content">
-    <h3 class="wb-card__title wb-card__overlay-title">Title</h3>
-    <p class="wb-card__subtitle wb-card__overlay-subtitle">Subtitle</p>
-  </div>
-</article>
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `image` | string | `""` | Background image URL |
+| `position` | string | `"bottom"` | Text position: `top`, `center`, `bottom` |
+| `gradient` | boolean | `true` | Show gradient overlay for readability |
+| `height` | string | `"300px"` | Card height |
+
+## Usage
+
+### Basic Overlay
 
 ```html
-<article class="wb-card wb-card--overlay-card wb-card--overlay-bottom" style="background-image: url(...)">
-  <!-- Content Container -->
-  <div class="wb-card__overlay-content">
-    <h3 class="wb-card__title wb-card__overlay-title">Title</h3>
-    <p class="wb-card__subtitle wb-card__overlay-subtitle">Subtitle</p>
-  </div>
-</article>
+<wb-cardoverlay 
+  title="Featured Story"
+  subtitle="Read more about this"
+  image="/images/background.jpg">
+</wb-cardoverlay>
 ```
 
-## Attributes
-
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data-image` | string | required | URL of the background image. |
-| `data-height` | string | `300px` | CSS height value for the card. |
-| `data-position` | enum | `bottom` | Content position: `top`, `center`, `bottom`. |
-| `data-gradient` | boolean | `true` | Adds a text-protection gradient behind the content. |
-
-## Usage Example
-
-<div data-wb="cardoverlay" 
-     data-image="/assets/landscape.jpg" 
-     data-title="Mountain Retreat" 
-     data-subtitle="Explore the peaks"
-     data-position="bottom"
-     data-gradient="true">
-</div>
+### Top Position
 
 ```html
-<div data-wb="cardoverlay" 
-     data-image="/assets/landscape.jpg" 
-     data-title="Mountain Retreat" 
-     data-subtitle="Explore the peaks"
-     data-position="bottom"
-     data-gradient="true">
-</div>
+<wb-cardoverlay 
+  title="Top Overlay"
+  image="/images/bg.jpg"
+  position="top">
+</wb-cardoverlay>
 ```
+
+### Center Position
+
+```html
+<wb-cardoverlay 
+  title="Centered"
+  subtitle="Text in the middle"
+  image="/images/bg.jpg"
+  position="center">
+</wb-cardoverlay>
+```
+
+### No Gradient
+
+```html
+<wb-cardoverlay 
+  title="No Gradient"
+  image="/images/light-bg.jpg"
+  gradient="false">
+</wb-cardoverlay>
+```
+
+### Custom Height
+
+```html
+<wb-cardoverlay 
+  title="Tall Card"
+  image="/images/bg.jpg"
+  height="500px">
+</wb-cardoverlay>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.wb-card--overlay-card` | Base overlay styling |
+| `.wb-card--overlay-top` | Top position |
+| `.wb-card--overlay-center` | Center position |
+| `.wb-card--overlay-bottom` | Bottom position |
+
+## Schema
+
+Location: `src/wb-models/cardoverlay.schema.json`

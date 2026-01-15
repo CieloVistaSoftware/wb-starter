@@ -221,9 +221,9 @@
   
   "test": {
     "setup": [
-      "<span data-wb=\"tooltip\" data-tooltip=\"Helpful tip\">Hover me</span>",
-      "<button data-wb=\"tooltip\" data-tooltip=\"Click help\" data-position=\"bottom\">Help</button>",
-      "<button data-wb=\"tooltip\" tooltip=\"Global tooltip\">Global</button>"
+      "<span x-behavior=\"tooltip\" x-content=\"Helpful tip\">Hover me</span>",
+      "<button x-behavior=\"tooltip\" x-content=\"Click help\" x-position=\"bottom\">Help</button>",
+      "<button x-behavior=\"tooltip\" x-content=\"Global tooltip\">Global</button>"
     ],
     "matrix": {
       "combinations": [

@@ -125,6 +125,11 @@
     }
   },
   "test": {
+    "setup": [
+      "<article x-behavior=\"card\">Basic card content</article>",
+      "<article x-behavior=\"card\" x-title=\"Card Title\" x-elevated=\"true\">Elevated card</article>",
+      "<article x-behavior=\"card\" x-title=\"Clickable\" x-clickable=\"true\">Clickable card</article>"
+    ],
     "functional": {
       "visual": [
         {

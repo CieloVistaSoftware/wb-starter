@@ -92,8 +92,8 @@
   },
   "test": {
     "setup": [
-      "<wb-fireworks></wb-fireworks>",
-      "<button data-wb=\"fireworks\">Boom!</button>"
+      "<div x-behavior=\"fireworks\"></div>",
+      "<button x-behavior=\"fireworks\">Boom!</button>"
     ],
     "matrix": {
       "combinations": [

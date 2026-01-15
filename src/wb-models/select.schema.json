@@ -263,8 +263,8 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-select options='[{\"value\":\"1\",\"label\":\"Option 1\"}]'></wb-select>",
-      "<select data-wb=\"select\"><option value=\"1\">One</option></select>"
+      "<div x-behavior=\"select\" data-options=\"[{\\\"value\\\":\\\"1\\\",\\\"label\\\":\\\"Option 1\\\"}]></div>",
+      "<select x-behavior=\"select\"><option value=\"1\">One</option></select>"
     ],
     "matrix": {
       "combinations": [

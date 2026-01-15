@@ -1,62 +1,138 @@
-# Video Component Design & User Guide
+# Video - WB Framework v3.0
 
-## 1. Design Philosophy
+Enhanced HTML5 video player with configurable defaults.
 
-The `video` component wraps the HTML5 `<video>` element to provide a consistent API and default configuration. It simplifies common tasks like setting up background videos (autoplay + muted + loop) or handling poster images.
+## Overview
 
-### Key Features
-- **Configurable Defaults**: Easy setup via data attributes.
-- **API Wrapper**: Simplified methods for playback control.
-- **PlaysInline**: Ensures videos play inline on mobile devices by default.
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-video>` |
+| Behavior | `video` |
+| Semantic | `<video>` |
+| Base Class | `wb-video` |
+| Category | Media |
 
-## 2. User Guide
+## Properties
 
-### Basic Usage
-The `video` behavior is automatically injected into `<video>` elements.
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `src` | string | Required | Video source URL |
+| `poster` | string | `""` | Poster image URL |
+| `controls` | boolean | `true` | Show native controls |
+| `autoplay` | boolean | `false` | Auto-play video |
+| `muted` | boolean | `false` | Start muted |
+| `loop` | boolean | `false` | Loop playback |
+| `playsInline` | boolean | `true` | Play inline on mobile |
 
-```html
-<video src="movie.mp4"></video>
-```
+## Usage
 
-### Configuration Options
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data-controls` | Boolean | `true` | Show native controls. |
-| `data-autoplay` | Boolean | `false` | Autoplay video. |
-| `data-muted` | Boolean | `false` | Mute audio. |
-| `data-loop` | Boolean | `false` | Loop playback. |
-| `data-poster` | String | `''` | URL of poster image. |
-
-### API Methods
-Access via `element.wbVideo`:
-- `play()`, `pause()`, `toggle()`
-- `setTime(t)`, `getTime()`
-- `setVolume(v)`, `mute()`, `unmute()`
-
-## 3. Examples
-
-### Example 1: Background Video
-A silent, looping background video.
+### Custom Element
 
 ```html
-<video 
-  src="bg.mp4" 
-  data-autoplay="true" 
-  data-muted="true" 
-  data-loop="true" 
-  data-controls="false">
-</video>
+<wb-video src="movie.mp4"></wb-video>
 ```
 
-### Example 2: Standard Player
-A video player with a poster image.
+### Native Video (Enhanced)
 
 ```html
-<video 
-  src="clip.mp4" 
-  data-poster="thumb.jpg">
-</video>
+<video data-wb="video" src="clip.mp4" controls></video>
 ```
 
-## 4. Why It Works
-The component maps the data attributes directly to the DOM properties (`autoplay`, `loop`, `muted`, etc.) during initialization. This ensures that the video behaves as expected even if the attributes were added dynamically after the page load.
+### With Poster
+
+```html
+<wb-video src="movie.mp4" poster="thumbnail.jpg"></wb-video>
+```
+
+### Background Video
+
+```html
+<wb-video 
+  src="background.mp4" 
+  autoplay 
+  muted 
+  loop 
+  controls="false">
+</wb-video>
+```
+
+## Generated Structure
+
+```html
+<div class="wb-video">
+  <video 
+    class="wb-video__player"
+    src="movie.mp4"
+    poster="thumb.jpg"
+    controls
+    playsinline>
+  </video>
+</div>
+```
+
+## Methods
+
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `play()` | Starts playback | `Promise` |
+| `pause()` | Pauses playback | - |
+| `toggle()` | Toggles play/pause | - |
+| `setTime(t)` | Seeks to time (seconds) | - |
+| `getTime()` | Gets current time | `number` |
+| `setVolume(v)` | Sets volume (0-1) | - |
+| `mute()` | Mutes audio | - |
+| `unmute()` | Unmutes audio | - |
+
+```javascript
+const video = document.querySelector('wb-video');
+
+// Playback
+video.play();
+video.pause();
+video.toggle();
+
+// Seeking
+video.setTime(30);  // Skip to 30 seconds
+const currentTime = video.getTime();
+
+// Volume
+video.setVolume(0.5);
+video.mute();
+```
+
+## Events
+
+| Event | Description |
+|-------|-------------|
+| `play` | Playback started |
+| `pause` | Playback paused |
+| `ended` | Playback ended |
+| `timeupdate` | Current time changed |
+| `volumechange` | Volume changed |
+
+```javascript
+video.addEventListener('ended', () => {
+  console.log('Video finished');
+});
+```
+
+## CSS Classes
+
+| Class | Applied When | Description |
+|-------|--------------|-------------|
+| `.wb-video` | Always | Base styling |
+| `.wb-video--playing` | Playing | Playback active |
+| `.wb-video--fullscreen` | Fullscreen | Fullscreen mode |
+
+## Accessibility
+
+The native video element provides built-in accessibility:
+- Keyboard controls for play/pause
+- Screen reader announcements
+- Captions support via `<track>` elements
+
+```html
+<wb-video src="movie.mp4">
+  <track kind="captions" src="captions.vtt" srclang="en" label="English">
+</wb-video>
+```

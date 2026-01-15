@@ -93,6 +93,11 @@
   </div>
 
   <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+
+    // Initialize WB
+    WB.init({ scan: false }); // We'll scan manually after content load
+
     async function loadRegistry() {
       const container = document.getElementById('registry-container');
       
@@ -136,12 +141,6 @@
             attributesHtml += '</div>';
           }
 
-          // Escape HTML for display
-          const templateEscaped = view.template
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
-
           html += `
             <tr>
               <td>
@@ -154,11 +153,12 @@
                 <div class="view-desc">${view.description || 'No description provided.'}</div>
                 ${attributesHtml}
               </td>
-              <td>
-                <details>
-                  <summary style="cursor: pointer; font-size: 0.8rem; color: var(--primary);">Show Template Source</summary>
-                  <div class="code-preview" style="margin-top: 0.5rem;">${templateEscaped}</div>
-                </details>
+              <td style="min-width: 400px; max-width: 600px;">
+                <wb-mdhtml>
+\`\`\`html
+${view.template.replace(/`/g, '\\`')}
+\`\`\`
+                </wb-mdhtml>
               </td>
             </tr>
           `;
@@ -166,6 +166,9 @@
         
         html += `</tbody></table>`;
         container.innerHTML = html;
+        
+        // Scan for new behaviors
+        await WB.scan(container);
         
       } catch (err) {
         container.innerHTML = `<div class="alert alert--error">

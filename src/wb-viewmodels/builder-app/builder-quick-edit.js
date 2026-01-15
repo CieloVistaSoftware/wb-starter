@@ -423,8 +423,8 @@ function saveQuickEdit() {
   
   try {
     const c = JSON.parse(currentWrapper.dataset.c || '{}');
-    const behavior = c.b || 'default';
-    const mapping = getFieldMapping(behavior);
+    const mappedBehavior = c.b || 'default';
+    const behaviorMapping = getFieldMapping(behavior);
     
     if (!c.d) c.d = {};
     
@@ -524,7 +524,7 @@ export function shouldShowQuickEdit(wrapper) {
   
   try {
     const c = JSON.parse(wrapper.dataset.c || '{}');
-    const behavior = c.b || '';
+    const activeBehavior = c.b || '';
     
     // Quick edit applies to these behaviors
     const quickEditBehaviors = [

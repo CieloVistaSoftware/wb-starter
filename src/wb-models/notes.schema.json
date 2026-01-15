@@ -214,8 +214,8 @@
   },
   "test": {
     "setup": [
-      "<wb-notes></wb-notes>",
-      "<aside data-wb=\"notes\" data-position=\"right\"></aside>"
+      "<div x-behavior=\"notes\"></div>",
+      "<aside x-behavior=\"notes\" data-position=\"right\"></aside>"
     ],
     "matrix": {
       "combinations": [

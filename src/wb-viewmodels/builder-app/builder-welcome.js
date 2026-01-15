@@ -242,7 +242,7 @@ window.selectPageTemplate = async (templateId) => {
 };
 
 window.selectSectionTemplate = async (templateId) => {
-  const template = getSectionTemplate(templateId);
+  const pageTemplate = getSectionTemplate(templateId);
   if (!template) return;
   
   hideWelcome();

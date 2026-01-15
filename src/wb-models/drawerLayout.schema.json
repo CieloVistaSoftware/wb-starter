@@ -105,8 +105,8 @@
   },
   "test": {
     "setup": [
-      "<wb-drawer-layout>Sidebar</wb-drawer-layout>",
-      "<aside data-wb=\"drawerLayout\" data-position=\"left\">Content</aside>"
+      "<div x-behavior=\"drawerLayout\">Sidebar</div>",
+      "<aside x-behavior=\"drawerLayout\" data-position=\"left\">Content</aside>"
     ],
     "matrix": {
       "combinations": [

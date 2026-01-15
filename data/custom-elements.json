@@ -1,0 +1,3673 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "WB Framework Custom Elements",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/card.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-card",
+          "tagName": "wb-card",
+          "customElement": true,
+          "description": "Base card component. IS-A article, HAS-A header, main, footer.",
+          "attributes": [
+            {
+              "name": "data-title",
+              "description": "Card title displayed in header",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "data-subtitle",
+              "description": "Card subtitle displayed below title",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "data-footer",
+              "description": "Card footer text",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "data-elevated",
+              "description": "Add drop shadow",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-clickable",
+              "description": "Make card clickable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "default | glass | bordered | flat"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-card",
+          "declaration": {
+            "name": "wb-card",
+            "module": "src/wb-viewmodels/card.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardimage.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardimage",
+          "tagName": "wb-cardimage",
+          "customElement": true,
+          "description": "Card with featured image and optional title/subtitle",
+          "attributes": [
+            {
+              "name": "data-src",
+              "description": "Image source URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-alt",
+              "description": "Image alt text (accessibility)",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "data-title",
+              "description": "Card title",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-subtitle",
+              "description": "Card subtitle",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-caption",
+              "description": "Image caption (displayed below image)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-href",
+              "description": "Link URL (makes card clickable)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-aspect",
+              "description": "Image aspect ratio",
+              "type": {
+                "text": "16/9 | 4/3 | 1/1 | 3/2 | 21/9 | auto"
+              },
+              "default": "16/9"
+            },
+            {
+              "name": "data-position",
+              "description": "Image position relative to content",
+              "type": {
+                "text": "top | bottom | left | right"
+              },
+              "default": "top"
+            },
+            {
+              "name": "data-fit",
+              "description": "Image object-fit mode",
+              "type": {
+                "text": "cover | contain | fill | none"
+              },
+              "default": "cover"
+            },
+            {
+              "name": "data-loading",
+              "description": "Image loading strategy",
+              "type": {
+                "text": "lazy | eager"
+              },
+              "default": "lazy"
+            },
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "default | elevated | bordered | minimal"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardimage",
+          "declaration": {
+            "name": "wb-cardimage",
+            "module": "src/wb-viewmodels/cardimage.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardvideo.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardvideo",
+          "tagName": "wb-cardvideo",
+          "customElement": true,
+          "description": "Card with embedded video player",
+          "attributes": [
+            {
+              "name": "data-src",
+              "description": "Video source URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-poster",
+              "description": "Poster image URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-title",
+              "description": "Video title",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-description",
+              "description": "Video description",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-autoplay",
+              "description": "Auto-play video (requires muted)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-muted",
+              "description": "Mute video",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-loop",
+              "description": "Loop video playback",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-controls",
+              "description": "Show video controls",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "name": "data-aspect",
+              "description": "Video aspect ratio",
+              "type": {
+                "text": "16/9 | 4/3 | 1/1 | 21/9 | 9/16"
+              },
+              "default": "16/9"
+            },
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "default | minimal | bordered | elevated"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardvideo",
+          "declaration": {
+            "name": "wb-cardvideo",
+            "module": "src/wb-viewmodels/cardvideo.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardprofile.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardprofile",
+          "tagName": "wb-cardprofile",
+          "customElement": true,
+          "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
+          "attributes": [
+            {
+              "name": "data-name",
+              "description": "Person's name",
+              "type": {
+                "text": "string"
+              },
+              "default": "John Doe"
+            },
+            {
+              "name": "data-role",
+              "description": "Job title or role",
+              "type": {
+                "text": "string"
+              },
+              "default": "Designer"
+            },
+            {
+              "name": "data-avatar",
+              "description": "Avatar image URL",
+              "type": {
+                "text": "string"
+              },
+              "default": "https://i.pravatar.cc/80?img=1"
+            },
+            {
+              "name": "data-bio",
+              "description": "Short biography",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-cover",
+              "description": "Cover/banner image URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-size",
+              "description": "Avatar size",
+              "type": {
+                "text": "sm | md | lg"
+              },
+              "default": "md"
+            },
+            {
+              "name": "data-align",
+              "description": "Content alignment",
+              "type": {
+                "text": "left | center"
+              },
+              "default": "center"
+            },
+            {
+              "name": "data-hover-text",
+              "description": "Tooltip text shown on hover",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardprofile",
+          "declaration": {
+            "name": "wb-cardprofile",
+            "module": "src/wb-viewmodels/cardprofile.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardpricing.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardpricing",
+          "tagName": "wb-cardpricing",
+          "customElement": true,
+          "description": "Pricing tier card with plan name, price, features list, and CTA",
+          "attributes": [
+            {
+              "name": "data-plan",
+              "description": "Plan name (e.g., Basic, Pro, Enterprise)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-price",
+              "description": "Price amount (e.g., $29)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-period",
+              "description": "Billing period (e.g., /month, /year)",
+              "type": {
+                "text": "string"
+              },
+              "default": "/month"
+            },
+            {
+              "name": "data-description",
+              "description": "Short plan description",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-features",
+              "description": "Comma-separated list of features",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-cta",
+              "description": "Call-to-action button text",
+              "type": {
+                "text": "string"
+              },
+              "default": "Get Started"
+            },
+            {
+              "name": "data-cta-href",
+              "description": "Call-to-action link URL",
+              "type": {
+                "text": "string"
+              },
+              "default": "#"
+            },
+            {
+              "name": "data-featured",
+              "description": "Highlight as featured/recommended plan",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "default | bordered | elevated | minimal"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardpricing",
+          "declaration": {
+            "name": "wb-cardpricing",
+            "module": "src/wb-viewmodels/cardpricing.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardproduct.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardproduct",
+          "tagName": "wb-cardproduct",
+          "customElement": true,
+          "description": "E-commerce product card with image, price, rating, and CTA",
+          "attributes": [
+            {
+              "name": "data-image",
+              "description": "Product image URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-title",
+              "description": "Product name",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-description",
+              "description": "Product description",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-price",
+              "description": "Current price",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-original-price",
+              "description": "Original price (shows discount)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-badge",
+              "description": "Badge text (Sale, New, etc.)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-rating",
+              "description": "Product rating (0-5)",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "name": "data-reviews",
+              "description": "Number of reviews",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "name": "data-cta",
+              "description": "CTA button text",
+              "type": {
+                "text": "string"
+              },
+              "default": "Add to Cart"
+            },
+            {
+              "name": "data-featured",
+              "description": "Highlight as featured",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "default | compact | horizontal | minimal"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardproduct",
+          "declaration": {
+            "name": "wb-cardproduct",
+            "module": "src/wb-viewmodels/cardproduct.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardstats.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardstats",
+          "tagName": "wb-cardstats",
+          "customElement": true,
+          "description": "Statistics display card with value, label, icon, and trend indicator",
+          "attributes": [
+            {
+              "name": "data-value",
+              "description": "The main statistic value (e.g., 1,234 or $50K)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-label",
+              "description": "Label describing what the value represents",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-icon",
+              "description": "Icon (emoji or icon name)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-trend",
+              "description": "Trend direction",
+              "type": {
+                "text": "up | down | neutral"
+              }
+            },
+            {
+              "name": "data-trend-value",
+              "description": "Trend amount (e.g., +12%, -5%)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "default | compact | large | minimal"
+              },
+              "default": "default"
+            },
+            {
+              "name": "data-color",
+              "description": "Accent color (CSS color value)",
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardstats",
+          "declaration": {
+            "name": "wb-cardstats",
+            "module": "src/wb-viewmodels/cardstats.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardtestimonial.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardtestimonial",
+          "tagName": "wb-cardtestimonial",
+          "customElement": true,
+          "description": "Customer testimonial/review card with quote, author, avatar, and rating",
+          "attributes": [
+            {
+              "name": "data-quote",
+              "description": "Testimonial quote text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-author",
+              "description": "Author name",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-role",
+              "description": "Author role/title/company",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-avatar",
+              "description": "Author avatar image URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-rating",
+              "description": "Star rating (0-5)",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "default | elevated | bordered | minimal | centered"
+              },
+              "default": "default"
+            },
+            {
+              "name": "data-size",
+              "description": "Card size",
+              "type": {
+                "text": "sm | md | lg"
+              },
+              "default": "md"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardtestimonial",
+          "declaration": {
+            "name": "wb-cardtestimonial",
+            "module": "src/wb-viewmodels/cardtestimonial.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardhero.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardhero",
+          "tagName": "wb-cardhero",
+          "customElement": true,
+          "description": "Hero banner with background image, title, subtitle, and optional CTA",
+          "attributes": [
+            {
+              "name": "data-background",
+              "description": "Background image URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-title",
+              "description": "Hero headline",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-subtitle",
+              "description": "Hero tagline/subheadline",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-cta",
+              "description": "Call-to-action button text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-cta-href",
+              "description": "Call-to-action link URL",
+              "type": {
+                "text": "string"
+              },
+              "default": "#"
+            },
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "default | cosmic | split | minimal | gradient"
+              },
+              "default": "default"
+            },
+            {
+              "name": "data-xalign",
+              "description": "Horizontal content alignment (x-axis)",
+              "type": {
+                "text": "left | center | right"
+              },
+              "default": "center"
+            },
+            {
+              "name": "data-overlay",
+              "description": "Show gradient overlay for text readability",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "name": "data-full-height",
+              "description": "Make hero full viewport height",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardhero",
+          "declaration": {
+            "name": "wb-cardhero",
+            "module": "src/wb-viewmodels/cardhero.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardfile.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardfile",
+          "tagName": "wb-cardfile",
+          "customElement": true,
+          "description": "File display card with icon, name, size, and download",
+          "attributes": [
+            {
+              "name": "data-filename",
+              "description": "File name",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-file-type",
+              "description": "File type for icon",
+              "type": {
+                "text": "pdf | doc | image | video | audio | zip | file"
+              },
+              "default": "file"
+            },
+            {
+              "name": "data-size",
+              "description": "File size (e.g., 2.4 MB)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-date",
+              "description": "File date",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-href",
+              "description": "Download URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-downloadable",
+              "description": "Show download link",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "name": "data-variant",
+              "description": "variant property",
+              "type": {
+                "text": "default | compact | elevated"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardfile",
+          "declaration": {
+            "name": "wb-cardfile",
+            "module": "src/wb-viewmodels/cardfile.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardnotification.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardnotification",
+          "tagName": "wb-cardnotification",
+          "customElement": true,
+          "description": "Dismissible notification card with type-based styling",
+          "attributes": [
+            {
+              "name": "data-variant",
+              "description": "Notification type/severity",
+              "type": {
+                "text": "info | success | warning | error"
+              },
+              "default": "info"
+            },
+            {
+              "name": "data-title",
+              "description": "Notification title",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-message",
+              "description": "Notification message",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-icon",
+              "description": "Custom icon (overrides type-based icon)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-dismissible",
+              "description": "Show dismiss button",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "name": "data-elevated",
+              "description": "Add shadow elevation",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardnotification",
+          "declaration": {
+            "name": "wb-cardnotification",
+            "module": "src/wb-viewmodels/cardnotification.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardportfolio.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardportfolio",
+          "tagName": "wb-cardportfolio",
+          "customElement": true,
+          "description": "Professional portfolio/profile card with cover, avatar, bio, contact, and social",
+          "attributes": [
+            {
+              "name": "data-name",
+              "description": "Full name",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-title",
+              "description": "Job title",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-company",
+              "description": "Company name",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-location",
+              "description": "Location",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-cover",
+              "description": "Cover image URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-avatar",
+              "description": "Avatar image URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-bio",
+              "description": "Biography text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-email",
+              "description": "Email address",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-phone",
+              "description": "Phone number",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-website",
+              "description": "Website URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-social",
+              "description": "Social links as JSON [{name, url, icon}]",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-variant",
+              "description": "variant property",
+              "type": {
+                "text": "default | compact | horizontal"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardportfolio",
+          "declaration": {
+            "name": "wb-cardportfolio",
+            "module": "src/wb-viewmodels/cardportfolio.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardlink.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardlink",
+          "tagName": "wb-cardlink",
+          "customElement": true,
+          "description": "Clickable card that navigates to a URL",
+          "attributes": [
+            {
+              "name": "data-href",
+              "description": "Link destination URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-title",
+              "description": "Card title",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-description",
+              "description": "Card description text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-icon",
+              "description": "Icon (emoji or icon name)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-badge",
+              "description": "Badge text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-target",
+              "description": "Link target",
+              "type": {
+                "text": "_self | _blank"
+              },
+              "default": "_self"
+            },
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "default | elevated | bordered | minimal | glass"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardlink",
+          "declaration": {
+            "name": "wb-cardlink",
+            "module": "src/wb-viewmodels/cardlink.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardhorizontal.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardhorizontal",
+          "tagName": "wb-cardhorizontal",
+          "customElement": true,
+          "description": "Card with horizontal layout - image on side, content on other",
+          "attributes": [
+            {
+              "name": "data-image",
+              "description": "Image URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-image-alt",
+              "description": "Image alt text",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "data-image-position",
+              "description": "Image position",
+              "type": {
+                "text": "left | right"
+              },
+              "default": "left"
+            },
+            {
+              "name": "data-image-width",
+              "description": "Image width (CSS value)",
+              "type": {
+                "text": "string"
+              },
+              "default": "40%"
+            },
+            {
+              "name": "data-title",
+              "description": "Card title",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-subtitle",
+              "description": "Card subtitle",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "default | elevated | bordered | minimal"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardhorizontal",
+          "declaration": {
+            "name": "wb-cardhorizontal",
+            "module": "src/wb-viewmodels/cardhorizontal.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardoverlay.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardoverlay",
+          "tagName": "wb-cardoverlay",
+          "customElement": true,
+          "description": "Card with text overlaid on background image",
+          "attributes": [
+            {
+              "name": "data-image",
+              "description": "Background image URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-title",
+              "description": "Overlay title",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-subtitle",
+              "description": "Overlay subtitle",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-position",
+              "description": "Content position",
+              "type": {
+                "text": "top | center | bottom"
+              },
+              "default": "bottom"
+            },
+            {
+              "name": "data-xalign",
+              "description": "Horizontal text alignment (x-axis)",
+              "type": {
+                "text": "left | center | right"
+              },
+              "default": "left"
+            },
+            {
+              "name": "data-gradient",
+              "description": "Show gradient overlay for text readability",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "name": "data-height",
+              "description": "Card height (CSS value)",
+              "type": {
+                "text": "string"
+              },
+              "default": "300px"
+            },
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "default | dark | light | blur"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardoverlay",
+          "declaration": {
+            "name": "wb-cardoverlay",
+            "module": "src/wb-viewmodels/cardoverlay.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardbutton.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardbutton",
+          "tagName": "wb-cardbutton",
+          "customElement": true,
+          "description": "Card with action buttons in footer",
+          "attributes": [
+            {
+              "name": "data-title",
+              "description": "Card title",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-content",
+              "description": "Card content/description",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-primary",
+              "description": "Primary button text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-primary-href",
+              "description": "Primary button link URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-secondary",
+              "description": "Secondary button text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-secondary-href",
+              "description": "Secondary button link URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-variant",
+              "description": "variant property",
+              "type": {
+                "text": "default | elevated | bordered"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardbutton",
+          "declaration": {
+            "name": "wb-cardbutton",
+            "module": "src/wb-viewmodels/cardbutton.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardexpandable.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardexpandable",
+          "tagName": "wb-cardexpandable",
+          "customElement": true,
+          "description": "Card with collapsible/expandable content section",
+          "attributes": [
+            {
+              "name": "data-title",
+              "description": "Card title",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-content",
+              "description": "Expandable content",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-expanded",
+              "description": "Initial expanded state",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-max-height",
+              "description": "Max height when collapsed",
+              "type": {
+                "text": "string"
+              },
+              "default": "100px"
+            },
+            {
+              "name": "data-variant",
+              "description": "variant property",
+              "type": {
+                "text": "default | elevated | bordered"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardexpandable",
+          "declaration": {
+            "name": "wb-cardexpandable",
+            "module": "src/wb-viewmodels/cardexpandable.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cardminimizable.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardminimizable",
+          "tagName": "wb-cardminimizable",
+          "customElement": true,
+          "description": "Card with minimize/expand toggle button in header",
+          "attributes": [
+            {
+              "name": "data-title",
+              "description": "Card title (always visible)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-content",
+              "description": "Minimizable content",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-minimized",
+              "description": "Initial minimized state",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-variant",
+              "description": "variant property",
+              "type": {
+                "text": "default | elevated | bordered"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cardminimizable",
+          "declaration": {
+            "name": "wb-cardminimizable",
+            "module": "src/wb-viewmodels/cardminimizable.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/carddraggable.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-carddraggable",
+          "tagName": "wb-carddraggable",
+          "customElement": true,
+          "description": "Card that can be dragged around the page",
+          "attributes": [
+            {
+              "name": "data-title",
+              "description": "Card title",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-content",
+              "description": "Card content",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-constrain",
+              "description": "Constrain to area",
+              "type": {
+                "text": "none | parent | viewport"
+              },
+              "default": "none"
+            },
+            {
+              "name": "data-axis",
+              "description": "Drag axis",
+              "type": {
+                "text": "both | x | y"
+              },
+              "default": "both"
+            },
+            {
+              "name": "data-snap-to-grid",
+              "description": "Snap grid size (0=disabled)",
+              "type": {
+                "text": "number"
+              },
+              "default": "0"
+            },
+            {
+              "name": "data-variant",
+              "description": "variant property",
+              "type": {
+                "text": "default | elevated"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-carddraggable",
+          "declaration": {
+            "name": "wb-carddraggable",
+            "module": "src/wb-viewmodels/carddraggable.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/spinner.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-spinner",
+          "tagName": "wb-spinner",
+          "customElement": true,
+          "description": "Loading spinner indicator",
+          "attributes": [
+            {
+              "name": "data-size",
+              "description": "size property",
+              "type": {
+                "text": "xs | sm | md | lg | xl"
+              },
+              "default": "md"
+            },
+            {
+              "name": "data-variant",
+              "description": "variant property",
+              "type": {
+                "text": "default | primary | success | warning | error"
+              },
+              "default": "primary"
+            },
+            {
+              "name": "data-speed",
+              "description": "speed property",
+              "type": {
+                "text": "slow | medium | fast"
+              },
+              "default": "medium"
+            },
+            {
+              "name": "data-label",
+              "description": "Accessible label",
+              "type": {
+                "text": "string"
+              },
+              "default": "Loading"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-spinner",
+          "declaration": {
+            "name": "wb-spinner",
+            "module": "src/wb-viewmodels/spinner.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/avatar.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-avatar",
+          "tagName": "wb-avatar",
+          "customElement": true,
+          "description": "User avatar with image, initials fallback, and status indicator",
+          "attributes": [
+            {
+              "name": "data-src",
+              "description": "Image source URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-alt",
+              "description": "Alt text for image",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-initials",
+              "description": "Fallback initials (2 chars)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-name",
+              "description": "Full name (generates initials if not provided)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-size",
+              "description": "size property",
+              "type": {
+                "text": "xs | sm | md | lg | xl | 2xl"
+              },
+              "default": "md"
+            },
+            {
+              "name": "data-shape",
+              "description": "shape property",
+              "type": {
+                "text": "circle | square | rounded"
+              },
+              "default": "circle"
+            },
+            {
+              "name": "data-status",
+              "description": "Status indicator",
+              "type": {
+                "text": "online | offline | busy | away"
+              }
+            },
+            {
+              "name": "data-bordered",
+              "description": "Show border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-avatar",
+          "declaration": {
+            "name": "wb-avatar",
+            "module": "src/wb-viewmodels/avatar.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/badge.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-badge",
+          "tagName": "wb-badge",
+          "customElement": true,
+          "description": "Small label/tag for status indicators, counts, or categories",
+          "attributes": [
+            {
+              "name": "data-label",
+              "description": "Badge text content",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-variant",
+              "description": "Color variant",
+              "type": {
+                "text": "default | primary | secondary | success | warning | error | info"
+              },
+              "default": "default"
+            },
+            {
+              "name": "data-size",
+              "description": "Badge size",
+              "type": {
+                "text": "xs | sm | md | lg"
+              },
+              "default": "md"
+            },
+            {
+              "name": "data-pill",
+              "description": "Pill shape with full border radius",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-dot",
+              "description": "Dot indicator (no text)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-outline",
+              "description": "Outline style (transparent background)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-removable",
+              "description": "Show remove/close button",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-badge",
+          "declaration": {
+            "name": "wb-badge",
+            "module": "src/wb-viewmodels/badge.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/alert.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-alert",
+          "tagName": "wb-alert",
+          "customElement": true,
+          "description": "Alert component for displaying messages with severity levels",
+          "attributes": [
+            {
+              "name": "data-variant",
+              "description": "Alert severity/style variant",
+              "type": {
+                "text": "info | success | warning | error"
+              },
+              "default": "info"
+            },
+            {
+              "name": "data-title",
+              "description": "Alert title (optional heading)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-message",
+              "description": "Alert message content",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-icon",
+              "description": "Icon (emoji or icon name)",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "data-dismissible",
+              "description": "Show close button to dismiss alert",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-alert",
+          "declaration": {
+            "name": "wb-alert",
+            "module": "src/wb-viewmodels/alert.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/progress.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-progress",
+          "tagName": "wb-progress",
+          "customElement": true,
+          "description": "Progress bar with determinate and indeterminate states",
+          "attributes": [
+            {
+              "name": "data-value",
+              "description": "Current progress value (0-100)",
+              "type": {
+                "text": "number"
+              },
+              "default": "0"
+            },
+            {
+              "name": "data-max",
+              "description": "Maximum value",
+              "type": {
+                "text": "number"
+              },
+              "default": "100"
+            },
+            {
+              "name": "data-label",
+              "description": "Progress label text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-show-value",
+              "description": "Show percentage value",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-variant",
+              "description": "Color variant",
+              "type": {
+                "text": "default | primary | success | warning | error | info"
+              },
+              "default": "primary"
+            },
+            {
+              "name": "data-size",
+              "description": "Bar height size",
+              "type": {
+                "text": "xs | sm | md | lg | xl"
+              },
+              "default": "md"
+            },
+            {
+              "name": "data-animated",
+              "description": "Animate on load",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "name": "data-striped",
+              "description": "Show striped pattern",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-indeterminate",
+              "description": "Indeterminate loading state",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-progress",
+          "declaration": {
+            "name": "wb-progress",
+            "module": "src/wb-viewmodels/progress.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/rating.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-rating",
+          "tagName": "wb-rating",
+          "customElement": true,
+          "description": "Star rating component for displaying or collecting ratings",
+          "attributes": [
+            {
+              "name": "data-value",
+              "description": "Current rating value",
+              "type": {
+                "text": "number"
+              },
+              "default": "0"
+            },
+            {
+              "name": "data-max",
+              "description": "Maximum rating",
+              "type": {
+                "text": "number"
+              },
+              "default": "5"
+            },
+            {
+              "name": "data-readonly",
+              "description": "Display only, not interactive",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-disabled",
+              "description": "Disabled state",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-half",
+              "description": "Allow half-star ratings",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-size",
+              "description": "size property",
+              "type": {
+                "text": "sm | md | lg"
+              },
+              "default": "md"
+            },
+            {
+              "name": "data-icon",
+              "description": "Custom icon (emoji or symbol)",
+              "type": {
+                "text": "string"
+              },
+              "default": "★"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-rating",
+          "declaration": {
+            "name": "wb-rating",
+            "module": "src/wb-viewmodels/rating.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/tabs.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-tabs",
+          "tagName": "wb-tabs",
+          "customElement": true,
+          "description": "Tab navigation for switching between content panels",
+          "attributes": [
+            {
+              "name": "data-active-tab",
+              "description": "Initially active tab index",
+              "type": {
+                "text": "number"
+              },
+              "default": "0"
+            },
+            {
+              "name": "data-variant",
+              "description": "variant property",
+              "type": {
+                "text": "default | pills | underline | bordered"
+              },
+              "default": "default"
+            },
+            {
+              "name": "data-size",
+              "description": "size property",
+              "type": {
+                "text": "sm | md | lg"
+              },
+              "default": "md"
+            },
+            {
+              "name": "data-full-width",
+              "description": "Tabs fill container width",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-vertical",
+              "description": "Vertical tab layout",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-tabs",
+          "declaration": {
+            "name": "wb-tabs",
+            "module": "src/wb-viewmodels/tabs.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/switch.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-switch",
+          "tagName": "wb-switch",
+          "customElement": true,
+          "description": "Toggle switch for boolean settings",
+          "attributes": [
+            {
+              "name": "data-label",
+              "description": "Switch label",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-checked",
+              "description": "On/off state",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-disabled",
+              "description": "Disabled state",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "data-name",
+              "description": "Form field name",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-value",
+              "description": "Form field value when checked",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-label-position",
+              "description": "labelPosition property",
+              "type": {
+                "text": "start | end"
+              },
+              "default": "end"
+            },
+            {
+              "name": "data-size",
+              "description": "size property",
+              "type": {
+                "text": "sm | md | lg"
+              },
+              "default": "md"
+            },
+            {
+              "name": "data-variant",
+              "description": "variant property",
+              "type": {
+                "text": "default | primary | success"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-switch",
+          "declaration": {
+            "name": "wb-switch",
+            "module": "src/wb-viewmodels/switch.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/grid.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-grid",
+          "tagName": "wb-grid",
+          "customElement": true,
+          "description": "WB Framework grid component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-grid",
+          "declaration": {
+            "name": "wb-grid",
+            "module": "src/wb-viewmodels/grid.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/flex.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-flex",
+          "tagName": "wb-flex",
+          "customElement": true,
+          "description": "WB Framework flex component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-flex",
+          "declaration": {
+            "name": "wb-flex",
+            "module": "src/wb-viewmodels/flex.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/stack.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-stack",
+          "tagName": "wb-stack",
+          "customElement": true,
+          "description": "WB Framework stack component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-stack",
+          "declaration": {
+            "name": "wb-stack",
+            "module": "src/wb-viewmodels/stack.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cluster.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cluster",
+          "tagName": "wb-cluster",
+          "customElement": true,
+          "description": "WB Framework cluster component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cluster",
+          "declaration": {
+            "name": "wb-cluster",
+            "module": "src/wb-viewmodels/cluster.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/container.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-container",
+          "tagName": "wb-container",
+          "customElement": true,
+          "description": "WB Framework container component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-container",
+          "declaration": {
+            "name": "wb-container",
+            "module": "src/wb-viewmodels/container.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/sidebarlayout.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-sidebar",
+          "tagName": "wb-sidebar",
+          "customElement": true,
+          "description": "WB Framework sidebarlayout component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-sidebar",
+          "declaration": {
+            "name": "wb-sidebar",
+            "module": "src/wb-viewmodels/sidebarlayout.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/center.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-center",
+          "tagName": "wb-center",
+          "customElement": true,
+          "description": "WB Framework center component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-center",
+          "declaration": {
+            "name": "wb-center",
+            "module": "src/wb-viewmodels/center.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/cover.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cover",
+          "tagName": "wb-cover",
+          "customElement": true,
+          "description": "WB Framework cover component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-cover",
+          "declaration": {
+            "name": "wb-cover",
+            "module": "src/wb-viewmodels/cover.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/masonry.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-masonry",
+          "tagName": "wb-masonry",
+          "customElement": true,
+          "description": "WB Framework masonry component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-masonry",
+          "declaration": {
+            "name": "wb-masonry",
+            "module": "src/wb-viewmodels/masonry.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/switcher.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-switcher",
+          "tagName": "wb-switcher",
+          "customElement": true,
+          "description": "WB Framework switcher component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-switcher",
+          "declaration": {
+            "name": "wb-switcher",
+            "module": "src/wb-viewmodels/switcher.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/reel.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-reel",
+          "tagName": "wb-reel",
+          "customElement": true,
+          "description": "WB Framework reel component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-reel",
+          "declaration": {
+            "name": "wb-reel",
+            "module": "src/wb-viewmodels/reel.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/frame.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-frame",
+          "tagName": "wb-frame",
+          "customElement": true,
+          "description": "WB Framework frame component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-frame",
+          "declaration": {
+            "name": "wb-frame",
+            "module": "src/wb-viewmodels/frame.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/sticky.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-sticky",
+          "tagName": "wb-sticky",
+          "customElement": true,
+          "description": "Makes element stick to viewport on scroll",
+          "attributes": [
+            {
+              "name": "data-offset",
+              "description": "Offset from top when stuck",
+              "type": {
+                "text": "string"
+              },
+              "default": "0"
+            },
+            {
+              "name": "data-z-index",
+              "description": "Z-index when stuck",
+              "type": {
+                "text": "number"
+              },
+              "default": "100"
+            },
+            {
+              "name": "data-threshold",
+              "description": "Scroll position to trigger sticky",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "name": "data-stuck-class",
+              "description": "Class added when stuck",
+              "type": {
+                "text": "string"
+              },
+              "default": "is-stuck"
+            },
+            {
+              "name": "data-animated",
+              "description": "Animate stick/unstick",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-sticky",
+          "declaration": {
+            "name": "wb-sticky",
+            "module": "src/wb-viewmodels/sticky.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/drawerLayout.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-drawer",
+          "tagName": "wb-drawer",
+          "customElement": true,
+          "description": "Collapsible sidebar layout with toggle",
+          "attributes": [
+            {
+              "name": "data-position",
+              "description": "position property",
+              "type": {
+                "text": "left | right"
+              },
+              "default": "left"
+            },
+            {
+              "name": "data-width",
+              "description": "Expanded width",
+              "type": {
+                "text": "string"
+              },
+              "default": "250px"
+            },
+            {
+              "name": "data-min-width",
+              "description": "Collapsed width",
+              "type": {
+                "text": "string"
+              },
+              "default": "48px"
+            },
+            {
+              "name": "data-collapsed",
+              "description": "Initial collapsed state",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-drawer",
+          "declaration": {
+            "name": "wb-drawer",
+            "module": "src/wb-viewmodels/drawerLayout.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/icon.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-icon",
+          "tagName": "wb-icon",
+          "customElement": true,
+          "description": "WB Framework icon component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-icon",
+          "declaration": {
+            "name": "wb-icon",
+            "module": "src/wb-viewmodels/icon.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/span.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-span",
+          "tagName": "wb-span",
+          "customElement": true,
+          "description": "A generic inline container for applying utility classes and variants. Useful for traffic lights (window controls), badges, and status indicators.",
+          "attributes": [
+            {
+              "name": "data-variant",
+              "description": "Visual style variant",
+              "type": {
+                "text": "red | yellow | green | dot | primary | secondary | success | error | warning | info"
+              },
+              "default": "default"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-span",
+          "declaration": {
+            "name": "wb-span",
+            "module": "src/wb-viewmodels/span.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/control.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-control",
+          "tagName": "wb-control",
+          "customElement": true,
+          "description": "WB Framework control component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-control",
+          "declaration": {
+            "name": "wb-control",
+            "module": "src/wb-viewmodels/control.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/repeater.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-repeater",
+          "tagName": "wb-repeater",
+          "customElement": true,
+          "description": "WB Framework repeater component",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-repeater",
+          "declaration": {
+            "name": "wb-repeater",
+            "module": "src/wb-viewmodels/repeater.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/mdhtml.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-mdhtml",
+          "tagName": "wb-mdhtml",
+          "customElement": true,
+          "description": "Renders Markdown content as HTML, either from inline content or external source",
+          "attributes": [
+            {
+              "name": "data-src",
+              "description": "Path to external markdown file",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-sanitize",
+              "description": "sanitize property",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "name": "data-gfm",
+              "description": "gfm property",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-mdhtml",
+          "declaration": {
+            "name": "wb-mdhtml",
+            "module": "src/wb-viewmodels/mdhtml.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/codecontrol.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-codecontrol",
+          "tagName": "wb-codecontrol",
+          "customElement": true,
+          "description": "Interactive code editor/viewer control.",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-codecontrol",
+          "declaration": {
+            "name": "wb-codecontrol",
+            "module": "src/wb-viewmodels/codecontrol.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/collapse.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-collapse",
+          "tagName": "wb-collapse",
+          "customElement": true,
+          "description": "Collapsible content area.",
+          "attributes": [
+            {
+              "name": "data-expanded",
+              "description": "Ideally open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-collapse",
+          "declaration": {
+            "name": "wb-collapse",
+            "module": "src/wb-viewmodels/collapse.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/darkmode.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-darkmode",
+          "tagName": "wb-darkmode",
+          "customElement": true,
+          "description": "Button to toggle dark/light theme.",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-darkmode",
+          "declaration": {
+            "name": "wb-darkmode",
+            "module": "src/wb-viewmodels/darkmode.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/dropdown.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-dropdown",
+          "tagName": "wb-dropdown",
+          "customElement": true,
+          "description": "Toggleable dropdown menu",
+          "attributes": [
+            {
+              "name": "data-position",
+              "description": "position property",
+              "type": {
+                "text": "bottom-start | bottom-end | top-start | top-end"
+              },
+              "default": "bottom-start"
+            },
+            {
+              "name": "data-trigger",
+              "description": "trigger property",
+              "type": {
+                "text": "click | hover"
+              },
+              "default": "click"
+            },
+            {
+              "name": "data-close-on-select",
+              "description": "Close on item select",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "name": "data-close-on-outside",
+              "description": "Close on outside click",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "name": "data-offset",
+              "description": "Offset from trigger (px)",
+              "type": {
+                "text": "number"
+              },
+              "default": "4"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-dropdown",
+          "declaration": {
+            "name": "wb-dropdown",
+            "module": "src/wb-viewmodels/dropdown.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/footer.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-footer",
+          "tagName": "wb-footer",
+          "customElement": true,
+          "description": "Page footer with copyright, links, and social icons",
+          "attributes": [
+            {
+              "name": "data-copyright",
+              "description": "Copyright text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-brand",
+              "description": "Brand name",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-links",
+              "description": "Navigation links as JSON [{label, href}]",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-social",
+              "description": "Social links as JSON [{platform, href}]",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-sticky",
+              "description": "Sticky at bottom",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-footer",
+          "declaration": {
+            "name": "wb-footer",
+            "module": "src/wb-viewmodels/footer.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/header.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-header",
+          "tagName": "wb-header",
+          "customElement": true,
+          "description": "Page header with logo, title, and optional navigation",
+          "attributes": [
+            {
+              "name": "data-icon",
+              "description": "Logo icon (emoji or text)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-title",
+              "description": "Header title",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-subtitle",
+              "description": "Subtitle text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-badge",
+              "description": "Badge text (e.g., version)",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-logo-href",
+              "description": "Logo link URL",
+              "type": {
+                "text": "string"
+              },
+              "default": "/"
+            },
+            {
+              "name": "data-sticky",
+              "description": "Sticky at top",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-header",
+          "declaration": {
+            "name": "wb-header",
+            "module": "src/wb-viewmodels/header.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/globe.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-globe",
+          "tagName": "wb-globe",
+          "customElement": true,
+          "description": "3D Globe visualization.",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-globe",
+          "declaration": {
+            "name": "wb-globe",
+            "module": "src/wb-viewmodels/globe.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/wb-viewmodels/stagelight.js",
+      "declarations": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-stagelight",
+          "tagName": "wb-stagelight",
+          "customElement": true,
+          "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
+          "attributes": [
+            {
+              "name": "data-variant",
+              "description": "Type of light effect",
+              "type": {
+                "text": "beam | spotlight | fixture"
+              },
+              "default": "beam"
+            },
+            {
+              "name": "data-color",
+              "description": "Color of the light (hex, rgb, or named)",
+              "type": {
+                "text": "string"
+              },
+              "default": "#ffffff"
+            },
+            {
+              "name": "data-intensity",
+              "description": "Brightness/Opacity (0-1)",
+              "type": {
+                "text": "number"
+              },
+              "default": "0.5"
+            },
+            {
+              "name": "data-size",
+              "description": "Size of the light/beam",
+              "type": {
+                "text": "string"
+              },
+              "default": "300px"
+            },
+            {
+              "name": "data-speed",
+              "description": "Animation speed (e.g., 3s)",
+              "type": {
+                "text": "string"
+              },
+              "default": "3s"
+            },
+            {
+              "name": "data-target",
+              "description": "Selector for element to track (for spotlight/fixture)",
+              "type": {
+                "text": "string"
+              },
+              "default": "mouse"
+            },
+            {
+              "name": "data-label",
+              "description": "Label for the fixture variant",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Default slot for content"
+            }
+          ],
+          "members": [],
+          "events": [],
+          "cssProperties": [],
+          "cssParts": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "wb-stagelight",
+          "declaration": {
+            "name": "wb-stagelight",
+            "module": "src/wb-viewmodels/stagelight.js"
+          }
+        }
+      ]
+    }
+  ]
+}

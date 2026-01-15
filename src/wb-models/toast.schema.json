@@ -319,9 +319,9 @@
   },
   "test": {
     "setup": [
-      "<button data-wb=\"toast\" data-message=\"Hello!\">Show Toast</button>",
-      "<button data-wb=\"toast\" data-variant=\"success\" data-message=\"Success!\">Success</button>",
-      "<button data-wb=\"toast\" data-variant=\"error\" data-message=\"Error!\">Error</button>"
+      "<button x-behavior=\"toast\" x-message=\"Hello!\">Show Toast</button>",
+      "<button x-behavior=\"toast\" x-variant=\"success\" x-message=\"Success!\">Success</button>",
+      "<button x-behavior=\"toast\" x-variant=\"error\" x-message=\"Error!\">Error</button>"
     ],
     "matrix": {
       "combinations": [

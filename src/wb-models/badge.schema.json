@@ -193,10 +193,10 @@
   },
   "test": {
     "setup": [
-      "<wb-badge label=\"New\"></wb-badge>",
-      "<wb-badge label=\"5\" variant=\"error\" pill></wb-badge>",
-      "<wb-badge variant=\"success\">Active</wb-badge>",
-      "<span data-wb=\"badge\">Badge</span>"
+      "<div x-behavior=\"badge\" data-label=\"New\"></div>",
+      "<div x-behavior=\"badge\" data-label=\"5\" data-variant=\"error\" data-pill></div>",
+      "<div x-behavior=\"badge\" data-variant=\"success\">Active</div>",
+      "<span x-behavior=\"badge\">Badge</span>"
     ],
     "matrix": {
       "combinations": [

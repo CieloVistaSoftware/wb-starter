@@ -212,9 +212,9 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-textarea placeholder=\"Enter text...\"></wb-textarea>",
-      "<wb-textarea label=\"Message\" rows=\"5\" show-count max-length=\"500\"></wb-textarea>",
-      "<textarea data-wb=\"textarea\" placeholder=\"Test\"></textarea>"
+      "<div x-behavior=\"textarea\" data-placeholder=\"Enter text...\"></div>",
+      "<div x-behavior=\"textarea\" data-label=\"Message\" data-rows=\"5\" data-show-count=\"true\" data-max-length=\"500\"></div>",
+      "<textarea x-behavior=\"textarea\" placeholder=\"Test\"></textarea>"
     ],
     "matrix": {
       "combinations": [

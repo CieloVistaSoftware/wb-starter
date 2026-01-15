@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Behaviors Showcase Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/demos/behaviors.html');
+    await page.goto('/demos/behaviors-showcase.html');
     await page.waitForTimeout(1000); // Wait for WB to initialize
   });
 

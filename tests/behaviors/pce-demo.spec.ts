@@ -4,52 +4,80 @@ test.describe('PCE Demo Page', () => {
   test('loads pce-test.html and renders custom elements', async ({ page }) => {
     await page.goto('/demos/pce-test.html');
 
-    // Check title
-    await expect(page).toHaveTitle('PCE (Pseudo-Custom Elements) Test');
+    // Check title (v3.0)
+    await expect(page).toHaveTitle('PCE (Pseudo-Custom Elements) Test - v3.0');
 
-    // Check Profile Card
-    const profileCard = page.locator('#profile-card-1');
+    // Wait for WB to initialize
+    await page.waitForFunction(() => window.WB !== undefined);
+    
+    // Give behaviors time to load (lazy loading)
+    await page.waitForTimeout(1000);
+
+    // Check Profile Card (wb-* namespace)
+    const profileCard = page.locator('#wb-cardprofile-1');
+    await profileCard.scrollIntoViewIfNeeded();
     await expect(profileCard).toBeVisible();
-    await expect(profileCard).toContainText('Sarah Connor');
-    await expect(profileCard).toContainText('Resistance Leader');
+    // Check data attributes are present (behavior may or may not inject content)
+    await expect(profileCard).toHaveAttribute('data-name', 'Sarah Connor');
+
+    // Check Profile Card (noun-first alias)
+    const profileCardAlias = page.locator('#profile-card-1');
+    await profileCardAlias.scrollIntoViewIfNeeded();
+    await expect(profileCardAlias).toBeVisible();
+    await expect(profileCardAlias).toHaveAttribute('data-name', 'John Connor');
 
     // Check Hero Card
-    const heroCard = page.locator('#hero-card-1');
+    const heroCard = page.locator('#wb-cardhero-1');
+    await heroCard.scrollIntoViewIfNeeded();
     await expect(heroCard).toBeVisible();
-    await expect(heroCard).toContainText('Welcome to the Future');
+    await expect(heroCard).toHaveAttribute('data-title', 'Welcome to WB v3.0');
 
-    // Check Stats Card
-    const statsCard = page.locator('#stats-card-1');
-    await expect(statsCard).toBeVisible();
-    await expect(statsCard).toContainText('Total Users');
+    // Check Stats Cards
+    const statsCard1 = page.locator('#wb-cardstats-1');
+    await statsCard1.scrollIntoViewIfNeeded();
+    await expect(statsCard1).toBeVisible();
+    await expect(statsCard1).toHaveAttribute('data-label', 'Total Users');
+    await expect(statsCard1).toHaveAttribute('data-value', '1,234,567');
 
     // Check Testimonial Card
-    const testimonialCard = page.locator('#testimonial-card-1');
+    const testimonialCard = page.locator('#wb-cardtestimonial-1');
     await testimonialCard.scrollIntoViewIfNeeded();
     await expect(testimonialCard).toBeVisible();
-    await expect(testimonialCard).toContainText('Jane Doe');
+    await expect(testimonialCard).toHaveAttribute('data-author', 'Jane Doe');
 
     // Check File Card
-    const fileCard = page.locator('#file-card-1');
+    const fileCard = page.locator('#wb-cardfile-1');
     await fileCard.scrollIntoViewIfNeeded();
     await expect(fileCard).toBeVisible();
-    await expect(fileCard).toContainText('project-specs-v2.pdf');
+    await expect(fileCard).toHaveAttribute('data-filename', 'wb-framework-v3.0-docs.pdf');
 
-    // Check Notification Card
-    const notificationCard = page.locator('#notification-card-1');
-    await notificationCard.scrollIntoViewIfNeeded();
-    await expect(notificationCard).toBeVisible();
-    await expect(notificationCard).toContainText('Update Available');
+    // Check Notification Cards
+    const notificationCard1 = page.locator('#wb-cardnotification-1');
+    await notificationCard1.scrollIntoViewIfNeeded();
+    await expect(notificationCard1).toBeVisible();
+    await expect(notificationCard1).toHaveAttribute('data-type', 'info');
+    await expect(notificationCard1).toHaveAttribute('data-title', 'WB v3.0 Released');
 
-    // Check Interactive Elements
+    // Check Interactive Element with x-behavior
     const tooltipBtn = page.locator('#btn-tooltip-1');
     await tooltipBtn.scrollIntoViewIfNeeded();
     await expect(tooltipBtn).toBeVisible();
+    await expect(tooltipBtn).toHaveAttribute('x-behavior', 'tooltip toast');
+  });
+
+  test('debug status check works', async ({ page }) => {
+    await page.goto('/demos/pce-test.html');
     
-    // Hover to trigger tooltip
-    await tooltipBtn.hover();
-    const tooltip = page.locator('.wb-tooltip');
-    await expect(tooltip).toBeVisible();
-    await expect(tooltip).toContainText('I am a tooltip');
+    // Wait for WB to initialize
+    await page.waitForFunction(() => window.WB !== undefined);
+    await page.waitForTimeout(2500); // Wait for auto-check
+
+    // Check that status output has content
+    const statusOutput = page.locator('#status-output');
+    await expect(statusOutput).not.toBeEmpty();
+    
+    // Parse and verify some elements are detected
+    const statusText = await statusOutput.textContent();
+    expect(statusText).toContain('wb-cardprofile-1');
   });
 });

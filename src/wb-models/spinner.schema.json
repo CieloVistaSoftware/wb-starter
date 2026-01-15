@@ -102,9 +102,9 @@
   },
   "test": {
     "setup": [
-      "<wb-spinner></wb-spinner>",
-      "<wb-spinner size=\"lg\" variant=\"success\"></wb-spinner>",
-      "<div data-wb=\"spinner\"></div>"
+      "<div x-behavior=\"spinner\"></div>",
+      "<div x-behavior=\"spinner\" x-size=\"lg\" x-variant=\"success\"></div>",
+      "<div x-behavior=\"spinner\" x-size=\"sm\" x-speed=\"fast\"></div>"
     ],
     "matrix": {
       "combinations": [

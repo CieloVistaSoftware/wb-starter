@@ -1,112 +1,107 @@
-# Card Portfolio Component
+# Card Portfolio - WB Framework v3.0
+
+Portfolio/contact card using semantic `<address>` element.
 
 ## Overview
-The `cardportfolio` component is a rich profile card designed for personal branding, team pages, or user bios. It aggregates contact info, social links, and biographical data into a cohesive layout.
 
-## Internals & Lifecycle
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-cardportfolio>` |
+| Behavior | `cardportfolio` |
+| Semantic | `<article>` + `<address>` |
+| Base Class | `wb-card wb-portfolio` |
+| Inherits | card |
 
-### Initialization
-1.  **Cover & Avatar**:
-    - Creates a cover image figure (height: 120px).
-    - Creates an avatar image with a negative top margin (`-50px`) to create an overlap effect with the cover.
-2.  **Profile Details**:
-    - Renders Name (`h2`), Title (primary color), Company (muted), and Location (with 📍 icon).
-3.  **Contact Section**:
-    - Generates an `<address>` block.
-    - Automatically creates `mailto:` links for emails and `tel:` links for phone numbers.
-    - Adds icons (📧, 📱, 🌐) to each contact item.
-4.  **Social Links**:
-    - Checks for `linkedin`, `twitter`, and `github` attributes.
-    - Renders a row of circular icon buttons for each provided link.
+## Properties
 
-### DOM Structure
+Inherits all [card properties](./card.md) plus:
 
-<article class="wb-card wb-card--portfolio">
-  <!-- Cover Image -->
-  <figure class="wb-card__portfolio-cover" style="background-image: url(...)"></figure>
-  
-  <!-- Profile Info -->
-  <div style="margin-top: -50px;">
-    <img class="wb-card__portfolio-avatar" src="...">
-    <h2>Name</h2>
-    <p>Title</p>
-  </div>
-  
-  <!-- Contact -->
-  <address>
-    <a href="mailto:...">📧 email@example.com</a>
-  </address>
-  
-  <!-- Social -->
-  <div class="wb-card__portfolio-social">
-    <a href="...">💼</a> <!-- LinkedIn -->
-    <a href="...">🐦</a> <!-- Twitter -->
-  </div>
-</article>
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `name` | string | `""` | Person's name |
+| `title` | string | `""` | Job title |
+| `company` | string | `""` | Company name |
+| `bio` | string | `""` | Biography |
+| `avatar` | string | `""` | Avatar image URL |
+| `cover` | string | `""` | Cover image URL |
+| `location` | string | `""` | Location |
+| `email` | string | `""` | Email address |
+| `phone` | string | `""` | Phone number |
+| `website` | string | `""` | Website URL |
+| `linkedin` | string | `""` | LinkedIn URL |
+| `twitter` | string | `""` | Twitter URL |
+| `github` | string | `""` | GitHub URL |
+
+## Usage
+
+### Basic Portfolio
 
 ```html
-<article class="wb-card wb-card--portfolio">
-  <!-- Cover Image -->
-  <figure class="wb-card__portfolio-cover" style="background-image: url(...)"></figure>
-  
-  <!-- Profile Info -->
-  <div style="margin-top: -50px;">
-    <img class="wb-card__portfolio-avatar" src="...">
-    <h2>Name</h2>
-    <p>Title</p>
-  </div>
-  
-  <!-- Contact -->
+<wb-cardportfolio 
+  name="John Doe"
+  title="Senior Developer"
+  company="TechCorp"
+  avatar="/images/john.jpg">
+</wb-cardportfolio>
+```
+
+### Full Profile
+
+```html
+<wb-cardportfolio 
+  name="Jane Smith"
+  title="Product Designer"
+  company="DesignCo"
+  avatar="/images/jane.jpg"
+  cover="/images/cover.jpg"
+  bio="Passionate about creating beautiful, user-friendly experiences."
+  location="San Francisco, CA"
+  email="jane@example.com"
+  phone="+1 555-123-4567"
+  website="https://janesmith.com"
+  linkedin="https://linkedin.com/in/janesmith"
+  twitter="https://twitter.com/janesmith"
+  github="https://github.com/janesmith">
+</wb-cardportfolio>
+```
+
+### Minimal Contact
+
+```html
+<wb-cardportfolio 
+  name="Alex Johnson"
+  email="alex@example.com"
+  phone="+1 555-987-6543">
+</wb-cardportfolio>
+```
+
+## Generated Structure
+
+```html
+<article class="wb-card wb-portfolio">
+  <figure class="wb-card__figure wb-card__portfolio-cover">
+  </figure>
+  <header>
+    <img class="wb-card__portfolio-avatar">
+    <h2 class="wb-card__portfolio-name">Name</h2>
+    <p class="wb-card__portfolio-title">Title</p>
+    <p class="wb-card__portfolio-company">Company</p>
+    <p class="wb-card__portfolio-location">📍 Location</p>
+    <p class="wb-card__portfolio-bio">Bio...</p>
+  </header>
   <address>
-    <a href="mailto:...">📧 email@example.com</a>
+    <a class="wb-card__portfolio-email">📧 email</a>
+    <a class="wb-card__portfolio-phone">📱 phone</a>
+    <a class="wb-card__portfolio-website">🌐 website</a>
   </address>
-  
-  <!-- Social -->
   <div class="wb-card__portfolio-social">
-    <a href="...">💼</a> <!-- LinkedIn -->
-    <a href="...">🐦</a> <!-- Twitter -->
+    <a>💼</a> <!-- LinkedIn -->
+    <a>🐦</a> <!-- Twitter -->
+    <a>🐙</a> <!-- GitHub -->
   </div>
 </article>
 ```
 
-## Attributes
+## Schema
 
-| Attribute | Type | Description |
-|-----------|------|-------------|
-| `data-name` | string | Full name. |
-| `data-title` | string | Job title. |
-| `data-company` | string | Company name. |
-| `data-avatar` | string | URL to profile picture. |
-| `data-cover` | string | URL to cover background image. |
-| `data-bio` | string | Short biography text. |
-| `data-location` | string | City/Country. |
-| `data-email` | string | Email address. |
-| `data-phone` | string | Phone number. |
-| `data-website` | string | Personal website URL. |
-| `data-linkedin` | string | LinkedIn profile URL. |
-| `data-twitter` | string | Twitter/X profile URL. |
-| `data-github` | string | GitHub profile URL. |
-
-## Usage Example
-
-<div data-wb="cardportfolio" 
-     data-name="Jane Doe"
-     data-title="Senior Developer"
-     data-company="Tech Corp"
-     data-avatar="/assets/jane.jpg"
-     data-cover="/assets/code-bg.jpg"
-     data-email="jane@example.com"
-     data-github="https://github.com/janedoe">
-</div>
-
-```html
-<div data-wb="cardportfolio" 
-     data-name="Jane Doe"
-     data-title="Senior Developer"
-     data-company="Tech Corp"
-     data-avatar="/assets/jane.jpg"
-     data-cover="/assets/code-bg.jpg"
-     data-email="jane@example.com"
-     data-github="https://github.com/janedoe">
-</div>
-```
+Location: `src/wb-models/cardportfolio.schema.json`

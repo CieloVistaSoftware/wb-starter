@@ -1,8 +1,8 @@
-# Semantic HTML Elements
+# Semantic HTML Elements - WB Framework v3.0
 
-Web Behaviors (WB) uses semantic HTML elements as the foundation for all components. This ensures accessibility, SEO benefits, and meaningful document structure.
+WB Framework uses semantic HTML elements as the foundation for all components, ensuring accessibility, SEO benefits, and meaningful document structure.
 
-## Element Hierarchy
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -32,16 +32,33 @@ Web Behaviors (WB) uses semantic HTML elements as the foundation for all compone
 
 ## Component → Element Mapping
 
-| Component | Primary Element | Secondary Elements |
-|-----------|----------------|-------------------|
-| card | `<article>` | header, main, footer |
-| cardtestimonial | `<article>` | blockquote, cite, figure |
-| cardnotification | `<aside>` | - |
-| cardportfolio | `<article>` | address, figure |
-| cardstats | `<article>` | data |
-| cardfile | `<article>` | figure, figcaption |
-| cardproduct | `<article>` | figure, data |
-| alert | `<aside>` | - |
+| Component | Custom Tag | Primary Element | Secondary Elements |
+|-----------|------------|----------------|-------------------|
+| card | `<wb-card>` | `<article>` | header, main, footer |
+| cardtestimonial | `<wb-cardtestimonial>` | `<article>` | blockquote, cite, figure |
+| cardnotification | `<wb-cardnotification>` | `<aside>` | - |
+| cardportfolio | `<wb-cardportfolio>` | `<article>` | address, figure |
+| cardstats | `<wb-cardstats>` | `<article>` | data |
+| cardfile | `<wb-cardfile>` | `<article>` | figure, figcaption |
+| cardproduct | `<wb-cardproduct>` | `<article>` | figure, data |
+| alert | `<wb-alert>` | `<aside>` | - |
+| tabs | `<wb-tabs>` | `<section>` | nav |
+| dialog | `<wb-dialog>` | `<dialog>` | - |
+| progress | `<wb-progress>` | `<progress>` | - |
+
+## Why Semantic HTML?
+
+### Accessibility
+Screen readers and assistive technologies understand semantic structure, providing better navigation and context for users.
+
+### SEO
+Search engines prioritize well-structured semantic content, improving discoverability.
+
+### Maintainability
+Semantic elements are self-documenting, making code easier to understand and maintain.
+
+### Browser Features
+Semantic elements come with built-in behaviors (e.g., `<dialog>` for modals, `<progress>` for progress bars).
 
 ## Files in this Directory
 

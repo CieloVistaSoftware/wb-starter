@@ -115,9 +115,9 @@
   },
   "test": {
     "setup": [
-      "<wb-skeleton></wb-skeleton>",
-      "<wb-skeleton variant=\"circle\" width=\"50px\"></wb-skeleton>",
-      "<div data-wb=\"skeleton\" data-variant=\"text\" data-lines=\"3\"></div>"
+      "<div x-behavior=\"skeleton\"></div>",
+      "<div x-behavior=\"skeleton\" x-variant=\"circle\" x-width=\"50px\"></div>",
+      "<div x-behavior=\"skeleton\" x-variant=\"text\" x-lines=\"3\"></div>"
     ],
     "matrix": {
       "combinations": [

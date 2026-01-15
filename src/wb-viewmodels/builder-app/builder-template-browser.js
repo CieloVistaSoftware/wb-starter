@@ -642,7 +642,7 @@ window.tbToggleSectionsRow = () => {
 
 // Add an empty section container to the canvas
 window.tbAddSection = (sectionType) => {
-  const section = SECTION_CONTAINERS.find(s => s.id === sectionType);
+  const pageSection = SECTION_CONTAINERS.find(s => s.id === sectionType);
   if (!section) return;
   
   const html = generateSectionHTML(section);
@@ -1591,7 +1591,7 @@ function addArticlesSection(articles) {
     const wordCount = getWordCount(article.readTime);
     const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     
-    const html = `
+    const templateHtml = `
       <article id="${article.articleId}" class="py-16 px-4" style="background: ${index % 2 === 0 ? '#fff' : '#f8fafc'};">
         <div class="container mx-auto max-w-3xl">
           <!-- Article Header -->

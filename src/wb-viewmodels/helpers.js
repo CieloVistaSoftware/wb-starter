@@ -622,7 +622,7 @@ export function clock(element, options = {}) {
   };
 
   update();
-  const interval = setInterval(update, 1000);
+  const updateInterval = setInterval(update, 1000);
 
   element.dataset.wbReady = 'clock';
   return () => { 
@@ -666,7 +666,7 @@ export function relativetime(element, options = {}) {
   };
 
   update();
-  const interval = setInterval(update, config.refresh);
+  const timerInterval = setInterval(update, config.refresh);
 
   return () => { clearInterval(interval); element.classList.remove('wb-relativetime'); };
 }

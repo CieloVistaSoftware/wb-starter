@@ -277,7 +277,9 @@
       <!-- BEFORE column -->
       <div>
         <div style="font-size: 0.85rem; font-weight: 600; color: var(--danger-color); margin-bottom: 0.5rem;">❌ BEFORE (Web Behaviors v1.0)</div>
-        <pre style="margin: 0; border: 1px solid var(--danger-color);"><code>&lt;!-- Every element needs data-wb --&gt;
+        <wb-mdhtml data-size="xs" style="margin: 0; border: 1px solid var(--danger-color); border-radius: var(--radius-sm); display: block;">
+```html
+&lt;!-- Every element needs data-wb --&gt;
 &lt;button  
   data-variant="primary"&gt;
   Click Me
@@ -294,7 +296,9 @@
 &lt;figure &gt;
   &lt;img src=&quot;url&quot;&gt;
   &lt;figcaption&gt;Caption&lt;/figcaption&gt;
-&lt;/figure&gt;</code></pre>
+&lt;/figure&gt;
+```
+        </wb-mdhtml>
         <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0.5rem 0 0 0;">
           Verbose, repetitive, easy to forget
         </p>
@@ -303,7 +307,9 @@
       <!-- AFTER column -->
       <div>
         <div style="font-size: 0.85rem; font-weight: 600; color: var(--success-color); margin-bottom: 0.5rem;">✅ AFTER (WB v2.0)</div>
-        <pre style="margin: 0; border: 1px solid var(--success-color);"><code>&lt;!-- Just write semantic HTML --&gt;
+        <wb-mdhtml data-size="xs" style="margin: 0; border: 1px solid var(--success-color); border-radius: var(--radius-sm); display: block;">
+```html
+&lt;!-- Just write semantic HTML --&gt;
 &lt;button 
   data-variant="primary"&gt;
   Click Me
@@ -320,7 +326,9 @@
 &lt;figure 
   data-img-src=&quot;url&quot; 
   data-caption="Caption"&gt;
-&lt;/figure&gt;</code></pre>
+&lt;/figure&gt;
+```
+        </wb-mdhtml>
         <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0.5rem 0 0 0;">
           Clean, semantic, automatic enhancement
         </p>

@@ -1,82 +1,78 @@
-# Card File Component
+# Card File - WB Framework v3.0
+
+File/document download card with file type icons.
 
 ## Overview
-The `cardfile` component represents a file attachment or download link. It automatically assigns an icon based on the file type and formats metadata like size and date.
 
-## Internals & Lifecycle
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-cardfile>` |
+| Behavior | `cardfile` |
+| Semantic | `<article>` + `<figure>` |
+| Base Class | `wb-card wb-card-file` |
+| Inherits | card |
 
-### Initialization
-1.  **Icon Mapping**: Maps the `data-type` attribute to a specific emoji icon.
-    - `pdf` → 📄
-    - `doc` → 📝
-    - `image` → 🖼️
-    - `video` → 🎬
-    - `audio` → 🎵
-    - `zip` → 📦
-    - Default → 📁
-2.  **Layout**: Uses a horizontal flex layout (`flex-direction: row`) to align the icon, details, and download action.
-3.  **Meta Formatting**: Joins `data-size` and `data-date` with a bullet separator (`•`) if both are present.
-4.  **Download Action**: If `data-downloadable` is true and a `data-href` is provided, it appends an anchor tag with the `download` attribute set to the filename.
+## Properties
 
-### DOM Structure
+Inherits all [card properties](./card.md) plus:
 
-<article class="wb-card wb-card--file">
-  <!-- File Type Icon -->
-  <span style="font-size:2.5rem;">📄</span>
-  
-  <!-- File Details -->
-  <div style="flex:1;">
-    <h3 class="wb-card__filename">report.pdf</h3>
-    <p class="wb-card__file-meta">2.5MB • Dec 12, 2025</p>
-  </div>
-  
-  <!-- Download Button -->
-  <a href="..." download="report.pdf">⬇️</a>
-</article>
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `filename` | string | `""` | File name |
+| `type` | string | `"file"` | Type: `pdf`, `doc`, `image`, `video`, `audio`, `zip`, `file` |
+| `size` | string | `""` | File size (e.g., "2.5 MB") |
+| `date` | string | `""` | Date modified |
+| `downloadable` | boolean | `true` | Show download button |
+| `href` | string | `""` | Download URL |
+
+## Usage
+
+### Basic File Card
 
 ```html
-<article class="wb-card wb-card--file">
-  <!-- File Type Icon -->
-  <span style="font-size:2.5rem;">📄</span>
-  
-  <!-- File Details -->
-  <div style="flex:1;">
-    <h3 class="wb-card__filename">report.pdf</h3>
-    <p class="wb-card__file-meta">2.5MB • Dec 12, 2025</p>
-  </div>
-  
-  <!-- Download Button -->
-  <a href="..." download="report.pdf">⬇️</a>
-</article>
+<wb-cardfile 
+  filename="Annual Report.pdf"
+  type="pdf"
+  size="2.5 MB">
+</wb-cardfile>
 ```
 
-## Attributes
-
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data-filename` | string | required | The name of the file to display. |
-| `data-type` | enum | `file` | File type for icon mapping (pdf, doc, image, etc.). |
-| `data-size` | string | - | File size string (e.g., "2.5MB"). |
-| `data-date` | string | - | Date string (e.g., "2025-12-01"). |
-| `data-href` | string | - | URL to the file. |
-| `data-downloadable` | boolean | `true` | Whether to show the download button. |
-
-## Usage Example
-
-<div data-wb="cardfile" 
-     data-filename="Q4_Financial_Report.pdf" 
-     data-type="pdf" 
-     data-size="4.2 MB"
-     data-date="Dec 20, 2025"
-     data-href="/files/q4-report.pdf">
-</div>
+### Downloadable File
 
 ```html
-<div data-wb="cardfile" 
-     data-filename="Q4_Financial_Report.pdf" 
-     data-type="pdf" 
-     data-size="4.2 MB"
-     data-date="Dec 20, 2025"
-     data-href="/files/q4-report.pdf">
-</div>
+<wb-cardfile 
+  filename="Project Assets.zip"
+  type="zip"
+  size="15.3 MB"
+  date="Jan 10, 2024"
+  href="/downloads/assets.zip"
+  downloadable>
+</wb-cardfile>
 ```
+
+### Image File
+
+```html
+<wb-cardfile 
+  filename="hero-banner.jpg"
+  type="image"
+  size="850 KB"
+  date="Dec 5, 2023">
+</wb-cardfile>
+```
+
+## File Type Icons
+
+| Type | Icon |
+|------|------|
+| pdf | 📄 |
+| doc | 📝 |
+| image | 🖼️ |
+| video | 🎬 |
+| audio | 🎵 |
+| zip | 📦 |
+| file | 📁 |
+
+## Schema
+
+Location: `src/wb-models/cardfile.schema.json`

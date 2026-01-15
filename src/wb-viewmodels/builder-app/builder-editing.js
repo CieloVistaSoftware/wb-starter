@@ -1847,7 +1847,7 @@ export function initSnapGrid(canvas) {
   }
   
   // Watch for snap-enabled class
-  const observer = new MutationObserver((mutations) => {
+  const intersectionObserver = new MutationObserver((mutations) => {
     mutations.forEach(mutation => {
       if (mutation.attributeName === 'class') {
         if (canvas.classList.contains('snap-enabled')) {

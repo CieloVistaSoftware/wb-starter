@@ -50,16 +50,17 @@ export function animate(element, options = {}) {
 // Helper for click-triggered animations
 function clickAnim(element, animName, duration = '0.5s') {
   element.classList.add(`wb-${animName}`);
-  const play = () => {
+  const playAnimation = () => {
     element.style.animation = 'none';
     void element.offsetWidth;
     element.style.animation = `wb-${animName} ${duration} ease`;
   };
   if (element.tagName === 'BUTTON') {
-    element.onclick = play;
+    element.onclick = playAnimation;
   } else {
-    play();
+    element.onclick = playAnimation;
   }
+  element.wbAnim = { play: playAnimation };
   element.dataset.wbReady = animName;
   return () => element.classList.remove(`wb-${animName}`);
 }
@@ -307,7 +308,7 @@ export function parallax(element, options = {}) {
   
   let ticking = false;
 
-  const update = () => {
+  const updateFn = () => {
     const rect = element.getBoundingClientRect();
     const offset = (window.innerHeight - rect.top) * speed * 0.1;
     element.style.transform = `translateY(${offset}px)`;
@@ -316,13 +317,13 @@ export function parallax(element, options = {}) {
 
   const onScroll = () => {
     if (!ticking) {
-      window.requestAnimationFrame(update);
+      window.requestAnimationFrame(updateFn);
       ticking = true;
     }
   };
   
   window.addEventListener('scroll', onScroll, { passive: true });
-  update();
+  updateFn();
   
   return () => {
     window.removeEventListener('scroll', onScroll);
@@ -513,8 +514,9 @@ export function fireworks(element, options = {}) {
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     
-    const container = document.createElement('div');
-    container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+    // Fix: create container
+    const animContainer = document.createElement('div');
+    animContainer.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
     
     const colors = ['#ff0', '#f0f', '#0ff', '#f00', '#0f0', '#00f', '#fff'];
     
@@ -531,11 +533,11 @@ export function fireworks(element, options = {}) {
         animation:wb-firework-particle 1s ease-out forwards;
         --end-x:${Math.cos(angle) * velocity}px;--end-y:${Math.sin(angle) * velocity}px;
       `;
-      container.appendChild(particle);
+      animContainer.appendChild(particle);
     }
     
-    document.body.appendChild(container);
-    setTimeout(() => container.remove(), 1500);
+    document.body.appendChild(animContainer);
+    setTimeout(() => animContainer.remove(), 1500);
   };
   
   element.onclick = fire;
@@ -572,6 +574,7 @@ export function snow(element, options = {}) {
   }
   
   const fire = () => {
+    // Fix: create container
     const container = document.createElement('div');
     container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
     

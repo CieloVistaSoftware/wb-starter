@@ -135,8 +135,8 @@
   },
   "test": {
     "setup": [
-      "<wb-details summary=\"Click to expand\">Content here</wb-details>",
-      "<details data-wb=\"details\"><summary>Summary</summary><div>Content</div></details>"
+      "<details x-behavior=\"details\" x-summary=\"Click to expand\">Content here</details>",
+      "<details x-behavior=\"details\" x-summary=\"Summary\" x-open=\"true\"><div>Content</div></details>"
     ],
     "matrix": {
       "combinations": [

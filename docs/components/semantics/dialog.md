@@ -1,84 +1,192 @@
-# Dialog Component Design & User Guide
+# Dialog - WB Framework v3.0
 
-## 1. Design Philosophy
+Modal dialog using native HTML5 dialog element.
 
-The `dialog` (or `modal`) component leverages the native HTML5 `<dialog>` element to provide a robust, accessible modal system. By using the native element, we gain built-in accessibility features like focus trapping, screen reader support, and standard keyboard navigation (ESC to close) without complex JavaScript polyfills.
+## Overview
 
-### Key Features
-- **Semantic Structure**: Uses `<header>`, `<main>`, and `<footer>` within the dialog.
-- **Native Accessibility**: `aria-modal`, `aria-labelledby`, and focus management are handled by the browser.
-- **Backdrop Support**: Uses the native `::backdrop` pseudo-element for dimming the background.
-- **Size Variants**: Pre-defined sizes for consistent UI.
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-dialog>` |
+| Behavior | `dialog` |
+| Semantic | `<dialog>` |
+| Base Class | `wb-dialog` |
+| Category | Overlay |
+| Schema | `src/wb-models/dialog.schema.json` |
 
-## 2. User Guide
+## Properties
 
-### Basic Usage
-The `dialog` behavior is automatically injected into `<dialog>` elements.
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `title` | string | `""` | Dialog title |
+| `content` | string | `""` | Dialog body content |
+| `size` | string | `"md"` | Size: `sm`, `md`, `lg`, `xl`, `full` |
+| `closeOnBackdrop` | boolean | `true` | Close on backdrop click |
+| `closeOnEscape` | boolean | `true` | Close on Escape key |
+| `showClose` | boolean | `true` | Show close button |
+| `variant` | string | `"default"` | Variant: `default`, `centered`, `fullscreen` |
 
-```html
-<dialog>
-  <header>
-    <h2>Title</h2>
-    <button onclick="this.closest('dialog').close()">×</button>
-  </header>
-  <main>
-    <p>Content</p>
-  </main>
-  <footer>
-    <button onclick="this.closest('dialog').close()">Close</button>
-  </footer>
-</dialog>
-```
+## Usage
 
-### Trigger Usage (Dynamic)
-Add `data-wb="dialog"` to a button to create a dialog dynamically.
+### Custom Element
 
 ```html
-<button 
-  data-wb="dialog" 
-  data-title="Welcome" 
-  data-content="Hello World!">
+<wb-dialog title="Welcome" id="my-dialog">
+  <p>Dialog content goes here.</p>
+</wb-dialog>
+
+<button onclick="document.getElementById('my-dialog').open()">
   Open Dialog
 </button>
 ```
 
-### Configuration Options
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data-title` | String | `Dialog` | Title displayed in the header. |
-| `data-content` | String | `''` | HTML content for the body. |
-| `data-size` | String | `md` | Size: `sm`, `md`, `lg`, `xl`. |
-
-### Events
-- `wb:dialog:ok`: Fired on the trigger element when the "OK" button is clicked.
-
-## 3. Examples
-
-### Example 1: Semantic Dialog
-A standard HTML5 dialog.
-
-```html
-<button onclick="document.getElementById('my-dialog').showModal()">Open</button>
-
-<dialog id="my-dialog">
-  <h3>Hello!</h3>
-  <p>This is a native dialog.</p>
-  <button onclick="this.closest('dialog').close()">Close</button>
-</dialog>
-```
-
-### Example 2: Dynamic Confirmation Modal
-A simple confirmation dialog triggered by a button.
+### Trigger Button
 
 ```html
 <button 
-  data-wb="modal" 
-  data-title="Confirm Action" 
-  data-content="Are you sure you want to proceed?" 
-  data-size="sm">
-  Delete Item
+  data-wb="dialog" 
+  data-wb-title="Confirm" 
+  data-wb-content="Are you sure?">
+  Open Confirmation
 </button>
 ```
 
-## 4. Why It Works
-The component listens for a click on the trigger element. When clicked, it dynamically constructs a `<dialog>` element with the specified content and appends it to the `<body>`. It then calls the native `dialog.showModal()` method. When closed, the element is removed from the DOM to keep the page clean.
+### Sizes
+
+```html
+<wb-dialog title="Small" size="sm">Small dialog</wb-dialog>
+<wb-dialog title="Medium" size="md">Medium dialog</wb-dialog>
+<wb-dialog title="Large" size="lg">Large dialog</wb-dialog>
+<wb-dialog title="Full" size="full">Full dialog</wb-dialog>
+```
+
+### Centered Variant
+
+```html
+<wb-dialog title="Centered" variant="centered">
+  This dialog is vertically centered.
+</wb-dialog>
+```
+
+### Without Close Button
+
+```html
+<wb-dialog title="Required Action" showClose="false">
+  You must complete this action.
+</wb-dialog>
+```
+
+## Generated Structure
+
+```html
+<dialog class="wb-dialog wb-dialog--md">
+  <div class="wb-dialog__container">
+    <header class="wb-dialog__header">
+      <h2 class="wb-dialog__title">Title</h2>
+      <button class="wb-dialog__close">×</button>
+    </header>
+    <main class="wb-dialog__body">
+      Content here
+    </main>
+    <footer class="wb-dialog__footer">
+      Footer content
+    </footer>
+  </div>
+</dialog>
+```
+
+## CSS Classes
+
+| Class | Applied When | Description |
+|-------|--------------|-------------|
+| `.wb-dialog` | Always | Base styling |
+| `.wb-dialog--sm` | `size="sm"` | Small size |
+| `.wb-dialog--md` | `size="md"` | Medium size |
+| `.wb-dialog--lg` | `size="lg"` | Large size |
+| `.wb-dialog--xl` | `size="xl"` | Extra large size |
+| `.wb-dialog--full` | `size="full"` | Full screen |
+| `.wb-dialog--centered` | `variant="centered"` | Centered variant |
+| `.wb-dialog--fullscreen` | `variant="fullscreen"` | Fullscreen variant |
+
+## Methods
+
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `open()` | Opens the dialog | `Promise` |
+| `close()` | Closes the dialog | `Promise` |
+| `toggle()` | Toggles the dialog | - |
+| `isOpen()` | Returns open state | `boolean` |
+| `setContent(content)` | Updates body content | - |
+| `setTitle(title)` | Updates title | - |
+
+```javascript
+const dialog = document.querySelector('wb-dialog');
+
+// Open/close
+await dialog.open();
+await dialog.close();
+
+// Check state
+if (dialog.isOpen()) {
+  console.log('Dialog is open');
+}
+
+// Update content
+dialog.setTitle('New Title');
+dialog.setContent('<p>Updated content</p>');
+```
+
+## Events
+
+| Event | Description | Detail |
+|-------|-------------|--------|
+| `wb:dialog:open` | Dialog opened | `{ title: string }` |
+| `wb:dialog:close` | Dialog closed | `{}` |
+| `wb:dialog:cancel` | Cancelled (Escape/backdrop) | `{}` |
+
+```javascript
+dialog.addEventListener('wb:dialog:open', (e) => {
+  console.log('Dialog opened:', e.detail.title);
+});
+
+dialog.addEventListener('wb:dialog:close', () => {
+  console.log('Dialog closed');
+});
+```
+
+## CSS API
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--wb-dialog-width` | `500px` | Dialog width |
+| `--wb-dialog-max-width` | `90vw` | Max dialog width |
+| `--wb-dialog-max-height` | `85vh` | Max dialog height |
+| `--wb-dialog-radius` | `8px` | Border radius |
+| `--wb-dialog-bg` | `var(--bg-surface, #ffffff)` | Background |
+| `--wb-dialog-shadow` | `0 20px 60px rgba(0,0,0,0.3)` | Box shadow |
+| `--wb-dialog-padding` | `1.5rem` | Content padding |
+| `--wb-dialog-header-gap` | `1rem` | Header gap |
+| `--wb-dialog-title-size` | `1.25rem` | Title font size |
+| `--wb-dialog-title-weight` | `600` | Title font weight |
+| `--wb-dialog-backdrop-bg` | `rgba(0,0,0,0.5)` | Backdrop background |
+| `--wb-dialog-backdrop-blur` | `0` | Backdrop blur |
+| `--wb-dialog-enter-animation` | `dialogFadeIn 0.2s ease` | Enter animation |
+| `--wb-dialog-exit-animation` | `dialogFadeOut 0.15s ease` | Exit animation |
+| `--wb-dialog-z-index` | `1000` | Z-index |
+
+## Accessibility
+
+| Attribute | Value | Condition |
+|-----------|-------|-----------|
+| `role` | `dialog` | Implicit |
+| `aria-modal` | `true` | Always |
+| `aria-labelledby` | Dialog title ID | When title exists |
+
+Built-in accessibility features:
+- Focus trap inside dialog
+- Escape key to close
+- Return focus on close
+- Screen reader announcements
+
+## Schema
+
+Location: `src/wb-models/dialog.schema.json`

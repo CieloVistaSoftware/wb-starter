@@ -185,8 +185,8 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-tabs><div data-tab-title=\"Tab 1\">Content 1</div><div data-tab-title=\"Tab 2\">Content 2</div></wb-tabs>",
-      "<div data-wb=\"tabs\"><div data-tab-title=\"First\">First</div><div data-tab-title=\"Second\">Second</div></div>"
+      "<div x-behavior=\"tabs\"><div data-tab-title=\"Tab 1\">Content 1</div><div data-tab-title=\"Tab 2\">Content 2</div></div>",
+      "<div x-behavior=\"tabs\"><div data-tab-title=\"First\">First</div><div data-tab-title=\"Second\">Second</div></div>"
     ],
     "matrix": {
       "combinations": [

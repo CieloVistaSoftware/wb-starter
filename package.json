@@ -19,6 +19,10 @@
     "test:base": "npx playwright test --project=compliance && npx playwright test --project=base",
     "test:behaviors": "npx playwright test --project=compliance && npx playwright test --project=base && npx playwright test --project=behaviors",
     "test:performance": "npx playwright test --project=performance",
+    "test:firefox": "npx playwright test --project=firefox",
+    "test:webkit": "npx playwright test --project=webkit",
+    "test:mobile": "npx playwright test --project=mobile-chrome --project=mobile-safari",
+    "test:browsers": "npx playwright test --project=firefox --project=webkit --project=mobile-chrome --project=mobile-safari",
     "test:all": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors && npx playwright test --project=performance",
     "test:integrity": "npx playwright test tests/compliance/project-integrity.spec.ts",
     "generate:schema-tests": "node scripts/generate-schema-tests.js",
@@ -48,7 +52,10 @@
     "highlight.js": "^11.11.1",
     "ws": "^8.18.3"
   },
+  "customElements": "./data/custom-elements.json",
   "devDependencies": {
+    "acorn": "^8.15.0",
+    "acorn-walk": "^8.3.4",
     "sharp": "^0.34.5"
   }
 }

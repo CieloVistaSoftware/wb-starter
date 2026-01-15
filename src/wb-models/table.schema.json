@@ -195,8 +195,8 @@
   },
   "test": {
     "setup": [
-      "<wb-table columns='[{\"key\":\"name\",\"label\":\"Name\"}]' data='[{\"name\":\"Test\"}]'></wb-table>",
-      "<table data-wb=\"table\"><thead><tr><th>Name</th></tr></thead><tbody><tr><td>Test</td></tr></tbody></table>"
+      "<table x-behavior=\"table\" data-columns='[{\"key\":\"name\",\"label\":\"Name\"}]' data-data='[{\"name\":\"Test\"}]'></table>",
+      "<table x-behavior=\"table\"><thead><tr><th>Name</th></tr></thead><tbody><tr><td>Test</td></tr></tbody></table>"
     ],
     "matrix": {
       "combinations": [

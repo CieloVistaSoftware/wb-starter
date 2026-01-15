@@ -1,11 +1,42 @@
 # TODO List
 
-**Created**: 2024-12-31
-**Source**: CURRENT-STATUS.md
+**Last Updated:** 2026-01-14  
+**Source:** CURRENT-STATUS.md
+
+---
+
+## ✅ Completed This Session (2026-01-14)
+
+- [x] **Cross-Browser Support Infrastructure**
+  - [x] CSS Normalization (`src/styles/normalize.css`)
+  - [x] Safari/WebKit Fixes (`src/styles/safari-fixes.css`)
+  - [x] ResizeObserver Utility (`src/core/resize.js`)
+  - [x] Feature Detection (`src/core/features.js`) - No UA sniffing
+  - [x] Escape Hatches Documentation (`docs/escape-hatches.md`)
+  - [x] Cross-browser test suite (26 tests passing)
+
+- [x] **Playwright Cross-Browser Testing**
+  - [x] Firefox project
+  - [x] WebKit (Safari) project
+  - [x] Mobile Chrome (Pixel 5) project
+  - [x] Mobile Safari (iPhone 12) project
+  - [x] npm scripts: `test:firefox`, `test:webkit`, `test:mobile`, `test:browsers`
+
+- [x] **VS Code Custom Elements Support**
+  - [x] Custom Elements Manifest generator (`scripts/generate-custom-elements.js`)
+  - [x] Generated `data/custom-elements.json` (54 components)
+  - [x] Added `customElements` field to `package.json`
+
+- [x] **Code Highlighting Fix**
+  - [x] Fixed `mdhtml.js` using wrong attributes (`x-pre`/`x-code` → `x-behavior`)
 
 ---
 
 ## 🔴 High Priority - Architecture
+
+### Builder Module Split (Completed Earlier)
+- [x] Split `builder-app/index.js` from 123KB to 26KB (79% reduction)
+- [x] Created 7 new modules: panels, dnd, components-core, selection, context-menu, collab, template-add
 
 ### x- Prefix Migration
 - [ ] **Phase 1: Core Infrastructure** (see `docs/architecture/CODE-AUDIT-X-MIGRATION.md`)
@@ -19,19 +50,11 @@
 - [ ] **Phase 6: Schemas** - Add customElement metadata
 - [ ] **Phase 7: Documentation** - Update examples
 
-### HTML Parts System (ONE-TIME-ONE-PLACE for markup) ✅ COMPLETED
-- [x] **Design `<wb-part>` system** - `src/core/wb-parts.js`
-  - Define once: `<template wb-part="card-tile">...</template>`
-  - Use anywhere: `<wb-part card-tile icon="📝" label="Card">`
-  - Interpolation: `{{prop}}`, `{{prop || default}}`, ternary
-  - Conditionals: `wb-if`, `wb-unless`
-  - Loops: `wb-for="item in items"`
-- [x] **Part registry** - `src/parts/parts-registry.json` (12 parts defined)
-- [x] **Part slots** - `{{body}}` placeholder for inner content
-- [x] **Part variants** - Via attributes (variant, size, status enums)
-- [x] **Data binding** - `src="/api/data"` fetches JSON, `refresh="5000"` auto-refresh
-- [x] **IntelliSense** - `.vscode/html-custom-data.json` updated
-- [x] **Documentation** - `docs/architecture/WBPARTS.md`
+### HTML Parts System ✅ COMPLETED
+- [x] `<wb-part>` system with interpolation, conditionals, loops
+- [x] Part registry (12 parts defined)
+- [x] IntelliSense support
+- [x] Documentation
 
 ---
 
@@ -46,13 +69,11 @@
   - Workflow overlay (`#wfOverlay`) blocks click events
   - Tests need to dismiss overlay before interacting with sidebar
   - File: `tests/behaviors/ui/builder-sidebar.spec.ts`
-  - Add: `await page.click('[data-dismiss]')` or close overlay programmatically
 
-- [ ] **AI Code Regression Audit**
-  - Run full `npm test` suite
-  - Review `git diff` for unintended changes
-  - Check core files (wb.js, site-engine.js, behaviors) for regressions
-  - Document any found issues
+- [ ] **Web Components Language Server Issue** 🔍 *Investigate*
+  - VS Code shows "no custom element docs found" errors
+  - Custom Elements Manifest exists at `data/custom-elements.json` (101KB)
+  - May need VS Code restart or extension configuration
 
 ---
 
@@ -71,7 +92,7 @@
   - Allow applying/removing effects
 
 - [ ] **Mobile Testing on Real Devices**
-  - Verify Jan 3 responsive fixes work on actual phones
+  - Verify responsive fixes work on actual phones
   - Test nav menu toggle, backdrop, scroll lock
   - Check 480px breakpoint on small phones
 
@@ -105,8 +126,8 @@
   - Keep lazy loading benefits
 
 - [ ] **Expand Test Coverage**
-  - Current: 44 tests (89% passing)
-  - Target: 60+ tests
+  - Current: 26 cross-browser tests + existing suite
+  - Target: 100+ tests total
   - Add edge case coverage for behaviors
 
 - [ ] **Performance Profiling**
@@ -124,37 +145,49 @@
   - Missing: some layout and effect behaviors
   - Target: 100% for builder compatibility
 
+- [ ] **Split Remaining Large Files** (if needed)
+  - `builder-template-browser.js` (75KB) → 3-4 modules
+  - `builder-templates.js` (75KB) → template data, rendering
+  - `builder-editing.js` (56KB) → 2-3 modules
+  - `builder-tree.js` (41KB) → tree view, selection
+
 ---
 
-## ✅ Completed This Session
+## 🧪 Test Commands
 
-- [x] Mobile Responsive Fixes (Jan 3)
-- [x] Web Behaviors (WB).js Internals Documentation (`docs/architecture/wb_internals.md`)
-- [x] **Attribute Naming Standard** (`docs/architecture/ATTRIBUTE-NAMING-STANDARD.md`)
-  - Custom element naming: `<component-name>`, `x-behavior`, `x-as-morph`
-  - Native attribute reuse rule
-  - Collision avoidance (`title` → `heading`, `type` → `variant`)
-  - Data injection patterns
-- [x] **Migration Plan for x- Prefix** (`docs/architecture/MIGRATION-PLAN-X-PREFIX.md`)
-  - Custom elements (IS-A): `<basic-card>`
-  - Extensions (HAS-A): `x-ripple`, `x-tooltip="tip"`
-  - Morphing (BECOMES): `x-as-card`
-  - Multiple behaviors solved: each `x-*` is independent attribute
-- [x] **Builder Sidebar Common Components** (`src/builder/builder-sidebar.js`)
-  - Added 12 common component tiles (4x3 grid)
-  - Click to add OR drag to canvas
-  - Visual tile design with icons
-- [x] Builder Sidebar Category System
-- [x] Builder Architecture Refactor (event hygiene)
-- [x] `autocomplete` → native `<datalist>`
-- [x] Created `src/behaviorMeta.js` (155+ behaviors)
-- [x] Created `src/builder-drop-handler.js`
+```bash
+# Standard tests
+npm test                  # Full test suite
+npm run test:compliance   # Static compliance only
+npm run test:behaviors    # Behavior tests
+
+# Cross-browser tests
+npm run test:firefox      # Firefox
+npm run test:webkit       # Safari/WebKit
+npm run test:mobile       # Mobile Chrome + Safari
+npm run test:browsers     # All browsers
+
+# Utilities
+npm run test:ui           # Playwright UI mode
+npm run test:single       # Single-threaded (debugging)
+```
+
+---
+
+## 📊 Current Test Status
+
+| Suite | Status |
+|-------|--------|
+| Compliance | ✅ Passing |
+| Cross-browser Support | ✅ 26/26 passing |
+| Base Behaviors | ✅ Passing |
+| Builder Sidebar | ⚠️ 4 failing (overlay issue) |
 
 ---
 
 ## Quick Reference
 
 ```bash
-npm start    # http://localhost:3000/builder.html
-npm test     # Run tests
+npm start                           # http://localhost:3000
+node scripts/generate-custom-elements.js  # Regenerate CEM
 ```

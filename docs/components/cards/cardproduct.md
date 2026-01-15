@@ -1,140 +1,83 @@
-# Card Product Component
+# Card Product - WB Framework v3.0
+
+E-commerce product card with image, pricing, and add-to-cart functionality.
 
 ## Overview
-The `cardproduct` component is a commerce-focused card designed to display product details, pricing, and call-to-action buttons. It includes built-in event handling for "Add to Cart" actions.
 
-## Internals & Lifecycle
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-cardproduct>` |
+| Behavior | `cardproduct` |
+| Semantic | `<article>` + `<figure>` + `<data>` |
+| Base Class | `wb-card wb-product` |
+| Inherits | card |
 
-### Initialization
-1.  **Image & Badge**: 
-    - Creates a figure for the product image.
-    - If `data-badge` is present (e.g., "Sale", "New"), it injects a badge element absolutely positioned over the image.
-2.  **Price Formatting**:
-    - Renders the current price in a bold, prominent style.
-    - If `data-original-price` is provided, it renders it next to the current price with `text-decoration: line-through` and a muted color.
-3.  **Rating System**:
-    - Generates star characters (★) based on the `data-rating` value.
-    - Appends the review count in parentheses if `data-reviews` is provided.
-4.  **Interaction**:
-    - Creates a full-width CTA button (default text: "Add to Cart").
-    - Attaches a click handler to the button that dispatches a custom event.
+## Properties
 
-### Events
-The component dispatches a custom event when the CTA button is clicked.
+Inherits all [card properties](./card.md) plus:
 
-- **Event Name**: `wb:cardproduct:addtocart`
-- **Bubbles**: `true`
-- **Detail Object**:
-  ```javascript
-  {
-    title: "Product Title",
-    price: "$99.00",
-    id: "element-id"
-  }
-  ```
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `image` | string | `""` | Product image URL |
+| `price` | string | `""` | Current price |
+| `originalPrice` | string | `""` | Original price (for sales) |
+| `badge` | string | `""` | Badge text (e.g., "Sale") |
+| `rating` | string | `""` | Star rating |
+| `reviews` | string | `""` | Review count |
+| `cta` | string | `"Add to Cart"` | CTA button text |
+| `description` | string | `""` | Product description |
 
-### DOM Structure
+## Usage
 
-<article class="wb-card wb-card--product">
-  <!-- Image & Badge -->
-  <figure style="position:relative;">
-    <img src="...">
-    <span class="wb-card__badge">Sale</span>
-  </figure>
-  
-  <!-- Product Info -->
-  <div class="wb-card__product-info">
-    <h3 class="wb-card__product-title">Title</h3>
-    
-    <!-- Rating -->
-    <div class="wb-card__product-rating">
-      <span>★★★★</span> <span>4.5 (120)</span>
-    </div>
-    
-    <!-- Pricing -->
-    <div class="wb-card__price-wrap">
-      <span class="wb-card__price-current">$49.99</span>
-      <span class="wb-card__price-original">$69.99</span>
-    </div>
-    
-    <!-- CTA -->
-    <button class="wb-card__product-cta">Add to Cart</button>
-  </div>
-</article>
+### Basic Product
 
 ```html
-<article class="wb-card wb-card--product">
-  <!-- Image & Badge -->
-  <figure style="position:relative;">
-    <img src="...">
-    <span class="wb-card__badge">Sale</span>
-  </figure>
-  
-  <!-- Product Info -->
-  <div class="wb-card__product-info">
-    <h3 class="wb-card__product-title">Title</h3>
-    
-    <!-- Rating -->
-    <div class="wb-card__product-rating">
-      <span>★★★★</span> <span>4.5 (120)</span>
-    </div>
-    
-    <!-- Pricing -->
-    <div class="wb-card__price-wrap">
-      <span class="wb-card__price-current">$49.99</span>
-      <span class="wb-card__price-original">$69.99</span>
-    </div>
-    
-    <!-- CTA -->
-    <button class="wb-card__product-cta">Add to Cart</button>
-  </div>
-</article>
+<wb-cardproduct 
+  title="Wireless Headphones"
+  image="/images/headphones.jpg"
+  price="$99.99">
+</wb-cardproduct>
 ```
 
-## Attributes
-
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data-image` | string | required | URL of the product image. |
-| `data-price` | string | required | Current price string. |
-| `data-original-price` | string | - | Original price (shown struck through). |
-| `data-badge` | string | - | Overlay text like "Sale" or "New". |
-| `data-rating` | number | - | Star rating (0-5). |
-| `data-reviews` | number | - | Count of reviews. |
-| `data-cta` | string | "Add to Cart" | Text for the action button. |
-
-## Usage Example
-
-<div data-wb="cardproduct" 
-     data-title="Wireless Headphones"
-     data-image="/assets/headphones.jpg" 
-     data-price="$199.00"
-     data-original-price="$249.00"
-     data-badge="Best Seller"
-     data-rating="4.8"
-     data-reviews="450">
-</div>
-
-<script>
-  document.addEventListener('wb:cardproduct:addtocart', (e) => {
-    console.log('Added to cart:', e.detail.title);
-  });
-</script>
+### With Sale Price
 
 ```html
-<div data-wb="cardproduct" 
-     data-title="Wireless Headphones"
-     data-image="/assets/headphones.jpg" 
-     data-price="$199.00"
-     data-original-price="$249.00"
-     data-badge="Best Seller"
-     data-rating="4.8"
-     data-reviews="450">
-</div>
-
-<script>
-  document.addEventListener('wb:cardproduct:addtocart', (e) => {
-    console.log('Added to cart:', e.detail.title);
-  });
-</script>
+<wb-cardproduct 
+  title="Premium Headphones"
+  image="/images/headphones.jpg"
+  price="$79.99"
+  originalPrice="$99.99"
+  badge="Sale">
+</wb-cardproduct>
 ```
+
+### With Rating
+
+```html
+<wb-cardproduct 
+  title="Bluetooth Speaker"
+  image="/images/speaker.jpg"
+  price="$49.99"
+  rating="4.5"
+  reviews="128"
+  description="Portable wireless speaker with 24-hour battery">
+</wb-cardproduct>
+```
+
+## Events
+
+### wb:cardproduct:addtocart
+
+Fired when CTA button is clicked:
+
+```javascript
+document.querySelector('wb-cardproduct').addEventListener('wb:cardproduct:addtocart', (e) => {
+  console.log('Product:', e.detail.title);
+  console.log('Price:', e.detail.price);
+  console.log('ID:', e.detail.id);
+});
+```
+
+## Schema
+
+Location: `src/wb-models/cardproduct.schema.json`

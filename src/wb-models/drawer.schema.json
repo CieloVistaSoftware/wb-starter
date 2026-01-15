@@ -201,8 +201,8 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-drawer title=\"Menu\">Navigation here</wb-drawer>",
-      "<button data-wb=\"drawer\" data-drawer-title=\"Settings\">Open</button>"
+      "<aside x-behavior=\"drawer\" x-title=\"Menu\">Navigation here</aside>",
+      "<button x-behavior=\"drawer\" x-title=\"Settings\">Open</button>"
     ],
     "matrix": {
       "combinations": [

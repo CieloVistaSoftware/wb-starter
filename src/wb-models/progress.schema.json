@@ -241,10 +241,10 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-progress value=\"50\"></wb-progress>",
-      "<wb-progress value=\"75\" show-value></wb-progress>",
-      "<wb-progress value=\"25\" striped></wb-progress>",
-      "<progress data-wb=\"progress\" value=\"50\" max=\"100\"></progress>"
+      "<div x-behavior=\"progress\" data-value=\"50\"></div>",
+      "<div x-behavior=\"progress\" data-value=\"75\" data-show-value=\"true\"></div>",
+      "<div x-behavior=\"progress\" data-value=\"25\" data-striped=\"true\"></div>",
+      "<progress x-behavior=\"progress\" value=\"50\" max=\"100\"></progress>"
     ],
     "matrix": {
       "combinations": [

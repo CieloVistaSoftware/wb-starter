@@ -1,67 +1,128 @@
-# Code Component Design & User Guide
+# Code - WB Framework v3.0
 
-## 1. Design Philosophy
+Enhanced code display with copy button and language badge.
 
-The `code` component enhances the `<code>` element to support both inline and block-level code snippets. It adds developer-friendly features like syntax highlighting (via CSS classes), a copy-to-clipboard button, and language badges.
+## Overview
 
-### Key Features
-- **Inline & Block Modes**: Automatically detects or configures display mode.
-- **Copy Button**: One-click copy functionality with visual feedback.
-- **Language Badge**: Displays the programming language name.
-- **Theming**: Uses CSS variables for easy dark/light mode adaptation.
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-code>` |
+| Behavior | `code` |
+| Semantic | `<code>` |
+| Base Class | `wb-code` |
+| Category | Content |
 
-## 2. User Guide
+## Properties
 
-### Basic Usage
-Add `data-wb="code"` to a `<code>` element.
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `language` | string | `""` | Language name to display (e.g., "JS", "HTML") |
+| `showCopy` | boolean | `false` | Show copy button (block mode) |
+| `variant` | string | `"inline"` | Display style: `inline`, `block` |
+| `scrollable` | boolean | `false` | Enable horizontal scrolling |
+
+## Usage
+
+### Inline Code
 
 ```html
-<code data-wb="code">const x = 1;</code>
+<wb-code>const x = 1;</wb-code>
 ```
 
-### Configuration Options
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data-language` | String | `''` | Language name to display (e.g., "JS", "HTML"). |
-| `data-show-copy` | Boolean | `false` | Show a copy button (block mode only). |
-| `data-variant` | String | `inline` | Display style: `inline`, `block`. |
-| `data-scrollable` | Boolean | `false` | If true, enables scrolling. If false (default), wraps content and expands height. |
-
-## 3. Examples
-
-### Example 1: Inline Code
-Simple inline code highlighting.
+### Block Code
 
 ```html
-<p>Use the <code data-wb="code">init()</code> function to start.</p>
-```
-
-### Example 2: Code Block with Copy
-A code block with a language badge and copy button.
-
-```html
-<code 
-  data-wb="code" 
-  data-variant="block" 
-  data-language="JS" 
-  data-show-copy="true">
+<wb-code variant="block" language="JavaScript" showCopy>
 function hello() {
   console.log("Hello World");
 }
-</code>
+</wb-code>
 ```
 
-### Example 3: Scrollable Code Block
-A code block that scrolls instead of wrapping.
+### Native Code (Enhanced)
 
 ```html
-<code 
-  data-wb="code" 
-  data-variant="block" 
-  data-scrollable="true">
-const veryLongLine = "This is a very long line of code that will scroll horizontally instead of wrapping to the next line because scrollable is set to true.";
+<code data-wb="code" data-wb-language="Python">
+print("Hello")
 </code>
 ```
 
-## 4. Why It Works
-For block-level code, the component wraps the `<code>` element in a relative container. This allows absolute positioning of the "Copy" button and language badge. The copy functionality uses the `navigator.clipboard` API for a seamless experience.
+### With Copy Button
+
+```html
+<wb-code variant="block" showCopy>
+npm install wb-framework
+</wb-code>
+```
+
+### Scrollable (Long Lines)
+
+```html
+<wb-code variant="block" scrollable>
+const veryLongLine = "This is a very long line of code that will scroll horizontally";
+</wb-code>
+```
+
+## Generated Structure
+
+### Inline
+```html
+<code class="wb-code wb-code--inline">const x = 1;</code>
+```
+
+### Block
+```html
+<div class="wb-code wb-code--block">
+  <div class="wb-code__header">
+    <span class="wb-code__language">JavaScript</span>
+    <button class="wb-code__copy">Copy</button>
+  </div>
+  <pre class="wb-code__content">
+    <code>function hello() { ... }</code>
+  </pre>
+</div>
+```
+
+## CSS Classes
+
+| Class | Applied When | Description |
+|-------|--------------|-------------|
+| `.wb-code` | Always | Base styling |
+| `.wb-code--inline` | `variant="inline"` | Inline display |
+| `.wb-code--block` | `variant="block"` | Block display |
+| `.wb-code--scrollable` | `scrollable` | Horizontal scroll |
+
+## Methods
+
+| Method | Description |
+|--------|-------------|
+| `copy()` | Copies code to clipboard |
+
+```javascript
+const code = document.querySelector('wb-code');
+code.copy();
+```
+
+## Events
+
+| Event | Description |
+|-------|-------------|
+| `wb:code:copy` | Code copied to clipboard |
+
+```javascript
+code.addEventListener('wb:code:copy', () => {
+  console.log('Code copied!');
+});
+```
+
+## CSS API
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--wb-code-bg` | `var(--bg-tertiary)` | Background color |
+| `--wb-code-color` | `var(--text-primary)` | Text color |
+| `--wb-code-radius` | `4px` | Border radius |
+| `--wb-code-padding` | `0.25em 0.5em` | Inline padding |
+| `--wb-code-block-padding` | `1rem` | Block padding |
+| `--wb-code-font-family` | `monospace` | Font family |
+| `--wb-code-font-size` | `0.875em` | Font size |
