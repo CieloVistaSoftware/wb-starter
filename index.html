@@ -6,7 +6,7 @@
   <title>My Awesome Site - Built with WB</title>
   <meta name="description" content="A modern website starter kit powered by WB Behaviors">
   
-  <!-- Layer 1: Foundation (OOP - only 2 files needed) -->
+  <!-- Layer 1: Foundation () -->
   <link rel="preload" href="src/styles/normalize.css" as="style">
   <link rel="preload" href="src/styles/themes.css" as="style">
   <link rel="preload" href="src/styles/site.css" as="style">
@@ -80,49 +80,7 @@
   <!-- Premium Navbar Scroll Effect -->
   <script src="src/lib/premium-navbar.js"></script>
 
-  <script type="module">
-    console.log('Script starting...');
-    
-    try {
-      console.log('Importing WB...');
-      const { default: WB } = await import('./src/core/wb.js');
-      console.log('WB imported:', WB);
-      
-      console.log('Importing WBSite...');
-      const { default: WBSite } = await import('./src/core/site-engine.js');
-      console.log('WBSite imported:', WBSite);
-      
-      // Expose WB globally
-      window.WB = WB;
-    
-      // Boot the site with error handling
-      const site = new WBSite();
-      console.log('WBSite instance created');
-      
-      console.log('Calling site.init()...');
-      await site.init();
-      console.log('site.init() complete');
-      
-      console.log('Calling navigateTo...');
-      await site.navigateTo(site.currentPage);
-      console.log('Navigation complete');
-      
-      // Expose for debugging
-      window.WBSite = site;
-    } catch (error) {
-      console.error('❌ Site initialization failed:', error);
-      console.error('Stack:', error.stack);
-      const app = document.getElementById('app');
-      const template = document.getElementById('error-template');
-      if (template) {
-        app.innerHTML = template.innerHTML;
-        // Also show the actual error
-        const errorDiv = document.createElement('pre');
-        errorDiv.style.cssText = 'margin: 1rem; padding: 1rem; background: #1e1e1e; color: #f87171; border-radius: 8px; overflow: auto; font-size: 12px;';
-        errorDiv.textContent = error.stack || error.message || String(error);
-        app.appendChild(errorDiv);
-      }
-    }
-  </script>
+  <!-- Main Application Bootstrap -->
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>

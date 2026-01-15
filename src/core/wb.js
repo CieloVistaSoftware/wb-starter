@@ -1,3 +1,8 @@
+// Ensure WB is declared on window for type safety (for TS/IDE, no-op at runtime)
+// @ts-ignore
+if (typeof window !== 'undefined' && typeof window.WB === 'undefined') {
+  /** @type {any} */ (window).WB = undefined;
+}
 /**
  * WB - Web Behavior
  * =================
@@ -150,7 +155,8 @@ const WB = {
   async inject(element, behaviorName, options = {}) {
     // Resolve element if string selector
     if (typeof element === 'string') {
-      element = document.querySelector(element);
+      const found = document.querySelector(element);
+      element = (found instanceof HTMLElement) ? found : null;
     }
 
     if (!element || !(element instanceof HTMLElement)) {
@@ -260,7 +266,7 @@ const WB = {
     if (schemaProcessed.has(element)) return;
     
     // Get schema name from tag or data-wb
-    const name = schemaName || this._detectSchemaName(element);
+    const name = schemaName || WB._detectSchemaName(element);
     if (!name) return;
     
     // Check if schema exists
@@ -311,30 +317,31 @@ const WB = {
     // v3.0: Process wb-* custom element tags through schema builder first
     if (useSchemas) {
       root.querySelectorAll('*').forEach(el => {
-        const tag = el.tagName.toLowerCase();
+        const htmlEl = /** @type {HTMLElement} */ (el);
+        const tag = htmlEl.tagName.toLowerCase();
         if (tag.startsWith('wb-') && tag !== 'wb-view') {
-          this.processSchema(el);
+          WB.processSchema(htmlEl);
         }
       });
     }
 
-    // 1. Detect Legacy Usage (Strict Mode: Error)
-    // Note: data-wb is deprecated - use wb-* custom elements or x-* attributes
-    root.querySelectorAll('[data-wb]').forEach(element => {
-      const val = element.dataset.wb || '';
-      const name = val.split(/\s+/)[0] || 'unknown';
+      // 1. Detect Legacy Usage (Strict Mode: Error) 
+      root.querySelectorAll('[data-wb]').forEach(element => {
+        if (!(element instanceof HTMLElement)) return; // Ensure element is an HTMLElement
+        const val = element.dataset.wb || '';
+        const name = val.split(/\s+/)[0] || 'unknown';
       
-      const errorMsg = `Legacy syntax data-wb="${val}" detected on <${element.tagName.toLowerCase()}>. Please use :lt.wb-${name}> instead.`;
-      console.error(`[WB] ${errorMsg}`);
+        const errorMsg = `Legacy syntax data-wb="${val}" detected on <${element.tagName.toLowerCase()}>. Please use <wb-${name}> instead.`;
+        console.error(`[WB] ${errorMsg}`);
       
-      Events.error('WB:LegacySyntax', new Error(errorMsg), {
-        element: element.tagName,
-        fix: `<wb-${name}>`
+        Events.error('WB:LegacySyntax', new Error(errorMsg), {
+          element: element.tagName,
+          fix: `<wb-${name}>`
+        });
+      
+        // Mark element but do not process
+        element.setAttribute('data-wb-error', 'legacy');
       });
-      
-      // Mark element but do not process
-      element.setAttribute('data-wb-error', 'legacy');
-    });
 
     // 2. Semantic Shorthand: {prefix}-{name} (Decoration) and {prefix}-as-{name} (Morph/Layout)
     if (behaviorNames.length > 0) {
@@ -349,7 +356,8 @@ const WB = {
       const shorthandElements = root.querySelectorAll(selectors.join(','));
       
       shorthandElements.forEach(element => {
-        Array.from(element.attributes).forEach(attr => {
+        const htmlEl = /** @type {HTMLElement} */ (element);
+        Array.from(htmlEl.attributes).forEach(attr => {
           let behaviorName = null;
           
           // Check {prefix}-{name}
@@ -373,7 +381,7 @@ const WB = {
           if (behaviorName) {
             // Pass the attribute value as config if present
             const options = attr.value ? { config: attr.value } : {};
-            promises.push(WB.inject(element, behaviorName, options));
+            promises.push(WB.inject(htmlEl, behaviorName, options));
           }
         });
       });
@@ -384,11 +392,12 @@ const WB = {
       autoInjectMappings.forEach(({ selector, behavior }) => {
         const autoElements = root.querySelectorAll(selector);
         autoElements.forEach(element => {
+          const htmlEl = /** @type {HTMLElement} */ (element);
           // Only skip if explicitly ignored
-          if (!element.hasAttribute('x-ignore')) {
+          if (!htmlEl.hasAttribute('x-ignore')) {
             // We don't check for other attributes here anymore.
             // Auto-inject is additive.
-            WB.inject(element, behavior);
+            WB.inject(htmlEl, behavior);
           }
         });
       });
@@ -431,115 +440,122 @@ const WB = {
       for (const mutation of mutations) {
         // Handle added nodes
         for (const node of mutation.addedNodes) {
-          if (node.nodeType === Node.ELEMENT_NODE) {
-            const tag = node.tagName?.toLowerCase();
+          // Skip non-element nodes
+          if (node.nodeType !== Node.ELEMENT_NODE) continue;
+          
+          // Cast to HTMLElement after type check
+          const el = /** @type {HTMLElement} */ (node);
+          const tag = el.tagName.toLowerCase();
             
-            // v3.0: Process wb-* tags through schema builder
-            if (useSchemas && tag?.startsWith('wb-') && tag !== 'wb-view') {
-              this.processSchema(node);
-            }
+          // v3.0: Process wb-* tags through schema builder
+          if (useSchemas && tag.startsWith('wb-') && tag !== 'wb-view') {
+            WB.processSchema(el);
+          }
             
-            // 1. Check node itself
-            // Legacy data-wb check
-            if (node.dataset?.wb) {
-              const val = node.dataset.wb;
-              const name = val.split(/\s+/)[0];
-              console.error(`[WB] Legacy syntax detected:. Use <wb-${name}>.`);
-              // Do not process
-            }
+          // 1. Check node itself
+          // Legacy data-wb check
+          if (el.dataset?.wb) {
+            const val = el.dataset.wb;
+            const name = val.split(/\s+/)[0];
+            console.error(`[WB] Legacy syntax detected:. Use <wb-${name}>.`);
+            // Do not process
+          }
             
-            // Shorthand ({prefix}-* and {prefix}-as-*)
-            Array.from(node.attributes).forEach(attr => {
-              if (attr.name.startsWith(`${prefix}-`)) {
-                const rawName = attr.name.substring(prefix.length + 1);
-                let behaviorName = null;
+          // Shorthand ({prefix}-* and {prefix}-as-*)
+          Array.from(el.attributes).forEach(attr => {
+            if (attr.name.startsWith(`${prefix}-`)) {
+              const rawName = attr.name.substring(prefix.length + 1);
+              let behaviorName = null;
                 
-                if (rawName.startsWith('as-')) {
-                  const morphName = rawName.substring(3);
-                  if (knownBehaviors.has(morphName)) behaviorName = morphName;
-                } else if (knownBehaviors.has(rawName)) {
-                  behaviorName = rawName;
-                }
+              if (rawName.startsWith('as-')) {
+                const morphName = rawName.substring(3);
+                if (knownBehaviors.has(morphName)) behaviorName = morphName;
+              } else if (knownBehaviors.has(rawName)) {
+                behaviorName = rawName;
+              }
 
-                if (behaviorName) {
-                  const options = attr.value ? { config: attr.value } : {};
-                  WB.inject(node, behaviorName, options);
-                }
+              if (behaviorName) {
+                const options = attr.value ? { config: attr.value } : {};
+                WB.inject(el, behaviorName, options);
+              }
+            }
+          });
+
+          // Auto-inject (only if no explicit behaviors)
+          const autoBehavior = getAutoInjectBehavior(el);
+          if (autoBehavior) {
+            WB.inject(el, autoBehavior);
+          }
+
+          // 2. Check descendants
+          // v3.0: Process wb-* descendants through schema builder
+          if (useSchemas) {
+            el.querySelectorAll('*').forEach(descendant => {
+              const descEl = /** @type {HTMLElement} */ (descendant);
+              const elTag = descEl.tagName.toLowerCase();
+              if (elTag.startsWith('wb-') && elTag !== 'wb-view') {
+                WB.processSchema(descEl);
               }
             });
-
-            // Auto-inject (only if no explicit behaviors)
-            const autoBehavior = getAutoInjectBehavior(node);
-            if (autoBehavior) {
-              WB.inject(node, autoBehavior);
-            }
-
-            // 2. Check descendants
-            // v3.0: Process wb-* descendants through schema builder
-            if (useSchemas) {
-              node.querySelectorAll?.('*').forEach(el => {
-                const elTag = el.tagName.toLowerCase();
-                if (elTag.startsWith('wb-') && elTag !== 'wb-view') {
-                  this.processSchema(el);
+          }
+            
+          // Legacy data-wb check (descendants)
+          // Note: data-wb is deprecated - use wb-* custom elements or x-* attributes
+          el.querySelectorAll('[data-wb]').forEach(descendant => {
+            const descEl = /** @type {HTMLElement} */ (descendant);
+            const val = descEl.dataset.wb || '';
+            const name = val.split(/\s+/)[0] || 'unknown';
+            console.error(`[WB] Legacy syntax detected:. Use <wb-${name}>.`);
+          });
+            
+          // Shorthand - we need to query for all known shorthand attributes
+          const selectors = [];
+          behaviorNames.forEach(name => {
+            selectors.push(`[${prefix}-${name}]`);
+            selectors.push(`[${prefix}-as-${name}]`);
+          });
+            
+          if (selectors.length > 0) {
+            el.querySelectorAll(selectors.join(',')).forEach(descendant => {
+              const descEl = /** @type {HTMLElement} */ (descendant);
+              Array.from(descEl.attributes).forEach(attr => {
+                if (attr.name.startsWith(`${prefix}-`)) {
+                  const rawName = attr.name.substring(prefix.length + 1);
+                  let behaviorName = null;
+                  if (rawName.startsWith('as-')) {
+                    const morphName = rawName.substring(3);
+                    if (knownBehaviors.has(morphName)) behaviorName = morphName;
+                  } else if (knownBehaviors.has(rawName)) {
+                    behaviorName = rawName;
+                  }
+                  if (behaviorName) {
+                    const options = attr.value ? { config: attr.value } : {};
+                    WB.inject(descEl, behaviorName, options);
+                  }
                 }
               });
-            }
-            
-            // Legacy data-wb check (descendants)
-            // Note: data-wb is deprecated - use wb-* custom elements or x-* attributes
-            node.querySelectorAll?.('[data-wb]').forEach(el => {
-               const val = el.dataset.wb || '';
-               const name = val.split(/\s+/)[0] || 'unknown';
-               console.error(`[WB] Legacy syntax detected:. Use <wb-${name}>.`);
             });
-            
-            // Shorthand - we need to query for all known shorthand attributes
-            const selectors = [];
-            behaviorNames.forEach(name => {
-              selectors.push(`[${prefix}-${name}]`);
-              selectors.push(`[${prefix}-as-${name}]`);
-            });
-            
-            if (selectors.length > 0) {
-              node.querySelectorAll?.(selectors.join(',')).forEach(el => {
-                Array.from(el.attributes).forEach(attr => {
-                  if (attr.name.startsWith(`${prefix}-`)) {
-                    const rawName = attr.name.substring(prefix.length + 1);
-                    let behaviorName = null;
-                    if (rawName.startsWith('as-')) {
-                      const morphName = rawName.substring(3);
-                      if (knownBehaviors.has(morphName)) behaviorName = morphName;
-                    } else if (knownBehaviors.has(rawName)) {
-                      behaviorName = rawName;
-                    }
-                    if (behaviorName) {
-                      const options = attr.value ? { config: attr.value } : {};
-                      WB.inject(el, behaviorName, options);
-                    }
-                  }
-                });
-              });
-            }
+          }
 
-            // Auto-inject descendants
-            if (getConfig('autoInject')) {
-              autoInjectMappings.forEach(({ selector, behavior }) => {
-                node.querySelectorAll?.(selector).forEach(el => {
-                  // Only skip if explicitly ignored
-                  if (!el.hasAttribute('x-ignore')) {
-                    // We don't check for other attributes here anymore.
-                    // Auto-inject is additive.
-                    WB.inject(el, behavior);
-                  }
-                });
+          // Auto-inject descendants
+          if (getConfig('autoInject')) {
+            autoInjectMappings.forEach(({ selector, behavior }) => {
+              el.querySelectorAll(selector).forEach(descendant => {
+                const descEl = /** @type {HTMLElement} */ (descendant);
+                // Only skip if explicitly ignored
+                if (!descEl.hasAttribute('x-ignore')) {
+                  // We don't check for other attributes here anymore.
+                  // Auto-inject is additive.
+                  WB.inject(descEl, behavior);
+                }
               });
-            }
+            });
           }
         }
 
         // Handle attribute changes
         if (mutation.type === 'attributes') {
-          const element = mutation.target;
+          const element = /** @type {HTMLElement} */ (mutation.target);
           
           if (mutation.attributeName === 'x-behavior') {
             // ... existing data-wb logic ...
@@ -555,7 +571,7 @@ const WB = {
               }
             });
             behaviorList.forEach(name => WB.inject(element, name));
-          } else if (mutation.attributeName.startsWith(`${prefix}-`)) {
+          } else if (mutation.attributeName?.startsWith(`${prefix}-`)) {
             // Handle shorthand add/remove
             const rawName = mutation.attributeName.substring(prefix.length + 1);
             let behaviorName = null;
@@ -730,7 +746,7 @@ const WB = {
 
 // Global export
 if (typeof window !== 'undefined') {
-  window.WB = WB;
+  /** @type {any} */ (window).WB = WB;
 }
 
 export { WB };
