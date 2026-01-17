@@ -1,0 +1,695 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "builder-pages.schema.json",
+  "title": "WB Page Builder - Pages Schema",
+  "description": "Schema for the WB Page Builder pages system including navigation, breadcrumbs, and component management",
+  "version": "2.0.0",
+
+  "definitions": {
+    "Page": {
+      "type": "object",
+      "description": "A single page in the site",
+      "required": ["id", "name", "slug"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique page identifier",
+          "pattern": "^[a-z0-9-]+$",
+          "examples": ["home", "about", "contact"]
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name for the page",
+          "minLength": 1,
+          "maxLength": 50,
+          "examples": ["Home", "About Us", "Contact"]
+        },
+        "slug": {
+          "type": "string",
+          "description": "URL filename for the page",
+          "pattern": "^[a-z0-9-]+\\.html$",
+          "examples": ["index.html", "about.html", "contact.html"]
+        },
+        "seoTitle": {
+          "type": "string",
+          "description": "Page title for SEO and browser tab",
+          "maxLength": 60
+        },
+        "seoDescription": {
+          "type": "string",
+          "description": "Meta description for search engines",
+          "maxLength": 160
+        },
+        "main": {
+          "type": "array",
+          "description": "Page-specific components in main section",
+          "items": { "$ref": "#/definitions/Component" }
+        }
+      }
+    },
+
+    "Component": {
+      "type": "object",
+      "description": "A component instance on the canvas",
+      "required": ["id", "type", "section"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique component instance ID",
+          "pattern": "^comp-[a-z0-9-]+$"
+        },
+        "type": {
+          "type": "string",
+          "description": "Component type identifier",
+          "enum": [
+            "navbar", "header-logo", "hero", "features", "testimonials",
+            "pricing", "team", "gallery", "faq", "cta", "card", "footer", "newsletter"
+          ]
+        },
+        "section": {
+          "type": "string",
+          "description": "Canvas section containing the component",
+          "enum": ["header", "main", "footer"]
+        },
+        "html": {
+          "type": "string",
+          "description": "Rendered HTML content of the component"
+        },
+        "data": {
+          "type": "object",
+          "description": "Component-specific data and configuration",
+          "additionalProperties": true
+        },
+        "nestedComponents": {
+          "type": "array",
+          "description": "Nested WB components inside this component",
+          "items": { "$ref": "#/definitions/NestedComponent" }
+        }
+      }
+    },
+
+    "NestedComponent": {
+      "type": "object",
+      "description": "A WB component nested inside a parent component",
+      "required": ["id", "type"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique nested component ID",
+          "pattern": "^nested-[0-9]+$"
+        },
+        "type": {
+          "type": "string",
+          "description": "WB component tag name",
+          "pattern": "^wb-[a-z]+$",
+          "examples": ["wb-card", "wb-stack", "wb-hero", "wb-cta"]
+        },
+        "config": {
+          "type": "object",
+          "description": "Component configuration",
+          "properties": {
+            "title": { "type": "string" },
+            "content": { "type": "string" },
+            "icon": { "type": "string" },
+            "headline": { "type": "string" },
+            "subheadline": { "type": "string" },
+            "buttonText": { "type": "string" },
+            "buttonLink": { "type": "string" },
+            "gap": { 
+              "type": "string",
+              "enum": ["none", "small", "medium", "large"]
+            },
+            "padding": {
+              "type": "string",
+              "enum": ["none", "normal", "large"]
+            }
+          }
+        }
+      }
+    },
+
+    "Breadcrumb": {
+      "type": "object",
+      "description": "Navigation breadcrumb item",
+      "required": ["label"],
+      "properties": {
+        "icon": {
+          "type": "string",
+          "description": "Emoji or icon for the breadcrumb item"
+        },
+        "label": {
+          "type": "string",
+          "description": "Display text for the breadcrumb"
+        },
+        "current": {
+          "type": "boolean",
+          "description": "Whether this is the current/active item",
+          "default": false
+        },
+        "onClick": {
+          "type": "string",
+          "description": "Function name to call when clicked"
+        }
+      }
+    },
+
+    "ColorPicker": {
+      "type": "object",
+      "description": "Color picker component configuration",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Current color value",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "presets": {
+          "type": "array",
+          "description": "Preset color options",
+          "items": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$"
+          }
+        },
+        "recentColors": {
+          "type": "array",
+          "description": "Recently used colors",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$"
+          }
+        },
+        "showAlpha": {
+          "type": "boolean",
+          "description": "Whether to show alpha/opacity slider",
+          "default": false
+        }
+      }
+    },
+
+    "PhoneInput": {
+      "type": "object",
+      "description": "Phone number input with masking",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Raw phone number (digits only)",
+          "pattern": "^[0-9]{10,15}$"
+        },
+        "displayValue": {
+          "type": "string",
+          "description": "Formatted display value",
+          "examples": ["(555) 123-4567"]
+        },
+        "format": {
+          "type": "string",
+          "description": "Phone number format",
+          "enum": ["us", "international"],
+          "default": "us"
+        },
+        "allowExtension": {
+          "type": "boolean",
+          "description": "Whether to allow extension numbers",
+          "default": false
+        }
+      }
+    },
+
+    "SiteSettings": {
+      "type": "object",
+      "description": "Global site settings",
+      "properties": {
+        "siteName": {
+          "type": "string",
+          "description": "Site name",
+          "default": "My Website"
+        },
+        "siteJsonPath": {
+          "type": "string",
+          "description": "Path to site.json configuration file",
+          "default": "config/site.json"
+        },
+        "autoLoadSiteJson": {
+          "type": "boolean",
+          "description": "Auto-load site.json on startup",
+          "default": false
+        },
+        "defaultTheme": {
+          "type": "string",
+          "description": "Default color theme",
+          "enum": ["light", "dark"],
+          "default": "dark"
+        },
+        "confirmDelete": {
+          "type": "boolean",
+          "description": "Confirm before deleting components",
+          "default": true
+        },
+        "showTooltips": {
+          "type": "boolean",
+          "description": "Show helpful tooltips",
+          "default": true
+        },
+        "showGrid": {
+          "type": "boolean",
+          "description": "Show canvas grid",
+          "default": true
+        },
+        "gridSize": {
+          "type": "integer",
+          "description": "Grid size in pixels",
+          "default": 20,
+          "minimum": 10,
+          "maximum": 50
+        },
+        "autoSave": {
+          "type": "boolean",
+          "description": "Enable auto-save",
+          "default": true
+        },
+        "autoSaveInterval": {
+          "type": "integer",
+          "description": "Auto-save interval in minutes",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 30
+        }
+      }
+    },
+
+    "ComponentCategory": {
+      "type": "object",
+      "description": "Category of components in the component browser",
+      "required": ["id", "label", "items"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Category identifier"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Category icon/emoji"
+        },
+        "label": {
+          "type": "string",
+          "description": "Category display name"
+        },
+        "items": {
+          "type": "array",
+          "description": "Components in this category",
+          "items": { "$ref": "#/definitions/ComponentDefinition" }
+        }
+      }
+    },
+
+    "ComponentDefinition": {
+      "type": "object",
+      "description": "Definition of a component in the browser",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Component tag name or type"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Component icon/emoji"
+        },
+        "name": {
+          "type": "string",
+          "description": "Component display name"
+        },
+        "desc": {
+          "type": "string",
+          "description": "Short description"
+        }
+      }
+    }
+  },
+
+  "type": "object",
+  "required": ["pages", "globalSections", "currentPageId"],
+  "properties": {
+    "pages": {
+      "type": "array",
+      "description": "All pages in the site",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/Page" }
+    },
+    "globalSections": {
+      "type": "object",
+      "description": "Shared header and footer components",
+      "properties": {
+        "header": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Component" }
+        },
+        "footer": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Component" }
+        }
+      }
+    },
+    "currentPageId": {
+      "type": "string",
+      "description": "Currently active page ID"
+    },
+    "settings": { "$ref": "#/definitions/SiteSettings" }
+  },
+
+  "test": {
+    "setup": [
+      {
+        "name": "Minimal site",
+        "data": {
+          "pages": [{ "id": "home", "name": "Home", "slug": "index.html", "main": [] }],
+          "globalSections": { "header": [], "footer": [] },
+          "currentPageId": "home"
+        }
+      },
+      {
+        "name": "Multi-page site",
+        "data": {
+          "pages": [
+            { "id": "home", "name": "Home", "slug": "index.html", "main": [] },
+            { "id": "about", "name": "About", "slug": "about.html", "main": [] },
+            { "id": "contact", "name": "Contact", "slug": "contact.html", "main": [] }
+          ],
+          "globalSections": { "header": [], "footer": [] },
+          "currentPageId": "home"
+        }
+      },
+      {
+        "name": "Page with nested components",
+        "data": {
+          "pages": [{
+            "id": "home",
+            "name": "Home",
+            "slug": "index.html",
+            "main": [{
+              "id": "comp-hero-1",
+              "type": "hero",
+              "section": "main",
+              "data": {
+                "nestedComponents": [
+                  { "id": "nested-1", "type": "wb-card", "config": { "title": "Feature 1" } },
+                  { "id": "nested-2", "type": "wb-card", "config": { "title": "Feature 2" } }
+                ]
+              }
+            }]
+          }],
+          "globalSections": { "header": [], "footer": [] },
+          "currentPageId": "home"
+        }
+      }
+    ],
+    "functional": {
+      "pageOperations": [
+        {
+          "name": "Create page",
+          "action": "createPage",
+          "input": { "name": "Services", "template": "blank" },
+          "expect": {
+            "pagesCount": 2,
+            "newPageId": "services",
+            "newPageSlug": "services.html"
+          }
+        },
+        {
+          "name": "Rename page",
+          "action": "renamePage",
+          "input": { "pageId": "about", "newName": "About Us" },
+          "expect": {
+            "pageName": "About Us",
+            "pageSlug": "about-us.html"
+          }
+        },
+        {
+          "name": "Delete page",
+          "action": "deletePage",
+          "input": { "pageId": "contact" },
+          "expect": {
+            "pagesCount": 1,
+            "deletedPageGone": true
+          }
+        },
+        {
+          "name": "Cannot delete home",
+          "action": "deletePage",
+          "input": { "pageId": "home" },
+          "expect": {
+            "error": "Cannot delete home page",
+            "pagesCount": 1
+          }
+        }
+      ],
+      "breadcrumbNavigation": [
+        {
+          "name": "Site level",
+          "context": { "page": null, "component": null },
+          "expect": {
+            "breadcrumb": ["📁 Site"],
+            "currentItem": "Site"
+          }
+        },
+        {
+          "name": "Page level",
+          "context": { "page": { "id": "contact", "name": "Contact" }, "component": null },
+          "expect": {
+            "breadcrumb": ["📁 Site", "📄 Contact"],
+            "currentItem": "Contact"
+          }
+        },
+        {
+          "name": "Component level",
+          "context": {
+            "page": { "id": "contact", "name": "Contact" },
+            "section": "main",
+            "component": { "type": "hero", "template": { "icon": "🦸", "name": "Hero Section" } }
+          },
+          "expect": {
+            "breadcrumb": ["📁 Site", "📄 Contact", "🧩 Main", "🦸 Hero Section"],
+            "currentItem": "Hero Section"
+          }
+        },
+        {
+          "name": "Nested component level",
+          "context": {
+            "page": { "id": "contact", "name": "Contact" },
+            "section": "main",
+            "component": { "type": "hero", "template": { "icon": "🦸", "name": "Hero Section" } },
+            "nestedComponent": { "type": "wb-card", "config": { "title": "My Card" } }
+          },
+          "expect": {
+            "breadcrumb": ["📁 Site", "📄 Contact", "🧩 Main", "🦸 Hero Section", "🃏 My Card"],
+            "currentItem": "My Card"
+          }
+        }
+      ],
+      "colorPicker": [
+        {
+          "name": "Set color from picker",
+          "action": "setColorFromPicker",
+          "input": { "field": "gradientStart", "value": "#667eea" },
+          "expect": {
+            "hexInput": "#667EEA",
+            "swatchColor": "#667eea",
+            "componentUpdated": true
+          }
+        },
+        {
+          "name": "Set color from hex input",
+          "action": "setColorFromHex",
+          "input": { "field": "gradientEnd", "value": "#764BA2" },
+          "expect": {
+            "swatchColor": "#764ba2",
+            "componentUpdated": true
+          }
+        },
+        {
+          "name": "Invalid hex rejected",
+          "action": "setColorFromHex",
+          "input": { "field": "gradientStart", "value": "invalid" },
+          "expect": {
+            "error": "Invalid color format",
+            "valueUnchanged": true
+          }
+        },
+        {
+          "name": "Preset color click",
+          "action": "clickPreset",
+          "input": { "field": "gradientStart", "preset": "#10b981" },
+          "expect": {
+            "hexInput": "#10B981",
+            "swatchColor": "#10b981",
+            "componentUpdated": true
+          }
+        }
+      ],
+      "phoneInput": [
+        {
+          "name": "Format US number",
+          "action": "inputPhone",
+          "input": { "value": "5551234567" },
+          "expect": {
+            "displayValue": "(555) 123-4567",
+            "storedValue": "5551234567"
+          }
+        },
+        {
+          "name": "Format partial number",
+          "action": "inputPhone",
+          "input": { "value": "555" },
+          "expect": {
+            "displayValue": "(555",
+            "storedValue": "555"
+          }
+        },
+        {
+          "name": "Strip non-digits",
+          "action": "inputPhone",
+          "input": { "value": "(555) 123-4567" },
+          "expect": {
+            "displayValue": "(555) 123-4567",
+            "storedValue": "5551234567"
+          }
+        },
+        {
+          "name": "Max 10 digits",
+          "action": "inputPhone",
+          "input": { "value": "55512345678901" },
+          "expect": {
+            "displayValue": "(555) 123-4567",
+            "storedValue": "5551234567"
+          }
+        }
+      ],
+      "visualFeedback": [
+        {
+          "name": "Edit Properties flash",
+          "action": "contextMenuEditProperties",
+          "expect": {
+            "propsPanelClass": "props-flash",
+            "animationDuration": 600
+          }
+        },
+        {
+          "name": "Flash removed after animation",
+          "action": "waitForAnimation",
+          "wait": 700,
+          "expect": {
+            "propsPanelClass": "no props-flash"
+          }
+        }
+      ],
+      "componentBrowser": [
+        {
+          "name": "Show on container right-click",
+          "action": "rightClickContainer",
+          "input": { "componentType": "wb-stack" },
+          "expect": {
+            "menuVisible": true,
+            "hasSearch": true,
+            "categoryCount": 5
+          }
+        },
+        {
+          "name": "Filter by search",
+          "action": "searchComponents",
+          "input": { "query": "card" },
+          "expect": {
+            "visibleItems": 19,
+            "hiddenCategories": ["Layout", "Interactive"]
+          }
+        },
+        {
+          "name": "Insert component",
+          "action": "selectFromBrowser",
+          "input": { "componentId": "wb-cardimage" },
+          "expect": {
+            "nestedComponentAdded": true,
+            "nestedType": "wb-cardimage",
+            "menuClosed": true
+          }
+        }
+      ],
+      "siteSettings": [
+        {
+          "name": "Load site.json",
+          "action": "loadSiteJson",
+          "input": { "path": "config/site.json" },
+          "expect": {
+            "brandingApplied": true,
+            "pagesCreated": true,
+            "statusMessage": "✅ Loaded configuration"
+          }
+        },
+        {
+          "name": "Invalid path error",
+          "action": "loadSiteJson",
+          "input": { "path": "invalid/path.json" },
+          "expect": {
+            "error": true,
+            "statusMessage": "❌ Failed to load"
+          }
+        },
+        {
+          "name": "Auto-save toggle",
+          "action": "updateSetting",
+          "input": { "key": "autoSave", "value": false },
+          "expect": {
+            "settingUpdated": true,
+            "autoSaveDisabled": true
+          }
+        }
+      ]
+    },
+    "validation": [
+      {
+        "name": "Page ID format",
+        "schema": "#/definitions/Page/properties/id",
+        "valid": ["home", "about-us", "contact-123"],
+        "invalid": ["Home", "about us", "contact.html", ""]
+      },
+      {
+        "name": "Page slug format",
+        "schema": "#/definitions/Page/properties/slug",
+        "valid": ["index.html", "about.html", "contact-us.html"],
+        "invalid": ["index", "about.htm", "CONTACT.HTML", ""]
+      },
+      {
+        "name": "Color hex format",
+        "schema": "#/definitions/ColorPicker/properties/value",
+        "valid": ["#667eea", "#FFFFFF", "#000000"],
+        "invalid": ["667eea", "#fff", "rgb(0,0,0)", ""]
+      },
+      {
+        "name": "Phone number format",
+        "schema": "#/definitions/PhoneInput/properties/value",
+        "valid": ["5551234567", "15551234567", "442071234567"],
+        "invalid": ["555-123-4567", "(555) 123-4567", "abc", ""]
+      },
+      {
+        "name": "Nested component ID format",
+        "schema": "#/definitions/NestedComponent/properties/id",
+        "valid": ["nested-0", "nested-1", "nested-999"],
+        "invalid": ["nested", "nested-abc", "comp-1", ""]
+      },
+      {
+        "name": "WB component type format",
+        "schema": "#/definitions/NestedComponent/properties/type",
+        "valid": ["wb-card", "wb-stack", "wb-hero"],
+        "invalid": ["card", "WB-CARD", "wb_card", ""]
+      }
+    ]
+  },
+
+  "_metadata": {
+    "category": "builder",
+    "icon": "📄",
+    "since": "2.0.0",
+    "status": "stable",
+    "author": "WB Framework",
+    "lastUpdated": "2026-01-16"
+  }
+}

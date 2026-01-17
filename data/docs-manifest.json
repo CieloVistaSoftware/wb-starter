@@ -1,6 +1,6 @@
 {
-  "generated": "2026-01-15T03:19:32.127Z",
-  "totalFiles": 122,
+  "generated": "2026-01-17T01:36:40.729Z",
+  "totalFiles": 125,
   "categories": [
     "_today",
     "architecture",
@@ -107,6 +107,12 @@
         "category": "root"
       },
       {
+        "path": "docs/builder.md",
+        "title": "WB Builder - The Heart of the Framework",
+        "name": "builder",
+        "category": "root"
+      },
+      {
         "path": "docs/builder.todo.md",
         "title": "Builder TODO",
         "name": "builder.todo",
@@ -198,7 +204,7 @@
       },
       {
         "path": "docs/MVVM-MIGRATION.md",
-        "title": "Web Behaviors (WB) MVVM Migration",
+        "title": "WB Framework v3.0 - MVVM Architecture",
         "name": "MVVM-MIGRATION",
         "category": "root"
       },
@@ -206,6 +212,12 @@
         "path": "docs/NOTES-V3-GUIDE.md",
         "title": "Notes Component v3.0 - Updates Summary",
         "name": "NOTES-V3-GUIDE",
+        "category": "root"
+      },
+      {
+        "path": "docs/PAGE-BUILDER-RULES.md",
+        "title": "WB Page Builder - Content Creation Rules",
+        "name": "PAGE-BUILDER-RULES",
         "category": "root"
       },
       {
@@ -336,6 +348,12 @@
         "path": "docs/builder/builder-tree.md",
         "title": "WB Builder Tree Panel - Comprehensive Schema",
         "name": "builder-tree",
+        "category": "builder"
+      },
+      {
+        "path": "docs/builder/pages.md",
+        "title": "WB Page Builder - Pages System",
+        "name": "pages",
         "category": "builder"
       }
     ],
@@ -752,7 +770,7 @@
     "_today": [
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "# WB Framework v3.0 - Current Status",
+        "title": "Current Status - Builder UI Enhancements",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -767,7 +785,7 @@
   "files": [
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "# WB Framework v3.0 - Current Status",
+      "title": "Current Status - Builder UI Enhancements",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -874,6 +892,12 @@
       "category": "root"
     },
     {
+      "path": "docs/builder.md",
+      "title": "WB Builder - The Heart of the Framework",
+      "name": "builder",
+      "category": "root"
+    },
+    {
       "path": "docs/builder.todo.md",
       "title": "Builder TODO",
       "name": "builder.todo",
@@ -889,6 +913,12 @@
       "path": "docs/builder/builder-tree.md",
       "title": "WB Builder Tree Panel - Comprehensive Schema",
       "name": "builder-tree",
+      "category": "builder"
+    },
+    {
+      "path": "docs/builder/pages.md",
+      "title": "WB Page Builder - Pages System",
+      "name": "pages",
       "category": "builder"
     },
     {
@@ -1373,7 +1403,7 @@
     },
     {
       "path": "docs/MVVM-MIGRATION.md",
-      "title": "Web Behaviors (WB) MVVM Migration",
+      "title": "WB Framework v3.0 - MVVM Architecture",
       "name": "MVVM-MIGRATION",
       "category": "root"
     },
@@ -1381,6 +1411,12 @@
       "path": "docs/NOTES-V3-GUIDE.md",
       "title": "Notes Component v3.0 - Updates Summary",
       "name": "NOTES-V3-GUIDE",
+      "category": "root"
+    },
+    {
+      "path": "docs/PAGE-BUILDER-RULES.md",
+      "title": "WB Page Builder - Content Creation Rules",
+      "name": "PAGE-BUILDER-RULES",
       "category": "root"
     },
     {
