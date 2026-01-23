@@ -17,8 +17,20 @@
   <button class="btn btn-secondary btn-sm" onclick="showConfigPanel()">⚙️ Settings</button>
   <button class="btn btn-secondary btn-sm" onclick="showOpenMenu(event)">📂 Open ▾</button>
   <button class="btn btn-secondary btn-sm" onclick="previewSite()">👁️ Preview</button>
-  <!-- Issues button moved to the common header (wb-navbar extras) -->
+  <button id="issuesToggle" class="btn btn-secondary btn-sm" title="Issues">🐛 Issues</button>
   <button class="btn btn-primary btn-sm" onclick="showSaveMenu(event)">💾 Save ▾</button>
+  <script>
+    // Attach issues toggle handler to use centralized helper (absolute import path)
+    (function(){
+      const el = document.getElementById('issuesToggle');
+      if (!el) return;
+      el.addEventListener('click', () => {
+        import('/src/lib/issues-helper.js')
+          .then(mod => (mod.openSiteIssues ? mod.openSiteIssues() : (mod.default ? mod.default() : null)))
+          .catch(e => console.warn('[Issues] open helper failed', e));
+      });
+    })();
+  </script>
 </div>
 
 <!-- Hidden file input for Open > Upload JSON (triggers browser file picker) -->
