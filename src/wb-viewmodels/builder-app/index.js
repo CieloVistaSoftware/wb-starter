@@ -106,6 +106,7 @@ import { initCanvasSections, addElementToCanvas, getDropConfig } from './builder
 import { renderTree, initTree } from './builder-tree.js';
 import { renderDecorationsPanel } from './builder-decorations.js';
 import { openQuickEdit, shouldShowQuickEdit } from './builder-quick-edit.js';
+import '../../wb-viewmodels/wb-menu-bar.js';
 
 // === EXPOSE GLOBALS ===
 window.WB = WB;
@@ -589,6 +590,8 @@ function load() {
 
 // === MAIN START ===
 async function start() {
+    // Ensure builder-layout is never collapsed
+    document.querySelector('.builder-layout')?.classList.remove('collapsed');
   Events.setupGlobalHandlers();
   await loadPropertyConfig();
 
@@ -607,7 +610,17 @@ async function start() {
 
   enableBuilderInteractions();
   load();
-  initNotes();
+  // --- Auto-expand canvas sections if empty ---
+  setTimeout(() => {
+    const hasComponents = document.querySelector('.dropped');
+    if (!hasComponents) {
+      // Remove 'collapsed' from main, header, and footer (use class selectors)
+      document.querySelector('.canvas-section.main')?.classList.remove('collapsed');
+      document.querySelector('.canvas-section.header')?.classList.remove('collapsed');
+      document.querySelector('.canvas-section.footer')?.classList.remove('collapsed');
+    }
+  }, 0);
+  initNotes(); // Only sets up textarea, does NOT open notes drawer
   updateVPInfo();
   initCanvasEditing();
   restorePanelTab();
@@ -645,6 +658,15 @@ function initNotes() {
 }
 
 window.toggleNotesDrawer = () => {
+  // Prefer opening the builder's Issues component to avoid duplicate UIs
+  const builderIssues = document.getElementById('builderIssuesDrawer') || document.querySelector('wb-issues#builderIssuesDrawer') || document.querySelector('wb-issues');
+  if (builderIssues) {
+    if (typeof builderIssues.open === 'function') { builderIssues.open(); return; }
+    const trigger = builderIssues.querySelector('.wb-issues__trigger');
+    if (trigger) { trigger.click(); return; }
+  }
+
+  // Fallback to legacy notes modal if present
   const notesModal = document.getElementById('notesModal');
   const backdrop = document.getElementById('notesBackdrop');
   if (!notesModal) return;
@@ -680,29 +702,8 @@ window.openTemplates = openTemplatesChooser;
 window.closeTemplates = hideWelcome;
 
 // === PREVIEW ===
-window.togglePreview = () => {
-  const body = document.body;
-  const isPreview = body.classList.toggle('preview-mode');
-  
-  const btn = document.getElementById('previewBtn');
-  if (btn) {
-    btn.innerHTML = isPreview ? '<span>✕</span> Exit Preview' : '<span>👁️</span> Preview';
-    btn.classList.toggle('active', isPreview);
-  }
-  
-  let exitBtn = document.getElementById('previewExitBtn');
-  if (isPreview && !exitBtn) {
-    exitBtn = document.createElement('button');
-    exitBtn.id = 'previewExitBtn';
-    exitBtn.innerHTML = '✕ Exit Preview';
-    exitBtn.style.cssText = 'position:fixed;top:16px;right:16px;padding:12px 24px;background:#6366f1;color:white;border:none;border-radius:8px;cursor:pointer;z-index:99999;';
-    exitBtn.onclick = () => window.togglePreview();
-    document.body.appendChild(exitBtn);
-  }
-  if (exitBtn) exitBtn.style.display = isPreview ? 'block' : 'none';
-  
-  toast(isPreview ? 'Preview Mode Active' : 'Edit Mode');
-};
+import { togglePreview } from './builder-preview.js';
+window.togglePreview = togglePreview;
 
 // === SNAP GRID ===
 window.toggleSnapGrid = (enabled) => {
@@ -720,7 +721,7 @@ window.setVP = (s) => {
   currentVP = s;
   const f = document.querySelector('.frame');
   document.querySelectorAll('.tool-btn[data-vp]').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.tool-btn[data-vp="${s}"]`)?.classList.add('active');
+  document.querySelector(`.tool-btn[vp="${s}"]`)?.classList.add('active');
   f.style.maxWidth = VP_SIZES[s].w + 'px';
   updateVPInfo();
 };
@@ -780,11 +781,16 @@ function initNewFeatures() {
 }
 
 function bindToggleButtons() {
+  const previewBtn = document.getElementById('previewBtn');
+  if (previewBtn) {
+    previewBtn.onclick = () => window.togglePreview();
+    // Initial state
+    updatePreviewBtnState();
+  }
+  // Other buttons
   const bindings = [
-    { id: 'previewBtn', fn: window.togglePreview },
     { id: 'templatesBtn', fn: window.openTemplates },
     { id: 'shortcutsBtn', fn: window.showShortcuts },
-    { id: 'headerNotesBtn', fn: window.toggleNotesDrawer },
     { id: 'undoBtn', fn: window.undo },
     { id: 'redoBtn', fn: window.redo },
     { id: 'saveHtmlBtn', fn: window.saveAsHTML },
@@ -794,10 +800,32 @@ function bindToggleButtons() {
     { id: 'shortcutsCloseBtn', fn: window.closeShortcuts },
     { id: 'templatesCloseBtn', fn: window.closeTemplates },
     { id: 'docsCloseBtn', fn: closeDocsModal },
-    { id: 'notesCloseBtn', fn: window.toggleNotesDrawer },
     { id: 'favoritesClearBtn', fn: window.clearFavorites }
   ];
-  bindings.forEach(({ id, fn }) => document.getElementById(id)?.addEventListener('click', fn));
+  bindings.forEach(({ id, fn }) => {
+    const btn = document.getElementById(id);
+    if (btn) btn.onclick = fn;
+  });
+}
+
+function updatePreviewBtnState() {
+  const previewBtn = document.getElementById('previewBtn');
+  if (!previewBtn) return;
+  const canvas = document.getElementById('canvas');
+  const hasComponents = canvas && canvas.querySelector('.dropped');
+  previewBtn.disabled = !hasComponents;
+  previewBtn.classList.toggle('disabled', !hasComponents);
+}
+
+// Observe canvas for changes to enable/disable preview button
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('canvas');
+  if (canvas) {
+    const observer = new MutationObserver(updatePreviewBtnState);
+    observer.observe(canvas, { childList: true, subtree: true });
+    updatePreviewBtnState();
+  }
+});
   
   document.getElementById('docsTabBtn')?.addEventListener('click', () => switchDocsTab('docs'));
   document.getElementById('schemaTabBtn')?.addEventListener('click', () => switchDocsTab('schema'));
