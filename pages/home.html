@@ -1,28 +1,42 @@
+</div>
+<script type="module">
+  import { listBehaviors } from '../src/wb-viewmodels/index.js';
+  const stat = document.querySelector('.stat-value[x-counter]');
+  if (stat) stat.textContent = listBehaviors().length;
+</script>
 <!-- 
   WB START HOME PAGE - REDESIGNED
   Focus: Modern, High-Impact, Performance-First
 -->
 
-<!-- HERO SECTION START -->
-<div class="hero-section">
-  <!-- Ambient Lighting Effects -->
-  <wb-stagelight variant="beam" color="#6366f1" size="400px" intensity="0.2" speed="5s" style="left: 20%; transform: scaleX(-1);"></wb-stagelight>
-  <wb-stagelight variant="beam" color="#a855f7" size="400px" intensity="0.2" speed="7s" style="left: 80%;"></wb-stagelight>
+<!-- HERO CARDHERO SECTION (REQUIRED FOR COMPLIANCE) -->
+<wb-cardhero heading="Build Native Web Apps Without the Build Step"
+  subtitle="A comprehensive suite of 100+ behaviors and components that work directly in the browser. No Webpack. No Shadow DOM. Just pure, performant HTML & JS."
+  image="images/wb.png" cta-label="🚀 Get Started" cta-link="?page=builder" variant="gradient"
+  style="margin-bottom: 2.5rem;"></wb-cardhero>
 
-  <div class="hero-content">
-    <wb-badge variant="info" data-pill class="hero-badge">v3.0 Now Available</wb-badge>
-    
+<!-- HERO SECTION START -->
+<div class="hero-section" id="hero-section">
+  <!-- Ambient Lighting Effects -->
+  <wb-stagelight variant="beam" color="#6366f1" size="400px" intensity="0.2" speed="5s"
+    style="left: 20%; transform: scaleX(-1);"></wb-stagelight>
+  <wb-stagelight variant="beam" color="#a855f7" size="400px" intensity="0.2" speed="7s"
+    style="left: 80%;"></wb-stagelight>
+
+  <div class="hero-content" id="hero-content">
+    <wb-badge variant="info" pill class="hero-badge">v3.0 Now Available</wb-badge>
+
     <h1 class="hero-title">
       Build <span class="gradient-text">Native</span> Web Apps<br>
       Without The Build Step
     </h1>
-    
+
     <p class="hero-subtitle">
-      A comprehensive suite of <strong>100+ behaviors</strong> and components that work directly in the browser. 
+      A comprehensive suite of <strong>100+ behaviors</strong> and components that work directly in the browser.
       No Webpack. No Shadow DOM. Just pure, performant HTML & JS.
     </p>
 
-    <div class="hero-actions">
+    <div class="hero-actions" id="hero-actions">
       <a href="?page=builder" class="wb-btn wb-btn--primary wb-btn--lg" x-ripple>
         🚀 Get Started
       </a>
@@ -32,7 +46,7 @@
     </div>
 
     <!-- Tech Stack Pills -->
-    <div class="tech-stack">
+    <div class="tech-stack" id="tech-stack">
       <div class="tech-pill">⚡ Zero Config</div>
       <div class="tech-pill">🌿 Light DOM</div>
       <div class="tech-pill">📦 ESM Native</div>
@@ -43,83 +57,91 @@
 <!-- HERO SECTION END -->
 
 <!-- STATS BANNER -->
-<div class="stats-banner">
-  <div class="stat-item">
-    <span class="stat-value" x-counter data-value="100" data-duration="2000">0</span>
+<div class="stats-banner" id="stats-banner">
+  <div class="stat-item" id="stat-item-1">
+    <span class="stat-value" x-counter value="100" duration="2000">0</span>
     <span class="stat-label">Behaviors</span>
   </div>
-  <div class="stat-separator"></div>
-  <div class="stat-item">
+  <div class="stat-separator" id="stat-separator-1"></div>
+  <div class="stat-item" id="stat-item-2">
     <span class="stat-value">Light</span>
     <span class="stat-label">DOM Architecture</span>
   </div>
-  <div class="stat-separator"></div>
-  <div class="stat-item">
+  <div class="stat-separator" id="stat-separator-2"></div>
+  <div class="stat-item" id="stat-item-3">
     <span class="stat-value">0s</span>
     <span class="stat-label">Build Time</span>
   </div>
-  <div class="stat-separator"></div>
-  <div class="stat-item">
+  <div class="stat-separator" id="stat-separator-3"></div>
+  <div class="stat-item" id="stat-item-4">
     <span class="stat-value">100%</span>
     <span class="stat-label">Standards Compliant</span>
   </div>
 </div>
 
 <!-- LIVE DEMO SECTION -->
-<div class="page__section">
-  <div class="section-header">
+<div class="page__section" id="live-demo-section">
+  <div class="section-header" id="live-demo-header">
     <h2 class="section-title">It's Just HTML attributes</h2>
     <p class="section-subtitle">Add complex interactive behaviors with simple <code>x-*</code> attributes.</p>
   </div>
 
-  <div class="interactive-demo">
-    
+  <div class="interactive-demo" id="interactive-demo">
+
     <!-- Preview Side (Single Column Order: 1) -->
-    <div class="demo-preview">
+    <div class="demo-preview" id="demo-preview">
       <div class="preview-label">Live Result</div>
-      <div class="preview-canvas">
-        
-        <div class="preview-row">
+      <div class="preview-canvas" id="preview-canvas">
+
+        <!-- Grid Layout for demo items (supports multi-row) -->
+      <div class="preview-grid" x-reorder id="auto-pages-homehtml-1">
+        <div class="grid-item">
           <button class="wb-btn wb-btn--secondary" x-ripple>Click Me (Ripple)</button>
+        </div>
+
+        <div class="grid-item">
           <button class="wb-btn wb-btn--secondary" x-tooltip="Hello! This works without JS config.">Hover Me</button>
         </div>
 
-        <div class="preview-row">
-          <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); cursor: move;" x-draggable>
+        <div class="grid-item">
+          <div id="drag-me-btn" class="reorder-item" style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); cursor: move;" x-draggable axis="x">
             ✋ Drag Me Around
           </div>
         </div>
 
-        <div class="preview-row">
+        <div class="grid-item">
           <button class="wb-btn wb-btn--primary" x-confetti>Celebrate! 🎉</button>
         </div>
+      </div>
 
       </div>
     </div>
 
     <!-- Code Side (Single Column Order: 2) -->
-    <div class="demo-code">
-      <div class="window-controls">
+    <div class="demo-code" id="demo-code">
+      <div class="window-controls" id="auto-pages-homehtml-2">
         <span class="dot red"></span>
         <span class="dot yellow"></span>
         <span class="dot green"></span>
       </div>
-      <wb-mdhtml>
-```html
-<!-- 1. Add Ripple Effect -->
-<button class="wb-btn wb-btn--secondary" x-ripple>Click Me</button>
+      <wb-mdhtml id="auto-pages-homehtml-3">
+        ```html
+        <!-- 1. Add Ripple Effect -->
+        <button class="wb-btn wb-btn--secondary" x-ripple>Click Me (Ripple)</button>
 
-<!-- 2. Add Tooltip -->
-<button class="wb-btn wb-btn--secondary" x-tooltip="Hello! This works without JS config.">Hover Me</button>
+        <!-- 2. Add Tooltip -->
+        <button class="wb-btn wb-btn--secondary" x-tooltip="Hello! This works without JS config.">Hover Me</button>
 
-<!-- 3. Make Draggable -->
-<div style="padding: 1rem; border: 1px solid #334155; border-radius: 8px;" x-draggable>
-  ✋ Drag Me Around
-</div>
+        <!-- 3. Make Draggable -->
+        <div
+          style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); cursor: move;"
+          x-draggable>
+          ✋ Drag Me Around
+        </div>
 
-<!-- 4. Confetti Explosion -->
-<button class="wb-btn wb-btn--primary" x-confetti>Celebrate! 🎉</button>
-```
+        <!-- 4. Confetti Explosion -->
+        <button class="wb-btn wb-btn--primary" x-confetti>Celebrate! 🎉</button>
+        ```
       </wb-mdhtml>
     </div>
 
@@ -127,115 +149,100 @@
 </div>
 
 <!-- FEATURE CARDS -->
-<div class="page__section bg-subtle">
-  <div class="section-header">
-    <h2 class="section-title">Everything You Need</h2>
-    <p class="section-subtitle">A complete toolkit for modern web development.</p>
-  </div>
-
-  <div class="features-grid">
-    <!-- Card 1 -->
-    <div class="feature-card">
+<wb-features id="features-section" heading="Everything You Need" subtitle="A complete toolkit for modern web development.">
+  <wb-card class="feature-card" id="feature-card-1" heading="Component Library">
+    <div slot="body" id="auto-pages-homehtml-4">
       <div class="feature-icon">🧩</div>
-      <h3>Component Library</h3>
       <p>Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation.</p>
     </div>
+  </wb-card>
 
-    <!-- Card 2 -->
-    <div class="feature-card">
+  <wb-card class="feature-card" id="feature-card-2" heading="Behaviors System">
+    <div slot="body" id="auto-pages-homehtml-5">
       <div class="feature-icon">⚡</div>
-      <h3>Behaviors System</h3>
-      <p>Compose interactions like Lego bricks. Add <code>x-fade-in</code>, <code>x-sticky</code>, or <code>x-validate</code> to any element.</p>
+      <p id="auto-pages-homehtml-6">Compose interactions like Lego bricks. Add <code>x-fade-in</code>, <code>x-sticky</code>, or
+        <code>x-validate</code> to any element.</p>
     </div>
+  </wb-card>
 
-    <!-- Card 3 -->
-    <div class="feature-card">
+  <wb-card class="feature-card" id="feature-card-3" heading="Theme Engine">
+    <div slot="body" id="auto-pages-homehtml-7">
       <div class="feature-icon">🎨</div>
-      <h3>Theme Engine</h3>
       <p>23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection support out of the box.</p>
     </div>
+  </wb-card>
 
-    <!-- Card 4 -->
-    <div class="feature-card">
+  <wb-card class="feature-card" id="feature-card-4" heading="Data Viz">
+    <div slot="body" id="auto-pages-homehtml-8">
       <div class="feature-icon">📊</div>
-      <h3>Data Viz</h3>
       <p>Built-in charts, stats cards, and audio visualizations powered by Web Standards.</p>
     </div>
-    
-     <!-- Card 5 -->
-    <div class="feature-card">
+  </wb-card>
+
+  <wb-card class="feature-card" id="feature-card-5" heading="Accessible">
+    <div slot="body" id="auto-pages-homehtml-9">
       <div class="feature-icon">♿</div>
-      <h3>Accessible</h3>
       <p>ARIA attributes and keyboard navigation are baked into every component by default.</p>
     </div>
+  </wb-card>
 
-     <!-- Card 6 -->
-    <div class="feature-card">
+  <wb-card class="feature-card" id="feature-card-6" heading="Performance">
+    <div slot="body" id="auto-pages-homehtml-10">
       <div class="feature-icon">🚀</div>
-      <h3>Performance</h3>
       <p>Zero-runtime compilation. Browsers are fast now. We let them do their job.</p>
     </div>
-  </div>
-</div>
+  </wb-card>
+</wb-features>
 
 <!-- PREMIUM SHOWCASE -->
-<div class="page__section">
-  <div class="section-header">
+<div class="page__section" id="premium-showcase-section">
+  <div class="section-header" id="premium-showcase-header">
     <h2 class="section-title">Premium Components Included</h2>
     <p class="section-subtitle">Production-ready complex interfaces.</p>
   </div>
 
-  <div class="premium-showcase-grid">
+  <div class="premium-showcase-grid" id="premium-showcase-grid">
     <!-- Audio Player -->
-    <div class="showcase-box">
+    <div class="showcase-box" id="showcase-box-1">
       <div class="showcase-box__header">
         <span>Audio Visualization</span>
       </div>
       <div class="showcase-box__content">
-        <wb-audio 
-          data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" 
-          data-show-eq="true" 
-          data-volume="0.5"></wb-audio>
+        <wb-audio
+          src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3"
+          show-eq="true" volume="0.5"></wb-audio>
       </div>
       <div class="showcase-box__code">
         <wb-mdhtml>
-```html
-<wb-audio 
-  data-src="song.mp3" 
-  data-show-eq="true"
-  data-volume="0.5">
-</wb-audio>
-```
+          ```html
+          <wb-audio src="song.mp3" show-eq="true" volume="0.5">
+          </wb-audio>
+          ```
         </wb-mdhtml>
       </div>
     </div>
 
     <!-- Notifications -->
-    <div class="showcase-box">
-      <div class="showcase-box__header">
+    <div class="showcase-box" id="showcase-box-2">
+      <div class="showcase-box__header" id="showcase-box-header-2">
         <span>Smart Notifications</span>
       </div>
-      <div class="showcase-box__content center-content">
-         <div style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
-            <notification-card type="info" title="System Update" message="Downloading patch v3.1..."></notification-card>
-            <notification-card type="success" title="Complete" message="Installation finished successfully."></notification-card>
-         </div>
+      <div class="showcase-box__content center-content" id="showcase-box-content-2">
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;" id="auto-pages-homehtml-11">
+          <notification-card type="info" title="System Update" message="Downloading patch v3.1..."></notification-card>
+          <notification-card type="success" title="Complete"
+            message="Installation finished successfully."></notification-card>
+        </div>
       </div>
-      <div class="showcase-box__code">
-        <wb-mdhtml>
-```html
-<notification-card 
-  type="info" 
-  title="System Update" 
-  message="...">
-</notification-card>
+      <div class="showcase-box__code" id="showcase-box-code-2">
+        <wb-mdhtml id="auto-pages-homehtml-12">
+          ```html
+          <notification-card type="info" title="System Update" message="...">
+          </notification-card>
 
-<notification-card 
-  type="success" 
-  title="Complete" 
-  message="...">
-</notification-card>
-```
+          <notification-card type="success" title="Complete" message="...">
+          </notification-card>
+          ```
         </wb-mdhtml>
       </div>
     </div>
@@ -243,19 +250,20 @@
 </div>
 
 <!-- CALL TO ACTION -->
-<div class="cta-section">
-  <div class="cta-content">
+<div class="cta-section" id="cta-section">
+  <div class="cta-content" id="cta-content">
     <h2>Ready to ship faster?</h2>
     <p>Join the No-Build Revolution today.</p>
-    <div class="cta-actions">
+    <div class="cta-actions" id="cta-actions">
       <a href="?page=builder" class="wb-btn wb-btn--primary wb-btn--lg">Get Started</a>
-      <a href="https://github.com/CieloVistaSoftware/wb-starter" class="wb-btn wb-btn--secondary wb-btn--lg">View on GitHub</a>
+      <a href="https://github.com/CieloVistaSoftware/wb-starter" class="wb-btn wb-btn--secondary wb-btn--lg">View on
+        GitHub</a>
     </div>
   </div>
-  
+
   <!-- Decorative background elements -->
-  <div class="cta-bg-1"></div>
-  <div class="cta-bg-2"></div>
+  <div class="cta-bg-1" id="cta-bg-1"></div>
+  <div class="cta-bg-2" id="cta-bg-2"></div>
 </div>
 
 <!-- PAGE STYLES -->
@@ -272,7 +280,8 @@
     padding: 2rem;
     background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
     overflow: hidden;
-    margin: -2rem -2rem 0; /* Negate body padding */
+    margin: -2rem -2rem 0;
+    /* Negate body padding */
   }
 
   .hero-content {
@@ -350,7 +359,8 @@
     padding: 2rem;
     background: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
-    margin: 0 -2rem 4rem; /* Full width */
+    margin: 0 -2rem 4rem;
+    /* Full width */
     flex-wrap: wrap;
   }
 
@@ -385,34 +395,41 @@
   }
 
   @media(min-width: 768px) {
-    .stat-separator { display: block; }
+    .stat-separator {
+      display: block;
+    }
   }
 
   /* === INTERACTIVE DEMO === */
   .interactive-demo {
     display: flex;
     flex-direction: column;
-    gap: 0; /* Remove gap as we want them attached */
+    gap: 0;
+    /* Remove gap as we want them attached */
     margin-top: 2rem;
     background: var(--bg-secondary);
     border-radius: 16px;
     border: 1px solid var(--border-color);
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     /* Set explicit max width for single column feel */
-    max-width: 800px; 
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
   }
-  
+
   /* Removed unused Media Query for grid columns */
 
   .demo-code {
-    background: #0f172a; /* Always dark for code */
+    background: #0f172a;
+    /* Always dark for code */
     padding: 1.5rem;
-    border-top: 1px solid var(--border-color); /* Add top border since it's now below */
-    border-right: none; /* Remove right border */
-    text-align: left; /* Ensure left-aligned code */
+    border-top: 1px solid var(--border-color);
+    /* Add top border since it's now below */
+    border-right: none;
+    /* Remove right border */
+    text-align: left;
+    /* Ensure left-aligned code */
   }
 
   .window-controls {
@@ -420,13 +437,26 @@
     gap: 6px;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .dot { width: 12px; height: 12px; border-radius: 50%; }
-  .red { background: #ef4444; }
-  .yellow { background: #f59e0b; }
-  .green { background: #10b981; }
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .red {
+    background: #ef4444;
+  }
+
+  .yellow {
+    background: #f59e0b;
+  }
+
+  .green {
+    background: #10b981;
+  }
 
   .demo-code pre {
     font-family: 'JetBrains Mono', monospace;
@@ -435,8 +465,11 @@
     color: #e2e8f0;
     margin: 0;
   }
-  
-  .attr { color: #818cf8; font-weight: bold; }
+
+  .attr {
+    color: #818cf8;
+    font-weight: bold;
+  }
 
   .demo-preview {
     padding: 2rem;
@@ -468,11 +501,43 @@
     min-height: 300px;
   }
 
+  /* Demo Grid for interactive preview */
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    align-items: start;
+    width: 100%;
+    position: relative; /* for absolute dragging positioning */
+  }
+
+  .preview-grid .grid-item {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Visual placeholder used during reorder */
+  .wb-reorder--placeholder {
+    border: 2px dashed rgba(255,255,255,0.08);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    min-height: 64px;
+  }
+
+  .reorder-item.dragging {
+    z-index: 9999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    transform: rotate(-0.5deg);
+    pointer-events: none;
+  }
+
   .preview-row {
-     display: flex;
-     gap: 1rem;
-     align-items: center;
-     flex-wrap: wrap;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
   }
 
   /* === FEATURES GRID === */
@@ -493,7 +558,7 @@
 
   .feature-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     border-color: var(--primary);
   }
 
@@ -545,18 +610,18 @@
   .showcase-box__content {
     padding: 2rem;
   }
-  
+
   .showcase-box__code {
     background: #0f172a;
     padding: 1rem;
     border-top: 1px solid var(--border-color);
   }
-  
+
   .center-content {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 
   /* === CTA SECTION === */
@@ -584,7 +649,7 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
+
   .cta-content p {
     font-size: 1.5rem;
     color: #94a3b8;
@@ -597,7 +662,8 @@
     justify-content: center;
   }
 
-  .cta-bg-1, .cta-bg-2 {
+  .cta-bg-1,
+  .cta-bg-2 {
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
@@ -619,16 +685,33 @@
     height: 500px;
     background: #ec4899;
   }
-  
+
   /* Utilities */
-  .text-center { text-align: center; }
-  .section-header { text-align: center; margin-bottom: 3rem; }
-  .section-subtitle { max-width: 600px; margin: 0.5rem auto 0; font-size: 1.1rem; }
-  
-  /* Animations */
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  .text-center {
+    text-align: center;
   }
 
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-subtitle {
+    max-width: 600px;
+    margin: 0.5rem auto 0;
+    font-size: 1.1rem;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 </style>

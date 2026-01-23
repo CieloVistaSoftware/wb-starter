@@ -1,14 +1,16 @@
 {
-  "generated": "2026-01-17T01:36:40.729Z",
-  "totalFiles": 125,
+  "generated": "2026-01-23T03:39:16.703Z",
+  "totalFiles": 154,
   "categories": [
     "_today",
     "architecture",
     "audits",
+    "batches",
     "builder",
     "compliance",
     "components",
     "guides",
+    "plans",
     "root",
     "standards"
   ],
@@ -108,7 +110,7 @@
       },
       {
         "path": "docs/builder.md",
-        "title": "WB Builder - The Heart of the Framework",
+        "title": "WB Builder – The Heart of the Framework (2026)",
         "name": "builder",
         "category": "root"
       },
@@ -131,6 +133,12 @@
         "category": "root"
       },
       {
+        "path": "docs/COMMONHEADER.md",
+        "title": "Common Header Specification (wb-common-header) ✅",
+        "name": "COMMONHEADER",
+        "category": "root"
+      },
+      {
         "path": "docs/container-pattern.md",
         "title": "Container Components Pattern",
         "name": "container-pattern",
@@ -149,6 +157,12 @@
         "category": "root"
       },
       {
+        "path": "docs/data-wb-inventory.md",
+        "title": "data-wb Migration To-Do — Prioritized by Folder",
+        "name": "data-wb-inventory",
+        "category": "root"
+      },
+      {
         "path": "docs/deploying-wb-starter-to-render.md",
         "title": "Deploying Web Behaviors (WB) Starter to Render: A Complete Guide",
         "name": "deploying-wb-starter-to-render",
@@ -156,8 +170,14 @@
       },
       {
         "path": "docs/escape-hatches.md",
-        "title": "WB Framework Escape Hatches",
+        "title": "WB Framework Escape Hatches (2026)",
         "name": "escape-hatches",
+        "category": "root"
+      },
+      {
+        "path": "docs/howtoruntests.md",
+        "title": "How to Run Tests",
+        "name": "howtoruntests",
         "category": "root"
       },
       {
@@ -185,6 +205,12 @@
         "category": "root"
       },
       {
+        "path": "docs/issues.md",
+        "title": "Issues System",
+        "name": "issues",
+        "category": "root"
+      },
+      {
         "path": "docs/linkedin-framework-agnostic.md",
         "title": "LinkedIn Article: The AI Architect: Why the Future of Web Tools is Framework Agnostic",
         "name": "linkedin-framework-agnostic",
@@ -204,7 +230,7 @@
       },
       {
         "path": "docs/MVVM-MIGRATION.md",
-        "title": "WB Framework v3.0 - MVVM Architecture",
+        "title": "WB Behaviors v3.0 – Schema-Driven MVVM Architecture (2026)",
         "name": "MVVM-MIGRATION",
         "category": "root"
       },
@@ -216,13 +242,13 @@
       },
       {
         "path": "docs/PAGE-BUILDER-RULES.md",
-        "title": "WB Page Builder - Content Creation Rules",
+        "title": "WB Page Builder – Content Creation Rules (2026)",
         "name": "PAGE-BUILDER-RULES",
         "category": "root"
       },
       {
         "path": "docs/pce-candidates.md",
-        "title": "PCE (Pseudo-Custom Elements) - WB v3.0",
+        "title": "PCE (Pseudo-Custom Elements) – WB v3.0 (2026)",
         "name": "pce-candidates",
         "category": "root"
       },
@@ -317,6 +343,12 @@
         "category": "root"
       },
       {
+        "path": "docs/WB-HTML-EDITOR-MERGE-HISTORY.md",
+        "title": "WB HTML Editor — Merge & History (Quick Guide)",
+        "name": "WB-HTML-EDITOR-MERGE-HISTORY",
+        "category": "root"
+      },
+      {
         "path": "docs/wb-parts-spec.md",
         "title": "gcan# Web Behaviors (WB) Parts Specification",
         "name": "wb-parts-spec",
@@ -324,7 +356,7 @@
       },
       {
         "path": "docs/WB_BEHAVIOR_SYSTEM.md",
-        "title": "Web Behaviors (WB) Behavior System - Technical Workflow",
+        "title": "WB Behaviors v3.0 - Behavior System",
         "name": "WB_BEHAVIOR_SYSTEM",
         "category": "root"
       }
@@ -337,11 +369,85 @@
         "category": "audits"
       }
     ],
+    "batches": [
+      {
+        "path": "docs/batches/batch-001-quick-wins.md",
+        "title": "Batch 001 — Quick Wins & Docs",
+        "name": "batch-001-quick-wins",
+        "category": "batches"
+      },
+      {
+        "path": "docs/batches/batch-002-schema-fixes.md",
+        "title": "Batch 002 — Schema Fixes",
+        "name": "batch-002-schema-fixes",
+        "category": "batches"
+      },
+      {
+        "path": "docs/batches/batch-003-tests-flaky-fixes.md",
+        "title": "Batch 003 — Tests & Flaky Fixes",
+        "name": "batch-003-tests-flaky-fixes",
+        "category": "batches"
+      },
+      {
+        "path": "docs/batches/batch-004-css-cleanup.md",
+        "title": "Batch 004 — CSS Cleanup & Visual Polishing",
+        "name": "batch-004-css-cleanup",
+        "category": "batches"
+      },
+      {
+        "path": "docs/batches/batch-005-builder-ui-merge.md",
+        "title": "Batch 005 — Builder UI Merge (Top-bar → Common Header)",
+        "name": "batch-005-builder-ui-merge",
+        "category": "batches"
+      }
+    ],
     "builder": [
       {
         "path": "docs/builder/BUILDER-FIXES.md",
         "title": "BUILDER BROKEN - Critical Fixes Needed",
         "name": "BUILDER-FIXES",
+        "category": "builder"
+      },
+      {
+        "path": "docs/builder/builder-html-view.md",
+        "title": "Builder Component HTML View",
+        "name": "builder-html-view",
+        "category": "builder"
+      },
+      {
+        "path": "docs/builder/builder-interaction-rules.md",
+        "title": "Builder Interaction Rules",
+        "name": "builder-interaction-rules",
+        "category": "builder"
+      },
+      {
+        "path": "docs/builder/builder-onboarding-flow.md",
+        "title": "Page Builder Onboarding Flow",
+        "name": "builder-onboarding-flow",
+        "category": "builder"
+      },
+      {
+        "path": "docs/builder/BUILDER-PROPERTIES-SPEC.md",
+        "title": "WB Builder Properties Panel Specification",
+        "name": "BUILDER-PROPERTIES-SPEC",
+        "category": "builder"
+      },
+      {
+        "path": "docs/builder/builder-properties.md",
+        "title": "WB Builder Properties Panel",
+        "name": "builder-properties",
+        "category": "builder"
+      },
+      {
+        "path": "docs/builder/builder-section-focus.md",
+        "title": "Builder Section Focus System",
+        "name": "builder-section-focus",
+        "category": "builder"
+      },
+      {
+        "path": "docs/builder/builder-testing.md",
+        "title": "Builder Component Testing",
+        "name": "builder-testing",
         "category": "builder"
       },
       {
@@ -351,8 +457,26 @@
         "category": "builder"
       },
       {
+        "path": "docs/builder/builder-workflow.md",
+        "title": "Page Builder Workflow System",
+        "name": "builder-workflow",
+        "category": "builder"
+      },
+      {
+        "path": "docs/builder/builder.md",
+        "title": "WB Builder – The Heart of the Framework (2026)",
+        "name": "builder",
+        "category": "builder"
+      },
+      {
+        "path": "docs/builder/builder.todo.md",
+        "title": "Builder TODO",
+        "name": "builder.todo",
+        "category": "builder"
+      },
+      {
         "path": "docs/builder/pages.md",
-        "title": "WB Page Builder - Pages System",
+        "title": "pages",
         "name": "pages",
         "category": "builder"
       }
@@ -746,7 +870,7 @@
       },
       {
         "path": "docs/components/tabs.md",
-        "title": "Tabs - WB Framework v3.0",
+        "title": "Tabs - Web Behaviors (WB) v3.0",
         "name": "tabs",
         "category": "components"
       }
@@ -759,7 +883,63 @@
         "category": "guides"
       }
     ],
+    "plans": [
+      {
+        "path": "docs/plans/MVVM-MIGRATION-PLAN.md",
+        "title": "Web Behaviors (WB) MVVM Migration Plan",
+        "name": "MVVM-MIGRATION-PLAN",
+        "category": "plans"
+      },
+      {
+        "path": "docs/plans/MVVM-MIGRATION.md",
+        "title": "WB Framework v3.0 – Schema-Driven MVVM Architecture (2026)",
+        "name": "MVVM-MIGRATION",
+        "category": "plans"
+      },
+      {
+        "path": "docs/plans/PHASE2-ATTRIBUTE-MIGRATION.md",
+        "title": "Phase 2: Attribute Name Migration",
+        "name": "PHASE2-ATTRIBUTE-MIGRATION",
+        "category": "plans"
+      },
+      {
+        "path": "docs/plans/USER-PAGE-BUILDER-PLAN.md",
+        "title": "User Page Builder Plan",
+        "name": "USER-PAGE-BUILDER-PLAN",
+        "category": "plans"
+      },
+      {
+        "path": "docs/plans/_today/CURRENT-STATUS.md",
+        "title": "WB Framework – Current Status (2026)",
+        "name": "CURRENT-STATUS",
+        "category": "plans"
+      },
+      {
+        "path": "docs/plans/_today/TODO.md",
+        "title": "TODO List (2026)",
+        "name": "TODO",
+        "category": "plans"
+      }
+    ],
     "standards": [
+      {
+        "path": "docs/standards/code-examples-standard.md",
+        "title": "Code Examples Standard",
+        "name": "code-examples-standard",
+        "category": "standards"
+      },
+      {
+        "path": "docs/standards/css-standards.md",
+        "title": "CSS Standards & OOP Architecture",
+        "name": "css-standards",
+        "category": "standards"
+      },
+      {
+        "path": "docs/standards/semantic-standard.md",
+        "title": "HTML5 Semantic Standard (Mandatory)",
+        "name": "semantic-standard",
+        "category": "standards"
+      },
       {
         "path": "docs/standards/V3-STANDARDS.md",
         "title": "Web Behaviors (WB) v3.0 Standards",
@@ -770,13 +950,13 @@
     "_today": [
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "Current Status - Builder UI Enhancements",
+        "title": "WB Behaviors – Current Status (2026)",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
       {
         "path": "docs/_today/TODO.md",
-        "title": "TODO List",
+        "title": "TODO",
         "name": "TODO",
         "category": "_today"
       }
@@ -785,13 +965,13 @@
   "files": [
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "Current Status - Builder UI Enhancements",
+      "title": "WB Behaviors – Current Status (2026)",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
     {
       "path": "docs/_today/TODO.md",
-      "title": "TODO List",
+      "title": "TODO",
       "name": "TODO",
       "category": "_today"
     },
@@ -844,6 +1024,36 @@
       "category": "root"
     },
     {
+      "path": "docs/batches/batch-001-quick-wins.md",
+      "title": "Batch 001 — Quick Wins & Docs",
+      "name": "batch-001-quick-wins",
+      "category": "batches"
+    },
+    {
+      "path": "docs/batches/batch-002-schema-fixes.md",
+      "title": "Batch 002 — Schema Fixes",
+      "name": "batch-002-schema-fixes",
+      "category": "batches"
+    },
+    {
+      "path": "docs/batches/batch-003-tests-flaky-fixes.md",
+      "title": "Batch 003 — Tests & Flaky Fixes",
+      "name": "batch-003-tests-flaky-fixes",
+      "category": "batches"
+    },
+    {
+      "path": "docs/batches/batch-004-css-cleanup.md",
+      "title": "Batch 004 — CSS Cleanup & Visual Polishing",
+      "name": "batch-004-css-cleanup",
+      "category": "batches"
+    },
+    {
+      "path": "docs/batches/batch-005-builder-ui-merge.md",
+      "title": "Batch 005 — Builder UI Merge (Top-bar → Common Header)",
+      "name": "batch-005-builder-ui-merge",
+      "category": "batches"
+    },
+    {
       "path": "docs/behavior-cross-reference.md",
       "title": "Web Behaviors (WB) Behaviors Cross-Reference",
       "name": "behavior-cross-reference",
@@ -893,7 +1103,7 @@
     },
     {
       "path": "docs/builder.md",
-      "title": "WB Builder - The Heart of the Framework",
+      "title": "WB Builder – The Heart of the Framework (2026)",
       "name": "builder",
       "category": "root"
     },
@@ -910,14 +1120,74 @@
       "category": "builder"
     },
     {
+      "path": "docs/builder/builder-html-view.md",
+      "title": "Builder Component HTML View",
+      "name": "builder-html-view",
+      "category": "builder"
+    },
+    {
+      "path": "docs/builder/builder-interaction-rules.md",
+      "title": "Builder Interaction Rules",
+      "name": "builder-interaction-rules",
+      "category": "builder"
+    },
+    {
+      "path": "docs/builder/builder-onboarding-flow.md",
+      "title": "Page Builder Onboarding Flow",
+      "name": "builder-onboarding-flow",
+      "category": "builder"
+    },
+    {
+      "path": "docs/builder/BUILDER-PROPERTIES-SPEC.md",
+      "title": "WB Builder Properties Panel Specification",
+      "name": "BUILDER-PROPERTIES-SPEC",
+      "category": "builder"
+    },
+    {
+      "path": "docs/builder/builder-properties.md",
+      "title": "WB Builder Properties Panel",
+      "name": "builder-properties",
+      "category": "builder"
+    },
+    {
+      "path": "docs/builder/builder-section-focus.md",
+      "title": "Builder Section Focus System",
+      "name": "builder-section-focus",
+      "category": "builder"
+    },
+    {
+      "path": "docs/builder/builder-testing.md",
+      "title": "Builder Component Testing",
+      "name": "builder-testing",
+      "category": "builder"
+    },
+    {
       "path": "docs/builder/builder-tree.md",
       "title": "WB Builder Tree Panel - Comprehensive Schema",
       "name": "builder-tree",
       "category": "builder"
     },
     {
+      "path": "docs/builder/builder-workflow.md",
+      "title": "Page Builder Workflow System",
+      "name": "builder-workflow",
+      "category": "builder"
+    },
+    {
+      "path": "docs/builder/builder.md",
+      "title": "WB Builder – The Heart of the Framework (2026)",
+      "name": "builder",
+      "category": "builder"
+    },
+    {
+      "path": "docs/builder/builder.todo.md",
+      "title": "Builder TODO",
+      "name": "builder.todo",
+      "category": "builder"
+    },
+    {
       "path": "docs/builder/pages.md",
-      "title": "WB Page Builder - Pages System",
+      "title": "pages",
       "name": "pages",
       "category": "builder"
     },
@@ -931,6 +1201,12 @@
       "path": "docs/code-examples-standard.md",
       "title": "Code Examples Standard",
       "name": "code-examples-standard",
+      "category": "root"
+    },
+    {
+      "path": "docs/COMMONHEADER.md",
+      "title": "Common Header Specification (wb-common-header) ✅",
+      "name": "COMMONHEADER",
       "category": "root"
     },
     {
@@ -1319,7 +1595,7 @@
     },
     {
       "path": "docs/components/tabs.md",
-      "title": "Tabs - WB Framework v3.0",
+      "title": "Tabs - Web Behaviors (WB) v3.0",
       "name": "tabs",
       "category": "components"
     },
@@ -1342,6 +1618,12 @@
       "category": "root"
     },
     {
+      "path": "docs/data-wb-inventory.md",
+      "title": "data-wb Migration To-Do — Prioritized by Folder",
+      "name": "data-wb-inventory",
+      "category": "root"
+    },
+    {
       "path": "docs/deploying-wb-starter-to-render.md",
       "title": "Deploying Web Behaviors (WB) Starter to Render: A Complete Guide",
       "name": "deploying-wb-starter-to-render",
@@ -1349,7 +1631,7 @@
     },
     {
       "path": "docs/escape-hatches.md",
-      "title": "WB Framework Escape Hatches",
+      "title": "WB Framework Escape Hatches (2026)",
       "name": "escape-hatches",
       "category": "root"
     },
@@ -1358,6 +1640,12 @@
       "title": "Search Index Generator",
       "name": "search-index",
       "category": "guides"
+    },
+    {
+      "path": "docs/howtoruntests.md",
+      "title": "How to Run Tests",
+      "name": "howtoruntests",
+      "category": "root"
     },
     {
       "path": "docs/IMPROVEMENTS.md",
@@ -1384,6 +1672,12 @@
       "category": "root"
     },
     {
+      "path": "docs/issues.md",
+      "title": "Issues System",
+      "name": "issues",
+      "category": "root"
+    },
+    {
       "path": "docs/linkedin-framework-agnostic.md",
       "title": "LinkedIn Article: The AI Architect: Why the Future of Web Tools is Framework Agnostic",
       "name": "linkedin-framework-agnostic",
@@ -1403,7 +1697,7 @@
     },
     {
       "path": "docs/MVVM-MIGRATION.md",
-      "title": "WB Framework v3.0 - MVVM Architecture",
+      "title": "WB Behaviors v3.0 – Schema-Driven MVVM Architecture (2026)",
       "name": "MVVM-MIGRATION",
       "category": "root"
     },
@@ -1415,13 +1709,13 @@
     },
     {
       "path": "docs/PAGE-BUILDER-RULES.md",
-      "title": "WB Page Builder - Content Creation Rules",
+      "title": "WB Page Builder – Content Creation Rules (2026)",
       "name": "PAGE-BUILDER-RULES",
       "category": "root"
     },
     {
       "path": "docs/pce-candidates.md",
-      "title": "PCE (Pseudo-Custom Elements) - WB v3.0",
+      "title": "PCE (Pseudo-Custom Elements) – WB v3.0 (2026)",
       "name": "pce-candidates",
       "category": "root"
     },
@@ -1430,6 +1724,42 @@
       "title": "Performance Improvement Plan",
       "name": "performance",
       "category": "root"
+    },
+    {
+      "path": "docs/plans/_today/CURRENT-STATUS.md",
+      "title": "WB Framework – Current Status (2026)",
+      "name": "CURRENT-STATUS",
+      "category": "plans"
+    },
+    {
+      "path": "docs/plans/_today/TODO.md",
+      "title": "TODO List (2026)",
+      "name": "TODO",
+      "category": "plans"
+    },
+    {
+      "path": "docs/plans/MVVM-MIGRATION-PLAN.md",
+      "title": "Web Behaviors (WB) MVVM Migration Plan",
+      "name": "MVVM-MIGRATION-PLAN",
+      "category": "plans"
+    },
+    {
+      "path": "docs/plans/MVVM-MIGRATION.md",
+      "title": "WB Framework v3.0 – Schema-Driven MVVM Architecture (2026)",
+      "name": "MVVM-MIGRATION",
+      "category": "plans"
+    },
+    {
+      "path": "docs/plans/PHASE2-ATTRIBUTE-MIGRATION.md",
+      "title": "Phase 2: Attribute Name Migration",
+      "name": "PHASE2-ATTRIBUTE-MIGRATION",
+      "category": "plans"
+    },
+    {
+      "path": "docs/plans/USER-PAGE-BUILDER-PLAN.md",
+      "title": "User Page Builder Plan",
+      "name": "USER-PAGE-BUILDER-PLAN",
+      "category": "plans"
     },
     {
       "path": "docs/pricecard.md",
@@ -1480,6 +1810,24 @@
       "category": "root"
     },
     {
+      "path": "docs/standards/code-examples-standard.md",
+      "title": "Code Examples Standard",
+      "name": "code-examples-standard",
+      "category": "standards"
+    },
+    {
+      "path": "docs/standards/css-standards.md",
+      "title": "CSS Standards & OOP Architecture",
+      "name": "css-standards",
+      "category": "standards"
+    },
+    {
+      "path": "docs/standards/semantic-standard.md",
+      "title": "HTML5 Semantic Standard (Mandatory)",
+      "name": "semantic-standard",
+      "category": "standards"
+    },
+    {
       "path": "docs/standards/V3-STANDARDS.md",
       "title": "Web Behaviors (WB) v3.0 Standards",
       "name": "V3-STANDARDS",
@@ -1523,8 +1871,14 @@
     },
     {
       "path": "docs/WB_BEHAVIOR_SYSTEM.md",
-      "title": "Web Behaviors (WB) Behavior System - Technical Workflow",
+      "title": "WB Behaviors v3.0 - Behavior System",
       "name": "WB_BEHAVIOR_SYSTEM",
+      "category": "root"
+    },
+    {
+      "path": "docs/WB-HTML-EDITOR-MERGE-HISTORY.md",
+      "title": "WB HTML Editor — Merge & History (Quick Guide)",
+      "name": "WB-HTML-EDITOR-MERGE-HISTORY",
       "category": "root"
     },
     {

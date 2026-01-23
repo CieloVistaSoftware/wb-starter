@@ -39,7 +39,7 @@ export function docsviewer(element) {
   });
   
   // Set initial active
-  const firstBtn = element.querySelector('.docs-link[data-src="docs/behaviors-reference.md"]');
+  const firstBtn = element.querySelector('.docs-link[src="docs/behaviors-reference.md"]');
   if (firstBtn) {
     firstBtn.classList.remove('btn-secondary');
     firstBtn.classList.add('btn-primary');

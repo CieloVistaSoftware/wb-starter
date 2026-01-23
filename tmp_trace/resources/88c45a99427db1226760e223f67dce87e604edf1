@@ -1,0 +1,57 @@
+# Page snapshot
+
+```yaml
+- heading "🏗️ WB Page Builder" [level=1]
+- button "🔄 Refresh"
+- button "🗑️ Reset"
+- button "🧪 Test"
+- button "⚙️ Settings"
+- button "📂 Open ▾"
+- button "👁️ Preview"
+- button "🐛 Issues"
+- button "💾 Save ▾"
+- complementary:
+  - heading "📄 Pages" [level=3]
+  - text: Home
+  - button "+ Add Page"
+  - heading "🔝 Header Components" [level=3]
+  - text: 🔝 Navigation Bar 📍 Logo & Title
+  - heading "📄 Main Content" [level=3]
+  - text: 🦸 Hero Section ✨ Features Grid 💬 Testimonials 💰 Pricing Table 👥 Team Members 🖼️ Image Gallery ❓ FAQ Section 📞 Call to Action 🃏 Card 📧 Newsletter Signup
+  - heading "🔻 Footer Components" [level=3]
+  - text: 🔻 Footer
+  - button "◀"
+- text: Home /pages/home.html
+- checkbox "Header" [checked]
+- text: Header
+- checkbox "Footer" [checked]
+- text: Footer Header (shared) Drop components here Canvas 1 component
+- button "+ Element ▼"
+- button "+ Component ▼"
+- text: Main Content / Home
+- heading "Welcome to Your Site" [level=2]
+- paragraph: Your value proposition goes here
+- text: 🦸 Hero Section
+- 'button "{ }"'
+- button "🗑️"
+- text: Drop components here Footer (shared) Drop components here
+- complementary:
+  - button "▶"
+  - heading "🦸 Hero Section Show HTML" [level=4]:
+    - text: 🦸 Hero Section
+    - button "Show HTML"
+  - text: Headline
+  - textbox: Welcome to Your Site
+  - text: Subheadline
+  - textbox: Your value proposition goes here
+  - text: Gradient Angle
+  - slider: "135"
+  - text: 135° Gradient Start
+  - textbox: "#667eea"
+  - text: Gradient End
+  - textbox: "#764ba2"
+  - button "🗑️ Delete"
+- strong: 🦸
+- text: Hero Section Ready
+- button "🐛"
+```

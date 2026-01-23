@@ -1,0 +1,1122 @@
+/**
+ * WB Behaviors Theme Definitions
+ * Pure CSS theme implementation - SOLID compliant
+ * 
+ * Usage: Set data-theme attribute on <html> or <body>
+ * Example: <html data-theme="ocean">
+ * 
+ * All themes derive from HCS (Harmonic Color System) definitions
+ * Source: components/wb-control-panel/config/themes-hcs.json
+ * 
+ * @version 1.0.0
+ */
+
+/* =============================================================================
+   BASE THEME STRUCTURE
+   All themes provide these CSS custom properties
+   ============================================================================= */
+
+/*
+  Required variables per theme:
+  --hue-primary, --saturation-primary, --lightness-primary
+  --primary, --primary-dark, --primary-light
+  --secondary, --secondary-dark, --secondary-light
+  --accent, --accent-dark, --accent-light
+  --bg-color, --bg-primary, --bg-secondary, --bg-tertiary
+  --text-primary, --text-secondary, --text-muted
+  --border-color, --border-light, --border-dark
+*/
+
+/* Apply theme text color to any element defining a theme */
+[data-theme] {
+  color: var(--text-primary);
+}
+
+/* =============================================================================
+   DARK THEME (Default)
+   Standard - Complementary harmony, hue: 240
+   ============================================================================= */
+[data-theme="dark"],
+:root {
+  /* Foundation */
+  --hue-primary: 240;
+  --saturation-primary: 70;
+  --lightness-primary: 50;
+  
+  /* Primary */
+  --primary: hsl(240, 70%, 50%);
+  --primary-dark: hsl(240, 70%, 35%);
+  --primary-light: hsl(240, 50%, 75%);
+  --primary-rgb: 99, 102, 241;
+  
+  /* Secondary (Complementary +180°) */
+  --secondary: hsl(60, 60%, 50%);
+  --secondary-dark: hsl(60, 60%, 40%);
+  --secondary-light: hsl(60, 50%, 65%);
+  
+  /* Accent (Analogous -30°) */
+  --accent: hsl(210, 60%, 50%);
+  --accent-dark: hsl(210, 60%, 35%);
+  --accent-light: hsl(210, 45%, 70%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(220, 25%, 10%);
+  --bg-primary: hsl(220, 25%, 15%);
+  --bg-secondary: hsl(220, 20%, 20%);
+  --bg-tertiary: hsl(220, 15%, 25%);
+  
+  /* Text */
+  --text-primary: hsl(0, 0%, 98%);
+  --text-secondary: hsl(220, 10%, 80%);
+  --text-muted: hsl(220, 10%, 60%);
+  
+  /* Borders */
+  --border-color: hsl(220, 15%, 30%);
+  --border-light: hsl(220, 15%, 40%);
+  --border-dark: hsl(220, 15%, 20%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(240, 70%, 60%);
+  
+  /* Semantic Status Colors */
+  --success-color: hsl(142, 76%, 45%);
+  --warning-color: hsl(45, 100%, 50%);
+  --danger-color: hsl(0, 84%, 60%);
+  --info-color: hsl(200, 100%, 50%);
+}
+
+/* =============================================================================
+   LIGHT THEME
+   Standard - Complementary harmony, hue: 240
+   ============================================================================= */
+[data-theme="light"] {
+  /* Foundation */
+  --hue-primary: 240;
+  --saturation-primary: 70;
+  --lightness-primary: 50;
+  
+  /* Primary */
+  --primary: hsl(240, 70%, 50%);
+  --primary-dark: hsl(240, 70%, 40%);
+  --primary-light: hsl(240, 50%, 70%);
+  --primary-rgb: 99, 102, 241;
+  
+  /* Secondary (Complementary +180°) */
+  --secondary: hsl(60, 60%, 45%);
+  --secondary-dark: hsl(60, 60%, 35%);
+  --secondary-light: hsl(60, 50%, 60%);
+  
+  /* Accent (Analogous -30°) */
+  --accent: hsl(210, 60%, 50%);
+  --accent-dark: hsl(210, 60%, 40%);
+  --accent-light: hsl(210, 45%, 65%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(0, 0%, 98%);
+  --bg-primary: hsl(0, 0%, 100%);
+  --bg-secondary: hsl(220, 15%, 96%);
+  --bg-tertiary: hsl(220, 10%, 92%);
+  
+  /* Text */
+  --text-primary: hsl(220, 25%, 15%);
+  --text-secondary: hsl(220, 15%, 35%);
+  --text-muted: hsl(220, 10%, 55%);
+  
+  /* Borders */
+  --border-color: hsl(220, 15%, 80%);
+  --border-light: hsl(220, 15%, 88%);
+  --border-dark: hsl(220, 15%, 70%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(240, 70%, 50%);
+  
+  /* Semantic Status Colors */
+  --success-color: hsl(142, 76%, 36%);
+  --warning-color: hsl(45, 100%, 40%);
+  --danger-color: hsl(0, 84%, 50%);
+  --info-color: hsl(200, 100%, 40%);
+}
+
+/* =============================================================================
+   CYBERPUNK THEME
+   Vibrant - Complementary harmony, hue: 320 (Magenta/Cyan)
+   ============================================================================= */
+[data-theme="cyberpunk"] {
+  /* Foundation */
+  --hue-primary: 320;
+  --saturation-primary: 100;
+  --lightness-primary: 50;
+  
+  /* Primary (Magenta) */
+  --primary: hsl(320, 100%, 50%);
+  --primary-dark: hsl(320, 100%, 35%);
+  --primary-light: hsl(320, 80%, 70%);
+  --primary-rgb: 255, 0, 127;
+  
+  /* Secondary (Cyan - Complementary +180°) */
+  --secondary: hsl(180, 100%, 50%);
+  --secondary-dark: hsl(180, 100%, 35%);
+  --secondary-light: hsl(180, 80%, 70%);
+  
+  /* Accent (Purple - Analogous -30°) */
+  --accent: hsl(290, 90%, 50%);
+  --accent-dark: hsl(290, 90%, 35%);
+  --accent-light: hsl(290, 70%, 70%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(270, 40%, 8%);
+  --bg-primary: hsl(270, 40%, 10%);
+  --bg-secondary: hsl(270, 35%, 15%);
+  --bg-tertiary: hsl(270, 30%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(180, 100%, 95%);
+  --text-secondary: hsl(320, 50%, 80%);
+  --text-muted: hsl(270, 30%, 60%);
+  
+  /* Borders */
+  --border-color: hsl(320, 80%, 40%);
+  --border-light: hsl(180, 80%, 50%);
+  --border-dark: hsl(270, 50%, 25%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(180, 100%, 50%);
+}
+
+/* =============================================================================
+   OCEAN THEME
+   Calm - Analogous harmony, hue: 200 (Blues)
+   ============================================================================= */
+[data-theme="ocean"] {
+  /* Foundation */
+  --hue-primary: 200;
+  --saturation-primary: 80;
+  --lightness-primary: 50;
+  
+  /* Primary (Ocean Blue) */
+  --primary: hsl(200, 80%, 50%);
+  --primary-dark: hsl(200, 80%, 35%);
+  --primary-light: hsl(200, 60%, 70%);
+  --primary-rgb: 25, 153, 230;
+  
+  /* Secondary (Deep Blue - Analogous +30°) */
+  --secondary: hsl(230, 80%, 50%);
+  --secondary-dark: hsl(230, 80%, 40%);
+  --secondary-light: hsl(230, 60%, 65%);
+  
+  /* Accent (Teal - Analogous -30°) */
+  --accent: hsl(170, 70%, 45%);
+  --accent-dark: hsl(170, 70%, 30%);
+  --accent-light: hsl(170, 50%, 65%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(200, 40%, 10%);
+  --bg-primary: hsl(200, 40%, 15%);
+  --bg-secondary: hsl(200, 35%, 20%);
+  --bg-tertiary: hsl(200, 30%, 25%);
+  
+  /* Text */
+  --text-primary: hsl(200, 20%, 95%);
+  --text-secondary: hsl(200, 30%, 75%);
+  --text-muted: hsl(200, 20%, 55%);
+  
+  /* Borders */
+  --border-color: hsl(200, 50%, 35%);
+  --border-light: hsl(200, 50%, 45%);
+  --border-dark: hsl(200, 50%, 25%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(170, 70%, 50%);
+}
+
+/* =============================================================================
+   SUNSET THEME
+   Warm - Triadic harmony, hue: 25 (Orange)
+   ============================================================================= */
+[data-theme="sunset"] {
+  /* Foundation */
+  --hue-primary: 25;
+  --saturation-primary: 90;
+  --lightness-primary: 55;
+  
+  /* Primary (Sunset Orange) */
+  --primary: hsl(25, 90%, 55%);
+  --primary-dark: hsl(25, 90%, 40%);
+  --primary-light: hsl(25, 70%, 75%);
+  --primary-rgb: 245, 130, 48;
+  
+  /* Secondary (Green - Triadic +120°) */
+  --secondary: hsl(145, 80%, 45%);
+  --secondary-dark: hsl(145, 80%, 35%);
+  --secondary-light: hsl(145, 60%, 65%);
+  
+  /* Accent (Purple - Triadic +240°) */
+  --accent: hsl(265, 70%, 55%);
+  --accent-dark: hsl(265, 70%, 40%);
+  --accent-light: hsl(265, 50%, 75%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(15, 30%, 10%);
+  --bg-primary: hsl(15, 30%, 15%);
+  --bg-secondary: hsl(15, 25%, 20%);
+  --bg-tertiary: hsl(15, 20%, 25%);
+  
+  /* Text */
+  --text-primary: hsl(40, 30%, 95%);
+  --text-secondary: hsl(25, 40%, 80%);
+  --text-muted: hsl(15, 20%, 60%);
+  
+  /* Borders */
+  --border-color: hsl(25, 60%, 35%);
+  --border-light: hsl(25, 60%, 50%);
+  --border-dark: hsl(15, 40%, 25%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(25, 90%, 60%);
+}
+
+/* =============================================================================
+   FOREST THEME
+   Natural - Split-complementary harmony, hue: 140 (Green)
+   ============================================================================= */
+[data-theme="forest"] {
+  /* Foundation */
+  --hue-primary: 140;
+  --saturation-primary: 60;
+  --lightness-primary: 45;
+  
+  /* Primary (Forest Green) */
+  --primary: hsl(140, 60%, 45%);
+  --primary-dark: hsl(140, 60%, 30%);
+  --primary-light: hsl(140, 40%, 65%);
+  --primary-rgb: 69, 184, 115;
+  
+  /* Secondary (Rose - Split-comp +150°) */
+  --secondary: hsl(320, 55%, 50%);
+  --secondary-dark: hsl(320, 55%, 40%);
+  --secondary-light: hsl(320, 40%, 70%);
+  
+  /* Accent (Orange - Split-comp -150°) */
+  --accent: hsl(20, 60%, 50%);
+  --accent-dark: hsl(20, 60%, 35%);
+  --accent-light: hsl(20, 45%, 70%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(140, 30%, 8%);
+  --bg-primary: hsl(140, 30%, 12%);
+  --bg-secondary: hsl(140, 25%, 18%);
+  --bg-tertiary: hsl(140, 20%, 24%);
+  
+  /* Text */
+  --text-primary: hsl(80, 20%, 95%);
+  --text-secondary: hsl(140, 20%, 75%);
+  --text-muted: hsl(140, 15%, 55%);
+  
+  /* Borders */
+  --border-color: hsl(140, 40%, 30%);
+  --border-light: hsl(140, 40%, 40%);
+  --border-dark: hsl(140, 40%, 20%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(140, 60%, 50%);
+}
+
+/* =============================================================================
+   MIDNIGHT THEME
+   Calm - Monochromatic harmony, hue: 230 (Deep Blue)
+   ============================================================================= */
+[data-theme="midnight"] {
+  /* Foundation */
+  --hue-primary: 230;
+  --saturation-primary: 85;
+  --lightness-primary: 35;
+  
+  /* Primary (Midnight Blue) */
+  --primary: hsl(230, 85%, 35%);
+  --primary-dark: hsl(230, 85%, 25%);
+  --primary-light: hsl(230, 65%, 55%);
+  --primary-rgb: 26, 54, 165;
+  
+  /* Secondary (Lighter Blue - Monochromatic) */
+  --secondary: hsl(230, 75%, 50%);
+  --secondary-dark: hsl(230, 75%, 40%);
+  --secondary-light: hsl(230, 55%, 65%);
+  
+  /* Accent (Lightest Blue - Monochromatic) */
+  --accent: hsl(230, 60%, 65%);
+  --accent-dark: hsl(230, 60%, 50%);
+  --accent-light: hsl(230, 40%, 80%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(230, 40%, 6%);
+  --bg-primary: hsl(230, 40%, 8%);
+  --bg-secondary: hsl(230, 35%, 12%);
+  --bg-tertiary: hsl(230, 30%, 18%);
+  
+  /* Text */
+  --text-primary: hsl(230, 30%, 95%);
+  --text-secondary: hsl(230, 40%, 75%);
+  --text-muted: hsl(230, 30%, 55%);
+  
+  /* Borders */
+  --border-color: hsl(230, 50%, 25%);
+  --border-light: hsl(230, 50%, 35%);
+  --border-dark: hsl(230, 50%, 15%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(230, 60%, 65%);
+}
+
+/* =============================================================================
+   SAKURA THEME
+   Elegant - Tetradic harmony, hue: 340 (Pink)
+   ============================================================================= */
+[data-theme="sakura"] {
+  /* Foundation */
+  --hue-primary: 340;
+  --saturation-primary: 70;
+  --lightness-primary: 70;
+  
+  /* Primary (Sakura Pink) */
+  --primary: hsl(340, 70%, 70%);
+  --primary-dark: hsl(340, 70%, 55%);
+  --primary-light: hsl(340, 50%, 85%);
+  --primary-rgb: 235, 143, 168;
+  
+  /* Secondary (Spring Green - Tetradic +90°) */
+  --secondary: hsl(70, 60%, 60%);
+  --secondary-dark: hsl(70, 60%, 45%);
+  --secondary-light: hsl(70, 40%, 75%);
+  
+  /* Accent (Sky Blue - Tetradic +180°) */
+  --accent: hsl(160, 50%, 60%);
+  --accent-dark: hsl(160, 50%, 45%);
+  --accent-light: hsl(160, 35%, 75%);
+  
+  /* Backgrounds - Light mode */
+  --bg-color: hsl(350, 25%, 96%);
+  --bg-primary: hsl(350, 20%, 98%);
+  --bg-secondary: hsl(340, 15%, 94%);
+  --bg-tertiary: hsl(340, 10%, 90%);
+  
+  /* Text */
+  --text-primary: hsl(340, 40%, 20%);
+  --text-secondary: hsl(340, 25%, 40%);
+  --text-muted: hsl(340, 15%, 55%);
+  
+  /* Borders */
+  --border-color: hsl(340, 40%, 80%);
+  --border-light: hsl(340, 30%, 88%);
+  --border-dark: hsl(340, 40%, 70%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(340, 70%, 60%);
+}
+
+/* =============================================================================
+   ARCTIC THEME
+   Wave-based - Doppler Shift harmony, hue: 190 (Ice Blue)
+   ============================================================================= */
+[data-theme="arctic"] {
+  /* Foundation */
+  --hue-primary: 190;
+  --saturation-primary: 75;
+  --lightness-primary: 65;
+  
+  /* Primary (Arctic Ice) */
+  --primary: hsl(190, 75%, 65%);
+  --primary-dark: hsl(190, 75%, 50%);
+  --primary-light: hsl(190, 55%, 80%);
+  --primary-rgb: 115, 206, 224;
+  
+  /* Secondary (Shifted Blue - Doppler) */
+  --secondary: hsl(210, 70%, 60%);
+  --secondary-dark: hsl(210, 70%, 45%);
+  --secondary-light: hsl(210, 50%, 75%);
+  
+  /* Accent (Shifted Cyan - Doppler) */
+  --accent: hsl(170, 65%, 55%);
+  --accent-dark: hsl(170, 65%, 40%);
+  --accent-light: hsl(170, 45%, 75%);
+  
+  /* Backgrounds - Light mode */
+  --bg-color: hsl(190, 20%, 95%);
+  --bg-primary: hsl(190, 15%, 98%);
+  --bg-secondary: hsl(190, 15%, 92%);
+  --bg-tertiary: hsl(190, 10%, 88%);
+  
+  /* Text */
+  --text-primary: hsl(200, 40%, 20%);
+  --text-secondary: hsl(200, 25%, 40%);
+  --text-muted: hsl(200, 15%, 55%);
+  
+  /* Borders */
+  --border-color: hsl(190, 40%, 80%);
+  --border-light: hsl(190, 30%, 88%);
+  --border-dark: hsl(190, 40%, 70%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(190, 75%, 50%);
+}
+
+/* =============================================================================
+   DESERT THEME
+   Wave-based - Standing Wave harmony, hue: 35 (Sand)
+   ============================================================================= */
+[data-theme="desert"] {
+  /* Foundation */
+  --hue-primary: 35;
+  --saturation-primary: 65;
+  --lightness-primary: 60;
+  
+  /* Primary (Desert Sand) */
+  --primary: hsl(35, 65%, 60%);
+  --primary-dark: hsl(35, 65%, 45%);
+  --primary-light: hsl(35, 45%, 80%);
+  --primary-rgb: 214, 174, 107;
+  
+  /* Secondary (Warm Tan - Standing Wave) */
+  --secondary: hsl(45, 60%, 55%);
+  --secondary-dark: hsl(45, 60%, 40%);
+  --secondary-light: hsl(45, 40%, 75%);
+  
+  /* Accent (Terracotta - Standing Wave) */
+  --accent: hsl(15, 55%, 55%);
+  --accent-dark: hsl(15, 55%, 40%);
+  --accent-light: hsl(15, 40%, 75%);
+  
+  /* Backgrounds - Light mode */
+  --bg-color: hsl(40, 25%, 92%);
+  --bg-primary: hsl(40, 20%, 96%);
+  --bg-secondary: hsl(35, 20%, 88%);
+  --bg-tertiary: hsl(35, 15%, 84%);
+  
+  /* Text */
+  --text-primary: hsl(30, 40%, 20%);
+  --text-secondary: hsl(30, 25%, 40%);
+  --text-muted: hsl(30, 15%, 55%);
+  
+  /* Borders */
+  --border-color: hsl(35, 35%, 75%);
+  --border-light: hsl(35, 25%, 85%);
+  --border-dark: hsl(35, 35%, 65%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(35, 65%, 50%);
+}
+
+/* =============================================================================
+   NEON DREAMS THEME
+   Wave-based - Beat Pattern harmony, hue: 280 (Purple Neon)
+   ============================================================================= */
+[data-theme="neon-dreams"] {
+  /* Foundation */
+  --hue-primary: 280;
+  --saturation-primary: 95;
+  --lightness-primary: 55;
+  
+  /* Primary (Neon Purple) */
+  --primary: hsl(280, 95%, 55%);
+  --primary-dark: hsl(280, 95%, 40%);
+  --primary-light: hsl(280, 75%, 75%);
+  --primary-rgb: 178, 36, 239;
+  
+  /* Secondary (Neon Pink - Beat Pattern) */
+  --secondary: hsl(320, 95%, 55%);
+  --secondary-dark: hsl(320, 95%, 40%);
+  --secondary-light: hsl(320, 75%, 75%);
+  
+  /* Accent (Electric Blue - Beat Pattern) */
+  --accent: hsl(240, 90%, 60%);
+  --accent-dark: hsl(240, 90%, 45%);
+  --accent-light: hsl(240, 70%, 75%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(270, 35%, 8%);
+  --bg-primary: hsl(270, 35%, 12%);
+  --bg-secondary: hsl(270, 30%, 18%);
+  --bg-tertiary: hsl(270, 25%, 24%);
+  
+  /* Text */
+  --text-primary: hsl(280, 50%, 95%);
+  --text-secondary: hsl(300, 40%, 80%);
+  --text-muted: hsl(270, 25%, 60%);
+  
+  /* Borders */
+  --border-color: hsl(280, 70%, 40%);
+  --border-light: hsl(320, 70%, 50%);
+  --border-dark: hsl(270, 50%, 25%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(320, 95%, 60%);
+}
+
+/* =============================================================================
+   RETRO WAVE THEME
+   Wave-based - Harmonic Series harmony, hue: 330 (Retro Pink)
+   ============================================================================= */
+[data-theme="retro-wave"] {
+  /* Foundation */
+  --hue-primary: 330;
+  --saturation-primary: 85;
+  --lightness-primary: 60;
+  
+  /* Primary (Retro Pink) */
+  --primary: hsl(330, 85%, 60%);
+  --primary-dark: hsl(330, 85%, 45%);
+  --primary-light: hsl(330, 65%, 80%);
+  --primary-rgb: 235, 87, 159;
+  
+  /* Secondary (Retro Purple - Harmonic) */
+  --secondary: hsl(300, 80%, 55%);
+  --secondary-dark: hsl(300, 80%, 40%);
+  --secondary-light: hsl(300, 60%, 75%);
+  
+  /* Accent (Retro Blue - Harmonic) */
+  --accent: hsl(260, 75%, 60%);
+  --accent-dark: hsl(260, 75%, 45%);
+  --accent-light: hsl(260, 55%, 80%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(260, 30%, 12%);
+  --bg-primary: hsl(260, 30%, 15%);
+  --bg-secondary: hsl(260, 25%, 22%);
+  --bg-tertiary: hsl(260, 20%, 28%);
+  
+  /* Text */
+  --text-primary: hsl(330, 40%, 95%);
+  --text-secondary: hsl(300, 35%, 80%);
+  --text-muted: hsl(260, 20%, 60%);
+  
+  /* Borders */
+  --border-color: hsl(330, 60%, 45%);
+  --border-light: hsl(300, 60%, 55%);
+  --border-dark: hsl(260, 40%, 30%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(330, 85%, 65%);
+}
+
+/* =============================================================================
+   LAVENDER THEME
+   Soft purple pastels
+   ============================================================================= */
+[data-theme="lavender"] {
+  --hue-primary: 270;
+  --saturation-primary: 60;
+  --lightness-primary: 70;
+  
+  --primary: hsl(270, 60%, 70%);
+  --primary-dark: hsl(270, 60%, 55%);
+  --primary-light: hsl(270, 40%, 85%);
+  --primary-rgb: 183, 153, 214;
+  
+  --secondary: hsl(300, 50%, 65%);
+  --secondary-dark: hsl(300, 50%, 50%);
+  --secondary-light: hsl(300, 35%, 80%);
+  
+  --accent: hsl(240, 50%, 70%);
+  --accent-dark: hsl(240, 50%, 55%);
+  --accent-light: hsl(240, 35%, 85%);
+  
+  --bg-color: hsl(270, 30%, 95%);
+  --bg-primary: hsl(270, 25%, 98%);
+  --bg-secondary: hsl(270, 20%, 92%);
+  --bg-tertiary: hsl(270, 15%, 88%);
+  
+  --text-primary: hsl(270, 40%, 20%);
+  --text-secondary: hsl(270, 25%, 40%);
+  --text-muted: hsl(270, 15%, 55%);
+  
+  --border-color: hsl(270, 30%, 80%);
+  --border-light: hsl(270, 25%, 88%);
+  --border-dark: hsl(270, 30%, 70%);
+  
+  --semantic-label: hsl(270, 60%, 60%);
+}
+
+/* =============================================================================
+   EMERALD THEME
+   Rich jewel-toned green
+   ============================================================================= */
+[data-theme="emerald"] {
+  --hue-primary: 160;
+  --saturation-primary: 85;
+  --lightness-primary: 40;
+  
+  --primary: hsl(160, 85%, 40%);
+  --primary-dark: hsl(160, 85%, 28%);
+  --primary-light: hsl(160, 65%, 60%);
+  --primary-rgb: 15, 189, 140;
+  
+  --secondary: hsl(180, 75%, 35%);
+  --secondary-dark: hsl(180, 75%, 25%);
+  --secondary-light: hsl(180, 55%, 55%);
+  
+  --accent: hsl(140, 70%, 45%);
+  --accent-dark: hsl(140, 70%, 32%);
+  --accent-light: hsl(140, 50%, 65%);
+  
+  --bg-color: hsl(160, 35%, 8%);
+  --bg-primary: hsl(160, 35%, 12%);
+  --bg-secondary: hsl(160, 30%, 18%);
+  --bg-tertiary: hsl(160, 25%, 24%);
+  
+  --text-primary: hsl(160, 20%, 95%);
+  --text-secondary: hsl(160, 25%, 75%);
+  --text-muted: hsl(160, 15%, 55%);
+  
+  --border-color: hsl(160, 45%, 30%);
+  --border-light: hsl(160, 45%, 40%);
+  --border-dark: hsl(160, 45%, 20%);
+  
+  --semantic-label: hsl(160, 85%, 45%);
+}
+
+/* =============================================================================
+   RUBY THEME
+   Deep red elegance
+   ============================================================================= */
+[data-theme="ruby"] {
+  --hue-primary: 350;
+  --saturation-primary: 80;
+  --lightness-primary: 45;
+  
+  --primary: hsl(350, 80%, 45%);
+  --primary-dark: hsl(350, 80%, 32%);
+  --primary-light: hsl(350, 60%, 65%);
+  --primary-rgb: 207, 34, 68;
+  
+  --secondary: hsl(330, 70%, 50%);
+  --secondary-dark: hsl(330, 70%, 38%);
+  --secondary-light: hsl(330, 50%, 70%);
+  
+  --accent: hsl(15, 75%, 50%);
+  --accent-dark: hsl(15, 75%, 38%);
+  --accent-light: hsl(15, 55%, 70%);
+  
+  --bg-color: hsl(350, 30%, 8%);
+  --bg-primary: hsl(350, 30%, 12%);
+  --bg-secondary: hsl(350, 25%, 18%);
+  --bg-tertiary: hsl(350, 20%, 24%);
+  
+  --text-primary: hsl(350, 20%, 95%);
+  --text-secondary: hsl(350, 25%, 75%);
+  --text-muted: hsl(350, 15%, 55%);
+  
+  --border-color: hsl(350, 50%, 30%);
+  --border-light: hsl(350, 50%, 40%);
+  --border-dark: hsl(350, 50%, 20%);
+  
+  --semantic-label: hsl(350, 80%, 50%);
+}
+
+/* =============================================================================
+   GOLDEN THEME
+   Luxurious gold and amber
+   ============================================================================= */
+[data-theme="golden"] {
+  --hue-primary: 45;
+  --saturation-primary: 90;
+  --lightness-primary: 50;
+  
+  --primary: hsl(45, 90%, 50%);
+  --primary-dark: hsl(45, 90%, 38%);
+  --primary-light: hsl(45, 70%, 70%);
+  --primary-rgb: 242, 194, 13;
+  
+  --secondary: hsl(30, 85%, 50%);
+  --secondary-dark: hsl(30, 85%, 38%);
+  --secondary-light: hsl(30, 65%, 70%);
+  
+  --accent: hsl(60, 70%, 45%);
+  --accent-dark: hsl(60, 70%, 33%);
+  --accent-light: hsl(60, 50%, 65%);
+  
+  --bg-color: hsl(40, 30%, 8%);
+  --bg-primary: hsl(40, 30%, 12%);
+  --bg-secondary: hsl(40, 25%, 18%);
+  --bg-tertiary: hsl(40, 20%, 24%);
+  
+  --text-primary: hsl(45, 30%, 95%);
+  --text-secondary: hsl(45, 35%, 75%);
+  --text-muted: hsl(40, 20%, 55%);
+  
+  --border-color: hsl(45, 60%, 30%);
+  --border-light: hsl(45, 60%, 45%);
+  --border-dark: hsl(45, 60%, 20%);
+  
+  --semantic-label: hsl(45, 90%, 55%);
+}
+
+/* =============================================================================
+   SLATE THEME
+   Professional gray tones
+   ============================================================================= */
+[data-theme="slate"] {
+  --hue-primary: 215;
+  --saturation-primary: 20;
+  --lightness-primary: 50;
+  
+  --primary: hsl(215, 20%, 50%);
+  --primary-dark: hsl(215, 20%, 38%);
+  --primary-light: hsl(215, 15%, 65%);
+  --primary-rgb: 102, 117, 133;
+  
+  --secondary: hsl(215, 25%, 45%);
+  --secondary-dark: hsl(215, 25%, 33%);
+  --secondary-light: hsl(215, 20%, 60%);
+  
+  --accent: hsl(200, 30%, 50%);
+  --accent-dark: hsl(200, 30%, 38%);
+  --accent-light: hsl(200, 25%, 65%);
+  
+  --bg-color: hsl(215, 15%, 12%);
+  --bg-primary: hsl(215, 15%, 16%);
+  --bg-secondary: hsl(215, 12%, 22%);
+  --bg-tertiary: hsl(215, 10%, 28%);
+  
+  --text-primary: hsl(215, 10%, 95%);
+  --text-secondary: hsl(215, 12%, 75%);
+  --text-muted: hsl(215, 8%, 55%);
+  
+  --border-color: hsl(215, 15%, 32%);
+  --border-light: hsl(215, 15%, 42%);
+  --border-dark: hsl(215, 15%, 22%);
+  
+  --semantic-label: hsl(215, 25%, 55%);
+}
+
+/* =============================================================================
+   COFFEE THEME
+   Warm brown tones
+   ============================================================================= */
+[data-theme="coffee"] {
+  --hue-primary: 25;
+  --saturation-primary: 50;
+  --lightness-primary: 40;
+  
+  --primary: hsl(25, 50%, 40%);
+  --primary-dark: hsl(25, 50%, 28%);
+  --primary-light: hsl(25, 35%, 60%);
+  --primary-rgb: 153, 102, 51;
+  
+  --secondary: hsl(35, 45%, 45%);
+  --secondary-dark: hsl(35, 45%, 33%);
+  --secondary-light: hsl(35, 35%, 60%);
+  
+  --accent: hsl(15, 55%, 45%);
+  --accent-dark: hsl(15, 55%, 33%);
+  --accent-light: hsl(15, 40%, 65%);
+  
+  --bg-color: hsl(25, 25%, 10%);
+  --bg-primary: hsl(25, 25%, 14%);
+  --bg-secondary: hsl(25, 20%, 20%);
+  --bg-tertiary: hsl(25, 18%, 26%);
+  
+  --text-primary: hsl(30, 25%, 92%);
+  --text-secondary: hsl(25, 20%, 72%);
+  --text-muted: hsl(25, 15%, 52%);
+  
+  --border-color: hsl(25, 35%, 28%);
+  --border-light: hsl(25, 35%, 38%);
+  --border-dark: hsl(25, 35%, 18%);
+  
+  --semantic-label: hsl(25, 50%, 50%);
+}
+
+/* =============================================================================
+   MINT THEME
+   Fresh mint green - light mode
+   ============================================================================= */
+[data-theme="mint"] {
+  --hue-primary: 165;
+  --saturation-primary: 60;
+  --lightness-primary: 50;
+  
+  --primary: hsl(165, 60%, 50%);
+  --primary-dark: hsl(165, 60%, 38%);
+  --primary-light: hsl(165, 45%, 70%);
+  --primary-rgb: 51, 204, 170;
+  
+  --secondary: hsl(180, 55%, 45%);
+  --secondary-dark: hsl(180, 55%, 33%);
+  --secondary-light: hsl(180, 40%, 65%);
+  
+  --accent: hsl(150, 50%, 50%);
+  --accent-dark: hsl(150, 50%, 38%);
+  --accent-light: hsl(150, 38%, 70%);
+  
+  --bg-color: hsl(165, 30%, 95%);
+  --bg-primary: hsl(165, 25%, 98%);
+  --bg-secondary: hsl(165, 20%, 92%);
+  --bg-tertiary: hsl(165, 15%, 88%);
+  
+  --text-primary: hsl(165, 40%, 15%);
+  --text-secondary: hsl(165, 25%, 35%);
+  --text-muted: hsl(165, 15%, 50%);
+  
+  --border-color: hsl(165, 35%, 78%);
+  --border-light: hsl(165, 28%, 86%);
+  --border-dark: hsl(165, 35%, 68%);
+  
+  --semantic-label: hsl(165, 60%, 42%);
+}
+
+/* =============================================================================
+   NOIR THEME
+   High contrast black and white
+   ============================================================================= */
+[data-theme="noir"] {
+  --hue-primary: 0;
+  --saturation-primary: 0;
+  --lightness-primary: 100;
+  
+  --primary: hsl(0, 0%, 100%);
+  --primary-dark: hsl(0, 0%, 85%);
+  --primary-light: hsl(0, 0%, 100%);
+  --primary-rgb: 255, 255, 255;
+  
+  --secondary: hsl(0, 0%, 70%);
+  --secondary-dark: hsl(0, 0%, 55%);
+  --secondary-light: hsl(0, 0%, 85%);
+  
+  --accent: hsl(0, 0%, 50%);
+  --accent-dark: hsl(0, 0%, 35%);
+  --accent-light: hsl(0, 0%, 70%);
+  
+  --bg-color: hsl(0, 0%, 4%);
+  --bg-primary: hsl(0, 0%, 8%);
+  --bg-secondary: hsl(0, 0%, 14%);
+  --bg-tertiary: hsl(0, 0%, 20%);
+  
+  --text-primary: hsl(0, 0%, 98%);
+  --text-secondary: hsl(0, 0%, 75%);
+  --text-muted: hsl(0, 0%, 50%);
+  
+  --border-color: hsl(0, 0%, 25%);
+  --border-light: hsl(0, 0%, 35%);
+  --border-dark: hsl(0, 0%, 15%);
+  
+  --semantic-label: hsl(0, 0%, 100%);
+}
+
+/* =============================================================================
+   AURORA THEME
+   Northern lights inspired
+   ============================================================================= */
+[data-theme="aurora"] {
+  --hue-primary: 160;
+  --saturation-primary: 80;
+  --lightness-primary: 55;
+  
+  --primary: hsl(160, 80%, 55%);
+  --primary-dark: hsl(160, 80%, 40%);
+  --primary-light: hsl(160, 60%, 75%);
+  --primary-rgb: 51, 222, 178;
+  
+  --secondary: hsl(280, 70%, 60%);
+  --secondary-dark: hsl(280, 70%, 45%);
+  --secondary-light: hsl(280, 50%, 78%);
+  
+  --accent: hsl(200, 75%, 55%);
+  --accent-dark: hsl(200, 75%, 40%);
+  --accent-light: hsl(200, 55%, 75%);
+  
+  --bg-color: hsl(240, 30%, 8%);
+  --bg-primary: hsl(240, 30%, 12%);
+  --bg-secondary: hsl(240, 25%, 18%);
+  --bg-tertiary: hsl(240, 20%, 24%);
+  
+  --text-primary: hsl(160, 30%, 95%);
+  --text-secondary: hsl(200, 35%, 78%);
+  --text-muted: hsl(240, 20%, 58%);
+  
+  --border-color: hsl(200, 50%, 32%);
+  --border-light: hsl(160, 50%, 42%);
+  --border-dark: hsl(280, 40%, 25%);
+  
+  --semantic-label: hsl(160, 80%, 60%);
+}
+
+/* =============================================================================
+   TWILIGHT THEME
+   Similar to Midnight but with purple-blue gradients and warmer accents
+   ============================================================================= */
+[data-theme="twilight"] {
+  /* Foundation */
+  --hue-primary: 250;
+  --saturation-primary: 70;
+  --lightness-primary: 45;
+  
+  /* Primary (Twilight Purple-Blue) */
+  --primary: hsl(250, 70%, 45%);
+  --primary-dark: hsl(250, 70%, 32%);
+  --primary-light: hsl(250, 55%, 62%);
+  --primary-rgb: 77, 61, 194;
+  
+  /* Secondary (Warm Violet) */
+  --secondary: hsl(280, 60%, 52%);
+  --secondary-dark: hsl(280, 60%, 40%);
+  --secondary-light: hsl(280, 45%, 68%);
+  
+  /* Accent (Sunset Orange) */
+  --accent: hsl(25, 85%, 55%);
+  --accent-dark: hsl(25, 85%, 42%);
+  --accent-light: hsl(25, 65%, 72%);
+  
+  /* Backgrounds - Deep blue-purple */
+  --bg-color: hsl(245, 35%, 7%);
+  --bg-primary: hsl(245, 35%, 10%);
+  --bg-secondary: hsl(248, 30%, 15%);
+  --bg-tertiary: hsl(250, 25%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(245, 25%, 95%);
+  --text-secondary: hsl(250, 30%, 78%);
+  --text-muted: hsl(248, 22%, 55%);
+  
+  /* Borders */
+  --border-color: hsl(250, 40%, 28%);
+  --border-light: hsl(250, 40%, 38%);
+  --border-dark: hsl(250, 40%, 18%);
+  
+  /* Semantic label color */
+  --semantic-label: hsl(25, 85%, 58%);
+}
+
+/* =============================================================================
+   GRAPE THEME
+   Deep purple vibes
+   ============================================================================= */
+[data-theme="grape"] {
+  --hue-primary: 280;
+  --saturation-primary: 70;
+  --lightness-primary: 50;
+  
+  --primary: hsl(280, 70%, 50%);
+  --primary-dark: hsl(280, 70%, 38%);
+  --primary-light: hsl(280, 50%, 70%);
+  --primary-rgb: 153, 51, 204;
+  
+  --secondary: hsl(260, 65%, 55%);
+  --secondary-dark: hsl(260, 65%, 42%);
+  --secondary-light: hsl(260, 45%, 72%);
+  
+  --accent: hsl(300, 60%, 50%);
+  --accent-dark: hsl(300, 60%, 38%);
+  --accent-light: hsl(300, 45%, 70%);
+  
+  --bg-color: hsl(280, 35%, 8%);
+  --bg-primary: hsl(280, 35%, 12%);
+  --bg-secondary: hsl(280, 30%, 18%);
+  --bg-tertiary: hsl(280, 25%, 24%);
+  
+  --text-primary: hsl(280, 25%, 95%);
+  --text-secondary: hsl(280, 30%, 78%);
+  --text-muted: hsl(280, 18%, 58%);
+  
+  --border-color: hsl(280, 45%, 32%);
+  --border-light: hsl(280, 45%, 42%);
+  --border-dark: hsl(280, 45%, 22%);
+  
+  --semantic-label: hsl(280, 70%, 58%);
+}
+
+/* =============================================================================
+   SEMANTIC STATE COLORS (Consistent across all themes)
+   ============================================================================= */
+[data-theme] {
+  /* Success */
+  --success-color: hsl(160, 84%, 39%);
+  --success-color-light: hsl(160, 72%, 52%);
+  --success-color-dark: hsl(160, 84%, 29%);
+  --success-bg: hsla(160, 84%, 39%, 0.1);
+  
+  /* Danger / Error */
+  --danger-color: hsl(0, 84%, 60%);
+  --danger-color-light: hsl(0, 84%, 70%);
+  --danger-color-dark: hsl(0, 84%, 50%);
+  --error-color: var(--danger-color);
+  --error-color-light: var(--danger-color-light);
+  --error-color-dark: var(--danger-color-dark);
+  
+  /* Warning */
+  --warning-color: hsl(38, 92%, 50%);
+  --warning-color-light: hsl(38, 92%, 60%);
+  --warning-color-dark: hsl(38, 92%, 40%);
+  
+  /* Info */
+  --info-color: hsl(199, 89%, 48%);
+  --info-color-light: hsl(199, 89%, 58%);
+  --info-color-dark: hsl(199, 89%, 38%);
+}
+
+/* =============================================================================
+   SPACING, TYPOGRAPHY, RADIUS (Consistent across all themes)
+   ============================================================================= */
+[data-theme] {
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  
+  /* Typography */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+  
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;
+  --radius-base: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-all: all 0.2s ease;
+}
+
+/* =============================================================================
+   COMPONENT SPECIFIC VARIABLES
+   (To avoid hardcoded colors in component CSS files)
+   ============================================================================= */
+[data-theme] {
+  /* Code blocks */
+  --code-bg: #1e1e1e;
+  --code-text: #d4d4d4;
+  
+  /* Card Rack Variant */
+  --rack-bg: #0f172a;
+  --rack-border: #334155;
+  --rack-side: #1e293b;
+  --rack-text: #ffffff;
+  
+  /* Card Dark Mode Overrides (used in card.css) */
+  --card-dark-bg-secondary: #1e293b;
+  --card-dark-bg-tertiary: #0f172a;
+  --card-dark-bg-elevated: #64748b;
+  --card-dark-text-primary: #f1f5f9;
+  --card-dark-text-secondary: #94a3b8;
+  --card-dark-border: #334155;
+}

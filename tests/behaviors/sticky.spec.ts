@@ -21,7 +21,7 @@ test.describe('Sticky Behavior', () => {
           nav { background: #333; color: #fff; padding: 1rem; }
         </style>
         <div class="spacer">Scroll down to see sticky behavior</div>
-        <nav data-wb="sticky" id="stickyNav">Sticky Navigation</nav>
+        <nav wb="sticky" id="stickyNav">Sticky Navigation</nav>
         <div class="content">Main content area</div>
       `;
     });
@@ -88,7 +88,7 @@ test.describe('Sticky Behavior', () => {
     await expect(placeholder).toHaveCount(1);
   });
 
-  test('respects data-offset attribute', async ({ page }) => {
+  test('respects offset attribute', async ({ page }) => {
     // Inject a new sticky element with offset
     await page.evaluate(() => {
       document.body.innerHTML = `
@@ -99,7 +99,7 @@ test.describe('Sticky Behavior', () => {
           nav { background: #333; color: #fff; padding: 1rem; }
         </style>
         <div class="spacer"></div>
-        <nav data-wb="sticky" data-offset="50" id="stickyNav">Sticky with Offset</nav>
+        <nav wb="sticky" offset="50" id="stickyNav">Sticky with Offset</nav>
         <div class="content"></div>
       `;
     });
@@ -133,7 +133,7 @@ test.describe('Sticky Behavior', () => {
           nav { background: #333; color: #fff; padding: 1rem; }
         </style>
         <div class="spacer"></div>
-        <nav data-wb="sticky" data-class="nav-fixed" id="stickyNav">Custom Class</nav>
+        <nav wb="sticky" class="nav-fixed" id="stickyNav">Custom Class</nav>
         <div class="content"></div>
       `;
     });

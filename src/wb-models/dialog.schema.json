@@ -15,9 +15,9 @@
     "accessibility": "high"
   },
   "properties": {
-    "title": {
+    "heading": {
       "type": "string",
-      "description": "Dialog title"
+      "description": "Dialog heading"
     },
     "content": {
       "type": "string",
@@ -79,17 +79,17 @@
       "name": "header",
       "tag": "header",
       "public": true,
-      "createdWhen": "title OR showClose",
+      "createdWhen": "heading OR showClose",
       "description": "Dialog header"
     },
     {
-      "name": "title",
+      "name": "heading",
       "tag": "h2",
       "parent": "header",
       "public": true,
-      "content": "{{title}}",
-      "createdWhen": "title",
-      "description": "Dialog title"
+      "content": "{{heading}}",
+      "createdWhen": "heading",
+      "description": "Dialog heading"
     },
     {
       "name": "close",
@@ -141,10 +141,10 @@
         "content"
       ]
     },
-    "setTitle": {
-      "description": "Updates dialog title",
+    "setHeading": {
+      "description": "Updates dialog heading",
       "params": [
-        "title"
+        "heading"
       ]
     }
   },
@@ -213,13 +213,13 @@
   "accessibility": {
     "role": "dialog",
     "ariaModal": "true",
-    "ariaLabelledBy": "dialog title id"
+    "ariaLabelledBy": "dialog heading id"
   },
   "events": {
     "wb:dialog:open": {
       "description": "Dialog opened",
       "detail": {
-        "title": "string"
+        "heading": "string"
       }
     },
     "wb:dialog:close": {
@@ -242,23 +242,23 @@
       "<wb-dialog variant=\"centered\">variant=centered</wb-dialog>",
       "<wb-dialog variant=\"fullscreen\">variant=fullscreen</wb-dialog>",
       "<wb-dialog close-on-backdrop>with closeOnBackdrop</wb-dialog>",
-      "<wb-dialog title=\"Test Title\">With title attribute</wb-dialog>"
+      "<wb-dialog heading=\"Test Heading\">With heading attribute</wb-dialog>"
     ],
     "matrix": {
       "combinations": [
         {
-          "title": "Basic Dialog"
+          "heading": "Basic Dialog"
         },
         {
-          "title": "Large",
+          "heading": "Large",
           "size": "lg"
         },
         {
-          "title": "No Close",
+          "heading": "No Close",
           "showClose": false
         },
         {
-          "title": "Centered",
+          "heading": "Centered",
           "variant": "centered"
         }
       ]

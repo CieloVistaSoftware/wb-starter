@@ -176,14 +176,14 @@ export const behaviorMeta = {
     type: 'element',
     element: 'div',
     template: `
-      <div class="wb-otp" x-otp data-length="6"></div>
+      <div class="wb-otp" x-otp length="6"></div>
     `
   },
   rating: {
     type: 'element',
     element: 'div',  // Could use <meter> for display-only
     template: `
-      <wb-rating class="wb-rating"  data-max="5" data-value="0"></div>
+      <wb-rating class="wb-rating"  max="5" value="0"></div>
     `
   },
   tags: {
@@ -374,7 +374,7 @@ export const behaviorMeta = {
     template: `
       <div class="wb-action-group wb-copy-group">
         <div class="wb-action-target" contenteditable="true">Text to copy</div>
-        <button x-copy data-target=".wb-action-target">📋 Copy</button>
+        <button x-copy target=".wb-action-target">📋 Copy</button>
       </div>
     `
   },
@@ -386,7 +386,7 @@ export const behaviorMeta = {
     template: `
       <div class="wb-action-group wb-clipboard-group">
         <code class="wb-action-target">npm install wb-framework</code>
-        <button data-target=".wb-action-target">📋</button>
+        <button target=".wb-action-target">📋</button>
       </div>
     `
   },
@@ -401,7 +401,7 @@ export const behaviorMeta = {
           <h3>Printable Content</h3>
           <p>This content will be printed.</p>
         </div>
-        <button x-print data-target=".wb-action-target">🖨️ Print</button>
+        <button x-print target=".wb-action-target">🖨️ Print</button>
       </div>
     `
   },
@@ -415,7 +415,7 @@ export const behaviorMeta = {
         <div class="wb-action-target" style="min-height:200px;background:var(--bg-secondary);">
           <p>Fullscreen content area</p>
         </div>
-        <button x-fullscreen data-target=".wb-action-target">⛶ Fullscreen</button>
+        <button x-fullscreen target=".wb-action-target">⛶ Fullscreen</button>
       </div>
     `
   },
@@ -423,7 +423,7 @@ export const behaviorMeta = {
     type: 'action',
     trigger: 'button',
     target: 'required',
-    template: `<button x-scroll data-target="#section">↓ Scroll To</button>`
+    template: `<button x-scroll target="#section">↓ Scroll To</button>`
   },
   toggle: {
     type: 'action',
@@ -432,7 +432,7 @@ export const behaviorMeta = {
     group: true,
     template: `
       <div class="wb-action-group wb-toggle-group">
-        <button data-target=".wb-action-target">👁️ Toggle</button>
+        <button target=".wb-action-target">👁️ Toggle</button>
         <div class="wb-action-target">
           <p>This content can be toggled.</p>
         </div>
@@ -455,7 +455,7 @@ export const behaviorMeta = {
     trigger: 'button',
     target: null,
     createsOverlay: true,
-    template: `<wb-modal  data-modal-title="Modal Title" data-modal-content="Modal content here">Open Modal</button>`
+    template: `<wb-modal  modal-title="Modal Title" modal-content="Modal content here">Open Modal</button>`
   },
   tooltip: {
     type: 'modifier',  // Actually a modifier - attaches to element
@@ -467,7 +467,7 @@ export const behaviorMeta = {
     trigger: 'button',
     target: null,
     createsOverlay: true,
-    template: `<button x-popover data-content="Popover content">Show Popover</button>`
+    template: `<button x-popover description="Popover content">Show Popover</button>`
   },
   dropdown: {
     type: 'action',
@@ -490,7 +490,7 @@ export const behaviorMeta = {
     trigger: 'button',
     target: null,
     createsOverlay: true,
-    template: `<wb-drawer  data-position="right">☰ Open Drawer</button>`
+    template: `<wb-drawer  position="right">☰ Open Drawer</button>`
   },
   lightbox: {
     type: 'modifier',  // Attaches to images
@@ -516,26 +516,26 @@ export const behaviorMeta = {
     trigger: 'button',
     target: null,
     createsOverlay: true,
-    template: `<button x-confirm data-message="Are you sure?">Confirm Action</button>`
+    template: `<button x-confirm message="Are you sure?">Confirm Action</button>`
   },
   prompt: {
     type: 'action',
     trigger: 'button',
     target: null,
     createsOverlay: true,
-    template: `<button x-prompt data-message="Enter value:">Show Prompt</button>`
+    template: `<button x-prompt message="Enter value:">Show Prompt</button>`
   },
   notify: {
     type: 'action',
     trigger: 'button',
     target: null,
-    template: `<button x-notify data-message="Notification!">Show Notification</button>`
+    template: `<button x-notify message="Notification!">Show Notification</button>`
   },
   toast: {
     type: 'action',
     trigger: 'button',
     target: null,
-    template: `<button x-toast data-message="Toast message">Show Toast</button>`
+    template: `<button x-toast message="Toast message">Show Toast</button>`
   },
   
   // ============================================

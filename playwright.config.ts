@@ -1,3 +1,5 @@
+
+/// <reference types="node" />
 import { defineConfig, devices } from '@playwright/test';
 
 /**
@@ -55,10 +57,10 @@ export default defineConfig({
   fullyParallel: true,
   workers: 8,
   retries: 1,
-  timeout: 30000,
+  timeout: 20000,
   
   expect: {
-    timeout: 5000
+    timeout: 20000
   },
   
   use: {
@@ -68,13 +70,22 @@ export default defineConfig({
   
   // Web server - automatically starts before tests
   webServer: {
-    command: 'npm start',
+    command: 'node scripts/start-server-only.js',
     port: 3000,
     reuseExistingServer: !process.env.CI,
-    timeout: 10000,
+    timeout: 20000,
   },
   
   projects: [
+        // ═══════════════════════════════════════════════════════════════
+        // ISSUES MODAL TESTS
+        // Dedicated project for issues-modal.spec.ts
+        // ═══════════════════════════════════════════════════════════════
+        {
+          name: 'issues-modal',
+          testDir: './tests',
+          testMatch: 'issues-modal.spec.ts',
+        },
     // ═══════════════════════════════════════════════════════════════
     // TIER 1: STATIC COMPLIANCE
     // Pure file analysis - no browser, no server needed
@@ -143,7 +154,12 @@ export default defineConfig({
         'ui/builder-sidebar.spec.ts',
         'ui/figure.spec.ts',
         'ui/all-components.spec.ts',
+        'ui/page-builder-rules.spec.ts',
+        'ui/code-examples.spec.ts',
+        'ui/builder.spec.ts',
+        'ui/mdhtml-escaping.spec.ts',
         'behaviors-showcase.spec.ts',
+        'drag-me-btn-no-move.spec.ts',
         'pill-shortcut.spec.ts',
         'input-switch.spec.ts',
         'scrollalong.spec.ts',
@@ -153,6 +169,7 @@ export default defineConfig({
         'pce.spec.ts',
         'pce-demo.spec.ts',
         'autoinject.spec.ts',
+        'ui/menu-bar.spec.ts',
       ],
       // Explicitly exclude deprecated files
       testIgnore: [
@@ -169,6 +186,16 @@ export default defineConfig({
       name: 'functional',
       testDir: './tests/behaviors',
       testMatch: ['functional-runner.spec.ts'],
+    },
+    // ═══════════════════════════════════════════════════════════════
+    // ALL TESTS PROJECT
+    // Convenience project that includes every spec so you can run any file
+    // with --project=all-tests (useful for ad-hoc runs across tiers)
+    // ═══════════════════════════════════════════════════════════════
+    {
+      name: 'all-tests',
+      testDir: './tests',
+      testMatch: ['**/*.spec.ts']
     },
     
     // ═══════════════════════════════════════════════════════════════

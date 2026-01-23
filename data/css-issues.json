@@ -1,0 +1,424 @@
+{
+  "hardcodedColors": [
+    {
+      "file": "src\\styles\\behaviors\\docs.css",
+      "line": 88,
+      "color": "rgba(",
+      "context": "background: rgba(239, 68, 68, 0.1);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\docs.css",
+      "line": 89,
+      "color": "rgba(",
+      "context": "border: 1px solid rgba(239, 68, 68, 0.2);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\docs.css",
+      "line": 101,
+      "color": "#dc2626",
+      "context": "color: #dc2626;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\docs.css",
+      "line": 107,
+      "color": "#666",
+      "context": "color: #666;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\docs.css",
+      "line": 141,
+      "color": "rgba(",
+      "context": "background: rgba(99, 102, 241, 0.05);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\docs.css",
+      "line": 198,
+      "color": "rgba(",
+      "context": "background: rgba(99, 102, 241, 0.08);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\docs.css",
+      "line": 271,
+      "color": "rgba(",
+      "context": "background: rgba(99, 102, 241, 0.08);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\docs.css",
+      "line": 277,
+      "color": "#fff",
+      "context": "color: #fff;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\docs.css",
+      "line": 282,
+      "color": "#fff",
+      "context": "color: #fff;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\hero.css",
+      "line": 52,
+      "color": "#667eea",
+      "context": "background: linear-gradient(135deg, #667eea 0%, #764ba2 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\hero.css",
+      "line": 52,
+      "color": "#764ba2",
+      "context": "background: linear-gradient(135deg, #667eea 0%, #764ba2 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\hero.css",
+      "line": 57,
+      "color": "#1e293b",
+      "context": "background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\hero.css",
+      "line": 57,
+      "color": "#0f172a",
+      "context": "background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\hero.css",
+      "line": 62,
+      "color": "#f8fafc",
+      "context": "background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\hero.css",
+      "line": 62,
+      "color": "#e2e8f0",
+      "context": "background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\hero.css",
+      "line": 63,
+      "color": "#0f172a",
+      "context": "color: #0f172a;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\hero.css",
+      "line": 68,
+      "color": "#667eea",
+      "context": "background: linear-gradient(135deg, #667eea 0%, #764ba2 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\hero.css",
+      "line": 68,
+      "color": "#764ba2",
+      "context": "background: linear-gradient(135deg, #667eea 0%, #764ba2 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\hero.css",
+      "line": 131,
+      "color": "#667eea",
+      "context": "color: #667eea;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\issues.css",
+      "line": 19,
+      "color": "#6366f1",
+      "context": "background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\issues.css",
+      "line": 19,
+      "color": "#8b5cf6",
+      "context": "background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\issues.css",
+      "line": 365,
+      "color": "#ef4444",
+      "context": "background: #ef4444;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\issues.css",
+      "line": 370,
+      "color": "#22c55e",
+      "context": "background: #22c55e;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\issues.css",
+      "line": 375,
+      "color": "#4b5563",
+      "context": "background: #4b5563;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\issues.css",
+      "line": 380,
+      "color": "#f59e0b",
+      "context": "background: #f59e0b;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\issues.css",
+      "line": 389,
+      "color": "#4b5563",
+      "context": "border: 2px solid #4b5563;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\issues.css",
+      "line": 398,
+      "color": "#f59e0b",
+      "context": "border-color: #f59e0b;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 19,
+      "color": "rgba(",
+      "context": "background: rgba(15, 23, 42, 0.7);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 22,
+      "color": "rgba(",
+      "context": "border-bottom: 1px solid rgba(99, 102, 241, 0.2);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 35,
+      "color": "rgba(",
+      "context": "background: rgba(15, 23, 42, 0.85);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 39,
+      "color": "rgba(",
+      "context": "inset 0 1px 0 rgba(99, 102, 241, 0.3);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 52,
+      "color": "#fff",
+      "context": "color: #fff;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 70,
+      "color": "#6366f1",
+      "context": "color: #6366f1;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 115,
+      "color": "#6366f1",
+      "context": "background: linear-gradient(90deg, #6366f1, #8b5cf6);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 115,
+      "color": "#8b5cf6",
+      "context": "background: linear-gradient(90deg, #6366f1, #8b5cf6);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 120,
+      "color": "#fff",
+      "context": "color: #fff;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 130,
+      "color": "#6366f1",
+      "context": "color: #6366f1;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 149,
+      "color": "#6366f1",
+      "context": "background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 149,
+      "color": "#8b5cf6",
+      "context": "background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 150,
+      "color": "#fff",
+      "context": "color: #fff;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 172,
+      "color": "rgba(",
+      "context": "0 0 20px rgba(99, 102, 241, 0.5);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 242,
+      "color": "rgba(",
+      "context": "color: rgba(99, 102, 241, 0.7);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 255,
+      "color": "rgba(",
+      "context": "background: rgba(15, 23, 42, 0.95);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 259,
+      "color": "rgba(",
+      "context": "background: rgba(15, 23, 42, 0.98);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 269,
+      "color": "#6366f1",
+      "context": "--wb-navbar-active-color: #6366f1;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\navbar.css",
+      "line": 311,
+      "color": "#8b5cf6",
+      "context": "background: linear-gradient(90deg, var(--wb-navbar-active-co"
+    },
+    {
+      "file": "src\\styles\\behaviors\\notes.css",
+      "line": 20,
+      "color": "#6366f1",
+      "context": "background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\notes.css",
+      "line": 20,
+      "color": "#8b5cf6",
+      "context": "background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%"
+    },
+    {
+      "file": "src\\styles\\behaviors\\notes.css",
+      "line": 389,
+      "color": "#ef4444",
+      "context": "background: #ef4444;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\notes.css",
+      "line": 394,
+      "color": "#22c55e",
+      "context": "background: #22c55e;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\notes.css",
+      "line": 400,
+      "color": "#4b5563",
+      "context": "background: #4b5563;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\notes.css",
+      "line": 405,
+      "color": "#f59e0b",
+      "context": "background: #f59e0b;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\notes.css",
+      "line": 415,
+      "color": "#4b5563",
+      "context": "border: 2px solid #4b5563;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\notes.css",
+      "line": 424,
+      "color": "#f59e0b",
+      "context": "border-color: #f59e0b;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\statusbar.css",
+      "line": 26,
+      "color": "rgba(",
+      "context": "--wb-statusbar-bg: rgba(15, 15, 25, 0.95);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\statusbar.css",
+      "line": 27,
+      "color": "#a0a0b0",
+      "context": "--wb-statusbar-color: #a0a0b0;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\statusbar.css",
+      "line": 29,
+      "color": "#6366f1",
+      "context": "--wb-statusbar-accent: #6366f1;"
+    },
+    {
+      "file": "src\\styles\\behaviors\\statusbar.css",
+      "line": 93,
+      "color": "rgba(",
+      "context": "background: rgba(99, 102, 241, 0.15);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\statusbar.css",
+      "line": 98,
+      "color": "rgba(",
+      "context": "background: rgba(99, 102, 241, 0.25);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\statusbar.css",
+      "line": 123,
+      "color": "rgba(",
+      "context": "--wb-statusbar-bg: rgba(245, 245, 250, 0.95);"
+    },
+    {
+      "file": "src\\styles\\behaviors\\statusbar.css",
+      "line": 124,
+      "color": "#555",
+      "context": "--wb-statusbar-color: #555;"
+    }
+  ],
+  "importantUsage": {
+    "total": 100,
+    "byFile": [
+      {
+        "file": "src\\styles\\builder.css",
+        "count": 43
+      },
+      {
+        "file": "src\\styles\\behaviors\\navbar.css",
+        "count": 11
+      },
+      {
+        "file": "src\\styles\\site.css",
+        "count": 9
+      },
+      {
+        "file": "builder-override.css",
+        "count": 6
+      },
+      {
+        "file": "src\\styles\\components\\drawer.css",
+        "count": 5
+      },
+      {
+        "file": "src\\styles\\normalize.css",
+        "count": 5
+      },
+      {
+        "file": "src\\styles\\wb-signature.css",
+        "count": 5
+      },
+      {
+        "file": "src\\styles\\behaviors\\issues.css",
+        "count": 4
+      },
+      {
+        "file": "src\\styles\\behaviors\\notes.css",
+        "count": 4
+      },
+      {
+        "file": "src\\styles\\transitions.css",
+        "count": 4
+      },
+      {
+        "file": "src\\styles\\safari-fixes.css",
+        "count": 3
+      },
+      {
+        "file": "src\\styles\\code-captions.css",
+        "count": 1
+      }
+    ]
+  },
+  "timestamp": "2026-01-22T03:57:27.549Z"
+}

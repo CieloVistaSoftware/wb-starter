@@ -2,11 +2,24 @@
 
 ## Session Start (DO THIS FIRST - NO EXCEPTIONS)
 
-1. **Call `list_allowed_directories`** to confirm MCP access
-2. **Read this file** (CLAUDE.md) 
-3. **Read `docs/_today/CURRENT-STATUS.md`** for current project state
-4. **Check `/Lock` folder** for any active file locks
-5. **Then greet John** — ready to work, no questions
+1. **Access to all files is via MCP servers** that are active when John brings up Claude
+2. **Call `list_allowed_directories`** to confirm MCP access
+3. **Read this file** (CLAUDE.md) 
+4. **Read `docs/plans/_today/CURRENT-STATUS.md`** for current project state
+5. **Check `/Lock` folder** for any active file locks
+6. **⚡ Check `data/pending-issues.json`** for user-reported issues
+7. **Read last chat** using `recent_chats` tool — new sessions usually start because the previous chat stopped responding, so check what was being worked on
+8. **Then greet John** — ready to work, no questions
+
+---
+
+## 🚨 ISSUE TRACKING - FIX IMMEDIATELY
+
+John reports issues via Notes panel. Each saved note = one issue.
+
+**Check `data/pending-issues.json` on EVERY response. Fix all pending issues immediately.**
+
+---
 
 ### What NOT To Do
 - ❌ Never ask John to upload files
@@ -37,7 +50,7 @@
 src/wb-models/{name}.schema.json   — Component schemas
 src/wb-viewmodels/{name}.js        — Behavior/logic
 src/styles/components/{name}.css   — Styles
-docs/_today/CURRENT-STATUS.md      — Current work status
+docs/plans/_today/CURRENT-STATUS.md      — Current work status
 ```
 
 ---

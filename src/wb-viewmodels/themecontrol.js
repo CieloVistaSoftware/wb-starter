@@ -56,14 +56,16 @@ export function themecontrol(element, options = {}) {
   }
 
   element.classList.add('wb-themecontrol');
+  element.style.display = 'block';
 
   // Create the control UI
   const wrapper = document.createElement('div');
   wrapper.className = 'wb-themecontrol__wrapper';
   wrapper.style.cssText = `
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 0.5rem;
+    width: 100%;
   `;
 
   // Label
@@ -83,8 +85,8 @@ export function themecontrol(element, options = {}) {
   const select = document.createElement('select');
   select.className = 'wb-themecontrol__select';
   select.style.cssText = `
-    padding: 0.5rem 2rem 0.5rem 0.75rem;
-    font-size: 0.875rem;
+    padding: 0.4rem 1.5rem 0.4rem 0.5rem;
+    font-size: 0.8rem;
     border: 1px solid var(--border-color, #ddd);
     border-radius: var(--radius-md, 6px);
     background: var(--bg-primary, #fff);
@@ -93,8 +95,8 @@ export function themecontrol(element, options = {}) {
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 0.5rem center;
-    min-width: 150px;
+    background-position: right 0.4rem center;
+    width: 100%;
   `;
 
   // Add theme options

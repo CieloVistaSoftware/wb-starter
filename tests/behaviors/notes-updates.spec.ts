@@ -7,7 +7,7 @@ test.describe('Notes Behavior Updates', () => {
 
   test('Notes should show current URL on open', async ({ page }) => {
     // Open notes
-    await page.click('button[data-wb="sheet"][data-title="My Notes"]');
+    await page.click('button[wb="sheet"][heading="My Notes"]');
     
     // Check textarea content
     const textarea = page.locator('.wb-notes__textarea');
@@ -20,21 +20,21 @@ test.describe('Notes Behavior Updates', () => {
 
   test('Saving a note should show "Note added" and View button should work', async ({ page }) => {
     // Open notes
-    await page.click('button[data-wb="sheet"][data-title="My Notes"]');
+    await page.click('button[wb="sheet"][heading="My Notes"]');
     
     // Add some text
     const textarea = page.locator('.wb-notes__textarea');
     await textarea.fill('Test note content');
     
     // Click save
-    await page.click('button[data-action="save"]');
+    await page.click('button[action="save"]');
     
     // Check status message
     const status = page.locator('.wb-notes__status');
     await expect(status).toHaveText('Note added');
     
     // Click view button
-    await page.click('button[data-action="view"]');
+    await page.click('button[action="view"]');
     
     // Check viewer
     const viewer = page.locator('h3:has-text("Saved Notes")');

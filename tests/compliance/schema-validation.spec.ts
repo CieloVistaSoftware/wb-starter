@@ -210,11 +210,11 @@ test.describe('Schema Validation: Test Section Completeness', () => {
         if (typeof html !== 'string') {
           issues.push(`${file}: setup[${i}] is not a string`);
         } else {
-          // v3.0: Accept either <wb-*> tags OR data-wb attribute
+          // v3.0: Accept either <wb-*> tags OR wb attribute
           const hasWbTag = html.includes('<wb-');
-          const hasDataWb = html.includes('data-wb=');
+          const hasDataWb = html.includes('wb=');
           if (!hasWbTag && !hasDataWb) {
-            issues.push(`${file}: setup[${i}] missing <wb-*> tag or data-wb attribute`);
+            issues.push(`${file}: setup[${i}] missing <wb-*> tag or wb attribute`);
           }
         }
       }
@@ -248,7 +248,7 @@ test.describe('Schema Validation: Test Section Completeness', () => {
       if (!schema.test?.setup) continue;
       
       const possibleTags = getPossibleTags(schema.behavior);
-      const dataWbPattern = `data-wb="${schema.behavior}"`;
+      const dataWbPattern = `wb="${schema.behavior}"`;
       
       for (let i = 0; i < schema.test.setup.length; i++) {
         const html = schema.test.setup[i];
@@ -258,10 +258,10 @@ test.describe('Schema Validation: Test Section Completeness', () => {
         
         // Also allow card variants to use base card behavior in setup
         const usesCardBase = schema.behavior.startsWith('card') && 
-          (html.includes('data-wb="card"') || html.includes('<wb-card'));
+          (html.includes('wb="card"') || html.includes('<wb-card'));
         
         if (!hasWbTag && !hasDataWb && !usesCardBase) {
-          issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.behavior}> or data-wb="${schema.behavior}"`);
+          issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.behavior}> or wb="${schema.behavior}"`);
         }
       }
     }

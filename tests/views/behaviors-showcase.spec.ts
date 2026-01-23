@@ -134,9 +134,9 @@ test.describe('Inputs Section', () => {
 
   test('validation variant inputs render', async ({ page }) => {
     const section = page.locator('#inputs');
-    await expect(section.locator('input[data-variant="success"]').first()).toBeVisible();
-    await expect(section.locator('input[data-variant="warning"]').first()).toBeVisible();
-    await expect(section.locator('input[data-variant="error"]').first()).toBeVisible();
+    await expect(section.locator('input[variant="success"]').first()).toBeVisible();
+    await expect(section.locator('input[variant="warning"]').first()).toBeVisible();
+    await expect(section.locator('input[variant="error"]').first()).toBeVisible();
   });
 
   test('password input has x-password', async ({ page }) => {
@@ -312,7 +312,7 @@ test.describe('Feedback Section', () => {
     const toastBtns = section.locator('[x-toast]');
     expect(await toastBtns.count()).toBeGreaterThanOrEqual(4);
     
-    // Check each has data-message and data-type
+    // Check each has message and variant
     for (let i = 0; i < await toastBtns.count(); i++) {
       const btn = toastBtns.nth(i);
       const message = await btn.getAttribute('data-message');

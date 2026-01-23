@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" theme="dark" id="auto-demos-pce-testhtml-1">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,28 +87,28 @@
         }
     </style>
 </head>
-<body>
+<body id="auto-demos-pce-testhtml-2">
     <h1>PCE Test Suite <span class="version-badge">v3.0</span></h1>
     
-    <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--primary);">
+    <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--primary);" id="auto-demos-pce-testhtml-3">
         <h3 style="margin-top: 0;">What is PCE? (Pseudo-Custom Elements)</h3>
         <p>PCE allows you to use <strong>semantic tag names</strong> instead of generic divs with behavior attributes. WB v3.0 supports two naming conventions:</p>
         
-        <div class="syntax-comparison">
-            <div>
+        <div class="syntax-comparison" id="auto-demos-pce-testhtml-4">
+            <div id="auto-demos-pce-testhtml-5">
                 <h4>✅ WB Namespace (Recommended)</h4>
-                <code>&lt;wb-cardprofile data-name="Sarah"&gt;</code>
+                <code>&lt;wb-cardprofile name="Sarah"&gt;</code>
             </div>
-            <div>
+            <div id="auto-demos-pce-testhtml-6">
                 <h4>✅ Noun-First (Also Supported)</h4>
-                <code>&lt;profile-card data-name="Sarah"&gt;</code>
+                <code>&lt;profile-card name="Sarah"&gt;</code>
             </div>
         </div>
         
-        <p style="font-size: 0.9rem; color: var(--text-muted);">Both are equivalent to: <code>&lt;div x-behavior="cardprofile" data-name="Sarah"&gt;</code></p>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">Both are equivalent to: <code>&lt;div x-behavior="cardprofile" name="Sarah"&gt;</code></p>
 
         <h3>WB v3.0 Architecture</h3>
-        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;" id="auto-demos-pce-testhtml-7">
             <li><strong>Light DOM Only:</strong> No Shadow DOM - all elements enhanced in standard DOM</li>
             <li><strong>Lazy Loading:</strong> Behaviors loaded on-demand via IntersectionObserver</li>
             <li><strong>WBServices Pattern:</strong> Dependency injection for shared services</li>
@@ -117,9 +117,9 @@
         </ul>
 
         <h3>How It Works</h3>
-        <ol style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+        <ol style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;" id="auto-demos-pce-testhtml-8">
             <li><strong>Detection:</strong> IntersectionObserver (lazy) or WB.scan() (eager) identifies custom tags</li>
-            <li><strong>Lookup:</strong> <code>customElementMappings</code> registry maps tag → behavior</li>
+            <li id="auto-demos-pce-testhtml-9"><strong>Lookup:</strong> <code>customElementMappings</code> registry maps tag → behavior</li>
             <li><strong>Dynamic Import:</strong> Behavior module fetched only when needed</li>
             <li><strong>Hydration:</strong> Behavior function enhances element with data-* attributes</li>
         </ol>
@@ -141,7 +141,7 @@ const customElementMappings = [
         </div>
 
         <h3>Performance Benefits</h3>
-        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;" id="auto-demos-pce-testhtml-10">
             <li><strong>Initial Load:</strong> Only core library (~15KB) loads upfront</li>
             <li><strong>On Scroll:</strong> Component code loads when element enters viewport</li>
             <li><strong>Caching:</strong> Loaded behaviors cached for instant reuse</li>
@@ -150,24 +150,24 @@ const customElementMappings = [
     </div>
 
     <h2>1. Profile Card</h2>
-    <p>Using <code>&lt;wb-cardprofile&gt;</code> and <code>&lt;profile-card&gt;</code> (both work):</p>
-    <div class="grid">
+    <p id="auto-demos-pce-testhtml-11">Using <code>&lt;wb-cardprofile&gt;</code> and <code>&lt;profile-card&gt;</code> (both work):</p>
+    <div class="grid" id="auto-demos-pce-testhtml-12">
         <wb-cardprofile 
             id="wb-cardprofile-1"
-            data-name="Sarah Connor" 
-            data-role="Resistance Leader" 
-            data-bio="No fate but what we make." 
-            data-avatar="https://i.pravatar.cc/150?img=1"
-            data-cover="https://picsum.photos/400/100?r=1">
+            name="Sarah Connor" 
+            role="Resistance Leader" 
+            bio="No fate but what we make." 
+            avatar="https://i.pravatar.cc/150?img=1"
+            cover="https://picsum.photos/400/100?r=1">
         </wb-cardprofile>
         
         <profile-card 
             id="profile-card-1"
-            data-name="John Connor" 
-            data-role="Future Leader" 
-            data-bio="The future is not set." 
-            data-avatar="https://i.pravatar.cc/150?img=3"
-            data-cover="https://picsum.photos/400/100?r=2">
+            name="John Connor" 
+            role="Future Leader" 
+            bio="The future is not set." 
+            avatar="https://i.pravatar.cc/150?img=3"
+            cover="https://picsum.photos/400/100?r=2">
         </profile-card>
     </div>
 
@@ -176,40 +176,40 @@ const customElementMappings = [
     <div class="grid">
         <wb-cardhero 
             id="wb-cardhero-1"
-            data-title="Welcome to WB v3.0" 
-            data-subtitle="Light DOM • Lazy Loading • Zero Dependencies" 
-            data-height="300px"
-            data-align="center"
-            data-overlay="true">
+            heading="Welcome to WB v3.0" 
+            subtitle="Light DOM • Lazy Loading • Zero Dependencies" 
+            height="300px"
+            align="center"
+            overlay="true">
         </wb-cardhero>
     </div>
 
     <h2>3. Stats Card</h2>
     <p>Using <code>&lt;wb-cardstats&gt;</code>:</p>
-    <div class="grid">
+    <div class="grid" id="auto-demos-pce-testhtml-13">
         <wb-cardstats 
             id="wb-cardstats-1"
-            data-label="Total Users" 
-            data-value="1,234,567" 
-            data-icon="👥" 
-            data-trend="up" 
-            data-trend-value="12%">
+            label="Total Users" 
+            value="1,234,567" 
+            icon="👥" 
+            trend="up" 
+            trend-value="12%">
         </wb-cardstats>
         <wb-cardstats 
             id="wb-cardstats-2"
-            data-label="Bounce Rate" 
-            data-value="42%" 
-            data-icon="📉" 
-            data-trend="down" 
-            data-trend-value="5%">
+            label="Bounce Rate" 
+            value="42%" 
+            icon="📉" 
+            trend="down" 
+            trend-value="5%">
         </wb-cardstats>
         <wb-cardstats 
             id="wb-cardstats-3"
-            data-label="Page Views" 
-            data-value="8.2M" 
-            data-icon="👁️" 
-            data-trend="up" 
-            data-trend-value="24%">
+            label="Page Views" 
+            value="8.2M" 
+            icon="👁️" 
+            trend="up" 
+            trend-value="24%">
         </wb-cardstats>
     </div>
 
@@ -218,11 +218,11 @@ const customElementMappings = [
     <div class="grid">
         <wb-cardtestimonial 
             id="wb-cardtestimonial-1"
-            data-quote="WB v3.0 changed how we build UIs. The lazy loading alone saved us 2 seconds on initial load!" 
-            data-author="Jane Doe" 
-            data-role="CTO, TechCorp" 
-            data-rating="5"
-            data-avatar="https://i.pravatar.cc/150?img=5">
+            quote="WB v3.0 changed how we build UIs. The lazy loading alone saved us 2 seconds on initial load!" 
+            author="Jane Doe" 
+            role="CTO, TechCorp" 
+            rating="5"
+            avatar="https://i.pravatar.cc/150?img=5">
         </wb-cardtestimonial>
     </div>
 
@@ -231,121 +231,121 @@ const customElementMappings = [
     <div class="grid">
         <wb-cardvideo 
             id="wb-cardvideo-1"
-            data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" 
-            data-title="Blooming Flower"
-            data-controls="true">
+            src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" 
+            heading="Blooming Flower"
+            controls="true">
         </wb-cardvideo>
     </div>
 
     <h2>6. File Card</h2>
     <p>Using <code>&lt;wb-cardfile&gt;</code>:</p>
-    <div class="grid">
+    <div class="grid" id="auto-demos-pce-testhtml-14">
         <wb-cardfile 
             id="wb-cardfile-1"
-            data-filename="wb-framework-v3.0-docs.pdf" 
-            data-type="pdf" 
-            data-size="2.4 MB" 
-            data-date="Jan 14, 2026"
-            data-downloadable="true">
+            filename="wb-framework-v3.0-docs.pdf" 
+            variant="pdf" 
+            size="2.4 MB" 
+            date="Jan 14, 2026"
+            downloadable="true">
         </wb-cardfile>
         <wb-cardfile 
             id="wb-cardfile-2"
-            data-filename="component-library.zip" 
-            data-type="zip" 
-            data-size="8.1 MB" 
-            data-date="Jan 14, 2026"
-            data-downloadable="true">
+            filename="component-library.zip" 
+            variant="zip" 
+            size="8.1 MB" 
+            date="Jan 14, 2026"
+            downloadable="true">
         </wb-cardfile>
     </div>
 
     <h2>7. Notification Card</h2>
     <p>Using <code>&lt;wb-cardnotification&gt;</code>:</p>
-    <div class="grid">
+    <div class="grid" id="auto-demos-pce-testhtml-15">
         <wb-cardnotification 
             id="wb-cardnotification-1"
-            data-type="info" 
-            data-title="WB v3.0 Released" 
-            data-message="The new version includes Light DOM architecture and improved lazy loading."
-            data-dismissible="true">
+            variant="info" 
+            heading="WB v3.0 Released" 
+            message="The new version includes Light DOM architecture and improved lazy loading."
+            dismissible="true">
         </wb-cardnotification>
         <wb-cardnotification 
             id="wb-cardnotification-2"
-            data-type="success" 
-            data-title="Tests Passing" 
-            data-message="All 26 cross-browser tests are passing."
-            data-dismissible="true">
+            variant="success" 
+            heading="Tests Passing" 
+            message="All 26 cross-browser tests are passing."
+            dismissible="true">
         </wb-cardnotification>
         <wb-cardnotification 
             id="wb-cardnotification-3"
-            data-type="warning" 
-            data-title="Legacy Syntax Detected" 
-            data-message="Please migrate from data-wb to wb-* tags."
-            data-dismissible="true">
+            variant="warning" 
+            heading="Legacy Syntax Detected" 
+            message="Please migrate from wb to wb-* tags."
+            dismissible="true">
         </wb-cardnotification>
         <wb-cardnotification 
             id="wb-cardnotification-4"
-            data-type="error" 
-            data-title="Connection Lost" 
-            data-message="Please check your internet connection."
-            data-dismissible="true">
+            variant="error" 
+            heading="Connection Lost" 
+            message="Please check your internet connection."
+            dismissible="true">
         </wb-cardnotification>
     </div>
 
     <h2>8. Basic Card Variants</h2>
-    <p>Using <code>&lt;wb-card&gt;</code>, <code>&lt;wb-cardimage&gt;</code>, <code>&lt;wb-cardoverlay&gt;</code>:</p>
-    <div class="grid">
-        <wb-card id="wb-card-1" data-title="Basic Card">
+    <p id="auto-demos-pce-testhtml-16">Using <code>&lt;wb-card&gt;</code>, <code>&lt;wb-cardimage&gt;</code>, <code>&lt;wb-cardoverlay&gt;</code>:</p>
+    <div class="grid" id="auto-demos-pce-testhtml-17">
+        <wb-card id="wb-card-1" heading="Basic Card">
             <p>This is a basic card with the wb-* namespace.</p>
         </wb-card>
 
         <wb-cardimage 
             id="wb-cardimage-1" 
-            data-src="https://picsum.photos/400/200" 
-            data-title="Image Card">
+            src="https://picsum.photos/400/200" 
+            heading="Image Card">
         </wb-cardimage>
 
         <wb-cardoverlay 
             id="wb-cardoverlay-1" 
-            data-image="https://picsum.photos/400/300" 
-            data-title="Overlay Card" 
-            data-subtitle="With gradient overlay">
+            image="https://picsum.photos/400/300" 
+            heading="Overlay Card" 
+            subtitle="With gradient overlay">
         </wb-cardoverlay>
     </div>
 
     <h2>9. Portfolio & Link Cards</h2>
-    <p>Using <code>&lt;wb-cardportfolio&gt;</code>, <code>&lt;wb-cardlink&gt;</code>, <code>&lt;wb-cardhorizontal&gt;</code>:</p>
-    <div class="grid">
+    <p id="auto-demos-pce-testhtml-18">Using <code>&lt;wb-cardportfolio&gt;</code>, <code>&lt;wb-cardlink&gt;</code>, <code>&lt;wb-cardhorizontal&gt;</code>:</p>
+    <div class="grid" id="auto-demos-pce-testhtml-19">
         <wb-cardportfolio 
             id="wb-cardportfolio-1"
-            data-name="John Developer" 
-            data-title="Senior Engineer" 
-            data-company="Cielo Vista Software" 
-            data-email="john@example.com">
+            name="John Developer" 
+            heading="Senior Engineer" 
+            company="Cielo Vista Software" 
+            email="john@example.com">
         </wb-cardportfolio>
 
         <wb-cardlink 
             id="wb-cardlink-1" 
-            data-title="View Documentation" 
-            data-href="/docs" 
-            data-description="Complete WB v3.0 API reference">
+            heading="View Documentation" 
+            href="/docs" 
+            description="Complete WB v3.0 API reference">
         </wb-cardlink>
 
         <wb-cardhorizontal 
             id="wb-cardhorizontal-1" 
-            data-title="Horizontal Card" 
-            data-image="https://picsum.photos/150/150" 
-            data-subtitle="Side-by-side layout">
+            heading="Horizontal Card" 
+            image="https://picsum.photos/150/150" 
+            subtitle="Side-by-side layout">
         </wb-cardhorizontal>
     </div>
 
     <h2>10. Interactive Elements</h2>
     <p>Using <code>x-behavior</code> attributes for behaviors:</p>
-    <div class="grid">
+    <div class="grid" id="auto-demos-pce-testhtml-20">
         <button id="btn-tooltip-1" class="wb-btn" 
             x-behavior="tooltip toast"
-            data-tooltip="I am a tooltip" 
-            data-tooltip-position="top" 
-            data-toast-message="Button clicked!">
+            tooltip="I am a tooltip" 
+            tooltip-position="top" 
+            toast-message="Button clicked!">
             Hover & Click Me (x-behavior)
         </button>
 
@@ -355,36 +355,36 @@ const customElementMappings = [
 
         <span id="span-tooltip-1" 
             x-behavior="tooltip"
-            data-tooltip="Tooltips work on any element" 
+            tooltip="Tooltips work on any element" 
             style="padding: 1rem; background: var(--bg-secondary); border-radius: 4px; display: inline-block; cursor: help;">
             Hover Me (Span with tooltip)
         </span>
 
-        <wb-badge id="wb-badge-1" data-variant="success">Success Badge</wb-badge>
+        <wb-badge id="wb-badge-1" variant="success">Success Badge</wb-badge>
     </div>
 
     <h2>11. Layout Components</h2>
-    <p>Using <code>&lt;wb-grid&gt;</code>, <code>&lt;wb-stack&gt;</code>, <code>&lt;wb-flex&gt;</code>:</p>
+    <p id="auto-demos-pce-testhtml-21">Using <code>&lt;wb-grid&gt;</code>, <code>&lt;wb-stack&gt;</code>, <code>&lt;wb-flex&gt;</code>:</p>
     
-    <wb-grid id="wb-grid-1" data-cols="3" data-gap="1rem" style="margin-bottom: 2rem;">
-        <wb-card data-title="Grid Item 1"><p>Content</p></wb-card>
-        <wb-card data-title="Grid Item 2"><p>Content</p></wb-card>
-        <wb-card data-title="Grid Item 3"><p>Content</p></wb-card>
+    <wb-grid id="wb-grid-1" cols="3" gap="1rem" style="margin-bottom: 2rem;">
+        <wb-card heading="Grid Item 1"><p>Content</p></wb-card>
+        <wb-card heading="Grid Item 2"><p>Content</p></wb-card>
+        <wb-card heading="Grid Item 3"><p>Content</p></wb-card>
     </wb-grid>
 
-    <wb-stack id="wb-stack-1" data-gap="0.5rem" style="margin-bottom: 2rem;">
-        <wb-alert data-type="info" data-message="Stack item 1"></wb-alert>
-        <wb-alert data-type="success" data-message="Stack item 2"></wb-alert>
-        <wb-alert data-type="warning" data-message="Stack item 3"></wb-alert>
+    <wb-stack id="wb-stack-1" gap="0.5rem" style="margin-bottom: 2rem;">
+        <wb-alert variant="info" message="Stack item 1"></wb-alert>
+        <wb-alert variant="success" message="Stack item 2"></wb-alert>
+        <wb-alert variant="warning" message="Stack item 3"></wb-alert>
     </wb-stack>
 
     <h2>12. Feedback Components</h2>
-    <p>Using <code>&lt;wb-spinner&gt;</code>, <code>&lt;wb-progress&gt;</code>, <code>&lt;wb-avatar&gt;</code>:</p>
-    <div class="grid" style="align-items: center;">
-        <wb-spinner id="wb-spinner-1" data-size="lg"></wb-spinner>
-        <wb-progress id="wb-progress-1" data-value="75" data-max="100"></wb-progress>
-        <wb-avatar id="wb-avatar-1" data-src="https://i.pravatar.cc/150?img=8" data-size="lg"></wb-avatar>
-        <wb-rating id="wb-rating-1" data-value="4" data-max="5"></wb-rating>
+    <p id="auto-demos-pce-testhtml-22">Using <code>&lt;wb-spinner&gt;</code>, <code>&lt;wb-progress&gt;</code>, <code>&lt;wb-avatar&gt;</code>:</p>
+    <div class="grid" style="align-items: center;" id="auto-demos-pce-testhtml-23">
+        <wb-spinner id="wb-spinner-1" size="lg"></wb-spinner>
+        <wb-progress id="wb-progress-1" value="75" max="100"></wb-progress>
+        <wb-avatar id="wb-avatar-1" src="https://i.pravatar.cc/150?img=8" size="lg"></wb-avatar>
+        <wb-rating id="wb-rating-1" value="4" max="5"></wb-rating>
     </div>
 
     <hr style="margin: 3rem 0; border: none; border-top: 1px solid var(--border-color);">

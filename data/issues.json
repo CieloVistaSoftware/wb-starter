@@ -1,0 +1,319 @@
+{
+  "id": "issue-1769030333849",
+  "description": "[1/21/2026, 3:18:01 PM] http://localhost:3000/?page=components\nThe card with a footer does not show the footer",
+  "status": "pending",
+  "createdAt": "2026-01-21T21:18:53.849Z",
+  "notes": [
+    {
+      "id": "note-1769072272194",
+      "content": "UI test 1769072271917 zj02",
+      "createdAt": "2026-01-22T08:57:52.194Z",
+      "updatedAt": "2026-01-22T08:57:52.194Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769069023950",
+      "content": "Delete test 1769069023946 zfy5tc",
+      "createdAt": "2026-01-22T08:03:43.950Z",
+      "updatedAt": "2026-01-22T08:03:43.950Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769069023725",
+      "content": "Test issue 1769069023689 32v2cw",
+      "createdAt": "2026-01-22T08:03:43.725Z",
+      "updatedAt": "2026-01-22T08:03:43.725Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769067768715",
+      "content": "Delete test 1769067768631 nk48wv",
+      "createdAt": "2026-01-22T07:42:48.715Z",
+      "updatedAt": "2026-01-22T07:42:48.715Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769067767551",
+      "content": "Test issue 1769067767457 r7cy47",
+      "createdAt": "2026-01-22T07:42:47.550Z",
+      "updatedAt": "2026-01-22T07:42:47.550Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769059350295",
+      "content": "flow-test-1769059350125",
+      "createdAt": "2026-01-22T05:22:30.295Z",
+      "updatedAt": "2026-01-22T05:22:30.295Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769059267977",
+      "content": "Test issue 1769059267937 yqmlfs",
+      "createdAt": "2026-01-22T05:21:07.977Z",
+      "updatedAt": "2026-01-22T05:21:07.977Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769059267303",
+      "content": "UI test 1769059266902 9zrx",
+      "createdAt": "2026-01-22T05:21:07.303Z",
+      "updatedAt": "2026-01-22T05:21:07.303Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769059265114",
+      "content": "Test issue 1769059265077 9a5uul",
+      "createdAt": "2026-01-22T05:21:05.114Z",
+      "updatedAt": "2026-01-22T05:21:05.114Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769059265092",
+      "content": "Delete test 1769059265044 46izse",
+      "createdAt": "2026-01-22T05:21:05.092Z",
+      "updatedAt": "2026-01-22T05:21:05.092Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769059101297",
+      "content": "Delete test 1769059101203 f7ho3l",
+      "createdAt": "2026-01-22T05:18:21.297Z",
+      "updatedAt": "2026-01-22T05:18:21.297Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769059101120",
+      "content": "Test issue 1769059100854 mdgfmu",
+      "createdAt": "2026-01-22T05:18:21.120Z",
+      "updatedAt": "2026-01-22T05:18:21.120Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769059097520",
+      "content": "Delete test 1769059097469 82uirz",
+      "createdAt": "2026-01-22T05:18:17.520Z",
+      "updatedAt": "2026-01-22T05:18:17.520Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769059097473",
+      "content": "Test issue 1769059097405 scj5n7",
+      "createdAt": "2026-01-22T05:18:17.473Z",
+      "updatedAt": "2026-01-22T05:18:17.473Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769058846670",
+      "content": "Test issue 1769058846597 5nc6fe",
+      "createdAt": "2026-01-22T05:14:06.670Z",
+      "updatedAt": "2026-01-22T05:14:06.670Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769058846520",
+      "content": "Delete test 1769058846459 xdkmew",
+      "createdAt": "2026-01-22T05:14:06.520Z",
+      "updatedAt": "2026-01-22T05:14:06.520Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769058843541",
+      "content": "Test issue 1769058843451 xxvtax",
+      "createdAt": "2026-01-22T05:14:03.541Z",
+      "updatedAt": "2026-01-22T05:14:03.541Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769058843335",
+      "content": "Delete test 1769058843252 2n8ypy",
+      "createdAt": "2026-01-22T05:14:03.335Z",
+      "updatedAt": "2026-01-22T05:14:03.335Z",
+      "isClaudeResponse": false
+    }
+  ],
+  "lastUpdated": "2026-01-23T07:21:23.873Z",
+  "submissions": [
+    {
+      "id": "note-1769152883873",
+      "content": "[BUG] Test issue from header 1769152...\nPriority: 2\nPage: /\nTest issue from header 1769152882735",
+      "createdAt": "2026-01-23T07:21:23.873Z",
+      "updatedAt": "2026-01-23T07:21:23.873Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769151316437",
+      "content": "[BUG] Test issue from header 1769151...\nPriority: 2\nPage: /\nTest issue from header 1769151315677",
+      "createdAt": "2026-01-23T06:55:16.437Z",
+      "updatedAt": "2026-01-23T06:55:16.437Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769144342410",
+      "content": "Delete test 1769144342292 kfidc7",
+      "createdAt": "2026-01-23T04:59:02.410Z",
+      "updatedAt": "2026-01-23T04:59:02.410Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769144337683",
+      "content": "Delete test 1769144337195 te5yz0",
+      "createdAt": "2026-01-23T04:58:57.683Z",
+      "updatedAt": "2026-01-23T04:58:57.683Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769144332917",
+      "content": "Test issue 1769144332815 8fktop",
+      "createdAt": "2026-01-23T04:58:52.917Z",
+      "updatedAt": "2026-01-23T04:58:52.917Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769144324889",
+      "content": "Test issue 1769144324628 po4cxu",
+      "createdAt": "2026-01-23T04:58:44.889Z",
+      "updatedAt": "2026-01-23T04:58:44.889Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769144269528",
+      "content": "[BUG] <wb-skeleton variant=\"text\" li...\nPriority: 2\nPage: /?page=behaviors\n<wb-skeleton variant=\"text\" lines=\"3\" style=\"width: 200px;\"></wb-skeleton>\n<wb-skeleton variant=\"circle\" width=\"60px\"></wb-skeleton>\n<wb-skeleton variant=\"rect\" width=\"150px\" height=\"100px\"></wb-skeleton>\n\n\ndon't our unit tests test everythiung in behaviors?  make that happen.",
+      "createdAt": "2026-01-23T04:57:49.528Z",
+      "updatedAt": "2026-01-23T04:57:49.528Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769144221111",
+      "content": "[BUG] <wb-avatar src=\"photo.jpg\"></w...\nPriority: 2\nPage: /?page=behaviors\n<wb-avatar src=\"photo.jpg\"></wb-avatar>\n<wb-avatar src=\"photo.jpg\" size=\"lg\"></wb-avatar>\n<wb-avatar initials=\"JD\"></wb-avatar>\n<wb-avatar src=\"photo.jpg\" status=\"online\"></wb-avatar>\n<wb-avatar src=\"photo.jpg\" status=\"away\"></wb-avatar>\n\nno photo no status no sizes",
+      "createdAt": "2026-01-23T04:57:01.111Z",
+      "updatedAt": "2026-01-23T04:57:01.111Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769144170255",
+      "content": "[BUG] <div x-steps \n     data-items=...\nPriority: 2\nPage: /?page=behaviors\n<div x-steps \n     data-items=\"Cart,Shipping,Payment,Confirm\" \n     current=\"2\"></div>  nothing rendered",
+      "createdAt": "2026-01-23T04:56:10.255Z",
+      "updatedAt": "2026-01-23T04:56:10.255Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769144143288",
+      "content": "[BUG] <wb-accordion id=\"auto-pages-b...\nPriority: 2\nPage: /?page=behaviors\n<wb-accordion id=\"auto-pages-behaviorshtml-31\">\n  <div accordion-title=\"Section 1\">\n    <p>Content for section 1...</p>\n  </div>\n  <div accordion-title=\"Section 2\">\n    <p>Content for section 2...</p>\n  </div>\n</wb-accordion>  no accordian shown.",
+      "createdAt": "2026-01-23T04:55:43.288Z",
+      "updatedAt": "2026-01-23T04:55:43.288Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769144093959",
+      "content": "[BUG] <button x-lightbox src=\"https:...\nPriority: 2\nPage: /?page=behaviors\n<button x-lightbox src=\"https://example.com/large-image.jpg\">\n  View Image\n</button>  no image is shown",
+      "createdAt": "2026-01-23T04:54:53.959Z",
+      "updatedAt": "2026-01-23T04:54:53.959Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769144063341",
+      "content": "[IMPROVEMENT] <wb-progress value=\"25\"></wb-p...\nPriority: 2\nPage: /?page=behaviors\n<wb-progress value=\"25\"></wb-progress>\n<wb-progress value=\"50\"></wb-progress>\n<wb-progress value=\"75\" striped></wb-progress>\n<wb-progress value=\"100\"></wb-progress>\n\n\ndo not show the value",
+      "createdAt": "2026-01-23T04:54:23.341Z",
+      "updatedAt": "2026-01-23T04:54:23.341Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769144012110",
+      "content": "[BUG] Alerts (All Variants)<wb-alert...\nPriority: 2\nPage: /?page=behaviors\nAlerts (All Variants)<wb-alert variant=\"info\" \n          heading=\"Information\" \n          message=\"Informational message.\" \n          dismissible></wb-alert>\n\n<wb-alert variant=\"success\" \n          heading=\"Success\" \n          message=\"Operation completed.\"\n          dismissible></wb-alert>\n\n<wb-alert variant=\"warning\" \n          heading=\"Warning\" \n          message=\"Please review.\"></wb-alert>\n\n<wb-alert variant=\"error\" \n          heading=\"Error\" \n          message=\"Something went wrong.\"></wb-alert>\n\n\nhave no different colors",
+      "createdAt": "2026-01-23T04:53:32.109Z",
+      "updatedAt": "2026-01-23T04:53:32.109Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769143968863",
+      "content": "[BUG] <div x-stepper value=\"5\" min=\"...\nPriority: 2\nPage: /?page=behaviors\n<div x-stepper value=\"5\" min=\"0\" max=\"10\"></div>\n<input type=\"range\" min=\"0\" max=\"100\" value=\"50\">  Only shows 1 element on render",
+      "createdAt": "2026-01-23T04:52:48.863Z",
+      "updatedAt": "2026-01-23T04:52:48.863Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769143918804",
+      "content": "[FEATURE] <wb-rating value=\"3\" max=\"5\"><...\nPriority: 2\nPage: /?page=behaviors\n<wb-rating value=\"3\" max=\"5\"></wb-rating>\n<wb-rating value=\"4\" max=\"5\" icon=\"❤️\"></wb-rating>\n<wb-rating value=\"2\" max=\"5\" icon=\"👍\"></wb-rating>\n\nshould be in three different bg colors",
+      "createdAt": "2026-01-23T04:51:58.804Z",
+      "updatedAt": "2026-01-23T04:51:58.804Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769143859804",
+      "content": "[BUG] <!-- Color picker -->\n<input t...\nPriority: 2\nPage: /?page=behaviors\n<!-- Color picker -->\n<input type=\"text\" x-colorpicker value=\"#6366f1\"> doesn't allow color change",
+      "createdAt": "2026-01-23T04:50:59.804Z",
+      "updatedAt": "2026-01-23T04:50:59.804Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769143796059",
+      "content": "[BUG] <!-- Search with icon -->\n<inp...\nPriority: 2\nPage: /?page=behaviors\n<!-- Search with icon -->\n<input type=\"text\" x-search placeholder=\"Search...\">  Shows no search icon should be a manifying glass to the right of the input.",
+      "createdAt": "2026-01-23T04:49:56.059Z",
+      "updatedAt": "2026-01-23T04:49:56.059Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769143709812",
+      "content": "[BUG] http://localhost:3000/?page=be...\nPriority: 2\nPage: /?page=behaviors\nhttp://localhost:3000/?page=behaviors  \nget rid of all toast click confirmations",
+      "createdAt": "2026-01-23T04:48:29.812Z",
+      "updatedAt": "2026-01-23T04:48:29.812Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769143652465",
+      "content": "[BUG] http://localhost:3000/?page=be...\nPriority: 2\nPage: /?page=behaviors\nhttp://localhost:3000/?page=behaviors\n<button class=\"wb-btn wb-btn--primary\">Primary</button>\n<button class=\"wb-btn wb-btn--secondary\">Secondary</button>\n<button class=\"wb-btn wb-btn--ghost\">Ghost</button>\n<button class=\"wb-btn wb-btn--primary\" disabled>Disabled</button>\n\nthis page does not show the proper colors",
+      "createdAt": "2026-01-23T04:47:32.465Z",
+      "updatedAt": "2026-01-23T04:47:32.465Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769143580087",
+      "content": "[BUG] sumbitting and issue auto clos...\nPriority: 2\nPage: /?page=behaviors\nsumbitting and issue auto closes the modal, only the user should do that.",
+      "createdAt": "2026-01-23T04:46:20.087Z",
+      "updatedAt": "2026-01-23T04:46:20.087Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769143538898",
+      "content": "[BUG] issues clicked on home page do...\nPriority: 2\nPage: /?page=components\nissues clicked on home page does nothing",
+      "createdAt": "2026-01-23T04:45:38.898Z",
+      "updatedAt": "2026-01-23T04:45:38.898Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769143424422",
+      "content": "[BUG] opening an issue always shows ...\nPriority: 2\nPage: /?page=behaviors\nopening an issue always shows a clicked toast message.  it should not show",
+      "createdAt": "2026-01-23T04:43:44.422Z",
+      "updatedAt": "2026-01-23T04:43:44.422Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769142244558",
+      "content": "Delete test 1769142244481 1jc3we",
+      "createdAt": "2026-01-23T04:24:04.558Z",
+      "updatedAt": "2026-01-23T04:24:04.558Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769142241430",
+      "content": "Delete test 1769142241389 gac0h2",
+      "createdAt": "2026-01-23T04:24:01.430Z",
+      "updatedAt": "2026-01-23T04:24:01.430Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769142238379",
+      "content": "Test issue 1769142238337 k848ms",
+      "createdAt": "2026-01-23T04:23:58.379Z",
+      "updatedAt": "2026-01-23T04:23:58.379Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769142235806",
+      "content": "Test issue 1769142235371 he40y6",
+      "createdAt": "2026-01-23T04:23:55.806Z",
+      "updatedAt": "2026-01-23T04:23:55.806Z",
+      "isClaudeResponse": false
+    }
+  ]
+}

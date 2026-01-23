@@ -3,13 +3,21 @@
  * -----------------------------------------------------------------------------
  * Adds tooltip on hover/focus to any element.
  * 
- * Custom Tag: <button-tooltip>
- * Attribute: [tooltip]
+ * Attribute: [x-tooltip]
  * -----------------------------------------------------------------------------
  * 
  * @example
- * <button x-tooltip data-tooltip="Save changes">Save</button>
- * <span x-tooltip data-tooltip="More info" data-tooltip-position="right">?</span>
+ * // Inline content (recommended)
+ * <button x-tooltip="Save your changes">Save</button>
+ * 
+ * // With position
+ * <button x-tooltip="More info" position="right">?</button>
+ * 
+ * // Using data attributes
+ * <span x-tooltip tooltip="Help text">Info</span>
+ * 
+ * // From title attribute (fallback)
+ * <span x-tooltip title="Tooltip from title">Hover me</span>
  */
 
 // Inject styles once
@@ -83,16 +91,38 @@ export async function tooltip(element, options = {}) {
   injectStyles();
 
   // Config
-  const content = String(options.content ?? element.dataset.content ?? element.getAttribute('x-content') ?? element.dataset.tooltip ?? element.getAttribute('tooltip') ?? element.getAttribute('title') ?? element.innerText.trim() ?? '');
+  // Check x-tooltip value first (allows x-tooltip="Tooltip text" syntax)
+  const xTooltipValue = element.getAttribute('x-tooltip');
+  const content = String(
+    options.content ?? 
+    (xTooltipValue && xTooltipValue !== '' && xTooltipValue !== 'true' ? xTooltipValue : null) ??  // x-tooltip="text"
+    element.dataset.content ?? 
+    element.getAttribute('x-content') ?? 
+    element.dataset.tooltip ?? 
+    element.getAttribute('tooltip') ?? 
+    element.getAttribute('title') ?? 
+    ''
+  );
   if (!content) {
-    console.warn('[WB:tooltip] No content');
+    console.warn('[WB:tooltip] No content - use x-tooltip="text" or tooltip="text"');
     return () => {};
   }
 
   const config = {
     content,
-    position: ['top', 'bottom', 'left', 'right'].includes(options.position ?? element.getAttribute('x-position') ?? element.dataset.tooltipPosition ?? element.getAttribute('tooltip-position'))
-      ? (options.position ?? element.getAttribute('x-position') ?? element.dataset.tooltipPosition ?? element.getAttribute('tooltip-position')) : 'top',
+    position: (['top', 'bottom', 'left', 'right'].includes(
+      options.position ?? 
+      element.getAttribute('x-position') ?? 
+      element.dataset.position ?? 
+      element.dataset.tooltipPosition ?? 
+      element.getAttribute('tooltip-position')
+    )) ? (
+      options.position ?? 
+      element.getAttribute('x-position') ?? 
+      element.dataset.position ?? 
+      element.dataset.tooltipPosition ?? 
+      element.getAttribute('tooltip-position')
+    ) : 'top',
     delay: Math.max(0, parseInt(options.delay ?? element.getAttribute('x-delay') ?? element.dataset.tooltipDelay ?? '200', 10)),
     hideDelay: Math.max(0, parseInt(options.hideDelay ?? element.getAttribute('x-hide-delay') ?? element.dataset.tooltipHideDelay ?? '100', 10)),
     customClass: options.customClass ?? element.getAttribute('x-custom-class') ?? element.dataset.tooltipClass ?? '',

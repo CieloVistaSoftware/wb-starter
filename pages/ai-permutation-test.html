@@ -1,13 +1,13 @@
-<header class="page__hero">
+<header class="page__hero" id="auto-pages-ai-permutation-testhtml-1">
   <h1 class="wb-gradient-text">AI Permutation Testing</h1>
   <p>Automated combinatorial testing powered by Artificial Intelligence.</p>
 </header>
 
 <section class="page__section">
-  <wb-grid columns="1fr 300px" gap="2rem">
+  <wb-grid columns="1fr 300px" gap="2rem" id="auto-pages-ai-permutation-testhtml-2">
     
     <!-- Main Content -->
-    <article>
+    <article id="auto-pages-ai-permutation-testhtml-3">
       <h2>The Theory</h2>
       <p>
         Traditional testing often relies on happy-path scenarios or manually defined edge cases. 
@@ -21,20 +21,20 @@
         might miss.
       </p>
 
-      <wb-card variant="float" title="Interactive Demo" style="margin-top: 2rem;">
+      <wb-card variant="float" heading="Interactive Demo" style="margin-top: 2rem;" id="auto-pages-ai-permutation-testhtml-4">
         <p style="margin-bottom: 1rem;">Define your test dimensions below to see the combinatorial explosion.</p>
         
         <wb-stack id="dimensions-container" gap="1rem">
           <!-- Dimensions will be injected here -->
         </wb-stack>
 
-        <div style="margin-top: 1rem;">
+        <div style="margin-top: 1rem;" id="auto-pages-ai-permutation-testhtml-5">
           <button class="btn btn-secondary" onclick="addDimension()">+ Add Dimension</button>
           <button class="btn btn-primary" onclick="generatePermutations()" style="margin-left: 0.5rem;">Generate Scenarios</button>
         </div>
       </wb-card>
 
-      <wb-card id="results-area" title="Generated Scenarios" style="margin-top: 2rem; display: none;">
+      <wb-card id="results-area" heading="Generated Scenarios" style="margin-top: 2rem; display: none;">
         <h3>Generated Scenarios (<span id="scenario-count">0</span>)</h3>
         
         <progress id="test-progress" max="100" value="0" style="width: 100%; display: none; margin-bottom: 1rem;"></progress>
@@ -42,7 +42,7 @@
         <div style="max-height: 300px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px;">
           <table class="wb-table wb-table--striped" id="scenario-table">
             <thead>
-              <tr>
+              <tr id="auto-pages-ai-permutation-testhtml-6">
                 <th>ID</th>
                 <th>Combination</th>
                 <th>Status</th>
@@ -56,16 +56,16 @@
 
     <!-- Sidebar / Stats -->
     <aside>
-      <wb-card title="Coverage Analysis" style="position: sticky; top: 2rem;">
+      <wb-card heading="Coverage Analysis" style="position: sticky; top: 2rem;" id="auto-pages-ai-permutation-testhtml-7">
         <canvas id="coverageChart"></canvas>
         <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
           <strong>X-Axis:</strong> The dimension being tested (e.g., Browser, Role).<br>
           <strong>Y-Axis:</strong> Percentage of total possible values covered by the current test suite.
         </p>
 
-        <div style="margin-top: 2rem;">
+        <div style="margin-top: 2rem;" id="auto-pages-ai-permutation-testhtml-8">
           <h4>AI Insights</h4>
-          <ul style="font-size: 0.9rem; color: var(--text-secondary); padding-left: 1.2rem;">
+          <ul style="font-size: 0.9rem; color: var(--text-secondary); padding-left: 1.2rem;" id="auto-pages-ai-permutation-testhtml-9">
             <li>Exponential growth detected in scenario count.</li>
             <li>Recommended: Pairwise testing to reduce volume by 85%.</li>
           </ul>
@@ -127,7 +127,7 @@
     
     // Render Table
     tableBody.innerHTML = scenarios.map((s, i) => `
-      <tr>
+      <tr id="auto-pages-ai-permutation-testhtml-10">
         <td>#${i + 1}</td>
         <td>${Array.isArray(s) ? s.join(' + ') : s}</td>
         <td><span class="wb-dot-pulse" style="background: var(--text-muted);"></span> Pending</td>

@@ -107,6 +107,7 @@ WB Behaviors automatically enhances standard HTML5 semantic elements. No `data-w
 
 **Opt-out:** Add `data-wb=""` to any element to disable auto-injection.
 
+
 ## 📦 Available Behaviors
 
 ### Core UI & Layout
@@ -124,6 +125,21 @@ WB Behaviors automatically enhances standard HTML5 semantic elements. No `data-w
 ### Utilities
 `builder`, `docs-viewer`, `enhancements`, `helpers`, `notes`
 
+---
+
+## 📝 Notes Component
+
+**All notes UI and logic must use the `<wb-notes>` custom element.**
+
+- Legacy modal and builder-notes.js code is removed.
+- To add notes to any page or app, use:
+
+```html
+<wb-notes position="modal"></wb-notes>
+```
+
+- All features (open/close, copy, save, clear, resize, etc.) are provided by the component.
+- See `src/wb-models/notes.schema.json` for schema and API.
 ## 📱 Responsive
 
 - Collapsible sidebar navigation

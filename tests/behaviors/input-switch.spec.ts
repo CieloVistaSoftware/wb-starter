@@ -22,13 +22,13 @@ test.describe('Input and Switch Behaviors', () => {
             <!-- Input with Icon -->
             <div class="wb-input-wrapper">
               <span class="wb-input-icon">🔍</span>
-              <input type="text" data-wb="input" data-wb-eager placeholder="Search...">
+              <input type="text" wb="input" wb-eager placeholder="Search...">
             </div>
           </div>
 
           <div class="demo-area">
             <!-- Switch -->
-            <input type="checkbox" data-wb="switch" data-wb-eager id="switch1">
+            <input type="checkbox" wb="switch" wb-eager id="switch1">
             <label for="switch1">Toggle Me</label>
           </div>
 

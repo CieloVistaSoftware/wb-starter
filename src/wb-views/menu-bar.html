@@ -1,0 +1,68 @@
+<!-- External HTML for <wb-menu-bar> -->
+<nav class="menu-bar" id="menuBar">
+  <div class="menu-item" id="menuFile">
+    <span>File</span>
+    <div class="menu-dropdown">
+      <div class="menu-action" onclick="newPage()">📄 New Page<span class="menu-shortcut">Ctrl+N</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-action" onclick="window.openWorkspace?.()">📁 Open Workspace...</div>
+      <div class="menu-action menu-submenu">📂 Recent Workspaces
+        <div class="menu-submenu-items" id="recentWorkspaces">
+          <div class="menu-action disabled">No recent workspaces</div>
+        </div>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-action" onclick="window.importJSON()">📥 Import JSON...<span class="menu-shortcut">Ctrl+O</span></div>
+      <div class="menu-action" onclick="window.exportJSON()">📤 Export JSON<span class="menu-shortcut">Ctrl+E</span></div>
+      <div class="menu-action" onclick="window.saveAsHTML()">📄 Export HTML<span class="menu-shortcut">Ctrl+Shift+S</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-action" onclick="window.close()">🚪 Exit</div>
+    </div>
+  </div>
+  <div class="menu-item" id="menuEdit">
+    <span>Edit</span>
+    <div class="menu-dropdown">
+      <div class="menu-action" onclick="window.undo()">↩️ Undo<span class="menu-shortcut">Ctrl+Z</span></div>
+      <div class="menu-action" onclick="window.redo()">↪️ Redo<span class="menu-shortcut">Ctrl+Y</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-action" onclick="dupSelected()">⧉ Duplicate<span class="menu-shortcut">Ctrl+D</span></div>
+      <div class="menu-action" onclick="delSelected()">🗑️ Delete<span class="menu-shortcut">Del</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-action" onclick="window.resetCanvas()">🧹 Clear All</div>
+    </div>
+  </div>
+  <div class="menu-item" id="menuView">
+    <span>View</span>
+    <div class="menu-dropdown">
+      <div class="menu-action" onclick="doPreview()">👁️ Preview<span class="menu-shortcut">Ctrl+P</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-action" onclick="toggleLeft()">📑 Templates Panel<span class="menu-shortcut">\</span></div>
+      <div class="menu-action" onclick="toggleRight()">⚙️ Properties Panel<span class="menu-shortcut">]</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-action" onclick="collapseAllSections()">📁 Collapse All</div>
+      <div class="menu-action" onclick="expandAllSections()">📂 Expand All</div>
+    </div>
+  </div>
+  <div class="menu-item" id="menuHelp">
+    <span>Help</span>
+    <div class="menu-dropdown">
+      <div class="menu-action" onclick="window.showShortcuts()">⌨️ Shortcuts<span class="menu-shortcut">?</span></div>
+      <div class="menu-action" onclick="window.open('/docs/BUILDER.md')">📖 Documentation</div>
+      <div class="menu-divider"></div>
+      <div class="menu-action" onclick="alert('WB Builder v1.0')">ℹ️ About</div>
+    </div>
+  </div>
+  <div class="menu-item" id="menuTools">
+    <span>Tools</span>
+    <div class="menu-dropdown">
+      <div class="menu-action" onclick="window.exportJSON()">📤 Export JSON<span class="menu-shortcut">Ctrl+E</span></div>
+      <div class="menu-action" onclick="window.importJSON()">📥 Import JSON<span class="menu-shortcut">Ctrl+O</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-action" onclick="window.toggleContentBuilder()">📋 Content Builder</div>
+      <div class="menu-action" onclick="toggleSnapFromMenu()">
+        <span id="snapMenuIcon">☐</span> Snap to Grid<span class="menu-shortcut">G</span>
+      </div>
+    </div>
+  </div>
+  <div class="menu-spacer"></div>
+</nav>

@@ -270,7 +270,7 @@ function renderSection(key, icon, title, subtitle, items, selectedId) {
   
   // Click on header toggles expand/collapse and syncs canvas
   return `
-    <div class="page-section ${collapsedClass} ${isActive ? 'active' : ''}" data-section="${key}">
+    <div class="page-section ${collapsedClass} ${isActive ? 'active' : ''}" section="${key}">
       <div class="page-section-header" onclick="window.selectSection('${key}')">
         <span class="page-section-icon">${icon}</span>
         <div style="flex:1;">
@@ -557,7 +557,7 @@ function renderTreeItem(wrapper, selectedId, level = 0) {
   }
   
   let html = `
-    <div class="tree-item ${isSelected ? 'selected' : ''}" data-id="${id}" onclick="window.selectFromTree('${id}')">
+    <div class="tree-item ${isSelected ? 'selected' : ''}" id="${id}" onclick="window.selectFromTree('${id}')">
       <span class="tree-item-indent" style="${indentStyle}"></span>
       ${toggleHtml}
       <span class="tree-item-icon">${icon}</span>
@@ -633,7 +633,7 @@ function renderDOMChild(el, level = 1, maxDepth = 6, parentPath = 'root', showCh
   const editBtn = isEditable ? `<button class="tree-item-edit" onclick="event.stopPropagation(); window.editDOMElementText('${escapedKey}')" title="Edit text">✏️</button>` : '';
   
   let templateHtml = `
-    <div class="tree-item tree-item-dom ${isHighlighted ? 'highlighted' : ''}" data-dom-key="${elKey}" onclick="window.highlightDOMElement('${escapedKey}')" ondblclick="window.inspectDOMElement('${escapedKey}')">
+    <div class="tree-item tree-item-dom ${isHighlighted ? 'highlighted' : ''}" dom-key="${elKey}" onclick="window.highlightDOMElement('${escapedKey}')" ondblclick="window.inspectDOMElement('${escapedKey}')">
       <span class="tree-item-indent" style="${indentStyle}"></span>
       ${toggleHtml}
       <span class="tree-item-icon">${info.icon}</span>
@@ -687,7 +687,7 @@ window.highlightDOMElement = (elKey) => {
   highlightEl.classList.add('dom-highlight');
   
   // Highlight in tree
-  const treeItem = document.querySelector(`.tree-item-dom[data-dom-key="${elKey}"]`);
+  const treeItem = document.querySelector(`.tree-item-dom[dom-key="${elKey}"]`);
   if (treeItem) {
     treeItem.classList.add('highlighted');
   }
@@ -827,7 +827,7 @@ function syncSectionState(section, isExpanded) {
   localStorage.setItem('tb-collapsed-sections', JSON.stringify(collapsed));
   
   // Also sync properties panel sections if visible
-  const propCategory = document.querySelector(`.prop-category[data-section="${section}"]`);
+  const propCategory = document.querySelector(`.prop-category[section="${section}"]`);
   if (propCategory) {
     propCategory.classList.toggle('collapsed', !isExpanded);
   }
@@ -842,7 +842,7 @@ window.unifiedActivateSection = (sectionId) => {
   
   // 2. Perform Layout Updates Synchronously
   const viewport = document.getElementById('viewport');
-  const targetSection = document.querySelector(`.canvas-section[data-section="${sectionId}"]`);
+  const targetSection = document.querySelector(`.canvas-section[section="${sectionId}"]`);
   
   if (targetSection && viewport) {
     // A. Apply classes to trigger layout change (collapsing siblings)
@@ -999,7 +999,7 @@ window.selectFromTree = (id) => {
 
 // Scroll tree to selected item
 window.scrollTreeToSelected = (id) => {
-  const selectedTreeItem = document.querySelector(`.tree-item[data-id="${id}"]`);
+  const selectedTreeItem = document.querySelector(`.tree-item[id="${id}"]`);
   if (selectedTreeItem) {
     selectedTreeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }

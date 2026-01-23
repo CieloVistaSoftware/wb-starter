@@ -20,7 +20,7 @@
       "description": "Background image URL",
       "required": true
     },
-    "title": {
+    "heading": {
       "type": "string",
       "description": "Hero headline",
       "required": true
@@ -108,12 +108,12 @@
       "description": "Content above title"
     },
     {
-      "name": "title",
+      "name": "heading",
       "tag": "h1",
       "parent": "content",
       "public": true,
-      "content": "{{title}}",
-      "createdWhen": "title",
+      "content": "{{heading}}",
+      "createdWhen": "heading",
       "description": "Hero headline"
     },
     {
@@ -234,46 +234,46 @@
       "<wb-cardhero xalign=\"center\">xalign=center</wb-cardhero>",
       "<wb-cardhero xalign=\"right\">xalign=right</wb-cardhero>",
       "<wb-cardhero overlay>with overlay</wb-cardhero>",
-      "<wb-cardhero title=\"Test Title\">With title attribute</wb-cardhero>",
-      "<wb-hero background=\"hero.jpg\" title=\"Welcome\"></wb-hero>",
-      "<wb-hero background=\"hero.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></wb-hero>"
+      "<wb-cardhero heading=\"Test Heading\">With heading attribute</wb-cardhero>",
+      "<wb-hero background=\"hero.jpg\" heading=\"Welcome\"></wb-hero>",
+      "<wb-hero background=\"hero.jpg\" heading=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></wb-hero>"
     ],
     "matrix": {
       "combinations": [
         {
           "background": "hero.jpg",
-          "title": "Welcome"
+          "heading": "Welcome"
         },
         {
           "background": "hero.jpg",
-          "title": "Welcome",
+          "heading": "Welcome",
           "subtitle": "Subtitle"
         },
         {
           "background": "hero.jpg",
-          "title": "Welcome",
+          "heading": "Welcome",
           "cta": "Click Me"
         },
         {
           "background": "hero.jpg",
-          "title": "Welcome",
+          "heading": "Welcome",
           "subtitle": "Sub",
           "cta": "Go",
           "variant": "cosmic"
         },
         {
           "background": "hero.jpg",
-          "title": "Welcome",
+          "heading": "Welcome",
           "xalign": "left"
         },
         {
           "background": "hero.jpg",
-          "title": "Welcome",
+          "heading": "Welcome",
           "overlay": false
         },
         {
           "background": "hero.jpg",
-          "title": "Welcome",
+          "heading": "Welcome",
           "fullHeight": true
         }
       ]

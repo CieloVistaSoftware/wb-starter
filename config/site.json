@@ -1,20 +1,21 @@
 {
-  "branding": {
+  "header": {
+    "autoInclude": true,
     "companyName": "WB Framework",
-    "headerSubtitle": "Modern Native Web",
-    "headerLogoImage": "<img src='images/wb.png' alt='WB Logo' style='height: 2rem; width: auto;' />",
+    "subtitle": "Modern Native Web",
+    "logoImage": "<img src='images/wb.png' alt='WB Logo' style='height: 2rem; width: auto;' />",
+    "showLogo": true,
+    "showThemeSwitcher": true,
+    "showSearchBar": false,
+    "sticky": true
+  },
+
+  "site": {
     "browserTabIcon": "images/wb.png",
     "colorTheme": "dark",
     "appVersion": "1.0.0",
-    "autoInjectComponents": false,
+    "autoInjectComponents": true,
     "adminEditMode": true
-  },
-
-  "headerSettings": {
-    "displayHeaderLogo": true,
-    "displayThemeSwitcher": true,
-    "displaySearchBar": false,
-    "keepHeaderAtTop": true
   },
 
   "navigationMenu": [
@@ -69,9 +70,10 @@
     "navigationStartCollapsed": false
   },
 
-  "footerSettings": {
-    "footerCopyrightText": "© 2025 Your Company. All rights reserved.",
-    "displaySocialMediaLinks": true
+  "footer": {
+    "autoInclude": true,
+    "copyrightText": "© 2025 Your Company. All rights reserved.",
+    "showSocialLinks": true
   },
 
   "socialMediaLinks": [
@@ -92,7 +94,7 @@
     }
   ],
 
-  "additionalFooterLinks": [
+  "footerLinks": [
     {
       "linkText": "Privacy Policy",
       "pageToLoad": "privacy"
@@ -183,9 +185,9 @@
     }
   ],
 
-  "searchEngineOptimization": {
+  "seo": {
     "pageTitle": "WB Framework v3.0 - Zero Build Web Components",
     "pageDescription": "170+ behaviors, 23 themes, zero build process. The professional web component library.",
-    "seoKeywords": ["web components", "framework", "behaviors", "themes", "no-build"]
+    "keywords": ["web components", "framework", "behaviors", "themes", "no-build"]
   }
 }

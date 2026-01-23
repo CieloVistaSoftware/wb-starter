@@ -6,18 +6,18 @@
 
 | Status | File | Line | Usage | Context |
 |--------|------|------|-------|---------|
-| ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 32 | `x-ripple` | `\| `&lt;button data-wb="ripple"&gt;` \| `&lt;button x-ripple&gt;` \|` |
-| ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 80 | `x-ripple` | `│  &lt;button x-ripple&gt;                                      │` |
-| ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 81 | `x-tooltip` | `│  &lt;span x-tooltip="Tip text"&gt;                            │` |
-| ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 82 | `x-animate` | `│  &lt;div x-animate="fadeIn"&gt;                               │` |
-| ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 83 | `x-sticky` | `│  &lt;header x-sticky&gt;                                      │` |
-| ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 139 | `x-ripple` | `\| `x-ripple` \| Add behaviors \| `&lt;button x-ripple&gt;` \| ✅ PRIMARY \|` |
-| ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 139 | `x-ripple` | `\| `x-ripple` \| Add behaviors \| `&lt;button x-ripple&gt;` \| ✅ PRIMARY \|` |
-| ✅ Valid | [docs/_today/TODO.md](docs/_today/TODO.md) | 134 | `x-behavior` | `- Custom element naming: `&lt;component-name&gt;`, `x-behavior`, `x-as-morph`` |
-| ⚠️ Invalid Morph Target | [docs/_today/TODO.md](docs/_today/TODO.md) | 134 | `x-as-morph` | `- Custom element naming: `&lt;component-name&gt;`, `x-behavior`, `x-as-morph`` |
-| ✅ Valid | [docs/_today/TODO.md](docs/_today/TODO.md) | 140 | `x-ripple` | `- Extensions (HAS-A): `x-ripple`, `x-tooltip="tip"`` |
-| ✅ Valid | [docs/_today/TODO.md](docs/_today/TODO.md) | 140 | `x-tooltip` | `- Extensions (HAS-A): `x-ripple`, `x-tooltip="tip"`` |
-| ✅ Valid | [docs/_today/TODO.md](docs/_today/TODO.md) | 141 | `x-as-card` | `- Morphing (BECOMES): `x-as-card`` |
+| ✅ Valid | [docs/plans/_today/CURRENT-STATUS.md](docs/plans/_today/CURRENT-STATUS.md) | 32 | `x-ripple` | `| <button data-wb="ripple">` | `<button x-ripple>` |`
+| ✅ Valid | [docs/plans/_today/CURRENT-STATUS.md](docs/plans/_today/CURRENT-STATUS.md) | 80 | `x-ripple` | `│  &lt;button x-ripple&gt;                                      │` |
+| ✅ Valid | [docs/plans/_today/CURRENT-STATUS.md](docs/plans/_today/CURRENT-STATUS.md) | 81 | `x-tooltip` | `│  &lt;span x-tooltip="Tip text"&gt;                            │` |
+| ✅ Valid | [docs/plans/_today/CURRENT-STATUS.md](docs/plans/_today/CURRENT-STATUS.md) | 82 | `x-animate` | `│  &lt;div x-animate="fadeIn"&gt;                               │` |
+| ✅ Valid | [docs/plans/_today/CURRENT-STATUS.md](docs/plans/_today/CURRENT-STATUS.md) | 83 | `x-sticky` | `│  &lt;header x-sticky&gt;                                      │` |
+| ✅ Valid | [docs/plans/_today/CURRENT-STATUS.md](docs/plans/_today/CURRENT-STATUS.md) | 139 | `x-ripple` | `\| `x-ripple` \| Add behaviors \| `&lt;button x-ripple&gt;` \| ✅ PRIMARY \|` |
+| ✅ Valid | [docs/plans/_today/CURRENT-STATUS.md](docs/plans/_today/CURRENT-STATUS.md) | 139 | `x-ripple` | `\| `x-ripple` \| Add behaviors \| `&lt;button x-ripple&gt;` \| ✅ PRIMARY \|` |
+| ✅ Valid | [docs/plans/_today/TODO.md](docs/plans/_today/TODO.md) | 134 | `x-behavior` | `- Custom element naming: <component-name>, x-behavior, x-as-morph` |
+| ⚠️ Invalid Morph Target | [docs/plans/_today/TODO.md](docs/plans/_today/TODO.md) | 134 | `x-as-morph` | `- Custom element naming: <component-name>, x-behavior, x-as-morph` |
+| ✅ Valid | [docs/plans/_today/TODO.md](docs/plans/_today/TODO.md) | 140 | `x-ripple` | `- Extensions (HAS-A): `x-ripple`, `x-tooltip="tip"`` |
+| ✅ Valid | [docs/plans/_today/TODO.md](docs/plans/_today/TODO.md) | 140 | `x-tooltip` | `- Extensions (HAS-A): `x-ripple`, `x-tooltip="tip"`` |
+| ✅ Valid | [docs/plans/_today/TODO.md](docs/plans/_today/TODO.md) | 141 | `x-as-card` | `- Morphing (BECOMES): `x-as-card`` |
 | ✅ Valid | [docs/architecture.md](docs/architecture.md) | 161 | `x-ripple` | `&lt;button x-ripple&gt;Click Me&lt;/button&gt;` |
 | ✅ Valid | [docs/architecture.md](docs/architecture.md) | 164 | `x-as-card` | `&lt;article x-as-card&gt;` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](docs/architecture/ATTRIBUTE-NAMING-STANDARD.md) | 100 | `x-behavior` | `\| `x-behavior` \| **HAS-A** \| Extensions (adds capability) \| `x-ripple` \|` |

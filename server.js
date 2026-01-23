@@ -22,13 +22,9 @@ try {
   wss = new WebSocketServer({ port: WS_PORT });
   wss.on('error', (e) => {
     if (e.code === 'EADDRINUSE') {
-      console.log(`[Live Reload] Port ${WS_PORT} is busy. Live reload will be disabled for this session.`);
       wss = null;
-    } else {
-      console.error('[Live Reload] Server error:', e);
     }
   });
-  console.log(`Live Reload Server running on port ${WS_PORT}`);
 } catch (e) {
   console.log(`[Live Reload] Failed to initialize: ${e.message}`);
 }
@@ -45,8 +41,8 @@ const broadcastReload = () => {
 let reloadTimeout;
 const triggerReload = (eventType, filename) => {
   if (!filename) return;
-  // Ignore git, node_modules, and temp files
-  if (filename.includes('.git') || filename.includes('node_modules') || filename.includes('.tmp')) return;
+  // Ignore git, node_modules, data folder, and temp files
+  if (filename.includes('.git') || filename.includes('node_modules') || filename.includes('.tmp') || filename.includes('data/') || filename.includes('data\\') || filename.startsWith('data')) return;
   
   clearTimeout(reloadTimeout);
   reloadTimeout = setTimeout(() => {
@@ -65,7 +61,184 @@ const watchDir = (dir) => {
 ['pages', 'src', 'config', 'public'].forEach(d => watchDir(path.join(rootDir, d)));
 watchDir(rootDir); // Watch root for index.html changes
 
-// Request logging (for debugging)
+// === SUBMISSIONS WATCHER ===
+// Each paragraph in a submission = one issue (split by blank lines)
+// Broadcasts notification via WebSocket when new issue detected
+const submissionsPath = path.join(rootDir, 'data', 'issues.json');
+const pendingIssuesPath = path.join(rootDir, 'data', 'pending-issues.json');
+
+const broadcastNewIssue = (issue) => {
+  if (!wss) return;
+  try {
+    const desc = String((issue && (issue.description || issue.content || '')) || '').trim();
+    const action = desc.substring(0, 100) + (desc.length > 100 ? '...' : '');
+    const message = JSON.stringify({
+      type: 'claude-response',
+      data: {
+        status: 'info',
+        issue: '📝 Issue Received',
+        action
+      }
+    });
+    wss.clients.forEach(client => {
+      if (client.readyState === 1) client.send(message);
+    });
+  } catch (e) {
+    console.warn('[Broadcast New Issue] failed to send message', e && e.message);
+  }
+};
+
+// Normalize description for duplicate checking
+const normalizeDescription = (desc) => {
+  return (desc || '').trim().toLowerCase().replace(/\s+/g, ' ');
+};
+
+const extractIssuesFromSubmissions = () => {
+  try {
+    if (!fs.existsSync(submissionsPath)) return;
+    
+    const submissionsData = JSON.parse(fs.readFileSync(submissionsPath, 'utf8'));
+    const submissions = submissionsData.submissions || [];
+    const issues = [];
+    
+    submissions.forEach(submission => {
+      // Skip Claude responses
+      if (submission.isClaudeResponse) return;
+      
+      // Remove timestamp line first
+      const content = (submission.content || '')
+        .split('\n')
+        .filter(line => !line.match(/^\[.*?\]\s*(http|Page:)/i))
+        .join('\n')
+        .trim();
+      
+      // Split by double newlines (paragraphs)
+      const paragraphs = content.split(/\n\s*\n/).map(p => p.trim()).filter(p => p);
+      
+      paragraphs.forEach((para, idx) => {
+        issues.push({
+          id: `${submission.id}-p${idx}`,
+          description: para,
+          status: 'pending',
+          createdAt: submission.createdAt
+        });
+      });
+    });
+    
+    // Read existing
+    let existing = { issues: [], lastUpdated: null };
+    if (fs.existsSync(pendingIssuesPath)) {
+      try { existing = JSON.parse(fs.readFileSync(pendingIssuesPath, 'utf8')); } catch (e) {}
+    }
+    
+    // Build set of existing IDs AND normalized descriptions for duplicate check
+    const existingIds = new Set(existing.issues.map(i => i.id));
+    const existingDescriptions = new Set(existing.issues.map(i => normalizeDescription(i.description)));
+    
+    // Filter out duplicates by ID or description content
+    const newIssues = issues.filter(i => {
+      const normalizedDesc = normalizeDescription(i.description);
+      // Skip if ID exists OR if same description already exists
+      if (existingIds.has(i.id) || existingDescriptions.has(normalizedDesc)) {
+        return false;
+      }
+      // Add to set to prevent duplicates within the same batch
+      existingDescriptions.add(normalizedDesc);
+      return true;
+    });
+    
+    if (newIssues.length > 0) {
+      existing.issues.push(...newIssues);
+      existing.lastUpdated = new Date().toISOString();
+      fs.writeFileSync(pendingIssuesPath, JSON.stringify(existing, null, 2));
+      
+      // Broadcast each new issue via WebSocket
+      newIssues.forEach(issue => broadcastNewIssue(issue));
+      console.log(`  \x1b[33m●\x1b[0m ${newIssues.length} issue(s) received`);
+    }
+  } catch (e) {
+    console.error('[Issue Watcher] Error:', e.message);
+  }
+};
+
+// Watch issues.json specifically
+if (fs.existsSync(path.join(rootDir, 'data'))) {
+  fs.watch(path.join(rootDir, 'data'), (eventType, filename) => {
+    if (filename === 'issues.json') {
+      console.log('[Issue Watcher] issues.json changed, scanning for issues...');
+      setTimeout(extractIssuesFromSubmissions, 100); // Debounce
+    }
+  });
+}
+
+// === CLAUDE STATUS UPDATES ===
+// Real-time status broadcasting for Claude's work
+const claudeStatusPath = path.join(rootDir, 'data', 'claude-status.json');
+
+const broadcastClaudeStatus = (status) => {
+  if (!wss) return;
+  const message = JSON.stringify({
+    type: 'claude-status',
+    data: status
+  });
+  wss.clients.forEach(client => {
+    if (client.readyState === 1) client.send(message);
+  });
+};
+
+// Watch claude-status.json for live updates
+if (fs.existsSync(path.join(rootDir, 'data'))) {
+  fs.watch(path.join(rootDir, 'data'), (eventType, filename) => {
+    if (filename === 'claude-status.json') {
+      try {
+        const data = JSON.parse(fs.readFileSync(claudeStatusPath, 'utf8'));
+        if (data.status) {
+          broadcastClaudeStatus(data);
+          console.log(`[Claude] Status: ${data.status} - ${data.message || ''}`);
+        }
+      } catch (e) {}
+    }
+  });
+}
+
+// === CLAUDE RESPONSE NOTIFICATIONS ===
+// Watch claude-responses.json and broadcast via WebSocket, then clear
+const claudeResponsesPath = path.join(rootDir, 'data', 'claude-responses.json');
+
+const broadcastClaudeResponse = (response) => {
+  if (!wss) return;
+  const message = JSON.stringify({
+    type: 'claude-response',
+    data: response
+  });
+  wss.clients.forEach(client => {
+    if (client.readyState === 1) client.send(message);
+  });
+  console.log(`[Claude] Broadcasted: ${response.status === 'success' ? '✅' : '❌'} ${response.issue.substring(0, 40)}...`);
+};
+
+// Watch for claude response changes - broadcast then clear
+if (fs.existsSync(path.join(rootDir, 'data'))) {
+  fs.watch(path.join(rootDir, 'data'), (eventType, filename) => {
+    if (filename === 'claude-responses.json') {
+      try {
+        const data = JSON.parse(fs.readFileSync(claudeResponsesPath, 'utf8'));
+        const responses = data.responses || [];
+        if (responses.length > 0) {
+          // Broadcast all responses
+          responses.forEach(resp => broadcastClaudeResponse(resp));
+          
+          // Clear responses after broadcasting
+          fs.writeFileSync(claudeResponsesPath, JSON.stringify({ responses: [], lastUpdated: new Date().toISOString() }, null, 2));
+        }
+      } catch (e) {}
+    }
+  });
+}
+
+// Request logging - disabled for cleaner output
+// Uncomment for debugging
+/*
 app.use((req, res, next) => {
   if (req.path.endsWith('.js')) {
     res.on('finish', () => {
@@ -76,6 +249,7 @@ app.use((req, res, next) => {
   }
   next();
 });
+*/
 
 // Health Check Endpoint
 app.get('/health', (req, res) => {
@@ -205,6 +379,25 @@ app.use(express.static(rootDir, cacheConfig));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.text({ limit: '10mb' }));
 
+// Request logging for API endpoints (development helper)
+app.use((req, res, next) => {
+  if (req.path && req.path.startsWith('/api')) {
+    const ct = req.headers['content-type'] || '';
+    const accept = req.headers['accept'] || '';
+    console.log(`[API Request] ${req.method} ${req.path} content-type=${ct} accept=${accept}`);
+  }
+  next();
+});
+
+// Convert body-parser JSON parse errors to JSON responses (avoid HTML error page)
+app.use((err, req, res, next) => {
+  if (err && (err.type === 'entity.parse.failed' || err instanceof SyntaxError)) {
+    console.error('[Request Parse Error]', err.message);
+    return res.status(400).json({ error: 'Invalid JSON' });
+  }
+  next(err);
+});
+
 // Special Routes for HTML files in public/
 app.get('/builder.html', (req, res) => {
   res.sendFile(path.join(rootDir, 'public', 'builder.html'));
@@ -228,6 +421,269 @@ app.get('/performance-dashboard.html', (req, res) => {
 
 app.get('/doc-viewer.html', (req, res) => {
   res.sendFile(path.join(rootDir, 'public', 'doc-viewer.html'));
+});
+
+app.get('/claude-status.html', (req, res) => {
+  res.sendFile(path.join(rootDir, 'public', 'claude-status.html'));
+});
+
+// API Endpoint to post Claude's fix response back to submissions
+app.post("/api/claude-response", (req, res) => {
+  try {
+    const { issueId, status, message } = req.body;
+    
+    if (!message) {
+      return res.status(400).json({ error: 'Missing message' });
+    }
+    
+    const submissionsPathLocal = path.join(rootDir, 'data', 'issues.json');
+    let submissionsData = { submissions: [], lastUpdated: null };
+    
+    if (fs.existsSync(submissionsPathLocal)) {
+      try { submissionsData = JSON.parse(fs.readFileSync(submissionsPathLocal, 'utf8')); } catch (e) {}
+    }
+    
+    // Add Claude's response as a new submission
+    const responseSubmission = {
+      id: 'claude-' + Date.now(),
+      content: `[CLAUDE ${status === 'success' ? '✅' : '❌'}] ${message}`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      isClaudeResponse: true,
+      status: status // 'success' or 'error'
+    };
+    
+    submissionsData.submissions.unshift(responseSubmission); // Add to top
+    submissionsData.lastUpdated = new Date().toISOString();
+    
+    fs.writeFileSync(submissionsPathLocal, JSON.stringify(submissionsData, null, 2));
+    
+    console.log(`[Claude Response] ${status === 'success' ? '✅' : '❌'} ${message.substring(0, 50)}...`);
+    res.json({ success: true, submission: responseSubmission });
+  } catch (error) {
+    console.error('[Claude Response Error]', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API Endpoint to update issue status
+app.post("/api/update-issue", (req, res) => {
+  try {
+    const { issueId, status, resolution } = req.body;
+    
+    if (!issueId || !status) {
+      return res.status(400).json({ error: 'Missing issueId or status' });
+    }
+    
+    const pendingIssuesPath = path.join(rootDir, 'data', 'pending-issues.json');
+    
+    if (!fs.existsSync(pendingIssuesPath)) {
+      return res.status(404).json({ error: 'No pending issues file found' });
+    }
+    
+    const data = JSON.parse(fs.readFileSync(pendingIssuesPath, 'utf8'));
+    const issue = data.issues.find(i => i.id === issueId);
+    
+    if (!issue) {
+      return res.status(404).json({ error: 'Issue not found' });
+    }
+    
+    issue.status = status;
+    if (status === 'resolved' || status === 'fixed') {
+      // When Claude marks as fixed, set to pending-review for user approval
+      issue.status = 'pending-review';
+      issue.claimedFixedAt = new Date().toISOString();
+      issue.resolution = resolution || 'Fixed by Claude';
+    } else if (status === 'approved') {
+      // User approved the fix
+      issue.status = 'resolved';
+      issue.resolvedAt = new Date().toISOString();
+    } else if (status === 'rejected') {
+      // User rejected the fix, back to pending
+      issue.status = 'pending';
+      issue.claimedFixedAt = null;
+      issue.resolution = null;
+    }
+    
+    data.lastUpdated = new Date().toISOString();
+    fs.writeFileSync(pendingIssuesPath, JSON.stringify(data, null, 2));
+    
+    console.log(`[Issue Update] ${issueId} -> ${status}`);
+    res.json({ success: true, issue });
+  } catch (error) {
+    console.error('[Issue Update Error]', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API Endpoint to get pending issues
+app.get("/api/pending-issues", (req, res) => {
+  try {
+    const pendingIssuesPath = path.join(rootDir, 'data', 'pending-issues.json');
+    
+    if (!fs.existsSync(pendingIssuesPath)) {
+      return res.json({ issues: [], lastChecked: null, lastUpdated: null });
+    }
+    
+    const data = JSON.parse(fs.readFileSync(pendingIssuesPath, 'utf8'));
+    
+    // Dedupe issues by normalized description (keep first occurrence)
+    const seenDescriptions = new Set();
+    const dedupedIssues = (data.issues || []).filter(issue => {
+      const normalized = normalizeDescription(issue.description);
+      if (seenDescriptions.has(normalized)) {
+        return false;
+      }
+      seenDescriptions.add(normalized);
+      return true;
+    });
+    
+    // Update lastChecked
+    data.lastChecked = new Date().toISOString();
+    
+    // If duplicates were removed, save the cleaned data
+    if (dedupedIssues.length !== data.issues.length) {
+      data.issues = dedupedIssues;
+      data.lastUpdated = new Date().toISOString();
+    }
+    
+    fs.writeFileSync(pendingIssuesPath, JSON.stringify(data, null, 2));
+    
+    // If ?all=true, return all issues; otherwise just pending
+    if (req.query.all === 'true') {
+      res.json({ issues: dedupedIssues, lastUpdated: data.lastUpdated });
+    } else {
+      const pending = dedupedIssues.filter(i => i.status === 'pending');
+      res.json({ issues: pending, total: dedupedIssues.length, lastUpdated: data.lastUpdated });
+    }
+  } catch (error) {
+    console.error('[Pending Issues Error]', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API Endpoint to update issue details (description and resolution)
+app.post("/api/update-issue-details", (req, res) => {
+  try {
+    const { issueId, description, resolution } = req.body;
+    
+    if (!issueId) {
+      return res.status(400).json({ error: 'Missing issueId' });
+    }
+    
+    const pendingIssuesPath = path.join(rootDir, 'data', 'pending-issues.json');
+    
+    if (!fs.existsSync(pendingIssuesPath)) {
+      return res.status(404).json({ error: 'No pending issues file found' });
+    }
+    
+    const data = JSON.parse(fs.readFileSync(pendingIssuesPath, 'utf8'));
+    const issue = data.issues.find(i => i.id === issueId);
+    
+    if (!issue) {
+      return res.status(404).json({ error: 'Issue not found' });
+    }
+    
+    if (description !== undefined) issue.description = description;
+    if (resolution !== undefined) issue.resolution = resolution;
+    
+    data.lastUpdated = new Date().toISOString();
+    fs.writeFileSync(pendingIssuesPath, JSON.stringify(data, null, 2));
+    
+    console.log(`[Issue Details] ${issueId} updated`);
+    res.json({ success: true, issue });
+  } catch (error) {
+    console.error('[Issue Details Error]', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API Endpoint to delete a single issue
+app.post("/api/delete-issue", (req, res) => {
+  try {
+    const { issueId } = req.body;
+    
+    if (!issueId) {
+      return res.status(400).json({ error: 'Missing issueId' });
+    }
+    
+    const pendingIssuesPath = path.join(rootDir, 'data', 'pending-issues.json');
+    
+    if (!fs.existsSync(pendingIssuesPath)) {
+      return res.status(404).json({ error: 'No pending issues file found' });
+    }
+    
+    const data = JSON.parse(fs.readFileSync(pendingIssuesPath, 'utf8'));
+    const idx = data.issues.findIndex(i => i.id === issueId);
+    
+    if (idx === -1) {
+      return res.status(404).json({ error: 'Issue not found' });
+    }
+    
+    data.issues.splice(idx, 1);
+    data.lastUpdated = new Date().toISOString();
+    fs.writeFileSync(pendingIssuesPath, JSON.stringify(data, null, 2));
+    
+    console.log(`[Issue Delete] ${issueId} removed`);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('[Issue Delete Error]', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API Endpoint to clear all resolved issues
+app.post("/api/clear-resolved-issues", (req, res) => {
+  try {
+    const pendingIssuesPath = path.join(rootDir, 'data', 'pending-issues.json');
+    
+    if (!fs.existsSync(pendingIssuesPath)) {
+      return res.json({ success: true, cleared: 0 });
+    }
+    
+    const data = JSON.parse(fs.readFileSync(pendingIssuesPath, 'utf8'));
+    const originalCount = data.issues.length;
+    
+    // Identify resolved issues to clear
+    const resolvedIssues = data.issues.filter(i => i.status === 'resolved');
+    const resolvedIds = new Set(resolvedIssues.map(i => i.id));
+
+    // Remove resolved from pending list
+    data.issues = data.issues.filter(i => i.status !== 'resolved');
+    const cleared = originalCount - data.issues.length;
+
+    data.lastUpdated = new Date().toISOString();
+    fs.writeFileSync(pendingIssuesPath, JSON.stringify(data, null, 2));
+
+    // Also remove originating submissions for resolved issues (to prevent them being re-parsed)
+    try {
+      const subsPath = path.join(rootDir, 'data', 'issues.json');
+      if (fs.existsSync(subsPath)) {
+        const subsData = JSON.parse(fs.readFileSync(subsPath, 'utf8'));
+        const remainingSubmissions = (subsData.submissions || []).filter(sub => {
+          // If any resolved issue is derived from this submission, remove the submission
+          const derivedIdPrefix = `${sub.id}-p`;
+          const hasResolved = resolvedIssues.some(ri => ri.id.startsWith(derivedIdPrefix));
+          return !hasResolved;
+        });
+        if (remainingSubmissions.length !== (subsData.submissions || []).length) {
+          subsData.submissions = remainingSubmissions;
+          subsData.lastUpdated = new Date().toISOString();
+          fs.writeFileSync(subsPath, JSON.stringify(subsData, null, 2));
+          // Re-run extraction to ensure no re-adding
+          extractIssuesFromSubmissions();
+        }
+      }
+    } catch (e) {
+      console.warn('[Issue Clear] Failed to prune originating submissions:', e && e.message);
+    }
+
+    console.log(`[Issue Clear] ${cleared} resolved issues removed`);
+    res.json({ success: true, cleared });
+  } catch (error) {
+    console.error('[Issue Clear Error]', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // API Endpoint to log content issues
@@ -260,6 +716,61 @@ app.post("/api/log-issues", (req, res) => {
     console.log(`[Server] Logged ${issuesList.length} content issues`);
   }
   res.json({ success: true, count: issuesList.length });
+});
+
+// API Endpoint to add a single user issue submission to data/issues.json and trigger parsing
+app.post('/api/add-issue', (req, res) => {
+  try {
+    const { content } = req.body;
+    if (!content || !content.trim()) return res.status(400).json({ error: 'Missing content' });
+
+    const submissionsPathLocal = path.join(rootDir, 'data', 'issues.json');
+    let submissionsData = { submissions: [], lastUpdated: null };
+
+    if (fs.existsSync(submissionsPathLocal)) {
+      try { submissionsData = JSON.parse(fs.readFileSync(submissionsPathLocal, 'utf8')); } catch (e) {
+        // If file is a legacy single object, convert it into submissions array
+        try {
+          const raw = JSON.parse(fs.readFileSync(submissionsPathLocal, 'utf8'));
+          if (raw && typeof raw === 'object') {
+            submissionsData = { submissions: [ raw ], lastUpdated: new Date().toISOString() };
+          }
+        } catch (err) {
+          submissionsData = { submissions: [], lastUpdated: null };
+        }
+      }
+    }
+
+    const now = new Date().toISOString();
+    const submission = {
+      id: `note-${Date.now()}`,
+      content: content,
+      createdAt: now,
+      updatedAt: now,
+      isClaudeResponse: false
+    };
+
+    submissionsData.submissions = submissionsData.submissions || [];
+    submissionsData.submissions.unshift(submission);
+    submissionsData.lastUpdated = now;
+
+    // Ensure dir
+    const dir = path.dirname(submissionsPathLocal);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+
+    fs.writeFileSync(submissionsPathLocal, JSON.stringify(submissionsData, null, 2), 'utf8');
+
+    // Immediately parse and add to pending-issues.json by reusing extractIssuesFromSubmissions
+    try { extractIssuesFromSubmissions(); } catch (e) { console.warn('[Add Issue] extractIssuesFromSubmissions failed', e); }
+
+    // Broadcast a quick notification
+    broadcastNewIssue(submission);
+
+    res.json({ success: true, submission });
+  } catch (error) {
+    console.error('[Add Issue Error]', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // HTMX Demo Endpoint
@@ -312,7 +823,10 @@ app.post("/api/save", (req, res) => {
 
     fs.writeFileSync(fullPath, content, 'utf8');
     
-    console.log(`[Server] Saved data to ${location}`);
+    // Only log non-routine saves
+    if (!location.includes('errors.json')) {
+      console.log(`  \x1b[32m✓\x1b[0m Saved: ${location}`);
+    }
     res.json({ success: true, message: `Saved to ${location}` });
   } catch (error) {
     console.error('[Save Error]', error);
@@ -405,10 +919,18 @@ app.use((req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log(`WB Starter running at http://localhost:${port}`);
-  if (ENABLE_COLLAB) {
-    console.log(`Collab Server running at ws://localhost:${WS_PORT}/collab`);
-  } else {
-    console.log(`Collab Server disabled. To enable: set ENABLE_COLLAB=true`);
+  console.log('');
+  console.log('  \x1b[32m\x1b[1m WB Starter \x1b[0m');
+  console.log('');
+  console.log('  \x1b[2m-\x1b[0m Local:    \x1b[36mhttp://localhost:' + port + '\x1b[0m');
+  console.log('  \x1b[2m-\x1b[0m WebSocket: \x1b[36mws://localhost:' + WS_PORT + '\x1b[0m');
+  console.log('');
+  if (wss) {
+    console.log('  \x1b[32m●\x1b[0m Live Reload enabled');
+    console.log('  \x1b[32m●\x1b[0m Claude Notify enabled');
   }
+  console.log('  \x1b[32m●\x1b[0m Issue Watcher enabled');
+  console.log('');
+  console.log('  \x1b[2mPress Ctrl+C to stop\x1b[0m');
+  console.log('');
 });

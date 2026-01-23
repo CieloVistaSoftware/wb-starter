@@ -58,11 +58,11 @@ function addViewToggleButton() {
   
   toggleContainer.innerHTML = `
     <div class="view-toggle">
-      <button id="sections-btn" class="view-btn ${currentView === 'site' ? 'active' : ''}" data-view="site" onclick="window.setCanvasView('site')">
+      <button id="sections-btn" class="view-btn ${currentView === 'site' ? 'active' : ''}" view="site" onclick="window.setCanvasView('site')">
         <span class="view-icon">📄</span>
         <span class="view-label">Page View</span>
       </button>
-      <button id="components-btn" class="view-btn ${currentView === 'components' ? 'active' : ''}" data-view="components" onclick="window.setCanvasView('components')">
+      <button id="components-btn" class="view-btn ${currentView === 'components' ? 'active' : ''}" view="components" onclick="window.setCanvasView('components')">
         <span class="view-icon">🧩</span>
         <span class="view-label">Components</span>
       </button>
@@ -131,36 +131,36 @@ function initSiteView() {
   
   // Create structure
   canvas.innerHTML = `
-    <header id="canvas-header" class="canvas-section collapsed" data-section="header">
+    <header id="canvas-header" class="canvas-section collapsed" section="header">
       <div class="section-bar" onclick="window.toggleCanvasSection && window.toggleCanvasSection('header')">
         <span class="section-icon">🔝</span>
         <span class="section-name">Header</span>
         <span class="section-id">#canvas-header</span>
       </div>
-      <div class="section-content" data-drop-zone="header"></div>
+      <div class="section-content" drop-zone="header"></div>
     </header>
     
-    <main id="canvas-main" class="canvas-section canvas-section--main collapsed" data-section="main">
+    <main id="canvas-main" class="canvas-section canvas-section--main collapsed" section="main">
       <div class="section-bar" onclick="window.toggleCanvasSection && window.toggleCanvasSection('main')">
         <span class="section-icon">📄</span>
-        <span class="section-name">Main Content</span>
+        <span class="section-name" id="main-section-name">Main Content</span>
         <span class="section-id">#canvas-main</span>
       </div>
-      <div class="section-content" data-drop-zone="main"></div>
+      <div class="section-content" drop-zone="main"></div>
     </main>
     
-    <footer id="canvas-footer" class="canvas-section collapsed" data-section="footer">
+    <footer id="canvas-footer" class="canvas-section collapsed" section="footer">
       <div class="section-bar" onclick="window.toggleCanvasSection && window.toggleCanvasSection('footer')">
         <span class="section-icon">🔻</span>
         <span class="section-name">Footer</span>
         <span class="section-id">#canvas-footer</span>
       </div>
-      <div class="section-content" data-drop-zone="footer"></div>
+      <div class="section-content" drop-zone="footer"></div>
     </footer>
   `;
   
   // Move existing content to correct section
-  const mainZone = canvas.querySelector('[data-drop-zone="main"]');
+  const mainZone = canvas.querySelector('[drop-zone="main"]');
   existingElements.forEach(el => {
     ensureElementSetup(el);
     
@@ -173,7 +173,7 @@ function initSiteView() {
       }
     } catch (e) {}
     
-    const zone = canvas.querySelector(`[data-drop-zone="${sectionId}"]`) || mainZone;
+    const zone = canvas.querySelector(`[drop-zone="${sectionId}"]`) || mainZone;
     zone.appendChild(el);
   });
   
@@ -182,7 +182,7 @@ function initSiteView() {
   
   // Activate default section (Fix regression: header collapsed)
   if (targetSection) {
-      const section = canvas.querySelector(`.canvas-section[data-section="${targetSection}"]`);
+      const section = canvas.querySelector(`.canvas-section[section="${targetSection}"]`);
       if (section) {
           section.classList.remove('collapsed');
           section.classList.add('is-target');
@@ -280,7 +280,7 @@ export function setTargetSection(sectionId) {
   document.dispatchEvent(new CustomEvent('wb:canvas:section:clicked', { detail: { section: sectionId } }));
   
   // Scroll to section - 5rem (80px) below header
-  const pageSection = document.querySelector(`[data-section="${sectionId}"]`);
+  const pageSection = document.querySelector(`[section="${sectionId}"]`);
   if (section) {
     const builderHeader = document.getElementById('builderHeader');
     const headerHeight = builderHeader ? builderHeader.offsetHeight : 0;
@@ -392,7 +392,7 @@ export function getDropConfig() {
     section: targetSection,
     mode: insertMode,
     target: insertTarget,
-    dropZone: document.querySelector(`[data-drop-zone="${targetSection}"]`) || document.getElementById('canvas')
+    dropZone: document.querySelector(`[drop-zone="${targetSection}"]`) || document.getElementById('canvas')
   };
 }
 
@@ -468,7 +468,7 @@ export function addElementToCanvas(element) {
   ensureElementSetup(element);
   
   // Get drop zone
-  const dropZone = document.querySelector(`[data-drop-zone="${targetSection}"]`) || 
+  const dropZone = document.querySelector(`[drop-zone="${targetSection}"]`) || 
                    document.getElementById('canvas');
   
   // Insert based on mode
@@ -524,7 +524,7 @@ function generateReadableId(element) {
   // Try to get the component name from various sources
   let baseName = '';
   
-  // Check data-c for template/component info
+  // Check c for template/component info
   try {
     const c = JSON.parse(element.dataset.c || '{}');
     baseName = c.n || c.b || '';
@@ -535,7 +535,7 @@ function generateReadableId(element) {
     baseName = element.dataset.templateName;
   }
   
-  // Check data-wb attribute
+  // Check wb attribute
   if (!baseName) {
     const wbEl = element.querySelector('');
     baseName = element.dataset?.wb || wbEl?.dataset?.wb || '';
@@ -749,7 +749,7 @@ function moveToSection(id, sectionId) {
   const el = document.getElementById(id);
   if (!el) return;
   
-  const dropZone = document.querySelector(`[data-drop-zone="${sectionId}"]`);
+  const dropZone = document.querySelector(`[drop-zone="${sectionId}"]`);
   if (!dropZone) return;
   
   // Remove empty state
@@ -801,7 +801,7 @@ window.duplicateCanvasElement = duplicateCanvasElement;
  */
 function updateEmptyStates() {
   ['header', 'main', 'footer'].forEach(sectionId => {
-    const dropZone = document.querySelector(`[data-drop-zone="${sectionId}"]`);
+    const dropZone = document.querySelector(`[drop-zone="${sectionId}"]`);
     if (!dropZone) return;
     
     // Remove empty states - we don't show "click to add" messages anymore
@@ -952,6 +952,24 @@ function setupDragReorder(canvas) {
   });
 }
 
+/**
+ * Update main section name when page changes
+ * @param {string} pageName - Name of the current page
+ */
+export function updateMainSectionName(pageName) {
+  const nameEl = document.getElementById('main-section-name');
+  if (nameEl) {
+    nameEl.textContent = pageName ? `Main Content / ${pageName}` : 'Main Content';
+  }
+}
+
+/**
+ * Activate main section with green border when page switches
+ */
+export function activateMainSection() {
+  setTargetSection('main');
+}
+
 // Expose globally
 window.setCanvasView = setCanvasView;
 window.setTargetSection = setTargetSection;
@@ -960,6 +978,8 @@ window.clearInsertPoint = clearInsertPoint;
 window.removeCanvasElement = removeCanvasElement;
 window.addElementToCanvas = addElementToCanvas;
 window.getDropConfig = getDropConfig;
+window.updateMainSectionName = updateMainSectionName;
+window.activateMainSection = activateMainSection;
 
 /**
  * Inject styles
@@ -1086,7 +1106,7 @@ function injectSectionStyles() {
       transition: border-color 0.2s, background 0.2s;
     }
     
-    .canvas-section[data-section="header"] {
+    .canvas-section[section="header"] {
       flex-shrink: 0;
     }
     
@@ -1095,7 +1115,7 @@ function injectSectionStyles() {
       min-height: 400px;
     }
     
-    .canvas-section[data-section="footer"] {
+    .canvas-section[section="footer"] {
       flex-shrink: 0;
       margin-top: auto;
     }
@@ -1162,101 +1182,27 @@ function injectSectionStyles() {
       border-radius: 3px;
     }
     
-    /* Component ID label - visible on all dropped elements */
+    /* Component ID label - positioned ABOVE the element */
     .el-id-label {
       position: absolute;
-      top: 2px;
-      left: 2px;
+      top: -28px;
+      left: 0;
       font-family: monospace;
-      font-size: 0.6rem;
+      font-size: 0.65rem;
       color: #fff;
-      background: rgba(99, 102, 241, 0.85);
-      padding: 2px 6px;
-      border-radius: 3px;
+      background: rgba(99, 102, 241, 0.95);
+      padding: 3px 8px;
+      border-radius: 4px 4px 0 0;
       z-index: 99;
       pointer-events: none;
+      white-space: nowrap;
     }
     
-    .section-badge {
-      margin-left: auto;
-      padding: 4px 10px;
-      background: var(--bg-tertiary, #333);
-      border-radius: 12px;
-      font-size: 11px;
-      color: var(--text-secondary, #888);
-      opacity: 0;
-      transition: opacity 0.15s;
-    }
-    
-    .is-target .section-badge {
-      opacity: 1;
-      background: #22c55e !important;
-      color: #fff;
-    }
-    
-    .section-bar:hover .section-badge {
-      opacity: 0.7;
-    }
-    
-    /* Section content */
-    .section-content {
-      min-height: 60px;
-      padding: 0;
-      width: 100%; /* Force full width */
-      max-width: 100%; /* Prevent overflow */
-      overflow: hidden; /* Clip anything that extends beyond */
-      box-sizing: border-box;
-    }
-
-    /* Ensure direct children also respect limits */
-    .section-content > * {
-      max-width: 100%;
-      box-sizing: border-box;
-    }
-    
-    /* Empty state */
-    .section-empty {
-      padding: 40px 20px;
-      text-align: center;
-      color: var(--text-secondary, #666);
-      cursor: pointer;
-      transition: color 0.15s;
-    }
-    
-    .section-empty:hover {
-      color: var(--primary, #6366f1);
-    }
-    
-    .section-empty .empty-icon {
-      font-size: 36px;
-      opacity: 0.4;
-      margin-bottom: 8px;
-    }
-    
-    .section-empty .empty-text {
-      font-size: 13px;
-    }
-    
-    .canvas-empty {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 300px;
-      color: var(--text-secondary, #666);
-    }
-    
-    .canvas-empty .empty-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-      opacity: 0.5;
-    }
-    
-    /* Element controls */
+    /* Element controls - positioned ABOVE the element, same row as label */
     .el-controls {
       position: absolute;
-      top: 4px;
-      right: 4px;
+      top: -28px;
+      right: 0;
       display: flex;
       gap: 3px;
       opacity: 0;
@@ -1307,9 +1253,107 @@ function injectSectionStyles() {
       box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
     
-    /* Selected element */
+    .section-badge {
+      margin-left: auto;
+      padding: 4px 10px;
+      background: var(--bg-tertiary, #333);
+      border-radius: 12px;
+      font-size: 11px;
+      color: var(--text-secondary, #888);
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    
+    .is-target .section-badge {
+      opacity: 1;
+      background: #22c55e !important;
+      color: #fff;
+    }
+    
+    .section-bar:hover .section-badge {
+      opacity: 0.7;
+    }
+    
+    /* Section content */
+    .section-content {
+      min-height: 60px;
+      padding: 1rem;
+      width: 100%;
+      max-width: 100%;
+      overflow: visible;
+      box-sizing: border-box;
+    }
+
+    .section-content > * {
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    
+    /* Drop zone placeholder text */
+    .canvas-drop-zone-text {
+      text-align: center;
+      color: var(--text-muted, #666);
+      padding: 1rem;
+      font-size: 0.85rem;
+      border: 2px dashed var(--border-color, #333);
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+    
+    /* Empty state */
+    .section-empty {
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--text-secondary, #666);
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    
+    .section-empty:hover {
+      color: var(--primary, #6366f1);
+    }
+    
+    .section-empty .empty-icon {
+      font-size: 36px;
+      opacity: 0.4;
+      margin-bottom: 8px;
+    }
+    
+    .section-empty .empty-text {
+      font-size: 13px;
+    }
+    
+    .canvas-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      color: var(--text-secondary, #666);
+    }
+    
+    .canvas-empty .empty-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    /* Selected element - 1rem above controls, 1rem below controls */
     .dropped {
       position: relative;
+      margin-top: calc(1rem + 28px); /* 1rem gap + controls height */
+      padding-top: 1rem; /* 1rem gap below controls before content */
+    }
+    
+    /* First dropped element in section */
+    .section-content > .dropped:first-child {
+      margin-top: calc(1rem + 28px);
+    }
+    
+    /* Ensure controls bar is clearly on top */
+    .dropped > .el-controls,
+    .dropped > .el-id-label {
+      pointer-events: auto;
     }
     
     .dropped.selected {
@@ -1452,6 +1496,10 @@ function injectSectionStyles() {
   document.head.appendChild(style);
 }
 
+// Expose globally for builder-pages.js
+window.updateMainSectionName = updateMainSectionName;
+window.activateMainSection = activateMainSection;
+
 export default {
   init: initCanvasSections,
   setView: setCanvasView,
@@ -1460,6 +1508,8 @@ export default {
   clearInsertPoint,
   addElement: addElementToCanvas,
   removeElement: removeCanvasElement,
-  getDropConfig
+  getDropConfig,
+  updateMainSectionName,
+  activateMainSection
 };
 

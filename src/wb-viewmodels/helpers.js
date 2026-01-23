@@ -5,8 +5,8 @@
  * Includes lazy loading, printing, sharing, full screen, and clipboard operations.
  * 
  * Usage:
- *   <div x-lazy data-src="img.jpg"></div>
- *   <button x-copy data-target="#code">Copy</button>
+ *   <div x-lazy src="img.jpg"></div>
+ *   <button x-copy target="#code">Copy</button>
  * -----------------------------------------------------------------------------
  * Fixed implementations for all utilities
  */
@@ -29,7 +29,7 @@ export function lazy(element, options = {}) {
   
   // Show loading state
   if (!config.src) {
-    element.textContent = '⏳ No data-src provided';
+    element.textContent = '⏳ No src provided';
     return () => element.classList.remove('wb-lazy');
   }
   
@@ -233,7 +233,7 @@ export function hotkey(element, options = {}) {
   };
 
   if (!config.key) {
-    element.textContent = '⚠️ No data-key set';
+    element.textContent = '⚠️ No key set';
     return () => {};
   }
 
@@ -480,7 +480,7 @@ export function external(element, options = {}) {
 
 /**
  * Helper Attribute: [x-countdown]
- * Use: x-countdown data-seconds="60" OR data-date="2025-12-31"
+ * Use: x-countdown seconds="60" OR date="2025-12-31"
  */
 export function countdown(element, options = {}) {
   const config = {

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "notes.schema.json",
   "title": "Notes",
-  "description": "Slide-out notes drawer with multiple display modes",
+  "description": "Single-source notes drawer component. Use <wb-notes> for all notes UI and logic. Legacy modal and builder-notes.js code is deprecated and removed. Supports left, right, and modal display modes.",
   "behavior": "notes",
   "baseClass": "wb-notes",
   "semanticElement": {
@@ -213,6 +213,7 @@
     }
   },
   "test": {
+    "note": "Legacy notes modal and builder-notes.js are removed. All tests and UI must use <wb-notes> only.",
     "setup": [
       "<wb-notes>Basic notes content</wb-notes>",
       "<wb-notes position=\"left\">position=left</wb-notes>",

@@ -1,8 +1,16 @@
-# WB Framework v3.0 - MVVM Architecture
+# WB Behaviors v3.0 – Schema-Driven MVVM Architecture (2026)
+
+> **Version:** 3.0.0  
+> **Last Updated:** 2026-01-17  
+> **Status:** Active
+
 
 ## Overview
 
-WB Framework v3.0 implements a **Schema-Driven MVVM Architecture** that eliminates the need for build steps while providing a robust, type-safe component system. This document describes the architecture, migration status, and implementation details.
+WB Behaviors v3.0 is a no-build, schema-driven, Light DOM architecture for modern web components. All business logic, structure, and styling are defined by JSON schemas, ESM viewmodels, and global CSS. This document describes the architecture, migration status, and implementation details.
+
+
+---
 
 ## Architecture Diagram
 
@@ -47,11 +55,10 @@ WB Framework v3.0 implements a **Schema-Driven MVVM Architecture** that eliminat
 
 ## Key Principles
 
-### 1. Light DOM Architecture
 
-WB v3.0 uses **Light DOM exclusively**. No Shadow DOM.
+### 1. Light DOM Only
 
-**Benefits:**
+WB v3.0 uses Light DOM exclusively (no Shadow DOM). This ensures:
 - CSS works naturally (no piercing)
 - DevTools show real DOM structure
 - Screen readers understand content
@@ -70,9 +77,10 @@ WB v3.0 uses **Light DOM exclusively**. No Shadow DOM.
 </wb-card>
 ```
 
+
 ### 2. Schema-First Development
 
-Every component is defined by a JSON schema that serves as the single source of truth:
+Every component is defined by a JSON schema (see `src/wb-models/`). The schema is the single source of truth for structure, attributes, CSS API, and methods.
 
 ```json
 {
@@ -105,6 +113,7 @@ Every component is defined by a JSON schema that serves as the single source of 
 }
 ```
 
+
 ### 3. Golden Rule: Attributes Over Slots
 
 > **Attribute name = what it is for**  
@@ -124,6 +133,7 @@ Every component is defined by a JSON schema that serves as the single source of 
 </wb-card>
 ```
 
+
 ### 4. Behaviors vs Components
 
 | Type | Tag | Purpose | Example |
@@ -131,7 +141,10 @@ Every component is defined by a JSON schema that serves as the single source of 
 | **Component** | `<wb-*>` | Creates new DOM structure | `<wb-card title="Hi">` |
 | **Behavior** | `x-*` attribute | Enhances existing element | `<button x-ripple>` |
 
-## File Structure
+
+---
+
+## File Structure (2026)
 
 ```
 src/
@@ -167,6 +180,9 @@ src/
         ├── modal.css
         └── ...
 ```
+
+
+---
 
 ## Schema Properties Reference
 
@@ -211,6 +227,9 @@ Documents CSS custom properties for theming:
 }
 ```
 
+
+---
+
 ## Migration Status
 
 ### ✅ Complete (v3.0 Core)
@@ -242,6 +261,9 @@ Documents CSS custom properties for theming:
 - [ ] Complete $methods binding for all components
 - [ ] Auto-generate Playwright tests from schemas
 - [ ] VS Code extension for IntelliSense
+
+
+---
 
 ## Usage Examples
 
@@ -280,6 +302,9 @@ wb-card {
 }
 ```
 
+
+---
+
 ## Testing Strategy
 
 ### Schema-Driven Tests
@@ -308,6 +333,9 @@ Automated tests verify all components meet standards:
 - Keyboard accessibility
 - Theme compatibility
 
+
+---
+
 ## Debugging
 
 ### Console Logging
@@ -335,12 +363,23 @@ const card = document.querySelector('wb-card');
 console.log(card.dataset.wbReady); // Lists applied behaviors
 ```
 
-## Resources
+
+---
+
+## Resources & References
+
+- See docs/builder/pages.md for schema-driven page builder rules
+- See docs/plans/_today/TODO.md for current priorities
+- See docs/builder.md for builder architecture
+- See docs/PAGE-BUILDER-RULES.md for content rules
 
 - [Builder Documentation](/docs/builder.md) - The heart of WB Framework
 - [Behaviors Reference](/docs/behaviors-reference.md) - All 170+ behaviors
 - [Theme System](/docs/themes.md) - 23 themes and customization
 - [Testing Strategy](/docs/testing-strategy.md) - How to test components
+
+
+---
 
 ## Changelog
 

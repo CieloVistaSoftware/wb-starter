@@ -188,7 +188,7 @@ export function previewTemplate(template, options = {}) {
       const tag = comp.t || 'div';
       const attrs = [];
       
-      if (comp.b) attrs.push(`data-wb="${comp.b}"`);
+      if (comp.b) attrs.push(`wb="${comp.b}"`);
       
       if (comp.d) {
         Object.entries(comp.d).forEach(([k, v]) => {
@@ -213,7 +213,7 @@ export function previewTemplate(template, options = {}) {
 
   const previewHtml = `
 <!DOCTYPE html>
-<html lang="en" data-theme="${theme}">
+<html lang="en" theme="${theme}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

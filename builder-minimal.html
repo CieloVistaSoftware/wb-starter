@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏗️ WB Page Builder</title>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="src/styles/themes.css">
+  <link rel="stylesheet" href="src/styles/site.css">
+  <link rel="stylesheet" href="src/styles/builder.css">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Mobile Notice -->
+  <div class="builder-mobile-notice">
+    <div class="builder-mobile-notice__icon">🖥️</div>
+    <h2 class="builder-mobile-notice__title">Desktop Recommended</h2>
+    <p class="builder-mobile-notice__text">
+      The WB Page Builder works best on desktop or tablet devices.
+    </p>
+    <a href="index.html" class="builder-mobile-notice__btn">← Back to Site</a>
+  </div>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <h1>🏗️ WB Page Builder</h1>
+    <div class="top-bar-actions">
+      <button class="btn btn-secondary btn-sm" onclick="showConfigPanel()">⚙️ Settings</button>
+      <button class="btn btn-secondary btn-sm" onclick="showLoadSiteMenu(event)">📂 Load Site ▾</button>
+      <button class="btn btn-secondary btn-sm" onclick="previewSite()">👁️ Preview</button>
+      <button class="btn btn-secondary btn-sm" onclick="showExportMenu(event)">📦 Export ▾</button>
+      <button class="btn btn-primary btn-sm" onclick="saveSite()">💾 Save</button>
+    </div>
+  </div>
+
+  <!-- Main Builder Layout -->
+  <div class="builder-layout">
+    
+    <!-- Left Sidebar -->
+    <aside class="sidebar-left" id="leftDrawer">
+      <div class="drawer-content">
+        <div class="pages-section">
+          <h3>📄 Pages</h3>
+          <div id="pagesList" class="pages-list"></div>
+          <button class="btn btn-secondary btn-sm" style="width: 100%; margin-top: 0.5rem;" onclick="addNewPage()">
+            + Add Page
+          </button>
+        </div>
+        <div id="componentLibrary"></div>
+      </div>
+      <button class="wb-drawer-toggle" onclick="toggleDrawer('leftDrawer')">◀</button>
+      <div class="wb-drawer-handle" onmousedown="startResize(event, 'leftDrawer', 'left')"></div>
+    </aside>
+
+    <!-- Center Canvas -->
+    <div class="canvas-area">
+      <div class="canvas-toolbar">
+        <span>Canvas</span>
+        <span id="componentCount">0 components</span>
+      </div>
+      
+      <div class="canvas-viewport">
+        <div class="canvas">
+          <!-- Header Section -->
+          <div class="canvas-section header">
+            <div class="section-label">Header <span style="font-size: 0.65rem; opacity: 0.7;">(shared)</span></div>
+            <div class="components-container" id="header-container">
+              <div class="canvas-drop-zone" data-section="header">💡 Drop header components here</div>
+            </div>
+          </div>
+
+          <!-- Main Section -->
+          <div class="canvas-section main">
+            <div class="section-label">Main Content</div>
+            <div class="components-container" id="main-container">
+              <div class="canvas-drop-zone" data-section="main">💡 Drop content components here</div>
+            </div>
+          </div>
+
+          <!-- Footer Section -->
+          <div class="canvas-section footer">
+            <div class="section-label">Footer <span style="font-size: 0.65rem; opacity: 0.7;">(shared)</span></div>
+            <div class="components-container" id="footer-container">
+              <div class="canvas-drop-zone" data-section="footer">💡 Drop footer components here</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <aside class="sidebar-right" id="rightDrawer">
+      <button class="wb-drawer-toggle" onclick="toggleDrawer('rightDrawer')">▶</button>
+      <div class="wb-drawer-handle" onmousedown="startResize(event, 'rightDrawer', 'right')"></div>
+      <div class="drawer-content">
+        <div id="propertiesPanel" class="properties-empty">Click a component to edit its properties</div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Hidden file input -->
+  <input type="file" id="jsonFileInput" accept=".json" onchange="handleJsonFileUpload(event)" style="display: none;">
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span id="activeElement">
+      <span style="color: #10b981;"><strong>📄 Page:</strong> Home <code style="background: rgba(99, 102, 241, 0.2); padding: 0.15rem 0.4rem; border-radius: 3px; font-family: monospace; font-size: 0.8rem; margin-left: 0.5rem;">/</code></span>
+    </span>
+    <span style="display: flex; align-items: center; gap: 1rem;">
+      <span id="templateIndicator" style="display: none;"></span>
+      <span id="status">Ready</span>
+    </span>
+  </div>
+
+  <!-- Builder JS -->
+  <script src="src/builder/builder.js"></script>
+</body>
+</html>

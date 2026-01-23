@@ -1,0 +1,382 @@
+/**
+ * Documentation Viewer Component Styles
+ * ============================================================================
+ */
+
+wb-docs,
+.wb-docs {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--wb-docs-border-color, var(--border-color, #e0e0e0));
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--wb-docs-content-bg, var(--bg-primary, #fff));
+  
+  /* CSS API */
+  --wb-docs-nav-bg: var(--bg-secondary, #f5f5f5);
+  --wb-docs-tab-color: var(--text-secondary, #666);
+  --wb-docs-tab-active-color: var(--primary, #6366f1);
+  --wb-docs-content-bg: var(--bg-primary, #fff);
+  --wb-docs-border-color: var(--border-color, #e0e0e0);
+}
+
+/* ============================================================================
+   Loading State
+   ============================================================================ */
+
+.wb-docs--loading {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wb-docs__loading-indicator {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-secondary, #666);
+  font-size: 0.9rem;
+}
+
+.wb-docs__loading-indicator::before {
+  content: '⏳';
+  display: block;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ============================================================================
+   Empty State
+   ============================================================================ */
+
+.wb-docs__empty {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--text-secondary, #666);
+}
+
+.wb-docs__empty-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+  margin-bottom: 1rem;
+}
+
+.wb-docs__empty-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.wb-docs__empty-hint {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* ============================================================================
+   Error State
+   ============================================================================ */
+
+.wb-docs__error {
+  padding: 2rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--danger-color) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--danger-color) 20%, transparent);
+  border-radius: 6px;
+  margin: 1rem;
+}
+
+.wb-docs__error-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.wb-docs__error-text {
+  font-weight: 600;
+  color: var(--danger-color);
+  margin-bottom: 0.5rem;
+}
+
+.wb-docs__error-detail {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ============================================================================
+   TABS LAYOUT
+   ============================================================================ */
+
+.wb-docs--tabs .wb-docs__tabs-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  background: var(--wb-docs-nav-bg);
+  border-bottom: 1px solid var(--wb-docs-border-color);
+  padding: 0 0.5rem;
+}
+
+.wb-docs__tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--wb-docs-tab-color);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.2s ease;
+}
+
+.wb-docs__tab:hover {
+  color: var(--wb-docs-tab-active-color);
+  background: color-mix(in srgb, var(--primary) 5%, transparent);
+}
+
+.wb-docs__tab--active {
+  color: var(--wb-docs-tab-active-color);
+  border-bottom-color: var(--wb-docs-tab-active-color);
+  background: var(--wb-docs-content-bg);
+}
+
+.wb-docs__tab-icon {
+  font-size: 1rem;
+}
+
+.wb-docs__tab-title {
+  white-space: nowrap;
+}
+
+.wb-docs--tabs .wb-docs__content {
+  padding: 1.5rem;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* ============================================================================
+   ACCORDION LAYOUT
+   ============================================================================ */
+
+.wb-docs--accordion .wb-docs__accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.wb-docs__accordion-item {
+  border-bottom: 1px solid var(--wb-docs-border-color);
+}
+
+.wb-docs__accordion-item:last-child {
+  border-bottom: none;
+}
+
+.wb-docs__accordion-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: none;
+  background: var(--wb-docs-nav-bg);
+  color: var(--text-primary, #333);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.wb-docs__accordion-header:hover {
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.wb-docs__accordion-icon {
+  font-size: 1.1rem;
+}
+
+.wb-docs__accordion-title {
+  flex: 1;
+}
+
+.wb-docs__accordion-arrow {
+  font-size: 0.7rem;
+  color: var(--text-secondary, #666);
+  transition: transform 0.2s ease;
+}
+
+.wb-docs__accordion-item--open .wb-docs__accordion-arrow {
+  transform: rotate(180deg);
+}
+
+.wb-docs__accordion-item--open .wb-docs__accordion-header {
+  background: var(--wb-docs-content-bg);
+  border-bottom: 1px solid var(--wb-docs-border-color);
+}
+
+.wb-docs__accordion-content {
+  display: none;
+  padding: 1.5rem;
+  background: var(--wb-docs-content-bg);
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.wb-docs__accordion-item--open .wb-docs__accordion-content {
+  display: block;
+}
+
+/* ============================================================================
+   SIDEBAR LAYOUT
+   ============================================================================ */
+
+.wb-docs--sidebar {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 400px;
+}
+
+.wb-docs__sidebar {
+  background: var(--wb-docs-nav-bg);
+  border-right: 1px solid var(--wb-docs-border-color);
+  overflow-y: auto;
+}
+
+.wb-docs__sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.wb-docs__sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--text-secondary, #666);
+  text-decoration: none;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.wb-docs__sidebar-link:hover {
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  color: var(--wb-docs-tab-active-color);
+}
+
+.wb-docs__sidebar-link--active {
+  background: var(--wb-docs-tab-active-color);
+  color: var(--text-primary);
+}
+
+.wb-docs__sidebar-link--active:hover {
+  background: var(--wb-docs-tab-active-color);
+  color: var(--text-primary);
+}
+
+.wb-docs__sidebar-icon {
+  font-size: 1rem;
+}
+
+.wb-docs__sidebar-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wb-docs--sidebar .wb-docs__main {
+  padding: 1.5rem;
+  overflow-y: auto;
+  max-height: 600px;
+}
+
+/* ============================================================================
+   Responsive
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .wb-docs--sidebar {
+    grid-template-columns: 1fr;
+  }
+  
+  .wb-docs__sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--wb-docs-border-color);
+    max-height: 150px;
+  }
+  
+  .wb-docs__sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .wb-docs__tabs-nav {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  
+  .wb-docs__tab {
+    flex-shrink: 0;
+  }
+}
+
+/* ============================================================================
+   Content Styling (inherited by mdhtml)
+   ============================================================================ */
+
+.wb-docs__content .wb-mdhtml,
+.wb-docs__main .wb-mdhtml,
+.wb-docs__accordion-content .wb-mdhtml {
+  line-height: 1.6;
+}
+
+.wb-docs__content h1,
+.wb-docs__main h1,
+.wb-docs__accordion-content h1 {
+  font-size: 1.5em;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--wb-docs-border-color);
+}
+
+.wb-docs__content h2,
+.wb-docs__main h2,
+.wb-docs__accordion-content h2 {
+  font-size: 1.25em;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.wb-docs__content h3,
+.wb-docs__main h3,
+.wb-docs__accordion-content h3 {
+  font-size: 1.1em;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.wb-docs__content code,
+.wb-docs__main code,
+.wb-docs__accordion-content code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.wb-docs__content pre code,
+.wb-docs__main pre code,
+.wb-docs__accordion-content pre code {
+  background: transparent;
+  padding: 0;
+}

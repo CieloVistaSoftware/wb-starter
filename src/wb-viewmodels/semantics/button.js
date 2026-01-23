@@ -99,10 +99,20 @@ export function button(element, options = {}) {
     }
   }
 
-  // Click handler for toast
+  // Click handler for toast — disabled in builder to avoid noisy feedback
+  const inBuilder = () => {
+    try {
+      // Detect builder context by path or root builder layout
+      return (typeof window !== 'undefined' && window.location && String(window.location.pathname).includes('builder.html')) || !!document.querySelector('.builder-layout');
+    } catch (e) {
+      return false;
+    }
+  };
+
   const clickHandler = (e) => {
-    // Only show toast if it's not part of another interactive behavior that might handle clicks
-    // But for the demo page, we want this feedback.
+    // Do not show clicked-toasts while in the builder UI
+    if (inBuilder()) return;
+
     const text = element.textContent.trim();
     if (text) {
       let toastType = config.variant;

@@ -1,0 +1,26 @@
+{
+  "titleOnWb": [],
+  "typeOnWb": [],
+  "titleOnOther": [
+    {
+      "file": "pages\\home.html",
+      "line": 232,
+      "content": "<notification-card type=\"info\" title=\"System Update\" message=\"Downloading patch v3.1...\"></notificat"
+    },
+    {
+      "file": "pages\\home.html",
+      "line": 233,
+      "content": "<notification-card type=\"success\" title=\"Complete\""
+    },
+    {
+      "file": "pages\\home.html",
+      "line": 240,
+      "content": "<notification-card type=\"info\" title=\"System Update\" message=\"...\">"
+    },
+    {
+      "file": "pages\\home.html",
+      "line": 243,
+      "content": "<notification-card type=\"success\" title=\"Complete\" message=\"...\">"
+    }
+  ]
+}

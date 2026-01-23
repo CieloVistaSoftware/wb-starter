@@ -3,28 +3,70 @@
   "$id": "resizable.schema.json",
   "title": "Resizable",
   "behavior": "resizable",
-  "description": "Make an element resizable.",
+  "description": "Make an element resizable with optional size persistence.",
   "compliance": {
     "baseClass": "wb-resizable",
     "supportLevel": "stable",
     "accessibility": "high"
   },
   "properties": {
-    "handles": {
+    "directions": {
       "type": "string",
-      "default": "se"
+      "default": "se",
+      "description": "Resize directions: n, s, e, w, ne, nw, se, sw, or 'all'. Can be comma/space separated."
+    },
+    "minWidth": {
+      "type": "integer",
+      "default": 50,
+      "description": "Minimum width in pixels"
+    },
+    "minHeight": {
+      "type": "integer",
+      "default": 50,
+      "description": "Minimum height in pixels"
+    },
+    "maxWidth": {
+      "type": "integer",
+      "description": "Maximum width in pixels (0 or omit for no limit)"
+    },
+    "maxHeight": {
+      "type": "integer",
+      "description": "Maximum height in pixels (0 or omit for no limit)"
+    },
+    "aspectRatio": {
+      "type": "boolean",
+      "default": false,
+      "description": "Maintain aspect ratio while resizing"
+    },
+    "persist": {
+      "type": "string",
+      "description": "localStorage key to save/restore size. Saved as wb-resizable-{key}"
     }
   },
   "$view": [],
-  "$methods": {},
-  "$cssAPI": {},
+  "$methods": {
+    "setSize": "Set size programmatically: setSize(width, height)",
+    "getSize": "Get current size: returns { width, height }"
+  },
+  "$events": {
+    "wb:resize:start": "Fired when resize begins. Detail: { width, height }",
+    "wb:resize:move": "Fired during resize. Detail: { width, height }",
+    "wb:resize:end": "Fired when resize ends. Detail: { width, height }"
+  },
+  "$cssAPI": {
+    ".wb-resizable": "Base class added to resizable elements",
+    ".wb-resizable--resizing": "Added while actively resizing",
+    ".wb-resizable__handle": "Base class for resize handles",
+    ".wb-resizable__handle--{dir}": "Direction-specific handle (e.g., --se, --nw)"
+  },
   "test": {
     "setup": [
-      "<wb-resizable>Basic resizable content</wb-resizable>",
-      "<wb-resizable handles=\"se\">handles=\"se\"</wb-resizable>",
-      "<wb-resizable>Test permutation 3</wb-resizable>",
-      "<wb-resizable>Test permutation 4</wb-resizable>",
-      "<wb-resizable>Test permutation 5</wb-resizable>"
+      "<div x-resizable style=\"width:200px;height:150px;background:#334155;\">SE corner only (default)</div>",
+      "<div x-resizable data-directions=\"all\" style=\"width:200px;height:150px;background:#334155;\">All directions</div>",
+      "<div x-resizable data-directions=\"e,w\" style=\"width:200px;height:150px;background:#334155;\">Horizontal only</div>",
+      "<div x-resizable data-min-width=\"100\" data-min-height=\"100\" style=\"width:200px;height:150px;background:#334155;\">Min 100x100</div>",
+      "<div x-resizable data-aspect-ratio style=\"width:200px;height:150px;background:#334155;\">Maintain aspect ratio</div>",
+      "<div x-resizable data-persist=\"my-panel\" style=\"width:200px;height:150px;background:#334155;\">Size saved to localStorage</div>"
     ]
   }
 }

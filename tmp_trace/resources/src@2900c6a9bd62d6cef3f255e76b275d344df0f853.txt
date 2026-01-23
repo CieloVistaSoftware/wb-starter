@@ -1,0 +1,226 @@
+import { test, expect } from '@playwright/test';
+
+test.describe('wb-html-editor (Properties panel)', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/builder.html');
+    // wait for builder to be ready (extended timeout to account for CI flakiness)
+    await page.waitForSelector('#canvas .canvas-component', { timeout: 15000 });
+  });
+
+  test('shows HTML editor in properties panel when component selected', async ({ page }) => {
+    const component = page.locator('.canvas-component').first();
+    await component.click();
+
+    const panel = page.locator('#propertiesPanel');
+    await expect(panel.locator('wb-html-editor, .wb-html-editor__textarea')).toBeVisible();
+  });
+
+  test('editor opens preloaded with active element HTML', async ({ page }) => {
+    const firstPara = page.locator('.canvas-component .component-content p').first();
+    const outer = await firstPara.evaluate(e => e.outerHTML);
+    await firstPara.click();
+
+    const editor = page.locator('#propertiesPanel wb-html-editor');
+    const textarea = editor.locator('.wb-html-editor__textarea');
+    await expect(textarea).toContainText(outer.replace(/\s+/g, ' ').substring(0, 30));
+  });
+
+  test('CodeMirror toggle attempts to load (graceful fallback), gutter responsive, and theme toggle works', async ({ page }) => {
+    await page.locator('.canvas-component').first().click();
+    const editorHandle = await page.$('#propertiesPanel wb-html-editor');
+    await expect(editorHandle).toBeTruthy();
+
+    const cmButton = await page.locator('#propertiesPanel wb-html-editor .wb-html-editor__cm-toggle');
+    await cmButton.click();
+
+    // CodeMirror may load asynchronously; wait briefly then check gutter
+    await page.waitForTimeout(500);
+    const gutter = page.locator('#propertiesPanel wb-html-editor .wb-html-editor__cm-gutter');
+    await expect(gutter).toBeVisible();
+
+    // Responsive: small viewport should hide gutter
+    await page.setViewportSize({ width: 360, height: 900 });
+    await page.waitForTimeout(120);
+    await expect(gutter).toHaveCSS('display', 'none');
+    // restore viewport
+    await page.setViewportSize({ width: 1280, height: 900 });
+
+    // Theme toggle exists and toggles data-theme on the editor
+    const themeBtn = page.locator('#propertiesPanel wb-html-editor .wb-html-editor__theme-toggle');
+    await expect(themeBtn).toBeVisible();
+    await themeBtn.click();
+    const themeAttr = await page.evaluate(() => document.querySelector('#propertiesPanel wb-html-editor')?.getAttribute('data-theme'));
+    expect(themeAttr).toBe('light');
+    // toggling again removes override (inherit)
+    await themeBtn.click();
+    const themeAttr2 = await page.evaluate(() => document.querySelector('#propertiesPanel wb-html-editor')?.getAttribute('data-theme'));
+    expect(themeAttr2).toBeNull();
+  });
+
+  test('Import canvas performs id-based merge and preserves unrelated nodes', async ({ page }) => {
+    // prepare a controlled canvas state
+    await page.evaluate(() => {
+      const canvas = document.getElementById('canvas')!;
+      canvas.innerHTML = '<div id="merge-target">KEEP</div><div id="preserve">P</div>';
+    });
+
+    await page.locator('.canvas-component').first().click();
+    const editor = page.locator('#propertiesPanel wb-html-editor');
+    const textarea = editor.locator('.wb-html-editor__textarea');
+    const importBtn = editor.locator('.wb-html-editor__import-canvas');
+
+    // First import: load canvas into editor
+    await importBtn.click();
+    await expect(textarea).toContainText('merge-target');
+
+    // Edit the textarea: change merge-target content and add a new node
+    await textarea.fill('<div id="merge-target">UPDATED</div><div id="preserve">P</div><div id="new-node">NEW</div>');
+
+    // Click Import again to open the diff modal
+    await importBtn.click();
+    const diffModal = page.locator('.wb-html-editor__diff-modal');
+    await expect(diffModal).toBeVisible();
+    await expect(diffModal).toContainText('Update: merge-target');
+
+    // Deselect the inserted node hunk (new-node) so only the merge-target update is applied
+    const newNodeHunk = diffModal.locator('section.wb-html-editor__hunk:has-text("new-node")');
+    await expect(newNodeHunk).toBeVisible();
+    await newNodeHunk.locator('.wb-html-editor__hunk-checkbox').uncheck();
+
+    // Apply selected (only merge-target should change)
+    await diffModal.locator('.wb-html-editor__diff-apply-selected').click();
+
+    await expect(page.locator('#merge-target')).toHaveText('UPDATED');
+    await expect(page.locator('#preserve')).toHaveText('P');
+    await expect(page.locator('#new-node')).toHaveCount(0);
+
+    // Now enable CM and use gutter to apply the same hunk programmatically
+    const cmButton = page.locator('#propertiesPanel wb-html-editor .wb-html-editor__cm-toggle');
+    await cmButton.click();
+    await page.waitForTimeout(400);
+    const gutterApply = page.locator('#propertiesPanel wb-html-editor .wb-html-editor__cm-gutter .wb-html-editor__gutter-apply').first();
+    if (await gutterApply.isVisible()) {
+      await gutterApply.click();
+      // since this applies a single hunk, ensure no unexpected nodes were added
+      await expect(page.locator('#new-node')).toHaveCount(0);
+    }
+
+
+    // Undo the merge using the undo button
+    const undoBtn = page.locator('#propertiesPanel wb-html-editor .wb-html-editor__undo-merge');
+    await expect(undoBtn).toBeEnabled();
+    await undoBtn.click();
+    await expect(page.locator('#merge-target')).toHaveText('KEEP');
+  });
+
+  test('backup history shows snapshots and allows restore/delete via modal', async ({ page }) => {
+    // start from controlled canvas
+    await page.evaluate(() => { const c = document.getElementById('canvas')!; c.innerHTML = '<div id="one">ONE</div>'; });
+
+    await page.locator('.canvas-component').first().click();
+    const editor = page.locator('#propertiesPanel wb-html-editor');
+    const textarea = editor.locator('.wb-html-editor__textarea');
+    const importBtn = editor.locator('.wb-html-editor__import-canvas');
+
+    // create first backup (merge UPDATED_A)
+    await importBtn.click();
+    await textarea.fill('<div id="one">A</div>');
+    await importBtn.click();
+    const diffModal = page.locator('.wb-html-editor__diff-modal');
+    await diffModal.locator('.wb-html-editor__diff-apply').click();
+    await expect(page.locator('#one')).toHaveText('A');
+
+    // create second backup (merge UPDATED_B)
+    await importBtn.click();
+    await textarea.fill('<div id="one">B</div>');
+    await importBtn.click();
+    await diffModal.locator('.wb-html-editor__diff-apply').click();
+    await expect(page.locator('#one')).toHaveText('B');
+
+    // open history list and assert at least 2 backups
+    const historyList = editor.locator('.wb-html-editor__history-list');
+    await expect(historyList).toBeVisible();
+    const initialCount = await historyList.locator('.wb-html-editor__history-item').count();
+    expect(initialCount).toBeGreaterThan(1);
+
+    // open the first history item (older) and restore it
+    const firstItem = historyList.locator('.wb-html-editor__history-item').first();
+    await firstItem.click();
+    const historyModal = page.locator('.wb-html-editor__diff-modal');
+    await expect(historyModal).toBeVisible();
+    await historyModal.locator('.wb-html-editor__history-restore').click();
+    await expect(page.locator('#one')).toHaveText('A');
+
+    // delete that backup via modal and ensure list shrinks
+    await firstItem.click();
+    await historyModal.locator('.wb-html-editor__history-delete').click();
+    const afterDeleteCount = await historyList.locator('.wb-html-editor__history-item').count();
+    expect(afterDeleteCount).toBeLessThan(initialCount);
+
+    // reload the page to assert persistence (backups persisted to localStorage)
+    await page.reload();
+    await page.waitForSelector('#canvas .canvas-component');
+    await page.locator('.canvas-component').first().click();
+    const editor2 = page.locator('#propertiesPanel wb-html-editor');
+    const historyList2 = editor2.locator('.wb-html-editor__history-list');
+    // history should survive reload (may be fewer after deletion)
+    await expect(historyList2).toBeVisible();
+
+    // clear history via Clear button and verify it is gone (and persisted)
+    await editor2.locator('.wb-html-editor__clear-history').click();
+    await expect(historyList2.locator('.wb-html-editor__history-item')).toHaveCount(0);
+    await page.reload();
+    await page.locator('.canvas-component').first().click();
+    const editor3 = page.locator('#propertiesPanel wb-html-editor');
+    await expect(editor3.locator('.wb-html-editor__history-item')).toHaveCount(0);
+  });
+
+  test('editing HTML updates canvas in real time (live preview)', async ({ page }) => {
+    const firstPara = page.locator('.canvas-component .component-content p').first();
+    await firstPara.click();
+
+    const editor = page.locator('#propertiesPanel wb-html-editor');
+    await expect(editor).toBeVisible();
+
+    const textarea = editor.locator('.wb-html-editor__textarea');
+    await textarea.fill('<p data-test="edited">Live edit!</p>');
+
+    // enable live preview if not already
+    const live = editor.locator('.wb-html-editor__live');
+    if (!await live.isChecked()) await live.click();
+
+    await page.waitForTimeout(250);
+    await expect(page.locator('.canvas-component .component-content [data-test="edited"]')).toHaveText('Live edit!');
+  });
+
+  test('save persists HTML as raw (scripts allowed) when requested', async ({ page }) => {
+    const firstPara = page.locator('.canvas-component .component-content p').first();
+    await firstPara.click();
+
+    const editor = page.locator('#propertiesPanel wb-html-editor');
+    const textarea = editor.locator('.wb-html-editor__textarea');
+
+    await textarea.fill('<p id="x">Saved</p><script id="s">window.__INJECT=1</script>');
+    await editor.locator('.wb-html-editor__save').click();
+
+    await expect(page.locator('.canvas-component .component-content #x')).toHaveText('Saved');
+    // raw save must preserve script tags per product request
+    await expect(page.locator('.canvas-component .component-content script#s')).toHaveCount(1);
+  });
+
+  test('Import canvas loads entire canvas HTML into the editor', async ({ page }) => {
+    await page.locator('.canvas-component').first().click();
+    const editor = page.locator('#propertiesPanel wb-html-editor');
+    await expect(editor).toBeVisible();
+
+    await editor.locator('.wb-html-editor__import-canvas').click();
+    const textarea = editor.locator('.wb-html-editor__textarea');
+    await expect(textarea).toContainText('canvas');
+
+    // make a small edit to the canvas and save
+    await textarea.fill('<div id="canvas"><div class="injected">Imported!</div></div>');
+    await editor.locator('.wb-html-editor__save').click();
+
+    await expect(page.locator('#canvas .injected')).toHaveText('Imported!');
+  });
+});

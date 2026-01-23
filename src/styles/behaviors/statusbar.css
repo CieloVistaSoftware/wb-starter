@@ -1,0 +1,151 @@
+/**
+ * Status Bar Component Styles
+ * ============================================================================
+ * Uses CSS variables from themes.css
+ */
+
+wb-statusbar,
+.wb-statusbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 28px;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--wb-statusbar-bg, color-mix(in srgb, var(--bg-primary) 95%, transparent));
+  color: var(--wb-statusbar-color, var(--text-secondary));
+  border-top: 1px solid var(--wb-statusbar-border, color-mix(in srgb, var(--text-primary) 10%, transparent));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  
+  /* CSS API */
+  --wb-statusbar-bg: color-mix(in srgb, var(--bg-primary) 95%, transparent);
+  --wb-statusbar-color: var(--text-secondary);
+  --wb-statusbar-border: color-mix(in srgb, var(--text-primary) 10%, transparent);
+  --wb-statusbar-accent: var(--primary);
+  --wb-statusbar-hover: color-mix(in srgb, var(--text-primary) 10%, transparent);
+}
+
+/* Position variants */
+.wb-statusbar--bottom {
+  bottom: 0;
+}
+
+.wb-statusbar--top {
+  top: 0;
+  border-top: none;
+  border-bottom: 1px solid var(--wb-statusbar-border);
+}
+
+/* Sections */
+.wb-statusbar__left,
+.wb-statusbar__center,
+.wb-statusbar__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wb-statusbar__left {
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.wb-statusbar__center {
+  flex: 0 0 auto;
+}
+
+.wb-statusbar__right {
+  flex: 1;
+  justify-content: flex-end;
+}
+
+/* Items */
+.wb-statusbar__item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+}
+
+.wb-statusbar__item:hover {
+  background: var(--wb-statusbar-hover);
+}
+
+.wb-statusbar__icon {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.wb-statusbar__label {
+  font-weight: 500;
+}
+
+/* Page indicator */
+.wb-statusbar__page {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--wb-statusbar-accent);
+}
+
+.wb-statusbar__page:hover {
+  background: color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+/* Brand */
+.wb-statusbar__brand {
+  font-weight: 600;
+  color: var(--wb-statusbar-color);
+  opacity: 0.6;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+}
+
+/* Theme indicator */
+.wb-statusbar__theme {
+  cursor: pointer;
+}
+
+/* Time */
+.wb-statusbar__time {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Light theme overrides */
+[data-theme="light"] wb-statusbar,
+[data-theme="light"] .wb-statusbar {
+  --wb-statusbar-bg: color-mix(in srgb, var(--bg-primary) 95%, transparent);
+  --wb-statusbar-color: var(--text-secondary);
+  --wb-statusbar-border: color-mix(in srgb, var(--bg-color) 10%, transparent);
+  --wb-statusbar-hover: color-mix(in srgb, var(--bg-color) 5%, transparent);
+}
+
+/* Adjust main content to account for statusbar */
+body:has(wb-statusbar),
+body:has(.wb-statusbar) {
+  padding-bottom: 28px;
+}
+
+body:has(.wb-statusbar--top) {
+  padding-bottom: 0;
+  padding-top: 28px;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .wb-statusbar__brand,
+  .wb-statusbar__time {
+    display: none;
+  }
+  
+  .wb-statusbar__center {
+    display: none;
+  }
+}

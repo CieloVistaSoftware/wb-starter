@@ -6,8 +6,8 @@
  * Custom Tag: <wb-header>
  * 
  * Usage:
- * <wb-header  data-icon="📂" data-title="Project Index" data-badge="v1.0"></header>
- * <wb-header  data-icon="🚀" data-title="My App" data-subtitle="Dashboard" data-sticky></header>
+ * <wb-header  icon="📂" heading="Project Index" badge="v1.0"></header>
+ * <wb-header  icon="🚀" heading="My App" subtitle="Dashboard" sticky></header>
  * -----------------------------------------------------------------------------
  */
 

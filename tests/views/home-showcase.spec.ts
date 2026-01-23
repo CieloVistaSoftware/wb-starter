@@ -101,16 +101,16 @@ test.describe('Home Page Showcase', () => {
     console.log('✅ 4 stat cards present');
     
     // Check specific stats
-    await expect(page.locator('stats-card[data-value="232"]')).toBeVisible();
+    await expect(page.locator('stats-card[value="232"]')).toBeVisible();
     console.log('✅ Behaviors stat visible');
     
-    await expect(page.locator('stats-card[data-value="23"]')).toBeVisible();
+    await expect(page.locator('stats-card[value="23"]')).toBeVisible();
     console.log('✅ Themes stat visible');
     
-    await expect(page.locator('stats-card[data-label="Total Size"]')).toBeVisible();
+    await expect(page.locator('stats-card[label="Total Size"]')).toBeVisible();
     console.log('✅ Total Size stat visible');
     
-    await expect(page.locator('stats-card[data-value="0"]')).toBeVisible();
+    await expect(page.locator('stats-card[value="0"]')).toBeVisible();
     console.log('✅ Build Steps stat visible');
   });
 

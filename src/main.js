@@ -4,6 +4,8 @@
  * @module main
  */
 
+// Global debug flag - set to true to see all logs
+window.WB_DEBUG = false;
 
 // Extend Window interface to include WB
 /**
@@ -12,11 +14,11 @@
  */
 
 /**
- * @type {Window & { WB?: WB, WBSite?: WBSite }}
+ * @type {Window & { WB?: WB, WBSite?: WBSite, WB_DEBUG?: boolean }}
  */
 const _window = window;
 
-import WB from './core/wb.js';
+import WB from './core/wb-lazy.js';
 import WBSiteClass from './core/site-engine.js';
 
 /**
@@ -24,7 +26,8 @@ import WBSiteClass from './core/site-engine.js';
  * @returns {Promise<void>}
  */
 async function init() {
-  console.log('🚀 WB Framework starting...');
+  console.log('[main] init() starting');
+  if (_window.WB_DEBUG) console.log('🚀 WB Framework starting...');
 
   try {
     // Expose WB globally
@@ -33,18 +36,18 @@ async function init() {
     // Boot the site
     /** @type {WBSite} */
     const site = new WBSiteClass();
-    console.log('WBSite instance created');
+    if (_window.WB_DEBUG) console.log('WBSite instance created');
 
     await site.init();
-    console.log('site.init() complete');
+    if (_window.WB_DEBUG) console.log('site.init() complete');
 
     await site.navigateTo(site.currentPage);
-    console.log('Navigation complete');
+    if (_window.WB_DEBUG) console.log('Navigation complete');
 
     // Expose for debugging
     _window.WBSite = site;
 
-    console.log('✅ WB Framework ready');
+    if (_window.WB_DEBUG) console.log('✅ WB Framework ready');
   } catch (error) {
     console.error('❌ Site initialization failed:', error);
     console.error('Stack:', error.stack);

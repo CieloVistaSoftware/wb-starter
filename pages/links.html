@@ -1,15 +1,15 @@
 <div class="wb-hero" style="min-height: 40vh;">
-  <div class="wb-hero__content">
+  <div class="wb-hero__content" id="auto-pages-linkshtml-1">
     <h1>Interesting <span class="wb-gradient-text">Links</span></h1>
     <p class="wb-hero__subtitle">A curated list of interesting resources.</p>
   </div>
 </div>
 
 <section style="padding: 2rem;">
-  <div style="max-width: 800px; margin: 0 auto;">
+  <div style="max-width: 800px; margin: 0 auto;" id="auto-pages-linkshtml-2">
     
     <!-- Add Form -->
-    <div class="wb-glass" style="padding: 2rem; margin-bottom: 2rem;">
+    <div class="wb-glass" style="padding: 2rem; margin-bottom: 2rem;" id="auto-pages-linkshtml-3">
       <h3 style="margin-top: 0;">Add New Link</h3>
       <form id="add-link-form" style="display: flex; flex-direction: column; gap: 1rem;">
         <input type="text" id="link-url" placeholder="URL (e.g. https://github.com/...)" class="wb-input-glass" required>
@@ -75,14 +75,14 @@
       item.style.gap = '1rem';
       
       item.innerHTML = `
-        <div style="flex: 1;">
+        <div style="flex: 1;" id="auto-pages-linkshtml-4">
           <h3 style="margin: 0 0 0.5rem 0;">
             <a href="${link.url}" target="_blank" style="text-decoration: none; color: inherit;">${link.title}</a>
           </h3>
           <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">${link.description || ''}</p>
           <a href="${link.url}" target="_blank" style="font-size: 0.8rem; color: var(--primary); text-decoration: none; display: block; margin-top: 0.5rem;">${link.url}</a>
         </div>
-        <div style="display: flex; gap: 0.5rem;">
+        <div style="display: flex; gap: 0.5rem;" id="auto-pages-linkshtml-5">
           <button class="wb-btn-glass" onclick="editLink(${link.id})" style="padding: 0.5rem;" title="Edit">✏️</button>
           <button class="wb-btn-glass" onclick="deleteLink(${link.id})" style="padding: 0.5rem; color: var(--danger-color, #ef4444);" title="Delete">🗑️</button>
         </div>

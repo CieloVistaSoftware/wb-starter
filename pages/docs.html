@@ -41,12 +41,12 @@
         if (!hasDocs && !hasPages) continue;
         
         hasResults = true;
-        html += '<div class="docs-category" style="margin-bottom: 2.5rem;">';
-        html += '<h2 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">';
+        html += '<div class="docs-category" style="margin-bottom: 2.5rem;" id="auto-pages-docshtml-1">';
+        html += '<h2 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;" id="auto-pages-docshtml-2">';
         html += '<span>' + category.icon + '</span>';
         html += '<span>' + category.name + '</span>';
         html += '</h2>';
-        html += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">';
+        html += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;" id="auto-pages-docshtml-3">';
         
         // Handle markdown docs
         if (category.docs) {
@@ -55,7 +55,7 @@
             const filePath = doc.file.startsWith('http') || doc.file.startsWith('/') ? doc.file : '/docs/' + doc.file;
             html += '<a href="/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
             html += 'class="docs-card" target="_blank" ';
-            html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
+            html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;" id="auto-pages-docshtml-4">';
             html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + doc.title + '</h3>';
             html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + doc.description + '</p>';
             html += '</a>';
@@ -67,7 +67,7 @@
           for (const page of category.pages) {
             html += '<a href="/pages/' + page.page + '.html" ';
             html += 'class="docs-card" target="_blank" ';
-            html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
+            html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;" id="auto-pages-docshtml-5">';
             html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + page.title + '</h3>';
             html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + page.description + '</p>';
             html += '</a>';
@@ -78,7 +78,7 @@
       }
       
       if (!hasResults) {
-        container.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);">' +
+        container.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);" id="auto-pages-docshtml-6">' +
           '<p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔍</p>' +
           '<p>No results found matching your search.</p>' +
           '</div>';
@@ -155,7 +155,7 @@
       
     } catch (err) {
       console.error('Failed to load docs manifest:', err);
-      container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);">' +
+      container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);" id="auto-pages-docshtml-7">' +
         '<p>⚠️ Could not load documentation index.</p>' +
         '<p style="font-size: 0.875rem;">Error: ' + err.message + '</p>' +
         '</div>';

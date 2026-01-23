@@ -187,8 +187,8 @@ function renderSidebar() {
         ${COMMON_COMPONENTS.map(c => `
           <div class="common-tile" 
                draggable="true" 
-               data-behavior="${c.id}"
-               data-tag="${c.tag}"
+               behavior="${c.id}"
+               tag="${c.tag}"
                title="${c.label} - click to add or drag to canvas">
             <span class="common-tile__icon">${c.icon}</span>
             <span class="common-tile__label">${c.label}</span>
@@ -445,7 +445,7 @@ function renderComponentItem(comp) {
   const data = JSON.stringify(comp).replace(/"/g, '&quot;');
   const isFav = favorites.includes(comp.b);
   return `
-    <div class="comp-item${isFav ? ' favorite' : ''}" draggable="true" data-c="${data}" data-behavior="${comp.b || ''}" title="${comp.n}${comp.b ? ' (' + comp.b + ')' : ''}">
+    <div class="comp-item${isFav ? ' favorite' : ''}" draggable="true" c="${data}" behavior="${comp.b || ''}" title="${comp.n}${comp.b ? ' (' + comp.b + ')' : ''}">
       <span class="comp-icon">${comp.i}</span>
       <span class="comp-name">${comp.n}</span>
       ${isFav ? '<span class="comp-star">★</span>' : ''}

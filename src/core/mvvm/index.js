@@ -29,7 +29,7 @@
  *   
  *   // Then just write HTML:
  *   <wb-card title="Hello">Content</wb-card>
- *   <wb-card  data-title="Hello">Content</article>
+ *   <wb-card  heading="Hello">Content</article>
  */
 
 export { 

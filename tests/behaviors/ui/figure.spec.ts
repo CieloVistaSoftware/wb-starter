@@ -1,7 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 
 test.describe('Figure Component', () => {
-  test('should render caption from data-caption attribute', async ({ page }: { page: Page }) => {
+  test('should render caption from caption attribute', async ({ page }: { page: Page }) => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     

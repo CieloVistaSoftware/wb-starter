@@ -6,8 +6,8 @@
  * Custom Tag: <wb-footer>
  * 
  * Usage:
- * <wb-footer  data-copyright="© 2025 Acme Inc"></footer>
- * <footer data-copyright="© 2025" data-links="Privacy,Terms,Contact"></footer>
+ * <wb-footer  copyright="© 2025 Acme Inc"></footer>
+ * <footer copyright="© 2025" links="Privacy,Terms,Contact"></footer>
  * -----------------------------------------------------------------------------
  */
 

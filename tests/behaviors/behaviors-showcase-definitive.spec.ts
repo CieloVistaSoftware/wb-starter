@@ -182,9 +182,9 @@ test.describe('Inputs Section', () => {
 
   test('validation variant inputs exist', async ({ page }) => {
     const section = page.locator('#inputs');
-    await expect(section.locator('[data-variant="success"]').first()).toBeVisible();
-    await expect(section.locator('[data-variant="warning"]').first()).toBeVisible();
-    await expect(section.locator('[data-variant="error"]').first()).toBeVisible();
+    await expect(section.locator('[variant="success"]').first()).toBeVisible();
+    await expect(section.locator('[variant="warning"]').first()).toBeVisible();
+    await expect(section.locator('[variant="error"]').first()).toBeVisible();
   });
 
   test('password input has x-password behavior', async ({ page }) => {

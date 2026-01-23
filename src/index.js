@@ -1,6 +1,5 @@
 // Main entry point for site logic
 import WB from './core/wb-lazy.js';
-import { NotesModal } from './core/notes-modal.js';
 
 // Expose WB globally for debugging
 window.WB = WB;

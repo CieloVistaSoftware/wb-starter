@@ -15,6 +15,8 @@ import { getConfig, setConfig } from './config.js';
 
 // Auto-injection mappings
 const customElementMappings = [
+    // Issues/Bug Tracker
+    { selector: 'wb-issues', behavior: 'issues' },
   // Card custom tags - BOTH wb-* AND card-* namespaces for flexibility
   { selector: 'wb-card', behavior: 'card' },
   { selector: 'card-basic', behavior: 'card' },
@@ -95,6 +97,9 @@ const customElementMappings = [
   
   { selector: 'wb-code-card', behavior: 'demo' },
   { selector: 'wb-mdhtml', behavior: 'mdhtml' },
+  { selector: 'wb-docs', behavior: 'docs' },
+  { selector: 'wb-statusbar', behavior: 'statusbar' },
+  { selector: '[x-statusbar]', behavior: 'statusbar' },
   
   // === NEW LAYOUT MAPPINGS ===
   
@@ -141,6 +146,7 @@ const customElementMappings = [
   // Behavior Attributes
   { selector: '[x-copy]', behavior: 'copy' },
   { selector: '[x-draggable]', behavior: 'draggable' },
+  { selector: '[x-reorder]', behavior: 'reorder' },
   { selector: '[x-collapse]', behavior: 'collapse' },
   { selector: '[x-fadein]', behavior: 'fadein' },
   { selector: '[x-shake]', behavior: 'shake' },
@@ -152,13 +158,15 @@ const customElementMappings = [
 
   // New Components
   { selector: 'wb-codecontrol', behavior: 'codecontrol' },
+  { selector: 'wb-html-editor', behavior: 'htmlEditor' },
   { selector: 'wb-collapse', behavior: 'collapse' },
   { selector: 'wb-darkmode', behavior: 'darkmode' },
   { selector: 'wb-dropdown', behavior: 'dropdown' },
   { selector: 'wb-footer', behavior: 'footer' },
   { selector: 'wb-header', behavior: 'header' },
   { selector: 'wb-globe', behavior: 'globe' },
-  { selector: 'wb-stagelight', behavior: 'stagelight' }
+  { selector: 'wb-stagelight', behavior: 'stagelight' },
+  { selector: 'wb-features', behavior: 'features' }
 ];
 
 const autoInjectMappings = [
@@ -214,7 +222,7 @@ function getAutoInjectBehaviors(element) {
 
   if (!getConfig('autoInject')) return behaviors;
   
-  // Skip if data-wb is already present (explicit overrides implicit)
+  // Skip if wb is already present (explicit overrides implicit)
   if (element.hasAttribute('x-behavior')) return behaviors;
   
   for (const { selector, behavior } of autoInjectMappings) {
@@ -400,7 +408,7 @@ const WB = {
   },
 
   /**
-   * Scan DOM for elements with data-wb and inject behaviors
+   * Scan DOM for elements with wb and inject behaviors
    * Uses batching for better performance
    * @param {HTMLElement} root - Root element to scan (default: document.body)
    */
@@ -434,7 +442,7 @@ const WB = {
       autoInjectMappings.forEach(({ selector, behavior }) => {
         const autoElements = root.querySelectorAll(selector);
         autoElements.forEach(element => {
-          // Skip if data-wb is present (already handled)
+          // Skip if wb is present (already handled)
           if (!element.hasAttribute('x-behavior')) {
             WB.lazyInject(element, behavior);
           }
@@ -451,7 +459,7 @@ const WB = {
   },
 
   /**
-   * Watch for new elements with data-wb (MutationObserver)
+   * Watch for new elements with wb (MutationObserver)
    * @param {HTMLElement} root - Root element to observe (default: document.body)
    * @returns {MutationObserver} The observer instance
    */
@@ -648,7 +656,7 @@ const WB = {
       }
     }
 
-    console.log(`✅ WB v${WB.version} initialized (lazy loading enabled)`);
+    if (window.WB_DEBUG) console.log(`✅ WB v${WB.version} initialized (lazy loading enabled)`);
     
     if (debug) {
       Events.log('info', 'WB', 'Initialized', options);
@@ -704,7 +712,7 @@ const WB = {
     }
 
     // 4. Apply Behaviors
-    // If we didn't find a custom tag, or if there are extra behaviors, add data-wb
+    // If we didn't find a custom tag, or if there are extra behaviors, add wb
     const behaviors = data.behaviors || [];
     if (data.b && !isCustomTag) {
       behaviors.push(data.b);

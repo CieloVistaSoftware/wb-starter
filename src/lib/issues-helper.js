@@ -11,9 +11,9 @@ export async function openSiteIssues() {
       try { window.WB.scan(issuesEl); } catch (e) { console.warn('[WB] Failed to scan issues element', e); }
     }
 
-    // Wait for behavior to initialize
+    // Wait for behavior to initialize (give it a bit longer to attach methods)
     const start = Date.now();
-    while ((issuesEl.dataset.wbReady !== 'issues') && (Date.now() - start < 1000)) {
+    while ((issuesEl.dataset.wbReady !== 'issues') && (Date.now() - start < 2000)) {
       // eslint-disable-next-line no-await-in-loop
       await new Promise(r => setTimeout(r, 50));
     }
@@ -21,9 +21,9 @@ export async function openSiteIssues() {
 
   // Use its public API if present, otherwise click its trigger
   if (issuesEl && typeof issuesEl.open === 'function') {
-    try { return issuesEl.open(); } catch (e) { console.warn('issuesEl.open() failed', e); }
+    try { console.debug('[issues-helper] calling issuesEl.open()'); return issuesEl.open(); } catch (e) { console.warn('issuesEl.open() failed', e); }
   }
-  const trigger = issuesEl.querySelector('.wb-issues__trigger');
+  const trigger = issuesEl.querySelector('.wb-issues-trigger, .wb-issues__trigger');
   if (trigger) trigger.click();
 }
 

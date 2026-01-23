@@ -181,7 +181,7 @@ async function setupAudioComponent(page: Page, props: Record<string, any>): Prom
   
   await page.waitForTimeout(300); // Allow behavior to initialize
   
-  return page.locator('[data-wb="audio"]').first();
+  return page.locator('[wb="audio"]').first();
 }
 
 // =============================================================================

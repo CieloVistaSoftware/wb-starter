@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="auto-public-performance-dashboardhtml-1">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -157,14 +157,14 @@
     }
   </style>
 </head>
-<body>
-  <div class="container">
-    <header>
-      <div>
+<body id="auto-public-performance-dashboardhtml-2">
+  <div class="container" id="auto-public-performance-dashboardhtml-3">
+    <header id="auto-public-performance-dashboardhtml-4">
+      <div id="auto-public-performance-dashboardhtml-5">
         <h1>Performance Dashboard</h1>
         <p style="color: var(--text-muted)">Real-time metrics from Playwright tests</p>
       </div>
-      <div class="control-cabinet">
+      <div class="control-cabinet" id="auto-public-performance-dashboardhtml-6">
         <button id="runBtn" class="run-btn" onclick="runTests()">
           <span class="status-light"></span>
           <span class="btn-text">Run Test Suite</span>
@@ -173,32 +173,32 @@
       </div>
     </header>
 
-    <div class="grid">
+    <div class="grid" id="auto-public-performance-dashboardhtml-7">
       <!-- Load Time Chart -->
-      <div class="card">
+      <div class="card" id="auto-public-performance-dashboardhtml-8">
         <h2>Page Load Times</h2>
         <canvas id="loadChart"></canvas>
       </div>
 
       <!-- Interaction Chart -->
-      <div class="card">
+      <div class="card" id="auto-public-performance-dashboardhtml-9">
         <h2>Interaction Latency</h2>
         <canvas id="interactionChart"></canvas>
       </div>
 
       <!-- Resource Size Chart -->
-      <div class="card">
+      <div class="card" id="auto-public-performance-dashboardhtml-10">
         <h2>Resource Sizes</h2>
         <canvas id="resourceChart"></canvas>
       </div>
 
       <!-- Recent Results Table -->
-      <div class="card" style="grid-column: 1 / -1;">
+      <div class="card" style="grid-column: 1 / -1;" id="auto-public-performance-dashboardhtml-11">
         <h2>Recent Test Runs</h2>
         <div style="overflow-x: auto;">
           <table id="resultsTable">
             <thead>
-              <tr>
+              <tr id="auto-public-performance-dashboardhtml-12">
                 <th>Time</th>
                 <th>Test Name</th>
                 <th>Value</th>
@@ -311,7 +311,7 @@
         const statusIcon = passed ? '✓ Pass' : '✗ Fail';
         
         return `
-          <tr>
+          <tr id="auto-public-performance-dashboardhtml-13">
             <td>${new Date(e.timestamp).toLocaleTimeString()}</td>
             <td>${e.name}</td>
             <td>${e.value.toFixed(2)} ${e.unit}</td>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" theme="dark" id="auto-demos-registry-browserhtml-1">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,10 +77,10 @@
     }
   </style>
 </head>
-<body>
+<body id="auto-demos-registry-browserhtml-2">
 
-  <div class="page">
-    <div class="page__hero">
+  <div class="page" id="auto-demos-registry-browserhtml-3">
+    <div class="page__hero" id="auto-demos-registry-browserhtml-4">
       <h1>📚 WB Views Registry Browser</h1>
       <p>Live documentation of all registered views in <code>src/wb-views/views-registry.json</code>.</p>
     </div>
@@ -112,19 +112,19 @@
         const sortedKeys = Object.keys(views).sort();
         
         let html = `
-          <div class="section-header">
+          <div class="section-header" id="auto-demos-registry-browserhtml-5">
             <h2>Registered Views</h2>
             <span class="badge">${sortedKeys.length} items</span>
           </div>
-          <table class="registry-table">
+          <table class="registry-table" id="auto-demos-registry-browserhtml-6">
             <thead>
-              <tr>
+              <tr id="auto-demos-registry-browserhtml-7">
                 <th style="width: 200px;">View Name</th>
                 <th>Description & Attributes</th>
                 <th>Template Source</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="auto-demos-registry-browserhtml-8">
         `;
         
         sortedKeys.forEach(key => {
@@ -142,8 +142,8 @@
           }
 
           html += `
-            <tr>
-              <td>
+            <tr id="auto-demos-registry-browserhtml-9">
+              <td id="auto-demos-registry-browserhtml-10">
                 <div class="view-name">${key}</div>
                 <div style="margin-top:0.5rem; font-size: 0.75rem; color: var(--text-muted);">
                    &lt;${key.includes('-') ? key : 'wb-' + key}&gt;
@@ -171,9 +171,9 @@ ${view.template.replace(/`/g, '\\`')}
         await WB.scan(container);
         
       } catch (err) {
-        container.innerHTML = `<div class="alert alert--error">
+        container.innerHTML = `<div class="alert alert--error" id="auto-demos-registry-browserhtml-11">
           <span class="alert__icon">❌</span>
-          <div class="alert__content">
+          <div class="alert__content" id="auto-demos-registry-browserhtml-12">
             <strong>Error loading registry</strong>
             <p>${err.message}</p>
           </div>

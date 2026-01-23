@@ -554,7 +554,7 @@
 
       <h3>3.1. Eliminating the Confident Lie</h3>
       <p>
-        In traditional frameworks, an AI prompted to "make the button blue" might confidently invent a class <code>.btn-blue</code>, asserting the task is complete. This overconfidence, absent validation, results in a functional lie. Under Schema-First Architecture, the AI is constrained to the schema: <code>data-variant="primary"</code>. The validity of the output is binary and verifiable.
+        In traditional frameworks, an AI prompted to "make the button blue" might confidently invent a class <code>.btn-blue</code>, asserting the task is complete. This overconfidence, absent validation, results in a functional lie. Under Schema-First Architecture, the AI is constrained to the schema: <code>variant="primary"</code>. The validity of the output is binary and verifiable.
       </p>
 
       <figure>
@@ -566,17 +566,17 @@
               <span style="font-size: 9pt; color: #22c55e; font-weight: bold;">✓</span>
               <button
                 x-ripple x-toast
-                data-variant="primary"
-                data-message="✓ Schema-valid button clicked!"
-                data-type="success">Schema Valid (Primary)</button>
+                variant="primary"
+                message="✓ Schema-valid button clicked!"
+                variant="success">Schema Valid (Primary)</button>
             </div>
             <div style="display: flex; gap: 1rem; align-items: center;">
               <span style="font-size: 9pt; color: #22c55e; font-weight: bold;">✓</span>
               <button
                 x-ripple x-toast
-                data-variant="outline"
-                data-message="✓ Schema-valid button clicked!"
-                data-type="success">Schema Valid (Outline)</button>
+                variant="outline"
+                message="✓ Schema-valid button clicked!"
+                variant="success">Schema Valid (Outline)</button>
             </div>
             <div style="display: flex; gap: 1rem; align-items: center;">
               <span style="font-size: 9pt; color: #ef4444; font-weight: bold;">✗</span>

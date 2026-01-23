@@ -5,7 +5,7 @@
   "description": "Modern website starter kit powered by WB Behaviors",
   "main": "index.html",
   "scripts": {
-    "start": "node scripts/update-docs-manifest.js && node server.js",
+    "start": "node scripts/start.js",
     "dev": "npx serve . -p 3000",
     "test:duplicates": "node scripts/test-duplicates.mjs",
     "test": "npm run test:duplicates && npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors",
@@ -18,6 +18,7 @@
     "test:regression": "npx playwright test --project=regression",
     "test:base": "npx playwright test --project=compliance && npx playwright test --project=base",
     "test:behaviors": "npx playwright test --project=compliance && npx playwright test --project=base && npx playwright test --project=behaviors",
+    "test:builders": "npx playwright test --ui --max-failures=1 tests/compliance/builder.schema.spec.ts tests/behaviors/builder-mkel.spec.ts tests/behaviors/ui/builder.spec.ts tests/behaviors/ui/builder-sidebar.spec.ts tests/behaviors/ui/builder-properties.spec.ts tests/behaviors/ui/builder-permutations.spec.ts tests/behaviors/ui/builder-api.spec.ts tests/regression/builder-sync.spec.ts tests/regression/builder-spa-header.spec.ts tests/behaviors/ui/page-builder-rules.spec.ts",
     "test:performance": "npx playwright test --project=performance",
     "test:firefox": "npx playwright test --project=firefox",
     "test:webkit": "npx playwright test --project=webkit",
@@ -25,11 +26,13 @@
     "test:browsers": "npx playwright test --project=firefox --project=webkit --project=mobile-chrome --project=mobile-safari",
     "test:all": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors && npx playwright test --project=performance",
     "test:integrity": "npx playwright test tests/compliance/project-integrity.spec.ts",
+    "test:watch": "node scripts/test-watch-fast.js",
     "audit:schema-tests": "node scripts/audit-schema-tests.mjs",
     "generate:wb-tests": "node scripts/generate-wb-tests.mjs",
     "generate:schema-tests": "node scripts/generate-schema-tests.js",
     "generate:search": "node scripts/generate-search-index.js",
-    "precommit": "npm run test:integrity"
+    "validate:css": "node scripts/validate-css-contracts.js",
+    "precommit": "npm run validate:css && npm run test:integrity"
   },
   "keywords": [
     "website",
@@ -56,8 +59,10 @@
   },
   "customElements": "./data/custom-elements.json",
   "devDependencies": {
-    "acorn": "^8.15.0",
+    "@types/node": "^24.10.1",
+    "acorn": "^8.8.2",
     "acorn-walk": "^8.3.4",
+    "chokidar": "^4.0.3",
     "sharp": "^0.34.5"
   }
 }

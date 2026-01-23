@@ -33,7 +33,7 @@ const CARD_PADDING = '1rem';
 const parseBoolean = (val) => {
   if (val === 'true') return true;
   if (val === 'false') return false;
-  if (val === '') return true; // Handle boolean attributes (e.g. data-clickable="")
+  if (val === '') return true; // Handle boolean attributes (e.g. clickable="")
   return val;
 };
 
@@ -85,10 +85,17 @@ export function cardBase(element, options = {}) {
   // When true, DOM structure is already built from $view - we only add interactivity
   const schemaProcessed = options.schemaProcessed || element.dataset.wbSchema;
   
+  // Phase 2: Read 'heading' first, fallback to legacy 'title' for backward compat
+  // Note: Native 'title' attribute creates tooltips, so we prefer 'heading' for headings
+  const headingValue = options.heading || element.dataset.heading || element.getAttribute('heading') ||
+                       options.title || element.dataset.title || element.getAttribute('title') || '';
+  
   const config = {
     ...options, // Spread first to allow overrides, but specific logic below takes precedence
     behavior: options.behavior || 'card',
-    title: options.title || element.dataset.title || element.getAttribute('title') || '',
+    // v3.0 Phase 2: Use 'heading' for headings (standard), keep 'title' alias for backward compat
+    heading: headingValue,
+    title: headingValue, // Backward compatibility alias
     subtitle: options.subtitle || element.dataset.subtitle || '',
     content: options.content || element.dataset.content || element.getAttribute('content') || '',
     footer: options.footer || element.dataset.footer || '',
@@ -763,14 +770,14 @@ export function cardhero(element, options = {}) {
   // CHECK FOR SLOTS/CHILDREN BEFORE CLEARING
   // ----------------------------------------
   // If the user provided content inside the tag, we want to preserve specific pieces
-  // marked with slot="..." or data-slot="..." to avoid putting HTML in attributes.
+  // marked with slot="..." or slot="..." to avoid putting HTML in attributes.
   
   const slots = {};
   ['pretitle', 'title', 'subtitle'].forEach(slotName => {
     // Check standard ShadowDOM-like slot syntax
     let slotEl = element.querySelector(`[slot="${slotName}"]`);
-    // Fallback to data-slot
-    if (!slotEl) slotEl = element.querySelector(`[data-slot="${slotName}"]`);
+    // Fallback to slot
+    if (!slotEl) slotEl = element.querySelector(`[slot="${slotName}"]`);
     
     if (slotEl) {
       slots[slotName] = slotEl.cloneNode(true);
@@ -1359,8 +1366,15 @@ export function cardproduct(element, options = {}) {
  * Custom Tag: <card-notification>
  */
 export function cardnotification(element, options = {}) {
+  // Phase 2: Read 'variant' first, fallback to legacy 'type' for backward compat
+  // Note: Native 'type' has specific meaning on inputs/buttons, so we prefer 'variant' for style variants
+  const variantValue = options.variant || element.dataset.variant || element.getAttribute('variant') ||
+                       options.type || element.dataset.type || element.getAttribute('type') || 'info';
+  
   const config = {
-    type: options.type || element.dataset.type || element.getAttribute('type') || 'info',
+    // v3.0 Phase 2: Use 'variant' for style variants (standard), keep 'type' alias for backward compat
+    variant: variantValue,
+    type: variantValue, // Backward compatibility alias
     message: options.message || element.dataset.message || element.getAttribute('message') || element.textContent,
     dismissible: parseBoolean(options.dismissible) ?? (element.dataset.dismissible !== 'false' && element.getAttribute('dismissible') !== 'false'),
     icon: options.icon || element.dataset.icon || element.getAttribute('icon'),

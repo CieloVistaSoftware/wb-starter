@@ -1,10 +1,10 @@
 {
   "metadata": {
     "description": "Registry of all bugs found during development. Each bug MUST have a corresponding regression test.",
-    "lastUpdated": "2025-12-26",
-    "totalBugs": 3,
+    "lastUpdated": "2026-01-21",
+    "totalBugs": 4,
     "testedBugs": 3,
-    "untestedBugs": 0
+    "untestedBugs": 1
   },
   "bugs": [
     {
@@ -95,7 +95,8 @@
     "behavior-initialization": [],
     "event-handling": [],
     "styling": [],
-    "accessibility": []
+    "accessibility": [],
+    "test-infrastructure": ["BUG-2026-01-21-001"]
   },
   "componentIndex": {
     "figure": ["BUG-2025-12-26-001"],
@@ -104,6 +105,7 @@
     "cardimage": ["BUG-2024-12-19-001"],
     "cardvideo": ["BUG-2024-12-19-001"],
     "avatar": ["BUG-2024-12-19-001"],
-    "builder": ["BUG-2024-12-19-001"]
+    "builder": ["BUG-2024-12-19-001"],
+    "playwright": ["BUG-2026-01-21-001"]
   }
 }

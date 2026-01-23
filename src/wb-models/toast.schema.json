@@ -20,9 +20,9 @@
       "description": "Toast notification message",
       "required": true
     },
-    "title": {
+    "heading": {
       "type": "string",
-      "description": "Toast title (optional)"
+      "description": "Toast heading (optional)"
     },
     "variant": {
       "type": "string",
@@ -100,13 +100,13 @@
       "description": "Content container"
     },
     {
-      "name": "title",
+      "name": "heading",
       "tag": "strong",
       "parent": "content",
       "public": true,
-      "content": "{{title}}",
-      "createdWhen": "title",
-      "description": "Toast title"
+      "content": "{{heading}}",
+      "createdWhen": "heading",
+      "description": "Toast heading"
     },
     {
       "name": "message",
@@ -327,7 +327,7 @@
       "<wb-toast position=\"top-left\">position=top-left</wb-toast>",
       "<wb-toast position=\"top-center\">position=top-center</wb-toast>",
       "<wb-toast dismissible>with dismissible</wb-toast>",
-      "<wb-toast title=\"Test Title\">With title attribute</wb-toast>"
+      "<wb-toast heading=\"Test Heading\">With heading attribute</wb-toast>"
     ],
     "matrix": {
       "combinations": [
@@ -352,7 +352,7 @@
         },
         {
           "message": "Test",
-          "title": "Notice"
+          "heading": "Notice"
         },
         {
           "message": "Test",

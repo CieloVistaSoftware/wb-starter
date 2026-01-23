@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
 <body>
 
   <div class="page">
-    <div class="page__hero">
+    <div class="page__hero" id="auto-demos-wb-views-demohtml-1">
       <h1>🧩 WB Views System</h1>
       <p><strong>Custom Element Factory:</strong> Define a template once → get a custom tag automatically. Change the template → ALL instances update.</p>
     </div>
@@ -23,12 +23,12 @@
 
     <!-- Demo Section: Standardized section wrapper -->
     <template wb-view="demo-section">
-      <section class="demo-section">
-        <div class="section-header">
+      <section class="demo-section" id="auto-demos-wb-views-demohtml-2">
+        <div class="section-header" id="auto-demos-wb-views-demohtml-3">
           <h2>{{title}}</h2>
           <span class="badge" wb-if="badge">{{badge}}</span>
         </div>
-        <div class="section-content">
+        <div class="section-content" id="auto-demos-wb-views-demohtml-4">
           <p class="section-description" wb-if="description">{{description}}</p>
           <slot></slot>
         </div>
@@ -37,20 +37,20 @@
 
     <!-- Example Block: Renders example and shows source code -->
     <template wb-view="example-block">
-      <div class="example-block">
+      <div class="example-block" id="auto-demos-wb-views-demohtml-5">
         <div class="example-label">{{label}}</div>
         <div class="example-render">
           <slot></slot>
         </div>
         <div class="example-codes" wb-if="code">
-          <wb-mdhtml data-size="sm" data-highlight data-captions="true">{{code}}</wb-mdhtml>
+          <wb-mdhtml size="sm" highlight captions="true">{{code}}</wb-mdhtml>
         </div>
       </div>
     </template>
 
     <!-- Component Tile -->
     <template wb-view="component-tile">
-      <div class="tile">
+      <div class="tile" id="auto-demos-wb-views-demohtml-6">
         <span class="tile__icon">{{icon}}</span>
         <span class="tile__label"><slot>{{text}}</slot></span>
         <span class="tile__badge" wb-if="badge">{{badge}}</span>
@@ -59,7 +59,7 @@
 
     <!-- Badge Tag -->
     <template wb-view="badge-tag">
-      <span class="badge-tag badge-tag--{{variant || 'primary'}}">
+      <span class="badge-tag badge-tag--{{variant || 'primary'}}" id="auto-demos-wb-views-demohtml-7">
         <span wb-if="icon">{{icon}}</span>
         <slot>{{text}}</slot>
       </span>
@@ -86,9 +86,9 @@
 
     <!-- Card -->
     <template wb-view="card">
-      <article class="card">
-        <header class="card__header" wb-if="title">
-          <div class="card__header-content">
+      <article class="card" id="auto-demos-wb-views-demohtml-8">
+        <header class="card__header" wb-if="title" id="auto-demos-wb-views-demohtml-9">
+          <div class="card__header-content" id="auto-demos-wb-views-demohtml-10">
             <h3 class="card__title">{{title}}</h3>
             <p class="card__subtitle" wb-if="subtitle">{{subtitle}}</p>
           </div>
@@ -101,9 +101,9 @@
 
     <!-- User Card -->
     <template wb-view="user-card">
-      <div class="user-card">
+      <div class="user-card" id="auto-demos-wb-views-demohtml-11">
         <user-avatar initials="{{initials}}" size="lg" status="{{status}}" name="{{name}}"></user-avatar>
-        <div class="user-card__info">
+        <div class="user-card__info" id="auto-demos-wb-views-demohtml-12">
           <div class="user-card__name">{{name}}</div>
           <div class="user-card__role">{{role}}</div>
         </div>
@@ -132,9 +132,9 @@
 
     <!-- Alert Box -->
     <template wb-view="alert-box">
-      <div class="alert alert--{{variant || 'info'}}">
+      <div class="alert alert--{{variant || 'info'}}" id="auto-demos-wb-views-demohtml-13">
         <span class="alert__icon" wb-if="icon">{{icon}}</span>
-        <div class="alert__content">
+        <div class="alert__content" id="auto-demos-wb-views-demohtml-14">
           <div class="alert__heading" wb-if="heading">{{heading}}</div>
           <div class="alert__message">{{message}}</div>
         </div>
@@ -144,9 +144,9 @@
 
     <!-- Stat Tile -->
     <template wb-view="stat-tile">
-      <div class="stat">
+      <div class="stat" id="auto-demos-wb-views-demohtml-15">
         <span class="stat__icon" wb-if="icon">{{icon}}</span>
-        <div>
+        <div id="auto-demos-wb-views-demohtml-16">
           <div class="stat__value">{{value}}</div>
           <div class="stat__label"><slot>{{text}}</slot></div>
           <div class="stat__trend stat__trend--{{trend}}" wb-if="trendValue">{{trendValue}}</div>
@@ -161,7 +161,7 @@
 
     <demo-section title="🔘 Buttons" badge="variants + icons">
         <example-block label="Standard Buttons (wb-button)">
-            <div class="inline-row">
+            <div class="inline-row" id="auto-demos-wb-views-demohtml-17">
               <wb-button label="Primary"></wb-button>
               <wb-button variant="secondary" label="Secondary"></wb-button>
               <wb-button variant="success" label="Success"></wb-button>
@@ -173,7 +173,7 @@
 
     <demo-section title="👤 Avatars" badge="sizes + status">
         <example-block label="User Avatars (user-avatar)">
-            <div class="inline-row">
+            <div class="inline-row" id="auto-demos-wb-views-demohtml-18">
               <user-avatar initials="SM" size="sm" name="User"></user-avatar>
               <user-avatar initials="MD" size="md" name="User"></user-avatar>
               <user-avatar initials="LG" size="lg" name="User"></user-avatar>
@@ -185,7 +185,7 @@
 
     <demo-section title="🧭 Navigation Links" badge="sidebar nav">
         <example-block label="Navigation Items (nav-link)">
-            <div style="max-width: 280px;">
+            <div style="max-width: 280px;" id="auto-demos-wb-views-demohtml-19">
               <nav-link icon="🏠" href="#" active label="Dashboard"></nav-link>
               <nav-link icon="📊" href="#" label="Analytics"></nav-link>
               <nav-link icon="💬" href="#" badge="5" label="Messages"></nav-link>
@@ -195,13 +195,13 @@
     </demo-section>
 
     <demo-section title="💰 Pricing" badge="prices + features">
-        <example-block label="Pricing Components (price-tag, feature-item)">
-            <div class="inline-row" style="margin-bottom: 1.5rem;">
+        <example-block label="Pricing Components (price-tag, feature-item)" id="auto-demos-wb-views-demohtml-20">
+            <div class="inline-row" style="margin-bottom: 1.5rem;" id="auto-demos-wb-views-demohtml-21">
               <price-tag price="$29" period="/month"></price-tag>
               <price-tag price="$19" original="$29" period="/month"></price-tag>
               <price-tag price="Free"></price-tag>
             </div>
-            <div style="max-width: 300px;">
+            <div style="max-width: 300px;" id="auto-demos-wb-views-demohtml-22">
               <feature-item text="Unlimited projects" included></feature-item>
               <feature-item text="Priority support" included></feature-item>
               <feature-item text="Custom integrations"></feature-item>
@@ -227,7 +227,7 @@
 
 &lt;!-- 3. Both produce: --&gt;
 &lt;span class="badge-tag badge-tag--primary"&gt;New&lt;/span&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true" id="auto-demos-wb-views-demohtml-23">
 ```html
 <!-- 1. Define a template ONCE -->
 <template wb-view="badge-tag">
@@ -244,25 +244,25 @@
             </wb-mdhtml>
         </example-block>
 
-        <example-block label="Tag Naming Convention">
+        <example-block label="Tag Naming Convention" id="auto-demos-wb-views-demohtml-24">
             <p style="margin-bottom: 1rem; color: var(--text-muted);">Custom elements <em>require</em> a hyphen (Web Components spec). WB Views handles this automatically:</p>
-            <table style="width: 100%; border-collapse: collapse;">
+            <table style="width: 100%; border-collapse: collapse;" id="auto-demos-wb-views-demohtml-25">
               <thead>
-                <tr style="border-bottom: 1px solid var(--border-color);">
+                <tr style="border-bottom: 1px solid var(--border-color);" id="auto-demos-wb-views-demohtml-26">
                   <th style="text-align: left; padding: 0.5rem;">View Name</th>
                   <th style="text-align: left; padding: 0.5rem;">Has Hyphen?</th>
                   <th style="text-align: left; padding: 0.5rem;">Custom Tag</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr><td style="padding: 0.5rem;"><code>toolbar</code></td><td style="padding: 0.5rem; color: var(--danger-color);">No</td><td style="padding: 0.5rem;"><code>&lt;wb-toolbar&gt;</code> (auto-prefixed)</td></tr>
-                <tr><td style="padding: 0.5rem;"><code>card</code></td><td style="padding: 0.5rem; color: var(--danger-color);">No</td><td style="padding: 0.5rem;"><code>&lt;wb-card&gt;</code> (auto-prefixed)</td></tr>
-                <tr><td style="padding: 0.5rem;"><code>alert-box</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;alert-box&gt;</code> (as-is)</td></tr>
-                <tr><td style="padding: 0.5rem;"><code>stat-tile</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;stat-tile&gt;</code> (as-is)</td></tr>
-                <tr><td style="padding: 0.5rem;"><code>nav-link</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;nav-link&gt;</code> (as-is)</td></tr>
+              <tbody id="auto-demos-wb-views-demohtml-27">
+                <tr id="auto-demos-wb-views-demohtml-28"><td style="padding: 0.5rem;"><code>toolbar</code></td><td style="padding: 0.5rem; color: var(--danger-color);">No</td><td style="padding: 0.5rem;"><code>&lt;wb-toolbar&gt;</code> (auto-prefixed)</td></tr>
+                <tr id="auto-demos-wb-views-demohtml-29"><td style="padding: 0.5rem;"><code>card</code></td><td style="padding: 0.5rem; color: var(--danger-color);">No</td><td style="padding: 0.5rem;"><code>&lt;wb-card&gt;</code> (auto-prefixed)</td></tr>
+                <tr id="auto-demos-wb-views-demohtml-30"><td style="padding: 0.5rem;"><code>alert-box</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;alert-box&gt;</code> (as-is)</td></tr>
+                <tr id="auto-demos-wb-views-demohtml-31"><td style="padding: 0.5rem;"><code>stat-tile</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;stat-tile&gt;</code> (as-is)</td></tr>
+                <tr id="auto-demos-wb-views-demohtml-32"><td style="padding: 0.5rem;"><code>nav-link</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;nav-link&gt;</code> (as-is)</td></tr>
               </tbody>
             </table>
-            <p style="margin-top: 1rem;"><strong>The Rule:</strong> No hyphen → auto-prefix with <code>wb-</code> &nbsp;|&nbsp; Has hyphen → use as-is</p>
+            <p style="margin-top: 1rem;" id="auto-demos-wb-views-demohtml-33"><strong>The Rule:</strong> No hyphen → auto-prefix with <code>wb-</code> &nbsp;|&nbsp; Has hyphen → use as-is</p>
         </example-block>
     </demo-section>
 
@@ -274,10 +274,10 @@
     &lt;span class="tile__badge" wb-if="badge"&gt;{{badge}}&lt;/span&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="component-tile">
-  <div class="tile">
+  <div class="tile" id="auto-demos-wb-views-demohtml-34">
     <span class="tile__icon">{{icon}}</span>
     <span class="tile__label"><slot>{{text}}</slot></span>
     <span class="tile__badge" wb-if="badge">{{badge}}</span>
@@ -288,7 +288,7 @@
         </example-block>
 
         <example-block label="2. Use It (MANY TIMES)">
-            <div class="grid-4">
+            <div class="grid-4" id="auto-demos-wb-views-demohtml-35">
               <component-tile icon="📝" text="Card"></component-tile>
               <component-tile icon="⚡" text="Hero"></component-tile>
               <component-tile icon="📦" text="Section"></component-tile>
@@ -308,12 +308,12 @@
     &lt;button class="alert__dismiss" wb-if="dismissible"&gt;✕&lt;/button&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="alert-box">
-  <div class="alert alert--{{variant || 'info'}}">
+  <div class="alert alert--{{variant || 'info'}}" id="auto-demos-wb-views-demohtml-36">
     <span class="alert__icon" wb-if="icon">{{icon}}</span>
-    <div class="alert__content">
+    <div class="alert__content" id="auto-demos-wb-views-demohtml-37">
       <div class="alert__heading" wb-if="heading">{{heading}}</div>
       <div class="alert__message">{{message}}</div>
     </div>
@@ -324,7 +324,7 @@
             </wb-mdhtml>
         </example-block>
 
-        <example-block label="2. Use It (MANY TIMES)">
+        <example-block label="2. Use It (MANY TIMES)" id="auto-demos-wb-views-demohtml-38">
             <alert-box variant="info" icon="ℹ️" message="This is an informational message."></alert-box>
             <alert-box variant="success" icon="✅" heading="Success!" message="Your changes have been saved."></alert-box>
             <alert-box variant="warning" icon="⚠️" message="This action cannot be undone." dismissible></alert-box>
@@ -343,12 +343,12 @@
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="stat-tile">
-  <div class="stat">
+  <div class="stat" id="auto-demos-wb-views-demohtml-39">
     <span class="stat__icon" wb-if="icon">{{icon}}</span>
-    <div>
+    <div id="auto-demos-wb-views-demohtml-40">
       <div class="stat__value">{{value}}</div>
       <div class="stat__label"><slot>{{text}}</slot></div>
       <div class="stat__trend stat__trend--{{trend}}" wb-if="trendValue">{{trendValue}}</div>
@@ -360,7 +360,7 @@
         </example-block>
 
         <example-block label="2. Use It (MANY TIMES)">
-            <div class="grid-4">
+            <div class="grid-4" id="auto-demos-wb-views-demohtml-41">
               <stat-tile icon="👥" value="1,234" label="Active Users" trend="up" trend-value="+12.5%"></stat-tile>
               <stat-tile icon="💰" value="$52,000" label="Revenue" trend="up" trend-value="+8.2%"></stat-tile>
               <stat-tile icon="📦" value="89" label="Orders Today" trend="down" trend-value="-3.1%"></stat-tile>
@@ -376,10 +376,10 @@
     &lt;slot&gt;{{text}}&lt;/slot&gt;
   &lt;/span&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="badge-tag">
-  <span class="badge-tag badge-tag--{{variant || 'primary'}}">
+  <span class="badge-tag badge-tag--{{variant || 'primary'}}" id="auto-demos-wb-views-demohtml-42">
     <span wb-if="icon">{{icon}}</span>
     <slot>{{text}}</slot>
   </span>
@@ -409,7 +409,7 @@
     &lt;span class="tag" wb-for="tag in tags"&gt;{{tag}}&lt;/span&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="tag-list">
   <div class="tags">
@@ -437,12 +437,12 @@
     &lt;slot&gt;&lt;/slot&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="user-card">
-  <div class="user-card">
+  <div class="user-card" id="auto-demos-wb-views-demohtml-43">
     <wb-avatar initials="{{initials}}" size="lg" status="{{status}}"></wb-avatar>
-    <div class="user-card__info">
+    <div class="user-card__info" id="auto-demos-wb-views-demohtml-44">
       <div class="user-card__name">{{name}}</div>
       <div class="user-card__role">{{role}}</div>
     </div>
@@ -454,7 +454,7 @@
         </example-block>
           
         <example-block label="2. Use It (Views inside Views!)">
-            <div class="grid-2">
+            <div class="grid-2" id="auto-demos-wb-views-demohtml-45">
               <user-card name="John Doe" initials="JD" role="Lead Developer" status="online">
                 <badge-tag variant="success">Pro</badge-tag>
               </user-card>
@@ -465,7 +465,7 @@
         </example-block>
 
         <example-block label="Button Group (Container View)">
-            <button-group>
+            <button-group id="auto-demos-wb-views-demohtml-46">
               <wb-button label="Left"></wb-button>
               <wb-button label="Center"></wb-button>
               <wb-button label="Right"></wb-button>
@@ -473,9 +473,9 @@
         </example-block>
 
         <example-block label="Card with Nested Views">
-            <wb-card title="User Settings" subtitle="Manage your preferences">
+            <wb-card heading="User Settings" subtitle="Manage your preferences" id="auto-demos-wb-views-demohtml-47">
               <p style="margin-bottom: 1rem; color: var(--text-muted);">Update your account settings and preferences below.</p>
-              <div class="inline-row">
+              <div class="inline-row" id="auto-demos-wb-views-demohtml-48">
                 <wb-button label="Save Changes"></wb-button>
                 <wb-button variant="secondary" label="Cancel"></wb-button>
               </div>
@@ -483,7 +483,7 @@
         </example-block>
 
         <example-block label="Stat Row (Auto-Grid Container)">
-            <stat-row>
+            <stat-row id="auto-demos-wb-views-demohtml-49">
               <stat-tile icon="👥" value="2,451" label="Users"></stat-tile>
               <stat-tile icon="📦" value="184" label="Orders"></stat-tile>
               <stat-tile icon="💰" value="$12,500" label="Revenue"></stat-tile>
@@ -505,7 +505,7 @@
     <!-- ============================================ -->
 
     <demo-section title="📚 Documentation" badge="Read Me" description="Overview of the WB Views system features and usage.">
-        <wb-mdhtml data-src="wb-views-demo.md" data-size="md"></wb-mdhtml>
+        <wb-mdhtml src="wb-views-demo.md" size="md"></wb-mdhtml>
     </demo-section>
 
   </div>

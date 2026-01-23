@@ -18,7 +18,7 @@ test.describe('New Semantic Behaviors', () => {
 
   test('List behavior renders items correctly', async ({ page }) => {
     await page.setContent(`
-      <ul id="test-list" data-wb="list" data-items="Item 1, Item 2, Item 3"></ul>
+      <ul id="test-list" wb="list" data-items="Item 1, Item 2, Item 3"></ul>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -30,7 +30,7 @@ test.describe('New Semantic Behaviors', () => {
 
   test('List behavior handles JSON items', async ({ page }) => {
     await page.setContent(`
-      <ul id="test-list-json" data-wb="list" data-items='["Item A", "Item B, with comma"]'></ul>
+      <ul id="test-list-json" wb="list" data-items='["Item A", "Item B, with comma"]'></ul>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -41,7 +41,7 @@ test.describe('New Semantic Behaviors', () => {
 
   test('Description List behavior renders items correctly', async ({ page }) => {
     await page.setContent(`
-      <dl id="test-dl" data-wb="desclist" data-items='[{"term":"Term 1","desc":"Desc 1"},{"term":"Term 2","desc":"Desc 2"}]'></dl>
+      <dl id="test-dl" wb="desclist" data-items='[{"term":"Term 1","desc":"Desc 1"},{"term":"Term 2","desc":"Desc 2"}]'></dl>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -55,7 +55,7 @@ test.describe('New Semantic Behaviors', () => {
 
   test('Empty state behavior renders correctly', async ({ page }) => {
     await page.setContent(`
-      <div id="test-empty" data-wb="empty" data-icon="∅" data-message="No Data"></div>
+      <div id="test-empty" wb="empty" icon="∅" message="No Data"></div>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -67,7 +67,7 @@ test.describe('New Semantic Behaviors', () => {
 
   test('Code behavior works on PRE tag', async ({ page }) => {
     await page.setContent(`
-      <pre id="test-pre" data-wb="code" data-language="javascript"><code>const a = 1;</code></pre>
+      <pre id="test-pre" wb="code" language="javascript"><code>const a = 1;</code></pre>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -85,7 +85,7 @@ test.describe('New Semantic Behaviors', () => {
 
   test('Stat behavior renders correctly', async ({ page }) => {
     await page.setContent(`
-      <div id="test-stat" data-wb="stat" data-value="100" data-label="Users"></div>
+      <div id="test-stat" wb="stat" value="100" label="Users"></div>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -97,7 +97,7 @@ test.describe('New Semantic Behaviors', () => {
 
   test('Timeline behavior renders correctly', async ({ page }) => {
     await page.setContent(`
-      <div id="test-timeline" data-wb="timeline" data-items="Step 1, Step 2"></div>
+      <div id="test-timeline" wb="timeline" data-items="Step 1, Step 2"></div>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -108,7 +108,7 @@ test.describe('New Semantic Behaviors', () => {
 
   test('JSON behavior renders correctly', async ({ page }) => {
     await page.setContent(`
-      <div id="test-json" data-wb="json">{"a":1}</div>
+      <div id="test-json" wb="json">{"a":1}</div>
       <script src="/src/index.js" type="module"></script>
     `);
 

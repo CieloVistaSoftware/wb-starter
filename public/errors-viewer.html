@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id="errors-html" lang="en" data-theme="dark">
+<html id="errors-html" lang="en" theme="dark">
 <head id="errors-head">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -266,9 +266,9 @@
       errors.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
       container.innerHTML = errors.map((error, index) => `
-        <div class="error-card">
-          <div class="error-header" onclick="toggleDetails(${index})">
-            <div class="error-title">
+        <div class="error-card" id="auto-public-errors-viewerhtml-1">
+          <div class="error-header" onclick="toggleDetails(${index})" id="auto-public-errors-viewerhtml-2">
+            <div class="error-title" id="auto-public-errors-viewerhtml-3">
               <span class="badge badge-${error.level || 'error'}">${error.level || 'ERROR'}</span>
               <span class="source-badge">${error.source || 'Unknown'}</span>
               <span>${escapeHtml(error.message)}</span>
@@ -278,45 +278,45 @@
             </div>
           </div>
           <div class="error-body" id="details-${index}">
-            <div class="detail-row">
+            <div class="detail-row" id="auto-public-errors-viewerhtml-4">
               <div class="detail-label">Error ID</div>
               <code>${error.id}</code>
             </div>
 
-            <div class="detail-row">
+            <div class="detail-row" id="auto-public-errors-viewerhtml-5">
               <div class="detail-label">Interaction Context</div>
-              <div style="display: flex; gap: 1rem; align-items: center; background: var(--bg-tertiary); padding: 0.5rem; border-radius: 4px;">
-                <div>
+              <div style="display: flex; gap: 1rem; align-items: center; background: var(--bg-tertiary); padding: 0.5rem; border-radius: 4px;" id="auto-public-errors-viewerhtml-6">
+                <div id="auto-public-errors-viewerhtml-7">
                   <span style="font-size: 0.75rem; color: var(--text-secondary); display: block;">FROM</span>
                   <strong>${escapeHtml(error.interaction?.from || 'System')}</strong>
                 </div>
                 <div style="color: var(--text-secondary);">→</div>
-                <div>
+                <div id="auto-public-errors-viewerhtml-8">
                   <span style="font-size: 0.75rem; color: var(--text-secondary); display: block;">TO</span>
                   <strong>${escapeHtml(error.interaction?.to || 'Unknown')}</strong>
                 </div>
               </div>
             </div>
 
-            <div class="detail-row">
+            <div class="detail-row" id="auto-public-errors-viewerhtml-9">
               <div class="detail-label">Location</div>
               <code>${error.module || 'unknown'}:${error.line || '?'}:${error.column || '?'}</code>
               ${error.function ? ` in <code>${error.function}()</code>` : ''}
             </div>
             
-            <div class="detail-row">
+            <div class="detail-row" id="auto-public-errors-viewerhtml-10">
               <div class="detail-label">URL</div>
               <a href="${error.url}" target="_blank" style="color: var(--primary);">${error.url}</a>
             </div>
 
             ${error.stack ? `
-              <div class="detail-row">
+              <div class="detail-row" id="auto-public-errors-viewerhtml-11">
                 <div class="detail-label">Stack Trace</div>
                 <pre>${escapeHtml(error.stack)}</pre>
               </div>
             ` : ''}
 
-            <div class="detail-row">
+            <div class="detail-row" id="auto-public-errors-viewerhtml-12">
               <div class="detail-label">User Agent</div>
               <div style="font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(error.userAgent)}</div>
             </div>

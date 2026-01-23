@@ -310,7 +310,7 @@ export function changeCardType(wrapperId, newType) {
     // Remove old behavior
     if (window.WB) window.WB.remove(el, oldType);
 
-    // Update data-wb attribute
+    // Update wb attribute
     const behaviors = el.dataset.wb.split(/\s+/);
     const newBehaviors = behaviors.map(b => b === oldType ? newType : b);
     el.dataset.wb = newBehaviors.join(' ');
@@ -335,41 +335,12 @@ export function changeCardType(wrapperId, newType) {
  * @param {string} newId - New ID
  */
 export function updateElementId(oldId, newId) {
+  // ID updates are disallowed. IDs must be static and edited in source files (pages/templates).
   const w = document.getElementById(oldId);
   if (!w) return;
-  
-  newId = newId.trim();
-  if (!newId) {
-    if (window.toast) window.toast('ID cannot be empty');
-    return;
-  }
-  
-  if (document.getElementById(newId) && newId !== oldId) {
-    if (window.toast) window.toast('ID already exists: ' + newId);
-    return;
-  }
-  
-  const sanitized = newId.replace(/[^a-zA-Z0-9_-]/g, '-');
-  if (sanitized !== newId) {
-    if (window.toast) window.toast('ID sanitized to: ' + sanitized);
-    newId = sanitized;
-  }
-  
-  w.id = newId;
-  
-  const innerEl = w.querySelector('[data-wb]');
-  if (innerEl) {
-    innerEl.id = newId + '-el';
-  }
-  
-  if (sel && sel.id === oldId) {
-    sel = w;
-    window.sel = w;
-  }
-  
-  if (window.renderTree) window.renderTree();
-  if (window.saveHist) window.saveHist();
-  if (window.toast) window.toast('ID updated to: ' + newId);
+
+  console.warn('[Builder] updateElementId blocked. IDs are static and cannot be changed at runtime. Attempted to set:', newId);
+  if (window.toast) window.toast('IDs are static and cannot be changed in the builder. Edit source files to modify IDs.');
 }
 
 // Expose to window

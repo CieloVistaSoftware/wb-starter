@@ -70,7 +70,7 @@ test.describe('Cards Showcase Page', () => {
       expect(count).toBeGreaterThanOrEqual(20); // 22 themes total
     });
 
-    test('changing theme updates data-theme attribute', async ({ page }) => {
+    test('changing theme updates theme attribute', async ({ page }) => {
       const select = page.locator('wb-themecontrol select');
       
       // Change to ocean theme
@@ -118,13 +118,13 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card (Base)', () => {
     test('basic card renders with title', async ({ page }) => {
-      const card = page.locator('[data-title="Basic Card"]');
+      const card = page.locator('[heading="Basic Card"]');
       await expect(card).toBeVisible();
       await expect(card.locator('.wb-card__title')).toContainText('Basic Card');
     });
 
     test('elevated card has shadow', async ({ page }) => {
-      const card = page.locator('[data-elevated="true"]').first();
+      const card = page.locator('[elevated="true"]').first();
       const shadow = await card.evaluate(el => 
         window.getComputedStyle(el).boxShadow
       );

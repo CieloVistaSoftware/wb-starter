@@ -24,7 +24,8 @@
     "icon": { "component": "iconPicker" },
     "json": { "component": "textarea", "rows": 5, "monospace": true },
     "cssValue": { "component": "input", "inputType": "text", "placeholder": "e.g., 100px, 2rem, 50%" },
-    "canvasEditable": { "component": "none", "editOnCanvas": true }
+    "canvasEditable": { "component": "none", "editOnCanvas": true },
+    "docSelector": { "component": "docSelector", "multiSelect": true }
   },
 
   "properties": {
@@ -237,6 +238,29 @@
           "default": "pdf"
         }
       }
+    },
+    "activeStyle": {
+      "label": "Active Page Style",
+      "ui": "select",
+      "default": "underline",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "🎨 Color Only" },
+        { "value": "underline", "label": "▁ Underline" },
+        { "value": "pill", "label": "💊 Pill/Highlight" },
+        { "value": "arrow", "label": "▼ Arrow" },
+        { "value": "dot", "label": "● Dot" },
+        { "value": "glow", "label": "✨ Glow" }
+      ],
+      "description": "How to highlight the current/active page in navigation",
+      "category": "appearance"
+    },
+    "activeColor": {
+      "label": "Active Link Color",
+      "ui": "color",
+      "default": "#6366f1",
+      "description": "Color for active/current page link",
+      "category": "style"
     },
     "variant": {
       "label": "Variant",
@@ -857,6 +881,33 @@
       "description": "Programming language",
       "category": "data"
     },
+    "manifest": {
+      "label": "Docs Manifest",
+      "ui": "text",
+      "default": "docs/manifest.json",
+      "description": "Path to documentation manifest JSON file",
+      "category": "data"
+    },
+    "show": {
+      "label": "Show Docs",
+      "ui": "docSelector",
+      "default": "",
+      "description": "Select which documentation files to display",
+      "category": "content",
+      "manifestSource": "manifest"
+    },
+    "docsLayout": {
+      "label": "Docs Layout",
+      "ui": "select",
+      "default": "tabs",
+      "options": [
+        { "value": "tabs", "label": "🗗️ Tabs" },
+        { "value": "accordion", "label": "🗂️ Accordion" },
+        { "value": "sidebar", "label": "📋 Sidebar" }
+      ],
+      "description": "Layout style for documentation viewer",
+      "category": "layout"
+    },
     "markdown": {
       "label": "Markdown",
       "ui": "textarea",
@@ -1447,6 +1498,20 @@
     },
     "youtube": {
       "id": "dQw4w9WgXcQ"
+    },
+    "navbar": {
+      "brand": "Brand",
+      "brandHref": "/",
+      "sticky": true,
+      "variant": "default",
+      "activeStyle": "underline",
+      "activeColor": "#6366f1"
+    },
+    "docs": {
+      "manifest": "docs/manifest.json",
+      "show": "",
+      "layout": "tabs",
+      "size": "sm"
     }
   }
 }

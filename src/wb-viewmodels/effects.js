@@ -6,7 +6,7 @@
  * 
  * Usage:
  *   <div x-fadein>...</div>
- *   <button x-shake data-trigger="hover">Shake Me</button>
+ *   <button x-shake trigger="hover">Shake Me</button>
  * -----------------------------------------------------------------------------
  */
 

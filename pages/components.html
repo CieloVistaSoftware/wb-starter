@@ -4,10 +4,10 @@
   Clean, organized component showcase with demo + code pattern
 -->
 
-<div class="page__hero">
+<div class="page__hero" id="auto-pages-componentshtml-1">
   <h1>🧩 Components Library</h1>
   <p>WB Framework v3.0 • Interactive demos with copy-ready code</p>
-  <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+  <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;" id="auto-pages-componentshtml-2">
     <a href="?page=builder" class="wb-btn">🚀 Get Started</a>
     <a href="?page=behaviors" class="wb-btn wb-btn--secondary">⚡ Behaviors</a>
     <a href="?page=themes" class="wb-btn wb-btn--ghost">🎨 Themes</a>
@@ -17,24 +17,24 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      CARDS
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section">
+<section class="component-section" id="auto-pages-componentshtml-3">
   <h2>📇 Cards</h2>
   
   <!-- Basic Cards -->
   <h3>Basic Cards</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-componentshtml-4">
     <div class="demo-item">
-      <wb-card title="Basic Card" elevated>
+      <wb-card heading="Basic Card" elevated>
         <p>Simple card with title and hover effect.</p>
       </wb-card>
     </div>
     <div class="demo-item">
-      <wb-card title="With Footer" footer="Card Footer" elevated>
+      <wb-card heading="With Footer" footer="Card Footer" elevated>
         <p>Card with header and footer.</p>
       </wb-card>
     </div>
     <div class="demo-item">
-      <wb-card title="Outlined Card" outlined>
+      <wb-card heading="Outlined Card" outlined>
         <p>Card with outline border instead of elevation.</p>
       </wb-card>
     </div>
@@ -55,12 +55,12 @@
 
   <!-- Image Cards -->
   <h3>Image Cards</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-componentshtml-5">
     <div class="demo-item">
-      <wb-cardimage src="https://picsum.photos/400/200?r=img1" title="Image Card" subtitle="Card with image header"></wb-cardimage>
+      <wb-cardimage src="https://picsum.photos/400/200?r=img1" heading="Image Card" subtitle="Card with image header"></wb-cardimage>
     </div>
     <div class="demo-item">
-      <wb-cardimage src="https://picsum.photos/400/200?r=img2" title="Another Image" subtitle="With subtitle text"></wb-cardimage>
+      <wb-cardimage src="https://picsum.photos/400/200?r=img2" heading="Another Image" subtitle="With subtitle text"></wb-cardimage>
     </div>
   </div>
   <div class="code-example">
@@ -74,7 +74,7 @@
   <!-- Video Card -->
   <h3>Video Card</h3>
   <div class="demo-row demo-row--single">
-    <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" title="Video Card" controls></wb-cardvideo>
+    <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" heading="Video Card" controls></wb-cardvideo>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-cardvideo 
@@ -86,12 +86,12 @@
 
   <!-- Overlay & Hero Cards -->
   <h3>Overlay & Hero Cards</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-componentshtml-6">
     <div class="demo-item">
-      <wb-cardoverlay image="https://picsum.photos/400/300?r=ov1" title="Overlay Card" subtitle="Text overlays the image"></wb-cardoverlay>
+      <wb-cardoverlay image="https://picsum.photos/400/300?r=ov1" heading="Overlay Card" subtitle="Text overlays the image"></wb-cardoverlay>
     </div>
     <div class="demo-item" style="grid-column: span 2;">
-      <wb-cardhero title="Hero Card" subtitle="Featured content with background" background="https://picsum.photos/800/400?r=hero"></wb-cardhero>
+      <wb-cardhero heading="Hero Card" subtitle="Featured content with background" background="https://picsum.photos/800/400?r=hero"></wb-cardhero>
     </div>
   </div>
   <div class="code-example">
@@ -110,11 +110,11 @@
 
   <!-- Stats Cards -->
   <h3>Stats Cards</h3>
-  <div class="demo-row demo-row--four">
-    <wb-cardlink title="S&P 500" href="#" description="4,891.23 (+1.2%)" icon="📈"></wb-cardlink>
-    <wb-cardlink title="Dow Jones" href="#" description="38,654.12 (+0.8%)" icon="🏦"></wb-cardlink>
-    <wb-cardlink title="NASDAQ" href="#" description="15,432.56 (-0.3%)" icon="💻"></wb-cardlink>
-    <wb-cardlink title="Gold" href="#" description="$2,045.30 (+2.1%)" icon="🥇"></wb-cardlink>
+  <div class="demo-row demo-row--four" id="auto-pages-componentshtml-7">
+    <wb-cardlink heading="S&P 500" href="#" description="4,891.23 (+1.2%)" icon="📈"></wb-cardlink>
+    <wb-cardlink heading="Dow Jones" href="#" description="38,654.12 (+0.8%)" icon="🏦"></wb-cardlink>
+    <wb-cardlink heading="NASDAQ" href="#" description="15,432.56 (-0.3%)" icon="💻"></wb-cardlink>
+    <wb-cardlink heading="Gold" href="#" description="$2,045.30 (+2.1%)" icon="🥇"></wb-cardlink>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-cardlink title="S&P 500" href="#" description="4,891.23 (+1.2%)" icon="📈"&gt;&lt;/wb-cardlink&gt;</code></pre>
@@ -122,7 +122,7 @@
 
   <!-- Pricing Cards -->
   <h3>Pricing Cards</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-componentshtml-8">
     <div class="demo-item">
       <wb-cardpricing plan="Starter" price="$9" period="/mo" features="5 projects,Basic support,1GB storage" cta="Start Free"></wb-cardpricing>
     </div>
@@ -146,17 +146,17 @@
 
   <!-- Product Cards -->
   <h3>Product Cards</h3>
-  <div class="demo-row demo-row--four">
-    <wb-cardproduct title="Basic Widget" price="$19.99" image="https://picsum.photos/200/200?r=p1" description="Perfect for beginners"></wb-cardproduct>
-    <wb-cardproduct title="Premium Widget" price="$49.99" data-original-price="$79.99" image="https://picsum.photos/200/200?r=p2" badge="Sale" description="Most popular" featured></wb-cardproduct>
-    <wb-cardproduct title="Enterprise" price="$149.99" image="https://picsum.photos/200/200?r=p3" description="Full features" badge="Pro"></wb-cardproduct>
-    <wb-cardproduct title="Deluxe Widget" price="$79.99" image="https://picsum.photos/200/200?r=p4" description="Premium features" badge="Hot"></wb-cardproduct>
+  <div class="demo-row demo-row--four" id="auto-pages-componentshtml-9">
+    <wb-cardproduct heading="Basic Widget" price="$19.99" image="https://picsum.photos/200/200?r=p1" description="Perfect for beginners"></wb-cardproduct>
+    <wb-cardproduct heading="Premium Widget" price="$49.99" original-price="$79.99" image="https://picsum.photos/200/200?r=p2" badge="Sale" description="Most popular" featured></wb-cardproduct>
+    <wb-cardproduct heading="Enterprise" price="$149.99" image="https://picsum.photos/200/200?r=p3" description="Full features" badge="Pro"></wb-cardproduct>
+    <wb-cardproduct heading="Deluxe Widget" price="$79.99" image="https://picsum.photos/200/200?r=p4" description="Premium features" badge="Hot"></wb-cardproduct>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-cardproduct 
   title="Premium Widget" 
   price="$49.99" 
-  data-original-price="$79.99" 
+  original-price="$79.99" 
   image="https://picsum.photos/200/200" 
   badge="Sale" 
   description="Most popular" 
@@ -166,7 +166,7 @@
 
   <!-- Testimonial Cards -->
   <h3>Testimonial Cards</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-componentshtml-10">
     <div class="demo-item">
       <wb-cardtestimonial quote="The WB framework has completely transformed our development process." author="Jane Smith" role="CEO, TechCorp" rating="5" avatar="https://i.pravatar.cc/150?img=5"></wb-cardtestimonial>
     </div>
@@ -186,11 +186,11 @@
 
   <!-- Notification Cards -->
   <h3>Notification Cards</h3>
-  <div class="demo-stack" style="max-width: 500px;">
-    <wb-cardnotification size="md" type="info" title="Info" message="You have a new update available"></wb-cardnotification>
-    <wb-cardnotification size="md" type="success" title="Success" message="Your changes have been saved"></wb-cardnotification>
-    <wb-cardnotification size="md" type="warning" title="Warning" message="Your subscription expires soon"></wb-cardnotification>
-    <wb-cardnotification size="md" type="error" title="Error" message="Failed to connect to server"></wb-cardnotification>
+  <div class="demo-stack" style="max-width: 500px;" id="auto-pages-componentshtml-11">
+    <wb-cardnotification size="md" variant="info" heading="Info" message="You have a new update available"></wb-cardnotification>
+    <wb-cardnotification size="md" variant="success" heading="Success" message="Your changes have been saved"></wb-cardnotification>
+    <wb-cardnotification size="md" variant="warning" heading="Warning" message="Your subscription expires soon"></wb-cardnotification>
+    <wb-cardnotification size="md" variant="error" heading="Error" message="Failed to connect to server"></wb-cardnotification>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-cardnotification size="md" type="info" title="Info" message="You have a new update available"&gt;&lt;/wb-cardnotification&gt;
@@ -201,11 +201,11 @@
 
   <!-- File Cards -->
   <h3>File Cards</h3>
-  <div class="demo-stack">
-    <wb-cardfile filename="report.pdf" size="2.4 MB" type="pdf"></wb-cardfile>
-    <wb-cardfile filename="presentation.doc" size="1.2 MB" type="doc"></wb-cardfile>
-    <wb-cardfile filename="photo.jpg" size="856 KB" type="image"></wb-cardfile>
-    <wb-cardfile filename="archive.zip" size="15.7 MB" type="zip"></wb-cardfile>
+  <div class="demo-stack" id="auto-pages-componentshtml-12">
+    <wb-cardfile filename="report.pdf" size="2.4 MB" variant="pdf"></wb-cardfile>
+    <wb-cardfile filename="presentation.doc" size="1.2 MB" variant="doc"></wb-cardfile>
+    <wb-cardfile filename="photo.jpg" size="856 KB" variant="image"></wb-cardfile>
+    <wb-cardfile filename="archive.zip" size="15.7 MB" variant="zip"></wb-cardfile>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-cardfile filename="report.pdf" size="2.4 MB" type="pdf"&gt;&lt;/wb-cardfile&gt;</code></pre>
@@ -213,12 +213,12 @@
 
   <!-- Link & Horizontal Cards -->
   <h3>Link & Horizontal Cards</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-componentshtml-13">
     <div class="demo-item">
-      <wb-cardlink title="External Link" href="https://example.com" description="Click to visit"></wb-cardlink>
+      <wb-cardlink heading="External Link" href="https://example.com" description="Click to visit"></wb-cardlink>
     </div>
     <div class="demo-item">
-      <wb-cardhorizontal title="Horizontal Card" image="https://picsum.photos/150/150?r=h1" subtitle="Image on the side"></wb-cardhorizontal>
+      <wb-cardhorizontal heading="Horizontal Card" image="https://picsum.photos/150/150?r=h1" subtitle="Image on the side"></wb-cardhorizontal>
     </div>
   </div>
   <div class="code-example">
@@ -231,7 +231,7 @@
   <div class="demo-row demo-row--single">
     <wb-cardportfolio 
          name="Jane Smith" 
-         title="Senior Developer" 
+         heading="Senior Developer" 
          company="Tech Corp" 
          email="jane@techcorp.com" 
          phone="+1-555-0123" 
@@ -259,12 +259,12 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      FEEDBACK
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section">
+<section class="component-section" id="auto-pages-componentshtml-14">
   <h2>💬 Feedback Components</h2>
   
   <!-- Badges -->
   <h3>Badges</h3>
-  <div class="demo-inline">
+  <div class="demo-inline" id="auto-pages-componentshtml-15">
     <wb-badge variant="gray">Pending</wb-badge>
     <wb-badge variant="primary">New</wb-badge>
     <wb-badge variant="success">Approved</wb-badge>
@@ -274,7 +274,7 @@
     <wb-badge variant="purple">Premium</wb-badge>
     <wb-badge variant="pink">Featured</wb-badge>
     <wb-badge variant="orange">Hot</wb-badge>
-    <wb-badge variant="teal" data-pill>Live</wb-badge>
+    <wb-badge variant="teal" pill>Live</wb-badge>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-badge variant="gray"&gt;Pending&lt;/wb-badge&gt;
@@ -292,69 +292,69 @@
   <!-- Alerts (as Toasts) -->
   <h3>Alerts</h3>
   <p style="color: var(--text-secondary); margin-bottom: 1rem;">Click to trigger alert toasts:</p>
-  <div class="demo-inline">
-    <button class="wb-btn" style="background: var(--info);" x-toast data-message="This is an informational message." data-type="info" data-size="md">ℹ️ Info Alert</button>
-    <button class="wb-btn" style="background: var(--success);" x-toast data-message="Operation completed successfully!" data-type="success" data-size="md">✅ Success Alert</button>
-    <button class="wb-btn" style="background: var(--warning); color: #000;" x-toast data-message="Please review before continuing." data-type="warning" data-size="md">⚠️ Warning Alert</button>
-    <button class="wb-btn" style="background: var(--error);" x-toast data-message="Something went wrong. Please try again." data-type="error" data-size="md">❌ Error Alert</button>
+  <div class="demo-inline" id="auto-pages-componentshtml-16">
+    <button class="wb-btn" style="background: var(--info);" x-toast message="This is an informational message." variant="info" size="md">ℹ️ Info Alert</button>
+    <button class="wb-btn" style="background: var(--success);" x-toast message="Operation completed successfully!" variant="success" size="md">✅ Success Alert</button>
+    <button class="wb-btn" style="background: var(--warning); color: #000;" x-toast message="Please review before continuing." variant="warning" size="md">⚠️ Warning Alert</button>
+    <button class="wb-btn" style="background: var(--error);" x-toast message="Something went wrong. Please try again." variant="error" size="md">❌ Error Alert</button>
   </div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;button x-toast data-message="Info message" data-type="info" data-size="md"&gt;Info Alert&lt;/button&gt;
-&lt;button x-toast data-message="Success!" data-type="success" data-size="md"&gt;Success Alert&lt;/button&gt;
-&lt;button x-toast data-message="Warning!" data-type="warning" data-size="md"&gt;Warning Alert&lt;/button&gt;
-&lt;button x-toast data-message="Error!" data-type="error" data-size="md"&gt;Error Alert&lt;/button&gt;</code></pre>
+    <pre><code class="language-html">&lt;button x-toast message="Info message" variant="info" size="md"&gt;Info Alert&lt;/button&gt;
+&lt;button x-toast message="Success!" variant="success" size="md"&gt;Success Alert&lt;/button&gt;
+&lt;button x-toast message="Warning!" variant="warning" size="md"&gt;Warning Alert&lt;/button&gt;
+&lt;button x-toast message="Error!" variant="error" size="md"&gt;Error Alert&lt;/button&gt;</code></pre>
   </div>
 
   <!-- Progress Bars -->
   <h3>Progress Bars</h3>
-  <div class="demo-stack" style="max-width: 400px;">
-    <wb-progress data-value="25"></wb-progress>
-    <wb-progress data-value="50"></wb-progress>
-    <wb-progress data-value="75" data-striped></wb-progress>
-    <wb-progress data-value="100"></wb-progress>
+  <div class="demo-stack" style="max-width: 400px;" id="auto-pages-componentshtml-17">
+    <wb-progress value="25"></wb-progress>
+    <wb-progress value="50"></wb-progress>
+    <wb-progress value="75" striped></wb-progress>
+    <wb-progress value="100"></wb-progress>
   </div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;wb-progress data-value="25"&gt;&lt;/wb-progress&gt;
-&lt;wb-progress data-value="50"&gt;&lt;/wb-progress&gt;
-&lt;wb-progress data-value="75" data-striped&gt;&lt;/wb-progress&gt;
-&lt;wb-progress data-value="100"&gt;&lt;/wb-progress&gt;</code></pre>
+    <pre><code class="language-html">&lt;wb-progress value="25"&gt;&lt;/wb-progress&gt;
+&lt;wb-progress value="50"&gt;&lt;/wb-progress&gt;
+&lt;wb-progress value="75" data-striped&gt;&lt;/wb-progress&gt;
+&lt;wb-progress value="100"&gt;&lt;/wb-progress&gt;</code></pre>
   </div>
 
   <!-- Spinners -->
   <h3>Spinners</h3>
-  <div class="demo-inline" style="align-items: flex-end;">
-    <div style="text-align: center;">
-      <wb-spinner data-size="xs" data-color="primary"></wb-spinner>
+  <div class="demo-inline" style="align-items: flex-end;" id="auto-pages-componentshtml-18">
+    <div style="text-align: center;" id="auto-pages-componentshtml-19">
+      <wb-spinner size="xs" color="primary"></wb-spinner>
       <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">xs</div>
     </div>
-    <div style="text-align: center;">
-      <wb-spinner data-size="sm" data-color="success"></wb-spinner>
+    <div style="text-align: center;" id="auto-pages-componentshtml-20">
+      <wb-spinner size="sm" color="success"></wb-spinner>
       <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">sm</div>
     </div>
-    <div style="text-align: center;">
-      <wb-spinner data-size="md" data-color="warning"></wb-spinner>
+    <div style="text-align: center;" id="auto-pages-componentshtml-21">
+      <wb-spinner size="md" color="warning"></wb-spinner>
       <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">md</div>
     </div>
-    <div style="text-align: center;">
-      <wb-spinner data-size="lg" data-color="error"></wb-spinner>
+    <div style="text-align: center;" id="auto-pages-componentshtml-22">
+      <wb-spinner size="lg" color="error"></wb-spinner>
       <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">lg</div>
     </div>
-    <div style="text-align: center;">
-      <wb-spinner data-size="xl" data-color="info"></wb-spinner>
+    <div style="text-align: center;" id="auto-pages-componentshtml-23">
+      <wb-spinner size="xl" color="info"></wb-spinner>
       <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">xl</div>
     </div>
   </div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;wb-spinner data-size="xs" data-color="primary"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner data-size="sm" data-color="success"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner data-size="md" data-color="warning"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner data-size="lg" data-color="error"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner data-size="xl" data-color="info"&gt;&lt;/wb-spinner&gt;</code></pre>
+    <pre><code class="language-html">&lt;wb-spinner size="xs" color="primary"&gt;&lt;/wb-spinner&gt;
+&lt;wb-spinner size="sm" color="success"&gt;&lt;/wb-spinner&gt;
+&lt;wb-spinner size="md" color="warning"&gt;&lt;/wb-spinner&gt;
+&lt;wb-spinner size="lg" color="error"&gt;&lt;/wb-spinner&gt;
+&lt;wb-spinner size="xl" color="info"&gt;&lt;/wb-spinner&gt;</code></pre>
   </div>
 
   <!-- Avatars -->
   <h3>Avatars</h3>
-  <div class="demo-inline">
+  <div class="demo-inline" id="auto-pages-componentshtml-24">
     <wb-avatar initials="JS" size="sm"></wb-avatar>
     <wb-avatar initials="MC" size="md" style="--wb-avatar-bg: var(--success);"></wb-avatar>
     <wb-avatar initials="KL" size="lg" style="--wb-avatar-bg: var(--warning);"></wb-avatar>
@@ -373,7 +373,7 @@
 
   <!-- Skeleton Loaders -->
   <h3>Skeleton Loaders</h3>
-  <div class="demo-inline">
+  <div class="demo-inline" id="auto-pages-componentshtml-25">
     <wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton>
     <wb-skeleton variant="circle" width="60px"></wb-skeleton>
     <wb-skeleton variant="rect" width="150px" height="100px"></wb-skeleton>
@@ -388,106 +388,106 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      OVERLAYS
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section">
+<section class="component-section" id="auto-pages-componentshtml-26">
   <h2>🪟 Overlays & Dialogs</h2>
   
-  <div class="demo-row">
-    <div class="component-box">
+  <div class="demo-row" id="auto-pages-componentshtml-27">
+    <div class="component-box" id="auto-pages-componentshtml-28">
       <h4>Modal</h4>
       <p>Centered dialog with backdrop</p>
-      <wb-modal class="wb-btn" data-modal-title="Modal Dialog" data-modal-content="This is modal content. Press ESC or click outside to close.">Open Modal</wb-modal>
+      <wb-modal class="wb-btn" modal-title="Modal Dialog" modal-content="This is modal content. Press ESC or click outside to close.">Open Modal</wb-modal>
     </div>
     
-    <div class="component-box">
+    <div class="component-box" id="auto-pages-componentshtml-29">
       <h4>Drawer</h4>
       <p>Slide-out panel</p>
-      <div style="display: flex; gap: 0.5rem;">
-        <button class="wb-btn" x-drawer data-title="Left Drawer" data-content="This panel slides in from the left side." data-position="left">← Left</button>
-        <button class="wb-btn" x-drawer data-title="Right Drawer" data-content="This panel slides in from the right side." data-position="right">Right →</button>
+      <div style="display: flex; gap: 0.5rem;" id="auto-pages-componentshtml-30">
+        <button class="wb-btn" x-drawer heading="Left Drawer" description="This panel slides in from the left side." position="left">← Left</button>
+        <button class="wb-btn" x-drawer heading="Right Drawer" description="This panel slides in from the right side." position="right">Right →</button>
       </div>
     </div>
     
-    <div class="component-box">
+    <div class="component-box" id="auto-pages-componentshtml-31">
       <h4>Confirm</h4>
       <p>Yes/No confirmation</p>
-      <button class="wb-btn" x-confirm data-title="Delete Item?" data-message="This cannot be undone.">Confirm</button>
+      <button class="wb-btn" x-confirm heading="Delete Item?" message="This cannot be undone.">Confirm</button>
     </div>
     
-    <div class="component-box">
+    <div class="component-box" id="auto-pages-componentshtml-32">
       <h4>Prompt</h4>
       <p>Input dialog</p>
-      <button class="wb-btn" x-prompt data-title="Your Name" data-message="Please enter your name:">Prompt</button>
+      <button class="wb-btn" x-prompt heading="Your Name" message="Please enter your name:">Prompt</button>
     </div>
 
-    <div class="component-box">
+    <div class="component-box" id="auto-pages-componentshtml-33">
       <h4>Lightbox</h4>
       <p>Full-screen image viewer</p>
-      <button class="wb-btn" x-lightbox data-src="https://picsum.photos/1200/800">View Image</button>
+      <button class="wb-btn" x-lightbox src="https://picsum.photos/1200/800">View Image</button>
     </div>
 
-    <div class="component-box">
+    <div class="component-box" id="auto-pages-componentshtml-34">
       <h4>Popover</h4>
       <p>Small popup</p>
-      <button class="wb-btn" x-popover data-title="Info" data-content="Additional information here.">Show Popover</button>
+      <button class="wb-btn" x-popover heading="Info" description="Additional information here.">Show Popover</button>
     </div>
   </div>
 
   <div class="code-example">
     <pre><code class="language-html">&lt;!-- Modal --&gt;
-&lt;wb-modal class="wb-btn" data-modal-title="Modal Dialog" data-modal-content="Content here."&gt;Open Modal&lt;/wb-modal&gt;
+&lt;wb-modal class="wb-btn" modal-title="Modal Dialog" modal-content="Content here."&gt;Open Modal&lt;/wb-modal&gt;
 
 &lt;!-- Drawer --&gt;
-&lt;button x-drawer data-title="Left Drawer" data-content="Panel content." data-position="left"&gt;Left&lt;/button&gt;
+&lt;button x-drawer heading="Left Drawer" description="Panel content." position="left"&gt;Left&lt;/button&gt;
 
 &lt;!-- Confirm --&gt;
-&lt;button x-confirm data-title="Delete Item?" data-message="This cannot be undone."&gt;Confirm&lt;/button&gt;
+&lt;button x-confirm heading="Delete Item?" message="This cannot be undone."&gt;Confirm&lt;/button&gt;
 
 &lt;!-- Prompt --&gt;
-&lt;button x-prompt data-title="Your Name" data-message="Please enter your name:"&gt;Prompt&lt;/button&gt;
+&lt;button x-prompt heading="Your Name" message="Please enter your name:"&gt;Prompt&lt;/button&gt;
 
 &lt;!-- Lightbox --&gt;
-&lt;button x-lightbox data-src="https://picsum.photos/1200/800"&gt;View Image&lt;/button&gt;
+&lt;button x-lightbox src="https://picsum.photos/1200/800"&gt;View Image&lt;/button&gt;
 
 &lt;!-- Popover --&gt;
-&lt;button x-popover data-title="Info" data-content="Additional information here."&gt;Show Popover&lt;/button&gt;</code></pre>
+&lt;button x-popover heading="Info" description="Additional information here."&gt;Show Popover&lt;/button&gt;</code></pre>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
      NAVIGATION
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section">
+<section class="component-section" id="auto-pages-componentshtml-35">
   <h2>🧭 Navigation</h2>
 
   <!-- Tabs -->
   <h3>Tabs</h3>
-  <wb-tabs>
-    <div data-tab-title="Overview">
+  <wb-tabs id="auto-pages-componentshtml-36">
+    <div tab-title="Overview" id="auto-pages-componentshtml-37">
       <h4>Project Overview</h4>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     </div>
-    <div data-tab-title="Features">
+    <div tab-title="Features" id="auto-pages-componentshtml-38">
       <h4>Key Features</h4>
-      <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+      <ul style="margin: 1rem 0; padding-left: 1.5rem;" id="auto-pages-componentshtml-39">
         <li>Zero-build architecture</li>
         <li>Light DOM components</li>
         <li>Accessible by default</li>
       </ul>
     </div>
-    <div data-tab-title="Installation">
+    <div tab-title="Installation" id="auto-pages-componentshtml-40">
       <h4>Getting Started</h4>
       <p>Aenean lacinia bibendum nulla sed consectetur. Just include the script and start building.</p>
     </div>
   </wb-tabs>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-tabs&gt;
-  &lt;div data-tab-title="Overview"&gt;
+  &lt;div tab-title="Overview"&gt;
     &lt;p&gt;Overview content...&lt;/p&gt;
   &lt;/div&gt;
-  &lt;div data-tab-title="Features"&gt;
+  &lt;div tab-title="Features"&gt;
     &lt;p&gt;Features content...&lt;/p&gt;
   &lt;/div&gt;
-  &lt;div data-tab-title="Installation"&gt;
+  &lt;div tab-title="Installation"&gt;
     &lt;p&gt;Installation content...&lt;/p&gt;
   &lt;/div&gt;
 &lt;/wb-tabs&gt;</code></pre>
@@ -495,7 +495,7 @@
 
   <!-- Details/Accordion -->
   <h3>Details / Accordion</h3>
-  <div class="demo-stack">
+  <div class="demo-stack" id="auto-pages-componentshtml-41">
     <wb-details summary="What is WB Framework?">
       <p>WB Framework is a zero-build web component library that provides modern, accessible UI components using native web standards.</p>
     </wb-details>
@@ -521,46 +521,46 @@
 
   <!-- Pagination -->
   <h3>Pagination</h3>
-  <nav x-pagination data-total="100" data-per-page="10" data-current="5"></nav>
+  <nav x-pagination total="100" per-page="10" current="5"></nav>
   <div class="code-example">
-    <pre><code class="language-html">&lt;nav x-pagination data-total="100" data-per-page="10" data-current="5"&gt;&lt;/nav&gt;</code></pre>
+    <pre><code class="language-html">&lt;nav x-pagination total="100" per-page="10" current="5"&gt;&lt;/nav&gt;</code></pre>
   </div>
 
   <!-- Steps Wizard -->
   <h3>Steps Wizard</h3>
-  <div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
+  <div x-steps data-items="Cart,Shipping,Payment,Confirm" current="2"></div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"&gt;&lt;/div&gt;</code></pre>
+    <pre><code class="language-html">&lt;div x-steps data-items="Cart,Shipping,Payment,Confirm" current="2"&gt;&lt;/div&gt;</code></pre>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
      FORMS
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section">
+<section class="component-section" id="auto-pages-componentshtml-42">
   <h2>📝 Form Components</h2>
   
   <!-- Text Inputs -->
   <h3>Text Inputs</h3>
   <div class="demo-stack" style="max-width: 400px;">
     <input type="text" placeholder="Basic input">
-    <input type="text" placeholder="Success" data-variant="success">
-    <input type="text" placeholder="Error" data-variant="error">
+    <input type="text" placeholder="Success" variant="success">
+    <input type="text" placeholder="Error" variant="error">
     <input type="password" x-password placeholder="Password with toggle">
     <textarea placeholder="Textarea" rows="3"></textarea>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;input type="text" placeholder="Basic input"&gt;
-&lt;input type="text" placeholder="Success" data-variant="success"&gt;
-&lt;input type="text" placeholder="Error" data-variant="error"&gt;
+&lt;input type="text" placeholder="Success" variant="success"&gt;
+&lt;input type="text" placeholder="Error" variant="error"&gt;
 &lt;input type="password" x-password placeholder="Password with toggle"&gt;
 &lt;textarea placeholder="Textarea" rows="3"&gt;&lt;/textarea&gt;</code></pre>
   </div>
 
   <!-- Selection Inputs -->
   <h3>Selection Inputs</h3>
-  <div class="demo-stack" style="max-width: 300px;">
-    <select>
+  <div class="demo-stack" style="max-width: 300px;" id="auto-pages-componentshtml-43">
+    <select id="auto-pages-componentshtml-44">
       <option>Select an option</option>
       <option>Option 1</option>
       <option>Option 2</option>
@@ -586,20 +586,20 @@
     <input type="range" min="0" max="100" value="50">
     <wb-rating value="3" max="5"></wb-rating>
     <wb-rating value="4" max="5" icon="❤️"></wb-rating>
-    <div x-stepper data-value="5" data-min="0" data-max="10"></div>
+    <div x-stepper value="5" min="0" max="10"></div>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;input type="range" min="0" max="100" value="50"&gt;
 &lt;wb-rating value="3" max="5"&gt;&lt;/wb-rating&gt;
 &lt;wb-rating value="4" max="5" icon="❤️"&gt;&lt;/wb-rating&gt;
-&lt;div x-stepper data-value="5" data-min="0" data-max="10"&gt;&lt;/div&gt;</code></pre>
+&lt;div x-stepper value="5" min="0" max="10"&gt;&lt;/div&gt;</code></pre>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
      DATA DISPLAY
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section">
+<section class="component-section" id="auto-pages-componentshtml-45">
   <h2>📊 Data Display</h2>
 
   <!-- Timeline -->
@@ -615,7 +615,7 @@
 
   <!-- Keyboard Keys -->
   <h3>Keyboard Keys</h3>
-  <p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>
+  <p id="auto-pages-componentshtml-46">Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>
   <div class="code-example">
     <pre><code class="language-html">&lt;p&gt;Press &lt;span x-kbd&gt;Ctrl&lt;/span&gt; + &lt;span x-kbd&gt;S&lt;/span&gt; to save.&lt;/p&gt;</code></pre>
   </div>
@@ -631,7 +631,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      MEDIA
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section">
+<section class="component-section" id="auto-pages-componentshtml-47">
   <h2>🖼️ Media</h2>
 
   <!-- Gallery -->
@@ -644,33 +644,33 @@
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;div x-gallery data-columns="4"&gt;
-  &lt;img src="image1.jpg" alt="Gallery 1"&gt;
-  &lt;img src="image2.jpg" alt="Gallery 2"&gt;
-  &lt;img src="image3.jpg" alt="Gallery 3"&gt;
-  &lt;img src="image4.jpg" alt="Gallery 4"&gt;
+  &lt;img src="https://picsum.photos/200/200?r=1" alt="Gallery 1"&gt;
+  &lt;img src="https://picsum.photos/200/200?r=2" alt="Gallery 2"&gt;
+  &lt;img src="https://picsum.photos/200/200?r=3" alt="Gallery 3"&gt;
+  &lt;img src="https://picsum.photos/200/200?r=4" alt="Gallery 4"&gt;
 &lt;/div&gt;</code></pre>
   </div>
 
   <!-- YouTube Embed -->
   <h3>YouTube Embed</h3>
   <div style="max-width: 600px;">
-    <div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
+    <div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div>
   </div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"&gt;&lt;/div&gt;</code></pre>
+    <pre><code class="language-html">&lt;div x-youtube id="dQw4w9WgXcQ" ratio="16:9"&gt;&lt;/div&gt;</code></pre>
   </div>
 
   <!-- Audio Player -->
   <h3>Audio Player</h3>
   <wb-audio 
-    data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" 
-    data-show-eq="true" 
-    data-volume="0.7"></wb-audio>
+    src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" 
+    show-eq="true" 
+    volume="0.7"></wb-audio>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-audio 
-  data-src="audio.mp3" 
-  data-show-eq="true" 
-  data-volume="0.7"&gt;
+  src="https://example.com/audio.mp3" 
+  show-eq="true" 
+  volume="0.7"&gt;
 &lt;/wb-audio&gt;</code></pre>
   </div>
 </section>
@@ -678,12 +678,12 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      UTILITIES
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section">
+<section class="component-section" id="auto-pages-componentshtml-48">
   <h2>🔧 Utilities</h2>
 
   <!-- Tooltips -->
   <h3>Tooltips</h3>
-  <div class="demo-inline">
+  <div class="demo-inline" id="auto-pages-componentshtml-49">
     <wb-tooltip position="top" content="Top tooltip"><button class="wb-btn wb-btn--secondary">Top</button></wb-tooltip>
     <wb-tooltip position="bottom" content="Bottom tooltip"><button class="wb-btn wb-btn--secondary">Bottom</button></wb-tooltip>
     <wb-tooltip position="left" content="Left tooltip"><button class="wb-btn wb-btn--secondary">Left</button></wb-tooltip>
@@ -698,33 +698,33 @@
 
   <!-- Copy, Share, Print -->
   <h3>Copy, Share, Print</h3>
-  <div class="demo-inline">
-    <button class="wb-btn" x-copy data-copy="Text copied!">📋 Copy Text</button>
-    <button class="wb-btn" x-share data-share-title="WB Framework" data-share-url="https://example.com">📤 Share</button>
+  <div class="demo-inline" id="auto-pages-componentshtml-50">
+    <button class="wb-btn" x-copy copy="Text copied!">📋 Copy Text</button>
+    <button class="wb-btn" x-share share-title="WB Framework" share-url="https://example.com">📤 Share</button>
     <button class="wb-btn" x-print>🖨️ Print</button>
     <button class="wb-btn" x-fullscreen>⛶ Fullscreen</button>
   </div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;button x-copy data-copy="Text to copy"&gt;📋 Copy&lt;/button&gt;
-&lt;button x-share data-share-title="Title" data-share-url="https://..."&gt;📤 Share&lt;/button&gt;
+    <pre><code class="language-html">&lt;button x-copy copy="Text to copy"&gt;📋 Copy&lt;/button&gt;
+&lt;button x-share share-title="Title" share-url="https://..."&gt;📤 Share&lt;/button&gt;
 &lt;button x-print&gt;🖨️ Print&lt;/button&gt;
 &lt;button x-fullscreen&gt;⛶ Fullscreen&lt;/button&gt;</code></pre>
   </div>
 
   <!-- Clock & Countdown -->
   <h3>Clock & Countdown</h3>
-  <div class="demo-inline">
+  <div class="demo-inline" id="auto-pages-componentshtml-51">
     <div x-clock class="time-display"></div>
-    <div x-countdown data-to="2026-12-31" class="time-display"></div>
+    <div x-countdown to="2026-12-31" class="time-display"></div>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;div x-clock&gt;&lt;/div&gt;
-&lt;div x-countdown data-to="2026-12-31"&gt;&lt;/div&gt;</code></pre>
+&lt;div x-countdown to="2026-12-31"&gt;&lt;/div&gt;</code></pre>
   </div>
 
   <!-- Theme Controls -->
   <h3>Theme Controls</h3>
-  <div class="demo-inline">
+  <div class="demo-inline" id="auto-pages-componentshtml-52">
     <button class="wb-btn" x-darkmode>🌙 Toggle Dark Mode</button>
     <wb-themecontrol></wb-themecontrol>
   </div>
@@ -735,9 +735,9 @@
 </section>
 
 <!-- FOOTER -->
-<footer class="page-footer">
+<footer class="page-footer" id="auto-pages-componentshtml-53">
   <p><strong>WB Framework v3.0</strong> • 170+ Behaviors • 23 Themes</p>
-  <p>
+  <p id="auto-pages-componentshtml-54">
     <a href="?page=builder">Get Started</a> • 
     <a href="?page=behaviors">Behaviors</a> • 
     <a href="?page=themes">Themes</a> • 

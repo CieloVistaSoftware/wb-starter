@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" theme="dark" id="auto-indexhtml-1">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,13 +16,15 @@
   <link rel="stylesheet" href="src/styles/safari-fixes.css">
   <link rel="modulepreload" href="src/core/wb.js">
   <link rel="modulepreload" href="src/core/site-engine.js">
-  <link rel="preload" href="config/site.json" as="fetch" crossorigin>
   
   <!-- Page Transitions CSS -->
   <link rel="stylesheet" href="src/styles/transitions.css">
   
   <!-- Premium Navbar CSS - Glassmorphism Edition -->
   <link rel="stylesheet" href="src/styles/behaviors/navbar.css">
+  
+  <!-- Issues Component CSS -->
+  <link rel="stylesheet" href="src/styles/behaviors/issues.css">
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +36,7 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#6366f1">
 </head>
-<body>
+  <body id="auto-indexhtml-2">
   <!-- 
     ARCHITECTURAL NOTE:
     You won't see the standard HTML structure here. This project uses a 
@@ -59,7 +61,7 @@
   -->
   <!-- Site container - built dynamically from config -->
   <div id="app" class="site">
-    <div class="site__loading">
+    <div class="site__loading" id="auto-indexhtml-3">
       <wb-spinner color="primary"></wb-spinner>
       <p>Loading...</p>
     </div>
@@ -67,7 +69,7 @@
 
   <!-- Fallback UI for config load failure -->
   <template id="error-template">
-    <div class="site__error">
+    <div class="site__error" id="auto-indexhtml-4">
       <div class="error__icon">⚠️</div>
       <h1>Unable to Load Site</h1>
       <p>Could not load configuration. Please check your connection and try again.</p>
@@ -79,8 +81,12 @@
 
   <!-- Premium Navbar Scroll Effect -->
   <script src="src/lib/premium-navbar.js"></script>
-
+  
   <!-- Main Application Bootstrap -->
   <script type="module" src="./src/main.js"></script>
+  <script>
+    // Sanity check for test harness: mark that index loaded
+    try { document.documentElement.dataset.testIndexLoaded = 'true'; } catch (e) {}
+  </script>
 </body>
 </html>

@@ -50,7 +50,7 @@ test.describe('Progress Bars', () => {
     // Wait for animation to complete
     await page.waitForTimeout(1200);
     
-    // Check final width matches data-value
+    // Check final width matches value
     const progressBar = page.locator('#test-progress-anim .wb-progress__bar');
     const barWidth = await progressBar.evaluate(el => el.style.width);
     

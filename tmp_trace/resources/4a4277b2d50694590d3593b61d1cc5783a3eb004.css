@@ -1,0 +1,196 @@
+/**
+ * WB Drawer Component
+ * ===================
+ * BEM Structure:
+ *   .wb-drawer              - Base drawer
+ *   .wb-drawer--left        - Left position modifier
+ *   .wb-drawer--right       - Right position modifier
+ *   .wb-drawer--collapsed   - Collapsed state modifier
+ *   .wb-drawer__content     - Scrollable content area
+ *   .wb-drawer__toggle      - Expand/collapse button
+ *   .wb-drawer__handle      - Resize handle
+ * 
+ * CSS Variables:
+ *   --wb-drawer-width       - Default width
+ *   --wb-drawer-min-width   - Minimum width when resizing
+ *   --wb-drawer-max-width   - Maximum width when resizing
+ *   --wb-drawer-collapsed-width - Width when collapsed
+ *   --wb-drawer-transition  - Animation timing
+ */
+
+/* =============================================================================
+   CSS VARIABLES
+   ============================================================================= */
+:root, [data-theme] {
+  --wb-drawer-width: 280px;
+  --wb-drawer-min-width: 200px;
+  --wb-drawer-max-width: 50vw;
+  --wb-drawer-collapsed-width: 1.5rem;
+  --wb-drawer-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =============================================================================
+   BASE DRAWER
+   ============================================================================= */
+.wb-drawer {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: relative;
+  background: var(--bg-primary);
+  overflow: hidden;
+  transition: 
+    width var(--wb-drawer-transition),
+    min-width var(--wb-drawer-transition);
+  box-sizing: border-box;
+}
+
+/* Disable transitions during resize */
+.wb-drawer.resizing {
+  transition: none !important;
+}
+
+/* =============================================================================
+   POSITION MODIFIERS
+   ============================================================================= */
+
+/* Left Drawer */
+.wb-drawer--left {
+  width: var(--wb-drawer-width);
+  min-width: var(--wb-drawer-min-width);
+  max-width: var(--wb-drawer-max-width);
+  border-right: 1px solid var(--border-color);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Right Drawer */
+.wb-drawer--right {
+  width: var(--wb-drawer-width);
+  min-width: var(--wb-drawer-min-width);
+  max-width: var(--wb-drawer-max-width);
+  border-left: 1px solid var(--border-color);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* =============================================================================
+   COLLAPSED STATE
+   ============================================================================= */
+.wb-drawer--collapsed {
+  width: var(--wb-drawer-collapsed-width) !important;
+  min-width: var(--wb-drawer-collapsed-width) !important;
+  flex: 0 0 var(--wb-drawer-collapsed-width) !important;
+  box-shadow: none;
+  overflow: hidden !important;
+}
+
+/* Hide content when collapsed */
+.wb-drawer--collapsed .wb-drawer__content {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Hide resize handle when collapsed */
+.wb-drawer--collapsed .wb-drawer__handle {
+  display: none;
+}
+
+/* Rotate toggle arrow when collapsed */
+.wb-drawer--left.wb-drawer--collapsed .wb-drawer__toggle {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.wb-drawer--right.wb-drawer--collapsed .wb-drawer__toggle {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* =============================================================================
+   CONTENT AREA
+   ============================================================================= */
+.wb-drawer__content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.5rem;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+/* =============================================================================
+   TOGGLE BUTTON
+   ============================================================================= */
+.wb-drawer__toggle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 48px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  z-index: 10;
+  transition: 
+    all 0.2s,
+    transform var(--wb-drawer-transition);
+}
+
+/* Left drawer toggle - on right edge */
+.wb-drawer--left .wb-drawer__toggle {
+  right: -20px;
+  border-radius: 0 4px 4px 0;
+  border-left: none;
+}
+
+/* Right drawer toggle - on left edge */
+.wb-drawer--right .wb-drawer__toggle {
+  left: -20px;
+  border-radius: 4px 0 0 4px;
+  border-right: none;
+}
+
+/* Hover state */
+.wb-drawer__toggle:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* =============================================================================
+   RESIZE HANDLE
+   ============================================================================= */
+.wb-drawer__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  cursor: col-resize;
+  background: transparent;
+  z-index: 5;
+  transition: background 0.2s;
+}
+
+/* Left drawer handle - on right edge */
+.wb-drawer--left .wb-drawer__handle {
+  right: 0;
+}
+
+/* Right drawer handle - on left edge */
+.wb-drawer--right .wb-drawer__handle {
+  left: 0;
+}
+
+/* Hover state */
+.wb-drawer__handle:hover {
+  background: var(--primary);
+  opacity: 0.5;
+}
+
+/* Active resize state */
+.wb-drawer.resizing .wb-drawer__handle {
+  background: var(--primary);
+  opacity: 0.7;
+}

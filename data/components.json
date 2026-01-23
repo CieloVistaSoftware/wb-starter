@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-17T00:00:00Z",
+  "description": "Comprehensive registry of all custom elements and UI components available in the WB system, including their status and schema support.",
+  "components": {
+    "wb-grid-demo": {
+      "description": "Grid layout showing all wb-xyz components as children.",
+      "example": "<wb-grid>\n  <wb-card></wb-card>\n  <wb-grid></wb-grid>\n  <wb-row></wb-row>\n  <wb-column></wb-column>\n  <wb-cluster></wb-cluster>\n  <wb-newsletter></wb-newsletter>\n  <wb-repeater></wb-repeater>\n  <wb-stack></wb-stack>\n  <wb-control></wb-control>\n  <wb-fix-card></wb-fix-card>\n</wb-grid>"
+    },
+    "button": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "input": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "checkbox": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "card": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "cardbutton": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "cardimage": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "cardhero": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "cardstats": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "cardprofile": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "cardpricing": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "switch": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "select": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "textarea": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "alert": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": false },
+    "toast": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "spinner": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": false },
+    "dialog": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "tooltip": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "dropdown": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "tabs": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "wb-card": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "wb-grid": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "wb-row": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "wb-column": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "wb-cluster": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "wb-newsletter": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "wb-repeater": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "wb-stack": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "wb-control": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true },
+    "wb-fix-card": { "status": "complete", "schema": true, "compliance": true, "tests": true, "interactions": true }
+  }
+}

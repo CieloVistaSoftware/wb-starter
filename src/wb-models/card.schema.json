@@ -15,9 +15,9 @@
     "accessibility": "high"
   },
   "properties": {
-    "title": {
+    "heading": {
       "type": "string",
-      "description": "Card title displayed in header",
+      "description": "Card heading displayed in header",
       "default": ""
     },
     "subtitle": {
@@ -65,14 +65,14 @@
     {
       "name": "header",
       "tag": "header",
-      "createdWhen": "title OR subtitle"
+      "createdWhen": "heading OR subtitle"
     },
     {
-      "name": "title",
+      "name": "heading",
       "tag": "h3",
       "parent": "header",
-      "content": "{{title}}",
-      "createdWhen": "title"
+      "content": "{{heading}}",
+      "createdWhen": "heading"
     },
     {
       "name": "subtitle",
@@ -139,7 +139,7 @@
       "<wb-card variant=\"bordered\">variant=bordered</wb-card>",
       "<wb-card elevated>with elevated</wb-card>",
       "<wb-card clickable>with clickable</wb-card>",
-      "<wb-card title=\"Sample title\">title=\"Sample title\"</wb-card>",
+      "<wb-card heading=\"Sample heading\">heading=\"Sample heading\"</wb-card>",
       "<wb-card subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</wb-card>"
     ],
     "functional": {
@@ -154,7 +154,7 @@
         },
         {
           "name": "Card with Header/Footer",
-          "setup": "<article data-wb='card' data-wb-title='Title' data-wb-footer='Footer'>Content</article>",
+          "setup": "<article data-wb='card' data-wb-heading='Title' data-wb-footer='Footer'>Content</article>",
           "expect": {
             "textContains": "Title"
           },

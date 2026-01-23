@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id="schemaviewer-html-1" lang="en" data-theme="dark">
+<html id="schemaviewer-html-1" lang="en" theme="dark">
 <head id="schemaviewer-head-2">
   <meta id="schemaviewer-meta-3" charset="UTF-8">
   <meta id="schemaviewer-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
@@ -292,9 +292,9 @@
 </head>
 <body id="schemaviewer-body-11">
   <!-- Header -->
-  <header class="sv-header">
+  <header class="sv-header" id="auto-public-schema-viewerhtml-1">
     <h1>📋 Schema Viewer</h1>
-    <div class="sv-header-actions">
+    <div class="sv-header-actions" id="auto-public-schema-viewerhtml-2">
       <select class="sv-select" id="schemaSelector">
         <option value="">Select a component...</option>
       </select>
@@ -304,15 +304,15 @@
   </header>
   
   <!-- Main Content -->
-  <main class="sv-main">
+  <main class="sv-main" id="auto-public-schema-viewerhtml-3">
     <!-- Left Panel: Preview & Properties -->
-    <div class="sv-panel">
-      <div class="sv-panel-header">
+    <div class="sv-panel" id="auto-public-schema-viewerhtml-4">
+      <div class="sv-panel-header" id="auto-public-schema-viewerhtml-5">
         <span>Preview & Properties</span>
         <button class="sv-btn sv-btn-secondary" id="refreshBtn" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">↻ Refresh</button>
       </div>
       <div class="sv-panel-content" id="previewPanel">
-        <div class="sv-empty">
+        <div class="sv-empty" id="auto-public-schema-viewerhtml-6">
           <span>📦</span>
           <p>Select a component to preview</p>
         </div>
@@ -320,7 +320,7 @@
     </div>
     
     <!-- Right Panel: JSON Editor -->
-    <div class="sv-panel">
+    <div class="sv-panel" id="auto-public-schema-viewerhtml-7">
       <div class="sv-panel-header">
         <span>JSON Schema</span>
       </div>
@@ -382,7 +382,7 @@
       
       if (!schema) {
         panel.innerHTML = `
-          <div class="sv-empty">
+          <div class="sv-empty" id="auto-public-schema-viewerhtml-8">
             <span>📦</span>
             <p>Select a component to preview</p>
           </div>
@@ -437,7 +437,7 @@
 
       panel.innerHTML = `
         <!-- Component Info -->
-        <div class="sv-info">
+        <div class="sv-info" id="auto-public-schema-viewerhtml-9">
           <h2>${schema.title || componentName}</h2>
           <p>${schema.description || 'No description available.'}</p>
         </div>
@@ -457,10 +457,10 @@
           const propType = prop.type || (prop.enum ? 'enum' : 'any');
           
           return `
-            <div class="sv-prop">
+            <div class="sv-prop" id="auto-public-schema-viewerhtml-10">
               <div class="sv-prop-name">${key}</div>
               <div class="sv-prop-desc">${prop.description || ''}</div>
-              <div class="sv-prop-meta">
+              <div class="sv-prop-meta" id="auto-public-schema-viewerhtml-11">
                 <span>Type: ${propType}</span>
                 ${prop.default !== undefined ? `<span class="default">Default: ${JSON.stringify(prop.default)}</span>` : ''}
                 ${prop.enum ? `<span class="options">Options: ${prop.enum.join(', ')}</span>` : ''}
@@ -470,7 +470,7 @@
         }).join('')}
         
         <!-- Code Example -->
-        <div class="sv-code-section">
+        <div class="sv-code-section" id="auto-public-schema-viewerhtml-12">
           <div class="sv-props-title">Example Usage</div>
           <div class="sv-preview has-content" id="codeExample">
             <wb-mdhtml>```html

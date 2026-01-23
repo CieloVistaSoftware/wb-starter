@@ -46,7 +46,7 @@ let initialized = false;
 export function registerView(name, html, meta = {}) {
   viewRegistry.set(name, html.trim());
   viewMeta.set(name, meta);
-  console.log(`[WB Views] ✓ Registered: "${name}" (${html.length} chars)`);
+  if (window.WB_DEBUG) console.log(`[WB Views] ✓ Registered: "${name}" (${html.length} chars)`);
 }
 
 /**
@@ -55,7 +55,7 @@ export function registerView(name, html, meta = {}) {
  */
 export function loadViewsFromDOM(root = document) {
   const templates = root.querySelectorAll('template[wb-view]');
-  console.log(`[WB Views] Scanning for templates... found ${templates.length}`);
+  if (window.WB_DEBUG) console.log(`[WB Views] Scanning for templates... found ${templates.length}`);
   
   templates.forEach(template => {
     const name = template.getAttribute('wb-view');
@@ -113,7 +113,7 @@ function registerViewAsElement(name) {
   
   // Register the custom element
   customElements.define(tagName, WBViewElement);
-  console.log(`[WB Views] ✓ Registered tag: <${tagName}>`);
+  if (window.WB_DEBUG) console.log(`[WB Views] ✓ Registered tag: <${tagName}>`);
 }
 
 /**
@@ -286,7 +286,7 @@ export async function loadViewsFromURL(urls) {
         // Auto-register as custom element tag
         registerViewAsElement(name);
       }
-      console.log(`[WB Views] Loaded views from ${url}`);
+      if (window.WB_DEBUG) console.log(`[WB Views] Loaded views from ${url}`);
     } catch (error) {
       console.error(`[WB Views] Failed to load views from ${url}:`, error);
     }
@@ -806,10 +806,10 @@ function processWbView(element) {
  */
 export function scanViews(root = document.body) {
   const elements = root.querySelectorAll('wb-view');
-  console.log(`[WB Views] Scanning for <wb-view> elements... found ${elements.length}`);
+  if (window.WB_DEBUG) console.log(`[WB Views] Scanning for <wb-view> elements... found ${elements.length}`);
   
   elements.forEach((el, i) => {
-    console.log(`[WB Views] Processing element ${i + 1}/${elements.length}`);
+    if (window.WB_DEBUG) console.log(`[WB Views] Processing element ${i + 1}/${elements.length}`);
     processWbView(el);
   });
 }
@@ -837,7 +837,7 @@ function startObserver() {
   });
   
   observer.observe(document.body, { childList: true, subtree: true });
-  console.log('[WB Views] MutationObserver started');
+  if (window.WB_DEBUG) console.log('[WB Views] MutationObserver started');
 }
 
 // =============================================================================
@@ -849,14 +849,16 @@ function startObserver() {
  */
 export async function initViews(options = {}) {
   if (initialized) {
-    console.log('[WB Views] Already initialized, rescanning...');
+    if (window.WB_DEBUG) console.log('[WB Views] Already initialized, rescanning...');
     scanViews(document.body);
     return;
   }
   
-  console.log('[WB Views] ═══════════════════════════════════');
-  console.log('[WB Views] Initializing WB Views System v1.5.0');
-  console.log('[WB Views] ═══════════════════════════════════');
+  if (window.WB_DEBUG) {
+    console.log('[WB Views] ═══════════════════════════════════');
+    console.log('[WB Views] Initializing WB Views System v1.5.0');
+    console.log('[WB Views] ═══════════════════════════════════');
+  }
   
   // Load views from DOM templates
   loadViewsFromDOM(document);
@@ -866,7 +868,7 @@ export async function initViews(options = {}) {
     await loadViewsFromURL(options.registry);
   }
   
-  console.log(`[WB Views] Registry contains ${viewRegistry.size} views:`, [...viewRegistry.keys()]);
+  if (window.WB_DEBUG) console.log(`[WB Views] Registry contains ${viewRegistry.size} views:`, [...viewRegistry.keys()]);
   
   // Scan for existing <wb-view> elements
   scanViews(document.body);
@@ -875,9 +877,11 @@ export async function initViews(options = {}) {
   startObserver();
   
   initialized = true;
-  console.log('[WB Views] ═══════════════════════════════════');
-  console.log('[WB Views] Ready!');
-  console.log('[WB Views] ═══════════════════════════════════');
+  if (window.WB_DEBUG) {
+    console.log('[WB Views] ═══════════════════════════════════');
+    console.log('[WB Views] Ready!');
+    console.log('[WB Views] ═══════════════════════════════════');
+  }
 }
 
 // =============================================================================

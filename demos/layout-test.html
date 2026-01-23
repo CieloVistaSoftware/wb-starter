@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +32,7 @@
         <p>Demonstrating the new semantic layout tags.</p>
    
         <h2>1. Grid (&lt;wb-grid&gt;)</h2>
-        <wb-grid columns="3" gap="1rem">
+        <wb-grid columns="3" gap="1rem" id="auto-demos-layout-testhtml-1">
             <div class="box">1</div>
             <div class="box">2</div>
             <div class="box">3</div>
@@ -42,7 +42,7 @@
         </wb-grid>
 
         <h2>2. Flex Cluster (&lt;wb-cluster&gt;)</h2>
-        <wb-cluster gap="0.5rem" align="center">
+        <wb-cluster gap="0.5rem" align="center" id="auto-demos-layout-testhtml-2">
             <button class="wb-button wb-button--primary">Save</button>
             <button class="wb-button wb-button--secondary">Cancel</button>
             <button class="wb-button wb-button--secondary">Export</button>
@@ -50,7 +50,7 @@
         </wb-cluster>
 
         <h2>3. Stack (&lt;wb-stack&gt;)</h2>
-        <wb-stack gap="1rem" style="max-width: 400px; border: 1px dashed #555; padding: 1rem;">
+        <wb-stack gap="1rem" style="max-width: 400px; border: 1px dashed #555; padding: 1rem;" id="auto-demos-layout-testhtml-3">
             <div class="box" style="min-height: 50px;">Item 1</div>
             <div class="box" style="min-height: 50px;">Item 2</div>
             <div class="box" style="min-height: 50px;">Item 3</div>
@@ -58,7 +58,7 @@
 
         <h2>4. Sidebar Layout (&lt;wb-sidebar&gt;)</h2>
         <div style="border: 1px solid var(--border-color); height: 300px;">
-            <wb-sidebar side="left" width="200px" gap="1rem">
+            <wb-sidebar side="left" width="200px" gap="1rem" id="auto-demos-layout-testhtml-4">
                 <div slot="sidebar" style="background: var(--bg-tertiary); height: 100%; padding: 1rem;">
                     Sidebar Content
                 </div>
@@ -70,7 +70,7 @@
 
         <h2>5. Switcher (&lt;wb-switcher&gt;)</h2>
         <p>Resize window to see me switch from horizontal to vertical.</p>
-        <wb-switcher threshold="600px" gap="1rem">
+        <wb-switcher threshold="600px" gap="1rem" id="auto-demos-layout-testhtml-5">
             <div class="box">A</div>
             <div class="box">B</div>
             <div class="box">C</div>

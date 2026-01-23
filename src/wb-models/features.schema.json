@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "features.schema.json",
+  "title": "Features Section",
+  "description": "Section that presents key feature cards with title and subtitle",
+  "behavior": "features",
+  "baseClass": "wb-features",
+  "semanticElement": {
+    "tagName": "section",
+    "implicitRole": "region"
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Main heading",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Subheading"
+    }
+  },
+  "$view": [
+    {
+      "name": "header",
+      "tag": "div",
+      "public": true,
+      "content": "",
+      "createdWhen": "title"
+    },
+    {
+      "name": "grid",
+      "tag": "div",
+      "public": true,
+      "description": "Container for feature cards"
+    }
+  ],
+  "$methods": {
+    "refresh": {
+      "description": "Re-renders the features section",
+      "parameters": [],
+      "returns": "void"
+    }
+  },
+  "$cssAPI": {
+    "--wb-features-gap": {
+      "description": "Gap between feature cards",
+      "default": "1.5rem"
+    },
+    "--wb-features-columns": {
+      "description": "Number of columns in the grid",
+      "default": "3"
+    }
+  }
+}

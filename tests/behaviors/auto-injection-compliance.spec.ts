@@ -67,9 +67,9 @@ test.describe('Auto-Injection Compliance', () => {
     await expect(dialog).toHaveClass(/wb-dialog/);
   });
 
-  test('Article with data-wb="card" SHOULD be a Card', async ({ page }) => {
+  test('Article with wb="card" SHOULD be a Card', async ({ page }) => {
     await page.setContent(`
-      <article id="explicit-card" data-wb="card">
+      <article id="explicit-card" wb="card">
         <header><h1>Title</h1></header>
         <p>Content</p>
       </article>

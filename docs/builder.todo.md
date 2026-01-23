@@ -1,7 +1,5 @@
 # Builder TODO
-
 ## Phase 1: Foundation Fixes ✅ COMPLETE
-
 ### 1. Fix Invisible Components ✅
 All button-type behaviors already have visible rendering in their behavior functions:
 - ✅ **Clipboard** - `helpers.js` renders button when empty
@@ -12,7 +10,6 @@ All button-type behaviors already have visible rendering in their behavior funct
 - ✅ **Scroll** - `helpers.js` renders button
 - ✅ **Fireworks** - `effects.js` renders button
 - ✅ **Snow** - `effects.js` renders button
-
 **Fixed:** Renamed `text` to `clipboardText` in Clipboard C.All definition to avoid textContent collision.
 
 ---

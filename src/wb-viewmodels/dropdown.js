@@ -9,8 +9,8 @@
  *   Option 1 - data-items attribute:
  *     <wb-dropdown  data-items="Profile,Settings,Logout">Click me</div>
  * 
- *   Option 2 - data-label with child elements:
- *     <wb-dropdown  data-label="Options">
+ *   Option 2 - label with child elements:
+ *     <wb-dropdown  label="Options">
  *       <a href="#">Profile</a>
  *       <a href="#">Settings</a>
  *     </div>

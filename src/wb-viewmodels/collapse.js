@@ -94,7 +94,133 @@ export function collapse(element, options = {}) {
   return () => element.classList.remove('wb-collapse');
 }
 
-// Accordion is an alias for collapse
-export const accordion = collapse;
+/**
+ * Accordion - Multi-panel collapsible container
+ * Custom Tag: <wb-accordion>
+ * Children should have [accordion-title] attribute
+ */
+export function accordion(element, options = {}) {
+  const config = {
+    multiple: options.multiple ?? element.hasAttribute('data-multiple'),
+    ...options
+  };
+
+  element.classList.add('wb-accordion');
+  element.style.cssText = `
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  `;
+
+  // Find all children with accordion-title
+  const panels = Array.from(element.children).filter(child => 
+    child.hasAttribute('accordion-title') || child.dataset.accordionTitle
+  );
+
+  // If no panels with accordion-title, use all children as panels
+  const items = panels.length > 0 ? panels : Array.from(element.children);
+  
+  if (items.length === 0) {
+    // No content - show placeholder
+    element.innerHTML = `
+      <div style="padding: 1rem; background: var(--bg-secondary, #1f2937); border-radius: 8px; color: var(--text-secondary, #9ca3af);">
+        Add panels with <code>accordion-title</code> attribute
+      </div>
+    `;
+    element.dataset.wbReady = 'accordion';
+    return () => element.classList.remove('wb-accordion');
+  }
+
+  // Process each panel
+  const accordionItems = [];
+  
+  items.forEach((panel, index) => {
+    const title = panel.getAttribute('accordion-title') || panel.dataset.accordionTitle || `Section ${index + 1}`;
+    const content = panel.innerHTML;
+    const isOpen = panel.hasAttribute('data-open') || index === 0;
+    
+    const wrapper = document.createElement('div');
+    wrapper.className = 'wb-accordion__item';
+    wrapper.style.cssText = `
+      border: 1px solid var(--border-color, #374151);
+      border-radius: 8px;
+      overflow: hidden;
+    `;
+    
+    wrapper.innerHTML = `
+      <button class="wb-accordion__trigger" style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 1rem;
+        background: var(--bg-secondary, #1f2937);
+        border: none;
+        cursor: pointer;
+        color: var(--text-primary, #f9fafb);
+        font-weight: 500;
+        font-size: 0.95rem;
+        text-align: left;
+        transition: background 0.15s;
+      ">
+        <span>${title}</span>
+        <span class="wb-accordion__icon" style="
+          transition: transform 0.2s;
+          font-size: 0.75rem;
+          transform: ${isOpen ? 'rotate(180deg)' : 'rotate(0deg)'};
+        ">▼</span>
+      </button>
+      <div class="wb-accordion__content" style="
+        padding: 1rem;
+        background: var(--bg-primary, #111827);
+        display: ${isOpen ? 'block' : 'none'};
+        border-top: 1px solid var(--border-color, #374151);
+      ">${content}</div>
+    `;
+    
+    const trigger = wrapper.querySelector('.wb-accordion__trigger');
+    const contentEl = wrapper.querySelector('.wb-accordion__content');
+    const icon = wrapper.querySelector('.wb-accordion__icon');
+    
+    let open = isOpen;
+    
+    const toggle = () => {
+      // If not multiple mode, close other panels
+      if (!config.multiple && !open) {
+        accordionItems.forEach(item => {
+          if (item !== wrapper && item.isOpen) {
+            item.close();
+          }
+        });
+      }
+      
+      open = !open;
+      contentEl.style.display = open ? 'block' : 'none';
+      icon.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+      
+      element.dispatchEvent(new CustomEvent('wb:accordion:toggle', {
+        bubbles: true,
+        detail: { index, open, title }
+      }));
+    };
+    
+    trigger.addEventListener('click', toggle);
+    trigger.addEventListener('mouseenter', () => trigger.style.background = 'var(--bg-tertiary, #374151)');
+    trigger.addEventListener('mouseleave', () => trigger.style.background = 'var(--bg-secondary, #1f2937)');
+    
+    // Store reference with API
+    wrapper.isOpen = open;
+    wrapper.close = () => { if (open) { open = false; contentEl.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; wrapper.isOpen = false; } };
+    wrapper.open = () => { if (!open) { toggle(); } };
+    
+    accordionItems.push(wrapper);
+    
+    // Replace original panel with wrapper
+    panel.replaceWith(wrapper);
+  });
+
+  element.dataset.wbReady = 'accordion';
+  return () => element.classList.remove('wb-accordion');
+}
 
 export default collapse;

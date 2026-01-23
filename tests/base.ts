@@ -264,7 +264,7 @@ export function stripDynamicContent(html: string): string {
   let result = html;
   // Remove <script>...</script> blocks
   result = result.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
-  // Remove content inside data-wb="mdhtml" elements or wb-mdhtml components
+  // Remove content inside wb="mdhtml" elements or wb-mdhtml components
   result = result.replace(/data-wb=['"]mdhtml['"][^>]*>[\s\S]*?<\/div>/gi, '');
   result = result.replace(/<wb-mdhtml[^>]*>[\s\S]*?<\/wb-mdhtml>/gi, '');
   // Remove markdown code blocks

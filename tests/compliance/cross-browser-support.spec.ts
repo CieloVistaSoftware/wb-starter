@@ -360,7 +360,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
   // 7. ESCAPE HATCHES
   // ═══════════════════════════════════════════════════════════════
   
-  test('data-wb-skip prevents behavior injection', async ({ page }) => {
+  test('wb-skip prevents behavior injection', async ({ page }) => {
     const skipped = await page.evaluate(async () => {
       // Create element with skip attribute
       const pre = document.createElement('pre');

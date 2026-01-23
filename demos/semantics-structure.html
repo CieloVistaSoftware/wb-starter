@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -74,13 +74,13 @@
   <p>Features: Sortable columns (click header), Copyable cells (click cell), Searchable, Striped rows.</p>
   <div class="demo-section">
     <table
-      data-sortable="true"
-      data-searchable="true"
-      data-striped="true"
-      data-hover="true"
-      data-copyable="true"
-      data-pagination="true"
-      data-page-size="5">
+      sortable="true"
+      searchable="true"
+      striped="true"
+      hover="true"
+      copyable="true"
+      pagination="true"
+      page-size="5">
       <thead>
         <tr>
           <th>ID</th>
@@ -111,17 +111,17 @@
   <div class="demo-section">
     <div class="demo-grid">
       <details
-        data-accordion="group1">
+        accordion="group1">
         <summary>Detail Item 1</summary>
         <p>This is the content for item 1. It closes when another item in the group opens.</p>
       </details>
       <details
-        data-accordion="group1">
+        accordion="group1">
         <summary>Detail Item 2</summary>
         <p>This is the content for item 2. It closes when another item in the group opens.</p>
       </details>
       <details
-        data-accordion="group1">
+        accordion="group1">
         <summary>Detail Item 3</summary>
         <p>This is the content for item 3. It closes when another item in the group opens.</p>
       </details>
@@ -138,8 +138,8 @@
     
     <dialog
       id="demo-dialog"
-      data-close-on-backdrop="true"
-      data-animation="fade">
+      close-on-backdrop="true"
+      animation="fade">
       <form method="dialog">
         <h3>Confirmation</h3>
         <p>This is a native dialog enhanced with animations and backdrop click handling.</p>
@@ -180,7 +180,7 @@
     <p>Use <wb-code copy="true">npm install wb-core</code> to install.</p>
     
     <h3>Code Block</h3>
-    <wb-pre data-copy="true" data-line-numbers="true"<wb-code language="javascript">
+    <wb-pre copy="true" line-numbers="true"<wb-code language="javascript">
 function hello() {
   console.log("Hello World");
   return true;
@@ -194,7 +194,7 @@ function hello() {
     <div class="demo-grid">
       <div>
         <h3>Enhanced Unordered List</h3>
-        <wb-ul data-marker="check"
+        <wb-ul marker="check"
           <li>Feature One</li>
           <li>Feature Two</li>
           <li>Feature Three</li>
@@ -202,7 +202,7 @@ function hello() {
       </div>
       <div>
         <h3>Enhanced Ordered List</h3>
-        <wb-ol data-marker="circle"
+        <wb-ol marker="circle"
           <li>Step One</li>
           <li>Step Two</li>
           <li>Step Three</li>
@@ -210,7 +210,7 @@ function hello() {
       </div>
       <div>
         <h3>Description List</h3>
-        <wb-dl data-layout="grid"
+        <wb-dl layout="grid"
           <dt>HTML</dt>
           <dd>HyperText Markup Language</dd>
           <dt>CSS</dt>

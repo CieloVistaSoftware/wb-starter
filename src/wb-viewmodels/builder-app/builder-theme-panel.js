@@ -77,15 +77,15 @@ export function toggleThemePanel() {
       <div class="theme-section">
         <label class="theme-section-label">Mode</label>
         <div class="mode-toggle">
-          <button class="mode-btn ${currentMode === 'light' ? 'active' : ''}" data-mode="light" onclick="window.setMode('light')">
+          <button class="mode-btn ${currentMode === 'light' ? 'active' : ''}" mode="light" onclick="window.setMode('light')">
             <span class="mode-icon">☀️</span>
             <span class="mode-label">Light</span>
           </button>
-          <button class="mode-btn ${currentMode === 'dark' ? 'active' : ''}" data-mode="dark" onclick="window.setMode('dark')">
+          <button class="mode-btn ${currentMode === 'dark' ? 'active' : ''}" mode="dark" onclick="window.setMode('dark')">
             <span class="mode-icon">🌙</span>
             <span class="mode-label">Dark</span>
           </button>
-          <button class="mode-btn ${currentMode === 'auto' ? 'active' : ''}" data-mode="auto" onclick="window.setMode('auto')">
+          <button class="mode-btn ${currentMode === 'auto' ? 'active' : ''}" mode="auto" onclick="window.setMode('auto')">
             <span class="mode-icon">💻</span>
             <span class="mode-label">Auto</span>
           </button>
@@ -98,7 +98,7 @@ export function toggleThemePanel() {
         <div class="theme-grid">
           ${THEMES.map(theme => `
             <button class="theme-card ${currentTheme === theme.id ? 'active' : ''}" 
-                    data-theme="${theme.id}" 
+                    theme="${theme.id}" 
                     onclick="window.setTheme('${theme.id}')"
                     title="${theme.description}">
               <span class="theme-preview theme-preview--${theme.id}"></span>
@@ -112,7 +112,7 @@ export function toggleThemePanel() {
       <div class="theme-section">
         <label class="theme-section-label">Add to your page</label>
         <div class="theme-code">
-          <code id="themeCode">&lt;html data-theme="${currentTheme}"${currentMode === 'dark' ? ' class="dark"' : ''}&gt;</code>
+          <code id="themeCode">&lt;html theme="${currentTheme}"${currentMode === 'dark' ? ' class="dark"' : ''}&gt;</code>
           <button class="theme-code-copy" onclick="window.copyThemeCode()" title="Copy to clipboard">📋</button>
         </div>
         <p class="theme-hint">Add this attribute to your &lt;html&gt; tag</p>
@@ -249,7 +249,7 @@ function updateCodePreview() {
   const codeEl = document.getElementById('themeCode');
   if (codeEl) {
     const modeClass = currentMode === 'dark' ? ' class="dark"' : (currentMode === 'light' ? '' : ' class="auto"');
-    codeEl.textContent = `<html data-theme="${currentTheme}"${modeClass}>`;
+    codeEl.textContent = `<html theme="${currentTheme}"${modeClass}>`;
   }
 }
 
@@ -258,7 +258,7 @@ function updateCodePreview() {
  */
 window.copyThemeCode = () => {
   const modeClass = currentMode === 'dark' ? ' class="dark"' : (currentMode === 'light' ? '' : '');
-  const code = `<html data-theme="${currentTheme}"${modeClass}>`;
+  const code = `<html theme="${currentTheme}"${modeClass}>`;
   
   navigator.clipboard.writeText(code).then(() => {
     if (window.toast) window.toast('Copied to clipboard!');

@@ -8,7 +8,7 @@
  * -----------------------------------------------------------------------------
  * 
  * Usage:
- *   <form x-form data-ajax>...</form>
+ *   <form x-form ajax>...</form>
  *   <input x-password>
  */
 
@@ -146,56 +146,123 @@ export function formrow(element, options = {}) {
 }
 
 /**
- * Stepper - Number stepper
+ * Stepper - Number stepper with + and - buttons
  */
 export function stepper(element, options = {}) {
+  // Guard: element must be in DOM
+  if (!element.parentNode) {
+    console.warn('[WB] stepper: Element not in DOM, skipping');
+    return () => {};
+  }
+
   const config = {
-    min: parseFloat(options.min ?? element.dataset.min ?? '-Infinity'),
-    max: parseFloat(options.max ?? element.dataset.max ?? 'Infinity'),
+    min: parseFloat(options.min ?? element.dataset.min ?? '0'),
+    max: parseFloat(options.max ?? element.dataset.max ?? '100'),
     step: parseFloat(options.step || element.dataset.step || '1'),
+    value: parseFloat(options.value || element.dataset.value || element.value || '0'),
     ...options
   };
 
   const wrapper = document.createElement('div');
   wrapper.className = 'wb-stepper';
+  wrapper.style.cssText = `
+    display:inline-flex;
+    align-items:stretch;
+    border:1px solid var(--border-color,#374151);
+    border-radius:6px;
+    overflow:hidden;
+  `;
   element.parentNode.insertBefore(wrapper, element);
   
+  // Decrement button
   const decBtn = document.createElement('button');
   decBtn.type = 'button';
   decBtn.className = 'wb-stepper__btn wb-stepper__dec';
   decBtn.textContent = '−';
+  decBtn.style.cssText = `
+    width:2.5rem;
+    height:2.5rem;
+    border:none;
+    background:var(--bg-tertiary,#374151);
+    color:var(--text-primary,#f9fafb);
+    font-size:1.25rem;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background 0.15s;
+  `;
+  decBtn.onmouseenter = () => decBtn.style.background = 'var(--bg-secondary,#1f2937)';
+  decBtn.onmouseleave = () => decBtn.style.background = 'var(--bg-tertiary,#374151)';
   
+  // Increment button  
   const incBtn = document.createElement('button');
   incBtn.type = 'button';
   incBtn.className = 'wb-stepper__btn wb-stepper__inc';
   incBtn.textContent = '+';
+  incBtn.style.cssText = decBtn.style.cssText;
+  incBtn.onmouseenter = () => incBtn.style.background = 'var(--bg-secondary,#1f2937)';
+  incBtn.onmouseleave = () => incBtn.style.background = 'var(--bg-tertiary,#374151)';
+  
+  // Input field or create one
+  let input;
+  if (element.tagName === 'INPUT') {
+    input = element;
+  } else {
+    input = document.createElement('input');
+    input.type = 'number';
+  }
+  input.value = config.value;
+  input.min = config.min;
+  input.max = config.max;
+  input.step = config.step;
+  input.className = 'wb-stepper__input';
+  input.style.cssText = `
+    width:3.5rem;
+    text-align:center;
+    border:none;
+    border-left:1px solid var(--border-color,#374151);
+    border-right:1px solid var(--border-color,#374151);
+    background:var(--bg-secondary,#1f2937);
+    color:var(--text-primary,#f9fafb);
+    font-size:0.875rem;
+    font-weight:500;
+    -moz-appearance:textfield;
+  `;
   
   wrapper.appendChild(decBtn);
-  wrapper.appendChild(element);
+  wrapper.appendChild(input);
   wrapper.appendChild(incBtn);
   
-  element.classList.add('wb-stepper__input');
-  
   const updateValue = (delta) => {
-    let value = parseFloat(element.value) || 0;
+    let value = parseFloat(input.value) || 0;
     value = Math.max(config.min, Math.min(config.max, value + delta));
-    element.value = value;
-    element.dispatchEvent(new Event('change'));
+    input.value = value;
+    input.dispatchEvent(new Event('change', { bubbles: true }));
   };
   
   decBtn.onclick = () => updateValue(-config.step);
   incBtn.onclick = () => updateValue(config.step);
 
+  element.dataset.wbReady = 'stepper';
   return () => {
-    wrapper.parentNode.insertBefore(element, wrapper);
+    if (element.tagName === 'INPUT') {
+      wrapper.parentNode.insertBefore(element, wrapper);
+    }
     wrapper.remove();
   };
 }
 
 /**
- * Search - Search input
+ * Search - Search input with magnifying glass icon on the right
  */
 export function search(element, options = {}) {
+  // Guard: element must be in DOM
+  if (!element.parentNode) {
+    console.warn('[WB] search: Element not in DOM, skipping');
+    return () => {};
+  }
+
   const config = {
     expandable: options.expandable ?? element.hasAttribute('data-expandable'),
     instant: options.instant ?? element.hasAttribute('data-instant'),
@@ -205,15 +272,35 @@ export function search(element, options = {}) {
 
   const wrapper = document.createElement('div');
   wrapper.className = 'wb-search';
+  wrapper.style.cssText = 'position:relative;display:flex;align-items:center;width:100%;';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
   element.classList.add('wb-search__input');
   element.type = 'search';
+  element.style.cssText = `
+    width:100%;
+    padding:0.5rem 2.5rem 0.5rem 0.75rem;
+    border:1px solid var(--border-color,#374151);
+    border-radius:6px;
+    background:var(--bg-secondary,#1f2937);
+    color:var(--text-primary,#f9fafb);
+    font-size:0.875rem;
+  `;
 
+  // Icon on the right
   const icon = document.createElement('span');
   icon.className = 'wb-search__icon';
   icon.textContent = '🔍';
-  wrapper.insertBefore(icon, element);
+  icon.style.cssText = `
+    position:absolute;
+    right:0.75rem;
+    top:50%;
+    transform:translateY(-50%);
+    pointer-events:none;
+    font-size:1rem;
+    opacity:0.7;
+  `;
+  wrapper.appendChild(icon);
 
   let timeout;
   if (config.instant) {
@@ -225,6 +312,7 @@ export function search(element, options = {}) {
     };
   }
 
+  element.dataset.wbReady = 'search';
   return () => {
     wrapper.parentNode.insertBefore(element, wrapper);
     wrapper.remove();
@@ -236,6 +324,12 @@ export function search(element, options = {}) {
  * Helper Attribute: [x-password]
  */
 export function password(element, options = {}) {
+  // Guard: element must be in DOM
+  if (!element.parentNode) {
+    console.warn('[WB] password: Element not in DOM, skipping');
+    return () => {};
+  }
+
   const config = {
     toggle: options.toggle ?? element.dataset.toggle !== 'false',
     strength: options.strength ?? element.hasAttribute('data-strength'),
@@ -353,7 +447,7 @@ function getPasswordStrength(password) {
 /**
  * Masked - Masked input for formatted data entry
  * Uses '9' as placeholder for digits, other chars are literals
- * Example: data-mask="(999) 999-9999" for phone numbers
+ * Example: mask="(999) 999-9999" for phone numbers
  */
 export function masked(element, options = {}) {
   const config = {
@@ -448,6 +542,12 @@ export function masked(element, options = {}) {
  * Counter - Character counter
  */
 export function counter(element, options = {}) {
+  // Guard: element must be in DOM
+  if (!element.parentNode) {
+    console.warn('[WB] counter: Element not in DOM, skipping');
+    return () => {};
+  }
+
   const config = {
     max: parseInt(options.max || element.dataset.max || element.maxLength || '0'),
     warning: parseInt(options.warning || element.dataset.warning || '0'),
@@ -476,6 +576,12 @@ export function counter(element, options = {}) {
  * Floating Label - Floating label effect
  */
 export function floatinglabel(element, options = {}) {
+  // Guard: element must be in DOM
+  if (!element.parentNode) {
+    console.warn('[WB] floatinglabel: Element not in DOM, skipping');
+    return () => {};
+  }
+
   const wrapper = document.createElement('div');
   wrapper.className = 'wb-floating-label';
   element.parentNode.insertBefore(wrapper, element);
@@ -567,31 +673,75 @@ export function otp(element, options = {}) {
 }
 
 /**
- * Color Picker - Enhanced color input
+ * Color Picker - Enhanced color input with preview swatch
  */
 export function colorpicker(element, options = {}) {
+  // Guard: element must be in DOM
+  if (!element.parentNode) {
+    console.warn('[WB] colorpicker: Element not in DOM, skipping');
+    return () => {};
+  }
+
   const config = {
-    value: options.value || element.value || '#000000',
+    value: options.value || element.value || element.dataset.value || '#6366f1',
     ...options
   };
 
-  // If element is input, use it, otherwise create one
-  let input = element;
-  if (element.tagName !== 'INPUT') {
+  // Create wrapper for better layout
+  const wrapper = document.createElement('div');
+  wrapper.className = 'wb-colorpicker';
+  wrapper.style.cssText = 'display:inline-flex;align-items:center;gap:0.5rem;';
+  element.parentNode.insertBefore(wrapper, element);
+
+  // The actual color input (hidden visually but functional)
+  let input;
+  if (element.tagName === 'INPUT') {
+    input = element;
+    input.type = 'color';
+  } else {
     input = document.createElement('input');
     input.type = 'color';
-    element.appendChild(input);
-  } else {
-    input.type = 'color';
   }
-  
   input.value = config.value;
-  input.classList.add('wb-colorpicker');
-  input.style.cssText = 'width:3rem;height:3rem;padding:0;border:none;border-radius:6px;cursor:pointer;background:none;';
+  input.style.cssText = `
+    width:3rem;
+    height:3rem;
+    padding:0;
+    border:2px solid var(--border-color,#374151);
+    border-radius:8px;
+    cursor:pointer;
+    background:none;
+    -webkit-appearance:none;
+  `;
+  wrapper.appendChild(input);
 
+  // Text display showing hex value
+  const textDisplay = document.createElement('span');
+  textDisplay.className = 'wb-colorpicker__value';
+  textDisplay.style.cssText = `
+    font-family:monospace;
+    font-size:0.875rem;
+    color:var(--text-secondary,#9ca3af);
+    min-width:70px;
+  `;
+  textDisplay.textContent = input.value.toUpperCase();
+  wrapper.appendChild(textDisplay);
+
+  // Update text on change
+  input.addEventListener('input', () => {
+    textDisplay.textContent = input.value.toUpperCase();
+    element.dispatchEvent(new CustomEvent('wb:colorpicker:change', {
+      bubbles: true,
+      detail: { value: input.value }
+    }));
+  });
+
+  element.dataset.wbReady = 'colorpicker';
   return () => {
-    input.classList.remove('wb-colorpicker');
-    if (element !== input) input.remove();
+    if (element.tagName === 'INPUT') {
+      wrapper.parentNode.insertBefore(element, wrapper);
+    }
+    wrapper.remove();
   };
 }
 
@@ -700,6 +850,12 @@ export function autocomplete(element, options = {}) {
  * Helper Attribute: [x-file]
  */
 export function file(element, options = {}) {
+  // Guard: element must be in DOM
+  if (!element.parentNode) {
+    console.warn('[WB] file: Element not in DOM, skipping');
+    return () => {};
+  }
+
   const config = {
     multiple: options.multiple ?? element.hasAttribute('data-multiple'),
     accept: options.accept || element.dataset.accept || '',

@@ -36,6 +36,7 @@ export function showContextMenu(x, y, wrapper) {
   `;
 
   menu.innerHTML = `
+    <button class="ctx-item" onclick="inspectElement(document.getElementById('${wrapper.id}'))">🔍 Inspect</button>
     <button class="ctx-item" onclick="viewSchema('${c.b}')">View Schema</button>
     <button class="ctx-item" onclick="selComp(document.getElementById('${wrapper.id}'))">Edit Properties</button>
     <hr class="ctx-divider">
@@ -106,9 +107,11 @@ export function viewSchema(behavior) {
  */
 export function createContextMenuHandler() {
   return (e) => {
-    if (!e.shiftKey) return;
+    // Only intercept right-click on canvas components
     const wrapper = e.target.closest('.dropped');
     if (!wrapper) return;
+    
+    // Prevent default browser context menu
     e.preventDefault();
     showContextMenu(e.clientX, e.clientY, wrapper);
   };
@@ -117,3 +120,26 @@ export function createContextMenuHandler() {
 // Expose to window
 window.showContextMenu = showContextMenu;
 window.viewSchema = viewSchema;
+
+// Utility: Inspect element in DevTools
+window.inspectElement = function(el) {
+  // Close context menu first
+  document.getElementById('builderContextMenu')?.remove();
+  
+  if (!el) return;
+  
+  // Store for console access
+  window.$i = el;
+  
+  // The inspect() function works when DevTools is open
+  // It's injected by Chrome/Edge/Firefox when DevTools panel is active
+  if (typeof inspect === 'function') {
+    inspect(el);
+    console.log('%c[Inspect] Element selected in Elements panel', 'color: #10b981');
+  } else {
+    // DevTools not open - prompt user and provide console access
+    console.log('%c[Inspect] Open DevTools (F12) then run: inspect($i)', 'color: #f59e0b; font-weight: bold');
+    console.log('%c[Inspect] Element stored as window.$i:', 'color: #60a5fa', el);
+    console.dir(el);
+  }
+};

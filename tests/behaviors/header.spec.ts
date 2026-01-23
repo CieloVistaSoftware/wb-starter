@@ -13,7 +13,7 @@ test.describe('Header Behavior', () => {
   test('renders with icon and title', async ({ page }) => {
     await page.evaluate(() => {
       document.body.innerHTML = `
-        <header data-wb="header" data-icon="📂" data-title="Project Index" id="testHeader"></header>
+        <header wb="header" icon="📂" heading="Project Index" id="testHeader"></header>
       `;
     });
     
@@ -35,7 +35,7 @@ test.describe('Header Behavior', () => {
   test('renders badge on right side', async ({ page }) => {
     await page.evaluate(() => {
       document.body.innerHTML = `
-        <header data-wb="header" data-title="App" data-badge="v1.0" id="testHeader"></header>
+        <header wb="header" heading="App" badge="v1.0" id="testHeader"></header>
       `;
     });
     
@@ -48,10 +48,10 @@ test.describe('Header Behavior', () => {
     await expect(badge).toHaveText('v1.0');
   });
 
-  test('applies sticky class when data-sticky present', async ({ page }) => {
+  test('applies sticky class when sticky present', async ({ page }) => {
     await page.evaluate(() => {
       document.body.innerHTML = `
-        <header data-wb="header" data-title="Sticky" data-sticky id="testHeader"></header>
+        <header wb="header" heading="Sticky" sticky id="testHeader"></header>
       `;
     });
     
@@ -67,7 +67,7 @@ test.describe('Header Behavior', () => {
   test('renders subtitle', async ({ page }) => {
     await page.evaluate(() => {
       document.body.innerHTML = `
-        <header data-wb="header" data-title="Dashboard" data-subtitle="Analytics" id="testHeader"></header>
+        <header wb="header" heading="Dashboard" subtitle="Analytics" id="testHeader"></header>
       `;
     });
     
@@ -83,7 +83,7 @@ test.describe('Header Behavior', () => {
   test('logo links when logoHref provided', async ({ page }) => {
     await page.evaluate(() => {
       document.body.innerHTML = `
-        <header data-wb="header" data-icon="🏠" data-title="Home" data-logo-href="/home" id="testHeader"></header>
+        <header wb="header" icon="🏠" heading="Home" logo-href="/home" id="testHeader"></header>
       `;
     });
     
@@ -99,7 +99,7 @@ test.describe('Header Behavior', () => {
   test('API: setTitle updates title', async ({ page }) => {
     await page.evaluate(() => {
       document.body.innerHTML = `
-        <header data-wb="header" data-title="Original" id="testHeader"></header>
+        <header wb="header" heading="Original" id="testHeader"></header>
       `;
     });
     
@@ -124,7 +124,7 @@ test.describe('Header Behavior', () => {
   test('API: setBadge updates badge', async ({ page }) => {
     await page.evaluate(() => {
       document.body.innerHTML = `
-        <header data-wb="header" data-title="App" data-badge="v1.0" id="testHeader"></header>
+        <header wb="header" heading="App" badge="v1.0" id="testHeader"></header>
       `;
     });
     
@@ -149,7 +149,7 @@ test.describe('Header Behavior', () => {
   test('preserves slot content', async ({ page }) => {
     await page.evaluate(() => {
       document.body.innerHTML = `
-        <header data-wb="header" id="testHeader">
+        <header wb="header" id="testHeader">
           <div slot="right"><button id="customBtn">Action</button></div>
         </header>
       `;

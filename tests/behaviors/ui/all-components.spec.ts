@@ -70,7 +70,7 @@ test.describe('WB Components & Behaviors', () => {
     
     test('Masonry component works', async ({ page }) => {
        const el = page.locator('[data-columns][style*="width: 100%"]').first(); // Masonry demo uses div with data-columns, explicitly checking implicit masonry or wb-masonry if used
-       // usage in behaviors.html: <div data-columns="3" data-gap="0.5rem" ...> (under Masonry section)
+       // usage in behaviors.html: <div data-columns="3" gap="0.5rem" ...> (under Masonry section)
        // This relies on implicit behavior injection or just layout classes. 
        // In behaviors.html, it's just a div. Wait, does it have x-masonry? 
        // The HTML shows: <div data-columns="3" ...> inside the Masonry card.
@@ -85,11 +85,11 @@ test.describe('WB Components & Behaviors', () => {
        /*
        <div
           data-columns="3"
-          data-gap="0.5rem"
+          gap="0.5rem"
           style="width: 100%">
        */
        // It lacks `x-masonry`. This might be why the user says "none of the behaviors are working" if they expect it to work without the attribute?
-       // But wait, the demo page explains "Explicit Behaviors... data-wb attribute is required".
+       // But wait, the demo page explains "Explicit Behaviors... wb attribute is required".
        // Does that div have `x-behavior` or `data-wb`?
        // In the snippet I read: `<div data-columns="3" ...>` no x-behavior visible.
        // Wait, I might have missed it or it wasn't there.
@@ -144,7 +144,7 @@ test.describe('WB Components & Behaviors', () => {
   
   test.describe('Effects', () => {
      test('Effect demos exist', async({ page }) => {
-        const bounce = page.locator('[data-effect="bounce"]');
+        const bounce = page.locator('[effect="bounce"]');
         await expect(bounce).toBeVisible();
      });
   });

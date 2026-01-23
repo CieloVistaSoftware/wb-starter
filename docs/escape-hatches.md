@@ -1,6 +1,13 @@
-# WB Framework Escape Hatches
+# WB Framework Escape Hatches (2026)
 
-Override or customize any WB component behavior when defaults don't fit your needs.
+> **Version:** 3.0.0  
+> **Last Updated:** 2026-01-17  
+> **Status:** Active
+
+Escape hatches let you override or customize any WB component or behavior when the defaults don't fit your needs. Use these patterns to adapt, extend, or bypass the framework as required.
+
+
+---
 
 ## CSS Custom Properties
 
@@ -27,6 +34,9 @@ wb-grid {
 }
 ```
 
+
+---
+
 ## Skip Auto-Injection
 
 Prevent WB from automatically applying behaviors to elements:
@@ -44,6 +54,9 @@ Prevent WB from automatically applying behaviors to elements:
   <button>Not enhanced</button>
 </div>
 ```
+
+
+---
 
 ## Override Behavior Options
 
@@ -67,6 +80,9 @@ Pass options via `data-*` attributes:
 </button>
 ```
 
+
+---
+
 ## Override Injected CSS
 
 WB components inject minimal CSS. Override with higher specificity:
@@ -84,6 +100,9 @@ wb-card.custom {
 }
 ```
 
+
+---
+
 ## Disable Behaviors Programmatically
 
 ```javascript
@@ -97,6 +116,9 @@ WB.remove(element);
 const applied = WB.applied.get(element);
 console.log(applied); // [{ name: 'card', cleanup: fn }, ...]
 ```
+
+
+---
 
 ## Use Raw Elements
 
@@ -116,6 +138,9 @@ Just don't use WB attributes/tags:
 </wb-card>
 ```
 
+
+---
+
 ## Override Theme Variables
 
 ```css
@@ -127,6 +152,9 @@ Just don't use WB attributes/tags:
   --radius-md: 0; /* Square corners everywhere */
 }
 ```
+
+
+---
 
 ## Custom Behavior Registration
 
@@ -148,6 +176,9 @@ WB.register('card-fancy', (element, options) => {
 });
 ```
 
+
+---
+
 ## Debug Mode
 
 Enable debug output to see what WB is doing:
@@ -159,7 +190,20 @@ WB.init({
 });
 ```
 
+
+---
+
 ## Force Re-scan
+
+---
+
+## References
+
+- See docs/builder/pages.md for schema-driven page builder rules
+- See docs/plans/_today/TODO.md for current priorities
+- See docs/builder.md for builder architecture
+- See docs/plans/MVVM-MIGRATION.md for migration and architecture
+- See docs/PAGE-BUILDER-RULES.md for content rules
 
 If dynamic content isn't getting behaviors:
 

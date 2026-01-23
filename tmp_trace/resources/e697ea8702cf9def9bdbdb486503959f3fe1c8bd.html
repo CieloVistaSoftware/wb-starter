@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🗒️ WB Page Builder</title>
+  <link rel="stylesheet" href="src/styles/themes.css">
+  <link rel="stylesheet" href="src/styles/site.css">
+  <link rel="stylesheet" href="src/styles/builder.css">
+  <link rel="stylesheet" href="src/styles/components/drawer.css">
+  <link rel="stylesheet" href="src/styles/behaviors/notes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="builder-override.css">
+</head>
+<body>
+  <!-- Mobile Notice -->
+  <div class="builder-mobile-notice">
+    <div class="builder-mobile-notice__icon">🖥️</div>
+    <h2 class="builder-mobile-notice__title">Desktop Recommended</h2>
+    <p class="builder-mobile-notice__text">
+      The WB Page Builder works best on desktop or tablet devices with a screen width of 768px or larger.
+    </p>
+    <a href="index.html" class="builder-mobile-notice__btn">← Back to Site</a>
+  </div>
+
+  <!-- Top Bar (loaded dynamically) -->
+  <div class="top-bar" id="top-bar-content"></div>
+
+  <!-- Main Builder Layout -->
+  <div class="builder-layout">
+    
+    <!-- Left Drawer -->
+    <aside class="wb-drawer wb-drawer--left" id="leftDrawer">
+      <div class="wb-drawer__content" id="components-panel-content">
+        <!-- Loaded by builder-app.js -->
+      </div>
+      <button class="wb-drawer__toggle" onclick="toggleDrawer('leftDrawer')">◀</button>
+      <div class="wb-drawer__handle" onmousedown="startResize(event, 'leftDrawer', 'left')"></div>
+    </aside>
+
+    <!-- Center Canvas -->
+    <div class="canvas-area" id="canvas-content">
+      <!-- Loaded by builder-app.js -->
+    </div>
+
+    <!-- Right Drawer -->
+    <aside class="wb-drawer wb-drawer--right" id="rightDrawer">
+      <button class="wb-drawer__toggle" onclick="toggleDrawer('rightDrawer')">▶</button>
+      <div class="wb-drawer__handle" onmousedown="startResize(event, 'rightDrawer', 'right')"></div>
+      <div class="wb-drawer__content" id="properties-panel-content">
+        <!-- Loaded by builder-app.js -->
+      </div>
+    </aside>
+  </div>
+
+  <!-- Status Bar (loaded dynamically) -->
+  <div class="status-bar" id="status-bar-content"></div>
+
+  <!-- WB Framework - Required for component rendering -->
+  <script type="module">
+    import WB from './src/core/wb-lazy.js';
+    WB.init({ debug: false, autoInject: true });
+    if (window.WB_DEBUG) console.log('[WB Builder] WB Framework initialized');
+  </script>
+
+  <!-- Builder App - Loads all views -->
+  <script src="src/builder/builder-app.js" type="module"></script>
+
+  <!-- Builder Core Scripts (load after views are ready) -->
+  <script>
+    // Wait for views to load before initializing builder modules
+    document.addEventListener('builder:views-loaded', () => {
+      if (window.WB_DEBUG) console.log('[Builder] Views ready, initializing modules...');
+    });
+  </script>
+  <script src="builder-inline.js"></script>
+  <script src="src/builder/builder-state.js"></script>
+  <script src="src/builder/builder-templates.js"></script>
+  <script src="src/builder/builder-pages.js"></script>
+  <script src="src/builder/builder-components.js"></script>
+  <script src="src/builder/builder-properties.js"></script>
+  <script src="src/builder/builder-export.js"></script>
+  <script src="src/builder/builder-ui.js"></script>
+  <script src="src/builder/builder-editor-toolbar.js"></script>
+  <script src="src/builder/builder-init.js"></script>
+  <script src="src/builder/builder-self-test.js"></script>
+
+  <script src="src/wb-viewmodels/builder-app/builder-enhancements.js"></script>
+  <!-- Disable all toast notifications after builder app loads -->
+  <script>
+    window.toast = function(){};
+  </script>
+
+  <!-- Issues Panel -->
+  <wb-issues id="builderIssuesDrawer" position="modal"></wb-issues>
+</body>
+</html>

@@ -292,7 +292,7 @@
 
       <h3>3.1. Eliminating the Confident Lie</h3>
       <p>
-        In traditional frameworks, an AI prompted to "make the button blue" might confidently invent a class `.btn-blue`, asserting the task is complete. This overconfidence, absent validation, results in a functional lie. Under Schema-First Architecture, the AI is constrained to the schema: `data-variant="primary"`. The validity of the output is binary and verifiable.
+        In traditional frameworks, an AI prompted to "make the button blue" might confidently invent a class `.btn-blue`, asserting the task is complete. This overconfidence, absent validation, results in a functional lie. Under Schema-First Architecture, the AI is constrained to the schema: `variant="primary"`. The validity of the output is binary and verifiable.
       </p>
 
       <figure>
@@ -300,9 +300,9 @@
           <span class="demo-label">Live Interactive Figure 2: Schema-Driven Rendering</span>
           <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; padding: 1rem; background: #f5f5f5; transform: scale(0.6); transform-origin: center;">
             <!-- These are real working components -->
-            <button data-variant="primary" data-size="xs">Schema Valid</button>
-            <button data-variant="outlined" data-size="xs">Schema Valid</button>
-            <button class="btn-fake-hallucination" style="padding: 2px 6px; font-size: 0.7rem; border: 1px solid red; color: red; background: transparent;" x-toast data-type="error" data-message="Error: Schema Validation Failed. Missing required child '.wb-card__header'.">Hallucination (Invalid)</button>
+            <button variant="primary" size="xs">Schema Valid</button>
+            <button variant="outlined" size="xs">Schema Valid</button>
+            <button class="btn-fake-hallucination" style="padding: 2px 6px; font-size: 0.7rem; border: 1px solid red; color: red; background: transparent;" x-toast variant="error" message="Error: Schema Validation Failed. Missing required child '.wb-card__header'.">Hallucination (Invalid)</button>
           </div>
         </div>
         <figcaption>Fig 2. Visual comparison of schema-compliant components vs. unstyled hallucination.</figcaption>

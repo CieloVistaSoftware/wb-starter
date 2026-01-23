@@ -33,7 +33,7 @@ test.describe('Card Schema-First Architecture', () => {
   test('Builder: Creates structure when missing', async ({ page }) => {
     const card = page.locator('#empty-card');
     
-    // The JS should have built the structure
+    // The JS should have built the structure from attributes
     await expect(card.locator('h3')).toHaveText('Builder Title');
     await expect(card.locator('main')).toHaveText('Builder Body');
   });

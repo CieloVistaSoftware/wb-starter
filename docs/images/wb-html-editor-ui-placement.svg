@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1000" height="600" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .bg { fill: #f7fafc; }
+    .panel { fill: #ffffff; stroke: #e6e9ef; stroke-width:1; rx:8; }
+    .section { fill: #f2f6fb; stroke: #e6e9ef; stroke-width:1; rx:6; }
+    .title { font-family: Inter, Arial, sans-serif; font-size:14px; fill:#0b1220; font-weight:600; }
+    .label { font-family: Inter, Arial, sans-serif; font-size:12px; fill:#1f2937; }
+    .muted { font-family: Inter, Arial, sans-serif; font-size:11px; fill:#6b7280; }
+    .btn { fill:#f3f4f6; stroke:#d1d5db; stroke-width:1; rx:5; }
+    .btn-text { font-size:11px; fill:#111827; font-family: Inter, Arial, sans-serif; }
+    .arrow { stroke:#94a3b8; stroke-width:2; fill:none; marker-end:url(#arrow); }
+  </style>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 L3,5 z" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+
+  <!-- Canvas area -->
+  <g transform="translate(40,40)">
+    <rect x="0" y="0" width="600" height="500" class="panel"/>
+    <text x="12" y="22" class="title">Canvas</text>
+    <rect x="12" y="36" width="180" height="64" class="section"/>
+    <text x="24" y="56" class="label">Component A</text>
+    <text x="24" y="72" class="muted">ID: demo-1</text>
+
+    <rect x="12" y="110" width="220" height="64" class="section"/>
+    <text x="24" y="130" class="label">Component B</text>
+    <text x="24" y="146" class="muted">ID: demo-2</text>
+
+  </g>
+
+  <!-- Right properties panel -->
+  <g transform="translate(660,40)">
+    <rect x="0" y="0" width="280" height="500" class="panel"/>
+    <text x="12" y="22" class="title">Properties</text>
+
+    <!-- Properties sections -->
+    <rect x="12" y="40" width="256" height="72" class="section"/>
+    <text x="24" y="64" class="label">Page Properties</text>
+
+    <rect x="12" y="120" width="256" height="220" class="section"/>
+    <text x="24" y="144" class="label">Component • <tspan class="muted">Card</tspan></text>
+
+    <!-- HTML editor row -->
+    <rect x="22" y="168" width="232" height="140" rx="6" fill="#ffffff" stroke="#e6e9ef"/>
+    <text x="32" y="186" class="label">HTML</text>
+    <!-- Controls -->
+    <g transform="translate(40,200)">
+      <rect x="0" y="0" width="68" height="28" class="btn"/>
+      <text x="12" y="18" class="btn-text">💾 Save</text>
+
+      <rect x="76" y="0" width="84" height="28" class="btn"/>
+      <text x="86" y="18" class="btn-text">📥 Import</text>
+
+      <rect x="164" y="0" width="84" height="28" class="btn"/>
+      <text x="176" y="18" class="btn-text">🧾 CodeMirror</text>
+
+      <rect x="0" y="38" width="84" height="28" class="btn"/>
+      <text x="12" y="56" class="btn-text">🧼 Sanitize</text>
+
+      <rect x="92" y="38" width="84" height="28" class="btn"/>
+      <text x="106" y="56" class="btn-text">↶ Undo</text>
+
+      <rect x="184" y="38" width="70" height="28" class="btn"/>
+      <text x="196" y="56" class="btn-text">🗂 Backups</text>
+
+      <text x="0" y="96" class="muted">Live preview (sanitized)</text>
+    </g>
+
+    <!-- Preview box -->
+    <rect x="24" y="322" width="224" height="64" fill="#f8fafc" stroke="#e6e9ef" rx="6" />
+    <text x="32" y="346" class="muted">Preview</text>
+
+  </g>
+
+  <!-- flow arrow: select component -> HTML editor opens -->
+  <path d="M200 140 L420 140" class="arrow" />
+  <text x="240" y="130" class="muted">Select component</text>
+  <path d="M420 140 L680 180" class="arrow" />
+  <text x="600" y="170" class="muted">Properties panel inserts <tspan font-weight="700">&lt;wb-html-editor&gt;</tspan></text>
+
+  <!-- legend -->
+  <rect x="40" y="560" width="92" height="28" rx="6" fill="#ffffff" stroke="#e6e9ef"/>
+  <text x="54" y="579" class="muted">Editor</text>
+</svg>

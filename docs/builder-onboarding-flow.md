@@ -1,7 +1,5 @@
 # Page Builder Onboarding Flow
-
 ## New User Experience (Polished Flow)
-
 ### Step 1: Pick a Template
 User opens builder → Sidebar shows templates categorized by type
 - Landing Pages
@@ -9,7 +7,6 @@ User opens builder → Sidebar shows templates categorized by type
 - Blog
 - Dashboard
 - Business
-
 **OR** User clicks "Start Blank" for empty canvas
 
 ### Step 2: Template Loads → Hints Appear

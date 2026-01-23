@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../src/styles/site.css">
   <link rel="stylesheet" href="../src/styles/behaviors/effects.css">
   <link rel="stylesheet" href="../src/styles/builder.css">
+  <link rel="stylesheet" href="../src/styles/behaviors/issues.css">
   <style>
     /* ===== FILE MENU BAR ===== */
     .menu-bar {
@@ -310,15 +311,15 @@
       border: 2px solid transparent;
       transition: border-color 0.2s, background 0.2s;
     }
-    .canvas-section[data-section="header"] { flex-shrink: 0; }
-    .canvas-section[data-section="header"] .section-content {
+    .canvas-section[section="header"] { flex-shrink: 0; }
+    .canvas-section[section="header"] .section-content {
          width: 100%;
          padding: 0 1rem !important;
          box-sizing: border-box;
     }
     .canvas-section--main { flex: 1; min-height: 400px; }
-    .canvas-section[data-section="footer"] { flex-shrink: 0; margin-top: auto; }
-    .canvas-section[data-section="footer"].is-target { margin-top: 0 !important; }
+    .canvas-section[section="footer"] { flex-shrink: 0; margin-top: auto; }
+    .canvas-section[section="footer"].is-target { margin-top: 0 !important; }
     
     /* GREEN highlight for active/target section */
     .canvas-section.is-target {
@@ -630,34 +631,7 @@
 </head>
 <body class="wb-builder">
   <!-- FILE MENU BAR -->
-  <nav class="menu-bar" id="menuBar">
-    <div class="menu-item" id="menuFile">
-      <span>File</span>
-      <div class="menu-dropdown">
-        <div class="menu-action" onclick="newPage()">📄 New Page<span class="menu-shortcut">Ctrl+N</span></div>
-        <div class="menu-divider"></div>
-        <div class="menu-action" onclick="window.openWorkspace?.()">📁 Open Workspace...</div>
-        <div class="menu-action menu-submenu">📂 Recent Workspaces
-          <div class="menu-submenu-items" id="recentWorkspaces">
-            <div class="menu-action disabled">No recent workspaces</div>
-          </div>
-        </div>
-        <div class="menu-action" onclick="window.saveWorkspace?.()">💾 Save Workspace</div>
-        <div class="menu-action" onclick="window.saveWorkspaceAs?.()">💾 Save Workspace As...</div>
-        <div class="menu-divider"></div>
-        <div class="menu-action" onclick="window.importJSON()">📥 Import JSON...<span class="menu-shortcut">Ctrl+O</span></div>
-        <div class="menu-action" onclick="window.exportJSON()">📤 Export JSON<span class="menu-shortcut">Ctrl+E</span></div>
-        <div class="menu-action" onclick="window.saveAsHTML()">📄 Export HTML<span class="menu-shortcut">Ctrl+Shift+S</span></div>
-        <div class="menu-divider"></div>
-        <div class="menu-action" onclick="window.close()">🚪 Exit</div>
-      </div>
-    </div>
-    <div class="menu-item" id="menuEdit">
-      <span>Edit</span>
-      <div class="menu-dropdown">
-        <div class="menu-action" onclick="window.undo()">↩️ Undo<span class="menu-shortcut">Ctrl+Z</span></div>
-        <div class="menu-action" onclick="window.redo()">↪️ Redo<span class="menu-shortcut">Ctrl+Y</span></div>
-        <div class="menu-divider"></div>
+  <wb-menu-bar></wb-menu-bar>
         <div class="menu-action" onclick="window.copyAsHTML()">📋 Copy HTML<span class="menu-shortcut">Ctrl+C</span></div>
         <div class="menu-action" onclick="dupSelected()">⧉ Duplicate<span class="menu-shortcut">Ctrl+D</span></div>
         <div class="menu-action" onclick="delSelected()">🗑️ Delete<span class="menu-shortcut">Del</span></div>
@@ -667,7 +641,7 @@
     </div>
     <div class="menu-item" id="menuView">
       <span>View</span>
-      <div class="menu-dropdown">
+      <div class="menu-dropdown" id="auto-public-builderhtml-1">
         <div class="menu-action" onclick="doPreview()">👁️ Preview<span class="menu-shortcut">Ctrl+P</span></div>
         <div class="menu-divider"></div>
         <div class="menu-action" onclick="toggleLeft()">📑 Templates Panel<span class="menu-shortcut">\</span></div>
@@ -679,7 +653,7 @@
     </div>
     <div class="menu-item" id="menuHelp">
       <span>Help</span>
-      <div class="menu-dropdown">
+      <div class="menu-dropdown" id="auto-public-builderhtml-2">
         <div class="menu-action" onclick="window.showShortcuts()">⌨️ Shortcuts<span class="menu-shortcut">?</span></div>
         <div class="menu-action" onclick="window.open('/docs/BUILDER.md')">📖 Documentation</div>
         <div class="menu-divider"></div>
@@ -688,12 +662,12 @@
     </div>
     <div class="menu-item" id="menuTools">
       <span>Tools</span>
-      <div class="menu-dropdown">
+      <div class="menu-dropdown" id="auto-public-builderhtml-3">
         <div class="menu-action" onclick="window.exportJSON()">📤 Export JSON<span class="menu-shortcut">Ctrl+E</span></div>
         <div class="menu-action" onclick="window.importJSON()">📥 Import JSON<span class="menu-shortcut">Ctrl+O</span></div>
         <div class="menu-divider"></div>
         <div class="menu-action" onclick="window.toggleContentBuilder()">📋 Content Builder</div>
-        <div class="menu-action" onclick="toggleSnapFromMenu()">
+        <div class="menu-action" onclick="toggleSnapFromMenu()" id="auto-public-builderhtml-4">
           <span id="snapMenuIcon">☐</span> Snap to Grid<span class="menu-shortcut">G</span>
         </div>
       </div>
@@ -702,15 +676,15 @@
   </nav>
 
     <header class="builder-header" id="builderHeader">
-    <div class="header-content">
+    <div class="header-content" id="auto-public-builderhtml-5">
       <h1><span style="color:#3b82f6;font-size:1.2em;">★</span> WB Builder</h1>
-      <div class="header-actions">
+      <div class="header-actions" id="auto-public-builderhtml-6">
         <button class="header-btn" onclick="window.doPreview()" title="Preview (Ctrl+P)" style="margin-right: 0.5rem; padding: 2px 6px; font-size: 11px; height: 24px;">👁️ Preview</button>
         <!-- Toolbar icons moved here -->
         <button class="tool-btn" id="undoBtn" onclick="window.undo()" disabled title="Undo (Ctrl+Z)" style="padding: 2px 6px; font-size: 11px; height: 24px;">↩️</button>
         <button class="tool-btn" id="redoBtn" onclick="window.redo()" disabled title="Redo (Ctrl+Y)" style="padding: 2px 6px; font-size: 11px; height: 24px;">↪️</button>
         <select id="pageTheme" class="theme-select" title="Theme" style="padding: 0 4px; font-size: 11px; height: 24px;"></select>
-        <button class="header-btn" onclick="window.toggleNotesDrawer()" title="Notes (Ctrl+Shift+N)" style="padding: 2px 6px; font-size: 11px; height: 24px;">📝</button>
+        <!-- Notes button removed: only floating icon opens notes drawer -->
       </div>
     </div>
   </header>
@@ -720,6 +694,7 @@
       <!-- LEFT SIDEBAR -->
       <aside class="sidebar" id="sidebar">
         <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleLeft()" title="Toggle (\\)">◀</button>
+          <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleLeft()" title="Templates Panel (\\)">📑</button>
         <div class="sidebar-resize-handle" id="sidebarResizeHandle"></div>
       </aside>
       
@@ -728,33 +703,33 @@
         <div class="viewport" id="viewport">
           <div class="frame" id="canvas">
                         <!-- HEADER SECTION - collapsed by default -->
-            <header id="canvas-header" class="canvas-section collapsed" data-section="header">
-              <div class="section-bar" onclick="window.unifiedActivateSection && window.unifiedActivateSection('header')">
+            <header id="canvas-header" class="canvas-section collapsed" section="header">
+              <div class="section-bar" onclick="window.unifiedActivateSection && window.unifiedActivateSection('header')" id="auto-public-builderhtml-7">
                 <span class="section-icon">🔝</span>
                 <span class="section-name">Header</span>
                 <span class="section-id">#canvas-header</span>
               </div>
-              <div class="section-content" data-drop-zone="header"></div>
+              <div class="section-content" drop-zone="header"></div>
             </header>
             
             <!-- MAIN SECTION - collapsed by default -->
-            <main id="canvas-main" class="canvas-section canvas-section--main collapsed" data-section="main">
-              <div class="section-bar" onclick="window.unifiedActivateSection && window.unifiedActivateSection('main')">
+            <main id="canvas-main" class="canvas-section canvas-section--main collapsed" section="main">
+              <div class="section-bar" onclick="window.unifiedActivateSection && window.unifiedActivateSection('main')" id="auto-public-builderhtml-8">
                 <span class="section-icon">📄</span>
                 <span class="section-name">Main Content</span>
                 <span class="section-id">#canvas-main</span>
               </div>
-              <div class="section-content" data-drop-zone="main"></div>
+              <div class="section-content" drop-zone="main"></div>
             </main>
             
             <!-- FOOTER SECTION - collapsed by default -->
-            <footer id="canvas-footer" class="canvas-section collapsed" data-section="footer">
-              <div class="section-bar" onclick="window.unifiedActivateSection && window.unifiedActivateSection('footer')">
+            <footer id="canvas-footer" class="canvas-section collapsed" section="footer">
+              <div class="section-bar" onclick="window.unifiedActivateSection && window.unifiedActivateSection('footer')" id="auto-public-builderhtml-9">
                 <span class="section-icon">🔻</span>
                 <span class="section-name">Footer</span>
                 <span class="section-id">#canvas-footer</span>
               </div>
-              <div class="section-content" data-drop-zone="footer"></div>
+              <div class="section-content" drop-zone="footer"></div>
             </footer>
           </div>
         </div>
@@ -763,10 +738,11 @@
       <!-- RIGHT PANEL -->
       <aside class="panel-right" id="panelRight">
         <button class="panel-toggle" id="panelToggle" onclick="toggleRight()" title="Toggle (])">▶</button>
+          <button class="panel-toggle" id="panelToggle" onclick="toggleRight()" title="Properties Panel (])">⚙️</button>
         <div class="panel-resize-handle" id="panelResizeHandle"></div>
         
         <div class="panel-right-header">
-                  <div class="panel-tabs">
+                  <div class="panel-tabs" id="auto-public-builderhtml-10">
             <button class="panel-tab active" id="tabTree" onclick="window.switchPanelTab('tree')" style="font-size: 1rem; padding: 2px 6px;">🌳</button>
             <button class="panel-tab" id="tabDecorate" onclick="window.switchPanelTab('decorate')" style="font-size: 1rem; padding: 2px 6px;">🎨</button>
           </div>
@@ -783,8 +759,8 @@
   
   <!-- Component Chooser Modal -->
   <div class="component-chooser" id="componentChooser">
-    <div class="chooser-panel">
-      <div class="chooser-header">
+    <div class="chooser-panel" id="auto-public-builderhtml-11">
+      <div class="chooser-header" id="auto-public-builderhtml-12">
         <h2>➕ Add Component</h2>
         <button class="chooser-close" onclick="closeChooser()">✕</button>
       </div>
@@ -810,7 +786,7 @@
     display: none;
   ">
     <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 14px;">📋 Content Builder</h3>
-    <div style="color: #aaa; font-size: 13px; line-height: 1.6;">
+    <div style="color: #aaa; font-size: 13px; line-height: 1.6;" id="auto-public-builderhtml-13">
       <p>Select a page type to get started:</p>
       <button onclick="window.showContentBuilder()" style="
         width: 100%;
@@ -849,15 +825,10 @@
   </div>
   
   
-  <div class="notes-modal" id="notesModal">
-    <div class="notes-modal-header"><span>📝 Notes</span><button onclick="window.toggleNotesDrawer()">✕</button></div>
-    <textarea id="notesArea" placeholder="Notes..."></textarea>
-  </div>
-  <div class="notes-backdrop" id="notesBackdrop" onclick="window.toggleNotesDrawer()"></div>
   <div class="shortcuts-modal" id="shortcutsModal">
-    <div class="shortcuts-modal-content">
-      <div class="shortcuts-modal-header"><span>⌨️ Shortcuts</span><button onclick="window.closeShortcuts()">✕</button></div>
-      <div class="shortcuts-list">
+    <div class="shortcuts-modal-content" id="auto-public-builderhtml-14">
+      <div class="shortcuts-modal-header" id="auto-public-builderhtml-15"><span>⌨️ Shortcuts</span><button onclick="window.closeShortcuts()">✕</button></div>
+      <div class="shortcuts-list" id="auto-public-builderhtml-16">
         <div><kbd>Ctrl+Z</kbd> Undo</div>
         <div><kbd>Ctrl+Y</kbd> Redo</div>
         <div><kbd>Ctrl+S</kbd> Save</div>
@@ -976,7 +947,7 @@
       }
       
       grid.innerHTML = templates.map(t => `
-        <div class="chooser-item" onclick="selectTemplate('${t.id}')">
+        <div class="chooser-item" onclick="selectTemplate('${t.id}')" id="auto-public-builderhtml-17">
           <span class="chooser-item-icon">${getCategoryIcon(t.category)}</span>
           <span class="chooser-item-name">${t.name}</span>
         </div>
@@ -1325,74 +1296,6 @@
       });
     }
 
-    function doPreview() {
-      // If not in preview mode, check if there's content before allowing preview
-      if (!isPreviewMode) {
-        const canvas = document.getElementById('canvas');
-        const droppedComponents = canvas?.querySelectorAll('.dropped');
-        
-        if (!droppedComponents || droppedComponents.length === 0) {
-          if (window.toast) {
-            window.toast('Nothing to preview! Add components to Header, Main, or Footer first.');
-          } else {
-            alert('Nothing to preview! Add components to Header, Main, or Footer first.');
-          }
-          return;
-        }
-      }
-      
-      isPreviewMode = !isPreviewMode;
-      document.body.classList.toggle('preview-mode', isPreviewMode);
-      
-      if (isPreviewMode) {
-        // Store builder theme and apply page theme
-        builderTheme = document.documentElement.dataset.theme || 'dark';
-        
-        // Get the page theme from canvas (check for data-page-theme or use canvas section theme)
-        const canvas = document.getElementById('canvas');
-        const pageTheme = canvas?.dataset?.pageTheme || 
-                          document.getElementById('canvas-main')?.dataset?.theme ||
-                          localStorage.getItem('wb-page-theme') ||
-                          builderTheme;
-        
-        document.documentElement.dataset.theme = pageTheme;
-        document.body.style.background = 'var(--bg-color)';
-        document.body.style.color = 'var(--text-primary)';
-        
-        // Add exit button
-        let exitBtn = document.getElementById('previewExitBtn');
-        if (!exitBtn) {
-          exitBtn = document.createElement('button');
-          exitBtn.id = 'previewExitBtn';
-          exitBtn.className = 'preview-exit-btn';
-          exitBtn.textContent = '✕ Exit Preview';
-          
-          // Separate click handler to distinguish from drag
-          exitBtn.addEventListener('click', (e) => {
-             // Only exit if not dragging (simple heuristic: mouse didn't move much)
-             // or just let simple click work since we preventDefault on mousedown for drag
-             doPreview();
-          });
-          
-          document.body.appendChild(exitBtn);
-          makeDraggable(exitBtn);
-        }
-        exitBtn.style.display = 'block';
-        // Reset position if it was hidden? Optional. keeping previous position is nice.
-        
-      } else {
-        // ... rest of function
-        // Restore builder theme
-        document.documentElement.dataset.theme = builderTheme;
-        document.body.style.background = '';
-        document.body.style.color = '';
-        
-        // Hide exit button
-        const exitBtn = document.getElementById('previewExitBtn');
-        if (exitBtn) exitBtn.style.display = 'none';
-      }
-    }
-    
     // Set page theme (separate from builder theme)
     window.setPageTheme = function(theme) {
       const canvas = document.getElementById('canvas');
@@ -1413,8 +1316,7 @@
     };
     
         // Expose globally
-    window.doPreview = doPreview;
-    window.togglePreview = doPreview;
+    // Preview logic is now unified in builder-preview.js and index.js
     
     // ===== EXPAND/COLLAPSE ALL =====
     function collapseAllSections() {
@@ -1444,7 +1346,7 @@
       
       if (e.ctrlKey && e.key === 'z') { e.preventDefault(); window.undo?.(); }
       if (e.ctrlKey && e.key === 'y') { e.preventDefault(); window.redo?.(); }
-      if (e.ctrlKey && e.key === 'p') { e.preventDefault(); doPreview(); }
+      if (e.ctrlKey && e.key === 'p') { e.preventDefault(); window.togglePreview(); }
       if (e.key === '\\') { e.preventDefault(); toggleLeft(); }
       if (e.key === ']') { e.preventDefault(); toggleRight(); }
       if (e.key === 'Escape') { closeChooser(); }

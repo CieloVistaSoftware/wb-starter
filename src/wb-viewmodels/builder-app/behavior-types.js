@@ -12,7 +12,7 @@ import * as Validator from '../validator.js';
 import * as Toggle from '../toggle.js';
 import * as Copy from '../copy.js';
 import * as Darkmode from '../darkmode.js';
-import * as Notes from '../notes.js';
+import * as Issues from '../issues.js';
 import * as Mdhtml from '../mdhtml.js';
 import * as Tabs from '../tabs.js';
 import * as Draggable from '../draggable.js';

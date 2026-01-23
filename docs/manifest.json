@@ -9,7 +9,7 @@
         {
           "file": "builder.md",
           "title": "WB Builder",
-          "description": "The heart of WB Framework - Schema-driven architecture explained"
+          "description": "The heart of WB Behaviors - Schema-driven architecture explained"
         },
         {
           "file": "architecture.md",
@@ -593,9 +593,122 @@
       ]
     },
     {
+      "name": "Builder (Subfolder)",
+      "icon": "🛠️",
+      "docs": [
+        {
+          "file": "builder/builder.md",
+          "title": "Builder Overview (subfolder)",
+          "description": "Builder documentation in subfolder"
+        },
+        {
+          "file": "builder/builder-interaction-rules.md",
+          "title": "Builder Interaction Rules (subfolder)",
+          "description": "Interaction rules for the builder"
+        },
+        {
+          "file": "builder/builder-onboarding-flow.md",
+          "title": "Builder Onboarding Flow (subfolder)",
+          "description": "Onboarding flow documentation"
+        },
+        {
+          "file": "builder/builder-properties.md",
+          "title": "Builder Properties (subfolder)",
+          "description": "Properties panel documentation"
+        },
+        {
+          "file": "builder/BUILDER-PROPERTIES-SPEC.md",
+          "title": "Builder Properties Spec",
+          "description": "Properties specification"
+        },
+        {
+          "file": "builder/builder-section-focus.md",
+          "title": "Builder Section Focus (subfolder)",
+          "description": "Section focus documentation"
+        },
+        {
+          "file": "builder/builder-testing.md",
+          "title": "Builder Testing (subfolder)",
+          "description": "Testing documentation"
+        },
+        {
+          "file": "builder/builder-workflow.md",
+          "title": "Builder Workflow (subfolder)",
+          "description": "Workflow documentation"
+        },
+        {
+          "file": "builder/builder.todo.md",
+          "title": "Builder TODO (subfolder)",
+          "description": "Builder task list"
+        },
+        {
+          "file": "builder/pages.md",
+          "title": "Builder Pages",
+          "description": "Page builder documentation"
+        }
+      ]
+    },
+    {
+      "name": "Plans (Subfolder)",
+      "icon": "📝",
+      "docs": [
+        {
+          "file": "plans/MVVM-MIGRATION-PLAN.md",
+          "title": "MVVM Migration Plan (subfolder)",
+          "description": "Migration plan in plans folder"
+        },
+        {
+          "file": "plans/MVVM-MIGRATION.md",
+          "title": "MVVM Migration (subfolder)",
+          "description": "Migration documentation in plans folder"
+        },
+        {
+          "file": "plans/USER-PAGE-BUILDER-PLAN.md",
+          "title": "User Page Builder Plan (subfolder)",
+          "description": "Page builder plan in plans folder"
+        }
+      ]
+    },
+    {
+      "name": "Standards (Subfolder)",
+      "icon": "📏",
+      "docs": [
+        {
+          "file": "standards/code-examples-standard.md",
+          "title": "Code Examples Standard (subfolder)",
+          "description": "Code examples standard in standards folder"
+        },
+        {
+          "file": "standards/css-standards.md",
+          "title": "CSS Standards (subfolder)",
+          "description": "CSS standards in standards folder"
+        },
+        {
+          "file": "standards/semantic-standard.md",
+          "title": "Semantic Standard (subfolder)",
+          "description": "Semantic standard in standards folder"
+        }
+      ]
+    },
+    {
       "name": "Uncategorized",
       "icon": "📄",
       "docs": [
+        {
+          "file": "escape-hatches.md",
+          "title": "Escape Hatches",
+          "description": "Cross-browser escape hatches documentation"
+        },
+        {
+          "file": "issues.md",
+          "title": "Issues",
+          "description": "Issues tracking documentation"
+        },
+        {
+          "file": "PAGE-BUILDER-RULES.md",
+          "title": "Page Builder Rules",
+          "description": "Rules for the page builder"
+        },
         {
           "file": "DATA-FILES.md",
           "title": "DATA-FILES",

@@ -2,13 +2,15 @@
  * Rating Behavior
  * ===============
  * 
- * Interactive star rating component.
+ * Interactive star rating component with optional background colors.
  * 
  * ATTRIBUTES:
- * - data-max: Number of stars (default: 5)
- * - data-value: Initial value (default: 0)
+ * - max / max: Number of stars (default: 5)
+ * - value / value: Initial value (default: 0)
  * - data-readonly: If "true", user cannot change value
- * - data-color: Color of filled stars (default: gold)
+ * - color / color: Color of filled stars (default: gold)
+ * - icon / icon: Custom icon (emoji or unicode)
+ * - bg / bg: Background style (none, light, dark, primary)
  * 
  * EVENTS:
  * - wb:rating:change: Dispatched when value changes. detail: { value: number }
@@ -17,11 +19,24 @@
 
 export function rating(element, options = {}) {
   const config = {
-    max: parseInt(options.max || element.dataset.max || '5', 10),
-    value: parseInt(options.value || element.dataset.value || '0', 10),
-    readonly: options.readonly ?? (element.dataset.readonly === 'true'),
-    color: options.color || element.dataset.color || '#fbbf24', // gold-400
+    max: parseInt(options.max || element.getAttribute('max') || element.dataset.max || '5', 10),
+    value: parseInt(options.value || element.getAttribute('value') || element.dataset.value || '0', 10),
+    readonly: options.readonly ?? (element.dataset.readonly === 'true' || element.hasAttribute('readonly')),
+    color: options.color || element.getAttribute('color') || element.dataset.color || '#fbbf24', // gold-400
+    icon: options.icon || element.getAttribute('icon') || element.dataset.icon || '★',
+    bg: options.bg || element.getAttribute('bg') || element.dataset.bg || 'none',
     ...options
+  };
+
+  // Background styles
+  const bgStyles = {
+    none: '',
+    light: 'background: rgba(255,255,255,0.1); padding: 0.5rem 0.75rem; border-radius: 8px;',
+    dark: 'background: rgba(0,0,0,0.2); padding: 0.5rem 0.75rem; border-radius: 8px;',
+    primary: 'background: var(--primary, #6366f1); padding: 0.5rem 0.75rem; border-radius: 8px;',
+    success: 'background: #22c55e; padding: 0.5rem 0.75rem; border-radius: 8px;',
+    warning: 'background: #f59e0b; padding: 0.5rem 0.75rem; border-radius: 8px;',
+    error: 'background: #ef4444; padding: 0.5rem 0.75rem; border-radius: 8px;'
   };
 
   // State
@@ -31,9 +46,15 @@ export function rating(element, options = {}) {
   // Clear element
   element.innerHTML = '';
   element.classList.add('wb-rating');
-  element.style.display = 'inline-flex';
-  element.style.gap = '0.25rem';
-  element.style.cursor = config.readonly ? 'default' : 'pointer';
+  if (config.bg !== 'none') {
+    element.classList.add(`wb-rating--${config.bg}`);
+  }
+  element.style.cssText = `
+    display: inline-flex;
+    gap: 0.25rem;
+    cursor: ${config.readonly ? 'default' : 'pointer'};
+    ${bgStyles[config.bg] || ''}
+  `;
 
   // Create stars
   const stars = [];
@@ -41,11 +62,14 @@ export function rating(element, options = {}) {
     const star = document.createElement('span');
     star.className = 'wb-rating__star';
     star.dataset.value = i;
-    star.innerHTML = '★'; // Unicode star
-    star.style.fontSize = '1.5rem';
-    star.style.lineHeight = '1';
-    star.style.transition = 'color 0.2s ease, transform 0.1s ease';
-    star.style.color = '#e5e7eb'; // gray-200 (empty)
+    star.textContent = config.icon;
+    star.style.cssText = `
+      font-size: 1.5rem;
+      line-height: 1;
+      transition: color 0.2s ease, transform 0.1s ease;
+      color: ${config.bg !== 'none' ? 'rgba(255,255,255,0.3)' : '#4b5563'};
+      user-select: none;
+    `;
     
     if (!config.readonly) {
       // Hover effects
@@ -86,6 +110,7 @@ export function rating(element, options = {}) {
   // Update visual state
   function updateStars() {
     const targetValue = hoverValue > 0 ? hoverValue : currentValue;
+    const emptyColor = config.bg !== 'none' ? 'rgba(255,255,255,0.3)' : '#4b5563';
     
     stars.forEach((star, index) => {
       const value = index + 1;
@@ -96,7 +121,7 @@ export function rating(element, options = {}) {
         star.style.color = config.color;
       } else {
         star.classList.remove('wb-rating__star--full');
-        star.style.color = '#e5e7eb';
+        star.style.color = emptyColor;
       }
     });
   }

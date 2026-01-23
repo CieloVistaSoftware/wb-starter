@@ -1,78 +1,127 @@
-
 import { test, expect } from '@playwright/test';
 
-test.describe('Builder SPA Header Constraints', () => {
+/**
+ * Builder Layout Constraints Tests
+ * Ensures builder content respects container boundaries
+ */
+
+// Use desktop viewport for all builder tests
+test.use({ viewport: { width: 1280, height: 720 } });
+
+test.describe('Builder Layout Constraints', () => {
 
   test.beforeEach(async ({ page }) => {
-    // Navigate to the builder
-    // Assuming the dev server serves from the root
-    await page.goto('/public/builder.html');
-    
-    // Wait for builder initialization
-    await page.waitForSelector('#builder-root', { timeout: 10000 });
+    await page.goto('/builder.html');
+    await page.waitForTimeout(500);
   });
 
-  test('SPA header fits within the page width', async ({ page }) => {
-    // 1. Insert SPA Header using the global function exposed in builder.html
-    // We use evaluate because we need to trigger the internal logic of the builder
-    await page.evaluate(async () => {
-      // Mock the fetch if necessary, or assume it works. 
-      // Given it's an integration test, we prefer it to actually fetch if possible.
-      // But we can also fallback to directly invoking the logic if we know the ID.
-      if (window.selectTemplate) {
-        await window.selectTemplate('spa-header');
+  test('canvas sections should fit within canvas area', async ({ page }) => {
+    const canvasArea = page.locator('.canvas-area');
+    const canvasAreaBox = await canvasArea.boundingBox();
+    expect(canvasAreaBox).toBeTruthy();
+
+    if (!canvasAreaBox) return;
+
+    // Check each canvas section fits within canvas area
+    const sections = ['.canvas-section.header', '.canvas-section.main', '.canvas-section.footer'];
+    
+    for (const selector of sections) {
+      const section = page.locator(selector);
+      const sectionBox = await section.boundingBox();
+      
+      if (sectionBox) {
+        // Section should be within canvas area horizontally
+        expect(sectionBox.x).toBeGreaterThanOrEqual(canvasAreaBox.x - 1);
+        expect(sectionBox.x + sectionBox.width).toBeLessThanOrEqual(canvasAreaBox.x + canvasAreaBox.width + 1);
       }
-    });
-
-    // 2. Wait for the element to appear in the canvas
-    // The "Dropped" wrapper contains the inserted HTML.
-    // The SPA Header has "Brand", "Home", "About" links.
-    const spaHeader = page.locator('.dropped').filter({ hasText: 'Brand' }).filter({ hasText: 'Home' }).first();
-    await expect(spaHeader).toBeVisible({ timeout: 5000 });
-
-    // 3. Get container dimensions (The canvas viewport)
-    // The canvas is constrained by .canvas-section or #canvas
-    const canvasSection = page.locator('#canvas-header .section-content');
-    const sectionBox = await canvasSection.boundingBox();
-    expect(sectionBox).toBeTruthy();
-
-    if (!sectionBox) return; // TS guard
-
-    // 4. Get the SPA Header dimensions
-    // We check the first child of the dropped element, or the dropped element itself 
-    // depending on how styles are applied. The dropped wrapper has the constraints.
-    const headerBox = await spaHeader.boundingBox();
-    expect(headerBox).toBeTruthy();
-    
-    if (!headerBox) return; // TS guard
-
-    // 5. Assertions
-    // "Content cannot extend beyond the page width"
-    // We check if the header width is less than or equal to section width (+ small tolerance for pixels)
-    expect(headerBox.width).toBeLessThanOrEqual(sectionBox.width + 1);
-    
-    // Check if it's strictly inside the left/right bounds (in case of negative margins)
-    expect(headerBox.x).toBeGreaterThanOrEqual(sectionBox.x - 1);
-    expect(headerBox.x + headerBox.width).toBeLessThanOrEqual(sectionBox.x + sectionBox.width + 1);
-
-    // "Height" - usually headers flow vertically, but users shouldn't have elements poking out bounds
-    // The section content has overflow: hidden now, so visually it should be cut off.
-    // However, the test asks to make sure "all that is there fits inside".
-    // If the content is larger, overflow hidden "fixes" the visual issue, but the element itself might still be huge.
-    // The user requirement "cannot extend beyond" logic handled by overflow: hidden is one way.
-    // Let's also verify scrollWidth vs clientWidth to ensure no overflow is happening internally?
-    
-    const overflowState = await canvasSection.evaluate((el) => {
-      return {
-        isScrollable: el.scrollWidth > el.clientWidth,
-        scrollWidth: el.scrollWidth,
-        clientWidth: el.clientWidth
-      };
-    });
-    
-    // If scrollWidth > clientWidth, something is overflowing (even if hidden)
-    expect(overflowState.scrollWidth).toBeLessThanOrEqual(overflowState.clientWidth + 1);
-
+    }
   });
 
+  test('component containers should not overflow', async ({ page }) => {
+    const containers = ['#header-container', '#main-container', '#footer-container'];
+    
+    for (const selector of containers) {
+      const container = page.locator(selector);
+      
+      const overflowState = await container.evaluate((el) => {
+        return {
+          isScrollable: el.scrollWidth > el.clientWidth,
+          scrollWidth: el.scrollWidth,
+          clientWidth: el.clientWidth
+        };
+      });
+      
+      // Container should not have horizontal overflow
+      expect(overflowState.scrollWidth).toBeLessThanOrEqual(overflowState.clientWidth + 1);
+    }
+  });
+
+  test('left drawer should not overlap canvas', async ({ page }) => {
+    const leftDrawer = page.locator('#leftDrawer');
+    const canvasArea = page.locator('.canvas-area');
+    
+    const drawerBox = await leftDrawer.boundingBox();
+    const canvasBox = await canvasArea.boundingBox();
+    
+    expect(drawerBox).toBeTruthy();
+    expect(canvasBox).toBeTruthy();
+    
+    if (drawerBox && canvasBox) {
+      // Left drawer should be to the left of canvas
+      expect(drawerBox.x + drawerBox.width).toBeLessThanOrEqual(canvasBox.x + 5);
+    }
+  });
+
+  test('right drawer should not overlap canvas', async ({ page }) => {
+    const rightDrawer = page.locator('#rightDrawer');
+    const canvasArea = page.locator('.canvas-area');
+    
+    const drawerBox = await rightDrawer.boundingBox();
+    const canvasBox = await canvasArea.boundingBox();
+    
+    expect(drawerBox).toBeTruthy();
+    expect(canvasBox).toBeTruthy();
+    
+    if (drawerBox && canvasBox) {
+      // Right drawer should be to the right of canvas
+      expect(canvasBox.x + canvasBox.width).toBeLessThanOrEqual(drawerBox.x + 5);
+    }
+  });
+
+  test('builder layout should use flexbox', async ({ page }) => {
+    const builderLayout = page.locator('.builder-layout');
+    
+    const display = await builderLayout.evaluate(el => getComputedStyle(el).display);
+    expect(display).toBe('flex');
+  });
+
+  test('top bar should span full width', async ({ page }) => {
+    const topBar = page.locator('.top-bar');
+    const body = page.locator('body');
+    
+    const topBarBox = await topBar.boundingBox();
+    const bodyBox = await body.boundingBox();
+    
+    expect(topBarBox).toBeTruthy();
+    expect(bodyBox).toBeTruthy();
+    
+    if (topBarBox && bodyBox) {
+      // Top bar should be nearly full width (accounting for scrollbar)
+      expect(topBarBox.width).toBeGreaterThan(bodyBox.width * 0.95);
+    }
+  });
+
+  test('status bar should exist and be visible', async ({ page }) => {
+    const statusBar = page.locator('.status-bar');
+    await expect(statusBar).toBeVisible();
+    
+    const statusBarBox = await statusBar.boundingBox();
+    expect(statusBarBox).toBeTruthy();
+    
+    if (statusBarBox) {
+      // Status bar should have reasonable dimensions
+      expect(statusBarBox.height).toBeGreaterThan(20);
+      expect(statusBarBox.width).toBeGreaterThan(100);
+    }
+  });
 });

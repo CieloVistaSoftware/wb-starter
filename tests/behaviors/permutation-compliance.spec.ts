@@ -245,7 +245,7 @@ function loadSchemas(): Map<string, Schema> {
 
 // Generate HTML for testing
 function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName: string = 'div'): string {
-  let attrs = `data-wb="${behavior}"`;
+  let attrs = `wb="${behavior}"`;
   
   // Special handling for input type="checkbox"
   if (tagName === 'input' && behavior === 'checkbox') {

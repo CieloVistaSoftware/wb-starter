@@ -27,9 +27,9 @@
       "default": "info",
       "appliesClass": "wb-notification--{{value}}"
     },
-    "title": {
+    "heading": {
       "type": "string",
-      "description": "Notification title"
+      "description": "Notification heading"
     },
     "message": {
       "type": "string",
@@ -68,13 +68,13 @@
       "description": "Content container"
     },
     {
-      "name": "title",
+      "name": "heading",
       "tag": "strong",
       "parent": "content",
       "public": true,
-      "content": "{{title}}",
-      "createdWhen": "title",
-      "description": "Notification title"
+      "content": "{{heading}}",
+      "createdWhen": "heading",
+      "description": "Notification heading"
     },
     {
       "name": "message",
@@ -192,7 +192,7 @@
       "description": "Fired when notification is dismissed",
       "detail": {
         "variant": "string",
-        "title": "string"
+        "heading": "string"
       }
     }
   },
@@ -204,7 +204,7 @@
       "<wb-cardnotification variant=\"warning\">variant=warning</wb-cardnotification>",
       "<wb-cardnotification dismissible>with dismissible</wb-cardnotification>",
       "<wb-cardnotification elevated>with elevated</wb-cardnotification>",
-      "<wb-cardnotification title=\"Sample title\">title=\"Sample title\"</wb-cardnotification>",
+      "<wb-cardnotification heading=\"Sample heading\">heading=\"Sample heading\"</wb-cardnotification>",
       "<wb-cardnotification message=\"Sample message\">message=\"Sample message\"</wb-cardnotification>",
       "<wb-notification message=\"Info message\"></wb-notification>",
       "<wb-notification variant=\"success\" title=\"Success\" message=\"Done!\"></wb-notification>"
@@ -216,7 +216,7 @@
         },
         {
           "variant": "success",
-          "title": "Success",
+          "heading": "Success",
           "message": "Done!"
         },
         {
@@ -230,7 +230,7 @@
         },
         {
           "variant": "info",
-          "title": "Notice",
+          "heading": "Notice",
           "message": "Info",
           "icon": "🔔"
         }

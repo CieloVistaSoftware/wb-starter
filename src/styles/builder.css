@@ -83,8 +83,8 @@ body.preview-mode {
   --builder-panel-max-width: 50vw;
   --builder-panel-collapsed-width: 1.5rem;
   /* Layout */
-  --builder-header-height: 56px;
-  --builder-footer-height: 36px;
+  --builder-header-height: 36px;
+  --builder-footer-height: 24px;
   --snap-grid-size: 20px;
   /* Animation */
   --drawer-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -99,9 +99,9 @@ body {
 }
 
 /* =============================================================================
-   HEADER
+   TOP BAR (Header)
    ============================================================================= */
-.builder-header {
+.top-bar {
   height: var(--builder-header-height);
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
@@ -109,47 +109,690 @@ body {
   z-index: 100;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
   flex-shrink: 0;
 }
 
-.builder-container {
-  flex: 1;
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  min-height: 0; /* Important for nested flex scrolling */
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 1rem;
-}
-
-.builder-header h1 {
+.top-bar h1 {
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0;
   color: var(--text-primary);
 }
 
-.header-actions {
+.top-bar-actions {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
 
-.header-btn {
-  padding: 0.4rem 0.75rem;
+/* =============================================================================
+   BUILDER LAYOUT (Main Container)
+   ============================================================================= */
+.builder-layout {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* =============================================================================
+   SIDEBARS (Left & Right)
+   ============================================================================= */
+.sidebar-left,
+.sidebar-right {
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  transition: width var(--drawer-transition);
+}
+
+.sidebar-left {
+  width: var(--builder-sidebar-width);
+  min-width: var(--builder-sidebar-min-width);
+  max-width: var(--builder-sidebar-max-width);
+  border-right: 1px solid var(--border-color);
+}
+
+.sidebar-right {
+  width: var(--builder-panel-width);
+  min-width: var(--builder-panel-min-width);
+  max-width: var(--builder-panel-max-width);
+  border-left: 1px solid var(--border-color);
+}
+
+.drawer-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+}
+
+/* Drawer Toggle Buttons - See drawer.css for BEM implementation */
+
+/* Drawer Resize Handles - See drawer.css for BEM implementation */
+
+/* =============================================================================
+   PAGES SECTION (Left Sidebar)
+   ============================================================================= */
+.pages-section {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pages-section h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: var(--text-primary);
+}
+
+.pages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.page-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
   background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  border: 1px solid transparent;
   border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.page-item:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+}
+
+.page-item.active {
+  border-color: var(--success-color);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.page-item-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.page-item-actions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.page-item:hover .page-item-actions {
+  opacity: 1;
+}
+
+.page-item-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-item-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.page-item-btn.delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--danger-color);
+}
+
+/* =============================================================================
+   COMPONENT LIBRARY (Left Sidebar)
+   ============================================================================= */
+#componentLibrary h4 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin: 1rem 0 0.5rem 0;
+}
+
+.component-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-secondary);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: grab;
+  margin-bottom: 0.25rem;
+  transition: all 0.15s;
+}
+
+.component-item:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary);
+}
+
+.component-item:active {
+  cursor: grabbing;
+}
+
+.component-item .icon {
+  font-size: 1rem;
+}
+
+.component-item .name {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* =============================================================================
+   CANVAS AREA (Center)
+   ============================================================================= */
+.canvas-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  background: var(--bg-color);
+  overflow: hidden;
+}
+
+.canvas-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.canvas-viewport {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.canvas {
+  min-height: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* =============================================================================
+   CANVAS SECTIONS (Header, Main, Footer)
+   ============================================================================= */
+.canvas-section {
+  padding: 1rem;
+  border-bottom: 1px dashed var(--border-color);
+  min-height: 80px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  margin: 0.5rem;
+}
+
+.canvas-section:hover {
+  background: rgba(99, 102, 241, 0.03);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.canvas-section.focused {
+  border-color: var(--success-color) !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+  background: rgba(34, 197, 94, 0.03);
+}
+
+.canvas-section.focused .section-label {
+  color: var(--success-color);
+  font-weight: 700;
+}
+
+.canvas-section:last-child {
+  border-bottom: none;
+}
+
+.section-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.canvas-section.header {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.canvas-section.header .canvas-drop-zone {
+  padding-top: 1rem;
+}
+
+.canvas-section.main {
+  background: transparent;
+  min-height: 200px;
+}
+
+.canvas-section.footer {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.components-container {
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* =============================================================================
+   COMPONENT & SEMANTIC ELEMENT SPACING
+   Page Components: 4rem (64px) gap - major building blocks
+   Semantic Elements: 1.5rem (24px) gap - HTML5 elements
+   ============================================================================= */
+
+/* Page Components - major building blocks (Hero, Features, Pricing, CTA, etc.) */
+.canvas-component {
+  margin-bottom: 4rem;
+}
+
+/* Last component in a section doesn't need bottom margin */
+.canvas-component:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Semantic container elements - moderate spacing */
+.canvas-component[id^="comp-"] .component-content > section,
+.canvas-component[id^="comp-"] .component-content > article,
+.canvas-component[id^="comp-"] .component-content > aside,
+.canvas-component[id^="comp-"] .component-content > nav,
+.canvas-component[id^="comp-"] .component-content > main,
+.canvas-component[id^="comp-"] .component-content > div {
+  margin-bottom: 2rem;
+}
+
+/* Text and content elements - readable flow */
+.canvas-component .component-content p,
+.canvas-component .component-content h1,
+.canvas-component .component-content h2,
+.canvas-component .component-content h3,
+.canvas-component .component-content h4,
+.canvas-component .component-content h5,
+.canvas-component .component-content h6,
+.canvas-component .component-content ul,
+.canvas-component .component-content ol,
+.canvas-component .component-content blockquote,
+.canvas-component .component-content details,
+.canvas-component .component-content address,
+.canvas-component .component-content pre {
+  margin-bottom: 1rem;
+}
+
+/* Media elements - slightly more spacing to frame content */
+.canvas-component .component-content figure,
+.canvas-component .component-content img,
+.canvas-component .component-content video,
+.canvas-component .component-content audio,
+.canvas-component .component-content iframe {
+  margin-bottom: 1.5rem;
+}
+
+/* Semantic-type components (added via HTML5 picker) get tighter spacing */
+/* These have type="semantic-*" set via data attribute */
+.canvas-component[data-type^="semantic-"] {
+  margin-bottom: 1.5rem;
+}
+
+/* Last semantic component also has no bottom margin */
+.canvas-component[data-type^="semantic-"]:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Drop zone spacing */
+.canvas-drop-zone {
+  margin-top: 2rem;
+}
+
+/* When drop zone has items, reduce its top margin */
+.canvas-drop-zone.has-items {
+  margin-top: 1rem;
+}
+
+/* =============================================================================
+   CANVAS COMPONENTS (Dropped into sections)
+   ============================================================================= */
+.canvas-component {
+  position: relative;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Clean rounded corners */
+}
+
+.canvas-component:hover {
+  border-color: var(--primary);
+}
+
+.canvas-component:focus {
+  outline: none;
+  border-color: var(--success-color);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+.canvas-component.selected {
+  border-color: var(--success-color);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+/* Component label - ALWAYS visible on TOP */
+.component-overlay {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.65rem;
+  order: -1; /* Force to top */
+}
+
+.component-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Component overlay action buttons container */
+.component-overlay-actions {
+  display: flex;
+  gap: 0.25rem;
+  margin-left: auto;
+}
+
+/* Show HTML button */
+.component-html-btn {
+  padding: 0.15rem 0.4rem !important;
+  font-size: 0.55rem !important;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  background: var(--primary) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+  opacity: 0.7;
+  transition: all 0.15s;
+  line-height: 1;
+}
+
+.component-html-btn:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.component-html-btn.active {
+  background: var(--success-color) !important;
+  opacity: 1;
+}
+
+.component-delete-btn {
+  padding: 0.15rem 0.3rem !important;
+  font-size: 0.6rem !important;
+  background: var(--danger-color) !important;
+  border: none !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+  line-height: 1;
+}
+
+.component-delete-btn:hover {
+  opacity: 1;
+}
+
+/* Component HTML view panel */
+.component-html-view {
+  background: var(--bg-tertiary);
+  border-top: 1px solid var(--border-color);
+  max-height: 300px;
+  overflow: auto;
+}
+
+.component-html-code {
+  margin: 0;
+  padding: 0.75rem;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.component-html-code code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+/* Component content - below the label with 1rem gap */
+.component-content {
+  min-height: 2rem;
+  outline: none;
+  padding: 1rem;
+}
+
+.component-content:focus {
+  background: rgba(99, 102, 241, 0.03);
+}
+
+.canvas-drop-zone {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border: 2px dashed var(--border-color);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.canvas-drop-zone.drag-over {
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+/* =============================================================================
+   DROPPED COMPONENTS
+   ============================================================================= */
+.dropped-component {
+  position: relative;
+  margin-bottom: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.dropped-component:hover {
+  border-color: var(--primary);
+}
+
+.dropped-component.selected {
+  border-color: var(--success-color);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.component-controls {
+  position: absolute;
+  top: -10px;
+  right: 4px;
+  display: none;
+  gap: 2px;
+  z-index: 10;
+}
+
+.dropped-component:hover .component-controls,
+.dropped-component.selected .component-controls {
+  display: flex;
+}
+
+.ctrl-btn {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-primary);
   color: var(--text-primary);
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ctrl-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.ctrl-btn.delete:hover {
+  background: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+/* =============================================================================
+   PROPERTIES PANEL (Right Sidebar)
+   ============================================================================= */
+#propertiesPanel {
+  padding: 0.5rem;
+}
+
+.properties-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 2rem 1rem;
+}
+
+.property-group {
+  margin-bottom: 1rem;
+}
+
+.property-group h4 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin: 0 0 0.5rem 0;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.property-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.property-label {
+  font-size: 0.75rem;
   font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.property-input {
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+.property-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.property-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.property-select {
+  cursor: pointer;
+}
+
+/* =============================================================================
+   STATUS BAR (Footer)
+   ============================================================================= */
+.status-bar {
+  height: var(--builder-footer-height);
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+#activeElement {
+  font-weight: 500;
+}
+
+#status {
+  color: var(--success-color);
 }
 
 /* Theme Selector in Header */
@@ -198,133 +841,17 @@ body {
   transition: none !important;
 }
 
-/* Collapsed state */
-.sidebar.collapsed {
-  width: 1.5rem !important;
-  min-width: 1.5rem !important;
-  flex: 0 0 1.5rem !important;
-  box-shadow: none;
-  overflow: hidden !important;
-}
-
-.sidebar.collapsed .search,
-.sidebar.collapsed .favorites-section,
-.sidebar.collapsed .categories,
-.sidebar.collapsed .sidebar-header {
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-}
-
-.sidebar.collapsed .sidebar-toggle .toggle-icon {
-  transform: rotate(180deg);
-}
+/* Collapsed state - See drawer.css for BEM implementation */
 
 /* Sidebar Toggle Button */
-.sidebar-toggle {
-  position: absolute;
-  top: 50%;
-  right: -14px;
-  transform: translateY(-50%);
-  width: 28px;
-  height: 56px;
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 0 8px 8px 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  z-index: 25;
-  transition: all 0.2s;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-}
 
-.sidebar-toggle .toggle-icon {
-  transition: transform var(--drawer-transition);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sidebar-toggle:hover {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: white;
-  width: 32px;
-  right: -18px;
-}
-
-.sidebar-collapsed-label {
-  display: none;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  padding: 1rem 0;
-  text-align: center;
-  letter-spacing: 1px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: rotate(180deg) translate(50%, 50%);
-  white-space: nowrap;
-  cursor: pointer;
-  z-index: 30;
-}
-
-.sidebar-collapsed-label:hover {
-  color: var(--primary);
-}
-
-.sidebar.collapsed .sidebar-collapsed-label {
-  display: none;
-}
+/* See drawer.css for collapsed label */
 
 /* Resize handle - RIGHT edge */
-.sidebar-resize-handle {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 12px;
-  cursor: col-resize;
-  background: transparent;
-  z-index: 1000;
-  transition: background 0.2s;
-}
-
-.sidebar-resize-handle::before {
-  content: '';
-  position: absolute;
-  right: 4px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 40px;
-  background: var(--border-color);
-  border-radius: 2px;
-  opacity: 0.5;
-  transition: opacity 0.2s, background 0.2s;
-}
 
 .sidebar-resize-handle:hover::before,
-.sidebar.resizing .sidebar-resize-handle::before {
-  opacity: 1;
-  background: var(--primary);
-}
 
-.sidebar-resize-handle:hover {
-  background: linear-gradient(to left, hsla(var(--hue-primary), 70%, 50%, 0.2), transparent);
-}
-
-.sidebar.collapsed .sidebar-resize-handle {
-  display: none;
-}
+/* See drawer.css for collapsed handle */
 
 /* Search */
 .search {
@@ -715,131 +1242,17 @@ body {
   box-sizing: border-box;
 }
 
-/* Collapsed state */
-.panel-right.collapsed {
-  width: 1.5rem !important;
-  min-width: 1.5rem !important;
-  flex: 0 0 1.5rem !important;
-  box-shadow: none;
-  overflow: hidden !important;
-}
-
-.panel-right.collapsed .panel-right-header,
-.panel-right.collapsed .panel-right-list {
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-}
-
-.panel-right.collapsed .panel-toggle .toggle-icon {
-  transform: rotate(180deg);
-}
+/* Collapsed state - See drawer.css for BEM implementation */
 
 /* Panel Toggle Button */
-.panel-toggle {
-  position: absolute;
-  top: 50%;
-  left: -14px;
-  transform: translateY(-50%);
-  width: 28px;
-  height: 56px;
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px 0 0 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  z-index: 25;
-  transition: all 0.2s;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-}
-
-.panel-toggle .toggle-icon {
-  transition: transform var(--drawer-transition);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.panel-toggle:hover {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: white;
-  width: 32px;
-  left: -18px;
-}
 
 /* Collapsed panel label */
-.panel-collapsed-label {
-  display: none;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  padding: 1rem 0;
-  text-align: center;
-  letter-spacing: 1px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
-  cursor: pointer;
-  z-index: 30;
-}
-
-.panel-collapsed-label:hover {
-  color: var(--primary);
-}
-
-.panel-right.collapsed .panel-collapsed-label {
-  display: block;
-}
 
 /* Resize handle - LEFT edge */
-.panel-resize-handle {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 12px;
-  cursor: col-resize;
-  background: transparent;
-  z-index: 1000;
-  transition: background 0.2s;
-}
-
-.panel-resize-handle::before {
-  content: '';
-  position: absolute;
-  left: 4px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 40px;
-  background: var(--border-color);
-  border-radius: 2px;
-  opacity: 0.5;
-  transition: opacity 0.2s, background 0.2s;
-}
 
 .panel-resize-handle:hover::before,
-.panel-right.resizing .panel-resize-handle::before {
-  opacity: 1;
-  background: var(--primary);
-}
 
-.panel-resize-handle:hover {
-  background: linear-gradient(to right, hsla(var(--hue-primary), 70%, 50%, 0.2), transparent);
-}
-
-.panel-right.collapsed .panel-resize-handle {
-  display: none;
-}
+/* See drawer.css for collapsed handle */
 
 .panel-right-header {
   padding: 0.75rem 1rem;
@@ -964,8 +1377,6 @@ body {
   gap: 0.25rem;
 }
 
-
-
 .panel-right-empty {
   color: var(--text-muted);
   text-align: center;
@@ -1032,46 +1443,9 @@ body {
 .panel-item-badge.valid { background: rgba(34, 197, 94, 0.2); color: var(--success-color); }
 .panel-item-badge.invalid { background: rgba(239, 68, 68, 0.2); color: var(--danger-color); }
 
-.panel-item-remove {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #ef4444;
-  padding: 0.25rem;
-  font-size: 0.85rem;
-  border-radius: 4px;
-  transition: all 0.15s;
-  margin-right: 0;
-}
-
-.panel-item-remove:hover {
-  background: rgba(239, 68, 68, 0.15);
-}
-
 /* =============================================================================
    FOOTER
    ============================================================================= */
-.builder-footer {
-  height: var(--builder-footer-height);
-  background: var(--bg-secondary);
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  border-top: 1px solid var(--border-color);
-  position: relative;
-  flex-shrink: 0;
-  z-index: 100;
-}
-
-.builder-footer p { margin: 0; }
-.builder-footer kbd {
-  background: var(--bg-tertiary);
-  padding: 0.1rem 0.3rem;
-  border-radius: 3px;
-  font-size: 0.65rem;
-}
 
 /* =============================================================================
    DROPPED COMPONENTS
@@ -1081,10 +1455,17 @@ body {
   border: 1px solid transparent;
   border-radius: 6px;
   margin-bottom: 0.5rem;
+  margin-top: 2rem; /* Space for controls above */
   transition: all 0.15s;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+/* First dropped element needs extra margin */
+.section-content > .dropped:first-child,
+.canvas-drop-zone > .dropped:first-child {
+  margin-top: 2.5rem;
 }
 
 .dropped > * {
@@ -1116,10 +1497,10 @@ body {
 
 .controls {
   position: absolute;
-  top: -12px;
-  right: 4px;
+  top: -28px;
+  right: 0;
   display: none;
-  gap: 2px;
+  gap: 3px;
   z-index: 10;
 }
 
@@ -1671,6 +2052,48 @@ body {
   outline: none !important;
 }
 
+/* =============================================================================
+   PREVIEW MODE - ELEMENT SPACING
+   Applies proper vertical rhythm to rendered content
+   ============================================================================= */
+
+/* Page Components in preview - 4rem (64px) gap */
+.preview-mode .canvas-component {
+  margin-bottom: 4rem;
+}
+
+.preview-mode .canvas-component:last-child {
+  margin-bottom: 0;
+}
+
+/* Semantic elements in preview - 1.5rem (24px) gap */
+.preview-mode .canvas-component[data-type^="semantic-"] {
+  margin-bottom: 1.5rem;
+}
+
+.preview-mode .canvas-component[data-type^="semantic-"]:last-child {
+  margin-bottom: 0;
+}
+
+/* Hide builder chrome in preview */
+.preview-mode .component-overlay,
+.preview-mode .component-html-view,
+.preview-mode .canvas-drop-zone,
+.preview-mode .section-label {
+  display: none !important;
+}
+
+/* Reset component wrapper styling in preview */
+.preview-mode .canvas-component {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.preview-mode .component-content {
+  padding: 0 !important;
+}
+
 /* Preview exit button */
 .preview-exit {
   position: fixed;
@@ -1864,21 +2287,6 @@ wb-builder {
   font-size: 0.65rem;
   color: var(--text-muted);
   font-family: monospace;
-}
-
-.prop-header-remove {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #ef4444;
-  padding: 0.25rem;
-  font-size: 0.9rem;
-  border-radius: 4px;
-  transition: all 0.15s;
-}
-
-.prop-header-remove:hover {
-  background: rgba(239, 68, 68, 0.15);
 }
 
 /* Property Categories */
@@ -2721,12 +3129,6 @@ wb-builder {
 /* =============================================================================
    FOOTER STATUS INDICATOR
 ============================================================================= */
-.builder-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-}
 
 .footer-left {
   display: flex;
@@ -2847,7 +3249,6 @@ wb-builder {
   display: inline-block;
 }
 
-
 /* Snap Guide Lines (Red Crosshair) */
 .snap-guide-lines {
   position: absolute;
@@ -2910,3 +3311,1053 @@ wb-builder {
   border-bottom-color: var(--primary);
 }
 
+/* =============================================================================
+   RESPONSIVE - Builder is desktop-optimized
+   ============================================================================= */
+
+/* Mobile notice - hidden by default, shown only on small screens */
+.builder-mobile-notice {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  background: var(--bg-color);
+  z-index: 9999;
+  padding: 2rem;
+  text-align: center;
+}
+
+.builder-mobile-notice__icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+}
+
+.builder-mobile-notice__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.builder-mobile-notice__text {
+  color: var(--text-secondary);
+  max-width: 300px;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.builder-mobile-notice__btn {
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* Show mobile notice and hide builder on small screens */
+@media (max-width: 767px) {
+  .builder-mobile-notice {
+    display: flex;
+  }
+  .top-bar,
+  .builder-layout {
+    display: none !important;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root, [data-theme] {
+    --builder-sidebar-width: 220px;
+    --builder-panel-width: 260px;
+  }
+}
+
+/* Large desktop - extra room */
+@media (min-width: 1400px) {
+  :root, [data-theme] {
+    --builder-sidebar-width: 320px;
+    --builder-panel-width: 360px;
+  }
+}
+
+/* =============================================================================
+   READONLY SECTIONS - For header/footer from Home page
+   ============================================================================= */
+
+.canvas-section.readonly-section {
+  pointer-events: none;
+  position: relative;
+}
+
+.canvas-section.readonly-section .canvas-component {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.canvas-section.readonly-section .canvas-drop-zone {
+  display: none;
+}
+
+.canvas-section.readonly-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(99, 102, 241, 0.03) 10px,
+    rgba(99, 102, 241, 0.03) 20px
+  );
+  pointer-events: none;
+  z-index: 5;
+  border-radius: inherit;
+}
+
+.section-from-home-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 0.7rem;
+  background: var(--primary);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  z-index: 10;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Page item indicators */
+.page-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-indicators {
+  margin-left: auto;
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+/* Shared section links - click to go to Home */
+.shared-link {
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.shared-link:hover {
+  opacity: 1 !important;
+  color: var(--primary);
+}
+
+/* =============================================================================
+   PROPERTIES PANEL - Property Rows
+   ============================================================================= */
+.properties-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.properties-section h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.property {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.property label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+.property input[type="text"],
+.property input[type="number"],
+.property textarea,
+.property select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+.property input:focus,
+.property textarea:focus,
+.property select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.property input[type="color"] {
+  width: 48px;
+  height: 32px;
+  padding: 2px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.property input[type="range"] {
+  width: 100%;
+  accent-color: var(--primary);
+}
+
+.property textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+/* =============================================================================
+   EDITOR TOOLBAR (CKEditor-style)
+   ============================================================================= */
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 100;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  position: relative;
+}
+
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.2rem 0.4rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  color: var(--text-primary);
+  font-size: 0.65rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.toolbar-btn:hover {
+  background: var(--bg-primary);
+  border-color: var(--primary);
+}
+
+.toolbar-btn:active,
+.toolbar-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.toolbar-btn-icon {
+  padding: 0.2rem 0.3rem;
+  font-size: 0.75rem;
+}
+
+.dropdown-caret {
+  font-size: 0.5rem;
+  opacity: 0.7;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border-color);
+  margin: 0 0.2rem;
+}
+
+.toolbar-spacer {
+  flex: 1;
+}
+
+.page-selector-btn {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.page-selector-btn:hover {
+  background: var(--primary);
+  filter: brightness(1.1);
+}
+
+/* =============================================================================
+   TOOLBAR DROPDOWNS
+   ============================================================================= */
+.toolbar-dropdown {
+  position: fixed;
+  min-width: 150px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  display: none;
+}
+
+.toolbar-dropdown.open {
+  display: block;
+}
+
+.toolbar-dropdown.dropdown-wide {
+  min-width: 200px;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.65rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.dropdown-item:hover {
+  background: var(--bg-tertiary);
+}
+
+.dropdown-item.active {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--primary);
+}
+
+.dropdown-item-label {
+  flex: 1;
+}
+
+.dropdown-item-key,
+.dropdown-item-tag {
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.dropdown-item-shortcut {
+  font-size: 0.5rem;
+  color: var(--text-muted);
+  padding: 0.05rem 0.15rem;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+}
+
+.dropdown-item-icon {
+  font-size: 0.7rem;
+  width: 1rem;
+  text-align: center;
+}
+
+.dropdown-item-desc {
+  font-size: 0.5rem;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 0.2rem 0;
+}
+
+.dropdown-group {
+  padding: 0.15rem 0;
+}
+
+.dropdown-group-label {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.5rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dropdown-search {
+  padding: 0.25rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dropdown-search input {
+  width: 100%;
+  padding: 0.2rem 0.4rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  color: var(--text-primary);
+  font-size: 0.6rem;
+}
+
+.dropdown-search input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Submenu */
+.dropdown-submenu-trigger {
+  position: relative;
+}
+
+.dropdown-submenu-trigger:hover > .dropdown-submenu {
+  display: block;
+}
+
+.dropdown-submenu {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  min-width: 140px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.has-submenu {
+  justify-content: space-between;
+}
+
+.submenu-arrow {
+  font-size: 0.5rem;
+  opacity: 0.5;
+}
+
+/* =============================================================================
+   CANVAS SINGLE PAGE VIEW
+   ============================================================================= */
+.canvas-single-page {
+  min-height: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.canvas-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.5rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page-title {
+  font-weight: 600;
+  font-size: 0.6rem;
+  color: var(--text-primary);
+}
+
+.page-path {
+  font-size: 0.5rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.canvas-content {
+  min-height: 300px;
+  padding: 0.5rem;
+}
+
+.canvas-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.canvas-empty-state .empty-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.5;
+}
+
+.canvas-empty-state h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.7rem;
+  color: var(--text-primary);
+}
+
+.canvas-empty-state p {
+  margin: 0 0 0.75rem;
+  font-size: 0.6rem;
+}
+
+.empty-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.canvas-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 0.5rem;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  font-size: 0.55rem;
+  color: var(--text-muted);
+}
+
+/* =============================================================================
+   X-ATTR SECTION (Properties Panel)
+   ============================================================================= */
+.properties-panel-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.xattr-section {
+  border-top: 1px solid var(--border-color);
+  padding: 0.5rem;
+  margin-top: auto;
+}
+
+.panel-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.panel-section-header .btn-icon {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  color: var(--text-primary);
+  font-size: 0.7rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-section-header .btn-icon:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.xattr-list {
+  margin-top: 0.25rem;
+}
+
+.xattr-empty {
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 0.25rem 0;
+}
+
+.xattr-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0;
+  font-size: 0.55rem;
+}
+
+.xattr-item .xattr-name {
+  font-family: monospace;
+  color: var(--primary);
+}
+
+.xattr-item .xattr-value {
+  flex: 1;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Canvas toolbar inside main container */
+.canvas-toolbar {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.canvas-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-elements {
+  flex: 1;
+  padding: 0.5rem;
+  min-height: 200px;
+}
+
+/* =============================================================================
+   FONT SIZE REDUCTION - 50% smaller for all panels
+   ============================================================================= */
+
+/* Top bar */
+.top-bar h1 { font-size: 0.75rem; }
+.top-bar-actions .btn { font-size: 0.5rem; padding: 0.15rem 0.35rem; }
+
+/* Sidebar panels */
+.sidebar-left, .sidebar-right { font-size: 0.5rem; }
+.drawer-content { padding: 0.35rem; font-size: 0.5rem; }
+
+/* Pages section */
+.pages-section h3 { font-size: 0.5rem; margin-bottom: 0.35rem; }
+.page-item { padding: 0.25rem 0.35rem; }
+.page-item-name { font-size: 0.5rem; }
+.page-item-btn { width: 16px; height: 16px; font-size: 0.45rem; }
+
+/* Component library */
+#componentLibrary h4 { font-size: 0.45rem; margin: 0.5rem 0 0.25rem; }
+.component-item { padding: 0.3rem 0.35rem; gap: 0.25rem; }
+.component-item .icon { font-size: 0.6rem; }
+.component-item .name { font-size: 0.5rem; }
+
+/* Category sections */
+.category-header { padding: 0.25rem 0.35rem; gap: 0.25rem; }
+.category-icon { font-size: 0.6rem; }
+.category-title { font-size: 0.5rem; }
+.category-count { font-size: 0.4rem; padding: 0.05rem 0.2rem; }
+.category-toggle { font-size: 0.4rem; }
+.category-desc { font-size: 0.4rem; padding: 0.15rem 0.35rem 0.25rem; }
+.category-items { padding: 0.25rem; gap: 0.15rem; }
+
+/* Component items */
+.comp-item { padding: 0.35rem 0.5rem; min-height: 24px; font-size: 0.5rem; gap: 0.25rem; }
+.comp-icon { font-size: 0.55rem; }
+.comp-name { font-size: 0.5rem; }
+.comp-fav { font-size: 0.45rem; }
+.comp-badge { font-size: 0.4rem; }
+
+/* Search */
+.search { padding: 0.35rem; }
+.search input { padding: 0.25rem 0.35rem 0.25rem 1.25rem; font-size: 0.5rem; }
+.search-icon { font-size: 0.5rem; left: 0.6rem; }
+
+/* Favorites */
+.favorites-header { padding: 0.25rem 0.35rem; font-size: 0.45rem; }
+.favorites-clear { font-size: 0.4rem; }
+.favorites-list { padding: 0 0.25rem 0.25rem; gap: 0.15rem; }
+
+/* Canvas toolbar */
+.editor-toolbar { padding: 0.15rem 0.25rem; gap: 0.15rem; }
+.toolbar-btn { padding: 0.1rem 0.25rem; font-size: 0.5rem; gap: 0.1rem; }
+.toolbar-btn-icon { padding: 0.1rem 0.15rem; font-size: 0.55rem; }
+.dropdown-caret { font-size: 0.35rem; }
+.toolbar-divider { height: 12px; margin: 0 0.1rem; }
+
+/* Toolbar dropdowns */
+.toolbar-dropdown { min-width: 100px; max-height: 200px; }
+.toolbar-dropdown.dropdown-wide { min-width: 140px; }
+.dropdown-item { padding: 0.15rem 0.25rem; font-size: 0.5rem; gap: 0.2rem; }
+.dropdown-item-key, .dropdown-item-tag { font-size: 0.4rem; }
+.dropdown-item-shortcut { font-size: 0.35rem; padding: 0.02rem 0.1rem; }
+.dropdown-item-icon { font-size: 0.5rem; width: 0.7rem; }
+.dropdown-item-desc { font-size: 0.35rem; }
+.dropdown-divider { margin: 0.1rem 0; }
+.dropdown-group { padding: 0.1rem 0; }
+.dropdown-group-label { padding: 0.1rem 0.25rem; font-size: 0.35rem; }
+.dropdown-search { padding: 0.15rem; }
+.dropdown-search input { padding: 0.1rem 0.2rem; font-size: 0.45rem; }
+.dropdown-submenu { min-width: 100px; max-height: 150px; }
+.submenu-arrow { font-size: 0.35rem; }
+
+/* Canvas page header */
+.canvas-page-header { padding: 0.15rem 0.25rem; }
+.page-title { font-size: 0.45rem; }
+.page-path { font-size: 0.35rem; }
+
+/* Canvas content */
+.canvas-content { padding: 0.25rem; min-height: 200px; }
+.canvas-empty-state { padding: 1rem; }
+.canvas-empty-state .empty-icon { font-size: 1.25rem; margin-bottom: 0.25rem; }
+.canvas-empty-state h3 { font-size: 0.5rem; margin-bottom: 0.15rem; }
+.canvas-empty-state p { font-size: 0.45rem; margin-bottom: 0.5rem; }
+.empty-actions { gap: 0.25rem; }
+.empty-actions .btn { font-size: 0.45rem; padding: 0.15rem 0.3rem; }
+.canvas-statusbar { padding: 0.1rem 0.25rem; font-size: 0.4rem; }
+
+/* Canvas components */
+.canvas-component .component-overlay { padding: 0.2rem 0.35rem; font-size: 0.45rem; }
+.component-label { font-size: 0.45rem; }
+.component-delete-btn { padding: 0.1rem 0.25rem !important; font-size: 0.45rem !important; }
+.component-content { padding: 0.5rem; }
+
+/* Section labels */
+.section-label { font-size: 0.4rem; padding: 0.25rem 0.35rem; margin-bottom: 0.35rem; }
+
+/* Drop zone */
+.canvas-drop-zone { padding: 1rem; font-size: 0.5rem; }
+
+/* Properties panel */
+#propertiesPanel { padding: 0.25rem; }
+.properties-empty { font-size: 0.5rem; padding: 1rem 0.5rem; }
+.property-group { margin-bottom: 0.5rem; }
+.property-group h4 { font-size: 0.45rem; margin-bottom: 0.25rem; }
+.property-row { gap: 0.15rem; margin-bottom: 0.35rem; }
+.property-label { font-size: 0.45rem; }
+.property-input { padding: 0.25rem; font-size: 0.5rem; }
+.property textarea { min-height: 40px; }
+
+/* Property categories */
+.prop-category-header { padding: 0.25rem 0.35rem; }
+.prop-category-label { font-size: 0.45rem; }
+.prop-category-count { font-size: 0.4rem; }
+.prop-category-body { padding: 0.25rem; gap: 0.25rem; }
+.prop-category-toggle { font-size: 0.4rem; }
+
+/* Property rows */
+.prop-row { padding-left: 0.25rem; padding-right: 0.25rem; margin-bottom: 0.35rem; gap: 0.15rem; }
+.prop-row .prop-label { font-size: 0.45rem; }
+.prop-input { padding: 0.2rem 0.25rem; font-size: 0.5rem; }
+.prop-select { padding: 0.2rem 0.25rem; font-size: 0.5rem; }
+.prop-textarea { padding: 0.25rem; font-size: 0.5rem; min-height: 35px; }
+.prop-hint { font-size: 0.4rem; }
+
+/* Property header */
+.prop-header { padding: 0.35rem 0.5rem; gap: 0.25rem; }
+.prop-header-icon { font-size: 0.75rem; }
+.prop-header-name { font-size: 0.55rem; }
+.prop-header-id { font-size: 0.4rem; }
+.prop-header-badge { font-size: 0.4rem; padding: 0.05rem 0.15rem; }
+
+/* X-attr section */
+.xattr-section { padding: 0.25rem; }
+.panel-section-header { font-size: 0.4rem; padding: 0.15rem 0; }
+.panel-section-header .btn-icon { width: 14px; height: 14px; font-size: 0.5rem; }
+.xattr-list { margin-top: 0.15rem; }
+.xattr-empty { font-size: 0.4rem; }
+.xattr-item { font-size: 0.4rem; gap: 0.15rem; padding: 0.1rem 0; }
+.xattr-item .xattr-remove { width: 12px; height: 12px; font-size: 0.4rem; }
+
+/* Status bar */
+.status-bar { height: 24px; padding: 0 0.5rem; font-size: 0.45rem; }
+
+/* Panel headers */
+.panel-right-header { padding: 0.35rem 0.5rem; font-size: 0.5rem; }
+.panel-right-list { padding: 0.25rem; gap: 0.15rem; }
+.panel-right-empty { padding: 1rem 0.5rem; font-size: 0.5rem; }
+.panel-item-header { padding: 0.35rem 0.5rem; min-height: 28px; gap: 0.25rem; }
+.panel-item-icon { font-size: 0.55rem; }
+.panel-item-name { font-size: 0.5rem; }
+.panel-item-badge { font-size: 0.4rem; padding: 0.05rem 0.15rem; }
+.panel-item-remove { font-size: 0.5rem; }
+.panel-item-hamburger { font-size: 0.55rem; }
+
+/* Buttons */
+.btn { padding: 0.2rem 0.35rem; font-size: 0.5rem; gap: 0.15rem; }
+.btn-sm { padding: 0.15rem 0.25rem; font-size: 0.45rem; }
+
+/* Tool buttons */
+.tool-btn { padding: 0.2rem 0.35rem; font-size: 0.5rem; gap: 0.15rem; }
+
+/* Modals */
+.docs-modal-title { font-size: 0.55rem; }
+.docs-tab-btn { padding: 0.15rem 0.35rem; font-size: 0.45rem; }
+.docs-modal-body { padding: 0.75rem; font-size: 0.55rem; }
+.templates-modal-header { padding: 0.5rem; font-size: 0.55rem; }
+.template-name { font-size: 0.55rem; }
+.template-desc { font-size: 0.5rem; }
+.shortcuts-modal-header { padding: 0.5rem; font-size: 0.55rem; }
+.shortcut-item { font-size: 0.5rem; }
+.shortcut-item kbd { font-size: 0.45rem; }
+
+/* =============================================================================
+   FLAT DROPDOWN LAYOUT (2026-01-18)
+   ============================================================================= */
+.dropdown-flat {
+  padding: 0.5rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.dropdown-category {
+  margin-bottom: 0.75rem;
+}
+.dropdown-category:last-child {
+  margin-bottom: 0;
+}
+.dropdown-category-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+  padding-left: 0.25rem;
+}
+.dropdown-category-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.dropdown-item-flat {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.55rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  color: var(--text-primary);
+}
+.dropdown-item-flat:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary);
+}
+
+/* =============================================================================
+   COMPONENT VIEW TOGGLE (HTML/Render)
+   ============================================================================= */
+.component-view-toggle {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+  margin-right: 0.5rem;
+}
+.view-btn {
+  padding: 0.15rem 0.35rem;
+  font-size: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.15s;
+}
+.view-btn:hover {
+  opacity: 1;
+  background: var(--bg-tertiary);
+}
+.view-btn.active {
+  opacity: 1;
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* Component HTML view */
+.component-html-view {
+  margin: 0;
+  padding: 0.75rem;
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 0.55rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  color: var(--text-secondary);
+}
+
+/* =============================================================================
+   PAGE OPTIONS (Header/Footer checkboxes)
+   ============================================================================= */
+.page-options {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+}
+.page-option {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.5rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.page-option input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+/* =============================================================================
+   CANVAS SECTIONS (Header/Footer areas)
+   ============================================================================= */
+.canvas-section {
+  border: 1px dashed var(--border-subtle);
+  margin: 0.5rem;
+  border-radius: 6px;
+  background: var(--bg-secondary);
+}
+.canvas-header {
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.05);
+}
+.canvas-footer {
+  border-color: var(--secondary);
+  background: rgba(139, 92, 246, 0.05);
+}
+.section-content {
+  min-height: 60px;
+  padding: 0.5rem;
+}
+.section-empty {
+  color: var(--text-muted);
+  font-size: 0.5rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Property description */
+.prop-desc {
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  background: var(--bg-tertiary);
+  border-radius: 6px;
+  font-size: 0.5rem;
+  color: var(--text-secondary);
+}
+
+/* Canvas page header - enhanced */
+.canvas-page-header { 
+  padding: 0.35rem 0.5rem; 
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.page-title { font-size: 0.55rem; font-weight: 600; }
+.page-path { font-size: 0.45rem; color: var(--text-muted); }
+
+/* =============================================================================
+   COMPONENT ACTIONS (Add child, view toggle)
+   ============================================================================= */
+.component-actions {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+  margin-right: 0.5rem;
+}
+.action-btn {
+  padding: 0.15rem 0.4rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  background: var(--success, #22c55e);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  color: white;
+  transition: all 0.15s;
+}
+.action-btn:hover {
+  background: var(--success-hover, #16a34a);
+  transform: scale(1.05);
+}
+.action-btn-alt {
+  background: var(--primary, #6366f1);
+}
+.action-btn-alt:hover {
+  background: var(--primary-hover, #4f46e5);
+}
+
+/* Nested child components */
+.canvas-component-child {
+  margin: 0.5rem;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.02);
+}
+.canvas-component-child .component-overlay {
+  background: var(--bg-tertiary);
+  font-size: 0.5rem;
+}
+.canvas-component-child .component-label {
+  font-size: 0.45rem;
+}
+
+/* Nested levels - visual hierarchy */
+.canvas-component-child .canvas-component-child {
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.03);
+}
+.canvas-component-child .canvas-component-child .canvas-component-child {
+  border-color: var(--secondary);
+  background: rgba(139, 92, 246, 0.03);
+}
+
+/* =============================================================================
+   PROPERTIES PANEL - ALL ATTRIBUTES EDITABLE
+   ============================================================================= */
+.prop-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.prop-row-add {
+  display: flex;
+  gap: 0.35rem;
+}
+.prop-row-add .prop-input {
+  flex: 1;
+}
+.prop-add-btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.5rem;
+  background: var(--success, #22c55e);
+  border: none;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.prop-add-btn:hover {
+  background: var(--success-hover, #16a34a);
+}
+.prop-textarea-code {
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 0.5rem;
+}

@@ -299,8 +299,8 @@ export function createDropHandler(canvas, handlers) {
       }
       
       if (dropResult.useTemplate && dropResult.template) {
-        const templateComp = { ...component, d: { ...component.d, ...dropResult.template } };
-        add(templateComp);
+        const useTemplateComp = { ...component, d: { ...component.d, ...dropResult.template } };
+        add(useTemplateComp);
         return;
       }
     }

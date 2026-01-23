@@ -1,0 +1,25 @@
+<!--
+  Top Bar View
+  Header bar: Title + action buttons
+-->
+<h1>🏗️ WB Page Builder</h1>
+<div class="top-bar-actions">
+  <button class="btn btn-secondary btn-sm" 
+          onclick="refreshBuilder()" 
+          title="Reload to pick up WB framework changes (work is preserved)">🔄 Refresh</button>
+  <button class="btn btn-secondary btn-sm" 
+          onclick="resetBuilder()" 
+          title="Clear all work and start fresh">🗑️ Reset</button>
+  <button class="btn btn-secondary btn-sm" 
+          onclick="BuilderSelfTest.runAll()" 
+          oncontextmenu="BuilderSelfTest.showContextMenu(event)"
+          title="Run self-tests (Ctrl+Shift+T) | Right-click to edit">🧪 Test</button>
+  <button class="btn btn-secondary btn-sm" onclick="showConfigPanel()">⚙️ Settings</button>
+  <button class="btn btn-secondary btn-sm" onclick="showOpenMenu(event)">📂 Open ▾</button>
+  <button class="btn btn-secondary btn-sm" onclick="previewSite()">👁️ Preview</button>
+  <button id="headerIssuesBtn" class="btn btn-secondary btn-sm" onclick="toggleBuilderIssues()" title="Issues">🐛 Issues</button>
+  <button class="btn btn-primary btn-sm" onclick="showSaveMenu(event)">💾 Save ▾</button>
+</div>
+
+<!-- Hidden file input for Open > Upload JSON (triggers browser file picker) -->
+<input type="file" id="jsonFileInput" accept=".json" style="display:none" onchange="handleJsonFileUpload(event)">

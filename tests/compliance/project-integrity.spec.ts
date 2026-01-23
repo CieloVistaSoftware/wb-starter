@@ -127,7 +127,7 @@ test.describe('Project Integrity', () => {
     issues.expectEmpty('Broken HTML links found');
   });
 
-  test('no redundant data-wb attributes on auto-injected semantic elements', () => {
+  test('no redundant wb attributes on auto-injected semantic elements', () => {
     const htmlFiles = [
       ...getFiles(PATHS.pages, ['.html']),
       ...getFiles(PATHS.public, ['.html']),
@@ -158,7 +158,7 @@ test.describe('Project Integrity', () => {
         const matches = content.match(regex);
         if (matches) {
           for (const match of matches) {
-            issues.add(`${relFile}: <${element} data-wb="${behavior}"> is redundant (auto-injected)`);
+            issues.add(`${relFile}: <${element} wb="${behavior}"> is redundant (auto-injected)`);
           }
         }
       }
@@ -170,7 +170,7 @@ test.describe('Project Integrity', () => {
         const matches = content.match(regex);
         if (matches) {
           for (const match of matches) {
-            issues.add(`${relFile}: <input type="${inputType}" data-wb="${behavior}"> is redundant`);
+            issues.add(`${relFile}: <input type="${inputType}" wb="${behavior}"> is redundant`);
           }
         }
       }
@@ -178,13 +178,13 @@ test.describe('Project Integrity', () => {
     
     // Warn but don't break - these are optimization suggestions
     if (issues.count > 0) {
-      console.warn(`Found ${issues.count} redundant data-wb attributes:`);
+      console.warn(`Found ${issues.count} redundant wb attributes:`);
       issues.all.slice(0, 5).forEach(i => console.warn(`  - ${i}`));
     }
-    issues.expectLessThan(50, 'Too many redundant data-wb attributes');
+    issues.expectLessThan(50, 'Too many redundant wb attributes');
   });
 
-  test('all data-wb attributes reference valid behaviors', () => {
+  test('all wb attributes reference valid behaviors', () => {
     const validBehaviors = getRegisteredBehaviors();
     const htmlFiles = [
       ...getFiles(PATHS.pages, ['.html']),

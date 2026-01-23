@@ -1120,3 +1120,60 @@
   --card-dark-text-secondary: #94a3b8;
   --card-dark-border: #334155;
 }
+
+/* =============================================================================
+   GLOBAL ANIMATIONS
+   ============================================================================= */
+
+/* Spinner rotation */
+@keyframes wb-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Skeleton shimmer */
+@keyframes wb-skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Progress bar stripe animation */
+@keyframes wb-stripe-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 1rem 0; }
+}
+
+/* Fade in */
+@keyframes wb-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Fade out */
+@keyframes wb-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Slide in from right */
+@keyframes wb-slide-in {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Slide out to right */
+@keyframes wb-slide-out {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+/* Zoom in */
+@keyframes wb-zoom-in {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Pulse */
+@keyframes wb-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

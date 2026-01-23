@@ -75,7 +75,7 @@ export async function loadSchemas(basePath = '/src/wb-models') {
     const index = await indexResponse.json();
     const schemaFiles = index.schemas || [];
     
-    console.log(`[Schema Builder] Loading ${schemaFiles.length} schemas...`);
+    if (window.WB_DEBUG) console.log(`[Schema Builder] Loading ${schemaFiles.length} schemas...`);
     
     // Load schemas in parallel for speed
     const loadPromises = schemaFiles.map(async (file) => {
@@ -95,7 +95,7 @@ export async function loadSchemas(basePath = '/src/wb-models') {
     const results = await Promise.all(loadPromises);
     const loaded = results.filter(Boolean).length;
     
-    console.log(`[Schema Builder] ✅ Loaded ${loaded}/${schemaFiles.length} schemas`);
+    if (window.WB_DEBUG) console.log(`[Schema Builder] ✅ Loaded ${loaded}/${schemaFiles.length} schemas`);
     
   } catch (error) {
     console.error('[Schema Builder] Failed to load schemas:', error);
@@ -114,7 +114,7 @@ export function registerSchema(schema, filename) {
   const tagName = `wb-${name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`;
   tagToSchema.set(tagName, name);
   
-  console.log(`[Schema Builder] Registered: ${name} → <${tagName}>`);
+  if (window.WB_DEBUG) console.log(`[Schema Builder] Registered: ${name} → <${tagName}>`);
 }
 
 /**
@@ -208,7 +208,9 @@ function extractData(element, schema) {
  * Parse attribute value to appropriate type
  */
 function parseValue(value) {
-  if (value === '' || value === 'true') return true;
+  // Empty string stays empty (don't convert to true!)
+  if (value === '') return '';
+  if (value === 'true') return true;
   if (value === 'false') return false;
   if (/^-?\d+$/.test(value)) return parseInt(value, 10);
   if (/^-?\d+\.\d+$/.test(value)) return parseFloat(value);
@@ -735,7 +737,7 @@ export function scan(root = document.body) {
       continue;
     }
     
-    // Process data-wb elements
+    // Process wb elements
     if (el.hasAttribute('x-behavior')) {
       processElement(el);
     }
@@ -774,7 +776,7 @@ export function startObserver() {
   });
   
   observer.observe(document.body, { childList: true, subtree: true });
-  console.log('[Schema Builder] Observer started');
+  if (window.WB_DEBUG) console.log('[Schema Builder] Observer started');
 }
 
 // =============================================================================
@@ -782,10 +784,12 @@ export function startObserver() {
 // =============================================================================
 
 export async function init(options = {}) {
-  console.log('[Schema Builder] ═══════════════════════════════════');
-  console.log('[Schema Builder] MVVM Schema Builder v3.0');
-  console.log('[Schema Builder] $view + $methods format');
-  console.log('[Schema Builder] ═══════════════════════════════════');
+  if (window.WB_DEBUG) {
+    console.log('[Schema Builder] ═══════════════════════════════════');
+    console.log('[Schema Builder] MVVM Schema Builder v3.0');
+    console.log('[Schema Builder] $view + $methods format');
+    console.log('[Schema Builder] ═══════════════════════════════════');
+  }
   
   const basePath = options.schemaPath || '/src/wb-models';
   await loadSchemas(basePath);
@@ -793,7 +797,7 @@ export async function init(options = {}) {
   scan(document.body);
   startObserver();
   
-  console.log('[Schema Builder] Ready!');
+  if (window.WB_DEBUG) console.log('[Schema Builder] Ready!');
 }
 
 // =============================================================================

@@ -2,11 +2,49 @@
  * Notes Behavior Styles v2.0
  * ==========================
  * Wide compact buttons, collapse arrows, clear at bottom
+ * Uses CSS variables from themes.css
  */
 
 .wb-notes {
   --notes-max-width: 50vw;
   --notes-min-width: 200px;
+}
+
+/* Floating trigger button */
+.wb-notes__trigger {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 997;
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--primary) 40%, transparent);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wb-notes__trigger:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px color-mix(in srgb, var(--primary) 50%, transparent);
+}
+
+.wb-notes__trigger:active {
+  transform: scale(0.95);
+}
+
+/* Hide trigger when panel is open */
+.wb-notes.wb-notes--open .wb-notes__trigger {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.5);
 }
 
 /* Start hidden - only show when wb-notes--open class is added */
@@ -22,7 +60,7 @@
 .wb-notes__backdrop {
   position: fixed;
   inset: 0;
-  background: var(--overlay-bg, rgba(0, 0, 0, 0.6));
+  background: var(--overlay-bg, color-mix(in srgb, var(--bg-color) 60%, transparent));
   z-index: 998;
   opacity: 0;
   pointer-events: none;
@@ -48,7 +86,7 @@
   flex-direction: column;
   z-index: 999;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  box-shadow: var(--shadow-xl, 0 0 30px rgba(0, 0, 0, 0.4));
+  box-shadow: var(--shadow-xl, 0 0 30px color-mix(in srgb, var(--bg-color) 40%, transparent));
 }
 
 /* Left position */
@@ -156,16 +194,16 @@
   background: var(--primary);
 }
 
-/* Header */
+/* Header - compact */
 .wb-notes__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.75rem;
+  padding: 0.35rem 0.5rem;
   border-bottom: 1px solid var(--border-color);
   background: var(--bg-secondary);
   flex-shrink: 0;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
 .wb-notes--modal .wb-notes__header {
@@ -189,59 +227,104 @@
   min-width: 0;
 }
 
-/* Button row - fits all buttons in one line */
+/* Button row - header icons */
 .wb-notes__btn-row {
   display: flex;
-  gap: 2px;
+  gap: 4px;
   flex-wrap: nowrap;
 }
 
-/* Wide compact buttons */
-.wb-notes__wide-btn {
-  flex: 1;
-  min-width: 24px;
-  max-width: 36px;
-  height: 26px;
-  padding: 0 4px;
+/* Icon buttons - compact symbols for header */
+.wb-notes__icon-btn {
+  width: 28px;
+  height: 24px;
+  padding: 0;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
   color: var(--text-primary);
   transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Consolas', 'Monaco', monospace;
 }
 
-.wb-notes__wide-btn:hover {
-  background: var(--primary);
-  border-color: var(--primary);
-}
-
-.wb-notes__wide-btn.active {
+.wb-notes__icon-btn:hover {
   background: var(--primary);
   border-color: var(--primary);
   color: white;
 }
 
-/* Save button green on hover */
-.wb-notes__wide-btn--save:hover {
+.wb-notes__icon-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* Footer actions container */
+.wb-notes__footer-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+}
+
+/* Footer buttons - icon only */
+.wb-notes__footer-btn {
+  width: 28px;
+  height: 24px;
+  padding: 0;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wb-notes__footer-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* Save button - green on hover */
+.wb-notes__footer-btn--save:hover {
   background: var(--success-color);
   border-color: var(--success-color);
 }
 
-/* Clear button in footer - red on hover */
-.wb-notes__wide-btn--clear {
-  max-width: none;
-  padding: 0 8px;
-  font-size: 0.7rem;
-}
-
-.wb-notes__wide-btn--clear:hover {
+/* Clear button - red on hover */
+.wb-notes__footer-btn--clear:hover {
   background: var(--danger-color);
   border-color: var(--danger-color);
+}
+
+/* Confirm state for clear */
+.wb-notes__footer-btn--confirm {
+  background: var(--warning-color) !important;
+  border-color: var(--warning-color) !important;
+  animation: pulse-warning 0.5s ease infinite alternate;
+}
+
+@keyframes pulse-warning {
+  from { opacity: 1; }
+  to { opacity: 0.7; }
+}
+
+/* Legacy wide-btn support */
+.wb-notes__wide-btn {
+  display: none;
 }
 
 /* Textarea */
@@ -267,17 +350,97 @@
   opacity: 0.7;
 }
 
-/* Footer with status and clear button */
+/* Footer - compact */
 .wb-notes__footer {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.75rem;
+  padding: 0.35rem 0.5rem;
   border-top: 1px solid var(--border-color);
   background: var(--bg-secondary);
-  min-height: 36px;
+  min-height: 28px;
   flex-shrink: 0;
   gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+
+/* Status bar with lights and issue count */
+.wb-notes__status-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Status lights */
+.wb-notes__light {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+/* Connection light - red/green */
+.wb-notes__light--connection {
+  background: var(--danger-color);
+  box-shadow: 0 0 4px var(--danger-color);
+}
+
+.wb-notes__light--connection.connected {
+  background: var(--success-color);
+  box-shadow: 0 0 6px var(--success-color);
+}
+
+/* Working light - gray/amber with pulse */
+.wb-notes__light--working {
+  background: var(--text-muted);
+  box-shadow: none;
+}
+
+.wb-notes__light--working.active {
+  background: var(--warning-color);
+  box-shadow: 0 0 6px var(--warning-color);
+  animation: pulse-working 1s ease infinite;
+}
+
+/* Spinner */
+.wb-notes__spinner {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+  border-top-color: transparent;
+  flex-shrink: 0;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.wb-notes__spinner.active {
+  opacity: 1;
+  border-color: var(--warning-color);
+  border-top-color: transparent;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-working {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.9); }
+}
+
+/* Issue count */
+.wb-notes__issue-count {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  min-width: 50px;
 }
 
 .wb-notes__status {

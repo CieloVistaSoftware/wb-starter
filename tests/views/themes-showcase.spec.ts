@@ -93,7 +93,7 @@ test.describe('Themes Showcase Page', () => {
 
     test('has code example with wb-mdhtml', async ({ page }) => {
       // Check for code block in HCS section
-      const codeBlock = page.locator('.page__section').first().locator('wb-mdhtml, [data-wb="mdhtml"]');
+      const codeBlock = page.locator('.page__section').first().locator('wb-mdhtml, [wb="mdhtml"]');
       await expect(codeBlock).toBeVisible();
     });
   });
@@ -106,7 +106,7 @@ test.describe('Themes Showcase Page', () => {
 
     test('theme cards are clickable and switch themes', async ({ page }) => {
       // Click on Ocean theme
-      const oceanCard = page.locator('.theme-card[data-preview-theme="ocean"]');
+      const oceanCard = page.locator('.theme-card[preview-theme="ocean"]');
       await oceanCard.click();
       
       // Verify theme attribute changed

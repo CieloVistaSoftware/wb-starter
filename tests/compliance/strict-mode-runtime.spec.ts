@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Strict Mode Runtime Compliance', () => {
 
-  test('should throw error for legacy data-wb usage and NOT process it', async ({ page }) => {
+  test('should throw error for legacy wb usage and NOT process it', async ({ page }) => {
     const errorLogs: string[] = [];
     page.on('console', msg => {
       if (msg.type() === 'error') {
@@ -19,8 +19,8 @@ test.describe('Strict Mode Runtime Compliance', () => {
     await page.waitForTimeout(500);
 
     // 1. Check for Console Error
-    // Should match "Legacy syntax data-wb="card" detected..."
-    const legacyErrorMatch = errorLogs.find(log => log.includes('Legacy syntax') && log.includes('data-wb="card"'));
+    // Should match "Legacy syntax wb="card" detected..."
+    const legacyErrorMatch = errorLogs.find(log => log.includes('Legacy syntax') && log.includes('wb="card"'));
 
     expect(legacyErrorMatch, 'Should log error for legacy syntax').toBeTruthy();
 

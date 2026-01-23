@@ -8,7 +8,7 @@
  * -----------------------------------------------------------------------------
  * 
  * Usage:
- *   <wb-navbar  data-logo="MySite">...</nav>
+ *   <wb-navbar  logo="MySite">...</nav>
  *   <aside data-items='[...]'>...</aside>
  * -----------------------------------------------------------------------------
  * 
@@ -17,6 +17,9 @@
  * - Navbar component: Better responsive design
  * - Sidebar component: Fixed item layout and hover states
  */
+
+// Re-export statusbar from its own module
+export { statusbar } from './statusbar.js';
 
 /**
  * Navbar - Navigation bar from data attributes
@@ -100,20 +103,71 @@ export function navbar(element, options = {}) {
   };
 
   // Helper to apply navbar item styling to any link element
-  const styleNavbarItem = (link) => {
+  const styleNavbarItem = (link, isActive = false) => {
     link.classList.add('wb-navbar__item');
-    link.style.opacity = '0.8';
+    if (isActive) link.classList.add('wb-navbar__item--active');
+    link.style.opacity = isActive ? '1' : '0.8';
     link.style.textDecoration = 'none';
     link.style.color = 'inherit';
     link.style.transition = 'opacity 0.15s ease';
     link.style.whiteSpace = 'nowrap';
+    if (isActive) {
+      link.style.fontWeight = '600';
+      link.style.borderBottom = '2px solid var(--primary, #6366f1)';
+      link.style.paddingBottom = '2px';
+    }
     
     // Add hover effects if not already added
     if (!link._navbarHover) {
       link._navbarHover = true;
       link.addEventListener('mouseenter', () => link.style.opacity = '1');
-      link.addEventListener('mouseleave', () => link.style.opacity = '0.8');
+      link.addEventListener('mouseleave', () => {
+        if (!link.classList.contains('wb-navbar__item--active')) {
+          link.style.opacity = '0.8';
+        }
+      });
     }
+  };
+  
+  // Check if a link matches the current page
+  const isLinkActive = (href, label) => {
+    const currentPage = window.currentPage;
+    if (!currentPage) return false;
+    
+    // Check by slug
+    if (href && currentPage.slug) {
+      const hrefSlug = href.replace(/^\//, '').replace(/^#/, '');
+      const pageSlug = currentPage.slug.replace(/^\//, '');
+      if (hrefSlug === pageSlug || hrefSlug === currentPage.id) return true;
+    }
+    
+    // Check by name
+    if (label && currentPage.name) {
+      if (label.toLowerCase() === currentPage.name.toLowerCase()) return true;
+    }
+    
+    // Check by ID
+    if (href && currentPage.id) {
+      const hrefId = href.replace(/^\//, '').replace(/^#/, '').replace(/\.html$/, '');
+      if (hrefId === currentPage.id) return true;
+    }
+    
+    return false;
+  };
+  
+  // Update active states on all navbar items
+  const updateActiveStates = () => {
+    element.querySelectorAll('.wb-navbar__item').forEach(link => {
+      const href = link.getAttribute('href') || link.dataset.href || '';
+      const label = link.textContent?.trim() || '';
+      const isActive = isLinkActive(href, label);
+      
+      link.classList.toggle('wb-navbar__item--active', isActive);
+      link.style.opacity = isActive ? '1' : '0.8';
+      link.style.fontWeight = isActive ? '600' : '';
+      link.style.borderBottom = isActive ? '2px solid var(--primary, #6366f1)' : '';
+      link.style.paddingBottom = isActive ? '2px' : '';
+    });
   };
 
   // Check for existing custom children (links dropped by user in builder)
@@ -272,7 +326,7 @@ export function sidebar(element, options = {}) {
       }
 
       const isActive = label === config.active;
-      const tooltipAttrs = config.collapsed ? `x-tooltip data-tooltip="${label}" data-tooltip-position="right"` : `title="${label}"`;
+      const tooltipAttrs = config.collapsed ? `x-tooltip tooltip="${label}" tooltip-position="right"` : `title="${label}"`;
       
       return `
         <a class="wb-sidebar__item" href="${href}" ${tooltipAttrs} style="
@@ -364,7 +418,7 @@ export function menu(element, options = {}) {
     }
 
     return `
-    <div class="wb-menu__item" role="menuitem" tabindex="0" data-index="${idx}" data-value="${value}" style="
+    <div class="wb-menu__item" role="menuitem" tabindex="0" index="${idx}" value="${value}" style="
       padding: 0.6rem 0.75rem;
       border-radius: 4px;
       cursor: pointer;
@@ -414,7 +468,7 @@ export function menu(element, options = {}) {
 }
 
 /**
- * Pagination - Page navigation from data-pages
+ * Pagination - Page navigation from pages
  * Custom Tag: <wb-pagination>
  */
 export function pagination(element, options = {}) {
@@ -432,7 +486,7 @@ export function pagination(element, options = {}) {
 
   const render = () => {
     let html = `
-      <button class="wb-pagination__btn" ${config.current <= 1 ? 'disabled' : ''} data-action="prev" 
+      <button class="wb-pagination__btn" ${config.current <= 1 ? 'disabled' : ''} action="prev" 
         style="
           padding: 0.5rem 0.75rem;
           border: 1px solid var(--border-color, #4b5563);
@@ -448,7 +502,7 @@ export function pagination(element, options = {}) {
     for (let i = 1; i <= config.pages; i++) {
       const active = i === config.current;
       html += `
-        <button class="wb-pagination__btn" data-page="${i}" 
+        <button class="wb-pagination__btn" page="${i}" 
           style="
             padding: 0.5rem 0.75rem;
             border: 1px solid ${active ? 'var(--primary, #6366f1)' : 'var(--border-color, #4b5563)'};
@@ -463,7 +517,7 @@ export function pagination(element, options = {}) {
     }
     
     html += `
-      <button class="wb-pagination__btn" ${config.current >= config.pages ? 'disabled' : ''} data-action="next" 
+      <button class="wb-pagination__btn" ${config.current >= config.pages ? 'disabled' : ''} action="next" 
         style="
           padding: 0.5rem 0.75rem;
           border: 1px solid var(--border-color, #4b5563);
@@ -501,47 +555,96 @@ export function pagination(element, options = {}) {
 
 /**
  * Steps - Step indicator from data-items
- * Custom Tag: <wb-steps>
+ * Custom Tag: <wb-steps> or <div x-steps>
  */
 export function steps(element, options = {}) {
+  // Get items from multiple possible sources
+  const itemsStr = options.items || element.getAttribute('data-items') || element.dataset.items || '';
   const config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
-    current: parseInt(options.current || element.dataset.current || '1'),
+    items: itemsStr.split(',').map(s => s.trim()).filter(Boolean),
+    current: parseInt(options.current || element.getAttribute('current') || element.dataset.current || '1'),
     ...options
   };
 
+  // If no items, show a placeholder
+  if (config.items.length === 0) {
+    config.items = ['Step 1', 'Step 2', 'Step 3', 'Step 4'];
+  }
+
   element.classList.add('wb-steps');
-  element.style.display = 'flex';
-  element.style.alignItems = 'center';
-  element.style.gap = '1rem';
-  element.style.flexWrap = 'wrap';
+  element.style.cssText = `
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    padding: 1rem;
+    background: var(--bg-secondary, #1f2937);
+    border-radius: 8px;
+  `;
 
   element.innerHTML = config.items.map((item, i) => {
     const step = i + 1;
     const isComplete = step < config.current;
     const isActive = step === config.current;
+    const isPending = step > config.current;
+    
+    // Determine styles based on state
+    let circleStyle = '';
+    if (isComplete) {
+      circleStyle = 'background: #22c55e; color: white; border-color: #22c55e;';
+    } else if (isActive) {
+      circleStyle = 'background: var(--primary, #6366f1); color: white; border-color: var(--primary, #6366f1);';
+    } else {
+      circleStyle = 'background: transparent; color: var(--text-secondary, #9ca3af); border: 2px solid var(--border-color, #4b5563);';
+    }
+    
+    // Connector line (not after last item)
+    const connector = i < config.items.length - 1 ? `
+      <div class="wb-steps__connector" style="
+        flex: 1;
+        min-width: 2rem;
+        max-width: 4rem;
+        height: 2px;
+        background: ${isComplete ? '#22c55e' : 'var(--border-color, #374151)'};
+        margin: 0 0.5rem;
+      "></div>
+    ` : '';
     
     return `
-      <div class="wb-steps__item" style="display: flex; align-items: center; gap: 0.5rem;">
-        <div style="
-          width: 28px;
-          height: 28px;
+      <div class="wb-steps__item" style="display: flex; align-items: center;">
+        <div class="wb-steps__circle" style="
+          width: 32px;
+          height: 32px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 0.75rem;
+          font-size: 0.875rem;
           font-weight: 600;
           flex-shrink: 0;
-          ${isComplete ? 'background: var(--success, #22c55e); color: white;' : ''}
-          ${isActive ? 'background: var(--primary, #6366f1); color: white;' : ''}
-          ${!isComplete && !isActive ? 'background: var(--bg-tertiary, #374151); opacity: 0.5;' : ''}
+          transition: all 0.2s;
+          ${circleStyle}
         ">${isComplete ? '✓' : step}</div>
-        <span style="font-size: 0.875rem; white-space: nowrap; ${!isActive ? 'opacity: 0.7;' : 'font-weight: 500;'}">${item.trim()}</span>
-        ${i < config.items.length - 1 ? '<div style="width: 32px; height: 2px; background: var(--border-color, #374151); flex-shrink: 0;"></div>' : ''}
+        <span class="wb-steps__label" style="
+          font-size: 0.875rem;
+          margin-left: 0.5rem;
+          white-space: nowrap;
+          color: ${isActive ? 'var(--text-primary, #f9fafb)' : 'var(--text-secondary, #9ca3af)'};
+          font-weight: ${isActive ? '600' : '400'};
+        ">${item}</span>
+        ${connector}
       </div>
     `;
   }).join('');
+
+  // API to update current step
+  element.wbSteps = {
+    setCurrent: (step) => {
+      config.current = step;
+      steps(element, config); // Re-render
+    },
+    getCurrent: () => config.current
+  };
 
   element.dataset.wbReady = 'steps';
   return () => element.classList.remove('wb-steps');
@@ -771,121 +874,6 @@ export function link(element, options = {}) {
 
   element.dataset.wbReady = 'link';
   return () => element.classList.remove('wb-link');
-}
-
-/**
- * Statusbar - Bottom status bar
- * Custom Tag: <wb-statusbar>
- */
-export function statusbar(element, options = {}) {
-  const config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
-    position: options.position || element.dataset.position || 'bottom',
-    ...options
-  };
-
-  element.classList.add('wb-statusbar');
-  element.style.display = 'flex';
-  element.style.alignItems = 'center';
-  element.style.justifyContent = 'space-between';
-  element.style.padding = '0 1rem';
-  element.style.height = '1.5rem';
-  element.style.background = 'var(--bg-secondary, #1f2937)';
-  element.style.borderTop = '1px solid var(--border-color, #374151)';
-  element.style.fontSize = '0.75rem';
-  element.style.color = 'var(--text-secondary, #9ca3af)';
-  element.style.width = '100%';
-  element.style.boxSizing = 'border-box';
-
-  if (config.position === 'bottom' || config.position === 'fixed') {
-    element.style.position = 'fixed';
-    element.style.bottom = '0';
-    element.style.left = '0';
-    element.style.zIndex = '100';
-    // Compliance: Do not modify body padding. User must handle layout spacing.
-    // document.body.style.paddingBottom = '1.5rem';
-  } else if (config.position === 'top') {
-    element.style.position = 'fixed';
-    element.style.top = '0';
-    element.style.left = '0';
-    element.style.zIndex = '100';
-    element.style.borderTop = 'none';
-    element.style.borderBottom = '1px solid var(--border-color, #374151)';
-    // Compliance: Do not modify body padding.
-    // document.body.style.paddingTop = '1.5rem';
-  }
-
-  // Create message area
-  let messageArea = element.querySelector('.wb-statusbar__message');
-  if (!messageArea) {
-    messageArea = document.createElement('span');
-    messageArea.className = 'wb-statusbar__message';
-    messageArea.style.flex = '1';
-    messageArea.style.textAlign = 'center';
-    messageArea.style.fontWeight = '500';
-    messageArea.style.color = 'var(--text-primary, #e5e7eb)';
-    messageArea.style.transition = 'opacity 0.3s ease';
-    messageArea.style.opacity = '0';
-    
-    // If items exist, insert in middle, otherwise append
-    if (element.children.length > 0) {
-      const mid = Math.floor(element.children.length / 2);
-      element.insertBefore(messageArea, element.children[mid]);
-    } else {
-      element.appendChild(messageArea);
-    }
-  }
-
-  // If items are provided via data attribute
-  if (config.items.length > 0) {
-    // Clear but save message area
-    const msg = messageArea;
-    element.innerHTML = '';
-    
-    // Add left items
-    const leftItems = config.items.slice(0, Math.ceil(config.items.length / 2));
-    leftItems.forEach(item => {
-      const span = document.createElement('span');
-      span.textContent = item.trim();
-      element.appendChild(span);
-    });
-
-    // Add message area
-    element.appendChild(msg);
-
-    // Add right items
-    const rightItems = config.items.slice(Math.ceil(config.items.length / 2));
-    rightItems.forEach(item => {
-      const rightSpan = document.createElement('span');
-      rightSpan.textContent = item.trim();
-      element.appendChild(rightSpan);
-    });
-  }
-
-  // Event listener for status messages
-  const handleStatusMessage = (e) => {
-    const { message, type, duration = 3000 } = e.detail;
-    messageArea.textContent = message;
-    messageArea.style.opacity = '1';
-    
-    if (type === 'error') messageArea.style.color = 'var(--danger-color, #ef4444)';
-    else if (type === 'success') messageArea.style.color = 'var(--success-color, #10b981)';
-    else messageArea.style.color = 'var(--text-primary, #e5e7eb)';
-
-    if (element._statusTimeout) clearTimeout(element._statusTimeout);
-    
-    element._statusTimeout = setTimeout(() => {
-      messageArea.style.opacity = '0';
-    }, duration);
-  };
-
-  document.addEventListener('wb:status:message', handleStatusMessage);
-
-  element.dataset.wbReady = 'statusbar';
-  return () => {
-    element.classList.remove('wb-statusbar');
-    document.removeEventListener('wb:status:message', handleStatusMessage);
-  };
 }
 
 export default { navbar, sidebar, menu, pagination, steps, treeview, backtotop, link, statusbar };

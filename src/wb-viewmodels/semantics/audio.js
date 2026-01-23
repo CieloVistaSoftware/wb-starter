@@ -465,11 +465,11 @@ function injectAudioStyles() {
       border: 2px solid rgba(59,130,246,0.5);
       box-shadow: 0 2px 8px rgba(0,0,0,0.4); cursor: pointer;
     }
-    [data-theme="light"] .wb-audio {
+    [theme="light"] .wb-audio {
       background: linear-gradient(145deg, #e8e8f0 0%, #d8d8e8 50%, #c8c8d8 100%) !important;
       box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
     }
-    [data-theme="light"] .wb-audio__eq-container { background: rgba(0,0,0,0.05) !important; }
+    [theme="light"] .wb-audio__eq-container { background: rgba(0,0,0,0.05) !important; }
   `;
   document.head.appendChild(style);
 }

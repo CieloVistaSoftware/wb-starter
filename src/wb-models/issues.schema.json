@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://wb-starter.local/schemas/issues.schema.json",
+  "title": "Issues Input",
+  "description": "Schema for raw user-submitted issues/notes in WB Starter",
+  "type": "object",
+  "required": ["notes"],
+  "properties": {
+    "notes": {
+      "type": "array",
+      "description": "List of user-submitted notes (each paragraph becomes an issue)",
+      "items": {
+        "$ref": "#/definitions/Note"
+      }
+    },
+    "lastUpdated": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of last modification"
+    }
+  },
+  "definitions": {
+    "Note": {
+      "type": "object",
+      "required": ["id", "content", "createdAt"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the note",
+          "pattern": "^(note-|claude-)\\d+$",
+          "examples": ["note-1737302400000", "claude-1737302400000"]
+        },
+        "content": {
+          "type": "string",
+          "description": "The note content (paragraphs separated by blank lines become separate issues)"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when the note was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when the note was last updated"
+        },
+        "isClaudeResponse": {
+          "type": "boolean",
+          "description": "True if this note is a response from Claude",
+          "default": false
+        },
+        "status": {
+          "type": "string",
+          "enum": ["success", "error"],
+          "description": "Status of Claude's response (only for Claude responses)"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+
+  "behavior": "issues",
+  "baseClass": "wb-issues",
+
+  "$view": [
+    {
+      "name": "container",
+      "tag": "div",
+      "class": "wb-issues"
+    }
+  ],
+
+  "$methods": {
+    "addNote": "Adds a new note/issue",
+    "deleteNote": "Deletes a note by ID",
+    "updateNote": "Updates a note's content"
+  },
+
+  "$cssAPI": {
+    "--wb-issues-gap": "Gap between issue items"
+  }
+}

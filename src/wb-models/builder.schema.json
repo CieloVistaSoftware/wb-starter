@@ -212,6 +212,41 @@
         }
       ]
     },
+    "componentHtmlView": {
+      "description": "Rules for component HTML view button",
+      "rules": [
+        {
+          "id": "HTML_BUTTON_VISIBLE",
+          "trigger": "Component dropped on canvas",
+          "action": "Show HTML button appears in component overlay",
+          "details": "Every dropped component displays a '{ }' button in its overlay bar next to the delete button. Button shows 'Show/Hide HTML' tooltip."
+        },
+        {
+          "id": "HTML_VIEW_TOGGLE",
+          "trigger": "Click Show HTML button",
+          "action": "Toggle between visual content and HTML code view",
+          "details": "Clicking the button hides the visual preview and shows formatted HTML code. Clicking again returns to visual preview."
+        },
+        {
+          "id": "HTML_BUTTON_ACTIVE_STATE",
+          "trigger": "HTML view is visible",
+          "action": "Button shows active state (green)",
+          "details": "When HTML view is active, the button changes to green to indicate state. Returns to purple when HTML view is hidden."
+        },
+        {
+          "id": "HTML_VIEW_FORMATTED",
+          "trigger": "Show HTML view",
+          "action": "HTML is formatted with indentation",
+          "details": "The displayed HTML is auto-formatted with proper indentation and line breaks for readability."
+        },
+        {
+          "id": "HTML_VIEW_READ_ONLY",
+          "trigger": "HTML view visible",
+          "action": "HTML code is read-only",
+          "details": "The HTML view is for inspection only. Users cannot edit the code directly in this view."
+        }
+      ]
+    },
     "previewMode": {
       "description": "Rules for preview mode behavior",
       "rules": [
@@ -356,6 +391,21 @@
           "Verify Footer section immediately turns green",
           "Verify canvas scrolls to Footer",
           "Verify template browser shows footer templates"
+        ]
+      },
+      {
+        "name": "Component Show HTML button toggles code view",
+        "type": "interactions",
+        "steps": [
+          "Add a Hero component to Main",
+          "Verify '{ }' button visible in component overlay",
+          "Click the '{ }' button",
+          "Verify visual content is hidden",
+          "Verify HTML code is displayed with formatting",
+          "Verify button shows green active state",
+          "Click button again",
+          "Verify visual content returns",
+          "Verify HTML code is hidden"
         ]
       }
     ]

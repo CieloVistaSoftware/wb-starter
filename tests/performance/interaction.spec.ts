@@ -7,7 +7,7 @@ test.describe('Interaction Performance', () => {
     await page.goto('/?page=home');
     
     // Find the modal trigger button (using the one we added to home page)
-    const modalTrigger = page.locator('button[data-modal-title="Glass Modal"]');
+    const modalTrigger = page.locator('button[modal-title="Glass Modal"]');
     await modalTrigger.waitFor({ state: 'visible' });
     
     const startTime = Date.now();

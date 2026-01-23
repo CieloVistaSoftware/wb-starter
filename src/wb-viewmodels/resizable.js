@@ -4,6 +4,13 @@
  * Make an element resizable.
  * 
  * Helper Attribute: [x-resizable]
+ * 
+ * Options:
+ *   - directions: 'n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw', 'all' (default: 'se')
+ *   - minWidth, minHeight: minimum size in pixels
+ *   - maxWidth, maxHeight: maximum size in pixels
+ *   - aspectRatio: maintain aspect ratio while resizing
+ *   - persist: localStorage key to save/restore size
  * -----------------------------------------------------------------------------
  */
 export function resizable(element, options = {}) {
@@ -14,7 +21,29 @@ export function resizable(element, options = {}) {
     maxWidth: parseInt(options.maxWidth || element.dataset.maxWidth || '0', 10) || Infinity,
     maxHeight: parseInt(options.maxHeight || element.dataset.maxHeight || '0', 10) || Infinity,
     aspectRatio: options.aspectRatio ?? element.hasAttribute('data-aspect-ratio'),
+    persist: options.persist || element.dataset.persist || null,
     ...options
+  };
+
+  // Persistence helpers
+  const storageKey = config.persist ? `wb-resizable-${config.persist}` : null;
+  
+  const loadSize = () => {
+    if (!storageKey) return null;
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey));
+      if (saved && saved.width && saved.height) {
+        return saved;
+      }
+    } catch {}
+    return null;
+  };
+  
+  const saveSize = (width, height) => {
+    if (!storageKey) return;
+    try {
+      localStorage.setItem(storageKey, JSON.stringify({ width, height }));
+    } catch {}
   };
 
   element.classList.add('wb-resizable');
@@ -23,6 +52,13 @@ export function resizable(element, options = {}) {
   const computedStyle = window.getComputedStyle(element);
   if (computedStyle.position === 'static') {
     element.style.position = 'relative';
+  }
+
+  // Restore persisted size if available
+  const savedSize = loadSize();
+  if (savedSize) {
+    element.style.width = `${savedSize.width}px`;
+    element.style.height = `${savedSize.height}px`;
   }
 
   // Parse directions
@@ -181,9 +217,15 @@ export function resizable(element, options = {}) {
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
     
+    const finalWidth = element.offsetWidth;
+    const finalHeight = element.offsetHeight;
+    
+    // Save size if persist enabled
+    saveSize(finalWidth, finalHeight);
+    
     element.dispatchEvent(new CustomEvent('wb:resize:end', {
       bubbles: true,
-      detail: { width: element.offsetWidth, height: element.offsetHeight }
+      detail: { width: finalWidth, height: finalHeight }
     }));
   };
 

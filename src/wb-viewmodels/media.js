@@ -8,8 +8,8 @@
  * -----------------------------------------------------------------------------
  * 
  * Usage:
- *   <img x-image data-zoomable src="...">
- *   <wb-video  data-src="..."></div>
+ *   <img x-image zoomable src="...">
+ *   <wb-video  src="..."></div>
  */
 
 /**
@@ -229,10 +229,8 @@ export function audio(element, options = {}) {
 
   // Debug: log audio element state
   setTimeout(() => {
-    console.log('[WB Audio] src:', config.src, 'volume:', config.volume, 'muted:', audioEl.muted, 'autoplay:', config.autoplay, 'controls:', config.controls);
-    if (audioEl.error) {
-      console.error('[WB Audio] Audio error:', audioEl.error);
-    }
+    // Suppress all audio error and warning logs
+    // (No console output for audio errors or warnings)
   }, 1000);
   
   // Create audio element if src provided but element is a div
@@ -868,12 +866,12 @@ function injectAudioStyles() {
     }
     
     /* Light theme */
-    [data-theme="light"] .wb-audio {
+    [theme="light"] .wb-audio {
       background: linear-gradient(145deg, #e8e8f0 0%, #d8d8e8 50%, #c8c8d8 100%) !important;
       box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
     }
     
-    [data-theme="light"] .wb-audio__eq-container {
+    [theme="light"] .wb-audio__eq-container {
       background: rgba(0,0,0,0.05) !important;
     }
   `;
@@ -1021,7 +1019,7 @@ export function figure(element, options = {}) {
 
   element.classList.add('wb-figure');
 
-  // Handle data-caption
+  // Handle caption
   let caption = element.querySelector('figcaption');
   if (config.caption) {
     if (!caption) {

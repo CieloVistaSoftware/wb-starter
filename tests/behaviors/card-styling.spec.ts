@@ -16,7 +16,7 @@ test.describe('Card Styling Standards', () => {
   test('elevated cards have LIGHTER background than base cards', async ({ page }) => {
     // Get a base card background
     const baseCard = page.locator('article.wb-card:not(.wb-card--elevated)').first();
-    const elevatedCard = page.locator('[data-elevated="true"]').first();
+    const elevatedCard = page.locator('[elevated="true"]').first();
     
     await expect(baseCard).toBeVisible();
     await expect(elevatedCard).toBeVisible();
@@ -125,7 +125,7 @@ test.describe('Card Styling Standards', () => {
   });
 
   test('elevated cards have box-shadow', async ({ page }) => {
-    const elevatedCard = page.locator('[data-elevated="true"]').first();
+    const elevatedCard = page.locator('[elevated="true"]').first();
     await expect(elevatedCard).toBeVisible();
     
     const shadow = await elevatedCard.evaluate(el => {

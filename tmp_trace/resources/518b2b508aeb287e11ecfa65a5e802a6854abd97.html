@@ -1,0 +1,82 @@
+<!--
+  Canvas View
+  Single page canvas with element/component buttons inside
+  Pages are in root/pages folder, Home is always present
+-->
+
+<!-- Canvas Viewport -->
+<div class="canvas-viewport">
+  <div class="canvas canvas-single-page">
+    <div class="canvas-page-header">
+      <span class="page-title" id="canvas-page-title">Home</span>
+      <span class="page-path" id="canvas-page-path">/pages/home.html</span>
+      <div class="page-options">
+        <label class="page-option">
+          <input type="checkbox" id="showHeader" checked onchange="togglePageSection('header', this.checked)">
+          <span>Header</span>
+        </label>
+        <label class="page-option">
+          <input type="checkbox" id="showFooter" checked onchange="togglePageSection('footer', this.checked)">
+          <span>Footer</span>
+        </label>
+      </div>
+    </div>
+    
+    <!-- Header Section (collapsible, shared across pages) -->
+    <div class="canvas-section header" id="canvas-header">
+      <div class="section-label">Header (shared)</div>
+      <div class="section-content" id="header-container">
+        <div class="canvas-drop-zone" data-section="header">Drop components here</div>
+      </div>
+    </div>
+    
+    <!-- Main Section -->
+    <div class="canvas-section main" id="canvas-main">
+      <!-- Toolbar inside canvas -->
+      <div class="canvas-toolbar">
+        <span>Canvas</span>
+        <span id="componentCount">0 components</span>
+        <div class="toolbar-group">
+          <button class="toolbar-btn" onclick="EditorToolbar.toggleDropdown('dropdown-element', this)">
+            + Element <span class="dropdown-caret">▼</span>
+          </button>
+          <div class="toolbar-dropdown dropdown-wide" id="dropdown-element"></div>
+        </div>
+        <div class="toolbar-group">
+          <button class="toolbar-btn" onclick="EditorToolbar.toggleDropdown('dropdown-component', this)">
+            + Component <span class="dropdown-caret">▼</span>
+          </button>
+          <div class="toolbar-dropdown dropdown-wide" id="dropdown-component"></div>
+        </div>
+      </div>
+      
+      <!-- Content area -->
+      <div class="section-label">Main</div>
+      <div class="canvas-elements" id="main-container">
+        <div class="canvas-drop-zone" data-section="main">Drop components here</div>
+      </div>
+    </div>
+    
+    <!-- Footer Section (collapsible, shared across pages) -->
+    <div class="canvas-section footer" id="canvas-footer">
+      <div class="section-label">Footer (shared)</div>
+      <div class="section-content" id="footer-container">
+        <div class="canvas-drop-zone" data-section="footer">Drop components here</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Toggle header/footer visibility
+function togglePageSection(section, visible) {
+  const el = document.getElementById(`canvas-${section}`);
+  if (el) {
+    el.style.display = visible ? '' : 'none';
+  }
+  // Update page config
+  if (typeof updatePageProperty === 'function') {
+    updatePageProperty(`show${section.charAt(0).toUpperCase() + section.slice(1)}`, visible);
+  }
+}
+</script>

@@ -1,13 +1,19 @@
-# PCE (Pseudo-Custom Elements) - WB v3.0
+# PCE (Pseudo-Custom Elements) – WB v3.0 (2026)
 
-> **Version:** 3.0  
-> **Updated:** 2026-01-14
+> **Version:** 3.0.0  
+> **Last Updated:** 2026-01-17  
+> **Status:** Active
+
 
 ## Overview
 
-PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of generic divs with behavior attributes. WB v3.0 supports two naming conventions that are functionally equivalent.
+PCE (Pseudo-Custom Elements) enables semantic, schema-driven HTML using either the `wb-*` namespace or noun-first aliases. All PCEs are fully supported in WB v3.0 and are functionally equivalent to their behavior-attribute counterparts.
+
+
+---
 
 ## Naming Conventions
+
 
 ### 1. WB Namespace (Recommended)
 ```html
@@ -16,6 +22,7 @@ PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of
 <wb-cardstats data-value="1,234"></wb-cardstats>
 ```
 
+
 ### 2. Noun-First Aliases (Also Supported)
 ```html
 <profile-card data-name="Sarah"></profile-card>
@@ -23,12 +30,17 @@ PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of
 <stats-card data-value="1,234"></stats-card>
 ```
 
+
 ### 3. Behavior Attribute (Traditional)
 ```html
 <div x-behavior="cardprofile" data-name="Sarah"></div>
 ```
 
-All three are equivalent and produce the same result.
+
+All three are equivalent and produce the same result. Use the `wb-*` form for maximum compatibility and future-proofing.
+
+---
+
 
 ---
 
@@ -41,6 +53,9 @@ All three are equivalent and produce the same result.
 | **WBServices Pattern** | Dependency injection for shared services |
 | **HTMLElement Inheritance** | Components extend HTMLElement properly |
 | **x-behavior Attribute** | Standard attribute for behavior declaration |
+
+---
+
 
 ---
 
@@ -119,6 +134,9 @@ All three are equivalent and produce the same result.
 
 ---
 
+
+---
+
 ## How It Works
 
 ```
@@ -134,6 +152,9 @@ All three are equivalent and produce the same result.
 4. Hydration
    └── cardprofile(element, options) enhances the element in-place
 ```
+
+---
+
 
 ---
 
@@ -157,6 +178,9 @@ const customElementMappings = [
   // ...
 ];
 ```
+
+---
+
 
 ---
 
@@ -196,6 +220,9 @@ const customElementMappings = [
 
 ---
 
+
+---
+
 ## Performance
 
 | Metric | Traditional | PCE + Lazy Loading |
@@ -204,6 +231,9 @@ const customElementMappings = [
 | Time to Interactive | ~2s | ~0.3s |
 | Component Load | All upfront | On-demand |
 | Memory Usage | High | Low (only visible) |
+
+---
+
 
 ---
 
@@ -217,6 +247,9 @@ npx playwright test tests/behaviors/pce-demo.spec.ts
 # View test page
 # http://localhost:3000/demos/pce-test.html
 ```
+
+---
+
 
 ---
 
@@ -239,7 +272,16 @@ Or with behavior attribute:
 
 ---
 
-## Related Documentation
+
+---
+
+## References & Related Documentation
+
+- See docs/builder/pages.md for schema-driven page builder rules
+- See docs/plans/_today/TODO.md for current priorities
+- See docs/builder.md for builder architecture
+- See docs/plans/MVVM-MIGRATION.md for migration and architecture
+- See docs/PAGE-BUILDER-RULES.md for content rules
 
 - [WB Architecture](/docs/architecture/wb_internals.md)
 - [Attribute Naming Standard](/docs/architecture/ATTRIBUTE-NAMING-STANDARD.md)

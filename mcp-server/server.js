@@ -61,6 +61,15 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           required: ["command"],
         },
       },
+      {
+        name: "health",
+        description: "Health check - returns server status and basic diagnostics",
+        inputSchema: {
+          type: "object",
+          properties: {},
+          required: [],
+        },
+      },
     ],
   };
 });
@@ -75,6 +84,22 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
   if (name === "npm_command") {
     return await runNpmCommand(args.command);
+  }
+
+  if (name === "health") {
+    return {
+      content: [{
+        type: "text",
+        text: `## MCP Server Health\n\n` +
+              `**Status:** ✅ Running\n` +
+              `**Server:** npm-runner v1.0.0\n` +
+              `**Project Dir:** ${PROJECT_DIR}\n` +
+              `**Timestamp:** ${new Date().toISOString()}\n` +
+              `**Node Version:** ${process.version}\n` +
+              `**Platform:** ${process.platform}\n` +
+              `**PID:** ${process.pid}`
+      }],
+    };
   }
 
   return {
@@ -167,7 +192,7 @@ async function runNpmCommand(command) {
   }
 }
 
-function runCommand(command, args, cwd) {
+function runCommand(command, args, cwd, timeoutMs = 120000) {
   return new Promise((resolve) => {
     const proc = spawn(command, args, {
       cwd,
@@ -177,6 +202,14 @@ function runCommand(command, args, cwd) {
 
     let stdout = "";
     let stderr = "";
+    let timedOut = false;
+
+    // Timeout handler - kill process and return partial results
+    const timeout = setTimeout(() => {
+      timedOut = true;
+      proc.kill('SIGTERM');
+      setTimeout(() => proc.kill('SIGKILL'), 5000); // Force kill after 5s
+    }, timeoutMs);
 
     proc.stdout.on("data", (data) => {
       stdout += data.toString();
@@ -187,11 +220,16 @@ function runCommand(command, args, cwd) {
     });
 
     proc.on("close", (exitCode) => {
-      resolve({ stdout, stderr, exitCode });
+      clearTimeout(timeout);
+      if (timedOut) {
+        stderr += `\n\n⚠️ TIMEOUT: Process killed after ${timeoutMs/1000}s. Partial results returned.`;
+      }
+      resolve({ stdout, stderr, exitCode: timedOut ? 124 : exitCode, timedOut });
     });
 
     proc.on("error", (err) => {
-      resolve({ stdout, stderr: err.message, exitCode: 1 });
+      clearTimeout(timeout);
+      resolve({ stdout, stderr: err.message, exitCode: 1, timedOut: false });
     });
   });
 }

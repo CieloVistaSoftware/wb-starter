@@ -60,7 +60,7 @@
     "mdhtml.schema.json",
     "move.schema.json",
     "navbar.schema.json",
-    "notes.schema.json",
+    "issues.schema.json",
     "progress.schema.json",
     "rating.schema.json",
     "resizable.schema.json",
@@ -213,7 +213,7 @@
       "description": "Utility and content components",
       "count": 5,
       "schemas": [
-        "notes.schema.json",
+        "issues.schema.json",
         "span.schema.json",
         "darkmode.schema.json",
         "themecontrol.schema.json",

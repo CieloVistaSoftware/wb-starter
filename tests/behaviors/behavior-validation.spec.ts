@@ -150,12 +150,12 @@ function generateTestHtml(behaviorName: string, meta: BehaviorMeta, content: str
   // Determine tag
   let tag = meta.element || 'div';
   
-  // Handle input types - put type BEFORE data-wb for proper parsing
+  // Handle input types - put type BEFORE wb for proper parsing
   let attrs = '';
   if (meta.inputType) {
-    attrs = `type="${meta.inputType}" data-wb="${behaviorName}"`;
+    attrs = `type="${meta.inputType}" wb="${behaviorName}"`;
   } else {
-    attrs = `data-wb="${behaviorName}"`;
+    attrs = `wb="${behaviorName}"`;
   }
   
   // Self-closing tags

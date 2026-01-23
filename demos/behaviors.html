@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -239,7 +239,7 @@
       <p>Interactive demo of all available behaviors</p>
     </div>
     <div style="display: flex; gap: 1rem; align-items: center;">
-      <wb-codecontrol data-size="sm"</div>
+      <wb-codecontrol size="sm"</div>
       <wb-themecontrol></div>
     </div>
   </header>
@@ -260,7 +260,7 @@
       <strong style="color: var(--primary); font-size: 1.1rem;">🎨 Live Code Theme Preview</strong>
       <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: var(--text-secondary);">Change ANY dropdown → ALL code blocks update instantly. They're synced! Try <code>grayscale</code> for black/white.</p>
     </div>
-    <wb-codecontrol data-size="sm" data-show-label="false"</div>
+    <wb-codecontrol size="sm" show-label="false"</div>
   </div>
 
   <!-- Auto-Inject Mode Callout -->
@@ -277,11 +277,11 @@
       <!-- BEFORE column -->
       <div>
         <div style="font-size: 0.85rem; font-weight: 600; color: var(--danger-color); margin-bottom: 0.5rem;">❌ BEFORE (Web Behaviors v1.0)</div>
-        <wb-mdhtml data-size="xs" style="margin: 0; border: 1px solid var(--danger-color); border-radius: var(--radius-sm); display: block;">
+        <wb-mdhtml size="xs" style="margin: 0; border: 1px solid var(--danger-color); border-radius: var(--radius-sm); display: block;">
 ```html
-&lt;!-- Every element needs data-wb --&gt;
+&lt;!-- Every element needs wb --&gt;
 &lt;button  
-  data-variant="primary"&gt;
+  variant="primary"&gt;
   Click Me
 &lt;/button&gt;
 
@@ -307,11 +307,11 @@
       <!-- AFTER column -->
       <div>
         <div style="font-size: 0.85rem; font-weight: 600; color: var(--success-color); margin-bottom: 0.5rem;">✅ AFTER (WB v2.0)</div>
-        <wb-mdhtml data-size="xs" style="margin: 0; border: 1px solid var(--success-color); border-radius: var(--radius-sm); display: block;">
+        <wb-mdhtml size="xs" style="margin: 0; border: 1px solid var(--success-color); border-radius: var(--radius-sm); display: block;">
 ```html
 &lt;!-- Just write semantic HTML --&gt;
 &lt;button 
-  data-variant="primary"&gt;
+  variant="primary"&gt;
   Click Me
 &lt;/button&gt;
 
@@ -325,7 +325,7 @@
 
 &lt;figure 
   data-img-src=&quot;url&quot; 
-  data-caption="Caption"&gt;
+  caption="Caption"&gt;
 &lt;/figure&gt;
 ```
         </wb-mdhtml>
@@ -391,15 +391,15 @@
       <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0 0 0.5rem 0;">Add to <strong>any element</strong> via <code>data-wb</code> attribute — click to try:</p>
       <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.8rem;">
         <button x-ripple style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>ripple</code></button>
-        <span x-tooltip data-tooltip="I'm a tooltip!" style="padding: 0.25rem 0.5rem; cursor: help; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>tooltip</code></span>
-        <button x-copy data-text="Copied from WB!" style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>copy</code></button>
+        <span x-tooltip tooltip="I'm a tooltip!" style="padding: 0.25rem 0.5rem; cursor: help; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>tooltip</code></span>
+        <button x-copy text="Copied from WB!" style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>copy</code></button>
         <div x-draggable style="padding: 0.25rem 0.5rem; cursor: move; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>draggable</code></div>
-        <button x-fullscreen data-target="body" style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>fullscreen</code></button>
+        <button x-fullscreen target="body" style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>fullscreen</code></button>
         <button x-print style="padding: 0.25rem 0.5rem; cursor: pointer; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);"><code>print</code></button>
-        <span x-tooltip data-tooltip="Press Ctrl+K to test" style="padding: 0.25rem 0.5rem; cursor: help; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);" data-hotkey="ctrl+k" onclick="alert('Hotkey triggered!')"><code>hotkey</code></span>
+        <span x-tooltip tooltip="Press Ctrl+K to test" style="padding: 0.25rem 0.5rem; cursor: help; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-tertiary);" hotkey="ctrl+k" onclick="alert('Hotkey triggered!')"><code>hotkey</code></span>
       </div>
       <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0.5rem 0 0 0;">
-        Example: <code>&lt;button x-ripple x-tooltip data-tooltip="Save changes"&gt;</code>
+        Example: <code>&lt;button x-ripple x-tooltip tooltip="Save changes"&gt;</code>
       </p>
     </div>
     
@@ -408,18 +408,18 @@
       <div style="font-size: 0.9rem; font-weight: 600; color: var(--accent); margin-bottom: 0.5rem;">✨ Animation Effects</div>
       <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0 0 0.5rem 0;">Click to preview — add to any element:</p>
       <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.8rem;">
-        <code class="effect-demo" data-effect="bounce" style="cursor: pointer;">bounce</code>
-        <code class="effect-demo" data-effect="shake" style="cursor: pointer;">shake</code>
-        <code class="effect-demo" data-effect="pulse" style="cursor: pointer;">pulse</code>
-        <code class="effect-demo" data-effect="wobble" style="cursor: pointer;">wobble</code>
-        <code class="effect-demo" data-effect="tada" style="cursor: pointer;">tada</code>
-        <code class="effect-demo" data-effect="flip" style="cursor: pointer;">flip</code>
-        <code class="effect-demo" data-effect="rotate" style="cursor: pointer;">rotate</code>
-        <code class="effect-demo" data-effect="swing" style="cursor: pointer;">swing</code>
-        <code class="effect-demo" data-effect="jello" style="cursor: pointer;">jello</code>
-        <code class="effect-demo" data-effect="heartbeat" style="cursor: pointer;">heartbeat</code>
-        <code class="effect-demo" data-effect="flash" style="cursor: pointer;">flash</code>
-        <code class="effect-demo" data-effect="rubberband" style="cursor: pointer;">rubberband</code>
+        <code class="effect-demo" effect="bounce" style="cursor: pointer;">bounce</code>
+        <code class="effect-demo" effect="shake" style="cursor: pointer;">shake</code>
+        <code class="effect-demo" effect="pulse" style="cursor: pointer;">pulse</code>
+        <code class="effect-demo" effect="wobble" style="cursor: pointer;">wobble</code>
+        <code class="effect-demo" effect="tada" style="cursor: pointer;">tada</code>
+        <code class="effect-demo" effect="flip" style="cursor: pointer;">flip</code>
+        <code class="effect-demo" effect="rotate" style="cursor: pointer;">rotate</code>
+        <code class="effect-demo" effect="swing" style="cursor: pointer;">swing</code>
+        <code class="effect-demo" effect="jello" style="cursor: pointer;">jello</code>
+        <code class="effect-demo" effect="heartbeat" style="cursor: pointer;">heartbeat</code>
+        <code class="effect-demo" effect="flash" style="cursor: pointer;">flash</code>
+        <code class="effect-demo" effect="rubberband" style="cursor: pointer;">rubberband</code>
       </div>
     </div>
     
@@ -468,13 +468,13 @@
       <div class="demo-area">
         <div class="demo-row">
           <button
-            data-variant="primary">Primary</button>
+            variant="primary">Primary</button>
           <button
-            data-variant="secondary">Secondary</button>
+            variant="secondary">Secondary</button>
           <button
-            data-variant="outline">Outline</button>
+            variant="outline">Outline</button>
           <button
-            data-variant="ghost">Ghost</button>
+            variant="ghost">Ghost</button>
         </div>
       </div>
     </div>
@@ -486,7 +486,7 @@
           placeholder="Default input"
           style="width: 100%">
         <input
-          data-icon="🔍"
+          icon="🔍"
           placeholder="With icon"
           style="width: 100%">
       </div>
@@ -497,12 +497,12 @@
       <div class="demo-area">
         <div class="demo-row">
           <label style="display:flex; gap:0.5rem; align-items:center;">
-            <wb-switch type="checkbox"
+            <wb-switch variant="checkbox"
               id="demo-notifications-switch">
             <span>Notifications</span>
           </label>
           <label style="display:flex; gap:0.5rem; align-items:center;">
-            <wb-switch type="checkbox"
+            <wb-switch variant="checkbox"
               id="demo-dark-mode-switch"
               checked>
             <span>Dark Mode</span>
@@ -627,20 +627,20 @@
       <div class="demo-area" style="display:flex; flex-direction:column; gap:1rem; width: 100%;">
         <div
           id="progress-uploading"
-          data-value="0"
-          data-label="Uploading..."
-          data-variant="primary"></div>
+          value="0"
+          label="Uploading..."
+          variant="primary"></div>
         <div
           id="progress-processing"
-          data-value="0"
-          data-label="Processing"
-          data-striped="true"
-          data-animated="true"
-          data-variant="warning"></div>
+          value="0"
+          label="Processing"
+          striped="true"
+          animated="true"
+          variant="warning"></div>
         <div
-          data-value="100"
-          data-label="Complete"
-          data-variant="success"></div>
+          value="100"
+          label="Complete"
+          variant="success"></div>
         <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">
           ⏱️ Upload resets every 8s, Processing resets every 5s
         </p>
@@ -671,29 +671,29 @@
         <div class="demo-row" style="justify-content: center; width: 100%;">
           <button
             x-tooltip x-ripple
-            data-tooltip="I am a tooltip on top!"
-            data-tooltip-position="top"
+            tooltip="I am a tooltip on top!"
+            tooltip-position="top"
             style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
             Top
           </button>
           <button
             x-tooltip x-ripple
-            data-tooltip="I am a tooltip on right!"
-            data-tooltip-position="right"
+            tooltip="I am a tooltip on right!"
+            tooltip-position="right"
             style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
             Right
           </button>
           <button
             x-tooltip x-ripple
-            data-tooltip="I am a tooltip on bottom!"
-            data-tooltip-position="bottom"
+            tooltip="I am a tooltip on bottom!"
+            tooltip-position="bottom"
             style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
             Bottom
           </button>
           <button
             x-tooltip x-ripple
-            data-tooltip="I am a tooltip on left!"
-            data-tooltip-position="left"
+            tooltip="I am a tooltip on left!"
+            tooltip-position="left"
             style="padding:0.5rem 1rem; background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">
             Left
           </button>
@@ -701,7 +701,7 @@
         <p style="text-align: center; width: 100%; margin-top: 1rem;">
           <span
             x-tooltip
-            data-tooltip="Inline tooltips work too!"
+            tooltip="Inline tooltips work too!"
             style="text-decoration: underline; cursor: help;">Hover me</span> for inline help.
         </p>
       </div>
@@ -713,14 +713,14 @@
         <div class="demo-row">
           <button
             x-toast
-            data-message="Action saved successfully!"
-            data-type="success"
+            message="Action saved successfully!"
+            variant="success"
             class="wb-button">
             Show Toast
           </button>
           <button
             x-notify
-            data-message="New notification received"
+            message="New notification received"
             class="wb-button">
             Show Notify
           </button>
@@ -739,7 +739,7 @@
       <div class="demo-area" style="display:block">
         <div
           x-stack
-          data-gap="sm">
+          gap="sm">
           <div style="background:var(--bg-tertiary); padding:0.5rem; border-radius: 4px;">Item 1</div>
           <div style="background:var(--bg-tertiary); padding:0.5rem; border-radius: 4px;">Item 2</div>
           <div style="background:var(--bg-tertiary); padding:0.5rem; border-radius: 4px;">Item 3</div>
@@ -752,7 +752,7 @@
       <div class="demo-area" style="display:block">
         <div
           x-cluster
-          data-gap="xs">
+          gap="xs">
           <wb-badge>JavaScript</span>
           <wb-badge>HTML</span>
           <wb-badge>CSS</span>
@@ -766,7 +766,7 @@
     <div class="behavior-card">
       <div class="behavior-title">Grid <span class="behavior-code">x-grid</span></div>
       <div class="demo-area" style="display:block">
-        <wb-grid data-columns="2" data-gap="sm"
+        <wb-grid data-columns="2" gap="sm"
           <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">1</div>
           <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">2</div>
           <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">3</div>
@@ -791,7 +791,7 @@
             style="flex: 1; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
           <button
             x-copy x-ripple
-            data-target="#copy-target"
+            target="#copy-target"
             style="padding:0.5rem 1rem; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer; overflow:hidden; position:relative;">📋 Copy</button>
         </div>
       </div>
@@ -813,8 +813,8 @@
       <div class="demo-area">
         <button
           x-confetti
-          data-count="100"
-          data-label="Celebrate!">🎉</button>
+          count="100"
+          label="Celebrate!">🎉</button>
       </div>
     </div>
 
@@ -825,8 +825,8 @@
           <span
             id="typewriter-demo"
             x-typewriter
-            data-text="Hello! I am typing this text out character by character using WB Behaviors."
-            data-speed="50"
+            text="Hello! I am typing this text out character by character using WB Behaviors."
+            speed="50"
             style="font-family: monospace; font-size: 1.1rem; color: var(--primary);"></span>
           <button
             class="wb-button wb-button--sm wb-button--secondary"
@@ -896,7 +896,7 @@
     <div class="behavior-card">
       <div class="behavior-title">Audio <span class="behavior-code">&lt;audio&gt;</span></div>
       <div class="demo-area">
-        <wb-audio data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" data-controls="true"</div>
+        <wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" controls="true"</div>
       </div>
     </div>
     <div class="behavior-card">
@@ -915,76 +915,76 @@
         <!-- Full example -->
         <div
           x-tooltip
-          data-tooltip="Full syntax: data-img-src, data-alt, and data-caption. The img and figcaption are auto-generated from attributes. Zero child tags needed!"
-          data-tooltip-position="top"
+          tooltip="Full syntax: data-img-src, data-alt, and data-caption. The img and figcaption are auto-generated from attributes. Zero child tags needed!"
+          tooltip-position="top"
           style="width: 150px;">
           <figure
-            data-img-src="https://picsum.photos/150/100?random=1"
-            data-alt="Mountain landscape"
-            data-caption="Full syntax">
+            img-src="https://picsum.photos/150/100?random=1"
+            alt="Mountain landscape"
+            caption="Full syntax">
           </figure>
         </div>
         
         <!-- Minimal example -->
         <div
           x-tooltip
-          data-tooltip="Minimal syntax: only data-img-src required. Alt text auto-defaults to the src URL when omitted. Caption is optional."
-          data-tooltip-position="top"
+          tooltip="Minimal syntax: only img-src required. Alt text auto-defaults to the src URL when omitted. Caption is optional."
+          tooltip-position="top"
           style="width: 150px;">
           <figure
-            data-img-src="https://picsum.photos/150/100?random=2">
+            img-src="https://picsum.photos/150/100?random=2">
           </figure>
         </div>
         
         <!-- Lightbox example -->
         <div
           x-tooltip
-          data-tooltip="Lightbox mode: add data-lightbox to enable click-to-fullscreen. Opens a modal overlay with the full-size image. Press ESC or click outside to close."
-          data-tooltip-position="top"
+          tooltip="Lightbox mode: add lightbox to enable click-to-fullscreen. Opens a modal overlay with the full-size image. Press ESC or click outside to close."
+          tooltip-position="top"
           style="width: 150px;">
           <figure
-            data-img-src="https://picsum.photos/150/100?random=3"
-            data-caption="Click me!"
-            data-lightbox>
+            img-src="https://picsum.photos/150/100?random=3"
+            caption="Click me!"
+            lightbox>
           </figure>
         </div>
         
         <!-- Zoom example -->
         <div
           x-tooltip
-          data-tooltip="Zoom mode: add data-zoom for hover-to-scale effect. Image scales to 1.05x on mouseenter, returns to normal on mouseleave. Great for galleries."
-          data-tooltip-position="top"
+          tooltip="Zoom mode: add zoom for hover-to-scale effect. Image scales to 1.05x on mouseenter, returns to normal on mouseleave. Great for galleries."
+          tooltip-position="top"
           style="width: 150px;">
           <figure
-            data-img-src="https://picsum.photos/150/100?random=4"
-            data-caption="Hover me!"
-            data-zoom>
+            img-src="https://picsum.photos/150/100?random=4"
+            caption="Hover me!"
+            zoom>
           </figure>
         </div>
         
         <!-- Overlay caption example -->
         <div
           x-tooltip
-          data-tooltip="Overlay caption: data-caption-position='overlay' places caption over the image with a gradient background. Perfect for hero images and cards."
-          data-tooltip-position="top"
+          tooltip="Overlay caption: caption-position='overlay' places caption over the image with a gradient background. Perfect for hero images and cards."
+          tooltip-position="top"
           style="width: 150px;">
           <figure
-            data-img-src="https://picsum.photos/150/100?random=5"
-            data-caption="Overlay caption"
-            data-caption-position="overlay">
+            img-src="https://picsum.photos/150/100?random=5"
+            caption="Overlay caption"
+            caption-position="overlay">
           </figure>
         </div>
         
         <!-- Lazy loading example -->
         <div
           x-tooltip
-          data-tooltip="Lazy loading: add data-lazy for native browser lazy loading. Image only loads when scrolled into viewport. Improves page performance."
-          data-tooltip-position="top"
+          tooltip="Lazy loading: add lazy for native browser lazy loading. Image only loads when scrolled into viewport. Improves page performance."
+          tooltip-position="top"
           style="width: 150px;">
           <figure
-            data-img-src="https://picsum.photos/150/100?random=6"
-            data-caption="Lazy loaded"
-            data-lazy>
+            img-src="https://picsum.photos/150/100?random=6"
+            caption="Lazy loaded"
+            lazy>
           </figure>
         </div>
         
@@ -1007,9 +1007,9 @@
       <div class="behavior-title">Tabs <span class="behavior-code"></span></div>
       <div class="demo-area">
         <wb-tabs>
-          <div data-tab="Tab 1">Content for Tab 1</div>
-          <div data-tab="Tab 2">Content for Tab 2</div>
-          <div data-tab="Tab 3">Content for Tab 3</div>
+          <div tab="Tab 1">Content for Tab 1</div>
+          <div tab="Tab 2">Content for Tab 2</div>
+          <div tab="Tab 3">Content for Tab 3</div>
         </div>
       </div>
     </div>
@@ -1033,7 +1033,7 @@
       <div class="demo-area">
         <button
           x-collapse
-          data-target="#collapse-content">Toggle Content</button>
+          target="#collapse-content">Toggle Content</button>
         <div
           id="collapse-content"
           style="margin-top: 1rem; padding: 1rem; background: var(--bg-tertiary);">
@@ -1057,8 +1057,8 @@
       <div class="behavior-title">Drawer <span class="behavior-code"></span></div>
       <div class="demo-area" style="height: 200px; overflow: hidden; border: 1px solid var(--border-color);">
         <div
-          data-position="left"
-          data-width="150px"
+          position="left"
+          width="150px"
           style="height: 100%;">
           <div style="background: var(--bg-tertiary); height: 100%; padding: 1rem;">Sidebar</div>
           <div style="padding: 1rem;">Main Content</div>
@@ -1069,8 +1069,8 @@
       <div class="behavior-title">Toggle <span class="behavior-code"></span></div>
       <div class="demo-area">
         <button
-          data-target="#toggle-box"
-          data-class="active">Toggle Class</button>
+          target="#toggle-box"
+          class="active">Toggle Class</button>
         <div
           id="toggle-box"
           style="width: 50px; height: 50px; background: red; margin-top: 1rem; transition: all 0.3s;"></div>
@@ -1152,7 +1152,7 @@
       <div class="demo-area">
         <div
           data-columns="3"
-          data-gap="0.5rem"
+          gap="0.5rem"
           style="width: 100%">
           <div style="background: #333; height: 50px;"></div>
           <div style="background: #444; height: 80px;"></div>
@@ -1166,7 +1166,7 @@
       <div class="behavior-title">Switcher <span class="behavior-code"></span></div>
       <div class="demo-area">
         <div
-          data-threshold="200px">
+          threshold="200px">
           <div style="background: #333; padding: 1rem;">Item 1</div>
           <div style="background: #444; padding: 1rem;">Item 2</div>
           <div style="background: #555; padding: 1rem;">Item 3</div>
@@ -1177,7 +1177,7 @@
       <div class="behavior-title">Frame <span class="behavior-code"></span></div>
       <div class="demo-area">
         <div
-          data-ratio="16/9"
+          ratio="16/9"
           style="width: 100%; background: #000;">
           <img
             src="https://picsum.photos/400/300"
@@ -1189,7 +1189,7 @@
       <div class="behavior-title">Reel <span class="behavior-code"></span></div>
       <div class="demo-area">
         <div
-          data-item-width="100px">
+          item-width="100px">
           <div style="background: #333; height: 80px; width: 100px;">1</div>
           <div style="background: #444; height: 80px; width: 100px;">2</div>
           <div style="background: #555; height: 80px; width: 100px;">3</div>
@@ -1228,7 +1228,7 @@
       <div class="behavior-title">Sidebar Layout <span class="behavior-code"></span></div>
       <div class="demo-area" style="height: 200px; border: 1px solid var(--border-color);">
         <div
-          data-sidebar-width="100px">
+          sidebar-width="100px">
           <div style="background: var(--bg-tertiary); padding: 1rem;">Side</div>
           <div style="padding: 1rem;">Main Content Area</div>
         </div>
@@ -1283,7 +1283,7 @@
       codeSize: 'xs'            // xs, sm, md, lg, xl
     };
 
-    // Auto-inject mapping: data-wb value -> { element, note }
+    // Auto-inject mapping: wb value -> { element, note }
     const autoinjectMap = {
       'button': { element: 'button', note: 'Auto-injects via <button>. Explicit: ' },
       'card': { element: 'article', note: 'Auto-injects via <article>. Explicit:' },
@@ -1441,7 +1441,7 @@
         return { html, note: `ℹ️ Explicit behavior. Use:` };
       }
 
-      // Remove data-wb attribute for autoinject format
+      // Remove wb attribute for autoinject format
       let transformed = html.replace(/\s*]*"/g, '');
       
       // Clean up: collapse multiple newlines into single newline
@@ -1459,8 +1459,8 @@
       if (codeSpan) {
         const text = codeSpan.textContent;
         
-        // Check for data-wb pattern first
-        const wbMatch = text.match(/data-wb="([^"]+)"/);
+        // Check for wb pattern first
+        const wbMatch = text.match(/wb="([^"]+)"/);
         if (wbMatch) return wbMatch[1];
         
         // Check for <tagname> pattern (semantic HTML)

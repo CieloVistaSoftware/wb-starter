@@ -10,8 +10,8 @@
 |----------|-------------|
 | [Architecture](./architecture.md) | Core framework architecture and patterns |
 | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards |
-| [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work |
-| [TODO](./_today/TODO.md) | Upcoming tasks |
+| [Current Status](./plans/_today/CURRENT-STATUS.md) | Today's progress and active work |
+| [TODO](./plans/_today/TODO.md) | Upcoming tasks |
 
 ---
 
@@ -23,10 +23,9 @@
 - [WBViews](./architecture/WBVIEWS.md)
 - [Proposed Custom Elements](./architecture/proposed-custom-elements.md)
 - [Schema-First Architecture](./schema-first-architecture.md)
-- [CSS Standards](./css-standards.md)
-- [Semantic Standard](./semantic-standard.md)
-- [Container Pattern](./container-pattern.md)
-- [Code Examples Standard](./code-examples-standard.md)
+- [CSS Standards](./standards/css-standards.md)
+- [Semantic Standard](./standards/semantic-standard.md)
+- [Code Examples Standard](./standards/code-examples-standard.md)
 
 ---
 
@@ -79,15 +78,16 @@
 
 ## Builder System
 
-- [Builder Workflow](./builder-workflow.md)
-- [Builder Properties](./builder-properties.md)
-- [Builder Interaction Rules](./builder-interaction-rules.md)
-- [Builder Onboarding Flow](./builder-onboarding-flow.md)
-- [Builder Section Focus](./builder-section-focus.md)
-- [Builder Testing](./builder-testing.md)
-- [Builder TODO](./builder.todo.md)
-- [Builder Fixes](./builder/BUILDER-FIXES.md)
-- [User Page Builder Plan](./USER-PAGE-BUILDER-PLAN.md)
+| [Builder Workflow](./builder/builder-workflow.md)
+| [Builder Properties](./builder/builder-properties.md)
+| [Builder Interaction Rules](./builder/builder-interaction-rules.md)
+| [Builder Onboarding Flow](./builder/builder-onboarding-flow.md)
+| [Builder Section Focus](./builder/builder-section-focus.md)
+| [Builder Testing](./builder/builder-testing.md)
+| [Builder TODO](./builder/builder.todo.md)
+| [Builder Tree](./builder/builder-tree.md)
+| [Builder Fixes](./builder/BUILDER-FIXES.md)
+- [User Page Builder Plan](./plans/USER-PAGE-BUILDER-PLAN.md)
 
 ---
 
@@ -124,8 +124,8 @@
 
 ## Migration & Improvements
 
-- [MVVM Migration](./MVVM-MIGRATION.md)
-- [MVVM Migration Plan](./MVVM-MIGRATION-PLAN.md)
+- [MVVM Migration](./plans/MVVM-MIGRATION.md)
+- [MVVM Migration Plan](./plans/MVVM-MIGRATION-PLAN.md)
 - [V3 Notes Guide](./NOTES-V3-GUIDE.md)
 - [Improvements](./IMPROVEMENTS.md)
 - [PCE Candidates](./pce-candidates.md)

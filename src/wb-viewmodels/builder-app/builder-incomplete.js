@@ -454,7 +454,7 @@ function showAllIssues() {
       
       <div class="checklist-items">
         ${results.map(analysis => `
-          <div class="checklist-component" data-id="${analysis.id}">
+          <div class="checklist-component" id="${analysis.id}">
             <div class="checklist-component-name" onclick="document.getElementById('allIssuesModal').remove(); window.selComp?.(document.getElementById('${analysis.id}'))" style="cursor:pointer">
               ${analysis.behavior || 'Component'} <span style="opacity:0.5">→</span>
             </div>
@@ -553,7 +553,7 @@ function showIssuesPanel(wrapper) {
     html += `<div class="issues-section issues-section--error">
       <div class="issues-header">⚠️ ${analysis.issues.length} Issue${analysis.issues.length > 1 ? 's' : ''}</div>
       ${analysis.issues.map(issue => `
-        <div class="issue-item issue-item--error" data-field="${issue.field}">
+        <div class="issue-item issue-item--error" field="${issue.field}">
           <span class="issue-icon">●</span>
           <span class="issue-message">${issue.message}</span>
           <button class="issue-goto" onclick="scrollToProperty('${wrapper.id}', '${issue.field}')" title="Go to field">→</button>
@@ -566,7 +566,7 @@ function showIssuesPanel(wrapper) {
     html += `<div class="issues-section issues-section--warning">
       <div class="issues-header">⚡ ${analysis.warnings.length} Warning${analysis.warnings.length > 1 ? 's' : ''}</div>
       ${analysis.warnings.map(warning => `
-        <div class="issue-item issue-item--warning" data-field="${warning.field}">
+        <div class="issue-item issue-item--warning" field="${warning.field}">
           <span class="issue-icon">●</span>
           <span class="issue-message">${warning.message}</span>
           <button class="issue-goto" onclick="scrollToProperty('${wrapper.id}', '${warning.field}')" title="Go to field">→</button>
@@ -583,7 +583,7 @@ function showIssuesPanel(wrapper) {
  * Scroll to and highlight a property field
  */
 window.scrollToProperty = (wrapperId, fieldName) => {
-  const input = document.querySelector(`[data-prop-field="${fieldName}"]`) ||
+  const input = document.querySelector(`[prop-field="${fieldName}"]`) ||
                 document.getElementById(`prop-${wrapperId}-${fieldName}`);
   
   if (input) {
@@ -638,13 +638,13 @@ function showTemplateChecklist(templateName, componentIds) {
             <div class="checklist-component-name">${analysis.behavior}</div>
             ${analysis.issues.map(issue => `
               <label class="checklist-item checklist-item--error">
-                <input type="checkbox" data-id="${analysis.id}" data-field="${issue.field}">
+                <input type="checkbox" id="${analysis.id}" field="${issue.field}">
                 <span>${issue.message}</span>
               </label>
             `).join('')}
             ${analysis.warnings.map(warning => `
               <label class="checklist-item checklist-item--warning">
-                <input type="checkbox" data-id="${analysis.id}" data-field="${warning.field}">
+                <input type="checkbox" id="${analysis.id}" field="${warning.field}">
                 <span>${warning.message}</span>
               </label>
             `).join('')}
@@ -705,7 +705,7 @@ window.closeChecklist = () => {
  * Mark property field with warning/error state
  */
 function markPropertyField(wrapper, fieldName, severity) {
-  const input = document.querySelector(`[data-prop-field="${fieldName}"]`);
+  const input = document.querySelector(`[prop-field="${fieldName}"]`);
   if (input) {
     input.classList.add(`prop-${severity}`);
   }

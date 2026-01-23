@@ -1,46 +1,88 @@
-# WB Page Builder - Content Creation Rules
+# WB Page Builder – Content Creation Rules (2026)
 
-## 📄 PAGE
+> **Version:** 3.0.0  
+> **Last Updated:** 2026-01-17  
+> **Status:** Active
+
+---
+
+## Self-Testing
+
+**Rule:** Builder includes built-in self-tests that validate all functionality against documented rules.
+
+**How to Run:**
+- Click "🧪 Test" button in the top bar
+- Or press `Ctrl+Shift+T`
+
+**Test Categories:**
+| Category | Tests |
+|----------|-------|
+| Page Management | Home page, slugs, required properties |
+| Component Placement | Drop zones, section restrictions |
+| Navbar | Auto-create pages, link updates |
+| Global Sections | Header/footer sharing |
+| Card Component | 6 card types, required fields |
+| CTA Component | Phone/email modes, gradients |
+| UI Elements | Panels, drawers, status bar |
+| Editing Methods | CRUD functions, handlers |
+| Templates | All required templates exist |
+| Save/Load | Export, import functions |
+| Data Integrity | Component arrays, orphan check |
+
+**Implementation:**
+See `src/builder/builder-self-test.js`
+
+---
+
+## Page Properties & Rules
 
 ### Page Properties
 
 | Property | Description | Editable |
 |----------|-------------|----------|
-| **Name** | Display name shown in navbar and pages list | Yes (except Home) |
+| **Name** | Display name in navbar and pages list | Yes (except Home) |
 | **Slug** | URL filename (e.g., `about.html`) | Yes (except Home) |
-| **SEO Title** | Browser tab title / search result title | Yes |
+| **SEO Title** | Browser/search result title | Yes |
 | **SEO Description** | Meta description for search engines | Yes |
 
 ### Page Rules
 
+
 | Rule | Details |
 |------|---------|
-| **Home page is protected** | Cannot rename, cannot change slug, cannot delete |
+| **Home page is protected** | Cannot rename, change slug, or delete |
 | **Home slug is always** | `index.html` |
 | **Minimum pages** | Must have at least 1 page (Home) |
-| **Maximum pages in navbar** | First 4 pages shown in navigation |
+| **Max navbar pages** | First 4 pages shown in navigation |
 | **Duplicate IDs blocked** | Cannot create page with same ID as existing |
 | **Slug auto-generates** | From page name: lowercase, spaces→hyphens, special chars removed, `.html` suffix |
 | **Slug manual override** | Once manually edited, won't auto-update when name changes |
 | **Auto-switch after create** | Builder switches to new page immediately |
 | **Navbar auto-updates** | When pages are added/removed/renamed |
 
-### Page Templates
+
+### Page Templates (2026)
+
 
 | Template | Initial Content |
 |----------|-----------------|
 | **📋 Blank** | Empty page (no components) |
 | **🦸 With Hero** | Hero section with page name as title |
-| **📞 Contact** | Hero + CTA component (green gradient, phone mode) |
+| **📞 Contact** | Hero + CTA (phone mode, green gradient) |
 | **ℹ️ About** | Hero + Team Members section |
 
 ---
 
-## 🌐 SPA vs NON-SPA
+
+---
+
+## SPA vs Non-SPA (Multi-Page)
+
 
 ### Current Mode: **Non-SPA (Multi-Page Application)**
 
 The builder currently generates a traditional multi-page website where each page is a separate HTML file.
+
 
 | Aspect | Non-SPA (Current) | SPA (Future) |
 |--------|-------------------|--------------|
@@ -54,7 +96,9 @@ The builder currently generates a traditional multi-page website where each page
 | **Hosting** | Any static host | Any static host (with routing config) |
 | **Offline Support** | Limited | Better (with service worker) |
 
+
 ### Export Behavior by Mode
+
 
 #### Non-SPA Export (Current)
 ```
@@ -75,6 +119,7 @@ Each HTML file contains:
 - Page-specific main content
 - All CSS links
 
+
 #### SPA Export (Future Enhancement)
 ```
 site-export.zip
@@ -93,6 +138,7 @@ Single HTML file with:
 - JavaScript router
 - Dynamic content loading from `site.json`
 
+
 ### Recommended Mode by Use Case
 
 | Use Case | Recommended | Reason |
@@ -105,9 +151,14 @@ Single HTML file with:
 
 ---
 
-## 🧩 COMPONENTS
 
-### Component Placement Rules
+---
+
+## Component Placement & Rules
+
+
+### Placement Matrix
+
 
 | Component | Header | Main | Footer | Notes |
 |-----------|:------:|:----:|:------:|-------|
@@ -125,6 +176,7 @@ Single HTML file with:
 | 🔻 Footer | ❌ | ❌ | ✅ | |
 | 📧 Newsletter | ❌ | ❌ | ✅ | |
 
+
 ### Section Behavior
 
 | Section | Shared Across Pages? | Content Scope |
@@ -132,6 +184,7 @@ Single HTML file with:
 | **Header** | ✅ Yes | Global - same on all pages |
 | **Main Content** | ❌ No | Page-specific - unique per page |
 | **Footer** | ✅ Yes | Global - same on all pages |
+
 
 ### Duplicate Component Rules
 
@@ -141,9 +194,13 @@ Single HTML file with:
 
 ---
 
-## 🃏 CARD COMPONENT
+
+---
+
+## Card Component (6 Types)
 
 The Card component supports 6 different types, each with unique fields:
+
 
 ### Card Types
 
@@ -155,6 +212,7 @@ The Card component supports 6 different types, each with unique fields:
 | **Team** | 👤 | Team member profile |
 | **Testimonial** | 💬 | Customer quote |
 | **CTA** | 📞 | Call to action |
+
 
 ### Card Fields by Type
 
@@ -176,11 +234,16 @@ The Card component supports 6 different types, each with unique fields:
 | Gradient Start | | | | | | ✅ |
 | Gradient End | | | | | | ✅ |
 
+
 *Fields shown based on Contact Type selection
 
 ---
 
-## 📞 CTA COMPONENT
+
+---
+
+## CTA Component
+
 
 ### Contact Modes
 
@@ -188,6 +251,7 @@ The Card component supports 6 different types, each with unique fields:
 |------|---------------|---------|
 | **Phone** | `tel:` link - opens phone dialer | 📞 (555) 123-4567 |
 | **Email** | `mailto:` link - opens email client | ✉️ Send Us an Email |
+
 
 ### CTA Fields
 
@@ -205,11 +269,15 @@ The Card component supports 6 different types, each with unique fields:
 
 ---
 
-## ✨ FEATURES GRID
+
+---
+
+## Features Grid
 
 - **Fixed 3-card layout**
 - Click individual card to select and edit
 - Selected card shows purple border
+
 
 ### Feature Card Fields
 
@@ -221,11 +289,15 @@ The Card component supports 6 different types, each with unique fields:
 
 ---
 
-## 💰 PRICING GRID
+
+---
+
+## Pricing Grid
 
 - **Fixed 3-card layout**
 - Click individual card to select and edit
 - One card can be "highlighted" (recommended tier)
+
 
 ### Pricing Card Fields
 
@@ -239,7 +311,10 @@ The Card component supports 6 different types, each with unique fields:
 
 ---
 
-## ✏️ EDITING METHODS
+
+---
+
+## Editing Methods
 
 | Component | Edit Method | Details |
 |-----------|-------------|---------|
@@ -258,13 +333,18 @@ The Card component supports 6 different types, each with unique fields:
 
 ---
 
-## 💾 SAVING & EXPORT
+
+---
+
+## Saving & Export
+
 
 ### Save (LocalStorage)
 
 | Key | Content |
 |-----|---------|
 | `wb-page-builder-site` | Complete site JSON |
+
 
 ### Load Options
 
@@ -274,12 +354,14 @@ The Card component supports 6 different types, each with unique fields:
 | **From Template** | Load pre-built site.json template |
 | **From File** | Upload custom .json file |
 
+
 ### Export Options
 
 | Format | Output |
 |--------|--------|
 | **JSON** | `site.json` - data backup, can be re-imported |
 | **HTML** | `site-export.zip` - deployable website |
+
 
 ### Export Security
 
@@ -290,7 +372,11 @@ The Card component supports 6 different types, each with unique fields:
 
 ---
 
-## 🔄 STATE MANAGEMENT
+
+---
+
+## State Management
+
 
 ### Data Model
 
@@ -314,6 +400,7 @@ Site State
 └── currentPageId
 ```
 
+
 ### Page Switch Behavior
 
 1. Save current page's main content
@@ -325,7 +412,10 @@ Site State
 
 ---
 
-## 📊 STATUS BAR
+
+---
+
+## Status Bar
 
 The status bar always shows the current active element:
 
@@ -336,7 +426,19 @@ The status bar always shows the current active element:
 
 ---
 
-## 🚀 FUTURE ENHANCEMENTS
+
+---
+
+## Future Enhancements
+
+---
+
+## References
+
+- See docs/builder/pages.md for schema-driven page builder rules
+- See docs/plans/_today/TODO.md for current priorities
+- See docs/builder.md for builder architecture
+- See docs/plans/MVVM-MIGRATION.md for migration and architecture
 
 ### Planned Features
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" theme="dark" id="auto-public-claude-statushtml-1">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Responses</title>
+  <link rel="stylesheet" href="/src/styles/themes.css">
+  <style>
+    body { 
+      font-family: system-ui, sans-serif; 
+      padding: 2rem; 
+      background: var(--bg-primary); 
+      color: var(--text-primary);
+    }
+    h1 { margin-bottom: 1rem; }
+    .response {
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 8px;
+      border-left: 4px solid;
+    }
+    .response.success {
+      background: rgba(34, 197, 94, 0.1);
+      border-color: #22c55e;
+    }
+    .response.error {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: #ef4444;
+    }
+    .response .status {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .response.success .status { color: #22c55e; }
+    .response.error .status { color: #ef4444; }
+    .response .issue { 
+      font-weight: 600; 
+      margin: 0.5rem 0;
+    }
+    .response .action {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .response .time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+    .empty { color: var(--text-muted); font-style: italic; }
+  </style>
+</head>
+<body id="auto-public-claude-statushtml-2">
+  <h1>🤖 Claude Responses</h1>
+  <div id="responses"></div>
+  
+  <script>
+    async function loadResponses() {
+      try {
+        const res = await fetch('/data/claude-responses.json');
+        const data = await res.json();
+        const container = document.getElementById('responses');
+        
+        if (!data.responses || data.responses.length === 0) {
+          container.innerHTML = '<p class="empty">No responses yet</p>';
+          return;
+        }
+        
+        container.innerHTML = data.responses.map(r => `
+          <div class="response ${r.status}" id="auto-public-claude-statushtml-3">
+            <div class="status">${r.status === 'success' ? '✅ FIXED' : '❌ FAILED'}</div>
+            <div class="issue">${r.issue}</div>
+            <div class="action">${r.action}</div>
+            <div class="time">${new Date(r.timestamp).toLocaleString()}</div>
+          </div>
+        `).join('');
+      } catch (e) {
+        document.getElementById('responses').innerHTML = '<p class="empty">Error loading responses</p>';
+      }
+    }
+    
+    loadResponses();
+    setInterval(loadResponses, 3000); // Auto-refresh
+  </script>
+</body>
+</html>

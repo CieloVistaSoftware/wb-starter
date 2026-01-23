@@ -112,11 +112,11 @@ export function mkEl(c, id) {
       }
 
       // Make semantic children contenteditable
-      const semanticTags = [
+      const childEditableTags = [
         'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'BUTTON', 'A', 'LI', 'LABEL',
         'SUMMARY', 'DT', 'DD', 'SMALL', 'STRONG', 'EM', 'B', 'I', 'U', 'TH', 'TD'
       ];
-      if (semanticTags.includes(tagName.toUpperCase()) || (childDef.d && childDef.d.text)) {
+      if (childEditableTags.includes(tagName.toUpperCase()) || (childDef.d && childDef.d.text)) {
         childEl.setAttribute('contenteditable', 'true');
         childEl.classList.add('canvas-editable');
         childEl.dataset.editableKey = childDef.content ? 'content' : 'text';

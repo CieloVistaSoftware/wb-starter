@@ -46,7 +46,7 @@ function testFileExistsForBehavior(behavior: string): string | null {
 function isInRegressionTests(behavior: string): boolean {
   const content = readFile(path.join(REGRESSION_DIR, 'regression-tests.spec.ts'));
   return content.includes(`"${behavior}"`) || content.includes(`'${behavior}'`) || 
-         content.includes(`b: '${behavior}'`) || content.includes(`data-wb="${behavior}"`);
+         content.includes(`b: '${behavior}'`) || content.includes(`wb="${behavior}"`);
 }
 
 function isInPermutationTests(behavior: string): boolean {

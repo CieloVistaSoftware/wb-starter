@@ -47,6 +47,20 @@
       "default": false,
       "appliesClass": "wb-navbar--sticky"
     },
+    "activeStyle": {
+      "type": "string",
+      "enum": ["none", "color", "underline", "pill", "arrow", "dot", "glow"],
+      "default": "underline",
+      "description": "How to highlight the current/active page link",
+      "appliesClass": "wb-navbar--active-{{value}}"
+    },
+    "activeColor": {
+      "type": "string",
+      "format": "color",
+      "default": "#6366f1",
+      "description": "Color for active page indicator",
+      "appliesStyle": "--wb-navbar-active-color"
+    },
     "variant": {
       "type": "string",
       "enum": [

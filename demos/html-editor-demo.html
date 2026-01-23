@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" id="auto-demos-html-editor-demohtml-1">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WB HTML Editor — Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body id="auto-demos-html-editor-demohtml-2">
+  <main style="padding:2rem;max-width:980px;margin:0 auto;font-family:Inter,system-ui,Segoe UI,Roboto;" id="auto-demos-html-editor-demohtml-3">
+    <h1>wb-html-editor — demo</h1>
+    <p>Quick playground for the <code>wb-html-editor</code> merge & history UX.</p>
+
+    <section style="display:flex;gap:1rem;align-items:flex-start;" id="auto-demos-html-editor-demohtml-4">
+      <div style="flex:1" id="auto-demos-html-editor-demohtml-5">
+        <h3>Canvas (editable)</h3>
+        <div id="canvas" style="border:1px dashed var(--border-color); padding:1rem; border-radius:8px; background:var(--bg-secondary);">
+          <div id="demo-1"><h2>Hero title</h2><p>Subtitle text</p></div>
+          <div id="demo-2"><p>Some paragraph content</p></div>
+        </div>
+
+        <p style="margin-top:.5rem;color:var(--text-secondary)">Tip: Select an element in the builder (or click the canvas below) and the editor will open for the active element.</p>
+      </div>
+
+      <div style="width:420px;" id="auto-demos-html-editor-demohtml-6">
+        <h3>HTML Editor (properties)</h3>
+        <wb-html-editor style="--wb-demo:1;"></wb-html-editor>
+        <p style="color:var(--text-secondary);font-size:0.9rem;margin-top:.5rem">Use <kbd>Import canvas</kbd> to load whole canvas; try per-hunk apply in Merge Preview.</p>
+      </div>
+    </section>
+
+    <hr style="margin:2rem 0">
+    <p style="color:var(--text-secondary)">This demo uses the same behavior as the Builder Properties panel but runs standalone.</p>
+  </main>
+
+  <script type="module">
+    import WB from '/src/core/wb-lazy.js';
+    WB.init({ debug: false, autoInject: true });
+
+    // open editor for first demo node after views load
+    document.addEventListener('DOMContentLoaded', () => {
+      const editor = document.querySelector('wb-html-editor');
+      const el = document.getElementById('demo-1');
+      if (editor && editor.openFor) editor.openFor(el, { mode: 'element' });
+
+      // simple click-to-select behavior for demo
+      document.getElementById('canvas').addEventListener('click', (e) => {
+        const target = e.target.closest('#canvas > *');
+        if (target && editor && editor.openFor) editor.openFor(target);
+      });
+    });
+  </script>
+</body>
+</html>

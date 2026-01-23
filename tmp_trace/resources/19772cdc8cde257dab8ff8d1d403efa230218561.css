@@ -1,0 +1,39 @@
+/**
+ * WB Starter - Stock Indicator Styles
+ */
+
+.wb-stock,
+[data-wb="stock"],
+[data-wb="ticker"],
+[data-wb="market"] {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-family: inherit;
+  border-radius: 4px;
+}
+
+.wb-ticker,
+[data-wb="ticker"] {
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+.wb-price {
+  margin-right: 0.5rem;
+}
+
+.wb-change {
+    font-size: 0.9em;
+}
+
+.wb-price.positive,
+.wb-change.positive {
+  color: var(--success-color);
+}
+
+.wb-price.negative,
+.wb-change.negative {
+  color: var(--danger-color);
+}

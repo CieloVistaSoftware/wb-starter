@@ -1,38 +1,37 @@
-# WB Page Builder - Pages System
 
-> **Version:** 2.1.0  
-> **Last Updated:** 2026-01-16  
+# WB Page Builder – Pages System (2026)
+
+> **Version:** 3.0.0  
+> **Last Updated:** 2026-01-17  
 > **Status:** Active Development
 > **Schema:** `src/wb-models/page-builder.schema.json`
 
-## 📋 Overview
+---
 
-The Pages system manages multi-page website creation in the WB Page Builder. This document defines all rules, behaviors, and implementation requirements.
+## Overview
+
+The Pages system enables multi-page website creation in the WB Page Builder. It is schema-driven, no-build, and fully integrated with the modern WB architecture (Light DOM, ESM, global CSS, and JSON-driven data).
 
 ---
 
-## 🎯 Core Principles
+## Core Principles (2026)
 
-| ID | Principle | Description |
-|----|-----------|-------------|
-| CORE-001 | **Reuse WB Components** | ALWAYS use wb-* components (wb-input, wb-control, etc.) - NEVER native HTML inputs |
-| CORE-002 | **Breadcrumb Navigation** | Properties panel shows path: `contact.html / Hero Section / wb-card` |
-| CORE-003 | **Visual Feedback** | All interactions provide immediate visual feedback (flash, borders, transitions) |
-| CORE-004 | **Searchable Browser** | Container components show categorized, searchable 20+ component list |
-| CORE-005 | **site.json Integration** | Settings MUST include site.json path and auto-load capability |
+- **Use Only WB Components:** All UI must use `<wb-*>` custom elements. Native HTML elements are not allowed for interactive controls.
+- **Breadcrumb Navigation:** Every properties panel must show a full breadcrumb path for context.
+- **Immediate Visual Feedback:** All user actions provide instant feedback (flashes, transitions, etc.).
+- **Component Browser:** All container components must provide a categorized, searchable browser with 20+ WB components.
+- **site.json Integration:** All settings panels must support site.json path and auto-load.
 
 ---
 
-## 🗂️ Page Structure
-
-### Data Model
+## Data Model (2026)
 
 ```typescript
 interface Page {
-  id: string;                    // Unique identifier (e.g., 'home', 'about')
+  id: string;                    // Unique (e.g., 'home', 'about')
   name: string;                  // Display name
-  slug: string;                  // URL filename (e.g., 'about.html')
-  seoTitle?: string;             // Browser tab / search title
+  slug: string;                  // URL (e.g., 'about.html')
+  seoTitle?: string;             // SEO/browser title
   seoDescription?: string;       // Meta description
   main: Component[];             // Page-specific components
 }
@@ -40,8 +39,8 @@ interface Page {
 interface SiteState {
   pages: Page[];
   globalSections: {
-    header: Component[];         // Shared across all pages
-    footer: Component[];         // Shared across all pages
+    header: Component[];
+    footer: Component[];
   };
   currentPageId: string;
   settings: SiteSettings;
@@ -49,7 +48,7 @@ interface SiteState {
 
 interface SiteSettings {
   siteName: string;
-  siteJson: string;              // Path to site.json config
+  siteJson: string;              // Path to site.json
   defaultTheme: 'light' | 'dark';
   confirmDelete: boolean;
   showTooltips: boolean;
@@ -60,543 +59,142 @@ interface SiteSettings {
 
 ---
 
-## 🧭 Breadcrumb Navigation
+## Breadcrumb Navigation
 
-### Rule: BREADCRUMB-001
-**Every properties panel MUST display a breadcrumb showing the current navigation path.**
+**Rule:** Every properties panel must display a breadcrumb showing the current navigation path.
 
-### Format
+**Format:**
 ```
 📁 Site / 📄 {page.name} / 🧩 {section} / {component.icon} {component.name}
 ```
 
-### Examples
-```
-📁 Site / 📄 Contact / 🧩 Main / 🦸 Hero Section
-📁 Site / 📄 Contact / 🧩 Main / 🦸 Hero Section / 🃏 wb-card
-📁 Site / 📄 Home / 🧩 Header / 🔝 Navigation Bar
-```
+**Behavior:**
+- Clickable segments for site, page, section, and component (except current, which is bold).
+- Always reflects the current selection context.
 
-### Behavior
-| Action | Result |
-|--------|--------|
-| Click `📁 Site` | Show site-level settings |
-| Click `📄 {page}` | Show page properties |
-| Click `🧩 {section}` | Show section overview |
-| Click `{component}` | Show component properties |
-| Current item | Non-clickable, bold text |
-
-### Implementation
-```javascript
-function renderBreadcrumb(context) {
-  const { page, section, component, nestedComponent } = context;
-  
-  const crumbs = [
-    { icon: '📁', label: 'Site', onClick: () => showSiteSettings() },
-    { icon: '📄', label: page.name, onClick: () => showPageProperties(page) }
-  ];
-  
-  if (section) {
-    crumbs.push({ icon: '🧩', label: section, onClick: () => showSectionOverview(section) });
-  }
-  
-  if (component) {
-    crumbs.push({ 
-      icon: component.template.icon, 
-      label: component.template.name, 
-      onClick: () => selectComponent(component) 
-    });
-  }
-  
-  if (nestedComponent) {
-    crumbs.push({ 
-      icon: getNestedInfo(nestedComponent.type).icon, 
-      label: nestedComponent.config?.title || nestedComponent.type,
-      current: true 
-    });
-  }
-  
-  return crumbs;
-}
-```
+**Implementation:**
+See `src/wb-viewmodels/breadcrumb.js` for the latest logic.
 
 ---
 
-## 🎨 Color Picker Component
+## Color Picker Component
 
-### Rule: COLOR-001
-**All color inputs MUST use the full WB colorpicker component, not native `<input type="color">`.**
+**Rule:** All color inputs must use `<wb-colorpicker>`, not native `<input type="color">`.
 
-### Required Features
-- Large swatch preview (48x48px minimum)
-- Hex input field with validation
-- Preset color palette
-- Recent colors history
-- Alpha channel support (where applicable)
+**Features:**
+- Large swatch preview (≥48x48px)
+- Hex input with validation
+- Preset palette and recent colors
+- Alpha channel support (if needed)
 
-### HTML Structure
+**See:** `src/wb-models/colorpicker.schema.json` and `src/wb-viewmodels/colorpicker.js`
+
+---
+
+## Phone Number Input Mask
+
+**Rule:** All phone number fields must use input masking for consistent formatting.
+
+**Supported:** US, International, Extension formats.
+
+**See:** `src/wb-viewmodels/phone-mask.js` for up-to-date implementation.
+
+---
+
+## Visual Feedback
+
+**Rule:** All key actions (edit, error, save, select) must trigger a visible feedback animation (e.g., border flash).
+
+**Colors:**
+- Green: Edit/Save
+- Red: Error
+- Purple: Selection
+
+**See:** `src/styles/components/feedback.css` for animation details.
+
+---
+
+## Auto-Create Linked Pages
+
+**Rule:** When dropping any component that contains a link to a page (e.g., navigation links, buttons with href, card links), the linked page **must be automatically created** if it doesn't exist.
+
+**Auto-Created Page Requirements:**
+
+| Requirement | Description |
+|-------------|-------------|
+| **Filename** | `{page-slug}.html` in `/pages/` folder |
+| **Created Date** | Today's date (YYYY-MM-DD) in page metadata and content |
+| **Page Title** | Derived from link text or component name |
+| **Default Content** | Helpful placeholder with customization instructions |
+
+**Template for Auto-Created Pages:**
 ```html
-<div class="wb-color-picker" data-field="gradientStart">
-  <label>Gradient Start Color</label>
-  <div class="color-picker-preview">
-    <div class="color-swatch" style="background: #667eea;">
-      <input type="color" value="#667eea" 
-             onchange="updateColorFromPicker(this, 'gradientStart')">
-    </div>
-    <div class="color-value">
-      <input type="text" class="color-hex-input" value="#667EEA" 
-             pattern="^#[0-9A-Fa-f]{6}$"
-             onchange="updateColorFromHex(this, 'gradientStart')">
-    </div>
+<!--
+  Page: {Page Name}
+  Created: {YYYY-MM-DD}
+  Source: Auto-generated from Page Builder
+-->
+<section class="page-placeholder">
+  <h1>{Page Name}</h1>
+  <p class="page-meta">📅 Created: {Month DD, YYYY}</p>
+  
+  <div class="customize-guide">
+    <h2>🎨 How to Customize This Page</h2>
+    <p>This page was auto-created when you added a link to it. Here's how to make it yours:</p>
+    <ol>
+      <li><strong>Open Page Builder</strong> – Select this page from the Pages panel</li>
+      <li><strong>Add Components</strong> – Drag components from the library to the canvas</li>
+      <li><strong>Edit Content</strong> – Click any component to edit its properties</li>
+      <li><strong>Change the Layout</strong> – Use wb-grid or wb-stack for structure</li>
+      <li><strong>Update SEO</strong> – Set the page title and description in Page Settings</li>
+      <li><strong>Save Changes</strong> – Click the Save button to publish</li>
+    </ol>
+    <p>💡 <em>Delete this placeholder section after adding your content.</em></p>
   </div>
-  <div class="color-presets">
-    <!-- Primary palette -->
-    <button class="color-preset" style="background: #667eea;" 
-            onclick="setColor('gradientStart', '#667eea')"></button>
-    <button class="color-preset" style="background: #764ba2;" 
-            onclick="setColor('gradientStart', '#764ba2')"></button>
-    <button class="color-preset" style="background: #10b981;" 
-            onclick="setColor('gradientStart', '#10b981')"></button>
-    <button class="color-preset" style="background: #f59e0b;" 
-            onclick="setColor('gradientStart', '#f59e0b')"></button>
-    <button class="color-preset" style="background: #ef4444;" 
-            onclick="setColor('gradientStart', '#ef4444')"></button>
-    <button class="color-preset" style="background: #8b5cf6;" 
-            onclick="setColor('gradientStart', '#8b5cf6')"></button>
-    <button class="color-preset" style="background: #06b6d4;" 
-            onclick="setColor('gradientStart', '#06b6d4')"></button>
-    <button class="color-preset" style="background: #ec4899;" 
-            onclick="setColor('gradientStart', '#ec4899')"></button>
-  </div>
-</div>
+</section>
 ```
 
-### Color Presets (Standard Palette)
-```javascript
-const COLOR_PRESETS = {
-  primary: ['#667eea', '#764ba2', '#6366f1', '#8b5cf6'],
-  success: ['#10b981', '#059669', '#22c55e', '#16a34a'],
-  warning: ['#f59e0b', '#d97706', '#eab308', '#ca8a04'],
-  danger:  ['#ef4444', '#dc2626', '#f87171', '#b91c1c'],
-  info:    ['#06b6d4', '#0891b2', '#22d3ee', '#0e7490'],
-  neutral: ['#1f2937', '#374151', '#6b7280', '#9ca3af']
-};
-```
+**Behavior:**
+- ✅ Check if target page exists before creating
+- ✅ Show toast notification: "📄 Created new page: {name}"
+- ✅ Auto-add page to the Pages list in the left sidebar
+- ✅ Set page SEO title to match the page name
+- ❌ Do NOT auto-navigate to the new page (stay on current page)
+
+**Implementation:**
+See `src/builder/builder-pages.js` → `createLinkedPage(slug, linkText)` function.
 
 ---
 
-## 📞 Phone Number Input Mask
+## Container Component Browser
 
-### Rule: PHONE-001
-**All phone number inputs MUST use input masking for consistent formatting.**
+**Rule:** All container components (wb-stack, wb-grid, etc.) must show a categorized, searchable browser with 20+ WB components.
 
-### Supported Formats
-| Format | Pattern | Example |
-|--------|---------|---------|
-| US/Canada | `(###) ###-####` | (555) 123-4567 |
-| International | `+## ### ### ####` | +44 123 456 7890 |
-| Extension | `(###) ###-#### x####` | (555) 123-4567 x1234 |
+**Categories:** Layout, Cards, Content, Interactive, Feedback
 
-### Implementation
-```javascript
-function formatPhoneNumber(input) {
-  // Strip all non-digits
-  let value = input.value.replace(/\D/g, '');
-  
-  // Limit to 10 digits (US) or 15 (international)
-  const maxLength = value.startsWith('1') || value.length <= 10 ? 10 : 15;
-  value = value.substring(0, maxLength);
-  
-  // Format based on length
-  if (value.length <= 3) {
-    input.value = value.length ? `(${value}` : '';
-  } else if (value.length <= 6) {
-    input.value = `(${value.substring(0, 3)}) ${value.substring(3)}`;
-  } else {
-    input.value = `(${value.substring(0, 3)}) ${value.substring(3, 6)}-${value.substring(6)}`;
-  }
-}
-
-function getCleanPhoneNumber(formatted) {
-  return formatted.replace(/\D/g, '');
-}
-```
-
-### HTML Structure
-```html
-<div class="property">
-  <label>Phone Number</label>
-  <div class="phone-input-group">
-    <span style="font-size: 1.2rem;">📞</span>
-    <input type="tel" 
-           class="phone-masked-input"
-           value="(555) 123-4567"
-           placeholder="(___) ___-____"
-           maxlength="14"
-           oninput="formatPhoneNumber(this)"
-           onchange="updateCTA('phoneNumber', getCleanPhoneNumber(this.value))">
-  </div>
-  <div class="phone-format-hint">Format: (555) 123-4567</div>
-</div>
-```
+**See:** `src/wb-viewmodels/component-browser.js` for the latest logic and categories.
 
 ---
 
-## ⚡ Visual Feedback
+## Settings – site.json Integration
 
-### Rule: FEEDBACK-001
-**Right-click "Edit Properties" MUST flash green border on properties panel.**
+**Rule:** Settings panel must include site.json path and auto-load toggle.
 
-### Implementation
-```javascript
-function flashPropertiesPanel() {
-  const panel = document.getElementById('propertiesPanel');
-  panel.classList.add('props-flash');
-  setTimeout(() => panel.classList.remove('props-flash'), 600);
-}
+**Panel Structure:**
+- Path input for site.json
+- Auto-load toggle
+- Manual load button
 
-// CSS Animation
-@keyframes propsFlash {
-  0% { box-shadow: inset 0 0 0 3px #10b981; }
-  50% { box-shadow: inset 0 0 0 3px #10b981, 0 0 20px rgba(16, 185, 129, 0.3); }
-  100% { box-shadow: none; }
-}
-
-.props-flash {
-  animation: propsFlash 0.6s ease-out;
-}
-```
-
-### When to Flash
-| Trigger | Flash Color |
-|---------|-------------|
-| Edit Properties (context menu) | Green (#10b981) |
-| Error / Validation failure | Red (#ef4444) |
-| Save successful | Green (#10b981) |
-| Component selected | Purple (#6366f1) |
+**See:** `src/wb-viewmodels/settings.js` for up-to-date integration code.
 
 ---
 
-## 📦 Container Component Browser
+## Test Cases (2026)
 
-### Rule: CONTAINER-001
-**Container components (wb-stack, wb-grid, wb-cluster, etc.) MUST show searchable component browser with 20+ components.**
-
-### Browser Structure
-```html
-<div class="context-menu" style="width: 320px;">
-  <input type="text" class="ctx-search" placeholder="🔍 Search components..." 
-         oninput="filterComponents(this.value)">
-  
-  <div class="ctx-scrollable">
-    <!-- Layout Components -->
-    <div class="ctx-category-header">📐 Layout</div>
-    <button class="ctx-item" onclick="insertComponent('wb-stack')">
-      <span>📚</span> wb-stack
-    </button>
-    <button class="ctx-item" onclick="insertComponent('wb-grid')">
-      <span>🔲</span> wb-grid
-    </button>
-    <!-- ... more layout components -->
-    
-    <!-- Content Components -->
-    <div class="ctx-category-header">📝 Content</div>
-    <button class="ctx-item" onclick="insertComponent('wb-card')">
-      <span>🃏</span> wb-card
-    </button>
-    <!-- ... more content components -->
-    
-    <!-- Cards (expanded) -->
-    <div class="ctx-category-header">🎴 Cards</div>
-    <button class="ctx-item" onclick="insertComponent('wb-cardimage')">
-      <span>🖼️</span> wb-cardimage
-    </button>
-    <!-- ... all 20 card variants -->
-  </div>
-</div>
-```
-
-### Component Categories
-```javascript
-const COMPONENT_CATEGORIES = {
-  layout: {
-    icon: '📐',
-    label: 'Layout',
-    items: [
-      { id: 'wb-stack', icon: '📚', name: 'Stack', desc: 'Vertical flow' },
-      { id: 'wb-cluster', icon: '🔷', name: 'Cluster', desc: 'Horizontal wrap' },
-      { id: 'wb-grid', icon: '🔲', name: 'Grid', desc: 'CSS Grid layout' },
-      { id: 'wb-container', icon: '📦', name: 'Container', desc: 'Max-width wrapper' },
-      { id: 'wb-sidebar', icon: '📑', name: 'Sidebar', desc: 'Main + aside' },
-      { id: 'wb-center', icon: '🎯', name: 'Center', desc: 'Centered content' },
-      { id: 'wb-cover', icon: '📋', name: 'Cover', desc: 'Full viewport' },
-      { id: 'wb-switcher', icon: '🔀', name: 'Switcher', desc: 'Responsive flip' },
-      { id: 'wb-reel', icon: '🎞️', name: 'Reel', desc: 'Horizontal scroll' },
-      { id: 'wb-frame', icon: '🖼️', name: 'Frame', desc: 'Aspect ratio' }
-    ]
-  },
-  cards: {
-    icon: '🎴',
-    label: 'Cards',
-    items: [
-      { id: 'wb-card', icon: '🃏', name: 'Card', desc: 'Basic card' },
-      { id: 'wb-cardimage', icon: '🖼️', name: 'Image Card', desc: 'Featured image' },
-      { id: 'wb-cardvideo', icon: '🎬', name: 'Video Card', desc: 'Embedded video' },
-      { id: 'wb-cardprofile', icon: '👤', name: 'Profile Card', desc: 'Team member' },
-      { id: 'wb-cardpricing', icon: '💰', name: 'Pricing Card', desc: 'Price tier' },
-      { id: 'wb-cardproduct', icon: '🛍️', name: 'Product Card', desc: 'E-commerce' },
-      { id: 'wb-cardstats', icon: '📊', name: 'Stats Card', desc: 'Key metrics' },
-      { id: 'wb-cardtestimonial', icon: '💬', name: 'Testimonial', desc: 'Customer quote' },
-      { id: 'wb-cardhero', icon: '🦸', name: 'Hero Card', desc: 'Full-width hero' },
-      { id: 'wb-cardfile', icon: '📁', name: 'File Card', desc: 'File download' },
-      { id: 'wb-cardnotification', icon: '🔔', name: 'Notification', desc: 'Alert card' },
-      { id: 'wb-cardportfolio', icon: '💼', name: 'Portfolio', desc: 'Project showcase' },
-      { id: 'wb-cardlink', icon: '🔗', name: 'Link Card', desc: 'Clickable card' },
-      { id: 'wb-cardhorizontal', icon: '↔️', name: 'Horizontal', desc: 'Side-by-side' },
-      { id: 'wb-cardoverlay', icon: '🎭', name: 'Overlay', desc: 'Text on image' },
-      { id: 'wb-cardbutton', icon: '🔘', name: 'Button Card', desc: 'With CTA' },
-      { id: 'wb-cardexpandable', icon: '📖', name: 'Expandable', desc: 'Collapsible' },
-      { id: 'wb-cardminimizable', icon: '➖', name: 'Minimizable', desc: 'Minimize' },
-      { id: 'wb-carddraggable', icon: '✋', name: 'Draggable', desc: 'Drag & drop' }
-    ]
-  },
-  content: {
-    icon: '📝',
-    label: 'Content',
-    items: [
-      { id: 'wb-hero', icon: '🦸', name: 'Hero', desc: 'Page header' },
-      { id: 'wb-header', icon: '🔝', name: 'Header', desc: 'Site header' },
-      { id: 'wb-footer', icon: '🔻', name: 'Footer', desc: 'Site footer' },
-      { id: 'wb-mdhtml', icon: '📄', name: 'Markdown', desc: 'Rich text' }
-    ]
-  },
-  interactive: {
-    icon: '🎮',
-    label: 'Interactive',
-    items: [
-      { id: 'wb-tabs', icon: '📑', name: 'Tabs', desc: 'Tab panels' },
-      { id: 'wb-collapse', icon: '📂', name: 'Collapse', desc: 'Accordion' },
-      { id: 'wb-dropdown', icon: '🔽', name: 'Dropdown', desc: 'Menu' },
-      { id: 'wb-drawer', icon: '📥', name: 'Drawer', desc: 'Slide panel' }
-    ]
-  },
-  feedback: {
-    icon: '💬',
-    label: 'Feedback',
-    items: [
-      { id: 'wb-alert', icon: '⚠️', name: 'Alert', desc: 'Notification' },
-      { id: 'wb-badge', icon: '🏷️', name: 'Badge', desc: 'Status indicator' },
-      { id: 'wb-progress', icon: '📊', name: 'Progress', desc: 'Progress bar' },
-      { id: 'wb-spinner', icon: '🔄', name: 'Spinner', desc: 'Loading' },
-      { id: 'wb-rating', icon: '⭐', name: 'Rating', desc: 'Star rating' }
-    ]
-  }
-};
-```
-
-### Search Filter
-```javascript
-function filterComponents(query) {
-  const q = query.toLowerCase();
-  document.querySelectorAll('.ctx-item').forEach(item => {
-    const text = item.textContent.toLowerCase();
-    item.style.display = text.includes(q) ? '' : 'none';
-  });
-  
-  // Hide empty categories
-  document.querySelectorAll('.ctx-category-header').forEach(header => {
-    const items = getNextSiblings(header, '.ctx-item');
-    const hasVisible = items.some(i => i.style.display !== 'none');
-    header.style.display = hasVisible ? '' : 'none';
-  });
-}
-```
+Test cases are defined in `tests/behaviors/ui/pages.spec.ts` and are auto-generated from schemas. See the test file for the latest scenarios.
 
 ---
 
-## ⚙️ Settings - site.json Integration
+## Schema Reference
 
-### Rule: SETTINGS-001
-**Settings panel MUST include site.json configuration path and auto-load capability.**
-
-### Settings Panel Structure
-```html
-<div class="config-section">
-  <h3>📁 Site Configuration</h3>
-  
-  <div class="config-row">
-    <div>
-      <label>site.json Path</label>
-      <small>Path to your site configuration file</small>
-    </div>
-    <input type="text" id="cfgSiteJson" value="config/site.json" 
-           placeholder="config/site.json"
-           onchange="updateSetting('siteJsonPath', this.value)">
-  </div>
-  
-  <div class="config-row">
-    <div>
-      <label>Auto-load site.json</label>
-      <small>Load configuration on startup</small>
-    </div>
-    <label class="toggle-switch">
-      <input type="checkbox" id="cfgAutoLoadSiteJson" 
-             onchange="updateSetting('autoLoadSiteJson', this.checked)">
-      <span class="toggle-slider"></span>
-    </label>
-  </div>
-  
-  <div class="config-row">
-    <div>
-      <label>Load site.json Now</label>
-      <small>Import configuration from file</small>
-    </div>
-    <button class="btn btn-secondary btn-sm" onclick="loadSiteJsonConfig()">
-      📥 Load Config
-    </button>
-  </div>
-</div>
-```
-
-### site.json Integration
-```javascript
-async function loadSiteJsonConfig() {
-  const path = builderSettings.siteJsonPath || 'config/site.json';
-  
-  try {
-    const response = await fetch(path);
-    if (!response.ok) throw new Error(`Failed to load ${path}`);
-    
-    const config = await response.json();
-    applyConfig(config);
-    updateStatus(`✅ Loaded configuration from ${path}`);
-  } catch (error) {
-    console.error('Failed to load site.json:', error);
-    updateStatus(`❌ Failed to load ${path}: ${error.message}`);
-  }
-}
-
-function applyConfig(config) {
-  // Apply branding
-  if (config.branding) {
-    // Update navbar logo
-    const navComp = components.find(c => c.type === 'navbar');
-    if (navComp) {
-      navComp.data.logo = config.branding.companyName;
-      updateNavbarDisplay(navComp);
-    }
-  }
-  
-  // Apply navigation menu as pages
-  if (config.navigationMenu) {
-    config.navigationMenu.forEach(item => {
-      ensurePageExists(item.menuItemId, item.menuItemText, item.pageToLoad);
-    });
-  }
-  
-  // Apply services as features
-  if (config.servicesList) {
-    const featuresComp = components.find(c => c.type === 'features');
-    if (featuresComp) {
-      featuresComp.data.cards = config.servicesList.slice(0, 3).map(s => ({
-        icon: s.serviceIcon || '✨',
-        title: s.serviceName,
-        description: s.serviceDescription
-      }));
-      updateFeaturesDisplay(featuresComp);
-    }
-  }
-}
-```
-
----
-
-## 🧪 Test Cases
-
-### Page Tests
-```javascript
-const PAGE_TESTS = [
-  {
-    name: 'Create page with template',
-    steps: [
-      'Click "Add Page"',
-      'Select "Contact" template',
-      'Click "Create Page"'
-    ],
-    expect: {
-      pageExists: 'contact',
-      hasComponents: ['hero', 'cta'],
-      breadcrumb: '📁 Site / 📄 Contact'
-    }
-  },
-  {
-    name: 'Breadcrumb navigation',
-    steps: [
-      'Select Hero component on Contact page',
-      'Verify breadcrumb shows full path',
-      'Click page name in breadcrumb'
-    ],
-    expect: {
-      breadcrumb: '📁 Site / 📄 Contact / 🧩 Main / 🦸 Hero Section',
-      afterClick: 'Shows page properties'
-    }
-  },
-  {
-    name: 'Color picker interaction',
-    steps: [
-      'Select CTA component',
-      'Click gradient start color swatch',
-      'Select preset color'
-    ],
-    expect: {
-      colorUpdates: true,
-      previewUpdates: true,
-      hexInputUpdates: true
-    }
-  },
-  {
-    name: 'Phone mask formatting',
-    steps: [
-      'Select CTA component',
-      'Set contact type to Phone',
-      'Type "5551234567" in phone field'
-    ],
-    expect: {
-      displayValue: '(555) 123-4567',
-      storedValue: '5551234567'
-    }
-  },
-  {
-    name: 'Edit Properties flash',
-    steps: [
-      'Right-click Hero component',
-      'Click "Edit Properties"'
-    ],
-    expect: {
-      propsPanel: 'has class props-flash',
-      animationDuration: '600ms'
-    }
-  },
-  {
-    name: 'Container component browser',
-    steps: [
-      'Right-click wb-stack component',
-      'Click "Insert WB Component"'
-    ],
-    expect: {
-      menuWidth: '320px',
-      hasSearch: true,
-      categories: ['Layout', 'Cards', 'Content', 'Interactive', 'Feedback'],
-      componentCount: '20+'
-    }
-  }
-];
-```
-
----
-
-## 📐 Schema Reference
-
-See: `src/wb-models/builder.schema.json`
-
-The complete schema for the builder page system is defined in the schema file.
+See: `src/wb-models/builder.schema.json` for the complete schema definition for the builder page system.

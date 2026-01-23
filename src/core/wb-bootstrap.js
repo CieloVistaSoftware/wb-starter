@@ -9,8 +9,8 @@
  * 
  * Usage (With Options via data attributes):
  *   <script type="module" src="/src/core/wb-bootstrap.js"
- *           data-debug
- *           data-registry="/src/wb-views/partials-registry.json">
+ *           debug
+ *           registry="/src/wb-views/partials-registry.json">
  *   </script>
  * 
  * Usage (Manual):
@@ -179,7 +179,7 @@ function parseScriptOptions() {
 
 /**
  * Auto-initialize when script loads
- * Respects data-no-auto-init attribute to disable
+ * Respects no-auto-init attribute to disable
  */
 const script = document.currentScript;
 const noAutoInit = script?.hasAttribute('data-no-auto-init');

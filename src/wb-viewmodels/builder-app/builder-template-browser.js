@@ -517,7 +517,7 @@ function renderGridMode(container) {
         ${filtered.length === 0 ? '<div class="tb-empty">No templates found</div>' : filtered.map(t => {
           const cat = categories.find(c => c.id === t.category);
           const tooltip = generateTooltip(t);
-          return `<button id="tb-grid-card-${t.id}" class="tb-card" data-id="${t.id}" title="${tooltip.replace(/"/g, '&quot;')}">
+          return `<button id="tb-grid-card-${t.id}" class="tb-card" id="${t.id}" title="${tooltip.replace(/"/g, '&quot;')}">
             <span class="tb-card-icon">${cat?.icon || '📄'}</span>
             <span class="tb-card-name">${t.name}</span>
           </button>`;
@@ -563,7 +563,7 @@ function renderSiteMode(container) {
         const layoutClass = isHorizontal ? 'tb-grid-horizontal' : 'tb-grid-compact';
         
         return `
-          <div class="tb-site-section ${isCollapsed ? 'collapsed' : ''} ${isActive ? 'filtered-active' : ''}" data-section="${id}">
+          <div class="tb-site-section ${isCollapsed ? 'collapsed' : ''} ${isActive ? 'filtered-active' : ''}" section="${id}">
             <button id="tb-section-header-${id}" class="tb-section-header" tabindex="-1" onclick="window.tbToggleSection('${id}')">
               <span class="tb-section-icon">${section.icon}</span>
               <div class="tb-section-info">
@@ -583,7 +583,7 @@ function renderSiteMode(container) {
                     const tooltip = generateTooltip(t, id);
                     const isInCanvas = templatesInCanvas.has(t.id);
                     const inCanvasClass = isInCanvas ? 'in-canvas' : '';
-                    return `<button id="tb-site-card-${t.id}" class="tb-card tb-card-small ${inCanvasClass}" data-id="${t.id}" title="${tooltip.replace(/"/g, '&quot;')}"${isInCanvas ? ' disabled' : ''}>
+                    return `<button id="tb-site-card-${t.id}" class="tb-card tb-card-small ${inCanvasClass}" id="${t.id}" title="${tooltip.replace(/"/g, '&quot;')}"${isInCanvas ? ' disabled' : ''}>
                       <span class="tb-card-icon">${cat?.icon || '📄'}</span>
                       <span class="tb-card-name">${t.name}</span>
                     </button>`;
@@ -619,7 +619,7 @@ function renderSectionsRow() {
         <div class="tb-sections-grid">
           ${SECTION_CONTAINERS.map(s => `
             <button id="tb-section-btn-${s.id}" class="tb-section-btn" 
-                    data-section-type="${s.id}" 
+                    section-type="${s.id}" 
                     title="${s.desc}\n\nClick to add to canvas"
                     onclick="window.tbAddSection('${s.id}')">
               <span class="tb-section-btn-icon">${s.icon}</span>
@@ -676,7 +676,7 @@ function generateSectionHTML(section) {
   switch (section.cols) {
     case 1:
       innerHTML = `
-        <div class="wb-drop-zone" data-drop="true" style="${dropStyle}">
+        <div class="wb-drop-zone" drop="true" style="${dropStyle}">
           <span>Drop content here</span>
         </div>`;
       break;
@@ -684,10 +684,10 @@ function generateSectionHTML(section) {
     case 2:
       innerHTML = `
         <div style="display: flex; flex-direction: row; gap: 1.5rem; width: 100%;">
-          <div class="wb-drop-zone" data-drop="true" style="${dropStyle} flex: 1;">
+          <div class="wb-drop-zone" drop="true" style="${dropStyle} flex: 1;">
             <span>Column 1</span>
           </div>
-          <div class="wb-drop-zone" data-drop="true" style="${dropStyle} flex: 1;">
+          <div class="wb-drop-zone" drop="true" style="${dropStyle} flex: 1;">
             <span>Column 2</span>
           </div>
         </div>`;
@@ -696,13 +696,13 @@ function generateSectionHTML(section) {
     case 3:
       innerHTML = `
         <div style="display: flex; flex-direction: row; gap: 1.5rem; width: 100%;">
-          <div class="wb-drop-zone" data-drop="true" style="${dropStyle} flex: 1;">
+          <div class="wb-drop-zone" drop="true" style="${dropStyle} flex: 1;">
             <span>Column 1</span>
           </div>
-          <div class="wb-drop-zone" data-drop="true" style="${dropStyle} flex: 1;">
+          <div class="wb-drop-zone" drop="true" style="${dropStyle} flex: 1;">
             <span>Column 2</span>
           </div>
-          <div class="wb-drop-zone" data-drop="true" style="${dropStyle} flex: 1;">
+          <div class="wb-drop-zone" drop="true" style="${dropStyle} flex: 1;">
             <span>Column 3</span>
           </div>
         </div>`;
@@ -711,16 +711,16 @@ function generateSectionHTML(section) {
     case 4:
       innerHTML = `
         <div style="display: flex; flex-direction: row; gap: 1rem; width: 100%;">
-          <div class="wb-drop-zone" data-drop="true" style="${dropStyle} flex: 1; min-height: 80px;">
+          <div class="wb-drop-zone" drop="true" style="${dropStyle} flex: 1; min-height: 80px;">
             <span>1</span>
           </div>
-          <div class="wb-drop-zone" data-drop="true" style="${dropStyle} flex: 1; min-height: 80px;">
+          <div class="wb-drop-zone" drop="true" style="${dropStyle} flex: 1; min-height: 80px;">
             <span>2</span>
           </div>
-          <div class="wb-drop-zone" data-drop="true" style="${dropStyle} flex: 1; min-height: 80px;">
+          <div class="wb-drop-zone" drop="true" style="${dropStyle} flex: 1; min-height: 80px;">
             <span>3</span>
           </div>
-          <div class="wb-drop-zone" data-drop="true" style="${dropStyle} flex: 1; min-height: 80px;">
+          <div class="wb-drop-zone" drop="true" style="${dropStyle} flex: 1; min-height: 80px;">
             <span>4</span>
           </div>
         </div>`;
@@ -729,10 +729,10 @@ function generateSectionHTML(section) {
     case 'sidebar-left':
       innerHTML = `
         <div style="display: flex; flex-direction: row; gap: 1.5rem; width: 100%; min-height: 300px;">
-          <aside class="wb-drop-zone" data-drop="true" style="${dropStyle} width: 250px; flex-shrink: 0; min-height: 200px; background: rgba(0,0,0,0.05);">
+          <aside class="wb-drop-zone" drop="true" style="${dropStyle} width: 250px; flex-shrink: 0; min-height: 200px; background: rgba(0,0,0,0.05);">
             <span>Sidebar</span>
           </aside>
-          <main class="wb-drop-zone" data-drop="true" style="${dropStyle} flex: 1; min-height: 200px;">
+          <main class="wb-drop-zone" drop="true" style="${dropStyle} flex: 1; min-height: 200px;">
             <span>Main Content</span>
           </main>
         </div>`;
@@ -741,10 +741,10 @@ function generateSectionHTML(section) {
     case 'sidebar-right':
       innerHTML = `
         <div style="display: flex; flex-direction: row; gap: 1.5rem; width: 100%; min-height: 300px;">
-          <main class="wb-drop-zone" data-drop="true" style="${dropStyle} flex: 1; min-height: 200px;">
+          <main class="wb-drop-zone" drop="true" style="${dropStyle} flex: 1; min-height: 200px;">
             <span>Main Content</span>
           </main>
-          <aside class="wb-drop-zone" data-drop="true" style="${dropStyle} width: 250px; flex-shrink: 0; min-height: 200px; background: rgba(0,0,0,0.05);">
+          <aside class="wb-drop-zone" drop="true" style="${dropStyle} width: 250px; flex-shrink: 0; min-height: 200px; background: rgba(0,0,0,0.05);">
             <span>Sidebar</span>
           </aside>
         </div>`;
@@ -753,7 +753,7 @@ function generateSectionHTML(section) {
     case 'full':
       sectionStyle = 'background: var(--bg-secondary, #f8f9fa); min-height: 200px; padding: 3rem 0;';
       innerHTML = `
-        <div class="wb-drop-zone" data-drop="true" style="${dropStyle} min-height: 150px; margin: 0 16px;">
+        <div class="wb-drop-zone" drop="true" style="${dropStyle} min-height: 150px; margin: 0 16px;">
           <span>Full Width Content</span>
         </div>`;
       break;
@@ -761,7 +761,7 @@ function generateSectionHTML(section) {
     case 'centered':
       innerHTML = `
         <div style="max-width: 42rem; margin: 0 auto; width: 100%;">
-          <div class="wb-drop-zone" data-drop="true" style="${dropStyle}">
+          <div class="wb-drop-zone" drop="true" style="${dropStyle}">
             <span>Centered Content</span>
           </div>
         </div>`;
@@ -769,7 +769,7 @@ function generateSectionHTML(section) {
       
     default:
       innerHTML = `
-        <div class="wb-drop-zone" data-drop="true" style="${dropStyle}">
+        <div class="wb-drop-zone" drop="true" style="${dropStyle}">
           <span>Drop content here</span>
         </div>`;
   }
@@ -1440,7 +1440,7 @@ function addScheduleDemoSection() {
           <p class="text-white/70 text-sm mb-2">💡 Pro Tip: Embed your calendar</p>
           <code class="text-xs text-green-300 bg-black/30 px-3 py-2 rounded block">
             &lt;!-- Add Calendly widget here --&gt;<br>
-            &lt;div class="calendly-inline-widget" data-url="https://calendly.com/your-link"&gt;&lt;/div&gt;
+            &lt;div class="calendly-inline-widget" url="https://calendly.com/your-link"&gt;&lt;/div&gt;
           </code>
         </div>
       </div>

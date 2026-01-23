@@ -8,7 +8,7 @@
  * -----------------------------------------------------------------------------
  * 
  * Usage:
- *   <wb-hero  data-variant="particles">...</div>
+ *   <wb-hero  variant="particles">...</div>
  */
 
 /**

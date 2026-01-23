@@ -1,213 +1,140 @@
-// Builder Component Permutations
-// Note: Builder is a page tool, not a data-wb behavior component
-// These tests verify builder rendering with various property combinations
+/**
+ * Builder Component Library Tests
+ * Tests the component library rendering and page management
+ */
+import { test, expect, Page } from '@playwright/test';
 
-import { test, expect, Page, Locator } from '@playwright/test';
+// Use desktop viewport for all builder tests
+test.use({ viewport: { width: 1280, height: 720 } });
 
-type Permutation = {
-  desc: string;
-  html: string;
-  // Optional explicit expectations:
-  expectedClasses?: string[];
-  unexpectedClasses?: string[];
-  attrs?: Record<string, string | RegExp | boolean>;
-};
-
-const permutations: Permutation[] = [
-  {
-    desc: 'Default builder component',
-    html: '<div data-wb="builder" data-label="Test" data-icon="🧩"></div>',
-    attrs: { 'data-label': /Test/, 'data-icon': /🧩/ },
-    expectedClasses: ['wb-builder'], // base class, adjust to your actual base class
-  },
-  {
-    desc: 'Dark theme',
-    html: '<div data-wb="builder" data-label="Test" data-icon="🧩" data-theme="dark"></div>',
-    expectedClasses: ['wb-builder--theme-dark'],
-    unexpectedClasses: ['wb-builder--theme-light'],
-  },
-  {
-    desc: 'Info variant',
-    html: '<div data-wb="builder" data-label="Test" data-icon="🧩" data-variant="info"></div>',
-    expectedClasses: ['wb-builder--variant-info'],
-  },
-  {
-    desc: 'Clickable',
-    html: '<div data-wb="builder" data-label="Test" data-icon="🧩" data-clickable></div>',
-    expectedClasses: ['wb-builder--clickable'],
-  },
-  {
-    desc: 'Not hoverable',
-    html: '<div data-wb="builder" data-label="Test" data-icon="🧩" data-hoverable="false"></div>',
-    unexpectedClasses: ['wb-builder--hoverable'],
-  },
-  {
-    desc: 'Elevated',
-    html: '<div data-wb="builder" data-label="Test" data-icon="🧩" data-elevated></div>',
-    expectedClasses: ['wb-builder--elevated'],
-  },
-  {
-    desc: 'All features',
-    html: '<div data-wb="builder" data-label="Test" data-icon="🧩" data-theme="info" data-variant="success" data-clickable data-hoverable="true" data-elevated></div>',
-    expectedClasses: [
-      'wb-builder--theme-info',
-      'wb-builder--variant-success',
-      'wb-builder--clickable',
-      'wb-builder--hoverable',
-      'wb-builder--elevated',
-    ],
-  },
-];
-
-// --- helpers ---------------------------------------------------------------
-
-function normalizeDataValue(raw: string | null): string | boolean {
-  if (raw === null) return '';
-  if (raw === '') return true; // boolean attribute present
-  if (raw.toLowerCase() === 'true') return true;
-  if (raw.toLowerCase() === 'false') return false;
-  return raw;
-}
-
-async function injectPermutation(page: Page, html: string) {
-  await page.evaluate(async (markup) => {
-    // Wait for window.add to be available (max 2s)
-    let tries = 0;
-    while (typeof (window as any).add !== 'function' && tries < 20) {
-      await new Promise(r => setTimeout(r, 100));
-      tries++;
-    }
-    const container = document.createElement('div');
-    container.innerHTML = markup.trim();
-    const el = container.firstElementChild as HTMLElement | null;
-    if (!el) throw new Error('Permutation HTML did not produce an element');
-
-    // Build the object your builder's add() expects.
-    const data: any = { b: 'builder', n: 'Test', d: {} as Record<string, any> };
-    for (const attr of Array.from(el.attributes)) {
-      if (!attr.name.startsWith('data-')) continue;
-      const key = attr.name.replace('data-', '');
-      const v = attr.value;
-      data.d[key] = v === '' ? true : v;
-    }
-
-    const canvas = document.getElementById('canvas');
-    if (!canvas) throw new Error('Missing #canvas on builder page');
-
-    // Clear between runs
-    canvas.innerHTML = '';
-
-    if (typeof (window as any).add === 'function') {
-      (window as any).add(data);
-    } else {
-      canvas.appendChild(el);
-    }
-  }, html);
-}
-
-async function getBuilder(page: Page): Promise<Locator> {
-  // Wait for the .dropped wrapper to appear in the DOM
-  await page.waitForSelector('.dropped', { state: 'attached', timeout: 5000 });
-  const wrapper = page.locator('.dropped').first();
-  await expect(wrapper).toBeVisible();
-  // Return the inner builder element for attribute/class checks
-  const builder = wrapper.locator('[data-wb="builder"]').first();
-  return builder;
-}
-
-async function expectAttributes(builder: Locator, attrs?: Permutation['attrs']) {
-  if (!attrs) return;
-
-  for (const [name, expected] of Object.entries(attrs)) {
-    if (expected === true) {
-      // boolean attribute present: in HTML it may be "" or "true" depending on your rendering
-      await expect(builder).toHaveAttribute(name, /^(|true)$/);
-    } else if (expected instanceof RegExp) {
-      await expect(builder).toHaveAttribute(name, expected);
-    } else {
-      await expect(builder).toHaveAttribute(name, String(expected));
-    }
-  }
-}
-
-async function expectClasses(builder: Locator, expected?: string[], unexpected?: string[]) {
-  // Playwright's toHaveClass is strict if you pass array; here we just check contains.
-  if (expected?.length) {
-    for (const cls of expected) {
-      await expect(builder).toHaveClass(new RegExp(`(^|\\s)${cls}(\\s|$)`));
-    }
-  }
-  if (unexpected?.length) {
-    for (const cls of unexpected) {
-      await expect(builder).not.toHaveClass(new RegExp(`(^|\\s)${cls}(\\s|$)`));
-    }
-  }
-}
-
-// --- tests -----------------------------------------------------------------
-
-test.describe('Builder Component Permutations', () => {
+test.describe('Builder Component Library', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/builder.html');
+    await page.goto('/builder.html');
+    await page.waitForTimeout(500);
   });
 
-  for (const perm of permutations) {
-    test(perm.desc, async ({ page }) => {
-      await injectPermutation(page, perm.html);
+  test('component library container should exist', async ({ page }) => {
+    const library = page.locator('#componentLibrary');
+    await expect(library).toBeAttached();
+  });
 
-      const builder = await getBuilder(page);
+  test('pages list should render correctly', async ({ page }) => {
+    const pagesList = page.locator('#pagesList');
+    await expect(pagesList).toBeAttached();
+  });
 
-      // Attribute checks (label/icon etc.)
-      await expectAttributes(builder, perm.attrs);
+  test('add new page button should exist', async ({ page }) => {
+    const addButton = page.locator('.pages-section button').filter({ hasText: 'Add Page' });
+    await expect(addButton).toBeVisible();
+  });
+});
 
-      // Auto-derive some expected classes from data-* (optional but handy)
-      // This avoids repeating theme/variant assertions across permutations.
-      const derived = await page.evaluate(() => {
-        const el = document.querySelector('[data-wb="builder"]') as HTMLElement | null;
-        if (!el) return null;
+test.describe('Builder Canvas Sections', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/builder.html');
+    await page.waitForTimeout(500);
+  });
 
-        const d: Record<string, any> = {};
-        for (const attr of Array.from(el.attributes)) {
-          if (!attr.name.startsWith('data-')) continue;
-          d[attr.name.replace('data-', '')] = attr.value;
-        }
-        return d;
-      });
+  test('header section should have correct structure', async ({ page }) => {
+    const headerSection = page.locator('.canvas-section.header');
+    await expect(headerSection).toBeVisible();
+    
+    const label = headerSection.locator('.section-label');
+    await expect(label).toContainText('Header');
+    
+    const container = headerSection.locator('#header-container');
+    await expect(container).toBeVisible();
+  });
 
-      // Derived expectation: theme + variant
-      // (If your implementation *always* adds these, this becomes a strong contract.)
-      const html = perm.html;
-      const themeMatch = html.match(/data-theme="([^"]+)"/);
-      const variantMatch = html.match(/data-variant="([^"]+)"/);
+  test('main section should have correct structure', async ({ page }) => {
+    const mainSection = page.locator('.canvas-section.main');
+    await expect(mainSection).toBeVisible();
+    
+    const label = mainSection.locator('.section-label');
+    await expect(label).toContainText('Main');
+    
+    const container = mainSection.locator('#main-container');
+    await expect(container).toBeVisible();
+  });
 
-      if (themeMatch?.[1]) {
-        await expect(builder).toHaveClass(new RegExp(`wb-builder--theme-${themeMatch[1]}`));
-      }
-      if (variantMatch?.[1]) {
-        await expect(builder).toHaveClass(new RegExp(`wb-builder--variant-${variantMatch[1]}`));
-      }
+  test('footer section should have correct structure', async ({ page }) => {
+    const footerSection = page.locator('.canvas-section.footer');
+    await expect(footerSection).toBeVisible();
+    
+    const label = footerSection.locator('.section-label');
+    await expect(label).toContainText('Footer');
+    
+    const container = footerSection.locator('#footer-container');
+    await expect(container).toBeVisible();
+  });
 
-      // Clickable / hoverable / elevated
-      if (html.includes('data-clickable')) {
-        await expect(builder).toHaveClass(/wb-builder--clickable/);
-      }
-      if (html.includes('data-hoverable="false"')) {
-        await expect(builder).not.toHaveClass(/wb-builder--hoverable/);
-      }
-      if (html.includes('data-hoverable="true"')) {
-        await expect(builder).toHaveClass(/wb-builder--hoverable/);
-      }
-      if (html.includes('data-elevated')) {
-        await expect(builder).toHaveClass(/wb-builder--elevated/);
-      }
+  test('drop zones should have section attributes', async ({ page }) => {
+    const dropZones = page.locator('.canvas-drop-zone');
+    const count = await dropZones.count();
+    
+    expect(count).toBeGreaterThanOrEqual(3);
+    
+    // Each drop zone should have section attribute
+    for (let i = 0; i < count; i++) {
+      const zone = dropZones.nth(i);
+      const section = await zone.getAttribute('data-section');
+      expect(['header', 'main', 'footer']).toContain(section);
+    }
+  });
+});
 
-      // Explicit class expectations (strongest)
-      await expectClasses(builder, perm.expectedClasses, perm.unexpectedClasses);
+test.describe('Builder Properties Panel', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/builder.html');
+    await page.waitForTimeout(500);
+  });
 
-      // Tiny sanity check: inline styles present (only if your builder injects them)
-      // Uncomment if applicable:
-      // const style = await builder.getAttribute('style');
-      // expect(style).toBeTruthy();
-    });
-  }
+  test('properties panel should exist', async ({ page }) => {
+    const panel = page.locator('#propertiesPanel');
+    await expect(panel).toBeVisible();
+  });
+
+  test('properties panel should show empty state initially', async ({ page }) => {
+    const panel = page.locator('#propertiesPanel');
+    
+    // Should have empty state message
+    await expect(panel).toContainText('Click a component');
+  });
+});
+
+test.describe('Builder Theme Support', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/builder.html');
+    await page.waitForTimeout(500);
+  });
+
+  test('page should have theme attribute', async ({ page }) => {
+    const html = page.locator('html');
+    const theme = await html.getAttribute('data-theme');
+    
+    expect(['dark', 'light']).toContain(theme);
+  });
+
+  test('theme can be changed via settings', async ({ page }) => {
+    // Open config panel
+    await page.locator('button:has-text("Settings")').click();
+    await page.waitForTimeout(300);
+    
+    // Find theme selector
+    const themeSelect = page.locator('#cfgTheme');
+    await expect(themeSelect).toBeVisible();
+    
+    // Change theme
+    const currentTheme = await page.locator('html').getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    await themeSelect.selectOption(newTheme);
+    
+    // Verify theme changed
+    const updatedTheme = await page.locator('html').getAttribute('data-theme');
+    expect(updatedTheme).toBe(newTheme);
+    
+    // Close settings
+    await page.locator('#configPanel button:has-text("Close")').click();
+  });
 });

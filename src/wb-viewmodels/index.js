@@ -51,8 +51,10 @@ const behaviorModules = {
   accordion: 'collapse',
   collapse: 'collapse',
   tabs: 'tabs',
+  tab: 'tab',
   details: 'semantics/details',
   mdhtml: 'mdhtml',
+  docs: 'docs',
   builder: 'builder',
   
   // Feedback (10) → feedback.js
@@ -63,7 +65,10 @@ const behaviorModules = {
   // Navigation (8) → navigation.js
   navbar: 'navigation', sidebar: 'navigation', menu: 'navigation',
   pagination: 'navigation', steps: 'navigation', treeview: 'navigation',
-  backtotop: 'navigation', link: 'navigation', statusbar: 'navigation',
+  backtotop: 'navigation', link: 'navigation',
+  
+  // Statusbar → statusbar.js (separate for easy discovery)
+  statusbar: 'statusbar',
   
   // Header → header.js
   header: 'header',
@@ -119,6 +124,9 @@ const behaviorModules = {
   // Notes
   notes: 'notes',
   
+  // Issues
+  issues: 'issues',
+  
   // Docs
   docsviewer: 'docs-viewer',
   
@@ -134,6 +142,9 @@ const behaviorModules = {
   
   // Layout (19) → layouts.js + standalone
   draggable: 'draggable',
+
+  // Editor utilities
+  htmlEditor: 'html-editor',
   resizable: 'resizable',
   globe: 'globe',
   scrollalong: 'scrollalong',
@@ -145,6 +156,8 @@ const behaviorModules = {
   switcher: 'layouts', masonry: 'layouts', fixed: 'layouts',
   scrollable: 'layouts', cover: 'layouts', frame: 'layouts', reel: 'layouts',
   imposter: 'layouts', icon: 'layouts', drawerLayout: 'layouts', 'drawer-layout': 'layouts',
+  // Reorder behavior for grid containers
+  reorder: 'reorder',
   
   // Utility → helpers.js + standalone
   stagelight: 'stagelight',
@@ -161,7 +174,9 @@ const behaviorModules = {
   lazy: 'helpers', print: 'helpers', share: 'helpers', fullscreen: 'helpers',
   hotkey: 'helpers', clipboard: 'helpers', scroll: 'helpers', truncate: 'helpers',
   highlight: 'helpers', external: 'helpers', countdown: 'helpers', clock: 'helpers',
-  relativetime: 'helpers', offline: 'helpers', visible: 'helpers', debug: 'helpers'
+  relativetime: 'helpers', offline: 'helpers', visible: 'helpers', debug: 'helpers',
+  // Feature section component
+  features: 'features'
 };
 
 /**
@@ -185,7 +200,7 @@ async function loadModule(moduleName) {
     .then(module => {
       moduleCache.set(moduleName, module);
       loadingPromises.delete(moduleName);
-      console.log(`[WB] Loaded module: ${moduleName}.js`);
+      if (window.WB_DEBUG) console.log(`[WB] Loaded module: ${moduleName}.js`);
       return module;
     })
     .catch(error => {

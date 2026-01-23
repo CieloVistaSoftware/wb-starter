@@ -1,0 +1,108 @@
+{
+  "issues": [
+    {
+      "id": "note-1769143424422-p0",
+      "description": "[BUG] opening an issue always shows a clicked toast message. It should not show",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:43:44.422Z"
+    },
+    {
+      "id": "note-1769143538898-p0",
+      "description": "[BUG] issues clicked on home page does nothing",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:45:38.898Z"
+    },
+    {
+      "id": "note-1769143580087-p0",
+      "description": "[BUG] submitting an issue auto closes the modal, only the user should do that",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:46:20.087Z"
+    },
+    {
+      "id": "note-1769143652465-p0",
+      "description": "[BUG] behaviors page does not show proper button colors",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:47:32.465Z"
+    },
+    {
+      "id": "note-1769143709812-p0",
+      "description": "[BUG] get rid of all toast click confirmations",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:48:29.812Z"
+    },
+    {
+      "id": "note-1769143796059-p0",
+      "description": "[BUG] x-search shows no search icon - should be magnifying glass to the right",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:49:56.059Z"
+    },
+    {
+      "id": "note-1769143859804-p0",
+      "description": "[BUG] x-colorpicker doesn't allow color change",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:50:59.804Z"
+    },
+    {
+      "id": "note-1769143918804-p0",
+      "description": "[FEATURE] wb-rating should be in three different bg colors",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:51:58.804Z"
+    },
+    {
+      "id": "note-1769143968863-p0",
+      "description": "[BUG] x-stepper only shows 1 element on render",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:52:48.863Z"
+    },
+    {
+      "id": "note-1769144012110-p0",
+      "description": "[BUG] wb-alert variants have no different colors",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:53:32.109Z"
+    },
+    {
+      "id": "note-1769144063341-p0",
+      "description": "[IMPROVEMENT] wb-progress does not show the value",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:54:23.341Z"
+    },
+    {
+      "id": "note-1769144093959-p0",
+      "description": "[BUG] x-lightbox no image is shown",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:54:53.959Z"
+    },
+    {
+      "id": "note-1769144143288-p0",
+      "description": "[BUG] wb-accordion not showing",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:55:43.288Z"
+    },
+    {
+      "id": "note-1769144170255-p0",
+      "description": "[BUG] x-steps nothing rendered",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:56:10.255Z"
+    },
+    {
+      "id": "note-1769144221111-p0",
+      "description": "[BUG] wb-avatar no photo no status no sizes",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:57:01.111Z"
+    },
+    {
+      "id": "note-1769144269528-p0",
+      "description": "[BUG] wb-skeleton not rendering properly",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:57:49.528Z"
+    },
+    {
+      "id": "note-1769144269528-p1",
+      "description": "[IMPROVEMENT] Unit tests should test everything in behaviors page",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:57:49.528Z"
+    }
+  ],
+  "lastUpdated": "2026-01-23T17:20:00.000Z",
+  "lastChecked": "2026-01-23T17:20:00.000Z"
+}

@@ -1179,15 +1179,15 @@ export function addResizeHandle(wrapper) {
   const presets = document.createElement('div');
   presets.className = 'wb-width-presets';
   presets.innerHTML = `
-    <button id="btn-row-${wrapper.id}" data-flex="row" title="Row Layout">Row</button>
-    <button id="btn-col-${wrapper.id}" data-flex="column" title="Column Layout">Col</button>
+    <button id="btn-row-${wrapper.id}" flex="row" title="Row Layout">Row</button>
+    <button id="btn-col-${wrapper.id}" flex="column" title="Column Layout">Col</button>
     <div style="width: 1px; height: 12px; background: rgba(255,255,255,0.2); margin: 0 2px;"></div>
-    <button id="btn-25-${wrapper.id}" data-width="calc(25% - (var(--gap, 0px) * 0.75))" title="1/4 width">25%</button>
-    <button id="btn-33-${wrapper.id}" data-width="calc(33.333% - (var(--gap, 0px) * 0.666))" title="1/3 width">33%</button>
-    <button id="btn-50-${wrapper.id}" data-width="calc(50% - (var(--gap, 0px) * 0.5))" title="1/2 width">50%</button>
-    <button id="btn-75-${wrapper.id}" data-width="calc(75% - (var(--gap, 0px) * 0.25))" title="3/4 width">75%</button>
-    <button id="btn-100-${wrapper.id}" data-width="100%">100%</button>
-    <button id="btn-auto-${wrapper.id}" data-width="auto">Auto</button>
+    <button id="btn-25-${wrapper.id}" width="calc(25% - (var(--gap, 0px) * 0.75))" title="1/4 width">25%</button>
+    <button id="btn-33-${wrapper.id}" width="calc(33.333% - (var(--gap, 0px) * 0.666))" title="1/3 width">33%</button>
+    <button id="btn-50-${wrapper.id}" width="calc(50% - (var(--gap, 0px) * 0.5))" title="1/2 width">50%</button>
+    <button id="btn-75-${wrapper.id}" width="calc(75% - (var(--gap, 0px) * 0.25))" title="3/4 width">75%</button>
+    <button id="btn-100-${wrapper.id}" width="100%">100%</button>
+    <button id="btn-auto-${wrapper.id}" width="auto">Auto</button>
   `;
   
   wrapper.appendChild(handle);
@@ -1847,7 +1847,7 @@ export function initSnapGrid(canvas) {
   }
   
   // Watch for snap-enabled class
-  const intersectionObserver = new MutationObserver((mutations) => {
+  const snapObserver = new MutationObserver((mutations) => {
     mutations.forEach(mutation => {
       if (mutation.attributeName === 'class') {
         if (canvas.classList.contains('snap-enabled')) {
@@ -1859,7 +1859,7 @@ export function initSnapGrid(canvas) {
     });
   });
   
-  observer.observe(canvas, { attributes: true });
+  snapObserver.observe(canvas, { attributes: true });
   
   // Initial check
   if (canvas.classList.contains('snap-enabled')) {

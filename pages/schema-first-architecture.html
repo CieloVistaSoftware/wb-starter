@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="auto-pages-schema-first-architecturehtml-1">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -442,11 +442,11 @@
     }
   </style>
 </head>
-<body>
+<body id="auto-pages-schema-first-architecturehtml-2">
 
   <a href="../index.html" class="nav-back">← Return to Project</a>
 
-  <div class="paper-container">
+  <div class="paper-container" id="auto-pages-schema-first-architecturehtml-3">
     <h1 class="paper-title">Schema-First Architecture: A Deterministic Framework for Eliminating Generative A.I. Errors in Web Development</h1>
     
     <div class="addressee-container" style="text-align: center;">
@@ -461,14 +461,14 @@
       <span style="font-size: 9pt;">Department of Automated Engineering</span>
     </div>
 
-    <div class="abstract-box">
+    <div class="abstract-box" id="auto-pages-schema-first-architecturehtml-4">
       <span class="abstract-title">Abstract</span>
       <p style="text-indent: 0; margin: 0;">
         Large Language Models (LLMs) have demonstrated remarkable capability in code generation, yet they suffer from a critical failure mode known as "hallucination." When coupled with inherent overconfidence and a lack of validation, this phenomenon produces a "lie"—a confident assertion of correctness for structurally invalid code. This paper introduces "Schema-First Architecture," a novel methodology that constrains the generative process through rigorous JSON-based definitions. By decoupling structure (Schema) from implementation (Behavior), we demonstrate a deterministic framework where AI agents can generate complex UI components with high reliability. We present the three pillars of this architecture—Site, Component, and Semantic Schemas—and provide empirical evidence of their efficacy in the WB Starter project.
       </p>
     </div>
 
-    <div class="paper-body">
+    <div class="paper-body" id="auto-pages-schema-first-architecturehtml-5">
       <h2>1. Introduction</h2>
       <p>
         The advent of generative AI has transformed software development, yet the integration of AI into frontend workflows remains fraught with inconsistency. When prompted to "create a card," an LLM may generate a <code>div</code> with Tailwind classes in one instance, and a BEM-style structure in another [1]. This stochastic nature renders AI unreliable for maintaining large-scale design systems.
@@ -477,7 +477,7 @@
         Recent studies have quantified this unreliability. Kabir et al. (2024) found that 52% of ChatGPT's answers to software engineering questions contained inaccuracies, yet were presented with authoritative language [4]. This "confident lie" phenomenon is particularly dangerous in code generation, where subtle structural errors can introduce security vulnerabilities or accessibility failures that are difficult to detect without rigorous validation.
       </p>
 
-      <div class="key-insight">
+      <div class="key-insight" id="auto-pages-schema-first-architecturehtml-6">
         <span class="key-insight-label">Key Insight</span>
         <p>The root cause of AI unreliability is not the model's lack of intelligence, but the lack of <strong>contextual constraints</strong>. Without a defined schema, the model must guess the architectural intent.</p>
       </div>
@@ -487,11 +487,11 @@
       </p>
 
       <h3>1.1. The Determinism Gap</h3>
-      <p>
+      <p id="auto-pages-schema-first-architecturehtml-7">
         The prevailing industry narrative focuses on "Prompt Engineering" and Retrieval-Augmented Generation (RAG) as primary methods for controlling AI output. These techniques are fundamentally probabilistic—they attempt to increase the <em>likelihood</em> of a correct response. However, in software engineering, "likely correct" is synonymous with "buggy." We identify this as the <strong>"Determinism Gap"</strong>: the chasm between the stochastic nature of LLMs and the rigid requirements of a runtime environment.
       </p>
 
-      <div class="critical-box">
+      <div class="critical-box" id="auto-pages-schema-first-architecturehtml-8">
         <span class="critical-label">The Problem</span>
         <p style="text-indent: 0; margin: 0;"><strong>Prompt Engineering cannot guarantee correctness.</strong> It can only increase probability. In production systems, 95% correct means 5% broken—an unacceptable failure rate.</p>
       </div>
@@ -515,7 +515,7 @@
         Every UI element is governed by a strict JSON schema defining its properties, allowed values, and accessibility requirements. This is the contract between the AI and the UI.
       </p>
 
-      <figure>
+      <figure id="auto-pages-schema-first-architecturehtml-9">
         <div class="code-figure">{
   "behavior": "card",
   "properties": {
@@ -543,7 +543,7 @@
       </figure>
 
       <h3>2.3. The Semantic Schema</h3>
-      <p>
+      <p id="auto-pages-schema-first-architecturehtml-10">
         We enforce HTML5 semantic standards as a structural constraint. Behaviors are attached to meaningful tags (<code>article</code>, <code>nav</code>, <code>dialog</code>) rather than generic containers. This provides the AI with a semantic anchor, reducing the ambiguity of the generated markup.
       </p>
 
@@ -553,23 +553,23 @@
       </p>
 
       <h3>3.1. Eliminating the Confident Lie</h3>
-      <p>
-        In traditional frameworks, an AI prompted to "make the button blue" might confidently invent a class <code>.btn-blue</code>, asserting the task is complete. This overconfidence, absent validation, results in a functional lie. Under Schema-First Architecture, the AI is constrained to the schema: <code>data-variant="primary"</code>. The validity of the output is binary and verifiable.
+      <p id="auto-pages-schema-first-architecturehtml-11">
+        In traditional frameworks, an AI prompted to "make the button blue" might confidently invent a class <code>.btn-blue</code>, asserting the task is complete. This overconfidence, absent validation, results in a functional lie. Under Schema-First Architecture, the AI is constrained to the schema: <code>variant="primary"</code>. The validity of the output is binary and verifiable.
       </p>
 
-      <figure>
-        <div class="demo-box">
+      <figure id="auto-pages-schema-first-architecturehtml-12">
+        <div class="demo-box" id="auto-pages-schema-first-architecturehtml-13">
           <span class="demo-label">Live Interactive Figure 2: Schema-Driven Rendering</span>
-          <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
-            <div style="display: flex; gap: 1rem; align-items: center;">
+          <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; padding: 1rem; background: #f5f5f5; border-radius: 8px;" id="auto-pages-schema-first-architecturehtml-14">
+            <div style="display: flex; gap: 1rem; align-items: center;" id="auto-pages-schema-first-architecturehtml-15">
               <span style="font-size: 9pt; color: #22c55e; font-weight: bold;">✓</span>
-              <button data-variant="primary" style="padding: 0.5rem 1rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; background: #6366f1; color: white;">Schema Valid</button>
+              <button variant="primary" style="padding: 0.5rem 1rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; background: #6366f1; color: white;">Schema Valid</button>
             </div>
-            <div style="display: flex; gap: 1rem; align-items: center;">
+            <div style="display: flex; gap: 1rem; align-items: center;" id="auto-pages-schema-first-architecturehtml-16">
               <span style="font-size: 9pt; color: #22c55e; font-weight: bold;">✓</span>
-              <button data-variant="outlined" style="padding: 0.5rem 1rem; border-radius: 6px; border: 2px solid #6366f1; cursor: pointer; font-weight: 500; background: transparent; color: #6366f1;">Schema Valid</button>
+              <button variant="outlined" style="padding: 0.5rem 1rem; border-radius: 6px; border: 2px solid #6366f1; cursor: pointer; font-weight: 500; background: transparent; color: #6366f1;">Schema Valid</button>
             </div>
-            <div style="display: flex; gap: 1rem; align-items: center;">
+            <div style="display: flex; gap: 1rem; align-items: center;" id="auto-pages-schema-first-architecturehtml-17">
               <span style="font-size: 9pt; color: #ef4444; font-weight: bold;">✗</span>
               <button class="btn-fake-blue" style="padding: 0.5rem 1rem; font-size: 0.85rem; border: 2px dashed #ef4444; color: #ef4444; background: transparent; cursor: not-allowed;" title="Hallucinated class - not in schema">Hallucination (Invalid)</button>
             </div>
@@ -583,10 +583,10 @@
         We tracked AI-generated errors across four development phases, measuring the effectiveness of schema constraints at each stage. The results demonstrate a clear correlation between schema maturity and error reduction.
       </p>
 
-      <figure class="full-width">
-        <table class="comparison-table">
+      <figure class="full-width" id="auto-pages-schema-first-architecturehtml-18">
+        <table class="comparison-table" id="auto-pages-schema-first-architecturehtml-19">
           <thead>
-            <tr>
+            <tr id="auto-pages-schema-first-architecturehtml-20">
               <th>Phase</th>
               <th>Components</th>
               <th>Errors Generated</th>
@@ -595,8 +595,8 @@
               <th>Pass Rate</th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="error-row">
+          <tbody id="auto-pages-schema-first-architecturehtml-21">
+            <tr class="error-row" id="auto-pages-schema-first-architecturehtml-22">
               <td><strong>Phase 0:</strong> No Schema</td>
               <td>10</td>
               <td>847</td>
@@ -604,7 +604,7 @@
               <td>847</td>
               <td>0%</td>
             </tr>
-            <tr>
+            <tr id="auto-pages-schema-first-architecturehtml-23">
               <td><strong>Phase 1:</strong> Basic Schema</td>
               <td>20</td>
               <td>312</td>
@@ -612,7 +612,7 @@
               <td>45</td>
               <td>85.6%</td>
             </tr>
-            <tr>
+            <tr id="auto-pages-schema-first-architecturehtml-24">
               <td><strong>Phase 2:</strong> + Compliance Rules</td>
               <td>35</td>
               <td>156</td>
@@ -620,7 +620,7 @@
               <td>8</td>
               <td>94.9%</td>
             </tr>
-            <tr class="highlight-row">
+            <tr class="highlight-row" id="auto-pages-schema-first-architecturehtml-25">
               <td><strong>Phase 3:</strong> + Fix Database</td>
               <td>50</td>
               <td>89</td>
@@ -633,16 +633,16 @@
         <figcaption>Table 1. Error reduction across development phases. Phase 3 achieved zero manual intervention.</figcaption>
       </figure>
 
-      <div class="stats-grid full-width">
-        <div class="stat-box">
+      <div class="stats-grid full-width" id="auto-pages-schema-first-architecturehtml-26">
+        <div class="stat-box" id="auto-pages-schema-first-architecturehtml-27">
           <span class="stat-number error">847</span>
           <span class="stat-label">Errors Without Schema</span>
         </div>
-        <div class="stat-box">
+        <div class="stat-box" id="auto-pages-schema-first-architecturehtml-28">
           <span class="stat-number success">89</span>
           <span class="stat-label">Errors With Full Schema</span>
         </div>
-        <div class="stat-box">
+        <div class="stat-box" id="auto-pages-schema-first-architecturehtml-29">
           <span class="stat-number success">100%</span>
           <span class="stat-label">Auto-Fix Rate (Phase 3)</span>
         </div>
@@ -663,7 +663,7 @@
         Beyond detection, the schema enables deterministic repair. Since the schema defines the <em>required</em> structure (e.g., "Card must have a header"), the system can automatically generate the missing markup to satisfy the constraint. This transforms the development process from "Prompt &amp; Pray" to "Prompt, Validate, &amp; Repair."
       </p>
 
-      <div class="success-box">
+      <div class="success-box" id="auto-pages-schema-first-architecturehtml-30">
         <span class="success-label">Paradigm Shift</span>
         <p style="text-indent: 0; margin: 0;">The AI is no longer a one-shot generator—it becomes a <strong>convergent system</strong> that iteratively approaches correctness through validation feedback loops.</p>
       </div>
@@ -682,7 +682,7 @@
       <p>
         The implications extend beyond web pages. By treating the UI as a projection of a schema, we enable a new class of "Self-Correcting" AI agents capable of:
       </p>
-      <ol style="font-size: 10pt;">
+      <ol style="font-size: 10pt;" id="auto-pages-schema-first-architecturehtml-31">
         <li><strong>Reading</strong> the schema to understand capabilities</li>
         <li><strong>Generating</strong> JSON/HTML based on that schema</li>
         <li><strong>Validating</strong> the output against the schema</li>
@@ -698,18 +698,18 @@
       </p>
 
       <h3>4.4. Zero-Shot Test Generation</h3>
-      <p>
+      <p id="auto-pages-schema-first-architecturehtml-32">
         The deterministic nature of the schema extends to quality assurance. Traditionally, tests are written manually to verify intent. In our architecture, the schema <em>is</em> the intent. Therefore, test suites are not written; they are <strong>derived</strong>. The system parses the Component Schema to automatically generate specifications that verify structural compliance, accessibility standards, and property validation.
       </p>
 
       <h3>4.5. The Governance of Generation Rules</h3>
-      <p>
+      <p id="auto-pages-schema-first-architecturehtml-33">
         Crucially, this generative power is not unbounded. All generation is strictly governed by immutable "Generation Rules." While the schema defines the <em>what</em> (structural contract), these rules define the <em>how</em> (implementation standards). This dual-constraint system—Schema plus Rules—ensures output is not only correct but stylistically uniform.
       </p>
 
       <h2 class="full-width">5. Limitations &amp; Future Work</h2>
       
-      <div class="peer-review full-width">
+      <div class="peer-review full-width" id="auto-pages-schema-first-architecturehtml-34">
         <div class="peer-review-header">Peer Review Commentary</div>
         <p style="text-indent: 0; font-size: 9.5pt; margin-bottom: 0.75rem;">
           The following limitations were identified during external review and represent important caveats to the claims made in this paper.
@@ -717,11 +717,11 @@
       </div>
 
       <h3>5.1. Structural vs. Semantic Validity</h3>
-      <p>
+      <p id="auto-pages-schema-first-architecturehtml-35">
         While Schema-First Architecture effectively constrains <em>structural</em> correctness, it does not guarantee <em>semantic</em> correctness. A card component may pass all schema validations while containing contextually inappropriate content. The schema enforces "card needs a title"—it cannot enforce what the title should <em>mean</em>.
       </p>
 
-      <div class="critical-box">
+      <div class="critical-box" id="auto-pages-schema-first-architecturehtml-36">
         <span class="critical-label">Critical Distinction</span>
         <p style="text-indent: 0; margin: 0;"><strong>Structural validity ≠ Semantic correctness.</strong> An AI can generate a perfectly valid card with completely wrong content. This remains an open problem.</p>
       </div>
@@ -730,7 +730,7 @@
       <p>
         The term "deterministic" requires clarification. The <em>generation</em> step remains stochastic—LLMs produce variable outputs. What is deterministic are:
       </p>
-      <ul style="font-size: 10pt;">
+      <ul style="font-size: 10pt;" id="auto-pages-schema-first-architecturehtml-37">
         <li><strong>Validation:</strong> Binary pass/fail against schema</li>
         <li><strong>Repair:</strong> Lookup of known fixes from database</li>
       </ul>
@@ -743,32 +743,32 @@
         For this methodology to succeed, schemas must be <em>exhaustively complete</em>. Every gap in the schema represents a potential hallucination vector. This creates a maintenance burden: schemas must evolve in lockstep with features, and incomplete schemas silently permit invalid output.
       </p>
       
-      <figure>
-        <table class="comparison-table">
+      <figure id="auto-pages-schema-first-architecturehtml-38">
+        <table class="comparison-table" id="auto-pages-schema-first-architecturehtml-39">
           <thead>
-            <tr>
+            <tr id="auto-pages-schema-first-architecturehtml-40">
               <th>Gap Type</th>
               <th>Risk</th>
               <th>Mitigation</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
+          <tbody id="auto-pages-schema-first-architecturehtml-41">
+            <tr id="auto-pages-schema-first-architecturehtml-42">
               <td>Missing property</td>
               <td>AI invents arbitrary values</td>
               <td>Schema linting, coverage reports</td>
             </tr>
-            <tr>
+            <tr id="auto-pages-schema-first-architecturehtml-43">
               <td>Incomplete enum</td>
               <td>Valid-looking but unstyled variants</td>
               <td>Strict enum validation</td>
             </tr>
-            <tr>
+            <tr id="auto-pages-schema-first-architecturehtml-44">
               <td>Missing interaction</td>
               <td>Untested user flows</td>
               <td>Functional test generation</td>
             </tr>
-            <tr>
+            <tr id="auto-pages-schema-first-architecturehtml-45">
               <td>Outdated schema</td>
               <td>Implementation drift</td>
               <td>Source-schema compliance checks</td>
@@ -787,7 +787,7 @@
       <p>
         Several extensions warrant investigation:
       </p>
-      <ul style="font-size: 10pt;">
+      <ul style="font-size: 10pt;" id="auto-pages-schema-first-architecturehtml-46">
         <li><strong>Semantic validation:</strong> Integration of content-aware validators</li>
         <li><strong>Schema evolution:</strong> Version migration strategies without breaking implementations</li>
         <li><strong>Performance profiling:</strong> Quantifying validate-repair loop overhead</li>
@@ -800,7 +800,7 @@
         Schema-First Architecture represents a significant advancement in AI-assisted development. By prioritizing defined structure over flexible implementation, we create an environment where AI can operate with substantially improved reliability. The WB Starter project demonstrates that when we give AI a map (Schema), it reduces—though does not eliminate—the need to guess the territory.
       </p>
 
-      <div class="key-insight">
+      <div class="key-insight" id="auto-pages-schema-first-architecturehtml-47">
         <span class="key-insight-label">Core Philosophy</span>
         <p><strong>Never trust A.I.—make it prove itself.</strong> AI is a generator, not an authority. The system architecture must assume AI is wrong until proven right. Schemas provide the proof mechanism.</p>
       </div>
@@ -810,7 +810,7 @@
       </p>
 
       <h2>References</h2>
-      <ul class="references">
+      <ul class="references" id="auto-pages-schema-first-architecturehtml-48">
         <li>[1] OpenAI. (2024). <em>GPT-4 Technical Report</em>. arXiv:2303.08774.</li>
         <li>[2] Web Behaviors Team. (2025). <em>The WB Behavior System Documentation</em>. Internal Repository.</li>
         <li>[3] W3C. (2014). <em>HTML5: A vocabulary and associated APIs for HTML and XHTML</em>.</li>

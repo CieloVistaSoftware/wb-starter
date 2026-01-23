@@ -9,7 +9,7 @@ test('debug css loading', async ({ page }) => {
     </head>
     <body>
       <div id="test" class="wb-stock">Test</div>
-      <div id="test-attr" data-wb="stock">Test Attribute</div>
+      <div id="test-attr" wb="stock">Test Attribute</div>
     </body>
     </html>
   `);

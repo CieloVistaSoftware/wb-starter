@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "docs.schema.json",
+  "title": "Documentation Viewer",
+  "description": "Display documentation from a manifest file with selectable docs",
+  "behavior": "docs",
+  "baseClass": "wb-docs",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "region"
+  },
+  "compliance": {
+    "baseClass": "wb-docs",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "manifest": {
+      "type": "string",
+      "description": "Path to JSON manifest file listing available docs",
+      "default": "docs/manifest.json",
+      "attribute": "manifest"
+    },
+    "show": {
+      "type": "string",
+      "description": "Comma-separated list of doc files or titles to display",
+      "default": "",
+      "attribute": "show"
+    },
+    "category": {
+      "type": "string",
+      "description": "Show all docs from a specific category",
+      "default": "",
+      "attribute": "category"
+    },
+    "layout": {
+      "type": "string",
+      "enum": ["tabs", "accordion", "sidebar"],
+      "default": "tabs",
+      "description": "Layout style for the documentation viewer",
+      "attribute": "layout",
+      "appliesClass": "wb-docs--{{value}}"
+    },
+    "size": {
+      "type": "string",
+      "enum": ["xs", "sm", "md", "lg", "xl"],
+      "default": "sm",
+      "description": "Text size for documentation content",
+      "attribute": "size"
+    }
+  },
+  "$view": [
+    {
+      "name": "nav",
+      "tag": "nav",
+      "public": true,
+      "description": "Navigation for doc selection"
+    },
+    {
+      "name": "content",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "Content area for rendered documentation"
+    }
+  ],
+  "$methods": {
+    "reload": {
+      "description": "Reload the documentation viewer",
+      "params": []
+    },
+    "loadDoc": {
+      "description": "Load a specific doc file",
+      "params": [{ "name": "file", "type": "string" }]
+    },
+    "setShow": {
+      "description": "Update which docs to show",
+      "params": [{ "name": "showList", "type": "string" }]
+    },
+    "getManifest": {
+      "description": "Get the loaded manifest object",
+      "params": []
+    }
+  },
+  "$cssAPI": {
+    "--wb-docs-nav-bg": {
+      "default": "var(--bg-secondary, #f5f5f5)",
+      "description": "Navigation background"
+    },
+    "--wb-docs-tab-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Inactive tab color"
+    },
+    "--wb-docs-tab-active-color": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Active tab color"
+    },
+    "--wb-docs-content-bg": {
+      "default": "var(--bg-primary, #fff)",
+      "description": "Content area background"
+    },
+    "--wb-docs-border-color": {
+      "default": "var(--border-color, #e0e0e0)",
+      "description": "Border color"
+    }
+  },
+  "accessibility": {
+    "role": "region",
+    "ariaLabel": "Documentation viewer"
+  },
+  "test": {
+    "setup": [
+      "<wb-docs>Basic docs viewer</wb-docs>",
+      "<wb-docs layout=\"tabs\">Tabs layout</wb-docs>",
+      "<wb-docs layout=\"accordion\">Accordion layout</wb-docs>",
+      "<wb-docs layout=\"sidebar\">Sidebar layout</wb-docs>",
+      "<wb-docs show=\"builder,themes\">Filtered docs</wb-docs>",
+      "<wb-docs category=\"Architecture\">Category filter</wb-docs>"
+    ]
+  },
+  "_metadata": {
+    "category": "content",
+    "icon": "📚",
+    "since": "3.0.0",
+    "status": "stable"
+  }
+}

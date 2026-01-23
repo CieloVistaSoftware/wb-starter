@@ -1,0 +1,10 @@
+{
+  "responses": [
+    {
+      "status": "success",
+      "issue": "Modal centering fixed",
+      "action": "Modal now opens center screen by default. Only remembers position after user drags it."
+    }
+  ],
+  "lastUpdated": "2026-01-19T23:20:00.000Z"
+}

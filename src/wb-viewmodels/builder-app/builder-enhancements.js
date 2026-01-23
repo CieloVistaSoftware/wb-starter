@@ -376,7 +376,7 @@ class SmartComponentBrowser {
       html += `
         <div class="component-item" 
              draggable="true"
-             data-component="${comp.id}"
+             component="${comp.id}"
              title="${comp.desc}"
              ondragstart="handleDragStart(event, '${comp.id}')">
           <span class="comp-icon">${comp.icon}</span>
@@ -1382,7 +1382,7 @@ function updateContainerDisplay(comp) {
       const info = getComponentInfo(n.type);
       return `
         <div class="nested-component-visual" 
-             data-nested-id="${n.id}" 
+             nested-id="${n.id}" 
              style="padding: 1rem; background: rgba(99, 102, 241, 0.1); border: 1px dashed var(--primary); border-radius: 6px; text-align: center; cursor: pointer;"
              onclick="event.stopPropagation(); selectNestedComponent('${n.id}')">
           <span style="font-size: 1.2rem;">${info.icon}</span>
@@ -1486,8 +1486,74 @@ const CONTAINER_BROWSER_STYLES = `
 }
 `;
 
+// ============================================================================
+// MAIN SECTION MANAGEMENT
+// Updates the Main Content section label and applies green "active" border
+// ============================================================================
+
+/**
+ * Update the Main Content section label to show current page name
+ * @param {string} pageName - Name of the current page
+ */
+function updateMainSectionName(pageName) {
+  // Try ID first, then fallback to selector
+  let label = document.getElementById('main-section-label');
+  if (!label) {
+    label = document.querySelector('#canvas-main .section-label');
+  }
+  if (!label) {
+    // Silent fail - element may not exist yet
+    return;
+  }
+  
+  if (pageName && pageName.trim()) {
+    label.textContent = `Main Content / ${pageName}`;
+  } else {
+    label.textContent = 'Main Content';
+  }
+}
+
+/**
+ * Activate the Main Content section with a green border (like selected page)
+ * Removes focus from other sections first
+ */
+function activateMainSection() {
+  // Try ID first, then fallback to selector
+  let mainSection = document.getElementById('canvas-main-section');
+  if (!mainSection) {
+    mainSection = document.getElementById('canvas-main');
+  }
+  if (!mainSection) {
+    // Silent fail - element may not exist yet
+    return;
+  }
+  
+  // Remove focused class from all canvas sections
+  document.querySelectorAll('.canvas-section.focused').forEach(el => {
+    el.classList.remove('focused');
+  });
+  
+  // Add focused class to main section
+  mainSection.classList.add('focused');
+}
+
+/**
+ * Deactivate the Main Content section (remove green border)
+ */
+function deactivateMainSection() {
+  const mainSection = document.getElementById('canvas-main-section');
+  if (mainSection) {
+    mainSection.classList.remove('focused');
+  }
+}
+
 // Export for use
 if (typeof window !== 'undefined') {
+  // Main section management
+  window.updateMainSectionName = updateMainSectionName;
+  window.activateMainSection = activateMainSection;
+  window.deactivateMainSection = deactivateMainSection;
+  
   window.WB_COMPONENT_LIBRARY = WB_COMPONENT_LIBRARY;
   window.PAGE_TEMPLATES = PAGE_TEMPLATES;
   window.StatusBarManager = StatusBarManager;

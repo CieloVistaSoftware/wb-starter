@@ -215,6 +215,7 @@ export function issues(element, options = {}) {
 
   // Open/close
   const open = () => {
+    console.debug('[issues] open() running');
     isOpen = true;
     overlay.style.display = 'block';
     dialog.style.display = 'flex';
@@ -271,7 +272,8 @@ export function issues(element, options = {}) {
       form.querySelector('input[value="bug"]').closest('label').classList.add('active');
       form.querySelector('input[value="medium"]').closest('label').classList.add('active');
       fetchCount();
-      setTimeout(() => { btn.disabled = false; btn.textContent = '💾 Submit Issue'; close(); }, 1000);
+      // Keep modal open - user closes manually
+      setTimeout(() => { btn.disabled = false; btn.textContent = '💾 Submit Issue'; }, 1000);
     } catch {
       btn.textContent = '❌ Error';
       setTimeout(() => { btn.disabled = false; btn.textContent = '💾 Submit Issue'; }, 2000);
@@ -294,10 +296,10 @@ export function issues(element, options = {}) {
           <button type="button" class="wb-issues-list-close">✕</button>
         </div>
         <div class="wb-issues-list-filters">
-          <button class="active" data-f="all">All</button>
-          <button data-f="pending">⏳ Pending</button>
-          <button data-f="pending-review">🔍 Review</button>
-          <button data-f="resolved">✅ Done</button>
+          <button class="active" f="all">All</button>
+          <button f="pending">⏳ Pending</button>
+          <button f="pending-review">🔍 Review</button>
+          <button f="resolved">✅ Done</button>
         </div>
         <div class="wb-issues-list-items"></div>
         <div class="wb-issues-list-actions">
@@ -322,13 +324,13 @@ export function issues(element, options = {}) {
         const date = new Date(i.createdAt).toLocaleDateString();
         const desc = i.description.split('\n')[0].substring(0, 80);
         return `
-          <div class="wb-issues-list-item" data-status="${i.status}">
+          <div class="wb-issues-list-item" status="${i.status}">
             <div class="wb-issues-list-item-top">
               <span class="wb-issues-list-item-icon">${icons[i.status] || '❓'}</span>
               <span class="wb-issues-list-item-desc">${desc}</span>
               <span class="wb-issues-list-item-date">${date}</span>
             </div>
-            ${i.status === 'pending' ? `<button class="wb-issues-list-item-resolve" data-id="${i.id}">✅ Resolve</button>` : ''}
+            ${i.status === 'pending' ? `<button class="wb-issues-list-item-resolve" id="${i.id}">✅ Resolve</button>` : ''}
           </div>
         `;
       }).join('');
@@ -391,7 +393,12 @@ export function issues(element, options = {}) {
   fetchCount();
   element.dataset.wbReady = 'issues';
 
+  // Expose public API for external open/close/toggle
+  element.open = open;
+  element.close = close;
+  element.toggle = () => (isOpen ? close() : open());
+
   return () => { if (ws) ws.close(); };
 }
 
-export default issues;
+export default issues;    

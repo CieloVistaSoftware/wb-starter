@@ -4,7 +4,7 @@ test.describe('Code Behavior Scroll Options', () => {
   
   test('Default behavior (scrollable=false) wraps text and expands', async ({ page }) => {
     await page.setContent(`
-      <pre id="test-pre-default" data-wb="code" data-wb-eager><code>const veryLongLine = "This is a very long line of code that should wrap to the next line because scrollable is not set (default false).";</code></pre>
+      <pre id="test-pre-default" wb="code" wb-eager><code>const veryLongLine = "This is a very long line of code that should wrap to the next line because scrollable is not set (default false).";</code></pre>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -18,7 +18,7 @@ test.describe('Code Behavior Scroll Options', () => {
 
   test('Scrollable behavior (scrollable=true) does not wrap and scrolls', async ({ page }) => {
     await page.setContent(`
-      <pre id="test-pre-scroll" data-wb="code" data-scrollable="true" data-wb-eager><code>const veryLongLine = "This is a very long line of code that should NOT wrap to the next line because scrollable is set to true.";</code></pre>
+      <pre id="test-pre-scroll" wb="code" scrollable="true" wb-eager><code>const veryLongLine = "This is a very long line of code that should NOT wrap to the next line because scrollable is set to true.";</code></pre>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -32,7 +32,7 @@ test.describe('Code Behavior Scroll Options', () => {
 
   test('Standalone code block default behavior', async ({ page }) => {
     await page.setContent(`
-      <code id="test-code-default" data-wb="code" data-variant="block" data-wb-eager>const x = 1;</code>
+      <code id="test-code-default" wb="code" variant="block" wb-eager>const x = 1;</code>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -46,7 +46,7 @@ test.describe('Code Behavior Scroll Options', () => {
 
   test('Standalone code block scrollable behavior', async ({ page }) => {
     await page.setContent(`
-      <code id="test-code-scroll" data-wb="code" data-variant="block" data-scrollable="true" data-wb-eager>const x = 1;</code>
+      <code id="test-code-scroll" wb="code" variant="block" scrollable="true" wb-eager>const x = 1;</code>
       <script src="/src/index.js" type="module"></script>
     `);
 

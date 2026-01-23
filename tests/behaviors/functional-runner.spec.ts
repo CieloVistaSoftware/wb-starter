@@ -260,7 +260,7 @@ async function setupTestPage(page: Page, setupHtml: string): Promise<void> {
  */
 function resolveSelector(selector: string | undefined, behavior: string): string {
   if (!selector || selector === 'element') {
-    return `[data-wb="${behavior}"]`;
+    return `[wb="${behavior}"]`;
   }
   return selector;
 }
@@ -610,7 +610,7 @@ for (const { file, schema } of schemasWithTests) {
               await page.focus(selector);
             } else {
               // Focus the main element
-              await page.focus(`[data-wb="${behavior}"]`);
+              await page.focus(`[wb="${behavior}"]`);
             }
             
             await page.waitForTimeout(50);

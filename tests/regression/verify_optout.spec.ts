@@ -7,11 +7,11 @@ test('Auto-injection opt-out mechanisms', async ({ page }) => {
   const auto = page.locator('#auto');
   await expect(auto).toHaveClass(/wb-card/);
 
-  // 2. data-wb="" -> Should NOT be a card
+  // 2. wb="" -> Should NOT be a card
   const optout = page.locator('#optout');
   await expect(optout).not.toHaveClass(/wb-card/);
 
-  // 3. data-wb-ignore -> Should NOT be a card
+  // 3. wb-ignore -> Should NOT be a card
   const ignore = page.locator('#optout-ignore');
   await expect(ignore).not.toHaveClass(/wb-card/);
 });

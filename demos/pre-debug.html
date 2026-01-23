@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +15,13 @@
   <h1>Pre Behavior Debug</h1>
 
   <h2>1. Static Pre</h2>
-  <wb-pre data-language="js"<code>console.log('Hello World');
+  <wb-pre language="js"<code>console.log('Hello World');
 const x = 10;
 const y = 20;
 console.log(x + y);</code></pre>
 
   <h2>2. Static Pre with Line Numbers</h2>
-  <wb-pre data-language="js" data-show-line-numbers="true"<code>function test() {
+  <wb-pre language="js" show-line-numbers="true"<code>function test() {
   return "Line 1";
 }
 // Line 3
@@ -29,7 +29,7 @@ console.log(x + y);</code></pre>
 
   <h2>3. Double Injection Test</h2>
   <div id="double-inject">
-    <pre class="double-pre" data-language="html"><code>&lt;div&gt;Test&lt;/div&gt;</code></pre>
+    <pre class="double-pre" language="html"><code>&lt;div&gt;Test&lt;/div&gt;</code></pre>
   </div>
   <script type="module">
     import { pre } from '../src/behaviors/js/semantics/pre.js';

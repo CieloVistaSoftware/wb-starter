@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" theme="dark" id="auto-previewhtml-1">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview - WB Page Builder</title>
+  <link rel="stylesheet" href="src/styles/themes.css">
+  <link rel="stylesheet" href="src/styles/site.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-color); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; }
+    #preview-header { background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); }
+    #preview-main { max-width: 1200px; margin: 0 auto; padding: 2rem; min-height: 400px; flex: 1; width: 100%; }
+    #preview-footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); margin-top: auto; }
+    .preview-loading { display: flex; align-items: center; justify-content: center; min-height: 50vh; color: var(--text-secondary); }
+    .page-content { display: none; }
+    .page-content.active { display: block; }
+    
+    /* Preview toolbar */
+    .preview-toolbar {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 1000;
+    }
+    .preview-btn {
+      padding: 0.5rem 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .preview-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+    
+    /* Ensure WB components display properly */
+    wb-grid {
+      display: grid !important;
+    }
+    wb-cardprofile, wb-card {
+      display: flex !important;
+    }
+    wb-footer {
+      display: block !important;
+    }
+    
+    /* =============================================================================
+       ELEMENT SPACING - Vertical rhythm for rendered content
+       ============================================================================= */
+    
+    /* Page content containers - major building blocks get 4rem (64px) gap */
+    .page-content > * {
+      margin-bottom: 4rem;
+    }
+    .page-content > *:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* Semantic container elements - 2rem (32px) gap */
+    section, article, aside, nav:not(:first-child), main > div {
+      margin-bottom: 2rem;
+    }
+    section:last-child, article:last-child, aside:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* Text and content elements - 1rem (16px) gap */
+    p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, details, address, pre {
+      margin-bottom: 1rem;
+    }
+    p:last-child, h1:last-child, h2:last-child, h3:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* Media elements - 1.5rem (24px) gap */
+    figure, img, video, audio, iframe {
+      margin-bottom: 1.5rem;
+    }
+    figure:last-child, img:last-child, video:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* WB Components - major building blocks */
+    wb-hero, wb-features, wb-pricing, wb-testimonials, wb-cta, wb-faq, wb-team, wb-contact {
+      display: block;
+      margin-bottom: 4rem;
+    }
+    wb-hero:last-child, wb-features:last-child, wb-pricing:last-child, 
+    wb-testimonials:last-child, wb-cta:last-child, wb-faq:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body id="auto-previewhtml-2">
+  <!-- Preview Toolbar -->
+  <div class="preview-toolbar" id="auto-previewhtml-3">
+    <button class="preview-btn" onclick="refreshPreview()" title="Reload preview data">
+      🔄 Refresh
+    </button>
+    <button class="preview-btn" onclick="window.close()" title="Close preview">
+      ✕ Close
+    </button>
+  </div>
+
+  <header id="preview-header"></header>
+  <main id="preview-main">
+    <div class="preview-loading">Loading preview...</div>
+  </main>
+  <footer id="preview-footer"></footer>
+
+  <script type="module">
+    import WB from './src/core/wb-lazy.js';
+    
+    // Make WB available globally for refresh
+    window.WB = WB;
+    
+    // Load preview data from localStorage
+    function loadPreview() {
+      const previewData = localStorage.getItem('wb-builder-preview');
+      
+      if (!previewData) {
+        document.getElementById('preview-main').innerHTML = 
+          '<div class="preview-loading">No preview data found. Open preview from the Builder.</div>';
+        return;
+      }
+      
+      try {
+        const data = JSON.parse(previewData);
+        
+        console.log('[Preview] Loading data:', {
+          theme: data.theme,
+          headerLength: data.header?.length || 0,
+          footerLength: data.footer?.length || 0,
+          pagesLength: data.pages?.length || 0
+        });
+        
+        // Set theme
+        if (data.theme) {
+          document.documentElement.dataset.theme = data.theme;
+        }
+        
+        // Render header
+        const headerEl = document.getElementById('preview-header');
+        if (data.header && data.header.trim()) {
+          headerEl.innerHTML = data.header;
+          headerEl.style.display = '';
+          console.log('[Preview] Header rendered:', data.header.substring(0, 100));
+        } else {
+          headerEl.style.display = 'none';
+          console.log('[Preview] No header content');
+        }
+        
+        // Render main content (pages)
+        if (data.pages) {
+          document.getElementById('preview-main').innerHTML = data.pages;
+        }
+        
+        // Render footer
+        const footerEl = document.getElementById('preview-footer');
+        if (data.footer && data.footer.trim()) {
+          footerEl.innerHTML = data.footer;
+          footerEl.style.display = '';
+          console.log('[Preview] Footer rendered:', data.footer.substring(0, 100));
+        } else {
+          footerEl.style.display = 'none';
+          console.log('[Preview] No footer content');
+        }
+        
+        // Initialize WB components after content is in DOM
+        setTimeout(() => {
+          WB.init({ debug: true, autoInject: true });
+          console.log('[Preview] WB Framework initialized');
+          
+          // Force re-render any wb- elements that may not have initialized
+          document.querySelectorAll('[data-wb-schema]').forEach(el => {
+            if (!el.dataset.wbReady) {
+              console.log('[Preview] Re-initializing:', el.tagName);
+            }
+          });
+        }, 100);
+        
+        // Show first page or specified current page
+        const currentPage = data.currentPage || 'home';
+        document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
+        const pageEl = document.getElementById('page-' + currentPage);
+        if (pageEl) {
+          pageEl.classList.add('active');
+        } else {
+          // Show first page if specified page not found
+          const firstPage = document.querySelector('.page-content');
+          if (firstPage) firstPage.classList.add('active');
+        }
+        
+        console.log('[Preview] Preview loaded successfully');
+        
+      } catch (err) {
+        console.error('[Preview] Error:', err);
+        document.getElementById('preview-main').innerHTML = 
+          '<div class="preview-loading">Error loading preview: ' + err.message + '</div>';
+      }
+    }
+    
+    // Refresh function - reload from builder
+    window.refreshPreview = function() {
+      console.log('[Preview] Refreshing...');
+      
+      // Try to get fresh data from opener window
+      if (window.opener && !window.opener.closed) {
+        try {
+          // Trigger preview save in builder
+          if (window.opener.previewSite) {
+            // The builder will update localStorage, then we reload
+            window.opener.previewSite();
+            return; // previewSite will open new window or we'll get data
+          }
+        } catch (e) {
+          console.log('[Preview] Cannot access opener:', e);
+        }
+      }
+      
+      // Fallback: reload from localStorage
+      loadPreview();
+    };
+    
+    // Page navigation
+    window.showPage = function(pageId) {
+      document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
+      const page = document.getElementById('page-' + pageId);
+      if (page) page.classList.add('active');
+      
+      // Update active state on nav links
+      document.querySelectorAll('[data-page]').forEach(link => {
+        link.classList.toggle('active', link.dataset.page === pageId);
+      });
+      
+      console.log('[Preview] Navigated to page:', pageId);
+    };
+    
+    // Intercept navigation links to stay within preview
+    function setupNavigationInterception() {
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a[href]');
+        if (!link) return;
+        
+        const href = link.getAttribute('href');
+        if (!href) return;
+        
+        // Check if this is a page navigation link (matches a page slug or page attribute)
+        let pageId = link.dataset?.page;
+        
+        if (!pageId) {
+          // Try to extract pageId from href (e.g., "about.html" -> "about", "index.html" -> "home")
+          const match = href.match(/^(?:#)?([a-z0-9-]+)(?:\.html)?$/i);
+          if (match) {
+            pageId = match[1];
+            if (pageId === 'index') pageId = 'home';
+          }
+        }
+        
+        // Check if this pageId exists in our preview
+        if (pageId) {
+          const targetPage = document.getElementById('page-' + pageId);
+          if (targetPage) {
+            e.preventDefault();
+            e.stopPropagation();
+            showPage(pageId);
+            return;
+          }
+        }
+        
+        // For external links or unknown pages, let the browser handle normally
+        // but warn in console
+        console.log('[Preview] External link clicked:', href);
+      });
+      
+      console.log('[Preview] Navigation interception enabled');
+    }
+    
+    // Initial load
+    loadPreview();
+    setupNavigationInterception();
+  </script>
+</body>
+</html>

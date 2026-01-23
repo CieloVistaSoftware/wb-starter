@@ -52,11 +52,11 @@ export function showWelcome() {
         <!-- PAGES PANEL -->
         <div class="welcome-panel active" id="welcomePagesPanel">
           <div class="category-filters">
-            <button class="category-filter active" data-category="all" onclick="window.filterPageCategory('all')">
+            <button class="category-filter active" category="all" onclick="window.filterPageCategory('all')">
               All
             </button>
             ${PAGE_CATEGORIES.map(cat => `
-              <button class="category-filter" data-category="${cat.id}" onclick="window.filterPageCategory('${cat.id}')" title="${cat.desc}">
+              <button class="category-filter" category="${cat.id}" onclick="window.filterPageCategory('${cat.id}')" title="${cat.desc}">
                 ${cat.icon} ${cat.name}
               </button>
             `).join('')}
@@ -286,7 +286,7 @@ function findContainerDropZone(wrapper) {
   const containerEl = wrapper.querySelector('wb-container');
   if (containerEl) return containerEl;
   
-  // Fallback: the element with data-wb
+  // Fallback: the element with wb
   const wbEl = wrapper.querySelector('');
   if (wbEl) return wbEl;
   

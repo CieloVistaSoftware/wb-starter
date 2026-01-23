@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-01-20T19:37:37.607Z",
+  "fixMode": false,
+  "summary": {
+    "htmlClasses": 56,
+    "cssClasses": 503,
+    "missingInCss": 0,
+    "deadCode": 0,
+    "unusedButValid": 0,
+    "fixed": 0
+  },
+  "errors": [],
+  "deadCode": [],
+  "warnings": []
+}

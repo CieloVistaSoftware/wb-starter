@@ -9,7 +9,7 @@
  * 
  * Usage:
  *   <div x-grid data-columns="3">...</div>
- *   <div data-justify="between">...</div>
+ *   <div justify="between">...</div>
  */
 
 /**

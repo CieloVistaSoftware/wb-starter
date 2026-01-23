@@ -564,7 +564,7 @@ function showIntentPicker() {
       
       <div class="wf-grid">
         ${Object.values(WORKFLOWS).map(wf => `
-          <button class="wf-card" data-workflow="${wf.id}" style="--wf-color: ${wf.color}" onclick="window.wfSelectIntent('${wf.id}')">
+          <button class="wf-card" workflow="${wf.id}" style="--wf-color: ${wf.color}" onclick="window.wfSelectIntent('${wf.id}')">
             <span class="wf-card-icon">${wf.icon}</span>
             <span class="wf-card-title">${wf.title}</span>
             <span class="wf-card-subtitle">${wf.subtitle}</span>

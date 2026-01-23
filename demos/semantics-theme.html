@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id="semanticstheme-html-1" lang="en" data-theme="dark">
+<html id="semanticstheme-html-1" lang="en" theme="dark">
 <head id="semanticstheme-head-2">
   <meta id="semanticstheme-meta-3" charset="UTF-8">
   <meta id="semanticstheme-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,7 +59,7 @@
   <h2 id="semanticstheme-h2-14">Theme Control <code id="semanticstheme-code-15"></code></h2>
   <div id="semanticstheme-div-16" class="demo-section">
     <p id="semanticstheme-p-17">A dropdown to switch the global theme. Persists selection to localStorage.</p>
-    <wb-themecontrol id="semanticstheme-div-18" data-show-label="true"></div>
+    <wb-themecontrol id="semanticstheme-div-18" show-label="true"></div>
   </div>
 
   <!-- DARK MODE ENFORCER -->
@@ -67,40 +67,40 @@
   <div id="semanticstheme-div-21" class="demo-section">
     <p id="semanticstheme-p-22">These sections have forced themes regardless of the global setting.</p>
     
-    <div id="semanticstheme-div-23" class="card" x-darkmode data-target="self" data-theme="dark">
+    <div id="semanticstheme-div-23" class="card" x-darkmode target="self" theme="dark">
       <h3 id="semanticstheme-h3-24">Forced Dark Mode</h3>
       <p id="semanticstheme-p-25">This card will always be dark.</p>
-      <button id="semanticstheme-button-26" data-variant="primary">Primary Button</button>
+      <button id="semanticstheme-button-26" variant="primary">Primary Button</button>
     </div>
 
-    <div id="semanticstheme-div-27" class="card" x-darkmode data-target="self" data-theme="light">
+    <div id="semanticstheme-div-27" class="card" x-darkmode target="self" theme="light">
       <h3 id="semanticstheme-h3-28">Forced Light Mode</h3>
       <p id="semanticstheme-p-29">This card will always be light.</p>
-      <button id="semanticstheme-button-30" data-variant="primary">Primary Button</button>
+      <button id="semanticstheme-button-30" variant="primary">Primary Button</button>
     </div>
 
-    <div id="semanticstheme-div-31" class="card" x-darkmode data-target="self" data-theme="cyberpunk">
+    <div id="semanticstheme-div-31" class="card" x-darkmode target="self" theme="cyberpunk">
       <h3 id="semanticstheme-h3-32">Forced Cyberpunk</h3>
       <p id="semanticstheme-p-33">This card will always be cyberpunk.</p>
-      <button id="semanticstheme-button-34" data-variant="primary">Primary Button</button>
+      <button id="semanticstheme-button-34" variant="primary">Primary Button</button>
     </div>
   </div>
 
   <!-- NESTED THEMES -->
   <h2 id="semanticstheme-h2-35">Nested Themes</h2>
-  <div id="semanticstheme-div-36" class="demo-section" data-theme="forest">
+  <div id="semanticstheme-div-36" class="demo-section" theme="forest">
     <h3 id="semanticstheme-h3-37">Forest Theme Container</h3>
-    <p id="semanticstheme-p-38">This container uses <code id="semanticstheme-code-39">data-theme="forest"</code> directly in HTML.</p>
+    <p id="semanticstheme-p-38">This container uses <code id="semanticstheme-code-39">theme="forest"</code> directly in HTML.</p>
     
     <div id="semanticstheme-div-40" class="card">
       <h4 id="semanticstheme-h4-41">Inherited Forest Card</h4>
-      <button id="semanticstheme-button-42" data-variant="primary">Forest Button</button>
+      <button id="semanticstheme-button-42" variant="primary">Forest Button</button>
     </div>
 
-    <div id="semanticstheme-div-43" class="card" data-theme="sunset">
+    <div id="semanticstheme-div-43" class="card" theme="sunset">
       <h4 id="semanticstheme-h4-44">Nested Sunset Card</h4>
-      <p id="semanticstheme-p-45">Overriding parent theme with <code id="semanticstheme-code-46">data-theme="sunset"</code>.</p>
-      <button id="semanticstheme-button-47" data-variant="primary">Sunset Button</button>
+      <p id="semanticstheme-p-45">Overriding parent theme with <code id="semanticstheme-code-46">theme="sunset"</code>.</p>
+      <button id="semanticstheme-button-47" variant="primary">Sunset Button</button>
     </div>
   </div>
 

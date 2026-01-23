@@ -19,7 +19,7 @@ test.describe('Fix Verification Tests', () => {
   // WB_CARD_BOOLEAN_PARSING_030
   test('Card handles empty boolean attributes correctly', async ({ page }) => {
     await page.setContent(`
-      <article id="test-card-bool" data-behavior="card" data-clickable="" data-title="Boolean Test"></article>
+      <article id="test-card-bool" behavior="card" clickable="" heading="Boolean Test"></article>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -31,7 +31,7 @@ test.describe('Fix Verification Tests', () => {
   // WB_CARD_CLICKABLE_TOGGLE_025
   test('Clickable card toggles active state on click', async ({ page }) => {
     await page.setContent(`
-      <article id="test-card-toggle" data-behavior="card" data-clickable="true" data-title="Toggle Test"></article>
+      <article id="test-card-toggle" behavior="card" clickable="true" heading="Toggle Test"></article>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -48,7 +48,7 @@ test.describe('Fix Verification Tests', () => {
   // WB_FIGURE_CAPTION_021
   test('Figure component renders caption from data-caption', async ({ page }) => {
     await page.setContent(`
-      <figure id="test-figure" data-wb="media" data-caption="Test Caption">
+      <figure id="test-figure" wb="media" caption="Test Caption">
         <img src="/assets/images/placeholder.jpg" alt="Test">
       </figure>
       <script src="/src/index.js" type="module"></script>
@@ -65,7 +65,7 @@ test.describe('Fix Verification Tests', () => {
     // We need to mock the audio context or just check if the controls are rendered
     // Since we can't easily play audio in headless, we'll check structure
     await page.setContent(`
-      <div id="test-eq" data-wb="media" data-type="audio" data-src="/assets/audio/test.mp3" data-eq="true"></div>
+      <div id="test-eq" wb="media" variant="audio" src="/assets/audio/test.mp3" eq="true"></div>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -79,7 +79,7 @@ test.describe('Fix Verification Tests', () => {
     const eqPanel = page.locator('.wb-media__eq-panel');
     // It might be hidden or not created until activated. 
     // If this test is flaky, we might need to inspect media.js to see how to trigger it.
-    // For now, let's assume it's part of the structure if data-eq="true"
+    // For now, let's assume it's part of the structure if eq="true"
     
     // If the EQ panel is not immediately visible, we might need to click an EQ button
     // But let's try to find the controls if they exist in the DOM
@@ -158,13 +158,13 @@ test.describe('Fix Verification Tests', () => {
   // ==========================================================================
   test('New semantic behaviors render correctly', async ({ page }) => {
     await page.setContent(`
-      <ul id="test-list" data-behavior="list" data-items='["A", "B", "C"]'></ul>
-      <dl id="test-desclist" data-behavior="desclist"></dl>
-      <div id="test-empty" data-behavior="empty"></div>
-      <pre id="test-code" data-behavior="code">const x = 1;</pre>
-      <div id="test-stat" data-behavior="stat"></div>
-      <div id="test-timeline" data-behavior="timeline"></div>
-      <div id="test-json" data-behavior="json"></div>
+      <ul id="test-list" behavior="list" data-items='["A", "B", "C"]'></ul>
+      <dl id="test-desclist" behavior="desclist"></dl>
+      <div id="test-empty" behavior="empty"></div>
+      <pre id="test-code" behavior="code">const x = 1;</pre>
+      <div id="test-stat" behavior="stat"></div>
+      <div id="test-timeline" behavior="timeline"></div>
+      <div id="test-json" behavior="json"></div>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -197,7 +197,7 @@ test.describe('Fix Verification Tests', () => {
   // ==========================================================================
   test('Card behavior fixes', async ({ page }) => {
     await page.setContent(`
-      <article id="test-card" data-behavior="card" data-variant="product">
+      <article id="test-card" behavior="card" variant="product">
         <button class="wb-card__cta">Add to Cart</button>
       </article>
       <script src="/src/index.js" type="module"></script>
@@ -205,7 +205,7 @@ test.describe('Fix Verification Tests', () => {
 
     const card = page.locator('#test-card');
     
-    // 023: No crash (data-wb-error not present)
+    // 023: No crash (wb-error not present)
     await expect(card).not.toHaveAttribute('data-wb-error', 'true');
 
     // 027: Compliance classes
@@ -234,7 +234,7 @@ test.describe('Fix Verification Tests', () => {
   // ==========================================================================
   test('Builder properties and Core behaviors work correctly', async ({ page }) => {
     await page.setContent(`
-      <div id="test-rating" data-behavior="rating"></div>
+      <div id="test-rating" behavior="rating"></div>
       <script src="/src/index.js" type="module"></script>
     `);
 

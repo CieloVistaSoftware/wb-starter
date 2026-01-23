@@ -5,7 +5,7 @@
 
 <!-- HEADER -->
 <header id="header">
-  <div>
+  <div id="auto-pages-behaviorshtml-1">
     <h1>⚡ WB Behaviors Showcase</h1>
     <p class="header-subtitle">170+ behaviors • Interactive demos • Copy-ready code</p>
   </div>
@@ -36,7 +36,7 @@
   </div>
 
   <h3>Button Variants</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-2">
     <button class="wb-btn wb-btn--primary">Primary</button>
     <button class="wb-btn wb-btn--secondary">Secondary</button>
     <button class="wb-btn wb-btn--ghost">Ghost</button>
@@ -44,37 +44,42 @@
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <button class="wb-btn wb-btn--primary">Primary</button>
 <button class="wb-btn wb-btn--secondary">Secondary</button>
 <button class="wb-btn wb-btn--ghost">Ghost</button>
 <button class="wb-btn wb-btn--primary" disabled>Disabled</button>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Button Sizes</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-3">
     <button class="wb-btn wb-btn--primary wb-btn--sm">Small</button>
     <button class="wb-btn wb-btn--primary">Medium</button>
     <button class="wb-btn wb-btn--primary wb-btn--lg">Large</button>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <button class="wb-btn wb-btn--primary wb-btn--sm">Small</button>
 <button class="wb-btn wb-btn--primary">Medium</button>
 <button class="wb-btn wb-btn--primary wb-btn--lg">Large</button>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Button with Behaviors</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-4">
     <button class="wb-btn wb-btn--primary" x-ripple>With Ripple</button>
-    <button class="wb-btn wb-btn--primary" x-toast data-message="Action completed!" data-type="success">With Toast</button>
+    <button class="wb-btn wb-btn--primary" x-toast message="Action completed!" variant="success">With Toast</button>
     <button class="wb-btn wb-btn--primary" x-behavior="tooltip" x-content="Helpful hint!" x-position="top">With Tooltip</button>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <!-- Ripple effect on click -->
 <button class="wb-btn wb-btn--primary" x-ripple>
@@ -84,18 +89,19 @@
 <!-- Toast notification on click -->
 <button class="wb-btn wb-btn--primary" 
         x-toast 
-        data-message="Action completed!" 
-        data-type="success">
+        message="Action completed!" 
+        variant="success">
   With Toast
 </button>
 
 <!-- Tooltip on hover -->
 <button class="wb-btn wb-btn--primary" 
         x-tooltip="Helpful hint!" 
-        data-position="top">
+        position="top">
   With Tooltip
 </button>
 ```
+</script>
   </wb-mdhtml>
 </section>
 
@@ -116,26 +122,30 @@
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <input type="text" placeholder="Basic text input">
 <input type="email" placeholder="Email input">
 <input type="number" placeholder="Number input">
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Validation Variants</h3>
   <div class="demo-grid-3">
-    <input type="text" placeholder="Success state" data-variant="success">
-    <input type="text" placeholder="Warning state" data-variant="warning">
-    <input type="text" placeholder="Error state" data-variant="error">
+    <input type="text" placeholder="Success state" variant="success">
+    <input type="text" placeholder="Warning state" variant="warning">
+    <input type="text" placeholder="Error state" variant="error">
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<input type="text" placeholder="Success" data-variant="success">
-<input type="text" placeholder="Warning" data-variant="warning">
-<input type="text" placeholder="Error" data-variant="error">
+<input type="text" placeholder="Success" variant="success">
+<input type="text" placeholder="Warning" variant="warning">
+<input type="text" placeholder="Error" variant="error">
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Special Input Types</h3>
@@ -146,6 +156,7 @@
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <!-- Password with visibility toggle -->
 <input type="password" x-password placeholder="Password">
@@ -156,39 +167,44 @@
 <!-- Color picker -->
 <input type="text" x-colorpicker value="#6366f1">
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Masked Inputs</h3>
   <div class="demo-grid-3">
-    <input x-masked data-mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
-    <input x-masked data-mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
-    <input x-masked data-mask="9999 9999 9999 9999" placeholder="Credit Card">
+    <input x-masked mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
+    <input x-masked mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
+    <input x-masked mask="9999 9999 9999 9999" placeholder="Credit Card">
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <!-- Phone mask (9 = any digit) -->
-<input x-masked data-mask="(999) 999-9999" placeholder="Phone">
+<input x-masked mask="(999) 999-9999" placeholder="Phone">
 
 <!-- Date mask -->
-<input x-masked data-mask="99/99/9999" placeholder="MM/DD/YYYY">
+<input x-masked mask="99/99/9999" placeholder="MM/DD/YYYY">
 
 <!-- Credit card mask -->
-<input x-masked data-mask="9999 9999 9999 9999" placeholder="Card">
+<input x-masked mask="9999 9999 9999 9999" placeholder="Card">
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Textarea</h3>
-  <div class="demo-grid-2">
+  <div class="demo-grid-2" id="auto-pages-behaviorshtml-5">
     <textarea placeholder="Standard textarea" rows="3"></textarea>
-    <textarea data-autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>
+    <textarea autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <textarea placeholder="Standard textarea" rows="3"></textarea>
-<textarea data-autosize placeholder="Grows as you type..."></textarea>
+<textarea autosize placeholder="Grows as you type..."></textarea>
 ```
+</script>
   </wb-mdhtml>
 </section>
 
@@ -202,59 +218,65 @@
   </div>
 
   <h3>Checkboxes</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-6">
     <label class="checkbox-label"><input type="checkbox"> Unchecked</label>
     <label class="checkbox-label"><input type="checkbox" checked> Checked</label>
     <label class="checkbox-label"><input type="checkbox" disabled> Disabled</label>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <label><input type="checkbox"> Unchecked</label>
 <label><input type="checkbox" checked> Checked</label>
 <label><input type="checkbox" disabled> Disabled</label>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Radio Buttons</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-7">
     <label class="checkbox-label"><input type="radio" name="demo-radio" checked> Option A</label>
     <label class="checkbox-label"><input type="radio" name="demo-radio"> Option B</label>
     <label class="checkbox-label"><input type="radio" name="demo-radio"> Option C</label>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <label><input type="radio" name="choice" checked> Option A</label>
 <label><input type="radio" name="choice"> Option B</label>
 <label><input type="radio" name="choice"> Option C</label>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Switch Toggle</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-8">
     <wb-switch label="Dark Mode"></wb-switch>
     <wb-switch label="Notifications" checked></wb-switch>
     <wb-switch label="Disabled" disabled></wb-switch>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <wb-switch label="Dark Mode"></wb-switch>
 <wb-switch label="Notifications" checked></wb-switch>
 <wb-switch label="Disabled" disabled></wb-switch>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Select Dropdown</h3>
-  <div class="demo-grid-2">
-    <select>
+  <div class="demo-grid-2" id="auto-pages-behaviorshtml-9">
+    <select id="auto-pages-behaviorshtml-10">
       <option>Select an option</option>
       <option>Option 1</option>
       <option>Option 2</option>
       <option>Option 3</option>
     </select>
-    <select multiple size="3">
+    <select multiple size="3" id="auto-pages-behaviorshtml-11">
       <option>Multiple 1</option>
       <option>Multiple 2</option>
       <option>Multiple 3</option>
@@ -262,47 +284,65 @@
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<select>
+<select id="auto-pages-behaviorshtml-12">
   <option>Select an option</option>
   <option>Option 1</option>
   <option>Option 2</option>
 </select>
 
-<select multiple size="3">
+<select multiple size="3" id="auto-pages-behaviorshtml-13">
   <option>Item 1</option>
   <option>Item 2</option>
   <option>Item 3</option>
 </select>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Rating</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-14">
     <wb-rating value="3" max="5"></wb-rating>
     <wb-rating value="4" max="5" icon="❤️"></wb-rating>
     <wb-rating value="2" max="5" icon="👍"></wb-rating>
   </div>
 
+  <h3>Rating with Background Colors</h3>
+  <div class="demo-row">
+    <wb-rating value="4" max="5" bg="primary"></wb-rating>
+    <wb-rating value="3" max="5" bg="success"></wb-rating>
+    <wb-rating value="2" max="5" bg="warning"></wb-rating>
+  </div>
+
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <wb-rating value="3" max="5"></wb-rating>
 <wb-rating value="4" max="5" icon="❤️"></wb-rating>
 <wb-rating value="2" max="5" icon="👍"></wb-rating>
+
+<!-- With background colors -->
+<wb-rating value="4" max="5" bg="primary"></wb-rating>
+<wb-rating value="3" max="5" bg="success"></wb-rating>
+<wb-rating value="2" max="5" bg="warning"></wb-rating>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Stepper & Range</h3>
   <div class="demo-grid-2">
-    <div x-stepper data-value="5" data-min="0" data-max="10"></div>
+    <div x-stepper value="5" min="0" max="10"></div>
     <input type="range" min="0" max="100" value="50">
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<div x-stepper data-value="5" data-min="0" data-max="10"></div>
+<div x-stepper value="5" min="0" max="10"></div>
 <input type="range" min="0" max="100" value="50">
 ```
+</script>
   </wb-mdhtml>
 </section>
 
@@ -316,47 +356,50 @@
   </div>
 
   <h3>Alerts (All Variants)</h3>
-  <div class="alerts-stack">
-    <wb-alert type="info" title="Information" message="This is an informational message." data-dismissible></wb-alert>
-    <wb-alert type="success" title="Success" message="Operation completed successfully." data-dismissible></wb-alert>
-    <wb-alert type="warning" title="Warning" message="Please review before continuing." data-dismissible></wb-alert>
-    <wb-alert type="error" title="Error" message="Something went wrong." data-dismissible></wb-alert>
+  <div class="alerts-stack" id="auto-pages-behaviorshtml-15">
+    <wb-alert variant="info" heading="Information" message="This is an informational message." dismissible></wb-alert>
+    <wb-alert variant="success" heading="Success" message="Operation completed successfully." dismissible></wb-alert>
+    <wb-alert variant="warning" heading="Warning" message="Please review before continuing." dismissible></wb-alert>
+    <wb-alert variant="error" heading="Error" message="Something went wrong." dismissible></wb-alert>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<wb-alert type="info" 
-          title="Information" 
+<wb-alert variant="info" 
+          heading="Information" 
           message="Informational message." 
-          data-dismissible></wb-alert>
+          dismissible></wb-alert>
 
-<wb-alert type="success" 
-          title="Success" 
+<wb-alert variant="success" 
+          heading="Success" 
           message="Operation completed."
-          data-dismissible></wb-alert>
+          dismissible></wb-alert>
 
-<wb-alert type="warning" 
-          title="Warning" 
+<wb-alert variant="warning" 
+          heading="Warning" 
           message="Please review."></wb-alert>
 
-<wb-alert type="error" 
-          title="Error" 
+<wb-alert variant="error" 
+          heading="Error" 
           message="Something went wrong."></wb-alert>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Badges (All Variants)</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-16">
     <wb-badge>Default Badge</wb-badge>
     <wb-badge variant="primary">Primary Badge</wb-badge>
     <wb-badge variant="success">Success Badge</wb-badge>
     <wb-badge variant="warning">Warning Badge</wb-badge>
     <wb-badge variant="error">Error Badge</wb-badge>
     <wb-badge variant="info">Info Badge</wb-badge>
-    <wb-badge data-pill>Pill Badge</wb-badge>
+    <wb-badge pill>Pill Badge</wb-badge>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <wb-badge>Default Badge</wb-badge>
 <wb-badge variant="primary">Primary Badge</wb-badge>
@@ -364,41 +407,44 @@
 <wb-badge variant="warning">Warning Badge</wb-badge>
 <wb-badge variant="error">Error Badge</wb-badge>
 <wb-badge variant="info">Info Badge</wb-badge>
-<wb-badge data-pill>Pill Badge</wb-badge>
+<wb-badge pill>Pill Badge</wb-badge>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Progress Bars</h3>
-  <div class="progress-stack">
-    <div class="progress-item">
+  <div class="progress-stack" id="auto-pages-behaviorshtml-17">
+    <div class="progress-item" id="auto-pages-behaviorshtml-18">
       <span class="progress-label">25%</span>
-      <wb-progress data-value="25"></wb-progress>
+      <wb-progress value="25"></wb-progress>
     </div>
-    <div class="progress-item">
+    <div class="progress-item" id="auto-pages-behaviorshtml-19">
       <span class="progress-label">50%</span>
-      <wb-progress data-value="50"></wb-progress>
+      <wb-progress value="50"></wb-progress>
     </div>
-    <div class="progress-item">
+    <div class="progress-item" id="auto-pages-behaviorshtml-20">
       <span class="progress-label">75% (striped)</span>
-      <wb-progress data-value="75" data-striped></wb-progress>
+      <wb-progress value="75" striped></wb-progress>
     </div>
-    <div class="progress-item">
+    <div class="progress-item" id="auto-pages-behaviorshtml-21">
       <span class="progress-label">100%</span>
-      <wb-progress data-value="100"></wb-progress>
+      <wb-progress value="100"></wb-progress>
     </div>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<wb-progress data-value="25"></wb-progress>
-<wb-progress data-value="50"></wb-progress>
-<wb-progress data-value="75" data-striped></wb-progress>
-<wb-progress data-value="100"></wb-progress>
+<wb-progress value="25"></wb-progress>
+<wb-progress value="50"></wb-progress>
+<wb-progress value="75" striped></wb-progress>
+<wb-progress value="100"></wb-progress>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Spinners</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-22">
     <wb-spinner></wb-spinner>
     <wb-spinner color="success"></wb-spinner>
     <wb-spinner color="warning"></wb-spinner>
@@ -407,6 +453,7 @@
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <wb-spinner></wb-spinner>
 <wb-spinner color="success"></wb-spinner>
@@ -414,34 +461,37 @@
 <wb-spinner color="error"></wb-spinner>
 <wb-spinner size="lg"></wb-spinner>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Toast Notifications</h3>
-  <div class="demo-row">
-    <button class="wb-btn wb-btn--primary" x-toast data-message="Info message" data-type="info">Info Toast</button>
-    <button class="wb-btn wb-btn--primary" x-toast data-message="Success!" data-type="success">Success Toast</button>
-    <button class="wb-btn wb-btn--primary" x-toast data-message="Warning!" data-type="warning">Warning Toast</button>
-    <button class="wb-btn wb-btn--primary" x-toast data-message="Error!" data-type="error">Error Toast</button>
+  <div class="demo-row" id="auto-pages-behaviorshtml-23">
+    <button class="wb-btn wb-btn--primary" x-toast message="Info message" variant="info">Info Toast</button>
+    <button class="wb-btn wb-btn--primary" x-toast message="Success!" variant="success">Success Toast</button>
+    <button class="wb-btn wb-btn--primary" x-toast message="Warning!" variant="warning">Warning Toast</button>
+    <button class="wb-btn wb-btn--primary" x-toast message="Error!" variant="error">Error Toast</button>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<button x-toast data-message="Info message" data-type="info">
+<button x-toast message="Info message" variant="info">
   Info Toast
 </button>
 
-<button x-toast data-message="Success!" data-type="success">
+<button x-toast message="Success!" variant="success">
   Success Toast
 </button>
 
-<button x-toast data-message="Warning!" data-type="warning">
+<button x-toast message="Warning!" variant="warning">
   Warning Toast
 </button>
 
-<button x-toast data-message="Error!" data-type="error">
+<button x-toast message="Error!" variant="error">
   Error Toast
 </button>
 ```
+</script>
   </wb-mdhtml>
 </section>
 
@@ -458,119 +508,131 @@
   <div class="demo-row">
     <wb-modal 
       class="wb-btn wb-btn--primary" 
-      data-modal-title="Modal Dialog" 
-      data-modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
+      modal-title="Modal Dialog" 
+      modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <wb-modal 
   class="wb-btn wb-btn--primary" 
-  data-modal-title="Modal Dialog" 
-  data-modal-content="Modal content here.">
+  modal-title="Modal Dialog" 
+  modal-content="Modal content here.">
   Open Modal
 </wb-modal>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Drawer</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-24">
     <wb-drawer 
       class="wb-btn wb-btn--primary" 
-      title="Left Drawer" 
+      heading="Left Drawer" 
       content="Slide-out panel from the left." 
       position="left">Left Drawer</wb-drawer>
     <wb-drawer 
       class="wb-btn wb-btn--primary" 
-      title="Right Drawer" 
+      heading="Right Drawer" 
       content="Slide-out panel from the right." 
       position="right">Right Drawer</wb-drawer>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <wb-drawer class="wb-btn wb-btn--primary" 
-           title="Left Drawer" 
+           heading="Left Drawer" 
            content="Panel content" 
            position="left">
   Left Drawer
 </wb-drawer>
 
 <wb-drawer class="wb-btn wb-btn--primary" 
-           title="Right Drawer" 
+           heading="Right Drawer" 
            content="Panel content" 
            position="right">
   Right Drawer
 </wb-drawer>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Tooltips</h3>
-  <div class="demo-row">
-    <button class="wb-btn wb-btn--secondary" x-tooltip="Top tooltip" data-position="top">Top</button>
-    <button class="wb-btn wb-btn--secondary" x-tooltip="Bottom tooltip" data-position="bottom">Bottom</button>
-    <button class="wb-btn wb-btn--secondary" x-tooltip="Left tooltip" data-position="left">Left</button>
-    <button class="wb-btn wb-btn--secondary" x-tooltip="Right tooltip" data-position="right">Right</button>
+  <div class="demo-row" id="auto-pages-behaviorshtml-25">
+    <button class="wb-btn wb-btn--secondary" x-tooltip="Top tooltip" position="top">Top</button>
+    <button class="wb-btn wb-btn--secondary" x-tooltip="Bottom tooltip" position="bottom">Bottom</button>
+    <button class="wb-btn wb-btn--secondary" x-tooltip="Left tooltip" position="left">Left</button>
+    <button class="wb-btn wb-btn--secondary" x-tooltip="Right tooltip" position="right">Right</button>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<button x-tooltip="Top tooltip" data-position="top">Top</button>
-<button x-tooltip="Bottom tooltip" data-position="bottom">Bottom</button>
-<button x-tooltip="Left tooltip" data-position="left">Left</button>
-<button x-tooltip="Right tooltip" data-position="right">Right</button>
+<button x-tooltip="Top tooltip" position="top">Top</button>
+<button x-tooltip="Bottom tooltip" position="bottom">Bottom</button>
+<button x-tooltip="Left tooltip" position="left">Left</button>
+<button x-tooltip="Right tooltip" position="right">Right</button>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Popover</h3>
   <div class="demo-row">
-    <button class="wb-btn wb-btn--primary" x-popover data-title="Popover Title" data-content="This is additional information displayed in a popover.">Show Popover</button>
+    <button class="wb-btn wb-btn--primary" x-popover heading="Popover Title" description="This is additional information displayed in a popover.">Show Popover</button>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <button x-popover 
-        data-title="Popover Title" 
-        data-content="Additional information here.">
+        heading="Popover Title" 
+        description="Additional information here.">
   Show Popover
 </button>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Confirm & Prompt</h3>
-  <div class="demo-row">
-    <button class="wb-btn wb-btn--primary" x-confirm data-title="Confirm Action" data-message="Are you sure you want to proceed?">Confirm Dialog</button>
-    <button class="wb-btn wb-btn--primary" x-prompt data-title="Enter Value" data-message="Please enter your name:">Prompt Dialog</button>
+  <div class="demo-row" id="auto-pages-behaviorshtml-26">
+    <button class="wb-btn wb-btn--primary" x-confirm heading="Confirm Action" message="Are you sure you want to proceed?">Confirm Dialog</button>
+    <button class="wb-btn wb-btn--primary" x-prompt heading="Enter Value" message="Please enter your name:">Prompt Dialog</button>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <button x-confirm 
-        data-title="Confirm Action" 
-        data-message="Are you sure?">
+        heading="Confirm Action" 
+        message="Are you sure?">
   Confirm
 </button>
 
 <button x-prompt 
-        data-title="Enter Value" 
-        data-message="Please enter:">
+        heading="Enter Value" 
+        message="Please enter:">
   Prompt
 </button>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Lightbox</h3>
-  <div class="demo-row">
-    <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>
-    <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb2">View Image 2</button>
+  <div class="demo-row" id="auto-pages-behaviorshtml-27">
+    <button class="wb-btn wb-btn--primary" x-lightbox src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>
+    <button class="wb-btn wb-btn--primary" x-lightbox src="https://picsum.photos/1200/800?r=lb2">View Image 2</button>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<button x-lightbox data-src="https://example.com/large-image.jpg">
+<button x-lightbox src="https://example.com/large-image.jpg">
   View Image
 </button>
 ```
+</script>
   </wb-mdhtml>
 </section>
 
@@ -585,61 +647,65 @@
 
   <h3>Tabs</h3>
   <div class="demo-full">
-    <wb-tabs>
-      <div data-tab-title="Overview">
+    <wb-tabs id="auto-pages-behaviorshtml-28">
+      <div tab-title="Overview">
         <p>This is the overview tab content. Tabs organize content into separate views with keyboard navigation.</p>
       </div>
-      <div data-tab-title="Features">
+      <div tab-title="Features">
         <p>Features include smooth transitions, responsive design, and full accessibility compliance.</p>
       </div>
-      <div data-tab-title="Usage">
-        <p>Simply wrap your content in a wb-tabs element with data-tab-title on each panel.</p>
+      <div tab-title="Usage">
+        <p>Simply wrap your content in a wb-tabs element with tab-title on each panel.</p>
       </div>
     </wb-tabs>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<wb-tabs>
-  <div data-tab-title="Overview">
+<wb-tabs id="auto-pages-behaviorshtml-29">
+  <div tab-title="Overview">
     <p>Overview content...</p>
   </div>
-  <div data-tab-title="Features">
+  <div tab-title="Features">
     <p>Features content...</p>
   </div>
-  <div data-tab-title="Usage">
+  <div tab-title="Usage">
     <p>Usage content...</p>
   </div>
 </wb-tabs>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Accordion</h3>
   <div class="demo-full">
-    <wb-accordion>
-      <div data-accordion-title="What is WB Framework?">
+    <wb-accordion id="auto-pages-behaviorshtml-30">
+      <div accordion-title="What is WB Framework?">
         <p>WB Framework is a zero-build web component library with behaviors and themes.</p>
       </div>
-      <div data-accordion-title="How do I install it?">
+      <div accordion-title="How do I install it?">
         <p>No installation needed! Just include the script and start using components immediately.</p>
       </div>
-      <div data-accordion-title="Is it production ready?">
+      <div accordion-title="Is it production ready?">
         <p>Yes! WB Framework is schema-driven, fully tested, and enterprise hardened.</p>
       </div>
     </wb-accordion>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<wb-accordion>
-  <div data-accordion-title="Section 1">
+<wb-accordion id="auto-pages-behaviorshtml-31">
+  <div accordion-title="Section 1">
     <p>Content for section 1...</p>
   </div>
-  <div data-accordion-title="Section 2">
+  <div accordion-title="Section 2">
     <p>Content for section 2...</p>
   </div>
 </wb-accordion>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Breadcrumb</h3>
@@ -648,36 +714,42 @@
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones"></nav>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Pagination</h3>
   <div class="demo-full">
-    <nav x-pagination data-total="100" data-per-page="10" data-current="5"></nav>
+    <nav x-pagination total="100" per-page="10" current="5"></nav>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <nav x-pagination 
-     data-total="100" 
-     data-per-page="10" 
-     data-current="5"></nav>
+     total="100" 
+     per-page="10" 
+     current="5"></nav>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Steps Wizard</h3>
   <div class="demo-full">
-    <div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
+    <div x-steps data-items="Cart,Shipping,Payment,Confirm" current="2"></div>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <div x-steps 
      data-items="Cart,Shipping,Payment,Confirm" 
-     data-current="2"></div>
+     current="2"></div>
 ```
+</script>
   </wb-mdhtml>
 </section>
 
@@ -691,7 +763,7 @@
   </div>
 
   <h3>Avatars</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-32">
     <wb-avatar src="https://i.pravatar.cc/150?img=1"></wb-avatar>
     <wb-avatar src="https://i.pravatar.cc/150?img=2" size="lg"></wb-avatar>
     <wb-avatar initials="JD"></wb-avatar>
@@ -700,6 +772,7 @@
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <wb-avatar src="photo.jpg"></wb-avatar>
 <wb-avatar src="photo.jpg" size="lg"></wb-avatar>
@@ -707,21 +780,24 @@
 <wb-avatar src="photo.jpg" status="online"></wb-avatar>
 <wb-avatar src="photo.jpg" status="away"></wb-avatar>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Skeleton Loaders</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-33">
     <wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton>
     <wb-skeleton variant="circle" width="60px"></wb-skeleton>
     <wb-skeleton variant="rect" width="150px" height="100px"></wb-skeleton>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton>
 <wb-skeleton variant="circle" width="60px"></wb-skeleton>
 <wb-skeleton variant="rect" width="150px" height="100px"></wb-skeleton>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Timeline</h3>
@@ -730,21 +806,25 @@
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <div x-timeline 
      data-items="Kickoff,Design,Development,Testing,Launch"></div>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Keyboard Keys</h3>
   <div class="demo-row">
-    <p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>
+    <p id="auto-pages-behaviorshtml-34">Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save.</p>
+<p id="auto-pages-behaviorshtml-35">Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save.</p>
 ```
+</script>
   </wb-mdhtml>
 </section>
 
@@ -759,15 +839,17 @@
 
   <h3>Enhanced Images</h3>
   <div class="demo-row">
-    <img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" data-lazy class="demo-image">
-    <img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" data-zoomable class="demo-image">
+    <img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" lazy class="demo-image">
+    <img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" zoomable class="demo-image">
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<img x-image src="image.jpg" alt="Description" data-lazy>
-<img x-image src="image.jpg" alt="Description" data-zoomable>
+<img x-image src="image.jpg" alt="Description" lazy>
+<img x-image src="image.jpg" alt="Description" zoomable>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Gallery</h3>
@@ -781,6 +863,7 @@
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <div x-gallery data-columns="4">
   <img src="img1.jpg" alt="Image 1">
@@ -789,34 +872,39 @@
   <img src="img4.jpg" alt="Image 4">
 </div>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Audio Player</h3>
   <div class="demo-full">
     <wb-audio 
-      data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" 
-      data-show-eq="true" 
-      data-volume="0.7"></wb-audio>
+      src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" 
+      show-eq="true" 
+      volume="0.7"></wb-audio>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <wb-audio 
-  data-src="audio-file.mp3" 
-  data-show-eq="true" 
-  data-volume="0.7"></wb-audio>
+  src="audio-file.mp3" 
+  show-eq="true" 
+  volume="0.7"></wb-audio>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>YouTube Embed</h3>
   <div class="demo-full youtube-container">
-    <div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
+    <div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
+<div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div>
 ```
+</script>
   </wb-mdhtml>
 </section>
 
@@ -830,7 +918,7 @@
   </div>
 
   <h3>Attention Seekers (click to trigger)</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-36">
     <button class="effect-demo" x-bounce>Bounce</button>
     <button class="effect-demo" x-shake>Shake</button>
     <button class="effect-demo" x-pulse>Pulse</button>
@@ -842,6 +930,7 @@
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <button x-bounce>Bounce</button>
 <button x-shake>Shake</button>
@@ -852,31 +941,34 @@
 <button x-jello>Jello</button>
 <button x-heartbeat>Heartbeat</button>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Entrance Animations</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-37">
     <button class="effect-demo" x-fadein>Fade In</button>
-    <button class="effect-demo" x-slidein data-direction="left">Slide Left</button>
-    <button class="effect-demo" x-slidein data-direction="right">Slide Right</button>
-    <button class="effect-demo" x-slidein data-direction="up">Slide Up</button>
+    <button class="effect-demo" x-slidein direction="left">Slide Left</button>
+    <button class="effect-demo" x-slidein direction="right">Slide Right</button>
+    <button class="effect-demo" x-slidein direction="up">Slide Up</button>
     <button class="effect-demo" x-zoomin>Zoom In</button>
     <button class="effect-demo" x-flip>Flip</button>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <button x-fadein>Fade In</button>
-<button x-slidein data-direction="left">Slide Left</button>
-<button x-slidein data-direction="right">Slide Right</button>
-<button x-slidein data-direction="up">Slide Up</button>
+<button x-slidein direction="left">Slide Left</button>
+<button x-slidein direction="right">Slide Right</button>
+<button x-slidein direction="up">Slide Up</button>
 <button x-zoomin>Zoom In</button>
 <button x-flip>Flip</button>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Special Effects</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-38">
     <button class="wb-btn wb-btn--primary" x-confetti>🎊 Confetti</button>
     <button class="wb-btn wb-btn--primary" x-fireworks>🎆 Fireworks</button>
     <button class="wb-btn wb-btn--primary" x-snow>❄️ Snow</button>
@@ -886,6 +978,7 @@
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <button x-confetti>🎊 Confetti</button>
 <button x-fireworks>🎆 Fireworks</button>
@@ -894,19 +987,22 @@
 <button x-glow>💡 Glow</button>
 <button x-rainbow>🌈 Rainbow</button>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Ripple Effect</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-39">
     <button class="wb-btn wb-btn--primary" x-ripple>Click for Ripple</button>
     <div x-ripple class="ripple-box">Ripple on any element</div>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <button x-ripple>Click for Ripple</button>
 <div x-ripple>Any element can have ripple</div>
 ```
+</script>
   </wb-mdhtml>
 </section>
 
@@ -920,83 +1016,93 @@
   </div>
 
   <h3>Copy to Clipboard</h3>
-  <div class="demo-row">
-    <button class="wb-btn wb-btn--primary" x-copy data-copy="Text copied to clipboard!">📋 Copy Text</button>
-    <button class="wb-btn wb-btn--primary" x-copy data-copy="npm install wb-framework">📋 Copy Command</button>
+  <div class="demo-row" id="auto-pages-behaviorshtml-40">
+    <button class="wb-btn wb-btn--primary" x-copy copy="Text copied to clipboard!">📋 Copy Text</button>
+    <button class="wb-btn wb-btn--primary" x-copy copy="npm install wb-framework">📋 Copy Command</button>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<button x-copy data-copy="Text to copy">📋 Copy</button>
+<button x-copy copy="Text to copy">📋 Copy</button>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Share, Print & Fullscreen</h3>
-  <div class="demo-row">
-    <button class="wb-btn wb-btn--secondary" x-share data-share-title="WB Framework" data-share-url="https://example.com">📤 Share</button>
+  <div class="demo-row" id="auto-pages-behaviorshtml-41">
+    <button class="wb-btn wb-btn--secondary" x-share share-title="WB Framework" share-url="https://example.com">📤 Share</button>
     <button class="wb-btn wb-btn--secondary" x-print>🖨️ Print</button>
     <button class="wb-btn wb-btn--secondary" x-fullscreen>⛶ Fullscreen</button>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<button x-share data-share-title="Title" data-share-url="https://...">
+<button x-share share-title="Title" share-url="https://...">
   📤 Share
 </button>
 
 <button x-print>🖨️ Print</button>
 <button x-fullscreen>⛶ Fullscreen</button>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Clock & Countdown</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-42">
     <div x-clock class="time-display"></div>
-    <div x-countdown data-to="2026-12-31" class="time-display"></div>
-    <span x-relativetime data-date="2025-01-01" class="time-display">Jan 1, 2025</span>
+    <div x-countdown to="2026-12-31" class="time-display"></div>
+    <span x-relativetime date="2025-01-01" class="time-display">Jan 1, 2025</span>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <div x-clock></div>
-<div x-countdown data-to="2026-12-31"></div>
-<span x-relativetime data-date="2025-01-01"></span>
+<div x-countdown to="2026-12-31"></div>
+<span x-relativetime date="2025-01-01"></span>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Dark Mode Toggle</h3>
-  <div class="demo-row">
+  <div class="demo-row" id="auto-pages-behaviorshtml-43">
     <button class="wb-btn wb-btn--primary" x-darkmode>🌙 Toggle Dark Mode</button>
     <wb-themecontrol></wb-themecontrol>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
 <button x-darkmode>🌙 Toggle Dark Mode</button>
 <wb-themecontrol></wb-themecontrol>
 ```
+</script>
   </wb-mdhtml>
 
   <h3>Text Truncate</h3>
   <div class="demo-full">
-    <p x-truncate data-lines="2" class="truncate-box">
+    <p x-truncate lines="2" class="truncate-box">
       This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </p>
   </div>
 
   <wb-mdhtml>
+<script type="text/markdown">
 ```html
-<p x-truncate data-lines="2">
+<p x-truncate lines="2">
   Long text that will be truncated after 2 lines...
 </p>
 ```
+</script>
   </wb-mdhtml>
 </section>
 
 <!-- FOOTER -->
 <footer id="footer">
   <p>WB Framework v3.0 • 170+ Behaviors • 23 Themes</p>
-  <p><a href="?page=docs">Documentation</a> • <a href="?page=themes">Themes</a> • <a href="?page=home">Home</a></p>
+  <p id="auto-pages-behaviorshtml-44"><a href="?page=docs">Documentation</a> • <a href="?page=themes">Themes</a> • <a href="?page=home">Home</a></p>
 </footer>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -1232,15 +1338,15 @@ input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
-input[data-variant="success"] {
+input[variant="success"] {
   border-color: var(--success-color, #22c55e);
 }
 
-input[data-variant="warning"] {
+input[variant="warning"] {
   border-color: var(--warning-color, #f59e0b);
 }
 
-input[data-variant="error"] {
+input[variant="error"] {
   border-color: var(--danger-color, #ef4444);
 }
 

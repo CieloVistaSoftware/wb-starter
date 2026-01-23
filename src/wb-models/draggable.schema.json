@@ -3,7 +3,7 @@
   "$id": "draggable.schema.json",
   "title": "Draggable",
   "behavior": "draggable",
-  "description": "Make an element draggable.",
+  "description": "Make an element draggable with optional position persistence.",
   "compliance": {
     "baseClass": "wb-draggable",
     "supportLevel": "stable",
@@ -12,28 +12,53 @@
   "properties": {
     "axis": {
       "type": "string",
-      "enum": [
-        "x",
-        "y",
-        "both"
-      ],
-      "default": "both"
+      "enum": ["x", "y", "both"],
+      "default": "both",
+      "description": "Constrain movement to a single axis"
     },
     "handle": {
       "type": "string",
-      "description": "Selector for drag handle"
+      "description": "CSS selector for drag handle element"
+    },
+    "bounds": {
+      "type": "string",
+      "enum": ["viewport", "parent"],
+      "description": "Constrain dragging within bounds (viewport, parent, or CSS selector)"
+    },
+    "grid": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Snap to grid size in pixels"
+    },
+    "persist": {
+      "type": "string",
+      "description": "localStorage key to save/restore position. Saved as wb-draggable-{key}"
     }
   },
   "$view": [],
-  "$methods": {},
-  "$cssAPI": {},
+  "$methods": {
+    "setPosition": "Set position programmatically: setPosition(x, y)",
+    "getPosition": "Get current position: returns { x, y }"
+  },
+  "$events": {
+    "wb:drag:start": "Fired when drag begins. Detail: { x, y }",
+    "wb:drag:move": "Fired during drag. Detail: { x, y }",
+    "wb:drag:end": "Fired when drag ends. Detail: { x, y }"
+  },
+  "$cssAPI": {
+    ".wb-draggable": "Base class added to draggable elements",
+    ".wb-draggable--dragging": "Added while actively dragging",
+    ".wb-draggable__handle": "Added to the drag handle element"
+  },
   "test": {
     "setup": [
-      "<wb-draggable>Basic draggable content</wb-draggable>",
-      "<wb-draggable axis=\"x\">axis=x</wb-draggable>",
-      "<wb-draggable axis=\"y\">axis=y</wb-draggable>",
-      "<wb-draggable axis=\"both\">axis=both</wb-draggable>",
-      "<wb-draggable handle=\"Sample handle\">handle=\"Sample handle\"</wb-draggable>"
+      "<div x-draggable>Basic draggable</div>",
+      "<div x-draggable data-axis=\"x\">Horizontal only</div>",
+      "<div x-draggable data-axis=\"y\">Vertical only</div>",
+      "<div x-draggable data-bounds=\"viewport\">Bounded to viewport</div>",
+      "<div x-draggable data-grid=\"20\">Snap to 20px grid</div>",
+      "<div x-draggable data-persist=\"my-panel\">Position saved to localStorage</div>",
+      "<div x-draggable data-handle=\".handle\"><div class=\"handle\">Drag here</div><div>Content</div></div>"
     ]
   }
 }

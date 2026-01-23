@@ -1,0 +1,37 @@
+<!--
+  Properties Panel View
+  Right sidebar: Component properties + x-attributes (Alpine.js)
+-->
+<div class="properties-panel-content">
+  <!-- Component Properties -->
+  <div id="propertiesPanel" class="properties-empty">
+    Select an element to edit
+  </div>
+  
+  <!-- X-Attributes Section -->
+  <div id="xAttrSection" class="xattr-section" style="display:none;">
+    <div class="panel-section-header">
+      <span>x-attributes</span>
+      <button class="btn-icon" onclick="EditorToolbar.toggleDropdown('dropdown-xattr-props', this)" title="Add x-attribute">+</button>
+      <div class="toolbar-dropdown" id="dropdown-xattr-props"></div>
+    </div>
+    <div id="xAttrList" class="xattr-list">
+      <div class="xattr-empty">No x-attributes</div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof EditorToolbar !== 'undefined') {
+    const el = document.getElementById('dropdown-xattr-props');
+    if (el) el.innerHTML = EditorToolbar.buildXAttrDropdown();
+  }
+});
+document.addEventListener('builder:views-loaded', () => {
+  if (typeof EditorToolbar !== 'undefined') {
+    const el = document.getElementById('dropdown-xattr-props');
+    if (el) el.innerHTML = EditorToolbar.buildXAttrDropdown();
+  }
+});
+</script>

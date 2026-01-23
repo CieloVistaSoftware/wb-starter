@@ -147,7 +147,7 @@ function renderFileControl(wrapperId, propName, value, uiType, def) {
   }
   
   return `
-    <div class="prop-file-group" data-wrapper="${wrapperId}" data-prop="${propName}">
+    <div class="prop-file-group" wrapper="${wrapperId}" prop="${propName}">
       ${preview ? `<div class="prop-file-preview">${preview}</div>` : ''}
       <div class="prop-file-controls">
         <input type="file" id="${id}" accept="${accept}" 

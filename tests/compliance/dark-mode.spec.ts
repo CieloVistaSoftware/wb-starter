@@ -121,7 +121,7 @@ test.describe('Dark Mode Compliance', () => {
     });
   }
   
-  test('main site pages have data-theme attribute', async ({ page }) => {
+  test('main site pages have theme attribute', async ({ page }) => {
     // Test only main site pages (not demos or test files)
     const mainPages = relativeHtmlFiles.filter(f => 
       f.startsWith('pages/') || f === 'index.html'
@@ -137,7 +137,7 @@ test.describe('Dark Mode Compliance', () => {
       
       // Main pages should have theme attribute after site-engine loads
       if (!hasTheme) {
-        console.warn(`⚠️ ${htmlFile} missing data-theme attribute`);
+        console.warn(`⚠️ ${htmlFile} missing theme attribute`);
       }
     }
   });

@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tab.schema.json",
+  "title": "Tab",
+  "description": "Individual tab panel for use inside wb-tabs",
+  "behavior": "tab",
+  "baseClass": "wb-tab",
+  "semanticElement": {
+    "tagName": "section",
+    "implicitRole": "tabpanel"
+  },
+  "compliance": {
+    "baseClass": "wb-tab",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Tab button label text",
+      "required": true
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon (emoji or icon class) shown before title"
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Tab cannot be selected",
+      "default": false,
+      "appliesClass": "wb-tab--disabled"
+    },
+    "closable": {
+      "type": "boolean",
+      "description": "Shows close button on tab",
+      "default": false,
+      "appliesClass": "wb-tab--closable"
+    },
+    "badge": {
+      "type": "string",
+      "description": "Badge text/count shown on tab"
+    },
+    "lazy": {
+      "type": "boolean",
+      "description": "Content only renders when tab is first activated",
+      "default": false
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Tab is initially active (overrides parent activeTab)",
+      "default": false
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {
+    "--wb-tab-badge-bg": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Badge background color"
+    },
+    "--wb-tab-badge-color": {
+      "default": "#fff",
+      "description": "Badge text color"
+    },
+    "--wb-tab-badge-size": {
+      "default": "1.25rem",
+      "description": "Badge size"
+    }
+  },
+  "accessibility": {
+    "role": "tabpanel",
+    "ariaLabelledBy": "associated tab button"
+  },
+  "events": {
+    "wb:tab:close": {
+      "description": "Fired when closable tab close button is clicked",
+      "detail": {
+        "index": "number",
+        "label": "string"
+      }
+    }
+  },
+  "test": {
+    "functional": true,
+    "setup": [
+      "<wb-tabs><wb-tab label=\"First\">Content 1</wb-tab><wb-tab label=\"Second\">Content 2</wb-tab></wb-tabs>",
+      "<wb-tabs><wb-tab label=\"With Icon\" icon=\"📊\">Content</wb-tab></wb-tabs>",
+      "<wb-tabs><wb-tab label=\"Normal\">A</wb-tab><wb-tab label=\"Disabled\" disabled>B</wb-tab></wb-tabs>",
+      "<wb-tabs><wb-tab label=\"Closable\" closable>Content</wb-tab></wb-tabs>",
+      "<wb-tabs><wb-tab label=\"With Badge\" badge=\"5\">Content</wb-tab></wb-tabs>",
+      "<wb-tabs><wb-tab label=\"Lazy\" lazy>Heavy content</wb-tab></wb-tabs>"
+    ]
+  },
+  "_metadata": {
+    "category": "navigation",
+    "icon": "📑",
+    "since": "3.0.0",
+    "status": "stable",
+    "parent": "wb-tabs"
+  }
+}

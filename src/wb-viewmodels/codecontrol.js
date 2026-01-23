@@ -5,8 +5,8 @@
  * 
  * Usage:
  *   <wb-codecontrol ></div>
- *   <wb-codecontrol  data-size="xs"></div>
- *   <wb-codecontrol  data-show-label="false" data-size="sm"></div>
+ *   <wb-codecontrol  size="xs"></div>
+ *   <wb-codecontrol  show-label="false" size="sm"></div>
  */
 
 // Curated list of highlight.js themes (organized by category)

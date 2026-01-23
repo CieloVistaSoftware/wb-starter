@@ -1,748 +1,482 @@
-# Web Behaviors (WB) Behavior System - Technical Workflow
+# WB Behaviors v3.0 - Behavior System
 [Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/WB_BEHAVIOR_SYSTEM.md)
 
-## Overview
-
-The **WB (Web Behavior)** system is a functional, progressive enhancement library that injects behaviors into native HTML elements. Unlike Web Components or class-based frameworks, WB uses **pure functions** that enhance existing DOM elements with additional capabilities.
+> **Version:** 3.0.0  
+> **Last Updated:** 2026-01-20  
+> **Architecture:** Schema-Driven MVVM, Light DOM Only
 
 ---
 
 ## Table of Contents
 
-1. [Core Concept: Functional Enhancement](#core-concept-functional-enhancement)
-2. [How Behaviors "Inherit" from HTML Elements](#how-behaviors-inherit-from-html-elements)
-3. [The Complete Call Chain](#the-complete-call-chain)
-4. [HTML Declaration Pattern](#html-declaration-pattern)
-5. [Behavior Anatomy](#behavior-anatomy)
-6. [Advanced Features](#advanced-features)
+1. [Overview](#overview)
+2. [Key Concepts: Components vs Behaviors](#key-concepts-components-vs-behaviors)
+3. [Component System (`<wb-*>` Tags)](#component-system-wb--tags)
+4. [Behavior System (`x-*` Attributes)](#behavior-system-x--attributes)
+5. [Schema-Driven Architecture](#schema-driven-architecture)
+6. [The WB.init() Pipeline](#the-wbinit-pipeline)
 7. [Creating Custom Behaviors](#creating-custom-behaviors)
-8. [Best Practices](#best-practices)
+8. [Creating Custom Components](#creating-custom-components)
+9. [Best Practices](#best-practices)
+10. [Migration from v2.x](#migration-from-v2x)
 
 ---
 
-## Core Concept: Functional Enhancement
+## Overview
 
-### NOT Class Inheritance
+WB Framework v3.0 is a **schema-driven, Light DOM** architecture for building web applications. It provides two complementary systems:
 
-WB behaviors do **NOT** use traditional OOP inheritance like Web Components:
+| System | Syntax | Purpose |
+|--------|--------|---------|
+| **Components** | `<wb-card>`, `<wb-modal>` | Create new DOM structures |
+| **Behaviors** | `x-ripple`, `x-tooltip` | Enhance existing elements |
 
-```javascript
-// ❌ NOT THIS (Web Components)
-class MyButton extends HTMLButtonElement {
-  constructor() {
-    super();
-  }
-}
-customElements.define('my-button', MyButton, { extends: 'button' });
-```
-
-### Functional Behavior Pattern
-
-Instead, WB uses **functional enhancement**:
-
-```javascript
-// ✅ THIS (WB Behaviors)
-export function button(element, options = {}) {
-  // element is already an HTMLButtonElement
-  // We just enhance it with additional features
-
-  element.classList.add('wb-button');
-  element.style.padding = '0.5rem 1rem';
-
-  // Return cleanup function
-  return () => element.classList.remove('wb-button');
-}
-```
-
-**Key Points:**
-- Each behavior is a **pure function**
-- Takes a native HTML element as first parameter
-- Enhances the element in place
-- Returns a cleanup function
-- No classes, no `extends`, no custom elements
+**Key Principles:**
+- 🏗️ **Light DOM Only** - No Shadow DOM, CSS works naturally
+- 📋 **Schema-First** - JSON schemas define component structure
+- 🔧 **Progressive Enhancement** - Start with semantic HTML
+- 📦 **No Build Required** - Pure ESM, runs in browser
 
 ---
 
-## How Behaviors "Inherit" from HTML Elements
+## Key Concepts: Components vs Behaviors
 
-### The Browser Provides Inheritance
+### Components (`<wb-*>`)
 
-When you call a behavior function, you pass in a **native HTML element** that already has all standard properties and methods:
-
-```javascript
-import { button } from './behaviors/js/semantics/button.js';
-
-// Get a native <button> element
-const myButton = document.querySelector('button');
-// myButton is already an HTMLButtonElement
-// It already has: .click(), .disabled, .type, etc.
-
-// Enhance it with the button behavior
-button(myButton, { variant: 'primary' });
-// Now it ALSO has: wb-button classes, custom styling, loading states, etc.
-```
-
-### Semantic Behaviors Map to Native Elements
-
-| Behavior File | Expects Element Type | Native Inheritance |
-|--------------|---------------------|-------------------|
-| `button.js` | `<button>` | `HTMLButtonElement` |
-| `img.js` | `<img>` | `HTMLImageElement` |
-| `form.js` | `<form>` | `HTMLFormElement` |
-| `video.js` | `<video>` | `HTMLVideoElement` |
-| `input.js` | `<input>` | `HTMLInputElement` |
-| `table.js` | `<table>` | `HTMLTableElement` |
-
-**Example from `button.js:6`:**
-```javascript
-export function button(element, options = {}) {
-  if (element.tagName !== 'BUTTON') {
-    console.warn('[button] Element must be a <button>');
-    return () => {};
-  }
-  // element is guaranteed to be HTMLButtonElement
-  // with all native button properties already available
-}
-```
-
----
-
-## The Complete Call Chain
-
-### 1. HTML Declaration
-
-Use standard semantic HTML elements (Auto-Inject):
+Components **create new DOM structures** from schemas:
 
 ```html
-<!-- Semantic behaviors on native elements -->
-<button data-variant="primary">Click me</button>
-<img data-lazy data-zoomable src="photo.jpg" alt="Photo">
-<form data-ajax data-validate>...</form>
-<video controls autoplay>...</video>
+<!-- User writes: -->
+<wb-card title="Hello World" elevated>
+  <p>Card content here.</p>
+</wb-card>
+
+<!-- DOM becomes: -->
+<wb-card title="Hello World" elevated class="wb-card wb-card--elevated">
+  <header class="wb-card__header">
+    <h3 class="wb-card__title">Hello World</h3>
+  </header>
+  <main class="wb-card__main">
+    <p>Card content here.</p>
+  </main>
+</wb-card>
 ```
 
-Or use `data-wb` for explicit behavior injection (Legacy/Override):
+### Behaviors (`x-*`)
+
+Behaviors **enhance existing elements** without changing structure:
 
 ```html
-<!-- Multiple behaviors (space-separated) -->
-<button data-wb="ripple tooltip" data-tooltip="Hello!">Hover</button>
+<!-- User writes: -->
+<button x-ripple x-tooltip="Click to save">Save</button>
+
+<!-- Same button, now with ripple effect and tooltip behavior -->
+<button x-ripple x-tooltip="Click to save" class="wb-button" data-wb-ready="ripple tooltip">
+  Save
+</button>
 ```
 
-**From `src/site-engine.js:95`:**
-```javascript
-<button class="nav__toggle" data-wb="ripple">☰</button>
+### When to Use Which
+
+| Use Case | Solution |
+|----------|----------|
+| Need new DOM structure | Component (`<wb-card>`) |
+| Enhance native element | Behavior (`x-ripple`) |
+| Add interactivity to existing HTML | Behavior |
+| Create reusable UI patterns | Component |
+| Progressive enhancement | Behavior |
+
+---
+
+## Component System (`<wb-*>` Tags)
+
+### How Components Work
+
+1. **User declares** a custom element: `<wb-card title="Hi">`
+2. **Schema Builder** loads the component's JSON schema
+3. **$view rules** generate the internal DOM structure
+4. **Viewmodel** adds interactivity and API methods
+5. **CSS auto-loads** from `/src/styles/components/`
+
+### Component Declaration
+
+```html
+<!-- Basic component -->
+<wb-card title="My Card">
+  <p>Content goes here</p>
+</wb-card>
+
+<!-- With attributes -->
+<wb-card 
+  title="Premium Plan" 
+  subtitle="Best value"
+  variant="glass"
+  elevated
+  badge="Popular">
+  <p>Feature list...</p>
+</wb-card>
+
+<!-- Nested components -->
+<wb-card title="Dashboard">
+  <wb-stats value="1,234" label="Users" icon="👥"></wb-stats>
+  <wb-stats value="$45K" label="Revenue" icon="💰"></wb-stats>
+</wb-card>
 ```
 
-### 2. WB.init() - Initialization
+### Available Components (41+)
 
-Called once when the page loads:
+| Category | Components |
+|----------|------------|
+| **Cards** | card, cardimage, cardvideo, cardhero, cardprofile, cardpricing, cardstats, cardtestimonial, cardproduct, cardnotification, cardfile, cardlink, cardhorizontal, cardoverlay, cardexpandable, cardminimizable, carddraggable, cardportfolio |
+| **Feedback** | badge, toast, progress, spinner, avatar, skeleton |
+| **Navigation** | tabs, accordion, breadcrumb, pagination, steps, navbar |
+| **Overlays** | modal, drawer, lightbox, popover, confirm |
+| **Forms** | input, select, checkbox, radio, switch, rating |
+| **Media** | gallery, youtube, audio, video |
+| **Layout** | grid, stack, cluster, row, column |
+
+---
+
+## Behavior System (`x-*` Attributes)
+
+### How Behaviors Work
+
+1. **User adds** `x-{behavior}` attribute to any element
+2. **WB.scan()** detects the attribute during initialization
+3. **Behavior function** enhances the element in place
+4. **Cleanup function** is stored for later removal
+
+### Behavior Declaration
+
+```html
+<!-- Single behavior -->
+<button x-ripple>Click Me</button>
+
+<!-- Multiple behaviors -->
+<button x-ripple x-tooltip="Save changes">Save</button>
+
+<!-- Behavior with config value -->
+<div x-tooltip="Hello world">Hover me</div>
+
+<!-- Morph syntax (x-as-*) for layout transformation -->
+<div x-as-card>This div behaves like a card</div>
+```
+
+### Auto-Injection
+
+Certain semantic HTML elements receive behaviors automatically:
+
+```html
+<!-- These get behaviors automatically when autoInject is enabled -->
+<button>Automatically gets button behavior</button>
+<form>Automatically gets form behavior</form>
+<img src="..." alt="...">  <!-- Gets image behavior -->
+<code>const x = 1;</code>  <!-- Gets code highlighting -->
+<pre>...</pre>              <!-- Gets pre formatting -->
+```
+
+**Opt-out** with `x-ignore`:
+
+```html
+<button x-ignore>No automatic behavior</button>
+```
+
+### Available Behaviors
+
+| Category | Behaviors |
+|----------|-----------|
+| **Interaction** | ripple, tooltip, popover, dropdown, clipboard |
+| **Animation** | fade, slide, shake, bounce |
+| **Form** | validate, mask, autocomplete |
+| **Media** | lazy, zoomable, lightbox |
+| **Semantic** | code, pre, kbd, mark, table, details |
+
+---
+
+## Schema-Driven Architecture
+
+### Schema Location
+
+All component schemas live in `/src/wb-models/*.schema.json`
+
+### Schema Structure
+
+```json
+{
+  "$component": "card",
+  "$tagName": "wb-card",
+  "behavior": "card",
+  "baseClass": "wb-card",
+  
+  "properties": {
+    "title": { "type": "string", "description": "Card header text" },
+    "elevated": { "type": "boolean", "default": false },
+    "variant": { "enum": ["default", "glass", "bordered"] }
+  },
+  
+  "$view": [
+    { "name": "header", "tag": "header", "createdWhen": "title OR subtitle" },
+    { "name": "title", "tag": "h3", "parent": "header", "content": "{{title}}" },
+    { "name": "body", "tag": "main", "required": true, "content": "{{slot}}" }
+  ],
+  
+  "$methods": {
+    "show": { "description": "Shows the card" },
+    "hide": { "description": "Hides the card" }
+  },
+  
+  "$cssAPI": {
+    "--wb-card-padding": "Internal padding",
+    "--wb-card-radius": "Border radius"
+  }
+}
+```
+
+### $view Rules
+
+| Property | Purpose | Example |
+|----------|---------|---------|
+| `name` | BEM element name | `"header"` → `.wb-card__header` |
+| `tag` | HTML element | `"header"`, `"main"`, `"footer"` |
+| `parent` | Nest inside another part | `"parent": "header"` |
+| `content` | Template interpolation | `"{{title}}"` or `"{{slot}}"` |
+| `createdWhen` | Conditional creation | `"title OR subtitle"` |
+| `required` | Always create | `true` |
+
+---
+
+## The WB.init() Pipeline
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     WB.init() Called                        │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  1. Load Schemas from /src/wb-models/*.schema.json         │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  2. WB.scan() - Process existing DOM                       │
+│     • Find <wb-*> elements → Process through Schema Builder │
+│     • Find [x-*] attributes → Inject behaviors             │
+│     • Auto-inject semantic elements (if enabled)           │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  3. WB.observe() - Watch for new elements                  │
+│     • MutationObserver tracks childList + attributes       │
+│     • New wb-* elements processed through schema builder   │
+│     • New x-* attributes trigger behavior injection        │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Initialization Options
 
 ```javascript
-import WB from './wb.js';
+import WB from './src/core/wb.js';
 
-// Initialize the system
 WB.init({
-  scan: true,      // Scan existing elements
-  observe: true,   // Watch for new elements
-  theme: 'dark',   // Optional theme
-  debug: false     // Debug mode
+  scan: true,           // Scan existing elements
+  observe: true,        // Watch for new elements
+  theme: 'dark',        // Set theme
+  debug: false,         // Debug logging
+  autoInject: false,    // Auto-inject semantic behaviors
+  prefix: 'x',          // Attribute prefix (x-ripple)
+  useSchemas: true,     // Enable schema processing
+  schemaPath: '/src/wb-models'  // Schema location
 });
-```
-
-**From `src/site-engine.js:29`:**
-```javascript
-WB.init({ debug: false });
-```
-
-This triggers:
-- **WB.scan()** - Finds all existing `[data-wb]` elements
-- **WB.observe()** - Starts MutationObserver for dynamic elements
-
-### 3. WB.scan() - Discovery
-
-Finds and processes all elements with `data-wb` AND auto-injects behaviors on semantic tags (if enabled):
-
-**From `src/wb.js:112-124`:**
-```javascript
-scan(root = document.body) {
-  // 1. Find all elements with data-wb attribute
-  const elements = root.querySelectorAll('[data-wb]');
-
-  elements.forEach(element => {
-    // Parse behavior list (space-separated)
-    const behaviorList = element.dataset.wb.split(/\s+/).filter(Boolean);
-
-    // Inject each behavior
-    behaviorList.forEach(name => {
-      WB.inject(element, name);  // <-- Calls the behavior!
-    });
-  });
-
-  // 2. Auto-inject scan (if enabled)
-  if (getConfig('autoInject')) {
-    autoInjectMappings.forEach(({ selector, behavior }) => {
-      const autoElements = root.querySelectorAll(selector);
-      autoElements.forEach(element => {
-        // Skip if data-wb is present (already handled) or ignored
-        if (!element.hasAttribute('data-wb') && !element.hasAttribute('data-wb-ignore')) {
-          WB.inject(element, behavior);
-        }
-      });
-    });
-  }
-
-  Events.log('info', 'wb', `Scanned: ${elements.length} elements`);
-}
-```
-
-### 4. WB.inject() - Behavior Application
-
-The core method that actually calls your behavior functions:
-
-**From `src/wb.js:40-79`:**
-```javascript
-inject(element, behaviorName, options = {}) {
-  // Resolve element if string selector
-  if (typeof element === 'string') {
-    element = document.querySelector(element);
-  }
-
-  // Validate element
-  if (!element || !(element instanceof HTMLElement)) {
-    console.warn(`[WB] Invalid element for behavior: ${behaviorName}`);
-    return null;
-  }
-
-  // Check if behavior exists
-  if (!behaviors[behaviorName]) {
-    console.warn(`[WB] Unknown behavior: ${behaviorName}`);
-    return null;
-  }
-
-  // Check if already applied
-  const elementBehaviors = applied.get(element) || [];
-  if (elementBehaviors.some(b => b.name === behaviorName)) {
-    return null; // Already applied
-  }
-
-  try {
-    // ✨ THIS IS WHERE THE MAGIC HAPPENS ✨
-    // Call the behavior function, passing the element
-    const cleanup = behaviors[behaviorName](element, options);
-    //              ^^^^^^^^^^^^^^^^^^^^^^^^
-    //              This calls button(), img(), form(), etc.
-
-    // Track cleanup function for later removal
-    elementBehaviors.push({ name: behaviorName, cleanup });
-    applied.set(element, elementBehaviors);
-
-    // Log event
-    Events.log('info', 'wb', `Injected: ${behaviorName}`, { element: element.tagName });
-
-    return cleanup;
-  } catch (error) {
-    console.error(`[WB] Error injecting ${behaviorName}:`, error);
-    return null;
-  }
-}
-```
-
-### 5. MutationObserver - Auto-Detection
-
-Watches for dynamically added elements and auto-injects behaviors:
-
-**From `src/wb.js:131-177`:**
-```javascript
-observe(root = document.body) {
-  const observer = new MutationObserver(mutations => {
-    for (const mutation of mutations) {
-      // Handle added nodes
-      for (const node of mutation.addedNodes) {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          // Check if node itself has data-wb
-          if (node.dataset?.wb) {
-            const behaviorList = node.dataset.wb.split(/\s+/).filter(Boolean);
-            behaviorList.forEach(name => WB.inject(node, name));
-          }
-          // Check descendants
-          node.querySelectorAll?.('[data-wb]').forEach(el => {
-            const behaviorList = el.dataset.wb.split(/\s+/).filter(Boolean);
-            behaviorList.forEach(name => WB.inject(el, name));
-          });
-        }
-      }
-
-      // Handle attribute changes on data-wb
-      if (mutation.type === 'attributes' && mutation.attributeName === 'data-wb') {
-        // Re-process when data-wb changes
-      }
-    }
-  });
-
-  observer.observe(root, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    attributeFilter: ['data-wb']
-  });
-
-  return observer;
-}
-```
-
-### Complete Flow Diagram
-
-```
-┌─────────────────────────────────────────────────────────┐
-│ HTML: <button data-variant="primary">                   │
-└─────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────┐
-│ Page Load → WB.init({ autoInject: true })               │
-└─────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────┐
-│ WB.scan() finds semantic elements (e.g. <button>)       │
-└─────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────┐
-│ WB.inject(element, "button")                            │
-└─────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────┐
-│ behaviors["button"](element, options)                   │
-│ ← Your behavior function gets called!                   │
-└─────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────┐
-│ button(element, { variant: "primary" })                 │
-│ - Adds classes, styles, event listeners                 │
-│ - Attaches API methods                                  │
-│ - Returns cleanup function                              │
-└─────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────┐
-│ Enhanced Element Ready!                                 │
-│ - Native button features (click, disabled, etc.)        │
-│ - WB enhancements (variants, loading states, etc.)      │
-└─────────────────────────────────────────────────────────┘
-```
-
----
-
-## Auto-Injection System
-
-### Overview
-
-The Auto-Injection system allows standard HTML5 semantic elements to automatically receive behaviors without explicit `data-wb` attributes. This feature was introduced to reduce markup verbosity and promote semantic HTML.
-
-### Why It Was Done & Benefits
-
-1.  **Cleaner Markup**: Removes the need to add `data-wb="card"` or `data-wb="navbar"` to every element. Your HTML looks like standard HTML.
-2.  **Semantic Correctness**: Encourages developers to use proper tags like `<article>`, `<nav>`, `<dialog>`, etc., instead of generic `<div>`s.
-3.  **Accessibility**: By targeting semantic elements, we ensure that the underlying markup is accessible by default, even before behaviors enhance it.
-4.  **Portability**: The HTML remains standard and portable. If the JS library is removed, the content structure remains valid and meaningful.
-
-### How It Works
-
-When `WB.init({ autoInject: true })` is called:
-1.  **Mapping**: The system uses a predefined map of selectors to behaviors (e.g., `article` -> `card`, `nav` -> `navbar`).
-2.  **Scanning**: During `WB.scan()`, it queries for these selectors.
-3.  **Precedence**: Explicit `data-wb` attributes **always** take precedence. If an element has `data-wb` (even empty), auto-injection is skipped.
-4.  **Opt-Out**: You can prevent auto-injection on a specific element by adding `data-wb-ignore` or an empty `data-wb=""`.
-
-**Example Mapping:**
-```javascript
-const autoInjectMappings = [
-  { selector: 'article', behavior: 'card' },
-  { selector: 'nav', behavior: 'navbar' },
-  { selector: 'dialog', behavior: 'dialog' },
-  // ...
-];
-```
-
----
-
-## HTML Declaration Pattern
-
-### Data Attributes as Configuration
-
-All behavior options can be set via `data-*` attributes:
-
-```html
-<button
-
-  data-variant="primary"
-  data-size="lg"
-  data-icon="→"
-  data-loading>
-  Submit
-</button>
-```
-
-This becomes:
-```javascript
-button(element, {
-  variant: 'primary',
-  size: 'lg',
-  icon: '→',
-  loading: true
-});
-```
-
-### How Options Merge
-
-**From `button.js:11-19`:**
-```javascript
-const config = {
-  variant: options.variant || element.dataset.variant || 'primary',
-  size: options.size || element.dataset.size || 'md',
-  icon: options.icon || element.dataset.icon || '',
-  iconPosition: options.iconPosition || element.dataset.iconPosition || 'left',
-  loading: options.loading ?? element.hasAttribute('data-loading'),
-  disabled: options.disabled ?? element.hasAttribute('data-disabled'),
-  ...options  // Explicit options override everything
-};
-```
-
-**Priority (highest to lowest):**
-1. Explicitly passed `options` parameter
-2. `data-*` attributes on element
-3. Default values
-
----
-
-## Behavior Anatomy
-
-### Standard Behavior Structure
-
-**From `src/behaviors/js/semantics/img.js`:**
-```javascript
-/**
- * Image - Enhanced <img> element
- * Adds lazy loading, zoom/lightbox, fallback, aspect ratio
- */
-export function img(element, options = {}) {
-  // 1. Merge config from options + data attributes
-  const config = {
-    lazy: options.lazy ?? element.hasAttribute('data-lazy'),
-    zoomable: options.zoomable ?? element.hasAttribute('data-zoomable'),
-    placeholder: options.placeholder || element.dataset.placeholder || '',
-    fallback: options.fallback || element.dataset.fallback || '',
-    aspectRatio: options.aspectRatio || element.dataset.aspectRatio || '',
-    ...options
-  };
-
-  // 2. Add identifying class
-  element.classList.add('wb-img');
-
-  // 3. Apply lazy loading
-  if (config.lazy) {
-    element.loading = 'lazy';
-  }
-
-  // 4. Apply aspect ratio
-  if (config.aspectRatio) {
-    element.style.aspectRatio = config.aspectRatio;
-    element.style.objectFit = 'cover';
-  }
-
-  // 5. Add fallback on error
-  if (config.fallback) {
-    element.onerror = () => { element.src = config.fallback; };
-  }
-
-  // 6. Add zoom/lightbox feature
-  if (config.zoomable) {
-    element.classList.add('wb-img--zoomable');
-    element.style.cursor = 'zoom-in';
-    element.onclick = () => openLightbox(element.src, element.alt);
-  }
-
-  // 7. Mark as ready
-  element.dataset.wbReady = 'img';
-
-  // 8. Return cleanup function
-  return () => element.classList.remove('wb-img', 'wb-img--zoomable');
-}
-
-export default { img };
-```
-
-### Key Components
-
-1. **Config Merging** - Combine options + data attributes
-2. **Element Enhancement** - Add classes, styles, listeners
-3. **Feature Implementation** - Core behavior logic
-4. **Ready Marker** - `element.dataset.wbReady = 'behaviorName'`
-5. **Cleanup Function** - Remove all changes when behavior removed
-
----
-
-## Advanced Features
-
-### 1. Cleanup Functions
-
-Every behavior returns a cleanup function that reverses all changes:
-
-```javascript
-// Inject behavior and get cleanup function
-const cleanup = WB.inject(myElement, 'button', { variant: 'primary' });
-
-// Later, remove the behavior
-cleanup(); // Removes classes, listeners, API methods, etc.
-
-// Or use WB.remove()
-WB.remove(myElement, 'button'); // Calls cleanup automatically
-```
-
-**From `src/wb.js:87-106`:**
-```javascript
-remove(element, behaviorName = null) {
-  const elementBehaviors = applied.get(element);
-  if (!elementBehaviors) return;
-
-  if (behaviorName) {
-    // Remove specific behavior
-    const index = elementBehaviors.findIndex(b => b.name === behaviorName);
-    if (index !== -1) {
-      const { cleanup } = elementBehaviors[index];
-      if (typeof cleanup === 'function') cleanup();
-      elementBehaviors.splice(index, 1);
-    }
-  } else {
-    // Remove all behaviors
-    elementBehaviors.forEach(({ cleanup }) => {
-      if (typeof cleanup === 'function') cleanup();
-    });
-    applied.delete(element);
-  }
-}
-```
-
-### 2. API Attachment
-
-Behaviors can attach custom methods to elements:
-
-**From `video.js:24-37`:**
-```javascript
-// Video behavior attaches API methods
-element.wbVideo = {
-  play: () => element.play(),
-  pause: () => element.pause(),
-  toggle: () => element.paused ? element.play() : element.pause(),
-  setTime: (t) => { element.currentTime = t; },
-  getTime: () => element.currentTime,
-  getDuration: () => element.duration,
-  setVolume: (v) => { element.volume = Math.max(0, Math.min(1, v)); },
-  getVolume: () => element.volume,
-  mute: () => { element.muted = true; },
-  unmute: () => { element.muted = false; },
-  toggleMute: () => { element.muted = !element.muted; }
-};
-```
-
-**Usage:**
-```javascript
-const video = document.querySelector('video');
-video.wbVideo.toggle();  // Play/pause
-video.wbVideo.setVolume(0.5);  // Set volume to 50%
-```
-
-**From `form.js:133-140`:**
-```javascript
-element.wbForm = {
-  submit: () => element.requestSubmit(),
-  reset: () => element.reset(),
-  validate: () => element.checkValidity(),
-  getData: () => Object.fromEntries(new FormData(element)),
-  setLoading,
-  showMessage
-};
-```
-
-### 3. Custom Events
-
-Behaviors can dispatch custom events:
-
-**From `form.js:86-99`:**
-```javascript
-if (response.ok) {
-  element.dispatchEvent(new CustomEvent('wb:form:success', {
-    bubbles: true,
-    detail: { response }
-  }));
-} else {
-  element.dispatchEvent(new CustomEvent('wb:form:error', {
-    bubbles: true,
-    detail: { error: err }
-  }));
-}
-```
-
-**Listening for events:**
-```javascript
-const form = document.querySelector('form');
-form.addEventListener('wb:form:success', (e) => {
-  console.log('Form submitted!', e.detail.response);
-});
-```
-
-### 4. Multiple Behaviors on One Element
-
-Stack multiple behaviors on a single element:
-
-```html
-<button data-wb="button ripple tooltip"
-        data-variant="primary"
-        data-tooltip="Click me!">
-  Submit
-</button>
-```
-
-This applies three behaviors:
-1. `button()` - Button styling and states
-2. `ripple()` - Material Design ripple effect
-3. `tooltip()` - Tooltip on hover
-
-### 5. Manual Invocation
-
-You can also call behaviors programmatically:
-
-```javascript
-import WB from './wb.js';
-import { button } from './behaviors/js/semantics/button.js';
-
-const myButton = document.querySelector('#myBtn');
-
-// Method 1: Via WB.inject()
-WB.inject(myButton, 'button', { variant: 'success' });
-
-// Method 2: Direct function call
-const cleanup = button(myButton, { variant: 'success' });
-
-// Later, cleanup
-cleanup();
-```
-
-### 6. Custom Behavior Registration
-
-Register your own behaviors at runtime:
-
-```javascript
-import WB from './wb.js';
-
-// Define custom behavior
-function myBehavior(element, options = {}) {
-  element.classList.add('my-custom-class');
-  element.style.border = '2px solid red';
-
-  return () => {
-    element.classList.remove('my-custom-class');
-    element.style.border = '';
-  };
-}
-
-// Register it
-WB.register('mybehavior', myBehavior);
-
-// Now use it in HTML
-// <div data-wb="mybehavior">Content</div>
-```
-
-**From `src/wb.js:212-218`:**
-```javascript
-register(name, fn) {
-  if (typeof fn !== 'function') {
-    throw new Error(`[WB] Behavior must be a function: ${name}`);
-  }
-  behaviors[name] = fn;
-  Events.log('info', 'wb', `Registered: ${name}`);
-}
 ```
 
 ---
 
 ## Creating Custom Behaviors
 
-### Step 1: Create the Behavior File
-
-Create a new file in `src/behaviors/js/`:
+### Behavior Anatomy
 
 ```javascript
-// src/behaviors/js/my-custom.js
+// src/wb-viewmodels/my-behavior.js
 
 /**
- * MyCustom - Custom behavior description
- * Add your feature description here
+ * MyBehavior - Description of what this behavior does
+ * Usage: <element x-mybehavior="config">
  */
-export function mycustom(element, options = {}) {
-  // 1. Merge config
+export function mybehavior(element, options = {}) {
+  // 1. Merge config from options + data attributes
   const config = {
     color: options.color || element.dataset.color || 'blue',
-    size: options.size || element.dataset.size || 'md',
+    speed: options.speed || element.dataset.speed || '300ms',
     ...options
   };
 
   // 2. Add identifying class
-  element.classList.add('wb-mycustom');
+  element.classList.add('wb-mybehavior');
 
-  // 3. Apply styles
-  element.style.color = config.color;
-
+  // 3. Implement the behavior
+  element.style.transition = `all ${config.speed}`;
+  
   // 4. Add event listeners
   const handleClick = () => {
-    console.log('Custom behavior clicked!');
+    element.style.color = config.color;
   };
   element.addEventListener('click', handleClick);
 
   // 5. Attach API (optional)
-  element.wbMyCustom = {
+  element.wbMyBehavior = {
     setColor: (color) => { element.style.color = color; },
-    getColor: () => element.style.color
+    reset: () => { element.style.color = ''; }
   };
 
   // 6. Mark as ready
-  element.dataset.wbReady = 'mycustom';
+  element.dataset.wbReady = (element.dataset.wbReady || '') + ' mybehavior';
 
-  // 7. Return cleanup function
+  // 7. Return cleanup function (REQUIRED)
   return () => {
-    element.classList.remove('wb-mycustom');
-    element.style.color = '';
+    element.classList.remove('wb-mybehavior');
     element.removeEventListener('click', handleClick);
-    delete element.wbMyCustom;
+    delete element.wbMyBehavior;
   };
 }
 
-export default { mycustom };
+export default { mybehavior };
 ```
 
-### Step 2: Register in `src/behaviors/index.js`
+### Register the Behavior
 
-**Add to imports:**
 ```javascript
-import { mycustom } from './js/my-custom.js';
-```
+// src/wb-viewmodels/index.js
+import { mybehavior } from './my-behavior.js';
 
-**Add to export:**
-```javascript
 export const behaviors = {
   // ... existing behaviors ...
-  mycustom,
+  mybehavior,
 };
 ```
 
-### Step 3: Use in HTML
+### Use in HTML
 
 ```html
-<div data-wb="mycustom" data-color="red" data-size="lg">
-  Custom content
+<div x-mybehavior data-color="red" data-speed="500ms">
+  Click me to change color
 </div>
 ```
 
-### Step 4: Create Schema (Optional but Recommended)
+---
 
-Create `src/behaviors/schema/mycustom.schema.json` for testing and documentation.
+## Creating Custom Components
+
+### Step 1: Create Schema
+
+```json
+// src/wb-models/mycomponent.schema.json
+{
+  "$component": "mycomponent",
+  "$tagName": "wb-mycomponent",
+  "behavior": "mycomponent",
+  "baseClass": "wb-mycomponent",
+  
+  "properties": {
+    "title": { "type": "string", "required": true },
+    "icon": { "type": "string", "default": "⭐" }
+  },
+  
+  "$view": [
+    { "name": "icon", "tag": "span", "content": "{{icon}}" },
+    { "name": "title", "tag": "h3", "content": "{{title}}" },
+    { "name": "body", "tag": "main", "content": "{{slot}}", "required": true }
+  ]
+}
+```
+
+### Step 2: Create Viewmodel
+
+```javascript
+// src/wb-viewmodels/mycomponent.js
+
+export function mycomponent(element, options = {}) {
+  const config = {
+    title: options.title || element.getAttribute('title') || '',
+    icon: options.icon || element.getAttribute('icon') || '⭐',
+    ...options
+  };
+
+  // Schema Builder already created the DOM structure
+  // We just add interactivity here
+  
+  element.classList.add('wb-mycomponent');
+  
+  // Find schema-built elements
+  const titleEl = element.querySelector('.wb-mycomponent__title');
+  const iconEl = element.querySelector('.wb-mycomponent__icon');
+  
+  // Add interactivity
+  if (iconEl) {
+    iconEl.style.cursor = 'pointer';
+    iconEl.addEventListener('click', () => {
+      element.dispatchEvent(new CustomEvent('wb:mycomponent:iconclick', {
+        bubbles: true,
+        detail: { icon: config.icon }
+      }));
+    });
+  }
+
+  // API
+  element.wbMyComponent = {
+    setTitle: (text) => { if (titleEl) titleEl.textContent = text; },
+    setIcon: (icon) => { if (iconEl) iconEl.textContent = icon; }
+  };
+
+  element.dataset.wbReady = 'mycomponent';
+
+  return () => {
+    element.classList.remove('wb-mycomponent');
+    delete element.wbMyComponent;
+  };
+}
+```
+
+### Step 3: Create CSS
+
+```css
+/* src/styles/components/mycomponent.css */
+.wb-mycomponent {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 0.5rem);
+  padding: var(--space-md, 1rem);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md, 8px);
+}
+
+.wb-mycomponent__icon {
+  font-size: 1.5rem;
+}
+
+.wb-mycomponent__title {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.wb-mycomponent__body {
+  flex: 1;
+  color: var(--text-secondary);
+}
+```
+
+### Step 4: Register in Index
+
+```javascript
+// src/wb-viewmodels/index.js
+import { mycomponent } from './mycomponent.js';
+
+export const behaviors = {
+  // ... existing ...
+  mycomponent,
+};
+```
 
 ---
 
@@ -752,155 +486,124 @@ Create `src/behaviors/schema/mycustom.schema.json` for testing and documentation
 
 ```javascript
 // ✅ Good
-export function mybehavior(element, options = {}) {
-  element.classList.add('wb-mybehavior');
-
-  const handleClick = () => console.log('clicked');
-  element.addEventListener('click', handleClick);
-
+export function mybehavior(element) {
+  const handler = () => console.log('clicked');
+  element.addEventListener('click', handler);
+  
   return () => {
-    element.classList.remove('wb-mybehavior');
-    element.removeEventListener('click', handleClick);
+    element.removeEventListener('click', handler);
   };
 }
 
-// ❌ Bad - No cleanup
-export function mybehavior(element, options = {}) {
-  element.classList.add('wb-mybehavior');
+// ❌ Bad - Memory leak
+export function mybehavior(element) {
   element.addEventListener('click', () => console.log('clicked'));
-  // No return statement = memory leaks!
+  // No cleanup!
 }
 ```
 
-### 2. Use Descriptive Class Names
+### 2. Use BEM Class Naming
 
 ```javascript
-// ✅ Good - Clear hierarchy
-element.classList.add('wb-button');
-element.classList.add('wb-button--primary');
-element.classList.add('wb-button--loading');
+// ✅ Good
+element.classList.add('wb-card');
+element.classList.add('wb-card--elevated');
+element.classList.add('wb-card__header');
 
-// ❌ Bad - Unclear naming
-element.classList.add('btn');
-element.classList.add('active');
+// ❌ Bad
+element.classList.add('card');
+element.classList.add('elevated');
 ```
 
-### 3. Merge Options Properly
+### 3. Prefer Attributes Over Slots
 
-```javascript
-// ✅ Good - Check all sources
-const config = {
-  variant: options.variant || element.dataset.variant || 'default',
-  ...options  // Explicit options override
-};
+```html
+<!-- ✅ Good - Clean attribute API -->
+<wb-card title="Hello" subtitle="World">
+  <p>Content</p>
+</wb-card>
 
-// ❌ Bad - Ignores data attributes
-const config = {
-  variant: options.variant || 'default'
-};
+<!-- ❌ Avoid - Forces users to know internals -->
+<wb-card>
+  <h3 slot="title">Hello</h3>
+  <p slot="subtitle">World</p>
+  <p>Content</p>
+</wb-card>
 ```
 
-### 4. Validate Element Type
+### 4. Use Light DOM Only
 
 ```javascript
-// ✅ Good - Validate expected element
-export function button(element, options = {}) {
-  if (element.tagName !== 'BUTTON') {
-    console.warn('[button] Element must be a <button>');
-    return () => {};
-  }
-  // Continue with logic
-}
+// ✅ Good - Light DOM
+const header = document.createElement('header');
+header.className = 'wb-card__header';
+element.appendChild(header);
 
-// ❌ Bad - No validation
-export function button(element, options = {}) {
-  element.disabled = true; // Might fail on non-button elements
-}
+// ❌ Never use Shadow DOM
+const shadow = element.attachShadow({ mode: 'open' }); // NO!
 ```
 
 ### 5. Mark Elements as Ready
 
 ```javascript
-// ✅ Good - Mark when done
-element.dataset.wbReady = 'behaviorName';
+// ✅ Good - Track applied behaviors
+element.dataset.wbReady = (element.dataset.wbReady || '') + ' mybehavior';
 
-// Can check if already initialized
-if (element.dataset.wbReady === 'behaviorName') {
-  console.log('Already initialized');
-}
-```
-
-### 6. Use Semantic HTML
-
-```javascript
-// ✅ Good - Enhance native elements (Auto-Inject)
-<button>Click</button>
-<img src="...">
-<form>...</form>
-
-// ❌ Bad - Generic divs everywhere
-<div data-wb="button">Click</div>
-<div data-wb="img">...</div>
-```
-
-### 7. Dispatch Custom Events for Important Actions
-
-```javascript
-// ✅ Good - Let others listen
-element.dispatchEvent(new CustomEvent('wb:behavior:action', {
-  bubbles: true,
-  detail: { data: 'value' }
-}));
-
-// Listen elsewhere
-element.addEventListener('wb:behavior:action', (e) => {
-  console.log('Action happened!', e.detail);
-});
-```
-
-### 8. Keep Behaviors Focused
-
-```javascript
-// ✅ Good - Single responsibility
-export function button(element, options) {
-  // Only handles button-specific logic
-}
-
-export function ripple(element, options) {
-  // Only handles ripple effect
-}
-
-// Use together: data-wb="button ripple"
-
-// ❌ Bad - Does too much
-export function button(element, options) {
-  // Button logic + ripple + tooltip + validation + ...
+// Check if already applied
+if (element.dataset.wbReady?.includes('mybehavior')) {
+  return; // Already initialized
 }
 ```
 
 ---
 
-## Key Takeaways
+## Migration from v2.x
 
-1. **Functional, not Class-based** - Behaviors are functions that enhance native elements
-2. **Progressive Enhancement** - Start with semantic HTML, enhance with `data-wb`
-3. **No Inheritance** - The browser provides inheritance; we just add features
-4. **Declarative** - Configuration via data attributes
-5. **Composable** - Stack multiple behaviors on one element
-6. **Automatic** - `WB.init()` scans and observes, no manual wiring
-7. **Clean Lifecycle** - Every behavior has setup and teardown
-8. **Zero Build** - Pure ES6 modules, runs natively in browser
+### ⚠️ Breaking Changes
+
+| v2.x Syntax | v3.0 Syntax | Notes |
+|-------------|-------------|-------|
+| `data-wb="card"` | `<wb-card>` | Use custom elements |
+| `data-wb="ripple"` | `x-ripple` | Use `x-*` prefix |
+| `WBBaseComponent` | Direct HTMLElement | No base class |
+| Shadow DOM | Light DOM | No encapsulation |
+| Manual DOM | Schema `$view` | Declarative structure |
+
+### Migration Examples
+
+```html
+<!-- v2.x (deprecated) -->
+<div data-wb="card" data-title="Hello">Content</div>
+
+<!-- v3.0 -->
+<wb-card title="Hello">Content</wb-card>
+```
+
+```html
+<!-- v2.x (deprecated) -->
+<button data-wb="ripple tooltip" data-tooltip="Click me">Save</button>
+
+<!-- v3.0 -->
+<button x-ripple x-tooltip="Click me">Save</button>
+```
+
+### Legacy Detection
+
+v3.0 will **log errors** when detecting `data-wb` usage:
+
+```
+[WB] Legacy syntax data-wb="card" detected on <div>. Please use <wb-card> instead.
+```
 
 ---
 
 ## Related Documentation
 
-- **Architecture Overview**: `docs/architecture.md`
-- **Testing Standard**: `docs/test-schema-standard.md`
-- **Semantic Standard**: `docs/semantic-standard.md`
-- **CSS Standards**: `docs/css-standards.md`
-- **Component Docs**: `docs/components/`
+- **[MVVM Migration Guide](./plans/MVVM-MIGRATION.md)** - Full v3.0 architecture details
+- **[Behaviors Reference](./behaviors-reference.md)** - All available behaviors
+- **[Component Schemas](../src/wb-models/)** - JSON schema definitions
+- **[CSS Standards](./css-standards.md)** - Styling guidelines
 
 ---
 
-**Last Updated**: 2025-12-21
+**Last Updated:** 2026-01-20 | **Version:** 3.0.0

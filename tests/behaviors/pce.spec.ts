@@ -10,10 +10,10 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     const element = await setupTestContainer(
       page,
       `<wb-cardprofile 
-          data-name="John Doe" 
-          data-role="Developer" 
-          data-bio="Coding all day" 
-          data-avatar="avatar.jpg">
+          name="John Doe" 
+          role="Developer" 
+          bio="Coding all day" 
+          avatar="avatar.jpg">
        </wb-cardprofile>`
     );
 
@@ -36,8 +36,8 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     const element = await setupTestContainer(
       page,
       `<profile-card 
-          data-name="Jane Smith" 
-          data-role="Designer">
+          name="Jane Smith" 
+          role="Designer">
        </profile-card>`
     );
 
@@ -53,9 +53,9 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     const element = await setupTestContainer(
       page,
       `<wb-cardhero 
-          data-title="Hero Title" 
-          data-subtitle="Hero Subtitle" 
-          data-align="center">
+          heading="Hero Title" 
+          subtitle="Hero Subtitle" 
+          align="center">
        </wb-cardhero>`
     );
 
@@ -70,11 +70,11 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     const element = await setupTestContainer(
       page,
       `<wb-cardstats 
-          data-label="Users" 
-          data-value="1000" 
-          data-icon="👤" 
-          data-trend="up" 
-          data-trend-value="10%">
+          label="Users" 
+          value="1000" 
+          icon="👤" 
+          trend="up" 
+          trend-value="10%">
        </wb-cardstats>`
     );
 
@@ -91,9 +91,9 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     const element = await setupTestContainer(
       page,
       `<wb-cardnotification 
-          data-type="info" 
-          data-title="Info" 
-          data-message="This is info">
+          variant="info" 
+          heading="Info" 
+          message="This is info">
        </wb-cardnotification>`
     );
 
@@ -108,7 +108,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
   test('x-behavior attribute triggers tooltip behavior', async ({ page }) => {
     const element = await setupTestContainer(
       page,
-      `<button x-behavior="tooltip" data-tooltip="Test Tooltip">Hover Me</button>`
+      `<button x-behavior="tooltip" tooltip="Test Tooltip">Hover Me</button>`
     );
 
     await page.waitForTimeout(500);
@@ -130,7 +130,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
   test('wb-card basic element works', async ({ page }) => {
     const element = await setupTestContainer(
       page,
-      `<wb-card data-title="Test Card">
+      `<wb-card heading="Test Card">
          <p>Card content</p>
        </wb-card>`
     );
@@ -154,9 +154,9 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
         </script>
       </head>
       <body>
-        <wb-cardstats data-label="Stat 1" data-value="100"></wb-cardstats>
-        <wb-cardstats data-label="Stat 2" data-value="200"></wb-cardstats>
-        <wb-cardstats data-label="Stat 3" data-value="300"></wb-cardstats>
+        <wb-cardstats label="Stat 1" value="100"></wb-cardstats>
+        <wb-cardstats label="Stat 2" value="200"></wb-cardstats>
+        <wb-cardstats label="Stat 3" value="300"></wb-cardstats>
       </body>
       </html>
     `);
@@ -190,7 +190,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
       </head>
       <body>
         <div class="spacer">Scroll down...</div>
-        <wb-cardprofile id="lazy-profile" data-name="Lazy User"></wb-cardprofile>
+        <wb-cardprofile id="lazy-profile" name="Lazy User"></wb-cardprofile>
       </body>
       </html>
     `);

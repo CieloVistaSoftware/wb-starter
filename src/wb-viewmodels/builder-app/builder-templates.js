@@ -139,7 +139,7 @@ export const SECTION_TEMPLATES = [
           { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: '📱 Mobile Apps', subtitle: 'Native and cross-platform mobile applications for iOS and Android.' }},
           { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: '☁️ Cloud Solutions', subtitle: 'Scalable cloud infrastructure and deployment services.' }},
           { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: '🎨 UI/UX Design', subtitle: 'Beautiful, intuitive designs that delight users.' }},
-          { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: '📊 Analytics', subtitle: 'Data-driven insights to optimize your business.' }},
+          { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: '📊 Analytics', subtitle: 'driven insights to optimize your business.' }},
           { n: 'Card', i: '🃏', b: 'card', t: 'article', d: { title: '🔒 Security', subtitle: 'Enterprise-grade security for your digital assets.' }}
         ]}
       ]}

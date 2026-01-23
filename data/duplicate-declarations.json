@@ -1,0 +1,401 @@
+{
+  "total": 27,
+  "byFile": {
+    "src/wb-viewmodels/card.js": [
+      {
+        "file": "src/wb-viewmodels/card.js",
+        "line": 878,
+        "variable": "btn",
+        "function": "cardhero",
+        "firstDeclaredAt": 870
+      },
+      {
+        "file": "src/wb-viewmodels/card.js",
+        "line": 1983,
+        "variable": "footerEl",
+        "function": "cardminimizable",
+        "firstDeclaredAt": 1958
+      },
+      {
+        "file": "src/wb-viewmodels/card.js",
+        "line": 2595,
+        "variable": "pill",
+        "function": "cardportfolio",
+        "firstDeclaredAt": 2385
+      },
+      {
+        "file": "src/wb-viewmodels/card.js",
+        "line": 2647,
+        "variable": "link",
+        "function": "cardportfolio",
+        "firstDeclaredAt": 2620
+      }
+    ],
+    "src/wb-viewmodels/demo.js": [
+      {
+        "file": "src/wb-viewmodels/demo.js",
+        "line": 113,
+        "variable": "content",
+        "function": "demo",
+        "firstDeclaredAt": 59
+      }
+    ],
+    "src/wb-viewmodels/issues.js": [
+      {
+        "file": "src/wb-viewmodels/issues.js",
+        "line": 148,
+        "variable": "response",
+        "function": "issues",
+        "firstDeclaredAt": 129
+      },
+      {
+        "file": "src/wb-viewmodels/issues.js",
+        "line": 149,
+        "variable": "data",
+        "function": "issues",
+        "firstDeclaredAt": 131
+      },
+      {
+        "file": "src/wb-viewmodels/issues.js",
+        "line": 208,
+        "variable": "data",
+        "function": "issues",
+        "firstDeclaredAt": 131
+      },
+      {
+        "file": "src/wb-viewmodels/issues.js",
+        "line": 220,
+        "variable": "resp",
+        "function": "issues",
+        "firstDeclaredAt": 207
+      },
+      {
+        "file": "src/wb-viewmodels/issues.js",
+        "line": 221,
+        "variable": "data",
+        "function": "issues",
+        "firstDeclaredAt": 131
+      },
+      {
+        "file": "src/wb-viewmodels/issues.js",
+        "line": 223,
+        "variable": "sorted",
+        "function": "issues",
+        "firstDeclaredAt": 210
+      }
+    ],
+    "src/wb-viewmodels/navigation.js": [
+      {
+        "file": "src/wb-viewmodels/navigation.js",
+        "line": 193,
+        "variable": "label",
+        "function": "navbar",
+        "firstDeclaredAt": 162
+      },
+      {
+        "file": "src/wb-viewmodels/navigation.js",
+        "line": 194,
+        "variable": "href",
+        "function": "navbar",
+        "firstDeclaredAt": 161
+      }
+    ],
+    "src/wb-viewmodels/stagelight.js": [
+      {
+        "file": "src/wb-viewmodels/stagelight.js",
+        "line": 230,
+        "variable": "housing",
+        "function": "global",
+        "firstDeclaredAt": 184
+      }
+    ],
+    "src/wb-viewmodels/statusbar.js": [
+      {
+        "file": "src/wb-viewmodels/statusbar.js",
+        "line": 161,
+        "variable": "timeEl",
+        "function": "statusbar",
+        "firstDeclaredAt": 142
+      },
+      {
+        "file": "src/wb-viewmodels/statusbar.js",
+        "line": 168,
+        "variable": "pageEl",
+        "function": "statusbar",
+        "firstDeclaredAt": 82
+      },
+      {
+        "file": "src/wb-viewmodels/statusbar.js",
+        "line": 177,
+        "variable": "themeEl",
+        "function": "statusbar",
+        "firstDeclaredAt": 125
+      },
+      {
+        "file": "src/wb-viewmodels/statusbar.js",
+        "line": 179,
+        "variable": "theme",
+        "function": "statusbar",
+        "firstDeclaredAt": 131
+      }
+    ],
+    "src/wb-viewmodels/tabs.js": [
+      {
+        "file": "src/wb-viewmodels/tabs.js",
+        "line": 187,
+        "variable": "tab",
+        "function": "tabs",
+        "firstDeclaredAt": 157
+      },
+      {
+        "file": "src/wb-viewmodels/tabs.js",
+        "line": 212,
+        "variable": "i",
+        "function": "activateTab",
+        "firstDeclaredAt": 199
+      },
+      {
+        "file": "src/wb-viewmodels/tabs.js",
+        "line": 265,
+        "variable": "current",
+        "function": "global",
+        "firstDeclaredAt": 256
+      },
+      {
+        "file": "src/wb-viewmodels/tabs.js",
+        "line": 266,
+        "variable": "tabs",
+        "function": "global",
+        "firstDeclaredAt": 257
+      },
+      {
+        "file": "src/wb-viewmodels/tabs.js",
+        "line": 267,
+        "variable": "indices",
+        "function": "global",
+        "firstDeclaredAt": 258
+      },
+      {
+        "file": "src/wb-viewmodels/tabs.js",
+        "line": 268,
+        "variable": "currentPos",
+        "function": "global",
+        "firstDeclaredAt": 259
+      },
+      {
+        "file": "src/wb-viewmodels/tabs.js",
+        "line": 278,
+        "variable": "tabs",
+        "function": "global",
+        "firstDeclaredAt": 257
+      }
+    ],
+    "src/wb-viewmodels/wb-newsletter.js": [
+      {
+        "file": "src/wb-viewmodels/wb-newsletter.js",
+        "line": 116,
+        "variable": "options",
+        "function": "global",
+        "firstDeclaredAt": 77
+      },
+      {
+        "file": "src/wb-viewmodels/wb-newsletter.js",
+        "line": 210,
+        "variable": "options",
+        "function": "global",
+        "firstDeclaredAt": 77
+      }
+    ]
+  },
+  "all": [
+    {
+      "file": "src/wb-viewmodels/card.js",
+      "line": 878,
+      "variable": "btn",
+      "function": "cardhero",
+      "firstDeclaredAt": 870
+    },
+    {
+      "file": "src/wb-viewmodels/card.js",
+      "line": 1983,
+      "variable": "footerEl",
+      "function": "cardminimizable",
+      "firstDeclaredAt": 1958
+    },
+    {
+      "file": "src/wb-viewmodels/card.js",
+      "line": 2595,
+      "variable": "pill",
+      "function": "cardportfolio",
+      "firstDeclaredAt": 2385
+    },
+    {
+      "file": "src/wb-viewmodels/card.js",
+      "line": 2647,
+      "variable": "link",
+      "function": "cardportfolio",
+      "firstDeclaredAt": 2620
+    },
+    {
+      "file": "src/wb-viewmodels/demo.js",
+      "line": 113,
+      "variable": "content",
+      "function": "demo",
+      "firstDeclaredAt": 59
+    },
+    {
+      "file": "src/wb-viewmodels/issues.js",
+      "line": 148,
+      "variable": "response",
+      "function": "issues",
+      "firstDeclaredAt": 129
+    },
+    {
+      "file": "src/wb-viewmodels/issues.js",
+      "line": 149,
+      "variable": "data",
+      "function": "issues",
+      "firstDeclaredAt": 131
+    },
+    {
+      "file": "src/wb-viewmodels/issues.js",
+      "line": 208,
+      "variable": "data",
+      "function": "issues",
+      "firstDeclaredAt": 131
+    },
+    {
+      "file": "src/wb-viewmodels/issues.js",
+      "line": 220,
+      "variable": "resp",
+      "function": "issues",
+      "firstDeclaredAt": 207
+    },
+    {
+      "file": "src/wb-viewmodels/issues.js",
+      "line": 221,
+      "variable": "data",
+      "function": "issues",
+      "firstDeclaredAt": 131
+    },
+    {
+      "file": "src/wb-viewmodels/issues.js",
+      "line": 223,
+      "variable": "sorted",
+      "function": "issues",
+      "firstDeclaredAt": 210
+    },
+    {
+      "file": "src/wb-viewmodels/navigation.js",
+      "line": 193,
+      "variable": "label",
+      "function": "navbar",
+      "firstDeclaredAt": 162
+    },
+    {
+      "file": "src/wb-viewmodels/navigation.js",
+      "line": 194,
+      "variable": "href",
+      "function": "navbar",
+      "firstDeclaredAt": 161
+    },
+    {
+      "file": "src/wb-viewmodels/stagelight.js",
+      "line": 230,
+      "variable": "housing",
+      "function": "global",
+      "firstDeclaredAt": 184
+    },
+    {
+      "file": "src/wb-viewmodels/statusbar.js",
+      "line": 161,
+      "variable": "timeEl",
+      "function": "statusbar",
+      "firstDeclaredAt": 142
+    },
+    {
+      "file": "src/wb-viewmodels/statusbar.js",
+      "line": 168,
+      "variable": "pageEl",
+      "function": "statusbar",
+      "firstDeclaredAt": 82
+    },
+    {
+      "file": "src/wb-viewmodels/statusbar.js",
+      "line": 177,
+      "variable": "themeEl",
+      "function": "statusbar",
+      "firstDeclaredAt": 125
+    },
+    {
+      "file": "src/wb-viewmodels/statusbar.js",
+      "line": 179,
+      "variable": "theme",
+      "function": "statusbar",
+      "firstDeclaredAt": 131
+    },
+    {
+      "file": "src/wb-viewmodels/tabs.js",
+      "line": 187,
+      "variable": "tab",
+      "function": "tabs",
+      "firstDeclaredAt": 157
+    },
+    {
+      "file": "src/wb-viewmodels/tabs.js",
+      "line": 212,
+      "variable": "i",
+      "function": "activateTab",
+      "firstDeclaredAt": 199
+    },
+    {
+      "file": "src/wb-viewmodels/tabs.js",
+      "line": 265,
+      "variable": "current",
+      "function": "global",
+      "firstDeclaredAt": 256
+    },
+    {
+      "file": "src/wb-viewmodels/tabs.js",
+      "line": 266,
+      "variable": "tabs",
+      "function": "global",
+      "firstDeclaredAt": 257
+    },
+    {
+      "file": "src/wb-viewmodels/tabs.js",
+      "line": 267,
+      "variable": "indices",
+      "function": "global",
+      "firstDeclaredAt": 258
+    },
+    {
+      "file": "src/wb-viewmodels/tabs.js",
+      "line": 268,
+      "variable": "currentPos",
+      "function": "global",
+      "firstDeclaredAt": 259
+    },
+    {
+      "file": "src/wb-viewmodels/tabs.js",
+      "line": 278,
+      "variable": "tabs",
+      "function": "global",
+      "firstDeclaredAt": 257
+    },
+    {
+      "file": "src/wb-viewmodels/wb-newsletter.js",
+      "line": 116,
+      "variable": "options",
+      "function": "global",
+      "firstDeclaredAt": 77
+    },
+    {
+      "file": "src/wb-viewmodels/wb-newsletter.js",
+      "line": 210,
+      "variable": "options",
+      "function": "global",
+      "firstDeclaredAt": 77
+    }
+  ]
+}

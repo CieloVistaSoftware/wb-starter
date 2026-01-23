@@ -1,0 +1,577 @@
+/**
+ * Issues Form Styles v5.0
+ * =======================
+ * Clean, modern form-based issue submission
+ * Uses CSS variables from themes.css
+ */
+
+/* ============================================
+   TRIGGER BUTTON
+   ============================================ */
+.wb-issues-trigger {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 997;
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 40%, transparent);
+  transition: all 0.2s ease;
+}
+
+.wb-issues-trigger:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) 50%, transparent);
+}
+
+/* ============================================
+   OVERLAY
+   ============================================ */
+.wb-issues-overlay {
+  position: fixed;
+  inset: 0;
+  background: color-mix(in srgb, var(--bg-color) 90%, transparent);
+  backdrop-filter: blur(4px);
+  z-index: 998;
+}
+
+/* ============================================
+   DIALOG - Draggable & Resizable
+   ============================================ */
+.wb-issues-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 520px;
+  min-width: 320px;
+  min-height: 300px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  box-shadow: 0 20px 60px color-mix(in srgb, var(--bg-color) 80%, transparent);
+  overflow: hidden;
+}
+
+/* ============================================
+   HEADER - Drag handle
+   ============================================ */
+.wb-issues-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  cursor: move;
+  flex-shrink: 0;
+}
+
+.wb-issues-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.wb-issues-header-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.wb-issues-header-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.wb-issues-header-btn:hover {
+  background: color-mix(in srgb, var(--text-primary) 10%, transparent);
+  color: var(--text-primary);
+}
+
+.wb-issues-close:hover {
+  background: color-mix(in srgb, var(--danger-color) 20%, transparent);
+  color: var(--danger-color);
+}
+
+/* ============================================
+   FORM
+   ============================================ */
+.wb-issues-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 14px;
+  overflow-y: auto;
+}
+
+.wb-issues-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wb-issues-field--grow {
+  flex: 1;
+  min-height: 0;
+}
+
+.wb-issues-field--grow textarea {
+  flex: 1;
+  resize: none;
+}
+
+.wb-issues-field > label:first-child {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Type buttons */
+.wb-issues-type-btns,
+.wb-issues-priority-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.wb-issues-type,
+.wb-issues-priority {
+  flex: 1;
+  cursor: pointer;
+}
+
+.wb-issues-type input,
+.wb-issues-priority input {
+  display: none;
+}
+
+.wb-issues-type span,
+.wb-issues-priority span {
+  display: block;
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.wb-issues-type:hover span,
+.wb-issues-priority:hover span {
+  background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  border-color: var(--border-light);
+}
+
+.wb-issues-type.active span {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  border-color: var(--primary);
+  color: var(--primary-light);
+}
+
+.wb-issues-priority.active span.low {
+  background: color-mix(in srgb, var(--success-color) 15%, transparent);
+  border-color: var(--success-color);
+  color: var(--success-color);
+}
+
+.wb-issues-priority.active span.medium {
+  background: color-mix(in srgb, var(--warning-color) 15%, transparent);
+  border-color: var(--warning-color);
+  color: var(--warning-color);
+}
+
+.wb-issues-priority.active span.high {
+  background: color-mix(in srgb, var(--warning-color) 20%, transparent);
+  border-color: var(--warning-color);
+  color: var(--warning-color);
+}
+
+.wb-issues-priority.active span.critical {
+  background: color-mix(in srgb, var(--danger-color) 15%, transparent);
+  border-color: var(--danger-color);
+  color: var(--danger-color);
+}
+
+/* Textarea */
+.wb-issues-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  transition: all 0.15s;
+}
+
+.wb-issues-form textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.wb-issues-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 5%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 15%, transparent);
+}
+
+.wb-issues-form textarea[name="steps"] {
+  min-height: 50px;
+}
+
+/* Submit */
+.wb-issues-submit {
+  flex-shrink: 0;
+}
+
+.wb-issues-submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border: none;
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wb-issues-submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+.wb-issues-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.wb-issues-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.wb-issues-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--danger-color);
+  box-shadow: 0 0 6px var(--danger-color);
+  transition: all 0.3s;
+}
+
+.wb-issues-dot.connected {
+  background: var(--success-color);
+  box-shadow: 0 0 6px var(--success-color);
+}
+
+.wb-issues-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ============================================
+   RESIZE HANDLE
+   ============================================ */
+.wb-issues-resize {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+}
+
+.wb-issues-resize::before {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+}
+
+/* ============================================
+   LIST MODAL
+   ============================================ */
+.wb-issues-list-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.wb-issues-list-overlay {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--bg-color) 85%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+.wb-issues-list-panel {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px color-mix(in srgb, var(--bg-color) 80%, transparent);
+}
+
+.wb-issues-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 12px 12px 0 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.wb-issues-list-close {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.wb-issues-list-close:hover {
+  background: color-mix(in srgb, var(--danger-color) 20%, transparent);
+  color: var(--danger-color);
+}
+
+.wb-issues-list-filters {
+  display: flex;
+  gap: 6px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.wb-issues-list-filters button {
+  padding: 6px 12px;
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.wb-issues-list-filters button:hover {
+  background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  color: var(--text-secondary);
+}
+
+.wb-issues-list-filters button.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--text-primary);
+}
+
+.wb-issues-list-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wb-issues-list-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.wb-issues-list-item {
+  padding: 12px;
+  background: color-mix(in srgb, var(--text-primary) 2%, transparent);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: all 0.15s;
+}
+
+.wb-issues-list-item:hover {
+  background: color-mix(in srgb, var(--text-primary) 4%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.wb-issues-list-item-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.wb-issues-list-item-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.wb-issues-list-item-desc {
+  flex: 1;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.wb-issues-list-item-date {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.wb-issues-list-item-resolve {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: color-mix(in srgb, var(--success-color) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--success-color) 30%, transparent);
+  border-radius: 5px;
+  color: var(--success-color);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.wb-issues-list-item-resolve:hover {
+  background: var(--success-color);
+  border-color: var(--success-color);
+  color: var(--text-primary);
+}
+
+.wb-issues-list-actions {
+  display: flex;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  border-radius: 0 0 12px 12px;
+}
+
+.wb-issues-list-btn {
+  flex: 1;
+  padding: 10px;
+  background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.wb-issues-list-btn:hover {
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  color: var(--text-primary);
+}
+
+.wb-issues-list-btn.primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--text-primary);
+}
+
+.wb-issues-list-btn.primary:hover {
+  background: var(--primary-dark);
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+.wb-issues-form::-webkit-scrollbar,
+.wb-issues-list-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wb-issues-form::-webkit-scrollbar-track,
+.wb-issues-list-items::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.wb-issues-form::-webkit-scrollbar-thumb,
+.wb-issues-list-items::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.wb-issues-form::-webkit-scrollbar-thumb:hover,
+.wb-issues-list-items::-webkit-scrollbar-thumb:hover {
+  background: var(--border-light);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 480px) {
+  .wb-issues-dialog {
+    width: calc(100vw - 20px);
+    height: calc(100vh - 100px);
+    top: 10px;
+    left: 10px;
+    transform: none;
+  }
+  
+  .wb-issues-type-btns,
+  .wb-issues-priority-btns {
+    flex-wrap: wrap;
+  }
+  
+  .wb-issues-type,
+  .wb-issues-priority {
+    flex: 0 0 calc(50% - 3px);
+  }
+}

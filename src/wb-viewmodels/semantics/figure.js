@@ -3,11 +3,11 @@
  * Adds lightbox, lazy loading, caption animation, zoom
  * 
  * Supports pure attribute-driven usage (no child tags needed):
- *   <figure data-img-src="photo.jpg" data-alt="Description" data-caption="Caption">
+ *   <figure img-src="photo.jpg" alt="Description" caption="Caption">
  *   </figure>
  * 
  * Or traditional HTML with enhancements:
- *   <figure data-caption="Caption">
+ *   <figure caption="Caption">
  *     <img src="photo.jpg" alt="Description">
  *   </figure>
  * 
@@ -35,7 +35,7 @@ export function figure(element, options = {}) {
     borderRadius: '8px'
   });
 
-  // Auto-generate img from data-img-src if no img child exists
+  // Auto-generate img from img-src if no img child exists
   let img = element.querySelector('img');
   if (!img && config.imgSrc) {
     img = document.createElement('img');
@@ -55,7 +55,7 @@ export function figure(element, options = {}) {
 
   let figcaption = element.querySelector('figcaption');
 
-  // Handle data-caption
+  // Handle caption
   const captionText = options.caption || element.dataset.caption;
   if (captionText) {
     if (!figcaption) {

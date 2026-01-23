@@ -8,7 +8,7 @@
  * -----------------------------------------------------------------------------
  * 
  * Usage:
- *   <wb-drawer  data-target="#menu">Open Menu</button>
+ *   <wb-drawer  target="#menu">Open Menu</button>
  *   <a href="img.jpg" x-lightbox>View Image</a>
  * -----------------------------------------------------------------------------
  * All overlays show visual feedback when their trigger is clicked
@@ -208,24 +208,38 @@ export function drawer(element, options = {}) {
  * Helper Attribute: [x-lightbox]
  */
 export function lightbox(element, options = {}) {
+  // Get image source from multiple possible attributes
   const config = {
-    src: options.src || element.dataset.src || element.src || element.href || '',
+    src: options.src || element.getAttribute('src') || element.dataset.src || 
+         element.getAttribute('href') || element.href || '',
+    alt: options.alt || element.getAttribute('alt') || element.dataset.alt || 'Image',
     ...options
   };
 
   element.classList.add('wb-lightbox-trigger');
   element.classList.add('wb-lightbox');
-  element.style.cursor = 'pointer';
+  element.style.cursor = 'zoom-in';
+
+  // If no src found, try to find an img child
+  if (!config.src && element.querySelector('img')) {
+    config.src = element.querySelector('img').src;
+  }
 
   element.onclick = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    
+    if (!config.src) {
+      console.warn('[WB] Lightbox: No image source found');
+      return;
+    }
     
     const overlay = document.createElement('div');
-    overlay.className = 'wb-lightbox';
+    overlay.className = 'wb-lightbox-overlay';
     overlay.style.cssText = `
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       z-index: 10000;
       display: flex;
       align-items: center;
@@ -234,23 +248,46 @@ export function lightbox(element, options = {}) {
       cursor: zoom-out;
     `;
     
+    // Loading indicator
+    const loader = document.createElement('div');
+    loader.style.cssText = `
+      position: absolute;
+      color: white;
+      font-size: 1rem;
+    `;
+    loader.textContent = 'Loading...';
+    overlay.appendChild(loader);
+    
     const img = document.createElement('img');
-    img.src = config.src;
+    img.alt = config.alt;
     img.style.cssText = `
       max-width: 90vw;
       max-height: 90vh;
       object-fit: contain;
-      border-radius: 4px;
+      border-radius: 8px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      animation: wb-zoom-in 0.3s ease;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     `;
+    
+    img.onload = () => {
+      loader.remove();
+      img.style.opacity = '1';
+    };
+    
+    img.onerror = () => {
+      loader.textContent = 'Failed to load image';
+      loader.style.color = '#ef4444';
+    };
+    
+    img.src = config.src;
     
     const closeBtn = document.createElement('button');
     closeBtn.innerHTML = '×';
     closeBtn.style.cssText = `
       position: absolute;
       top: 1rem; right: 1rem;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.15);
       border: none;
       color: white;
       font-size: 2rem;
@@ -261,25 +298,30 @@ export function lightbox(element, options = {}) {
       align-items: center;
       justify-content: center;
       transition: background 0.2s;
+      z-index: 10001;
     `;
-    closeBtn.onmouseenter = () => closeBtn.style.background = 'rgba(255,255,255,0.2)';
-    closeBtn.onmouseleave = () => closeBtn.style.background = 'rgba(255,255,255,0.1)';
+    closeBtn.onmouseenter = () => closeBtn.style.background = 'rgba(255,255,255,0.25)';
+    closeBtn.onmouseleave = () => closeBtn.style.background = 'rgba(255,255,255,0.15)';
     
     const close = () => {
-      overlay.style.animation = 'wb-fade-out 0.2s ease';
+      overlay.style.opacity = '0';
+      overlay.style.transition = 'opacity 0.2s ease';
       setTimeout(() => overlay.remove(), 200);
+      document.body.style.overflow = '';
     };
     
-    closeBtn.onclick = close;
+    closeBtn.onclick = (e) => { e.stopPropagation(); close(); };
     overlay.onclick = (e) => { if (e.target === overlay) close(); };
     
-    document.addEventListener('keydown', function escHandler(e) {
+    const escHandler = (e) => {
       if (e.key === 'Escape') { close(); document.removeEventListener('keydown', escHandler); }
-    });
+    };
+    document.addEventListener('keydown', escHandler);
     
     overlay.appendChild(img);
     overlay.appendChild(closeBtn);
     document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
   };
 
   element.dataset.wbReady = 'lightbox';

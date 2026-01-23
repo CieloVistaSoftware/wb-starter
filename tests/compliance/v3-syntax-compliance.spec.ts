@@ -13,7 +13,7 @@
  *   - x-ripple, x-draggable - Prefix for adding behaviors to elements
  * 
  * ⚠️ DEPRECATED:
- *   - data-wb="card" - Legacy fallback (still works, avoid in new code)
+ *   - wb="card" - Legacy fallback (still works, avoid in new code)
  * 
  * This test ensures we're migrating toward clean, semantic syntax.
  */
@@ -26,7 +26,7 @@ const PAGES_DIR = 'pages';
 const DEMOS_DIR = 'demos';
 const PUBLIC_DIR = 'public';
 
-// Files that are allowed to use data-wb (legacy demos, documentation)
+// Files that are allowed to use wb (legacy demos, documentation)
 const LEGACY_ALLOWED = [
   'data-wb-demo.html',
   'migration-guide.html',
@@ -67,9 +67,9 @@ function scanHtmlFile(filePath: string): SyntaxViolation[] {
     // Skip if in code block
     if (inCodeBlock) return;
     
-    // Check for data-wb="component" pattern (not data-wb="behavior behavior")
-    // This catches: data-wb="card", data-wb="button", etc.
-    const dataWbMatch = line.match(/data-wb="(\w+)"/);
+    // Check for wb="component" pattern (not wb="behavior behavior")
+    // This catches: wb="card", wb="button", etc.
+    const dataWbMatch = line.match(/wb="(\w+)"/);
     if (dataWbMatch) {
       const value = dataWbMatch[1];
       // Single word = likely a component that should be <wb-*>
@@ -78,7 +78,7 @@ function scanHtmlFile(filePath: string): SyntaxViolation[] {
           file: filePath,
           line: index + 1,
           content: line.trim().substring(0, 80),
-          suggestion: `Use <wb-${value}> instead of data-wb="${value}"`
+          suggestion: `Use <wb-${value}> instead of wb="${value}"`
         });
       }
     }
@@ -109,11 +109,11 @@ function scanDirectory(dir: string): SyntaxViolation[] {
 
 test.describe('v3.0 Syntax Compliance', () => {
   
-  test('pages/ uses <wb-*> tags instead of data-wb for components', () => {
+  test('pages/ uses <wb-*> tags instead of wb for components', () => {
     const violations = scanDirectory(PAGES_DIR);
     
     if (violations.length > 0) {
-      console.log('\n⚠️  data-wb usage found (should migrate to <wb-*> tags):');
+      console.log('\n⚠️  wb usage found (should migrate to <wb-*> tags):');
       violations.forEach(v => {
         console.log(`  ${v.file}:${v.line}`);
         console.log(`    ${v.content}`);
@@ -123,14 +123,14 @@ test.describe('v3.0 Syntax Compliance', () => {
     
     // Warning only for now - will become error after migration complete
     // Current state: 167 violations, target: 0
-    expect(violations.length, `Found ${violations.length} data-wb usages that should be <wb-*> tags`).toBeLessThanOrEqual(200);
+    expect(violations.length, `Found ${violations.length} wb usages that should be <wb-*> tags`).toBeLessThanOrEqual(200);
   });
   
-  test('demos/ uses <wb-*> tags instead of data-wb for components', () => {
+  test('demos/ uses <wb-*> tags instead of wb for components', () => {
     const violations = scanDirectory(DEMOS_DIR);
     
     if (violations.length > 0) {
-      console.log('\n⚠️  data-wb usage found in demos:');
+      console.log('\n⚠️  wb usage found in demos:');
       violations.slice(0, 5).forEach(v => {
         console.log(`  ${v.file}:${v.line} → ${v.suggestion}`);
       });
@@ -144,11 +144,11 @@ test.describe('v3.0 Syntax Compliance', () => {
     expect(violations.length).toBeLessThanOrEqual(300);
   });
   
-  test('public/ uses <wb-*> tags instead of data-wb for components', () => {
+  test('public/ uses <wb-*> tags instead of wb for components', () => {
     const violations = scanDirectory(PUBLIC_DIR);
     
     if (violations.length > 0) {
-      console.log('\n⚠️  data-wb usage found in public:');
+      console.log('\n⚠️  wb usage found in public:');
       violations.forEach(v => {
         console.log(`  ${v.file}:${v.line} → ${v.suggestion}`);
       });
@@ -242,7 +242,7 @@ test.describe('x- Prefix Behavior Syntax', () => {
   
   test('behavior additions use x- prefix not data-wb', () => {
     // Check that adding behaviors to elements uses x- prefix
-    // e.g., <button x-ripple> not <button data-wb="ripple">
+    // e.g., <button x-ripple> not <button wb="ripple">
     const violations: SyntaxViolation[] = [];
     
     const checkFile = (filePath: string) => {
@@ -255,14 +255,14 @@ test.describe('x- Prefix Behavior Syntax', () => {
       
       lines.forEach((line, index) => {
         for (const behavior of behaviors) {
-          // Check for data-wb="behavior" on native elements
-          const pattern = new RegExp(`<(button|div|span|a|img)[^>]*data-wb="[^"]*${behavior}[^"]*"`);
+          // Check for wb="behavior" on native elements
+          const pattern = new RegExp(`<(button|div|span|a|img)[^>]*wb="[^"]*${behavior}[^"]*"`);
           if (pattern.test(line)) {
             violations.push({
               file: filePath,
               line: index + 1,
               content: line.trim().substring(0, 60),
-              suggestion: `Use x-${behavior} instead of data-wb="${behavior}"`
+              suggestion: `Use x-${behavior} instead of wb="${behavior}"`
             });
           }
         }

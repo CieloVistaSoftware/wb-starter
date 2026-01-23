@@ -19,7 +19,7 @@ if (typeof window !== 'undefined' && typeof window.WB === 'undefined') {
  * - $cssAPI documentation support
  * 
  * Usage:
- *   <wb-card  data-title="Hello">Content</div>
+ *   <wb-card  heading="Hello">Content</div>
  *   <wb-card title="Hello">Content</wb-card>
  *   
  *   <script type="module">
@@ -42,6 +42,19 @@ import '../wb-viewmodels/wb-column.js';
 import { getConfig, setConfig } from './config.js';
 import { pubsub } from './pubsub.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
+
+// v3.0: Tag and Extension registries
+import { isComponent, getBehaviorForTag, listComponents } from './tag-map.js';
+import { 
+  hasExtension, 
+  isDecoration, 
+  isMorph, 
+  getMorphBehavior,
+  parseExtensionAttribute,
+  listExtensions,
+  listDecorations,
+  listMorphs
+} from './extensions.js';
 
 // Auto-injection mappings
 const autoInjectMappings = [
@@ -265,7 +278,7 @@ const WB = {
   processSchema(element, schemaName = null) {
     if (schemaProcessed.has(element)) return;
     
-    // Get schema name from tag or data-wb
+    // Get schema name from tag or wb
     const name = schemaName || WB._detectSchemaName(element);
     if (!name) return;
     
@@ -283,12 +296,18 @@ const WB = {
   
   /**
    * Detect schema name from element
+   * Uses tag-map.js for <wb-*> component detection
    * @private
    */
   _detectSchemaName(element) {
     const tagName = element.tagName.toLowerCase();
     
-    // <wb-card> → card
+    // v3.0: Use tag-map for component detection
+    if (isComponent(tagName)) {
+      return getBehaviorForTag(tagName);
+    }
+    
+    // Fallback: <wb-*> pattern (for components not yet in tag-map)
     if (tagName.startsWith('wb-')) {
       return tagName.replace('wb-', '').replace(/-/g, '');
     }
@@ -303,7 +322,7 @@ const WB = {
   },
 
   /**
-   * Scan DOM for elements with data-wb and inject behaviors
+   * Scan DOM for elements with wb and inject behaviors
    * @param {HTMLElement} root - Root element to scan (default: document.body)
    * @returns {Promise<void>}
    */
@@ -331,7 +350,7 @@ const WB = {
         const val = element.dataset.wb || '';
         const name = val.split(/\s+/)[0] || 'unknown';
       
-        const errorMsg = `Legacy syntax data-wb="${val}" detected on <${element.tagName.toLowerCase()}>. Please use <wb-${name}> instead.`;
+        const errorMsg = `Legacy syntax wb="${val}" detected on <${element.tagName.toLowerCase()}>. Please use <wb-${name}> instead.`;
         console.error(`[WB] ${errorMsg}`);
       
         Events.error('WB:LegacySyntax', new Error(errorMsg), {
@@ -414,7 +433,7 @@ const WB = {
   },
 
   /**
-   * Watch for new elements with data-wb (MutationObserver)
+   * Watch for new elements with wb (MutationObserver)
    * @param {HTMLElement} root - Root element to observe (default: document.body)
    * @returns {MutationObserver} The observer instance
    */
@@ -453,7 +472,7 @@ const WB = {
           }
             
           // 1. Check node itself
-          // Legacy data-wb check
+          // Legacy wb check
           if (el.dataset?.wb) {
             const val = el.dataset.wb;
             const name = val.split(/\s+/)[0];
@@ -499,8 +518,8 @@ const WB = {
             });
           }
             
-          // Legacy data-wb check (descendants)
-          // Note: data-wb is deprecated - use wb-* custom elements or x-* attributes
+          // Legacy wb check (descendants)
+          // Note: wb is deprecated - use wb-* custom elements or x-* attributes
           el.querySelectorAll('[data-wb]').forEach(descendant => {
             const descEl = /** @type {HTMLElement} */ (descendant);
             const val = descEl.dataset.wb || '';
@@ -558,7 +577,7 @@ const WB = {
           const element = /** @type {HTMLElement} */ (mutation.target);
           
           if (mutation.attributeName === 'x-behavior') {
-            // ... existing data-wb logic ...
+            // ... existing wb logic ...
             const behaviorList = element.dataset.wb?.split(/\s+/).filter(Boolean) || [];
             const current = applied.get(element) || [];
             current.forEach(({ name, cleanup }) => {
@@ -587,7 +606,7 @@ const WB = {
                 const options = element.getAttribute(mutation.attributeName) ? { config: element.getAttribute(mutation.attributeName) } : {};
                 WB.inject(element, behaviorName, options);
               } else {
-                // Attribute removed - check if it's still in data-wb
+                // Attribute removed - check if it's still in wb
                 const list = element.dataset.wb?.split(/\s+/).filter(Boolean) || [];
                 if (!list.includes(behaviorName)) {
                   WB.remove(element, behaviorName);
@@ -690,13 +709,15 @@ const WB = {
 
     // v3.0: Initialize Schema Builder
     if (useSchemas) {
-      console.log('═══════════════════════════════════════════════════════');
-      console.log('  WB Behaviors v3.0 - MVVM Architecture');
-      console.log('═══════════════════════════════════════════════════════');
+      if (window.WB_DEBUG) {
+        console.log('═══════════════════════════════════════════════════════');
+        console.log('  WB Behaviors v3.0 - MVVM Architecture');
+        console.log('═══════════════════════════════════════════════════════');
+      }
       
       try {
         await SchemaBuilder.loadSchemas(schemaPath);
-        console.log(`[WB] Schema Builder loaded ${SchemaBuilder.registry.size} schemas`);
+        if (window.WB_DEBUG) console.log(`[WB] Schema Builder loaded ${SchemaBuilder.registry.size} schemas`);
       } catch (error) {
         console.warn('[WB] Failed to load schemas:', error);
         // Continue without schemas - behaviors still work
@@ -727,7 +748,7 @@ const WB = {
       SchemaBuilder.startObserver();
     }
 
-    console.log(`✅ WB (Web Behavior) v${WB.version} initialized`);
+    if (window.WB_DEBUG) console.log(`✅ WB (Web Behavior) v${WB.version} initialized`);
     
     pubsub.publish('wb:init', options);
 
@@ -741,7 +762,24 @@ const WB = {
   // Expose core modules
   Events,
   Theme,
-  config: { get: getConfig, set: setConfig }
+  config: { get: getConfig, set: setConfig },
+  
+  // v3.0: Expose tag-map and extensions registries
+  tags: {
+    isComponent,
+    getBehaviorForTag,
+    listComponents
+  },
+  extensions: {
+    hasExtension,
+    isDecoration,
+    isMorph,
+    getMorphBehavior,
+    parseExtensionAttribute,
+    listExtensions,
+    listDecorations,
+    listMorphs
+  }
 };
 
 // Global export

@@ -689,7 +689,29 @@
     "icon": "📄",
     "since": "2.0.0",
     "status": "stable",
-    "author": "WB Framework",
-    "lastUpdated": "2026-01-16"
+    "author": "WB Behaviors",
+    "lastUpdated": "2026-01-21"
+  },
+
+  "behavior": "builder-pages",
+  "baseClass": "wb-builder-pages",
+
+  "$view": [
+    {
+      "name": "container",
+      "tag": "div",
+      "class": "wb-builder-pages"
+    }
+  ],
+
+  "$methods": {
+    "createPage": "Creates a new page",
+    "deletePage": "Deletes a page by ID",
+    "renamePage": "Renames a page",
+    "switchPage": "Switches to a different page"
+  },
+
+  "$cssAPI": {
+    "--wb-builder-pages-gap": "Gap between page items"
   }
 }

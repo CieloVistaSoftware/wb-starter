@@ -27,9 +27,9 @@
       "default": "info",
       "appliesClass": "wb-alert--{{value}}"
     },
-    "title": {
+    "heading": {
       "type": "string",
-      "description": "Alert title (optional heading)"
+      "description": "Alert heading (optional)"
     },
     "message": {
       "type": "string",
@@ -73,13 +73,13 @@
       "description": "Content wrapper for title and message"
     },
     {
-      "name": "title",
+      "name": "heading",
       "tag": "strong",
       "parent": "content",
       "public": true,
-      "content": "{{title}}",
-      "createdWhen": "title",
-      "description": "Alert title/heading"
+      "content": "{{heading}}",
+      "createdWhen": "heading",
+      "description": "Alert heading"
     },
     {
       "name": "message",
@@ -195,7 +195,7 @@
       "<wb-alert variant=\"success\">variant=success</wb-alert>",
       "<wb-alert variant=\"warning\">variant=warning</wb-alert>",
       "<wb-alert dismissible>with dismissible</wb-alert>",
-      "<wb-alert title=\"Sample title\">title=\"Sample title\"</wb-alert>",
+      "<wb-alert heading=\"Sample heading\">heading=\"Sample heading\"</wb-alert>",
       "<wb-alert message=\"Sample message\">message=\"Sample message\"</wb-alert>",
       "<wb-alert icon=\"Sample icon\">icon=\"Sample icon\"</wb-alert>"
     ],
@@ -219,7 +219,7 @@
         },
         {
           "variant": "info",
-          "title": "Title",
+          "heading": "Heading",
           "message": "Test"
         },
         {
@@ -234,7 +234,7 @@
         },
         {
           "variant": "warning",
-          "title": "Warning",
+          "heading": "Warning",
           "message": "Be careful",
           "icon": "⚠️",
           "dismissible": true

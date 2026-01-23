@@ -1,10 +1,7 @@
 # Builder Interaction Rules
-
 ## Source of Truth
 All interaction rules are defined in: `src/wb-models/builder.schema.json` under the `interactions` section.
-
 ## Quick Reference
-
 ### Selection Synchronization
 
 | Rule ID | Trigger | Action |

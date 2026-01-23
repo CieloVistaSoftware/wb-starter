@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "tabs.schema.json",
   "title": "Tabs",
-  "description": "Tab navigation for switching between content panels",
+  "description": "Tab navigation for switching between content panels. Use <wb-tab> children.",
   "behavior": "tabs",
   "baseClass": "wb-tabs",
   "semanticElement": {
@@ -14,30 +14,20 @@
     "supportLevel": "stable",
     "accessibility": "high"
   },
+  "children": {
+    "allowed": ["wb-tab"],
+    "description": "Use <wb-tab label=\"...\"> for each tab panel"
+  },
   "properties": {
-    "activeTab": {
-      "type": "number",
-      "description": "Initially active tab index",
-      "default": 0
-    },
     "variant": {
       "type": "string",
-      "enum": [
-        "default",
-        "pills",
-        "underline",
-        "bordered"
-      ],
+      "enum": ["default", "pills", "underline", "bordered"],
       "default": "default",
       "appliesClass": "wb-tabs--{{value}}"
     },
     "size": {
       "type": "string",
-      "enum": [
-        "sm",
-        "md",
-        "lg"
-      ],
+      "enum": ["sm", "md", "lg"],
       "default": "md",
       "appliesClass": "wb-tabs--{{value}}"
     },
@@ -58,9 +48,7 @@
   "$methods": {
     "setActiveTab": {
       "description": "Activates a tab by index",
-      "params": [
-        "index"
-      ]
+      "params": ["index"]
     },
     "getActiveTab": {
       "description": "Returns active tab index",
@@ -68,19 +56,19 @@
       "returns": "number"
     },
     "next": {
-      "description": "Activates next tab",
+      "description": "Activates next tab (skips disabled)",
       "params": []
     },
     "prev": {
-      "description": "Activates previous tab",
+      "description": "Activates previous tab (skips disabled)",
       "params": []
     },
     "first": {
-      "description": "Activates first tab",
+      "description": "Activates first enabled tab",
       "params": []
     },
     "last": {
-      "description": "Activates last tab",
+      "description": "Activates last enabled tab",
       "params": []
     }
   },
@@ -137,7 +125,8 @@
     "tab": {
       "role": "tab",
       "ariaSelected": "dynamic",
-      "ariaControls": "panel id"
+      "ariaControls": "panel id",
+      "ariaDisabled": "when disabled"
     },
     "panel": {
       "role": "tabpanel",
@@ -151,37 +140,36 @@
         "index": "number",
         "previousIndex": "number"
       }
+    },
+    "wb:tab:close": {
+      "description": "Closable tab was closed",
+      "detail": {
+        "index": "number",
+        "label": "string"
+      }
     }
   },
   "test": {
     "functional": true,
     "setup": [
-      "<wb-tabs>Basic tabs content</wb-tabs>",
-      "<wb-tabs variant=\"default\">variant=default</wb-tabs>",
-      "<wb-tabs variant=\"pills\">variant=pills</wb-tabs>",
-      "<wb-tabs variant=\"underline\">variant=underline</wb-tabs>",
-      "<wb-tabs size=\"sm\">size=sm</wb-tabs>",
-      "<wb-tabs size=\"md\">size=md</wb-tabs>",
-      "<wb-tabs size=\"lg\">size=lg</wb-tabs>",
-      "<wb-tabs full-width>with fullWidth</wb-tabs>"
+      "<wb-tabs><wb-tab label=\"First\">Content 1</wb-tab><wb-tab label=\"Second\">Content 2</wb-tab></wb-tabs>",
+      "<wb-tabs><wb-tab label=\"With Icon\" icon=\"📊\">Content</wb-tab><wb-tab label=\"Plain\">Content</wb-tab></wb-tabs>",
+      "<wb-tabs><wb-tab label=\"Normal\">A</wb-tab><wb-tab label=\"Disabled\" disabled>B</wb-tab></wb-tabs>",
+      "<wb-tabs><wb-tab label=\"Closable\" closable>Content</wb-tab><wb-tab label=\"Fixed\">Content</wb-tab></wb-tabs>",
+      "<wb-tabs><wb-tab label=\"With Badge\" badge=\"5\">Content</wb-tab></wb-tabs>",
+      "<wb-tabs variant=\"pills\"><wb-tab label=\"One\">A</wb-tab><wb-tab label=\"Two\">B</wb-tab></wb-tabs>",
+      "<wb-tabs variant=\"underline\"><wb-tab label=\"One\">A</wb-tab><wb-tab label=\"Two\">B</wb-tab></wb-tabs>",
+      "<wb-tabs size=\"lg\"><wb-tab label=\"Large\">Content</wb-tab></wb-tabs>"
     ],
     "matrix": {
       "combinations": [
-        {
-          "activeTab": 0
-        },
-        {
-          "activeTab": 1
-        },
-        {
-          "variant": "pills"
-        },
-        {
-          "variant": "underline"
-        },
-        {
-          "fullWidth": true
-        }
+        { "variant": "pills" },
+        { "variant": "underline" },
+        { "variant": "bordered" },
+        { "size": "sm" },
+        { "size": "lg" },
+        { "fullWidth": true },
+        { "vertical": true }
       ]
     }
   },
@@ -189,6 +177,7 @@
     "category": "navigation",
     "icon": "📑",
     "since": "1.0.0",
-    "status": "stable"
+    "status": "stable",
+    "related": ["tab"]
   }
 }

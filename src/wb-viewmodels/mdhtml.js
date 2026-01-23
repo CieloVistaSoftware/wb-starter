@@ -12,9 +12,9 @@
  *   </wb-mdhtml>
  * 
  * Or with external file:
- *   <wb-mdhtml data-src="./docs/readme.md"></wb-mdhtml>
+ *   <wb-mdhtml src="./docs/readme.md"></wb-mdhtml>
  * Or with absolute path:
- *   <wb-mdhtml data-src="/docs/architecture.md"></wb-mdhtml>
+ *   <wb-mdhtml src="/docs/architecture.md"></wb-mdhtml>
  * -----------------------------------------------------------------------------
  */
 
@@ -68,8 +68,32 @@ export async function mdhtml(element, options = {}) {
     // Load marked library
     const marked = await loadMarked();
     
-    // Custom renderer to add heading IDs
+    // Helper function to escape HTML entities
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Custom renderer to add heading IDs and properly escape code
     const renderer = new marked.Renderer();
+    
+    // CRITICAL: Override code renderer to guarantee HTML escaping
+    renderer.code = function(code, language, escaped) {
+      // Handle marked v5+ object format
+      const codeText = typeof code === 'object' ? code.text : code;
+      const lang = typeof code === 'object' ? code.lang : language;
+      
+      // Always escape HTML in code blocks
+      const escapedCode = escapeHtml(codeText);
+      const langClass = lang ? ` class="language-${lang}"` : '';
+      
+      return `<pre><code${langClass}>${escapedCode}</code></pre>\n`;
+    };
+    
     renderer.heading = function(text, level) {
       // Generate slug from text (handle objects from marked v5+)
       const textContent = typeof text === 'object' ? text.text : text;
@@ -152,8 +176,14 @@ export async function mdhtml(element, options = {}) {
         return () => {};
       }
     } else {
-      // Use inline content
-      markdown = element.textContent || element.innerText;
+      // Check for <script type="text/markdown"> child first (protects HTML from browser parsing)
+      const scriptTag = element.querySelector('script[type="text/markdown"]');
+      if (scriptTag) {
+        markdown = scriptTag.textContent || '';
+      } else {
+        // Fall back to inline content (WARNING: HTML will be parsed by browser first!)
+        markdown = element.textContent || element.innerText;
+      }
     }
 
     // Parse markdown to HTML

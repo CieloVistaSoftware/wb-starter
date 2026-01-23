@@ -8,13 +8,24 @@
  * -----------------------------------------------------------------------------
  * 
  * Usage:
- *   <button x-toast data-message="Saved!">Save</button>
- *   <wb-badge  data-variant="success">New</span>
+ *   <button x-toast message="Saved!">Save</button>
+ *   <wb-badge  variant="success">New</span>
  * -----------------------------------------------------------------------------
  * All behaviors generate content from data attributes
  */
 
+// Helper: detect builder context to suppress noisy toasts
+function isBuilder() {
+  try {
+    if (typeof window === 'undefined') return false;
+    if ((window.location && String(window.location.pathname).includes('builder.html'))) return true;
+    return !!document.querySelector('.builder-layout');
+  } catch (e) { return false; }
+}
+
 export function createToast(message, type = 'info', duration = 3000) {
+  // Suppress all toasts while in the builder UI
+  if (isBuilder()) return { remove: () => {} };
   let container = document.querySelector('.wb-toast-container');
   if (!container) {
     container = document.createElement('div');
@@ -69,9 +80,14 @@ export function createToast(message, type = 'info', duration = 3000) {
  * Attribute: [toast-message]
  */
 export function toast(element, options = {}) {
+  // Phase 2: 'variant' is standard, 'type' is legacy fallback
+  const variantValue = options.variant || element.getAttribute('variant') || element.dataset.variant ||
+                       options.type || element.getAttribute('type') || element.dataset.type || 'info';
+  
   const config = {
     message: options.message || element.dataset.toastMessage || element.dataset.message || element.getAttribute('toast-message') || element.getAttribute('message') || 'Notification',
-    type: options.type || element.dataset.type || 'info',
+    variant: variantValue,
+    type: variantValue, // Legacy alias for backward compatibility
     duration: parseInt(options.duration || element.dataset.duration || '3000'),
     position: options.position || element.dataset.position || 'top-right',
     ...options
@@ -81,14 +97,17 @@ export function toast(element, options = {}) {
   element.style.cursor = 'pointer';
 
   const showToast = () => {
-    createToast(config.message, config.type, config.duration);
+    createToast(config.message, config.variant, config.duration);
     element.dispatchEvent(new CustomEvent('wb:toast:show', {
       bubbles: true,
-      detail: { message: config.message, type: config.type }
+      detail: { message: config.message, variant: config.variant, type: config.variant }
     }));
   };
 
-  element.addEventListener('click', showToast);
+  // Do not attach click-triggered toasts when inside the builder (noisy)
+  if (!isBuilder()) {
+    element.addEventListener('click', showToast);
+  }
   element.dataset.wbReady = 'toast';
   return () => element.removeEventListener('click', showToast);
 }
@@ -98,7 +117,7 @@ export function toast(element, options = {}) {
  * Attribute: [badge]
  */
 export function badge(element, options = {}) {
-  const rawVariant = options.variant || element.dataset.variant || element.getAttribute('badge') || 'default';
+  const rawVariant = options.variant || element.getAttribute('variant') || element.dataset.variant || element.getAttribute('badge') || 'default';
   // Sanitize variant for use as CSS class (replace spaces with dashes, lowercase)
   const sanitizedVariant = rawVariant.replace(/\s+/g, '-').toLowerCase();
   
@@ -170,15 +189,15 @@ export function badge(element, options = {}) {
 }
 
 /**
- * Progress - Animated progress bars (0.6rem height)
- * Custom Tag: <progress>
+ * Progress - Animated progress bars with value display
+ * Custom Tag: <wb-progress>
  */
 export function progress(element, options = {}) {
   const config = {
-    value: parseInt(options.value || element.dataset.value || '0'),
-    max: parseInt(options.max || element.dataset.max || '100'),
+    value: parseInt(options.value || element.getAttribute('value') || element.dataset.value || '0'),
+    max: parseInt(options.max || element.getAttribute('max') || element.dataset.max || '100'),
     animated: options.animated ?? element.hasAttribute('data-animated') ?? false,
-    striped: options.striped ?? element.hasAttribute('data-striped'),
+    striped: options.striped ?? (element.hasAttribute('striped') || element.hasAttribute('data-striped')),
     showLabel: options.showLabel ?? element.dataset.showLabel !== 'false',
     ...options
   };
@@ -188,13 +207,17 @@ export function progress(element, options = {}) {
     element.classList.add('wb-progress--animated');
   }
   
+  const pct = Math.min(100, Math.round((config.value / config.max) * 100));
+  
   // COMPLIANCE: explicit width on container
-  element.style.width = '100%';
-  element.style.height = '8px';
-  element.style.background = 'var(--bg-tertiary, #374151)';
-  element.style.borderRadius = '9999px';
-  element.style.overflow = 'hidden';
-  element.style.position = 'relative';
+  element.style.cssText = `
+    width: 100%;
+    height: 1.25rem;
+    background: var(--bg-tertiary, #374151);
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+  `;
   
   // If element is <progress>, hide native UI
   if (element.tagName === 'PROGRESS') {
@@ -202,21 +225,40 @@ export function progress(element, options = {}) {
     element.style.webkitAppearance = 'none';
     element.style.border = 'none';
   }
-
-  const pct = Math.min(100, (config.value / config.max) * 100);
   
   // Create bar element with direct style assignments for compliance
   const bar = document.createElement('div');
   bar.className = 'wb-progress__bar';
-  bar.style.width = config.animated ? '0%' : `${pct}%`;
-  bar.style.height = '100%';
-  bar.style.background = 'var(--primary, #6366f1)';
-  bar.style.borderRadius = '0.3rem';
-  bar.style.transition = 'width 1s cubic-bezier(0.4, 0, 0.2, 1)';
+  bar.style.cssText = `
+    width: ${config.animated ? '0%' : pct + '%'};
+    height: 100%;
+    background: var(--primary, #6366f1);
+    border-radius: 9999px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 0.5rem;
+    min-width: ${pct > 0 ? '2rem' : '0'};
+  `;
   if (config.striped) {
     bar.style.backgroundImage = 'linear-gradient(45deg,rgba(255,255,255,0.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.15) 75%,transparent 75%,transparent)';
-    bar.style.backgroundSize = '0.6rem 0.6rem';
+    bar.style.backgroundSize = '1rem 1rem';
+    bar.style.animation = 'wb-stripe-move 1s linear infinite';
   }
+  
+  // Value label inside the bar
+  const label = document.createElement('span');
+  label.className = 'wb-progress__label';
+  label.style.cssText = `
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  `;
+  label.textContent = `${pct}%`;
+  bar.appendChild(label);
+  
   element.innerHTML = '';
   element.appendChild(bar);
 
@@ -231,7 +273,13 @@ export function progress(element, options = {}) {
   element.wbProgress = {
     setValue: (v) => {
       const progressBar = element.querySelector('.wb-progress__bar');
-      if (progressBar) progressBar.style.width = `${(v / config.max) * 100}%`;
+      const progressLabel = element.querySelector('.wb-progress__label');
+      const newPct = Math.min(100, Math.round((v / config.max) * 100));
+      if (progressBar) {
+        progressBar.style.width = `${newPct}%`;
+        progressBar.style.minWidth = newPct > 0 ? '2rem' : '0';
+      }
+      if (progressLabel) progressLabel.textContent = `${newPct}%`;
     },
     reanimate: () => {
       const animBar = element.querySelector('.wb-progress__bar');
@@ -322,47 +370,84 @@ export function spinner(element, options = {}) {
 }
 
 /**
- * Avatar - User avatars
+ * Avatar - User avatars with photo, status, and sizes
  */
 export function avatar(element, options = {}) {
   const config = {
-    src: options.src || element.dataset.src || '',
-    initials: options.initials || element.dataset.initials || '',
-    name: options.name || element.dataset.name || '',
-    size: options.size || element.dataset.size || 'md',
-    status: options.status || element.dataset.status || '',
+    src: options.src || element.getAttribute('src') || element.dataset.src || '',
+    initials: options.initials || element.getAttribute('initials') || element.dataset.initials || '',
+    name: options.name || element.getAttribute('name') || element.dataset.name || '',
+    size: options.size || element.getAttribute('size') || element.dataset.size || 'md',
+    status: options.status || element.getAttribute('status') || element.dataset.status || '',
     ...options
   };
 
-  const sizes = { sm: '32px', md: '40px', lg: '56px', xl: '80px' };
-  const size = sizes[config.size] || sizes.md;
-  const initials = config.initials || (config.name ? config.name.split(' ').map(n => n[0]).join('').toUpperCase() : '?');
+  // Size configurations
+  const sizes = { 
+    xs: { px: '24px', font: '0.6rem', status: '6px' },
+    sm: { px: '32px', font: '0.75rem', status: '8px' },
+    md: { px: '40px', font: '0.875rem', status: '10px' },
+    lg: { px: '56px', font: '1.25rem', status: '14px' },
+    xl: { px: '80px', font: '1.75rem', status: '18px' }
+  };
+  const sizeConfig = sizes[config.size] || sizes.md;
+  const initials = config.initials || (config.name ? config.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : '?');
 
-  element.classList.add('wb-avatar');
-  element.style.width = size;
-  element.style.height = size;
-  element.style.borderRadius = '50%';
-  element.style.display = 'inline-flex';
-  element.style.alignItems = 'center';
-  element.style.justifyContent = 'center';
-  element.style.background = 'var(--primary, #6366f1)';
-  element.style.color = 'white';
-  element.style.fontWeight = '600';
-  element.style.fontSize = `calc(${size} * 0.4)`;
-  element.style.position = 'relative';
-  element.style.overflow = 'hidden';
+  element.classList.add('wb-avatar', `wb-avatar--${config.size}`);
+  element.style.cssText = `
+    width: ${sizeConfig.px};
+    height: ${sizeConfig.px};
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary, #6366f1);
+    color: white;
+    font-weight: 600;
+    font-size: ${sizeConfig.font};
+    position: relative;
+    overflow: visible;
+    flex-shrink: 0;
+  `;
 
+  // Build inner content
+  let innerHTML = '';
+  
   if (config.src) {
-    element.innerHTML = `<img src="${config.src}" alt="${config.name}" style="width:100%;height:100%;object-fit:cover;">`;
+    innerHTML = `<img src="${config.src}" alt="${config.name || 'Avatar'}" style="
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    ">`;
   } else {
-    element.textContent = initials;
+    innerHTML = `<span style="user-select:none;">${initials}</span>`;
   }
 
+  // Status indicator
   if (config.status) {
-    const statusColors = { online: '#22c55e', offline: '#6b7280', busy: '#ef4444', away: '#f59e0b' };
-    element.innerHTML += `<span style="position:absolute;bottom:0;right:0;width:25%;height:25%;background:${statusColors[config.status] || statusColors.offline};border-radius:50%;border:2px solid var(--bg-primary,#1f2937);"></span>`;
+    const statusColors = { 
+      online: '#22c55e', 
+      offline: '#6b7280', 
+      busy: '#ef4444', 
+      away: '#f59e0b',
+      dnd: '#ef4444'
+    };
+    const statusColor = statusColors[config.status] || statusColors.offline;
+    innerHTML += `<span class="wb-avatar__status wb-avatar__status--${config.status}" style="
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: ${sizeConfig.status};
+      height: ${sizeConfig.status};
+      background: ${statusColor};
+      border-radius: 50%;
+      border: 2px solid var(--bg-primary, #1f2937);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+    "></span>`;
   }
 
+  element.innerHTML = innerHTML;
   element.dataset.wbReady = 'avatar';
   return () => element.classList.remove('wb-avatar');
 }
@@ -419,46 +504,56 @@ export function chip(element, options = {}) {
 }
 
 /**
- * Alert - Alert messages
+ * Alert - Alert messages with distinct variant colors
  */
 export function alert(element, options = {}) {
+  // Support both 'type' and 'variant' attribute names
+  const variantValue = options.variant || element.getAttribute('variant') || element.dataset.variant ||
+                       options.type || element.getAttribute('type') || element.dataset.type || 'info';
   const config = {
-    type: options.variant || element.dataset.type || 'info',
-    message: options.message || element.dataset.message || '',
-    title: options.title || element.dataset.title || '',
-    dismissible: options.dismissible ?? element.hasAttribute('data-dismissible'),
+    variant: variantValue,
+    type: variantValue, // Legacy alias
+    message: options.message || element.getAttribute('message') || element.dataset.message || '',
+    heading: options.heading || element.getAttribute('heading') || element.dataset.heading ||
+             options.title || element.getAttribute('title') || element.dataset.title || '',
+    dismissible: options.dismissible ?? (element.hasAttribute('dismissible') || element.hasAttribute('data-dismissible')),
     ...options
   };
 
-  // Use solid backgrounds for better visibility
+  // Distinct solid background colors for each variant
   const colors = {
-    info: { bg: '#3b82f6', border: '#1e40af', text: 'white', icon: 'ℹ️' },
-    success: { bg: '#22c55e', border: '#166534', text: 'white', icon: '✓' },
-    warning: { bg: '#f59e0b', border: '#92400e', text: 'white', icon: '⚠️' },
-    error: { bg: '#ef4444', border: '#991b1b', text: 'white', icon: '✕' }
+    info: { bg: '#3b82f6', border: '#1d4ed8', text: 'white', icon: 'ℹ️' },
+    success: { bg: '#22c55e', border: '#16a34a', text: 'white', icon: '✅' },
+    warning: { bg: '#f59e0b', border: '#d97706', text: 'white', icon: '⚠️' },
+    error: { bg: '#ef4444', border: '#dc2626', text: 'white', icon: '❌' }
   };
-  const c = colors[config.type] || colors.info;
+  const c = colors[config.variant] || colors.info;
 
-  element.classList.add('wb-alert', `wb-alert--${config.type}`);
+  element.classList.add('wb-alert', `wb-alert--${config.variant}`);
   element.setAttribute('role', 'alert');
-  element.style.padding = '0.75rem 1rem';
-  element.style.background = c.bg;
-  element.style.borderLeft = `4px solid ${c.border}`;
-  element.style.borderRadius = '4px';
-  element.style.color = c.text;
-  element.style.display = 'flex';
-  element.style.alignItems = 'flex-start';
-  element.style.gap = '0.5rem';
+  element.style.cssText = `
+    padding: 1rem 1.25rem;
+    background: ${c.bg};
+    border-left: 4px solid ${c.border};
+    border-radius: 8px;
+    color: ${c.text};
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  `;
 
-  const content = config.message || element.innerHTML || 'Alert message';
-  const titleText = config.title || 'Alert Title';
+  const content = config.message || element.textContent.trim() || 'Alert message';
+  const headingText = config.heading || '';
+  
   element.innerHTML = `
-    <span class="wb-alert__icon" style="flex-shrink:0;">${c.icon}</span>
+    <span class="wb-alert__icon" style="flex-shrink:0;font-size:1.25rem;">${c.icon}</span>
     <div class="wb-alert__content" style="flex:1;">
-      <div class="wb-alert__title" style="font-weight:600;margin-bottom:0.25rem;">${titleText}</div>
-      <p class="wb-alert__message" style="margin:0;">${content}</p>
+      ${headingText ? `<div class="wb-alert__heading" style="font-weight:700;margin-bottom:0.25rem;font-size:1rem;">${headingText}</div>` : ''}
+      <p class="wb-alert__message" style="margin:0;font-size:0.9rem;opacity:0.95;">${content}</p>
     </div>
-    ${config.dismissible ? `<button class="wb-alert__close" onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;opacity:0.7;font-size:1.25rem;line-height:1;">×</button>` : ''}
+    ${config.dismissible ? `<button class="wb-alert__close" style="background:none;border:none;cursor:pointer;color:${c.text};opacity:0.8;font-size:1.5rem;line-height:1;padding:0;" onclick="this.parentElement.style.display='none'">×</button>` : ''}
   `;
 
   element.dataset.wbReady = 'alert';
@@ -466,27 +561,27 @@ export function alert(element, options = {}) {
 }
 
 /**
- * Skeleton - Glassmorphism loading skeletons with shimmer animation
+ * Skeleton - Loading skeletons with shimmer animation
  */
 export function skeleton(element, options = {}) {
   const config = {
-    variant: options.variant || element.dataset.variant || 'text',
-    lines: parseInt(options.lines || element.dataset.lines || '1'),
-    width: options.width || element.dataset.width || '100%',
-    height: options.height || element.dataset.height || '',
+    variant: options.variant || element.getAttribute('variant') || element.dataset.variant || 'text',
+    lines: parseInt(options.lines || element.getAttribute('lines') || element.dataset.lines || '3'),
+    width: options.width || element.getAttribute('width') || element.dataset.width || '100%',
+    height: options.height || element.getAttribute('height') || element.dataset.height || '',
     ...options
   };
 
   element.classList.add('wb-skeleton', `wb-skeleton--${config.variant}`);
   element.style.display = 'block';
 
-  // Glassmorphism skeleton style
+  // Shimmer animation style - uses CSS keyframes
   const skeletonStyle = `
     background: linear-gradient(
       90deg,
-      var(--bg-tertiary, rgba(255,255,255,0.05)) 0%,
-      var(--bg-secondary, rgba(255,255,255,0.15)) 50%,
-      var(--bg-tertiary, rgba(255,255,255,0.05)) 100%
+      var(--bg-tertiary, #374151) 0%,
+      var(--bg-secondary, #4b5563) 50%,
+      var(--bg-tertiary, #374151) 100%
     );
     background-size: 200% 100%;
     animation: wb-skeleton-shimmer 1.5s ease-in-out infinite;
@@ -496,23 +591,91 @@ export function skeleton(element, options = {}) {
     text: () => {
       let html = '';
       for (let i = 0; i < config.lines; i++) {
+        // Last line is shorter for natural look
         const w = i === config.lines - 1 && config.lines > 1 ? '60%' : '100%';
-        html += `<div class="wb-skeleton__line" style="height:1rem;border-radius:4px;margin-bottom:0.5rem;width:${w};${skeletonStyle}"></div>`;
+        html += `<div class="wb-skeleton__line" style="
+          height: 1rem;
+          border-radius: 4px;
+          margin-bottom: 0.75rem;
+          width: ${w};
+          ${skeletonStyle}
+        "></div>`;
       }
       element.innerHTML = html;
     },
     circle: () => {
-      element.innerHTML = `<div class="wb-skeleton__circle" style="width:${config.width};height:${config.width};border-radius:50%;${skeletonStyle}"></div>`;
+      const size = config.width || '60px';
+      element.innerHTML = `<div class="wb-skeleton__circle" style="
+        width: ${size};
+        height: ${size};
+        border-radius: 50%;
+        ${skeletonStyle}
+      "></div>`;
     },
     rect: () => {
-      element.innerHTML = `<div class="wb-skeleton__rect" style="width:${config.width};height:${config.height || '100px'};border-radius:8px;${skeletonStyle}"></div>`;
+      element.innerHTML = `<div class="wb-skeleton__rect" style="
+        width: ${config.width};
+        height: ${config.height || '100px'};
+        border-radius: 8px;
+        ${skeletonStyle}
+      "></div>`;
     },
     card: () => {
       element.innerHTML = `
-        <div style="background:var(--bg-secondary, rgba(255,255,255,0.05));border-radius:8px;padding:1rem;border:1px solid var(--border-color, rgba(255,255,255,0.1));">
-          <div class="wb-skeleton__line" style="width:100%;height:120px;border-radius:6px;margin-bottom:0.75rem;${skeletonStyle}"></div>
-          <div class="wb-skeleton__line" style="height:1rem;border-radius:4px;margin-bottom:0.5rem;width:70%;${skeletonStyle}"></div>
-          <div class="wb-skeleton__line" style="height:0.75rem;border-radius:4px;width:50%;${skeletonStyle}"></div>
+        <div style="
+          background: var(--bg-secondary, #1f2937);
+          border-radius: 12px;
+          padding: 1rem;
+          border: 1px solid var(--border-color, #374151);
+        ">
+          <div class="wb-skeleton__line" style="
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            ${skeletonStyle}
+          "></div>
+          <div class="wb-skeleton__line" style="
+            height: 1.25rem;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+            width: 70%;
+            ${skeletonStyle}
+          "></div>
+          <div class="wb-skeleton__line" style="
+            height: 0.875rem;
+            border-radius: 4px;
+            width: 50%;
+            ${skeletonStyle}
+          "></div>
+        </div>
+      `;
+    },
+    avatar: () => {
+      element.innerHTML = `
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="wb-skeleton__circle" style="
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            ${skeletonStyle}
+          "></div>
+          <div style="flex:1;">
+            <div class="wb-skeleton__line" style="
+              height: 1rem;
+              border-radius: 4px;
+              margin-bottom: 0.5rem;
+              width: 60%;
+              ${skeletonStyle}
+            "></div>
+            <div class="wb-skeleton__line" style="
+              height: 0.75rem;
+              border-radius: 4px;
+              width: 40%;
+              ${skeletonStyle}
+            "></div>
+          </div>
         </div>
       `;
     }
@@ -626,6 +789,13 @@ export function notify(element, options = {}) {
   };
 
   element.classList.add('wb-notify-trigger');
+
+  // Suppress notify clicks while in builder UI
+  if (isBuilder()) {
+    element.style.cursor = 'default';
+    element.dataset.wbReady = 'notify';
+    return () => element.classList.remove('wb-notify-trigger');
+  }
 
   element.onclick = () => {
     const currentType = types[typeIndex];

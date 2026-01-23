@@ -1,0 +1,387 @@
+/**
+ * Premium Sticky Navbar - Glassmorphism Edition
+ * ============================================================================
+ */
+
+wb-navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  
+  /* Glassmorphism Base */
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+  
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  gap: 2rem;
+}
+
+/* ============================================================================
+   SCROLL STATE - Enhanced shadow on scroll
+   ============================================================================ */
+
+wb-navbar.scrolled {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 rgba(99, 102, 241, 0.3);
+}
+
+/* ============================================================================
+   BRAND SECTION - Logo + Text
+   ============================================================================ */
+
+wb-navbar a[href="#home"],
+wb-navbar a:first-of-type {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.5px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+wb-navbar a[href="#home"] img,
+wb-navbar a:first-of-type img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+wb-navbar a[href="#home"]:hover,
+wb-navbar a:first-of-type:hover {
+  color: #6366f1;
+  transform: translateY(-2px);
+}
+
+wb-navbar a[href="#home"]:hover img,
+wb-navbar a:first-of-type:hover img {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+  transform: scale(1.05);
+}
+
+/* ============================================================================
+   NAV LINKS CONTAINER
+   ============================================================================ */
+
+wb-navbar > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  justify-content: center;
+}
+
+/* ============================================================================
+   NAV LINKS - Animated Underline
+   ============================================================================ */
+
+wb-navbar a:not(:first-of-type) {
+  position: relative;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+  overflow: hidden;
+}
+
+/* Animated underline */
+wb-navbar a:not(:first-of-type)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+wb-navbar a:not(:first-of-type):hover {
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+wb-navbar a:not(:first-of-type):hover::after {
+  left: 0;
+}
+
+/* Active state for second link (Home) */
+wb-navbar a:nth-of-type(2) {
+  color: #6366f1;
+}
+
+wb-navbar a:nth-of-type(2)::after {
+  left: 0;
+}
+
+/* ============================================================================
+   CTA BUTTON - Get Started / Primary Action
+   ============================================================================ */
+
+.navbar-cta,
+wb-navbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  
+  /* Premium gradient background */
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Hover state - scale + glow */
+.navbar-cta:hover,
+wb-navbar button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3),
+              0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+/* Active/Click state */
+.navbar-cta:active,
+wb-navbar button:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+/* Animated background shimmer */
+.navbar-cta::before,
+wb-navbar button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.navbar-cta:hover::before,
+wb-navbar button:hover::before {
+  left: 100%;
+}
+
+/* ============================================================================
+   RIGHT SIDE CONTAINER
+   ============================================================================ */
+
+wb-navbar > div:last-of-type {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 0;
+  justify-content: flex-end;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  wb-navbar {
+    padding: 0.75rem 1rem;
+    gap: 1rem;
+  }
+  
+  wb-navbar a:not(:first-of-type) {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  .navbar-cta,
+  wb-navbar button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ============================================================================
+   BRAND NAME & TAGLINE
+   ============================================================================ */
+
+wb-navbar [data-brand]::after {
+  content: attr(data-tagline);
+  display: block;
+  font-size: 0.65rem;
+  color: rgba(99, 102, 241, 0.7);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+/* ============================================================================
+   FALLBACK FOR BROWSERS WITHOUT BACKDROP-FILTER
+   ============================================================================ */
+
+@supports not (backdrop-filter: blur(1px)) {
+  wb-navbar {
+    background: rgba(15, 23, 42, 0.95);
+  }
+  
+  wb-navbar.scrolled {
+    background: rgba(15, 23, 42, 0.98);
+  }
+}
+
+/* ============================================================================
+   ACTIVE PAGE HIGHLIGHT STYLES
+   ============================================================================ */
+
+/* CSS Variable for active color */
+wb-navbar {
+  --wb-navbar-active-color: #6366f1;
+}
+
+/* Active link base styles */
+wb-navbar a.active,
+wb-navbar a[aria-current="page"] {
+  color: var(--wb-navbar-active-color) !important;
+}
+
+/* --------------------------------------------------------------------------
+   STYLE: None - No indicator
+   -------------------------------------------------------------------------- */
+wb-navbar.wb-navbar--active-none a.active::after,
+wb-navbar.wb-navbar--active-none a[aria-current="page"]::after {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   STYLE: Color Only - Just text color change
+   -------------------------------------------------------------------------- */
+wb-navbar.wb-navbar--active-color a.active,
+wb-navbar.wb-navbar--active-color a[aria-current="page"] {
+  color: var(--wb-navbar-active-color) !important;
+  font-weight: 600;
+}
+
+wb-navbar.wb-navbar--active-color a.active::after,
+wb-navbar.wb-navbar--active-color a[aria-current="page"]::after {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   STYLE: Underline - Animated underline (default)
+   -------------------------------------------------------------------------- */
+wb-navbar.wb-navbar--active-underline a.active::after,
+wb-navbar.wb-navbar--active-underline a[aria-current="page"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0 !important;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--wb-navbar-active-color), color-mix(in srgb, var(--wb-navbar-active-color), #8b5cf6 50%));
+}
+
+/* --------------------------------------------------------------------------
+   STYLE: Pill - Background highlight
+   -------------------------------------------------------------------------- */
+wb-navbar.wb-navbar--active-pill a.active,
+wb-navbar.wb-navbar--active-pill a[aria-current="page"] {
+  background: color-mix(in srgb, var(--wb-navbar-active-color) 15%, transparent);
+  border-radius: 6px;
+  color: var(--wb-navbar-active-color) !important;
+}
+
+wb-navbar.wb-navbar--active-pill a.active::after,
+wb-navbar.wb-navbar--active-pill a[aria-current="page"]::after {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   STYLE: Arrow - Small arrow indicator below
+   -------------------------------------------------------------------------- */
+wb-navbar.wb-navbar--active-arrow a.active,
+wb-navbar.wb-navbar--active-arrow a[aria-current="page"] {
+  color: var(--wb-navbar-active-color) !important;
+}
+
+wb-navbar.wb-navbar--active-arrow a.active::after,
+wb-navbar.wb-navbar--active-arrow a[aria-current="page"]::after {
+  content: '\25BC';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  height: auto;
+  background: none;
+  color: var(--wb-navbar-active-color);
+  font-size: 8px;
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   STYLE: Dot - Small dot indicator
+   -------------------------------------------------------------------------- */
+wb-navbar.wb-navbar--active-dot a.active,
+wb-navbar.wb-navbar--active-dot a[aria-current="page"] {
+  color: var(--wb-navbar-active-color) !important;
+}
+
+wb-navbar.wb-navbar--active-dot a.active::after,
+wb-navbar.wb-navbar--active-dot a[aria-current="page"]::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--wb-navbar-active-color);
+  border-radius: 50%;
+}
+
+/* --------------------------------------------------------------------------
+   STYLE: Glow - Glowing text effect
+   -------------------------------------------------------------------------- */
+wb-navbar.wb-navbar--active-glow a.active,
+wb-navbar.wb-navbar--active-glow a[aria-current="page"] {
+  color: var(--wb-navbar-active-color) !important;
+  text-shadow: 0 0 10px var(--wb-navbar-active-color),
+               0 0 20px color-mix(in srgb, var(--wb-navbar-active-color) 50%, transparent),
+               0 0 30px color-mix(in srgb, var(--wb-navbar-active-color) 30%, transparent);
+}
+
+wb-navbar.wb-navbar--active-glow a.active::after,
+wb-navbar.wb-navbar--active-glow a[aria-current="page"]::after {
+  display: none !important;
+}

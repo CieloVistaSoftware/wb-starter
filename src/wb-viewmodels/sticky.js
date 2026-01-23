@@ -8,14 +8,14 @@
  * 
  * Usage:
  *   <nav x-sticky>...</nav>
- *   <header x-sticky data-offset="60" data-z-index="1000">...</header>
+ *   <header x-sticky offset="60" z-index="1000">...</header>
  * 
  * Options:
- *   data-offset    - Pixels from top when stuck (default: 0)
- *   data-z-index   - Z-index when stuck (default: 100)
- *   data-threshold - Scroll position to trigger (default: element's top)
- *   data-class     - Class to add when stuck (default: "is-stuck")
- *   data-animate   - Add smooth transition (default: true)
+ *   offset    - Pixels from top when stuck (default: 0)
+ *   z-index   - Z-index when stuck (default: 100)
+ *   threshold - Scroll position to trigger (default: element's top)
+ *   class     - Class to add when stuck (default: "is-stuck")
+ *   animate   - Add smooth transition (default: true)
  */
 
 export function sticky(element, options = {}) {

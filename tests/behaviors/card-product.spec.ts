@@ -16,10 +16,10 @@ test.describe('Card Product Behavior', () => {
       </head>
       <body>
         <article id="test-product" 
-          data-behavior="cardproduct" 
-          data-title="Test Product" 
-          data-price="$99.99"
-          data-cta="Add to Cart">
+          behavior="cardproduct" 
+          heading="Test Product" 
+          price="$99.99"
+          cta="Add to Cart">
         </article>
       </body>
       </html>

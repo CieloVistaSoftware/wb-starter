@@ -20,7 +20,7 @@ test.describe('Pill Behavior Shortcut', () => {
         <body>
           <div class="demo-area">
             <!-- Pill Shortcut -->
-            <span id="test-pill" data-wb="pill" data-wb-eager data-variant="success">Pill Shortcut</span>
+            <span id="test-pill" wb="pill" wb-eager variant="success">Pill Shortcut</span>
           </div>
 
           <script type="module">
@@ -48,7 +48,7 @@ test.describe('Pill Behavior Shortcut', () => {
     });
   });
 
-  test('data-wb="pill" creates a badge with pill style', async ({ page }) => {
+  test('wb="pill" creates a badge with pill style', async ({ page }) => {
     const pill = page.locator('#test-pill');
     await expect(pill).toBeVisible();
     
