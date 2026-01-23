@@ -2031,29 +2031,29 @@ export function carddraggable(element, options = {}) {
 
   // Header with drag handle
   const headerEl = document.createElement('header');
-  header.className = 'wb-card__header wb-card__drag-handle';
-  header.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);cursor:grab;display:flex;align-items:center;gap:0.5rem;';
-  header.setAttribute('aria-label', 'Drag to move card');
-  header.setAttribute('role', 'button');
+  headerEl.className = 'wb-card__header wb-card__drag-handle';
+  headerEl.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);cursor:grab;display:flex;align-items:center;gap:0.5rem;';
+  headerEl.setAttribute('aria-label', 'Drag to move card');
+  headerEl.setAttribute('role', 'button');
 
   const handleIcon = document.createElement('span');
   handleIcon.style.cssText = 'opacity:0.5;';
   handleIcon.textContent = '⋮⋮';
-  header.appendChild(handleIcon);
+  headerEl.appendChild(handleIcon);
 
   if (base.config.title) {
     const headerTitle = document.createElement('h3');
-    titleEl.className = 'wb-card__title';
-    titleEl.style.cssText = 'margin:0;flex:1;color:var(--text-primary,#f9fafb);';
-    titleEl.textContent = base.config.title;
-    header.appendChild(titleEl);
+    headerTitle.className = 'wb-card__title';
+    headerTitle.style.cssText = 'margin:0;flex:1;color:var(--text-primary,#f9fafb);';
+    headerTitle.textContent = base.config.title;
+    headerEl.appendChild(headerTitle);
   }
 
-  element.appendChild(header);
+  element.appendChild(headerEl);
 
   // Content
   const contentArea = base.createMain();
-  element.appendChild(content);
+  element.appendChild(contentArea);
 
   // Footer
   if (base.config.footer) {
@@ -2072,7 +2072,7 @@ export function carddraggable(element, options = {}) {
     initialX = element.offsetLeft;
     initialY = element.offsetTop;
     
-    header.style.cursor = 'grabbing';
+    headerEl.style.cursor = 'grabbing';
     element.classList.add('wb-card--dragging');
     element.style.opacity = '0.8';
     element.style.zIndex = '1000';
@@ -2083,7 +2083,7 @@ export function carddraggable(element, options = {}) {
     }));
   };
 
-  header.addEventListener('mousedown', onMouseDown);
+  headerEl.addEventListener('mousedown', onMouseDown);
 
   const onMouseMove = (e) => {
     if (!isDragging) return;
@@ -2132,7 +2132,7 @@ export function carddraggable(element, options = {}) {
   const onMouseUp = () => {
     if (isDragging) {
       isDragging = false;
-      header.style.cursor = 'grab';
+      headerEl.style.cursor = 'grab';
       element.classList.remove('wb-card--dragging');
       element.style.opacity = '';
       element.style.zIndex = '';
