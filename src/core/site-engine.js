@@ -1,6 +1,6 @@
 // Site Engine Module
 // Contains WBSite class and site logic
-import WB from './wb.js';  // v3.0: Use main wb.js with schema support
+import WB from './wb-lazy.js';  // v3.0: Use lazy loading version
 import { initViews } from './wb-views.js';
 
 export default class WBSite {
@@ -12,6 +12,7 @@ export default class WBSite {
   }
 
   async init() {
+    console.log('[WBSite] init() starting');
     const app = document.getElementById('app');
     const loadingEl = app.querySelector('.site__loading');
     let loadingTimerId;
@@ -19,12 +20,15 @@ export default class WBSite {
       loadingTimerId = window.WBLoadingManager.startMonitoring(loadingEl, 'Site initialization');
     }
     try {
+      console.log('[WBSite] fetching config/site.json');
       const res = await fetch('config/site.json');
+      console.log('[WBSite] fetched config, status:', res.status);
       this.config = await res.json();
-      document.documentElement.dataset.theme = this.config.branding.colorTheme;
-      document.title = this.config.searchEngineOptimization?.pageTitle || this.config.branding.companyName;
+      console.log('[WBSite] config parsed');
+      document.documentElement.dataset.theme = this.config.site.colorTheme;
+      document.title = this.config.seo?.pageTitle || this.config.header.companyName;
       this.updateFavicon();
-      
+
       const params = new URLSearchParams(window.location.search);
       const pageParam = params.get('page');
       if (pageParam && this.config.navigationMenu.find(n => n.menuItemId === pageParam)) {
@@ -34,7 +38,7 @@ export default class WBSite {
       this.render();
       this.initResizableNav();
       this.initStickyHeader();
-      
+
       // Initialize Views System
       await initViews({
         registry: [
@@ -43,12 +47,18 @@ export default class WBSite {
         ]
       });
 
-      WB.init({ 
+      console.log('[WBSite] initializing WB core');
+      // Ensure WB initialization completes before proceeding so that
+      // MutationObservers and scanning are ready to handle subsequent
+      // page insertion. Previously this was fire-and-forget which could
+      // miss the initial page content.
+      await WB.init({
         debug: false,
-        autoInject: this.config.branding.autoInjectComponents || false,
+        autoInject: this.config.site.autoInjectComponents || false,
         useSchemas: true,  // v3.0: Enable schema-based DOM building
         preload: ['ripple', 'themecontrol', 'tooltip']
       });
+      console.log('[WBSite] WB.init() complete');
 
       window.addEventListener('popstate', () => {
         const params = new URLSearchParams(window.location.search);
@@ -73,7 +83,7 @@ export default class WBSite {
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
-      console.log('✅ WB Site initialized:', this.config.branding.companyName);
+      if (window.WB_DEBUG) console.log('✅ WB Site initialized:', this.config.header.companyName);
     } catch (error) {
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
@@ -86,15 +96,15 @@ export default class WBSite {
   }
 
   updateFavicon() {
-    if (!this.config.branding.browserTabIcon) return;
-    
+    if (!this.config.site.browserTabIcon) return;
+
     let link = document.querySelector("link[rel~='icon']");
     if (!link) {
       link = document.createElement('link');
       link.rel = 'icon';
       document.head.appendChild(link);
     }
-    link.href = this.config.branding.browserTabIcon;
+    link.href = this.config.site.browserTabIcon;
   }
 
   render() {
@@ -109,72 +119,103 @@ export default class WBSite {
         </main>
       </div>
       ${this.renderFooter()}
-      <div x-eager id="siteNotes"></div>
+      <wb-statusbar show-time show-theme></wb-statusbar>
+      
     `;
     const toggleBtn = app.querySelector('.nav__toggle');
+
+    // Issues button: always visible in header; use centralized helper to open the site Issues drawer
+    const issuesToggleBtn = app.querySelector('#issuesToggle');
+    if (issuesToggleBtn) {
+      issuesToggleBtn.style.display = '';
+      issuesToggleBtn.onclick = () => {
+        import('../lib/issues-helper.js')
+          .then(mod => (mod.openSiteIssues ? mod.openSiteIssues() : (mod.default ? mod.default() : null)))
+          .catch(e => console.warn('[Issues] open helper failed', e));
+      };
+    }
+
     if (toggleBtn) {
       toggleBtn.onclick = () => this.toggleNav();
     }
-    
+
     // Backdrop click closes mobile nav
     const backdrop = app.querySelector('.site__nav-backdrop');
     if (backdrop) {
       backdrop.onclick = () => this.closeMobileNav();
     }
-    const notesToggleBtn = app.querySelector('#notesToggle');
-    if (notesToggleBtn) {
-      notesToggleBtn.onclick = () => {
-        if (window.showNotesModal) {
-          window.showNotesModal();
-        } else {
-          const notesEl = document.querySelector('[]');
-          if (notesEl && notesEl.wbNotes) {
-            notesEl.wbNotes.toggle();
-          }
+
+    // Issues drawer toggle (attach additional safe handler)
+    const issuesToggleBtn2 = issuesToggleBtn || app.querySelector('#issuesToggle');
+    if (issuesToggleBtn2) {
+      issuesToggleBtn2.addEventListener('click', () => {
+        const issuesEl = document.getElementById('siteIssuesDrawer');
+        if (issuesEl && typeof issuesEl.open === 'function') {
+          try { issuesEl.open(); } catch (e) { console.warn('Issues open() failed', e); }
+        } else if (issuesEl) {
+          const trigger = issuesEl.querySelector('.wb-issues__trigger');
+          if (trigger) trigger.click();
         }
-      };
+      });
     }
+
+    // Refresh button
+    const refreshBtn = app.querySelector('#refreshBtn');
+    if (refreshBtn) {
+      refreshBtn.onclick = () => location.reload();
+    }
+
     this.updateActiveNav();
+
+    // Initialize wb-navbar and premium navbar support if present
+    const appScope = document.getElementById('app');
+    const navbarEl = appScope?.querySelector('wb-navbar');
+    if (navbarEl && window.WB && typeof window.WB.scan === 'function') {
+      try { window.WB.scan(navbarEl); } catch (e) { console.warn('[WB] Failed to scan navbar', e); }
+    }
+    if (typeof window.initPremiumNavbar === 'function') {
+      try { window.initPremiumNavbar(); } catch (e) { console.warn('[premium-navbar] init failed', e); }
+    }
 
     // === Runtime check for duplicate theme switchers ===
     const themeSwitchers = document.querySelectorAll('wb-themecontrol');
     if (themeSwitchers.length > 1) {
       console.warn(`⚠️ Found ${themeSwitchers.length} theme switchers on the page!`);
       themeSwitchers.forEach((el, i) => {
-        console.warn(`Theme switcher #${i+1}:`, el, 'Parent:', el.parentElement);
+        console.warn(`Theme switcher #${i + 1}:`, el, 'Parent:', el.parentElement);
       });
     }
   }
 
   renderHeader() {
-    const { branding, headerSettings } = this.config;
-    // Clean header layout with proper semantics and spacing
+    const { header } = this.config;
+
+    // Build nav links from config
+    const links = (this.config.navigationMenu || []).map(item => {
+      const href = item.href ? item.href : (item.pageToLoad ? `?page=${item.pageToLoad}` : (item.menuItemId ? `?page=${item.menuItemId}` : '#'));
+      const label = `${item.menuItemEmoji || ''} ${item.menuItemText || item.menuItemId || ''}`.trim();
+      return `<a href="${href}">${label}</a>`;
+    }).join('');
+
+    // Render a wb-navbar as the site header so premium-navbar behavior applies site-wide
     return `
-      <header class="site__header ${headerSettings.keepHeaderAtTop ? 'site__header--sticky' : ''}" id="siteHeader">
-        <div class="header__left" id="headerLeft" style="gap: 1.5rem;">
-          <button class="nav__toggle" x-ripple title="Toggle Navigation" id="navToggle" aria-label="Toggle Navigation">☰</button>
-          <a href="?page=home" class="header__logo" id="headerLogo" style="gap: 0.75rem;">
-            ${branding.headerLogoImage ? `<span class="header__logo-icon" id="headerLogoIcon">${branding.headerLogoImage}</span>` : ''}
-            <span class="header__logo-text" id="headerLogoText">${branding.companyName}</span>
-          </a>
-        </div>
-        <div class="header__right" id="headerRight" style="gap: 1rem;">
-          ${headerSettings.displaySearchBar ? `
-            <div class="header__search" id="headerSearch">
-              <input type="search" placeholder="Search..." aria-label="Search" class="wb-input-glass" style="padding: 0.4rem 0.8rem; width: 200px;">
-            </div>
-          ` : ''}
-          <button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>
-          ${headerSettings.displayThemeSwitcher ? '<wb-themecontrol data-show-label="false" id="themeControl"></wb-themecontrol>' : ''}
-          <button class="navbar-cta" id="ctaButton" x-ripple title="Get Started">Get Started</button>
-        </div>
-      </header>
+      <div class="site__header ${header.sticky ? 'site__header--sticky' : ''}" id="siteHeader" style="display:flex;align-items:center;gap:1rem;padding:0.5rem 1rem;">
+        <button class="nav__toggle" x-ripple title="Toggle Navigation" id="navToggle" aria-label="Toggle Navigation">☰</button>
+        <wb-navbar brand="${header.companyName.replace(/"/g, '&quot;')}" brand-href="?page=home" ${header.sticky ? 'sticky="true"' : ''}>
+          ${links}
+          <div class="wb-navbar__extras" style="display:flex;gap:0.5rem;align-items:center;margin-left:1rem;">
+            ${header.showThemeSwitcher ? '<wb-themecontrol show-label="false" id="themeControl" style="width:110px;flex-shrink:0;"></wb-themecontrol>' : ''}
+            <button class="header__issues-btn" id="issuesToggle" x-ripple title="Issues" aria-label="Issues">🐛</button>
+            <button class="header__refresh-btn" id="refreshBtn" x-ripple title="Refresh" aria-label="Refresh">↻</button>
+          </div>
+        </wb-navbar>
+      </div>
     `;
   }
 
   renderNav() {
     const { navigationMenu, navigationLayout } = this.config;
-    
+
     // Safety check for nav config
     if (!navigationMenu || !Array.isArray(navigationMenu)) {
       console.error('❌ Site configuration error: "navigationMenu" is missing or not an array.', navigationMenu);
@@ -185,7 +226,7 @@ export default class WBSite {
       // Robust href handling
       let href = '?page=home';
       let isExternal = false;
-      
+
       if (item.href) {
         href = item.href;
         isExternal = true;
@@ -200,11 +241,11 @@ export default class WBSite {
       if (!target && isExternal && typeof href === 'string' && href.startsWith('http')) {
         target = '_blank';
       }
-      
+
       return `
       <a href="${href}" 
          class="nav__item" 
-         ${!isExternal && item.menuItemId ? `data-page="${item.menuItemId}"` : ''} 
+         ${!isExternal && item.menuItemId ? `page="${item.menuItemId}"` : ''} 
          ${target ? `target="${target}"` : ''} 
          x-ripple 
          id="navItem-${item.menuItemId || item.menuItemText || Math.random().toString(36).substr(2, 9)}">
@@ -265,7 +306,7 @@ export default class WBSite {
 
     main.addEventListener('scroll', () => {
       const currentScrollY = main.scrollTop;
-      
+
       // Don't hide if near top
       if (currentScrollY < threshold) {
         header.classList.remove('site__header--hidden');
@@ -276,7 +317,7 @@ export default class WBSite {
       // Scrolling Down -> Hide
       if (currentScrollY > lastScrollY + 10) {
         header.classList.add('site__header--hidden');
-      } 
+      }
       // Scrolling Up -> Show
       else if (currentScrollY < lastScrollY - 10) {
         header.classList.remove('site__header--hidden');
@@ -287,22 +328,22 @@ export default class WBSite {
   }
 
   renderFooter() {
-    const { footerSettings, socialMediaLinks, additionalFooterLinks } = this.config;
-    const socialLinks = footerSettings.displaySocialMediaLinks ? socialMediaLinks.map(s => 
+    const { footer, socialMediaLinks, footerLinks } = this.config;
+    const socialLinksHtml = footer.showSocialLinks ? socialMediaLinks.map(s =>
       `<a href="${s.profileUrl}" class="footer__social-link" target="_blank" title="${s.platform}" id="footerSocialLink-${s.platform}">${s.icon}</a>`
     ).join('') : '';
-    const footerLinks = additionalFooterLinks?.map(l => 
+    const footerLinksHtml = footerLinks?.map(l =>
       `<a href="?page=${l.pageToLoad}" class="footer__link" id="footerLink-${l.pageToLoad}">${l.linkText}</a>`
     ).join(' · ') || '';
     return `
       <footer class="site__footer" id="siteFooter">
         <div class="footer__content" id="footerContent">
           <div class="footer__left" id="footerLeft">
-            <span id="footerCopyright">${footerSettings.footerCopyrightText}</span>
-            ${footerLinks ? `<span class="footer__links" id="footerLinks">${footerLinks}</span>` : ''}
+            <span id="footerCopyright">${footer.copyrightText}</span>
+            ${footerLinksHtml ? `<span class="footer__links" id="footerLinks">${footerLinksHtml}</span>` : ''}
           </div>
           <div class="footer__right" id="footerRight">
-            ${socialLinks ? `<div class="footer__social" id="footerSocial">${socialLinks}</div>` : ''}
+            ${socialLinksHtml ? `<div class="footer__social" id="footerSocial">${socialLinksHtml}</div>` : ''}
           </div>
         </div>
       </footer>
@@ -310,7 +351,7 @@ export default class WBSite {
   }
 
   renderPage(pageId) {
-    return `<div class="page" data-page="${pageId}" id="page-${pageId}"><div class="page__loading" id="pageLoading-${pageId}">Loading ${pageId}...</div></div>`;
+    return `<div class="page" page="${pageId}" id="page-${pageId}"><div class="page__loading" id="pageLoading-${pageId}">Loading ${pageId}...</div></div>`;
   }
 
   async navigateTo(pageId) {
@@ -318,7 +359,7 @@ export default class WBSite {
     if (window.innerWidth <= 768) {
       this.closeMobileNav();
     }
-    
+
     if (!this.config.navigationMenu.find(n => n.menuItemId === pageId)) {
       pageId = 'home';
     }
@@ -337,24 +378,26 @@ export default class WBSite {
     this.currentPage = pageId;
     this.updateActiveNav();
     const main = document.getElementById('main');
-    main.innerHTML = `<div class="page__loading" id="mainPageLoading"><wb-spinner  id="mainSpinner"></div><p id="mainLoadingText">Loading...</p></div>`;
+    main.innerHTML = `<div class="page__loading" id="mainPageLoading"><wb-spinner id="mainSpinner"></wb-spinner><p id="mainLoadingText">Loading...</p></div>`;
     // Optimization: Don't await scan here to start fetch immediately. MutationObserver handles injection.
     // WB.scan(main); 
-    
+
     const loadingEl = main.querySelector('.page__loading');
     let loadingTimerId;
     if (loadingEl && window.WBLoadingManager) {
       loadingTimerId = window.WBLoadingManager.startMonitoring(loadingEl, `Page: ${pageId}`);
     }
     try {
+      console.log('[WBSite] fetching page:', pageId);
       const res = await fetch(`pages/${pageId}.html`);
+      console.log('[WBSite] page fetch status:', res.status);
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
       if (res.ok) {
         const html = await res.text();
-        main.innerHTML = `<div class="page page--${pageId}" data-page="${pageId}" id="mainPage-${pageId}">${html}</div>`;
-        
+        main.innerHTML = `<div class="page page--${pageId}" page="${pageId}" id="mainPage-${pageId}">${html}</div>`;
+
         // Execute any scripts in the loaded page
         const scripts = main.querySelectorAll('script');
         scripts.forEach(oldScript => {
@@ -367,6 +410,38 @@ export default class WBSite {
           newScript.textContent = oldScript.textContent;
           oldScript.parentNode.replaceChild(newScript, oldScript);
         });
+
+        // Ensure WB scans newly-inserted page content immediately so
+        // essential components (e.g., <wb-cardhero>) are attached and hydrated.
+        // Rationale: MutationObserver may miss the initial insertion if WB
+        // initialization hasn't completed yet during site startup.
+        if (window.WB && typeof window.WB.scan === 'function') {
+          try {
+            // Try a few times with small delay to account for late initialization
+            let found = false;
+            for (let i = 0; i < 3; i++) {
+              try {
+                await window.WB.scan(main);
+              } catch (scanErr) {
+                console.warn('[WB] Page scan attempt failed:', scanErr);
+              }
+
+              if (main.querySelector('wb-cardhero')) {
+                found = true;
+                break;
+              }
+
+              // Wait briefly before retrying
+              await new Promise(r => setTimeout(r, 200));
+            }
+
+            if (!found) {
+              console.warn('[WBSite] <wb-cardhero> not found after page scan attempts');
+            }
+          } catch (scanErr) {
+            console.warn('[WB] Page scan failed:', scanErr);
+          }
+        }
       } else {
         main.innerHTML = this.render404(pageId);
       }
@@ -381,10 +456,12 @@ export default class WBSite {
     main.scrollTop = 0;
   }
 
+
+
   render404(pageId) {
     return `
       <div class="page page--404" id="page-404">
-        <div x-empty data-icon="📄" data-message="Page not found" data-description="Create pages/${pageId}.html to add content" id="empty404"></div>
+        <div x-empty icon="📄" message="Page not found" description="Create pages/${pageId}.html to add content" id="empty404"></div>
       </div>
     `;
   }
@@ -399,7 +476,7 @@ export default class WBSite {
     const nav = document.querySelector('.site__nav');
     const backdrop = document.querySelector('.site__nav-backdrop');
     const isMobile = window.innerWidth <= 768;
-    
+
     if (isMobile) {
       // Mobile: toggle slide-in menu
       this.mobileNavOpen = !this.mobileNavOpen;
@@ -413,7 +490,7 @@ export default class WBSite {
       document.body.classList.toggle('nav-collapsed', this.navCollapsed);
     }
   }
-  
+
   closeMobileNav() {
     const nav = document.querySelector('.site__nav');
     const backdrop = document.querySelector('.site__nav-backdrop');
