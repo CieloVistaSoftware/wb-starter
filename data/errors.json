@@ -1,40 +1,5 @@
 {
-  "lastUpdated": "2026-01-23T17:36:32.863Z",
-  "count": 1,
-  "errors": [
-    {
-      "id": 1769189792862,
-      "timestamp": "2026-01-23T17:36:32.862Z",
-      "level": "error",
-      "source": "WB: carddraggable",
-      "module": "card.js",
-      "line": 2034,
-      "column": 3,
-      "function": "carddraggable",
-      "message": "header is not defined",
-      "stack": "ReferenceError: header is not defined\n    at carddraggable (http://localhost:3000/src/wb-viewmodels/card.js:2034:3)\n    at Object.inject (http://localhost:3000/src/core/wb-lazy.js:328:23)",
-      "frames": [
-        {
-          "function": "carddraggable",
-          "file": "card.js",
-          "fullPath": "http://localhost:3000/src/wb-viewmodels/card.js",
-          "line": 2034,
-          "column": 3
-        },
-        {
-          "function": "Object.inject",
-          "file": "wb-lazy.js",
-          "fullPath": "http://localhost:3000/src/core/wb-lazy.js",
-          "line": 328,
-          "column": 23
-        }
-      ],
-      "url": "http://localhost:3000/index.html",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
-      "interaction": {
-        "from": "System",
-        "to": "Background Process"
-      }
-    }
-  ]
+  "lastUpdated": "2026-01-23T00:10:00.000Z",
+  "count": 0,
+  "errors": []
 }
