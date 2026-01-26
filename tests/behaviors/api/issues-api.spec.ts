@@ -100,4 +100,30 @@ test.describe('Issues API (server)', () => {
     const still = (checkData.issues || []).some(i => i.id === issue.id);
     expect(still).toBeFalsy();
   });
+
+  test('POST /api/add-issue rejects HTML content', async ({ request }) => {
+    const html = `<body><header><h1>Title</h1></header><div>content</div></body>`;
+
+    const beforeRes = await request.get('/api/pending-issues?all=true');
+    expect(beforeRes.ok()).toBeTruthy();
+    const beforeData = await beforeRes.json();
+    const beforeCount = (beforeData.issues || []).length || 0;
+
+    const res = await request.post('/api/add-issue', { data: { content: html } });
+    expect(res.ok()).toBeFalsy();
+    expect(res.status()).toBe(400);
+    const body = await res.json();
+    expect(body.error).toBeTruthy();
+    expect(body.errorId).toBeTruthy();
+    expect(typeof body.errorId).toBe('string');
+    expect(body.errorId).toMatch(/^SRV-[0-9A-Z-]+$/);
+
+    const afterRes = await request.get('/api/pending-issues?all=true');
+    expect(afterRes.ok()).toBeTruthy();
+    const afterData = await afterRes.json();
+    const afterCount = (afterData.issues || []).length || 0;
+
+    // Ensure no new issues were added
+    expect(afterCount).toBe(beforeCount);
+  });
 });

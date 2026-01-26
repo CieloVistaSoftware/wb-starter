@@ -164,30 +164,65 @@ const normalizeDescription = (desc) => {
   return (desc || '').trim().toLowerCase().replace(/\s+/g, ' ');
 };
 
+// Track latest processed submission time to avoid re-processing old backlog repeatedly
+let lastSubmissionProcessingAt = 0;
+
 // Validate content is not HTML garbage
 const isValidIssueContent = (text) => {
   if (!text || text.length < 5) return false;
   if (text.length > 2000) return false; // Single issue too long
-  
-  // Reject if it looks like HTML (multiple HTML tags)
-  const htmlTagCount = (text.match(/<[a-z][^>]*>/gi) || []).length;
-  if (htmlTagCount > 2) return false;
-  
-  // Reject if it starts with HTML tag
-  if (/^\s*<(div|span|button|header|footer|main|nav|section|article|pre|code|script|style|html|body|head)/i.test(text)) return false;
-  
-  // Reject closing tags only
+
+  // AGGRESSIVE HTML DETECTION - reject any content with HTML-like patterns
+  // Count HTML tags - if more than 2, it's definitely HTML content
+  const tagMatches = text.match(/<[a-z][^>]*>/gi) || [];
+  if (tagMatches.length > 2) return false;
+
+  // Reject content that starts with any HTML tag
+  if (/^\s*<[a-z!]/i.test(text)) return false;
+
+  // Reject any HTML tags to avoid accepting page dumps or injected markup
+  if (/<[^>]+>/i.test(text)) return false;
+
+  // Reject closing tags only or text that starts with obvious HTML elements
   if (/^\s*<\/[a-z]+>/i.test(text)) return false;
-  
+  if (/^\s*<(script|style|html|head|body|header|footer|nav|main|section|article|div|span|button)/i.test(text)) return false;
+
   // Reject JSON-looking content
   if (/^\s*\{[\s\S]*"[a-z]+"\s*:/i.test(text) && text.includes('}')) return false;
-  
+
   // Reject test data patterns (auto-generated test issues)
   if (/^(retry|lifecycle|rejection|approval|full-flow|direct-fix|in-progress)-test-\d+-/i.test(text)) return false;
-  if (/^(Delete test|Test issue)\s+\d+/i.test(text)) return false;
-  
+  // Only reject exact artifacts like "Test issue 123" or "Delete test 123" (no trailing text)
+  if (/^(Delete test|Test issue)\s+\d+\s*$/i.test(text)) return false;
+
   return true;
 };
+
+// --- Error ID generator + response middleware ---
+let _errorCounter = 0;
+const generateErrorId = (prefix = 'ERR') => {
+  _errorCounter = (_errorCounter + 1) % 0xFFFFFF;
+  return `${prefix}-${Date.now().toString(36)}-${(_errorCounter).toString(36)}`.toUpperCase();
+};
+
+// Middleware: decorate res.json so any response with { error } gains a unique errorId and server log includes it
+app.use((req, res, next) => {
+  const origJson = res.json.bind(res);
+  res.json = (body) => {
+    try {
+      if (body && typeof body === 'object' && body.error && !body.errorId) {
+        const id = generateErrorId('SRV');
+        body.errorId = id;
+        // Log with id for correlation
+        try { console.error(`[${id}] ${body.error}`, body._debug || ''); } catch (e) { console.error('[ErrorID] log failed', e); }
+      }
+    } catch (e) {
+      console.error('[ErrorID middleware] failed to augment response', e);
+    }
+    return origJson(body);
+  };
+  next();
+});
 
 const extractIssuesFromSubmissions = () => {
   try {
@@ -195,6 +230,12 @@ const extractIssuesFromSubmissions = () => {
     
     const submissionsData = JSON.parse(fs.readFileSync(submissionsPath, 'utf8'));
     const submissions = submissionsData.submissions || [];
+    // Only process submissions newer than the last processed timestamp to avoid flood-processing old backlog
+    const newSubmissions = submissions.filter(s => {
+      const t = Date.parse(s.createdAt || s.updatedAt || 0);
+      return !isNaN(t) && t > lastSubmissionProcessingAt;
+    });
+    if (!newSubmissions.length) return; // nothing new to process
     const issues = [];
     
     // Max issues per submission to prevent garbage floods
@@ -273,8 +314,76 @@ const extractIssuesFromSubmissions = () => {
       newIssues.forEach(issue => broadcastNewIssue(issue));
       console.log(`  \x1b[33m●\x1b[0m ${newIssues.length} issue(s) received`);
     }
+
+    // Update last processed timestamp so subsequent runs only pick up newer submissions
+    lastSubmissionProcessingAt = Date.now();
   } catch (e) {
     console.error('[Issue Watcher] Error:', e.message);
+  }
+};
+
+// Process a single submission (used by /api/add-issue) to avoid re-processing the entire submissions queue
+const processSingleSubmission = (submission) => {
+  try {
+    if (!submission || submission.isClaudeResponse) return;
+
+    const content = (submission.content || '')
+      .split('\n')
+      .filter(line => !line.match(/^\[.*?\]\s*(http|Page:)/i))
+      .join('\n')
+      .trim();
+
+    // Immediately skip submissions that contain any HTML tags — defense-in-depth
+    if (/<[^>]+>/i.test(content)) {
+      console.warn(`[Issue Watcher] Rejected submission ${submission.id} - contains HTML tags`);
+      return;
+    }
+
+    const htmlTagCount = (content.match(/<[a-z][^>]*>/gi) || []).length;
+    if (htmlTagCount > 10) {
+      console.warn(`[Issue Watcher] Rejected submission ${submission.id} - appears to be HTML dump (${htmlTagCount} tags)`);
+      return;
+    }
+
+    const paragraphs = content.split(/\n\s*\n/).map(p => p.trim()).filter(p => p);
+    const MAX_ISSUES_PER_SUBMISSION = 5;
+    const newIssues = [];
+
+    for (let idx = 0, count = 0; idx < paragraphs.length && count < MAX_ISSUES_PER_SUBMISSION; idx++) {
+      const para = paragraphs[idx];
+      if (!isValidIssueContent(para)) {
+        console.warn(`[Issue Watcher] Skipped invalid paragraph ${idx} in ${submission.id}`);
+        continue;
+      }
+      newIssues.push({ id: `${submission.id}-p${idx}`, description: para, status: 'pending', createdAt: submission.createdAt });
+      count++;
+    }
+
+    if (newIssues.length === 0) return;
+
+    // Append unique new issues to pending issues file
+    let existing = { issues: [], lastUpdated: null };
+    if (fs.existsSync(pendingIssuesPath)) {
+      try { existing = JSON.parse(fs.readFileSync(pendingIssuesPath, 'utf8')); } catch (e) { }
+    }
+
+    const existingDescriptions = new Set(existing.issues.map(i => normalizeDescription(i.description)));
+    const unique = newIssues.filter(i => {
+      const n = normalizeDescription(i.description);
+      if (existingDescriptions.has(n)) return false;
+      existingDescriptions.add(n);
+      return true;
+    });
+
+    if (unique.length > 0) {
+      existing.issues.push(...unique);
+      existing.lastUpdated = new Date().toISOString();
+      fs.writeFileSync(pendingIssuesPath, JSON.stringify(existing, null, 2));
+      unique.forEach(issue => broadcastNewIssue(issue));
+      console.log(`  \x1b[33m●\x1b[0m ${unique.length} new issue(s) received from ${submission.id}`);
+    }
+  } catch (e) {
+    console.error('[Issue Watcher] processSingleSubmission error:', e.message);
   }
 };
 
@@ -587,7 +696,7 @@ app.post("/api/claude-response", (req, res) => {
     fs.writeFileSync(submissionsPathLocal, JSON.stringify(submissionsData, null, 2));
     
     console.log(`[Claude Response] ${status === 'success' ? '✅' : '❌'} ${message.substring(0, 50)}...`);
-    res.json({ success: true, submission: responseSubmission });
+    res.json({ success: true, submission: responseSubmission, note: responseSubmission });
   } catch (error) {
     console.error('[Claude Response Error]', error);
     res.status(500).json({ error: error.message });
@@ -861,6 +970,19 @@ app.post('/api/add-issue', (req, res) => {
     const { content } = req.body;
     if (!content || !content.trim()) return res.status(400).json({ error: 'Missing content' });
 
+    // Explicitly reject raw HTML/page dumps early (defense-in-depth).
+    // Some older submissions slipped through; ensure new submissions cannot add HTML blobs.
+    if (/<[^>]+>/i.test(String(content))) {
+      console.warn('[Add Issue] Rejected HTML content submission');
+      return res.status(400).json({ error: 'HTML content not allowed' });
+    }
+
+    // Reject obvious HTML dumps or invalid content early to avoid polluting issues
+    if (!isValidIssueContent(content)) {
+      console.warn('[Add Issue] Rejected invalid submission content');
+      return res.status(400).json({ error: 'Invalid content' });
+    }
+
     const submissionsPathLocal = path.join(rootDir, 'data', 'issues.json');
     let submissionsData = { submissions: [], lastUpdated: null };
 
@@ -895,11 +1017,11 @@ app.post('/api/add-issue', (req, res) => {
 
     fs.writeFileSync(submissionsPathLocal, JSON.stringify(submissionsData, null, 2), 'utf8');
 
-    try { extractIssuesFromSubmissions(); } catch (e) { console.warn('[Add Issue] extractIssuesFromSubmissions failed', e); }
+    try { processSingleSubmission(submission); } catch (e) { console.warn('[Add Issue] processSingleSubmission failed', e); }
 
     broadcastNewIssue(submission);
 
-    res.json({ success: true, submission });
+    res.json({ success: true, submission, note: submission });
   } catch (error) {
     console.error('[Add Issue Error]', error);
     res.status(500).json({ error: error.message });
@@ -1309,6 +1431,19 @@ app.use((req, res, next) => {
   }
 
   res.sendFile(path.join(rootDir, 'index.html'));
+});
+
+// Generic error handler — ensures every error response includes a unique errorId
+app.use((err, req, res, next) => {
+  try {
+    const id = generateErrorId('SRV');
+    console.error(`[${id}] Unhandled error:`, err && (err.stack || err.message || err));
+    if (res.headersSent) return next(err);
+    res.status(500).json({ error: 'Internal server error', errorId: id });
+  } catch (e) {
+    console.error('[ErrorHandler] failed', e);
+    try { res.status(500).json({ error: 'Internal server error' }); } catch(_) { /* ignore */ }
+  }
 });
 
 app.listen(port, () => {
