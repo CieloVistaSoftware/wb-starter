@@ -126,4 +126,12 @@ test.describe('Issues API (server)', () => {
     // Ensure no new issues were added
     expect(afterCount).toBe(beforeCount);
   });
+
+  test('pending-issues contains only [BUG] items', async ({ request }) => {
+    const res = await request.get('/api/pending-issues?all=true');
+    expect(res.ok()).toBeTruthy();
+    const data = await res.json();
+    const nonBug = (data.issues || []).filter(i => !/\[bug\]/i.test(i.description || i.id || ''));
+    expect(nonBug.length, `Found non-[BUG] issues: ${nonBug.slice(0,5).map(n=>n.id).join(', ')}` ).toBe(0);
+  });
 });

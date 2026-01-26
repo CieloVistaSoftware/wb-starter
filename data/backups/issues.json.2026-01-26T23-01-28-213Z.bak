@@ -149,7 +149,7 @@
       "testLink": "tests/issues/issue-note-1769058843335.spec.ts"
     }
   ],
-  "lastUpdated": "2026-01-26T23:01:28.261Z",
+  "lastUpdated": "2026-01-26T22:53:19.269Z",
   "submissions": [
     {
       "id": "note-1769467999269",
@@ -177,6 +177,27 @@
       "content": "[BUG] Window refresh test test-window-refresh-1769467996519",
       "createdAt": "2026-01-26T22:53:18.871Z",
       "updatedAt": "2026-01-26T22:53:18.871Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769467237171",
+      "content": "Test issue 1769467237120 4nt5kd",
+      "createdAt": "2026-01-26T22:40:37.171Z",
+      "updatedAt": "2026-01-26T22:40:37.171Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769467235041",
+      "content": "Test issue 1769467234971 bdlysc",
+      "createdAt": "2026-01-26T22:40:35.040Z",
+      "updatedAt": "2026-01-26T22:40:35.040Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769466750855",
+      "content": "<body>\n  <header class=\"viewer-header\">\n    <h1 class=\"viewer-title\">📋 Issues</h1>\n    <div class=\"viewer-actions\">\n      <button class=\"btn\" onclick=\"refresh()\">🔄 Refresh</button>\n    </div>\n  </header>\n</body>",
+      "createdAt": "2026-01-26T22:32:30.855Z",
+      "updatedAt": "2026-01-26T22:32:30.855Z",
       "isClaudeResponse": false
     },
     {
@@ -551,6 +572,55 @@
       "isClaudeResponse": false
     },
     {
+      "id": "note-1769448419583",
+      "content": "retry-test-1769448419536-w65vcc",
+      "createdAt": "2026-01-26T17:26:59.583Z",
+      "updatedAt": "2026-01-26T17:26:59.583Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769448414378",
+      "content": "lifecycle-test-1769448414306-tnocnp",
+      "createdAt": "2026-01-26T17:26:54.378Z",
+      "updatedAt": "2026-01-26T17:26:54.378Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769448414343",
+      "content": "rejection-test-1769448414305-y5zlc1",
+      "createdAt": "2026-01-26T17:26:54.343Z",
+      "updatedAt": "2026-01-26T17:26:54.343Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769448409243",
+      "content": "full-flow-test-1769448409191-5hpvxv",
+      "createdAt": "2026-01-26T17:26:49.243Z",
+      "updatedAt": "2026-01-26T17:26:49.243Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769448409212",
+      "content": "approval-test-1769448409176-56pp5m",
+      "createdAt": "2026-01-26T17:26:49.212Z",
+      "updatedAt": "2026-01-26T17:26:49.212Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769448403135",
+      "content": "direct-fix-test-1769448403061-caszj3",
+      "createdAt": "2026-01-26T17:26:43.135Z",
+      "updatedAt": "2026-01-26T17:26:43.135Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769448402864",
+      "content": "in-progress-test-1769448402800-ngjpxp",
+      "createdAt": "2026-01-26T17:26:42.864Z",
+      "updatedAt": "2026-01-26T17:26:42.864Z",
+      "isClaudeResponse": false
+    },
+    {
       "id": "note-1769445907116",
       "content": "[BUG] http://localhost:3000/issues-v...\nPriority: 2\nPage: /builder.html?page=docs\nTime: 2026-01-26T16:39:31.965Z\nhttp://localhost:3000/issues-viewer.html  this interface is bad news. \n\nfor id just show the last 7 chars. make every type entry when clicked show the json for that issue.  Make the time view xs. put 1rem gaps for each column, allow clickable header sorting, \neach issue can only be resolved if the test passes (Automatically) remove the resolve button.  put a view test button before run button.",
       "createdAt": "2026-01-26T16:45:07.116Z",
@@ -593,10 +663,108 @@
       "isClaudeResponse": false
     },
     {
+      "id": "note-1769404801534",
+      "content": "retry-test-1769404801514-ki30vy",
+      "createdAt": "2026-01-26T05:20:01.534Z",
+      "updatedAt": "2026-01-26T05:20:01.534Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769404801508",
+      "content": "lifecycle-test-1769404801486-voi2pa",
+      "createdAt": "2026-01-26T05:20:01.508Z",
+      "updatedAt": "2026-01-26T05:20:01.508Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769404801309",
+      "content": "rejection-test-1769404801285-ozi078",
+      "createdAt": "2026-01-26T05:20:01.309Z",
+      "updatedAt": "2026-01-26T05:20:01.309Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769404801279",
+      "content": "approval-test-1769404801274-9la4gt",
+      "createdAt": "2026-01-26T05:20:01.279Z",
+      "updatedAt": "2026-01-26T05:20:01.279Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769404801078",
+      "content": "direct-fix-test-1769404801028-65hqxf",
+      "createdAt": "2026-01-26T05:20:01.078Z",
+      "updatedAt": "2026-01-26T05:20:01.078Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769404801027",
+      "content": "full-flow-test-1769404801020-ci0plx",
+      "createdAt": "2026-01-26T05:20:01.027Z",
+      "updatedAt": "2026-01-26T05:20:01.027Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769404800894",
+      "content": "in-progress-test-1769404800848-t93vel",
+      "createdAt": "2026-01-26T05:20:00.894Z",
+      "updatedAt": "2026-01-26T05:20:00.894Z",
+      "isClaudeResponse": false
+    },
+    {
       "id": "note-1769395439478",
       "content": "[BUG] <body>\n  <header class=\"viewer...\nPriority: 4\nPage: /builder.html\nTime: 2026-01-26T02:42:43.252Z\n<body>\n  <header class=\"viewer-header\">\n    <h1 class=\"viewer-title\">📋 Issues</h1>\n    <div class=\"viewer-actions\">\n      <button class=\"btn\" onclick=\"refresh()\">🔄 Refresh</button>\n      <button class=\"btn btn--danger\" onclick=\"clearResolved()\">🗑️ Clear Resolved</button>\n    </div>\n  </header>\n  \n  <nav class=\"filters\">\n    <label for=\"searchInput\" class=\"filter-label\">🔍</label>\n    <input type=\"text\" id=\"searchInput\" class=\"filter-input\" list=\"searchSuggestions\" placeholder=\"Search...\" title=\"Search by text, ID, or try: priority:0, [BUG], builder, drag\">\n    <datalist id=\"searchSuggestions\">\n      <option value=\"priority:0\">🔴 Critical</option>\n      <option value=\"priority:1\">🟠 High</option>\n      <option value=\"[BUG]\">Bug reports</option>\n      <option value=\"builder\">Builder</option>\n      <option value=\"drag\">Drag &amp; drop</option>\n      <option value=\"theme\">Theme</option>\n    </datalist>\n    <label for=\"statusSelect\" class=\"filter-label filter-label--status\">Status:</label>\n    <select id=\"statusSelect\" class=\"filter-select\">\n      <option value=\"all\">All</option>\n      <option value=\"pending\">⏳ Pending</option>\n      <option value=\"fixed\">🟡 Fixed</option>\n      <option value=\"pending-review\">🔍 Review</option>\n      <option value=\"resolved\">✅ Resolved</option>\n    </select>\n  </nav>\n  \n  <main class=\"issues-list\" id=\"issuesList\">\n          <div class=\"issue-card\" data-status=\"pending\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">⏳ [BUG] semanticContextMenu broken</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/24/2026, 6:53:57 PM</span>\n                <span>Status: <strong>pending</strong></span>\n                <span>ID: <code>note-1769302437975-p0</code></span>\n                \n              </div>\n              \n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769302437975-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/issues/issue-note-1769302437975-p0.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              <button class=\"btn btn--warning btn--sm\" onclick=\"markFixed('note-1769302437975-p0')\">🟡 Fixed</button>\n              <button class=\"btn btn--sm\" onclick=\"resolveIssue('note-1769302437975-p0')\">✅ Resolve</button>\n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769302437975-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769302437975-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769302437975-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769302437975-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769302437975-p0\",\n  \"description\": \"[BUG] semanticContextMenu broken\",\n  \"status\": \"pending\",\n  \"createdAt\": \"2026-01-25T00:53:57.975Z\",\n  \"testLink\": \"tests/issues/issue-note-1769302437975-p0.spec.ts\",\n  \"lastTestRun\": \"2026-01-26T02:36:39.013Z\",\n  \"lastTestResult\": \"passed\",\n  \"testSummary\": {\n    \"passed\": 2,\n    \"failed\": 0,\n    \"skipped\": 0\n  }\n}</pre>\n          </div>\n        \n          <div class=\"issue-card\" data-status=\"pending\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">⏳ [BUG] Behavior category buttons (Buttons, Inputs, Selection, etc.) don't scroll the page to that location</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/23/2026, 8:12:31 PM</span>\n                <span>Status: <strong>pending</strong></span>\n                <span>ID: <code>note-1769220751805-p0</code></span>\n                \n              </div>\n              \n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769220751805-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/issues/behaviors-page-scroll.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              <button class=\"btn btn--warning btn--sm\" onclick=\"markFixed('note-1769220751805-p0')\">🟡 Fixed</button>\n              <button class=\"btn btn--sm\" onclick=\"resolveIssue('note-1769220751805-p0')\">✅ Resolve</button>\n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769220751805-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769220751805-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769220751805-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769220751805-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769220751805-p0\",\n  \"description\": \"[BUG] Behavior category buttons (Buttons, Inputs, Selection, etc.) don't scroll the page to that location\",\n  \"status\": \"pending\",\n  \"createdAt\": \"2026-01-24T02:12:31.805Z\",\n  \"testLink\": \"tests/issues/behaviors-page-scroll.spec.ts\"\n}</pre>\n          </div>\n        \n          <div class=\"issue-card\" data-status=\"pending\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">⏳ [BUG] adding x-draggable changes element location even when not clicked</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/23/2026, 5:50:01 PM</span>\n                <span>Status: <strong>pending</strong></span>\n                <span>ID: <code>note-1769212201021-p0</code></span>\n                \n              </div>\n              \n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769212201021-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/issues/x-draggable-position.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              <button class=\"btn btn--warning btn--sm\" onclick=\"markFixed('note-1769212201021-p0')\">🟡 Fixed</button>\n              <button class=\"btn btn--sm\" onclick=\"resolveIssue('note-1769212201021-p0')\">✅ Resolve</button>\n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769212201021-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769212201021-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769212201021-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769212201021-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769212201021-p0\",\n  \"description\": \"[BUG] adding x-draggable changes element location even when not clicked\",\n  \"status\": \"pending\",\n  \"createdAt\": \"2026-01-23T23:50:01.021Z\",\n  \"testLink\": \"tests/issues/x-draggable-position.spec.ts\"\n}</pre>\n          </div>\n        \n          <div class=\"issue-card\" data-status=\"pending\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">⏳ [BUG] theme override does not work</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/23/2026, 5:35:01 PM</span>\n                <span>Status: <strong>pending</strong></span>\n                <span>ID: <code>note-1769211301098-p0</code></span>\n                \n              </div>\n              \n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769211301098-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/issues/theme-override.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              <button class=\"btn btn--warning btn--sm\" onclick=\"markFixed('note-1769211301098-p0')\">🟡 Fixed</button>\n              <button class=\"btn btn--sm\" onclick=\"resolveIssue('note-1769211301098-p0')\">✅ Resolve</button>\n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769211301098-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769211301098-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769211301098-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769211301098-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769211301098-p0\",\n  \"description\": \"[BUG] theme override does not work\",\n  \"status\": \"pending\",\n  \"createdAt\": \"2026-01-23T23:35:01.098Z\",\n  \"testLink\": \"tests/issues/theme-override.spec.ts\"\n}</pre>\n          </div>\n        \n          <div class=\"issue-card\" data-status=\"pending\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">⏳ [BUG] when right clicking on any element in the canvas and picking inspect, nothing happens</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/23/2026, 12:56:02 PM</span>\n                <span>Status: <strong>pending</strong></span>\n                <span>ID: <code>note-1769194562447-p0</code></span>\n                \n              </div>\n              \n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769194562447-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/issues/context-menu-inspect.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              <button class=\"btn btn--warning btn--sm\" onclick=\"markFixed('note-1769194562447-p0')\">🟡 Fixed</button>\n              <button class=\"btn btn--sm\" onclick=\"resolveIssue('note-1769194562447-p0')\">✅ Resolve</button>\n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769194562447-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769194562447-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769194562447-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769194562447-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769194562447-p0\",\n  \"description\": \"[BUG] when right clicking on any element in the canvas and picking inspect, nothing happens\",\n  \"status\": \"pending\",\n  \"createdAt\": \"2026-01-23T18:56:02.447Z\",\n  \"testLink\": \"tests/issues/context-menu-inspect.spec.ts\"\n}</pre>\n          </div>\n        \n          <div class=\"issue-card\" data-status=\"fixed\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">🟡 [BUG] when clicking issues button on home page nothing happens</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/24/2026, 4:28:03 PM</span>\n                <span>Status: <strong>fixed</strong></span>\n                <span>ID: <code>note-1769293683522-p0</code></span>\n                \n              </div>\n              <div class=\"issue-resolution\">🔧 Changed WB.scan() to WB.inject() in issues-helper.js</div>\n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769293683522-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/regression/issues-button-fix.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              \n              <button class=\"btn btn--sm\" onclick=\"resolveIssue('note-1769293683522-p0')\">✅ Resolve</button>\n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769293683522-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769293683522-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769293683522-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769293683522-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769293683522-p0\",\n  \"description\": \"[BUG] when clicking issues button on home page nothing happens\",\n  \"status\": \"fixed\",\n  \"createdAt\": \"2026-01-24T22:28:03.522Z\",\n  \"testLink\": \"tests/regression/issues-button-fix.spec.ts\",\n  \"fixedAt\": \"2026-01-25T01:00:00.000Z\",\n  \"resolution\": \"Changed WB.scan() to WB.inject() in issues-helper.js\"\n}</pre>\n          </div>\n        \n          <div class=\"issue-card\" data-status=\"fixed\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">🟡 [BUG] not all of the components on components page are able to be dropped into the canvas</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/24/2026, 4:22:20 PM</span>\n                <span>Status: <strong>fixed</strong></span>\n                <span>ID: <code>note-1769293340779-p0</code></span>\n                \n              </div>\n              <div class=\"issue-resolution\">🔧 Same root cause as drop zone fix</div>\n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769293340779-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/regression/builder-drop-zone-fix.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              \n              <button class=\"btn btn--sm\" onclick=\"resolveIssue('note-1769293340779-p0')\">✅ Resolve</button>\n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769293340779-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769293340779-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769293340779-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769293340779-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769293340779-p0\",\n  \"description\": \"[BUG] not all of the components on components page are able to be dropped into the canvas\",\n  \"status\": \"fixed\",\n  \"createdAt\": \"2026-01-24T22:22:20.779Z\",\n  \"testLink\": \"tests/regression/builder-drop-zone-fix.spec.ts\",\n  \"fixedAt\": \"2026-01-25T00:22:05.205Z\",\n  \"resolution\": \"Same root cause as drop zone fix\"\n}</pre>\n          </div>\n        \n          <div class=\"issue-card\" data-status=\"fixed\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">🟡 [BUG] Clicking on issue button in home page does not show issues - just shows a toast message 'Clicked'</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/23/2026, 8:11:35 PM</span>\n                <span>Status: <strong>fixed</strong></span>\n                <span>ID: <code>note-1769220695766-p0</code></span>\n                \n              </div>\n              <div class=\"issue-resolution\">🔧 Same as issues button fix</div>\n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769220695766-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/regression/issues-button-fix.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              \n              <button class=\"btn btn--sm\" onclick=\"resolveIssue('note-1769220695766-p0')\">✅ Resolve</button>\n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769220695766-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769220695766-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769220695766-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769220695766-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769220695766-p0\",\n  \"description\": \"[BUG] Clicking on issue button in home page does not show issues - just shows a toast message 'Clicked'\",\n  \"status\": \"fixed\",\n  \"createdAt\": \"2026-01-24T02:11:35.766Z\",\n  \"testLink\": \"tests/regression/issues-button-fix.spec.ts\",\n  \"fixedAt\": \"2026-01-25T01:00:00.000Z\",\n  \"resolution\": \"Same as issues button fix\"\n}</pre>\n          </div>\n        \n          <div class=\"issue-card\" data-status=\"fixed\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">🟡 [BUG] cannot drop any components into canvas</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/23/2026, 5:33:24 PM</span>\n                <span>Status: <strong>fixed</strong></span>\n                <span>ID: <code>note-1769211204743-p0</code></span>\n                \n              </div>\n              <div class=\"issue-resolution\">🔧 Same fix as above - getAttribute fallback</div>\n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769211204743-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/regression/builder-drop-zone-fix.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              \n              <button class=\"btn btn--sm\" onclick=\"resolveIssue('note-1769211204743-p0')\">✅ Resolve</button>\n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769211204743-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769211204743-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769211204743-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769211204743-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769211204743-p0\",\n  \"description\": \"[BUG] cannot drop any components into canvas\",\n  \"status\": \"fixed\",\n  \"createdAt\": \"2026-01-23T23:33:24.743Z\",\n  \"testLink\": \"tests/regression/builder-drop-zone-fix.spec.ts\",\n  \"fixedAt\": \"2026-01-25T00:40:28.152Z\",\n  \"resolution\": \"Same fix as above - getAttribute fallback\"\n}</pre>\n          </div>\n        \n          <div class=\"issue-card\" data-status=\"fixed\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">🟡 [BUG] trying to drag a component in like features shows error 'must be in main', but it was in main when trying to drop</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/23/2026, 5:32:07 PM</span>\n                <span>Status: <strong>fixed</strong></span>\n                <span>ID: <code>note-1769211127224-p0</code></span>\n                \n              </div>\n              <div class=\"issue-resolution\">🔧 Fixed getAttribute('section') fallback in builder-components.js</div>\n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769211127224-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/regression/builder-drop-zone-fix.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              \n              <button class=\"btn btn--sm\" onclick=\"resolveIssue('note-1769211127224-p0')\">✅ Resolve</button>\n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769211127224-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769211127224-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769211127224-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769211127224-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769211127224-p0\",\n  \"description\": \"[BUG] trying to drag a component in like features shows error 'must be in main', but it was in main when trying to drop\",\n  \"status\": \"fixed\",\n  \"createdAt\": \"2026-01-23T23:32:07.224Z\",\n  \"testLink\": \"tests/regression/builder-drop-zone-fix.spec.ts\",\n  \"fixedAt\": \"2026-01-25T00:22:05.205Z\",\n  \"resolution\": \"Fixed getAttribute('section') fallback in builder-components.js\"\n}</pre>\n          </div>\n        \n          <div class=\"issue-card\" data-status=\"resolved\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">✅ [BUG] on components page the 2nd card (header and footer) isn't showing the footer</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/24/2026, 7:16:12 PM</span>\n                <span>Status: <strong>resolved</strong></span>\n                <span>ID: <code>note-1769303772694-p0</code></span>\n                \n              </div>\n              <div class=\"issue-resolution\">🔧 ✅ Test passed: 2 passed, 0 failed, 0 skipped\nValidated by: tests/issues/issue-note-1769303772694-p0.spec.ts\nResolved at: 2026-01-26T02:08:50.201Z</div>\n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769303772694-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/issues/issue-note-1769303772694-p0.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              \n              \n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769303772694-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769303772694-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769303772694-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769303772694-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769303772694-p0\",\n  \"description\": \"[BUG] on components page the 2nd card (header and footer) isn't showing the footer\",\n  \"status\": \"resolved\",\n  \"createdAt\": \"2026-01-25T01:16:12.694Z\",\n  \"testLink\": \"tests/issues/issue-note-1769303772694-p0.spec.ts\",\n  \"lastTestRun\": \"2026-01-26T02:08:50.204Z\",\n  \"lastTestResult\": \"passed\",\n  \"testSummary\": {\n    \"passed\": 2,\n    \"failed\": 0,\n    \"skipped\": 0,\n    \"total\": 2\n  },\n  \"resolvedAt\": \"2026-01-26T02:08:50.204Z\",\n  \"resolution\": \"✅ Test passed: 2 passed, 0 failed, 0 skipped\\nValidated by: tests/issues/issue-note-1769303772694-p0.spec.ts\\nResolved at: 2026-01-26T02:08:50.201Z\",\n  \"validatedBy\": \"tests/issues/issue-note-1769303772694-p0.spec.ts\",\n  \"testPassed\": true\n}</pre>\n          </div>\n        \n          <div class=\"issue-card\" data-status=\"resolved\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">✅ [BUG] report issue has two buttons in builder - one in top and one in bottom</h3>\n              \n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 1/24/2026, 6:54:45 PM</span>\n                <span>Status: <strong>resolved</strong></span>\n                <span>ID: <code>note-1769302485789-p0</code></span>\n                \n              </div>\n              <div class=\"issue-resolution\">🔧 ✅ 2 passed</div>\n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('note-1769302485789-p0')\">\n                    ▶️ Run\n                  </button>\n                  <span class=\"issue-test__path\">tests/issues/issue-note-1769302485789-p0.spec.ts</span>\n                </div>\n                \n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              \n              \n              <button class=\"btn btn--sm\" onclick=\"viewTest('note-1769302485789-p0')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('note-1769302485789-p0')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('note-1769302485789-p0')\">🗑️</button>\n            </div>\n            <pre id=\"json-note-1769302485789-p0\" class=\"issue-json\" style=\"display:none\">{\n  \"id\": \"note-1769302485789-p0\",\n  \"description\": \"[BUG] report issue has two buttons in builder - one in top and one in bottom\",\n  \"status\": \"resolved\",\n  \"createdAt\": \"2026-01-25T00:54:45.789Z\",\n  \"testLink\": \"tests/issues/issue-note-1769302485789-p0.spec.ts\",\n  \"lastTestRun\": \"2026-01-26T02:09:26.394Z\",\n  \"lastTestResult\": \"passed\",\n  \"testSummary\": null,\n  \"resolvedAt\": \"2026-01-26T02:09:26.394Z\",\n  \"resolution\": \"✅ 2 passed\",\n  \"validatedBy\": \"tests/issues/issue-note-1769302485789-p0.spec.ts\",\n  \"testPassed\": true\n}</pre>\n          </div>\n        </main>\n  \n  <footer class=\"status-bar\">\n    <span><span class=\"status-dot connected\" id=\"statusDot\"></span><span id=\"statusText\">Connected</span></span>\n    <span id=\"issueCount\">12 issues · 5 pending · 5 fixed</span>\n  </footer>\n\n  <script type=\"module\">\n    let allIssues = [];\n    let currentFilter = 'all';\n    let searchQuery = '';\n    let ws;\n    let runningTests = new Set();\n    let testResults = new Map();  // Persist test results across refreshes\n    \n    const statusDot = document.getElementById('statusDot');\n    const statusText = document.getElementById('statusText');\n    const issueCount = document.getElementById('issueCount');\n    const issuesList = document.getElementById('issuesList');\n    \n    const icons = { pending: '⏳', fixed: '🟡', 'pending-review': '🔍', resolved: '✅', rejected: '❌' };\n    \n    // WebSocket connection\n    function connectWS() {\n      try {\n        ws = new WebSocket(`ws://${location.hostname}:3001`);\n        ws.onopen = () => { statusDot.classList.add('connected'); statusText.textContent = 'Connected'; };\n        ws.onclose = () => { statusDot.classList.remove('connected'); statusText.textContent = 'Disconnected'; setTimeout(connectWS, 2000); };\n        ws.onerror = () => ws.close();\n        ws.onmessage = (e) => { if (e.data === 'reload') refresh(); };\n      } catch {}\n    }\n    \n    // Fetch issues\n    async function refresh() {\n      try {\n        const res = await fetch('/api/pending-issues?all=true');\n        const data = await res.json();\n        allIssues = (data.issues || []).sort((a, b) => {\n          const order = { pending: 0, fixed: 1, 'pending-review': 2, resolved: 3 };\n          const diff = (order[a.status] ?? 2) - (order[b.status] ?? 2);\n          return diff !== 0 ? diff : new Date(b.createdAt) - new Date(a.createdAt);\n        });\n        render();\n        updateCount();\n      } catch {\n        issuesList.innerHTML = '<div class=\"empty-state\">⚠️ Server not running<br><br><code>npm start</code></div>';\n      }\n    }\n    \n    function updateCount() {\n      const pending = allIssues.filter(i => i.status === 'pending').length;\n      const fixed = allIssues.filter(i => i.status === 'fixed').length;\n      let text = `${allIssues.length} issue${allIssues.length !== 1 ? 's' : ''}`;\n      if (pending) text += ` · ${pending} pending`;\n      if (fixed) text += ` · ${fixed} fixed`;\n      issueCount.textContent = text;\n    }\n\n    function initFilters() {\n      document.getElementById('statusSelect')?.addEventListener('change', (e) => { currentFilter = e.target.value; render(); });\n      document.getElementById('searchInput')?.addEventListener('input', (e) => { searchQuery = e.target.value; render(); });\n    }\n\n    // Run test\n    window.runTest = async function(issueId) {\n      runningTests.add(issueId);\n      render();\n      \n      try {\n        const res = await fetch('/api/run-issue-test', {\n          method: 'POST',\n          headers: { 'Content-Type': 'application/json' },\n          body: JSON.stringify({ issueId })\n        });\n        const result = await res.json();\n        console.log('[Test Result]', JSON.stringify(result, null, 2)); // DEBUG\n        // Store in persistent Map so it survives refresh\n        testResults.set(issueId, result);\n        \n        const issue = allIssues.find(i => i.id === issueId);\n        if (issue && result.testPath) {\n          issue.testLink = result.testPath;\n        }\n        \n        const s = result.summary || {};\n        // Don't auto-resolve - let user see results first\n        // if (result.success && (s.passed || 0) > 0 && (s.failed || 0) === 0) {\n        //   await resolveWithTest(issueId, result);\n        // }\n      } catch (e) {\n        testResults.set(issueId, { success: false, error: e.message });\n      } finally {\n        runningTests.delete(issueId);\n        render();\n      }\n    };\n    \n    window.markFixed = async function(id) {\n      await fetch('/api/update-issue', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ issueId: id, status: 'fixed' }) });\n      refresh();\n    };\n    \n    async function resolveWithTest(issueId, testResult) {\n      const issue = allIssues.find(i => i.id === issueId);\n      const s = testResult.summary || {};\n      await fetch('/api/update-issue', {\n        method: 'POST',\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify({ issueId, status: 'resolved', resolution: `✅ ${s.passed} passed`, testPassed: true, testPath: testResult.testPath })\n      });\n      setTimeout(refresh, 300);\n    }\n\n    // Render using wb-card elements\n    function render() {\n      const search = searchQuery.toLowerCase().trim();\n      const priorityMatch = search.match(/^priority:(\\d)$/);\n      const priorityFilter = priorityMatch ? priorityMatch[1] : null;\n      const textSearch = priorityMatch ? '' : search;\n      \n      const filtered = allIssues.filter(i => {\n        if (currentFilter !== 'all' && i.status !== currentFilter) return false;\n        if (priorityFilter && String(i.priority ?? '') !== priorityFilter) return false;\n        if (textSearch && !`${i.description} ${i.id} ${i.resolution}`.toLowerCase().includes(textSearch)) return false;\n        return true;\n      });\n      \n      if (!filtered.length) {\n        issuesList.innerHTML = '<div class=\"empty-state\">No issues found</div>';\n        return;\n      }\n      \n      issuesList.innerHTML = filtered.map(i => {\n        const date = new Date(i.createdAt).toLocaleString();\n        const desc = i.description || 'No description';\n        const firstLine = desc.split('\\n')[0];\n        const hasMore = desc !== firstLine;\n        const isRunning = runningTests.has(i.id);\n        const testResult = testResults.get(i.id);\n        if (testResult) console.log('[Render] testResult for', i.id, testResult); // DEBUG\n        const testLink = i.testLink || `tests/issues/issue-${i.id.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.spec.ts`;\n\n        let testResultHtml = '';\n        if (isRunning) {\n          testResultHtml = `<div class=\"issue-test__results issue-test__results--running\"><span class=\"spinner\"></span> Running...</div>`;\n        } else if (testResult) {\n          const s = testResult.summary || {};\n          const tests = testResult.tests || [];\n          \n          // Build steps HTML\n          let stepsHtml = '';\n          tests.forEach(t => {\n            if (t.steps && t.steps.length > 0) {\n              stepsHtml += t.steps.map(step => \n                `<div class=\"issue-test__step ${step.status === 'passed' ? 'issue-test__step--passed' : 'issue-test__step--failed'}\">\n                  ${step.status === 'passed' ? '✓' : '✗'} ${esc(step.title)}\n                </div>`\n              ).join('');\n            }\n          });\n          \n          testResultHtml = `<div class=\"issue-test__results issue-test__results--${testResult.success ? 'success' : 'failure'}\">\n            <div class=\"issue-test__summary\"><strong>${testResult.success ? '✅ PASSED' : '❌ FAILED'}</strong> - ${s.passed || 0} passed, ${s.failed || 0} failed</div>\n            ${stepsHtml ? `<div class=\"issue-test__steps\">${stepsHtml}</div>` : ''}\n          </div>`;\n        }\n\n        // Using simple div cards (no wb-card to avoid duplicate structure)\n        return `\n          <div class=\"issue-card\" data-status=\"${i.status}\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">${esc(icons[i.status])} ${esc(firstLine)}</h3>\n              ${hasMore ? `<p class=\"issue-card__desc\">${esc(desc)}</p>` : ''}\n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 ${date}</span>\n                <span>Status: <strong>${i.status}</strong></span>\n                <span>ID: <code>${esc(i.id)}</code></span>\n                ${i.priority !== undefined ? `<span>Priority: ${i.priority}</span>` : ''}\n              </div>\n              ${i.resolution ? `<div class=\"issue-resolution\">🔧 ${esc(i.resolution)}</div>` : ''}\n              \n              <div class=\"issue-test\">\n                <div class=\"issue-test__title\">🧪 Validation Test</div>\n                <div class=\"issue-test__row\">\n                  <button class=\"btn btn--success btn--sm\" onclick=\"runTest('${i.id}')\" ${isRunning ? 'disabled' : ''}>\n                    ${isRunning ? '<span class=\"spinner\"></span>' : '▶️'} Run\n                  </button>\n                  <span class=\"issue-test__path\">${esc(testLink)}</span>\n                </div>\n                ${testResultHtml}\n              </div>\n            </div>\n            <div class=\"issue-card__footer\">\n              ${i.status === 'pending' ? `<button class=\"btn btn--warning btn--sm\" onclick=\"markFixed('${i.id}')\">🟡 Fixed</button>` : ''}\n              ${['pending','fixed'].includes(i.status) ? `<button class=\"btn btn--sm\" onclick=\"resolveIssue('${i.id}')\">✅ Resolve</button>` : ''}\n              <button class=\"btn btn--sm\" onclick=\"viewTest('${i.id}')\">📄 Test</button>\n              <button class=\"btn btn--sm\" onclick=\"toggleJson('${i.id}')\">🔎 JSON</button>\n              <button class=\"btn btn--danger btn--sm\" onclick=\"deleteIssue('${i.id}')\">🗑️</button>\n            </div>\n            <pre id=\"json-${i.id}\" class=\"issue-json\" style=\"display:none\">${esc(JSON.stringify(i, null, 2))}</pre>\n          </div>\n        `;\n      }).join('');\n\n    }\n\n    // View test\n    window.viewTest = async function(id) {\n      const issue = allIssues.find(i => i.id === id);\n      const testPath = issue?.testLink || `tests/issues/issue-${id.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.spec.ts`;\n      const desc = issue?.description || '';\n      const firstLine = desc.split('\\n')[0].substring(0, 60);\n      \n      try {\n        const res = await fetch(`/api/read-file?path=${encodeURIComponent(testPath)}`);\n        if (!res.ok) {\n          const template = `// ISSUE: ${firstLine}\\n// ID: ${id}\\n// ${desc.split('\\n').join('\\n// ')}\\n\\nimport { test, expect } from '@playwright/test';\\n\\ntest('verify fix', async ({ page }) => {\\n  await page.goto('http://localhost:3000/');\\n  // TODO: Add assertions\\n});`;\n          showModal('🧪 Template', testPath, template);\n          return;\n        }\n        const data = await res.json();\n        showModal('🧪 Test', testPath, data.content || '// Empty');\n      } catch (e) {\n        showModal('Error', testPath, `// ${e.message}`);\n      }\n    };\n    \n    function showModal(title, subtitle, content) {\n      document.getElementById('testModal')?.remove();\n      const modal = document.createElement('div');\n      modal.id = 'testModal';\n      modal.className = 'modal-overlay';\n      modal.innerHTML = `\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <div><div style=\"font-weight:600\">${title}</div><div style=\"font-family:monospace;font-size:0.75rem;color:var(--text-muted)\">${esc(subtitle)}</div></div>\n            <button onclick=\"document.getElementById('testModal').remove()\" style=\"background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-muted)\">✕</button>\n          </div>\n          <pre class=\"modal-body\">${esc(content)}</pre>\n        </div>\n      `;\n      modal.onclick = (e) => { if (e.target === modal) modal.remove(); };\n      document.body.appendChild(modal);\n      document.addEventListener('keydown', function close(e) { if (e.key === 'Escape') { modal.remove(); document.removeEventListener('keydown', close); } });\n    }\n\n    window.toggleJson = function(id) {\n      const el = document.getElementById('json-' + id);\n      if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';\n    };\n    \n    function esc(str) {\n      if (str == null) return '';\n      const div = document.createElement('div');\n      div.textContent = String(str);\n      return div.innerHTML;\n    }\n    \n    window.resolveIssue = async function(id) {\n      await fetch('/api/update-issue', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ issueId: id, status: 'resolved' }) });\n      refresh();\n    };\n    \n    window.deleteIssue = async function(id) {\n      if (!confirm('Delete?')) return;\n      await fetch('/api/delete-issue', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ issueId: id }) });\n      refresh();\n    };\n    \n    async function clearResolved() {\n      if (!confirm('Clear resolved?')) return;\n      await fetch('/api/clear-resolved-issues', { method: 'POST' });\n      refresh();\n    };\n    \n    // Expose to window for onclick handlers\n    window.refresh = refresh;\n    window.clearResolved = clearResolved;\n    \n    // Init\n    connectWS();\n    refresh();\n    initFilters();\n  </script>\n\n\n</body>    The fkn refesh button does not work.  fix it write a test and don't come back until it is fixed",
       "createdAt": "2026-01-26T02:43:59.478Z",
       "updatedAt": "2026-01-26T02:43:59.478Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769390397345",
+      "content": "retry-test-1769390397292-5cdy8a",
+      "createdAt": "2026-01-26T01:19:57.345Z",
+      "updatedAt": "2026-01-26T01:19:57.345Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769390397075",
+      "content": "lifecycle-test-1769390397039-btitt8",
+      "createdAt": "2026-01-26T01:19:57.075Z",
+      "updatedAt": "2026-01-26T01:19:57.075Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769390396903",
+      "content": "rejection-test-1769390396853-ocgx31",
+      "createdAt": "2026-01-26T01:19:56.903Z",
+      "updatedAt": "2026-01-26T01:19:56.903Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769390396644",
+      "content": "approval-test-1769390396609-5y460h",
+      "createdAt": "2026-01-26T01:19:56.644Z",
+      "updatedAt": "2026-01-26T01:19:56.644Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769390396460",
+      "content": "full-flow-test-1769390396438-inca8h",
+      "createdAt": "2026-01-26T01:19:56.460Z",
+      "updatedAt": "2026-01-26T01:19:56.460Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769390396329",
+      "content": "direct-fix-test-1769390396265-fo7cbl",
+      "createdAt": "2026-01-26T01:19:56.329Z",
+      "updatedAt": "2026-01-26T01:19:56.329Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769390396209",
+      "content": "in-progress-test-1769390395978-puqvj5",
+      "createdAt": "2026-01-26T01:19:56.209Z",
+      "updatedAt": "2026-01-26T01:19:56.209Z",
       "isClaudeResponse": false
     },
     {
@@ -705,6 +873,214 @@
       "isClaudeResponse": false
     },
     {
+      "id": "note-1769286158145",
+      "content": "retry-test-1769286158077-cmexpi",
+      "createdAt": "2026-01-24T20:22:38.145Z",
+      "updatedAt": "2026-01-24T20:22:38.145Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769286158145.spec.ts"
+    },
+    {
+      "id": "note-1769286157839",
+      "content": "lifecycle-test-1769286157827-spk536",
+      "createdAt": "2026-01-24T20:22:37.839Z",
+      "updatedAt": "2026-01-24T20:22:37.839Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769286157839.spec.ts"
+    },
+    {
+      "id": "note-1769286157644",
+      "content": "rejection-test-1769286157626-yp3vrm",
+      "createdAt": "2026-01-24T20:22:37.644Z",
+      "updatedAt": "2026-01-24T20:22:37.644Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769286157644.spec.ts"
+    },
+    {
+      "id": "note-1769286157494",
+      "content": "approval-test-1769286157487-qg3v09",
+      "createdAt": "2026-01-24T20:22:37.493Z",
+      "updatedAt": "2026-01-24T20:22:37.493Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769286157494.spec.ts"
+    },
+    {
+      "id": "note-1769286157211",
+      "content": "full-flow-test-1769286157204-rokey3",
+      "createdAt": "2026-01-24T20:22:37.211Z",
+      "updatedAt": "2026-01-24T20:22:37.211Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769286157211.spec.ts"
+    },
+    {
+      "id": "note-1769286157074",
+      "content": "direct-fix-test-1769286157028-hd85dy",
+      "createdAt": "2026-01-24T20:22:37.074Z",
+      "updatedAt": "2026-01-24T20:22:37.074Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769286157074.spec.ts"
+    },
+    {
+      "id": "note-1769223884612",
+      "content": "retry-test-1769223884539-ak3x8j",
+      "createdAt": "2026-01-24T03:04:44.612Z",
+      "updatedAt": "2026-01-24T03:04:44.612Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223884612.spec.ts"
+    },
+    {
+      "id": "note-1769223880592",
+      "content": "retry-test-1769223880519-2xirr8",
+      "createdAt": "2026-01-24T03:04:40.592Z",
+      "updatedAt": "2026-01-24T03:04:40.592Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223880592.spec.ts"
+    },
+    {
+      "id": "note-1769223875790",
+      "content": "lifecycle-test-1769223875583-qkco4s",
+      "createdAt": "2026-01-24T03:04:35.789Z",
+      "updatedAt": "2026-01-24T03:04:35.789Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223875790.spec.ts"
+    },
+    {
+      "id": "note-1769223871071",
+      "content": "lifecycle-test-1769223871023-kgjoas",
+      "createdAt": "2026-01-24T03:04:31.071Z",
+      "updatedAt": "2026-01-24T03:04:31.071Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223871071.spec.ts"
+    },
+    {
+      "id": "note-1769223870682",
+      "content": "rejection-test-1769223870663-khicc7",
+      "createdAt": "2026-01-24T03:04:30.682Z",
+      "updatedAt": "2026-01-24T03:04:30.682Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223870682.spec.ts"
+    },
+    {
+      "id": "note-1769223870313",
+      "content": "approval-test-1769223870290-c9ls0m",
+      "createdAt": "2026-01-24T03:04:30.313Z",
+      "updatedAt": "2026-01-24T03:04:30.313Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223870313.spec.ts"
+    },
+    {
+      "id": "note-1769223869863",
+      "content": "full-flow-test-1769223869820-9wh37w",
+      "createdAt": "2026-01-24T03:04:29.863Z",
+      "updatedAt": "2026-01-24T03:04:29.863Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223869863.spec.ts"
+    },
+    {
+      "id": "note-1769223869192",
+      "content": "direct-fix-test-1769223869045-m12g11",
+      "createdAt": "2026-01-24T03:04:29.192Z",
+      "updatedAt": "2026-01-24T03:04:29.192Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223869192.spec.ts"
+    },
+    {
+      "id": "note-1769223864194",
+      "content": "in-progress-test-1769223864096-sulnko",
+      "createdAt": "2026-01-24T03:04:24.194Z",
+      "updatedAt": "2026-01-24T03:04:24.194Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223864194.spec.ts"
+    },
+    {
+      "id": "note-1769223846071",
+      "content": "in-progress-test-1769223846042-piyao6",
+      "createdAt": "2026-01-24T03:04:06.071Z",
+      "updatedAt": "2026-01-24T03:04:06.071Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223846071.spec.ts"
+    },
+    {
+      "id": "note-1769223824302",
+      "content": "retry-test-1769223824226-fl8e27",
+      "createdAt": "2026-01-24T03:03:44.302Z",
+      "updatedAt": "2026-01-24T03:03:44.302Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223824302.spec.ts"
+    },
+    {
+      "id": "note-1769223819848",
+      "content": "retry-test-1769223819774-g0nefo",
+      "createdAt": "2026-01-24T03:03:39.848Z",
+      "updatedAt": "2026-01-24T03:03:39.848Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223819848.spec.ts"
+    },
+    {
+      "id": "note-1769223815357",
+      "content": "lifecycle-test-1769223815282-3zok52",
+      "createdAt": "2026-01-24T03:03:35.357Z",
+      "updatedAt": "2026-01-24T03:03:35.357Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223815357.spec.ts"
+    },
+    {
+      "id": "note-1769223812216",
+      "content": "lifecycle-test-1769223812205-fnhur4",
+      "createdAt": "2026-01-24T03:03:32.215Z",
+      "updatedAt": "2026-01-24T03:03:32.215Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223812216.spec.ts"
+    },
+    {
+      "id": "note-1769223811963",
+      "content": "rejection-test-1769223811954-jywj5y",
+      "createdAt": "2026-01-24T03:03:31.963Z",
+      "updatedAt": "2026-01-24T03:03:31.963Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223811963.spec.ts"
+    },
+    {
+      "id": "note-1769223811833",
+      "content": "approval-test-1769223811826-i6972d",
+      "createdAt": "2026-01-24T03:03:31.833Z",
+      "updatedAt": "2026-01-24T03:03:31.833Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223811833.spec.ts"
+    },
+    {
+      "id": "note-1769223811627",
+      "content": "full-flow-test-1769223811600-klqq7i",
+      "createdAt": "2026-01-24T03:03:31.627Z",
+      "updatedAt": "2026-01-24T03:03:31.627Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223811627.spec.ts"
+    },
+    {
+      "id": "note-1769223811360",
+      "content": "direct-fix-test-1769223811229-j680m2",
+      "createdAt": "2026-01-24T03:03:31.353Z",
+      "updatedAt": "2026-01-24T03:03:31.353Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223811360.spec.ts"
+    },
+    {
+      "id": "note-1769223806173",
+      "content": "in-progress-test-1769223806102-a1a288",
+      "createdAt": "2026-01-24T03:03:26.173Z",
+      "updatedAt": "2026-01-24T03:03:26.173Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223806173.spec.ts"
+    },
+    {
+      "id": "note-1769223800065",
+      "content": "in-progress-test-1769223800031-53q1b4",
+      "createdAt": "2026-01-24T03:03:20.065Z",
+      "updatedAt": "2026-01-24T03:03:20.065Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223800065.spec.ts"
+    },
+    {
       "id": "note-1769223764775",
       "content": "[BUG] Test issue from header 1769223...\nPriority: 2\nPage: /\nTime: 2026-01-24T03:02:43.847Z\nTest issue from header 1769223764546",
       "createdAt": "2026-01-24T03:02:44.775Z",
@@ -721,12 +1097,412 @@
       "testLink": "tests/issues/issue-note-1769223712451.spec.ts"
     },
     {
+      "id": "note-1769223699921",
+      "content": "Delete test 1769223699773 2igjwx",
+      "createdAt": "2026-01-24T03:01:39.921Z",
+      "updatedAt": "2026-01-24T03:01:39.921Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223699921.spec.ts"
+    },
+    {
+      "id": "note-1769223694420",
+      "content": "Delete test 1769223694281 q6aued",
+      "createdAt": "2026-01-24T03:01:34.420Z",
+      "updatedAt": "2026-01-24T03:01:34.420Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223694420.spec.ts"
+    },
+    {
+      "id": "note-1769223688318",
+      "content": "Test issue 1769223688135 pd5im1",
+      "createdAt": "2026-01-24T03:01:28.318Z",
+      "updatedAt": "2026-01-24T03:01:28.318Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223688318.spec.ts"
+    },
+    {
+      "id": "note-1769223682565",
+      "content": "Test issue 1769223682431 pfiekc",
+      "createdAt": "2026-01-24T03:01:22.565Z",
+      "updatedAt": "2026-01-24T03:01:22.565Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223682565.spec.ts"
+    },
+    {
+      "id": "note-1769223650519",
+      "content": "Delete test 1769223650484 fgh2ee",
+      "createdAt": "2026-01-24T03:00:50.519Z",
+      "updatedAt": "2026-01-24T03:00:50.519Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223650519.spec.ts"
+    },
+    {
+      "id": "note-1769223648447",
+      "content": "Delete test 1769223648412 xsyyr3",
+      "createdAt": "2026-01-24T03:00:48.447Z",
+      "updatedAt": "2026-01-24T03:00:48.447Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223648447.spec.ts"
+    },
+    {
+      "id": "note-1769223645144",
+      "content": "Test issue 1769223645106 jl5bwv",
+      "createdAt": "2026-01-24T03:00:45.144Z",
+      "updatedAt": "2026-01-24T03:00:45.144Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223645144.spec.ts"
+    },
+    {
+      "id": "note-1769223642722",
+      "content": "Test issue 1769223642688 nvgl0o",
+      "createdAt": "2026-01-24T03:00:42.722Z",
+      "updatedAt": "2026-01-24T03:00:42.722Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223642722.spec.ts"
+    },
+    {
+      "id": "note-1769223385960",
+      "content": "retry-test-1769223385931-2grpyr",
+      "createdAt": "2026-01-24T02:56:25.960Z",
+      "updatedAt": "2026-01-24T02:56:25.960Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223385960.spec.ts"
+    },
+    {
+      "id": "note-1769223384139",
+      "content": "lifecycle-test-1769223384134-pqmaig",
+      "createdAt": "2026-01-24T02:56:24.139Z",
+      "updatedAt": "2026-01-24T02:56:24.139Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223384139.spec.ts"
+    },
+    {
+      "id": "note-1769223383914",
+      "content": "rejection-test-1769223383901-ze2wt4",
+      "createdAt": "2026-01-24T02:56:23.914Z",
+      "updatedAt": "2026-01-24T02:56:23.914Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223383914.spec.ts"
+    },
+    {
+      "id": "note-1769223383749",
+      "content": "approval-test-1769223383733-fuyqmy",
+      "createdAt": "2026-01-24T02:56:23.749Z",
+      "updatedAt": "2026-01-24T02:56:23.749Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223383749.spec.ts"
+    },
+    {
+      "id": "note-1769223383600",
+      "content": "full-flow-test-1769223383595-pjxk44",
+      "createdAt": "2026-01-24T02:56:23.600Z",
+      "updatedAt": "2026-01-24T02:56:23.600Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223383600.spec.ts"
+    },
+    {
+      "id": "note-1769223383463",
+      "content": "direct-fix-test-1769223383433-y7vcqk",
+      "createdAt": "2026-01-24T02:56:23.463Z",
+      "updatedAt": "2026-01-24T02:56:23.463Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223383463.spec.ts"
+    },
+    {
+      "id": "note-1769223379415",
+      "content": "in-progress-test-1769223379379-sgg420",
+      "createdAt": "2026-01-24T02:56:19.415Z",
+      "updatedAt": "2026-01-24T02:56:19.415Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223379415.spec.ts"
+    },
+    {
+      "id": "note-1769223242313",
+      "content": "retry-test-1769223242282-nak115",
+      "createdAt": "2026-01-24T02:54:02.313Z",
+      "updatedAt": "2026-01-24T02:54:02.313Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223242313.spec.ts"
+    },
+    {
+      "id": "note-1769223239876",
+      "content": "lifecycle-test-1769223239870-c448to",
+      "createdAt": "2026-01-24T02:53:59.876Z",
+      "updatedAt": "2026-01-24T02:53:59.876Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223239876.spec.ts"
+    },
+    {
+      "id": "note-1769223239727",
+      "content": "rejection-test-1769223239714-ns42lc",
+      "createdAt": "2026-01-24T02:53:59.727Z",
+      "updatedAt": "2026-01-24T02:53:59.727Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223239727.spec.ts"
+    },
+    {
+      "id": "note-1769223239589",
+      "content": "approval-test-1769223239575-b2m9vb",
+      "createdAt": "2026-01-24T02:53:59.589Z",
+      "updatedAt": "2026-01-24T02:53:59.589Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223239589.spec.ts"
+    },
+    {
+      "id": "note-1769223239432",
+      "content": "full-flow-test-1769223239425-3co7j5",
+      "createdAt": "2026-01-24T02:53:59.432Z",
+      "updatedAt": "2026-01-24T02:53:59.432Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223239432.spec.ts"
+    },
+    {
+      "id": "note-1769223239271",
+      "content": "direct-fix-test-1769223239217-n2l6aw",
+      "createdAt": "2026-01-24T02:53:59.271Z",
+      "updatedAt": "2026-01-24T02:53:59.271Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223239271.spec.ts"
+    },
+    {
+      "id": "note-1769223236102",
+      "content": "in-progress-test-1769223236011-moj578",
+      "createdAt": "2026-01-24T02:53:56.102Z",
+      "updatedAt": "2026-01-24T02:53:56.102Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223236102.spec.ts"
+    },
+    {
+      "id": "note-1769223190879",
+      "content": "retry-test-1769223190847-ddmzjn",
+      "createdAt": "2026-01-24T02:53:10.879Z",
+      "updatedAt": "2026-01-24T02:53:10.879Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223190879.spec.ts"
+    },
+    {
+      "id": "note-1769223189110",
+      "content": "lifecycle-test-1769223189106-g6z2el",
+      "createdAt": "2026-01-24T02:53:09.110Z",
+      "updatedAt": "2026-01-24T02:53:09.110Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223189110.spec.ts"
+    },
+    {
+      "id": "note-1769223188942",
+      "content": "rejection-test-1769223188926-o5e9s8",
+      "createdAt": "2026-01-24T02:53:08.942Z",
+      "updatedAt": "2026-01-24T02:53:08.942Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223188942.spec.ts"
+    },
+    {
+      "id": "note-1769223188603",
+      "content": "approval-test-1769223188593-mhop7x",
+      "createdAt": "2026-01-24T02:53:08.603Z",
+      "updatedAt": "2026-01-24T02:53:08.603Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223188603.spec.ts"
+    },
+    {
+      "id": "note-1769223188445",
+      "content": "full-flow-test-1769223188440-w6bmmr",
+      "createdAt": "2026-01-24T02:53:08.445Z",
+      "updatedAt": "2026-01-24T02:53:08.445Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223188445.spec.ts"
+    },
+    {
+      "id": "note-1769223188332",
+      "content": "direct-fix-test-1769223188295-48vi9k",
+      "createdAt": "2026-01-24T02:53:08.332Z",
+      "updatedAt": "2026-01-24T02:53:08.332Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223188332.spec.ts"
+    },
+    {
+      "id": "note-1769223184851",
+      "content": "in-progress-test-1769223184808-dlains",
+      "createdAt": "2026-01-24T02:53:04.851Z",
+      "updatedAt": "2026-01-24T02:53:04.851Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769223184851.spec.ts"
+    },
+    {
+      "id": "note-1769222880135",
+      "content": "lifecycle-test-1769222880071-wzva4u",
+      "createdAt": "2026-01-24T02:48:00.135Z",
+      "updatedAt": "2026-01-24T02:48:00.135Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222880135.spec.ts"
+    },
+    {
+      "id": "note-1769222876693",
+      "content": "retry-test-1769222876616-fgd0nj",
+      "createdAt": "2026-01-24T02:47:56.693Z",
+      "updatedAt": "2026-01-24T02:47:56.693Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222876693.spec.ts"
+    },
+    {
+      "id": "note-1769222874384",
+      "content": "in-progress-test-1769222874339-0hufqo",
+      "createdAt": "2026-01-24T02:47:54.384Z",
+      "updatedAt": "2026-01-24T02:47:54.384Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222874384.spec.ts"
+    },
+    {
+      "id": "note-1769222873840",
+      "content": "retry-test-1769222873788-jov900",
+      "createdAt": "2026-01-24T02:47:53.839Z",
+      "updatedAt": "2026-01-24T02:47:53.839Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222873840.spec.ts"
+    },
+    {
+      "id": "note-1769222872624",
+      "content": "direct-fix-test-1769222872586-awlnj4",
+      "createdAt": "2026-01-24T02:47:52.624Z",
+      "updatedAt": "2026-01-24T02:47:52.624Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222872624.spec.ts"
+    },
+    {
+      "id": "note-1769222871311",
+      "content": "lifecycle-test-1769222871264-gatstq",
+      "createdAt": "2026-01-24T02:47:51.311Z",
+      "updatedAt": "2026-01-24T02:47:51.311Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222871311.spec.ts"
+    },
+    {
+      "id": "note-1769222871252",
+      "content": "in-progress-test-1769222871150-4ht65s",
+      "createdAt": "2026-01-24T02:47:51.252Z",
+      "updatedAt": "2026-01-24T02:47:51.252Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222871252.spec.ts"
+    },
+    {
+      "id": "note-1769222871022",
+      "content": "rejection-test-1769222870898-eevw15",
+      "createdAt": "2026-01-24T02:47:51.022Z",
+      "updatedAt": "2026-01-24T02:47:51.022Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222871022.spec.ts"
+    },
+    {
+      "id": "note-1769222870788",
+      "content": "approval-test-1769222870746-drsafc",
+      "createdAt": "2026-01-24T02:47:50.788Z",
+      "updatedAt": "2026-01-24T02:47:50.788Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222870788.spec.ts"
+    },
+    {
+      "id": "note-1769222870474",
+      "content": "full-flow-test-1769222870423-5a256x",
+      "createdAt": "2026-01-24T02:47:50.474Z",
+      "updatedAt": "2026-01-24T02:47:50.474Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222870474.spec.ts"
+    },
+    {
       "id": "note-1769222860318",
       "content": "[BUG] Test issue from header 1769222...\nPriority: 2\nPage: /\nTime: 2026-01-24T02:47:39.500Z\nTest issue from header 1769222859872",
       "createdAt": "2026-01-24T02:47:40.318Z",
       "updatedAt": "2026-01-24T02:47:40.318Z",
       "isClaudeResponse": false,
       "testLink": "tests/issues/issue-note-1769222860318.spec.ts"
+    },
+    {
+      "id": "note-1769222840192",
+      "content": "Delete test 1769222840144 z4q3z3",
+      "createdAt": "2026-01-24T02:47:20.192Z",
+      "updatedAt": "2026-01-24T02:47:20.192Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222840192.spec.ts"
+    },
+    {
+      "id": "note-1769222837679",
+      "content": "Delete test 1769222837633 nv50km",
+      "createdAt": "2026-01-24T02:47:17.679Z",
+      "updatedAt": "2026-01-24T02:47:17.679Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222837679.spec.ts"
+    },
+    {
+      "id": "note-1769222835093",
+      "content": "Test issue 1769222835053 bysuvj",
+      "createdAt": "2026-01-24T02:47:15.093Z",
+      "updatedAt": "2026-01-24T02:47:15.093Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222835093.spec.ts"
+    },
+    {
+      "id": "note-1769222831165",
+      "content": "Test issue 1769222831042 ocaa40",
+      "createdAt": "2026-01-24T02:47:11.164Z",
+      "updatedAt": "2026-01-24T02:47:11.164Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222831165.spec.ts"
+    },
+    {
+      "id": "note-1769222812785",
+      "content": "retry-test-1769222812743-e8gx6g",
+      "createdAt": "2026-01-24T02:46:52.785Z",
+      "updatedAt": "2026-01-24T02:46:52.785Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222812785.spec.ts"
+    },
+    {
+      "id": "note-1769222802793",
+      "content": "lifecycle-test-1769222802687-u6i4z7",
+      "createdAt": "2026-01-24T02:46:42.792Z",
+      "updatedAt": "2026-01-24T02:46:42.792Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222802793.spec.ts"
+    },
+    {
+      "id": "note-1769222802113",
+      "content": "rejection-test-1769222802071-qbf2v5",
+      "createdAt": "2026-01-24T02:46:42.113Z",
+      "updatedAt": "2026-01-24T02:46:42.113Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222802113.spec.ts"
+    },
+    {
+      "id": "note-1769222801376",
+      "content": "approval-test-1769222801337-eordoc",
+      "createdAt": "2026-01-24T02:46:41.376Z",
+      "updatedAt": "2026-01-24T02:46:41.376Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222801376.spec.ts"
+    },
+    {
+      "id": "note-1769222800522",
+      "content": "full-flow-test-1769222800447-5oidf0",
+      "createdAt": "2026-01-24T02:46:40.522Z",
+      "updatedAt": "2026-01-24T02:46:40.522Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222800522.spec.ts"
+    },
+    {
+      "id": "note-1769222800066",
+      "content": "direct-fix-test-1769222799921-m1c278",
+      "createdAt": "2026-01-24T02:46:40.066Z",
+      "updatedAt": "2026-01-24T02:46:40.066Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222800066.spec.ts"
+    },
+    {
+      "id": "note-1769222798308",
+      "content": "in-progress-test-1769222797925-g6bpgr",
+      "createdAt": "2026-01-24T02:46:38.308Z",
+      "updatedAt": "2026-01-24T02:46:38.308Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769222798308.spec.ts"
     },
     {
       "id": "note-1769220751805",
@@ -841,6 +1617,38 @@
       "testLink": "tests/issues/issue-note-1769190959225.spec.ts"
     },
     {
+      "id": "note-1769190801071",
+      "content": "Delete test 1769190800884 ab7b3i",
+      "createdAt": "2026-01-23T17:53:21.071Z",
+      "updatedAt": "2026-01-23T17:53:21.071Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769190801071.spec.ts"
+    },
+    {
+      "id": "note-1769190796863",
+      "content": "Delete test 1769190796787 hskdad",
+      "createdAt": "2026-01-23T17:53:16.863Z",
+      "updatedAt": "2026-01-23T17:53:16.863Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769190796863.spec.ts"
+    },
+    {
+      "id": "note-1769190792011",
+      "content": "Test issue 1769190791456 qomkki",
+      "createdAt": "2026-01-23T17:53:12.010Z",
+      "updatedAt": "2026-01-23T17:53:12.010Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769190792011.spec.ts"
+    },
+    {
+      "id": "note-1769190785333",
+      "content": "Test issue 1769190785233 o4lyik",
+      "createdAt": "2026-01-23T17:53:05.333Z",
+      "updatedAt": "2026-01-23T17:53:05.333Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769190785333.spec.ts"
+    },
+    {
       "id": "note-1769152883873",
       "content": "[BUG] Test issue from header 1769152...\nPriority: 2\nPage: /\nTest issue from header 1769152882735",
       "createdAt": "2026-01-23T07:21:23.873Z",
@@ -855,6 +1663,70 @@
       "updatedAt": "2026-01-23T06:55:16.437Z",
       "isClaudeResponse": false,
       "testLink": "tests/issues/issue-note-1769151316437.spec.ts"
+    },
+    {
+      "id": "note-1769144342410",
+      "content": "Delete test 1769144342292 kfidc7",
+      "createdAt": "2026-01-23T04:59:02.410Z",
+      "updatedAt": "2026-01-23T04:59:02.410Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769144342410.spec.ts"
+    },
+    {
+      "id": "note-1769144337683",
+      "content": "Delete test 1769144337195 te5yz0",
+      "createdAt": "2026-01-23T04:58:57.683Z",
+      "updatedAt": "2026-01-23T04:58:57.683Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769144337683.spec.ts"
+    },
+    {
+      "id": "note-1769144332917",
+      "content": "Test issue 1769144332815 8fktop",
+      "createdAt": "2026-01-23T04:58:52.917Z",
+      "updatedAt": "2026-01-23T04:58:52.917Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769144332917.spec.ts"
+    },
+    {
+      "id": "note-1769144324889",
+      "content": "Test issue 1769144324628 po4cxu",
+      "createdAt": "2026-01-23T04:58:44.889Z",
+      "updatedAt": "2026-01-23T04:58:44.889Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769144324889.spec.ts"
+    },
+    {
+      "id": "note-1769142244558",
+      "content": "Delete test 1769142244481 1jc3we",
+      "createdAt": "2026-01-23T04:24:04.558Z",
+      "updatedAt": "2026-01-23T04:24:04.558Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769142244558.spec.ts"
+    },
+    {
+      "id": "note-1769142241430",
+      "content": "Delete test 1769142241389 gac0h2",
+      "createdAt": "2026-01-23T04:24:01.430Z",
+      "updatedAt": "2026-01-23T04:24:01.430Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769142241430.spec.ts"
+    },
+    {
+      "id": "note-1769142238379",
+      "content": "Test issue 1769142238337 k848ms",
+      "createdAt": "2026-01-23T04:23:58.379Z",
+      "updatedAt": "2026-01-23T04:23:58.379Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769142238379.spec.ts"
+    },
+    {
+      "id": "note-1769142235806",
+      "content": "Test issue 1769142235371 he40y6",
+      "createdAt": "2026-01-23T04:23:55.806Z",
+      "updatedAt": "2026-01-23T04:23:55.806Z",
+      "isClaudeResponse": false,
+      "testLink": "tests/issues/issue-note-1769142235806.spec.ts"
     }
   ],
   "testLink": "tests/issues/issue-issue-1769030333849.spec.ts"

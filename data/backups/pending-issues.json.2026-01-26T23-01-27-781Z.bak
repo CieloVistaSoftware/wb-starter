@@ -113,6 +113,48 @@
       "createdAt": "2026-01-26T02:43:59.478Z"
     },
     {
+      "id": "note-1769395439478-p82",
+      "description": "async function resolveWithTest(issueId, testResult) {\n      const issue = allIssues.find(i => i.id === issueId);\n      const s = testResult.summary || {};\n      await fetch('/api/update-issue', {\n        method: 'POST',\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify({ issueId, status: 'resolved', resolution: `✅ ${s.passed} passed`, testPassed: true, testPath: testResult.testPath })\n      });\n      setTimeout(refresh, 300);\n    }",
+      "status": "pending",
+      "createdAt": "2026-01-26T02:43:59.478Z"
+    },
+    {
+      "id": "note-1769395439478-p83",
+      "description": "// Render using wb-card elements\n    function render() {\n      const search = searchQuery.toLowerCase().trim();\n      const priorityMatch = search.match(/^priority:(\\d)$/);\n      const priorityFilter = priorityMatch ? priorityMatch[1] : null;\n      const textSearch = priorityMatch ? '' : search;",
+      "status": "pending",
+      "createdAt": "2026-01-26T02:43:59.478Z"
+    },
+    {
+      "id": "note-1769395439478-p86",
+      "description": "issuesList.innerHTML = filtered.map(i => {\n        const date = new Date(i.createdAt).toLocaleString();\n        const desc = i.description || 'No description';\n        const firstLine = desc.split('\\n')[0];\n        const hasMore = desc !== firstLine;\n        const isRunning = runningTests.has(i.id);\n        const testResult = testResults.get(i.id);\n        if (testResult) console.log('[Render] testResult for', i.id, testResult); // DEBUG\n        const testLink = i.testLink || `tests/issues/issue-${i.id.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.spec.ts`;",
+      "status": "pending",
+      "createdAt": "2026-01-26T02:43:59.478Z"
+    },
+    {
+      "id": "note-1769395439478-p89",
+      "description": "testResultHtml = `<div class=\"issue-test__results issue-test__results--${testResult.success ? 'success' : 'failure'}\">\n            <div class=\"issue-test__summary\"><strong>${testResult.success ? '✅ PASSED' : '❌ FAILED'}</strong> - ${s.passed || 0} passed, ${s.failed || 0} failed</div>\n            ${stepsHtml ? `<div class=\"issue-test__steps\">${stepsHtml}</div>` : ''}\n          </div>`;\n        }",
+      "status": "pending",
+      "createdAt": "2026-01-26T02:43:59.478Z"
+    },
+    {
+      "id": "note-1769395439478-p90",
+      "description": "// Using simple div cards (no wb-card to avoid duplicate structure)\n        return `\n          <div class=\"issue-card\" data-status=\"${i.status}\">\n            <div class=\"issue-card__header\">\n              <h3 class=\"issue-card__title\">${esc(icons[i.status])} ${esc(firstLine)}</h3>\n              ${hasMore ? `<p class=\"issue-card__desc\">${esc(desc)}</p>` : ''}\n            </div>\n            <div class=\"issue-card__body\">\n              <div class=\"issue-meta\">\n                <span>📅 ${date}</span>\n                <span>Status: <strong>${i.status}</strong></span>\n                <span>ID: <code>${esc(i.id)}</code></span>\n                ${i.priority !== undefined ? `<span>Priority: ${i.priority}</span>` : ''}\n              </div>\n              ${i.resolution ? `<div class=\"issue-resolution\">🔧 ${esc(i.resolution)}</div>` : ''}",
+      "status": "pending",
+      "createdAt": "2026-01-26T02:43:59.478Z"
+    },
+    {
+      "id": "note-1769395439478-p100",
+      "description": "async function clearResolved() {\n      if (!confirm('Clear resolved?')) return;\n      await fetch('/api/clear-resolved-issues', { method: 'POST' });\n      refresh();\n    };",
+      "status": "pending",
+      "createdAt": "2026-01-26T02:43:59.478Z"
+    },
+    {
+      "id": "note-1769395439478-p101",
+      "description": "// Expose to window for onclick handlers\n    window.refresh = refresh;\n    window.clearResolved = clearResolved;",
+      "status": "pending",
+      "createdAt": "2026-01-26T02:43:59.478Z"
+    },
+    {
       "id": "note-1769306014994-p0",
       "description": "[BUG] builder.html add component pop...\nPriority: 2\nPage: /builder.html\nTime: 2026-01-25T01:52:52.297Z\nbuilder.html add component popup has uneven rows one tile is very tall",
       "status": "pending",
@@ -189,6 +231,18 @@
       "description": "[BUG] remove the docs link in the he...\nPriority: 2\nPage: /builder.html?page=docs\nTime: 2026-01-26T16:38:43.190Z\nremove the docs link in the heard replace it with the themes control which should have two modes, the entire page, the focused element",
       "status": "pending",
       "createdAt": "2026-01-26T16:39:31.833Z"
+    },
+    {
+      "id": "note-1769445907116-p0",
+      "description": "Priority: 2\nPage: /builder.html?page=docs\nTime: 2026-01-26T16:39:31.965Z\nhttp://localhost:3000/issues-viewer.html  this interface is bad news.",
+      "status": "pending",
+      "createdAt": "2026-01-26T16:45:07.116Z"
+    },
+    {
+      "id": "note-1769445907116-p1",
+      "description": "for id just show the last 7 chars. make every type entry when clicked show the json for that issue.  Make the time view xs. put 1rem gaps for each column, allow clickable header sorting, \neach issue can only be resolved if the test passes (Automatically) remove the resolve button.  put a view test button before run button.",
+      "status": "pending",
+      "createdAt": "2026-01-26T16:45:07.116Z"
     },
     {
       "id": "note-1769450844381-p0",
@@ -275,6 +329,18 @@
       "createdAt": "2026-01-25T00:35:56.171Z"
     },
     {
+      "id": "note-1769301356171-p1",
+      "description": "Test: tests/issues/issue-note-1769194562447-p0.spec.ts\nResult: 0 passed, 0 failed, 0 skipped",
+      "status": "pending",
+      "createdAt": "2026-01-25T00:35:56.171Z"
+    },
+    {
+      "id": "note-1769301356171-p2",
+      "description": "Error: Failed to fetch",
+      "status": "pending",
+      "createdAt": "2026-01-25T00:35:56.171Z"
+    },
+    {
       "id": "note-1769301356171-p3",
       "description": "Original Issue: [BUG] when right clicking on any element in the canvas and picking inspect, nothing happens",
       "status": "pending",
@@ -287,14 +353,50 @@
       "createdAt": "2026-01-24T23:06:06.108Z"
     },
     {
+      "id": "note-1769295966108-p1",
+      "description": "Test: tests/issues/issue-note-1769295552140-p0.spec.ts\nResult: 0 passed, 0 failed, 0 skipped",
+      "status": "pending",
+      "createdAt": "2026-01-24T23:06:06.108Z"
+    },
+    {
+      "id": "note-1769295966108-p2",
+      "description": "Error: Test not found for issue: note-1769295552140-p0",
+      "status": "pending",
+      "createdAt": "2026-01-24T23:06:06.108Z"
+    },
+    {
       "id": "note-1769295966108-p3",
       "description": "Original Issue: [BUG] Test failure for issue note-1769194562447-p0",
       "status": "pending",
       "createdAt": "2026-01-24T23:06:06.108Z"
     },
     {
+      "id": "note-1769295552140-p1",
+      "description": "Test: tests/issues/issue-note-1769194562447-p0.spec.ts\nResult: 0 passed, 10 failed, 0 skipped",
+      "status": "pending",
+      "createdAt": "2026-01-24T22:59:12.140Z"
+    },
+    {
+      "id": "note-1769295552140-p2",
+      "description": "Test Results:\n  ○ right-click inspect should open element inspector modal (20325ms)\n    Error: \u001b[31mTest timeout of 20000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n  ○ inspector shows correct element details (20248ms)\n    Error: \u001b[31mTest timeout of 20000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n  ○ inspector can be closed (20323ms)\n    Error: \u001b[31mTest timeout of 20000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n  ○ inspector Copy HTML button works (20166ms)\n    Error: \u001b[31mTest timeout of 20000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n  ○ inspectElement function exists and works programmatically (20128ms)\n    Error: \u001b[31mTest timeout of 20000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n  ○ right-click inspect should open element inspector modal (20642ms)\n    Error: \u001b[31mTest timeout of 20000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n  ○ inspector shows correct element details (20763ms)\n    Error: \u001b[31mTest timeout of 20000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n  ○ inspector can be closed (20254ms)\n    Error: \u001b[31mTest timeout of 20000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n  ○ inspector Copy HTML button works (20100ms)\n    Error: \u001b[31mTest timeout of 20000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n  ○ inspectElement function exists and works programmatically (20126ms)\n    Error: \u001b[31mTest timeout of 20000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+      "status": "pending",
+      "createdAt": "2026-01-24T22:59:12.140Z"
+    },
+    {
       "id": "note-1769295373510-p0",
       "description": "[BUG] Test failure for issue note-1769295364544-p0",
+      "status": "pending",
+      "createdAt": "2026-01-24T22:56:13.510Z"
+    },
+    {
+      "id": "note-1769295373510-p1",
+      "description": "Test: tests/issues/issue-note-1769295364544-p0.spec.ts\nResult: 0 passed, 0 failed, 0 skipped",
+      "status": "pending",
+      "createdAt": "2026-01-24T22:56:13.510Z"
+    },
+    {
+      "id": "note-1769295373510-p2",
+      "description": "Error: Test not found for issue: note-1769295364544-p0",
       "status": "pending",
       "createdAt": "2026-01-24T22:56:13.510Z"
     },
@@ -311,6 +413,18 @@
       "createdAt": "2026-01-24T22:56:04.544Z"
     },
     {
+      "id": "note-1769295364544-p1",
+      "description": "Test: tests/issues/issue-note-1769295344424-p0.spec.ts\nResult: 0 passed, 0 failed, 0 skipped",
+      "status": "pending",
+      "createdAt": "2026-01-24T22:56:04.544Z"
+    },
+    {
+      "id": "note-1769295364544-p2",
+      "description": "Error: Test not found for issue: note-1769295344424-p0",
+      "status": "pending",
+      "createdAt": "2026-01-24T22:56:04.544Z"
+    },
+    {
       "id": "note-1769295364544-p3",
       "description": "Original Issue: [BUG] Test failure for issue note-1769293683522-p0",
       "status": "pending",
@@ -319,6 +433,18 @@
     {
       "id": "note-1769295344424-p0",
       "description": "[BUG] Test failure for issue note-1769293683522-p0",
+      "status": "pending",
+      "createdAt": "2026-01-24T22:55:44.424Z"
+    },
+    {
+      "id": "note-1769295344424-p1",
+      "description": "Test: tests/issues/issue-note-1769293683522-p0.spec.ts\nResult: 0 passed, 0 failed, 0 skipped",
+      "status": "pending",
+      "createdAt": "2026-01-24T22:55:44.424Z"
+    },
+    {
+      "id": "note-1769295344424-p2",
+      "description": "Error: Test not found for issue: note-1769293683522-p0",
       "status": "pending",
       "createdAt": "2026-01-24T22:55:44.424Z"
     },
@@ -417,8 +543,164 @@
       "description": "[BUG] Test issue from header 1769464...\nPriority: 2\nPage: /\nTime: 2026-01-26T22:00:27.873Z\nTest issue from header 1769464828455",
       "status": "pending",
       "createdAt": "2026-01-26T22:00:28.913Z"
+    },
+    {
+      "id": "note-1769467235041-p0",
+      "description": "Test issue 1769467234971 bdlysc",
+      "status": "pending",
+      "createdAt": "2026-01-26T22:40:35.040Z"
+    },
+    {
+      "id": "note-1769223699921-p0",
+      "description": "Delete test 1769223699773 2igjwx",
+      "status": "pending",
+      "createdAt": "2026-01-24T03:01:39.921Z"
+    },
+    {
+      "id": "note-1769223694420-p0",
+      "description": "Delete test 1769223694281 q6aued",
+      "status": "pending",
+      "createdAt": "2026-01-24T03:01:34.420Z"
+    },
+    {
+      "id": "note-1769223688318-p0",
+      "description": "Test issue 1769223688135 pd5im1",
+      "status": "pending",
+      "createdAt": "2026-01-24T03:01:28.318Z"
+    },
+    {
+      "id": "note-1769223682565-p0",
+      "description": "Test issue 1769223682431 pfiekc",
+      "status": "pending",
+      "createdAt": "2026-01-24T03:01:22.565Z"
+    },
+    {
+      "id": "note-1769223650519-p0",
+      "description": "Delete test 1769223650484 fgh2ee",
+      "status": "pending",
+      "createdAt": "2026-01-24T03:00:50.519Z"
+    },
+    {
+      "id": "note-1769223648447-p0",
+      "description": "Delete test 1769223648412 xsyyr3",
+      "status": "pending",
+      "createdAt": "2026-01-24T03:00:48.447Z"
+    },
+    {
+      "id": "note-1769223645144-p0",
+      "description": "Test issue 1769223645106 jl5bwv",
+      "status": "pending",
+      "createdAt": "2026-01-24T03:00:45.144Z"
+    },
+    {
+      "id": "note-1769223642722-p0",
+      "description": "Test issue 1769223642688 nvgl0o",
+      "status": "pending",
+      "createdAt": "2026-01-24T03:00:42.722Z"
+    },
+    {
+      "id": "note-1769222840192-p0",
+      "description": "Delete test 1769222840144 z4q3z3",
+      "status": "pending",
+      "createdAt": "2026-01-24T02:47:20.192Z"
+    },
+    {
+      "id": "note-1769222837679-p0",
+      "description": "Delete test 1769222837633 nv50km",
+      "status": "pending",
+      "createdAt": "2026-01-24T02:47:17.679Z"
+    },
+    {
+      "id": "note-1769222835093-p0",
+      "description": "Test issue 1769222835053 bysuvj",
+      "status": "pending",
+      "createdAt": "2026-01-24T02:47:15.093Z"
+    },
+    {
+      "id": "note-1769222831165-p0",
+      "description": "Test issue 1769222831042 ocaa40",
+      "status": "pending",
+      "createdAt": "2026-01-24T02:47:11.164Z"
+    },
+    {
+      "id": "note-1769190801071-p0",
+      "description": "Delete test 1769190800884 ab7b3i",
+      "status": "pending",
+      "createdAt": "2026-01-23T17:53:21.071Z"
+    },
+    {
+      "id": "note-1769190796863-p0",
+      "description": "Delete test 1769190796787 hskdad",
+      "status": "pending",
+      "createdAt": "2026-01-23T17:53:16.863Z"
+    },
+    {
+      "id": "note-1769190792011-p0",
+      "description": "Test issue 1769190791456 qomkki",
+      "status": "pending",
+      "createdAt": "2026-01-23T17:53:12.010Z"
+    },
+    {
+      "id": "note-1769190785333-p0",
+      "description": "Test issue 1769190785233 o4lyik",
+      "status": "pending",
+      "createdAt": "2026-01-23T17:53:05.333Z"
+    },
+    {
+      "id": "note-1769144342410-p0",
+      "description": "Delete test 1769144342292 kfidc7",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:59:02.410Z"
+    },
+    {
+      "id": "note-1769144337683-p0",
+      "description": "Delete test 1769144337195 te5yz0",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:58:57.683Z"
+    },
+    {
+      "id": "note-1769144332917-p0",
+      "description": "Test issue 1769144332815 8fktop",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:58:52.917Z"
+    },
+    {
+      "id": "note-1769144324889-p0",
+      "description": "Test issue 1769144324628 po4cxu",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:58:44.889Z"
+    },
+    {
+      "id": "note-1769142244558-p0",
+      "description": "Delete test 1769142244481 1jc3we",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:24:04.558Z"
+    },
+    {
+      "id": "note-1769142241430-p0",
+      "description": "Delete test 1769142241389 gac0h2",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:24:01.430Z"
+    },
+    {
+      "id": "note-1769142238379-p0",
+      "description": "Test issue 1769142238337 k848ms",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:23:58.379Z"
+    },
+    {
+      "id": "note-1769142235806-p0",
+      "description": "Test issue 1769142235371 he40y6",
+      "status": "pending",
+      "createdAt": "2026-01-23T04:23:55.806Z"
+    },
+    {
+      "id": "note-1769467237171-p0",
+      "description": "Test issue 1769467237120 4nt5kd",
+      "status": "pending",
+      "createdAt": "2026-01-26T22:40:37.171Z"
     }
   ],
-  "lastUpdated": "2026-01-26T23:01:28.231Z",
+  "lastUpdated": "2026-01-26T22:53:21.293Z",
   "lastChecked": "2026-01-26T22:53:29.094Z"
 }

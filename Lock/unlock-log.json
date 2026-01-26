@@ -1,0 +1,9 @@
+[
+  {
+    "file": "Lock/LOCKED-pending-issues.json.md",
+    "releasedAt": "2026-01-26T18:25:00.000Z",
+    "releasedBy": "GitHub Copilot",
+    "model": "Raptor mini (Preview)",
+    "reason": "stale lock release to perform owner-requested cleanup of non-[BUG] issues"
+  }
+]
