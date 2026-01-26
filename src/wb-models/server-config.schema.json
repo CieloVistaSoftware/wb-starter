@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Server Configuration",
+  "description": "Schema for local dev server runtime configuration and live-reload settings.",
+  "type": "object",
+  "properties": {
+    "liveReload": {
+      "type": "object",
+      "description": "Live reload related settings (env overrides also available).",
+      "properties": {
+        "enabled": { "type": "boolean", "description": "Enable live reload by default.", "default": true },
+        "debounceMs": { "type": "integer", "description": "Debounce window (ms) for coalescing file change events.", "default": 500, "minimum": 50 },
+        "ignoredPaths": {
+          "type": "array",
+          "description": "Glob-like path fragments to ignore from triggering reloads.",
+          "items": { "type": "string" },
+          "default": ["tests/", "tmp_trace/", "tmp/", "data/", "node_modules/"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "watchRoot": { "type": "boolean", "description": "If true, the server will watch the repository root in addition to config paths.", "default": false }
+  },
+  "additionalProperties": false
+}

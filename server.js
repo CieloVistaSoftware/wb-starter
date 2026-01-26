@@ -37,18 +37,38 @@ const broadcastReload = () => {
   });
 };
 
-// Watch for file changes (Debounced)
+// Watch for file changes (Debounced & filtered)
 let reloadTimeout;
+const lastEvent = { filename: null, ts: 0 };
 const triggerReload = (eventType, filename) => {
   if (!filename) return;
-  // Ignore git, node_modules, data folder, and temp files
-  if (filename.includes('.git') || filename.includes('node_modules') || filename.includes('.tmp') || filename.includes('data/') || filename.includes('data\\') || filename.startsWith('data')) return;
-  
+  // Allow disabling live reload via env var
+  if (process.env.LIVE_RELOAD === 'false') return;
+  const f = String(filename);
+
+  // Ignore noisy or irrelevant paths
+  if (f.includes('.git') || f.includes('node_modules') || f.includes('.tmp') || f.includes('tmp') || f.includes('tmp_trace') || f.includes('data/') || f.includes('data\\') || f.startsWith('data') || f.includes('tests/') || f.includes('tests\\')) return;
+
+  // Ignore noisy builder dir events that often come as directory-only notifications
+  if ((f === 'src' || f === 'src\\builder' || f === 'src/builder' || f === 'src\\builder\\') && !f.includes('.')) return;
+
+  // Only reload for common file extensions to reduce noise
+  const ext = path.extname(f).toLowerCase();
+  const allowedExts = new Set(['.html', '.css', '.js', '.json', '.map']);
+  if (ext && !allowedExts.has(ext)) return;
+
   clearTimeout(reloadTimeout);
   reloadTimeout = setTimeout(() => {
-    console.log(`[File Changed] ${filename} -> Reloading clients...`);
+    const now = Date.now();
+    if (lastEvent.filename === f && (now - lastEvent.ts) < 2000) {
+      // Skip duplicate burst for same file
+      return;
+    }
+    lastEvent.filename = f;
+    lastEvent.ts = now;
+    console.log(`[File Changed] ${f} -> Reloading clients...`);
     broadcastReload();
-  }, 100);
+  }, 500);
 };
 
 // Watch specific directories recursively
@@ -59,13 +79,64 @@ const watchDir = (dir) => {
 };
 
 ['pages', 'src', 'config', 'public'].forEach(d => watchDir(path.join(rootDir, d)));
-watchDir(rootDir); // Watch root for index.html changes
+// Optionally watch root for index.html changes if WATCH_ROOT=true (set env var to 'true' to enable)
+if (process.env.WATCH_ROOT === 'true') {
+  watchDir(rootDir);
+}
+
+// === PATHS ===
+const submissionsPath = path.join(rootDir, 'data', 'issues.json');
+const pendingIssuesPath = path.join(rootDir, 'data', 'pending-issues.json');
+const fixedIssuesPath = path.join(rootDir, 'data', 'fixed.json');
+
+// === STARTUP: Archive resolved issues ===
+function archiveResolvedIssues() {
+  try {
+    if (!fs.existsSync(pendingIssuesPath)) return;
+    
+    const data = JSON.parse(fs.readFileSync(pendingIssuesPath, 'utf8'));
+    const issues = data.issues || [];
+    
+    // Find resolved issues where test passed
+    const toArchive = issues.filter(i => i.status === 'resolved' && i.testPassed === true);
+    
+    if (toArchive.length === 0) return;
+    
+    // Load existing archive
+    let archive = { issues: [], lastUpdated: null };
+    if (fs.existsSync(fixedIssuesPath)) {
+      try { archive = JSON.parse(fs.readFileSync(fixedIssuesPath, 'utf8')); } catch (e) {}
+    }
+    
+    // Add archived issues with archive timestamp
+    const now = new Date().toISOString();
+    toArchive.forEach(issue => {
+      issue.archivedAt = now;
+      archive.issues.push(issue);
+    });
+    archive.lastUpdated = now;
+    
+    // Remove from pending
+    const archivedIds = new Set(toArchive.map(i => i.id));
+    data.issues = issues.filter(i => !archivedIds.has(i.id));
+    data.lastUpdated = now;
+    
+    // Save both files
+    fs.writeFileSync(fixedIssuesPath, JSON.stringify(archive, null, 2));
+    fs.writeFileSync(pendingIssuesPath, JSON.stringify(data, null, 2));
+    
+    console.log(`  \x1b[32m✓\x1b[0m Archived ${toArchive.length} resolved issue(s) to fixed.json`);
+  } catch (e) {
+    console.warn('[Startup] Failed to archive resolved issues:', e.message);
+  }
+}
+
+// Run on startup
+archiveResolvedIssues();
 
 // === SUBMISSIONS WATCHER ===
 // Each paragraph in a submission = one issue (split by blank lines)
 // Broadcasts notification via WebSocket when new issue detected
-const submissionsPath = path.join(rootDir, 'data', 'issues.json');
-const pendingIssuesPath = path.join(rootDir, 'data', 'pending-issues.json');
 
 const broadcastNewIssue = (issue) => {
   if (!wss) return;
@@ -93,6 +164,31 @@ const normalizeDescription = (desc) => {
   return (desc || '').trim().toLowerCase().replace(/\s+/g, ' ');
 };
 
+// Validate content is not HTML garbage
+const isValidIssueContent = (text) => {
+  if (!text || text.length < 5) return false;
+  if (text.length > 2000) return false; // Single issue too long
+  
+  // Reject if it looks like HTML (multiple HTML tags)
+  const htmlTagCount = (text.match(/<[a-z][^>]*>/gi) || []).length;
+  if (htmlTagCount > 2) return false;
+  
+  // Reject if it starts with HTML tag
+  if (/^\s*<(div|span|button|header|footer|main|nav|section|article|pre|code|script|style|html|body|head)/i.test(text)) return false;
+  
+  // Reject closing tags only
+  if (/^\s*<\/[a-z]+>/i.test(text)) return false;
+  
+  // Reject JSON-looking content
+  if (/^\s*\{[\s\S]*"[a-z]+"\s*:/i.test(text) && text.includes('}')) return false;
+  
+  // Reject test data patterns (auto-generated test issues)
+  if (/^(retry|lifecycle|rejection|approval|full-flow|direct-fix|in-progress)-test-\d+-/i.test(text)) return false;
+  if (/^(Delete test|Test issue)\s+\d+/i.test(text)) return false;
+  
+  return true;
+};
+
 const extractIssuesFromSubmissions = () => {
   try {
     if (!fs.existsSync(submissionsPath)) return;
@@ -100,6 +196,9 @@ const extractIssuesFromSubmissions = () => {
     const submissionsData = JSON.parse(fs.readFileSync(submissionsPath, 'utf8'));
     const submissions = submissionsData.submissions || [];
     const issues = [];
+    
+    // Max issues per submission to prevent garbage floods
+    const MAX_ISSUES_PER_SUBMISSION = 5;
     
     submissions.forEach(submission => {
       // Skip Claude responses
@@ -112,16 +211,34 @@ const extractIssuesFromSubmissions = () => {
         .join('\n')
         .trim();
       
+      // Reject entire submission if it looks like HTML dump
+      const htmlTagCount = (content.match(/<[a-z][^>]*>/gi) || []).length;
+      if (htmlTagCount > 10) {
+        console.warn(`[Issue Watcher] Rejected submission ${submission.id} - appears to be HTML dump (${htmlTagCount} tags)`);
+        return;
+      }
+      
       // Split by double newlines (paragraphs)
       const paragraphs = content.split(/\n\s*\n/).map(p => p.trim()).filter(p => p);
       
+      // Limit paragraphs to prevent floods
+      let issueCount = 0;
       paragraphs.forEach((para, idx) => {
+        if (issueCount >= MAX_ISSUES_PER_SUBMISSION) return;
+        
+        // Validate each paragraph
+        if (!isValidIssueContent(para)) {
+          console.warn(`[Issue Watcher] Skipped invalid paragraph ${idx} in ${submission.id}`);
+          return;
+        }
+        
         issues.push({
           id: `${submission.id}-p${idx}`,
           description: para,
           status: 'pending',
           createdAt: submission.createdAt
         });
+        issueCount++;
       });
     });
     
@@ -236,24 +353,45 @@ if (fs.existsSync(path.join(rootDir, 'data'))) {
   });
 }
 
-// Request logging - disabled for cleaner output
-// Uncomment for debugging
-/*
-app.use((req, res, next) => {
-  if (req.path.endsWith('.js')) {
-    res.on('finish', () => {
-      if (res.statusCode !== 304) {
-        console.log(`[Request] ${req.method} ${req.path} (${res.statusCode})`);
-      }
-    });
-  }
-  next();
-});
-*/
-
 // Health Check Endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// API Endpoint to read a file (for viewing test files)
+app.get('/api/read-file', (req, res) => {
+  try {
+    const filePath = req.query.path;
+    
+    if (!filePath) {
+      return res.status(400).json({ error: 'Missing path parameter' });
+    }
+    
+    // Security: only allow reading from specific directories
+    const safePath = path.normalize(filePath).replace(/^(\.\.[/\\])+/, '');
+    const allowedPrefixes = ['tests/', 'tests\\', 'src/', 'src\\', 'docs/', 'docs\\'];
+    const isAllowed = allowedPrefixes.some(prefix => safePath.startsWith(prefix));
+    
+    if (!isAllowed) {
+      return res.status(403).json({ error: 'Access denied - can only read from tests/, src/, or docs/' });
+    }
+    
+    const fullPath = path.join(rootDir, safePath);
+    
+    if (!fullPath.startsWith(rootDir)) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+    
+    if (!fs.existsSync(fullPath)) {
+      return res.status(404).json({ error: 'File not found' });
+    }
+    
+    const content = fs.readFileSync(fullPath, 'utf8');
+    res.json({ success: true, path: safePath, content });
+  } catch (error) {
+    console.error('[Read File Error]', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Start WebSocket Server (Optional)
@@ -298,24 +436,18 @@ const cacheConfig = isProduction ? {
 // Serve wb-models for schema viewer
 app.use('/src/wb-models', express.static(path.join(rootDir, 'src', 'wb-models'), cacheConfig));
 // Auto-wrap /pages/*.html when accessed directly (Browser Navigation)
-// This allows "pure" HTML fragments in /pages/ to be viewed standalone
 app.get('/pages/:page', (req, res, next) => {
   const pageName = req.params.page;
   if (!pageName.endsWith('.html')) return next();
 
-  // Detect direct browser navigation vs SPA fetch
-  // Sec-Fetch-Mode: 'navigate' is the modern standard
-  // Fallback: Check Accept header for text/html
   const isNavigation = req.headers['sec-fetch-mode'] === 'navigate' || 
                        (req.headers['accept'] && req.headers['accept'].includes('text/html'));
 
   if (isNavigation) {
     const filePath = path.join(rootDir, 'pages', pageName);
     
-    // Security: Ensure we don't traverse out of pages dir (though express params usually prevent slashes)
     if (pageName.includes('/') || pageName.includes('\\')) return next();
 
-    // Read config/site.json to support dynamic theme/title
     let theme = 'dark';
     let siteName = 'WB Site';
     
@@ -323,7 +455,6 @@ app.get('/pages/:page', (req, res, next) => {
       const configPath = path.join(rootDir, 'config', 'site.json');
       if (fs.existsSync(configPath)) {
         const siteConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-        // Support both old schema (site.theme) and new schema (branding.colorTheme)
         if (siteConfig.site) {
              theme = siteConfig.site.theme || theme;
              siteName = siteConfig.site.name || siteName;
@@ -337,7 +468,7 @@ app.get('/pages/:page', (req, res, next) => {
     }
 
     fs.readFile(filePath, 'utf8', (err, content) => {
-      if (err) return next(); // File not found, pass to static handler
+      if (err) return next();
 
       const wrapped = `<!DOCTYPE html>
 <html lang="en" data-theme="${theme}">
@@ -351,7 +482,6 @@ app.get('/pages/:page', (req, res, next) => {
     import WB from '/src/core/wb-lazy.js';
     WB.init();
   </script>
-  <!-- Live Reload Client -->
   <script>
     (function() {
       const ws = new WebSocket('ws://' + window.location.hostname + ':3001');
@@ -370,7 +500,6 @@ app.get('/pages/:page', (req, res, next) => {
       res.send(wrapped);
     });
   } else {
-    // It's an SPA fetch (or other asset request), serve raw file
     next();
   }
 });
@@ -379,7 +508,7 @@ app.use(express.static(rootDir, cacheConfig));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.text({ limit: '10mb' }));
 
-// Request logging for API endpoints (development helper)
+// Request logging for API endpoints
 app.use((req, res, next) => {
   if (req.path && req.path.startsWith('/api')) {
     const ct = req.headers['content-type'] || '';
@@ -389,7 +518,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Convert body-parser JSON parse errors to JSON responses (avoid HTML error page)
+// Convert body-parser JSON parse errors to JSON responses
 app.use((err, req, res, next) => {
   if (err && (err.type === 'entity.parse.failed' || err instanceof SyntaxError)) {
     console.error('[Request Parse Error]', err.message);
@@ -443,17 +572,16 @@ app.post("/api/claude-response", (req, res) => {
       try { submissionsData = JSON.parse(fs.readFileSync(submissionsPathLocal, 'utf8')); } catch (e) {}
     }
     
-    // Add Claude's response as a new submission
     const responseSubmission = {
       id: 'claude-' + Date.now(),
       content: `[CLAUDE ${status === 'success' ? '✅' : '❌'}] ${message}`,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       isClaudeResponse: true,
-      status: status // 'success' or 'error'
+      status: status
     };
     
-    submissionsData.submissions.unshift(responseSubmission); // Add to top
+    submissionsData.submissions.unshift(responseSubmission);
     submissionsData.lastUpdated = new Date().toISOString();
     
     fs.writeFileSync(submissionsPathLocal, JSON.stringify(submissionsData, null, 2));
@@ -469,7 +597,7 @@ app.post("/api/claude-response", (req, res) => {
 // API Endpoint to update issue status
 app.post("/api/update-issue", (req, res) => {
   try {
-    const { issueId, status, resolution } = req.body;
+    const { issueId, status, resolution, testPassed, testPath, testSummary } = req.body;
     
     if (!issueId || !status) {
       return res.status(400).json({ error: 'Missing issueId or status' });
@@ -488,27 +616,47 @@ app.post("/api/update-issue", (req, res) => {
       return res.status(404).json({ error: 'Issue not found' });
     }
     
-    issue.status = status;
-    if (status === 'resolved' || status === 'fixed') {
-      // When Claude marks as fixed, set to pending-review for user approval
+    if (status === 'in-progress') {
+      issue.status = 'in-progress';
+      issue.startedAt = new Date().toISOString();
+    } else if (status === 'fixed') {
+      // Fixed = code fix applied, needs test & review (yellow status)
+      issue.status = 'fixed';
+      issue.fixedAt = new Date().toISOString();
+      if (resolution) issue.resolution = resolution;
+    } else if (status === 'resolved' && testPassed) {
+      // Test passed - fully resolve the issue with all proper fields
+      issue.status = 'resolved';
+      issue.resolvedAt = new Date().toISOString();
+      issue.resolution = resolution || 'Test passed - automatically resolved';
+      issue.validatedBy = testPath || issue.testLink || 'test';
+      issue.testPassed = true;
+      issue.testSummary = testSummary || null;
+      issue.lastTestRun = new Date().toISOString();
+      issue.lastTestResult = 'passed';
+    } else if (status === 'resolved') {
+      // Manual resolve without test - goes to pending-review
       issue.status = 'pending-review';
       issue.claimedFixedAt = new Date().toISOString();
       issue.resolution = resolution || 'Fixed by Claude';
     } else if (status === 'approved') {
-      // User approved the fix
       issue.status = 'resolved';
       issue.resolvedAt = new Date().toISOString();
     } else if (status === 'rejected') {
-      // User rejected the fix, back to pending
       issue.status = 'pending';
       issue.claimedFixedAt = null;
       issue.resolution = null;
+      issue.startedAt = null;
+      issue.rejectionCount = (issue.rejectionCount || 0) + 1;
+      issue.rejectedAt = new Date().toISOString();
+    } else {
+      issue.status = status;
     }
     
     data.lastUpdated = new Date().toISOString();
     fs.writeFileSync(pendingIssuesPath, JSON.stringify(data, null, 2));
     
-    console.log(`[Issue Update] ${issueId} -> ${status}`);
+    console.log(`[Issue Update] ${issueId} -> ${issue.status}${testPassed ? ' (test passed)' : ''}`);
     res.json({ success: true, issue });
   } catch (error) {
     console.error('[Issue Update Error]', error);
@@ -527,7 +675,6 @@ app.get("/api/pending-issues", (req, res) => {
     
     const data = JSON.parse(fs.readFileSync(pendingIssuesPath, 'utf8'));
     
-    // Dedupe issues by normalized description (keep first occurrence)
     const seenDescriptions = new Set();
     const dedupedIssues = (data.issues || []).filter(issue => {
       const normalized = normalizeDescription(issue.description);
@@ -538,10 +685,8 @@ app.get("/api/pending-issues", (req, res) => {
       return true;
     });
     
-    // Update lastChecked
     data.lastChecked = new Date().toISOString();
     
-    // If duplicates were removed, save the cleaned data
     if (dedupedIssues.length !== data.issues.length) {
       data.issues = dedupedIssues;
       data.lastUpdated = new Date().toISOString();
@@ -549,7 +694,6 @@ app.get("/api/pending-issues", (req, res) => {
     
     fs.writeFileSync(pendingIssuesPath, JSON.stringify(data, null, 2));
     
-    // If ?all=true, return all issues; otherwise just pending
     if (req.query.all === 'true') {
       res.json({ issues: dedupedIssues, lastUpdated: data.lastUpdated });
     } else {
@@ -562,7 +706,7 @@ app.get("/api/pending-issues", (req, res) => {
   }
 });
 
-// API Endpoint to update issue details (description and resolution)
+// API Endpoint to update issue details
 app.post("/api/update-issue-details", (req, res) => {
   try {
     const { issueId, description, resolution } = req.body;
@@ -644,24 +788,19 @@ app.post("/api/clear-resolved-issues", (req, res) => {
     const data = JSON.parse(fs.readFileSync(pendingIssuesPath, 'utf8'));
     const originalCount = data.issues.length;
     
-    // Identify resolved issues to clear
     const resolvedIssues = data.issues.filter(i => i.status === 'resolved');
-    const resolvedIds = new Set(resolvedIssues.map(i => i.id));
 
-    // Remove resolved from pending list
     data.issues = data.issues.filter(i => i.status !== 'resolved');
     const cleared = originalCount - data.issues.length;
 
     data.lastUpdated = new Date().toISOString();
     fs.writeFileSync(pendingIssuesPath, JSON.stringify(data, null, 2));
 
-    // Also remove originating submissions for resolved issues (to prevent them being re-parsed)
     try {
       const subsPath = path.join(rootDir, 'data', 'issues.json');
       if (fs.existsSync(subsPath)) {
         const subsData = JSON.parse(fs.readFileSync(subsPath, 'utf8'));
         const remainingSubmissions = (subsData.submissions || []).filter(sub => {
-          // If any resolved issue is derived from this submission, remove the submission
           const derivedIdPrefix = `${sub.id}-p`;
           const hasResolved = resolvedIssues.some(ri => ri.id.startsWith(derivedIdPrefix));
           return !hasResolved;
@@ -670,7 +809,6 @@ app.post("/api/clear-resolved-issues", (req, res) => {
           subsData.submissions = remainingSubmissions;
           subsData.lastUpdated = new Date().toISOString();
           fs.writeFileSync(subsPath, JSON.stringify(subsData, null, 2));
-          // Re-run extraction to ensure no re-adding
           extractIssuesFromSubmissions();
         }
       }
@@ -704,7 +842,6 @@ app.post("/api/log-issues", (req, res) => {
   logs.lastUpdated = new Date().toISOString();
   logs.issues = issuesList;
   
-  // Ensure directory exists
   const dir = path.dirname(logFile);
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -718,7 +855,7 @@ app.post("/api/log-issues", (req, res) => {
   res.json({ success: true, count: issuesList.length });
 });
 
-// API Endpoint to add a single user issue submission to data/issues.json and trigger parsing
+// API Endpoint to add a single user issue submission
 app.post('/api/add-issue', (req, res) => {
   try {
     const { content } = req.body;
@@ -729,7 +866,6 @@ app.post('/api/add-issue', (req, res) => {
 
     if (fs.existsSync(submissionsPathLocal)) {
       try { submissionsData = JSON.parse(fs.readFileSync(submissionsPathLocal, 'utf8')); } catch (e) {
-        // If file is a legacy single object, convert it into submissions array
         try {
           const raw = JSON.parse(fs.readFileSync(submissionsPathLocal, 'utf8'));
           if (raw && typeof raw === 'object') {
@@ -754,16 +890,13 @@ app.post('/api/add-issue', (req, res) => {
     submissionsData.submissions.unshift(submission);
     submissionsData.lastUpdated = now;
 
-    // Ensure dir
     const dir = path.dirname(submissionsPathLocal);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
     fs.writeFileSync(submissionsPathLocal, JSON.stringify(submissionsData, null, 2), 'utf8');
 
-    // Immediately parse and add to pending-issues.json by reusing extractIssuesFromSubmissions
     try { extractIssuesFromSubmissions(); } catch (e) { console.warn('[Add Issue] extractIssuesFromSubmissions failed', e); }
 
-    // Broadcast a quick notification
     broadcastNewIssue(submission);
 
     res.json({ success: true, submission });
@@ -781,7 +914,7 @@ app.post("/clicked", (req, res) => {
         ✓ Swapped!
       </button>
     `);
-  }, 500); // Artificial delay to show loading state if desired
+  }, 500);
 });
 
 // API Endpoint to save generic data
@@ -823,7 +956,6 @@ app.post("/api/save", (req, res) => {
 
     fs.writeFileSync(fullPath, content, 'utf8');
     
-    // Only log non-routine saves
     if (!location.includes('errors.json')) {
       console.log(`  \x1b[32m✓\x1b[0m Saved: ${location}`);
     }
@@ -838,21 +970,286 @@ app.post("/api/save", (req, res) => {
 app.post("/api/run-perf-tests", (req, res) => {
   console.log('[Server] Starting performance tests...');
   
-  // Set a long timeout for the request if possible, though client-side timeout matters more
   req.setTimeout(300000); // 5 minutes
 
   exec('npm run test:performance', { cwd: rootDir }, (error, stdout, stderr) => {
-    // Note: error will be non-null if tests fail (exit code 1), which is expected for failed tests
     console.log('[Server] Tests finished');
     if (error) {
       console.log(`[Server] Test command exit code: ${error.code}`);
     }
     
-    // We return success even if tests "failed" because we want to show the results
     res.json({ 
       success: true, 
       output: stdout,
       details: stderr,
+      exitCode: error ? error.code : 0
+    });
+  });
+});
+
+// API Endpoint to run a specific test file
+app.post("/api/run-test", (req, res) => {
+  const { testPath, testName } = req.body;
+  
+  if (!testPath) {
+    return res.status(400).json({ error: 'Missing testPath' });
+  }
+  
+  // Security: only allow tests from the tests/ directory
+  const safePath = path.normalize(testPath).replace(/^(\.\.[\/\\])+/, '');
+  if (!safePath.startsWith('tests/') && !safePath.startsWith('tests\\')) {
+    return res.status(400).json({ error: 'Test path must be in tests/ directory' });
+  }
+  
+  const fullPath = path.join(rootDir, safePath);
+  if (!fs.existsSync(fullPath)) {
+    return res.status(404).json({ error: `Test file not found: ${safePath}` });
+  }
+  
+  console.log(`[Server] Running test: ${safePath}${testName ? ` (${testName})` : ''}`);
+  
+  // Build playwright command - use grep to filter specific test if provided
+  let cmd = `npx playwright test "${safePath}" --reporter=json`;
+  if (testName) {
+    // Escape special regex characters in test name for grep
+    const escapedName = testName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    cmd += ` --grep "${escapedName}"`;
+  }
+  
+  req.setTimeout(120000); // 2 minutes timeout
+  
+  exec(cmd, { cwd: rootDir, maxBuffer: 10 * 1024 * 1024 }, (error, stdout, stderr) => {
+    console.log(`[Server] Test finished: ${error ? 'FAILED' : 'PASSED'}`);
+    
+    let results = null;
+    try {
+      results = JSON.parse(stdout);
+    } catch (e) {
+      results = { raw: stdout };
+    }
+    
+    let passed = 0;
+    let failed = 0;
+    let skipped = 0;
+    const testResults = [];
+    
+    if (results && results.suites) {
+      const extractTests = (suite) => {
+        if (suite.specs) {
+          suite.specs.forEach(spec => {
+            spec.tests.forEach(test => {
+              const status = test.results?.[0]?.status || 'unknown';
+              testResults.push({
+                title: spec.title,
+                status,
+                duration: test.results?.[0]?.duration || 0,
+                error: test.results?.[0]?.error?.message || null
+              });
+              if (status === 'passed') passed++;
+              else if (status === 'failed' || status === 'timedOut') failed++;
+              else if (status === 'skipped') skipped++;
+            });
+          });
+        }
+        if (suite.suites) {
+          suite.suites.forEach(extractTests);
+        }
+      };
+      results.suites.forEach(extractTests);
+    }
+    
+    res.json({
+      success: !error || error.code === 0,
+      testPath: safePath,
+      testName: testName || null,
+      summary: { passed, failed, skipped, total: passed + failed + skipped },
+      tests: testResults,
+      exitCode: error ? error.code : 0,
+      stderr: stderr || null
+    });
+  });
+});
+
+// API Endpoint to run test for a specific issue by ID
+app.post("/api/run-issue-test", (req, res) => {
+  const { issueId } = req.body;
+  
+  if (!issueId) {
+    return res.status(400).json({ error: 'Missing issueId' });
+  }
+  
+  // Convert issue ID to test file name
+  const testFileName = `issue-${issueId.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.spec.ts`;
+  const testPath = `tests/issues/${testFileName}`;
+  let fullPath = path.join(rootDir, testPath);
+  
+  if (!fs.existsSync(fullPath)) {
+    // Attempt to auto-generate a test for this issue ID and then run it.
+    console.log(`[Server] Test not found for ${issueId}; attempting to generate test file`);
+
+    // Helper to sanitize id -> filename
+    const toFileName = (id) => `issue-${id.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.spec.ts`;
+
+    // Try to locate issue details in pending-issues.json or issues.json
+    let issueDesc = '';
+    let issueCreatedAt = null;
+    try {
+      const pendingPath = path.join(rootDir, 'data', 'pending-issues.json');
+      if (fs.existsSync(pendingPath)) {
+        const pending = JSON.parse(fs.readFileSync(pendingPath, 'utf8'));
+        const found = (pending.issues || []).find(i => i.id === issueId);
+        if (found) { issueDesc = found.description || found.title || ''; issueCreatedAt = found.createdAt || null; }
+      }
+    } catch (e) { console.warn('[Issue Test] Failed to read pending-issues.json', e.message); }
+
+    if (!issueDesc) {
+      try {
+        const issuesPath = path.join(rootDir, 'data', 'issues.json');
+        if (fs.existsSync(issuesPath)) {
+          const issues = JSON.parse(fs.readFileSync(issuesPath, 'utf8'));
+          // search main, notes, submissions
+          if (issues.id === issueId) { issueDesc = issues.description || ''; issueCreatedAt = issues.createdAt || null; }
+          if (!issueDesc) {
+            const note = (issues.notes || []).find(n => n.id === issueId);
+            if (note) { issueDesc = note.content || ''; issueCreatedAt = note.createdAt || null; }
+          }
+          if (!issueDesc) {
+            const sub = (issues.submissions || []).find(s => s.id === issueId);
+            if (sub) { issueDesc = sub.content || ''; issueCreatedAt = sub.createdAt || null; }
+          }
+        }
+      } catch (e) { console.warn('[Issue Test] Failed to read issues.json', e.message); }
+    }
+
+    // Create test content
+    const kw = (issueDesc || 'unknown-issue').replace(/^\[BUG\]\s*/i, '').replace(/^\[FEATURE\]\s*/i, '').split('\n')[0].substring(0,60).replace(/[^a-zA-Z0-9\s]/g,'').trim() || 'unknown-issue';
+    const escaped = (issueDesc || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n');
+
+    const testContent = `/**\n * Issue Test: ${issueId}\n * Auto-generated: ${new Date().toISOString()}\n */\nimport { test, expect } from '@playwright/test';\n\ntest.describe('Issue ${issueId}: ${kw}', () => {\n  test.beforeEach(async ({ page }) => {\n    await page.goto('http://localhost:3000/');\n    await page.waitForLoadState('networkidle');\n  });\n\n  test('verify issue is fixed - ${kw}', async ({ page }) => {\n    // ID: ${issueId} | Created: ${issueCreatedAt || 'unknown'}\n    // Description: ${escaped}\n    test.info().annotations.push({ type: 'issue', description: '${issueId}' });\n    await expect(page).toHaveTitle(/.*/);\n    // TODO: Add specific assertions\n  });\n});\n`;
+
+    // Ensure tests/issues dir exists
+    const issueDir = path.join(rootDir, 'tests', 'issues');
+    if (!fs.existsSync(issueDir)) fs.mkdirSync(issueDir, { recursive: true });
+
+    const newFileName = toFileName(issueId);
+    const newFilePath = path.join(issueDir, newFileName);
+    try {
+      console.log('[Server] Creating test file at', newFilePath);
+      console.log('[Server] issueDir exists?', fs.existsSync(issueDir));
+      console.log('[Server] parent dir writable check (stat):');
+      try { console.log(fs.statSync(issueDir)); } catch (sErr) { console.log('stat err', sErr && sErr.message); }
+
+      fs.writeFileSync(newFilePath, testContent, 'utf8');
+      console.log(`[Server] Generated test file: ${newFilePath}`);
+
+      // Update pending-issues.json to include testLink if possible
+      try {
+        const pendingPath = path.join(rootDir, 'data', 'pending-issues.json');
+        if (fs.existsSync(pendingPath)) {
+          const pData = JSON.parse(fs.readFileSync(pendingPath, 'utf8'));
+          const issue = (pData.issues || []).find(i => i.id === issueId);
+          if (issue) {
+            issue.testLink = `tests/issues/${newFileName}`;
+            fs.writeFileSync(pendingPath, JSON.stringify(pData, null, 2));
+          }
+        }
+      } catch (e) { console.warn('[Issue Test] Failed to update pending-issues.json', e && e.stack ? e.stack : e); }
+
+      // set fullPath so we run it below
+      fullPath = newFilePath;
+    } catch (e) {
+      const errMsg = e && e.stack ? e.stack : String(e);
+      console.error('[Server] Failed to generate test file for issue', issueId, errMsg);
+      try {
+        const logFile = path.join(rootDir, 'data', 'issue-gen-errors.log');
+        fs.writeFileSync(logFile, `[${new Date().toISOString()}] Failed to generate test for ${issueId}: ${errMsg}\n`, { flag: 'a' });
+      } catch (err) { console.warn('[Server] Could not write error log', err && err.message); }
+      return res.status(500).json({ error: `Failed to generate test for issue: ${issueId}` });
+    }
+  }
+
+  console.log(`[Server] Running issue test: ${issueId}`);
+  
+  const cmd = `npx playwright test "${testPath}" --reporter=json`;
+  req.setTimeout(120000);
+  
+  exec(cmd, { cwd: rootDir, maxBuffer: 10 * 1024 * 1024 }, (error, stdout, stderr) => {
+    const success = !error || error.code === 0;
+    console.log(`[Server] Issue test ${issueId}: ${success ? 'PASSED' : 'FAILED'}`);
+    
+    let results = null;
+    try { results = JSON.parse(stdout); } catch (e) { results = { raw: stdout }; }
+    
+    let passed = 0, failed = 0, skipped = 0;
+    const testResults = [];
+    
+    if (results && results.suites) {
+      const extractTests = (suite) => {
+        if (suite.specs) {
+          suite.specs.forEach(spec => {
+            spec.tests.forEach(test => {
+              const result = test.results?.[0];
+              const status = result?.status || 'unknown';
+              
+              // Extract steps from the test result
+              const steps = [];
+              const extractSteps = (stepList, depth = 0) => {
+                if (!stepList) return;
+                stepList.forEach(step => {
+                  // Only include named steps (from test.step()), skip internal playwright steps
+                  if (step.title && !step.title.startsWith('Before') && !step.title.startsWith('After')) {
+                    steps.push({
+                      title: step.title,
+                      status: step.error ? 'failed' : 'passed',
+                      duration: step.duration || 0,
+                      error: step.error?.message || null
+                    });
+                  }
+                  // Recursively extract nested steps
+                  if (step.steps) extractSteps(step.steps, depth + 1);
+                });
+              };
+              extractSteps(result?.steps);
+              
+              testResults.push({
+                title: spec.title,
+                status,
+                duration: result?.duration || 0,
+                error: result?.error?.message || null,
+                steps: steps
+              });
+              if (status === 'passed') passed++;
+              else if (status === 'failed' || status === 'timedOut') failed++;
+              else if (status === 'skipped') skipped++;
+            });
+          });
+        }
+        if (suite.suites) suite.suites.forEach(extractTests);
+      };
+      results.suites.forEach(extractTests);
+    }
+    
+    // Update issue with test result
+    try {
+      const pendingPath = path.join(rootDir, 'data', 'pending-issues.json');
+      if (fs.existsSync(pendingPath)) {
+        const data = JSON.parse(fs.readFileSync(pendingPath, 'utf8'));
+        const issue = data.issues.find(i => i.id === issueId);
+        if (issue) {
+          issue.lastTestRun = new Date().toISOString();
+          issue.lastTestResult = success ? 'passed' : 'failed';
+          issue.testSummary = { passed, failed, skipped };
+          fs.writeFileSync(pendingPath, JSON.stringify(data, null, 2));
+        }
+      }
+    } catch (e) { console.warn('[Issue Test] Failed to update issue:', e.message); }
+    
+    res.json({
+      success,
+      issueId,
+      testPath,
+      summary: { passed, failed, skipped, total: passed + failed + skipped },
+      tests: testResults,
       exitCode: error ? error.code : 0
     });
   });
@@ -866,7 +1263,6 @@ app.post("/api/rename-page", (req, res) => {
     return res.status(400).json({ error: 'Missing oldName or newName' });
   }
 
-  // Sanitize names (simple check)
   const safeOld = path.basename(oldName, '.html');
   const safeNew = path.basename(newName, '.html');
 
@@ -884,11 +1280,9 @@ app.post("/api/rename-page", (req, res) => {
   }
 
   try {
-    // Rename HTML file
     fs.renameSync(oldHtmlPath, newHtmlPath);
     console.log(`[Server] Renamed page: ${safeOld}.html -> ${safeNew}.html`);
 
-    // Rename JSON data file if it exists
     if (fs.existsSync(oldJsonPath)) {
       fs.renameSync(oldJsonPath, newJsonPath);
       console.log(`[Server] Renamed data: ${safeOld}.json -> ${safeNew}.json`);
@@ -906,7 +1300,6 @@ app.use((req, res, next) => {
   const staticExtensions = ['.js', '.css', '.json', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.eot', '.map'];
   const ext = path.extname(req.path).toLowerCase();
 
-  // Allow .json files from /src/wb-models/ to be served
   if (ext === '.json' && req.path.startsWith('/src/wb-models/')) {
     return res.sendFile(path.join(rootDir, req.path));
   }
