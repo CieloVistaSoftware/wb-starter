@@ -62,7 +62,9 @@
   "test": {
     "setup": [
       "<div x-resizable style=\"width:200px;height:150px;background:#334155;\">SE corner only (default)</div>",
+      "<div data-wb=\"resizable\" style=\"width:200px;height:150px;background:#334155;\">SE corner only (data-wb)</div>",
       "<div x-resizable data-directions=\"all\" style=\"width:200px;height:150px;background:#334155;\">All directions</div>",
+      "<div data-wb=\"resizable\" data-directions=\"all\" style=\"width:200px;height:150px;background:#334155;\">All directions (data-wb)</div>",
       "<div x-resizable data-directions=\"e,w\" style=\"width:200px;height:150px;background:#334155;\">Horizontal only</div>",
       "<div x-resizable data-min-width=\"100\" data-min-height=\"100\" style=\"width:200px;height:150px;background:#334155;\">Min 100x100</div>",
       "<div x-resizable data-aspect-ratio style=\"width:200px;height:150px;background:#334155;\">Maintain aspect ratio</div>",

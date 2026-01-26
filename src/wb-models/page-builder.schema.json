@@ -229,9 +229,7 @@
       "type": "string",
       "description": "Currently active page ID"
     },
-    "settings": {
-      "$ref": "#/definitions/SiteSettings"
-    }
+    "settings": { "type": "object", "$ref": "#/definitions/SiteSettings" }
   },
   
   "rules": {

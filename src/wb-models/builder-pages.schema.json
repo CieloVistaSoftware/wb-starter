@@ -354,54 +354,14 @@
       "type": "string",
       "description": "Currently active page ID"
     },
-    "settings": { "$ref": "#/definitions/SiteSettings" }
+    "settings": { "type": "object", "$ref": "#/definitions/SiteSettings" }
   },
 
   "test": {
     "setup": [
-      {
-        "name": "Minimal site",
-        "data": {
-          "pages": [{ "id": "home", "name": "Home", "slug": "index.html", "main": [] }],
-          "globalSections": { "header": [], "footer": [] },
-          "currentPageId": "home"
-        }
-      },
-      {
-        "name": "Multi-page site",
-        "data": {
-          "pages": [
-            { "id": "home", "name": "Home", "slug": "index.html", "main": [] },
-            { "id": "about", "name": "About", "slug": "about.html", "main": [] },
-            { "id": "contact", "name": "Contact", "slug": "contact.html", "main": [] }
-          ],
-          "globalSections": { "header": [], "footer": [] },
-          "currentPageId": "home"
-        }
-      },
-      {
-        "name": "Page with nested components",
-        "data": {
-          "pages": [{
-            "id": "home",
-            "name": "Home",
-            "slug": "index.html",
-            "main": [{
-              "id": "comp-hero-1",
-              "type": "hero",
-              "section": "main",
-              "data": {
-                "nestedComponents": [
-                  { "id": "nested-1", "type": "wb-card", "config": { "title": "Feature 1" } },
-                  { "id": "nested-2", "type": "wb-card", "config": { "title": "Feature 2" } }
-                ]
-              }
-            }]
-          }],
-          "globalSections": { "header": [], "footer": [] },
-          "currentPageId": "home"
-        }
-      }
+      "<wb-builder-pages></wb-builder-pages>",
+      "<wb-builder-pages>",
+      "<wb-builder-pages><wb-card id=\"nested-1\"></wb-card></wb-builder-pages>"
     ],
     "functional": {
       "pageOperations": [

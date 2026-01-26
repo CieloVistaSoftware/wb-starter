@@ -53,7 +53,9 @@
   "test": {
     "setup": [
       "<div x-draggable>Basic draggable</div>",
+      "<div data-wb=\"draggable\">Basic draggable (data-wb)</div>",
       "<div x-draggable data-axis=\"x\">Horizontal only</div>",
+      "<div data-wb=\"draggable\" data-axis=\"x\">Horizontal only (data-wb)</div>",
       "<div x-draggable data-axis=\"y\">Vertical only</div>",
       "<div x-draggable data-bounds=\"viewport\">Bounded to viewport</div>",
       "<div x-draggable data-grid=\"20\">Snap to 20px grid</div>",

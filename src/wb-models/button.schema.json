@@ -268,7 +268,37 @@
       "<wb-button variant=\"success\">variant=success</wb-button>",
       "<wb-button size=\"xs\">size=xs</wb-button>",
       "<wb-button size=\"sm\">size=sm</wb-button>"
-    ],
+    ],    "functional": {
+      "buttons": [
+        {
+          "name": "Basic Click",
+          "setup": "<button data-wb=\"button\">Click Me</button>",
+          "selector": "element",
+          "expect": {
+            "textContains": "Click Me",
+            "event": "click"
+          }
+        }
+      ]
+    },
+    "interactions": {
+      "elements": {
+        "element": {
+          "description": "Primary button element",
+          "clickable": true,
+          "click": {
+            "action": "click",
+            "event": "click"
+          }
+        }
+      }
+    },
+    "events": {
+      "click": {
+        "description": "Fired when button is clicked",
+        "bubble": true
+      }
+    },
     "functional": {
       "buttons": [
         {
