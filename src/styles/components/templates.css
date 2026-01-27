@@ -1,0 +1,56 @@
+/* Shared template/page utility styles — extracted from inline styles in templates/pages */
+
+/* Page hero (used by multiple templates) */
+.page-hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.page-hero--tall { min-height: 60vh; padding: 6rem 2rem; }
+.page-hero__title { font-size: 3.5rem; margin-bottom: 1rem; font-weight: 300; }
+.page-hero__subtitle { font-size: 1.25rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 2rem; }
+.page-hero--image { background-blend-mode: overlay; background-position: center; background-size: cover; color: white; text-shadow: 1px 1px 4px rgba(0,0,0,0.5); }
+
+/* Centered page container */
+.page-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+
+/* Call-to-action link used in templates */
+.btn-cta {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.05rem;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.btn-cta:focus { outline: 3px solid color-mix(in srgb, var(--primary) 20%, transparent); outline-offset: 3px; }
+.btn-cta:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(99,102,241,0.35); }
+
+/* Card visual strip (gradient/image placeholders) */
+.card-visual { height: 250px; margin: -1rem -1rem 1rem -1rem; overflow: hidden; background-size: cover; background-position: center; border-radius: 4px 4px 0 0; }
+.card-visual--gradient-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.card-visual--gradient-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.card-visual--gradient-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+
+/* Pricing card helpers */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+.pricing-card__price { font-size: 2.5rem; font-weight: 700; }
+.pricing-card__meta { color: var(--text-secondary); }
+.pricing-card .wb-button { width: 100%; }
+
+/* Form utilities */
+.form-stack { display: flex; flex-direction: column; gap: 1.5rem; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-field label { display: block; margin-bottom: 0.5rem; }
+.form-field .wb-input, .form-field .wb-select, .form-field .wb-textarea { width: 100%; }
+
+/* Small utilities used in templates */
+.section-pad { padding: 3rem 2rem; }
+.section-center { text-align: center; }

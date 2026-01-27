@@ -1,8 +1,8 @@
-<div style="width: 100%; height: 400px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop') center/cover; background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 2rem; margin-bottom: 3rem;">
+<div class="page-hero page-hero--image" style="--hero-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop'); background-image: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.85)), var(--hero-image);">
   
-  <div id="auto-pages-abouthtml-1">
-    <h1 style="font-size: 3rem; margin: 0 0 0.5rem 0; font-weight: 700; text-shadow: 2px 2px 8px rgba(0,0,0,0.5);">About Acme Co</h1>
-    <p style="font-size: 1.3rem; margin: 0; color: rgba(255,255,255,0.9); text-shadow: 1px 1px 4px rgba(0,0,0,0.5);">Who we are and what we do</p>
+  <div id="auto-pages-abouthtml-1" class="page-container">
+    <h1 class="page-hero__title">About Acme Co</h1>
+    <p class="page-hero__subtitle">Who we are and what we do</p>
   </div>
 </div>
 
@@ -25,5 +25,5 @@
 </div>
 
 <div style="text-align: center; padding: 2rem;">
-  <a href="?page=services" style="display: inline-block; padding: 1rem 2.5rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 1.05rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 40px rgba(99,102,241,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(99,102,241,0.2)'">View Our Services</a>
+  <a href="?page=services" class="btn-cta" role="button">View Our Services</a>
 </div>
