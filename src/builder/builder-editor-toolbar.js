@@ -406,34 +406,34 @@ function selectPage(pageName) {
 }
 
 /**
- * Insert element - adds to selected element OR canvas end
+ * Insert element - ALWAYS adds to canvas end (main toolbar behavior)
+ * Use addChildElement() when adding inside a specific component
  */
 function insertElement(tag) {
   closeAllDropdowns();
   const element = createElementWithDefaults(tag);
-  
-  // If an element is selected, add as child; otherwise add to canvas
-  if (selectedWrapper) {
-    addAsChild(selectedWrapper, element, tag);
-  } else {
-    addElementToCanvas(element, tag);
-  }
+  // Main toolbar: always add to canvas end, not inside selected element
+  addElementToCanvas(element, tag);
 }
 
 /**
- * Insert component - adds to selected element OR canvas end
+ * Insert component - ALWAYS adds to canvas end (main toolbar behavior)
+ * Use addChildComponent() when adding inside a specific component
  */
 function insertComponent(tag) {
   closeAllDropdowns();
   const element = document.createElement(tag);
   element.id = generateElementId(tag);
-  
-  // If an element is selected, add as child; otherwise add to canvas
-  if (selectedWrapper) {
-    addAsChild(selectedWrapper, element, tag);
-  } else {
-    addElementToCanvas(element, tag);
+  // Special-case: provide sensible defaults for components that need children
+  if (tag === 'wb-tabs') {
+    element.innerHTML = `
+      <wb-tab label="Tab 1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</wb-tab>
+      <wb-tab label="Tab 2">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</wb-tab>
+      <wb-tab label="Tab 3">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</wb-tab>
+    `;
   }
+  // Main toolbar: always add to canvas end, not inside selected element
+  addElementToCanvas(element, tag);
 }
 
 /**
@@ -797,6 +797,36 @@ function updatePropertiesPanel(wrapper) {
     html += `<div class="prop-desc">${componentDef.description}</div>`;
   }
   
+  // Text Content - SPEC: Auto-grow, live update (moved to top)
+  const skipContent = ['wb-grid', 'wb-flex', 'wb-stack', 'wb-container', 'wb-tabs', 'br', 'hr', 'img', 'input', 'video', 'audio', 'iframe'];
+  if (!skipContent.includes(tag)) {
+    const textContent = content?.textContent || '';
+    html += `
+      <div class="prop-category">
+        <div class="prop-category-label">📝 Text Content</div>
+        <div class="prop-row">
+          <textarea class="prop-textarea prop-textarea-autogrow" 
+            oninput="EditorToolbar.updateElementContent('${wrapper.id}', this.value); this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"
+            style="min-height: 60px; resize: vertical;">${escapeHtml(textContent)}</textarea>
+        </div>
+      </div>
+    `;
+  }
+  
+  // Inline Style section - SPEC: Optional (moved to top)
+  const currentStyle = content?.getAttribute('style') || '';
+  html += `
+    <div class="prop-category">
+      <div class="prop-category-label">🎨 Inline Style (optional)</div>
+      <div class="prop-row">
+        <textarea class="prop-textarea prop-textarea-code prop-textarea-autogrow" 
+          placeholder="/* Optional: Add inline styles here */&#10;/* e.g. color: red; padding: 1rem; */"
+          oninput="EditorToolbar.updateElementStyle('${wrapper.id}', this.value); this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"
+          style="min-height: 40px; resize: vertical;">${escapeHtml(currentStyle)}</textarea>
+      </div>
+    </div>
+  `;
+
   // Theme selector - SPEC: Every element can have a static theme
   html += `
     <div class="prop-category">
@@ -836,9 +866,9 @@ function updatePropertiesPanel(wrapper) {
           html += `<input type="checkbox" id="${inputId}" ${currentValue === 'true' ? 'checked' : ''} 
             onchange="EditorToolbar.updateElementAttr('${wrapper.id}', '${attr.name}', this.checked ? 'true' : '')">`;
         } else {
-          html += `<input type="text" id="${inputId}" class="prop-input" value="${currentValue}" 
+          html += `<textarea id="${inputId}" class="prop-textarea prop-textarea-autogrow prop-textarea-short" 
             placeholder="${attr.default || ''}" 
-            oninput="EditorToolbar.updateElementAttr('${wrapper.id}', '${attr.name}', this.value)">`;
+            oninput="EditorToolbar.updateElementAttr('${wrapper.id}', '${attr.name}', this.value); this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';">${escapeHtml(currentValue)}</textarea>`;
         }
         
         html += `</div>`;
@@ -859,9 +889,9 @@ function updatePropertiesPanel(wrapper) {
       const inputId = `existing-${attr.name}-${wrapper.id}`;
       html += `<div class="prop-row">`;
       html += `<label class="prop-label" for="${inputId}">${attr.name}</label>`;
-      html += `<div style="display: flex; gap: 0.25rem;">`;
-      html += `<input type="text" id="${inputId}" class="prop-input" value="${escapeHtml(attr.value)}" 
-        oninput="EditorToolbar.updateElementAttr('${wrapper.id}', '${attr.name}', this.value)">`;
+      html += `<div style="display: flex; gap: 0.25rem; align-items: flex-start;">`;
+      html += `<textarea id="${inputId}" class="prop-textarea prop-textarea-autogrow prop-textarea-short" style="flex: 1;"
+        oninput="EditorToolbar.updateElementAttr('${wrapper.id}', '${attr.name}', this.value); this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';">${escapeHtml(attr.value)}</textarea>`;
       html += `<button class="prop-remove-btn" onclick="EditorToolbar.removeElementAttr('${wrapper.id}', '${attr.name}')" title="Remove">×</button>`;
       html += `</div></div>`;
     });
@@ -874,42 +904,18 @@ function updatePropertiesPanel(wrapper) {
     <div class="prop-category">
       <div class="prop-category-label">➕ Add Attribute</div>
       <div class="prop-row">
-        <input type="text" id="new-attr-name-${wrapper.id}" class="prop-input" placeholder="attribute name">
+        <label class="prop-label">Name</label>
+        <textarea id="new-attr-name-${wrapper.id}" class="prop-textarea prop-textarea-autogrow prop-textarea-short" 
+          placeholder="attribute name"
+          oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"></textarea>
       </div>
       <div class="prop-row">
-        <input type="text" id="new-attr-value-${wrapper.id}" class="prop-input" placeholder="attribute value">
+        <label class="prop-label">Value</label>
+        <textarea id="new-attr-value-${wrapper.id}" class="prop-textarea prop-textarea-autogrow prop-textarea-short" 
+          placeholder="attribute value"
+          oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"></textarea>
       </div>
       <button class="prop-add-btn" onclick="EditorToolbar.addNewAttribute('${wrapper.id}')">Add Attribute</button>
-    </div>
-  `;
-  
-  // Text Content - SPEC: Auto-grow, live update
-  const skipContent = ['wb-grid', 'wb-flex', 'wb-stack', 'wb-container', 'wb-tabs', 'br', 'hr', 'img', 'input', 'video', 'audio', 'iframe'];
-  if (!skipContent.includes(tag)) {
-    const textContent = content?.textContent || '';
-    html += `
-      <div class="prop-category">
-        <div class="prop-category-label">📝 Text Content</div>
-        <div class="prop-row">
-          <textarea class="prop-textarea prop-textarea-autogrow" 
-            oninput="EditorToolbar.updateElementContent('${wrapper.id}', this.value); this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"
-            style="min-height: 60px; resize: vertical;">${escapeHtml(textContent)}</textarea>
-        </div>
-      </div>
-    `;
-  }
-  
-  // Inline Style section - SPEC: Optional, shown as comment
-  const currentStyle = content?.getAttribute('style') || '';
-  html += `
-    <div class="prop-category">
-      <div class="prop-category-label">🎨 Inline Style (optional)</div>
-      <div class="prop-row">
-        <textarea class="prop-textarea prop-textarea-code prop-textarea-autogrow" 
-          placeholder="/* Optional: Add inline styles here */&#10;/* e.g. color: red; padding: 1rem; */"
-          oninput="EditorToolbar.updateElementStyle('${wrapper.id}', this.value); this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"
-          style="min-height: 40px; resize: vertical;">${escapeHtml(currentStyle)}</textarea>
-      </div>
     </div>
   `;
   

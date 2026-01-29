@@ -1,4 +1,4 @@
-# WB Builder Properties Panel Specification
+# Web Behaviors (WB) Builder Properties Panel Specification
 > **Version:** 3.0.0  
 > **Last Updated:** 2026-01-20  
 > **Status:** Active - SPEC COMPLIANCE REQUIRED
@@ -80,7 +80,7 @@ onchange="EditorToolbar.updateElementContent(id, this.value)"
 ```
 
 ### 6. EVERY ELEMENT MUST HAVE THEME SELECTOR
-- Theme dropdown at top of properties panel
+- Theme dropdown must be present and prominent in the properties panel (it may appear after the "Text Content" and "Inline Style" sections)
 - Uses WB theme classes
 - Default: "inherit" (no theme class)
 
@@ -130,6 +130,17 @@ Component Overlay:
 │ 🎯 <element-tag>                │
 │ #el-123456789                   │
 ├─────────────────────────────────┤
+│ 📝 Text Content                 │
+│ ┌─────────────────────────────┐ │
+│ │ Lorem ipsum dolor sit amet  │ │
+│ │ (auto-grows as you type)    │ │
+│ └─────────────────────────────┘ │
+├─────────────────────────────────┤
+│ 🎨 Inline Style (optional)      │
+│ ┌─────────────────────────────┐ │
+│ │ /* Optional: Add styles */  │ │
+│ └─────────────────────────────┘ │
+├─────────────────────────────────┤
 │ 🎨 Theme                        │
 │ [Default (inherit) ▼]          │
 ├─────────────────────────────────┤
@@ -149,17 +160,6 @@ Component Overlay:
 │ [attribute name               ] │
 │ [attribute value              ] │
 │ [Add Attribute]                 │
-├─────────────────────────────────┤
-│ 📝 Text Content                 │
-│ ┌─────────────────────────────┐ │
-│ │ Lorem ipsum dolor sit amet  │ │
-│ │ (auto-grows as you type)    │ │
-│ └─────────────────────────────┘ │
-├─────────────────────────────────┤
-│ 🎨 Inline Style (optional)      │
-│ ┌─────────────────────────────┐ │
-│ │ /* Optional: Add styles */  │ │
-│ └─────────────────────────────┘ │
 └─────────────────────────────────┘
 ```
 
@@ -181,8 +181,18 @@ test('text elements should have lorem ipsum content', async ({ page }) => {
 ```typescript
 test('text content should update as user types', async ({ page }) => {
   // Select element
+  // Use selector: `.prop-category:has-text("Text Content") textarea`
   // Type in properties panel textarea
   // Verify canvas element updates in real-time
+});
+```
+
+### Panel Order Test
+```typescript
+test('text content and inline style are the first two categories in properties panel', async ({ page }) => {
+  // Select an element
+  // Assert: `.prop-category`.first() contains 'Text Content'
+  // Assert: `.prop-category`.nth(1) contains 'Inline Style'
 });
 ```
 

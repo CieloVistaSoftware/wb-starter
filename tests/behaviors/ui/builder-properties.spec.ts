@@ -77,21 +77,40 @@ test.describe('Builder Properties Panel - Spec Compliance', () => {
   });
 
   test.describe('3. Text Content Must Auto-Grow', () => {
-    test('text content textarea should expand with content', async ({ page }) => {
+    test('text content textarea should expand with content and appears as first category', async ({ page }) => {
       // Add a text element
       await page.click('button:has-text("+ Element")');
       await page.waitForTimeout(200);
       await page.click('button:has-text("<p>")');
       await page.waitForTimeout(300);
       
-      // Select the element
-      await page.click('.canvas-component');
+      // Select the newly added element (last on canvas)
+      const wrapper = page.locator('.canvas-component').last();
+      await expect(wrapper).toBeVisible();
+      await wrapper.click();
       await page.waitForTimeout(200);
-      
-      // Find the text content textarea
-      const textarea = page.locator('.prop-textarea').first();
+
+      // Wait for properties panel and do diagnostic checks
+      const panel = page.locator('#propertiesPanel');
+      await expect(panel).toBeAttached();
+
+      const categoriesCount = await panel.locator('.prop-category').count();
+      if (categoriesCount === 0) {
+        const panelHtml = await panel.evaluate(el => el.innerHTML);
+        const bodySnap = await page.evaluate(() => document.body.innerHTML.substring(0, 20000));
+        throw new Error(`Diagnostic Failure: properties panel empty. panel.innerHTML:\n${panelHtml}\n\nBody snapshot (truncated):\n${bodySnap}`);
+      }
+
+      // Verify ordering: Text Content should be the first category and Inline Style second
+      const firstCategory = page.locator('.prop-category').first();
+      await expect(firstCategory).toContainText('Text Content');
+      const secondCategory = page.locator('.prop-category').nth(1);
+      await expect(secondCategory).toContainText('Inline Style');
+
+      // Find the text content textarea specifically
+      const textarea = page.locator('.prop-category:has-text("Text Content") textarea');
       await expect(textarea).toBeVisible();
-      
+
       // Get initial height
       const initialHeight = await textarea.evaluate(el => el.scrollHeight);
       
@@ -113,19 +132,32 @@ test.describe('Builder Properties Panel - Spec Compliance', () => {
       await page.click('button:has-text("<p>")');
       await page.waitForTimeout(300);
       
-      // Select the element
-      await page.click('.canvas-component');
+      // Select the newly added element (last on canvas)
+      const wrapper = page.locator('.canvas-component').last();
+      await expect(wrapper).toBeVisible();
+      await wrapper.click();
       await page.waitForTimeout(200);
-      
-      // Find the text content textarea
-      const textarea = page.locator('.prop-textarea').first();
+
+      // Wait for properties panel and diagnostic checks
+      const panel = page.locator('#propertiesPanel');
+      await expect(panel).toBeAttached();
+      const categoriesCount = await panel.locator('.prop-category').count();
+      if (categoriesCount === 0) {
+        const panelHtml = await panel.evaluate(el => el.innerHTML);
+        const bodySnap = await page.evaluate(() => document.body.innerHTML.substring(0, 20000));
+        throw new Error(`Diagnostic Failure: properties panel empty. panel.innerHTML:\n${panelHtml}\n\nBody snapshot (truncated):\n${bodySnap}`);
+      }
+
+      // Find the text content textarea specifically
+      const textarea = page.locator('.prop-category:has-text("Text Content") textarea');
+      await expect(textarea).toBeVisible();
       
       // Clear and type new content
       await textarea.fill('');
       await textarea.type('Live update test');
       
-      // Check canvas element updated (not waiting for blur)
-      const canvasP = page.locator('.canvas-component .component-content p');
+      // Check canvas element updated (not waiting for blur) — target the selected wrapper to avoid ambiguity
+      const canvasP = wrapper.locator('.component-content p').first();
       await expect(canvasP).toHaveText('Live update test');
     });
   });
@@ -142,8 +174,12 @@ test.describe('Builder Properties Panel - Spec Compliance', () => {
       await page.click('.canvas-component');
       await page.waitForTimeout(200);
       
-      // Find inline style textarea
-      const styleTextarea = page.locator('.prop-textarea-code');
+      // Ensure Inline Style is the second category
+      const secondCategory = page.locator('.prop-category').nth(1);
+      await expect(secondCategory).toContainText('Inline Style');
+
+      // Find inline style textarea specifically
+      const styleTextarea = page.locator('.prop-category:has-text("Inline Style") textarea');
       await expect(styleTextarea).toBeVisible();
       
       // Check placeholder contains "optional" or comment markers

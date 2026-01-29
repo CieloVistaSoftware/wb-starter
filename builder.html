@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" theme="dark" id="auto-builderhtml-1">
+<html lang="en" theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🗒️ WB Page Builder</title>
+  <title>🏗️ WB Page Builder</title>
   <link rel="stylesheet" href="src/styles/themes.css">
   <link rel="stylesheet" href="src/styles/site.css">
   <link rel="stylesheet" href="src/styles/builder.css">
   <link rel="stylesheet" href="src/styles/components/drawer.css">
   <link rel="stylesheet" href="src/styles/behaviors/notes.css">
+  <link rel="stylesheet" href="src/styles/behaviors/issues.css">
+  <link rel="stylesheet" href="src/styles/behaviors/navbar.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="builder-override.css">
 </head>
-<body id="auto-builderhtml-2">
+<body>
   <!-- Mobile Notice -->
-  <div class="builder-mobile-notice" id="auto-builderhtml-3">
+  <div class="builder-mobile-notice">
     <div class="builder-mobile-notice__icon">🖥️</div>
     <h2 class="builder-mobile-notice__title">Desktop Recommended</h2>
     <p class="builder-mobile-notice__text">
@@ -25,13 +27,33 @@
     <a href="index.html" class="builder-mobile-notice__btn">← Back to Site</a>
   </div>
 
-  <!-- Top Bar (loaded dynamically) -->
-  <div class="top-bar" id="top-bar-content"></div>
+  <!-- Top Navbar -->
+  <header class="builder-header">
+    <div class="top-bar">
+      <h1>WB Page Builder</h1>
+    </div>
+    <wb-navbar brand="🏗️ WB Builder" brand-href="index.html">
+      <a href="index.html">🏠 Home</a>
+      <a href="?page=components">🧩 Components</a>
+      <a href="?page=behaviors">⚡ Behaviors</a>
+      <a href="?page=docs">📖 Docs</a>
+      <div class="wb-navbar__extras">
+        <button class="btn btn-secondary btn-sm" onclick="refreshBuilder()" title="Refresh">🔄</button>
+        <button class="btn btn-secondary btn-sm" onclick="resetBuilder()" title="Reset">🗑️</button>
+        <button class="btn btn-secondary btn-sm" onclick="BuilderSelfTest.runAll()" title="Test">🧪</button>
+        <button class="btn btn-secondary btn-sm" onclick="showConfigPanel()" title="Settings">⚙️</button>
+        <button class="btn btn-secondary btn-sm" onclick="showOpenMenu(event)" title="Open">📂</button>
+        <button class="btn btn-secondary btn-sm" onclick="previewSite()" title="Preview">👁️</button>
+        <button id="issuesToggle" class="btn btn-secondary btn-sm" title="Issues">🐛</button>
+        <button class="btn btn-primary btn-sm" onclick="showSaveMenu(event)" title="Save">💾</button>
+        <wb-themecontrol show-label="false" style="width:100px;"></wb-themecontrol>
+      </div>
+    </wb-navbar>
+  </header>
 
   <!-- Main Builder Layout -->
-  <div class="builder-layout" id="auto-builderhtml-4">
-    
-    <!-- Left Drawer -->
+  <div class="builder-layout">
+    <!-- Left Drawer (Components Panel) -->
     <aside class="wb-drawer wb-drawer--left" id="leftDrawer">
       <div class="wb-drawer__content" id="components-panel-content">
         <!-- Loaded by builder-app.js -->
@@ -45,7 +67,7 @@
       <!-- Loaded by builder-app.js -->
     </div>
 
-    <!-- Right Drawer -->
+    <!-- Right Drawer (Properties Panel) -->
     <aside class="wb-drawer wb-drawer--right" id="rightDrawer">
       <button class="wb-drawer__toggle" onclick="toggleDrawer('rightDrawer')">▶</button>
       <div class="wb-drawer__handle" onmousedown="startResize(event, 'rightDrawer', 'right')"></div>
@@ -58,27 +80,33 @@
   <!-- Status Bar (loaded dynamically) -->
   <div class="status-bar" id="status-bar-content"></div>
 
-  <!-- WB Framework - Required for component rendering -->
+  <!-- Hidden file input for Open > Upload JSON -->
+  <input type="file" id="jsonFileInput" accept=".json" style="display:none" onchange="handleJsonFileUpload(event)">
+
+  <!-- WB Framework -->
   <script type="module">
     import WB from './src/core/wb-lazy.js';
     WB.init({ debug: false, autoInject: true });
-    if (window.WB_DEBUG) console.log('[WB Builder] WB Framework initialized');
   </script>
 
-  <!-- Builder App - Loads all views -->
+  <!-- Builder App - Loads views -->
   <script src="src/builder/builder-app.js" type="module"></script>
 
-  <!-- Builder Core Scripts (load after views are ready) -->
+  <!-- Builder Core Scripts -->
+  <script src="src/builder/builder-contracts.js"></script>
   <script>
-    // Wait for views to load before initializing builder modules
     document.addEventListener('builder:views-loaded', () => {
-      if (window.WB_DEBUG) console.log('[Builder] Views ready, initializing modules...');
+      console.log('[Builder] Views ready');
     });
   </script>
   <script src="builder-inline.js"></script>
   <script src="src/builder/builder-state.js"></script>
   <script src="src/builder/builder-templates.js"></script>
   <script src="src/builder/builder-pages.js"></script>
+  <script src="src/builder/builder-component-core.js"></script>
+  <script src="src/builder/builder-html-editor.js"></script>
+  <script src="src/builder/builder-semantic.js"></script>
+  <script src="src/builder/builder-drag-drop.js"></script>
   <script src="src/builder/builder-components.js"></script>
   <script src="src/builder/builder-properties.js"></script>
   <script src="src/builder/builder-export.js"></script>
@@ -86,12 +114,9 @@
   <script src="src/builder/builder-editor-toolbar.js"></script>
   <script src="src/builder/builder-init.js"></script>
   <script src="src/builder/builder-self-test.js"></script>
-
   <script src="src/wb-viewmodels/builder-app/builder-enhancements.js"></script>
-  <!-- Disable all toast notifications after builder app loads -->
-  <script>
-    window.toast = function(){};
-  </script>
 
+  <!-- Disable toast notifications in builder -->
+  <script>window.toast = function(){};</script>
 </body>
 </html>
