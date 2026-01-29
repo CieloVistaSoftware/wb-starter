@@ -360,6 +360,42 @@ function init() {
   // Render pages list and component library
   renderPagesList();
   renderComponentLibrary();
+
+  // Ensure core templates/components are available immediately for tests
+  // and for consumers that expect core building blocks to be synchronous.
+  (function ensureCoreComponentLibrary() {
+    try {
+      const coreIds = ['navbar', 'hero', 'cta', 'features'];
+      window.WB_COMPONENT_LIBRARY = window.WB_COMPONENT_LIBRARY || {};
+
+      // Helper to find component across categories
+      const hasComponent = id => Object.values(window.WB_COMPONENT_LIBRARY || {}).some(cat => (cat.components || []).some(c => c.id === id));
+
+      // Ensure there's a 'core' category we can populate with fallback entries
+      const coreCat = window.WB_COMPONENT_LIBRARY['core'] || { name: 'Core', icon: '⭐', components: [] };
+
+      for (const id of coreIds) {
+        if (!hasComponent(id)) {
+          const tpl = window.componentTemplates && window.componentTemplates[id];
+          coreCat.components.push({
+            id,
+            name: tpl?.name || id,
+            icon: tpl?.icon || '📦',
+            desc: tpl?.description || tpl?.name || id
+          });
+        }
+      }
+
+      window.WB_COMPONENT_LIBRARY['core'] = coreCat;
+
+      // Signal readiness for any listeners/tests that prefer an event
+      try { window.dispatchEvent(new CustomEvent('wb-core-templates-ready')); } catch (e) { /* ignore */ }
+
+      if (window.WB_DEBUG) console.log('[Builder] ensured core component library entries');
+    } catch (err) {
+      console.warn('[ensureCoreComponentLibrary] failed', err && err.message);
+    }
+  })();
   
   // Load Home page's initial content
   const homePage = pages.find(p => p.id === 'home');

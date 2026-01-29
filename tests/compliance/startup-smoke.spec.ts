@@ -34,6 +34,14 @@ test.describe('Builder startup smoke (fast)', () => {
       }
     }
 
+    // 3) Core components pre-warm: ensure the palette/library exposes core ids
+    const coreIds = ['navbar', 'hero', 'cta', 'features'];
+    const lib = await page.evaluate(() => (window as any).WB_COMPONENT_LIBRARY || {});
+    for (const id of coreIds) {
+      const exists = Object.values(lib).some((c: any) => Array.isArray(c.components) && c.components.find((x: any) => x.id === id));
+      expect(exists, `core component ${id} available in WB_COMPONENT_LIBRARY`).toBe(true);
+    }
+
     // 3) Sanity: critical APIs exist
     const apis = await page.evaluate(() => ({
       addComponentToCanvas: typeof window.addComponentToCanvas,
