@@ -63,11 +63,10 @@ test.describe('Builder Function Overwrite Detection', () => {
     // be exposed as plain globals; assert the observable feature instead.
     const availability = await page.evaluate(() => {
       return {
-        // showSemanticProperties may be exposed as a global OR via the
-        // higher-level `showProperties` API or via the properties panel DOM.
-        showSemanticProperties: typeof window.showSemanticProperties === 'function'
-          || typeof window.showProperties === 'function'
-          || !!document.querySelector('#propertiesPanel'),
+        // NOTE: `showSemanticProperties` is tested separately (behavior-driven)
+        // and may be intentionally protected by Design-by-Contract. Do not
+        // require the raw global here; check the higher-level `showProperties`
+        // API or the properties panel DOM instead.
 
         showProperties: typeof window.showProperties === 'function'
           || !!document.querySelector('#propertiesPanel'),
