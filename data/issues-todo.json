@@ -1,0 +1,173 @@
+{
+  "lastUpdated": "2026-01-30T02:24:25.789Z",
+  "issues": [
+    {
+      "id": "note-1769470023977-p0",
+      "type": "UI",
+      "description": "spinner sizes wrong on components page",
+      "date": "1/26/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769469995667-p0",
+      "type": "UI",
+      "description": "remove clicked toast in alerts section",
+      "date": "1/26/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769469912373-p0",
+      "type": "UI",
+      "description": "code sections not colored (use mdhtml)",
+      "date": "1/26/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769469867776-p0",
+      "type": "UI",
+      "description": "card footer missing on components page",
+      "date": "1/26/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769445571833-p0",
+      "type": "UI",
+      "description": "replace docs link with theme control",
+      "date": "1/26/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769445416198-p0",
+      "type": "UI",
+      "description": "builder.html needs page level theme control",
+      "date": "1/26/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769445369305-p0",
+      "type": "BUG",
+      "description": "doc button from builder does not navigate",
+      "date": "1/26/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769445232423-p0",
+      "type": "UI",
+      "description": "issue header not visible on home page",
+      "date": "1/26/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769445034341-p0",
+      "type": "BUG",
+      "description": "home page has many things not working",
+      "date": "1/26/2026",
+      "fixed": false
+    },
+    {
+      "id": "issues-viewer-refresh-button",
+      "type": "BUG",
+      "description": "Issues viewer refresh button does not work",
+      "date": "1/25/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769306014994-p0",
+      "type": "UI",
+      "description": "builder add component popup uneven rows",
+      "date": "1/24/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769305932956-p0",
+      "type": "UI",
+      "description": "remove issues button in builder bottom right",
+      "date": "1/24/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769302437975-p0",
+      "type": "BUG",
+      "description": "semanticContextMenu broken",
+      "date": "1/24/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769220751805-p0",
+      "type": "BUG",
+      "description": "Behavior category buttons do not scroll to section",
+      "date": "1/23/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769212344261-p0",
+      "type": "UI",
+      "description": "remove wb-issues refs not in navbar",
+      "date": "1/23/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769212252713-p0",
+      "type": "ENHANCEMENT",
+      "description": "unit tests for x-attribute add/remove",
+      "date": "1/23/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769194490447-p0",
+      "type": "ENHANCEMENT",
+      "description": "Issues component publishable to npm",
+      "date": "1/23/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769194412485-p0",
+      "type": "ENHANCEMENT",
+      "description": "require test link to resolve issue",
+      "date": "1/23/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769194386465-p0",
+      "type": "ENHANCEMENT",
+      "description": "inform AI tests required before resolve",
+      "date": "1/23/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769194331335-p0",
+      "type": "ENHANCEMENT",
+      "description": "issues viewer show full json record",
+      "date": "1/23/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769293683522-p0",
+      "type": "OTHER",
+      "description": "Auto-generated issue for test",
+      "date": "1/27/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769212201021-p0",
+      "type": "BUG",
+      "description": "adding x-draggable changes element location",
+      "date": "1/23/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769211301098-p0",
+      "type": "BUG",
+      "description": "theme override does not work",
+      "date": "1/23/2026",
+      "fixed": false
+    },
+    {
+      "id": "note-1769194562447-p0",
+      "type": "BUG",
+      "description": "context menu inspect does nothing",
+      "date": "1/23/2026",
+      "fixed": false
+    }
+  ]
+}
