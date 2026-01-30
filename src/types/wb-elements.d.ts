@@ -15,6 +15,7 @@ declare global {
     wbFireworks?: any;
     wbSnow?: any;
     wbForm?: any;
+    wbInput?: WBInputAPI;
     wbToggle?: any;
     wbMdhtml?: any;
     wbVideo?: any;
@@ -33,7 +34,7 @@ declare global {
     _wbSpinnerInit?: boolean;
     _statusTimeout?: number;
 
-    items?: any[];
+    items?: any;
   }
 }
 
