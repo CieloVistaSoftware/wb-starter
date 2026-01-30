@@ -12,6 +12,7 @@ This document describes the standard process for fixing issues in the WB Framewo
 - GitHub CLI (gh) installed and authenticated
 - npm-runner MCP server connected to project
 - All tests passing on main branch
+- Follow the repository file-locking protocol in `Lock/lock.md` for multi-agent edits: create `Lock/LOCKED-{filename}.md` before editing protected or high-risk files and remove it immediately after committing. AI agents **must** include agent identity and model in the lock file.
 
 ---
 
@@ -81,24 +82,39 @@ npx playwright test --project=behaviors --workers=8
 
 ### 6. Commit Changes
 
+Before you edit high-risk files create a lock (see `Lock/lock.md`) and include it in your local workspace; delete the lock immediately after you finish and before pushing. Example (AI/human):
+
+```bash
+# create a local lock file (human or CI may automate this)
+echo "Locked by: <you>\nTimestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)" > Lock/LOCKED-<filename>.md
+```
+
 ```bash
 # Stage all changes
 git add .
 
 # Commit with descriptive message
-git commit -m "fix(scope): description
+git commit -m "fix(scope): concise summary
 
-- bullet point of change
-- bullet point of change
+- short description of change
+- reference to test(s): tests/xxx.spec.ts
 
-Fixes #issue-id"
+Fixes #note-xxxxxxx"
 ```
+
+Commit message checklist (required):
+- short conventional prefix (fix/feat/chore/test)
+- one-line summary + 1–3 bullet points in body
+- reference to issue id (Fixes #note-...)
+- include `validationTest: tests/path/to/validation.spec.ts` in the issue record when resolving
 
 **Commit message format:**
 - fix(ui): for UI issues
 - fix(bug): for bugs
 - fix(test): for test-only changes
 - feat(enhancement): for new features
+
+> Note: do NOT commit Lock/LOCKED-*.md files to the repo — they are local coordination artifacts.
 
 ### 7. Push Branch
 
@@ -134,16 +150,29 @@ gh pr merge --squash --delete-branch
 
 ### 10. Update Issue Status
 
-Update data/pending-issues.json:
+Update `data/pending-issues.json` and record the validating test. Use `scripts/mark-ready-for-review.mjs` to atomically update the issue record when a validating test exists.
+
+**Important:** do not work on or modify any issue whose `fixed` field is `true` — those are considered resolved and must be left alone by automation and humans alike.
+
+Example JSON (record the validating test and `fixed` flag):
 
 ```json
 {
   "id": "issue-id",
   "status": "fixed",
-  "fixedAt": "ISO timestamp",
+  "fixedAt": "2026-01-29T19:00:00.000Z",
   "resolution": "Fixed in PR #number",
-  "testFile": "tests/issues/test.spec.ts"
+  "testFile": "tests/issues/test.spec.ts",
+  "validationTest": "tests/issues/test.spec.ts",
+  "fixed": true
 }
+```
+
+Quick helper (preferred):
+
+```bash
+# run the validation test and update issue atomically
+node scripts/mark-ready-for-review.mjs <issueId> tests/issues/test.spec.ts
 ```
 
 ---
@@ -161,8 +190,28 @@ Update data/pending-issues.json:
 | Create PR | gh pr create --title "..." --body "..." |
 | Merge PR | gh pr merge --squash --delete-branch |
 | Return to main | git checkout main and git pull |
+| Run auto PR (local) | `npm run auto:pr` (runs tests, honors locks, opens PR) |
 
 ---
+
+## Automation (local + CI)
+
+We provide a safe, opinionated automation flow to create an automated PR for trivial fixes and doc/data syncs. The automation is conservative: it **runs tests**, **honors Lock/**, and will **not** touch files that are locked.
+
+Local quick-run:
+- `npm run auto:pr` — runs relevant tests (or specified tests), creates a branch, commits only changed files, pushes, and opens a PR. Requires `GITHUB_TOKEN` or `GH_TOKEN` in your env.
+
+CI:
+- A scheduled/workflow dispatch action (`.github/workflows/auto-pr-on-pass.yml`) can run the same flow in CI — useful for nightly housekeeping or auto-fixing low-risk items.
+
+When automation SHOULD NOT run:
+- large refactors, behavioral changes, or API-breaking work
+- edits touching many files or cross-cutting concerns
+
+Safety checklist (automation):
+- tests covering changed behavior passed locally or in CI
+- no Lock/ files conflict with the changed files
+- PR description includes reason + validation test
 
 ## Notes
 
