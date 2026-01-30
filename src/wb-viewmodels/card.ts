@@ -85,15 +85,18 @@ export function cardBase(element: HTMLElement, options: Record<string, any> = {}
   // When true, DOM structure is already built from $view - we only add interactivity
   const schemaProcessed = options.schemaProcessed || element.dataset.wbSchema;
   
-  const config = {
+  const config: Record<string, any> = {
+    // Core options (spread last so explicit props above can still be overridden)
     ...options, // Spread first to allow overrides, but specific logic below takes precedence
     behavior: options.behavior || 'card',
     title: options.title || element.dataset.title || element.getAttribute('title') || '',
-    subtitle: options.subtitle || element.dataset.subtitle || '',
+    pretitle: options.pretitle || element.dataset.pretitle || '',
+    subtitle: options.subtitle || element.dataset.subtitle || element.getAttribute('subtitle') || '',
     content: options.content || element.dataset.content || element.getAttribute('content') || '',
     footer: options.footer || element.dataset.footer || '',
     variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
     badge: options.badge || element.dataset.badge || element.getAttribute('badge') || '',
+    background: options.background || element.dataset.background || element.getAttribute('background') || '',
     clickable: parseBoolean(options.clickable) ?? (element.dataset.clickable === 'true' || (element.hasAttribute('data-clickable') && element.dataset.clickable !== 'false') || element.hasAttribute('clickable')),
     hoverable: parseBoolean(options.hoverable) ?? (element.dataset.hoverable !== 'false'),
     elevated: parseBoolean(options.elevated) ?? (element.dataset.elevated === 'true' || (element.hasAttribute('data-elevated') && element.dataset.elevated !== 'false') || element.hasAttribute('elevated')),
@@ -101,6 +104,16 @@ export function cardBase(element: HTMLElement, options: Record<string, any> = {}
     hoverText: options.hoverText || element.dataset.hoverText || '',
     onClick: options.onClick || element.dataset.onClick || '',
     dataContext: options.dataContext || element.dataset.dataContext || '{}',
+
+    // CTA helpers
+    cta: options.cta || element.dataset.cta || element.getAttribute('cta') || '',
+    ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href') || '',
+    ctaSecondary: options.ctaSecondary || element.dataset.ctaSecondary || element.getAttribute('cta-secondary') || '',
+    ctaSecondaryHref: options.ctaSecondaryHref || element.dataset.ctaSecondaryHref || element.getAttribute('cta-secondary-href') || '',
+
+    // Media helpers
+    tracks: options.tracks || element.dataset.tracks || element.getAttribute('tracks') || '',
+
     // v3.0: Skip structure building if schema already did it
     skipStructure: parseBoolean(options.skipStructure) ?? schemaProcessed ?? false,
     schemaProcessed: schemaProcessed,
@@ -127,7 +140,7 @@ export function cardBase(element: HTMLElement, options: Record<string, any> = {}
   }
   
   // Apply base styles
-  const baseStyles = {
+  const baseStyles: Partial<CSSStyleDeclaration> = {
     transition: 'all 0.2s ease',
     borderRadius: 'var(--radius-lg, 8px)',
     background: config.background || element.style.background || 'var(--bg-secondary, #1f2937)',
@@ -144,7 +157,7 @@ export function cardBase(element: HTMLElement, options: Record<string, any> = {}
   if (config.variant === 'glass') {
     baseStyles.background = 'rgba(255, 255, 255, 0.05)';
     baseStyles.backdropFilter = 'blur(10px)';
-    baseStyles.webkitBackdropFilter = 'blur(10px)';
+    (baseStyles as any).webkitBackdropFilter = 'blur(10px)';
     baseStyles.border = '1px solid rgba(255, 255, 255, 0.1)';
   }
 
@@ -649,6 +662,7 @@ export function cardvideo(element: HTMLElement, options: Record<string, any> = {
     muted: parseBoolean(options.muted) ?? (element.dataset.muted === 'true' || element.getAttribute('muted') === 'true' || (element.hasAttribute('data-muted') && element.dataset.muted !== 'false')),
     loop: parseBoolean(options.loop) ?? (element.dataset.loop === 'true' || element.getAttribute('loop') === 'true' || (element.hasAttribute('data-loop') && element.dataset.loop !== 'false')),
     controls: parseBoolean(options.controls) ?? (element.dataset.controls !== 'false' && element.getAttribute('controls') !== 'false'),
+    tracks: options.tracks || element.dataset.tracks || element.getAttribute('tracks') || '',
     ...options
   };
 
@@ -765,7 +779,7 @@ export function cardhero(element: HTMLElement, options: Record<string, any> = {}
   // If the user provided content inside the tag, we want to preserve specific pieces
   // marked with slot="..." or data-slot="..." to avoid putting HTML in attributes.
   
-  const slots = {};
+  const slots: Record<string, HTMLElement> = {};
   ['pretitle', 'title', 'subtitle'].forEach(slotName => {
     // Check standard ShadowDOM-like slot syntax
     let slotEl = element.querySelector(`[slot="${slotName}"]`);
@@ -773,10 +787,10 @@ export function cardhero(element: HTMLElement, options: Record<string, any> = {}
     if (!slotEl) slotEl = element.querySelector(`[data-slot="${slotName}"]`);
     
     if (slotEl) {
-      slots[slotName] = slotEl.cloneNode(true);
+      slots[slotName] = slotEl.cloneNode(true) as HTMLElement;
       // Remove slot attribute for cleaner DOM in result
-      slots[slotName].removeAttribute('slot');
-      slots[slotName].removeAttribute('data-slot');
+      (slots[slotName] as HTMLElement).removeAttribute('slot');
+      (slots[slotName] as HTMLElement).removeAttribute('data-slot');
     }
   });
 
@@ -1235,6 +1249,7 @@ export function cardproduct(element: HTMLElement, options: Record<string, any> =
     reviews: options.reviews || element.dataset.reviews || element.getAttribute('reviews'),
     cta: options.cta || element.dataset.cta || element.getAttribute('cta') || 'Add to Cart',
     description: options.description || element.dataset.description || element.getAttribute('description'),
+    subtitle: options.subtitle || element.dataset.subtitle || element.getAttribute('subtitle') || '',
     ...options
   };
 
@@ -1950,7 +1965,7 @@ export function cardminimizable(element: HTMLElement, options: Record<string, an
     content.style.padding = isMinimized ? '0 1rem' : '1rem';
     content.style.opacity = isMinimized ? '0' : '1';
     minBtn.textContent = isMinimized ? '+' : '−';
-    minBtn.setAttribute('aria-expanded', !isMinimized);
+    minBtn.setAttribute('aria-expanded', String(!isMinimized));
     minBtn.setAttribute('aria-label', isMinimized ? 'Expand' : 'Minimize');
     element.classList.toggle('wb-card--minimized', isMinimized);
     
@@ -1966,7 +1981,7 @@ export function cardminimizable(element: HTMLElement, options: Record<string, an
     }));
   };
 
-  minBtn.setAttribute('aria-expanded', !config.minimized);
+  minBtn.setAttribute('aria-expanded', String(!config.minimized));
   minBtn.setAttribute('aria-label', config.minimized ? 'Expand' : 'Minimize');
   minBtn.onclick = toggle;
   
@@ -1981,8 +1996,8 @@ export function cardminimizable(element: HTMLElement, options: Record<string, an
   // Footer
   if (base.config.footer) {
     const footerEl = base.createFooter();
-    footer.style.display = isMinimized ? 'none' : '';
-    element.appendChild(footer);
+    footerEl.style.display = isMinimized ? 'none' : '';
+    element.appendChild(footerEl);
   }
 
   // API
@@ -2017,29 +2032,29 @@ export function carddraggable(element: HTMLElement, options: Record<string, any>
 
   // Header with drag handle
   const headerEl = document.createElement('header');
-  header.className = 'wb-card__header wb-card__drag-handle';
-  header.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);cursor:grab;display:flex;align-items:center;gap:0.5rem;';
-  header.setAttribute('aria-label', 'Drag to move card');
-  header.setAttribute('role', 'button');
+headerEl.className = 'wb-card__header wb-card__drag-handle';
+    headerEl.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);cursor:grab;display:flex;align-items:center;gap:0.5rem;';
+    headerEl.setAttribute('aria-label', 'Drag to move card');
+    headerEl.setAttribute('role', 'button');
 
   const handleIcon = document.createElement('span');
   handleIcon.style.cssText = 'opacity:0.5;';
   handleIcon.textContent = '⋮⋮';
-  header.appendChild(handleIcon);
+  headerEl.appendChild(handleIcon);
 
   if (base.config.title) {
-    const headerTitle = document.createElement('h3');
+    const titleEl = document.createElement('h3');
     titleEl.className = 'wb-card__title';
     titleEl.style.cssText = 'margin:0;flex:1;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
-    header.appendChild(titleEl);
+    headerEl.appendChild(titleEl);
   }
 
-  element.appendChild(header);
+  element.appendChild(headerEl);
 
   // Content
   const contentArea = base.createMain();
-  element.appendChild(content);
+  element.appendChild(contentArea);
 
   // Footer
   if (base.config.footer) {
@@ -2058,7 +2073,7 @@ export function carddraggable(element: HTMLElement, options: Record<string, any>
     initialX = element.offsetLeft;
     initialY = element.offsetTop;
     
-    header.style.cursor = 'grabbing';
+    headerEl.style.cursor = 'grabbing';
     element.classList.add('wb-card--dragging');
     element.style.opacity = '0.8';
     element.style.zIndex = '1000';
@@ -2069,7 +2084,7 @@ export function carddraggable(element: HTMLElement, options: Record<string, any>
     }));
   };
 
-  header.addEventListener('mousedown', onMouseDown);
+  headerEl.addEventListener('mousedown', onMouseDown);
 
   const onMouseMove = (e) => {
     if (!isDragging) return;
@@ -2118,7 +2133,7 @@ export function carddraggable(element: HTMLElement, options: Record<string, any>
   const onMouseUp = () => {
     if (isDragging) {
       isDragging = false;
-      header.style.cursor = 'grab';
+      headerEl.style.cursor = 'grab';
       element.classList.remove('wb-card--dragging');
       element.style.opacity = '';
       element.style.zIndex = '';
@@ -2126,8 +2141,8 @@ export function carddraggable(element: HTMLElement, options: Record<string, any>
       element.dispatchEvent(new CustomEvent('wb:carddraggable:dragend', {
         bubbles: true,
         detail: { 
-          x: parseInt(element.style.left || 0), 
-          y: parseInt(element.style.top || 0) 
+          x: parseInt(element.style.left || '0', 10), 
+          y: parseInt(element.style.top || '0', 10) 
         }
       }));
     }
@@ -2143,8 +2158,8 @@ export function carddraggable(element: HTMLElement, options: Record<string, any>
       element.style.top = y + 'px';
     },
     getPosition: () => ({
-      x: parseInt(element.style.left || 0),
-      y: parseInt(element.style.top || 0)
+      x: parseInt(element.style.left || '0', 10),
+      y: parseInt(element.style.top || '0', 10)
     }),
     reset: () => {
       element.style.left = '';
@@ -2156,7 +2171,7 @@ export function carddraggable(element: HTMLElement, options: Record<string, any>
   const originalCleanup = base.cleanup;
   return () => {
     originalCleanup();
-    header.removeEventListener('mousedown', onMouseDown);
+    headerEl.removeEventListener('mousedown', onMouseDown);
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
   };
@@ -2680,7 +2695,7 @@ export function cardportfolio(element: HTMLElement, options: Record<string, any>
   // API
   element.wbPortfolio = {
     setAvailability: (status) => {
-      const dot = element.querySelector('.wb-portfolio__availability');
+      const dot = element.querySelector('.wb-portfolio__availability') as HTMLElement | null;
       if (dot && availabilityConfig[status]) {
         dot.style.background = availabilityConfig[status].color;
         dot.title = availabilityConfig[status].label;
