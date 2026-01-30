@@ -25,11 +25,17 @@
     "test:browsers": "npx playwright test --project=firefox --project=webkit --project=mobile-chrome --project=mobile-safari",
     "test:all": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors && npx playwright test --project=performance",
     "test:integrity": "npx playwright test tests/compliance/project-integrity.spec.ts",
+    "test:issues": "npx playwright test --project=issues --reporter=list",
     "audit:schema-tests": "node scripts/audit-schema-tests.mjs",
     "generate:wb-tests": "node scripts/generate-wb-tests.mjs",
     "generate:schema-tests": "node scripts/generate-schema-tests.js",
     "generate:search": "node scripts/generate-search-index.js",
-    "precommit": "npm run test:integrity"
+    "precommit": "npm run test:integrity",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "test:smoke": "npx playwright test --project=compliance tests/compliance/theme-readiness-smoke.spec.ts --reporter=list",
+    "ci:ensure-trace": "node scripts/ci-ensure-trace.mjs data/test-results --retries=3 --wait=2000"
   },
   "keywords": [
     "website",
@@ -58,6 +64,7 @@
   "devDependencies": {
     "acorn": "^8.15.0",
     "acorn-walk": "^8.3.4",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.3"
   }
 }
