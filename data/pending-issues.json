@@ -1,424 +1,237 @@
 {
   "issues": [
     {
-      "id": "note-1769211127224-p0",
-      "description": "[BUG] trying to drag a component in like features shows error 'must be in main', but it was in main when trying to drop",
-      "status": "fixed",
-      "createdAt": "2026-01-23T23:32:07.224Z",
-      "testLink": "tests/regression/builder-drop-zone-fix.spec.ts",
-      "fixedAt": "2026-01-25T00:22:05.205Z",
-      "resolution": "Fixed getAttribute('section') fallback in builder-components.js"
-    },
-    {
-      "id": "note-1769211204743-p0",
-      "description": "[BUG] cannot drop any components into canvas",
-      "status": "fixed",
-      "createdAt": "2026-01-23T23:33:24.743Z",
-      "testLink": "tests/regression/builder-drop-zone-fix.spec.ts",
-      "fixedAt": "2026-01-25T00:40:28.152Z",
-      "resolution": "Same fix as above - getAttribute fallback"
-    },
-    {
       "id": "note-1769211301098-p0",
       "description": "[BUG] theme override does not work",
-      "status": "pending",
+      "status": "pending-review",
+      "category": "bug",
+      "priority": 1,
       "createdAt": "2026-01-23T23:35:01.098Z",
-      "testLink": "tests/issues/theme-override.spec.ts"
+      "testLink": "tests/issues/theme-override.spec.ts",
+      "claimedFixedAt": "2026-01-28T00:25:35.467Z",
+      "resolution": "Fixed by Claude"
     },
     {
       "id": "note-1769212201021-p0",
       "description": "[BUG] adding x-draggable changes element location even when not clicked",
       "status": "pending",
+      "category": "bug",
+      "priority": 1,
       "createdAt": "2026-01-23T23:50:01.021Z",
-      "testLink": "tests/issues/x-draggable-position.spec.ts"
+      "testLink": "tests/issues/x-draggable-position.spec.ts",
+      "lastTestRun": "2026-01-29T18:57:16.150Z",
+      "lastTestResult": "failed",
+      "testSummary": {
+        "passed": 4,
+        "failed": 2,
+        "skipped": 0
+      }
     },
     {
       "id": "note-1769194562447-p0",
-      "description": "[BUG] when right clicking on any element in the canvas and picking inspect, nothing happens",
+      "description": "[BUG] context menu inspect does nothing",
       "status": "pending",
+      "category": "bug",
+      "priority": 1,
       "createdAt": "2026-01-23T18:56:02.447Z",
       "testLink": "tests/issues/context-menu-inspect.spec.ts"
-    },
-    {
-      "id": "note-1769293340779-p0",
-      "description": "[BUG] not all of the components on components page are able to be dropped into the canvas",
-      "status": "fixed",
-      "createdAt": "2026-01-24T22:22:20.779Z",
-      "testLink": "tests/regression/builder-drop-zone-fix.spec.ts",
-      "fixedAt": "2026-01-25T00:22:05.205Z",
-      "resolution": "Same root cause as drop zone fix"
-    },
-    {
-      "id": "note-1769293683522-p0",
-      "description": "[BUG] when clicking issues button on home page nothing happens",
-      "status": "fixed",
-      "createdAt": "2026-01-24T22:28:03.522Z",
-      "testLink": "tests/regression/issues-button-fix.spec.ts",
-      "fixedAt": "2026-01-25T01:00:00.000Z",
-      "resolution": "Changed WB.scan() to WB.inject() in issues-helper.js"
     },
     {
       "id": "note-1769302437975-p0",
       "description": "[BUG] semanticContextMenu broken",
       "status": "pending",
+      "category": "bug",
+      "priority": 1,
       "createdAt": "2026-01-25T00:53:57.975Z",
       "testLink": "tests/issues/issue-note-1769302437975-p0.spec.ts"
     },
     {
-      "id": "note-1769302485789-p0",
-      "description": "[BUG] report issue has two buttons in builder - one in top and one in bottom",
-      "status": "resolved",
-      "createdAt": "2026-01-25T00:54:45.789Z",
-      "testLink": "tests/issues/issue-note-1769302485789-p0.spec.ts",
-      "resolvedAt": "2026-01-26T02:09:26.394Z",
-      "resolution": "✅ 2 passed"
-    },
-    {
-      "id": "note-1769303772694-p0",
-      "description": "[BUG] on components page the 2nd card (header and footer) isn't showing the footer",
-      "status": "resolved",
-      "createdAt": "2026-01-25T01:16:12.694Z",
-      "testLink": "tests/issues/issue-note-1769303772694-p0.spec.ts",
-      "resolvedAt": "2026-01-26T02:08:50.204Z",
-      "resolution": "✅ Test passed: 2 passed"
-    },
-    {
       "id": "note-1769220751805-p0",
-      "description": "[BUG] Behavior category buttons (Buttons, Inputs, Selection, etc.) don't scroll the page to that location",
+      "description": "[BUG] Behavior category buttons don't scroll to section",
       "status": "pending",
+      "category": "bug",
+      "priority": 2,
       "createdAt": "2026-01-24T02:12:31.805Z",
       "testLink": "tests/issues/behaviors-page-scroll.spec.ts"
-    },
-    {
-      "id": "note-1769220695766-p0",
-      "description": "[BUG] Clicking on issue button in home page does not show issues - just shows a toast message 'Clicked'",
-      "status": "fixed",
-      "createdAt": "2026-01-24T02:11:35.766Z",
-      "testLink": "tests/regression/issues-button-fix.spec.ts",
-      "fixedAt": "2026-01-25T01:00:00.000Z",
-      "resolution": "Same as issues button fix"
     },
     {
       "id": "issues-viewer-refresh-button",
       "description": "[BUG] Issues viewer refresh button does not work",
       "status": "pending",
-      "priority": 0,
+      "category": "bug",
+      "priority": 2,
       "createdAt": "2026-01-26T02:50:00.000Z",
       "testLink": "tests/issues/issues-viewer-refresh.spec.ts"
     },
     {
-      "id": "note-1769395439478-p0",
-      "description": "[BUG] <body>\n  <header class=\"viewer...\nPriority: 4\nPage: /builder.html\nTime: 2026-01-26T02:42:43.252Z\n<body>\n  <header class=\"viewer-header\">\n    <h1 class=\"viewer-title\">📋 Issues</h1>\n    <div class=\"viewer-actions\">\n      <button class=\"btn\" onclick=\"refresh()\">🔄 Refresh</button>\n      <button class=\"btn btn--danger\" onclick=\"clearResolved()\">🗑️ Clear Resolved</button>\n    </div>\n  </header>",
+      "id": "note-1769445034341-p0",
+      "description": "[BUG] home page has many things not working",
       "status": "pending",
-      "createdAt": "2026-01-26T02:43:59.478Z"
+      "category": "bug",
+      "priority": 2,
+      "createdAt": "2026-01-26T16:30:34.341Z"
+    },
+    {
+      "id": "note-1769445369305-p0",
+      "description": "[BUG] doc button from builder doesn't navigate",
+      "status": "pending",
+      "category": "bug",
+      "priority": 2,
+      "createdAt": "2026-01-26T16:36:09.305Z"
+    },
+    {
+      "id": "note-1769212344261-p0",
+      "description": "[UI] remove wb-issues refs not in navbar",
+      "status": "pending",
+      "category": "ui",
+      "priority": 2,
+      "createdAt": "2026-01-23T23:52:24.261Z"
     },
     {
       "id": "note-1769306014994-p0",
-      "description": "[BUG] builder.html add component pop...\nPriority: 2\nPage: /builder.html\nTime: 2026-01-25T01:52:52.297Z\nbuilder.html add component popup has uneven rows one tile is very tall",
+      "description": "[UI] builder add component popup uneven rows",
       "status": "pending",
+      "category": "ui",
+      "priority": 2,
       "createdAt": "2026-01-25T01:53:34.994Z"
     },
     {
       "id": "note-1769305932956-p0",
-      "description": "[BUG] builder.html has an issues but...\nPriority: 2\nPage: /builder.html\nTime: 2026-01-25T01:51:48.055Z\nbuilder.html has an issues button in bottom right corner,. remove it",
+      "description": "[UI] remove issues button in builder bottom right",
       "status": "pending",
+      "category": "ui",
+      "priority": 2,
       "createdAt": "2026-01-25T01:52:12.956Z"
     },
     {
-      "id": "note-1769212344261-p0",
-      "description": "[BUG] find all wb-issues refs.  remo...\nPriority: 2\nPage: /builder.html\nTime: 2026-01-23T23:51:54.695Z\nfind all wb-issues refs.  remove any no in the wb-navbar",
-      "status": "pending",
-      "createdAt": "2026-01-23T23:52:24.261Z"
-    },
-    {
-      "id": "note-1769212252713-p0",
-      "description": "[BUG] unit tests for all x-attribute...\nPriority: 2\nPage: /builder.html\nTime: 2026-01-23T23:50:31.623Z\nunit tests for all x-attributes must be validatd as added and removed",
-      "status": "pending",
-      "createdAt": "2026-01-23T23:50:52.713Z"
-    },
-    {
-      "id": "note-1769194490447-p0",
-      "description": "[BUG] This component Issues should b...\nPriority: 2\nPage: /builder.html\nTime: 2026-01-23T18:53:32.495Z\nThis component Issues should be able to be pushed to npm and allow anyone ability to create isses and track. It must be html only and contain a blank set of .json fiels and css to support it.",
-      "status": "pending",
-      "createdAt": "2026-01-23T18:54:50.447Z"
-    },
-    {
-      "id": "note-1769194412485-p0",
-      "description": "[BUG] in order to resolve an issue t...\nPriority: 2\nPage: /builder.html\nTime: 2026-01-23T18:53:06.478Z\nin order to resolve an issue there must be a link to the test that validated the fix",
-      "status": "pending",
-      "createdAt": "2026-01-23T18:53:32.485Z"
-    },
-    {
-      "id": "note-1769194386465-p0",
-      "description": "[BUG] issues viewer needs to inform ...\nPriority: 2\nPage: /builder.html\nTime: 2026-01-23T18:52:11.389Z\nissues viewer needs to inform AI that new tests are required to validate every fix before resolve can happend",
-      "status": "pending",
-      "createdAt": "2026-01-23T18:53:06.465Z"
-    },
-    {
-      "id": "note-1769194331335-p0",
-      "description": "[BUG] Issues viewer should show ever...\nPriority: 2\nPage: /builder.html\nTime: 2026-01-23T18:51:16.829Z\nIssues viewer should show everything in the json record.",
-      "status": "pending",
-      "createdAt": "2026-01-23T18:52:11.335Z"
-    },
-    {
-      "id": "note-1769445034341-p0",
-      "description": "[BUG] the home page has many things ...\nPriority: 4\nPage: /\nTime: 2026-01-26T16:30:03.978Z\nthe home page has many things not working run full unit tests and fix.",
-      "status": "pending",
-      "createdAt": "2026-01-26T16:30:34.341Z"
-    },
-    {
       "id": "note-1769445232423-p0",
-      "description": "[BUG] When submitting and issue, the...\nPriority: 2\nPage: /builder.html\nTime: 2026-01-26T16:33:01.912Z\nWhen submitting and issue, the issue header when on home page cannot be seen.",
+      "description": "[UI] issue header not visible on home page",
       "status": "pending",
+      "category": "ui",
+      "priority": 2,
       "createdAt": "2026-01-26T16:33:52.423Z"
     },
     {
-      "id": "note-1769445369305-p0",
-      "description": "[BUG] when clicking on the doc butto...\nPriority: 2\nPage: /builder.html?page=docs\nTime: 2026-01-26T16:35:34.039Z\nwhen clicking on the doc button from being in bulder, it does not navigate to the doc page.",
-      "status": "pending",
-      "createdAt": "2026-01-26T16:36:09.305Z"
-    },
-    {
       "id": "note-1769445416198-p0",
-      "description": "[BUG] bulder.html does not have a pa...\nPriority: 2\nPage: /builder.html?page=docs\nTime: 2026-01-26T16:36:26.180Z\nbulder.html does not have a page level theme control",
+      "description": "[UI] builder.html needs page level theme control",
       "status": "pending",
+      "category": "ui",
+      "priority": 2,
       "createdAt": "2026-01-26T16:36:56.198Z"
     },
     {
       "id": "note-1769445571833-p0",
-      "description": "[BUG] remove the docs link in the he...\nPriority: 2\nPage: /builder.html?page=docs\nTime: 2026-01-26T16:38:43.190Z\nremove the docs link in the heard replace it with the themes control which should have two modes, the entire page, the focused element",
+      "description": "[UI] replace docs link with theme control (page/element modes)",
       "status": "pending",
+      "category": "ui",
+      "priority": 2,
       "createdAt": "2026-01-26T16:39:31.833Z"
     },
     {
-      "id": "note-1769450844381-p0",
-      "description": "[BUG] Window refresh test test-window-refresh-1769450843701",
+      "id": "note-1769469867776-p0",
+      "description": "[UI] card footer missing on components page",
       "status": "pending",
-      "createdAt": "2026-01-26T18:07:24.381Z"
+      "category": "ui",
+      "priority": 2,
+      "createdAt": "2026-01-26T23:24:27.776Z"
     },
     {
-      "id": "note-1769450830222-p0",
-      "description": "[BUG] Test refresh validation test-refresh-1769450829529",
+      "id": "note-1769469912373-p0",
+      "description": "[UI] code sections not colored (use mdhtml)",
       "status": "pending",
-      "createdAt": "2026-01-26T18:07:10.222Z"
+      "category": "ui",
+      "priority": 2,
+      "createdAt": "2026-01-26T23:25:12.373Z"
     },
     {
-      "id": "note-1769450823478-p0",
-      "description": "[BUG] Window refresh test test-window-refresh-1769450822807",
+      "id": "note-1769469995667-p0",
+      "description": "[UI] remove clicked toast in alerts section",
       "status": "pending",
-      "createdAt": "2026-01-26T18:07:03.478Z"
+      "category": "ui",
+      "priority": 2,
+      "createdAt": "2026-01-26T23:26:35.666Z"
     },
     {
-      "id": "note-1769450809286-p0",
-      "description": "[BUG] Test refresh validation test-refresh-1769450808194",
+      "id": "note-1769470023977-p0",
+      "description": "[UI] spinner sizes wrong on components page",
       "status": "pending",
-      "createdAt": "2026-01-26T18:06:49.286Z"
+      "category": "ui",
+      "priority": 2,
+      "createdAt": "2026-01-26T23:27:03.977Z",
+      "testLink": "tests/issues/issue-note-1769470023977-p0.spec.ts",
+      "lastTestRun": "2026-01-29T19:04:27.723Z",
+      "lastTestResult": "passed",
+      "testSummary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      }
     },
     {
-      "id": "note-1769450392787-p0",
-      "description": "[BUG] Window refresh test test-window-refresh-1769450390733",
+      "id": "note-1769212252713-p0",
+      "description": "[ENHANCEMENT] unit tests for x-attribute add/remove",
       "status": "pending",
-      "createdAt": "2026-01-26T17:59:52.787Z"
+      "category": "enhancement",
+      "priority": 3,
+      "createdAt": "2026-01-23T23:50:52.713Z",
+      "fixed": false
     },
     {
-      "id": "note-1769450376050-p0",
-      "description": "[BUG] Window refresh test test-window-refresh-1769450375303",
+      "id": "note-1769194490447-p0",
+      "description": "[ENHANCEMENT] Issues component publishable to npm",
       "status": "pending",
-      "createdAt": "2026-01-26T17:59:36.050Z"
+      "category": "enhancement",
+      "priority": 3,
+      "createdAt": "2026-01-23T18:54:50.447Z",
+      "fixed": false
     },
     {
-      "id": "note-1769450350473-p0",
-      "description": "[BUG] Test refresh validation test-refresh-1769450349383",
+      "id": "note-1769194412485-p0",
+      "description": "[ENHANCEMENT] require test link to resolve issue",
       "status": "pending",
-      "createdAt": "2026-01-26T17:59:10.473Z"
+      "category": "enhancement",
+      "priority": 3,
+      "createdAt": "2026-01-23T18:53:32.485Z",
+      "fixed": false
     },
     {
-      "id": "note-1769450338390-p0",
-      "description": "[BUG] Test refresh validation test-refresh-1769450337215",
+      "id": "note-1769194386465-p0",
+      "description": "[ENHANCEMENT] inform AI tests required before resolve",
       "status": "pending",
-      "createdAt": "2026-01-26T17:58:58.390Z"
+      "category": "enhancement",
+      "priority": 3,
+      "createdAt": "2026-01-23T18:53:06.465Z",
+      "fixed": false
     },
     {
-      "id": "note-1769450305428-p0",
-      "description": "[BUG] Window refresh test test-window-refresh-1769450304441",
+      "id": "note-1769194331335-p0",
+      "description": "[ENHANCEMENT] issues viewer show full json record",
       "status": "pending",
-      "createdAt": "2026-01-26T17:58:25.428Z"
+      "category": "enhancement",
+      "priority": 3,
+      "createdAt": "2026-01-23T18:52:11.335Z",
+      "lastTestRun": "2026-01-29T18:57:45.396Z",
+      "lastTestResult": "passed",
+      "testSummary": {
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixed": false
     },
     {
-      "id": "note-1769450293154-p0",
-      "description": "[BUG] Window refresh test test-window-refresh-1769450292373",
-      "status": "pending",
-      "createdAt": "2026-01-26T17:58:13.154Z"
-    },
-    {
-      "id": "note-1769450264254-p0",
-      "description": "[BUG] Test refresh validation test-refresh-1769450263174",
-      "status": "pending",
-      "createdAt": "2026-01-26T17:57:44.253Z"
-    },
-    {
-      "id": "note-1769450253179-p0",
-      "description": "[BUG] Test refresh validation test-refresh-1769450252280",
-      "status": "pending",
-      "createdAt": "2026-01-26T17:57:33.179Z"
-    },
-    {
-      "id": "note-1769303624480-p0",
-      "description": "[BUG] Test issue from header 1769303...\nPriority: 2\nPage: /\nTime: 2026-01-25T01:13:42.771Z\nTest issue from header 1769303624051",
-      "status": "pending",
-      "createdAt": "2026-01-25T01:13:44.480Z"
-    },
-    {
-      "id": "note-1769301356171-p0",
-      "description": "[BUG] Test failure for issue note-1769194562447-p0",
-      "status": "pending",
-      "createdAt": "2026-01-25T00:35:56.171Z"
-    },
-    {
-      "id": "note-1769301356171-p3",
-      "description": "Original Issue: [BUG] when right clicking on any element in the canvas and picking inspect, nothing happens",
-      "status": "pending",
-      "createdAt": "2026-01-25T00:35:56.171Z"
-    },
-    {
-      "id": "note-1769295966108-p0",
-      "description": "[BUG] Test failure for issue note-1769295552140-p0",
-      "status": "pending",
-      "createdAt": "2026-01-24T23:06:06.108Z"
-    },
-    {
-      "id": "note-1769295966108-p3",
-      "description": "Original Issue: [BUG] Test failure for issue note-1769194562447-p0",
-      "status": "pending",
-      "createdAt": "2026-01-24T23:06:06.108Z"
-    },
-    {
-      "id": "note-1769295373510-p0",
-      "description": "[BUG] Test failure for issue note-1769295364544-p0",
-      "status": "pending",
-      "createdAt": "2026-01-24T22:56:13.510Z"
-    },
-    {
-      "id": "note-1769295373510-p3",
-      "description": "Original Issue: [BUG] Test failure for issue note-1769295344424-p0",
-      "status": "pending",
-      "createdAt": "2026-01-24T22:56:13.510Z"
-    },
-    {
-      "id": "note-1769295364544-p0",
-      "description": "[BUG] Test failure for issue note-1769295344424-p0",
-      "status": "pending",
-      "createdAt": "2026-01-24T22:56:04.544Z"
-    },
-    {
-      "id": "note-1769295364544-p3",
-      "description": "Original Issue: [BUG] Test failure for issue note-1769293683522-p0",
-      "status": "pending",
-      "createdAt": "2026-01-24T22:56:04.544Z"
-    },
-    {
-      "id": "note-1769295344424-p0",
-      "description": "[BUG] Test failure for issue note-1769293683522-p0",
-      "status": "pending",
-      "createdAt": "2026-01-24T22:55:44.424Z"
-    },
-    {
-      "id": "note-1769295344424-p3",
-      "description": "Original Issue: [BUG] when clicking issues button on...",
-      "status": "pending",
-      "createdAt": "2026-01-24T22:55:44.424Z"
-    },
-    {
-      "id": "note-1769223764775-p0",
-      "description": "[BUG] Test issue from header 1769223...\nPriority: 2\nPage: /\nTime: 2026-01-24T03:02:43.847Z\nTest issue from header 1769223764546",
-      "status": "pending",
-      "createdAt": "2026-01-24T03:02:44.775Z"
-    },
-    {
-      "id": "note-1769223712451-p0",
-      "description": "[BUG] Test issue from header 1769223...\nPriority: 2\nPage: /\nTime: 2026-01-24T03:01:51.851Z\nTest issue from header 1769223712138",
-      "status": "pending",
-      "createdAt": "2026-01-24T03:01:52.451Z"
-    },
-    {
-      "id": "note-1769222860318-p0",
-      "description": "[BUG] Test issue from header 1769222...\nPriority: 2\nPage: /\nTime: 2026-01-24T02:47:39.500Z\nTest issue from header 1769222859872",
-      "status": "pending",
-      "createdAt": "2026-01-24T02:47:40.318Z"
-    },
-    {
-      "id": "note-1769190959225-p0",
-      "description": "[BUG] Test issue from header 1769190...\nPriority: 2\nPage: /\nTest issue from header 1769190958495",
-      "status": "pending",
-      "createdAt": "2026-01-23T17:55:59.225Z"
-    },
-    {
-      "id": "note-1769152883873-p0",
-      "description": "[BUG] Test issue from header 1769152...\nPriority: 2\nPage: /\nTest issue from header 1769152882735",
-      "status": "pending",
-      "createdAt": "2026-01-23T07:21:23.873Z"
-    },
-    {
-      "id": "note-1769151316437-p0",
-      "description": "[BUG] Test issue from header 1769151...\nPriority: 2\nPage: /\nTest issue from header 1769151315677",
-      "status": "pending",
-      "createdAt": "2026-01-23T06:55:16.437Z"
-    },
-    {
-      "id": "note-1769463939280-p0",
-      "description": "[BUG] Test refresh validation test-refresh-1769463936976",
-      "status": "pending",
-      "createdAt": "2026-01-26T21:45:39.280Z"
-    },
-    {
-      "id": "note-1769463939131-p0",
-      "description": "[BUG] Window refresh test test-window-refresh-1769463936993",
-      "status": "pending",
-      "createdAt": "2026-01-26T21:45:39.131Z"
-    },
-    {
-      "id": "note-1769463939049-p0",
-      "description": "[BUG] Test refresh validation test-refresh-1769463936951",
-      "status": "pending",
-      "createdAt": "2026-01-26T21:45:39.049Z"
-    },
-    {
-      "id": "note-1769463938646-p0",
-      "description": "[BUG] Window refresh test test-window-refresh-1769463936956",
-      "status": "pending",
-      "createdAt": "2026-01-26T21:45:38.646Z"
-    },
-    {
-      "id": "note-1769464187652-p0",
-      "description": "[BUG] Window refresh test test-window-refresh-1769464183756",
-      "status": "pending",
-      "createdAt": "2026-01-26T21:49:47.652Z"
-    },
-    {
-      "id": "note-1769464187560-p0",
-      "description": "[BUG] Test refresh validation test-refresh-1769464183786",
-      "status": "pending",
-      "createdAt": "2026-01-26T21:49:47.560Z"
-    },
-    {
-      "id": "note-1769464186853-p0",
-      "description": "[BUG] Window refresh test test-window-refresh-1769464183754",
-      "status": "pending",
-      "createdAt": "2026-01-26T21:49:46.853Z"
-    },
-    {
-      "id": "note-1769464186140-p0",
-      "description": "[BUG] Test refresh validation test-refresh-1769464183785",
-      "status": "pending",
-      "createdAt": "2026-01-26T21:49:46.139Z"
-    },
-    {
-      "id": "note-1769464828913-p0",
-      "description": "[BUG] Test issue from header 1769464...\nPriority: 2\nPage: /\nTime: 2026-01-26T22:00:27.873Z\nTest issue from header 1769464828455",
-      "status": "pending",
-      "createdAt": "2026-01-26T22:00:28.913Z"
+      "id": "note-1769293683522-p0",
+      "description": "Auto-generated issue for test",
+      "createdAt": "2026-01-27T23:51:15.008Z",
+      "testLink": "tests/issues/issue-note-1769293683522-p0.spec.ts",
+      "lastTestRun": "2026-01-29T18:57:31.664Z",
+      "lastTestResult": "passed",
+      "testSummary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      }
     }
   ],
-  "lastUpdated": "2026-01-26T23:01:28.231Z",
-  "lastChecked": "2026-01-26T22:53:29.094Z"
+  "lastUpdated": "2026-01-29T19:00:47.800Z"
 }
