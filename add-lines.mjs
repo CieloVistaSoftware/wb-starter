@@ -1,0 +1,1 @@
+import fs from "fs"; const d = JSON.parse(fs.readFileSync("data/test-content.json")); const args = process.argv.slice(2); d.lines.push(...args); fs.writeFileSync("data/test-content.json", JSON.stringify(d)); console.log("Added", args.length, "lines. Total:", d.lines.length);

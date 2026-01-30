@@ -1,0 +1,1 @@
+const fs = require("fs"); const content = fs.readFileSync("tests/issues/x-draggable-position.spec.ts", "utf8"); console.log(content.length);

@@ -75,6 +75,18 @@ export default defineConfig({
   },
   
   projects: [
+    {
+      name: 'layer0-syntax',
+      testDir: './tests/layer0-syntax',
+      testMatch: '**/*.spec.ts',
+    },
+    {
+      name: 'layer3-behavior',
+      testDir: './tests/layer3-behavior',
+      testMatch: '**/*.spec.ts',
+      use: { ...devices['Desktop Chrome'] },
+    },
+
     // ═══════════════════════════════════════════════════════════════
     // TIER 1: STATIC COMPLIANCE
     // Pure file analysis - no browser, no server needed
@@ -95,6 +107,18 @@ export default defineConfig({
       name: 'views',
       testDir: './tests/views',
       testMatch: '**/*.spec.ts',
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // ISSUE TESTS
+    // Location: tests/issues — lightweight, focused issue reproductions
+    // NOTE: added so Playwright will discover/run `tests/issues/*` directly
+    // ═══════════════════════════════════════════════════════════════
+    {
+      name: 'issues',
+      testDir: './tests/issues',
+      testMatch: '**/*.spec.ts',
+      retries: 1,
     },
     
     // ═══════════════════════════════════════════════════════════════

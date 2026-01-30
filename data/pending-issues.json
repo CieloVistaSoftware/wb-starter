@@ -1,0 +1,21 @@
+{
+  "issues": [
+    {
+      "id": "note-1769293683522-p0",
+      "description": "Auto-generated issue for test",
+      "createdAt": "2026-01-30T04:48:15.086Z",
+      "testLink": "tests/issues/issue-note-1769293683522-p0.spec.ts",
+      "lastTestRun": "2026-01-30T05:37:56.243Z",
+      "lastTestResult": "passed",
+      "testSummary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "status": "pending-review",
+      "claimedFixedAt": "2026-01-30T05:42:07.422Z",
+      "resolution": "Fixed by Claude"
+    }
+  ],
+  "lastUpdated": "2026-01-30T05:42:07.423Z"
+}

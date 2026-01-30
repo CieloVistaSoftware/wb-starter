@@ -459,6 +459,33 @@ export async function waitForWB(page: Page): Promise<void> {
 }
 
 /**
+ * Wait for an explicit WB.scan() to complete and for behaviors to be bound to elements.
+ * - If `rootSelector` is omitted the whole document.body is scanned.
+ * - This is stricter than `waitForWB()` and should be used when tests call `WB.scan()`.
+ */
+export async function waitForWBScan(page: Page, rootSelector?: string, timeout = 5000): Promise<void> {
+  // Trigger a scan inside the page (scan is synchronous in the runtime) then wait
+  await page.evaluate((rootSel: string | null) => {
+    const root = rootSel ? document.querySelector(rootSel) : document.body;
+    if ((window as any).WB?.scan) (window as any).WB.scan(root);
+  }, rootSelector ?? null);
+
+  // Wait until any candidate elements under `root` have been processed (i.e. _wbViewModel set)
+  await page.waitForFunction((rootSel: string | null) => {
+    const root = rootSel ? document.querySelector(rootSel) : document.body;
+    const candidates = Array.from(root.querySelectorAll('*')).filter(el => {
+      const tag = el.tagName?.toLowerCase();
+      return tag?.startsWith('wb-') || el.hasAttribute?.('x-behavior') || (typeof el.className === 'string' && el.className.includes('wb-'));
+    });
+    if (candidates.length === 0) return true;
+    return candidates.every(el => Boolean((el as any)._wbViewModel));
+  }, rootSelector ?? null, { timeout });
+
+  // small stabilization to let microtasks settle
+  await page.waitForTimeout(20);
+}
+
+/**
  * Setup a test container with HTML and scan for behaviors
  */
 export async function setupTestContainer(page: Page, html: string): Promise<Locator> {
@@ -466,19 +493,15 @@ export async function setupTestContainer(page: Page, html: string): Promise<Loca
     document.getElementById('test-container')?.remove();
   });
   
-  await page.evaluate(async (h: string) => {
+  await page.evaluate((h: string) => {
     const c = document.createElement('div');
     c.id = 'test-container';
     c.innerHTML = h;
     document.body.appendChild(c);
-    
-    if ((window as any).WB?.scan) {
-      await (window as any).WB.scan(c);
-    }
   }, html);
-  
-  await page.waitForTimeout(150);
-  
+
+  // ensure the scan completes and behaviors are bound
+  await waitForWBScan(page, '#test-container');
   return page.locator('#test-container > *').first();
 }
 

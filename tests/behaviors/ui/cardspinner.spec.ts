@@ -13,9 +13,10 @@ test.describe('Spinner (integration)', () => {
       el.setAttribute('data-wb', 'spinner');
       el.setAttribute('data-color', 'primary');
       document.body.appendChild(el);
-      (window as any).WB.scan();
     });
-    
+
+    await waitForWBScan(page, '#test-spinner');
+
     // The spinner behavior adds wb-spinner class
     const spinner = page.locator('#test-spinner');
     await expect(spinner).toHaveClass(/wb-spinner/);
@@ -41,9 +42,9 @@ test.describe('Spinner (integration)', () => {
       el.id = 'test-spinner-2';
       el.setAttribute('data-wb', 'spinner');
       document.body.appendChild(el);
-      (window as any).WB.scan();
     });
-    
+
+    await waitForWBScan(page, '#test-spinner-2');
     const innerDiv = page.locator('#test-spinner-2 div');
     await expect(innerDiv).toHaveCSS('border-radius', '50%');
   });
@@ -60,9 +61,9 @@ test.describe('Spinner (integration)', () => {
       el.setAttribute('data-wb', 'spinner');
       el.setAttribute('data-color', 'primary');
       document.body.appendChild(el);
-      (window as any).WB.scan();
     });
-    
+
+    await waitForWBScan(page, '#test-spinner-3');
     const innerDiv = page.locator('#test-spinner-3 div');
     const style = await innerDiv.getAttribute('style');
     

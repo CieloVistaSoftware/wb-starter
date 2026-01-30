@@ -14,9 +14,9 @@ test.describe('Card Hero (integration)', () => {
       el.setAttribute('data-title', 'Hero Title');
       el.setAttribute('data-subtitle', 'Hero Subtitle');
       document.body.appendChild(el);
-      (window as any).WB.scan();
     });
-    
+
+    await waitForWBScan(page, '#test-hero');
     const card = page.locator('#test-hero');
     await expect(card).toHaveClass(/wb-card/);
     await expect(card).toHaveClass(/wb-card--hero/);
@@ -42,9 +42,9 @@ test.describe('Card Hero (integration)', () => {
       el.setAttribute('data-wb', 'cardhero');
       el.setAttribute('data-title', 'Big Hero');
       document.body.appendChild(el);
-      (window as any).WB.scan();
     });
-    
+
+    await waitForWBScan(page, '#test-hero-height');
     const card = page.locator('#test-hero-height');
     await expect(card).toHaveCSS('min-height', '400px');
   });
@@ -62,9 +62,9 @@ test.describe('Card Hero (integration)', () => {
       el.setAttribute('data-title', 'Background Hero');
       el.setAttribute('data-background', 'https://picsum.photos/800/400');
       document.body.appendChild(el);
-      (window as any).WB.scan();
     });
-    
+
+    await waitForWBScan(page, '#test-hero-bg');
     const card = page.locator('#test-hero-bg');
     const bgImage = await card.evaluate(el => getComputedStyle(el).backgroundImage);
     expect(bgImage).toContain('url');
@@ -83,9 +83,9 @@ test.describe('Card Hero (integration)', () => {
       el.setAttribute('data-title', 'Left Aligned');
       el.setAttribute('data-align', 'left');
       document.body.appendChild(el);
-      (window as any).WB.scan();
     });
-    
+
+    await waitForWBScan(page, '#test-hero-left');
     const card = page.locator('#test-hero-left');
     await expect(card).toHaveClass(/wb-card--align-left/);
   });

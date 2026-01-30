@@ -1,0 +1,261 @@
+/**
+ * WB Tabs Component
+ * =================
+ * BEM Structure:
+ *   .wb-tabs              - Container
+ *   .wb-tabs__nav         - Tab button container (tablist)
+ *   .wb-tabs__tab         - Individual tab button
+ *   .wb-tabs__tab--active - Active tab state
+ *   .wb-tabs__tab--disabled - Disabled tab state
+ *   .wb-tabs__icon        - Tab icon
+ *   .wb-tabs__title       - Tab label text
+ *   .wb-tabs__badge       - Badge/count on tab
+ *   .wb-tabs__close       - Close button for closable tabs
+ *   .wb-tabs__panels      - Panel container
+ *   .wb-tabs__panel       - Individual panel (tabpanel)
+ *
+ * Variants:
+ *   .wb-tabs--pills       - Pill-style tabs
+ *   .wb-tabs--underline   - Underline-only tabs
+ *   .wb-tabs--bordered    - Bordered tabs
+ *   .wb-tabs--vertical    - Vertical layout
+ *   .wb-tabs--full-width  - Tabs fill container
+ *   .wb-tabs--sm          - Small size
+ *   .wb-tabs--lg          - Large size
+ */
+
+/* =============================================================================
+   CSS VARIABLES
+   ============================================================================= */
+.wb-tabs {
+  --wb-tabs-gap: 0;
+  --wb-tabs-border: 1px solid var(--border-color, #374151);
+  --wb-tabs-tab-padding: 0.5rem 1rem;
+  --wb-tabs-tab-color: var(--text-secondary, #9ca3af);
+  --wb-tabs-tab-bg: transparent;
+  --wb-tabs-tab-active-color: var(--primary, #6366f1);
+  --wb-tabs-tab-active-bg: transparent;
+  --wb-tabs-tab-hover-color: var(--text-primary, #fff);
+  --wb-tabs-indicator-color: var(--primary, #6366f1);
+  --wb-tabs-indicator-height: 2px;
+  --wb-tabs-panel-padding: 1rem;
+}
+
+/* =============================================================================
+   BASE TABS
+   ============================================================================= */
+.wb-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* =============================================================================
+   TAB NAVIGATION
+   ============================================================================= */
+.wb-tabs__nav {
+  display: flex;
+  gap: var(--wb-tabs-gap);
+  border-bottom: var(--wb-tabs-border);
+  margin-bottom: 0.5rem;
+}
+
+/* =============================================================================
+   TAB BUTTONS
+   ============================================================================= */
+.wb-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: var(--wb-tabs-tab-padding);
+  background: var(--wb-tabs-tab-bg);
+  border: none;
+  border-bottom: var(--wb-tabs-indicator-height) solid transparent;
+  margin-bottom: calc(-1 * var(--wb-tabs-indicator-height));
+  cursor: pointer;
+  color: var(--wb-tabs-tab-color);
+  font-size: 0.875rem;
+  font-weight: 400;
+  opacity: 0.7;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.wb-tabs__tab:hover:not(.wb-tabs__tab--disabled) {
+  color: var(--wb-tabs-tab-hover-color);
+  opacity: 0.9;
+}
+
+.wb-tabs__tab--active {
+  color: var(--wb-tabs-tab-active-color);
+  background: var(--wb-tabs-tab-active-bg);
+  border-bottom-color: var(--wb-tabs-indicator-color);
+  font-weight: 600;
+  opacity: 1;
+}
+
+.wb-tabs__tab--disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* =============================================================================
+   TAB CONTENT ELEMENTS
+   ============================================================================= */
+.wb-tabs__icon {
+  font-size: 1em;
+  line-height: 1;
+}
+
+.wb-tabs__title {
+  /* Text styling inherited */
+}
+
+.wb-tabs__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.35rem;
+  background: var(--primary, #6366f1);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 9999px;
+}
+
+.wb-tabs__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.25rem;
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+  cursor: pointer;
+}
+
+.wb-tabs__close:hover {
+  opacity: 1;
+}
+
+/* =============================================================================
+   PANELS
+   ============================================================================= */
+.wb-tabs__panels {
+  width: 100%;
+}
+
+.wb-tabs__panel {
+  padding: var(--wb-tabs-panel-padding);
+  display: none;
+}
+
+.wb-tabs__panel[aria-hidden="false"],
+.wb-tabs__panel:not([aria-hidden]) {
+  display: block;
+}
+
+/* =============================================================================
+   VARIANT: PILLS
+   ============================================================================= */
+.wb-tabs--pills .wb-tabs__nav {
+  border-bottom: none;
+  gap: 0.5rem;
+}
+
+.wb-tabs--pills .wb-tabs__tab {
+  border: none;
+  border-radius: var(--radius-md, 6px);
+  margin-bottom: 0;
+}
+
+.wb-tabs--pills .wb-tabs__tab--active {
+  background: var(--primary, #6366f1);
+  color: #fff;
+}
+
+/* =============================================================================
+   VARIANT: UNDERLINE
+   ============================================================================= */
+.wb-tabs--underline .wb-tabs__nav {
+  border-bottom: none;
+}
+
+.wb-tabs--underline .wb-tabs__tab {
+  border-bottom-width: 2px;
+  margin-bottom: 0;
+}
+
+/* =============================================================================
+   VARIANT: BORDERED
+   ============================================================================= */
+.wb-tabs--bordered .wb-tabs__tab {
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: var(--radius-md, 6px) var(--radius-md, 6px) 0 0;
+  margin-bottom: -1px;
+}
+
+.wb-tabs--bordered .wb-tabs__tab--active {
+  border-color: var(--border-color, #374151);
+  background: var(--bg-primary, #1f2937);
+}
+
+/* =============================================================================
+   VARIANT: VERTICAL
+   ============================================================================= */
+.wb-tabs--vertical {
+  flex-direction: row;
+}
+
+.wb-tabs--vertical .wb-tabs__nav {
+  flex-direction: column;
+  border-bottom: none;
+  border-right: var(--wb-tabs-border);
+  margin-bottom: 0;
+  margin-right: 1rem;
+}
+
+.wb-tabs--vertical .wb-tabs__tab {
+  border-bottom: none;
+  border-right: var(--wb-tabs-indicator-height) solid transparent;
+  margin-bottom: 0;
+  margin-right: calc(-1 * var(--wb-tabs-indicator-height));
+}
+
+.wb-tabs--vertical .wb-tabs__tab--active {
+  border-right-color: var(--wb-tabs-indicator-color);
+}
+
+/* =============================================================================
+   VARIANT: FULL WIDTH
+   ============================================================================= */
+.wb-tabs--full-width .wb-tabs__nav {
+  width: 100%;
+}
+
+.wb-tabs--full-width .wb-tabs__tab {
+  flex: 1;
+  justify-content: center;
+}
+
+/* =============================================================================
+   SIZE: SMALL
+   ============================================================================= */
+.wb-tabs--sm .wb-tabs__tab {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+/* =============================================================================
+   SIZE: LARGE
+   ============================================================================= */
+.wb-tabs--lg .wb-tabs__tab {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}

@@ -1,0 +1,1 @@
+// Schema to TypeScript generator

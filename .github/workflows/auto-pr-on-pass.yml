@@ -1,0 +1,33 @@
+name: Auto PR on Passing Tests
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 2 * * *' # nightly (optional)
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run auto-PR script (dry-run=false)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node ./scripts/auto-pr-on-pass.mjs --dry=false --test "tests/compliance/builder-theme-event-handler.spec.ts"

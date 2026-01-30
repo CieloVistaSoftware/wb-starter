@@ -1,0 +1,1 @@
+{"version":3,"file":"timeline.js","sourceRoot":"","sources":["../../../src/wb-viewmodels/semantics/timeline.js"],"names":[],"mappings":"AAAA;;;GAGG;AACH,MAAM,UAAU,QAAQ,CAAC,OAAO,EAAE,OAAO,GAAG,EAAE;IAC5C,wEAAwE;IACxE,OAAO,CAAC,SAAS,CAAC,GAAG,CAAC,aAAa,CAAC,CAAC;IACrC,OAAO,GAAG,EAAE,CAAC,OAAO,CAAC,SAAS,CAAC,MAAM,CAAC,aAAa,CAAC,CAAC;AACvD,CAAC;AAED,eAAe,QAAQ,CAAC"}

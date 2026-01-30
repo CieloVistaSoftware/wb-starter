@@ -28,7 +28,7 @@ test.describe('Card Behavior (integration)', () => {
     }, html);
     
     await page.evaluate(() => {
-      (window as any).WB.scan(document.getElementById('test-container'));
+      await waitForWBScan(page, '#test-container');
     });
     
     // Wait a bit more for the dynamic import to complete

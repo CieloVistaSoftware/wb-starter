@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "navbar-config.json",
+  "title": "Navigation Bar Configuration",
+  "description": "Smart behaviors and settings for the site navigation bar",
+  "version": "1.0.0",
+
+  "appearance": {
+    "variant": "glassmorphism",
+    "variants": ["default", "dark", "transparent", "glassmorphism", "solid"],
+    "height": "60px",
+    "padding": "0 2rem",
+    "borderRadius": "0",
+    "shadow": "0 1px 3px rgba(0,0,0,0.1)",
+    "blur": "10px",
+    "opacity": 0.85
+  },
+
+  "brand": {
+    "logo": "images/wb.png",
+    "logoSize": "40px",
+    "text": "WB Framework",
+    "tagline": "Modern Native Web",
+    "href": "/",
+    "showTagline": true
+  },
+
+  "smartBehaviors": {
+    "sticky": {
+      "enabled": true,
+      "offset": 0,
+      "zIndex": 1000
+    },
+
+    "hideOnScroll": {
+      "enabled": false,
+      "threshold": 100,
+      "showOnScrollUp": true,
+      "animationDuration": "0.3s"
+    },
+
+    "shrinkOnScroll": {
+      "enabled": true,
+      "scrollThreshold": 50,
+      "normalHeight": "60px",
+      "shrunkHeight": "48px",
+      "animationDuration": "0.3s"
+    },
+
+    "backgroundOnScroll": {
+      "enabled": true,
+      "scrollThreshold": 50,
+      "initialBackground": "transparent",
+      "scrolledBackground": "var(--bg-primary)",
+      "initialBlur": "0px",
+      "scrolledBlur": "20px",
+      "addShadow": true
+    },
+
+    "activePageHighlight": {
+      "enabled": true,
+      "style": "underline",
+      "styles": ["none", "color", "underline", "pill", "arrow", "dot", "glow"],
+      "color": "var(--primary)",
+      "matchBy": ["href", "pageId", "label"],
+      "animateTransition": true
+    },
+
+    "progressIndicator": {
+      "enabled": false,
+      "position": "bottom",
+      "height": "3px",
+      "color": "var(--primary)",
+      "showOnScroll": true
+    }
+  },
+
+  "mobile": {
+    "breakpoint": "768px",
+    "menuType": "drawer",
+    "menuTypes": ["drawer", "dropdown", "fullscreen", "offcanvas"],
+    "hamburgerIcon": "☰",
+    "closeIcon": "✕",
+    "animationDuration": "0.3s",
+    "overlay": true,
+    "overlayOpacity": 0.5
+  },
+
+  "search": {
+    "enabled": false,
+    "placeholder": "Search...",
+    "position": "right",
+    "expandable": true,
+    "shortcut": "Ctrl+K",
+    "showIcon": true
+  },
+
+  "userMenu": {
+    "enabled": false,
+    "avatar": null,
+    "name": null,
+    "items": [
+      { "label": "Profile", "icon": "👤", "href": "#profile" },
+      { "label": "Settings", "icon": "⚙️", "href": "#settings" },
+      { "divider": true },
+      { "label": "Logout", "icon": "🚪", "action": "logout" }
+    ]
+  },
+
+  "notifications": {
+    "enabled": false,
+    "icon": "🔔",
+    "showBadge": true,
+    "badgeColor": "var(--danger-color)",
+    "position": "right"
+  },
+
+  "themeSwitcher": {
+    "enabled": true,
+    "position": "right",
+    "icons": {
+      "light": "☀️",
+      "dark": "🌙",
+      "auto": "💻"
+    },
+    "showLabel": false
+  },
+
+  "actions": {
+    "position": "right",
+    "items": [
+      {
+        "type": "button",
+        "label": "Get Started",
+        "href": "?page=builder",
+        "variant": "primary",
+        "icon": null
+      }
+    ]
+  },
+
+  "accessibility": {
+    "ariaLabel": "Main navigation",
+    "skipLink": true,
+    "skipLinkText": "Skip to main content",
+    "keyboardNavigation": true,
+    "focusIndicator": true
+  },
+
+  "cssVariables": {
+    "--wb-navbar-height": "60px",
+    "--wb-navbar-height-shrunk": "48px",
+    "--wb-navbar-bg": "var(--bg-primary)",
+    "--wb-navbar-bg-scrolled": "color-mix(in srgb, var(--bg-primary) 85%, transparent)",
+    "--wb-navbar-border": "1px solid var(--border-color)",
+    "--wb-navbar-shadow": "0 1px 3px rgba(0,0,0,0.1)",
+    "--wb-navbar-shadow-scrolled": "0 10px 30px rgba(0,0,0,0.15)",
+    "--wb-navbar-blur": "10px",
+    "--wb-navbar-blur-scrolled": "20px",
+    "--wb-navbar-brand-size": "1.25rem",
+    "--wb-navbar-brand-weight": "700",
+    "--wb-navbar-link-color": "var(--text-primary)",
+    "--wb-navbar-link-hover": "var(--primary)",
+    "--wb-navbar-active-color": "var(--primary)",
+    "--wb-navbar-transition": "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+  },
+
+  "_examples": {
+    "simpleSticky": {
+      "smartBehaviors": {
+        "sticky": { "enabled": true },
+        "hideOnScroll": { "enabled": false },
+        "shrinkOnScroll": { "enabled": false },
+        "backgroundOnScroll": { "enabled": false }
+      }
+    },
+    "hideOnScrollDown": {
+      "smartBehaviors": {
+        "sticky": { "enabled": true },
+        "hideOnScroll": { "enabled": true, "threshold": 100, "showOnScrollUp": true }
+      }
+    },
+    "shrinkingNavbar": {
+      "smartBehaviors": {
+        "sticky": { "enabled": true },
+        "shrinkOnScroll": { "enabled": true, "normalHeight": "80px", "shrunkHeight": "50px" }
+      }
+    },
+    "glassmorphism": {
+      "appearance": { "variant": "glassmorphism", "blur": "20px", "opacity": 0.7 },
+      "smartBehaviors": {
+        "backgroundOnScroll": { "enabled": true, "scrolledBlur": "30px" }
+      }
+    },
+    "progressBar": {
+      "smartBehaviors": {
+        "progressIndicator": { "enabled": true, "position": "bottom", "color": "var(--accent)" }
+      }
+    }
+  }
+}

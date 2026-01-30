@@ -1,0 +1,30 @@
+name: Block changes to protected paths
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [ main, master ]
+
+jobs:
+  protected-paths:
+    name: Fail if PR touches Lock/ or tmp/
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install (no-op if not needed)
+        run: npm ci --no-audit --no-fund
+
+      - name: Run protected-paths check
+        env:
+          GITHUB_BASE_REF: "${{ github.event.pull_request.base.ref }}"
+        run: node ./scripts/check-protected-paths.mjs --base-ref "${{ github.event.pull_request.base.ref }}"

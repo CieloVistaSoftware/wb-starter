@@ -1,56 +1,56 @@
 {
-  "lastUpdated": "2026-01-17T02:02:34.856Z",
-  "count": 2,
+  "lastUpdated": "2026-01-30T05:46:19.923Z",
+  "count": 3,
   "errors": [
     {
-      "id": 1768615352531,
-      "timestamp": "2026-01-17T02:02:32.532Z",
+      "id": 1769751979912,
+      "timestamp": "2026-01-30T05:46:19.912Z",
       "level": "error",
-      "source": "WB:LegacySyntax",
-      "module": "wb.js",
-      "line": 337,
-      "column": 41,
-      "function": "(anonymous)",
-      "message": "Legacy syntax data-wb=\"pill\" detected on <span>. Please use <wb-pill> instead.",
-      "stack": "Error: Legacy syntax data-wb=\"pill\" detected on <span>. Please use <wb-pill> instead.\n    at http://localhost:3000/src/core/wb.js:337:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:329:42)\n    at eval (eval at evaluate (:291:30), <anonymous>:13:23)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "source": "WB:password",
+      "module": "enhancements.js",
+      "line": 248,
+      "column": 22,
+      "function": "password",
+      "message": "Cannot read properties of null (reading 'insertBefore')",
+      "stack": "TypeError: Cannot read properties of null (reading 'insertBefore')\n    at password (http://localhost:3000/src/wb-viewmodels/enhancements.js:248:22)\n    at Proxy.<anonymous> (http://localhost:3000/src/wb-viewmodels/index.js:285:14)\n    at async Object.inject (http://localhost:3000/src/core/wb.js:200:19)\n    at async Promise.all (index 18)\n    at async Object.scan (http://localhost:3000/src/core/wb.js:406:5)\n    at async Object.init (http://localhost:3000/src/core/wb.js:712:9)",
       "frames": [
         {
-          "function": "(anonymous)",
+          "function": "password",
+          "file": "enhancements.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/enhancements.js",
+          "line": 248,
+          "column": 22
+        },
+        {
+          "function": "Proxy.<anonymous>",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/index.js",
+          "line": 285,
+          "column": 14
+        },
+        {
+          "function": "Object.inject",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 337,
-          "column": 41
+          "line": 200,
+          "column": 19
         },
         {
           "function": "Object.scan",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 329,
-          "column": 42
+          "line": 406,
+          "column": 5
         },
         {
-          "function": "eval",
-          "file": "eval at evaluate (",
-          "fullPath": "eval at evaluate (",
-          "line": 291,
-          "column": 30
-        },
-        {
-          "function": "UtilityScript.evaluate",
-          "file": "<anonymous>",
-          "fullPath": "<anonymous>",
-          "line": 293,
-          "column": 16
-        },
-        {
-          "function": "UtilityScript.<anonymous>",
-          "file": "<anonymous>",
-          "fullPath": "<anonymous>",
-          "line": 1,
-          "column": 44
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 712,
+          "column": 9
         }
       ],
-      "url": "http://localhost:3000/",
+      "url": "http://localhost:3000/?page=behaviors",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
       "interaction": {
         "from": "System",
@@ -58,40 +58,109 @@
       }
     },
     {
-      "id": 1768615354856,
-      "timestamp": "2026-01-17T02:02:34.856Z",
+      "id": 1769751979915,
+      "timestamp": "2026-01-30T05:46:19.915Z",
       "level": "error",
-      "source": "WB:LegacySyntax",
-      "module": "wb.js",
-      "line": 337,
-      "column": 41,
-      "function": "(anonymous)",
-      "message": "Legacy syntax data-wb=\"pill\" detected on <span>. Please use <wb-pill> instead.",
-      "stack": "Error: Legacy syntax data-wb=\"pill\" detected on <span>. Please use <wb-pill> instead.\n    at http://localhost:3000/src/core/wb.js:337:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:329:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:712:18)",
+      "source": "WB:search",
+      "module": "enhancements.js",
+      "line": 208,
+      "column": 22,
+      "function": "search",
+      "message": "Cannot read properties of null (reading 'insertBefore')",
+      "stack": "TypeError: Cannot read properties of null (reading 'insertBefore')\n    at search (http://localhost:3000/src/wb-viewmodels/enhancements.js:208:22)\n    at Proxy.<anonymous> (http://localhost:3000/src/wb-viewmodels/index.js:285:14)\n    at async Object.inject (http://localhost:3000/src/core/wb.js:200:19)\n    at async Promise.all (index 19)\n    at async Object.scan (http://localhost:3000/src/core/wb.js:406:5)\n    at async Object.init (http://localhost:3000/src/core/wb.js:712:9)",
       "frames": [
         {
-          "function": "(anonymous)",
+          "function": "search",
+          "file": "enhancements.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/enhancements.js",
+          "line": 208,
+          "column": 22
+        },
+        {
+          "function": "Proxy.<anonymous>",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/index.js",
+          "line": 285,
+          "column": 14
+        },
+        {
+          "function": "Object.inject",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 337,
-          "column": 41
+          "line": 200,
+          "column": 19
         },
         {
           "function": "Object.scan",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 329,
-          "column": 42
+          "line": 406,
+          "column": 5
         },
         {
           "function": "Object.init",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
           "line": 712,
-          "column": 18
+          "column": 9
         }
       ],
-      "url": "http://localhost:3000/",
+      "url": "http://localhost:3000/?page=behaviors",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1769751979923,
+      "timestamp": "2026-01-30T05:46:19.923Z",
+      "level": "error",
+      "source": "WB:stepper",
+      "module": "enhancements.js",
+      "line": 161,
+      "column": 22,
+      "function": "stepper",
+      "message": "Cannot read properties of null (reading 'insertBefore')",
+      "stack": "TypeError: Cannot read properties of null (reading 'insertBefore')\n    at stepper (http://localhost:3000/src/wb-viewmodels/enhancements.js:161:22)\n    at Proxy.<anonymous> (http://localhost:3000/src/wb-viewmodels/index.js:285:14)\n    at async Object.inject (http://localhost:3000/src/core/wb.js:200:19)\n    at async Promise.all (index 28)\n    at async Object.scan (http://localhost:3000/src/core/wb.js:406:5)\n    at async Object.init (http://localhost:3000/src/core/wb.js:712:9)",
+      "frames": [
+        {
+          "function": "stepper",
+          "file": "enhancements.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/enhancements.js",
+          "line": 161,
+          "column": 22
+        },
+        {
+          "function": "Proxy.<anonymous>",
+          "file": "index.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/index.js",
+          "line": 285,
+          "column": 14
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 200,
+          "column": 19
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 406,
+          "column": 5
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 712,
+          "column": 9
+        }
+      ],
+      "url": "http://localhost:3000/?page=behaviors",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
       "interaction": {
         "from": "System",

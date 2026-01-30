@@ -1,6 +1,13 @@
 {
-  "lastUpdated": "2026-01-30T02:24:25.789Z",
+  "lastUpdated": "2026-01-30T16:24:15.736Z",
   "issues": [
+    {
+      "id": "typescript-migration-path-a",
+      "type": "ENHANCEMENT",
+      "description": "TypeScript Migration Path A: Batch rename wb-viewmodels (52 files .js → .ts), fix compile errors, add type shims. Step 1: Create lock file.",
+      "date": "1/30/2026",
+      "fixed": false
+    },
     {
       "id": "note-1769470023977-p0",
       "type": "UI",

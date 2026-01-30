@@ -128,8 +128,17 @@ const VP_SIZES = {
 };
 
 // === ERROR HANDLING ===
+// Surface initialization errors to tests and make the global handler set a
+// diagnostic flag so tests can fail fast with actionable context.
 window.onerror = function(msg, url, line, col, error) {
   console.error('Global Error:', msg, error);
+  // Expose a short diagnostic for test harnesses / debug scripts
+  try {
+    window.builderInitError = (error && (error.stack || error.message)) || String(msg);
+    window.builderReady = false;
+  } catch (e) {
+    /* ignore */
+  }
   if (window.toast) window.toast('Error: ' + msg, 'error');
   return false;
 };
@@ -617,6 +626,17 @@ async function start() {
   setTimeout(() => {
     initWorkflow();
   }, 200);
+
+  // Mark the app as ready for the test harness and consumers.
+  // Use a microtask to ensure any remaining microtasks have a chance to run.
+  try {
+    Promise.resolve().then(() => { window.builderReady = true; });
+  } catch (err) {
+    // If setting the readiness flag fails for any reason, expose the error
+    window.builderReady = false;
+    window.builderInitError = err && (err.stack || err.message) || String(err);
+    console.error('[Builder] Failed to set builderReady flag', err);
+  }
 }
 
 function initCanvasEditing() {
@@ -848,10 +868,22 @@ window.builderAPI = {
   get: (id) => document.getElementById(id)
 };
 
-// Start on DOM ready
+// Start on DOM ready — run startup inside a guarded try/catch so initialization
+// failures are recorded to `window.builderInitError` and `window.builderReady`.
+async function safeStart() {
+  try {
+    await start();
+    try { initNewFeatures(); } catch (e) { console.error('initNewFeatures failed', e); }
+    // If start completed without throwing, builderReady will be set by start().
+  } catch (err) {
+    console.error('[Builder] initialization failed:', err);
+    window.builderReady = false;
+    window.builderInitError = err && (err.stack || err.message) || String(err);
+  }
+}
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => { start(); initNewFeatures(); });
+  document.addEventListener('DOMContentLoaded', () => { safeStart(); });
 } else {
-  start();
-  initNewFeatures();
+  safeStart();
 }

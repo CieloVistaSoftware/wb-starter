@@ -1,0 +1,357 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contextmenu.schema.json",
+  "title": "Context Menu",
+  "description": "Right-click context menu with smart positioning and keyboard navigation",
+  "behavior": "contextmenu",
+  "baseClass": "wb-contextmenu",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "menu"
+  },
+  "compliance": {
+    "baseClass": "wb-contextmenu",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "items": {
+      "type": "array",
+      "description": "Menu items array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique item identifier"
+          },
+          "label": {
+            "type": "string",
+            "description": "Display text"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Icon/emoji prefix"
+          },
+          "shortcut": {
+            "type": "string",
+            "description": "Keyboard shortcut hint"
+          },
+          "disabled": {
+            "type": "boolean",
+            "description": "Disable this item"
+          },
+          "danger": {
+            "type": "boolean",
+            "description": "Style as destructive action"
+          },
+          "separator": {
+            "type": "boolean",
+            "description": "Render as separator line"
+          },
+          "submenu": {
+            "type": "array",
+            "description": "Nested submenu items"
+          }
+        }
+      }
+    },
+    "trigger": {
+      "type": "string",
+      "description": "Element selector or 'contextmenu' event target",
+      "default": "contextmenu"
+    },
+    "minWidth": {
+      "type": "string",
+      "description": "Minimum menu width",
+      "default": "180px"
+    },
+    "maxWidth": {
+      "type": "string",
+      "description": "Maximum menu width",
+      "default": "320px"
+    },
+    "zIndex": {
+      "type": "number",
+      "description": "Stack order",
+      "default": 10000
+    },
+    "closeOnSelect": {
+      "type": "boolean",
+      "description": "Close menu after item selection",
+      "default": true
+    },
+    "closeOnOutside": {
+      "type": "boolean",
+      "description": "Close on outside click",
+      "default": true
+    },
+    "closeOnEscape": {
+      "type": "boolean",
+      "description": "Close on Escape key",
+      "default": true
+    },
+    "positioning": {
+      "type": "string",
+      "description": "Smart positioning strategy",
+      "enum": ["auto", "fixed", "absolute"],
+      "default": "auto"
+    }
+  },
+  "$view": [
+    {
+      "name": "menu",
+      "tag": "div",
+      "class": "wb-contextmenu",
+      "public": true,
+      "required": true,
+      "description": "Menu container"
+    },
+    {
+      "name": "item",
+      "tag": "button",
+      "class": "wb-contextmenu__item",
+      "public": true,
+      "description": "Menu item button"
+    },
+    {
+      "name": "separator",
+      "tag": "hr",
+      "class": "wb-contextmenu__separator",
+      "public": true,
+      "description": "Visual separator"
+    },
+    {
+      "name": "icon",
+      "tag": "span",
+      "class": "wb-contextmenu__icon",
+      "public": true,
+      "description": "Item icon container"
+    },
+    {
+      "name": "label",
+      "tag": "span",
+      "class": "wb-contextmenu__label",
+      "public": true,
+      "description": "Item label text"
+    },
+    {
+      "name": "shortcut",
+      "tag": "kbd",
+      "class": "wb-contextmenu__shortcut",
+      "public": true,
+      "description": "Keyboard shortcut hint"
+    }
+  ],
+  "$methods": {
+    "show": {
+      "description": "Show menu at coordinates",
+      "params": ["x", "y", "items?"]
+    },
+    "hide": {
+      "description": "Hide the menu",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggle menu visibility",
+      "params": ["x", "y"]
+    },
+    "isOpen": {
+      "description": "Returns open state",
+      "params": [],
+      "returns": "boolean"
+    },
+    "setItems": {
+      "description": "Update menu items",
+      "params": ["items"]
+    },
+    "focusItem": {
+      "description": "Focus specific item by index",
+      "params": ["index"]
+    },
+    "getPosition": {
+      "description": "Get optimal position avoiding overflow",
+      "params": ["x", "y"],
+      "returns": "{ left, top }"
+    }
+  },
+  "$cssAPI": {
+    "--wb-contextmenu-bg": {
+      "default": "var(--bg-secondary, #1f2937)",
+      "description": "Menu background color"
+    },
+    "--wb-contextmenu-border": {
+      "default": "1px solid var(--border-color, #374151)",
+      "description": "Menu border"
+    },
+    "--wb-contextmenu-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-contextmenu-shadow": {
+      "default": "0 10px 30px rgba(0, 0, 0, 0.3)",
+      "description": "Box shadow"
+    },
+    "--wb-contextmenu-padding": {
+      "default": "0.5rem",
+      "description": "Menu padding"
+    },
+    "--wb-contextmenu-min-width": {
+      "default": "180px",
+      "description": "Minimum width"
+    },
+    "--wb-contextmenu-max-width": {
+      "default": "320px",
+      "description": "Maximum width"
+    },
+    "--wb-contextmenu-z-index": {
+      "default": "10000",
+      "description": "Stack order"
+    },
+    "--wb-contextmenu-item-padding": {
+      "default": "0.75rem",
+      "description": "Item padding"
+    },
+    "--wb-contextmenu-item-radius": {
+      "default": "4px",
+      "description": "Item border radius"
+    },
+    "--wb-contextmenu-item-color": {
+      "default": "var(--text-primary, #fff)",
+      "description": "Item text color"
+    },
+    "--wb-contextmenu-item-hover-bg": {
+      "default": "var(--bg-tertiary, #374151)",
+      "description": "Item hover background"
+    },
+    "--wb-contextmenu-item-active-bg": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Item active background"
+    },
+    "--wb-contextmenu-item-danger-color": {
+      "default": "#ef4444",
+      "description": "Danger item color"
+    },
+    "--wb-contextmenu-item-disabled-opacity": {
+      "default": "0.5",
+      "description": "Disabled item opacity"
+    },
+    "--wb-contextmenu-separator-color": {
+      "default": "var(--border-color, #374151)",
+      "description": "Separator line color"
+    },
+    "--wb-contextmenu-separator-margin": {
+      "default": "0.5rem 0",
+      "description": "Separator margin"
+    },
+    "--wb-contextmenu-shortcut-color": {
+      "default": "var(--text-muted, #9ca3af)",
+      "description": "Shortcut text color"
+    },
+    "--wb-contextmenu-shortcut-font": {
+      "default": "0.75rem monospace",
+      "description": "Shortcut font"
+    },
+    "--wb-contextmenu-enter-animation": {
+      "default": "contextmenuFadeIn 0.15s ease",
+      "description": "Enter animation"
+    },
+    "--wb-contextmenu-exit-animation": {
+      "default": "contextmenuFadeOut 0.1s ease",
+      "description": "Exit animation"
+    }
+  },
+  "accessibility": {
+    "menu": {
+      "role": "menu",
+      "ariaLabel": "Context menu"
+    },
+    "item": {
+      "role": "menuitem",
+      "tabindex": "-1"
+    },
+    "separator": {
+      "role": "separator"
+    },
+    "keyboardNav": {
+      "ArrowUp": "Focus previous item",
+      "ArrowDown": "Focus next item",
+      "Enter": "Select focused item",
+      "Escape": "Close menu",
+      "Home": "Focus first item",
+      "End": "Focus last item"
+    }
+  },
+  "events": {
+    "wb:contextmenu:show": {
+      "description": "Menu opened",
+      "detail": {
+        "x": "number",
+        "y": "number"
+      }
+    },
+    "wb:contextmenu:hide": {
+      "description": "Menu closed",
+      "detail": {}
+    },
+    "wb:contextmenu:select": {
+      "description": "Item selected",
+      "detail": {
+        "id": "string",
+        "label": "string",
+        "item": "object"
+      }
+    },
+    "wb:contextmenu:hover": {
+      "description": "Item hovered",
+      "detail": {
+        "id": "string",
+        "item": "object"
+      }
+    }
+  },
+  "positioning": {
+    "algorithm": "Smart positioning that prevents overflow",
+    "rules": [
+      "Prefer below-right of click point",
+      "If no room below, position above click point",
+      "If no room right, position to the left",
+      "Maintain minimum 10px margin from viewport edges",
+      "Submenu opens in available space direction"
+    ]
+  },
+  "test": {
+    "functional": true,
+    "setup": [
+      "<div data-wb=\"contextmenu\" data-wb-items='[{\"id\":\"edit\",\"label\":\"Edit\",\"icon\":\"✏️\"},{\"separator\":true},{\"id\":\"delete\",\"label\":\"Delete\",\"icon\":\"🗑️\",\"danger\":true}]'>Right-click me</div>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "items": [{"id": "item1", "label": "Item 1"}]
+        },
+        {
+          "items": [{"id": "item1", "label": "Item 1", "icon": "📋"}]
+        },
+        {
+          "items": [{"id": "item1", "label": "Item 1", "shortcut": "Ctrl+C"}]
+        },
+        {
+          "items": [{"id": "item1", "label": "Item 1", "disabled": true}]
+        },
+        {
+          "items": [{"id": "delete", "label": "Delete", "danger": true}]
+        },
+        {
+          "items": [{"separator": true}]
+        }
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "overlay",
+    "icon": "📋",
+    "since": "3.0.0",
+    "status": "stable"
+  }
+}

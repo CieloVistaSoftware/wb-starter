@@ -132,7 +132,7 @@ const VALID_TRIGGERS = ['button', 'a', 'div', 'span'];
 async function loadBehaviorMeta(page: Page): Promise<Record<string, BehaviorMeta>> {
   return await page.evaluate(async () => {
     // Import the module
-    const module = await import('/src/wb-viewmodels/builder-app/behaviorMeta.js');
+    const module = await import('/dist/wb-viewmodels/builder-app/behaviorMeta.js');
     return module.behaviorMeta || module.default || {};
   });
 }

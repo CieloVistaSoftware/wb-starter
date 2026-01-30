@@ -1,0 +1,1 @@
+const fs = require("fs");\nconst content = fs.readFileSync("tests/issues/x-draggable-position.spec.ts", "utf8");\nconsole.log("Length:", content.length);\nconsole.log("First 200:", content.substring(0, 200));

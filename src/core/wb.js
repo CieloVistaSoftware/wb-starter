@@ -28,16 +28,16 @@ if (typeof window !== 'undefined' && typeof window.WB === 'undefined') {
  *   </script>
  */
 
-import { behaviors } from '../wb-viewmodels/index.js';
+import { behaviors } from '/dist/wb-viewmodels/index.js';
 import { Events } from './events.js';
 import { Theme } from './theme.js';
 
 // Register Layout Custom Elements
-import '../wb-viewmodels/wb-grid.js';
-import '../wb-viewmodels/wb-cluster.js';
-import '../wb-viewmodels/wb-stack.js';
-import '../wb-viewmodels/wb-row.js';
-import '../wb-viewmodels/wb-column.js';
+import '/dist/wb-viewmodels/wb-grid.js';
+import '/dist/wb-viewmodels/wb-cluster.js';
+import '/dist/wb-viewmodels/wb-stack.js';
+import '/dist/wb-viewmodels/wb-row.js';
+import '/dist/wb-viewmodels/wb-column.js';
 
 import { getConfig, setConfig } from './config.js';
 import { pubsub } from './pubsub.js';

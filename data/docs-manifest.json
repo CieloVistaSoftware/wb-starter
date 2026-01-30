@@ -1,6 +1,6 @@
 {
-  "generated": "2026-01-17T01:36:40.729Z",
-  "totalFiles": 125,
+  "generated": "2026-01-30T05:43:32.537Z",
+  "totalFiles": 133,
   "categories": [
     "_today",
     "architecture",
@@ -131,6 +131,12 @@
         "category": "root"
       },
       {
+        "path": "docs/CommittingFixes.md",
+        "title": "Committing Fixes Workflow",
+        "name": "CommittingFixes",
+        "category": "root"
+      },
+      {
         "path": "docs/container-pattern.md",
         "title": "Container Components Pattern",
         "name": "container-pattern",
@@ -161,6 +167,12 @@
         "category": "root"
       },
       {
+        "path": "docs/HANDOFF_FREEZE_2026-01-29.md",
+        "title": "Handoff — Freeze (2026-01-29)",
+        "name": "HANDOFF_FREEZE_2026-01-29",
+        "category": "root"
+      },
+      {
         "path": "docs/IMPROVEMENTS.md",
         "title": "Potential Improvements for Web Behaviors (WB)",
         "name": "IMPROVEMENTS",
@@ -185,6 +197,12 @@
         "category": "root"
       },
       {
+        "path": "docs/issue-validation-triage-2026-01-29.md",
+        "title": "Issue validation triage — 2026-01-29",
+        "name": "issue-validation-triage-2026-01-29",
+        "category": "root"
+      },
+      {
         "path": "docs/linkedin-framework-agnostic.md",
         "title": "LinkedIn Article: The AI Architect: Why the Future of Web Tools is Framework Agnostic",
         "name": "linkedin-framework-agnostic",
@@ -194,6 +212,12 @@
         "path": "docs/linkedin-standards-article.md",
         "title": "LinkedIn Article: The 3 Non-Negotiable Standards of Our Front-End Architecture",
         "name": "linkedin-standards-article",
+        "category": "root"
+      },
+      {
+        "path": "docs/mcp-playwright-architecture.md",
+        "title": "MCP + Playwright Architecture",
+        "name": "mcp-playwright-architecture",
         "category": "root"
       },
       {
@@ -308,6 +332,12 @@
         "path": "docs/themes.md",
         "title": "Theme System Documentation",
         "name": "themes",
+        "category": "root"
+      },
+      {
+        "path": "docs/TYPESCRIPT_MIGRATION.md",
+        "title": "TypeScript Migration Plan",
+        "name": "TYPESCRIPT_MIGRATION",
         "category": "root"
       },
       {
@@ -490,6 +520,12 @@
         "path": "docs/components/cards/README.md",
         "title": "WB Framework v3.0 - Cards",
         "name": "README",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/contextmenu.md",
+        "title": "Context Menu - Web Behaviors (WB) Framework v3.0",
+        "name": "contextmenu",
         "category": "components"
       },
       {
@@ -769,8 +805,20 @@
     ],
     "_today": [
       {
+        "path": "docs/_today/CTX-1-PROGRESS.md",
+        "title": "Context Menu — Issue #7 Progress",
+        "name": "CTX-1-PROGRESS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/CTX-8-PROGRESS.md",
+        "title": "Tabs Component — Issue #8 Progress",
+        "name": "CTX-8-PROGRESS",
+        "category": "_today"
+      },
+      {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "Current Status - Builder UI Enhancements",
+        "title": "Current Status - Builder Layout Fix",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -784,8 +832,20 @@
   },
   "files": [
     {
+      "path": "docs/_today/CTX-1-PROGRESS.md",
+      "title": "Context Menu — Issue #7 Progress",
+      "name": "CTX-1-PROGRESS",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/CTX-8-PROGRESS.md",
+      "title": "Tabs Component — Issue #8 Progress",
+      "name": "CTX-8-PROGRESS",
+      "category": "_today"
+    },
+    {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "Current Status - Builder UI Enhancements",
+      "title": "Current Status - Builder Layout Fix",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -934,6 +994,12 @@
       "category": "root"
     },
     {
+      "path": "docs/CommittingFixes.md",
+      "title": "Committing Fixes Workflow",
+      "name": "CommittingFixes",
+      "category": "root"
+    },
+    {
       "path": "docs/compliance/iso-42001-alignment.md",
       "title": "ISO/IEC 42001 Alignment Report",
       "name": "iso-42001-alignment",
@@ -1063,6 +1129,12 @@
       "path": "docs/components/cards/README.md",
       "title": "WB Framework v3.0 - Cards",
       "name": "README",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/contextmenu.md",
+      "title": "Context Menu - Web Behaviors (WB) Framework v3.0",
+      "name": "contextmenu",
       "category": "components"
     },
     {
@@ -1360,6 +1432,12 @@
       "category": "guides"
     },
     {
+      "path": "docs/HANDOFF_FREEZE_2026-01-29.md",
+      "title": "Handoff — Freeze (2026-01-29)",
+      "name": "HANDOFF_FREEZE_2026-01-29",
+      "category": "root"
+    },
+    {
       "path": "docs/IMPROVEMENTS.md",
       "title": "Potential Improvements for Web Behaviors (WB)",
       "name": "IMPROVEMENTS",
@@ -1384,6 +1462,12 @@
       "category": "root"
     },
     {
+      "path": "docs/issue-validation-triage-2026-01-29.md",
+      "title": "Issue validation triage — 2026-01-29",
+      "name": "issue-validation-triage-2026-01-29",
+      "category": "root"
+    },
+    {
       "path": "docs/linkedin-framework-agnostic.md",
       "title": "LinkedIn Article: The AI Architect: Why the Future of Web Tools is Framework Agnostic",
       "name": "linkedin-framework-agnostic",
@@ -1393,6 +1477,12 @@
       "path": "docs/linkedin-standards-article.md",
       "title": "LinkedIn Article: The 3 Non-Negotiable Standards of Our Front-End Architecture",
       "name": "linkedin-standards-article",
+      "category": "root"
+    },
+    {
+      "path": "docs/mcp-playwright-architecture.md",
+      "title": "MCP + Playwright Architecture",
+      "name": "mcp-playwright-architecture",
       "category": "root"
     },
     {
@@ -1513,6 +1603,12 @@
       "path": "docs/themes.md",
       "title": "Theme System Documentation",
       "name": "themes",
+      "category": "root"
+    },
+    {
+      "path": "docs/TYPESCRIPT_MIGRATION.md",
+      "title": "TypeScript Migration Plan",
+      "name": "TYPESCRIPT_MIGRATION",
       "category": "root"
     },
     {

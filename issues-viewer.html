@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📋 Issues Viewer</title>
+  <link rel="stylesheet" href="src/styles/themes.css">
+  <link rel="stylesheet" href="src/styles/site.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: var(--space-md);
+      padding-bottom: var(--space-xl);
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-primary);
+    }
+    
+    .viewer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .viewer-title {
+      font-size: var(--text-xl);
+      font-weight: var(--font-semibold);
+      margin: 0;
+    }
+    
+    .viewer-actions {
+      display: flex;
+      gap: var(--space-sm);
+    }
+    
+    .btn {
+      padding: var(--space-sm) var(--space-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: var(--text-sm);
+      transition: var(--transition-fast);
+    }
+    
+    .btn:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--primary);
+    }
+    
+    .btn--primary { background: var(--primary); border-color: var(--primary); color: white; }
+    .btn--danger { background: var(--danger-color); border-color: var(--danger-color); color: white; }
+    .btn--success { background: var(--success-color); border-color: var(--success-color); color: white; }
+    .btn--warning { background: var(--warning-color); border-color: var(--warning-color); color: black; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn--sm { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
+    
+    .filters {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Filter button group (backwards compatible with older tests) */
+    .filter-group {
+      display: flex;
+      gap: var(--space-xs);
+      align-items: center;
+    }
+
+    .filter-btn {
+      padding: 6px 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: var(--text-sm);
+    }
+
+    .filter-btn--active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+    .filter-input {
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      width: 280px;
+      font-size: var(--text-sm);
+    }
+    
+    .filter-select {
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: var(--text-sm);
+    }
+    
+    .filter-label--status {
+      margin-left: var(--space-md);
+    }
+
+    /* ========================================
+       TABLE STYLES
+       ======================================== */
+    .issues-table-wrapper {
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+    }
+    
+    .issues-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+    }
+    
+    .issues-table th {
+      background: #1a1a2e;
+      color: var(--text-primary);
+      font-weight: var(--font-semibold);
+      text-align: left;
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 2px solid var(--primary);
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+    }
+    
+    .issues-table td {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+    }
+    
+    /* Alternating dark row colors */
+    .issues-table tr:nth-child(odd) td {
+      background: #16162a;
+    }
+    
+    .issues-table tr:nth-child(even) td {
+      background: #1e1e3a;
+    }
+    
+    .issues-table tr:hover td {
+      background: #252550;
+    }
+    
+    /* Column widths */
+    .col-id { width: 180px; }
+    .col-type { width: 80px; text-align: center; }
+    .col-desc { min-width: 300px; }
+    .col-time { width: 150px; white-space: nowrap; }
+    .col-status { width: 120px; }
+    .col-run { width: 100px; text-align: center; }
+    .col-results { width: 200px; }
+    
+    /* Cell content styles */
+    .id-cell {
+      font-family: monospace;
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .type-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+    }
+    
+    .type-badge--bug { background: #ff4757; color: white; }
+    .type-badge--feature { background: #5352ed; color: white; }
+    .type-badge--improve { background: #ffa502; color: black; }
+    
+    .desc-cell {
+      max-width: 400px;
+    }
+    
+    .desc-text {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.4;
+    }
+    
+    .time-cell {
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+    }
+    
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+    }
+    
+    .status-badge--pending { background: #57606f; color: white; }
+    .status-badge--fixed { background: #ffa502; color: black; }
+    .status-badge--pending-review { background: var(--primary); color: white; }
+    .status-badge--resolved { background: var(--success-color); color: white; }
+    
+    .run-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: var(--radius-md);
+      background: var(--success-color);
+      color: white;
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    
+    .run-btn:hover:not(:disabled) {
+      transform: scale(1.05);
+      box-shadow: 0 2px 8px rgba(46, 213, 115, 0.4);
+    }
+    
+    .run-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    
+    .result-cell {
+      font-size: var(--text-xs);
+    }
+    
+    .result--pass {
+      color: var(--success-color);
+      font-weight: var(--font-semibold);
+    }
+    
+    .result--fail {
+      color: var(--danger-color);
+      font-weight: var(--font-semibold);
+    }
+    
+    .result--running {
+      color: var(--warning-color);
+    }
+
+    /* Validation test summary in issue row */
+    .issue-test { margin-top: 6px; }
+    .issue-test__title { font-weight: var(--font-semibold); font-size: 0.85rem; margin-bottom: 4px; }
+    .issue-test__row { display:flex; gap:8px; align-items:center; }
+    .issue-test__path code { font-family: monospace; background: var(--bg-secondary); padding: 2px 6px; border-radius: 4px; font-size: 0.8125rem; }
+    
+    .spinner {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--text-muted);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 4px;
+    }
+    
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    /* Actions dropdown */
+    .actions-cell {
+      position: relative;
+    }
+    
+    .actions-btn {
+      padding: 4px 8px;
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-secondary);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: var(--text-sm);
+    }
+    
+    .actions-btn:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: var(--space-xl);
+      color: var(--text-muted);
+    }
+
+    /* Simple issue card layout for backward compatibility */
+    .issue-card { border: 1px solid var(--border-color); padding: 12px; margin-bottom: 8px; border-radius: var(--radius-sm); background: var(--bg-secondary); }
+    .issue-card__header { display:flex; justify-content:space-between; align-items:center; }
+    .issue-card__title { margin:0; font-size: 0.95rem; }
+    .issue-card__body { margin-top:8px; }
+    .issue-meta { font-size: 0.8rem; color: var(--text-muted); display:flex; gap:8px; align-items:center; }
+    
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--danger-color);
+      display: inline-block;
+      margin-right: var(--space-sm);
+    }
+    
+    .status-dot.connected { background: var(--success-color); }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: var(--space-xl);
+    }
+
+    .modal-content {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      max-width: 900px;
+      width: 100%;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-body {
+      margin: 0;
+      padding: var(--space-md);
+      overflow: auto;
+      flex: 1;
+      font-size: var(--text-sm);
+      line-height: 1.5;
+      background: var(--bg-secondary);
+      font-family: monospace;
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+  <header class="viewer-header">
+    <h1 class="viewer-title">📋 Issues</h1>
+    <div class="viewer-actions">
+      <button class="btn" onclick="refresh()">🔄 Refresh</button>
+      <button class="btn btn--danger" onclick="clearResolved()">🗑️ Clear Resolved</button>
+    </div>
+  </header>
+  
+  <nav class="filters">
+    <label for="searchInput" class="filter-label">🔍</label>
+    <input type="text" id="searchInput" class="filter-input" list="searchSuggestions" placeholder="Search..." title="Search by text, ID, or try: priority:0, [BUG], builder, drag">
+    <datalist id="searchSuggestions">
+      <option value="priority:0">🔴 Critical</option>
+      <option value="priority:1">🟠 High</option>
+      <option value="[BUG]">Bug reports</option>
+      <option value="builder">Builder</option>
+      <option value="drag">Drag & drop</option>
+      <option value="theme">Theme</option>
+    </datalist>
+
+    <!-- Backwards-compatible filter buttons (used by existing tests) -->
+    <div class="filter-group" role="tablist" aria-label="Issue filters">
+      <button class="filter-btn" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="pending">Pending</button>
+      <button class="filter-btn" data-filter="fixed">Fixed</button>
+      <button class="filter-btn" data-filter="pending-review">Review</button>
+      <button class="filter-btn" data-filter="ready_for_review">Ready</button>
+      <button class="filter-btn" data-filter="resolved">Resolved</button>
+    </div>
+
+    <label for="statusSelect" class="filter-label filter-label--status">Status:</label>
+    <select id="statusSelect" class="filter-select">
+      <option value="all">All</option>
+      <option value="pending">⏳ Pending</option>
+      <option value="fixed">🟡 Fixed</option>
+      <option value="pending-review">🔍 Review</option>
+      <option value="resolved">✅ Resolved</option>
+      <option value="ready_for_review">🔍 Ready</option>
+    </select>
+  </nav>
+  
+  <main id="issuesContainer">
+    <div class="empty-state">Loading issues...</div>
+  </main>
+  
+  <footer class="status-bar">
+    <span><span class="status-dot" id="statusDot"></span><span id="statusText">Connecting...</span></span>
+    <span id="issueCount">0 issues</span>
+  </footer>
+
+  <script type="module">
+    let allIssues = [];
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let ws;
+    let runningTests = new Set();
+    let testResults = new Map();
+    
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const issueCount = document.getElementById('issueCount');
+    const issuesContainer = document.getElementById('issuesContainer');
+    
+    const statusLabels = { 
+      pending: '⏳ Pending', 
+      fixed: '🟡 Fixed', 
+      'pending-review': '🔍 Review', 
+      'ready_for_review': '🔍 Ready',
+      resolved: '✅ Resolved',
+      rejected: '❌ Rejected'
+    };
+    
+    // WebSocket connection
+    function connectWS() {
+      try {
+        ws = new WebSocket(`ws://${location.hostname}:3001`);
+        ws.onopen = () => { statusDot.classList.add('connected'); statusText.textContent = 'Connected'; };
+        ws.onclose = () => { statusDot.classList.remove('connected'); statusText.textContent = 'Disconnected'; setTimeout(connectWS, 2000); };
+        ws.onerror = () => ws.close();
+        ws.onmessage = (e) => { if (e.data === 'reload') refresh(); };
+      } catch {}
+    }
+    
+    // Fetch issues
+    async function refresh() {
+      try {
+        const res = await fetch('/api/pending-issues?all=true');
+        const data = await res.json();
+        allIssues = (data.issues || []).sort((a, b) => {
+          const order = { pending: 0, fixed: 1, 'pending-review': 2, resolved: 3 };
+          const diff = (order[a.status] ?? 2) - (order[b.status] ?? 2);
+          return diff !== 0 ? diff : new Date(b.createdAt) - new Date(a.createdAt);
+        });
+        render();
+        updateCount();
+      } catch {
+        issuesContainer.innerHTML = '<div class="empty-state">⚠️ Server not running<br><br><code>npm start</code></div>';
+      }
+    }
+    
+    function updateCount() {
+      const pending = allIssues.filter(i => i.status === 'pending').length;
+      const fixed = allIssues.filter(i => i.status === 'fixed').length;
+      let text = `${allIssues.length} issue${allIssues.length !== 1 ? 's' : ''}`;
+      if (pending) text += ` · ${pending} pending`;
+      if (fixed) text += ` · ${fixed} fixed`;
+      issueCount.textContent = text;
+    }
+
+    function updateActiveFilterButtons() {
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.toggle('filter-btn--active', b.getAttribute('data-filter') === currentFilter);
+      });
+    }
+
+    function initFilters() {
+      document.getElementById('statusSelect')?.addEventListener('change', (e) => { currentFilter = e.target.value; updateActiveFilterButtons(); render(); });
+      document.getElementById('searchInput')?.addEventListener('input', (e) => { searchQuery = e.target.value; render(); });
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const f = btn.getAttribute('data-filter');
+          currentFilter = f;
+          const sel = document.getElementById('statusSelect');
+          if (sel) sel.value = f;
+          updateActiveFilterButtons();
+          render();
+        });
+      });
+
+      // set initial active state on load
+      updateActiveFilterButtons();
+    }
+
+    // Run test
+    window.runTest = async function(issueId) {
+      runningTests.add(issueId);
+      render();
+      
+      try {
+        const res = await fetch('/api/run-issue-test', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ issueId })
+        });
+        const result = await res.json();
+        testResults.set(issueId, result);
+        
+        const issue = allIssues.find(i => i.id === issueId);
+        if (issue && result.testPath) {
+          issue.testLink = result.testPath;
+        }
+      } catch (e) {
+        testResults.set(issueId, { success: false, error: e.message });
+      } finally {
+        runningTests.delete(issueId);
+        render();
+      }
+    };
+    
+    window.markFixed = async function(id) {
+      await fetch('/api/update-issue', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ issueId: id, status: 'fixed' }) });
+      refresh();
+    };
+
+    window.resolveIssue = async function(id) {
+      await fetch('/api/update-issue', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ issueId: id, status: 'resolved' }) });
+      refresh();
+    };
+    
+    window.deleteIssue = async function(id) {
+      if (!confirm('Delete this issue?')) return;
+      await fetch('/api/delete-issue', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ issueId: id }) });
+      refresh();
+    };
+
+    // Determine issue type from content
+    function getIssueType(issue) {
+      const desc = (issue.description || '').toLowerCase();
+      const type = (issue.type || '').toLowerCase();
+      
+      if (type === 'bug' || desc.includes('[bug]') || desc.includes('bug') || desc.includes('error') || desc.includes('broken') || desc.includes('fix')) {
+        return { label: '🐛 Bug', class: 'type-badge--bug' };
+      }
+      if (type === 'feature' || desc.includes('[feature]') || desc.includes('feature') || desc.includes('add') || desc.includes('new')) {
+        return { label: '✨ Feature', class: 'type-badge--feature' };
+      }
+      return { label: '💡 Improve', class: 'type-badge--improve' };
+    }
+
+    // Render table
+    function render() {
+      const search = searchQuery.toLowerCase().trim();
+      const priorityMatch = search.match(/^priority:(\d)$/);
+      const priorityFilter = priorityMatch ? priorityMatch[1] : null;
+      const textSearch = priorityMatch ? '' : search;
+      
+      const filtered = allIssues.filter(i => {
+        if (currentFilter !== 'all' && i.status !== currentFilter) return false;
+        if (priorityFilter && String(i.priority ?? '') !== priorityFilter) return false;
+        if (textSearch && !`${i.description} ${i.id} ${i.resolution}`.toLowerCase().includes(textSearch)) return false;
+        return true;
+      });
+      
+      if (!filtered.length) {
+        issuesContainer.innerHTML = '<div class="empty-state">No issues found</div>';
+        return;
+      }
+
+      // Also render simple card list for backwards compatibility with existing tests
+      const cardsHtml = filtered.map(issue => {
+        const date = new Date(issue.createdAt).toLocaleString();
+        const desc = issue.description || 'No description';
+        return `<div class="issue-card" data-status="${issue.status}">
+          <div class="issue-card__header"><h3 class="issue-card__title">${esc(desc.split('\n')[0])}</h3></div>
+          <div class="issue-card__body"><div class="issue-meta"><span>📅 ${date}</span><span>ID: <code>${esc(issue.id)}</code></span></div>
+            ${issue.validationTest ? `<div class="issue-test"><div class="issue-test__title">🧪 Validation Test</div><div class="issue-test__row"><code>${esc(issue.validationTest)}</code></div></div>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+      
+      let html = `
+        ${cardsHtml}
+        <div class="issues-table-wrapper">
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th class="col-id">ID</th>
+                <th class="col-type">Type</th>
+                <th class="col-desc">Description</th>
+                <th class="col-time">Time</th>
+                <th class="col-status">Status</th>
+                <th class="col-run">Run Test</th>
+                <th class="col-results">Test Results</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+      
+      filtered.forEach(issue => {
+        const date = new Date(issue.createdAt).toLocaleString();
+        const desc = issue.description || 'No description';
+        const issueType = getIssueType(issue);
+        const isRunning = runningTests.has(issue.id);
+        const testResult = testResults.get(issue.id);
+        
+        // Test results display
+        let resultHtml = '<span style="color: var(--text-muted)">—</span>';
+        if (isRunning) {
+          resultHtml = '<span class="result--running"><span class="spinner"></span>Running...</span>';
+        } else if (testResult) {
+          const s = testResult.summary || {};
+          if (testResult.success) {
+            resultHtml = `<span class="result--pass">✅ ${s.passed || 0} passed</span>`;
+          } else {
+            resultHtml = `<span class="result--fail">❌ ${s.failed || 0} failed</span>`;
+          }
+        }
+        
+        // Status badge class
+        const statusClass = `status-badge--${issue.status}`;
+        
+        html += `
+          <tr>
+            <td class="col-id"><span class="id-cell" title="${esc(issue.id)}">${esc(issue.id)}</span></td>
+            <td class="col-type"><span class="type-badge ${issueType.class}">${issueType.label}</span></td>
+            <td class="col-desc">
+              <div class="desc-text" title="${esc(desc)}">${esc(desc)}</div>
+              ${issue.validationTest ? `<div class="issue-test"><div class="issue-test__title">🧪 Validation Test</div><div class="issue-test__row"><span class="issue-test__path"><code>${esc(issue.validationTest)}</code></span></div></div>` : ''}
+            </td>
+            <td class="col-time"><span class="time-cell">${date}</span></td>
+            <td class="col-status"><span class="status-badge ${statusClass}">${statusLabels[issue.status] || issue.status}</span></td>
+            <td class="col-run">
+              <button class="run-btn" onclick="runTest('${issue.id}')" ${isRunning ? 'disabled' : ''}>
+                ${isRunning ? '<span class="spinner"></span>' : '▶️ Run'}
+              </button>
+            </td>
+            <td class="col-results">${resultHtml}</td>
+            <td class="actions-cell">
+              ${issue.status === 'pending' ? `<button class="btn btn--warning btn--sm" onclick="markFixed('${issue.id}')" title="Mark as Fixed">🟡</button>` : ''}
+              ${['pending','fixed'].includes(issue.status) ? `<button class="btn btn--success btn--sm" onclick="resolveIssue('${issue.id}')" title="Resolve">✅</button>` : ''}
+              <button class="btn btn--danger btn--sm" onclick="deleteIssue('${issue.id}')" title="Delete">🗑️</button>
+            </td>
+          </tr>
+        `;
+      });
+      
+      html += `
+            </tbody>
+          </table>
+        </div>
+      `;
+      
+      issuesContainer.innerHTML = html;
+    }
+    
+    function esc(str) {
+      if (str == null) return '';
+      const div = document.createElement('div');
+      div.textContent = String(str);
+      return div.innerHTML;
+    }
+    
+    async function clearResolved() {
+      if (!confirm('Clear all resolved issues?')) return;
+      await fetch('/api/clear-resolved-issues', { method: 'POST' });
+      refresh();
+    };
+    
+    // Expose to window
+    window.refresh = refresh;
+    window.clearResolved = clearResolved;
+    
+    // Init
+    connectWS();
+    refresh();
+    initFilters();
+  </script>
+</body>
+</html>

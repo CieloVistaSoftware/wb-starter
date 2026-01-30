@@ -1,0 +1,1 @@
+{"version":3,"file":"stat.js","sourceRoot":"","sources":["../../../src/wb-viewmodels/semantics/stat.js"],"names":[],"mappings":"AAAA;;;GAGG;AACH,MAAM,UAAU,IAAI,CAAC,OAAO,EAAE,OAAO,GAAG,EAAE;IACxC,oEAAoE;IACpE,+DAA+D;IAC/D,OAAO,CAAC,SAAS,CAAC,GAAG,CAAC,SAAS,CAAC,CAAC;IACjC,OAAO,GAAG,EAAE,CAAC,OAAO,CAAC,SAAS,CAAC,MAAM,CAAC,SAAS,CAAC,CAAC;AACnD,CAAC;AAED,eAAe,IAAI,CAAC"}

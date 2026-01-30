@@ -1,0 +1,1 @@
+import fs from "fs"; const d = JSON.parse(fs.readFileSync("data/test-content.json", "utf8")); fs.writeFileSync(d.target, d.lines.join("\n")); console.log("done");

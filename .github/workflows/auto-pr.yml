@@ -1,0 +1,38 @@
+name: Auto PR for validated fixes
+
+on:
+  workflow_dispatch:
+    inputs:
+      test:
+        description: 'Playwright test path or npm script to run (default: npm run test:integrity)'
+        required: false
+        default: 'npm run test:integrity'
+      branch:
+        description: 'Branch name to create (optional)'
+        required: false
+      title:
+        description: 'PR title'
+        required: true
+      body:
+        description: 'PR body'
+        required: false
+
+jobs:
+  validate-and-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install deps
+        run: npm ci
+      - name: Run validation test
+        run: ${{ github.event.inputs.test }}
+      - name: Create branch, commit, push & open PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH=${{ github.event.inputs.branch || 'chore/auto/'$(date +%s) }}
+          node ./scripts/auto-pr.mjs --branch="$BRANCH" --title="${{ github.event.inputs.title }}" --body="${{ github.event.inputs.body }}" --test="${{ github.event.inputs.test }}"

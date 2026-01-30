@@ -14,9 +14,10 @@ test.describe('Figure Component', () => {
       img.src = 'https://picsum.photos/200';
       el.appendChild(img);
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      document.body.appendChild(el);
     });
-    
+
+    await waitForWBScan(page, '#test-figure');
     const figure = page.locator('#test-figure-caption');
     const caption = figure.locator('figcaption');
     await expect(caption).toBeVisible();

@@ -1,0 +1,486 @@
+src/wb-viewmodels/behaviors-showcase.ts(137,28): error TS2339: Property 'name' does not exist on type 'unknown'.
+src/wb-viewmodels/behaviors-showcase.ts(140,44): error TS2339: Property 'name' does not exist on type 'unknown'.
+src/wb-viewmodels/card.ts(133,24): error TS2339: Property 'background' does not exist on type '{ behavior: any; title: any; subtitle: any; content: any; footer: any; variant: any; badge: any; clickable: any; hoverable: any; elevated: any; size: any; hoverText: any; onClick: any; dataContext: any; skipStructure: any; schemaProcessed: any; }'.
+src/wb-viewmodels/card.ts(146,16): error TS2339: Property 'backdropFilter' does not exist on type '{ transition: string; borderRadius: string; background: any; border: string; overflow: string; display: string; flexDirection: string; contain: string; overflowWrap: string; wordBreak: string; }'.
+src/wb-viewmodels/card.ts(147,16): error TS2339: Property 'webkitBackdropFilter' does not exist on type '{ transition: string; borderRadius: string; background: any; border: string; overflow: string; display: string; flexDirection: string; contain: string; overflowWrap: string; wordBreak: string; }'.
+src/wb-viewmodels/card.ts(155,16): error TS2339: Property 'borderLeft' does not exist on type '{ transition: string; borderRadius: string; background: any; border: string; overflow: string; display: string; flexDirection: string; contain: string; overflowWrap: string; wordBreak: string; }'.
+src/wb-viewmodels/card.ts(156,16): error TS2339: Property 'borderRight' does not exist on type '{ transition: string; borderRadius: string; background: any; border: string; overflow: string; display: string; flexDirection: string; contain: string; overflowWrap: string; wordBreak: string; }'.
+src/wb-viewmodels/card.ts(158,16): error TS2339: Property 'boxShadow' does not exist on type '{ transition: string; borderRadius: string; background: any; border: string; overflow: string; display: string; flexDirection: string; contain: string; overflowWrap: string; wordBreak: string; }'.
+src/wb-viewmodels/card.ts(159,16): error TS2339: Property 'fontFamily' does not exist on type '{ transition: string; borderRadius: string; background: any; border: string; overflow: string; display: string; flexDirection: string; contain: string; overflowWrap: string; wordBreak: string; }'.
+src/wb-viewmodels/card.ts(676,64): error TS2339: Property 'tracks' does not exist on type '{ src: any; poster: any; title: any; subtitle: any; autoplay: any; muted: any; loop: any; controls: any; }'.
+src/wb-viewmodels/card.ts(726,40): error TS2339: Property 'href' does not exist on type 'HTMLButtonElement | HTMLAnchorElement'.
+src/wb-viewmodels/card.ts(734,38): error TS2339: Property 'href' does not exist on type 'HTMLButtonElement | HTMLAnchorElement'.
+src/wb-viewmodels/card.ts(818,13): error TS2339: Property 'pretitle' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(823,31): error TS2339: Property 'pretitle' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(825,26): error TS2339: Property 'pretitle' does not exist on type '{ behavior: any; title: any; subtitle: any; content: any; footer: any; variant: any; badge: any; clickable: any; hoverable: any; elevated: any; size: any; hoverText: any; onClick: any; dataContext: any; skipStructure: any; schemaProcessed: any; }'.
+src/wb-viewmodels/card.ts(829,35): error TS2339: Property 'pretitle' does not exist on type '{ behavior: any; title: any; subtitle: any; content: any; footer: any; variant: any; badge: any; clickable: any; hoverable: any; elevated: any; size: any; hoverText: any; onClick: any; dataContext: any; skipStructure: any; schemaProcessed: any; }'.
+src/wb-viewmodels/card.ts(834,13): error TS2339: Property 'title' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(836,12): error TS2339: Property 'title' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(837,17): error TS2339: Property 'title' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(837,45): error TS2339: Property 'title' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(838,17): error TS2339: Property 'title' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(838,49): error TS2339: Property 'title' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(839,12): error TS2339: Property 'title' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(840,32): error TS2339: Property 'title' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(850,13): error TS2339: Property 'subtitle' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(851,11): error TS2339: Property 'subtitle' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(852,11): error TS2339: Property 'subtitle' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(853,31): error TS2339: Property 'subtitle' does not exist on type '{}'.
+src/wb-viewmodels/card.ts(862,19): error TS2339: Property 'cta' does not exist on type '{ behavior: any; title: any; subtitle: any; content: any; footer: any; variant: any; badge: any; clickable: any; hoverable: any; elevated: any; size: any; hoverText: any; onClick: any; dataContext: any; skipStructure: any; schemaProcessed: any; }'.
+src/wb-viewmodels/card.ts(862,38): error TS2339: Property 'ctaSecondary' does not exist on type '{ behavior: any; title: any; subtitle: any; content: any; footer: any; variant: any; badge: any; clickable: any; hoverable: any; elevated: any; size: any; hoverText: any; onClick: any; dataContext: any; skipStructure: any; schemaProcessed: any; }'.
+src/wb-viewmodels/card.ts(869,21): error TS2339: Property 'cta' does not exist on type '{ behavior: any; title: any; subtitle: any; content: any; footer: any; variant: any; badge: any; clickable: any; hoverable: any; elevated: any; size: any; hoverText: any; onClick: any; dataContext: any; skipStructure: any; schemaProcessed: any; }'.
+src/wb-viewmodels/card.ts(872,30): error TS2339: Property 'ctaHref' does not exist on type '{ behavior: any; title: any; subtitle: any; content: any; footer: any; variant: any; badge: any; clickable: any; hoverable: any; elevated: any; size: any; hoverText: any; onClick: any; dataContext: any; skipStructure: any; schemaProcessed: any; }'.
+src/wb-viewmodels/card.ts(873,37): error TS2339: Property 'cta' does not exist on type '{ behavior: any; title: any; subtitle: any; content: any; footer: any; variant: any; badge: any; clickable: any; hoverable: any; elevated: any; size: any; hoverText: any; onClick: any; dataContext: any; skipStructure: any; schemaProcessed: any; }'.
+src/wb-viewmodels/card.ts(877,21): error TS2339: Property 'ctaSecondary' does not exist on type '{ behavior: any; title: any; subtitle: any; content: any; footer: any; variant: any; badge: any; clickable: any; hoverable: any; elevated: any; size: any; hoverText: any; onClick: any; dataContext: any; skipStructure: any; schemaProcessed: any; }'.
+src/wb-viewmodels/card.ts(880,30): error TS2339: Property 'ctaSecondaryHref' does not exist on type '{ behavior: any; title: any; subtitle: any; content: any; footer: any; variant: any; badge: any; clickable: any; hoverable: any; elevated: any; size: any; hoverText: any; onClick: any; dataContext: any; skipStructure: any; schemaProcessed: any; }'.
+src/wb-viewmodels/card.ts(881,37): error TS2339: Property 'ctaSecondary' does not exist on type '{ behavior: any; title: any; subtitle: any; content: any; footer: any; variant: any; badge: any; clickable: any; hoverable: any; elevated: any; size: any; hoverText: any; onClick: any; dataContext: any; skipStructure: any; schemaProcessed: any; }'.
+src/wb-viewmodels/card.ts(1242,37): error TS2339: Property 'subtitle' does not exist on type '{ image: any; price: any; originalPrice: any; badge: any; rating: any; reviews: any; cta: any; description: any; }'.
+src/wb-viewmodels/card.ts(1243,12): error TS2339: Property 'subtitle' does not exist on type '{ image: any; price: any; originalPrice: any; badge: any; rating: any; reviews: any; cta: any; description: any; }'.
+src/wb-viewmodels/card.ts(1873,11): error TS2339: Property 'wbCardExpandable' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/card.ts(1953,42): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+src/wb-viewmodels/card.ts(1960,16): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/card.ts(1969,40): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+src/wb-viewmodels/card.ts(1984,5): error TS2552: Cannot find name 'footer'. Did you mean 'footerEl'?
+src/wb-viewmodels/card.ts(1985,25): error TS2552: Cannot find name 'footer'. Did you mean 'footerEl'?
+src/wb-viewmodels/card.ts(1989,11): error TS2339: Property 'wbCardMinimizable' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/card.ts(2020,3): error TS2552: Cannot find name 'header'. Did you mean 'headerEl'?
+src/wb-viewmodels/card.ts(2021,3): error TS2552: Cannot find name 'header'. Did you mean 'headerEl'?
+src/wb-viewmodels/card.ts(2022,3): error TS2552: Cannot find name 'header'. Did you mean 'headerEl'?
+src/wb-viewmodels/card.ts(2023,3): error TS2552: Cannot find name 'header'. Did you mean 'headerEl'?
+src/wb-viewmodels/card.ts(2028,3): error TS2552: Cannot find name 'header'. Did you mean 'headerEl'?
+src/wb-viewmodels/card.ts(2032,5): error TS2304: Cannot find name 'titleEl'.
+src/wb-viewmodels/card.ts(2033,5): error TS2304: Cannot find name 'titleEl'.
+src/wb-viewmodels/card.ts(2034,5): error TS2304: Cannot find name 'titleEl'.
+src/wb-viewmodels/card.ts(2035,5): error TS2304: Cannot find name 'header'.
+src/wb-viewmodels/card.ts(2035,24): error TS2304: Cannot find name 'titleEl'.
+src/wb-viewmodels/card.ts(2038,23): error TS2304: Cannot find name 'header'.
+src/wb-viewmodels/card.ts(2042,23): error TS2304: Cannot find name 'content'.
+src/wb-viewmodels/card.ts(2061,5): error TS2304: Cannot find name 'header'.
+src/wb-viewmodels/card.ts(2072,3): error TS2304: Cannot find name 'header'.
+src/wb-viewmodels/card.ts(2121,7): error TS2304: Cannot find name 'header'.
+src/wb-viewmodels/card.ts(2129,23): error TS2345: Argument of type 'string | 0' is not assignable to parameter of type 'string'.
+src/wb-viewmodels/card.ts(2130,23): error TS2345: Argument of type 'string | 0' is not assignable to parameter of type 'string'.
+src/wb-viewmodels/card.ts(2140,11): error TS2339: Property 'wbCardDraggable' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/card.ts(2146,19): error TS2345: Argument of type 'string | 0' is not assignable to parameter of type 'string'.
+src/wb-viewmodels/card.ts(2147,19): error TS2345: Argument of type 'string | 0' is not assignable to parameter of type 'string'.
+src/wb-viewmodels/card.ts(2159,5): error TS2304: Cannot find name 'header'.
+src/wb-viewmodels/card.ts(2681,11): error TS2339: Property 'wbPortfolio' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/card.ts(2685,13): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/card.ts(2686,13): error TS2339: Property 'title' does not exist on type 'Element'.
+src/wb-viewmodels/codecontrol.ts(178,15): error TS2339: Property 'rel' does not exist on type 'Element'.
+src/wb-viewmodels/codecontrol.ts(198,17): error TS2339: Property 'href' does not exist on type 'Element'.
+src/wb-viewmodels/codecontrol.ts(200,17): error TS2339: Property 'href' does not exist on type 'Element'.
+src/wb-viewmodels/codecontrol.ts(248,11): error TS2339: Property 'wbCodeControl' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/codecontrol.ts(264,20): error TS2339: Property 'wbCodeControl' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/collapse.ts(76,15): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/collapse.ts(78,13): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/collapse.ts(86,11): error TS2339: Property 'wbCollapse' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/collapse.ts(87,27): error TS2339: Property 'click' does not exist on type 'Element'.
+src/wb-viewmodels/collapse.ts(88,40): error TS2339: Property 'click' does not exist on type 'Element'.
+src/wb-viewmodels/collapse.ts(89,40): error TS2339: Property 'click' does not exist on type 'Element'.
+src/wb-viewmodels/draggable.ts(186,11): error TS2551: Property 'wbDraggable' does not exist on type 'HTMLElement'. Did you mean 'draggable'?
+src/wb-viewmodels/draggable.ts(208,20): error TS2551: Property 'wbDraggable' does not exist on type 'HTMLElement'. Did you mean 'draggable'?
+src/wb-viewmodels/dropdown.ts(86,27): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/dropdown.ts(94,56): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/dropdown.ts(95,56): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/dropdown.ts(109,54): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/dropdown.ts(110,54): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/effects.ts(45,11): error TS2551: Property 'wbAnimate' does not exist on type 'HTMLElement'. Did you mean 'animate'?
+src/wb-viewmodels/effects.ts(213,11): error TS2339: Property 'wbConfetti' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/effects.ts(252,11): error TS2339: Property 'wbTypewriter' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/effects.ts(297,11): error TS2339: Property 'wbCountup' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/effects.ts(434,11): error TS2339: Property 'wbSparkle' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/effects.ts(544,11): error TS2339: Property 'wbFireworks' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/effects.ts(601,11): error TS2339: Property 'wbSnow' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(31,37): error TS2345: Argument of type 'HTMLElement' is not assignable to parameter of type 'HTMLFormElement'.
+src/wb-viewmodels/enhancements.ts(36,46): error TS2339: Property 'action' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(37,27): error TS2339: Property 'method' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(48,11): error TS2339: Property 'wbForm' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(49,52): error TS2345: Argument of type 'HTMLElement' is not assignable to parameter of type 'HTMLFormElement'.
+src/wb-viewmodels/enhancements.ts(50,26): error TS2551: Property 'reset' does not exist on type 'HTMLElement'. Did you mean 'onreset'?
+src/wb-viewmodels/enhancements.ts(51,27): error TS2339: Property 'requestSubmit' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(180,36): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(182,13): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(211,11): error TS2339: Property 'type' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(223,102): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(290,34): error TS2339: Property 'type' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(291,15): error TS2339: Property 'type' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(329,49): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(370,16): error TS2339: Property 'placeholder' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(371,13): error TS2339: Property 'placeholder' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(376,28): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(395,13): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(421,27): error TS2551: Property 'selectionStart' does not exist on type 'HTMLElement'. Did you mean 'onselectstart'?
+src/wb-viewmodels/enhancements.ts(422,35): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(423,71): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(424,67): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(426,13): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(440,15): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(452,65): error TS2339: Property 'maxLength' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(462,25): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(486,31): error TS2339: Property 'placeholder' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(489,11): error TS2339: Property 'placeholder' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(492,67): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(529,28): error TS2339: Property 'value' does not exist on type 'EventTarget'.
+src/wb-viewmodels/enhancements.ts(530,16): error TS2339: Property 'value' does not exist on type 'EventTarget'.
+src/wb-viewmodels/enhancements.ts(536,46): error TS2339: Property 'value' does not exist on type 'EventTarget'.
+src/wb-viewmodels/enhancements.ts(574,37): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(582,11): error TS2339: Property 'type' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(585,11): error TS2339: Property 'type' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(588,9): error TS2339: Property 'value' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/enhancements.ts(771,38): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/feedback.ts(22,15): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/feedback.ts(227,24): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/feedback.ts(231,11): error TS2551: Property 'wbProgress' does not exist on type 'HTMLElement'. Did you mean 'onprogress'?
+src/wb-viewmodels/feedback.ts(234,36): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/feedback.ts(239,17): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/feedback.ts(240,34): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/feedback.ts(254,63): error TS2339: Property '_wbSpinnerInit' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/feedback.ts(259,11): error TS2339: Property '_wbSpinnerInit' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/feedback.ts(320,20): error TS2339: Property '_wbSpinnerInit' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/feedback.ts(639,17): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/fix-card.ts(15,10): error TS2339: Property 'fixData' does not exist on type 'WBFixCard'.
+src/wb-viewmodels/fix-card.ts(19,10): error TS2339: Property 'fixData' does not exist on type 'WBFixCard'.
+src/wb-viewmodels/fix-card.ts(159,14): error TS2339: Property 'fixData' does not exist on type 'WBFixCard'.
+src/wb-viewmodels/fix-card.ts(184,15): error TS2339: Property 'fixData' does not exist on type 'WBFixCard'.
+src/wb-viewmodels/fix-card.ts(185,22): error TS2339: Property 'fixData' does not exist on type 'WBFixCard'.
+src/wb-viewmodels/fix-card.ts(308,40): error TS2345: Argument of type 'Element' is not assignable to parameter of type 'HTMLElement'.
+src/wb-viewmodels/helpers.ts(42,16): error TS2339: Property 'src' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/helpers.ts(43,13): error TS2339: Property 'alt' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/helpers.ts(50,33): error TS2339: Property 'src' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/helpers.ts(51,36): error TS2339: Property 'srcset' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/helpers.ts(187,50): error TS2339: Property 'overflow' does not exist on type '{}'.
+src/wb-viewmodels/helpers.ts(188,51): error TS2339: Property 'overflowY' does not exist on type '{}'.
+src/wb-viewmodels/helpers.ts(189,48): error TS2339: Property 'height' does not exist on type '{}'.
+src/wb-viewmodels/helpers.ts(407,3): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/helpers.ts(417,7): error TS2322: Type 'number | "unset"' is not assignable to type 'string'.
+src/wb-viewmodels/helpers.ts(467,13): error TS2339: Property 'target' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/helpers.ts(468,13): error TS2339: Property 'rel' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/helpers.ts(629,19): error TS2304: Cannot find name 'interval'.
+src/wb-viewmodels/helpers.ts(671,32): error TS2304: Cannot find name 'interval'.
+src/wb-viewmodels/helpers.ts(720,11): error TS2339: Property 'wbVisible' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/helpers.ts(726,73): error TS2339: Property 'wbVisible' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/helpers.ts(881,44): error TS2339: Property 'onclick' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(233,25): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(234,25): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(235,25): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(236,25): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(237,25): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(262,11): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(263,11): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(281,3): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/layouts.ts(286,10): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(287,10): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(388,15): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(389,15): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(411,11): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(412,11): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(413,11): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(438,11): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(439,11): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(440,44): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/layouts.ts(563,69): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+src/wb-viewmodels/layouts.ts(567,29): error TS2304: Cannot find name 'getArrow'.
+src/wb-viewmodels/layouts.ts(604,11): error TS2339: Property 'wbToggle' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/layouts.ts(691,16): error TS2339: Property 'right' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(691,36): error TS2339: Property 'top' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(691,54): error TS2339: Property 'bottom' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(691,75): error TS2339: Property 'width' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(691,96): error TS2339: Property 'cursor' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(693,16): error TS2339: Property 'left' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(693,35): error TS2339: Property 'top' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(693,53): error TS2339: Property 'bottom' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(693,74): error TS2339: Property 'width' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(693,95): error TS2339: Property 'cursor' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(695,16): error TS2339: Property 'bottom' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(695,37): error TS2339: Property 'left' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(695,56): error TS2339: Property 'right' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(695,76): error TS2339: Property 'height' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(695,98): error TS2339: Property 'cursor' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(697,16): error TS2339: Property 'top' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(697,34): error TS2339: Property 'left' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(697,53): error TS2339: Property 'right' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(697,73): error TS2339: Property 'height' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(697,95): error TS2339: Property 'cursor' does not exist on type '{ position: string; zIndex: string; background: string; }'.
+src/wb-viewmodels/layouts.ts(822,51): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+src/wb-viewmodels/layouts.ts(854,20): error TS2339: Property 'wbToggle' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/mdhtml.ts(131,50): error TS2339: Property 'message' does not exist on type 'unknown'.
+src/wb-viewmodels/mdhtml.ts(149,49): error TS2339: Property 'message' does not exist on type 'unknown'.
+src/wb-viewmodels/mdhtml.ts(177,16): error TS2339: Property 'captions' does not exist on type '{ src: any; sanitize: any; breaks: any; gfm: any; headerIds: any; highlight: any; size: any; }'.
+src/wb-viewmodels/mdhtml.ts(264,111): error TS2339: Property 'message' does not exist on type 'unknown'.
+src/wb-viewmodels/mdhtml.ts(272,11): error TS2339: Property 'wbMdhtml' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/mdhtml.ts(283,20): error TS2339: Property 'wbMdhtml' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(32,13): error TS2339: Property 'loading' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(41,39): error TS2339: Property 'src' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(46,50): error TS2339: Property 'src' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(101,49): error TS2339: Property 'onclick' does not exist on type 'Element'.
+src/wb-viewmodels/media.ts(102,49): error TS2339: Property 'onclick' does not exist on type 'Element'.
+src/wb-viewmodels/media.ts(103,50): error TS2339: Property 'onclick' does not exist on type 'Element'.
+src/wb-viewmodels/media.ts(136,29): error TS2339: Property 'src' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(140,32): error TS2339: Property 'controls' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(141,32): error TS2339: Property 'autoplay' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(142,29): error TS2339: Property 'muted' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(143,28): error TS2339: Property 'loop' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(144,30): error TS2339: Property 'poster' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(145,35): error TS2339: Property 'playsInline' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(147,11): error TS2339: Property 'wbVideo' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(148,25): error TS2339: Property 'play' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(149,26): error TS2551: Property 'pause' does not exist on type 'HTMLElement'. Did you mean 'onpause'?
+src/wb-viewmodels/media.ts(150,27): error TS2339: Property 'paused' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(150,44): error TS2339: Property 'play' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(150,61): error TS2551: Property 'pause' does not exist on type 'HTMLElement'. Did you mean 'onpause'?
+src/wb-viewmodels/media.ts(151,31): error TS2339: Property 'currentTime' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(232,92): error TS2339: Property 'muted' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(233,17): error TS2551: Property 'error' does not exist on type 'HTMLElement'. Did you mean 'onerror'?
+src/wb-viewmodels/media.ts(234,56): error TS2551: Property 'error' does not exist on type 'HTMLElement'. Did you mean 'onerror'?
+src/wb-viewmodels/media.ts(247,15): error TS2339: Property 'crossOrigin' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(251,21): error TS2339: Property 'crossOrigin' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(251,44): error TS2551: Property 'error' does not exist on type 'HTMLElement'. Did you mean 'onerror'?
+src/wb-viewmodels/media.ts(251,62): error TS2551: Property 'error' does not exist on type 'HTMLElement'. Did you mean 'onerror'?
+src/wb-viewmodels/media.ts(251,90): error TS2551: Property 'error' does not exist on type 'HTMLElement'. Did you mean 'onerror'?
+src/wb-viewmodels/media.ts(253,19): error TS2339: Property 'crossOrigin' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(256,19): error TS2339: Property 'src' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(257,19): error TS2339: Property 'load' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(258,40): error TS2339: Property 'play' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(262,13): error TS2339: Property 'src' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(264,66): error TS2339: Property 'crossOrigin' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(266,13): error TS2339: Property 'crossOrigin' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(268,32): error TS2339: Property 'src' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(270,15): error TS2339: Property 'src' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(271,15): error TS2339: Property 'src' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(275,32): error TS2339: Property 'controls' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(276,32): error TS2339: Property 'autoplay' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(278,13): error TS2339: Property 'loop' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(281,13): error TS2339: Property 'loop' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(284,11): error TS2339: Property 'volume' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(321,18): error TS2339: Property 'crossOrigin' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(431,33): error TS2339: Property 'paused' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(441,19): error TS2339: Property 'paused' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(442,17): error TS2339: Property 'play' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(445,17): error TS2551: Property 'pause' does not exist on type 'HTMLElement'. Did you mean 'onpause'?
+src/wb-viewmodels/media.ts(472,5): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/media.ts(473,5): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/media.ts(474,5): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/media.ts(474,31): error TS2339: Property 'volume' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(481,15): error TS2339: Property 'volume' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(481,33): error TS2339: Property 'value' does not exist on type 'EventTarget'.
+src/wb-viewmodels/media.ts(484,7): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/media.ts(484,33): error TS2339: Property 'volume' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(660,7): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/media.ts(661,7): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/media.ts(662,7): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/media.ts(677,45): error TS2339: Property 'value' does not exist on type 'EventTarget'.
+src/wb-viewmodels/media.ts(724,11): error TS2339: Property 'wbAudio' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(725,25): error TS2339: Property 'play' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(726,26): error TS2551: Property 'pause' does not exist on type 'HTMLElement'. Did you mean 'onpause'?
+src/wb-viewmodels/media.ts(727,27): error TS2339: Property 'paused' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(727,44): error TS2339: Property 'play' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(727,61): error TS2551: Property 'pause' does not exist on type 'HTMLElement'. Did you mean 'onpause'?
+src/wb-viewmodels/media.ts(728,33): error TS2339: Property 'volume' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/media.ts(966,3): error TS2304: Cannot find name 'iframe'.
+src/wb-viewmodels/media.ts(966,63): error TS2304: Cannot find name 'params'.
+src/wb-viewmodels/media.ts(967,3): error TS2304: Cannot find name 'iframe'.
+src/wb-viewmodels/media.ts(968,3): error TS2304: Cannot find name 'iframe'.
+src/wb-viewmodels/media.ts(969,3): error TS2304: Cannot find name 'iframe'.
+src/wb-viewmodels/media.ts(972,23): error TS2304: Cannot find name 'iframe'.
+src/wb-viewmodels/media.ts(998,11): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/media.ts(999,11): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/media.ts(1000,11): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/move.ts(47,8): error TS2339: Property 'hasAttribute' does not exist on type 'unknown'.
+src/wb-viewmodels/move.ts(47,46): error TS2339: Property 'matches' does not exist on type 'unknown'.
+src/wb-viewmodels/move.ts(128,10): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(130,27): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(131,44): error TS2304: Cannot find name 'container'.
+src/wb-viewmodels/move.ts(132,38): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(134,44): error TS2304: Cannot find name 'currentIndex'.
+src/wb-viewmodels/move.ts(134,69): error TS2304: Cannot find name 'currentIndex'.
+src/wb-viewmodels/move.ts(136,9): error TS2304: Cannot find name 'targetIndex'.
+src/wb-viewmodels/move.ts(136,29): error TS2304: Cannot find name 'targetIndex'.
+src/wb-viewmodels/move.ts(137,20): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(137,32): error TS2304: Cannot find name 'targetIndex'.
+src/wb-viewmodels/move.ts(141,36): error TS2304: Cannot find name 'handler'.
+src/wb-viewmodels/move.ts(142,52): error TS2304: Cannot find name 'handler'.
+src/wb-viewmodels/move.ts(157,10): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(159,27): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(160,35): error TS2304: Cannot find name 'container'.
+src/wb-viewmodels/move.ts(161,41): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(163,9): error TS2304: Cannot find name 'currentIndex'.
+src/wb-viewmodels/move.ts(164,20): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(164,32): error TS2304: Cannot find name 'currentIndex'.
+src/wb-viewmodels/move.ts(168,36): error TS2304: Cannot find name 'handler'.
+src/wb-viewmodels/move.ts(169,52): error TS2304: Cannot find name 'handler'.
+src/wb-viewmodels/move.ts(184,10): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(186,29): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(187,35): error TS2304: Cannot find name 'container'.
+src/wb-viewmodels/move.ts(188,39): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(190,9): error TS2304: Cannot find name 'currentIndex'.
+src/wb-viewmodels/move.ts(191,20): error TS2304: Cannot find name 'item'.
+src/wb-viewmodels/move.ts(191,32): error TS2304: Cannot find name 'currentIndex'.
+src/wb-viewmodels/move.ts(195,36): error TS2304: Cannot find name 'handler'.
+src/wb-viewmodels/move.ts(196,52): error TS2304: Cannot find name 'handler'.
+src/wb-viewmodels/navigation.ts(123,18): error TS2339: Property 'dataset' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(169,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(170,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(171,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(172,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(173,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(174,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(200,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(201,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(202,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(203,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(204,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(205,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(206,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(225,13): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(226,13): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(227,13): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(228,13): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(229,13): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(393,23): error TS2339: Property 'dataset' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(399,13): error TS2339: Property 'key' does not exist on type 'Event'.
+src/wb-viewmodels/navigation.ts(401,42): error TS2339: Property 'focus' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(402,20): error TS2339: Property 'key' does not exist on type 'Event'.
+src/wb-viewmodels/navigation.ts(404,57): error TS2339: Property 'focus' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(405,20): error TS2339: Property 'key' does not exist on type 'Event'.
+src/wb-viewmodels/navigation.ts(405,41): error TS2339: Property 'key' does not exist on type 'Event'.
+src/wb-viewmodels/navigation.ts(407,14): error TS2339: Property 'click' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(483,26): error TS2339: Property 'closest' does not exist on type 'EventTarget'.
+src/wb-viewmodels/navigation.ts(593,29): error TS2339: Property 'closest' does not exist on type 'EventTarget'.
+src/wb-viewmodels/navigation.ts(664,13): error TS2339: Property 'href' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/navigation.ts(667,15): error TS2339: Property 'target' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/navigation.ts(668,15): error TS2339: Property 'rel' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/navigation.ts(729,17): error TS2339: Property 'name' does not exist on type 'unknown'.
+src/wb-viewmodels/navigation.ts(823,17): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(824,17): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(825,17): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(826,17): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(827,17): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(828,17): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(869,17): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(871,39): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(872,46): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(873,22): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/navigation.ts(875,17): error TS2339: Property '_statusTimeout' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/navigation.ts(875,54): error TS2339: Property '_statusTimeout' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/navigation.ts(877,13): error TS2339: Property '_statusTimeout' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/navigation.ts(878,19): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(102,18): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(106,40): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(120,31): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(124,23): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(149,34): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(193,41): error TS2339: Property 'message' does not exist on type 'unknown'.
+src/wb-viewmodels/notes.ts(210,14): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(211,14): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(212,14): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(213,14): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(236,35): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(238,16): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(238,33): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(241,16): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(241,50): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(272,42): error TS2339: Property 'dataset' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(280,14): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(281,14): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(282,14): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(301,27): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(353,19): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(386,14): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(388,29): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(407,12): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(422,25): error TS2339: Property 'offsetWidth' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(495,26): error TS2339: Property 'closest' does not exist on type 'EventTarget'.
+src/wb-viewmodels/notes.ts(520,11): error TS2339: Property 'key' does not exist on type 'Event'.
+src/wb-viewmodels/notes.ts(520,33): error TS2339: Property 'shiftKey' does not exist on type 'Event'.
+src/wb-viewmodels/notes.ts(544,11): error TS2339: Property 'wbNotes' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/notes.ts(547,37): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(548,33): error TS2339: Property 'value' does not exist on type 'Element'.
+src/wb-viewmodels/notes.ts(570,20): error TS2339: Property 'wbNotes' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/overlay.ts(96,42): error TS2345: Argument of type 'EventTarget' is not assignable to parameter of type 'Node'.
+src/wb-viewmodels/overlay.ts(103,11): error TS2551: Property 'wbPopover' does not exist on type 'HTMLElement'. Did you mean 'popover'?
+src/wb-viewmodels/overlay.ts(197,11): error TS2339: Property 'wbDrawer' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/overlay.ts(212,56): error TS2339: Property 'src' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/overlay.ts(212,71): error TS2339: Property 'href' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/overlay.ts(346,11): error TS2339: Property 'wbOffcanvas' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/overlay.ts(446,11): error TS2339: Property 'wbSheet' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/overlay.ts(487,38): error TS2339: Property 'onclick' does not exist on type 'Element'.
+src/wb-viewmodels/overlay.ts(492,34): error TS2339: Property 'onclick' does not exist on type 'Element'.
+src/wb-viewmodels/overlay.ts(538,38): error TS2339: Property 'onclick' does not exist on type 'Element'.
+src/wb-viewmodels/overlay.ts(543,34): error TS2339: Property 'onclick' does not exist on type 'Element'.
+src/wb-viewmodels/overlay.ts(550,59): error TS2339: Property 'click' does not exist on type 'Element'.
+src/wb-viewmodels/overlay.ts(551,64): error TS2339: Property 'click' does not exist on type 'Element'.
+src/wb-viewmodels/progressbar.ts(70,7): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/progressbar.ts(85,9): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/progressbar.ts(86,9): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/progressbar.ts(90,9): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/progressbar.ts(94,13): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/resizable.ts(193,11): error TS2339: Property 'wbResizable' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/resizable.ts(210,43): error TS2339: Property 'remove' does not exist on type 'unknown'.
+src/wb-viewmodels/resizable.ts(211,20): error TS2339: Property 'wbResizable' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/stagelight.ts(238,13): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/stagelight.ts(244,11): error TS2339: Property 'wbStageLight' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/sticky.ts(97,5): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/sticky.ts(193,11): error TS2339: Property 'wbSticky' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/sticky.ts(209,20): error TS2339: Property 'wbSticky' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/tabs.ts(25,23): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/tabs.ts(34,35): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/tabs.ts(41,27): error TS2339: Property 'dataset' does not exist on type 'Element'.
+src/wb-viewmodels/tabs.ts(41,53): error TS2339: Property 'dataset' does not exist on type 'Element'.
+src/wb-viewmodels/tabs.ts(48,7): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/tabs.ts(49,44): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+src/wb-viewmodels/tabs.ts(77,7): error TS2322: Type 'number' is not assignable to type 'string'.
+src/wb-viewmodels/tabs.ts(113,9): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/tabs.ts(114,9): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/tabs.ts(115,9): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/tabs.ts(116,39): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+src/wb-viewmodels/tabs.ts(122,9): error TS2339: Property 'style' does not exist on type 'Element'.
+src/wb-viewmodels/themecontrol.ts(150,11): error TS2339: Property 'wbThemeControl' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/themecontrol.ts(164,20): error TS2339: Property 'wbThemeControl' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/timeline.ts(17,11): error TS2339: Property 'items' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/toggle.ts(92,11): error TS2339: Property 'wbToggle' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/toggle.ts(113,20): error TS2339: Property 'wbToggle' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/tooltip.ts(78,15): error TS2339: Property '_wbTooltip' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/tooltip.ts(79,20): error TS2339: Property '_wbTooltip' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/tooltip.ts(233,20): error TS2339: Property '_wbTooltip' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/tooltip.ts(236,11): error TS2339: Property '_wbTooltip' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/validator.ts(146,38): error TS2339: Property 'focus' does not exist on type 'Element'.
+src/wb-viewmodels/validator.ts(163,11): error TS2339: Property 'wbValidator' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/validator.ts(183,20): error TS2339: Property 'wbValidator' does not exist on type 'HTMLElement'.
+src/wb-viewmodels/wb-card.ts(12,10): error TS2339: Property '_cleanup' does not exist on type 'WBCard'.
+src/wb-viewmodels/wb-card.ts(13,10): error TS2339: Property '_base' does not exist on type 'WBCard'.
+src/wb-viewmodels/wb-card.ts(19,10): error TS2339: Property '_base' does not exist on type 'WBCard'.
+src/wb-viewmodels/wb-card.ts(31,12): error TS2339: Property '_base' does not exist on type 'WBCard'.
+src/wb-viewmodels/wb-card.ts(34,10): error TS2339: Property '_cleanup' does not exist on type 'WBCard'.
+src/wb-viewmodels/wb-card.ts(34,26): error TS2339: Property '_base' does not exist on type 'WBCard'.
+src/wb-viewmodels/wb-card.ts(38,14): error TS2339: Property '_cleanup' does not exist on type 'WBCard'.
+src/wb-viewmodels/wb-card.ts(39,12): error TS2339: Property '_cleanup' does not exist on type 'WBCard'.
+src/wb-viewmodels/wb-card.ts(45,17): error TS2339: Property '_base' does not exist on type 'WBCard'.
+src/wb-viewmodels/wb-cluster.ts(14,10): error TS2339: Property '_cleanup' does not exist on type 'WBCluster'.
+src/wb-viewmodels/wb-cluster.ts(25,10): error TS2339: Property '_cleanup' does not exist on type 'WBCluster'.
+src/wb-viewmodels/wb-cluster.ts(29,14): error TS2339: Property '_cleanup' does not exist on type 'WBCluster'.
+src/wb-viewmodels/wb-cluster.ts(30,12): error TS2339: Property '_cleanup' does not exist on type 'WBCluster'.
+src/wb-viewmodels/wb-column.ts(14,10): error TS2339: Property '_cleanup' does not exist on type 'WBColumn'.
+src/wb-viewmodels/wb-column.ts(27,10): error TS2339: Property '_cleanup' does not exist on type 'WBColumn'.
+src/wb-viewmodels/wb-column.ts(31,14): error TS2339: Property '_cleanup' does not exist on type 'WBColumn'.
+src/wb-viewmodels/wb-column.ts(32,12): error TS2339: Property '_cleanup' does not exist on type 'WBColumn'.
+src/wb-viewmodels/wb-control.ts(16,10): error TS2339: Property '_cleanup' does not exist on type 'WBControl'.
+src/wb-viewmodels/wb-control.ts(34,12): error TS2339: Property '_cleanup' does not exist on type 'WBControl'.
+src/wb-viewmodels/wb-control.ts(51,14): error TS2339: Property '_cleanup' does not exist on type 'WBControl'.
+src/wb-viewmodels/wb-control.ts(52,12): error TS2339: Property '_cleanup' does not exist on type 'WBControl'.
+src/wb-viewmodels/wb-grid.ts(14,10): error TS2339: Property '_cleanup' does not exist on type 'WBGrid'.
+src/wb-viewmodels/wb-grid.ts(25,10): error TS2339: Property '_cleanup' does not exist on type 'WBGrid'.
+src/wb-viewmodels/wb-grid.ts(29,14): error TS2339: Property '_cleanup' does not exist on type 'WBGrid'.
+src/wb-viewmodels/wb-grid.ts(30,12): error TS2339: Property '_cleanup' does not exist on type 'WBGrid'.
+src/wb-viewmodels/wb-repeater.ts(36,36): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+src/wb-viewmodels/wb-repeater.ts(37,32): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+src/wb-viewmodels/wb-row.ts(14,10): error TS2339: Property '_cleanup' does not exist on type 'WBRow'.
+src/wb-viewmodels/wb-row.ts(27,10): error TS2339: Property '_cleanup' does not exist on type 'WBRow'.
+src/wb-viewmodels/wb-row.ts(31,14): error TS2339: Property '_cleanup' does not exist on type 'WBRow'.
+src/wb-viewmodels/wb-row.ts(32,12): error TS2339: Property '_cleanup' does not exist on type 'WBRow'.
+src/wb-viewmodels/wb-stack.ts(14,10): error TS2339: Property '_cleanup' does not exist on type 'WBStack'.
+src/wb-viewmodels/wb-stack.ts(23,10): error TS2339: Property '_cleanup' does not exist on type 'WBStack'.
+src/wb-viewmodels/wb-stack.ts(27,14): error TS2339: Property '_cleanup' does not exist on type 'WBStack'.
+src/wb-viewmodels/wb-stack.ts(28,12): error TS2339: Property '_cleanup' does not exist on type 'WBStack'.

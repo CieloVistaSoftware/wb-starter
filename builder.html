@@ -1851,6 +1851,22 @@
         ${nestedChildrenHtml}
         <button class="btn btn-danger" style="width: 100%; margin-top: 1rem;" onclick="deleteComponent('${selectedComponent.id}')">🗑️ Delete (or press Delete key)</button>
       `;
+
+      // If a native theme <select> was injected by a template, mark the section ready
+      // (tests accept either this dataset flag OR a populated native <select> — keep both)
+      try {
+        const themeSelect = panel.querySelector('[data-test="element-theme-select"], select[name="elementTheme"], select[id="elementTheme"]');
+        if (themeSelect && themeSelect.options && themeSelect.options.length > 0) {
+          panel.dataset.themeSectionReady = 'true';
+        } else {
+          // clear stale flag when not applicable
+          delete panel.dataset.themeSectionReady;
+        }
+      } catch (err) {
+        // defensive — do not let a properties-render path break the builder
+        console.warn('theme readiness check failed', err);
+        delete panel.dataset.themeSectionReady;
+      }
       
       // Focus the canvas so keyboard events work
       if (selectedComponent && selectedComponent.element) {
@@ -4445,6 +4461,6 @@
   </script>
   
   <!-- Builder Enhancements Module -->
-  <script src="src/wb-viewmodels/builder-app/builder-enhancements.js"></script>
+  <script src="/dist/wb-viewmodels/builder-app/builder-enhancements.js"></script>
 </body>
 </html>

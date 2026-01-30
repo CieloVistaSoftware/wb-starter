@@ -82,6 +82,8 @@ npx playwright test --project=behaviors --workers=8
 
 ### 6. Commit Changes
 
+**Policy (enforced):** Do **not** commit or push code that addresses an issue until the validating test(s) for that issue pass locally. Local and CI gates will block pushes/PRs that touch issue code or issue metadata if the corresponding tests fail.
+
 Before you edit high-risk files create a lock (see `Lock/lock.md`) and include it in your local workspace; delete the lock immediately after you finish and before pushing. Example (AI/human):
 
 ```bash

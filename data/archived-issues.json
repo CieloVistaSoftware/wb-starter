@@ -1,0 +1,45 @@
+{
+  "archivedAt": "2026-01-27T20:00:00.000Z",
+  "issues": [
+    {
+      "id": "note-1769211127224-p0",
+      "description": "[BUG] drag component 'must be in main' error",
+      "status": "fixed",
+      "fixedAt": "2026-01-25T00:22:05.205Z",
+      "testLink": "tests/regression/builder-drop-zone-fix.spec.ts",
+      "resolution": "Fixed getAttribute section fallback"
+    },
+    {
+      "id": "note-1769211204743-p0",
+      "description": "[BUG] cannot drop components into canvas",
+      "status": "fixed",
+      "fixedAt": "2026-01-25T00:40:28.152Z",
+      "testLink": "tests/regression/builder-drop-zone-fix.spec.ts",
+      "resolution": "Same getAttribute fix"
+    },
+    {
+      "id": "note-1769293340779-p0",
+      "description": "[BUG] not all components droppable",
+      "status": "fixed",
+      "fixedAt": "2026-01-25T00:22:05.205Z",
+      "testLink": "tests/regression/builder-drop-zone-fix.spec.ts",
+      "resolution": "Drop zone fix"
+    },
+    {
+      "id": "note-1769293683522-p0",
+      "description": "[BUG] issues button nothing happens",
+      "status": "fixed",
+      "fixedAt": "2026-01-25T01:00:00.000Z",
+      "testLink": "tests/regression/issues-button-fix.spec.ts",
+      "resolution": "WB.scan to WB.inject"
+    },
+    {
+      "id": "note-1769220695766-p0",
+      "description": "[BUG] issues button shows toast only",
+      "status": "fixed",
+      "fixedAt": "2026-01-25T01:00:00.000Z",
+      "testLink": "tests/regression/issues-button-fix.spec.ts",
+      "resolution": "Same as issues button fix"
+    }
+  ]
+}

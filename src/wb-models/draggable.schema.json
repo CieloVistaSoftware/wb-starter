@@ -35,5 +35,47 @@
       "<wb-draggable axis=\"both\">axis=both</wb-draggable>",
       "<wb-draggable handle=\"Sample handle\">handle=\"Sample handle\"</wb-draggable>"
     ]
-  }
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "rule": "MUST NOT change element position on initialization",
+      "source": "bug:note-1769212201021-p0",
+      "testable": true
+    },
+    {
+      "id": "REQ-002",
+      "rule": "MUST only apply position:relative when drag starts",
+      "source": "bug:note-1769212201021-p0",
+      "testable": true
+    },
+    {
+      "id": "REQ-003",
+      "rule": "MUST initialize left:0 top:0 when setting position:relative",
+      "source": "bug:note-1769212201021-p0",
+      "testable": true
+    },
+    {
+      "id": "REQ-004",
+      "rule": "MUST preserve existing left/top if already set",
+      "source": "inferred",
+      "testable": true
+    },
+    {
+      "id": "REQ-005",
+      "rule": "MUST constrain to axis when axis property set",
+      "source": "schema:properties.axis",
+      "testable": true
+    },
+    {
+      "id": "REQ-006",
+      "rule": "MUST only drag from handle when handle property set",
+      "source": "schema:properties.handle",
+      "testable": true
+    }
+  ],
+  "constraints": [
+    "Element must be in DOM before inject",
+    "Converts position:fixed/absolute to relative"
+  ]
 }

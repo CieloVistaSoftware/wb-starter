@@ -1,0 +1,28 @@
+{
+  "description": "Only tests listed here will run",
+  "updated": "2026-01-30T03:51:58.592Z",
+  "layers": {
+    "layer0-syntax": [
+      "modules-parse.spec.ts",
+      "schemas-valid.spec.ts"
+    ],
+    "layer1-load": [
+      "wb-init.spec.ts"
+    ],
+    "layer2-render": [
+      "schema-setup-renders.spec.ts"
+    ],
+    "layer3-behavior": [
+      "draggable.spec.ts"
+    ],
+    "layer4-integration": [
+      "behaviors-page.spec.ts"
+    ]
+  },
+  "archived": "tests/_archive/",
+  "rules": [
+    "Layer 3+ tests MUST have // SCHEMA: comment",
+    "Layer 3+ tests MUST have // REQ-XXX: comment",
+    "Unlisted tests moved to _archive"
+  ]
+}

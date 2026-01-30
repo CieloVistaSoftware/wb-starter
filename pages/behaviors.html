@@ -44,12 +44,12 @@
   </div>
 
   <wb-mdhtml>
-```html
-<button class="wb-btn wb-btn--primary">Primary</button>
-<button class="wb-btn wb-btn--secondary">Secondary</button>
-<button class="wb-btn wb-btn--ghost">Ghost</button>
-<button class="wb-btn wb-btn--primary" disabled>Disabled</button>
-```
+    ```html
+    <button class="wb-btn wb-btn--primary">Primary</button>
+    <button class="wb-btn wb-btn--secondary">Secondary</button>
+    <button class="wb-btn wb-btn--ghost">Ghost</button>
+    <button class="wb-btn wb-btn--primary" disabled>Disabled</button>
+    ```
   </wb-mdhtml>
 
   <h3>Button Sizes</h3>
@@ -60,42 +60,39 @@
   </div>
 
   <wb-mdhtml>
-```html
-<button class="wb-btn wb-btn--primary wb-btn--sm">Small</button>
-<button class="wb-btn wb-btn--primary">Medium</button>
-<button class="wb-btn wb-btn--primary wb-btn--lg">Large</button>
-```
+    ```html
+    <button class="wb-btn wb-btn--primary wb-btn--sm">Small</button>
+    <button class="wb-btn wb-btn--primary">Medium</button>
+    <button class="wb-btn wb-btn--primary wb-btn--lg">Large</button>
+    ```
   </wb-mdhtml>
 
   <h3>Button with Behaviors</h3>
   <div class="demo-row">
     <button class="wb-btn wb-btn--primary" x-ripple>With Ripple</button>
-    <button class="wb-btn wb-btn--primary" x-toast data-message="Action completed!" data-type="success">With Toast</button>
-    <button class="wb-btn wb-btn--primary" x-behavior="tooltip" x-content="Helpful hint!" x-position="top">With Tooltip</button>
+    <button class="wb-btn wb-btn--primary" x-toast data-message="Action completed!" data-type="success">With
+      Toast</button>
+    <button class="wb-btn wb-btn--primary" x-behavior="tooltip" x-content="Helpful hint!" x-position="top">With
+      Tooltip</button>
   </div>
 
   <wb-mdhtml>
-```html
-<!-- Ripple effect on click -->
-<button class="wb-btn wb-btn--primary" x-ripple>
-  With Ripple
-</button>
+    ```html
+    <!-- Ripple effect on click -->
+    <button class="wb-btn wb-btn--primary" x-ripple>
+      With Ripple
+    </button>
 
-<!-- Toast notification on click -->
-<button class="wb-btn wb-btn--primary" 
-        x-toast 
-        data-message="Action completed!" 
-        data-type="success">
-  With Toast
-</button>
+    <!-- Toast notification on click -->
+    <button class="wb-btn wb-btn--primary" x-toast data-message="Action completed!" data-type="success">
+      With Toast
+    </button>
 
-<!-- Tooltip on hover -->
-<button class="wb-btn wb-btn--primary" 
-        x-tooltip="Helpful hint!" 
-        data-position="top">
-  With Tooltip
-</button>
-```
+    <!-- Tooltip on hover -->
+    <button class="wb-btn wb-btn--primary" x-tooltip="Helpful hint!" data-position="top">
+      With Tooltip
+    </button>
+    ```
   </wb-mdhtml>
 </section>
 
@@ -116,11 +113,11 @@
   </div>
 
   <wb-mdhtml>
-```html
-<input type="text" placeholder="Basic text input">
-<input type="email" placeholder="Email input">
-<input type="number" placeholder="Number input">
-```
+    ```html
+    <input type="text" placeholder="Basic text input">
+    <input type="email" placeholder="Email input">
+    <input type="number" placeholder="Number input">
+    ```
   </wb-mdhtml>
 
   <h3>Validation Variants</h3>
@@ -131,11 +128,11 @@
   </div>
 
   <wb-mdhtml>
-```html
-<input type="text" placeholder="Success" data-variant="success">
-<input type="text" placeholder="Warning" data-variant="warning">
-<input type="text" placeholder="Error" data-variant="error">
-```
+    ```html
+    <input type="text" placeholder="Success" data-variant="success">
+    <input type="text" placeholder="Warning" data-variant="warning">
+    <input type="text" placeholder="Error" data-variant="error">
+    ```
   </wb-mdhtml>
 
   <h3>Special Input Types</h3>
@@ -146,16 +143,16 @@
   </div>
 
   <wb-mdhtml>
-```html
-<!-- Password with visibility toggle -->
-<input type="password" x-password placeholder="Password">
+    ```html
+    <!-- Password with visibility toggle -->
+    <input type="password" x-password placeholder="Password">
 
-<!-- Search with icon -->
-<input type="text" x-search placeholder="Search...">
+    <!-- Search with icon -->
+    <input type="text" x-search placeholder="Search...">
 
-<!-- Color picker -->
-<input type="text" x-colorpicker value="#6366f1">
-```
+    <!-- Color picker -->
+    <input type="text" x-colorpicker value="#6366f1">
+    ```
   </wb-mdhtml>
 
   <h3>Masked Inputs</h3>
@@ -166,16 +163,16 @@
   </div>
 
   <wb-mdhtml>
-```html
-<!-- Phone mask (9 = any digit) -->
-<input x-masked data-mask="(999) 999-9999" placeholder="Phone">
+    ```html
+    <!-- Phone mask (9 = any digit) -->
+    <input x-masked data-mask="(999) 999-9999" placeholder="Phone">
 
-<!-- Date mask -->
-<input x-masked data-mask="99/99/9999" placeholder="MM/DD/YYYY">
+    <!-- Date mask -->
+    <input x-masked data-mask="99/99/9999" placeholder="MM/DD/YYYY">
 
-<!-- Credit card mask -->
-<input x-masked data-mask="9999 9999 9999 9999" placeholder="Card">
-```
+    <!-- Credit card mask -->
+    <input x-masked data-mask="9999 9999 9999 9999" placeholder="Card">
+    ```
   </wb-mdhtml>
 
   <h3>Textarea</h3>
@@ -185,10 +182,10 @@
   </div>
 
   <wb-mdhtml>
-```html
-<textarea placeholder="Standard textarea" rows="3"></textarea>
-<textarea data-autosize placeholder="Grows as you type..."></textarea>
-```
+    ```html
+    <textarea placeholder="Standard textarea" rows="3"></textarea>
+    <textarea data-autosize placeholder="Grows as you type..."></textarea>
+    ```
   </wb-mdhtml>
 </section>
 
@@ -209,11 +206,11 @@
   </div>
 
   <wb-mdhtml>
-```html
-<label><input type="checkbox"> Unchecked</label>
-<label><input type="checkbox" checked> Checked</label>
-<label><input type="checkbox" disabled> Disabled</label>
-```
+    ```html
+    <label><input type="checkbox"> Unchecked</label>
+    <label><input type="checkbox" checked> Checked</label>
+    <label><input type="checkbox" disabled> Disabled</label>
+    ```
   </wb-mdhtml>
 
   <h3>Radio Buttons</h3>
@@ -224,11 +221,11 @@
   </div>
 
   <wb-mdhtml>
-```html
-<label><input type="radio" name="choice" checked> Option A</label>
-<label><input type="radio" name="choice"> Option B</label>
-<label><input type="radio" name="choice"> Option C</label>
-```
+    ```html
+    <label><input type="radio" name="choice" checked> Option A</label>
+    <label><input type="radio" name="choice"> Option B</label>
+    <label><input type="radio" name="choice"> Option C</label>
+    ```
   </wb-mdhtml>
 
   <h3>Switch Toggle</h3>
@@ -239,11 +236,11 @@
   </div>
 
   <wb-mdhtml>
-```html
-<wb-switch label="Dark Mode"></wb-switch>
-<wb-switch label="Notifications" checked></wb-switch>
-<wb-switch label="Disabled" disabled></wb-switch>
-```
+    ```html
+    <wb-switch label="Dark Mode"></wb-switch>
+    <wb-switch label="Notifications" checked></wb-switch>
+    <wb-switch label="Disabled" disabled></wb-switch>
+    ```
   </wb-mdhtml>
 
   <h3>Select Dropdown</h3>
@@ -262,19 +259,19 @@
   </div>
 
   <wb-mdhtml>
-```html
-<select>
-  <option>Select an option</option>
-  <option>Option 1</option>
-  <option>Option 2</option>
-</select>
+    ```html
+    <select>
+      <option>Select an option</option>
+      <option>Option 1</option>
+      <option>Option 2</option>
+    </select>
 
-<select multiple size="3">
-  <option>Item 1</option>
-  <option>Item 2</option>
-  <option>Item 3</option>
-</select>
-```
+    <select multiple size="3">
+      <option>Item 1</option>
+      <option>Item 2</option>
+      <option>Item 3</option>
+    </select>
+    ```
   </wb-mdhtml>
 
   <h3>Rating</h3>
@@ -285,11 +282,11 @@
   </div>
 
   <wb-mdhtml>
-```html
-<wb-rating value="3" max="5"></wb-rating>
-<wb-rating value="4" max="5" icon="❤️"></wb-rating>
-<wb-rating value="2" max="5" icon="👍"></wb-rating>
-```
+    ```html
+    <wb-rating value="3" max="5"></wb-rating>
+    <wb-rating value="4" max="5" icon="❤️"></wb-rating>
+    <wb-rating value="2" max="5" icon="👍"></wb-rating>
+    ```
   </wb-mdhtml>
 
   <h3>Stepper & Range</h3>
@@ -299,10 +296,10 @@
   </div>
 
   <wb-mdhtml>
-```html
-<div x-stepper data-value="5" data-min="0" data-max="10"></div>
-<input type="range" min="0" max="100" value="50">
-```
+    ```html
+    <div x-stepper data-value="5" data-min="0" data-max="10"></div>
+    <input type="range" min="0" max="100" value="50">
+    ```
   </wb-mdhtml>
 </section>
 
@@ -324,25 +321,15 @@
   </div>
 
   <wb-mdhtml>
-```html
-<wb-alert type="info" 
-          title="Information" 
-          message="Informational message." 
-          data-dismissible></wb-alert>
+    ```html
+    <wb-alert type="info" title="Information" message="Informational message." data-dismissible></wb-alert>
 
-<wb-alert type="success" 
-          title="Success" 
-          message="Operation completed."
-          data-dismissible></wb-alert>
+    <wb-alert type="success" title="Success" message="Operation completed." data-dismissible></wb-alert>
 
-<wb-alert type="warning" 
-          title="Warning" 
-          message="Please review."></wb-alert>
+    <wb-alert type="warning" title="Warning" message="Please review."></wb-alert>
 
-<wb-alert type="error" 
-          title="Error" 
-          message="Something went wrong."></wb-alert>
-```
+    <wb-alert type="error" title="Error" message="Something went wrong."></wb-alert>
+    ```
   </wb-mdhtml>
 
   <h3>Badges (All Variants)</h3>
@@ -357,15 +344,15 @@
   </div>
 
   <wb-mdhtml>
-```html
-<wb-badge>Default Badge</wb-badge>
-<wb-badge variant="primary">Primary Badge</wb-badge>
-<wb-badge variant="success">Success Badge</wb-badge>
-<wb-badge variant="warning">Warning Badge</wb-badge>
-<wb-badge variant="error">Error Badge</wb-badge>
-<wb-badge variant="info">Info Badge</wb-badge>
-<wb-badge data-pill>Pill Badge</wb-badge>
-```
+    ```html
+    <wb-badge>Default Badge</wb-badge>
+    <wb-badge variant="primary">Primary Badge</wb-badge>
+    <wb-badge variant="success">Success Badge</wb-badge>
+    <wb-badge variant="warning">Warning Badge</wb-badge>
+    <wb-badge variant="error">Error Badge</wb-badge>
+    <wb-badge variant="info">Info Badge</wb-badge>
+    <wb-badge data-pill>Pill Badge</wb-badge>
+    ```
   </wb-mdhtml>
 
   <h3>Progress Bars</h3>
@@ -389,12 +376,12 @@
   </div>
 
   <wb-mdhtml>
-```html
-<wb-progress data-value="25"></wb-progress>
-<wb-progress data-value="50"></wb-progress>
-<wb-progress data-value="75" data-striped></wb-progress>
-<wb-progress data-value="100"></wb-progress>
-```
+    ```html
+    <wb-progress data-value="25"></wb-progress>
+    <wb-progress data-value="50"></wb-progress>
+    <wb-progress data-value="75" data-striped></wb-progress>
+    <wb-progress data-value="100"></wb-progress>
+    ```
   </wb-mdhtml>
 
   <h3>Spinners</h3>
@@ -407,13 +394,13 @@
   </div>
 
   <wb-mdhtml>
-```html
-<wb-spinner></wb-spinner>
-<wb-spinner color="success"></wb-spinner>
-<wb-spinner color="warning"></wb-spinner>
-<wb-spinner color="error"></wb-spinner>
-<wb-spinner size="lg"></wb-spinner>
-```
+    ```html
+    <wb-spinner></wb-spinner>
+    <wb-spinner color="success"></wb-spinner>
+    <wb-spinner color="warning"></wb-spinner>
+    <wb-spinner color="error"></wb-spinner>
+    <wb-spinner size="lg"></wb-spinner>
+    ```
   </wb-mdhtml>
 
   <h3>Toast Notifications</h3>
@@ -425,23 +412,23 @@
   </div>
 
   <wb-mdhtml>
-```html
-<button x-toast data-message="Info message" data-type="info">
-  Info Toast
-</button>
+    ```html
+    <button x-toast data-message="Info message" data-type="info">
+      Info Toast
+    </button>
 
-<button x-toast data-message="Success!" data-type="success">
-  Success Toast
-</button>
+    <button x-toast data-message="Success!" data-type="success">
+      Success Toast
+    </button>
 
-<button x-toast data-message="Warning!" data-type="warning">
-  Warning Toast
-</button>
+    <button x-toast data-message="Warning!" data-type="warning">
+      Warning Toast
+    </button>
 
-<button x-toast data-message="Error!" data-type="error">
-  Error Toast
-</button>
-```
+    <button x-toast data-message="Error!" data-type="error">
+      Error Toast
+    </button>
+    ```
   </wb-mdhtml>
 </section>
 
@@ -456,53 +443,36 @@
 
   <h3>Modal Dialog</h3>
   <div class="demo-row">
-    <wb-modal 
-      class="wb-btn wb-btn--primary" 
-      data-modal-title="Modal Dialog" 
+    <wb-modal class="wb-btn wb-btn--primary" data-modal-title="Modal Dialog"
       data-modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
   </div>
 
   <wb-mdhtml>
-```html
-<wb-modal 
-  class="wb-btn wb-btn--primary" 
-  data-modal-title="Modal Dialog" 
-  data-modal-content="Modal content here.">
-  Open Modal
-</wb-modal>
-```
+    ```html
+    <wb-modal class="wb-btn wb-btn--primary" data-modal-title="Modal Dialog" data-modal-content="Modal content here.">
+      Open Modal
+    </wb-modal>
+    ```
   </wb-mdhtml>
 
   <h3>Drawer</h3>
   <div class="demo-row">
-    <wb-drawer 
-      class="wb-btn wb-btn--primary" 
-      title="Left Drawer" 
-      content="Slide-out panel from the left." 
+    <wb-drawer class="wb-btn wb-btn--primary" title="Left Drawer" content="Slide-out panel from the left."
       position="left">Left Drawer</wb-drawer>
-    <wb-drawer 
-      class="wb-btn wb-btn--primary" 
-      title="Right Drawer" 
-      content="Slide-out panel from the right." 
+    <wb-drawer class="wb-btn wb-btn--primary" title="Right Drawer" content="Slide-out panel from the right."
       position="right">Right Drawer</wb-drawer>
   </div>
 
   <wb-mdhtml>
-```html
-<wb-drawer class="wb-btn wb-btn--primary" 
-           title="Left Drawer" 
-           content="Panel content" 
-           position="left">
-  Left Drawer
-</wb-drawer>
+    ```html
+    <wb-drawer class="wb-btn wb-btn--primary" title="Left Drawer" content="Panel content" position="left">
+      Left Drawer
+    </wb-drawer>
 
-<wb-drawer class="wb-btn wb-btn--primary" 
-           title="Right Drawer" 
-           content="Panel content" 
-           position="right">
-  Right Drawer
-</wb-drawer>
-```
+    <wb-drawer class="wb-btn wb-btn--primary" title="Right Drawer" content="Panel content" position="right">
+      Right Drawer
+    </wb-drawer>
+    ```
   </wb-mdhtml>
 
   <h3>Tooltips</h3>
@@ -514,63 +484,62 @@
   </div>
 
   <wb-mdhtml>
-```html
-<button x-tooltip="Top tooltip" data-position="top">Top</button>
-<button x-tooltip="Bottom tooltip" data-position="bottom">Bottom</button>
-<button x-tooltip="Left tooltip" data-position="left">Left</button>
-<button x-tooltip="Right tooltip" data-position="right">Right</button>
-```
+    ```html
+    <button x-tooltip="Top tooltip" data-position="top">Top</button>
+    <button x-tooltip="Bottom tooltip" data-position="bottom">Bottom</button>
+    <button x-tooltip="Left tooltip" data-position="left">Left</button>
+    <button x-tooltip="Right tooltip" data-position="right">Right</button>
+    ```
   </wb-mdhtml>
 
   <h3>Popover</h3>
   <div class="demo-row">
-    <button class="wb-btn wb-btn--primary" x-popover data-title="Popover Title" data-content="This is additional information displayed in a popover.">Show Popover</button>
+    <button class="wb-btn wb-btn--primary" x-popover data-title="Popover Title"
+      data-content="This is additional information displayed in a popover.">Show Popover</button>
   </div>
 
   <wb-mdhtml>
-```html
-<button x-popover 
-        data-title="Popover Title" 
-        data-content="Additional information here.">
-  Show Popover
-</button>
-```
+    ```html
+    <button x-popover data-title="Popover Title" data-content="Additional information here.">
+      Show Popover
+    </button>
+    ```
   </wb-mdhtml>
 
   <h3>Confirm & Prompt</h3>
   <div class="demo-row">
-    <button class="wb-btn wb-btn--primary" x-confirm data-title="Confirm Action" data-message="Are you sure you want to proceed?">Confirm Dialog</button>
-    <button class="wb-btn wb-btn--primary" x-prompt data-title="Enter Value" data-message="Please enter your name:">Prompt Dialog</button>
+    <button class="wb-btn wb-btn--primary" x-confirm data-title="Confirm Action"
+      data-message="Are you sure you want to proceed?">Confirm Dialog</button>
+    <button class="wb-btn wb-btn--primary" x-prompt data-title="Enter Value"
+      data-message="Please enter your name:">Prompt Dialog</button>
   </div>
 
   <wb-mdhtml>
-```html
-<button x-confirm 
-        data-title="Confirm Action" 
-        data-message="Are you sure?">
-  Confirm
-</button>
+    ```html
+    <button x-confirm data-title="Confirm Action" data-message="Are you sure?">
+      Confirm
+    </button>
 
-<button x-prompt 
-        data-title="Enter Value" 
-        data-message="Please enter:">
-  Prompt
-</button>
-```
+    <button x-prompt data-title="Enter Value" data-message="Please enter:">
+      Prompt
+    </button>
+    ```
   </wb-mdhtml>
 
   <h3>Lightbox</h3>
   <div class="demo-row">
-    <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>
-    <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb2">View Image 2</button>
+    <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb1">View Image
+      1</button>
+    <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb2">View Image
+      2</button>
   </div>
 
   <wb-mdhtml>
-```html
-<button x-lightbox data-src="https://example.com/large-image.jpg">
-  View Image
-</button>
-```
+    ```html
+    <button x-lightbox data-src="https://example.com/large-image.jpg">
+      View Image
+    </button>
+    ```
   </wb-mdhtml>
 </section>
 
@@ -599,19 +568,19 @@
   </div>
 
   <wb-mdhtml>
-```html
-<wb-tabs>
-  <div data-tab-title="Overview">
-    <p>Overview content...</p>
-  </div>
-  <div data-tab-title="Features">
-    <p>Features content...</p>
-  </div>
-  <div data-tab-title="Usage">
-    <p>Usage content...</p>
-  </div>
-</wb-tabs>
-```
+    ```html
+    <wb-tabs>
+      <div data-tab-title="Overview">
+        <p>Overview content...</p>
+      </div>
+      <div data-tab-title="Features">
+        <p>Features content...</p>
+      </div>
+      <div data-tab-title="Usage">
+        <p>Usage content...</p>
+      </div>
+    </wb-tabs>
+    ```
   </wb-mdhtml>
 
   <h3>Accordion</h3>
@@ -630,16 +599,16 @@
   </div>
 
   <wb-mdhtml>
-```html
-<wb-accordion>
-  <div data-accordion-title="Section 1">
-    <p>Content for section 1...</p>
-  </div>
-  <div data-accordion-title="Section 2">
-    <p>Content for section 2...</p>
-  </div>
-</wb-accordion>
-```
+    ```html
+    <wb-accordion>
+      <div data-accordion-title="Section 1">
+        <p>Content for section 1...</p>
+      </div>
+      <div data-accordion-title="Section 2">
+        <p>Content for section 2...</p>
+      </div>
+    </wb-accordion>
+    ```
   </wb-mdhtml>
 
   <h3>Breadcrumb</h3>
@@ -648,9 +617,9 @@
   </div>
 
   <wb-mdhtml>
-```html
-<nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones"></nav>
-```
+    ```html
+    <nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones"></nav>
+    ```
   </wb-mdhtml>
 
   <h3>Pagination</h3>
@@ -659,12 +628,9 @@
   </div>
 
   <wb-mdhtml>
-```html
-<nav x-pagination 
-     data-total="100" 
-     data-per-page="10" 
-     data-current="5"></nav>
-```
+    ```html
+    <nav x-pagination data-total="100" data-per-page="10" data-current="5"></nav>
+    ```
   </wb-mdhtml>
 
   <h3>Steps Wizard</h3>
@@ -673,11 +639,9 @@
   </div>
 
   <wb-mdhtml>
-```html
-<div x-steps 
-     data-items="Cart,Shipping,Payment,Confirm" 
-     data-current="2"></div>
-```
+    ```html
+    <div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
+    ```
   </wb-mdhtml>
 </section>
 
@@ -700,13 +664,13 @@
   </div>
 
   <wb-mdhtml>
-```html
-<wb-avatar src="photo.jpg"></wb-avatar>
-<wb-avatar src="photo.jpg" size="lg"></wb-avatar>
-<wb-avatar initials="JD"></wb-avatar>
-<wb-avatar src="photo.jpg" status="online"></wb-avatar>
-<wb-avatar src="photo.jpg" status="away"></wb-avatar>
-```
+    ```html
+    <wb-avatar src="photo.jpg"></wb-avatar>
+    <wb-avatar src="photo.jpg" size="lg"></wb-avatar>
+    <wb-avatar initials="JD"></wb-avatar>
+    <wb-avatar src="photo.jpg" status="online"></wb-avatar>
+    <wb-avatar src="photo.jpg" status="away"></wb-avatar>
+    ```
   </wb-mdhtml>
 
   <h3>Skeleton Loaders</h3>
@@ -717,11 +681,11 @@
   </div>
 
   <wb-mdhtml>
-```html
-<wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton>
-<wb-skeleton variant="circle" width="60px"></wb-skeleton>
-<wb-skeleton variant="rect" width="150px" height="100px"></wb-skeleton>
-```
+    ```html
+    <wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton>
+    <wb-skeleton variant="circle" width="60px"></wb-skeleton>
+    <wb-skeleton variant="rect" width="150px" height="100px"></wb-skeleton>
+    ```
   </wb-mdhtml>
 
   <h3>Timeline</h3>
@@ -730,21 +694,21 @@
   </div>
 
   <wb-mdhtml>
-```html
-<div x-timeline 
-     data-items="Kickoff,Design,Development,Testing,Launch"></div>
-```
+    ```html
+    <div x-timeline data-items="Kickoff,Design,Development,Testing,Launch"></div>
+    ```
   </wb-mdhtml>
 
   <h3>Keyboard Keys</h3>
   <div class="demo-row">
-    <p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>
+    <p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on
+      Mac.</p>
   </div>
 
   <wb-mdhtml>
-```html
-<p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save.</p>
-```
+    ```html
+    <p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save.</p>
+    ```
   </wb-mdhtml>
 </section>
 
@@ -764,10 +728,10 @@
   </div>
 
   <wb-mdhtml>
-```html
-<img x-image src="image.jpg" alt="Description" data-lazy>
-<img x-image src="image.jpg" alt="Description" data-zoomable>
-```
+    ```html
+    <img x-image src="image.jpg" alt="Description" data-lazy>
+    <img x-image src="image.jpg" alt="Description" data-zoomable>
+    ```
   </wb-mdhtml>
 
   <h3>Gallery</h3>
@@ -781,31 +745,27 @@
   </div>
 
   <wb-mdhtml>
-```html
-<div x-gallery data-columns="4">
-  <img src="img1.jpg" alt="Image 1">
-  <img src="img2.jpg" alt="Image 2">
-  <img src="img3.jpg" alt="Image 3">
-  <img src="img4.jpg" alt="Image 4">
-</div>
-```
+    ```html
+    <div x-gallery data-columns="4">
+      <img src="img1.jpg" alt="Image 1">
+      <img src="img2.jpg" alt="Image 2">
+      <img src="img3.jpg" alt="Image 3">
+      <img src="img4.jpg" alt="Image 4">
+    </div>
+    ```
   </wb-mdhtml>
 
   <h3>Audio Player</h3>
   <div class="demo-full">
-    <wb-audio 
-      data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" 
-      data-show-eq="true" 
-      data-volume="0.7"></wb-audio>
+    <wb-audio
+      data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3"
+      data-show-eq="true" data-volume="0.7"></wb-audio>
   </div>
 
   <wb-mdhtml>
-```html
-<wb-audio 
-  data-src="audio-file.mp3" 
-  data-show-eq="true" 
-  data-volume="0.7"></wb-audio>
-```
+    ```html
+    <wb-audio data-src="audio-file.mp3" data-show-eq="true" data-volume="0.7"></wb-audio>
+    ```
   </wb-mdhtml>
 
   <h3>YouTube Embed</h3>
@@ -814,9 +774,9 @@
   </div>
 
   <wb-mdhtml>
-```html
-<div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
-```
+    ```html
+    <div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
+    ```
   </wb-mdhtml>
 </section>
 
@@ -842,16 +802,16 @@
   </div>
 
   <wb-mdhtml>
-```html
-<button x-bounce>Bounce</button>
-<button x-shake>Shake</button>
-<button x-pulse>Pulse</button>
-<button x-flash>Flash</button>
-<button x-tada>Tada!</button>
-<button x-wobble>Wobble</button>
-<button x-jello>Jello</button>
-<button x-heartbeat>Heartbeat</button>
-```
+    ```html
+    <button x-bounce>Bounce</button>
+    <button x-shake>Shake</button>
+    <button x-pulse>Pulse</button>
+    <button x-flash>Flash</button>
+    <button x-tada>Tada!</button>
+    <button x-wobble>Wobble</button>
+    <button x-jello>Jello</button>
+    <button x-heartbeat>Heartbeat</button>
+    ```
   </wb-mdhtml>
 
   <h3>Entrance Animations</h3>
@@ -865,14 +825,14 @@
   </div>
 
   <wb-mdhtml>
-```html
-<button x-fadein>Fade In</button>
-<button x-slidein data-direction="left">Slide Left</button>
-<button x-slidein data-direction="right">Slide Right</button>
-<button x-slidein data-direction="up">Slide Up</button>
-<button x-zoomin>Zoom In</button>
-<button x-flip>Flip</button>
-```
+    ```html
+    <button x-fadein>Fade In</button>
+    <button x-slidein data-direction="left">Slide Left</button>
+    <button x-slidein data-direction="right">Slide Right</button>
+    <button x-slidein data-direction="up">Slide Up</button>
+    <button x-zoomin>Zoom In</button>
+    <button x-flip>Flip</button>
+    ```
   </wb-mdhtml>
 
   <h3>Special Effects</h3>
@@ -886,14 +846,14 @@
   </div>
 
   <wb-mdhtml>
-```html
-<button x-confetti>🎊 Confetti</button>
-<button x-fireworks>🎆 Fireworks</button>
-<button x-snow>❄️ Snow</button>
-<button x-sparkle>✨ Sparkle</button>
-<button x-glow>💡 Glow</button>
-<button x-rainbow>🌈 Rainbow</button>
-```
+    ```html
+    <button x-confetti>🎊 Confetti</button>
+    <button x-fireworks>🎆 Fireworks</button>
+    <button x-snow>❄️ Snow</button>
+    <button x-sparkle>✨ Sparkle</button>
+    <button x-glow>💡 Glow</button>
+    <button x-rainbow>🌈 Rainbow</button>
+    ```
   </wb-mdhtml>
 
   <h3>Ripple Effect</h3>
@@ -903,10 +863,10 @@
   </div>
 
   <wb-mdhtml>
-```html
-<button x-ripple>Click for Ripple</button>
-<div x-ripple>Any element can have ripple</div>
-```
+    ```html
+    <button x-ripple>Click for Ripple</button>
+    <div x-ripple>Any element can have ripple</div>
+    ```
   </wb-mdhtml>
 </section>
 
@@ -926,27 +886,28 @@
   </div>
 
   <wb-mdhtml>
-```html
-<button x-copy data-copy="Text to copy">📋 Copy</button>
-```
+    ```html
+    <button x-copy data-copy="Text to copy">📋 Copy</button>
+    ```
   </wb-mdhtml>
 
   <h3>Share, Print & Fullscreen</h3>
   <div class="demo-row">
-    <button class="wb-btn wb-btn--secondary" x-share data-share-title="WB Framework" data-share-url="https://example.com">📤 Share</button>
+    <button class="wb-btn wb-btn--secondary" x-share data-share-title="WB Framework"
+      data-share-url="https://example.com">📤 Share</button>
     <button class="wb-btn wb-btn--secondary" x-print>🖨️ Print</button>
     <button class="wb-btn wb-btn--secondary" x-fullscreen>⛶ Fullscreen</button>
   </div>
 
   <wb-mdhtml>
-```html
-<button x-share data-share-title="Title" data-share-url="https://...">
-  📤 Share
-</button>
+    ```html
+    <button x-share data-share-title="Title" data-share-url="https://...">
+      📤 Share
+    </button>
 
-<button x-print>🖨️ Print</button>
-<button x-fullscreen>⛶ Fullscreen</button>
-```
+    <button x-print>🖨️ Print</button>
+    <button x-fullscreen>⛶ Fullscreen</button>
+    ```
   </wb-mdhtml>
 
   <h3>Clock & Countdown</h3>
@@ -957,11 +918,11 @@
   </div>
 
   <wb-mdhtml>
-```html
-<div x-clock></div>
-<div x-countdown data-to="2026-12-31"></div>
-<span x-relativetime data-date="2025-01-01"></span>
-```
+    ```html
+    <div x-clock></div>
+    <div x-countdown data-to="2026-12-31"></div>
+    <span x-relativetime data-date="2025-01-01"></span>
+    ```
   </wb-mdhtml>
 
   <h3>Dark Mode Toggle</h3>
@@ -971,25 +932,26 @@
   </div>
 
   <wb-mdhtml>
-```html
-<button x-darkmode>🌙 Toggle Dark Mode</button>
-<wb-themecontrol></wb-themecontrol>
-```
+    ```html
+    <button x-darkmode>🌙 Toggle Dark Mode</button>
+    <wb-themecontrol></wb-themecontrol>
+    ```
   </wb-mdhtml>
 
   <h3>Text Truncate</h3>
   <div class="demo-full">
     <p x-truncate data-lines="2" class="truncate-box">
-      This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur
+      adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </p>
   </div>
 
   <wb-mdhtml>
-```html
-<p x-truncate data-lines="2">
-  Long text that will be truncated after 2 lines...
-</p>
-```
+    ```html
+    <p x-truncate data-lines="2">
+      Long text that will be truncated after 2 lines...
+    </p>
+    ```
   </wb-mdhtml>
 </section>
 
@@ -1003,375 +965,386 @@
      STYLES
      ═══════════════════════════════════════════════════════════════════════════ -->
 <style>
-/* ═══════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════
    LAYOUT
    ═══════════════════════════════════════════════════════════════════ */
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-xl, 2rem);
-  border-bottom: 2px solid var(--primary, #6366f1);
-  padding-bottom: var(--space-lg, 1.5rem);
-  flex-wrap: wrap;
-  gap: var(--space-md, 1rem);
-}
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-xl, 2rem);
+    border-bottom: 2px solid var(--primary, #6366f1);
+    padding-bottom: var(--space-lg, 1.5rem);
+    flex-wrap: wrap;
+    gap: var(--space-md, 1rem);
+  }
 
-header h1 {
-  margin: 0;
-  color: var(--primary, #6366f1);
-  font-size: 2rem;
-}
-
-.header-subtitle {
-  margin: 0.5rem 0 0 0;
-  color: var(--text-secondary, #9ca3af);
-  font-size: 0.875rem;
-}
-
-.nav-links {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: var(--space-xl, 2rem);
-  flex-wrap: wrap;
-  padding: var(--space-md, 1rem);
-  background: var(--bg-primary, #1f2937);
-  border-radius: 12px;
-  border: 1px solid var(--border-color, #374151);
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: var(--text-secondary, #9ca3af);
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  background: var(--bg-secondary, #111827);
-  border: 1px solid var(--border-color, #374151);
-  transition: all 0.2s ease;
-  font-size: 0.875rem;
-  white-space: nowrap;
-}
-
-.nav-links a:hover {
-  background: var(--primary, #6366f1);
-  color: white;
-  border-color: var(--primary, #6366f1);
-}
-
-section {
-  margin-bottom: var(--space-xl, 2rem);
-  padding-bottom: var(--space-xl, 2rem);
-  border-bottom: 1px solid var(--border-color, #374151);
-}
-
-section h2 {
-  margin: var(--space-xl, 2rem) 0 var(--space-lg, 1.5rem);
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--primary, #6366f1);
-  color: var(--text-primary, #f9fafb);
-  font-size: 1.5rem;
-}
-
-section h3 {
-  margin: var(--space-lg, 1.5rem) 0 var(--space-md, 1rem);
-  color: var(--accent, var(--primary, #6366f1));
-  font-size: 1.125rem;
-}
-
-.section-note {
-  background: var(--bg-secondary, #111827);
-  border-left: 4px solid var(--primary, #6366f1);
-  padding: 1rem;
-  margin-bottom: var(--space-lg, 1.5rem);
-  border-radius: 0 12px 12px 0;
-  font-size: 0.875rem;
-  color: var(--text-secondary, #9ca3af);
-}
-
-.section-note strong {
-  color: var(--primary, #6366f1);
-}
-
-/* Demo layouts */
-.demo-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: var(--space-lg, 1.5rem);
-  align-items: center;
-}
-
-.demo-grid-2 {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-  margin-bottom: var(--space-lg, 1.5rem);
-}
-
-.demo-grid-3 {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
-  margin-bottom: var(--space-lg, 1.5rem);
-}
-
-.demo-full {
-  margin-bottom: var(--space-lg, 1.5rem);
-}
-
-/* Alerts stack - stacked vertically with gaps */
-.alerts-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: var(--space-lg, 1.5rem);
-}
-
-/* Progress stack */
-.progress-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin-bottom: var(--space-lg, 1.5rem);
-}
-
-.progress-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.progress-label {
-  font-size: 0.875rem;
-  color: var(--text-secondary, #9ca3af);
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   BUTTONS
-   ═══════════════════════════════════════════════════════════════════ */
-.wb-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  font-family: inherit;
-}
-
-.wb-btn--primary {
-  background: var(--primary, #6366f1);
-  color: #ffffff;
-}
-
-.wb-btn--primary:hover:not(:disabled) {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-.wb-btn--primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.wb-btn--secondary {
-  background: var(--bg-tertiary, #374151);
-  color: var(--text-primary, #f9fafb);
-  border: 1px solid var(--border-color, #374151);
-}
-
-.wb-btn--secondary:hover {
-  background: var(--bg-secondary, #111827);
-}
-
-.wb-btn--ghost {
-  background: transparent;
-  color: var(--text-secondary, #9ca3af);
-  border: 1px solid var(--border-color, #374151);
-}
-
-.wb-btn--ghost:hover {
-  background: var(--bg-secondary, #111827);
-}
-
-.wb-btn--sm {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
-}
-
-.wb-btn--lg {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   FORM ELEMENTS
-   ═══════════════════════════════════════════════════════════════════ */
-input, textarea, select {
-  background: var(--bg-tertiary, #374151);
-  border: 1px solid var(--border-color, #374151);
-  color: var(--text-primary, #f9fafb);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  width: 100%;
-  box-sizing: border-box;
-  font-family: inherit;
-}
-
-input:focus, textarea:focus, select:focus {
-  outline: none;
-  border-color: var(--primary, #6366f1);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-}
-
-input[data-variant="success"] {
-  border-color: var(--success-color, #22c55e);
-}
-
-input[data-variant="warning"] {
-  border-color: var(--warning-color, #f59e0b);
-}
-
-input[data-variant="error"] {
-  border-color: var(--danger-color, #ef4444);
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--text-primary, #f9fafb);
-  cursor: pointer;
-  font-size: 0.875rem;
-}
-
-.checkbox-label input {
-  width: auto;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   SPECIAL ELEMENTS
-   ═══════════════════════════════════════════════════════════════════ */
-
-.effect-demo {
-  padding: 1rem 1.5rem;
-  background: var(--bg-tertiary, #374151);
-  border: 1px solid var(--border-color, #374151);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: monospace;
-  font-size: 0.875rem;
-  color: var(--text-primary, #f9fafb);
-}
-
-.effect-demo:hover {
-  background: var(--primary, #6366f1);
-  color: white;
-  border-color: var(--primary, #6366f1);
-}
-
-.ripple-box {
-  padding: 1.5rem 2rem;
-  background: var(--bg-secondary, #111827);
-  border-radius: 12px;
-  cursor: pointer;
-  border: 1px solid var(--border-color, #374151);
-  text-align: center;
-}
-
-.time-display {
-  font-size: 1.125rem;
-  font-family: monospace;
-  background: var(--bg-secondary, #111827);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--border-color, #374151);
-}
-
-.truncate-box {
-  max-width: 600px;
-  background: var(--bg-secondary, #111827);
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid var(--border-color, #374151);
-}
-
-.demo-image {
-  border-radius: 8px;
-  border: 1px solid var(--border-color, #374151);
-}
-
-.youtube-container {
-  max-width: 600px;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════════════════════════════════ */
-footer {
-  margin-top: var(--space-xl, 2rem);
-  padding: var(--space-xl, 2rem);
-  text-align: center;
-  background: var(--bg-secondary, #111827);
-  border-radius: 12px;
-  border: 1px solid var(--border-color, #374151);
-}
-
-footer p {
-  margin: 0.5rem 0;
-  color: var(--text-secondary, #9ca3af);
-}
-
-footer a {
-  color: var(--primary, #6366f1);
-  text-decoration: none;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   ANIMATIONS
-   ═══════════════════════════════════════════════════════════════════ */
-@keyframes wb-spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes wb-skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════════════════════════════════ */
-@media (max-width: 640px) {
   header h1 {
+    margin: 0;
+    color: var(--primary, #6366f1);
+    font-size: 2rem;
+  }
+
+  .header-subtitle {
+    margin: 0.5rem 0 0 0;
+    color: var(--text-secondary, #9ca3af);
+    font-size: 0.875rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: var(--space-xl, 2rem);
+    flex-wrap: wrap;
+    padding: var(--space-md, 1rem);
+    background: var(--bg-primary, #1f2937);
+    border-radius: 12px;
+    border: 1px solid var(--border-color, #374151);
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-secondary, #9ca3af);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: var(--bg-secondary, #111827);
+    border: 1px solid var(--border-color, #374151);
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover {
+    background: var(--primary, #6366f1);
+    color: white;
+    border-color: var(--primary, #6366f1);
+  }
+
+  section {
+    margin-bottom: var(--space-xl, 2rem);
+    padding-bottom: var(--space-xl, 2rem);
+    border-bottom: 1px solid var(--border-color, #374151);
+  }
+
+  section h2 {
+    margin: var(--space-xl, 2rem) 0 var(--space-lg, 1.5rem);
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary, #6366f1);
+    color: var(--text-primary, #f9fafb);
     font-size: 1.5rem;
   }
-  
-  .nav-links {
-    padding: 0.5rem;
-    gap: 0.25rem;
+
+  section h3 {
+    margin: var(--space-lg, 1.5rem) 0 var(--space-md, 1rem);
+    color: var(--accent, var(--primary, #6366f1));
+    font-size: 1.125rem;
   }
-  
-  .nav-links a {
+
+  .section-note {
+    background: var(--bg-secondary, #111827);
+    border-left: 4px solid var(--primary, #6366f1);
+    padding: 1rem;
+    margin-bottom: var(--space-lg, 1.5rem);
+    border-radius: 0 12px 12px 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary, #9ca3af);
+  }
+
+  .section-note strong {
+    color: var(--primary, #6366f1);
+  }
+
+  /* Demo layouts */
+  .demo-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: var(--space-lg, 1.5rem);
+    align-items: center;
+  }
+
+  .demo-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: var(--space-lg, 1.5rem);
+  }
+
+  .demo-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: var(--space-lg, 1.5rem);
+  }
+
+  .demo-full {
+    margin-bottom: var(--space-lg, 1.5rem);
+  }
+
+  /* Alerts stack - stacked vertically with gaps */
+  .alerts-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: var(--space-lg, 1.5rem);
+  }
+
+  /* Progress stack */
+  .progress-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: var(--space-lg, 1.5rem);
+  }
+
+  .progress-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .progress-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary, #9ca3af);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════════════════ */
+  .wb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+
+  .wb-btn--primary {
+    background: var(--primary, #6366f1);
+    color: #ffffff;
+  }
+
+  .wb-btn--primary:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .wb-btn--primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .wb-btn--secondary {
+    background: var(--bg-tertiary, #374151);
+    color: var(--text-primary, #f9fafb);
+    border: 1px solid var(--border-color, #374151);
+  }
+
+  .wb-btn--secondary:hover {
+    background: var(--bg-secondary, #111827);
+  }
+
+  .wb-btn--ghost {
+    background: transparent;
+    color: var(--text-secondary, #9ca3af);
+    border: 1px solid var(--border-color, #374151);
+  }
+
+  .wb-btn--ghost:hover {
+    background: var(--bg-secondary, #111827);
+  }
+
+  .wb-btn--sm {
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
   }
-  
-  section h2 {
-    font-size: 1.25rem;
+
+  .wb-btn--lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
   }
-}
+
+  /* ═══════════════════════════════════════════════════════════════════
+   FORM ELEMENTS
+   ═══════════════════════════════════════════════════════════════════ */
+  input,
+  textarea,
+  select {
+    background: var(--bg-tertiary, #374151);
+    border: 1px solid var(--border-color, #374151);
+    color: var(--text-primary, #f9fafb);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--primary, #6366f1);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  }
+
+  input[data-variant="success"] {
+    border-color: var(--success-color, #22c55e);
+  }
+
+  input[data-variant="warning"] {
+    border-color: var(--warning-color, #f59e0b);
+  }
+
+  input[data-variant="error"] {
+    border-color: var(--danger-color, #ef4444);
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary, #f9fafb);
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+
+  .checkbox-label input {
+    width: auto;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+   SPECIAL ELEMENTS
+   ═══════════════════════════════════════════════════════════════════ */
+
+  .effect-demo {
+    padding: 1rem 1.5rem;
+    background: var(--bg-tertiary, #374151);
+    border: 1px solid var(--border-color, #374151);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: monospace;
+    font-size: 0.875rem;
+    color: var(--text-primary, #f9fafb);
+  }
+
+  .effect-demo:hover {
+    background: var(--primary, #6366f1);
+    color: white;
+    border-color: var(--primary, #6366f1);
+  }
+
+  .ripple-box {
+    padding: 1.5rem 2rem;
+    background: var(--bg-secondary, #111827);
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid var(--border-color, #374151);
+    text-align: center;
+  }
+
+  .time-display {
+    font-size: 1.125rem;
+    font-family: monospace;
+    background: var(--bg-secondary, #111827);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #374151);
+  }
+
+  .truncate-box {
+    max-width: 600px;
+    background: var(--bg-secondary, #111827);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color, #374151);
+  }
+
+  .demo-image {
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #374151);
+  }
+
+  .youtube-container {
+    max-width: 600px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════════ */
+  footer {
+    margin-top: var(--space-xl, 2rem);
+    padding: var(--space-xl, 2rem);
+    text-align: center;
+    background: var(--bg-secondary, #111827);
+    border-radius: 12px;
+    border: 1px solid var(--border-color, #374151);
+  }
+
+  footer p {
+    margin: 0.5rem 0;
+    color: var(--text-secondary, #9ca3af);
+  }
+
+  footer a {
+    color: var(--primary, #6366f1);
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════ */
+  @keyframes wb-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes wb-skeleton-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════ */
+  @media (max-width: 640px) {
+    header h1 {
+      font-size: 1.5rem;
+    }
+
+    .nav-links {
+      padding: 0.5rem;
+      gap: 0.25rem;
+    }
+
+    .nav-links a {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    section h2 {
+      font-size: 1.25rem;
+    }
+  }
 </style>

@@ -1,0 +1,103 @@
+{
+  "submissions": [
+    {
+      "id": "note-1769750281026",
+      "content": "[BUG] retry-test-1769750280978-q4si23",
+      "createdAt": "2026-01-30T05:18:01.026Z",
+      "updatedAt": "2026-01-30T05:18:01.026Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769750280757",
+      "content": "[BUG] lifecycle-test-1769750280725-bugs97",
+      "createdAt": "2026-01-30T05:18:00.757Z",
+      "updatedAt": "2026-01-30T05:18:00.757Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769750280711",
+      "content": "[BUG] approval-test-1769750280664-0nincy",
+      "createdAt": "2026-01-30T05:18:00.711Z",
+      "updatedAt": "2026-01-30T05:18:00.711Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769750280703",
+      "content": "[BUG] rejection-test-1769750280654-22b5g6",
+      "createdAt": "2026-01-30T05:18:00.703Z",
+      "updatedAt": "2026-01-30T05:18:00.703Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769750280442",
+      "content": "[BUG] full-flow-test-1769750280401-hpcm02",
+      "createdAt": "2026-01-30T05:18:00.442Z",
+      "updatedAt": "2026-01-30T05:18:00.442Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769750280368",
+      "content": "[BUG] direct-fix-test-1769750280325-loth02",
+      "createdAt": "2026-01-30T05:18:00.368Z",
+      "updatedAt": "2026-01-30T05:18:00.368Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769750280256",
+      "content": "[BUG] in-progress-test-1769750280208-h8sp82",
+      "createdAt": "2026-01-30T05:18:00.256Z",
+      "updatedAt": "2026-01-30T05:18:00.256Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769742630263",
+      "content": "[BUG] retry-test-1769742630231-13rrd8",
+      "createdAt": "2026-01-30T03:10:30.263Z",
+      "updatedAt": "2026-01-30T03:10:30.263Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769742630178",
+      "content": "[BUG] lifecycle-test-1769742630123-apldis",
+      "createdAt": "2026-01-30T03:10:30.178Z",
+      "updatedAt": "2026-01-30T03:10:30.178Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769742630171",
+      "content": "[BUG] approval-test-1769742630058-osbza6",
+      "createdAt": "2026-01-30T03:10:30.171Z",
+      "updatedAt": "2026-01-30T03:10:30.171Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769742630151",
+      "content": "[BUG] rejection-test-1769742630074-cdojkm",
+      "createdAt": "2026-01-30T03:10:30.151Z",
+      "updatedAt": "2026-01-30T03:10:30.151Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769742629808",
+      "content": "[BUG] full-flow-test-1769742629775-cdn8wo",
+      "createdAt": "2026-01-30T03:10:29.808Z",
+      "updatedAt": "2026-01-30T03:10:29.808Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769742629735",
+      "content": "[BUG] direct-fix-test-1769742629646-pwidpu",
+      "createdAt": "2026-01-30T03:10:29.735Z",
+      "updatedAt": "2026-01-30T03:10:29.735Z",
+      "isClaudeResponse": false
+    },
+    {
+      "id": "note-1769742629727",
+      "content": "[BUG] in-progress-test-1769742629653-eew7uq",
+      "createdAt": "2026-01-30T03:10:29.727Z",
+      "updatedAt": "2026-01-30T03:10:29.727Z",
+      "isClaudeResponse": false
+    }
+  ],
+  "lastUpdated": "2026-01-30T05:18:01.026Z"
+}

@@ -1,0 +1,113 @@
+{
+  "issues": [
+    {
+      "id": "note-1769194562447-p0",
+      "description": "[BUG] when right clicking on any element in the canvas and picking inspect, nothing happens",
+      "status": "resolved",
+      "createdAt": "2026-01-23T18:56:02.447Z",
+      "priority": 0,
+      "rejectionCount": 1,
+      "rejectedAt": "2026-01-24T02:15:00.000Z",
+      "rejectionReason": "debugger statement is not acceptable UX - must actually inspect element",
+      "testLink": "tests/issues/issue-note-1769194562447-p0.spec.ts",
+      "lastTestRun": "2026-01-26T01:10:23.597Z",
+      "lastTestResult": "passed",
+      "testSummary": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 10,
+        "total": 10
+      },
+      "claimedFixedAt": "2026-01-25T01:19:52.771Z",
+      "resolution": "✅ Test passed: 0 passed, 0 failed, 10 skipped\nValidated by: tests/issues/issue-note-1769194562447-p0.spec.ts\nResolved at: 2026-01-26T01:10:23.582Z",
+      "resolvedAt": "2026-01-26T01:10:23.597Z",
+      "validatedBy": "tests/issues/issue-note-1769194562447-p0.spec.ts",
+      "testPassed": true,
+      "archivedAt": "2026-01-26T01:16:44.334Z"
+    },
+    {
+      "id": "note-1769220695766-p0",
+      "description": "[BUG] CLICKING ON ISSUE IN HOME PAGE DOES NOT SHOW ISSUES IT JUST SHOWS A TOAST MESSAGE CLICKED",
+      "status": "resolved",
+      "createdAt": "2026-01-24T02:11:35.766Z",
+      "priority": 2,
+      "testLink": "tests/issues/issue-note-1769220695766-p0.spec.ts",
+      "lastTestRun": "2026-01-26T01:06:42.254Z",
+      "lastTestResult": "passed",
+      "testSummary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 4,
+        "total": 6
+      },
+      "resolvedAt": "2026-01-26T01:06:42.254Z",
+      "resolution": "✅ Test passed: 2 passed, 0 failed, 4 skipped\nValidated by: tests/issues/issue-note-1769220695766-p0.spec.ts\nResolved at: 2026-01-26T01:06:42.248Z",
+      "validatedBy": "tests/issues/issue-note-1769220695766-p0.spec.ts",
+      "testPassed": true,
+      "archivedAt": "2026-01-26T01:16:44.334Z"
+    },
+    {
+      "id": "note-1769220751805-p0",
+      "description": "[BUG] Category buttons (Buttons, Inputs, Selection, Feedback, Overlays, Navigation, Data, Media, Effects, Utilities) do not scroll the page to that location",
+      "status": "resolved",
+      "createdAt": "2026-01-24T02:12:31.805Z",
+      "priority": 2,
+      "testLink": "tests/issues/issue-note-1769220751805-p0.spec.ts",
+      "lastTestRun": "2026-01-26T01:06:33.427Z",
+      "lastTestResult": "passed",
+      "testSummary": {
+        "passed": 6,
+        "failed": 0,
+        "skipped": 2,
+        "total": 8
+      },
+      "claimedFixedAt": "2026-01-24T22:48:40.472Z",
+      "resolution": "✅ Test passed: 6 passed, 0 failed, 2 skipped\nValidated by: tests/issues/issue-note-1769220751805-p0.spec.ts\nResolved at: 2026-01-26T01:06:33.425Z",
+      "resolvedAt": "2026-01-26T01:06:33.427Z",
+      "validatedBy": "tests/issues/issue-note-1769220751805-p0.spec.ts",
+      "testPassed": true,
+      "archivedAt": "2026-01-26T01:16:44.334Z"
+    },
+    {
+      "id": "note-1769306014994-p0",
+      "description": "[BUG] builder.html add component popup has uneven rows - one tile is very tall",
+      "status": "resolved",
+      "createdAt": "2026-01-25T01:53:34.994Z",
+      "testLink": "tests/issues/issue-note-1769306014994-p0.spec.ts",
+      "lastTestRun": "2026-01-26T01:55:29.088Z",
+      "lastTestResult": "passed",
+      "testSummary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "total": 2
+      },
+      "resolvedAt": "2026-01-26T01:55:29.088Z",
+      "resolution": "✅ Test passed: 2 passed, 0 failed, 0 skipped\nValidated by: tests/issues/issue-note-1769306014994-p0.spec.ts\nResolved at: 2026-01-26T01:55:29.084Z",
+      "validatedBy": "tests/issues/issue-note-1769306014994-p0.spec.ts",
+      "testPassed": true,
+      "archivedAt": "2026-01-26T02:02:40.477Z"
+    },
+    {
+      "id": "note-1769305932956-p0",
+      "description": "[BUG] builder.html has an issues button in bottom right corner - remove it",
+      "status": "resolved",
+      "createdAt": "2026-01-25T01:52:12.956Z",
+      "testLink": "tests/issues/issue-note-1769305932956-p0.spec.ts",
+      "lastTestRun": "2026-01-26T02:03:27.511Z",
+      "lastTestResult": "passed",
+      "testSummary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "total": 2
+      },
+      "resolvedAt": "2026-01-26T02:03:27.511Z",
+      "resolution": "✅ Test passed: 2 passed, 0 failed, 0 skipped\nValidated by: tests/issues/issue-note-1769305932956-p0.spec.ts\nResolved at: 2026-01-26T02:03:27.503Z",
+      "validatedBy": "tests/issues/issue-note-1769305932956-p0.spec.ts",
+      "testPassed": true,
+      "archivedAt": "2026-01-26T02:05:15.706Z"
+    }
+  ],
+  "lastUpdated": "2026-01-26T02:05:15.706Z"
+}
