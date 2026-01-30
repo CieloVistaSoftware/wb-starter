@@ -3,22 +3,32 @@
  * Adds clearable, prefix/suffix, validation variants
  * Helper Attribute: [x-behavior="input"]
  */
-export function input(element, options = {}) {
-  const config = {
-    type: options.type || element.dataset.type || element.type || 'text',
-    variant: options.variant || element.dataset.variant || '',
-    size: options.size || element.dataset.size || 'md',
+export interface InputOptions {
+  type?: string;
+  variant?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  clearable?: boolean;
+  prefix?: string;
+  suffix?: string;
+  [k: string]: any;
+}
+
+export function input(element: HTMLInputElement, options: InputOptions = {}): () => void {
+  const config: Required<Pick<InputOptions, 'type' | 'variant' | 'size' | 'clearable' | 'prefix' | 'suffix'>> & InputOptions = {
+    type: options.type || (element.dataset && element.dataset.type) || (element as HTMLInputElement).type || 'text',
+    variant: options.variant || (element.dataset && element.dataset.variant) || '',
+    size: (options.size as any) || (element.dataset && element.dataset.size) || 'md',
     clearable: options.clearable ?? element.hasAttribute('data-clearable'),
-    prefix: options.prefix || element.dataset.prefix || element.dataset.icon || '',
-    suffix: options.suffix || element.dataset.suffix || '',
+    prefix: options.prefix || (element.dataset && element.dataset.prefix) || (element.dataset && (element.dataset as any).icon) || '',
+    suffix: options.suffix || (element.dataset && element.dataset.suffix) || '',
     ...options
-  };
+  } as any;
 
   const wrapper = document.createElement('div');
   wrapper.className = 'wb-input';
   // Wrapper takes full width to mimic the input's behavior
   wrapper.style.cssText = 'position:relative;display:flex;align-items:center;width:100%;';
-  element.parentNode.insertBefore(wrapper, element);
+  element.parentNode?.insertBefore(wrapper, element);
   wrapper.appendChild(element);
   element.classList.add('wb-input__field');
   
@@ -35,7 +45,7 @@ export function input(element, options = {}) {
   });
 
   // Apply size
-  const paddings = {
+  const paddings: Record<string,string> = {
     xs: '0.125rem 0.5rem',
     sm: '0.25rem 0.75rem',
     md: '0.5rem 0.75rem',
@@ -80,7 +90,7 @@ export function input(element, options = {}) {
     clear.textContent = '×';
     clear.style.cssText = 'background:none;border:none;cursor:pointer;padding:0 0.5rem;font-size:1.25rem;color:var(--text-secondary,#9ca3af);';
     clear.onclick = () => { 
-      element.value = ''; 
+      (element as HTMLInputElement).value = ''; 
       element.focus(); 
       element.dispatchEvent(new Event('input', { bubbles: true }));
     };
@@ -89,7 +99,7 @@ export function input(element, options = {}) {
 
   element.dataset.wbReady = 'input';
   return () => {
-    wrapper.parentNode.insertBefore(element, wrapper);
+    wrapper.parentNode?.insertBefore(element, wrapper);
     wrapper.remove();
     element.classList.remove('wb-input__field');
   };
