@@ -16,6 +16,7 @@ declare global {
     wbSnow?: any;
     wbForm?: any;
     wbInput?: WBInputAPI;
+    wbForm?: WBFormAPI;
     wbToggle?: any;
     wbMdhtml?: any;
     wbVideo?: any;
