@@ -31,6 +31,9 @@ export function input(element: HTMLInputElement, options: InputOptions = {}): ()
   element.parentNode?.insertBefore(wrapper, element);
   wrapper.appendChild(element);
   element.classList.add('wb-input__field');
+  // Backwards-compatible: some callers & tests expect the input element itself to
+  // include the `wb-input` class. Keep that behavior so existing selectors keep working.
+  element.classList.add('wb-input');
   
   // Default styles for compliance
   Object.assign(element.style, {
@@ -97,8 +100,23 @@ export function input(element: HTMLInputElement, options: InputOptions = {}): ()
     wrapper.appendChild(clear);
   }
 
+  // Attach a small, stable runtime API so callers can use a typed surface instead
+  const api = {
+    get value() { return (element as HTMLInputElement).value; },
+    set value(v: string) { (element as HTMLInputElement).value = v; },
+    focus() { element.focus(); },
+    select() { if (typeof (element as HTMLInputElement).select === 'function') (element as HTMLInputElement).select(); },
+    clear() { (element as HTMLInputElement).value = ''; element.dispatchEvent(new Event('input', { bubbles: true })); },
+    setValue(v: string, triggerInput = true) { (element as HTMLInputElement).value = v; if (triggerInput) element.dispatchEvent(new Event('input', { bubbles: true })); },
+    get inputElement() { return element as HTMLInputElement; },
+    get invalid() { return element.classList.contains('wb-input--error') || !!element.getAttribute('aria-invalid'); }
+  } as const;
+
+  try { (element as any).wbInput = api; } catch (e) { /* defensive: non-writable host (unlikely) */ }
+
   element.dataset.wbReady = 'input';
   return () => {
+    try { delete (element as any).wbInput; } catch (e) { /* ignore */ }
     wrapper.parentNode?.insertBefore(element, wrapper);
     wrapper.remove();
     element.classList.remove('wb-input__field');

@@ -25,16 +25,18 @@ export function form(element: HTMLElement, options: Record<string, any> = {}) {
 
   element.classList.add('wb-form');
 
+  const formEl = element as HTMLFormElement;
+
   if (config.ajax) {
     element.onsubmit = async (e) => {
       e.preventDefault();
-      const formData = new FormData(element);
+      const formData = new FormData(formEl);
       
       element.dispatchEvent(new CustomEvent('wb:form:submit', { bubbles: true, detail: { formData } }));
       
       try {
-        const response = await fetch(element.action, {
-          method: element.method || 'POST',
+        const response = await fetch(formEl.action || '', {
+          method: (formEl.method || 'POST'),
           body: formData
         });
         const data = await response.json();
@@ -46,9 +48,9 @@ export function form(element: HTMLElement, options: Record<string, any> = {}) {
   }
 
   element.wbForm = {
-    getData: () => Object.fromEntries(new FormData(element)),
-    reset: () => element.reset(),
-    submit: () => element.requestSubmit()
+    getData: () => Object.fromEntries(new FormData(formEl)),
+    reset: () => formEl.reset(),
+    submit: () => formEl.requestSubmit()
   };
 
   return () => element.classList.remove('wb-form');
@@ -177,10 +179,16 @@ export function stepper(element: HTMLElement, options: Record<string, any> = {})
   element.classList.add('wb-stepper__input');
   
   const updateValue = (delta) => {
-    let value = parseFloat(element.value) || 0;
+    const inputEl = ((element as any).wbInput?.inputElement as HTMLInputElement) ?? (element as HTMLInputElement);
+    let value = parseFloat(inputEl.value) || 0;
     value = Math.max(config.min, Math.min(config.max, value + delta));
-    element.value = value;
-    element.dispatchEvent(new Event('change'));
+    // Prefer the typed API when available so any callers observing the API see updates
+    if ((element as any).wbInput?.setValue) {
+      (element as any).wbInput.setValue(String(value), true);
+    } else {
+      inputEl.value = String(value);
+      inputEl.dispatchEvent(new Event('change'));
+    }
   };
   
   decBtn.onclick = () => updateValue(-config.step);
@@ -215,12 +223,13 @@ export function search(element: HTMLElement, options: Record<string, any> = {}) 
   icon.textContent = '🔍';
   wrapper.insertBefore(icon, element);
 
-  let timeout;
+  let timeout: number | undefined;
   if (config.instant) {
-    element.oninput = () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        element.dispatchEvent(new CustomEvent('wb:search', { bubbles: true, detail: { query: element.value } }));
+    const inputEl = ((element as any).wbInput?.inputElement as HTMLInputElement) ?? (element as HTMLInputElement);
+    inputEl.oninput = () => {
+      if (typeof timeout !== 'undefined') clearTimeout(timeout);
+      timeout = window.setTimeout(() => {
+        inputEl.dispatchEvent(new CustomEvent('wb:search', { bubbles: true, detail: { query: inputEl.value } }));
       }, config.debounce);
     };
   }
@@ -461,7 +470,7 @@ export function counter(element: HTMLElement, options: Record<string, any> = {})
   const update = () => {
     const val = element.value || '';
     const len = val.length;
-    counter.textContent = config.max ? `${len}/${config.max}` : len;
+    counter.textContent = config.max ? `${len}/${config.max}` : String(len);
     counter.classList.toggle('wb-counter--warning', config.warning && len >= config.warning);
     counter.classList.toggle('wb-counter--error', config.max && len >= config.max);
   };
@@ -489,7 +498,7 @@ export function floatinglabel(element: HTMLElement, options: Record<string, any>
   element.placeholder = '';
 
   const checkValue = () => {
-    wrapper.classList.toggle('wb-floating-label--active', element.value || document.activeElement === element);
+    wrapper.classList.toggle('wb-floating-label--active', !!((element as HTMLInputElement).value) || document.activeElement === element);
   };
 
   element.addEventListener('focus', checkValue);
@@ -526,14 +535,14 @@ export function otp(element: HTMLElement, options: Record<string, any> = {}) {
     input.style.cssText = 'width:2.5rem;height:3rem;text-align:center;font-size:1.25rem;border:1px solid var(--border-color,#374151);border-radius:6px;background:var(--bg-secondary,#1f2937);color:var(--text-primary,#f9fafb);';
     
     input.oninput = (e) => {
-      const val = e.target.value.replace(/\D/g, '');
-      e.target.value = val;
+      const val = (e.target as HTMLInputElement).value.replace(/\D/g, '');
+      (e.target as HTMLInputElement).value = val;
       if (val && i < config.length - 1) inputs[i + 1].focus();
       checkComplete();
     };
 
     input.onkeydown = (e) => {
-      if (e.key === 'Backspace' && !e.target.value && i > 0) {
+      if (e.key === 'Backspace' && !(e.target as HTMLInputElement).value && i > 0) {
         inputs[i - 1].focus();
       }
     };

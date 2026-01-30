@@ -22,16 +22,13 @@ test.describe('Input and Switch Behaviors', () => {
             <!-- Input with Icon -->
             <div class="wb-input-wrapper">
               <span class="wb-input-icon">🔍</span>
-              <input type="text" data-wb="input" data-wb-eager placeholder="Search...">
+                <input type="text" x-input x-eager placeholder="Search...">
+              </div>
             </div>
-          </div>
 
-          <div class="demo-area">
-            <!-- Switch -->
-            <input type="checkbox" data-wb="switch" data-wb-eager id="switch1">
-            <label for="switch1">Toggle Me</label>
-          </div>
-
+            <div class="demo-area">
+              <!-- Switch -->
+              <input type="checkbox" x-switch x-eager id="switch1">
           <script type="module">
             import { WB } from '/src/index.js';
             window.WB = WB;
@@ -69,6 +66,14 @@ test.describe('Input and Switch Behaviors', () => {
     // Check icon positioning
     const icon = page.locator('.wb-input-icon');
     await expect(icon).toBeVisible();
+
+    // Programmatic API surface (runtime) — ensure the typed API is attached and works
+    const apiExists = await input.evaluate((el: HTMLInputElement) => !!(el as any).wbInput);
+    await expect(apiExists).toBeTruthy();
+
+    // exercise setValue via the API and confirm underlying input updates
+    await input.evaluate((el: HTMLInputElement) => (el as any).wbInput?.setValue('query'));
+    await expect(input).toHaveValue('query');
   });
 
   test('Switch should transform checkbox', async ({ page }) => {
