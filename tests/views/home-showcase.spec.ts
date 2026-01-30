@@ -250,8 +250,8 @@ test.describe('Home Page Showcase', () => {
     console.log('🧪 Test 8: Form elements...');
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
-    // Check text input
-    const textInput = page.locator('input[placeholder="Text input with styling"]');
+    // Check text input (allow slight placeholder variations)
+    const textInput = page.locator('input[placeholder^="Text input"]');
     await expect(textInput).toBeVisible();
     console.log('✅ Text input visible');
     

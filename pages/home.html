@@ -94,6 +94,22 @@
           <button class="wb-btn wb-btn--primary" x-confetti>Celebrate! 🎉</button>
         </div>
 
+        <div class="preview-row">
+          <input type="text" placeholder="Text input with styling" style="width:100%;padding:0.5rem;border:1px solid var(--border-color);border-radius:6px;background:var(--bg-primary);color:var(--text-primary);" />
+        </div>
+
+        <div class="preview-row" style="display:flex;gap:0.75rem;align-items:center;">
+          <input type="password" x-password placeholder="Password with toggle" style="flex:1;padding:0.5rem;border:1px solid var(--border-color);border-radius:6px;background:var(--bg-primary);color:var(--text-primary);" />
+          <input type="text" x-search placeholder="Search with icon" style="flex:1;padding:0.5rem;border:1px solid var(--border-color);border-radius:6px;background:var(--bg-primary);color:var(--text-primary);" />
+          <input x-masked data-mask="(999) 999-9999" placeholder="Phone: (999) 999-9999" style="flex:1;padding:0.5rem;border:1px solid var(--border-color);border-radius:6px;background:var(--bg-primary);color:var(--text-primary);" />
+        </div>
+
+        <div class="preview-row" style="display:flex;gap:0.75rem;align-items:center;margin-top:0.5rem;">
+          <wb-switch></wb-switch>
+          <wb-rating></wb-rating>
+          <div x-stepper style="width:120px;"><input type="number" value="1" style="width:100%;padding:0.4rem;border:1px solid var(--border-color);border-radius:6px;background:var(--bg-primary);color:var(--text-primary);" /></div>
+        </div>
+
       </div>
     </div>
 
