@@ -43,9 +43,11 @@ jobs:
           # dev deps if missing.
           npm ci --no-audit || true
           if [ ! -d node_modules/@playwright/test ]; then
-            echo "@playwright/test missing — installing devDependencies"
-            npm install --include=dev --no-audit
+            echo "@playwright/test missing — installing @playwright/test transiently"
+            npm install --no-audit --no-fund --no-package-lock --save-dev @playwright/test
           fi
+
+          # Ensure Playwright browsers are available
           npx playwright install --with-deps
 
       - name: Run Playwright (focused)
