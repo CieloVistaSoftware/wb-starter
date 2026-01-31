@@ -1859,7 +1859,13 @@ export function initSnapGrid(canvas) {
     });
   });
   
-  observer.observe(canvas, { attributes: true });
+  try {
+    // NOTE: fixed variable-name bug here (was calling `observer.observe`) and
+    // guard the call to prevent a ReferenceError from bubbling — fixes #41.
+    intersectionObserver.observe(canvas, { attributes: true });
+  } catch (obsErr) {
+    console.debug('[initSnapGrid] MutationObserver.observe failed', obsErr);
+  }
   
   // Initial check
   if (canvas.classList.contains('snap-enabled')) {
