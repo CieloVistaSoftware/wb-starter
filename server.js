@@ -55,11 +55,53 @@ const triggerReload = (eventType, filename) => {
   }, 100);
 };
 
-// Watch specific directories recursively
-const watchDir = (dir) => {
-  if (fs.existsSync(dir)) {
-    fs.watch(dir, { recursive: true }, triggerReload);
+// Watch specific directories safely (CI/runners may not support recursive fs.watch)
+const setupPerDirWatch = (root) => {
+  const stack = [root];
+  while (stack.length) {
+    const cur = stack.pop();
+    try {
+      fs.watch(cur, triggerReload).on('error', () => {});
+    } catch (e) {
+      // ignore individual watch errors
+    }
+
+    let entries = [];
+    try {
+      entries = fs.readdirSync(cur, { withFileTypes: true });
+    } catch (e) {
+      continue;
+    }
+
+    for (const ent of entries) {
+      if (ent.isDirectory()) stack.push(path.join(cur, ent.name));
+    }
   }
+};
+
+const watchDir = (dir) => {
+  if (!fs.existsSync(dir)) return;
+
+  // Allow consumers (CI) to disable watching entirely
+  if (process.env.CI === 'true' || process.env.DISABLE_WATCH === 'true') {
+    console.log(`[Watch] skipping fs.watch for ${dir} (CI or DISABLE_WATCH)`);
+    return;
+  }
+
+  // Prefer native recursive watch when available (Windows/macOS). If it fails, fall back.
+  try {
+    const w = fs.watch(dir, { recursive: true }, triggerReload);
+    w.on('error', (err) => {
+      console.warn(`[Watch] recursive fs.watch failed for ${dir}: ${err && err.message}. falling back to per-dir watchers.`);
+      setupPerDirWatch(dir);
+    });
+    return;
+  } catch (err) {
+    console.warn(`[Watch] recursive fs.watch not supported for ${dir}: ${err && err.message}. falling back to per-dir watchers.`);
+  }
+
+  // Fallback: walk the tree and attach non-recursive watchers (cross-platform)
+  setupPerDirWatch(dir);
 };
 
 ['pages', 'src', 'config', 'public'].forEach(d => watchDir(path.join(rootDir, d)));
