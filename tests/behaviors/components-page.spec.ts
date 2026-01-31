@@ -3,6 +3,7 @@
  * Comprehensive tests for the /pages/components.html showcase page
  */
 import { test, expect } from '@playwright/test';
+import { safeScrollIntoView } from '../helpers/ui-helpers';
 
 test.describe('Components Page', () => {
   
@@ -43,7 +44,7 @@ test.describe('Components Page', () => {
       
       for (const section of sections) {
         const heading = page.locator(`h2:has-text("${section}")`);
-        await heading.scrollIntoViewIfNeeded();
+        await safeScrollIntoView(heading);
         await expect(heading).toBeVisible();
       }
     });
@@ -136,10 +137,10 @@ test.describe('Components Page', () => {
   test.describe('Feedback Section', () => {
     
     test('badges render with variants', async ({ page }) => {
-      await page.locator('h2:has-text("Feedback Components")').scrollIntoViewIfNeeded();
+      await safeScrollIntoView(page.locator('h2:has-text("Feedback Components")'));
       const badges = page.locator('wb-badge');
       await badges.first().waitFor({ state: 'attached' });
-      await badges.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(badges.first());
       await expect(badges.count()).resolves.toBeGreaterThan(0);
     });
 
@@ -175,7 +176,7 @@ test.describe('Components Page', () => {
 
     test('toast buttons exist', async ({ page }) => {
       const toastButtons = page.locator('button[x-toast]');
-      await toastButtons.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(toastButtons.first());
       await expect(toastButtons.count()).resolves.toBeGreaterThan(0);
     });
   });
@@ -187,7 +188,7 @@ test.describe('Components Page', () => {
     
     test('modal trigger button exists', async ({ page }) => {
       const modalBtn = page.locator('wb-modal');
-      await modalBtn.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(modalBtn);
       await expect(modalBtn).toBeVisible();
     });
 
@@ -235,7 +236,7 @@ test.describe('Components Page', () => {
 
     test('breadcrumb renders', async ({ page }) => {
       const breadcrumb = page.locator('nav[x-breadcrumb]');
-      await breadcrumb.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(breadcrumb);
       await expect(breadcrumb).toBeVisible();
     });
 

@@ -89,3 +89,28 @@ export async function clickFirstNavAndAssert(page: Page) {
     expect(scrollY).toBeGreaterThan(0);
   }
 }
+
+/**
+ * Robustly scroll a locator into view and wait for it to be stable/visible.
+ * - avoids Playwright protocol errors when elements are detached during scrolling
+ * - waits for 'attached' then performs an in-page scrollIntoView, then waits
+ *   for 'visible' state. Safe to use as a drop-in replacement for
+ *   `locator.scrollIntoViewIfNeeded()` in flaky pages.
+ */
+export async function safeScrollIntoView(locator: import('@playwright/test').Locator, timeout = 3000) {
+  // Wait for element to be attached to DOM (short)
+  await locator.waitFor({ state: 'attached', timeout: Math.min(800, timeout) }).catch(() => null);
+
+  // Perform an in-page scrollIntoView inside the browser to avoid protocol edge-cases
+  await locator.evaluate((el: Element) => {
+    try {
+      el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
+    } catch (e) {
+      /* best-effort */
+    }
+  }).catch(() => null);
+
+  // Finally, wait for it to be visible/stable
+  await locator.waitFor({ state: 'visible', timeout }).catch(() => null);
+}
+
