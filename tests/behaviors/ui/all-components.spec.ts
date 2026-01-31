@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { safeScrollIntoView } from '../../base';
 
 test.describe('WB Components & Behaviors', () => {
 
@@ -17,7 +18,7 @@ test.describe('WB Components & Behaviors', () => {
   test.describe('Feedback Components', () => {
     test('Spinner renders', async ({ page }) => {
       const el = page.locator('wb-spinner').first();
-      await el.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(el);
       await expect(el).toHaveClass(/wb-spinner/);
       await expect(el).toBeVisible();
       // Check if it has classes or content
@@ -25,14 +26,14 @@ test.describe('WB Components & Behaviors', () => {
 
     test('Badge renders', async ({ page }) => {
       const el = page.locator('wb-badge').first();
-      await el.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(el);
       await expect(el).toBeVisible();
       await expect(el).toContainText('Default');
     });
 
     test('Avatar renders', async ({ page }) => {
       const el = page.locator('wb-avatar').first();
-      await el.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(el);
       await expect(el).toHaveClass(/wb-avatar/);
       await expect(el).toBeVisible();
     });
@@ -99,7 +100,7 @@ test.describe('WB Components & Behaviors', () => {
   test.describe('Navigation Components', () => {
     test('Breadcrumb renders', async ({ page }) => {
       const el = page.locator('nav[x-breadcrumb]').first();
-      await el.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(el);
       
       // Force direct injection to bypass intersection observer issues in test env
       await page.evaluate(() => {

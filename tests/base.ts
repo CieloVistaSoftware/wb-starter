@@ -491,6 +491,41 @@ export async function setupBehaviorTest(page: Page): Promise<void> {
 }
 
 /**
+ * Robust scroll helper for Playwright tests.
+ * - retries `scrollIntoViewIfNeeded()`
+ * - falls back to `element.scrollIntoView()` when needed
+ * - waits for visibility with retries to reduce flaky timing failures
+ */
+export async function safeScrollIntoView(
+  el: Locator,
+  opts: { timeoutMs?: number; maxRetries?: number } = {}
+): Promise<void> {
+  const timeout = opts.timeoutMs ?? 1500;
+  const maxRetries = opts.maxRetries ?? 3;
+
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      // Prefer the native helper where supported
+      await el.scrollIntoViewIfNeeded();
+      await el.waitFor({ state: 'visible', timeout });
+      return;
+    } catch (err) {
+      // JS fallback + short wait then retry
+      try {
+        await el.evaluate((node: Element) => {
+          (node as HTMLElement).scrollIntoView({ block: 'center' });
+        });
+        await el.waitFor({ state: 'visible', timeout });
+        return;
+      } catch (err2) {
+        if (attempt === maxRetries - 1) throw err2;
+        await new Promise((r) => setTimeout(r, 200));
+      }
+    }
+  }
+}
+
+/**
  * Get relative path from ROOT
  */
 export function relativePath(fullPath: string): string {

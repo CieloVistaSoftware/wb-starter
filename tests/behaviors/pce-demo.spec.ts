@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { safeScrollIntoView } from '../base';
 
 test.describe('PCE Demo Page', () => {
   test('loads pce-test.html and renders custom elements', async ({ page }) => {
@@ -15,7 +16,7 @@ test.describe('PCE Demo Page', () => {
 
     // Check Profile Card (wb-* namespace)
     const profileCard = page.locator('#wb-cardprofile-1');
-    await profileCard.scrollIntoViewIfNeeded();
+    await safeScrollIntoView(profileCard);
     await expect(profileCard).toBeVisible();
     // Check data attributes are present (behavior may or may not inject content)
     await expect(profileCard).toHaveAttribute('data-name', 'Sarah Connor');
@@ -28,7 +29,7 @@ test.describe('PCE Demo Page', () => {
 
     // Check Hero Card
     const heroCard = page.locator('#wb-cardhero-1');
-    await heroCard.scrollIntoViewIfNeeded();
+    await safeScrollIntoView(heroCard);
     await expect(heroCard).toBeVisible();
     await expect(heroCard).toHaveAttribute('data-title', 'Welcome to WB v3.0');
 
