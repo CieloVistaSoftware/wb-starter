@@ -57,37 +57,37 @@ test.describe('Components Page', () => {
     
     test('basic cards render correctly', async ({ page }) => {
       const basicCard = page.locator('wb-card[title="Basic Card"]');
-      await basicCard.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(basicCard);
       await expect(basicCard).toBeVisible();
     });
 
     test('card with header and footer renders', async ({ page }) => {
       const card = page.locator('wb-card[title="With Footer"][footer="Card Footer"]');
-      await card.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(card);
       await expect(card).toBeVisible();
     });
 
     test('image-card renders', async ({ page }) => {
       const imageCard = page.locator('wb-cardimage').first();
-      await imageCard.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(imageCard);
       await expect(imageCard).toBeVisible();
     });
 
     test('overlay-card renders correctly', async ({ page }) => {
       const overlayCard = page.locator('wb-cardoverlay');
-      await overlayCard.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(overlayCard);
       await expect(overlayCard).toBeVisible();
     });
 
     test('stats-card (stock indicators) render', async ({ page }) => {
       const statsCards = page.locator('wb-cardstats');
-      await statsCards.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(statsCards.first());
       await expect(statsCards).toHaveCount(4); 
     });
 
     test('price-card renders with features', async ({ page }) => {
       const pricingCards = page.locator('wb-cardpricing');
-      await pricingCards.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(pricingCards.first());
       await expect(pricingCards.first()).toBeVisible();
     });
 
@@ -95,38 +95,38 @@ test.describe('Components Page', () => {
     test('product-card renders', async ({ page }) => {
       const productCards = page.locator('wb-cardproduct');
       // Scroll to the section header to trigger loading
-      await page.locator('h3:has-text("Product Cards")').scrollIntoViewIfNeeded();
+      await safeScrollIntoView(page.locator('h3:has-text("Product Cards")'));
       
       // Wait for at least one to be attached
       await productCards.first().waitFor({ state: 'attached' });
       
       // Scroll to the card itself
-      await productCards.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(productCards.first());
       
       await expect(productCards.count()).resolves.toBeGreaterThan(0);
     });
 
     test('testimonial-card renders', async ({ page }) => {
       const testimonialCards = page.locator('wb-cardtestimonial');
-      await testimonialCards.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(testimonialCards.first());
       await expect(testimonialCards.first()).toBeVisible();
     });
 
     test('notification-card renders all types', async ({ page }) => {
       const notificationCards = page.locator('wb-cardnotification');
-      await notificationCards.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(notificationCards.first());
       await expect(notificationCards).toHaveCount(4); // info, success, warning, error
     });
 
     test('file-card renders', async ({ page }) => {
       const fileCards = page.locator('wb-cardfile');
-      await fileCards.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(fileCards.first());
       await expect(fileCards.count()).resolves.toBeGreaterThan(0);
     });
 
     test('portfolio-card (business cards) render', async ({ page }) => {
       const portfolioCards = page.locator('wb-cardportfolio');
-      await portfolioCards.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(portfolioCards.first());
       await expect(portfolioCards).toHaveCount(1);
     });
   });
@@ -146,31 +146,31 @@ test.describe('Components Page', () => {
 
     test('alerts render all types', async ({ page }) => {
       const alerts = page.locator('wb-alert');
-      await alerts.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(alerts.first());
       await expect(alerts).toHaveCount(4); // info, success, warning, error
     });
 
     test('progress bars render', async ({ page }) => {
       const progressBars = page.locator('wb-progress');
-      await progressBars.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(progressBars.first());
       await expect(progressBars).toHaveCount(4);
     });
 
     test('spinners render with colors', async ({ page }) => {
       const spinners = page.locator('wb-spinner');
-      await spinners.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(spinners.first());
       await expect(spinners.count()).resolves.toBeGreaterThan(0);
     });
 
     test('avatars render', async ({ page }) => {
       const avatars = page.locator('wb-avatar');
-      await avatars.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(avatars.first());
       await expect(avatars.count()).resolves.toBeGreaterThan(0);
     });
 
     test('skeleton loaders render', async ({ page }) => {
       const skeletons = page.locator('wb-skeleton');
-      await skeletons.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(skeletons.first());
       await expect(skeletons.count()).resolves.toBeGreaterThan(0);
     });
 
@@ -194,25 +194,25 @@ test.describe('Components Page', () => {
 
     test('drawer trigger buttons exist', async ({ page }) => {
       const drawerBtns = page.locator('wb-drawer');
-      await drawerBtns.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(drawerBtns.first());
       await expect(drawerBtns.count()).resolves.toBeGreaterThanOrEqual(2);
     });
 
     test('confirm dialog trigger exists', async ({ page }) => {
       const confirmBtn = page.locator('button[x-confirm]');
-      await confirmBtn.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(confirmBtn);
       await expect(confirmBtn).toBeVisible();
     });
 
     test('lightbox trigger exists', async ({ page }) => {
       const lightboxBtn = page.locator('button[x-lightbox]');
-      await lightboxBtn.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(lightboxBtn);
       await expect(lightboxBtn).toBeVisible();
     });
 
     test('popover trigger exists', async ({ page }) => {
       const popoverBtn = page.locator('button[x-popover]');
-      await popoverBtn.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(popoverBtn);
       await expect(popoverBtn).toBeVisible();
     });
   });
@@ -224,13 +224,13 @@ test.describe('Components Page', () => {
     
     test('tabs component renders', async ({ page }) => {
       const tabs = page.locator('wb-tabs');
-      await tabs.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(tabs);
       await expect(tabs).toBeVisible();
     });
 
     test('accordion component renders', async ({ page }) => {
       const accordion = page.locator('wb-accordion');
-      await accordion.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(accordion);
       await expect(accordion).toBeVisible();
     });
 
@@ -242,13 +242,13 @@ test.describe('Components Page', () => {
 
     test('pagination renders', async ({ page }) => {
       const pagination = page.locator('nav[x-pagination]');
-      await pagination.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(pagination);
       await expect(pagination).toBeVisible();
     });
 
     test('steps component renders', async ({ page }) => {
       const steps = page.locator('div[x-steps]');
-      await steps.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(steps);
       await expect(steps).toBeVisible();
     });
   });
@@ -260,31 +260,31 @@ test.describe('Components Page', () => {
     
     test('text inputs render', async ({ page }) => {
       const inputs = page.locator('input[type="text"]');
-      await inputs.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(inputs.first());
       await expect(inputs.count()).resolves.toBeGreaterThan(0);
     });
 
     test('password input with toggle exists', async ({ page }) => {
       const passwordInput = page.locator('input[x-password]');
-      await passwordInput.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(passwordInput);
       await expect(passwordInput).toBeVisible();
     });
 
     test('switch component exists', async ({ page }) => {
       const switchComp = page.locator('wb-switch');
-      await switchComp.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(switchComp);
       await expect(switchComp).toBeVisible();
     });
 
     test('rating component exists', async ({ page }) => {
       const ratings = page.locator('wb-rating');
-      await ratings.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(ratings.first());
       await expect(ratings.count()).resolves.toBeGreaterThanOrEqual(2);
     });
 
     test('stepper component exists', async ({ page }) => {
       const stepper = page.locator('div[x-stepper]');
-      await stepper.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(stepper);
       await expect(stepper).toBeVisible();
     });
   });
@@ -296,7 +296,7 @@ test.describe('Components Page', () => {
     
     test('timeline renders', async ({ page }) => {
       const timeline = page.locator('div[x-timeline]');
-      await timeline.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(timeline);
       await expect(timeline).toBeVisible();
     });
     
@@ -307,7 +307,7 @@ test.describe('Components Page', () => {
         await expect(mdHtml.count()).resolves.toBeGreaterThan(0);
         
         // Scroll to the first one to trigger hydration
-        await mdHtml.first().scrollIntoViewIfNeeded();
+        await safeScrollIntoView(mdHtml.first());
 
         // Wait for it to not be loading (class wb-mdhtml--loading removed)
         await expect(mdHtml.first()).not.toHaveClass(/wb-mdhtml--loading/);
@@ -322,13 +322,13 @@ test.describe('Components Page', () => {
 
     test('JSON viewer renders', async ({ page }) => {
       const jsonViewer = page.locator('div[x-json]');
-      await jsonViewer.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(jsonViewer);
       await expect(jsonViewer).toBeVisible();
     });
 
     test('keyboard key components render', async ({ page }) => {
       const kbdElements = page.locator('span[x-kbd]');
-      await kbdElements.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(kbdElements.first());
       await expect(kbdElements.count()).resolves.toBeGreaterThan(0);
     });
   });
@@ -340,19 +340,19 @@ test.describe('Components Page', () => {
     
     test('gallery component renders', async ({ page }) => {
       const gallery = page.locator('div[x-gallery]');
-      await gallery.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(gallery);
       await expect(gallery).toBeVisible();
     });
 
     test('youtube embed exists', async ({ page }) => {
       const youtube = page.locator('div[x-youtube]');
-      await youtube.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(youtube);
       await expect(youtube).toBeVisible();
     });
     
     test('audio player exists', async ({ page }) => {
         const audio = page.locator('wb-audio');
-        await audio.scrollIntoViewIfNeeded();
+        await safeScrollIntoView(audio);
         // WB-audio might change structure, but the container should be visible
         await expect(audio).toBeVisible();
     });
@@ -367,49 +367,49 @@ test.describe('Components Page', () => {
     
     test('copy button exists', async ({ page }) => {
       const copyBtn = page.locator('button[x-copy]');
-      await copyBtn.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(copyBtn.first());
       await expect(copyBtn).toBeVisible();
     });
 
     test('share button exists', async ({ page }) => {
       const shareBtn = page.locator('button[x-share]');
-      await shareBtn.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(shareBtn);
       await expect(shareBtn).toBeVisible();
     });
     
     test('print button exists', async ({ page }) => {
         const printBtn = page.locator('button[x-print]');
-        await printBtn.scrollIntoViewIfNeeded();
+        await safeScrollIntoView(printBtn);
         await expect(printBtn).toBeVisible();
     });
 
     test('tooltip buttons exist', async ({ page }) => {
       const tooltipBtns = page.locator('wb-tooltip');
-      await tooltipBtns.first().scrollIntoViewIfNeeded();
+      await safeScrollIntoView(tooltipBtns.first());
       await expect(tooltipBtns.count()).resolves.toBeGreaterThanOrEqual(4);
     });
 
     test('dark mode toggle exists', async ({ page }) => {
       const darkModeBtn = page.locator('button[x-darkmode]');
-      await darkModeBtn.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(darkModeBtn);
       await expect(darkModeBtn).toBeVisible();
     });
 
     test('theme control exists', async ({ page }) => {
       const themeControl = page.locator('wb-themecontrol');
-      await themeControl.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(themeControl);
       await expect(themeControl).toBeVisible();
     });
 
     test('clock component renders', async ({ page }) => {
       const clock = page.locator('div[x-clock]');
-      await clock.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(clock);
       await expect(clock).toBeVisible();
     });
 
     test('countdown component renders', async ({ page }) => {
       const countdown = page.locator('div[x-countdown]');
-      await countdown.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(countdown);
       await expect(countdown).toBeVisible();
     });
   });
@@ -421,7 +421,7 @@ test.describe('Components Page', () => {
     
     test('clicking toast button shows toast', async ({ page }) => {
       const toastBtn = page.locator('button[x-toast]').first();
-      await toastBtn.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(toastBtn);
       await toastBtn.click();
       
       // Wait for toast to appear
@@ -431,7 +431,7 @@ test.describe('Components Page', () => {
 
     test('accordion section can expand', async ({ page }) => {
       const accordionTitle = page.locator('[data-accordion-title]').first();
-      await accordionTitle.scrollIntoViewIfNeeded();
+      await safeScrollIntoView(accordionTitle);
       await accordionTitle.click();
       await page.waitForTimeout(300);
       
