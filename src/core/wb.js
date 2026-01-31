@@ -43,6 +43,18 @@ import { getConfig, setConfig } from './config.js';
 import { pubsub } from './pubsub.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
 
+// Global dev/test diagnostics: surface uncaught errors/rejections to console so Playwright traces capture them.
+try {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('error', ev => {
+      try { console.error('[WB:UNCAUGHT]', ev.message || ev && ev.error && ev.error.message, ev.error && ev.error.stack); } catch (e) { /* best-effort */ }
+    });
+    window.addEventListener('unhandledrejection', ev => {
+      try { console.error('[WB:UNHANDLEDREJ]', ev.reason && (ev.reason.stack || ev.reason)); } catch (e) { /* best-effort */ }
+    });
+  }
+} catch (e) { /* best-effort */ }
+
 // Auto-injection mappings
 const autoInjectMappings = [
   // Form Elements

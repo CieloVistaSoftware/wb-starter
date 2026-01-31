@@ -278,11 +278,42 @@ export const behaviors = new Proxy({}, {
   get(target, prop) {
     if (prop === 'then') return undefined; // Not a promise
     if (typeof prop !== 'string') return undefined;
-    
-    // Return a wrapper that loads on demand
+
+    // Return a safe wrapper that loads on demand and NEVER lets exceptions
+    // bubble out of the behavior invocation (prevents page/context crashes).
     return async (element, options) => {
-      const fn = await getBehavior(prop);
-      return fn(element, options);
+      try {
+        const fn = await getBehavior(prop).catch(err => {
+          console.warn(`[WB] getBehavior failed for '${prop}':`, err && err.message ? err.message : err);
+          return null;
+        });
+        if (!fn || typeof fn !== 'function') {
+          // Behavior missing or invalid — mark element and return noop cleanup
+          try { if (element && element.dataset) element.dataset.wbError = 'missing-behavior'; } catch (e) { /* best-effort */ }
+          return () => {};
+        }
+
+        // Call the behavior inside a try/catch and handle Promise rejections
+        try {
+          const result = fn(element, options);
+          if (result && typeof result.then === 'function') {
+            return await result.catch(err => {
+              console.error(`[WB] Behavior '${prop}' threw (async):`, err && err.message ? err.message : err);
+              try { if (element && element.dataset) element.dataset.wbError = (err && err.message) || 'behavior-async-failed'; } catch (e) { /* best-effort */ }
+              return () => {};
+            });
+          }
+          return result;
+        } catch (err) {
+          console.error(`[WB] Behavior '${prop}' threw (sync):`, err && err.message ? err.message : err);
+          try { if (element && element.dataset) element.dataset.wbError = (err && err.message) || 'behavior-sync-failed'; } catch (e) { /* best-effort */ }
+          return () => {};
+        }
+      } catch (err) {
+        console.error(`[WB] Unexpected error invoking behavior '${String(prop)}':`, err && err.message ? err.message : err);
+        try { if (element && element.dataset) element.dataset.wbError = 'behavior-invocation-failed'; } catch (e) { /* best-effort */ }
+        return () => {};
+      }
     };
   },
   has(target, prop) {

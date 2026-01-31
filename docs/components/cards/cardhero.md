@@ -22,11 +22,28 @@ Inherits all [card properties](./card.md) plus:
 | `overlay` | boolean | `true` | Dark overlay for text readability |
 | `xalign` | string | `"center"` | Text alignment: `left`, `center`, `right` |
 | `height` | string | `"400px"` | Hero height |
-| `pretitle` | string | `""` | Text above title |
+| `pretitle` | string | `""` | Text above title (badge / count) |
+| `title` | string | `""` | Hero headline (HTML allowed) |
+| `subtitle` | string | `""` | Hero subheadline |
+| `content` | string | `""` | HTML content rendered inside the hero (use instead of slots) |
 | `cta` | string | `""` | Primary CTA button text |
-| `ctaHref` | string | `""` | Primary CTA URL |
+| `ctaHref` | string | `"#"` | Primary CTA URL |
 | `ctaSecondary` | string | `""` | Secondary CTA text |
-| `ctaSecondaryHref` | string | `""` | Secondary CTA URL |
+| `ctaSecondaryHref` | string | `"#"` | Secondary CTA URL |
+
+### Attribute-only example
+```html
+<wb-cardhero
+  background="/images/hero.jpg"
+  pretitle="100 Components"
+  title='Build <span class="wb-gradient-text">stunning UIs</span>'
+  subtitle="just HTML — no build step"
+  cta="Explore Components"
+  cta-href="#components"
+  variant="cosmic"></wb-cardhero>
+```
+
+> Tip: `title` accepts HTML (so `wb-gradient-text` can be used) — you do not need to use slots.
 
 ## Usage
 
