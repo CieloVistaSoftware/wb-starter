@@ -172,6 +172,8 @@ export async function mdhtml(element, options = {}) {
     element.innerHTML = safeHtml;
     element.classList.remove('wb-mdhtml--loading');
     element.classList.add('wb-mdhtml--loaded');
+    // Runtime/test hook: mark hydrated so tests can wait deterministically
+    try { element.dataset.wbHydrated = '1'; element.dispatchEvent(new CustomEvent('wb:mdhtml:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
 
     // Add captions to code blocks (System-wide)
     if (config.captions !== false) {

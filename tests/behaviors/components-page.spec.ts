@@ -101,6 +101,12 @@ test.describe('Components Page', () => {
     test('stats-card (stock indicators) render', async ({ page }) => {
       const statsCards = page.locator('wb-cardstats');
       await safeScrollIntoView(statsCards.first());
+      // Wait briefly for runtime hydration marker or class to appear (best-effort).
+      await page.waitForFunction((sel) => {
+        const el = document.querySelector(sel);
+        return !!el && (el.dataset.wbHydrated === '1' || el.classList.contains('wb-stats'));
+      }, 'wb-cardstats', { timeout: 2000 }).catch(() => null);
+
       const statsCount = await statsCards.count();
       test.skip(statsCount === 0, 'stats-card example not present in this build');
       expect(statsCount).toBeGreaterThanOrEqual(4); 

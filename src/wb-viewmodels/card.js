@@ -1138,6 +1138,9 @@ export function cardstats(element, options = {}) {
 
   element.appendChild(content);
 
+  // Runtime/test hook: mark cardstats as hydrated so tests can wait on it
+  try { element.dataset.wbHydrated = '1'; element.dispatchEvent(new CustomEvent('wb:cardstats:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
+
   return base.cleanup;
 }
 
