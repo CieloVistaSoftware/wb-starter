@@ -4,42 +4,27 @@
 -->
 
 <!-- HERO SECTION START -->
-<div class="hero-section">
-  <!-- Ambient Lighting Effects -->
-  <wb-stagelight variant="beam" color="#6366f1" size="400px" intensity="0.2" speed="5s" style="left: 20%; transform: scaleX(-1);"></wb-stagelight>
-  <wb-stagelight variant="beam" color="#a855f7" size="400px" intensity="0.2" speed="7s" style="left: 80%;"></wb-stagelight>
+<wb-cardhero variant="cosmic" cta="Explore Components" cta-secondary="Documentation" title="Build <span class=\"wb-gradient-text\">stunning UIs</span>" subtitle="just HTML — no build step" background="https://picsum.photos/1400/700?r=hero">
+  <span slot="pretitle">100 Components</span>
+  <div slot="content">
+    <wb-stagelight variant="beam" color="#6366f1" size="400px" intensity="0.2" speed="5s" style="left: 20%; transform: scaleX(-1);"></wb-stagelight>
+    <wb-stagelight variant="beam" color="#a855f7" size="400px" intensity="0.2" speed="7s" style="left: 80%;"></wb-stagelight>
 
-  <div class="hero-content">
-    <wb-badge variant="info" data-pill class="hero-badge">v3.0 Now Available</wb-badge>
-    
-    <h1 class="hero-title">
-      Build <span class="gradient-text">Native</span> Web Apps<br>
-      Without The Build Step
-    </h1>
-    
-    <p class="hero-subtitle">
-      A comprehensive suite of <strong>100+ behaviors</strong> and components that work directly in the browser. 
-      No Webpack. No Shadow DOM. Just pure, performant HTML & JS.
-    </p>
+    <div class="hero-extra">
+      <div class="hero-actions">
+        <a href="?page=builder" class="wb-btn wb-btn--primary wb-btn--lg" x-ripple>🚀 Get Started</a>
+        <a href="?page=components" class="wb-btn wb-btn--ghost wb-btn--lg" x-ripple>🧩 Explore Components</a>
+      </div>
 
-    <div class="hero-actions">
-      <a href="?page=builder" class="wb-btn wb-btn--primary wb-btn--lg" x-ripple>
-        🚀 Get Started
-      </a>
-      <a href="?page=components" class="wb-btn wb-btn--ghost wb-btn--lg" x-ripple>
-        🧩 Explore Components
-      </a>
-    </div>
-
-    <!-- Tech Stack Pills -->
-    <div class="tech-stack">
-      <div class="tech-pill">⚡ Zero Config</div>
-      <div class="tech-pill">🌿 Light DOM</div>
-      <div class="tech-pill">📦 ESM Native</div>
-      <div class="tech-pill">🎨 23 Themes</div>
+      <div class="tech-stack">
+        <div class="tech-pill">⚡ Zero Config</div>
+        <div class="tech-pill">🌿 Light DOM</div>
+        <div class="tech-pill">📦 ESM Native</div>
+        <div class="tech-pill">🎨 23 Themes</div>
+      </div>
     </div>
   </div>
-</div>
+</wb-cardhero>
 <!-- HERO SECTION END -->
 
 <!-- STATS BANNER -->
