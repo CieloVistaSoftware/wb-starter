@@ -1082,14 +1082,16 @@ export function cardstats(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardstats', hoverable: false });
-  element.classList.add('wb-stats');
-  element.innerHTML = '';
-  element.style.containerType = 'inline-size';
-  element.style.padding = 'var(--space-md, 1rem)';
-  element.style.flexDirection = 'row';
-  element.style.alignItems = 'center';
-  element.style.gap = 'var(--space-md, 1rem)';
+  // Defensive init: catch unexpected runtime errors to avoid killing the page
+  try {
+    const base = cardBase(element, { ...config, behavior: 'cardstats', hoverable: false });
+    element.classList.add('wb-stats');
+    element.innerHTML = '';
+    element.style.containerType = 'inline-size';
+    element.style.padding = 'var(--space-md, 1rem)';
+    element.style.flexDirection = 'row';
+    element.style.alignItems = 'center';
+    element.style.gap = 'var(--space-md, 1rem)';
 
   // Semantic: Icon belongs in header
   if (config.icon) {
@@ -1142,6 +1144,11 @@ export function cardstats(element, options = {}) {
   try { element.dataset.wbHydrated = '1'; element.dispatchEvent(new CustomEvent('wb:cardstats:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
 
   return base.cleanup;
+  } catch (err) {
+    // Prevent unhandled errors from closing the test page; surface diagnostics instead.
+    try { console.error('[cardstats] init error:', err && err.message ? err.message : err); element.dataset.wbError = (err && err.message) || 'init-failed'; element.classList.add('wb-cardstats--error'); } catch (e) { /* best-effort */ }
+    return () => {};
+  }
 }
 
 /**
