@@ -52,6 +52,15 @@ jobs:
             echo "Health endpoint did not return ok:"; cat server-smoke.log; exit 2
           fi
 
+      - name: Upload smoke logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-smoke-logs
+          path: |
+            server-smoke.log
+            server-smoke.pid
+
       - name: Teardown
         if: always()
         run: |
