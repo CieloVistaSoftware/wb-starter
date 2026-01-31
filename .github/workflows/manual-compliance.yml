@@ -36,9 +36,16 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
+      - name: Install dependencies (ensure dev deps)
         run: |
-          npm ci
+          # Ensure devDependencies (like @playwright/test) are installed even if
+          # runner sets NODE_ENV=production. Try a normal CI install, then force
+          # dev deps if missing.
+          npm ci --no-audit || true
+          if [ ! -d node_modules/@playwright/test ]; then
+            echo "@playwright/test missing — installing devDependencies"
+            npm install --include=dev --no-audit
+          fi
           npx playwright install --with-deps
 
       - name: Run Playwright (focused)
