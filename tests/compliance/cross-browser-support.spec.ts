@@ -389,14 +389,15 @@ test.describe('Cross-Browser Support Infrastructure', () => {
       btn.textContent = 'Test';
       document.body.appendChild(btn);
       
-      // Wait for potential processing (scan will be triggered from the test harness)
+      // Trigger WB scan
+      if (window.WB) {
+        await window.WB.scan(document.body);
+      }
+      
+      // Wait for potential processing
       await new Promise(r => setTimeout(r, 100));
       
       const hasWbReady = btn.hasAttribute('data-wb-ready');
-    });
-
-    // ensure behaviors have been bound after the in-page mutation
-    await waitForWBScan(page);
       btn.remove();
       
       return !hasWbReady;

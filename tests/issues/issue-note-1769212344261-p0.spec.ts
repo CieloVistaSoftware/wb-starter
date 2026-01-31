@@ -51,15 +51,17 @@ test.describe('Issue note-1769212344261-p0: wb-issues Refs Cleanup', () => {
     await page.goto('http://localhost:3000/');
     await page.waitForLoadState('networkidle');
 
-    // Find wb-issues within navbar
+    // Wait for navbar anchor to be present, then assert wb-issues inside it
     const navbar = page.locator('wb-navbar, [wb="navbar"]');
-    
-    if (await navbar.count() > 0) {
-      const issuesInNavbar = navbar.locator('wb-issues, [wb="issues"]');
-      
-      if (await issuesInNavbar.count() > 0) {
-        await expect(issuesInNavbar.first()).toBeVisible();
-      }
+    await navbar.first().waitFor({ state: 'attached', timeout: 5000 });
+
+    const issuesInNavbar = navbar.locator('wb-issues, [wb="issues"]');
+    if (await issuesInNavbar.count() > 0) {
+      await issuesInNavbar.first().waitFor({ state: 'visible', timeout: 3000 });
+      await expect(issuesInNavbar.first()).toBeVisible();
+    } else {
+      // No wb-issues configured in this build — pass but record as informational
+      expect(await issuesInNavbar.count()).toBe(0);
     }
   });
 
@@ -67,12 +69,15 @@ test.describe('Issue note-1769212344261-p0: wb-issues Refs Cleanup', () => {
     await page.goto('http://localhost:3000/builder.html');
     await page.waitForLoadState('networkidle');
 
-    // Count all wb-issues
+    // Ensure navbar/header anchors are present before counting
+    await page.locator('wb-navbar, header, .header').first().waitFor({ state: 'attached', timeout: 5000 });
+
+    // Count all wb-issues (wait briefly for any async insertion to settle)
+    await page.waitForTimeout(200);
     const allIssues = await page.locator('wb-issues').count();
     const navbarIssues = await page.locator('wb-navbar wb-issues').count();
     const headerIssues = await page.locator('header wb-issues, .header wb-issues').count();
 
-    // Issues should only be in navbar or header, not randomly placed
     const allowedIssues = navbarIssues + headerIssues;
     const orphaned = allIssues - allowedIssues;
 

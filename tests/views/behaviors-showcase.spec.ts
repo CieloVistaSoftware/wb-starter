@@ -393,11 +393,18 @@ test.describe('Navigation Section', () => {
 
   test('tabs component renders with content', async ({ page }) => {
     const tabs = page.locator('#navigation wb-tabs').first();
-    await expect(tabs).toBeVisible();
-    
-    // Should have tab panels
+
+    // Wait for the tab panels to be attached (more reliable than a single visibility check)
     const panels = tabs.locator('[data-tab-title]');
-    expect(await panels.count()).toBeGreaterThanOrEqual(2);
+    await panels.nth(1).waitFor({ state: 'attached', timeout: 5000 });
+
+    // Structural assertion: at least two panels exist
+    const count = await panels.count();
+    expect(count).toBeGreaterThanOrEqual(2);
+
+    // Ensure the tabs control exposes an accessible role (sanity check)
+    const tablist = tabs.locator('[role="tablist"]');
+    await expect(tablist.first()).toBeVisible();
   });
 
   test('accordion component renders with sections', async ({ page }) => {
