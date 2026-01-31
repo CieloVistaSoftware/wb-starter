@@ -3,16 +3,26 @@
  * Comprehensive tests for the /pages/components.html showcase page
  */
 import { test, expect } from '@playwright/test';
-import { safeScrollIntoView as _safeScrollIntoView } from '../helpers/ui-helpers';
-
-// Defensive fallback: some worker environments were hitting a missing-import
-// regression — keep a small inline fallback so the spec is deterministic
-// while we fix the root cause (module-resolution/transpile race).
-const safeScrollIntoView = _safeScrollIntoView ?? (async (locator: any, timeout = 3000) => {
-  await locator.waitFor({ state: 'attached', timeout: Math.min(800, timeout) }).catch(() => null);
-  await locator.evaluate((el: Element) => { try { el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' }); } catch (e) { /* best-effort */ } }).catch(() => null);
-  await locator.waitFor({ state: 'visible', timeout }).catch(() => null);
-});
+// Lazy helper loader — avoids static import issues in some worker environments.
+let __safeScrollImpl: ((locator: any, timeout?: number) => Promise<void>) | null = null;
+async function safeScrollIntoView(locator: any, timeout = 3000) {
+  if (!__safeScrollImpl) {
+    try {
+      const mod = await import('../helpers/ui-helpers');
+      __safeScrollImpl = mod.safeScrollIntoView ?? null;
+    } catch (e) {
+      __safeScrollImpl = null;
+    }
+    if (!__safeScrollImpl) {
+      __safeScrollImpl = async (locator: any, timeout = 3000) => {
+        await locator.waitFor({ state: 'attached', timeout: Math.min(800, timeout) }).catch(() => null);
+        await locator.evaluate((el: Element) => { try { el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' }); } catch (e) { /* best-effort */ } }).catch(() => null);
+        await locator.waitFor({ state: 'visible', timeout }).catch(() => null);
+      };
+    }
+  }
+  return __safeScrollImpl(locator, timeout);
+}
 
 test.describe('Components Page', () => {
   
