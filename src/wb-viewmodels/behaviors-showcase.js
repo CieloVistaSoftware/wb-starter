@@ -45,25 +45,40 @@ function initNavHighlighting(container) {
   
   if (sections.length === 0 || navLinks.length === 0) return;
   
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === `#${id}`) {
-            link.classList.add('active');
+  // Defensive IntersectionObserver: guard callback and observe calls so a
+  // reference/implementation error cannot bubble (prevents "observer is not defined").
+  let observer = null;
+  try {
+    observer = new IntersectionObserver((entries) => {
+      try {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href') === `#${id}`) {
+                link.classList.add('active');
+              }
+            });
           }
         });
+      } catch (cbErr) {
+        console.debug('[wb-showcase] IntersectionObserver callback error:', cbErr);
       }
+    }, {
+      threshold: 0.3,
+      rootMargin: '-100px 0px -50% 0px'
     });
-  }, {
-    threshold: 0.3,
-    rootMargin: '-100px 0px -50% 0px'
-  });
-  
-  sections.forEach(section => observer.observe(section));
+  } catch (instErr) {
+    console.debug('[wb-showcase] IntersectionObserver unavailable:', instErr);
+  }
+
+  if (observer) {
+    sections.forEach(section => {
+      try { observer.observe(section); } catch (obsErr) { console.debug('[wb-showcase] observer.observe failed', obsErr); }
+    });
+  }
 }
 
 /**
