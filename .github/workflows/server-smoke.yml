@@ -1,0 +1,62 @@
+name: Server smoke test
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  server-smoke:
+    name: Server smoke (fast)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DISABLE_WATCH: 'true'    # ensure server.js doesn't attempt recursive fs.watch on runners
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install (fast)
+        run: |
+          npm ci --no-audit --no-fund
+
+      - name: Start dev server
+        run: |
+          nohup node server.js > server-smoke.log 2>&1 &
+          echo $! > server-smoke.pid
+          sleep 1
+
+      - name: Wait for /health
+        run: |
+          for i in {1..20}; do
+            if curl -fsS http://localhost:3000/health -m 2 >/dev/null; then
+              echo "server ready"
+              break
+            fi
+            sleep 1
+          done
+          curl -fsS http://localhost:3000/health
+
+      - name: Verify server responded OK
+        run: |
+          HTTP=$(curl -fsS -m 3 http://localhost:3000/health | jq -r .status)
+          if [ "$HTTP" != "ok" ]; then
+            echo "Health endpoint did not return ok:"; cat server-smoke.log; exit 2
+          fi
+
+      - name: Teardown
+        if: always()
+        run: |
+          if [ -f server-smoke.pid ]; then
+            kill "$(cat server-smoke.pid)" || true
+          fi
+          echo "--- server-smoke.log ---"
+          tail -n +1 server-smoke.log | sed -n '1,200p' || true
