@@ -25,9 +25,20 @@
       "description": "Hero headline",
       "required": true
     },
+    "pretitle": {
+      "type": "string",
+      "description": "Small label or count shown above the title (e.g. '100 Components')",
+      "default": ""
+    },
     "subtitle": {
       "type": "string",
-      "description": "Hero tagline/subheadline"
+      "description": "Hero tagline/subheadline",
+      "default": ""
+    },
+    "content": {
+      "type": "string",
+      "description": "HTML content rendered in the hero content area (allows attribute-only usage instead of slots)",
+      "default": ""
     },
     "cta": {
       "type": "string",
@@ -36,6 +47,16 @@
     "ctaHref": {
       "type": "string",
       "description": "Call-to-action link URL",
+      "default": "#"
+    },
+    "ctaSecondary": {
+      "type": "string",
+      "description": "Secondary CTA text",
+      "default": ""
+    },
+    "ctaSecondaryHref": {
+      "type": "string",
+      "description": "Secondary CTA URL",
       "default": "#"
     },
     "variant": {
@@ -234,8 +255,7 @@
       "<wb-cardhero xalign=\"center\">xalign=center</wb-cardhero>",
       "<wb-cardhero xalign=\"right\">xalign=right</wb-cardhero>",
       "<wb-cardhero overlay>with overlay</wb-cardhero>",
-      "<wb-cardhero title=\"Test Title\">With title attribute</wb-cardhero>",
-      "<wb-hero background=\"hero.jpg\" title=\"Welcome\"></wb-hero>",
+      "<wb-cardhero title=\"Test Title\">With title attribute</wb-cardhero>",      "<wb-cardhero pretitle='100 Components' title='Build <span class=\"wb-gradient-text\">stunning UIs</span>' subtitle='just HTML' cta='Explore Components'></wb-cardhero>",      "<wb-hero background=\"hero.jpg\" title=\"Welcome\"></wb-hero>",
       "<wb-hero background=\"hero.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></wb-hero>"
     ],
     "matrix": {
