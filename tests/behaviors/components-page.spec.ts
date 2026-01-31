@@ -3,6 +3,16 @@
  * Comprehensive tests for the /pages/components.html showcase page
  */
 import { test, expect } from '@playwright/test';
+import { safeScrollIntoView as _safeScrollIntoView } from '../helpers/ui-helpers';
+
+// Defensive fallback: some worker environments were hitting a missing-import
+// regression — keep a small inline fallback so the spec is deterministic
+// while we fix the root cause (module-resolution/transpile race).
+const safeScrollIntoView = _safeScrollIntoView ?? (async (locator: any, timeout = 3000) => {
+  await locator.waitFor({ state: 'attached', timeout: Math.min(800, timeout) }).catch(() => null);
+  await locator.evaluate((el: Element) => { try { el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' }); } catch (e) { /* best-effort */ } }).catch(() => null);
+  await locator.waitFor({ state: 'visible', timeout }).catch(() => null);
+});
 
 test.describe('Components Page', () => {
   
