@@ -60,6 +60,7 @@ jobs:
           path: |
             server-smoke.log
             server-smoke.pid
+          retention-days: 7
 
       - name: Teardown
         if: always()
