@@ -165,6 +165,18 @@ const cacheConfig = isProduction ? {
 };
 // Serve wb-models for schema viewer
 app.use('/src/wb-models', express.static(path.join(rootDir, 'src', 'wb-models'), cacheConfig));
+
+// Guard: ensure the canonical public/builder.html is served even if a root-level
+// builder.html exists in the workspace (prevents accidental shadowing by
+// express.static(rootDir)). This is a minimal, low-risk fix that preserves
+// existing server behavior and is reversible.
+app.use((req, res, next) => {
+  if (req.path === '/builder.html') {
+    return res.sendFile(path.join(rootDir, 'public', 'builder.html'));
+  }
+  return next();
+});
+
 // Auto-wrap /pages/*.html when accessed directly (Browser Navigation)
 // This allows "pure" HTML fragments in /pages/ to be viewed standalone
 app.get('/pages/:page', (req, res, next) => {
