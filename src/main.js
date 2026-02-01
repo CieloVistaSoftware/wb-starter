@@ -24,7 +24,7 @@ import WBSiteClass from './core/site-engine.js';
  * @returns {Promise<void>}
  */
 async function init() {
-  console.log('🚀 WB Framework starting...');
+  console.log('🚀 wb-starter starting...');
 
   try {
     // Expose WB globally

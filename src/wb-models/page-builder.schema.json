@@ -233,6 +233,10 @@
       "$ref": "#/definitions/SiteSettings"
     }
   },
+
+  "$view": [ { "tag": "div", "attrs": { "class": "page-builder" } } ],
+  "$methods": { "createPage": { "description": "Create page programmatically" } },
+  "$cssAPI": {},
   
   "rules": {
     "CORE-001": {

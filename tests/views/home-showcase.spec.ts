@@ -52,7 +52,7 @@ test.describe('Home Page Showcase', () => {
     // Check main title
     const title = page.locator('.home-hero__title');
     await expect(title).toBeVisible({ timeout: 5000 });
-    await expect(title).toContainText('WB Framework');
+    await expect(title).toContainText('wb-starter');
     console.log('✅ Hero title visible');
     
     // Check subtitle
@@ -123,7 +123,7 @@ test.describe('Home Page Showcase', () => {
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
     // Check section title
-    const sectionTitle = page.locator('h2:has-text("Why WB Framework")');
+    const sectionTitle = page.locator('h2:has-text("Why wb-starter")');
     await expect(sectionTitle).toBeVisible();
     console.log('✅ Section title visible');
     
@@ -310,10 +310,10 @@ test.describe('Home Page Showcase', () => {
     await expect(traditionalHeader).toBeVisible();
     console.log('✅ Traditional Approach header visible');
     
-    // Check WB Framework header
-    const wbHeader = page.locator('h3:has-text("WB Framework")');
+    // Check wb-starter header
+    const wbHeader = page.locator('h3:has-text("wb-starter")');
     await expect(wbHeader).toBeVisible();
-    console.log('✅ WB Framework header visible');
+    console.log('✅ wb-starter header visible');
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
