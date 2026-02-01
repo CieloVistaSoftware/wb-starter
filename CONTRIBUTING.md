@@ -40,6 +40,8 @@ npm run test:compliance
 npm run test:ui
 ```
 
+**Note (test runner):** `npm test` is a safety-wrapper (fast-by-default). Use `npm test -- --full`, `npm run test:ordered`, or set `CI=true` to run the ordered full pipeline. See `docs/testing-runbook.md` for recommended developer workflows and CI examples.
+
 ### Producing and publishing Playwright artifacts (traces) 🔍
 
 - Quick local repro (produces `trace.zip`):
