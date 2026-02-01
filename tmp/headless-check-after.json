@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:3000/docs/testing-runbook.html",
+  "timestamp": "2026-02-01T23:10:31.683Z",
+  "summary": {
+    "status": 200,
+    "consoleCount": 235,
+    "requestsWithErrors": 0,
+    "note": "All previously seen 404s for /docs/src/* resolved after adding <base href=\"/\"> to index.html. Page hydrated successfully."
+  },
+  "highlights": [
+    "No more 404s for site assets (css/js)",
+    "WB initialization logs present indicating successful hydration",
+    "Generated screenshot: tmp/headless-check-after.png (not committed)"
+  ]
+}
