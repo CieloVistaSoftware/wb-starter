@@ -1,0 +1,75 @@
+name: CI — Full Compliance
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      tests:
+        description: 'Optional test pattern (defaults to full compliance)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  full-compliance:
+    name: Run full compliance (with traces)
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies (ensure dev deps)
+        run: |
+          npm ci --no-audit || true
+          if [ ! -d node_modules/@playwright/test ]; then
+            npm install --no-audit --no-fund --no-package-lock --save-dev @playwright/test
+          fi
+          npx playwright install --with-deps
+
+      - name: Run Playwright (full compliance)
+        id: run
+        run: |
+          set -e
+          if [ -n "${{ github.event.inputs.tests }}" ]; then
+            TEST_CMD="npx playwright test ${{ github.event.inputs.tests }} --project=compliance --reporter=list"
+          else
+            TEST_CMD="npx playwright test --project=compliance --reporter=list"
+          fi
+          # Always enable trace for CI runs so failures produce artifacts
+          TEST_CMD="$TEST_CMD --trace=on"
+          echo "$TEST_CMD"
+          eval "$TEST_CMD"
+        shell: bash
+
+      - name: Collect artifacts (trace + logs)
+        if: always()
+        run: |
+          mkdir -p artifacts || true
+          cp -v data/test-results/**/*.zip artifacts/ 2>/dev/null || true
+          cp -v data/test-results/**/*.log artifacts/ 2>/dev/null || true
+          cp -v data/test-results/.last-run.json artifacts/ 2>/dev/null || true
+          ls -la artifacts || true
+
+      - name: Upload Playwright traces & logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: artifacts/**
+          retention-days: 30
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "CI: full compliance run complete. Artifacts uploaded as 'playwright-traces' if present."

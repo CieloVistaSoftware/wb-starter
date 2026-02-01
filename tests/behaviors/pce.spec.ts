@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { safeScrollIntoView } from '../base';
 import { setupBehaviorTest, setupTestContainer } from '../base';
 
 test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
@@ -203,7 +204,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await expect(profile).not.toBeInViewport();
     
     // Scroll into view
-    await profile.scrollIntoViewIfNeeded();
+    await safeScrollIntoView(profile);
     await page.waitForTimeout(500);
     
     // Now visible and should have behavior applied

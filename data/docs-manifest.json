@@ -1,6 +1,6 @@
 {
-  "generated": "2026-01-17T01:36:40.729Z",
-  "totalFiles": 125,
+  "generated": "2026-01-31T23:04:19.978Z",
+  "totalFiles": 126,
   "categories": [
     "_today",
     "architecture",
@@ -128,6 +128,12 @@
         "path": "docs/code-examples-standard.md",
         "title": "Code Examples Standard",
         "name": "code-examples-standard",
+        "category": "root"
+      },
+      {
+        "path": "docs/CommittingFixes.md",
+        "title": "Committing Fixes Workflow",
+        "name": "CommittingFixes",
         "category": "root"
       },
       {
@@ -770,7 +776,7 @@
     "_today": [
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "Current Status - Builder UI Enhancements",
+        "title": "Current Status - Builder Layout Fix",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -785,7 +791,7 @@
   "files": [
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "Current Status - Builder UI Enhancements",
+      "title": "Current Status - Builder Layout Fix",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -931,6 +937,12 @@
       "path": "docs/code-examples-standard.md",
       "title": "Code Examples Standard",
       "name": "code-examples-standard",
+      "category": "root"
+    },
+    {
+      "path": "docs/CommittingFixes.md",
+      "title": "Committing Fixes Workflow",
+      "name": "CommittingFixes",
       "category": "root"
     },
     {

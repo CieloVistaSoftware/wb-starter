@@ -83,6 +83,8 @@ const behaviorModules = {
   list: 'semantics/list',
   desclist: 'semantics/desclist',
   empty: 'semantics/empty',
+  // Diff (lightweight shim) — ensure registry consistency with data/behavior-inventory.json
+  diff: 'semantics/diff',
   
   // Media (10) → media.js
   image: 'media', gallery: 'media', video: 'media', audio: 'media',
@@ -161,7 +163,12 @@ const behaviorModules = {
   lazy: 'helpers', print: 'helpers', share: 'helpers', fullscreen: 'helpers',
   hotkey: 'helpers', clipboard: 'helpers', scroll: 'helpers', truncate: 'helpers',
   highlight: 'helpers', external: 'helpers', countdown: 'helpers', clock: 'helpers',
-  relativetime: 'helpers', offline: 'helpers', visible: 'helpers', debug: 'helpers'
+  relativetime: 'helpers', offline: 'helpers', visible: 'helpers', debug: 'helpers',
+  // Date & time pickers (shims)
+  datepicker: 'semantics/datepicker',
+  timepicker: 'semantics/timepicker',
+  // Modifier: autosize
+  autosize: 'autosize'
 };
 
 /**
