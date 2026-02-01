@@ -1,4 +1,4 @@
-# Card File - WB Framework v3.0
+# Card File - wb-starter v3.0
 
 File/document download card with file type icons.
 

@@ -1,4 +1,4 @@
-# Select - WB Framework v3.0
+# Select - wb-starter v3.0
 
 Enhanced select dropdown with search, clear, and multi-select.
 

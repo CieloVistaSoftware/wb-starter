@@ -9,7 +9,7 @@
         {
           "file": "builder.md",
           "title": "WB Builder",
-          "description": "The heart of WB Framework - Schema-driven architecture explained"
+          "description": "The heart of wb-starter - Schema-driven architecture explained"
         },
         {
           "file": "architecture.md",

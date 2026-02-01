@@ -1,4 +1,4 @@
-# Snow - WB Framework v3.0
+# Snow - wb-starter v3.0
 
 Falling snow animation effect.
 

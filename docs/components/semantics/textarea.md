@@ -1,4 +1,4 @@
-# Textarea - WB Framework v3.0
+# Textarea - wb-starter v3.0
 
 Multi-line text input with autosize and character count.
 

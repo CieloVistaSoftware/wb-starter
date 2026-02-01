@@ -1,8 +1,8 @@
-# WB Framework v3.0 - Component Library
+# wb-starter v3.0 - Component Library
 
 ## Overview
 
-The WB Framework provides 40+ components using **Light DOM architecture** and the **WBServices** pattern. All components use proper HTMLElement inheritance and ES Modules.
+The wb-starter provides 40+ components using **Light DOM architecture** and the **WBServices** pattern. All components use proper HTMLElement inheritance and ES Modules.
 
 ## Architecture (v3.0)
 

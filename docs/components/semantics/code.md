@@ -1,4 +1,4 @@
-# Code - WB Framework v3.0
+# Code - wb-starter v3.0
 
 Enhanced code display with copy button and language badge.
 

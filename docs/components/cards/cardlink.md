@@ -1,4 +1,4 @@
-# Card Link - WB Framework v3.0
+# Card Link - wb-starter v3.0
 
 Clickable navigation link card.
 

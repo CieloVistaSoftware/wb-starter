@@ -1,4 +1,4 @@
-# Dialog - WB Framework v3.0
+# Dialog - wb-starter v3.0
 
 Modal dialog using native HTML5 dialog element.
 

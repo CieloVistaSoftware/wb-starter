@@ -1,4 +1,4 @@
-# Confetti - WB Framework v3.0
+# Confetti - wb-starter v3.0
 
 Colorful confetti explosion effect.
 

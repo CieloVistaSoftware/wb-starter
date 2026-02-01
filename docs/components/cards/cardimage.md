@@ -1,4 +1,4 @@
-# Card Image - WB Framework v3.0
+# Card Image - wb-starter v3.0
 
 Card with a featured image. Uses `<figure>` for semantic image containment.
 

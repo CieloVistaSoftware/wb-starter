@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the standard process for fixing issues in the WB Framework project. Each fix follows a branch-based workflow with automated testing and PR-based merging.
+This document describes the standard process for fixing issues in the wb-starter project. Each fix follows a branch-based workflow with automated testing and PR-based merging.
 
 ---
 

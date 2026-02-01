@@ -1,7 +1,7 @@
 /**
  * Home Page Showcase Tests
  * ========================
- * Comprehensive tests for the WB Framework showcase home page.
+ * Comprehensive tests for the wb-starter showcase home page.
  * 
  * Covers:
  * - Hero section rendering
@@ -118,7 +118,7 @@ test.describe('Home Page Showcase', () => {
   // FEATURE CARDS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  test('03 - Why WB Framework section with feature cards', async ({ page }) => {
+  test('03 - Why wb-starter section with feature cards', async ({ page }) => {
     console.log('🧪 Test 3: Feature cards...');
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
@@ -601,7 +601,7 @@ test.describe('Home Page Showcase', () => {
     
     // Features
     console.log('📍 Checking FEATURES section...');
-    await expect(page.locator('h2:has-text("Why WB Framework")')).toBeVisible();
+    await expect(page.locator('h2:has-text("Why wb-starter")')).toBeVisible();
     const featureCards = page.locator('basic-card[data-hoverable]');
     expect(await featureCards.count()).toBeGreaterThanOrEqual(6);
     console.log('✅ FEATURES: Section title and cards present\n');

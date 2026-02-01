@@ -1,4 +1,4 @@
-# Drawer Components - WB Framework v3.0
+# Drawer Components - wb-starter v3.0
 
 Two distinct drawer types with different purposes.
 

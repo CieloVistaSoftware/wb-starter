@@ -1,4 +1,4 @@
-# Card Testimonial - WB Framework v3.0
+# Card Testimonial - wb-starter v3.0
 
 Quote/testimonial card using semantic `<blockquote>` and `<cite>` elements.
 

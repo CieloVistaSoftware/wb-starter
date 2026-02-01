@@ -2,7 +2,7 @@
 
 ## Overview
 
-The WB Builder is the architectural core of WB Framework v3.0. It represents a paradigm shift from traditional web component development to a **declarative, schema-driven approach** that eliminates build steps while maintaining enterprise-grade functionality.
+The WB Builder is the architectural core of wb-starter v3.0. It represents a paradigm shift from traditional web component development to a **declarative, schema-driven approach** that eliminates build steps while maintaining enterprise-grade functionality.
 
 ## Core Philosophy
 
@@ -19,7 +19,7 @@ Unlike frameworks that require webpack, vite, or other bundlers, WB Builder work
 
 ### Light DOM Only
 
-WB Framework uses Light DOM exclusively. This means:
+wb-starter uses Light DOM exclusively. This means:
 - **CSS works naturally** - No piercing shadow boundaries
 - **JavaScript access** - Query selectors work as expected
 - **Accessibility** - Screen readers see real DOM structure
@@ -161,7 +161,7 @@ Beyond components, WB provides **170+ behaviors** that enhance any HTML element:
 
 ```html
 <wb-card title="My First Card" elevated>
-  <p>Welcome to WB Framework!</p>
+  <p>Welcome to wb-starter!</p>
 </wb-card>
 ```
 
@@ -211,7 +211,7 @@ WB.pubsub.subscribe('card:selected', (data) => {
 
 ## The WB Difference
 
-| Traditional | WB Framework |
+| Traditional | wb-starter |
 |------------|--------------|
 | npm install | Just include the script |
 | webpack/vite config | Zero config |
@@ -222,7 +222,7 @@ WB.pubsub.subscribe('card:selected', (data) => {
 
 ## Philosophy Statement
 
-> "The browser is already a component runtime. WB Framework embraces this reality instead of fighting it. We don't compile, transpile, or bundle - we enhance."
+> "The browser is already a component runtime. wb-starter embraces this reality instead of fighting it. We don't compile, transpile, or bundle - we enhance."
 
 WB Builder represents our belief that modern web development has become unnecessarily complex. By leveraging native browser capabilities and a declarative schema system, we've created a framework that's both powerful and approachable.
 

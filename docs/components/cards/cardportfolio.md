@@ -1,4 +1,4 @@
-# Card Portfolio - WB Framework v3.0
+# Card Portfolio - wb-starter v3.0
 
 Portfolio/contact card using semantic `<address>` element.
 

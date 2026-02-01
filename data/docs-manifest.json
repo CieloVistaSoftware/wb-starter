@@ -162,7 +162,7 @@
       },
       {
         "path": "docs/escape-hatches.md",
-        "title": "WB Framework Escape Hatches",
+        "title": "wb-starter Escape Hatches",
         "name": "escape-hatches",
         "category": "root"
       },
@@ -210,7 +210,7 @@
       },
       {
         "path": "docs/MVVM-MIGRATION.md",
-        "title": "WB Framework v3.0 - MVVM Architecture",
+        "title": "wb-starter v3.0 - MVVM Architecture",
         "name": "MVVM-MIGRATION",
         "category": "root"
       },
@@ -374,151 +374,151 @@
     "components": [
       {
         "path": "docs/components/cards/card.md",
-        "title": "Card - WB Framework v3.0",
+        "title": "Card - wb-starter v3.0",
         "name": "card",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardbutton.md",
-        "title": "Card Button - WB Framework v3.0",
+        "title": "Card Button - wb-starter v3.0",
         "name": "cardbutton",
         "category": "components"
       },
       {
         "path": "docs/components/cards/carddraggable.md",
-        "title": "Card Draggable - WB Framework v3.0",
+        "title": "Card Draggable - wb-starter v3.0",
         "name": "carddraggable",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardexpandable.md",
-        "title": "Card Expandable - WB Framework v3.0",
+        "title": "Card Expandable - wb-starter v3.0",
         "name": "cardexpandable",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardfile.md",
-        "title": "Card File - WB Framework v3.0",
+        "title": "Card File - wb-starter v3.0",
         "name": "cardfile",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardhero.md",
-        "title": "Card Hero - WB Framework v3.0",
+        "title": "Card Hero - wb-starter v3.0",
         "name": "cardhero",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardhorizontal.md",
-        "title": "Card Horizontal - WB Framework v3.0",
+        "title": "Card Horizontal - wb-starter v3.0",
         "name": "cardhorizontal",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardimage.md",
-        "title": "Card Image - WB Framework v3.0",
+        "title": "Card Image - wb-starter v3.0",
         "name": "cardimage",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardlink.md",
-        "title": "Card Link - WB Framework v3.0",
+        "title": "Card Link - wb-starter v3.0",
         "name": "cardlink",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardminimizable.md",
-        "title": "Card Minimizable - WB Framework v3.0",
+        "title": "Card Minimizable - wb-starter v3.0",
         "name": "cardminimizable",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardnotification.md",
-        "title": "Card Notification - WB Framework v3.0",
+        "title": "Card Notification - wb-starter v3.0",
         "name": "cardnotification",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardoverlay.md",
-        "title": "Card Overlay - WB Framework v3.0",
+        "title": "Card Overlay - wb-starter v3.0",
         "name": "cardoverlay",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardportfolio.md",
-        "title": "Card Portfolio - WB Framework v3.0",
+        "title": "Card Portfolio - wb-starter v3.0",
         "name": "cardportfolio",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardpricing.md",
-        "title": "Card Pricing - WB Framework v3.0",
+        "title": "Card Pricing - wb-starter v3.0",
         "name": "cardpricing",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardproduct.md",
-        "title": "Card Product - WB Framework v3.0",
+        "title": "Card Product - wb-starter v3.0",
         "name": "cardproduct",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardprofile.md",
-        "title": "Card Profile - WB Framework v3.0",
+        "title": "Card Profile - wb-starter v3.0",
         "name": "cardprofile",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardstats.md",
-        "title": "Card Stats - WB Framework v3.0",
+        "title": "Card Stats - wb-starter v3.0",
         "name": "cardstats",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardtestimonial.md",
-        "title": "Card Testimonial - WB Framework v3.0",
+        "title": "Card Testimonial - wb-starter v3.0",
         "name": "cardtestimonial",
         "category": "components"
       },
       {
         "path": "docs/components/cards/cardvideo.md",
-        "title": "Card Video - WB Framework v3.0",
+        "title": "Card Video - wb-starter v3.0",
         "name": "cardvideo",
         "category": "components"
       },
       {
         "path": "docs/components/cards/index.md",
-        "title": "Card Components - WB Framework v3.0",
+        "title": "Card Components - wb-starter v3.0",
         "name": "index",
         "category": "components"
       },
       {
         "path": "docs/components/cards/README.md",
-        "title": "WB Framework v3.0 - Cards",
+        "title": "wb-starter v3.0 - Cards",
         "name": "README",
         "category": "components"
       },
       {
         "path": "docs/components/drawer.md",
-        "title": "Drawer Components - WB Framework v3.0",
+        "title": "Drawer Components - wb-starter v3.0",
         "name": "drawer",
         "category": "components"
       },
       {
         "path": "docs/components/effects/confetti.md",
-        "title": "Confetti - WB Framework v3.0",
+        "title": "Confetti - wb-starter v3.0",
         "name": "confetti",
         "category": "components"
       },
       {
         "path": "docs/components/effects/fireworks.md",
-        "title": "Fireworks - WB Framework v3.0",
+        "title": "Fireworks - wb-starter v3.0",
         "name": "fireworks",
         "category": "components"
       },
       {
         "path": "docs/components/effects/snow.md",
-        "title": "Snow - WB Framework v3.0",
+        "title": "Snow - wb-starter v3.0",
         "name": "snow",
         "category": "components"
       },
@@ -548,7 +548,7 @@
       },
       {
         "path": "docs/components/README.md",
-        "title": "WB Framework v3.0 - Component Library",
+        "title": "wb-starter v3.0 - Component Library",
         "name": "README",
         "category": "components"
       },
@@ -560,7 +560,7 @@
       },
       {
         "path": "docs/components/semantic/article.md",
-        "title": "Article Element - WB Framework v3.0",
+        "title": "Article Element - wb-starter v3.0",
         "name": "article",
         "category": "components"
       },
@@ -590,7 +590,7 @@
       },
       {
         "path": "docs/components/semantic/index.md",
-        "title": "Semantic HTML Elements - WB Framework v3.0",
+        "title": "Semantic HTML Elements - wb-starter v3.0",
         "name": "index",
         "category": "components"
       },
@@ -608,37 +608,37 @@
       },
       {
         "path": "docs/components/semantics/audio.md",
-        "title": "Audio - WB Framework v3.0",
+        "title": "Audio - wb-starter v3.0",
         "name": "audio",
         "category": "components"
       },
       {
         "path": "docs/components/semantics/button.md",
-        "title": "Button - WB Framework v3.0",
+        "title": "Button - wb-starter v3.0",
         "name": "button",
         "category": "components"
       },
       {
         "path": "docs/components/semantics/checkbox.md",
-        "title": "Checkbox - WB Framework v3.0",
+        "title": "Checkbox - wb-starter v3.0",
         "name": "checkbox",
         "category": "components"
       },
       {
         "path": "docs/components/semantics/code.md",
-        "title": "Code - WB Framework v3.0",
+        "title": "Code - wb-starter v3.0",
         "name": "code",
         "category": "components"
       },
       {
         "path": "docs/components/semantics/details.md",
-        "title": "Details - WB Framework v3.0",
+        "title": "Details - wb-starter v3.0",
         "name": "details",
         "category": "components"
       },
       {
         "path": "docs/components/semantics/dialog.md",
-        "title": "Dialog - WB Framework v3.0",
+        "title": "Dialog - wb-starter v3.0",
         "name": "dialog",
         "category": "components"
       },
@@ -656,19 +656,19 @@
       },
       {
         "path": "docs/components/semantics/form.md",
-        "title": "Form - WB Framework v3.0",
+        "title": "Form - wb-starter v3.0",
         "name": "form",
         "category": "components"
       },
       {
         "path": "docs/components/semantics/img.md",
-        "title": "Image - WB Framework v3.0",
+        "title": "Image - wb-starter v3.0",
         "name": "img",
         "category": "components"
       },
       {
         "path": "docs/components/semantics/input.md",
-        "title": "Input - WB Framework v3.0",
+        "title": "Input - wb-starter v3.0",
         "name": "input",
         "category": "components"
       },
@@ -692,7 +692,7 @@
       },
       {
         "path": "docs/components/semantics/progress.md",
-        "title": "Progress - WB Framework v3.0",
+        "title": "Progress - wb-starter v3.0",
         "name": "progress",
         "category": "components"
       },
@@ -710,31 +710,31 @@
       },
       {
         "path": "docs/components/semantics/rating.md",
-        "title": "Rating - WB Framework v3.0",
+        "title": "Rating - wb-starter v3.0",
         "name": "rating",
         "category": "components"
       },
       {
         "path": "docs/components/semantics/select.md",
-        "title": "Select - WB Framework v3.0",
+        "title": "Select - wb-starter v3.0",
         "name": "select",
         "category": "components"
       },
       {
         "path": "docs/components/semantics/switch.md",
-        "title": "Switch - WB Framework v3.0",
+        "title": "Switch - wb-starter v3.0",
         "name": "switch",
         "category": "components"
       },
       {
         "path": "docs/components/semantics/table.md",
-        "title": "Table - WB Framework v3.0",
+        "title": "Table - wb-starter v3.0",
         "name": "table",
         "category": "components"
       },
       {
         "path": "docs/components/semantics/textarea.md",
-        "title": "Textarea - WB Framework v3.0",
+        "title": "Textarea - wb-starter v3.0",
         "name": "textarea",
         "category": "components"
       },
@@ -746,13 +746,13 @@
       },
       {
         "path": "docs/components/semantics/video.md",
-        "title": "Video - WB Framework v3.0",
+        "title": "Video - wb-starter v3.0",
         "name": "video",
         "category": "components"
       },
       {
         "path": "docs/components/tabs.md",
-        "title": "Tabs - WB Framework v3.0",
+        "title": "Tabs - wb-starter v3.0",
         "name": "tabs",
         "category": "components"
       }
@@ -953,151 +953,151 @@
     },
     {
       "path": "docs/components/cards/card.md",
-      "title": "Card - WB Framework v3.0",
+      "title": "Card - wb-starter v3.0",
       "name": "card",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardbutton.md",
-      "title": "Card Button - WB Framework v3.0",
+      "title": "Card Button - wb-starter v3.0",
       "name": "cardbutton",
       "category": "components"
     },
     {
       "path": "docs/components/cards/carddraggable.md",
-      "title": "Card Draggable - WB Framework v3.0",
+      "title": "Card Draggable - wb-starter v3.0",
       "name": "carddraggable",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardexpandable.md",
-      "title": "Card Expandable - WB Framework v3.0",
+      "title": "Card Expandable - wb-starter v3.0",
       "name": "cardexpandable",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardfile.md",
-      "title": "Card File - WB Framework v3.0",
+      "title": "Card File - wb-starter v3.0",
       "name": "cardfile",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardhero.md",
-      "title": "Card Hero - WB Framework v3.0",
+      "title": "Card Hero - wb-starter v3.0",
       "name": "cardhero",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardhorizontal.md",
-      "title": "Card Horizontal - WB Framework v3.0",
+      "title": "Card Horizontal - wb-starter v3.0",
       "name": "cardhorizontal",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardimage.md",
-      "title": "Card Image - WB Framework v3.0",
+      "title": "Card Image - wb-starter v3.0",
       "name": "cardimage",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardlink.md",
-      "title": "Card Link - WB Framework v3.0",
+      "title": "Card Link - wb-starter v3.0",
       "name": "cardlink",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardminimizable.md",
-      "title": "Card Minimizable - WB Framework v3.0",
+      "title": "Card Minimizable - wb-starter v3.0",
       "name": "cardminimizable",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardnotification.md",
-      "title": "Card Notification - WB Framework v3.0",
+      "title": "Card Notification - wb-starter v3.0",
       "name": "cardnotification",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardoverlay.md",
-      "title": "Card Overlay - WB Framework v3.0",
+      "title": "Card Overlay - wb-starter v3.0",
       "name": "cardoverlay",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardportfolio.md",
-      "title": "Card Portfolio - WB Framework v3.0",
+      "title": "Card Portfolio - wb-starter v3.0",
       "name": "cardportfolio",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardpricing.md",
-      "title": "Card Pricing - WB Framework v3.0",
+      "title": "Card Pricing - wb-starter v3.0",
       "name": "cardpricing",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardproduct.md",
-      "title": "Card Product - WB Framework v3.0",
+      "title": "Card Product - wb-starter v3.0",
       "name": "cardproduct",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardprofile.md",
-      "title": "Card Profile - WB Framework v3.0",
+      "title": "Card Profile - wb-starter v3.0",
       "name": "cardprofile",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardstats.md",
-      "title": "Card Stats - WB Framework v3.0",
+      "title": "Card Stats - wb-starter v3.0",
       "name": "cardstats",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardtestimonial.md",
-      "title": "Card Testimonial - WB Framework v3.0",
+      "title": "Card Testimonial - wb-starter v3.0",
       "name": "cardtestimonial",
       "category": "components"
     },
     {
       "path": "docs/components/cards/cardvideo.md",
-      "title": "Card Video - WB Framework v3.0",
+      "title": "Card Video - wb-starter v3.0",
       "name": "cardvideo",
       "category": "components"
     },
     {
       "path": "docs/components/cards/index.md",
-      "title": "Card Components - WB Framework v3.0",
+      "title": "Card Components - wb-starter v3.0",
       "name": "index",
       "category": "components"
     },
     {
       "path": "docs/components/cards/README.md",
-      "title": "WB Framework v3.0 - Cards",
+      "title": "wb-starter v3.0 - Cards",
       "name": "README",
       "category": "components"
     },
     {
       "path": "docs/components/drawer.md",
-      "title": "Drawer Components - WB Framework v3.0",
+      "title": "Drawer Components - wb-starter v3.0",
       "name": "drawer",
       "category": "components"
     },
     {
       "path": "docs/components/effects/confetti.md",
-      "title": "Confetti - WB Framework v3.0",
+      "title": "Confetti - wb-starter v3.0",
       "name": "confetti",
       "category": "components"
     },
     {
       "path": "docs/components/effects/fireworks.md",
-      "title": "Fireworks - WB Framework v3.0",
+      "title": "Fireworks - wb-starter v3.0",
       "name": "fireworks",
       "category": "components"
     },
     {
       "path": "docs/components/effects/snow.md",
-      "title": "Snow - WB Framework v3.0",
+      "title": "Snow - wb-starter v3.0",
       "name": "snow",
       "category": "components"
     },
@@ -1127,7 +1127,7 @@
     },
     {
       "path": "docs/components/README.md",
-      "title": "WB Framework v3.0 - Component Library",
+      "title": "wb-starter v3.0 - Component Library",
       "name": "README",
       "category": "components"
     },
@@ -1139,7 +1139,7 @@
     },
     {
       "path": "docs/components/semantic/article.md",
-      "title": "Article Element - WB Framework v3.0",
+      "title": "Article Element - wb-starter v3.0",
       "name": "article",
       "category": "components"
     },
@@ -1169,7 +1169,7 @@
     },
     {
       "path": "docs/components/semantic/index.md",
-      "title": "Semantic HTML Elements - WB Framework v3.0",
+      "title": "Semantic HTML Elements - wb-starter v3.0",
       "name": "index",
       "category": "components"
     },
@@ -1187,37 +1187,37 @@
     },
     {
       "path": "docs/components/semantics/audio.md",
-      "title": "Audio - WB Framework v3.0",
+      "title": "Audio - wb-starter v3.0",
       "name": "audio",
       "category": "components"
     },
     {
       "path": "docs/components/semantics/button.md",
-      "title": "Button - WB Framework v3.0",
+      "title": "Button - wb-starter v3.0",
       "name": "button",
       "category": "components"
     },
     {
       "path": "docs/components/semantics/checkbox.md",
-      "title": "Checkbox - WB Framework v3.0",
+      "title": "Checkbox - wb-starter v3.0",
       "name": "checkbox",
       "category": "components"
     },
     {
       "path": "docs/components/semantics/code.md",
-      "title": "Code - WB Framework v3.0",
+      "title": "Code - wb-starter v3.0",
       "name": "code",
       "category": "components"
     },
     {
       "path": "docs/components/semantics/details.md",
-      "title": "Details - WB Framework v3.0",
+      "title": "Details - wb-starter v3.0",
       "name": "details",
       "category": "components"
     },
     {
       "path": "docs/components/semantics/dialog.md",
-      "title": "Dialog - WB Framework v3.0",
+      "title": "Dialog - wb-starter v3.0",
       "name": "dialog",
       "category": "components"
     },
@@ -1235,19 +1235,19 @@
     },
     {
       "path": "docs/components/semantics/form.md",
-      "title": "Form - WB Framework v3.0",
+      "title": "Form - wb-starter v3.0",
       "name": "form",
       "category": "components"
     },
     {
       "path": "docs/components/semantics/img.md",
-      "title": "Image - WB Framework v3.0",
+      "title": "Image - wb-starter v3.0",
       "name": "img",
       "category": "components"
     },
     {
       "path": "docs/components/semantics/input.md",
-      "title": "Input - WB Framework v3.0",
+      "title": "Input - wb-starter v3.0",
       "name": "input",
       "category": "components"
     },
@@ -1271,7 +1271,7 @@
     },
     {
       "path": "docs/components/semantics/progress.md",
-      "title": "Progress - WB Framework v3.0",
+      "title": "Progress - wb-starter v3.0",
       "name": "progress",
       "category": "components"
     },
@@ -1289,31 +1289,31 @@
     },
     {
       "path": "docs/components/semantics/rating.md",
-      "title": "Rating - WB Framework v3.0",
+      "title": "Rating - wb-starter v3.0",
       "name": "rating",
       "category": "components"
     },
     {
       "path": "docs/components/semantics/select.md",
-      "title": "Select - WB Framework v3.0",
+      "title": "Select - wb-starter v3.0",
       "name": "select",
       "category": "components"
     },
     {
       "path": "docs/components/semantics/switch.md",
-      "title": "Switch - WB Framework v3.0",
+      "title": "Switch - wb-starter v3.0",
       "name": "switch",
       "category": "components"
     },
     {
       "path": "docs/components/semantics/table.md",
-      "title": "Table - WB Framework v3.0",
+      "title": "Table - wb-starter v3.0",
       "name": "table",
       "category": "components"
     },
     {
       "path": "docs/components/semantics/textarea.md",
-      "title": "Textarea - WB Framework v3.0",
+      "title": "Textarea - wb-starter v3.0",
       "name": "textarea",
       "category": "components"
     },
@@ -1325,13 +1325,13 @@
     },
     {
       "path": "docs/components/semantics/video.md",
-      "title": "Video - WB Framework v3.0",
+      "title": "Video - wb-starter v3.0",
       "name": "video",
       "category": "components"
     },
     {
       "path": "docs/components/tabs.md",
-      "title": "Tabs - WB Framework v3.0",
+      "title": "Tabs - wb-starter v3.0",
       "name": "tabs",
       "category": "components"
     },
@@ -1361,7 +1361,7 @@
     },
     {
       "path": "docs/escape-hatches.md",
-      "title": "WB Framework Escape Hatches",
+      "title": "wb-starter Escape Hatches",
       "name": "escape-hatches",
       "category": "root"
     },
@@ -1415,7 +1415,7 @@
     },
     {
       "path": "docs/MVVM-MIGRATION.md",
-      "title": "WB Framework v3.0 - MVVM Architecture",
+      "title": "wb-starter v3.0 - MVVM Architecture",
       "name": "MVVM-MIGRATION",
       "category": "root"
     },

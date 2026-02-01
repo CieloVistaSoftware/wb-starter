@@ -1,8 +1,8 @@
-# WB Framework v3.0 - MVVM Architecture
+# wb-starter v3.0 - MVVM Architecture
 
 ## Overview
 
-WB Framework v3.0 implements a **Schema-Driven MVVM Architecture** that eliminates the need for build steps while providing a robust, type-safe component system. This document describes the architecture, migration status, and implementation details.
+wb-starter v3.0 implements a **Schema-Driven MVVM Architecture** that eliminates the need for build steps while providing a robust, type-safe component system. This document describes the architecture, migration status, and implementation details.
 
 ## Architecture Diagram
 
@@ -337,7 +337,7 @@ console.log(card.dataset.wbReady); // Lists applied behaviors
 
 ## Resources
 
-- [Builder Documentation](/docs/builder.md) - The heart of WB Framework
+- [Builder Documentation](/docs/builder.md) - The heart of wb-starter
 - [Behaviors Reference](/docs/behaviors-reference.md) - All 170+ behaviors
 - [Theme System](/docs/themes.md) - 23 themes and customization
 - [Testing Strategy](/docs/testing-strategy.md) - How to test components

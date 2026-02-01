@@ -1,4 +1,4 @@
-# Checkbox - WB Framework v3.0
+# Checkbox - wb-starter v3.0
 
 Checkbox input with label and custom styling.
 

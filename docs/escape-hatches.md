@@ -1,4 +1,4 @@
-# WB Framework Escape Hatches
+# wb-starter Escape Hatches
 
 Override or customize any WB component behavior when defaults don't fit your needs.
 

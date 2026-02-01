@@ -1,4 +1,4 @@
-# Article Element - WB Framework v3.0
+# Article Element - wb-starter v3.0
 
 The `<article>` element is the semantic foundation for all card components.
 

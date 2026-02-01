@@ -1,4 +1,4 @@
-# Table - WB Framework v3.0
+# Table - wb-starter v3.0
 
 Interactive data table with sorting and search.
 

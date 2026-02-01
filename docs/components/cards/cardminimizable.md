@@ -1,4 +1,4 @@
-# Card Minimizable - WB Framework v3.0
+# Card Minimizable - wb-starter v3.0
 
 Card that can be minimized like a window.
 

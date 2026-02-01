@@ -1,4 +1,4 @@
-# Form - WB Framework v3.0
+# Form - wb-starter v3.0
 
 Enhanced form with AJAX submission, validation, and auto-save.
 

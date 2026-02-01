@@ -1,4 +1,4 @@
-# Audio - WB Framework v3.0
+# Audio - wb-starter v3.0
 
 Audio player with optional 15-band graphic equalizer.
 

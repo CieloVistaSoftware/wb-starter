@@ -1,4 +1,4 @@
-# Card Notification - WB Framework v3.0
+# Card Notification - wb-starter v3.0
 
 Alert/notification card using semantic `<aside>` element.
 

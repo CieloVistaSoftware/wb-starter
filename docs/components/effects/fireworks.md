@@ -1,4 +1,4 @@
-# Fireworks - WB Framework v3.0
+# Fireworks - wb-starter v3.0
 
 Fireworks burst explosion effect.
 
