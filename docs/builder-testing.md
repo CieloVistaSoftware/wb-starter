@@ -30,32 +30,4 @@ Components dragged onto builder canvas have critical issues:
 ### Phase 3: Builder Test Suite
 - Test every component: drop → verify render → verify properties → verify interaction
 
-## Component Audit Checklist
-
-### Card Variants (20)
-| Component | Has All Props | Properties Work | Interactions Work |
-|-----------|--------------|-----------------|-------------------|
-| card | ❌ | ❌ | ⏳ |
-| cardimage | ❌ | ❌ | ⏳ |
-| cardvideo | ❌ | ❌ | ⏳ |
-| cardbutton | ❌ | ❌ | ⏳ |
-| cardhero | ❌ | ❌ | ⏳ |
-| cardprofile | ❌ | ❌ | ⏳ |
-| cardpricing | ✅ | ⏳ | ⏳ |
-| cardstats | ✅ | ⏳ | ⏳ |
-| cardtestimonial | ❌ | ❌ | ⏳ |
-| cardproduct | ❌ | ❌ | ⏳ |
-| cardnotification | ❌ | ❌ | ⏳ |
-| cardfile | ❌ | ❌ | ⏳ |
-| cardlink | ✅ | ⏳ | ⏳ |
-| cardhorizontal | ❌ | ❌ | ⏳ |
-| carddraggable | ❌ | ❌ | ⏳ |
-| cardexpandable | ❌ | ❌ | ❌ |
-| cardminimizable | ❌ | ❌ | ⏳ |
-| cardoverlay | ❌ | ❌ | ⏳ |
-| cardportfolio | ❌ | ❌ | ⏳ |
-
-### Priority Fixes
-1. cardexpandable - completely broken
-2. cardminimizable - likely same issues
-3. All cards missing subtitle, footer, content properties
+See `docs/testing-runbook.md` for the recommended commands, CI integration examples, and guidance on producing Playwright traces and artifacts for flaky tests. Also refer to `CONTRIBUTING.md` for how to attach traces to PRs.

@@ -17,6 +17,11 @@ A modern website starter kit powered by [WB Behaviors](https://github.com/CieloV
 
 > **Note**: While the site can run as a static file (`index.html`), the development server is required for the Visual Builder to save changes and for error logging to work.
 
+## Testing & CI
+
+- Quick dev run: `npm test` (fast-by-default). Use `npm test -- --full` or `CI=true npm test` to run the full ordered pipeline (compliance → fast → base → behaviors → regression). See `docs/testing-runbook.md` for the full runbook, Playwright trace examples, and CI guidance.
+- MCP: the project includes a local MCP helper used by tools/agents — see `docs/mcp.md` for MCP usage and `docs/testing-runbook.md` for how MCP integrates with tests and CI.
+
 ## 📁 Project Structure
 
 ```
@@ -41,95 +46,3 @@ wb-starter/
     ├── behaviors/      # Behavior modules
     └── builder/        # Visual builder logic
 ```
-
-## ⚙️ Configuration
-
-Edit `config/site.json` to customize your site:
-
-```json
-{
-  "site": {
-    "name": "My Site",
-    "logo": "🚀",
-    "theme": "dark"
-  },
-  "nav": [
-    { "id": "home", "label": "Home", "icon": "🏠", "page": "home" },
-    { "id": "about", "label": "About", "icon": "ℹ️", "page": "about" }
-  ],
-  "footer": {
-    "copyright": "© 2025 Your Company"
-  }
-}
-```
-
-## 📄 Adding Pages
-
-1. Create `pages/mypage.html` with your content
-2. Add to `site.json`:
-   ```json
-   { "id": "mypage", "label": "My Page", "icon": "📄", "page": "mypage" }
-   ```
-3. Refresh browser - done!
-
-## 🎨 Themes
-
-23 themes available. Change in `site.json`:
-
-```json
-"site": {
-  "theme": "cyberpunk"
-}
-```
-
-Themes: `dark`, `light`, `cyberpunk`, `ocean`, `sunset`, `forest`, `midnight`, `sakura`, `arctic`, `desert`, `neon-dreams`, `retro-wave`, `lavender`, `emerald`, `ruby`, `golden`, `slate`, `coffee`, `mint`, `noir`, `aurora`, `twilight`, `grape`
-
-## ✨ Auto Injection (Preview)
-
-WB Behaviors automatically enhances standard HTML5 semantic elements. No `data-wb` attributes required!
-
-| HTML Element | WB Behavior | Description |
-|--------------|-------------|-------------|
-| `<article>` | `card` | Card component with header/main/footer |
-| `<nav>` | `navbar` | Responsive navigation bar |
-| `<aside>` | `sidebar` | Collapsible sidebar/drawer |
-| `<dialog>` | `dialog` | Modal with backdrop and animations |
-| `<details>` | `details` | Animated expand/collapse |
-| `<form>` | `form` | Validation and AJAX handling |
-| `<input>` | `input` | Enhanced styling and states |
-| `<select>` | `select` | Custom dropdown UI |
-| `<button>` | `button` | Ripple effects and loading states |
-| `<table>` | `table` | Responsive sorting and styling |
-| `<img>` | `image` | Lazy loading and fade-in |
-| `<video>` | `video` | Custom player controls |
-| `<audio>` | `audio` | Custom audio player |
-| `<pre>` | `pre` | Code block with copy button |
-
-**Opt-out:** Add `data-wb=""` to any element to disable auto-injection.
-
-## 📦 Available Behaviors
-
-### Core UI & Layout
-`card`, `collapse`, `dropdown`, `hero`, `layouts`, `navigation`, `overlay` (modal/toast), `tabs`, `toggle`, `tooltip`
-
-### Interactive & Effects
-`copy`, `darkmode`, `draggable`, `effects`, `feedback`, `globe`, `move`, `resizable`, `ripple`, `scroll-progress`, `themecontrol`
-
-### Form & Input
-`checkbox`, `form`, `input`, `radio`, `range`, `rating`, `select`, `slider`, `switch`, `textarea`, `validator`
-
-### Media & Content
-`audio`, `code`, `details`, `dialog`, `dl`, `figure`, `img`, `mdhtml`, `media`, `ol`, `pre`, `progress`, `progressbar`, `table`, `ul`, `video`
-
-### Utilities
-`builder`, `docs-viewer`, `enhancements`, `helpers`, `notes`
-
-## 📱 Responsive
-
-- Collapsible sidebar navigation
-- Mobile-friendly layout
-- Touch-friendly components
-
-## 📄 License
-
-MIT License - Use freely in personal and commercial projects.
