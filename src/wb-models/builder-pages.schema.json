@@ -4,6 +4,7 @@
   "title": "WB Page Builder - Pages Schema",
   "description": "Schema for the WB Page Builder pages system including navigation, breadcrumbs, and component management",
   "version": "2.0.0",
+  "behavior": "builder-pages",
 
   "definitions": {
     "Page": {
