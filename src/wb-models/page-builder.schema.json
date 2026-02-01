@@ -230,6 +230,7 @@
       "description": "Currently active page ID"
     },
     "settings": {
+      "type": "object",
       "$ref": "#/definitions/SiteSettings"
     }
   },

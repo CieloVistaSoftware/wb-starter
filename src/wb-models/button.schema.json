@@ -258,6 +258,17 @@
     "role": "button",
     "ariaDisabled": "dynamic when disabled"
   },
+  "interactions": {
+    "elements": {
+      "element": {
+        "type": "button",
+        "click": {
+          "action": "triggers click handler",
+          "event": "wb:button:click"
+        }
+      }
+    }
+  },
   "test": {
     "setup": [
       "<wb-button>Basic button content</wb-button>",

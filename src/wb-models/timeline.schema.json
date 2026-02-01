@@ -4,6 +4,7 @@
   "title": "WB Timeline Schema",
   "description": "Schema for validating WB Timeline component",
   "type": "object",
+  "behavior": "timeline",
   "required": [
     "items"
   ],
