@@ -112,11 +112,11 @@ export function mkEl(c, id) {
       }
 
       // Make semantic children contenteditable
-      const semanticTags = [
+      const childSemanticTags = [
         'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'BUTTON', 'A', 'LI', 'LABEL',
         'SUMMARY', 'DT', 'DD', 'SMALL', 'STRONG', 'EM', 'B', 'I', 'U', 'TH', 'TD'
       ];
-      if (semanticTags.includes(tagName.toUpperCase()) || (childDef.d && childDef.d.text)) {
+      if (childSemanticTags.includes(tagName.toUpperCase()) || (childDef.d && childDef.d.text)) {
         childEl.setAttribute('contenteditable', 'true');
         childEl.classList.add('canvas-editable');
         childEl.dataset.editableKey = childDef.content ? 'content' : 'text';
@@ -138,7 +138,7 @@ export function mkEl(c, id) {
   }
 
   // Make all semantic elements contenteditable
-  const semanticTags = [
+  const globalSemanticTags = [
     'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'BUTTON', 'A', 'LI', 'LABEL',
     'ARTICLE', 'SECTION', 'HEADER', 'FOOTER', 'NAV', 'ASIDE', 'MAIN', 'ADDRESS', 
     'FIGURE', 'FIGCAPTION', 'TIME', 'MARK', 'CITE', 'SUMMARY', 'DETAILS', 'DT', 
@@ -146,7 +146,7 @@ export function mkEl(c, id) {
     'B', 'I', 'U', 'SUP', 'SUB', 'LEGEND', 'CAPTION', 'TD', 'TH', 'TR', 'TABLE', 
     'THEAD', 'TBODY', 'TFOOT', 'FORM', 'FIELDSET', 'INPUT', 'TEXTAREA', 'SELECT', 'OPTION'
   ];
-  if (semanticTags.includes(el.tagName) || (c.d && c.d.text)) {
+  if (globalSemanticTags.includes(el.tagName) || (c.d && c.d.text)) {
     el.setAttribute('contenteditable', 'true');
     el.classList.add('canvas-editable');
     el.dataset.editableKey = 'text';

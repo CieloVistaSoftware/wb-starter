@@ -275,8 +275,8 @@ export function createDropHandler(canvas, handlers) {
       
       if (dropResult.action === 'createActionGroup' || dropResult.action === 'createFromTemplate') {
         if (dropResult.template) {
-          const templateComp = { ...component, d: { ...component.d, ...dropResult.template } };
-          add(templateComp);
+          const templateComponent = { ...component, d: { ...component.d, ...dropResult.template } };
+          add(templateComponent);
         } else {
           add(component);
         }
@@ -299,8 +299,8 @@ export function createDropHandler(canvas, handlers) {
       }
       
       if (dropResult.useTemplate && dropResult.template) {
-        const templateComp = { ...component, d: { ...component.d, ...dropResult.template } };
-        add(templateComp);
+        const templateComponent = { ...component, d: { ...component.d, ...dropResult.template } };
+        add(templateComponent);
         return;
       }
     }
