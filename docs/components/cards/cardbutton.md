@@ -1,4 +1,4 @@
-# Card Button - WB Framework v3.0
+# Card Button - wb-starter v3.0
 
 Card with action buttons in the footer.
 

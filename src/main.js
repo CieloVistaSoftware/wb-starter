@@ -1,5 +1,5 @@
 /**
- * WB Framework - Application Bootstrap
+ * wb-starter - Application Bootstrap
  * Main entry point for the site
  * @module main
  */
@@ -20,11 +20,11 @@ import WB from './core/wb.js';
 import WBSiteClass from './core/site-engine.js';
 
 /**
- * Initialize the WB Framework application
+ * Initialize the wb-starter application
  * @returns {Promise<void>}
  */
 async function init() {
-  console.log('🚀 WB Framework starting...');
+  console.log('🚀 wb-starter starting...');
 
   try {
     // Expose WB globally
@@ -44,7 +44,7 @@ async function init() {
     // Expose for debugging
     _window.WBSite = site;
 
-    console.log('✅ WB Framework ready');
+    console.log('✅ wb-starter ready');
   } catch (error) {
     console.error('❌ Site initialization failed:', error);
     console.error('Stack:', error.stack);

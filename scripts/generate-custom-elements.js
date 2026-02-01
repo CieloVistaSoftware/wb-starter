@@ -2,7 +2,7 @@
  * Generate Custom Elements Manifest
  * ==================================
  * Creates a custom-elements.json file for VS Code Custom Elements Language Server
- * This enables "Go to Definition" and intellisense for WB Framework components.
+ * This enables "Go to Definition" and intellisense for wb-starter components.
  * 
  * Run: node scripts/generate-custom-elements.js
  * Output: data/custom-elements.json
@@ -150,7 +150,7 @@ async function generateManifest() {
       name: selector,
       tagName: selector,
       customElement: true,
-      description: schema?.description || `WB Framework ${behavior} component`,
+      description: schema?.description || `wb-starter ${behavior} component`,
       attributes: attributes,
       slots: [
         {
@@ -185,7 +185,7 @@ async function generateManifest() {
   // Create the manifest
   const manifest = {
     schemaVersion: '1.0.0',
-    readme: 'WB Framework Custom Elements',
+    readme: 'wb-starter Custom Elements',
     modules: modules
   };
   

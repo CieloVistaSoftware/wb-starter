@@ -1,4 +1,4 @@
-# Details - WB Framework v3.0
+# Details - wb-starter v3.0
 
 Enhanced accordion/disclosure component with smooth animations.
 

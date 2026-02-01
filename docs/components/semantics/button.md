@@ -1,4 +1,4 @@
-# Button - WB Framework v3.0
+# Button - wb-starter v3.0
 
 Interactive button with variants, sizes, and optional icon.
 

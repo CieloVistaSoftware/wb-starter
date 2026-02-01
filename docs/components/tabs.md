@@ -1,4 +1,4 @@
-# Tabs - WB Framework v3.0
+# Tabs - wb-starter v3.0
 
 Tabbed interface for organizing content into switchable panels.
 

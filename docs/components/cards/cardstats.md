@@ -1,4 +1,4 @@
-# Card Stats - WB Framework v3.0
+# Card Stats - wb-starter v3.0
 
 Statistics/metric display card using semantic `<data>` element.
 

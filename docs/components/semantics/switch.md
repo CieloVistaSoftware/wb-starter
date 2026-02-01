@@ -1,4 +1,4 @@
-# Switch - WB Framework v3.0
+# Switch - wb-starter v3.0
 
 Toggle switch for boolean settings.
 

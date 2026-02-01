@@ -1,4 +1,4 @@
-# Card Pricing - WB Framework v3.0
+# Card Pricing - wb-starter v3.0
 
 Pricing plan card for SaaS/subscription services.
 

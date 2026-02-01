@@ -1,4 +1,4 @@
-# Card Expandable - WB Framework v3.0
+# Card Expandable - wb-starter v3.0
 
 Card with expandable/collapsible content.
 

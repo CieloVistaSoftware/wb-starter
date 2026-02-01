@@ -1,4 +1,4 @@
-# Input - WB Framework v3.0
+# Input - wb-starter v3.0
 
 Text input field with label, helper text, and validation states.
 

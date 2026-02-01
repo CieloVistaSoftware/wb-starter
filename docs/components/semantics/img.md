@@ -1,4 +1,4 @@
-# Image - WB Framework v3.0
+# Image - wb-starter v3.0
 
 Enhanced image component with lazy loading, aspect ratio, and fallback support.
 

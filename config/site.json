@@ -1,6 +1,6 @@
 {
   "branding": {
-    "companyName": "WB Framework",
+    "companyName": "wb-starter",
     "headerSubtitle": "Modern Native Web",
     "headerLogoImage": "<img src='images/wb.png' alt='WB Logo' style='height: 2rem; width: auto;' />",
     "browserTabIcon": "images/wb.png",
@@ -184,7 +184,7 @@
   ],
 
   "searchEngineOptimization": {
-    "pageTitle": "WB Framework v3.0 - Zero Build Web Components",
+    "pageTitle": "wb-starter v3.0 - Zero Build Web Components",
     "pageDescription": "170+ behaviors, 23 themes, zero build process. The professional web component library.",
     "seoKeywords": ["web components", "framework", "behaviors", "themes", "no-build"]
   }

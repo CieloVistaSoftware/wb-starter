@@ -30,7 +30,7 @@ export function behaviorsShowcase(element, options = {}) {
   // Mark as ready
   element.dataset.wbReady = 'true';
   
-  console.log('✅ WB Behaviors Showcase initialized');
+  console.log('✅ wb-starter Behaviors Showcase initialized');
 }
 
 /**

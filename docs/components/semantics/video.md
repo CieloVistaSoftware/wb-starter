@@ -1,4 +1,4 @@
-# Video - WB Framework v3.0
+# Video - wb-starter v3.0
 
 Enhanced HTML5 video player with configurable defaults.
 

@@ -684,12 +684,20 @@
     ]
   },
 
+  "$view": [
+    { "tag": "div", "attrs": { "class": "builder-pages" } }
+  ],
+  "$methods": {
+    "createPage": { "description": "Create a page programmatically" }
+  },
+  "$cssAPI": {},
+
   "_metadata": {
     "category": "builder",
     "icon": "📄",
     "since": "2.0.0",
     "status": "stable",
-    "author": "WB Framework",
+    "author": "wb-starter",
     "lastUpdated": "2026-01-16"
   }
 }

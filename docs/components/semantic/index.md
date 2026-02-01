@@ -1,6 +1,6 @@
-# Semantic HTML Elements - WB Framework v3.0
+# Semantic HTML Elements - wb-starter v3.0
 
-WB Framework uses semantic HTML elements as the foundation for all components, ensuring accessibility, SEO benefits, and meaningful document structure.
+wb-starter uses semantic HTML elements as the foundation for all components, ensuring accessibility, SEO benefits, and meaningful document structure.
 
 ## Architecture
 

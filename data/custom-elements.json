@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "readme": "WB Framework Custom Elements",
+  "readme": "wb-starter Custom Elements",
   "modules": [
     {
       "kind": "javascript-module",
@@ -2465,7 +2465,7 @@
           "name": "wb-grid",
           "tagName": "wb-grid",
           "customElement": true,
-          "description": "WB Framework grid component",
+          "description": "wb-starter grid component",
           "attributes": [],
           "slots": [
             {
@@ -2499,7 +2499,7 @@
           "name": "wb-flex",
           "tagName": "wb-flex",
           "customElement": true,
-          "description": "WB Framework flex component",
+          "description": "wb-starter flex component",
           "attributes": [],
           "slots": [
             {
@@ -2533,7 +2533,7 @@
           "name": "wb-stack",
           "tagName": "wb-stack",
           "customElement": true,
-          "description": "WB Framework stack component",
+          "description": "wb-starter stack component",
           "attributes": [],
           "slots": [
             {
@@ -2567,7 +2567,7 @@
           "name": "wb-cluster",
           "tagName": "wb-cluster",
           "customElement": true,
-          "description": "WB Framework cluster component",
+          "description": "wb-starter cluster component",
           "attributes": [],
           "slots": [
             {
@@ -2601,7 +2601,7 @@
           "name": "wb-container",
           "tagName": "wb-container",
           "customElement": true,
-          "description": "WB Framework container component",
+          "description": "wb-starter container component",
           "attributes": [],
           "slots": [
             {
@@ -2635,7 +2635,7 @@
           "name": "wb-sidebar",
           "tagName": "wb-sidebar",
           "customElement": true,
-          "description": "WB Framework sidebarlayout component",
+          "description": "wb-starter sidebarlayout component",
           "attributes": [],
           "slots": [
             {
@@ -2669,7 +2669,7 @@
           "name": "wb-center",
           "tagName": "wb-center",
           "customElement": true,
-          "description": "WB Framework center component",
+          "description": "wb-starter center component",
           "attributes": [],
           "slots": [
             {
@@ -2703,7 +2703,7 @@
           "name": "wb-cover",
           "tagName": "wb-cover",
           "customElement": true,
-          "description": "WB Framework cover component",
+          "description": "wb-starter cover component",
           "attributes": [],
           "slots": [
             {
@@ -2737,7 +2737,7 @@
           "name": "wb-masonry",
           "tagName": "wb-masonry",
           "customElement": true,
-          "description": "WB Framework masonry component",
+          "description": "wb-starter masonry component",
           "attributes": [],
           "slots": [
             {
@@ -2771,7 +2771,7 @@
           "name": "wb-switcher",
           "tagName": "wb-switcher",
           "customElement": true,
-          "description": "WB Framework switcher component",
+          "description": "wb-starter switcher component",
           "attributes": [],
           "slots": [
             {
@@ -2805,7 +2805,7 @@
           "name": "wb-reel",
           "tagName": "wb-reel",
           "customElement": true,
-          "description": "WB Framework reel component",
+          "description": "wb-starter reel component",
           "attributes": [],
           "slots": [
             {
@@ -2839,7 +2839,7 @@
           "name": "wb-frame",
           "tagName": "wb-frame",
           "customElement": true,
-          "description": "WB Framework frame component",
+          "description": "wb-starter frame component",
           "attributes": [],
           "slots": [
             {
@@ -3014,7 +3014,7 @@
           "name": "wb-icon",
           "tagName": "wb-icon",
           "customElement": true,
-          "description": "WB Framework icon component",
+          "description": "wb-starter icon component",
           "attributes": [],
           "slots": [
             {
@@ -3091,7 +3091,7 @@
           "name": "wb-control",
           "tagName": "wb-control",
           "customElement": true,
-          "description": "WB Framework control component",
+          "description": "wb-starter control component",
           "attributes": [],
           "slots": [
             {
@@ -3125,7 +3125,7 @@
           "name": "wb-repeater",
           "tagName": "wb-repeater",
           "customElement": true,
-          "description": "WB Framework repeater component",
+          "description": "wb-starter repeater component",
           "attributes": [],
           "slots": [
             {

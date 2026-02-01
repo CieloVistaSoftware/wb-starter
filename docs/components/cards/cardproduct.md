@@ -1,4 +1,4 @@
-# Card Product - WB Framework v3.0
+# Card Product - wb-starter v3.0
 
 E-commerce product card with image, pricing, and add-to-cart functionality.
 

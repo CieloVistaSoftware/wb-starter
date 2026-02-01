@@ -10,13 +10,13 @@ import {
  * Ensures correct project terminology is used throughout the codebase.
  * 
  * Rules:
- * 1. "WB Framework" is forbidden. Use "WB Behaviors" or "WB Behaviors Library".
+ * 1. "wb-starter" is forbidden. Use "WB Behaviors" or "WB Behaviors Library".
  */
 
 test.describe('Terminology Compliance', () => {
   
-  test('no usage of forbidden term "WB Framework"', () => {
-    // Context: "WB Framework" is forbidden.
+  test('no usage of forbidden term "wb-starter"', () => {
+    // Context: "wb-starter" is forbidden.
     const FORBIDDEN_TERM = ['WB', 'Framework'].join(' ');
     // Filter out this test file itself
     const currentFileUrl = import.meta.url;

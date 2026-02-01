@@ -1,4 +1,4 @@
-# Card Profile - WB Framework v3.0
+# Card Profile - wb-starter v3.0
 
 User profile card with avatar, name, role, and bio.
 

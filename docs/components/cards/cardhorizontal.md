@@ -1,4 +1,4 @@
-# Card Horizontal - WB Framework v3.0
+# Card Horizontal - wb-starter v3.0
 
 Card with side-by-side image and content layout.
 

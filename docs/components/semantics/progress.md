@@ -1,4 +1,4 @@
-# Progress - WB Framework v3.0
+# Progress - wb-starter v3.0
 
 Progress bar with determinate and indeterminate states.
 

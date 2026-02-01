@@ -1,4 +1,4 @@
-# Card Video - WB Framework v3.0
+# Card Video - wb-starter v3.0
 
 Card with an embedded video player. Uses `<video>` element with accessibility considerations.
 

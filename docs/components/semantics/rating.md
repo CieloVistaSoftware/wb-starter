@@ -1,4 +1,4 @@
-# Rating - WB Framework v3.0
+# Rating - wb-starter v3.0
 
 Star rating component for displaying or collecting ratings.
 

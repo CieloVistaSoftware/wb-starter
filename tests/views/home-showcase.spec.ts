@@ -1,7 +1,7 @@
 /**
  * Home Page Showcase Tests
  * ========================
- * Comprehensive tests for the WB Framework showcase home page.
+ * Comprehensive tests for the wb-starter showcase home page.
  * 
  * Covers:
  * - Hero section rendering
@@ -52,7 +52,7 @@ test.describe('Home Page Showcase', () => {
     // Check main title
     const title = page.locator('.home-hero__title');
     await expect(title).toBeVisible({ timeout: 5000 });
-    await expect(title).toContainText('WB Framework');
+    await expect(title).toContainText('wb-starter');
     console.log('✅ Hero title visible');
     
     // Check subtitle
@@ -118,12 +118,12 @@ test.describe('Home Page Showcase', () => {
   // FEATURE CARDS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  test('03 - Why WB Framework section with feature cards', async ({ page }) => {
+  test('03 - Why wb-starter section with feature cards', async ({ page }) => {
     console.log('🧪 Test 3: Feature cards...');
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
     // Check section title
-    const sectionTitle = page.locator('h2:has-text("Why WB Framework")');
+    const sectionTitle = page.locator('h2:has-text("Why wb-starter")');
     await expect(sectionTitle).toBeVisible();
     console.log('✅ Section title visible');
     
@@ -310,10 +310,10 @@ test.describe('Home Page Showcase', () => {
     await expect(traditionalHeader).toBeVisible();
     console.log('✅ Traditional Approach header visible');
     
-    // Check WB Framework header
-    const wbHeader = page.locator('h3:has-text("WB Framework")');
+    // Check wb-starter header
+    const wbHeader = page.locator('h3:has-text("wb-starter")');
     await expect(wbHeader).toBeVisible();
-    console.log('✅ WB Framework header visible');
+    console.log('✅ wb-starter header visible');
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -601,7 +601,7 @@ test.describe('Home Page Showcase', () => {
     
     // Features
     console.log('📍 Checking FEATURES section...');
-    await expect(page.locator('h2:has-text("Why WB Framework")')).toBeVisible();
+    await expect(page.locator('h2:has-text("Why wb-starter")')).toBeVisible();
     const featureCards = page.locator('basic-card[data-hoverable]');
     expect(await featureCards.count()).toBeGreaterThanOrEqual(6);
     console.log('✅ FEATURES: Section title and cards present\n');

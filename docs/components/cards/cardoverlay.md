@@ -1,4 +1,4 @@
-# Card Overlay - WB Framework v3.0
+# Card Overlay - wb-starter v3.0
 
 Image card with text overlay.
 

@@ -1,4 +1,4 @@
-# WB Framework Issues Todo List
+# wb-starter Issues Todo List
 **Generated:** January 29, 2026  
 **Total Issues:** 24
 

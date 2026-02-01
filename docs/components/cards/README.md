@@ -1,4 +1,4 @@
-# WB Framework v3.0 - Cards
+# wb-starter v3.0 - Cards
 
 This folder contains documentation for all card components.
 

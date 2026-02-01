@@ -1,4 +1,4 @@
-# Card - WB Framework v3.0
+# Card - wb-starter v3.0
 
 Base card component using Light DOM architecture and WBServices pattern.
 

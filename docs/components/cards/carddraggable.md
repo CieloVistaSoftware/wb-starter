@@ -1,4 +1,4 @@
-# Card Draggable - WB Framework v3.0
+# Card Draggable - wb-starter v3.0
 
 Draggable/moveable card with mouse drag support.
 

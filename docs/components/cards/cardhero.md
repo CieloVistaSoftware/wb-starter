@@ -1,4 +1,4 @@
-# Card Hero - WB Framework v3.0
+# Card Hero - wb-starter v3.0
 
 Full-width hero banner card with background image/gradient and CTAs.
 

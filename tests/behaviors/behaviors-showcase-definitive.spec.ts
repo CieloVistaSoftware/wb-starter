@@ -66,7 +66,7 @@ test.describe('Page Structure', () => {
     expect(errors.filter(e => !e.includes('404'))).toHaveLength(0);
   });
 
-  test('WB framework initializes correctly', async ({ page }) => {
+  test('wb-starter initializes correctly', async ({ page }) => {
     const wbExists = await page.evaluate(() => !!(window as any).WB);
     expect(wbExists).toBe(true);
   });
