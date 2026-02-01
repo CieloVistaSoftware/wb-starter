@@ -10,11 +10,11 @@
 </div>
 
 <!-- QUICK STATS -->
-<div class="themes-stats">
-  <stats-card value="23" label="Total Themes" icon="🎨"></stats-card>
-  <stats-card value="12" label="Dark Themes" icon="🌙"></stats-card>
-  <stats-card value="11" label="Light Themes" icon="☀️"></stats-card>
-  <stats-card value="∞" label="CSS Variables" icon="🎯"></stats-card>
+<div id="themes-stats" class="themes-stats">
+  <stats-card id="themes-stats-total" value="23" label="Total Themes" icon="🎨"></stats-card>
+  <stats-card id="themes-stats-dark" value="12" label="Dark Themes" icon="🌙"></stats-card>
+  <stats-card id="themes-stats-light" value="11" label="Light Themes" icon="☀️"></stats-card>
+  <stats-card id="themes-stats-vars" value="∞" label="CSS Variables" icon="🎯"></stats-card>
 </div>
 
 <!-- HARMONIC COLOR SYSTEM DEMO -->
@@ -24,26 +24,26 @@
   
   <!-- HCS Visual Demo -->
   <div class="hcs-demo">
-    <div class="hcs-demo__visual">
+    <div id="hcs-demo-visual" class="hcs-demo__visual">
       <h3>🌊 Wave-Based Color Derivation</h3>
       <p>Colors are derived using wave frequencies. The primary hue acts as the fundamental frequency, with secondary and accent colors as harmonics.</p>
       
-      <div class="hcs-wave-demo">
+      <div id="hcs-wave-demo" class="hcs-wave-demo">
         <div class="hcs-wave" style="--hue: 240;"><!-- Primary wave --></div>
         <div class="hcs-wave hcs-wave--secondary" style="--hue: 60;"><!-- Complementary --></div>
         <div class="hcs-wave hcs-wave--accent" style="--hue: 210;"><!-- Accent --></div>
       </div>
       
-      <div class="hcs-color-output">
-        <div class="hcs-color-swatch" style="background: hsl(240, 70%, 50%);">
+      <div id="hcs-color-output" class="hcs-color-output">
+        <div id="hcs-color-swatch-primary" class="hcs-color-swatch" style="background: hsl(240, 70%, 50%);">
           <span>Primary</span>
           <code>240°</code>
         </div>
-        <div class="hcs-color-swatch" style="background: hsl(60, 60%, 50%);">
+        <div id="hcs-color-swatch-secondary" class="hcs-color-swatch" style="background: hsl(60, 60%, 50%);">
           <span>Secondary</span>
           <code>60° (+180°)</code>
         </div>
-        <div class="hcs-color-swatch" style="background: hsl(210, 60%, 50%);">
+        <div id="hcs-color-swatch-accent" class="hcs-color-swatch" style="background: hsl(210, 60%, 50%);">
           <span>Accent</span>
           <code>210° (-30°)</code>
         </div>
@@ -54,7 +54,7 @@
   <!-- Harmony Types -->
   <h3 style="text-align: center; margin: 2rem 0 1rem; color: var(--text-secondary);">Color Harmony Types Used in Themes</h3>
   
-  <div class="harmony-grid">
+  <div id="harmony-grid" class="harmony-grid">
     <!-- Complementary -->
     <div class="harmony-card">
       <h4>Complementary</h4>
@@ -646,9 +646,9 @@ const oceanPalette = generateHarmonicPalette(200, 'analogous');
   <h2 class="section-title">Live Preview</h2>
   <p class="section-subtitle">See how components look in the current theme</p>
   
-  <div class="preview-container">
+  <div id="themes-preview-container" class="preview-container">
     <!-- Cards -->
-    <div class="preview-row">
+    <div id="themes-preview-row-1" class="preview-row">
       <basic-card title="Card Title" hoverable="">
         <p>This card adapts to the current theme colors and styling.</p>
       </basic-card>
