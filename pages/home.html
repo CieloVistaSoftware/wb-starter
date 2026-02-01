@@ -1,26 +1,15 @@
 <!-- 
   WB START HOME PAGE - REDESIGNED
   Focus: Modern, High-Impact, Performance-First
--->
-
-<!-- HERO SECTION START -->
-<div id="home-hero" class="home-hero__wrapper">
-<wb-cardhero
-  variant="cosmic"
-  background="https://picsum.photos/1400/700?r=hero"
-  pretitle="100 Components"
-  title='Build <span class="wb-gradient-text">stunning UIs</span>'
-  subtitle="just HTML — no build step"
-  cta="Explore Components"
-  cta-href="#components"
-  cta-secondary="Documentation">
+--><!-- HERO SECTION START --><html><head></head><body><div id="home-hero" class="home-hero__wrapper">
+<wb-cardhero variant="cosmic" background="https://picsum.photos/1400/700?r=hero" pretitle="100 Components" title="Build <span class=&quot;wb-gradient-text&quot;>stunning UIs</span>" subtitle="just HTML — no build step" cta="Explore Components" cta-href="#components" cta-secondary="Documentation">
 </wb-cardhero>
 <!-- HERO SECTION END -->
 
 <!-- STATS BANNER -->
-<div class="stats-banner">
+<div class="stats-banner" id="autogen-home-html-3">
   <div class="stat-item">
-    <span class="stat-value" x-counter data-value="100" data-duration="2000">0</span>
+    <span class="stat-value" x-counter="" data-value="100" data-duration="2000">0</span>
     <span class="stat-label">Behaviors</span>
   </div>
   <div class="stat-separator"></div>
@@ -41,7 +30,7 @@
 </div>
 
 <!-- LIVE DEMO SECTION -->
-<div class="page__section">
+<div class="page__section" id="autogen-home-html-0">
   <div class="section-header">
     <h2 class="section-title">It's Just HTML attributes</h2>
     <p class="section-subtitle">Add complex interactive behaviors with simple <code>x-*</code> attributes.</p>
@@ -54,19 +43,19 @@
       <div class="preview-label">Live Result</div>
         <wb-card variant="glass" class="preview-canvas" style="padding:1rem;">
           <div class="preview-row">
-            <button class="wb-btn wb-btn--secondary" x-ripple>Click Me (Ripple)</button>
+            <button class="wb-btn wb-btn--secondary" x-ripple="">Click Me (Ripple)</button>
             <button class="wb-btn wb-btn--secondary" x-tooltip="Hello! This works without JS config.">Hover Me</button>
             <wb-button>Open Modal</wb-button>
           </div>
 
           <div class="preview-row">
-            <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); cursor: move;" x-draggable>
+            <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); cursor: move;" x-draggable="">
               ✋ Drag Me Around
             </div>
           </div>
 
           <div class="preview-row">
-            <button class="wb-btn wb-btn--primary" x-confetti>Celebrate! 🎉</button>
+            <button class="wb-btn wb-btn--primary" x-confetti="">Celebrate! 🎉</button>
           </div>
         </wb-card>
     </div>
@@ -81,18 +70,18 @@
       <wb-mdhtml>
 ```html
 <!-- 1. Add Ripple Effect -->
-<button class="wb-btn wb-btn--secondary" x-ripple>Click Me</button>
+<button class="wb-btn wb-btn--secondary" x-ripple="">Click Me</button>
 
 <!-- 2. Add Tooltip -->
 <button class="wb-btn wb-btn--secondary" x-tooltip="Hello! This works without JS config.">Hover Me</button>
 
 <!-- 3. Make Draggable -->
-<div style="padding: 1rem; border: 1px solid #334155; border-radius: 8px;" x-draggable>
+<div style="padding: 1rem; border: 1px solid #334155; border-radius: 8px;" x-draggable="">
   ✋ Drag Me Around
 </div>
 
 <!-- 4. Confetti Explosion -->
-<button class="wb-btn wb-btn--primary" x-confetti>Celebrate! 🎉</button>
+<button class="wb-btn wb-btn--primary" x-confetti="">Celebrate! 🎉</button>
 ```
       </wb-mdhtml>
     </div>
@@ -101,7 +90,7 @@
 </div>
 
 <!-- FEATURE CARDS -->
-<div class="page__section bg-subtle">
+<div class="page__section bg-subtle" id="autogen-home-html-1">
   <div class="section-header">
     <h2 class="section-title">Everything You Need</h2>
     <h2 class="section-title" style="margin-top:.25rem; font-size:1.25rem;">Why WB Behaviors</h2>
@@ -154,7 +143,7 @@
 </div>
 
 <!-- PREMIUM SHOWCASE -->
-<div class="page__section">
+<div class="page__section" id="autogen-home-html-2">
   <div class="section-header">
     <h2 class="section-title">Premium Components Included</h2>
     <h2 class="section-title" style="margin-top:.25rem; font-size:1.25rem;">Rearrange</h2>
@@ -172,18 +161,12 @@
         <span>Audio Visualization</span>
       </div>
       <div class="showcase-box__content">
-        <wb-audio 
-          data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" 
-          data-show-eq="true" 
-          data-volume="0.5"></wb-audio>
+        <wb-audio data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" data-show-eq="true" data-volume="0.5"></wb-audio>
       </div>
       <div class="showcase-box__code">
         <wb-mdhtml>
 ```html
-<wb-audio 
-  data-src="song.mp3" 
-  data-show-eq="true"
-  data-volume="0.5">
+<wb-audio data-src="song.mp3" data-show-eq="true" data-volume="0.5">
 </wb-audio>
 ```
         </wb-mdhtml>
@@ -204,16 +187,10 @@
       <div class="showcase-box__code">
         <wb-mdhtml>
 ```html
-<notification-card 
-  type="info" 
-  title="System Update" 
-  message="...">
+<notification-card type="info" title="System Update" message="...">
 </notification-card>
 
-<notification-card 
-  type="success" 
-  title="Complete" 
-  message="...">
+<notification-card type="success" title="Complete" message="...">
 </notification-card>
 ```
         </wb-mdhtml>
@@ -613,3 +590,4 @@
   }
 
 </style>
+</div></body></html>
