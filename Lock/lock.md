@@ -35,6 +35,12 @@ The `/Lock` folder serves as a coordination mechanism between AI assistants. Bef
 2. If a lock exists for your target file → **WAIT** or work on something else
 3. If no lock exists → Create your lock, then proceed
 
+### Cleaning up released or stale locks
+
+- Use `npm run lock:prune -- --age 30` to detect lock files older than 30 days that contain an explicit `RELEASED` / `UNLOCKED` marker (detect-only).
+- To remove matching files locally: `npm run lock:prune -- --age 30 --apply` (ensure your git tree is clean first).
+- CI will run the detection step on every PR and fail if stale locks are present; use the above commands to fix the PR before merge.
+
 ---
 
 ## Cleanup Progress Log
