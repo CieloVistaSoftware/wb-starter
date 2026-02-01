@@ -6,9 +6,13 @@
   "main": "index.html",
   "scripts": {
     "start": "node scripts/update-docs-manifest.js && node server.js",
+    "start:mcp": "node scripts/mcp-restart.js --port 52100 --wait 20",
+    "start:mcp:foreground": "node scripts/mcp-restart.js --port 52100 --foreground",
+    "mcp:healthcheck": "node scripts/mcp-healthcheck.cjs",
     "dev": "npx serve . -p 3000",
     "test:duplicates": "node scripts/test-duplicates.mjs",
-    "test": "npm run test:duplicates && npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors",
+    "test": "node scripts/test-runner.js",
+    "test:ordered": "npx playwright test --project=compliance && npm run test:fast && npx playwright test --project=base && npx playwright test --project=behaviors && npx playwright test --project=regression",
     "test:fast": "npx playwright test --max-failures=1",
     "test:dev": "npx playwright test --project=base --project=behaviors",
     "test:inc": "node scripts/test-incremental.js",
@@ -29,6 +33,16 @@
     "generate:wb-tests": "node scripts/generate-wb-tests.mjs",
     "generate:schema-tests": "node scripts/generate-schema-tests.js",
     "generate:search": "node scripts/generate-search-index.js",
+
+    "hooks:install": "sh scripts/install-git-hooks.sh",
+    "lock:status": "node scripts/lock-status.js",
+    "lock:annotate": "node scripts/lock-annotate.js",
+    "lock:prune": "node scripts/lock-prune.js",
+    "lock:prune:apply": "node scripts/lock-prune.js --apply",
+    "lock:restore": "node scripts/lock-restore.js",
+    "lock:restore:apply": "node scripts/lock-restore.js --apply",
+    "lock:hooks:install": "sh scripts/install-git-hooks.sh",
+
     "precommit": "npm run test:integrity"
   },
   "keywords": [
