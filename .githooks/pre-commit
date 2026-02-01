@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# .githooks/pre-commit
+# Prevent commits when stale/released lock files remain in the workspace.
+# Intended as a lightweight local guard (won't modify files).
+
+set -euo pipefail
+ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo "${PWD}")
+cd "$ROOT"
+
+# Run lock-prune in detect-only mode for a short age (catch obviously stale locks)
+node scripts/lock-prune.js --age 7 >/dev/null 2>&1 || {
+  echo "\nERROR: lock-prune detected released/stale lock files older than 7 days."
+  echo "Run: npm run lock:prune -- --age 7 --apply  (ensure working tree is clean first)"
+  exit 1
+}
+
+# If staged files include Lock/* ensure the author intentionally modified them
+staged=$(git diff --name-only --cached)
+if echo "$staged" | grep -qE '^Lock/'; then
+  echo "NOTICE: You are committing changes under Lock/. Ensure this is intentional."
+fi
+
+exit 0

@@ -1,0 +1,50 @@
+name: lock-auto-pr
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # every Monday 09:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-prune:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install deps
+        run: npm ci --no-audit --no-fund
+      - name: Detect & apply stale-lock cleanup
+        id: prune
+        run: |
+          BRANCH=lock/auto-prune-$(date -u +%Y%m%d)
+          git checkout -b "$BRANCH"
+          # apply safe deletions for locks older than 30 days
+          node scripts/lock-prune.js --age 30 --apply || true
+          if [ -n "$(git status --porcelain)" ]; then
+            git add Lock || true
+            git commit -m "chore(lock): automated prune of released/stale lock files (age>30d)" || true
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Create PR (if changes)
+        if: steps.prune.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: chore(lock): automated prune of released/stale lock files
+          title: chore(lock): automated prune of released/stale lock files
+          body: |
+            This PR was opened automatically by the lock-prune workflow. It removes advisory lock files that are older than 30 days and contain an explicit RELEASED/UNLOCKED marker.
+          branch: lock/auto-prune
+          labels: automated, housekeeping

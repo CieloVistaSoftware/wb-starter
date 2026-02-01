@@ -1,0 +1,45 @@
+name: lock-owner-reminder
+
+on:
+  schedule:
+    - cron: '0 12 * * 1' # weekly Monday 12:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  remind-owners:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install deps
+        run: npm ci --no-audit --no-fund
+      - name: Find long-lived locks
+        id: scan
+        run: |
+          node scripts/lock-status.js --json --age 30 > /tmp/locks.json || true
+          cat /tmp/locks.json || true
+      - name: Create issues for expired locks
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const locks = JSON.parse(fs.readFileSync('/tmp/locks.json','utf8')||'[]');
+            for (const l of locks) {
+              const owner = (l.meta||{}).owner || null;
+              const title = `Lock: ${l.name} — review required`;
+              const body = `Lock file **${l.name}** appears to be older than 30 days.\n\n` +
+                `**Owner:** ${(l.meta||{}).owner||'(none)'}\n` +
+                `**Reason:** ${(l.meta||{}).reason||'(not provided)'}\n\n` +
+                `If this lock is no longer needed, please remove it or mark it RELEASED. If it is still required, update the lock (add an \`expires:\` date or extend the reason).`;
+              await github.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body, labels: ['lock','triage'] });
+            }
