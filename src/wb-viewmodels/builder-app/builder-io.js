@@ -162,7 +162,7 @@ export function saveAsHTML() {
   </main>
   ${footerContent}
   <script type="module">
-    import WB from './src/index.js';
+    import WB from '/src/index.js';
   </script>
 </body>
 </html>`;
