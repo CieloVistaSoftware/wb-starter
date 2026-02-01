@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { safeScrollIntoView } from '../base';
 
 test.describe('PCE Demo Page', () => {
   test('loads pce-test.html and renders custom elements', async ({ page }) => {

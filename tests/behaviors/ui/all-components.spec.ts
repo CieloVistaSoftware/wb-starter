@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { safeScrollIntoView } from '../../base';
 
 test.describe('WB Components & Behaviors', () => {
 
