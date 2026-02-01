@@ -7,9 +7,7 @@ function safeAssign(name, fn) {
   if (!window[name]) window[name] = fn;
 }
 
-// MENU HANDLING (delegated)
-function initMenuHandlers() { /* delegated to `builder-menu.js` — kept as noop shim */ }
-
+// MENU HANDLING — fully delegated to `builder-menu.js` (removed noop shim here)
 // autoResizeCanvas delegated to viewmodels
 function autoResizeCanvasImpl() { /* noop — viewmodel should provide real impl */ }
 
