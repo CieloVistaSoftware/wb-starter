@@ -5,6 +5,12 @@
       "actor": "automation:repo-maintenance",
       "action": "restore-mcp-scripts",
       "details": "Restored root npm scripts `start:mcp` and `mcp:healthcheck`; added healthcheck script; added tests and CI guards to prevent future removals. Branch: fix/restore-mcp-scripts. PR: #90 (protect-critical-scripts)."
+    },
+    {
+      "timestamp": "2026-02-02T01:20:00Z",
+      "actor": "automation:repo-maintenance (GitHub Copilot)",
+      "action": "remove-stale-locks-and-speedup-tests",
+      "details": "Removed 5 stale Lock/ files and applied developer-responsiveness changes: made `npm test` fast-by-default, added staged MD/HTML integrity checks, combined Playwright invocations, added cleanup helper, and updated .gitignore. Changes landed on branch `chore/speedup-test-default` and submitted as a PR for CI verification."
     }
   ]
 }

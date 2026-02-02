@@ -6,7 +6,7 @@ cd "$ROOT"
 
 # Run critical checks (fast)
 node scripts/ensure-critical-scripts.js || { echo "ERROR: critical scripts missing - aborting commit"; exit 1; }
-node scripts/lint-md-powershell.js || { echo "ERROR: PowerShell-unsafe snippets found in docs - fix before committing"; exit 1; }
+node scripts/lint-md-powershell-staged.js || { echo "ERROR: PowerShell-unsafe snippets found in staged docs - fix before committing"; exit 1; }
 
 # Run quick tests (fast integrity check)
 npm run test:integrity --silent || { echo "ERROR: integrity tests failed - aborting commit"; exit 1; }
