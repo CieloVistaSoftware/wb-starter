@@ -25,11 +25,14 @@
     "test:browsers": "npx playwright test --project=firefox --project=webkit --project=mobile-chrome --project=mobile-safari",
     "test:all": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors && npx playwright test --project=performance",
     "test:integrity": "npx playwright test tests/compliance/project-integrity.spec.ts",
+    "lint:md-powershell": "node scripts/lint-md-powershell.js",
+    "check:stale-locks": "node scripts/check-stale-locks.js",
+    "ci:docs-safety": "npm run lint:md-powershell && npm run check:stale-locks",
     "audit:schema-tests": "node scripts/audit-schema-tests.mjs",
     "generate:wb-tests": "node scripts/generate-wb-tests.mjs",
     "generate:schema-tests": "node scripts/generate-schema-tests.js",
     "generate:search": "node scripts/generate-search-index.js",
-    "precommit": "npm run test:integrity"
+    "precommit": "npm run lint:md-powershell && npm run test:integrity"
   },
   "keywords": [
     "website",
