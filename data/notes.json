@@ -1,3 +1,10 @@
 {
-  "notes": []
+  "notes": [
+    {
+      "timestamp": "2026-02-01T23:58:00Z",
+      "actor": "automation:repo-maintenance",
+      "action": "restore-mcp-scripts",
+      "details": "Restored root npm scripts `start:mcp` and `mcp:healthcheck`; added healthcheck script; added tests and CI guards to prevent future removals. Branch: fix/restore-mcp-scripts. PR: #90 (protect-critical-scripts)."
+    }
+  ]
 }

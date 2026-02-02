@@ -29,12 +29,13 @@
     "test:integrity": "npx playwright test tests/compliance/project-integrity.spec.ts",
     "lint:md-powershell": "node scripts/lint-md-powershell.js",
     "check:stale-locks": "node scripts/check-stale-locks.js",
-    "ci:docs-safety": "npm run lint:md-powershell && npm run check:stale-locks",
+    "check:critical-scripts": "node scripts/ensure-critical-scripts.js",
+    "ci:docs-safety": "npm run lint:md-powershell && npm run check:stale-locks && npm run check:critical-scripts",
     "audit:schema-tests": "node scripts/audit-schema-tests.mjs",
     "generate:wb-tests": "node scripts/generate-wb-tests.mjs",
     "generate:schema-tests": "node scripts/generate-schema-tests.js",
     "generate:search": "node scripts/generate-search-index.js",
-    "precommit": "npm run lint:md-powershell && npm run test:integrity"
+    "precommit": "npm run check:critical-scripts && npm run lint:md-powershell && npm run test:integrity"
   },
   "keywords": [
     "website",

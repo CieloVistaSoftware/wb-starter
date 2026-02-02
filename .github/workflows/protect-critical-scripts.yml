@@ -1,0 +1,29 @@
+name: Protect critical scripts
+
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'scripts/**'
+      - '.githooks/**'
+  push:
+    branches: [ main ]
+
+jobs:
+  ensure-critical-scripts:
+    name: Ensure critical scripts + quick checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install deps
+        run: npm ci --no-audit
+      - name: Run critical-scripts check
+        run: npm run check:critical-scripts
+      - name: Run quick docs linter
+        run: npm run lint:md-powershell
