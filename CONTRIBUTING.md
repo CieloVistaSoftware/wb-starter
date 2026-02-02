@@ -53,6 +53,12 @@ npx playwright test tests/compliance/no-observer-referror.spec.ts \
 
 # or run a named compliance project
 npx playwright test --project=compliance --trace=on
+
+> TIP: to avoid starting Playwright when your grep/pattern matches no tests, use the safe wrapper:
+> ```bash
+> npm run pw:maybe -- --grep 'my-pattern'
+> ```
+> This prints a concise "no matching tests found — skipping" message instead of launching the runner.
 ```
 
 - Where to find artifacts locally:
