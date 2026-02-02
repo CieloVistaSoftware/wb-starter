@@ -6,6 +6,8 @@
   "main": "index.html",
   "scripts": {
     "start": "node scripts/update-docs-manifest.js && node server.js",
+    "start:mcp": "npm --prefix mcp-server start",
+    "mcp:healthcheck": "node scripts/mcp-healthcheck.js",
     "dev": "npx serve . -p 3000",
     "test:duplicates": "node scripts/test-duplicates.mjs",
     "test": "npm run test:duplicates && npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors",
