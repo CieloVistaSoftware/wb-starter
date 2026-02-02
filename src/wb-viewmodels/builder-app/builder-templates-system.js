@@ -261,7 +261,7 @@ export function previewTemplate(template, options = {}) {
   ${bodyContent}
   
   <script type="module">
-    import WB from './src/core/wb-lazy.js';
+    import WB from '../../core/wb-lazy.js';
     WB.init();
   </script>
 </body>

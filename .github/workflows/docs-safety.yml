@@ -46,6 +46,23 @@ jobs:
       - name: Check Lock/ entries
         run: npm run check:stale-locks
 
+  critical-scripts-check:
+    name: Critical npm-scripts check
+    runs-on: ubuntu-latest
+    needs: [md-powershell-lint, stale-locks]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install deps
+        run: npm ci --no-audit
+      - name: Ensure critical npm scripts present
+        run: npm run check:critical-scripts
+
   builder-del-guard:
     name: Builder del() guard (quick)
     runs-on: ubuntu-latest

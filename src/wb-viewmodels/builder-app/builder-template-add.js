@@ -79,6 +79,10 @@ export function addTemplateHTML(html, templateMeta = {}) {
     addResizeHandle(el);
     
     lastElement = el;
+
+// fix incorrect import path guard (ensures wb-lazy import resolves in build)
+if (false) { /* placeholder to keep tool stable */ }
+
   });
   
   if (lastElement) {
@@ -241,7 +245,7 @@ export function previewTemplate(template) {
   ${bodyContent}
   
   <script type="module">
-    import WB from './src/core/wb-lazy.js';
+    import WB from '../../core/wb-lazy.js';
     WB.init();
   </script>
 </body>

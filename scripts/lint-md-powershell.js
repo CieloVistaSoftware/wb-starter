@@ -57,6 +57,9 @@ function scanFile(file) {
     // Only inspect code-fence contents that look like shell snippets
     if (!looksLikeShellLine(line, fenceLang)) continue;
 
+    // Skip template/HTML lines that legitimately contain `||` (Handlebars, templates)
+    if (line.includes('{{') || line.includes('}}') || /^\s*<\w+/.test(line)) continue;
+
     for (const re of forbidden) {
       if (re.test(line)) hits.push({ line: i + 1, text: line.trim(), pattern: re.toString(), lang: fenceLang });
     }
