@@ -11,7 +11,7 @@
     "dev": "npx serve . -p 3000",
     "test:duplicates": "node scripts/test-duplicates.mjs",
     "test": "npm run test:fast",
-    "test:fast": "node scripts/playwright-if-tests.js -- --max-failures=1",
+    "test:fast": "npx playwright test --project=compliance --project=regression --project=base --project=behaviors --project=views --project=functional --project=schema-viewer --max-failures=1",
     "test:dev": "node scripts/playwright-if-tests.js -- --project=base --project=behaviors",
     "test:inc": "node scripts/test-incremental.js",
     "test:ui": "npx playwright test --ui",
@@ -66,6 +66,7 @@
   },
   "customElements": "./data/custom-elements.json",
   "devDependencies": {
+    "@playwright/test": "^1.52.0",
     "acorn": "^8.15.0",
     "acorn-walk": "^8.3.4",
     "sharp": "^0.34.5"
