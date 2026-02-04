@@ -1,6 +1,33 @@
 {
-  "lastUpdated": "2026-01-30T02:24:25.789Z",
+  "lastUpdated": "2026-02-03T12:00:00.000Z",
   "issues": [
+    {
+      "id": "BUG-2026-02-03-001",
+      "type": "BUG",
+      "description": "wb-mdhtml code blocks not syntax highlighted - hljs colors not applied",
+      "date": "2/3/2026",
+      "fixed": false,
+      "component": "code.js, mdhtml.js",
+      "notes": "CSS fix attempted but highlighting still not working"
+    },
+    {
+      "id": "UI-2026-02-03-001",
+      "type": "UI",
+      "description": "Code examples must match demos above (e.g., 3 image cards = 3 code examples)",
+      "date": "2/3/2026",
+      "fixed": false,
+      "component": "pages/components.html",
+      "notes": "Product cards updated, other sections still need sync"
+    },
+    {
+      "id": "ENHANCEMENT-2026-02-03-001",
+      "type": "ENHANCEMENT",
+      "description": "wb-cardportfolio schema missing size attribute (sm, md, lg)",
+      "date": "2/3/2026",
+      "fixed": false,
+      "component": "cardportfolio.schema.json",
+      "notes": "size='sm' used in components.html but not in schema"
+    },
     {
       "id": "note-1769470023977-p0",
       "type": "UI",
@@ -20,7 +47,9 @@
       "type": "UI",
       "description": "code sections not colored (use mdhtml)",
       "date": "1/26/2026",
-      "fixed": false
+      "fixed": true,
+      "test": "tests/views/themes-showcase.spec.ts, tests/views/home-showcase.spec.ts",
+      "notes": "Verified by Playwright — themes & home mdhtml tests (2026-02-04)"
     },
     {
       "id": "note-1769469867776-p0",
@@ -48,7 +77,9 @@
       "type": "BUG",
       "description": "doc button from builder does not navigate",
       "date": "1/26/2026",
-      "fixed": false
+      "fixed": true,
+      "test": "tests/verify-docs-links.js",
+      "notes": "Navigation fixed; verify-docs-links test covers this (2026-02-04)"
     },
     {
       "id": "note-1769445232423-p0",
@@ -69,7 +100,9 @@
       "type": "BUG",
       "description": "Issues viewer refresh button does not work",
       "date": "1/25/2026",
-      "fixed": false
+      "fixed": true,
+      "test": "tests/views/issues-viewer.spec.ts",
+      "notes": "Added Playwright test; refresh now updates panel (2026-02-04)"
     },
     {
       "id": "note-1769306014994-p0",
