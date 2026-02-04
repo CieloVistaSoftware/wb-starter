@@ -18,14 +18,14 @@
   },
 
   "navigationMenu": [
-    { "menuItemId": "home", "menuItemText": "Home", "menuItemEmoji": "🏠", "pageToLoad": "home" },
-    { "menuItemId": "builder", "menuItemText": "Get Started", "menuItemEmoji": "🚀", "pageToLoad": "builder" },
-    { "menuItemId": "components", "menuItemText": "Components", "menuItemEmoji": "🧩", "pageToLoad": "components" },
-    { "menuItemId": "behaviors", "menuItemText": "Behaviors", "menuItemEmoji": "⚡", "pageToLoad": "behaviors" },
-    { "menuItemId": "themes", "menuItemText": "Themes", "menuItemEmoji": "🎨", "pageToLoad": "themes" },
-    { "menuItemId": "docs", "menuItemText": "Docs", "menuItemEmoji": "📖", "pageToLoad": "docs" },
-    { "menuItemId": "viewers", "menuItemText": "Viewers", "menuItemEmoji": "🔍", "pageToLoad": "viewers" },
-    { "menuItemId": "about", "menuItemText": "About", "menuItemEmoji": "ℹ️", "pageToLoad": "about" },
+    { "menuItemId": "main-home", "menuItemText": "Home", "menuItemEmoji": "🏠", "pageToLoad": "main/home" },
+    { "menuItemId": "main-builder", "menuItemText": "Get Started", "menuItemEmoji": "🚀", "pageToLoad": "main/builder" },
+    { "menuItemId": "main-components", "menuItemText": "Components", "menuItemEmoji": "🧩", "pageToLoad": "main/components" },
+    { "menuItemId": "main-behaviors", "menuItemText": "Behaviors", "menuItemEmoji": "⚡", "pageToLoad": "main/behaviors" },
+    { "menuItemId": "main-themes", "menuItemText": "Themes", "menuItemEmoji": "🎨", "pageToLoad": "main/themes" },
+    { "menuItemId": "main-docs", "menuItemText": "Docs", "menuItemEmoji": "📖", "pageToLoad": "main/docs" },
+    { "menuItemId": "main-about", "menuItemText": "About", "menuItemEmoji": "ℹ️", "pageToLoad": "main/about" },
+    { "menuItemId": "main-contact", "menuItemText": "Contact", "menuItemEmoji": "✉️", "pageToLoad": "main/contact" }
 
     { "menuItemId": "ai-permutation-test", "menuItemText": "ai-permutation-test", "pageToLoad": "ai-permutation-test" },
     { "menuItemId": "charity-food", "menuItemText": "charity-food", "pageToLoad": "charity-food" },

@@ -1,0 +1,137 @@
+<!-- Viewers Page - Links to all development viewers -->
+
+<div class="page__section">
+  <div class="section-header">
+    <h1 class="section-title">🔍 Development Viewers</h1>
+    <p class="section-subtitle">Tools for debugging, monitoring, and inspecting your application</p>
+  </div>
+
+  <div class="viewers-grid">
+    
+    <!-- Doc Viewer -->
+    <a href="/doc-viewer.html" class="viewer-card">
+      <div class="viewer-icon">📄</div>
+      <div class="viewer-info">
+        <h3>Documentation Viewer</h3>
+        <p>Browse and read markdown documentation files with syntax highlighting</p>
+      </div>
+      <div class="viewer-arrow">→</div>
+    </a>
+
+    <!-- Schema Viewer -->
+    <a href="/schema-viewer.html" class="viewer-card">
+      <div class="viewer-icon">📋</div>
+      <div class="viewer-info">
+        <h3>Schema Viewer</h3>
+        <p>Inspect and edit component JSON schemas with live preview</p>
+      </div>
+      <div class="viewer-arrow">→</div>
+    </a>
+
+    <!-- Fix Viewer -->
+    <a href="/fix-viewer.html" class="viewer-card">
+      <div class="viewer-icon">🔧</div>
+      <div class="viewer-info">
+        <h3>Fix Registry Viewer</h3>
+        <p>Browse applied fixes, filter by status, component, or date</p>
+      </div>
+      <div class="viewer-arrow">→</div>
+    </a>
+
+    <!-- Errors Viewer -->
+    <a href="/errors-viewer.html" class="viewer-card">
+      <div class="viewer-icon">🚨</div>
+      <div class="viewer-info">
+        <h3>Error Log Viewer</h3>
+        <p>Monitor and debug application errors with stack traces</p>
+      </div>
+      <div class="viewer-arrow">→</div>
+    </a>
+
+    <!-- MCP Traffic Log -->
+    <a href="/mcp-server/logs/log-viewer.html" class="viewer-card">
+      <div class="viewer-icon">📡</div>
+      <div class="viewer-info">
+        <h3>MCP Traffic Log</h3>
+        <p>View MCP server communication logs in real-time</p>
+      </div>
+      <div class="viewer-arrow">→</div>
+    </a>
+
+  </div>
+</div>
+
+<style>
+  .viewers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .viewers-grid {
+      gap: 1.5rem;
+      padding: 0;
+    }
+  }
+
+  .viewer-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+  }
+
+  .viewer-card:hover {
+    border-color: var(--primary);
+    background: var(--bg-tertiary);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .viewer-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    width: 3rem;
+    text-align: center;
+  }
+
+  .viewer-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .viewer-info h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .viewer-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .viewer-arrow {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .viewer-card:hover .viewer-arrow {
+    transform: translateX(4px);
+    color: var(--primary);
+  }
+</style>

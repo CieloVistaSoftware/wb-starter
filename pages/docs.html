@@ -1,3 +1,8 @@
+<!-- REDIRECTED: canonical page moved to /main/docs.html -->
+<!doctype html>
+<meta http-equiv="refresh" content="0;url=/main/docs.html">
+<link rel="canonical" href="/main/docs.html">
+
 <div id="docs-hero" class="page__hero">
   <h1>📖 Documentation</h1>
   <p>Browse all documentation, guides, and research papers.</p>
@@ -53,7 +58,7 @@
           for (const doc of category.docs) {
             // Use absolute path for doc-viewer
             const filePath = doc.file.startsWith('http') || doc.file.startsWith('/') ? doc.file : '/docs/' + doc.file;
-            html += '<a href="/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
+            html += '<a href="/viewers/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
             html += 'class="docs-card" target="_blank" ';
             html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
             html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + doc.title + '</h3>';
