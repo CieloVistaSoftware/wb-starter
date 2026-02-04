@@ -55,15 +55,42 @@
       "pageToLoad": "docs"
     },
     {
+      "menuItemId": "viewers",
+      "menuItemText": "Viewers",
+      "menuItemEmoji": "🔍",
+      "pageToLoad": "viewers"
+    },
+    {
       "menuItemId": "about",
       "menuItemText": "About",
       "menuItemEmoji": "ℹ️",
       "pageToLoad": "about"
-    }
+    },
+
+    /* Auto-generated entries for all files in pages/ */
+    { "menuItemId": "about", "menuItemText": "about", "pageToLoad": "about" },
+    { "menuItemId": "ai-permutation-test", "menuItemText": "ai-permutation-test", "pageToLoad": "ai-permutation-test" },
+    { "menuItemId": "behaviors", "menuItemText": "behaviors", "pageToLoad": "behaviors" },
+    { "menuItemId": "builder", "menuItemText": "builder", "pageToLoad": "builder" },
+    { "menuItemId": "charity-food", "menuItemText": "charity-food", "pageToLoad": "charity-food" },
+    { "menuItemId": "components", "menuItemText": "components", "pageToLoad": "components" },
+    { "menuItemId": "contact", "menuItemText": "contact", "pageToLoad": "contact" },
+    { "menuItemId": "demos", "menuItemText": "demos", "pageToLoad": "demos" },
+    { "menuItemId": "docs", "menuItemText": "docs", "pageToLoad": "docs" },
+    { "menuItemId": "features", "menuItemText": "features", "pageToLoad": "features" },
+    { "menuItemId": "hero-variants", "menuItemText": "hero-variants", "pageToLoad": "hero-variants" },
+    { "menuItemId": "home", "menuItemText": "home", "pageToLoad": "home" },
+    { "menuItemId": "links", "menuItemText": "links", "pageToLoad": "links" },
+    { "menuItemId": "newpage", "menuItemText": "newpage", "pageToLoad": "newpage" },
+    { "menuItemId": "offshoring", "menuItemText": "offshoring", "pageToLoad": "offshoring" },
+    { "menuItemId": "schema-first-architecture", "menuItemText": "schema-first-architecture", "pageToLoad": "schema-first-architecture" },
+    { "menuItemId": "services", "menuItemText": "services", "pageToLoad": "services" },
+    { "menuItemId": "themes", "menuItemText": "themes", "pageToLoad": "themes" },
+    { "menuItemId": "viewers", "menuItemText": "viewers", "pageToLoad": "viewers" }
   ],
 
   "navigationLayout": {
-    "navigationPosition": "left",
+    "navigationPosition": "top",
     "navigationWidth": "fit-content",
     "navigationCanCollapse": true,
     "navigationStartCollapsed": false
