@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wb-mdhtml — Code Rendering Showcase</title>
+    <link rel="stylesheet" href="../src/styles/themes.css">
+    <link rel="stylesheet" href="../src/styles/site.css">
+    <link rel="stylesheet" href="../src/styles/demo.css">
+    <style>
+        body {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-color);
+            color: var(--text-primary);
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: var(--text-primary);
+            margin-top: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 1.5rem 0;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <h1>wb-mdhtml — Code Rendering Showcase</h1>
+        <p>Demonstrates syntax-highlighted code blocks with colored rendering.</p>
+
+        <hr>
+
+        <section>
+            <h2>HTML Code (Colored)</h2>
+            <wb-mdhtml>
+                <template>
+                    ```html
+                    <wb-button variant="primary">Primary Button</wb-button>
+                    <wb-button variant="success">Success Button</wb-button>
+                    <wb-button variant="error">Error Button</wb-button>
+                    ```
+                </template>
+            </wb-mdhtml>
+        </section>
+
+        <section>
+            <h2>JavaScript Code (Colored)</h2>
+            <wb-mdhtml>
+                <template>
+                    ```javascript
+                    class WbButton extends HTMLElement {
+                    connectedCallback() {
+                    const variant = this.getAttribute('variant') || 'primary';
+                    this.classList.add(`btn-${variant}`);
+                    console.log('Button initialized:', variant);
+                    }
+                    }
+                    customElements.define('wb-button', WbButton);
+                    ```
+                </template>
+            </wb-mdhtml>
+        </section>
+
+        <section>
+            <h2>CSS Code (Colored)</h2>
+            <wb-mdhtml>
+                <template>
+                    ```css
+                    .btn-primary {
+                    background-color: var(--color-primary);
+                    color: white;
+                    padding: 0.5rem 1rem;
+                    border-radius: var(--radius-md);
+                    border: none;
+                    cursor: pointer;
+                    }
+
+                    .btn-primary:hover {
+                    background-color: var(--color-primary-dark);
+                    }
+                    ```
+                </template>
+            </wb-mdhtml>
+        </section>
+
+        <section>
+            <h2>JSON Schema (Colored)</h2>
+            <wb-mdhtml>
+                <template>
+                    ```json
+                    {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "title": "wb-button",
+                    "properties": {
+                    "variant": {
+                    "type": "string",
+                    "enum": ["primary", "secondary", "success", "error"]
+                    },
+                    "size": {
+                    "type": "string",
+                    "enum": ["sm", "md", "lg"]
+                    }
+                    }
+                    }
+                    ```
+                </template>
+            </wb-mdhtml>
+        </section>
+
+        <section>
+            <h2>Bash / Shell (Colored)</h2>
+            <wb-mdhtml>
+                <template>
+                    ```bash
+                    # Install dependencies
+                    npm install
+
+                    # Start development server
+                    npm run start
+
+                    # Run tests
+                    npm run test:behaviors
+                    ```
+                </template>
+            </wb-mdhtml>
+        </section>
+
+        <section>
+            <h2>TypeScript Code (Colored)</h2>
+            <wb-mdhtml>
+                <template>
+                    ```typescript
+                    interface ButtonProps {
+                    variant: 'primary' | 'secondary' | 'success' | 'error';
+                    size?: 'sm' | 'md' | 'lg';
+                    disabled?: boolean;
+                    }
+
+                    function createButton(props: ButtonProps): HTMLElement {
+                    const btn = document.createElement('wb-button');
+                    btn.setAttribute('variant', props.variant);
+                    if (props.size) btn.setAttribute('size', props.size);
+                    return btn;
+                    }
+                    ```
+                </template>
+            </wb-mdhtml>
+        </section>
+
+        <section>
+            <h2>Markdown Content (Inline)</h2>
+            <wb-mdhtml>
+## This is a heading
+
+This is **bold** and *italic* text with a [link](https://example.com).
+
+- List item 1
+- List item 2
+- List item 3
+            </wb-mdhtml>
+        </section>
+
+        <section>
+            <h2>Mixed: Markdown + Code Block</h2>
+            <wb-mdhtml>
+                <template>
+                    ### Component Usage
+
+                    Use the `wb-card` component for content containers:
+
+                    ```html
+                    <wb-card variant="elevated">
+                        <h3 slot="header">Card Title</h3>
+                        <p>Card content goes here.</p>
+                        <wb-button slot="footer">Action</wb-button>
+                    </wb-card>
+                    ```
+
+                    The card supports these variants: `default`, `outline`, `elevated`.
+                </template></wb-mdhtml>
+        </section>
+
+        <section>
+            <h2>Python Code (Colored)</h2>
+            <wb-mdhtml><template>
+                    ```python
+                    def process_component(name: str, props: dict) -> str:
+                    """Generate HTML for a web component."""
+                    attrs = ' '.join(f'{k}="{v}"' for k, v in props.items())
+                    return f'<{name} {attrs}></{name}>'
+
+                    # Usage
+                    html = process_component('wb-button', {
+                    'variant': 'primary',
+                    'size': 'lg'
+                    })
+                    print(html)
+                    ```
+                </template></wb-mdhtml>
+        </section>
+
+    </main>
+
+    <script type="module">
+        import WB from '../src/core/wb.js';
+        WB.init();
+    </script>
+</body>
+
+</html>

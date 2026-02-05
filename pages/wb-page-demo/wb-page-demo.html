@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>wb-page demo</title>
+
+  <!-- Authoritative demo fallback: ensures deterministic first-paint during
+       development and inisolated environments. Kept minimal and reversible. -->
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/components/wb-page.css">
+</head>
+<body>
+  <wb-page title="Demo — wb-page" keep-header-at-top>
+    <header class="site__header">
+      <div class="header__left"><a href="/">wb-page Demo</a></div>
+      <div class="header__right"><wb-theme-dropdown></wb-theme-dropdown></div>
+    </header>
+
+    <main>
+      <h1>wb-page — canonical page wrapper</h1>
+      <p>This demo shows the `wb-page` component providing header, main and footer structure with site defaults. (Uses direct child elements; slots are deprecated.)</p>
+    </main>
+
+    <footer class="site__footer">© 2026 WB Starter</footer>
+  </wb-page>
+
+  <script type="module">
+    import WB from '/src/core/wb-lazy.js';
+    WB.init({ scan: true, observe: true, autoInject: true, preload: ['theme-dropdown'] });
+  </script>
+</body>
+</html>
