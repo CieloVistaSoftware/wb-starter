@@ -25,7 +25,7 @@
     { "menuItemId": "main-themes", "menuItemText": "Themes", "menuItemEmoji": "🎨", "pageToLoad": "main/themes" },
     { "menuItemId": "main-docs", "menuItemText": "Docs", "menuItemEmoji": "📖", "pageToLoad": "main/docs" },
     { "menuItemId": "main-about", "menuItemText": "About", "menuItemEmoji": "ℹ️", "pageToLoad": "main/about" },
-    { "menuItemId": "main-contact", "menuItemText": "Contact", "menuItemEmoji": "✉️", "pageToLoad": "main/contact" }
+    { "menuItemId": "main-contact", "menuItemText": "Contact", "menuItemEmoji": "✉️", "pageToLoad": "main/contact" },
 
     { "menuItemId": "ai-permutation-test", "menuItemText": "ai-permutation-test", "pageToLoad": "ai-permutation-test" },
     { "menuItemId": "charity-food", "menuItemText": "charity-food", "pageToLoad": "charity-food" },
