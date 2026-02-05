@@ -1,0 +1,10 @@
+{
+  "target": "scripts",
+  "files": [
+    { "file": "scripts/whoami.js", "changed": false },
+    { "file": "scripts/check-no-cjs.mjs", "changed": true },
+    { "file": "scripts/codemods/preview-codemod.mjs", "changed": true },
+    { "file": "scripts/sync-pages-to-nav.mjs", "changed": false }
+  ],
+  "transformed": 4
+}
