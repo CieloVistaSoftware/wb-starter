@@ -55,10 +55,10 @@ const behaviorModules = {
   mdhtml: 'mdhtml',
   builder: 'builder',
   
-  // Feedback (10) → feedback.js
-  toast: 'feedback', badge: 'feedback', progress: 'feedback', spinner: 'feedback',
-  avatar: 'feedback', chip: 'feedback', alert: 'feedback', skeleton: 'feedback',
-  divider: 'feedback', breadcrumb: 'feedback', notify: 'feedback', pill: 'feedback',
+  // Feedback — individual modules (split from feedback.js)
+  toast: 'toast', badge: 'badge', progress: 'progress', spinner: 'spinner',
+  avatar: 'avatar', chip: 'chip', alert: 'alert', skeleton: 'skeleton',
+  divider: 'divider', breadcrumb: 'breadcrumb', notify: 'notify', pill: 'pill',
   
   // Navigation (8) → navigation.js
   navbar: 'navigation', sidebar: 'navigation', menu: 'navigation',

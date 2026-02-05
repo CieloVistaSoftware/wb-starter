@@ -151,6 +151,14 @@
   - `builder-editing.js` (56KB) → 2-3 modules
   - `builder-tree.js` (41KB) → tree view, selection
 
+- [x] **Break up `feedback.js` monolith** (IN PROGRESS)
+  - [x] Extract 12 behaviors into individual files
+  - [x] Update index.js registry to point to individual modules
+  - [x] Replace feedback.js with backward-compat re-export
+  - [ ] Create missing CSS files (toast, notify, spinner, avatar, etc.)
+  - [ ] Migrate inline JS styles to CSS classes
+  - [ ] Refactor component-style behaviors into proper <wb-*> HTMLElement classes
+
 ---
 
 ## 🧪 Test Commands
