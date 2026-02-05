@@ -1,9 +1,9 @@
 /**
- * Builder Behavior
- * Visual page builder component
- * Custom Tag: <wb-builder>
- * Helper Attribute: [x-behavior="builder"]
+ * Visual page builder component behavior.
+ * - `<wb-builder>` component with theme and variant support.
  */
+export function cc() {}
+
 export function builder(element) {
   console.log('🏗️ BUILDER BEHAVIOR CALLED', element);
   

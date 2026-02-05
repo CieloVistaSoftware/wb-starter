@@ -90,7 +90,7 @@ Every component is defined by a JSON schema that serves as the single source of 
   "$view": [
     { "name": "header", "tag": "header", "createdWhen": "title" },
     { "name": "title", "tag": "h3", "parent": "header", "content": "{{title}}" },
-    { "name": "body", "tag": "main", "required": true, "content": "{{slot}}" }
+    { "name": "body", "tag": "main", "required": true, "content": "{{content}}" }
   ],
   
   "$methods": {
@@ -186,7 +186,7 @@ src/
 | `name` | Part identifier → BEM element | `"header"` → `.wb-card__header` |
 | `tag` | HTML element (lowercase) | `"header"`, `"main"`, `"footer"` |
 | `parent` | Nest inside another part | `"parent": "header"` |
-| `content` | Template interpolation | `"{{title}}"` or `"{{slot}}"` |
+| `content` | Template interpolation | `"{{title}}"` or `"{{content}}"` |
 | `createdWhen` | Conditional creation | `"title OR subtitle"` |
 | `required` | Always create | `true` |
 | `class` | Additional classes | `"custom-class"` |

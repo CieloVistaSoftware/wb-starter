@@ -1,18 +1,8 @@
 /**
- * Feedback Behaviors
- * -----------------------------------------------------------------------------
- * User feedback components including toasts, badges, alerts, spinners,
- * and progress indicators.
- * 
- * Custom Tag: <wb-feedback>
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- *   <button x-toast data-message="Saved!">Save</button>
- *   <wb-badge  data-variant="success">New</span>
- * -----------------------------------------------------------------------------
- * All behaviors generate content from data attributes
+ * User feedback components: toasts, badges, alerts, spinners, progress indicators.
+ * - `<wb-toast>`, `<wb-badge>`, `<wb-alert>`, `<wb-spinner>`, `<wb-avatar>`
  */
+export function cc() {}
 
 export function createToast(message, type = 'info', duration = 3000) {
   let container = document.querySelector('.wb-toast-container');

@@ -1,0 +1,86 @@
+wb-drawer {
+  visibility: hidden;
+  position: relative;
+}
+
+/* Overlay drawer internals must not affect page flow */
+wb-drawer > .wb-drawer__backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+wb-drawer > .wb-drawer__panel {
+  display: none;
+  position: fixed;
+  top: 0;
+  width: min(400px, 85vw);
+  height: 100%;
+  background: var(--bg-secondary, #1f2937);
+  z-index: 1000;
+  overflow-y: auto;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+  flex-direction: column;
+}
+
+wb-drawer.wb-drawer--left > .wb-drawer__panel,
+wb-drawer:not(.wb-drawer--right) > .wb-drawer__panel {
+  left: 0;
+}
+
+wb-drawer.wb-drawer--right > .wb-drawer__panel {
+  right: 0;
+}
+
+wb-drawer > .wb-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color, #374151);
+}
+
+wb-drawer > .wb-drawer__panel > main,
+wb-drawer .wb-drawer__body {
+  padding: 1rem;
+  flex: 1;
+}
+
+wb-drawer > .wb-drawer__close {
+  background: none;
+  border: none;
+  color: var(--text-primary, #f9fafb);
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+/* Open state */
+wb-drawer[open] {
+  visibility: visible;
+}
+
+wb-drawer[open] > .wb-drawer__backdrop,
+wb-drawer[open] > .wb-drawer__panel {
+  display: flex;
+}
+
+wb-drawer[open] > .wb-drawer__backdrop {
+  display: block;
+}
+
+/* Drawer layout variant - visible in-page, not overlay */
+wb-drawer.wb-drawer-layout {
+  visibility: visible;
+}
+
+wb-drawer.wb-drawer-layout > .wb-drawer__panel {
+  display: flex;
+  position: relative;
+  height: auto;
+  box-shadow: none;
+}

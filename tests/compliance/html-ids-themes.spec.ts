@@ -3,7 +3,12 @@ import { ROOT, relativePath, readFile } from '../base';
 
 test.describe('HTML Compliance: ID attributes (themes.html)', () => {
   test('themes critical containers have IDs', async ({ page }) => {
-    const file = `${ROOT}/pages/themes.html`;
+    const resolvePage = (slug) => {
+      const p1 = path.join(ROOT, 'pages', `${slug}.html`);
+      const p2 = path.join(ROOT, 'pages', slug, `${slug}.html`);
+      return fs.existsSync(p1) ? p1 : p2;
+    };
+    const file = resolvePage('themes');
     const content = readFile(file);
     await page.setContent(content);
 

@@ -1,30 +1,27 @@
 /**
- * Card Behavior + Variants
+ * Card components with 19 variants for elevated content containers.
+ * - `<wb-card>`, `<wb-cardhero>`, `<wb-cardimage>`, `<wb-cardprofile>`, etc.
  * -----------------------------------------------------------------------------
  * Comprehensive card system supporting various content types and layouts.
  * Handles extensive variants like heroes, profiles, pricing, and media cards.
- * 
  * Usage:
- *   <wb-card variant="glass" title="Title">Content</wb-card>
- *   <wb-cardhero variant="cosmic" title="Hero Title" ...></wb-cardhero>
+ *   `<wb-card variant="glass" title="Title">Content</wb-card>`
+ *   `<wb-cardhero variant="cosmic" title="Hero Title" ...></wb-cardhero>`
  * -----------------------------------------------------------------------------
- * 
  * ARCHITECTURE:
  * - All card variants INHERIT from cardBase
  * - Variants CONTAIN specialized content (images, profiles, etc.)
  * - Changes to cardBase propagate to ALL variants automatically
- * 
  * INHERITANCE: cardimage IS-A card
  * CONTAINMENT: cardimage HAS-A image (figure element)
- * 
  * SEMANTIC STANDARD (MANDATORY):
- * - Container: <article> (preferred) or <section>
- * - Header content (title, subtitle): <header>
- * - Main content: <main>
- * - Footer content (actions, buttons): <footer>
- * 
+ * - Container: `<article>` (preferred) or `<section>`
+ * - Header content (title, subtitle): `<header>`
+ * - Main content: `<main>`
+ * - Footer content (actions, buttons): `<footer>`
  * ALL text elements are EDITABLE via double-click in the builder
  */
+export function cc() {}
 
 // Common card padding
 const CARD_PADDING = '1rem';
@@ -78,7 +75,13 @@ function validateSemanticContainer(element, behaviorName) {
 
 /**
  * Base Card
- * All variants inherit from this
+ * 
+ * Foundation behavior that all card variants inherit from. Handles
+ * common styling, hover/click states, and structure building utilities.
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Object} Context object with element, config, and utility methods
  */
 export function cardBase(element, options = {}) {
   // v3.0: Check if schema builder already processed this element
@@ -531,7 +534,15 @@ export function cardBase(element, options = {}) {
 
 /**
  * Card Component
- * Custom Tag: <wb-card>
+ * 
+ * Standard card with header, main content, and footer sections.
+ * Automatically detects semantic structure or creates it from content.
+ * 
+ * Custom Tag: `<wb-card>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function card(element, options = {}) {
   // FIX: Un-wrap auto-generated main if it contains semantic elements
@@ -585,7 +596,15 @@ export function card(element, options = {}) {
 
 /**
  * Card Image Component
- * Custom Tag: <card-image>
+ * 
+ * Card variant with featured image at top or bottom position.
+ * Supports aspect ratio and object-fit configuration.
+ * 
+ * Custom Tag: `<card-image>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardimage(element, options = {}) {
   const config = {
@@ -637,7 +656,15 @@ export function cardimage(element, options = {}) {
 
 /**
  * Card Video Component
- * Custom Tag: <card-video>
+ * 
+ * Card variant with embedded video player. Supports autoplay,
+ * loop, controls, and poster image configuration.
+ * 
+ * Custom Tag: `<card-video>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardvideo(element, options = {}) {
   const config = {
@@ -694,7 +721,15 @@ export function cardvideo(element, options = {}) {
 
 /**
  * Card Button Component
- * Custom Tag: <card-button>
+ * 
+ * Card variant with primary and secondary action buttons in footer.
+ * Buttons can be links or standard buttons.
+ * 
+ * Custom Tag: `<card-button>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardbutton(element, options = {}) {
   // Use all inherited fields from cardBase, only add/override cardbutton-specific fields
@@ -741,7 +776,15 @@ export function cardbutton(element, options = {}) {
 
 /**
  * Card Hero Component
- * Custom Tag: <card-hero>
+ * 
+ * Full-width hero section with background image/gradient, overlay,
+ * and CTA buttons. Supports text alignment and pretitle elements.
+ * 
+ * Custom Tag: `<card-hero>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardhero(element, options = {}) {
   const config = {
@@ -891,7 +934,15 @@ export function cardhero(element, options = {}) {
 
 /**
  * Card Profile Component
- * Custom Tag: <card-profile>
+ * 
+ * Profile card with avatar, cover image, name, role, and bio.
+ * Ideal for team members or user profiles.
+ * 
+ * Custom Tag: `<card-profile>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardprofile(element, options = {}) {
   const config = {
@@ -964,7 +1015,15 @@ export function cardprofile(element, options = {}) {
 
 /**
  * Card Pricing Component
- * Custom Tag: <card-pricing>
+ * 
+ * Pricing tier card with plan name, price, period, features list,
+ * and CTA button. Supports featured state for emphasis.
+ * 
+ * Custom Tag: `<card-pricing>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardpricing(element, options = {}) {
   const config = {
@@ -1070,7 +1129,15 @@ export function cardpricing(element, options = {}) {
 
 /**
  * Card Stats Component
- * Custom Tag: <card-stats>
+ * 
+ * Statistics display card with large value, label, icon, and
+ * optional trend indicator showing up/down changes.
+ * 
+ * Custom Tag: `<card-stats>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardstats(element, options = {}) {
   const config = {
@@ -1153,7 +1220,15 @@ export function cardstats(element, options = {}) {
 
 /**
  * Card Testimonial Component
- * Custom Tag: <card-testimonial>
+ * 
+ * Quote card with author attribution, avatar, role, and star rating.
+ * Includes decorative quote icon and styled blockquote.
+ * 
+ * Custom Tag: `<card-testimonial>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardtestimonial(element, options = {}) {
   const config = {
@@ -1233,7 +1308,15 @@ export function cardtestimonial(element, options = {}) {
 
 /**
  * Card Product Component
- * Custom Tag: <card-product>
+ * 
+ * E-commerce product card with image, price, rating, reviews,
+ * and add-to-cart button. Dispatches `wb:cardproduct:addtocart` events.
+ * 
+ * Custom Tag: `<card-product>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardproduct(element, options = {}) {
   const config = {
@@ -1366,7 +1449,15 @@ export function cardproduct(element, options = {}) {
 
 /**
  * Card Notification Component
- * Custom Tag: <card-notification>
+ * 
+ * Alert/notification card with type styling (info, success, warning, error),
+ * icon, message, and optional dismiss button.
+ * 
+ * Custom Tag: `<card-notification>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardnotification(element, options = {}) {
   const config = {
@@ -1474,7 +1565,15 @@ export function cardnotification(element, options = {}) {
 
 /**
  * Card File Component
- * Custom Tag: <card-file>
+ * 
+ * File display card with type icon, filename, size, date,
+ * and optional download link.
+ * 
+ * Custom Tag: `<card-file>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardfile(element, options = {}) {
   const config = {
@@ -1544,7 +1643,15 @@ export function cardfile(element, options = {}) {
 
 /**
  * Card Link Component
- * Custom Tag: <card-link>
+ * 
+ * Clickable link card with icon, title, description, and badge.
+ * Opens URL in same or new window based on target setting.
+ * 
+ * Custom Tag: `<card-link>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardlink(element, options = {}) {
   const config = {
@@ -1653,7 +1760,15 @@ export function cardlink(element, options = {}) {
 
 /**
  * Card Horizontal Component
- * Custom Tag: <card-horizontal>
+ * 
+ * Horizontal layout card with image on left or right side.
+ * Configurable image width and position.
+ * 
+ * Custom Tag: `<card-horizontal>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardhorizontal(element, options = {}) {
   const config = {
@@ -1718,7 +1833,15 @@ export function cardhorizontal(element, options = {}) {
 
 /**
  * Card Overlay Component
- * Custom Tag: <card-overlay>
+ * 
+ * Card with content overlaid on background image. Supports
+ * gradient overlay and configurable content position.
+ * 
+ * Custom Tag: `<card-overlay>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardoverlay(element, options = {}) {
   const config = {
@@ -1786,7 +1909,15 @@ export function cardoverlay(element, options = {}) {
 
 /**
  * Card Expandable Component
- * Custom Tag: <card-expandable>
+ * 
+ * Card with collapsible content section. Toggle button shows/hides
+ * content with animation. Dispatches `wb:cardexpandable:toggle` events.
+ * 
+ * Custom Tag: `<card-expandable>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardexpandable(element, options = {}) {
   // Capture existing content as fallback before clearing
@@ -1892,7 +2023,15 @@ export function cardexpandable(element, options = {}) {
 
 /**
  * Card Minimizable Component
- * Custom Tag: <card-minimizable>
+ * 
+ * Card with minimize/expand button in header. Collapses to
+ * header-only view. Dispatches `wb:cardminimizable:toggle` events.
+ * 
+ * Custom Tag: `<card-minimizable>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function cardminimizable(element, options = {}) {
   // Capture existing content as fallback before clearing
@@ -2008,7 +2147,15 @@ export function cardminimizable(element, options = {}) {
 
 /**
  * Card Draggable Component
- * Custom Tag: <card-draggable>
+ * 
+ * Draggable card with grab handle in header. Supports axis
+ * constraints, snap-to-grid, and parent boundary limiting.
+ * 
+ * Custom Tag: `<card-draggable>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function carddraggable(element, options = {}) {
   const config = {
@@ -2172,10 +2319,19 @@ export function carddraggable(element, options = {}) {
   };
 }
 
-// ============================================
-// PORTFOLIO CARD - FULL-FEATURED
-// Custom Tag: <wb-cardportfolio>
-// ============================================
+/**
+ * Card Portfolio Component
+ * 
+ * Full-featured portfolio card with sections for identity, skills,
+ * experience, education, projects, social links, and contact info.
+ * Supports availability status indicator and multiple layout variants.
+ * 
+ * Custom Tag: `<wb-cardportfolio>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
+ */
 export function cardportfolio(element, options = {}) {
   // Parse JSON attributes safely
   const parseJSON = (val) => {

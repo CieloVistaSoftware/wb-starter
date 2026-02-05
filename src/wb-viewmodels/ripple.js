@@ -1,11 +1,9 @@
 /**
- * Ripple Behavior
- * -----------------------------------------------------------------------------
  * Material-style ripple effect on click.
- * 
- * Helper Attribute: [x-ripple]
- * -----------------------------------------------------------------------------
+ * - `[x-ripple]` attribute with customizable color and duration.
  */
+export function cc() {}
+
 export function ripple(element, options = {}) {
   const config = {
     color: options.color || element.dataset.rippleColor || element.getAttribute('ripple-color') || 'rgba(255, 255, 255, 0.4)',

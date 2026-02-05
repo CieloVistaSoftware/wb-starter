@@ -7,36 +7,60 @@
  * @version 3.0.0 - $view format with $methods support
  * 
  * MVVM Structure:
- *   - Model:     properties (data inputs)
- *   - View:      $view (DOM structure)
+ *   - Model: properties (data inputs)
+ *   - View: $view (DOM structure)
  *   - ViewModel: $methods (callable functions)
  * 
  * v3.0 Syntax Strategy:
  * =====================
  * PRIMARY (use in new code):
- *   1. wb-card title="Hello"> - Web component tags for components
- *   2. <button x-ripple> - x- prefix for adding behaviors
+ *   - 1. `<wb-card title="Hello">` - Web component tags for components
+ *   - 2. `<button x-ripple>` - x- prefix for adding behaviors
  * 
- * DEPRECATED (legacy fallback):
- *   3. wb-card > - Still works but avoid in new code
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * EXAMPLE TRACE: Follow this card through the entire pipeline
+ * ═══════════════════════════════════════════════════════════════════════════════
  * 
- * Schema Format:
+ * INPUT HTML:
+ *   `<wb-card title="Hello" elevated>Content here</wb-card>`
+ * 
+ * SCHEMA (card.schema.json):
  *   {
  *     "behavior": "card",
  *     "baseClass": "wb-card",
  *     "properties": {
  *       "title": { "type": "string" },
- *       "elevated": { "type": "boolean" }
+ *       "elevated": { "type": "boolean", "appliesClass": "wb-card--elevated" }
  *     },
  *     "$view": [
  *       { "name": "header", "tag": "header", "createdWhen": "title OR subtitle" },
- *       { "name": "main",   "tag": "main",   "required": true }
+ *       { "name": "title", "tag": "h3", "parent": "header", "content": "{{title}}" },
+ *       { "name": "body", "tag": "main", "required": true, "content": "{{content}}" }
  *     ],
  *     "$methods": {
  *       "show": { "description": "Shows the card" },
  *       "hide": { "description": "Hides the card" }
  *     }
  *   }
+ * 
+ * PROCESSING STEPS:
+ *   - 1. scan() → finds `<wb-card>` in DOM
+ *   - 2. processElement() → runs steps 3-9 below
+ *   - 3. detectSchema() → "wb-card" tag → returns "card"
+ *   - 4. getSchema() → looks up card.schema.json from registry
+ *   - 5. extractData() → { title: "Hello", elevated: true, content... }
+ *   - 6. buildStructure() → applies classes, calls buildFromView()
+ *   - 7. buildFromView() → creates header, h3, main from $view
+ *   - 8. bindSchemaMethodsToElement() → attaches .show(), .hide()
+ *   - 9. WB.inject() → adds behavior interactivity
+ * 
+ * OUTPUT HTML:
+ *   - `<wb-card class="wb-card wb-card--elevated">`
+ *   -   `<header class="wb-card__header">`
+ *   -     `<h3 class="wb-card__title">Hello</h3>`
+ *   -   `</header>`
+ *   -   `<main class="wb-card__body">Content here</main>`
+ *   - `</wb-card>`
  * 
  * Classes are AUTO-GENERATED: baseClass + "__" + name → "wb-card__header"
  * Tags are lowercase per HTML5: "header", "main", "footer"
@@ -62,6 +86,9 @@ const processedElements = new WeakSet();
 /**
  * Load all schemas from wb-models directory
  * @param {string} basePath - Path to wb-models folder
+ * @example
+ * await loadSchemas('/src/wb-models')  // loads all *.schema.json files
+ * await loadSchemas('/custom/path')    // custom schema location
  */
 export async function loadSchemas(basePath = '/src/wb-models') {
   try {
@@ -104,6 +131,25 @@ export async function loadSchemas(basePath = '/src/wb-models') {
 
 /**
  * Register a single schema
+ * 
+ * PURPOSE:
+ *   Adds a schema to the runtime registry so the system knows how to build
+ *   components of that type. Creates mapping between tag name/schema.
+ * 
+ * WHAT IT DOES:
+ *   - 1. Extracts schema name from "behavior" field (or filename)
+ *   - 2. Stores schema object in schemaRegistry (name → schema)
+ *   - 3. Creates tag-to-schema mapping (wb-card → card)
+ * 
+ * WHY IT EXISTS:
+ *   - Called during loadSchemas() for each .schema.json file
+ *   - Enables processElement() to look up how to build any `<wb-*>` tag
+ *   - Allows getWBkeys() to return all registered component tag names
+ * 
+ * EXAMPLE TRACE:
+ *   - Input:  schema = { behavior: "card"... }
+ *   - Result: schemaRegistry.set("card", schema)
+ *   - Result: tagToSchema.set("wb-card", "card")
  */
 export function registerSchema(schema, filename) {
   const name = schema.behavior || filename.replace('.schema.json', '');
@@ -118,7 +164,26 @@ export function registerSchema(schema, filename) {
 }
 
 /**
- * Get schema by name or tag
+ * Returns array of all registered `<wb-*>` tag names from the schema registry.
+ * Useful for querying all WB components in the DOM at once.
+ * @returns {string[]} ["wb-card", "wb-button", ...]
+ * @example
+ * getWBkeys()  // → ["wb-card", "wb-button", "wb-drawer", ...]
+ * document.querySelectorAll(getWBkeys().join(', '))  // select all WB
+ */
+export function getWBkeys() {
+  return [...tagToSchema.keys()];
+}
+
+/**
+ * Looks up a schema by its behavior name or tag name.
+ * Accepts either format and resolves to the schema object.
+ * @param {string} identifier - Schema name ("card") or tag ("wb-card")
+ * @returns {Object|null} Schema object or null if not found
+ * @example
+ * getSchema("card")      // → { behavior: "card", $view: [...], ... }
+ * getSchema("wb-card")   // → same result (resolved via tagToSchema)
+ * getSchema("unknown")   // → null
  */
 export function getSchema(identifier) {
   if (schemaRegistry.has(identifier)) {
@@ -138,21 +203,42 @@ export function getSchema(identifier) {
 // =============================================================================
 
 /**
- * Get base class from schema
+ * Extracts the base CSS class from a schema definition.
+ * Checks baseClass, compliance.baseClass, or generates from behavior name.
+ * @param {Object} schema - Component schema
+ * @returns {string} Base CSS class name
+ * @example
+ * getBaseClass({ baseClass: "wb-card" })           // → "wb-card"
+ * getBaseClass({ compliance: { baseClass: "wb-button" } }) // → "wb-button"
+ * getBaseClass({ behavior: "drawer" })             // → "wb-drawer" (fallback)
  */
 function getBaseClass(schema) {
   return schema.baseClass || schema.compliance?.baseClass || `wb-${schema.behavior}`;
 }
 
 /**
- * Auto-generate BEM class: baseClass__partName
+ * Generates a BEM element class by combining baseClass with part name.
+ * Used to create consistent class naming for component parts.
+ * @param {Object} schema - Component schema
+ * @param {string} partName - Part name (e.g., "header", "title")
+ * @returns {string} BEM element class
+ * @example
+ * getPartClass({ baseClass: "wb-card" }, "header")  // → "wb-card__header"
+ * getPartClass({ baseClass: "wb-card" }, "title")   // → "wb-card__title"
  */
 function getPartClass(schema, partName) {
   return `${getBaseClass(schema)}__${partName}`;
 }
 
 /**
- * Auto-generate modifier class: baseClass--modifier
+ * Generates a BEM modifier class by combining baseClass with modifier.
+ * Used for variant styling (elevated, glass, etc.).
+ * @param {Object} schema - Component schema
+ * @param {string} modifier - Modifier name (e.g., "elevated", "glass")
+ * @returns {string} BEM modifier class
+ * @example
+ * getModifierClass({ baseClass: "wb-card" }, "elevated")  // → "wb-card--elevated"
+ * getModifierClass({ baseClass: "wb-card" }, "glass")     // → "wb-card--glass"
  */
 function getModifierClass(schema, modifier) {
   return `${getBaseClass(schema)}--${modifier}`;
@@ -163,17 +249,30 @@ function getModifierClass(schema, modifier) {
 // =============================================================================
 
 /**
- * Extract data from element attributes
+ * Extracts data from element attributes and innerHTML into an object.
+ * Converts data-* and direct attributes, applies schema defaults.
+ * @param {HTMLElement} element - Element to extract data from
+ * @param {Object} schema - Component schema with properties
+ * @returns {Object} Extracted data object
+ * @example
+ * // Input:  `<wb-card title="Hello" elevated>Content here</wb-card>`
+ * extractData(cardEl, cardSchema)
+ * // → { title: "Hello", elevated: true, content: "Content here"... }
+ *
+ * // Processing:
+ * // - attr "title" → data.title = "Hello"
+ * // - attr "elevated" (empty) → data.elevated = true
+ * // - innerHTML → data.content, data.body (aliases)
  */
 function extractData(element, schema) {
   const data = {};
   
   // Get all data-* attributes AND direct attributes
   for (const attr of element.attributes) {
-    if (attr.name.startsWith('data-') && attr.name !== 'x-behavior') {
+    if (attr.name.startsWith('data-')) {
       const key = attr.name.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
       data[key] = parseValue(attr.value);
-    } else if (!['class', 'style', 'id', 'x-behavior'].includes(attr.name)) {
+    } else if (!['class', 'style', 'id'].includes(attr.name) && !attr.name.startsWith('x-')) {
       // Direct attributes (for web component style)
       const key = attr.name.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
       data[key] = parseValue(attr.value);
@@ -185,27 +284,42 @@ function extractData(element, schema) {
     applyDefaults(data, schema.properties);
   }
   
-  // Store original content as 'slot'
-  data.slot = element.innerHTML.trim();
-
-  // Extract named slots from children (v3.0 feature)
-  element.querySelectorAll('[slot]').forEach(child => {
-    const slotName = child.getAttribute('slot');
-    if (slotName) {
-      data[slotName] = child.innerHTML.trim();
-    }
-  });
-
-  // Alias slot to body if not defined (common in v3 schemas)
-  if (data.body === undefined && data.slot) {
-    data.body = data.slot;
+  // Store original inner content as 'content' (format-agnostic)
+  // IMPORTANT: <template> elements store content in .content (DocumentFragment),
+  // not in innerHTML. We must serialize the DocumentFragment content properly
+  // so behaviors like mdhtml can access template.innerHTML after restoration.
+  const templateChild = element.querySelector('template');
+  if (templateChild && templateChild.content) {
+    // Serialize the DocumentFragment content to a string
+    const tempDiv = document.createElement('div');
+    tempDiv.appendChild(templateChild.content.cloneNode(true));
+    const templateContent = tempDiv.innerHTML;
+    
+    // Reconstruct the template tag with serialized content
+    data.content = `<template>${templateContent}</template>`;  
+  } else {
+    data.content = element.innerHTML.trim();
   }
+
+  // Alias for backwards compatibility
+  data.body = data.content;
   
   return data;
 }
 
 /**
- * Parse attribute value to appropriate type
+ * Parses a raw attribute string into its appropriate JS type.
+ * Handles booleans, numbers, JSON objects, and strings.
+ * @param {string} value - Raw attribute value
+ * @returns {boolean|number|Object|string} Parsed value
+ * @example
+ * parseValue("")         // → true (boolean attribute)
+ * parseValue("true")     // → true
+ * parseValue("false")    // → false
+ * parseValue("42")       // → 42 (number)
+ * parseValue("3.14")     // → 3.14 (float)
+ * parseValue('{"a":1}')  // → { a: 1 } (JSON)
+ * parseValue("hello")    // → "hello" (string)
  */
 function parseValue(value) {
   if (value === '' || value === 'true') return true;
@@ -219,7 +333,14 @@ function parseValue(value) {
 }
 
 /**
- * Apply default values from schema properties
+ * Fills missing data values with defaults defined in schema properties.
+ * Recursively handles nested object properties.
+ * @param {Object} data - Data object to fill with defaults
+ * @param {Object} properties - Schema properties with defaults
+ * @example
+ * const data = { title: "Hello" };
+ * applyDefaults(data, { title: {}, size: { default: "md" } });
+ * // data is now { title: "Hello", size: "md" }
  */
 function applyDefaults(data, properties) {
   for (const [key, prop] of Object.entries(properties)) {
@@ -236,7 +357,16 @@ function applyDefaults(data, properties) {
 // =============================================================================
 
 /**
- * Build DOM structure from schema
+ * Builds the complete DOM structure for an element based on its schema.
+ * Applies classes, clears content, and delegates to format-specific builders.
+ * 
+ * EXAMPLE TRACE:
+ *   - Input:  element = `<wb-card>`, data = { title, elevated... }
+ *   - Step 1: element.classList.add("wb-card")
+ *   - Step 2: applyVariantClasses() → adds "wb-card--elevated"
+ *   - Step 3: element.innerHTML = '' (content saved)
+ *   - Step 4: buildFromView() creates children
+ *   - Result: `<wb-card class="wb-card wb-card--elevated">...</wb-card>`
  */
 function buildStructure(element, schema, data) {
   const baseClass = getBaseClass(schema);
@@ -252,16 +382,16 @@ function buildStructure(element, schema, data) {
   // Apply variant/modifier classes from data
   applyVariantClasses(element, schema, data);
   
-  // Clear existing content (we saved it as slot)
+  // Clear existing content (saved in data.content)
   element.innerHTML = '';
   
   // Build from $view (MVVM format)
   if (schema.$view) {
     buildFromView(element, schema, data);
-    // If $view is empty, restore original slot content
+    // If $view is empty, restore original content
     // This is common for components that process their content (like mdhtml)
-    if (schema.$view.length === 0 && data.slot) {
-      element.innerHTML = data.slot;
+    if (schema.$view.length === 0 && data.content) {
+      element.innerHTML = data.content;
     }
     return;
   }
@@ -278,9 +408,9 @@ function buildStructure(element, schema, data) {
     return;
   }
   
-  // Fallback: just restore slot content
-  if (data.slot) {
-    element.innerHTML = data.slot;
+  // Fallback: just restore original content
+  if (data.content) {
+    element.innerHTML = data.content;
   }
 }
 
@@ -291,8 +421,28 @@ function buildStructure(element, schema, data) {
  *   "$view": [
  *     { "name": "header", "tag": "header", "createdWhen": "title OR subtitle" },
  *     { "name": "title", "tag": "h3", "parent": "header", "content": "{{title}}" },
- *     { "name": "main", "tag": "main", "required": true, "content": "{{slot}}" }
+ *     { "name": "body", "tag": "main", "required": true, "content": "{{content}}" }
  *   ]
+ * 
+ * EXAMPLE TRACE (data = { title: "Hello", content: "..." }):
+ *
+ *   - PASS 1: Sort parts by depth then semantic order
+ *   - Root-level: header, body (depth 0)
+ *   - Nested: title (depth 1, parent: header)
+ *   - Sorted: [header, body, title]
+ *
+ *   - PASS 2: Build each part
+ *   - Part "header": createdWhen met → CREATE
+ *   - Part "body": required=true → CREATE
+ *   - Part "title": parent="header" → CREATE, append to header
+ *
+ *   - RESULT:
+ *   -   `<wb-card>`
+ *   -     `<header class="wb-card__header">`
+ *   -       `<h3 class="wb-card__title">Hello</h3>`
+ *   -     `</header>`
+ *   -     `<main class="wb-card__body">...</main>`
+ *   -   `</wb-card>`
  * 
  * Tags are lowercase per HTML5 standards.
  */
@@ -348,8 +498,8 @@ function buildFromView(element, schema, data) {
     // Handle content
     if (part.content) {
       const content = interpolate(part.content, data);
-      // Use innerHTML if it's the slot OR looks like HTML
-      if (part.content === '{{slot}}' || /<[a-z][\s\S]*>/i.test(content)) {
+      // Use innerHTML if it's content/body OR looks like HTML
+      if (part.content === '{{content}}' || part.content === '{{body}}' || /<[a-z][\s\S]*>/i.test(content)) {
         el.innerHTML = content;
       } else if (content) {
         el.textContent = content; // strict text for everything else
@@ -383,7 +533,15 @@ function buildFromView(element, schema, data) {
 }
 
 /**
- * Build from legacy compliance format (for backwards compatibility)
+ * Builds DOM from legacy v1 compliance format schemas.
+ * Provided for backwards compatibility with older schema definitions.
+ * @param {HTMLElement} element - Target element
+ * @param {Object} schema - Schema with compliance.requiredChildren/optionalChildren
+ * @param {Object} data - Extracted data
+ * @example
+ * // Schema with compliance format:
+ * // { compliance: { requiredChildren: { "main.wb-card__body": { content: "{{content}}" } } } }
+ * buildFromComplianceFormat(cardEl, schema, { content: "Content" });
  */
 function buildFromComplianceFormat(element, schema, data) {
   const required = schema.compliance?.requiredChildren || {};
@@ -413,15 +571,24 @@ function buildFromComplianceFormat(element, schema, data) {
     element.appendChild(el);
   }
   
-  // Add slot to main
+  // Add content to main
   const main = element.querySelector('main, [class*="__main"]');
-  if (main && data.slot) {
-    main.innerHTML = data.slot;
+  if (main && data.content) {
+    main.innerHTML = data.content;
   }
 }
 
 /**
- * Create element from compliance definition
+ * Creates a single DOM element from a legacy compliance definition.
+ * Parses selector for tag/class, applies content, and builds children.
+ * @param {string} selector - CSS selector like "main.wb-card__body"
+ * @param {Object} def - Definition with tagName, content, children
+ * @param {Object} data - Data for interpolation
+ * @param {Object} schema - Parent schema
+ * @returns {HTMLElement} Created element
+ * @example
+ * createFromComplianceDef("header.wb-card__header", { content: "{{title}}" }, { title: "Hi" }, schema)
+ * // → `<header class="wb-card__header">Hi</header>`
  */
 function createFromComplianceDef(selector, def, data, schema) {
   const parts = selector.split('.');
@@ -436,7 +603,7 @@ function createFromComplianceDef(selector, def, data, schema) {
   // Handle content
   if (def.content) {
     const content = interpolate(def.content, data);
-    if (def.content === '{{slot}}') {
+    if (def.content === '{{content}}' || def.content === '{{body}}') {
       el.innerHTML = content;
     } else if (content) {
       el.textContent = content;
@@ -459,7 +626,15 @@ function createFromComplianceDef(selector, def, data, schema) {
 }
 
 /**
- * Get semantic order for sorting
+ * Returns sort order based on semantic HTML5 landmark order.
+ * Ensures header comes before main, main before footer, etc.
+ * @param {string} selector - CSS selector starting with tag name
+ * @returns {number} Order value (0=nav, 1=header, 2=main, 3=aside, 4=footer)
+ * @example
+ * getSemanticOrder("header.wb-card__header")  // → 1
+ * getSemanticOrder("main.wb-card__body")      // → 2
+ * getSemanticOrder("footer.wb-card__footer")  // → 4
+ * getSemanticOrder("div.custom")              // → 2 (default)
  */
 function getSemanticOrder(selector) {
   const tag = selector.split('.')[0].toLowerCase();
@@ -468,7 +643,16 @@ function getSemanticOrder(selector) {
 }
 
 /**
- * Apply variant/modifier classes
+ * Applies BEM modifier classes and attributes based on data values.
+ * Handles appliesClass, appliesAttribute, and enum variants.
+ * @param {HTMLElement} element - Target element
+ * @param {Object} schema - Component schema with properties
+ * @param {Object} data - Data with property values
+ * @example
+ * // schema.properties: { elevated: { appliesClass: "wb-card--elevated" } }
+ * // data: { elevated: true }
+ * applyVariantClasses(cardEl, schema, data);
+ * // cardEl now has class "wb-card--elevated"
  */
 function applyVariantClasses(element, schema, data) {
   const props = schema.properties || {};
@@ -496,7 +680,33 @@ function applyVariantClasses(element, schema, data) {
 }
 
 /**
- * Evaluate condition: "title", "title OR subtitle", "title AND subtitle"
+ * Evaluates a createdWhen condition against data values.
+ * Supports simple checks, OR, AND, and NOT operators.
+ * @param {string} condition - Condition string to evaluate
+ * @param {Object} data - Data object with property values
+ * @returns {boolean} Whether condition is met
+ * @example
+ * // Simple property check
+ * evaluateCondition("title", { title: "Hello" })        // → true
+ * evaluateCondition("title", { title: "" })             // → false
+ * evaluateCondition("title", {})                        // → false
+ *
+ * // OR conditions (any match)
+ * evaluateCondition("title OR subtitle", { title: "X" })           // → true
+ * evaluateCondition("title OR subtitle", { subtitle: "Y" })        // → true
+ * evaluateCondition("title OR subtitle", {})                       // → false
+ *
+ * // AND conditions (all must match)
+ * evaluateCondition("title AND subtitle", { title: "X", subtitle: "Y" }) // → true
+ * evaluateCondition("title AND subtitle", { title: "X" })                // → false
+ *
+ * // NOT conditions
+ * evaluateCondition("NOT disabled", { disabled: false }) // → true
+ * evaluateCondition("NOT disabled", { disabled: true })  // → false
+ *
+ * // Boolean values
+ * evaluateCondition("elevated", { elevated: true })  // → true
+ * evaluateCondition("elevated", { elevated: false }) // → false
  */
 function evaluateCondition(condition, data) {
   if (condition.includes(' OR ')) {
@@ -513,7 +723,18 @@ function evaluateCondition(condition, data) {
 }
 
 /**
- * Interpolate {{placeholders}}
+ * Replace `{{placeholder}}` tokens in a template with data values.
+ * Used by $view content fields to inject dynamic text into DOM elements.
+ * Missing keys are replaced with empty string (no error thrown).
+ * @param {string} template - Template string with `{{key}}` placeholders
+ * @param {Object} data - Data object with key-value pairs
+ * @returns {string} Template with placeholders replaced by values
+ * @example
+ * interpolate("{{title}}", { title: "Hello" })           // → "Hello"
+ * interpolate("Hello, {{name}}!", { name: "John" })      // → "Hello, John!"
+ * interpolate("{{a}} and {{b}}", { a: "X", b: "Y" })     // → "X and Y"
+ * interpolate("Missing: {{foo}}", {})                    // → "Missing: "
+ * interpolate("No placeholders", { title: "Hi" })        // → "No placeholders"
  */
 function interpolate(template, data) {
   return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
@@ -527,10 +748,15 @@ function interpolate(template, data) {
 // =============================================================================
 
 /**
- * Bind $methods from schema to element
+ * Binds schema-defined methods to an element using a viewModel.
+ * Makes methods callable directly on the element instance.
  * @param {HTMLElement} element - Target element
  * @param {Object} schema - Component schema
  * @param {Object} viewModel - ViewModel instance with method implementations
+ * @example
+ * const viewModel = { show() { this.element.hidden = false; } };
+ * bindMethods(cardEl, { $methods: { show: {} } }, viewModel);
+ * cardEl.show();  // calls viewModel.show()
  */
 export function bindMethods(element, schema, viewModel) {
   const methods = schema.$methods || {};
@@ -546,9 +772,13 @@ export function bindMethods(element, schema, viewModel) {
 }
 
 /**
- * Get method definitions from schema
+ * Returns the $methods definitions from a schema by name.
+ * Used to inspect available methods without processing an element.
  * @param {string} schemaName - Name of schema
  * @returns {Object} Method definitions
+ * @example
+ * getMethods("card")  // → { show: { description: "Shows..." }, hide... }
+ * getMethods("unknown")  // → {}
  */
 export function getMethods(schemaName) {
   const schema = getSchema(schemaName);
@@ -564,6 +794,21 @@ export function getMethods(schemaName) {
  * 1. Builds DOM structure from $view
  * 2. Binds $methods to element
  * 3. Triggers behavior injection if WB is available
+ * 
+ * EXAMPLE TRACE:
+ *   Input: `<wb-card title="Hello" elevated>Content here</wb-card>`
+ *
+ *   - 3. detectSchema() → "card"
+ *   - 4. getSchema("card") → { behavior: "card", $view: [...], ... }
+ *   - 5. extractData() → { title: "Hello", elevated: true, content... }
+ *   - 6. buildStructure() → creates DOM children, applies classes
+ *   - 7. buildFromView() → creates header, h3, main from $view
+ *   - 8. bindSchemaMethodsToElement() → element.show(), element.hide()
+ *   - 9. WB.inject(element, "card") → adds interactivity
+ *
+ * To query all WB: document.querySelectorAll(getWBkeys().join(', '))
+ * 
+ *   Output: { success: true, schema: "card", data: {...} }
  * 
  * @param {HTMLElement} element - Element to process
  * @param {string} schemaName - Schema name (optional, auto-detected)
@@ -593,7 +838,6 @@ export function processElement(element, schemaName = null) {
   
   // Mark as processed
   processedElements.add(element);
-  element.dataset.wbSchema = name;
   
   // Bind $methods to element
   if (schema.$methods) {
@@ -613,6 +857,16 @@ export function processElement(element, schemaName = null) {
 /**
  * Bind $methods from schema to element instance
  * Creates callable methods like element.show(), element.hide(), etc.
+ * @param {HTMLElement} element - Target element
+ * @param {Object} schema - Component schema with $methods
+ * @param {Object} data - Element data
+ * @example
+ * bindSchemaMethodsToElement(cardEl, cardSchema, { title: "Hello" });
+ * cardEl.show();    // shows element, dispatches wb:show event
+ * cardEl.hide();    // hides element, dispatches wb:hide event
+ * cardEl.toggle();  // toggles visibility
+ * cardEl.update({ title: "New" });  // updates and rebuilds
+ * cardEl.getData(); // → { title: "New", ... }
  */
 function bindSchemaMethodsToElement(element, schema, data) {
   const methods = schema.$methods || {};
@@ -687,8 +941,15 @@ function bindSchemaMethodsToElement(element, schema, data) {
  * Detect schema from element
  * 
  * v3.0 Priority:
- *   1. wb-card> - Web component tag (PRIMARY)
- *   2. - Data attribute (DEPRECATED - legacy fallback)
+ *   1. `<wb-card>` - Web component tag (PRIMARY)
+ *   2. x-behavior attribute - For adding behaviors to existing elements
+ * 
+ * EXAMPLE TRACE:
+ *   - Input: `<wb-card title="Hello">...</wb-card>`
+ *   - tagName = "wb-card"
+ *   - tagName.startsWith("wb-") → true
+ *   - tagToSchema.get("wb-card") → "card"
+ *   - returns "card"
  * 
  * Note: Class detection was removed - classes are for CSS only
  */
@@ -720,7 +981,13 @@ function detectSchema(element) {
 // =============================================================================
 
 /**
- * Scan DOM for elements to process
+ * Scans a DOM subtree for `<wb-*>` elements and elements with `x-*` attributes.
+ * Processes each matching element through the schema builder.
+ * @param {HTMLElement} root - Root element to scan (default: document.body)
+ * @example
+ * scan();                    // scan entire document
+ * scan(containerEl);         // scan specific container
+ * scan(document.body);       // explicit full scan
  */
 export function scan(root = document.body) {
   // Find wb-* tags
@@ -735,8 +1002,9 @@ export function scan(root = document.body) {
       continue;
     }
     
-    // Process data-wb elements
-    if (el.hasAttribute('x-behavior')) {
+    // Process elements with x-* behavior attributes (x-ripple, x-click, etc.)
+    const hasXBehavior = [...el.attributes].some(a => a.name.startsWith('x-'));
+    if (hasXBehavior) {
       processElement(el);
     }
   }
@@ -748,6 +1016,14 @@ export function scan(root = document.body) {
 
 let observer = null;
 
+/**
+ * Start MutationObserver to auto-process dynamically added elements.
+ * Watches document.body for new `<wb-*>` elements and processes them.
+ * @example
+ * startObserver();  // begins watching for new `<wb-*>` elements
+ * // Now any dynamically added `<wb-card>` will auto-process
+ * container.innerHTML = '<wb-card title="Dynamic">Content</wb-card>';
+ */
 export function startObserver() {
   if (observer) return;
   
@@ -762,7 +1038,9 @@ export function startObserver() {
           processElement(node);
         }
         
-        if (node.hasAttribute?.('x-behavior')) {
+        // Check for x-* behavior attributes
+        const hasXBehavior = [...(node.attributes || [])].some(a => a.name.startsWith('x-'));
+        if (hasXBehavior) {
           processElement(node);
         }
         
@@ -781,6 +1059,17 @@ export function startObserver() {
 // INITIALIZATION
 // =============================================================================
 
+/**
+ * Initializes the Schema Builder system.
+ * Loads all schemas from `/src/wb-models`, scans existing DOM for `<wb-*>`
+ * elements, and starts the mutation observer for dynamic content.
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.schemaPath] - Path to schemas (default: '/src/wb-models')
+ * @returns {Promise<void>} Resolves when initialization is complete
+ * @example
+ * await init();                                   // use defaults
+ * await init({ schemaPath: '/custom/schemas' });  // custom path
+ */
 export async function init(options = {}) {
   console.log('[Schema Builder] ═══════════════════════════════════');
   console.log('[Schema Builder] MVVM Schema Builder v3.0');
@@ -805,6 +1094,7 @@ export default {
   loadSchemas,
   registerSchema,
   getSchema,
+  getWBkeys,
   getMethods,
   bindMethods,
   processElement,

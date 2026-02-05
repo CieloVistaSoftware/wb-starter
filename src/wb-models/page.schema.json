@@ -1,0 +1,20 @@
+{
+  "$id": "page.schema.json",
+  "title": "WB Page — site page shell",
+  "description": "Canonical site page wrapper that provides the default header, main and footer structure and consumes site tokens/behaviors.",
+  "baseClass": "wb-page",
+  "behavior": "page",
+  "properties": {
+    "title": { "type": "string", "description": "Document title (optional)" },
+    "keepHeaderAtTop": { "type": "boolean", "description": "Keep header sticky at top" }
+  },
+  "$view": [
+    { "name": "header", "tag": "header", "attributes": { "class": "site__header" } },
+    { "name": "main", "tag": "main", "attributes": { "class": "site__main" }, "required": true, "content": "{{content}}" },
+    { "name": "footer", "tag": "footer", "attributes": { "class": "site__footer" }, "createdWhen": "footer" }
+  ],
+  "examples": [
+    "<wb-page title=\"Products\">\n  <header>...custom header...</header>\n  <article>Page content...</article>\n  <footer>© 2026</footer>\n</wb-page>"
+  ],
+  "notes": "Use direct child elements (<header>, <main>, <footer>) — HTML slots are deprecated. `wb-page` will set the site default theme to 'dark' when no author theme is present; authors should NOT set `data-theme` on <html> for pages using `wb-page`."
+}

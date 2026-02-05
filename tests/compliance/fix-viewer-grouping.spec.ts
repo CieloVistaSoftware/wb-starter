@@ -40,7 +40,7 @@ test.describe('Fix Viewer Grouping', () => {
       await route.fulfill({ json });
     });
 
-    await page.goto('/public/fix-viewer.html');
+    await page.goto('/public/viewers/fix-viewer.html');
     await page.waitForSelector('.fix-card');
   });
 

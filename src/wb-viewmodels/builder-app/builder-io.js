@@ -1,7 +1,8 @@
 /**
- * builder-io.js
- * Save, Export, and Import functionality for the builder
+ * Save, Export, and Import functionality for the builder.
+ * - LocalStorage persistence, HTML export, JSON import.
  */
+export function cc() {}
 
 import { toast, updCount, chkEmpty } from './builder-utils.js';
 import { analyzeComponent, updateBadges } from './builder-incomplete.js';

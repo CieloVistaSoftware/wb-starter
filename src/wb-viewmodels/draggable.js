@@ -1,8 +1,9 @@
 /**
- * Draggable Behavior
- * Helper Attribute: [x-draggable]
- * Make an element draggable.
+ * Make elements draggable with axis constraints and bounds.
+ * - `[x-draggable]` attribute for drag functionality.
  */
+export function cc() {}
+
 export function draggable(element, options = {}) {
   const config = {
     handle: options.handle || element.dataset.handle,

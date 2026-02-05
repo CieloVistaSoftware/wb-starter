@@ -1,11 +1,9 @@
 /**
- * WBCluster Component
- * -----------------------------------------------------------------------------
- * Cluster layout component.
- * 
- * Custom Tag: <wb-cluster>
- * -----------------------------------------------------------------------------
+ * Cluster layout custom element for horizontal flow.
+ * - `<wb-cluster>` Web Component with gap and alignment options.
  */
+export function cc() {}
+
 import { cluster } from './layouts.js';
 
 export class WBCluster extends HTMLElement {

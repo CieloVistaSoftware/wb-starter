@@ -2,13 +2,11 @@ import { WBCard } from './wb-card.js';
 import { mdhtml } from './mdhtml.js';
 
 /**
- * Fix Card Component
- * -----------------------------------------------------------------------------
- * Special card for displaying fix details.
- * 
- * Custom Tag: <wb-fix-card>
- * -----------------------------------------------------------------------------
+ * Special card component for displaying fix/patch details.
+ * - `<wb-fix-card>` extends WBCard with fix-specific rendering.
  */
+export function cc() {}
+
 export class WBFixCard extends WBCard {
   constructor() {
     super();

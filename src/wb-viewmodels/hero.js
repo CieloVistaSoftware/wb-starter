@@ -1,19 +1,20 @@
 /**
- * Hero Behavior
- * -----------------------------------------------------------------------------
- * Enhances hero sections with dynamic background effects like particles 
- * or cosmic orbs.
- * 
- * Custom Tag: <wb-hero>
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- *   <wb-hero  data-variant="particles">...</div>
+ * Hero sections with dynamic background effects (particles, cosmic orbs).
+ * - `<wb-hero>` component with variant-based effects.
  */
+export function cc() {}
 
 /**
  * Hero Component
- * Custom Tag: <wb-hero>
+ * 
+ * Applies dynamic background effects to hero sections based on the
+ * selected variant (particles, cosmic, etc.).
+ * 
+ * Custom Tag: `<wb-hero>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.variant] - Effect variant: default, particles, cosmic
  */
 export function hero(element, options = {}) {
   // Merge options and data attributes

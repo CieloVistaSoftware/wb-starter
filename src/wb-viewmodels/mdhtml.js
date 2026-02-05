@@ -1,22 +1,32 @@
 /**
- * Markdown to HTML Behavior
- * -----------------------------------------------------------------------------
- * Converts markdown content to HTML using marked.js.
- * 
- * Custom Tag: <wb-mdhtml>
- * 
- * Usage:
- *   <wb-mdhtml>
- *     # Hello World
- *     This is **bold** and *italic*
- *   </wb-mdhtml>
- * 
- * Or with external file:
- *   <wb-mdhtml data-src="./docs/readme.md"></wb-mdhtml>
- * Or with absolute path:
- *   <wb-mdhtml data-src="/docs/architecture.md"></wb-mdhtml>
- * -----------------------------------------------------------------------------
+ * Markdown to HTML converter using marked.js with code highlighting.
+ * - `<wb-mdhtml>` for inline or external markdown rendering.
  */
+export function cc() {}
+
+/**
+ * Dedent: strip common leading whitespace from all lines.
+ * Fixes GFM fenced code blocks (```) that inherit HTML template indentation.
+ * GFM only allows 0-3 spaces before ```, so 4+ spaces breaks recognition.
+ */
+function dedent(text) {
+  const lines = text.split('\n');
+  // Find minimum indentation of non-empty lines
+  const indents = lines
+    .filter(line => line.trim().length > 0)
+    .map(line => {
+      const match = line.match(/^(\s*)/);
+      return match ? match[0].length : 0;
+    });
+  if (indents.length === 0) return text;
+  const minIndent = Math.min(...indents);
+  if (minIndent === 0) return text;
+  // Strip that many leading characters from each line
+  return lines
+    .map(line => line.length >= minIndent ? line.substring(minIndent) : line)
+    .join('\n')
+    .trim();
+}
 
 // Check if marked is available, if not load it
 let markedLoaded = false;
@@ -94,8 +104,11 @@ export async function mdhtml(element, options = {}) {
     let markdown = '';
 
     // Get markdown content
+    // Priority: 1. data-src (external file), 2. <template> child (preserves HTML), 3. textContent
+    const templateEl = element.querySelector('template');
+    
     if (config.src) {
-      // Load from external file
+      // Load from external file — no dedent needed for fetched files
       try {
         // Normalize path: handle both /docs/file.md and docs/file.md
         let fetchPath = config.src;
@@ -151,9 +164,14 @@ export async function mdhtml(element, options = {}) {
         
         return () => {};
       }
+    } else if (templateEl) {
+      // Use content from <template> child - preserves HTML as raw text
+      // Dedent to fix GFM fenced code blocks that inherit HTML indentation
+      markdown = dedent(templateEl.innerHTML);
     } else {
-      // Use inline content
-      markdown = element.textContent || element.innerText;
+      // Use inline content (works for non-HTML markdown)
+      // Dedent to fix indented inline markdown
+      markdown = dedent(element.textContent || element.innerText);
     }
 
     // Parse markdown to HTML

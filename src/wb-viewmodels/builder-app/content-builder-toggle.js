@@ -1,7 +1,8 @@
 /**
- * Content Builder Toggle
- * Simple, trustworthy toggle for showing/hiding content builder panel
+ * Simple toggle for showing/hiding content builder panel.
+ * - Show/hide `#contentBuilderPanel` element.
  */
+export function cc() {}
 
 // Main toggle function
 function toggleContentBuilder() {

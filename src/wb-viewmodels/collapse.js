@@ -1,11 +1,22 @@
 /**
- * Collapse Behavior
- * -----------------------------------------------------------------------------
- * Collapsible content sections.
- *
- * Custom Tag: <wb-collapse>
- * Helper Attribute: [x-collapse]
- * -----------------------------------------------------------------------------
+ * Collapsible content sections with expand/collapse toggle.
+ * - `<wb-collapse>` component and `[x-collapse]` attribute.
+ */
+export function cc() {}
+
+/**
+ * Collapse Component
+ * 
+ * Creates an expandable/collapsible section with a toggle trigger.
+ * Can target remote elements or wrap its own content accordion-style.
+ * Dispatches `wb:collapse:toggle` events on state change.
+ * 
+ * @param {HTMLElement} element - The container or trigger element
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.label] - Toggle button label
+ * @param {boolean} [options.open] - Initial open state
+ * @param {string} [options.target] - CSS selector for remote target
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function collapse(element, options = {}) {
   const config = {

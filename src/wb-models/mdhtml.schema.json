@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "mdhtml.schema.json",
   "title": "Markdown to HTML",
-  "description": "Renders Markdown content as HTML, either from inline content or external source",
+  "description": "Renders Markdown content as HTML, either from inline content, <template> child, or external source",
   "behavior": "mdhtml",
   "baseClass": "wb-mdhtml",
   "semanticElement": {
@@ -14,6 +14,13 @@
     "supportLevel": "stable",
     "accessibility": "high"
   },
+  "contentModel": {
+    "description": "Content priority: 1) data-src (external file), 2) <template> child (preserves HTML in code blocks), 3) textContent",
+    "templateChild": {
+      "description": "Use <template> child to preserve HTML tags in markdown code blocks. Browser doesn't parse template content, so <wb-button> stays as literal text for code examples.",
+      "example": "<wb-mdhtml><template>```html\n<wb-button>Click</wb-button>\n```</template></wb-mdhtml>"
+    }
+  },
   "properties": {
     "src": {
       "type": "string",
@@ -23,12 +30,27 @@
     "sanitize": {
       "type": "boolean",
       "default": true,
+      "description": "Remove script tags and on* attributes from output",
       "attribute": "data-sanitize"
     },
     "gfm": {
       "type": "boolean",
       "default": true,
+      "description": "Enable GitHub Flavored Markdown",
       "attribute": "data-gfm"
+    },
+    "breaks": {
+      "type": "boolean", 
+      "default": true,
+      "description": "Convert newlines to <br> tags",
+      "attribute": "data-breaks"
+    },
+    "size": {
+      "type": "string",
+      "enum": ["xs", "sm", "md", "lg", "xl"],
+      "default": "xs",
+      "description": "Base font size for rendered content",
+      "attribute": "data-size"
     }
   },
   "_metadata": {
@@ -46,6 +68,7 @@
       "<wb-mdhtml sanitize>with sanitize</wb-mdhtml>",
       "<wb-mdhtml gfm>with gfm</wb-mdhtml>",
       "<wb-mdhtml src=\"Sample src\">src=\"Sample src\"</wb-mdhtml>",
+      "<wb-mdhtml><template>```html\\n<wb-button>Code Example</wb-button>\\n```</template></wb-mdhtml>",
       "<wb-mdhtml sanitize gfm>Combined: with sanitize, with gfm</wb-mdhtml>"
     ]
   }

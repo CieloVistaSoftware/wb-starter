@@ -1,11 +1,9 @@
 /**
- * WBGrid Component
- * -----------------------------------------------------------------------------
- * Grid layout component.
- * 
- * Custom Tag: <wb-grid>
- * -----------------------------------------------------------------------------
+ * CSS Grid layout custom element.
+ * - `<wb-grid>` Web Component with columns, gap, and min-width options.
  */
+export function cc() {}
+
 import { grid } from './layouts.js';
 
 export class WBGrid extends HTMLElement {

@@ -1,0 +1,17 @@
+{
+  "$id": "issue.schema.json",
+  "title": "Issue / Report",
+  "baseClass": "wb-issue",
+  "description": "Small inline issue/report flag used across pages and demos. Generates an issue that can be posted to /api/log-issues.",
+  "properties": {},
+  "$view": [
+    {
+      "name": "main",
+      "tag": "p",
+      "content": "{{content}}"
+    }
+  ],
+  "examples": [
+    "<wb-issue>Click to report an accessibility problem on this component</wb-issue>"
+  ]
+}

@@ -1,15 +1,9 @@
 /**
- * WB Dialog Behavior - Semantic dialog modal
- * 
- * SEMANTIC STANDARD:
- * - Overlay: Creates <dialog> element (native HTML5 dialog)
- * - Header: <header>
- * - Body: <main>
- * - Footer: <footer>
- * 
- * The <dialog> element provides native accessibility features.
- * Helper Attribute: [x-behavior="dialog"]
+ * Native HTML5 `<dialog>` modal with semantic header/body/footer structure.
+ * - Accessible modal dialogs with `[x-behavior="dialog"]`.
  */
+export function cc() {}
+
 export function dialog(element, options = {}) {
   const config = {
     title: options.title || element.getAttribute('title') || element.dataset.dialogTitle || element.dataset.modalTitle || 'Dialog',

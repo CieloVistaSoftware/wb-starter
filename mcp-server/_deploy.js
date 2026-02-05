@@ -1,0 +1,1 @@
+const fs=require("fs"); const b64=fs.readFileSync("mcp-server/_b64.txt","utf8").trim(); fs.writeFileSync("mcp-server/server.js", Buffer.from(b64,"base64").toString()); console.log("Deployed server.js:", fs.statSync("mcp-server/server.js").size, "bytes"); fs.unlinkSync("mcp-server/_b64.txt"); fs.unlinkSync("mcp-server/_deploy.js"); console.log("Cleaned up temp files");

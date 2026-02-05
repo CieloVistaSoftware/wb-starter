@@ -146,6 +146,20 @@ const pending = new WeakMap();
 // Track schema-processed elements
 const schemaProcessed = new WeakSet();
 
+// Performance metrics
+const stats = {
+  initStart: 0,
+  initEnd: 0,
+  scanCount: 0,
+  scanTime: 0,
+  injectCount: 0,
+  injectTime: 0,
+  schemaCount: 0,
+  elementsWithBehaviors: 0,
+  lastScanDuration: 0,
+  errors: 0
+};
+
 /**
  * WB - Web Behavior Core
  */
@@ -153,6 +167,9 @@ const WB = {
   version: '3.0.0',
   behaviors,
   pubsub,
+  
+  // Expose stats for monitoring
+  stats,
   
   // Expose SchemaBuilder for direct access
   schema: SchemaBuilder,

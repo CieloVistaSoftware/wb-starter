@@ -1,8 +1,9 @@
 /**
- * Video - Enhanced <video> element
- * Adds controls, autoplay, loop, poster support
- * Helper Attribute: [x-behavior="video"]
+ * Enhanced `<video>` element with controls, autoplay, and poster.
+ * - `[x-behavior="video"]` for video player enhancements.
  */
+export function cc() {}
+
 export function video(element, options = {}) {
   const config = {
     controls: options.controls ?? element.dataset.controls !== 'false',

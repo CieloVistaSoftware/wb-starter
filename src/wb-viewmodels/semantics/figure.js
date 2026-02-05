@@ -1,18 +1,9 @@
 /**
- * Figure - Enhanced <figure> element
- * Adds lightbox, lazy loading, caption animation, zoom
- * 
- * Supports pure attribute-driven usage (no child tags needed):
- *   <figure data-img-src="photo.jpg" data-alt="Description" data-caption="Caption">
- *   </figure>
- * 
- * Or traditional HTML with enhancements:
- *   <figure data-caption="Caption">
- *     <img src="photo.jpg" alt="Description">
- *   </figure>
- * 
- * Helper Attribute: [x-behavior="figure"]
+ * Enhanced `<figure>` element with lightbox, lazy loading, and zoom.
+ * - Attribute-driven or traditional HTML with `[x-behavior="figure"]`.
  */
+export function cc() {}
+
 export function figure(element, options = {}) {
   const config = {
     imgSrc: options.imgSrc || element.dataset.imgSrc,

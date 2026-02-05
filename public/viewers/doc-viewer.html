@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Documentation Viewer</title>
   <link rel="stylesheet" href="/src/styles/themes.css">
   <link rel="stylesheet" href="/src/styles/site.css">
@@ -162,8 +165,8 @@
     });
 
     // Scroll to hash after load and apply highlighting
-    document.addEventListener('wb:mdhtml:loaded', () => {
-      // Apply syntax highlighting
+    document.addEventListener('wb:mdhtml:loaded', async () => {
+      // Apply syntax highlighting to direct code blocks
       document.querySelectorAll('pre code').forEach((block) => {
         // If no language class is present, force plaintext to prevent auto-detection
         // which can mess up ASCII art alignment
@@ -173,6 +176,20 @@
         }
         hljs.highlightElement(block);
       });
+
+      // Initialize nested wb-mdhtml elements (for live rendered examples in docs)
+      const nestedMdhtml = document.querySelectorAll('wb-mdhtml:not(.wb-mdhtml--loaded)');
+      for (const el of nestedMdhtml) {
+        await mdhtml(el, { size: 'md' });
+        // Highlight code blocks in nested elements
+        el.querySelectorAll('pre code').forEach((block) => {
+          const hasLanguage = Array.from(block.classList).some(cls => cls.startsWith('language-'));
+          if (!hasLanguage) {
+             block.classList.add('language-plaintext');
+          }
+          hljs.highlightElement(block);
+        });
+      }
 
       if (window.location.hash) {
         // Decode hash to handle special characters
@@ -197,6 +214,7 @@
     } else {
       document.getElementById('content').innerHTML = '<div class="error">No file specified.</div>';
     }
+    
   </script>
 </body>
 </html>

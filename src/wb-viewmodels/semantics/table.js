@@ -1,10 +1,11 @@
 import { createToast } from '../feedback.js';
 
 /**
- * Table - Enhanced <table> element
- * Adds sorting, striping, hover effects, and more
- * Helper Attribute: [x-behavior="table"]
+ * Enhanced `<table>` element with sorting, filtering, and selection.
+ * - Striped, hoverable, searchable tables with `[x-behavior="table"]`.
  */
+export function cc() {}
+
 export function table(element, options = {}) {
   const config = {
     striped: options.striped ?? element.hasAttribute('data-striped'),

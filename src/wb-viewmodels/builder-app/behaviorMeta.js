@@ -1,13 +1,8 @@
 /**
- * WB Behavior Metadata
- * ====================
- * Defines how each behavior works in the builder:
- * - type: element | container | modifier | action
- * - element: preferred HTML element
- * - attachTo: what elements it can attach to
- * - target: whether action needs a target
- * - template: HTML template for complex behaviors
+ * Behavior metadata defining how each behavior works in the builder.
+ * - Types (element/container/modifier), preferred elements, templates.
  */
+export function cc() {}
 
 export const behaviorMeta = {
   

@@ -1,9 +1,8 @@
 /**
- * Builder Drag & Drop Module
- * Handles all drag and drop functionality for the builder
- * 
- * @module builder-dnd
+ * Drag and drop functionality for the builder.
+ * - Drag feedback, drop zones, and smart insertion.
  */
+export function cc() {}
 
 import { getComponentType } from './behavior-types.js';
 import {

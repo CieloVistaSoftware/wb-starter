@@ -1,8 +1,8 @@
 /**
- * Inline Semantic Behaviors
- * =========================
- * Behaviors for inline semantic elements like <kbd> and <mark>
+ * Inline semantic behaviors for `<kbd>` and `<mark>` elements.
+ * - Keyboard key styling and text highlighting.
  */
+export function cc() {}
 
 /**
  * Kbd - Keyboard Input

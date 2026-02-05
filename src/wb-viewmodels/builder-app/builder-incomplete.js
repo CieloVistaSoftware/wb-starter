@@ -1,9 +1,8 @@
 /**
- * Builder Incomplete Detection
- * ============================
- * Detects placeholder values, missing required fields, and incomplete components.
- * Shows visual warnings on canvas and in properties panel.
+ * Placeholder detection and incomplete component warnings.
+ * - Scans for TODOs, missing fields, and shows visual warnings.
  */
+export function cc() {}
 
 // Placeholder patterns to detect
 const PLACEHOLDER_PATTERNS = {

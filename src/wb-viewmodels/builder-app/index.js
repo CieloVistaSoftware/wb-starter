@@ -1,16 +1,13 @@
 /**
- * Builder App - Main Entry Point
- * 
- * This file orchestrates the builder by importing modular components.
- * Each module handles a specific concern (panels, dnd, selection, etc.)
- * 
- * @module builder-app/index
+ * Builder App main entry point that orchestrates modular components.
+ * - Imports and coordinates panels, DnD, selection, and utilities.
  */
+export function cc() {}
 
 // === CORE IMPORTS ===
 import WB from '../../core/wb-lazy.js';
 import { Events } from '../../core/events.js';
-import { THEMES } from '../themecontrol.js';
+import { THEMES } from '../theme-dropdown.js';
 import { getComponentExclusions } from './builderExclusions.js';
 import { BEHAVIOR_TYPES, getComponentType } from './behavior-types.js';
 

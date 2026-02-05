@@ -6,16 +6,140 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { spawn } from "child_process";
 import { writeFile } from "fs/promises";
+import { writeFileSync, appendFileSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { Worker } from "worker_threads";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_DIR = join(__dirname, "..");
+const PROGRESS_FILE = join(PROJECT_DIR, "data", "test-progress.log");
+
+// Track running command state
+let runningCommand = null; // { startTime, command, pid }
+
+// ════════════════════════════════════════════════════════
+//  Traffic Logger — runs on a dedicated Worker thread
+//  so logging I/O never blocks MCP message processing
+// ════════════════════════════════════════════════════════
+
+const logWorker = new Worker(join(__dirname, "log-worker.js"), {
+  workerData: { logDir: join(__dirname, "logs") },
+});
+logWorker.on("error", (err) => {
+  process.stderr.write(`[LOG WORKER ERROR] ${err.message}\n`);
+});
+logWorker.unref(); // don't keep process alive just for logging
+
+function log(direction, data) {
+  const timestamp = new Date().toISOString();
+  let summary, detail;
+
+  if (typeof data === "string") {
+    summary = data;
+    detail = data;
+  } else {
+    detail = JSON.stringify(data, null, 2);
+
+    // Build a compact one-line summary
+    const id = data.id != null ? `[id:${data.id}] ` : "";
+
+    if (data.method) {
+      // Inbound request or notification
+      const params = data.params;
+      if (params?.name) {
+        const args = params.arguments
+          ? ` ${JSON.stringify(params.arguments)}`
+          : "";
+        summary = `${id}${data.method} ${params.name}${args}`;
+      } else {
+        summary = `${id}${data.method}`;
+      }
+    } else if (data.result !== undefined) {
+      // Outbound response (success)
+      const content = data.result?.content;
+      if (Array.isArray(content)) {
+        const textLen = content
+          .map((c) => c.text?.length || 0)
+          .reduce((a, b) => a + b, 0);
+        summary = `${id}result [${textLen} chars]`;
+      } else if (data.result?.tools) {
+        summary = `${id}tools [${data.result.tools.length} tools]`;
+      } else {
+        summary = `${id}result ${JSON.stringify(data.result).substring(0, 100)}`;
+      }
+    } else if (data.error) {
+      // Outbound response (error)
+      summary = `${id}error: ${data.error.message || JSON.stringify(data.error)}`;
+    } else {
+      summary = `${id}${JSON.stringify(data).substring(0, 120)}`;
+    }
+  }
+
+  logWorker.postMessage({ timestamp, direction, summary, detail });
+}
+
+// ════════════════════════════════════════════════════════
+//  LoggingTransport — wraps StdioServerTransport to
+//  intercept ALL inbound (<-) and outbound (->) traffic
+// ════════════════════════════════════════════════════════
+
+class LoggingTransport {
+  constructor(inner) {
+    this._inner = inner;
+  }
+
+  get sessionId() {
+    return this._inner.sessionId;
+  }
+  set sessionId(val) {
+    this._inner.sessionId = val;
+  }
+
+  set onmessage(handler) {
+    this._inner.onmessage = (msg) => {
+      log("<-", msg);
+      handler(msg);
+    };
+  }
+
+  set onerror(handler) {
+    this._inner.onerror = (err) => {
+      log("<- ERR", String(err));
+      handler(err);
+    };
+  }
+
+  set onclose(handler) {
+    this._inner.onclose = () => {
+      log("--", "connection closed");
+      handler();
+    };
+  }
+
+  async start() {
+    log("--", "transport started");
+    return this._inner.start();
+  }
+
+  async send(message) {
+    log("->", message);
+    return this._inner.send(message);
+  }
+
+  async close() {
+    return this._inner.close();
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  MCP Server Definition
+// ════════════════════════════════════════════════════════
 
 const server = new Server(
   {
     name: "npm-runner",
-    version: "1.0.0",
+    version: "1.1.0",
   },
   {
     capabilities: {
@@ -30,21 +154,29 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: [
       {
         name: "npm_test",
-        description: "Run npm test in the wb-starter project. Returns test results and writes them to data/test-results.json",
+        description:
+          "Run npm test in the wb-starter project. Returns test results and writes them to data/test-results.json. Progress streams to data/test-progress.log in real-time.",
         inputSchema: {
           type: "object",
           properties: {
+            reason: {
+              type: "string",
+              description:
+                "REQUIRED: Why are you running this test? (e.g., 'verify selector fix', 'confirm all tests pass after refactor')",
+            },
             filter: {
               type: "string",
-              description: "Optional: filter to run specific tests (e.g., 'schema' or 'compliance')",
+              description:
+                "Optional: filter to run specific tests (e.g., 'schema' or 'compliance')",
             },
             singleThread: {
               type: "boolean",
-              description: "Run tests in single-threaded mode for easier debugging",
+              description:
+                "Run tests in single-threaded mode for easier debugging",
               default: false,
             },
           },
-          required: [],
+          required: ["reason"],
         },
       },
       {
@@ -55,10 +187,27 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           properties: {
             command: {
               type: "string",
-              description: "The npm command to run (e.g., 'run build', 'install', 'run lint')",
+              description:
+                "The npm command to run (e.g., 'run build', 'install', 'run lint')",
             },
           },
           required: ["command"],
+        },
+      },
+      {
+        name: "check_progress",
+        description:
+          "Check real-time progress of a running npm command. Reads the streaming output from data/test-progress.log. Use 'tail' param to get last N lines.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            tail: {
+              type: "number",
+              description: "Number of lines from end to return (default: 30)",
+              default: 30,
+            },
+          },
+          required: [],
         },
       },
     ],
@@ -70,11 +219,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
 
   if (name === "npm_test") {
-    return await runNpmTest(args?.filter, args?.singleThread);
+    return await runNpmTest(args?.reason, args?.filter, args?.singleThread);
   }
 
   if (name === "npm_command") {
     return await runNpmCommand(args.command);
+  }
+
+  if (name === "check_progress") {
+    return checkProgress(args?.tail || 30);
   }
 
   return {
@@ -83,16 +236,20 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   };
 });
 
-async function runNpmTest(filter, singleThread) {
+// ════════════════════════════════════════════════════════
+//  Tool Implementations
+// ════════════════════════════════════════════════════════
+
+async function runNpmTest(reason, filter, singleThread) {
   const startTime = Date.now();
-  
+
   let command = "npx";
   let cmdArgs = ["playwright", "test"];
-  
+
   if (singleThread) {
     cmdArgs.push("--workers=1");
   }
-  
+
   if (filter) {
     cmdArgs.push("--grep", filter);
   }
@@ -100,13 +257,14 @@ async function runNpmTest(filter, singleThread) {
   try {
     const result = await runCommand(command, cmdArgs, PROJECT_DIR);
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
-    
+
     // Parse results for summary
     const summary = parseTestOutput(result.stdout + result.stderr);
-    
+
     // Write results to JSON file
     const jsonResult = {
       timestamp: new Date().toISOString(),
+      reason: reason || "(no reason provided)",
       duration: `${duration}s`,
       exitCode: result.exitCode,
       summary,
@@ -115,7 +273,7 @@ async function runNpmTest(filter, singleThread) {
       stdout: result.stdout,
       stderr: result.stderr,
     };
-    
+
     const outputPath = join(PROJECT_DIR, "data", "test-results.json");
     await writeFile(outputPath, JSON.stringify(jsonResult, null, 2));
 
@@ -123,18 +281,24 @@ async function runNpmTest(filter, singleThread) {
       content: [
         {
           type: "text",
-          text: `## Test Results (${duration}s)\n\n` +
-                `**Status:** ${result.exitCode === 0 ? "✅ PASSED" : "❌ FAILED"}\n` +
-                `**Summary:** ${summary}\n\n` +
-                `Results saved to: data/test-results.json\n\n` +
-                `### Output:\n\`\`\`\n${result.stdout}\n\`\`\`\n` +
-                (result.stderr ? `### Errors:\n\`\`\`\n${result.stderr}\n\`\`\`` : ""),
+          text:
+            `## Test Results (${duration}s)\n\n` +
+            `**Reason:** ${reason || "(not specified)"}\n` +
+            `**Status:** ${result.exitCode === 0 ? "✅ PASSED" : "❌ FAILED"}\n` +
+            `**Summary:** ${summary}\n\n` +
+            `Results saved to: data/test-results.json\n\n` +
+            `### Output:\n\`\`\`\n${result.stdout}\n\`\`\`\n` +
+            (result.stderr
+              ? `### Errors:\n\`\`\`\n${result.stderr}\n\`\`\``
+              : ""),
         },
       ],
     };
   } catch (error) {
     return {
-      content: [{ type: "text", text: `Error running tests: ${error.message}` }],
+      content: [
+        { type: "text", text: `Error running tests: ${error.message}` },
+      ],
       isError: true,
     };
   }
@@ -143,7 +307,7 @@ async function runNpmTest(filter, singleThread) {
 async function runNpmCommand(command) {
   const startTime = Date.now();
   const parts = command.split(" ");
-  
+
   try {
     const result = await runCommand("npm", parts, PROJECT_DIR);
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
@@ -152,67 +316,130 @@ async function runNpmCommand(command) {
       content: [
         {
           type: "text",
-          text: `## npm ${command} (${duration}s)\n\n` +
-                `**Exit Code:** ${result.exitCode}\n\n` +
-                `### Output:\n\`\`\`\n${result.stdout}\n\`\`\`\n` +
-                (result.stderr ? `### Stderr:\n\`\`\`\n${result.stderr}\n\`\`\`` : ""),
+          text:
+            `## npm ${command} (${duration}s)\n\n` +
+            `**Exit Code:** ${result.exitCode}\n\n` +
+            `### Output:\n\`\`\`\n${result.stdout}\n\`\`\`\n` +
+            (result.stderr
+              ? `### Stderr:\n\`\`\`\n${result.stderr}\n\`\`\``
+              : ""),
         },
       ],
     };
   } catch (error) {
     return {
-      content: [{ type: "text", text: `Error running npm ${command}: ${error.message}` }],
+      content: [
+        {
+          type: "text",
+          text: `Error running npm ${command}: ${error.message}`,
+        },
+      ],
       isError: true,
     };
   }
 }
 
+function checkProgress(tail) {
+  if (!existsSync(PROGRESS_FILE)) {
+    return {
+      content: [
+        {
+          type: "text",
+          text: "No progress file found. No command has been run yet.",
+        },
+      ],
+    };
+  }
+
+  const content = readFileSync(PROGRESS_FILE, "utf8");
+  const lines = content.split("\n");
+  const totalLines = lines.length;
+  const tailLines = lines.slice(-tail).join("\n");
+
+  const running = runningCommand
+    ? `**Running:** ${runningCommand.command} (${((Date.now() - runningCommand.startTime) / 1000).toFixed(0)}s elapsed, PID ${runningCommand.pid})`
+    : "**Status:** No command currently running";
+
+  return {
+    content: [
+      {
+        type: "text",
+        text:
+          `## Progress\n\n${running}\n` +
+          `**Output:** ${totalLines} lines total (showing last ${tail})\n\n` +
+          `\`\`\`\n${tailLines}\n\`\`\``,
+      },
+    ],
+  };
+}
+
 function runCommand(command, args, cwd) {
   return new Promise((resolve) => {
+    // Clear and initialize progress file
+    writeFileSync(PROGRESS_FILE, `[${new Date().toISOString()}] Starting: ${command} ${args.join(" ")}\n`);
+
     const proc = spawn(command, args, {
       cwd,
       shell: true,
       env: { ...process.env, FORCE_COLOR: "0" },
     });
 
+    runningCommand = {
+      startTime: Date.now(),
+      command: `${command} ${args.join(" ")}`,
+      pid: proc.pid,
+    };
+
     let stdout = "";
     let stderr = "";
 
     proc.stdout.on("data", (data) => {
-      stdout += data.toString();
+      const chunk = data.toString();
+      stdout += chunk;
+      try { appendFileSync(PROGRESS_FILE, chunk); } catch {}
     });
 
     proc.stderr.on("data", (data) => {
-      stderr += data.toString();
+      const chunk = data.toString();
+      stderr += chunk;
+      try { appendFileSync(PROGRESS_FILE, chunk); } catch {}
     });
 
     proc.on("close", (exitCode) => {
+      try {
+        appendFileSync(PROGRESS_FILE, `\n[${new Date().toISOString()}] Finished with exit code ${exitCode}\n`);
+      } catch {}
+      runningCommand = null;
       resolve({ stdout, stderr, exitCode });
     });
 
     proc.on("error", (err) => {
+      runningCommand = null;
       resolve({ stdout, stderr: err.message, exitCode: 1 });
     });
   });
 }
 
 function parseTestOutput(output) {
-  // Try to extract pass/fail counts from Playwright output
   const passMatch = output.match(/(\d+) passed/);
   const failMatch = output.match(/(\d+) failed/);
   const skipMatch = output.match(/(\d+) skipped/);
-  
+
   const passed = passMatch ? parseInt(passMatch[1]) : 0;
   const failed = failMatch ? parseInt(failMatch[1]) : 0;
   const skipped = skipMatch ? parseInt(skipMatch[1]) : 0;
-  
+
   if (passed || failed || skipped) {
     return `${passed} passed, ${failed} failed, ${skipped} skipped`;
   }
-  
+
   return "Could not parse test summary";
 }
 
-// Start the server
-const transport = new StdioServerTransport();
+// ════════════════════════════════════════════════════════
+//  Start — wrap stdio transport with logging layer
+// ════════════════════════════════════════════════════════
+
+const stdio = new StdioServerTransport();
+const transport = new LoggingTransport(stdio);
 await server.connect(transport);

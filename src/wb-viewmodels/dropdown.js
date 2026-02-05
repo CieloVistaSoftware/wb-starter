@@ -1,22 +1,24 @@
 /**
- * Dropdown Behavior
- * -----------------------------------------------------------------------------
- * Click to show menu.
- * 
- * Custom Tag: <wb-dropdown>
- * 
- * Usage:
- *   Option 1 - data-items attribute:
- *     <wb-dropdown  data-items="Profile,Settings,Logout">Click me</div>
- * 
- *   Option 2 - data-label with child elements:
- *     <wb-dropdown  data-label="Options">
- *       <a href="#">Profile</a>
- *       <a href="#">Settings</a>
- *     </div>
- * -----------------------------------------------------------------------------
+ * Click-to-show dropdown menu component.
+ * - `<wb-dropdown>` with data-items or child element menu items.
  */
-export function dropdown(element, options = {}) {
+export function cc() {}
+
+/**
+ * Dropdown Component
+ * 
+ * Creates a dropdown menu that opens on click. Supports both data-items
+ * attribute for simple menus and child elements for custom content.
+ * Dispatches `wb:dropdown:select` on item selection.
+ * 
+ * @param {HTMLElement} element - The trigger element
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.items] - Comma-separated menu items
+ * @param {string} [options.label] - Button label text
+ * @param {string} [options.position] - Menu position: bottom-left, bottom-right, ...
+ * @param {boolean} [options.closeOnSelect] - Close menu on item selection
+ * @returns {Function} Cleanup function to remove behavior
+ */export function dropdown(element, options = {}) {
   const config = {
     items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
     label: options.label || element.dataset.label || '',
@@ -59,7 +61,7 @@ export function dropdown(element, options = {}) {
   // Create menu
   const menu = document.createElement('div');
   menu.className = 'wb-dropdown__menu';
-  
+
   // Position styles
   const posStyles = {
     'bottom-left': 'top:100%;left:0;',
@@ -67,7 +69,7 @@ export function dropdown(element, options = {}) {
     'top-left': 'bottom:100%;left:0;',
     'top-right': 'bottom:100%;right:0;'
   };
-  
+
   menu.style.cssText = `
     position:absolute;${posStyles[config.position] || posStyles['bottom-left']}
     background:var(--bg-secondary,#1f2937);
@@ -103,7 +105,7 @@ export function dropdown(element, options = {}) {
         transition:background 0.15s;
       ">${item.trim()}</div>
     `).join('');
-    
+
     // Add hover events
     menu.querySelectorAll('.wb-dropdown__item').forEach(item => {
       item.addEventListener('mouseenter', () => item.style.background = 'var(--bg-tertiary,#374151)');
@@ -144,21 +146,21 @@ export function dropdown(element, options = {}) {
   // Click handler
   const clickHandler = (e) => {
     const item = e.target.closest('.wb-dropdown__item');
-    
+
     if (item) {
       // Item clicked
-      element.dispatchEvent(new CustomEvent('wb:dropdown:select', { 
-        bubbles: true, 
-        detail: { 
+      element.dispatchEvent(new CustomEvent('wb:dropdown:select', {
+        bubbles: true,
+        detail: {
           value: item.textContent.trim(),
-          href: item.href || null 
-        } 
+          href: item.href || null
+        }
       }));
-      
+
       if (config.closeOnSelect) {
         close();
       }
-      
+
       // Don't prevent default for links
       if (item.tagName !== 'A') {
         e.preventDefault();
@@ -198,8 +200,8 @@ export function dropdown(element, options = {}) {
   });
 
   element.dataset.wbReady = 'dropdown';
-  
-  return () => { 
+
+  return () => {
     element.removeEventListener('click', clickHandler);
     document.removeEventListener('click', outsideClickHandler);
     element.removeEventListener('keydown', keyHandler);

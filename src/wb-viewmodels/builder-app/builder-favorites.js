@@ -1,7 +1,8 @@
 /**
- * builder-favorites.js
- * Favorites system for components
+ * Favorites system for quick access to starred components.
+ * - Star/unstar, localStorage persistence.
  */
+export function cc() {}
 
 import { toast } from './builder-utils.js';
 

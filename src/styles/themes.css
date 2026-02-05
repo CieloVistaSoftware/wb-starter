@@ -65,4 +65,161 @@
   --text-primary: hsl(0, 0%, 98%);
   --text-secondary: hsl(220, 10%, 80%);
   --text-muted: hsl(220, 10%, 60%);
+  
+  /* Border */
+  --border-color: hsl(220, 15%, 30%);
+}
+
+/* =============================================================================
+   LIGHT THEME
+   ============================================================================= */
+[data-theme="light"] {
+  --primary: hsl(240, 70%, 50%);
+  --primary-dark: hsl(240, 70%, 40%);
+  --primary-light: hsl(240, 50%, 70%);
+  --primary-rgb: 99, 102, 241;
+  --secondary: hsl(60, 60%, 45%);
+  --accent: hsl(210, 60%, 50%);
+  
+  --bg-color: hsl(0, 0%, 100%);
+  --bg-primary: hsl(220, 20%, 97%);
+  --bg-secondary: hsl(220, 15%, 94%);
+  --bg-tertiary: hsl(220, 12%, 90%);
+  
+  --text-primary: hsl(220, 25%, 15%);
+  --text-secondary: hsl(220, 15%, 35%);
+  --text-muted: hsl(220, 10%, 50%);
+  --border-color: hsl(220, 15%, 85%);
+}
+
+/* =============================================================================
+   OCEAN THEME
+   ============================================================================= */
+[data-theme="ocean"] {
+  --primary: hsl(200, 80%, 50%);
+  --primary-dark: hsl(200, 80%, 35%);
+  --primary-light: hsl(200, 60%, 70%);
+  --primary-rgb: 14, 165, 233;
+  --secondary: hsl(170, 60%, 45%);
+  --accent: hsl(230, 60%, 55%);
+  
+  --bg-color: hsl(210, 35%, 12%);
+  --bg-primary: hsl(210, 30%, 18%);
+  --bg-secondary: hsl(210, 25%, 24%);
+  --bg-tertiary: hsl(210, 20%, 30%);
+  
+  --text-primary: hsl(200, 20%, 98%);
+  --text-secondary: hsl(200, 15%, 80%);
+  --text-muted: hsl(200, 10%, 60%);
+  --border-color: hsl(210, 20%, 35%);
+}
+
+/* =============================================================================
+   SUNSET THEME
+   ============================================================================= */
+[data-theme="sunset"] {
+  --primary: hsl(25, 90%, 55%);
+  --primary-dark: hsl(25, 90%, 40%);
+  --primary-light: hsl(25, 70%, 70%);
+  --primary-rgb: 249, 115, 22;
+  --secondary: hsl(350, 70%, 55%);
+  --accent: hsl(45, 80%, 50%);
+  
+  --bg-color: hsl(20, 30%, 10%);
+  --bg-primary: hsl(20, 25%, 15%);
+  --bg-secondary: hsl(20, 20%, 20%);
+  --bg-tertiary: hsl(20, 15%, 26%);
+  
+  --text-primary: hsl(30, 30%, 98%);
+  --text-secondary: hsl(30, 15%, 78%);
+  --text-muted: hsl(30, 10%, 58%);
+  --border-color: hsl(20, 20%, 32%);
+}
+
+/* =============================================================================
+   FOREST THEME
+   ============================================================================= */
+[data-theme="forest"] {
+  --primary: hsl(140, 60%, 40%);
+  --primary-dark: hsl(140, 60%, 28%);
+  --primary-light: hsl(140, 45%, 60%);
+  --primary-rgb: 34, 197, 94;
+  --secondary: hsl(80, 50%, 45%);
+  --accent: hsl(170, 50%, 45%);
+  
+  --bg-color: hsl(150, 30%, 8%);
+  --bg-primary: hsl(150, 25%, 13%);
+  --bg-secondary: hsl(150, 20%, 18%);
+  --bg-tertiary: hsl(150, 15%, 24%);
+  
+  --text-primary: hsl(140, 15%, 97%);
+  --text-secondary: hsl(140, 10%, 78%);
+  --text-muted: hsl(140, 8%, 58%);
+  --border-color: hsl(150, 18%, 28%);
+}
+
+/* =============================================================================
+   CYBERPUNK THEME
+   ============================================================================= */
+[data-theme="cyberpunk"] {
+  --primary: hsl(320, 100%, 55%);
+  --primary-dark: hsl(320, 100%, 40%);
+  --primary-light: hsl(320, 80%, 70%);
+  --primary-rgb: 236, 72, 153;
+  --secondary: hsl(180, 100%, 50%);
+  --accent: hsl(280, 80%, 60%);
+  
+  --bg-color: hsl(260, 40%, 8%);
+  --bg-primary: hsl(260, 35%, 13%);
+  --bg-secondary: hsl(260, 30%, 18%);
+  --bg-tertiary: hsl(260, 25%, 24%);
+  
+  --text-primary: hsl(180, 50%, 98%);
+  --text-secondary: hsl(180, 30%, 80%);
+  --text-muted: hsl(180, 20%, 60%);
+  --border-color: hsl(280, 40%, 35%);
+}
+
+/* =============================================================================
+   MIDNIGHT THEME
+   ============================================================================= */
+[data-theme="midnight"] {
+  --primary: hsl(230, 70%, 55%);
+  --primary-dark: hsl(230, 70%, 40%);
+  --primary-light: hsl(230, 50%, 70%);
+  --primary-rgb: 79, 70, 229;
+  --secondary: hsl(200, 60%, 50%);
+  --accent: hsl(260, 60%, 55%);
+  
+  --bg-color: hsl(230, 40%, 6%);
+  --bg-primary: hsl(230, 35%, 11%);
+  --bg-secondary: hsl(230, 30%, 16%);
+  --bg-tertiary: hsl(230, 25%, 22%);
+  
+  --text-primary: hsl(230, 20%, 98%);
+  --text-secondary: hsl(230, 15%, 78%);
+  --text-muted: hsl(230, 10%, 58%);
+  --border-color: hsl(230, 25%, 28%);
+}
+
+/* =============================================================================
+   SAKURA THEME
+   ============================================================================= */
+[data-theme="sakura"] {
+  --primary: hsl(340, 80%, 65%);
+  --primary-dark: hsl(340, 80%, 50%);
+  --primary-light: hsl(340, 60%, 80%);
+  --primary-rgb: 244, 114, 182;
+  --secondary: hsl(0, 50%, 70%);
+  --accent: hsl(320, 60%, 60%);
+  
+  --bg-color: hsl(340, 25%, 10%);
+  --bg-primary: hsl(340, 20%, 15%);
+  --bg-secondary: hsl(340, 18%, 20%);
+  --bg-tertiary: hsl(340, 15%, 26%);
+  
+  --text-primary: hsl(340, 25%, 98%);
+  --text-secondary: hsl(340, 15%, 80%);
+  --text-muted: hsl(340, 10%, 60%);
+  --border-color: hsl(340, 18%, 32%);
 }

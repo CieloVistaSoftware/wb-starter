@@ -1,8 +1,8 @@
 /**
- * Builder Behaviors Manager Module
- * Handles adding/removing behaviors from existing components
- * @module builder-behaviors-mgr
+ * Adding/removing behaviors from existing components.
+ * - Manages `data-wb` attribute behavior list.
  */
+export function cc() {}
 
 import { BEHAVIOR_TYPES } from './behavior-types.js';
 

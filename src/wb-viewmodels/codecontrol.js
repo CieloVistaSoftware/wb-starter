@@ -1,13 +1,8 @@
 /**
- * Code Control Behavior
- * Custom Tag: <wb-codecontrol>
- * Dropdown to select from available highlight.js code themes - applies immediately.
- * 
- * Usage:
- *   <wb-codecontrol ></div>
- *   <wb-codecontrol  data-size="xs"></div>
- *   <wb-codecontrol  data-show-label="false" data-size="sm"></div>
+ * Dropdown to select highlight.js code themes with instant preview.
+ * - `<wb-codecontrol>` for runtime syntax highlighting theme switching.
  */
+export function cc() {}
 
 // Curated list of highlight.js themes (organized by category)
 const CODE_THEMES = [

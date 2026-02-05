@@ -1,15 +1,11 @@
 import move from './move.js';
 
 /**
- * <wb-control>
- * -----------------------------------------------------------------------------
- * Wraps move behaviors in a consistent component.
- * 
- * Custom Tag: <wb-control>
- * -----------------------------------------------------------------------------
- * 
- * Usage: <wb-control action="move-up">↑</wb-control>
+ * Control button wrapper for move/action behaviors.
+ * - `<wb-control action="move-up">` for grid/list item manipulation.
  */
+export function cc() {}
+
 export class WBControl extends HTMLElement {
   constructor() {
     super();

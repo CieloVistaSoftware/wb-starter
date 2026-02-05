@@ -1,9 +1,8 @@
 /**
- * Dynamic Component Loader for Builder
- * =====================================
- * Loads component definitions from schema files instead of hardcoding them.
- * Each schema with a "builder" section becomes a palette item.
+ * Dynamic component loader from schema files.
+ * - Converts schemas with builder sections into palette items.
  */
+export function cc() {}
 
 const SCHEMA_PATH = 'src/wb-models';
 

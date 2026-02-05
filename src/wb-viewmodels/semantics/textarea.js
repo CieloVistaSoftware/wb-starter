@@ -1,8 +1,9 @@
 /**
- * Textarea - Enhanced <textarea> element
- * Adds autosize, character count, max length indicator
- * Helper Attribute: [x-behavior="textarea"]
+ * Enhanced `<textarea>` with autosize and character count.
+ * - `[x-behavior="textarea"]` with min/max rows and length indicator.
  */
+export function cc() {}
+
 export function textarea(element, options = {}) {
   if (!element || typeof element.classList === 'undefined') {
     console.warn('[textarea] Invalid element provided');

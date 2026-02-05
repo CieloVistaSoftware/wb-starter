@@ -1,0 +1,17 @@
+{
+  "$id": "note.schema.json",
+  "title": "Note / Help text",
+  "baseClass": "wb-note",
+  "description": "Small contextual/help text used across demos and forms. Uses theme token --text-tertiary.",
+  "properties": {},
+  "$view": [
+    {
+      "name": "main",
+      "tag": "p",
+      "content": "{{content}}"
+    }
+  ],
+  "examples": [
+    "<wb-note>Helpful hint about this field</wb-note>"
+  ]
+}

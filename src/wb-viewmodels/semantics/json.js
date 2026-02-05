@@ -1,7 +1,9 @@
 /**
- * JSON Viewer - Pretty print JSON
- * Helper Attribute: [x-behavior="json"]
+ * JSON viewer with syntax highlighting and pretty printing.
+ * - `[x-behavior="json"]` for formatted JSON display.
  */
+export function cc() {}
+
 import hljs from '/src/lib/highlight.js';
 
 export function json(element, options = {}) {

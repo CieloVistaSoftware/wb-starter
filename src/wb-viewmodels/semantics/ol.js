@@ -1,8 +1,9 @@
 /**
- * OL - Enhanced <ol> element (Ordered List)
- * Adds numbering styles, custom start, variants
- * Helper Attribute: [x-behavior="ol"]
+ * Enhanced `<ol>` (ordered list) with numbering styles and variants.
+ * - Decimal, roman, alpha numbering with `[x-behavior="ol"]`.
  */
+export function cc() {}
+
 export function ol(element, options = {}) {
   if (element.tagName !== 'OL') {
     console.warn('[ol] Element must be an <ol>');

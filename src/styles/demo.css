@@ -560,3 +560,222 @@ input, select, textarea {
 /* Utilities */
 .text-center { text-align: center; }
 .text-muted { color: var(--text-muted); }
+
+/* tertiary text utility — uses theme token --text-tertiary */
+.text-tertiary { color: var(--text-tertiary); }
+
+/* mvvm-test page-scoped styles (moved from src/core/mvvm-test.html) */
+.mvvm-test-page .test-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1rem 0;
+}
+
+.mvvm-test-page .test-box {
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.mvvm-test-page .test-box h3 {
+  margin-top: 0;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mvvm-test-page .status {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.mvvm-test-page .status.success { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+.mvvm-test-page .status.error { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+.mvvm-test-page .status.info { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+
+.mvvm-test-page .mvvm-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+.mvvm-test-page .mvvm-table th, .mvvm-test-page .mvvm-table td {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+.mvvm-test-page .mvvm-table th {
+  background: var(--bg-tertiary);
+  font-weight: 600;
+}
+.mvvm-test-page .mvvm-table code { font-size: 0.85em; }
+
+.mvvm-test-page pre {
+  background: var(--bg-tertiary);
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+}
+
+.mvvm-test-page code { color: var(--primary); }
+
+.mvvm-test-page .schema-format {
+  background: var(--bg-tertiary);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  font-family: monospace;
+  font-size: 0.8rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMPONENT SHOWCASE LAYOUTS
+   Styles for component demo pages (components.html, etc.)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Component Sections */
+.component-section {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.component-section:last-of-type {
+  border-bottom: none;
+}
+
+.component-section h2 {
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+.component-section h3 {
+  margin: 2rem 0 1rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Demo Grid Layouts */
+.demo-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.demo-row--single {
+  grid-template-columns: 1fr;
+  max-width: 600px;
+}
+
+.demo-row--four {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.demo-item {
+  min-width: 0;
+}
+
+/* Demo Flex Layouts */
+.demo-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.demo-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Component Box (for overlay demos) */
+.component-box {
+  background: var(--bg-secondary);
+  padding: 1.25rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.component-box h4 {
+  margin: 0 0 0.5rem;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.component-box p {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Form Utilities */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* Time Display (for clock/countdown demos) */
+.time-display {
+  font-family: monospace;
+  font-size: 1.25rem;
+  background: var(--bg-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+/* Page Footer */
+.page-footer {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+}
+
+.page-footer p {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.page-footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.page-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Demo Grid Responsive */
+@media (max-width: 900px) {
+  .demo-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .demo-row--four {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .demo-row,
+  .demo-row--four {
+    grid-template-columns: 1fr;
+  }
+}

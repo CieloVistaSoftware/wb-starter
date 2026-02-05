@@ -1,11 +1,8 @@
 /**
- * Theme Control Behavior
- * -----------------------------------------------------------------------------
- * Dropdown to select from available themes - applies immediately.
- * 
- * Custom Tag: <wb-theme-control>
- * -----------------------------------------------------------------------------
+ * Theme selector dropdown with 23 available themes.
+ * - `<wb-theme-dropdown>` for runtime theme switching.
  */
+export function cc() {}
 
 // Available themes - matches themes.css (23 total)
 const THEMES = [
@@ -36,7 +33,7 @@ const THEMES = [
   { id: 'grape', name: 'Grape', description: 'Deep purple vibes' }
 ];
 
-export function themecontrol(element, options = {}) {
+export function themeDropdown(element, options = {}) {
   const config = {
     target: options.target || element.dataset.target || 'html',
     default: options.default || element.dataset.default || 'dark',
@@ -51,16 +48,14 @@ export function themecontrol(element, options = {}) {
     : document.querySelector(config.target);
 
   if (!targetEl) {
-    console.warn('[WB] ThemeControl: Target not found');
+    console.warn('[WB] ThemeDropdown: Target not found');
     return () => {};
   }
 
-  element.classList.add('wb-themecontrol');
+  element.classList.add('wb-theme-dropdown');
 
-  // Create the control UI
-  const wrapper = document.createElement('div');
-  wrapper.className = 'wb-themecontrol__wrapper';
-  wrapper.style.cssText = `
+  // Apply flex layout directly to the element
+  element.style.cssText = `
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -70,18 +65,18 @@ export function themecontrol(element, options = {}) {
   let label = null;
   if (config.showLabel) {
     label = document.createElement('label');
-    label.className = 'wb-themecontrol__label';
+    label.className = 'wb-theme-dropdown__label';
     label.textContent = 'Theme:';
     label.style.cssText = `
       font-weight: 500;
       font-size: 0.875rem;
     `;
-    wrapper.appendChild(label);
+    element.appendChild(label);
   }
 
   // Dropdown select
   const select = document.createElement('select');
-  select.className = 'wb-themecontrol__select';
+  select.className = 'wb-theme-dropdown__select';
   select.style.cssText = `
     padding: 0.5rem 2rem 0.5rem 0.75rem;
     font-size: 0.875rem;
@@ -106,16 +101,45 @@ export function themecontrol(element, options = {}) {
     select.appendChild(option);
   });
 
-  wrapper.appendChild(select);
-  element.appendChild(wrapper);
+  element.appendChild(select);
 
-  // Get initial theme from localStorage or default
+  // Get initial theme: prefer an explicit data-theme on the page, else saved preference, else default
   let currentTheme = config.default;
-  if (config.persist && typeof localStorage !== 'undefined') {
-    const saved = localStorage.getItem('wb-theme');
-    if (saved && THEMES.some(t => t.id === saved)) {
-      currentTheme = saved;
+
+  // 1) If the page author explicitly set a data-theme on the target, respect it (authoritative)
+  try {
+    if (targetEl && targetEl.hasAttribute && targetEl.hasAttribute('data-theme')) {
+      const explicit = targetEl.getAttribute('data-theme');
+      if (explicit && THEMES.some(t => t.id === explicit)) {
+        currentTheme = explicit;
+      }
+    } else {
+      // Special-case: pages that use the canonical `wb-page` should default to dark
+      // even if the user previously selected a different persisted theme.
+      try {
+        if (document && document.querySelector && document.querySelector('wb-page')) {
+          currentTheme = 'dark';
+        } else if (config.persist) {
+          // 2) Fallback to persisted user preference (if available and safe to access)
+          try {
+            if (typeof localStorage !== 'undefined') {
+              const saved = localStorage.getItem('wb-theme');
+              if (saved && THEMES.some(t => t.id === saved)) {
+                currentTheme = saved;
+              }
+            }
+          } catch (err) {
+            // Some browsers block access to storage (tracking prevention). Don't fail — continue with default.
+            console.info('[WB] ThemeDropdown: localStorage unavailable, skipping persisted theme check');
+          }
+        }
+      } catch (err) {
+        // defensive: if document access fails, fall back to persisted/default behavior
+        console.warn('[WB] ThemeDropdown: error checking for wb-page', err);
+      }
     }
+  } catch (err) {
+    console.warn('[WB] ThemeDropdown: error while resolving initial theme, falling back to default', err);
   }
 
   // Apply theme function
@@ -124,9 +148,13 @@ export function themecontrol(element, options = {}) {
     targetEl.dataset.theme = themeId;
     select.value = themeId;
 
-    // Persist if enabled
-    if (config.persist && typeof localStorage !== 'undefined') {
-      localStorage.setItem('wb-theme', themeId);
+    // Persist if enabled (guarded)
+    try {
+      if (config.persist && typeof localStorage !== 'undefined') {
+        localStorage.setItem('wb-theme', themeId);
+      }
+    } catch (err) {
+      console.info('[WB] ThemeDropdown: unable to persist theme to localStorage');
     }
 
     // Dispatch event
@@ -147,24 +175,29 @@ export function themecontrol(element, options = {}) {
   select.addEventListener('change', onChange);
 
   // Expose methods
-  element.wbThemeControl = {
+  element.wbThemeDropdown = {
     getTheme: () => currentTheme,
     setTheme: applyTheme,
     getThemes: () => [...THEMES]
   };
 
   // Mark as ready
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' themecontrol';
+  element.dataset.wbReady = (element.dataset.wbReady || '') + ' theme-dropdown';
 
   // Cleanup
   return () => {
-    element.classList.remove('wb-themecontrol');
+    element.classList.remove('wb-theme-dropdown');
+    element.style.cssText = '';
     select.removeEventListener('change', onChange);
-    wrapper.remove();
-    delete element.wbThemeControl;
+    if (label) label.remove();
+    select.remove();
+    delete element.wbThemeDropdown;
   };
 }
 
+// Backwards compatibility alias
+export const themecontrol = themeDropdown;
+
 // Export themes list for external use
 export { THEMES };
-export default themecontrol;
+export default themeDropdown;

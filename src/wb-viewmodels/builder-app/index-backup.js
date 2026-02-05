@@ -1,6 +1,12 @@
+/**
+ * Backup of the main builder entry point.
+ * - Previous version of builder initialization.
+ */
+export function cc() {}
+
 import WB from '../../core/wb-lazy.js';
 import { getComponentExclusions } from './builderExclusions.js';
-import { THEMES } from '../themecontrol.js';
+import { THEMES } from '../theme-dropdown.js';
 import { BEHAVIOR_TYPES, getComponentType } from './behavior-types.js';
 import { Events } from '../../core/events.js';
 import BuilderValidation from './builder-validation.js';

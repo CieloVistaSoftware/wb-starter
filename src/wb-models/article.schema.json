@@ -141,7 +141,7 @@
       "tag": "div",
       "class": "wb-article__content",
       "required": true,
-      "content": "{{slot}}"
+      "content": "{{content}}"
     },
     {
       "name": "footer",

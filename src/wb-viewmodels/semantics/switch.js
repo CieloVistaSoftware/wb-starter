@@ -1,8 +1,9 @@
 /**
- * Switch - Toggle switch component
- * Transforms a checkbox into a toggle switch
- * Helper Attribute: [x-behavior="switch"]
+ * Toggle switch component that transforms a checkbox.
+ * - `[x-behavior="switch"]` for iOS-style toggle switches.
  */
+export function cc() {}
+
 export function switchInput(element, options = {}) {
   // Only apply to checkboxes
   if (element.type !== 'checkbox') return;

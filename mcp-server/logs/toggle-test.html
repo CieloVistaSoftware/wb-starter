@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Auto-Refresh Toggle Test</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #1e1e2e; color: #cdd6f4; }
+    .test { margin: 1rem 0; padding: 1rem; background: #313244; border-radius: 8px; }
+    .pass { border-left: 4px solid #a6e3a1; }
+    .fail { border-left: 4px solid #f38ba8; }
+    .pending { border-left: 4px solid #f9e2af; }
+    button { padding: 0.5rem 1rem; margin: 0.5rem; cursor: pointer; }
+    .indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; }
+    .indicator.off { background: #f38ba8; }
+    .indicator.on { background: #a6e3a1; }
+    #log { background: #11111b; padding: 1rem; font-family: monospace; font-size: 0.9rem; max-height: 300px; overflow-y: auto; }
+  </style>
+</head>
+<body>
+  <h1>Auto-Refresh Toggle Test</h1>
+  
+  <div class="test pending" id="test-result">
+    <h3>Test Status: Waiting...</h3>
+    <p id="test-msg">Click "Run Test" to start</p>
+  </div>
+  
+  <div class="test">
+    <h3>Manual Test</h3>
+    <button id="auto-refresh"><span class="indicator off"></span> Auto</button>
+    <p>Refresh count: <strong id="count">0</strong></p>
+    <p>Timer ID: <code id="timer-display">null</code></p>
+    <p>isAutoOn: <code id="state-display">false</code></p>
+  </div>
+  
+  <button onclick="runAutomatedTest()">Run Automated Test</button>
+  
+  <h3>Log</h3>
+  <div id="log"></div>
+
+  <script>
+    // === THE EXACT SAME TOGGLE CODE FROM log-viewer.html ===
+    window.isAutoOn = false;
+    window.timerId = null;
+    window.refreshCount = 0;
+    
+    function loadLog() {
+      window.refreshCount++;
+      updateDisplay();
+      log('loadLog() called - refreshCount: ' + window.refreshCount);
+    }
+    
+    function toggleAutoRefresh() {
+      const ind = document.querySelector('#auto-refresh .indicator');
+      
+      // Always stop any existing timer first
+      if (window.timerId) {
+        clearInterval(window.timerId);
+        window.timerId = null;
+        log('Cleared timer');
+      }
+      
+      // Flip the switch
+      window.isAutoOn = !window.isAutoOn;
+      log('Toggled isAutoOn to: ' + window.isAutoOn);
+      
+      if (window.isAutoOn) {
+        // Switch is ON: start refreshing
+        ind.className = 'indicator on';
+        window.timerId = setInterval(() => {
+          window.refreshCount++;
+          updateDisplay();
+          log('Auto-refresh tick - count: ' + window.refreshCount);
+        }, 1000); // 1 second for testing (normally 5000)
+        log('Started timer with ID: ' + window.timerId);
+      } else {
+        // Switch is OFF: do nothing (timer already cleared above)
+        ind.className = 'indicator off';
+        log('Switch is OFF, no timer running');
+      }
+      
+      updateDisplay();
+    }
+    
+    function updateDisplay() {
+      document.getElementById('count').textContent = window.refreshCount;
+      document.getElementById('timer-display').textContent = window.timerId || 'null';
+      document.getElementById('state-display').textContent = window.isAutoOn;
+    }
+    
+    function log(msg) {
+      const logEl = document.getElementById('log');
+      const time = new Date().toLocaleTimeString();
+      logEl.innerHTML += `[${time}] ${msg}\n`;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+    
+    // Bind button
+    document.getElementById('auto-refresh').onclick = toggleAutoRefresh;
+    
+    // === AUTOMATED TEST ===
+    async function runAutomatedTest() {
+      const resultEl = document.getElementById('test-result');
+      const msgEl = document.getElementById('test-msg');
+      
+      resultEl.className = 'test pending';
+      msgEl.innerHTML = 'Running test...';
+      log('=== AUTOMATED TEST START ===');
+      
+      // Reset state
+      if (window.timerId) clearInterval(window.timerId);
+      window.timerId = null;
+      window.isAutoOn = false;
+      window.refreshCount = 0;
+      document.querySelector('#auto-refresh .indicator').className = 'indicator off';
+      updateDisplay();
+      
+      let passed = true;
+      let errors = [];
+      
+      // Test 1: Initial state
+      if (window.isAutoOn !== false) { errors.push('Initial isAutoOn should be false'); passed = false; }
+      if (window.timerId !== null) { errors.push('Initial timerId should be null'); passed = false; }
+      log('Test 1 (initial state): ' + (passed ? 'PASS' : 'FAIL'));
+      
+      // Test 2: Toggle ON
+      toggleAutoRefresh();
+      await sleep(100);
+      if (window.isAutoOn !== true) { errors.push('After toggle ON, isAutoOn should be true'); passed = false; }
+      if (window.timerId === null) { errors.push('After toggle ON, timerId should NOT be null'); passed = false; }
+      log('Test 2 (toggle ON): isAutoOn=' + window.isAutoOn + ', timerId=' + window.timerId);
+      
+      // Test 3: Wait and check refresh happens
+      const countBefore = window.refreshCount;
+      await sleep(2500);
+      if (window.refreshCount <= countBefore) { errors.push('Refresh count should increase while ON'); passed = false; }
+      log('Test 3 (refresh while ON): count went from ' + countBefore + ' to ' + window.refreshCount);
+      
+      // Test 4: Toggle OFF
+      toggleAutoRefresh();
+      await sleep(100);
+      if (window.isAutoOn !== false) { errors.push('After toggle OFF, isAutoOn should be false'); passed = false; }
+      if (window.timerId !== null) { errors.push('After toggle OFF, timerId should be null'); passed = false; }
+      log('Test 4 (toggle OFF): isAutoOn=' + window.isAutoOn + ', timerId=' + window.timerId);
+      
+      // Test 5: Refresh should NOT happen while off
+      const countAtOff = window.refreshCount;
+      await sleep(2500);
+      if (window.refreshCount !== countAtOff) { errors.push('Refresh count should NOT increase while OFF'); passed = false; }
+      log('Test 5 (no refresh while OFF): count stayed at ' + window.refreshCount);
+      
+      // Result
+      log('=== TEST COMPLETE: ' + (passed ? 'PASS' : 'FAIL') + ' ===');
+      
+      if (passed) {
+        resultEl.className = 'test pass';
+        msgEl.innerHTML = '<strong>✓ ALL TESTS PASSED</strong><br>Toggle correctly starts/stops auto-refresh.';
+      } else {
+        resultEl.className = 'test fail';
+        msgEl.innerHTML = '<strong>✗ TESTS FAILED</strong><br>' + errors.join('<br>');
+      }
+    }
+    
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+    
+    updateDisplay();
+    log('Page loaded - ready for testing');
+  </script>
+</body>
+</html>

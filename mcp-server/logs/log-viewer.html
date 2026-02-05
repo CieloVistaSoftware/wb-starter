@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Traffic Log Viewer</title>
+  <link rel="stylesheet" href="log-viewer.css">
+</head>
+<body>
+  <header>
+    <h1>📡 MCP Traffic Log</h1>
+    <div class="controls">
+      <input type="text" id="search" placeholder="Search logs...">
+      <select id="filter-direction">
+        <option value="all">All Directions</option>
+        <option value="incoming">← Incoming</option>
+        <option value="outgoing">→ Outgoing</option>
+      </select>
+      <select id="filter-method">
+        <option value="all">All Methods</option>
+      </select>
+      <button onclick="expandAll()">Expand All</button>
+      <button onclick="collapseAll()" class="secondary">Collapse All</button>
+      <button onclick="loadLog()" class="secondary">↻ Refresh</button>
+      <button id="auto-refresh" class="secondary" onclick="toggleAutoRefresh()"><span class="indicator off"></span> Auto</button>
+    </div>
+    <div class="stats">
+      <span id="stat-total">0 messages</span>
+      <span id="stat-in">0 in</span>
+      <span id="stat-out">0 out</span>
+    </div>
+  </header>
+  
+  <div id="log-container">
+    <div class="loading">Loading log...</div>
+  </div>
+
+  <script src="log-viewer.js"></script>
+</body>
+</html>

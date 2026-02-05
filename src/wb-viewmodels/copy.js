@@ -1,10 +1,11 @@
 import { createToast } from './feedback.js';
 
 /**
- * Copy Behavior
- * Helper Attribute: [x-copy]
- * Copy text to clipboard on click.
+ * Copy text to clipboard on click with visual feedback.
+ * - `[x-copy]` attribute for clipboard copy functionality.
  */
+export function cc() {}
+
 export function copy(element, options = {}) {
   const config = {
     text: options.text || element.dataset.copyText,

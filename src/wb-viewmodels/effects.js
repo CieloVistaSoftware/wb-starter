@@ -1,14 +1,8 @@
 /**
- * Effects Behavior
- * -----------------------------------------------------------------------------
- * CSS-based animation utilities triggered by events or on load.
- * Supports standard animations like fade, slide, bounce, and shake.
- * 
- * Usage:
- *   <div x-fadein>...</div>
- *   <button x-shake data-trigger="hover">Shake Me</button>
- * -----------------------------------------------------------------------------
+ * CSS-based animation utilities: fade, slide, bounce, shake, and more.
+ * - `[x-fadein]`, `[x-shake]`, `[x-animate]` effect attributes.
  */
+export function cc() {}
 
 /**
  * Animate - General animation trigger

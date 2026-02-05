@@ -1,8 +1,8 @@
 /**
- * Builder Snap Grid Module
- * Snap-to-grid functionality for positioning
- * @module builder-snap
+ * Snap-to-grid functionality for positioning.
+ * - Grid overlay, snapping logic for alignment.
  */
+export function cc() {}
 
 let snapEnabled = false;
 

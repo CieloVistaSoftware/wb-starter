@@ -1,10 +1,22 @@
 /**
- * Toggle Behavior
- * -----------------------------------------------------------------------------
- * Toggle a class or state with IMMEDIATE visual feedback on mousedown
+ * Toggle CSS classes on target elements with instant visual feedback.
+ * - `[x-toggle]` attribute for toggle interactions.
+ */
+export function cc() {}
+
+/**
+ * Toggle Component
  * 
- * Helper Attribute: [x-toggle]
- * -----------------------------------------------------------------------------
+ * Toggles CSS classes on target elements with instant visual feedback.
+ * Supports self-targeting and remote targets via selector.
+ * Dispatches `wb:toggle` event with active state.
+ * 
+ * @param {HTMLElement} element - The trigger element
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.class] - Class(es) to toggle (default: active)
+ * @param {string} [options.target] - CSS selector for target elements
+ * @param {boolean} [options.self] - Also toggle class on trigger element
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function toggle(element, options = {}) {
   const config = {

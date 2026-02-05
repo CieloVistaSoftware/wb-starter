@@ -1,16 +1,8 @@
 /**
- * Media Behaviors
- * -----------------------------------------------------------------------------
- * Collection of behaviors for enhanced media elements including images,
- * video players, audio players, and galleries.
- * 
- * Custom Tag: <wb-media>
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- *   <img x-image data-zoomable src="...">
- *   <wb-video  data-src="..."></div>
+ * Media behaviors: enhanced images, video players, audio, galleries.
+ * - `[x-image]`, `<wb-video>`, `<wb-audio>`, `<wb-gallery>`
  */
+export function cc() {}
 
 /**
  * Image - Enhanced images

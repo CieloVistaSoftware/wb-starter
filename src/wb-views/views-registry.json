@@ -45,7 +45,7 @@
 
     "button": {
       "description": "Primary action button",
-      "template": "<button class=\"btn btn--{{variant || 'primary'}} btn--{{size || 'md'}}\" x-ripple {{disabled ? 'disabled' : ''}}>\n  <span class=\"btn__icon\" wb-if=\"icon\">{{icon}}</span>\n  <span class=\"btn__label\"><slot>{{label}}</slot></span>\n</button>",
+      "template": "<button class=\"btn btn--{{variant || 'primary'}} btn--{{size || 'md'}}\" type=\"button\">\n  <span class=\"btn__icon\" wb-if=\"icon\">{{icon}}</span>\n  <span class=\"btn__label\"><slot>{{label}}</slot></span>\n</button>",
       "attributes": {
         "label": { "type": "string", "required": true },
         "variant": { "type": "string", "enum": ["primary", "secondary", "success", "warning", "error", "ghost", "outline"], "default": "primary" },

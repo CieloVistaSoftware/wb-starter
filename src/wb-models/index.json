@@ -61,6 +61,7 @@
     "move.schema.json",
     "navbar.schema.json",
     "notes.schema.json",
+    "note.schema.json",
     "progress.schema.json",
     "rating.schema.json",
     "resizable.schema.json",
@@ -164,12 +165,13 @@
     },
     "layout": {
       "description": "Layout and structural components",
-      "count": 9,
+      "count": 10,
       "schemas": [
         "details.schema.json",
         "drawerLayout.schema.json",
         "footer.schema.json",
         "header.schema.json",
+        "page.schema.json",
         "scrollalong.schema.json",
         "sticky.schema.json",
         "table.schema.json",
@@ -211,9 +213,11 @@
     },
     "utility": {
       "description": "Utility and content components",
-      "count": 5,
+      "count": 7,
       "schemas": [
         "notes.schema.json",
+        "note.schema.json",
+        "issue.schema.json",
         "span.schema.json",
         "darkmode.schema.json",
         "themecontrol.schema.json",
@@ -246,9 +250,9 @@
   },
   
   "stats": {
-    "totalComponents": 72,
-    "v3Converted": 72,
+    "totalComponents": 75,
+    "v3Converted": 75,
     "migrationComplete": true,
-    "lastUpdated": "2026-01-14T00:00:00Z"
+    "lastUpdated": "2026-02-02T00:00:00Z"
   }
 }

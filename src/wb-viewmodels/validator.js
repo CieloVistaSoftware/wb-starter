@@ -1,17 +1,9 @@
 /**
- * Validator Behavior
- * -----------------------------------------------------------------------------
- * Provides client-side validation for form inputs.
- * Supports required fields, email formats, patterns, and custom rules.
- * 
- * Helper Attribute: [x-validate]
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- *   <input required type="email">
- * -----------------------------------------------------------------------------
- * Form validation with customizable rules.
+ * Client-side form validation with customizable rules and feedback.
+ * - `[x-validate]` for required, email, pattern, and custom validation.
  */
+export function cc() {}
+
 export function validator(element, options = {}) {
   const config = {
     validateOn: options.validateOn || element.dataset.validateOn || 'blur', // blur, change, input, submit

@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "range.schema.json",
+  "title": "Range",
+  "description": "Range slider input with label, value display, and theme integration",
+  "behavior": "range",
+  "baseClass": "wb-range",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "slider"
+  },
+  "compliance": {
+    "baseClass": "wb-range",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Range label text"
+    },
+    "value": {
+      "type": "number",
+      "description": "Current value",
+      "default": 50
+    },
+    "min": {
+      "type": "number",
+      "description": "Minimum value",
+      "default": 0
+    },
+    "max": {
+      "type": "number",
+      "description": "Maximum value",
+      "default": 100
+    },
+    "step": {
+      "type": "number",
+      "description": "Step increment",
+      "default": 1
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name"
+    },
+    "showValue": {
+      "type": "boolean",
+      "description": "Show current value display",
+      "default": true
+    },
+    "valuePosition": {
+      "type": "string",
+      "description": "Position of value display",
+      "enum": ["tooltip", "right", "left", "above", "below"],
+      "default": "right"
+    },
+    "showTicks": {
+      "type": "boolean",
+      "description": "Show tick marks at step intervals",
+      "default": false
+    },
+    "tickLabels": {
+      "type": "array",
+      "description": "Custom labels for tick marks",
+      "items": { "type": "string" }
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual variant",
+      "enum": ["default", "success", "warning", "error"],
+      "default": "default",
+      "appliesClass": "wb-range--{{value}}"
+    },
+    "size": {
+      "type": "string",
+      "description": "Size variant",
+      "enum": ["sm", "md", "lg"],
+      "default": "md",
+      "appliesClass": "wb-range--{{value}}"
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Disable the range input",
+      "default": false
+    },
+    "readonly": {
+      "type": "boolean",
+      "description": "Make the range read-only",
+      "default": false
+    },
+    "orientation": {
+      "type": "string",
+      "description": "Slider orientation",
+      "enum": ["horizontal", "vertical"],
+      "default": "horizontal",
+      "appliesClass": "wb-range--{{value}}"
+    },
+    "dual": {
+      "type": "boolean",
+      "description": "Enable dual-handle mode for min/max range selection",
+      "default": false
+    },
+    "minValue": {
+      "type": "number",
+      "description": "Lower bound value in dual mode"
+    },
+    "maxValue": {
+      "type": "number",
+      "description": "Upper bound value in dual mode"
+    },
+    "formatValue": {
+      "type": "string",
+      "description": "Value format template (e.g., '{{value}}%', '${{value}}')",
+      "default": "{{value}}"
+    }
+  },
+  "$view": [
+    {
+      "name": "container",
+      "selector": ".wb-range",
+      "description": "Root container element"
+    },
+    {
+      "name": "label",
+      "selector": ".wb-range__label",
+      "description": "Label element"
+    },
+    {
+      "name": "track",
+      "selector": ".wb-range__track",
+      "description": "Track background"
+    },
+    {
+      "name": "fill",
+      "selector": ".wb-range__fill",
+      "description": "Filled portion of track"
+    },
+    {
+      "name": "thumb",
+      "selector": ".wb-range__thumb",
+      "description": "Draggable thumb element"
+    },
+    {
+      "name": "thumb-min",
+      "selector": ".wb-range__thumb--min",
+      "description": "Min thumb in dual mode"
+    },
+    {
+      "name": "thumb-max",
+      "selector": ".wb-range__thumb--max",
+      "description": "Max thumb in dual mode"
+    },
+    {
+      "name": "value-display",
+      "selector": ".wb-range__value",
+      "description": "Value display element"
+    },
+    {
+      "name": "ticks",
+      "selector": ".wb-range__ticks",
+      "description": "Tick marks container"
+    },
+    {
+      "name": "input",
+      "selector": "input[type='range']",
+      "description": "Native range input (hidden, for form submission)"
+    }
+  ],
+  "$methods": {
+    "getValue": {
+      "description": "Get current value (or {min, max} in dual mode)",
+      "returns": "number | {min: number, max: number}"
+    },
+    "setValue": {
+      "description": "Set value programmatically",
+      "params": ["value: number | {min: number, max: number}"]
+    },
+    "getPercentage": {
+      "description": "Get current value as percentage (0-100)",
+      "returns": "number"
+    },
+    "enable": {
+      "description": "Enable the range input"
+    },
+    "disable": {
+      "description": "Disable the range input"
+    },
+    "reset": {
+      "description": "Reset to initial value"
+    }
+  },
+  "$events": {
+    "change": {
+      "description": "Fired when value changes (on release)",
+      "detail": "{ value: number, percentage: number }"
+    },
+    "input": {
+      "description": "Fired continuously during drag",
+      "detail": "{ value: number, percentage: number }"
+    }
+  },
+  "$cssAPI": {
+    "--wb-range-track-height": {
+      "description": "Track height",
+      "default": "6px"
+    },
+    "--wb-range-track-bg": {
+      "description": "Track background color",
+      "default": "var(--bg-tertiary)"
+    },
+    "--wb-range-fill-bg": {
+      "description": "Fill color",
+      "default": "var(--primary)"
+    },
+    "--wb-range-thumb-size": {
+      "description": "Thumb diameter",
+      "default": "20px"
+    },
+    "--wb-range-thumb-bg": {
+      "description": "Thumb background color",
+      "default": "var(--primary)"
+    },
+    "--wb-range-thumb-border": {
+      "description": "Thumb border",
+      "default": "2px solid white"
+    },
+    "--wb-range-thumb-shadow": {
+      "description": "Thumb shadow",
+      "default": "0 2px 4px rgba(0,0,0,0.2)"
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-range></wb-range>",
+      "<wb-range min=\"0\" max=\"100\" value=\"50\"></wb-range>",
+      "<wb-range label=\"Volume\" show-value></wb-range>",
+      "<wb-range variant=\"success\" show-ticks step=\"25\"></wb-range>",
+      "<wb-range dual min-value=\"20\" max-value=\"80\"></wb-range>"
+    ]
+  }
+}

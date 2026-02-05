@@ -1,8 +1,9 @@
 /**
- * Form - Enhanced <form> element
- * Adds AJAX submit, validation UI, loading states, auto-save
- * Helper Attribute: [x-behavior="form"]
+ * Enhanced `<form>` element with AJAX submit and validation UI.
+ * - Loading states, auto-save, and error handling.
  */
+export function cc() {}
+
 export function form(element, options = {}) {
   const config = {
     ajax: options.ajax ?? element.hasAttribute('data-ajax'),

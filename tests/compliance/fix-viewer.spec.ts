@@ -48,7 +48,7 @@ test.describe('Fix Viewer Compliance', () => {
         await route.fulfill({ json });
       });
 
-      await page.goto('/public/fix-viewer.html');
+      await page.goto('/public/viewers/fix-viewer.html');
     });
 
     test('should load and display fixes', async ({ page }) => {
@@ -137,7 +137,7 @@ test.describe('Fix Viewer Compliance', () => {
   test.describe('Live Data Audit', () => {
     test('should not have any cards taller than 500px', async ({ page }) => {
       // Load the real page with real data
-      await page.goto('/public/fix-viewer.html');
+      await page.goto('/public/viewers/fix-viewer.html');
       
       // Wait for fixes to load
       await page.waitForSelector('.fix-card', { timeout: 5000 });
@@ -220,7 +220,7 @@ test.describe('Fix Viewer Compliance', () => {
     });
 
     test('should not have duplicate IDs', async ({ page }) => {
-      await page.goto('/public/fix-viewer.html');
+      await page.goto('/public/viewers/fix-viewer.html');
       await page.waitForSelector('.fix-card', { timeout: 5000 });
 
       const duplicateIds = await page.evaluate(() => {
@@ -242,7 +242,7 @@ test.describe('Fix Viewer Compliance', () => {
     });
 
     test('should ensure code tags contain only text and are not too long', async ({ page }) => {
-      await page.goto('/public/fix-viewer.html');
+      await page.goto('/public/viewers/fix-viewer.html');
       await page.waitForSelector('.fix-card', { timeout: 5000 });
 
       const codeIssues = await page.evaluate(() => {

@@ -1,9 +1,11 @@
 /**
- * builder-preview.js
- * Preview mode functionality for the builder
+ * Preview mode functionality for the builder.
+ * - Toggle preview, responsive mode switching.
  */
+export function cc() {}
 
 import { toast } from './builder-utils.js';
+ 
 
 /**
  * Toggle preview mode on/off

@@ -1,11 +1,9 @@
 /**
- * Scroll Progress Behavior
- * -----------------------------------------------------------------------------
- * Shows scroll progress on the element.
- * 
- * Helper Attribute: [x-scroll-progress]
- * -----------------------------------------------------------------------------
+ * Shows scroll progress indicator on the element.
+ * - `[x-scroll-progress]` for page scroll visualization.
  */
+export function cc() {}
+
 export function scrollProgress(element, options = {}) {
   element.classList.add('wb-scroll-progress');
   element.dataset.wbReady = 'scroll-progress';

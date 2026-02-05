@@ -1,9 +1,8 @@
 /**
- * Builder Components Module
- * Handles component creation, deletion, duplication, and movement
- * 
- * @module builder-components
+ * Component creation, deletion, duplication, and movement handlers.
+ * - Core canvas manipulation utilities.
  */
+export function cc() {}
 
 import { addElementToCanvas } from './builder-canvas-sections.js';
 import { addResizeHandle } from './builder-editing.js';

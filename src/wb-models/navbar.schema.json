@@ -58,29 +58,7 @@
       "appliesClass": "wb-navbar--{{value}}"
     }
   },
-  "$view": [
-    {
-      "name": "brand",
-      "tag": "a",
-      "public": true,
-      "content": "{{brand}}",
-      "createdWhen": "brand",
-      "description": "Brand link"
-    },
-    {
-      "name": "nav",
-      "tag": "div",
-      "public": true,
-      "required": true,
-      "description": "Navigation links container"
-    },
-    {
-      "name": "toggle",
-      "tag": "button",
-      "public": true,
-      "description": "Mobile menu toggle"
-    }
-  ],
+  "$view": [],
   "$methods": {
     "openMenu": {
       "description": "Opens mobile menu",
@@ -97,23 +75,27 @@
   },
   "$cssAPI": {
     "--wb-navbar-height": {
-      "default": "60px",
+      "default": "56px",
       "description": "Navbar height"
     },
     "--wb-navbar-padding": {
       "default": "0 1rem",
       "description": "Navbar padding"
     },
+    "--wb-navbar-gap": {
+      "default": "1.5rem",
+      "description": "Gap between nav items"
+    },
     "--wb-navbar-bg": {
-      "default": "var(--bg-surface, #ffffff)",
+      "default": "var(--bg-secondary, #1f2937)",
       "description": "Background"
     },
     "--wb-navbar-border": {
-      "default": "1px solid var(--border-color, #e0e0e0)",
+      "default": "none",
       "description": "Border"
     },
     "--wb-navbar-shadow": {
-      "default": "0 1px 3px rgba(0,0,0,0.1)",
+      "default": "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
       "description": "Shadow"
     },
     "--wb-navbar-brand-size": {
@@ -121,15 +103,23 @@
       "description": "Brand font size"
     },
     "--wb-navbar-brand-weight": {
-      "default": "700",
+      "default": "600",
       "description": "Brand font weight"
     },
+    "--wb-navbar-link-size": {
+      "default": "0.875rem",
+      "description": "Link font size"
+    },
+    "--wb-navbar-link-weight": {
+      "default": "500",
+      "description": "Link font weight"
+    },
     "--wb-navbar-link-color": {
-      "default": "var(--text-primary, #1a1a1a)",
+      "default": "inherit",
       "description": "Link color"
     },
     "--wb-navbar-link-hover-color": {
-      "default": "var(--primary, #6366f1)",
+      "default": "var(--primary, #818cf8)",
       "description": "Link hover color"
     }
   },
@@ -140,14 +130,18 @@
   "test": {
     "setup": [
       "<wb-navbar>Basic navbar content</wb-navbar>",
-      "<wb-navbar variant=\"default\">variant=default</wb-navbar>",
-      "<wb-navbar variant=\"dark\">variant=dark</wb-navbar>",
-      "<wb-navbar variant=\"transparent\">variant=transparent</wb-navbar>",
-      "<wb-navbar sticky>with sticky</wb-navbar>",
-      "<wb-navbar brand=\"Sample brand\">brand=\"Sample brand\"</wb-navbar>",
-      "<wb-navbar brand-href=\"/\">brandHref=\"/\"</wb-navbar>",
-      "<wb-navbar logo=\"Sample logo\">logo=\"Sample logo\"</wb-navbar>",
-      "<wb-navbar brand=\"MySite\"></wb-navbar>"
+      "<wb-navbar brand=\"MySite\"></wb-navbar>",
+      "<wb-navbar brand=\"MySite\" brand-href=\"/home\">with brand-href</wb-navbar>",
+      "<wb-navbar brand=\"MySite\" sticky>with sticky</wb-navbar>",
+      "<wb-navbar brand=\"MySite\" variant=\"dark\">variant=dark</wb-navbar>",
+      "<wb-navbar brand=\"MySite\" variant=\"default\">variant=default</wb-navbar>",
+      "<wb-navbar brand=\"MySite\" variant=\"transparent\">variant=transparent</wb-navbar>",
+      "<wb-navbar brand=\"MySite\"><a href=\"?page=home\">🏠 Home</a><a href=\"?page=about\">ℹ️ About</a></wb-navbar>",
+      "<wb-navbar brand=\"MySite\"><a href=\"?page=home\">Home</a><a href=\"?page=components\">Components</a><a href=\"?page=behaviors\">Behaviors</a></wb-navbar>",
+      "<wb-navbar brand=\"TestSite\" sticky><a href=\"?page=home\">Home</a><a href=\"?page=about\">About</a><a href=\"?page=services\">Services</a><a href=\"?page=contact\">Contact</a></wb-navbar>",
+      "<wb-navbar brand=\"WB\" sticky><a href=\"?page=home\">🏠 Home</a><a href=\"?page=components\">🧩 Components</a><a href=\"?page=behaviors\">⚡ Behaviors</a><a href=\"?page=themes\">🎨 Themes</a><a href=\"?page=docs\">📖 Docs</a><a href=\"?page=about\">ℹ️ About</a></wb-navbar>",
+      "<wb-navbar items=\"Home:?page=home,About:?page=about,Contact:?page=contact\"></wb-navbar>",
+      "<wb-navbar logo=\"https://placehold.co/32x32\" brand=\"MySite\">with logo</wb-navbar>"
     ],
     "matrix": {
       "combinations": [
@@ -161,6 +155,62 @@
         {
           "brand": "MySite",
           "variant": "dark"
+        },
+        {
+          "brand": "MySite",
+          "variant": "transparent"
+        }
+      ]
+    },
+    "functional": {
+      "brandDisplay": [
+        {
+          "name": "Brand Not Duplicated",
+          "setup": "<wb-navbar brand=\"MySite\"><a href=\"?page=themes\">Themes</a></wb-navbar>",
+          "expect": {
+            "allTextMatches": "MySite",
+            "count": 1
+          }
+        }
+      ],
+      "childLinks": [
+        {
+          "name": "Brand + Child Links",
+          "setup": "<wb-navbar brand=\"MySite\"><a href=\"?page=home\">Home</a><a href=\"?page=about\">About</a></wb-navbar>",
+          "expect": {
+            "querySelector": ".wb-navbar__brand",
+            "textContains": "MySite",
+            "childSelector": "a",
+            "childCount": 2
+          }
+        },
+        {
+          "name": "Child Links Preserved",
+          "setup": "<wb-navbar brand=\"TestBrand\"><a href=\"?page=home\">Home</a><a href=\"?page=components\">Components</a></wb-navbar>",
+          "selector": "a[href='?page=home']",
+          "expect": {
+            "exists": true,
+            "textContains": "Home"
+          }
+        },
+        {
+          "name": "Multi-page Navigation",
+          "setup": "<wb-navbar brand=\"WB\" sticky><a href=\"?page=home\">🏠 Home</a><a href=\"?page=components\">🧩 Components</a><a href=\"?page=behaviors\">⚡ Behaviors</a><a href=\"?page=themes\">🎨 Themes</a><a href=\"?page=docs\">📖 Docs</a><a href=\"?page=about\">ℹ️ About</a></wb-navbar>",
+          "expect": {
+            "querySelector": ".wb-navbar__menu",
+            "childSelector": "a",
+            "childCountMin": 6
+          }
+        }
+      ],
+      "itemsAttribute": [
+        {
+          "name": "Items from attribute",
+          "setup": "<wb-navbar items=\"Home:?page=home,About:?page=about\"></wb-navbar>",
+          "selector": ".wb-navbar__menu a",
+          "expect": {
+            "count": 2
+          }
         }
       ]
     }

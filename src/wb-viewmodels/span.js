@@ -1,15 +1,9 @@
 /**
- * Span/Badge Behavior
- * -----------------------------------------------------------------------------
- * Applies utility classes and variants to inline span elements.
- * Useful for traffic lights (window controls), badges, and status indicators.
- * 
- * Custom Tag: <wb-span>
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- *   <wb-span variant="red"></wb-span>              <!-- Window control dot -->
+ * Utility behaviors for inline spans: badges, dots, status indicators.
+ * - `<wb-span>` with variant styling for window controls and badges.
  */
+export function cc() {}
+
 export function span(element, options = {}) {
   element.classList.add('wb-span');
   const variant = options.variant || element.dataset.variant;

@@ -1,3 +1,9 @@
+/**
+ * Auto-adjusts textarea height based on content.
+ * - Minimal autosize modifier for dynamic textarea resizing.
+ */
+export function cc() {}
+
 // Minimal autosize modifier (adjusts textarea height)
 export default function autosize(el) {
   try {

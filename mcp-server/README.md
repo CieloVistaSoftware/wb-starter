@@ -1,6 +1,6 @@
 # MCP NPM Runner
 
-An MCP server that allows Claude to run npm commands in your project.
+An MCP server that allows Claude to run npm commands in your project, with full traffic logging on a dedicated thread.
 
 ## Setup
 
@@ -31,9 +31,31 @@ Add this server to the `mcpServers` section:
 }
 ```
 
-### 3. Restart Claude Desktop
+### 3. Start the Server
 
-Close and reopen Claude Desktop to load the new MCP server.
+**Auto-start (via Claude Desktop):**
+Claude Desktop launches the server automatically based on the config above. Just restart Claude Desktop.
+
+**Manual start (for testing/debugging):**
+```powershell
+cd C:\Users\jwpmi\Downloads\AI\wb-starter\mcp-server
+node server.js
+```
+
+**Via npm script (from project root):**
+```powershell
+cd C:\Users\jwpmi\Downloads\AI\wb-starter
+npm run start:mcp
+```
+
+After any changes to server.js or log-worker.js, restart Claude Desktop to pick them up.
+
+## Files
+
+| File | Purpose |
+|------|---------|
+| `server.js` | MCP server — tool definitions, handlers, and LoggingTransport wrapper |
+| `log-worker.js` | Dedicated Worker thread for logging — isolated from MCP message processing |
 
 ## Available Tools
 
@@ -49,6 +71,36 @@ Run any npm command.
 
 **Parameters:**
 - `command` (required): The npm command to run (e.g., "run build", "install")
+
+## Traffic Logging
+
+All MCP traffic is logged with direction indicators:
+
+| Symbol | Meaning |
+|--------|---------|
+| `<-` | Inbound request from Claude Desktop |
+| `->` | Outbound response from server |
+| `--` | Lifecycle event (start, close) |
+
+### Where logs go
+
+- **stderr** — compact one-liners visible in Claude Desktop dev logs
+- **`mcp-server/logs/mcp-traffic.log`** — full JSON detail, created automatically
+
+### Tail the log in PowerShell
+
+```powershell
+Get-Content -Wait .\mcp-server\logs\mcp-traffic.log
+```
+
+### Example output
+
+```
+[2026-02-03T01:15:00.000Z] <- [id:1] tools/list
+[2026-02-03T01:15:00.005Z] -> [id:1] tools [2 tools]
+[2026-02-03T01:15:02.100Z] <- [id:2] tools/call npm_test {"filter":"schema"}
+[2026-02-03T01:15:14.300Z] -> [id:2] result [1523 chars]
+```
 
 ## Output
 

@@ -1,23 +1,20 @@
 /**
  * Home Page Showcase Tests
  * ========================
- * Comprehensive tests for the wb-starter showcase home page.
+ * Tests for the wb-starter home page.
  * 
  * Covers:
- * - Hero section rendering
- * - Stats bar with all stat cards
+ * - Hero section (wb-cardhero)
+ * - Stats banner
+ * - Live interactive demo
  * - Feature cards grid
- * - Live component showcase (cards, feedback, animations, overlays, forms)
- * - Code comparison section
- * - Testimonials
- * - Quick start guide
+ * - Premium showcase (audio, notifications)
  * - CTA section
  * - Responsive behavior
  * - No console errors
  */
 
 import { test, expect } from '@playwright/test';
-import { setupBehaviorTest, waitForWB } from '../base';
 
 const BASE_URL = 'http://localhost:3000';
 const HOME_URL = `${BASE_URL}?page=home`;
@@ -29,10 +26,26 @@ const HOME_URL = `${BASE_URL}?page=home`;
 test.describe('Home Page Showcase', () => {
   
   test.beforeEach(async ({ page }) => {
-    // Capture console errors
+    // Capture console errors - filter out expected external resource errors
     page.on('console', msg => {
       if (msg.type() === 'error') {
-        console.error(`[CONSOLE ERROR] ${msg.text()}`);
+        const text = msg.text();
+        // Skip expected errors from external resources
+        const isExpected = 
+          text.includes('favicon') ||
+          text.includes('404') ||
+          text.includes('picsum') ||
+          text.includes('pravatar') ||
+          text.includes('Failed to load resource') ||
+          text.includes('freemusicarchive') ||
+          text.includes('MediaError') ||
+          text.includes('MEDIA_ERR') ||
+          text.includes('audio') ||
+          text.includes('.mp3');
+        
+        if (!isExpected) {
+          console.error(`[CONSOLE ERROR] ${text}`);
+        }
       }
     });
     
@@ -42,452 +55,290 @@ test.describe('Home Page Showcase', () => {
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // HERO SECTION
+  // HERO SECTION (wb-cardhero)
   // ═══════════════════════════════════════════════════════════════════════════
 
   test('01 - Hero section renders correctly', async ({ page }) => {
-    console.log('🧪 Test 1: Hero section...');
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
-    // Check main title
-    const title = page.locator('.home-hero__title');
-    await expect(title).toBeVisible({ timeout: 5000 });
-    await expect(title).toContainText('wb-starter');
-    console.log('✅ Hero title visible');
+    // Check wb-cardhero component exists
+    const hero = page.locator('wb-cardhero');
+    await expect(hero).toBeVisible({ timeout: 5000 });
     
-    // Check subtitle
-    const subtitle = page.locator('.home-hero__subtitle');
-    await expect(subtitle).toBeVisible();
-    await expect(subtitle).toContainText('Zero-Build');
-    console.log('✅ Hero subtitle visible');
+    // Check hero wrapper
+    const heroWrapper = page.locator('.home-hero__wrapper');
+    await expect(heroWrapper).toBeVisible();
     
-    // Check tagline with stats
-    const tagline = page.locator('.home-hero__tagline');
-    await expect(tagline).toBeVisible();
-    await expect(tagline).toContainText('232 behaviors');
-    await expect(tagline).toContainText('23 themes');
-    console.log('✅ Hero tagline with stats visible');
-    
-    // Check CTA buttons
-    const viewComponentsBtn = page.locator('.home-hero__actions a:has-text("View Components")');
-    await expect(viewComponentsBtn).toBeVisible();
-    console.log('✅ View Components button visible');
-    
-    const docsBtn = page.locator('.home-hero__actions a:has-text("Documentation")');
-    await expect(docsBtn).toBeVisible();
-    console.log('✅ Documentation button visible');
-    
-    // Check version badge
-    const badge = page.locator('.home-hero__badge wb-badge');
-    await expect(badge).toBeVisible();
-    await expect(badge).toContainText('v3.0');
-    console.log('✅ Version badge visible');
+    // Check hero has correct variant
+    await expect(hero).toHaveAttribute('variant', 'cosmic');
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // STATS BAR
+  // STATS BANNER
   // ═══════════════════════════════════════════════════════════════════════════
 
-  test('02 - Stats bar displays all metrics', async ({ page }) => {
-    console.log('🧪 Test 2: Stats bar...');
+  test('02 - Stats banner displays all metrics', async ({ page }) => {
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
-    const statsBar = page.locator('.home-stats');
-    await expect(statsBar).toBeVisible();
+    const statsBanner = page.locator('.stats-banner');
+    await expect(statsBanner).toBeVisible();
     
-    // Check all 4 stat cards
-    const statCards = page.locator('.home-stats stats-card');
-    await expect(statCards).toHaveCount(4);
-    console.log('✅ 4 stat cards present');
+    // Check all 4 stat items
+    const statItems = page.locator('.stat-item');
+    await expect(statItems).toHaveCount(4);
     
-    // Check specific stats
-    await expect(page.locator('stats-card[data-value="232"]')).toBeVisible();
-    console.log('✅ Behaviors stat visible');
+    // Check specific stat values
+    const statValues = page.locator('.stat-value');
+    await expect(statValues).toHaveCount(4);
     
-    await expect(page.locator('stats-card[data-value="23"]')).toBeVisible();
-    console.log('✅ Themes stat visible');
+    // Check runtime stats are populated (behavior count and render time)
+    const behaviorCount = page.locator('#behavior-count');
+    await expect(behaviorCount).toBeVisible();
     
-    await expect(page.locator('stats-card[data-label="Total Size"]')).toBeVisible();
-    console.log('✅ Total Size stat visible');
+    // Check stat labels
+    const statLabels = page.locator('.stat-label');
+    await expect(statLabels.nth(0)).toContainText('Behaviors');
+    await expect(statLabels.nth(1)).toContainText('DOM Architecture');
+    await expect(statLabels.nth(2)).toContainText('Render Time');
+    await expect(statLabels.nth(3)).toContainText('Standards Compliant');
+  });
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVE INTERACTIVE DEMO
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  test('03 - Live demo section renders', async ({ page }) => {
+    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
-    await expect(page.locator('stats-card[data-value="0"]')).toBeVisible();
-    console.log('✅ Build Steps stat visible');
+    // Check section title
+    const sectionTitle = page.locator('h2.section-title:has-text("It\'s Just HTML attributes")');
+    await expect(sectionTitle).toBeVisible();
+    
+    // Check interactive demo container
+    const interactiveDemo = page.locator('.interactive-demo');
+    await expect(interactiveDemo).toBeVisible();
+    
+    // Check preview and code sections
+    const demoPreview = page.locator('.demo-preview');
+    await expect(demoPreview).toBeVisible();
+    
+    const demoCode = page.locator('.demo-code');
+    await expect(demoCode).toBeVisible();
+  });
+
+  test('04 - Interactive demo buttons work', async ({ page }) => {
+    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
+    
+    // Check ripple button (in demo preview) - now using wb-button
+    const rippleBtn = page.locator('.demo-preview wb-button[x-ripple]:has-text("Click Me")');
+    await expect(rippleBtn).toBeVisible();
+    
+    // Check tooltip button
+    const tooltipBtn = page.locator('.demo-preview wb-button[x-tooltip]');
+    await expect(tooltipBtn).toBeVisible();
+    await expect(tooltipBtn).toContainText('Hover Me');
+    
+    // Check draggable element
+    const draggable = page.locator('.demo-preview [x-draggable]');
+    await expect(draggable).toBeVisible();
+    await expect(draggable).toContainText('Drag Me Around');
+    
+    // Check confetti button
+    const confettiBtn = page.locator('.demo-preview wb-button[x-confetti]');
+    await expect(confettiBtn).toBeVisible();
+    await expect(confettiBtn).toContainText('Celebrate');
+  });
+
+  test('05 - Demo code block renders with syntax highlighting', async ({ page }) => {
+    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
+    
+    // Check wb-mdhtml renders code
+    const mdhtml = page.locator('.demo-code wb-mdhtml');
+    await expect(mdhtml).toBeVisible();
+    
+    // Check window controls (macOS style dots)
+    const windowControls = page.locator('.window-controls');
+    await expect(windowControls).toBeVisible();
+    
+    const dots = page.locator('.window-controls .dot');
+    await expect(dots).toHaveCount(3);
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
   // FEATURE CARDS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  test('03 - Why wb-starter section with feature cards', async ({ page }) => {
-    console.log('🧪 Test 3: Feature cards...');
+  test('06 - Feature cards section renders', async ({ page }) => {
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
     // Check section title
-    const sectionTitle = page.locator('h2:has-text("Why wb-starter")');
+    const sectionTitle = page.locator('h2.section-title:has-text("Everything You Need")');
     await expect(sectionTitle).toBeVisible();
-    console.log('✅ Section title visible');
+    
+    // Check "Why WB Behaviors" subtitle
+    const subtitle = page.locator('h2.section-title:has-text("Why WB Behaviors")');
+    await expect(subtitle).toBeVisible();
+    
+    // Check features grid
+    const featuresGrid = page.locator('.features-grid');
+    await expect(featuresGrid).toBeVisible();
     
     // Check all 6 feature cards
-    const featureCards = page.locator('basic-card[data-hoverable]');
-    const count = await featureCards.count();
-    expect(count).toBeGreaterThanOrEqual(6);
-    console.log(`✅ ${count} feature cards present`);
+    const featureCards = page.locator('.features-grid wb-card[variant="float"]');
+    await expect(featureCards).toHaveCount(6);
+  });
+
+  test('07 - Feature cards have correct content', async ({ page }) => {
+    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
-    // Check specific features
-    await expect(page.locator('basic-card[data-title*="Zero Configuration"]')).toBeVisible();
-    console.log('✅ Zero Configuration card visible');
+    // Check feature icons
+    const featureIcons = page.locator('.feature-icon');
+    await expect(featureIcons).toHaveCount(6);
     
-    await expect(page.locator('basic-card[data-title*="Light DOM"]')).toBeVisible();
-    console.log('✅ Light DOM card visible');
-    
-    await expect(page.locator('basic-card[data-title*="Behavior-Based"]')).toBeVisible();
-    console.log('✅ Behavior-Based card visible');
+    // Check specific feature titles
+    await expect(page.locator('.features-grid h3:has-text("Component Library")')).toBeVisible();
+    await expect(page.locator('.features-grid h3:has-text("Behaviors System")')).toBeVisible();
+    await expect(page.locator('.features-grid h3:has-text("Theme Engine")')).toBeVisible();
+    await expect(page.locator('.features-grid h3:has-text("Data Viz")')).toBeVisible();
+    await expect(page.locator('.features-grid h3:has-text("Accessible")')).toBeVisible();
+    await expect(page.locator('.features-grid h3:has-text("Performance")')).toBeVisible();
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // LIVE COMPONENT SHOWCASE
+  // PREMIUM SHOWCASE
   // ═══════════════════════════════════════════════════════════════════════════
 
-  test('04 - Cards showcase section', async ({ page }) => {
-    console.log('🧪 Test 4: Cards showcase...');
-    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
-    
-    // Check showcase section exists
-    const showcaseTitle = page.locator('h2:has-text("See It In Action")');
-    await expect(showcaseTitle).toBeVisible();
-    console.log('✅ Showcase section title visible');
-    
-    // Check image card
-    const imageCard = page.locator('image-card').first();
-    await expect(imageCard).toBeVisible();
-    console.log('✅ Image card visible');
-    
-    // Check stats card
-    const statsCard = page.locator('.home-showcase stats-card').first();
-    await expect(statsCard).toBeVisible();
-    console.log('✅ Stats card visible');
-    
-    // Check price card
-    const priceCard = page.locator('price-card');
-    await expect(priceCard).toBeVisible();
-    console.log('✅ Price card visible');
-  });
-
-  test('05 - Feedback & Status showcase', async ({ page }) => {
-    console.log('🧪 Test 5: Feedback showcase...');
-    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
-    
-    // Check alert
-    const alert = page.locator('wb-alert[type="success"]');
-    await expect(alert).toBeVisible();
-    console.log('✅ Success alert visible');
-    
-    // Check badges
-    const badges = page.locator('.home-showcase wb-badge');
-    const badgeCount = await badges.count();
-    expect(badgeCount).toBeGreaterThanOrEqual(5);
-    console.log(`✅ ${badgeCount} badges visible`);
-    
-    // Check progress bar
-    const progress = page.locator('wb-progress');
-    await expect(progress).toBeVisible();
-    console.log('✅ Progress bar visible');
-    
-    // Check spinner
-    const spinner = page.locator('wb-spinner');
-    await expect(spinner).toBeVisible();
-    console.log('✅ Spinner visible');
-  });
-
-  test('06 - Animation buttons showcase', async ({ page }) => {
-    console.log('🧪 Test 6: Animation buttons...');
-    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
-    
-    // Check animation buttons
-    const bounceBtn = page.locator('button[x-bounce]');
-    await expect(bounceBtn).toBeVisible();
-    console.log('✅ Bounce button visible');
-    
-    const shakeBtn = page.locator('button[x-shake]');
-    await expect(shakeBtn).toBeVisible();
-    console.log('✅ Shake button visible');
-    
-    const confettiBtn = page.locator('button[x-confetti]');
-    await expect(confettiBtn).toBeVisible();
-    console.log('✅ Confetti button visible');
-    
-    // Test animation triggers
-    await bounceBtn.click();
-    console.log('✅ Bounce animation triggered');
-  });
-
-  test('07 - Overlay buttons showcase', async ({ page }) => {
-    console.log('🧪 Test 7: Overlay buttons...');
-    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
-    
-    // Check modal button
-    const modalBtn = page.locator('wb-modal.wb-btn');
-    await expect(modalBtn).toBeVisible();
-    console.log('✅ Modal button visible');
-    
-    // Check drawer button
-    const drawerBtn = page.locator('wb-drawer.wb-btn');
-    await expect(drawerBtn).toBeVisible();
-    console.log('✅ Drawer button visible');
-    
-    // Check toast button
-    const toastBtn = page.locator('button[x-toast]').first();
-    await expect(toastBtn).toBeVisible();
-    console.log('✅ Toast button visible');
-    
-    // Check confirm button
-    const confirmBtn = page.locator('button[x-confirm]');
-    await expect(confirmBtn).toBeVisible();
-    console.log('✅ Confirm button visible');
-  });
-
-  test('08 - Form elements showcase', async ({ page }) => {
-    console.log('🧪 Test 8: Form elements...');
-    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
-    
-    // Check text input
-    const textInput = page.locator('input[placeholder="Text input with styling"]');
-    await expect(textInput).toBeVisible();
-    console.log('✅ Text input visible');
-    
-    // Check password input
-    const passwordInput = page.locator('input[x-password]');
-    await expect(passwordInput).toBeVisible();
-    console.log('✅ Password input visible');
-    
-    // Check search input
-    const searchInput = page.locator('input[x-search]');
-    await expect(searchInput).toBeVisible();
-    console.log('✅ Search input visible');
-    
-    // Check masked input
-    const maskedInput = page.locator('input[x-masked]');
-    await expect(maskedInput).toBeVisible();
-    console.log('✅ Masked input visible');
-    
-    // Check switch
-    const switchEl = page.locator('wb-switch');
-    await expect(switchEl).toBeVisible();
-    console.log('✅ Switch visible');
-    
-    // Check rating
-    const rating = page.locator('wb-rating');
-    await expect(rating).toBeVisible();
-    console.log('✅ Rating visible');
-    
-    // Check stepper
-    const stepper = page.locator('[x-stepper]');
-    await expect(stepper).toBeVisible();
-    console.log('✅ Stepper visible');
-  });
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // CODE COMPARISON
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  test('09 - Code comparison section', async ({ page }) => {
-    console.log('🧪 Test 9: Code comparison...');
+  test('08 - Premium showcase section renders', async ({ page }) => {
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
     // Check section title
-    const sectionTitle = page.locator('h2:has-text("Simple, Semantic HTML")');
+    const sectionTitle = page.locator('h2.section-title:has-text("Premium Components Included")');
     await expect(sectionTitle).toBeVisible();
-    console.log('✅ Section title visible');
     
-    // Check code blocks
-    const codeBlocks = page.locator('wb-code');
-    const codeCount = await codeBlocks.count();
-    expect(codeCount).toBeGreaterThanOrEqual(2);
-    console.log(`✅ ${codeCount} code blocks present`);
+    // Check showcase grid
+    const showcaseGrid = page.locator('.premium-showcase-grid');
+    await expect(showcaseGrid).toBeVisible();
     
-    // Check traditional approach header
-    const traditionalHeader = page.locator('h3:has-text("Traditional Approach")');
-    await expect(traditionalHeader).toBeVisible();
-    console.log('✅ Traditional Approach header visible');
-    
-    // Check wb-starter header
-    const wbHeader = page.locator('h3:has-text("wb-starter")');
-    await expect(wbHeader).toBeVisible();
-    console.log('✅ wb-starter header visible');
+    // Check showcase boxes
+    const showcaseBoxes = page.locator('.showcase-box');
+    await expect(showcaseBoxes).toHaveCount(2);
   });
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // TESTIMONIALS
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  test('10 - Testimonials section', async ({ page }) => {
-    console.log('🧪 Test 10: Testimonials...');
+  test('09 - Audio visualization renders', async ({ page }) => {
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
-    // Check section title
-    const sectionTitle = page.locator('h2:has-text("What Developers Say")');
-    await expect(sectionTitle).toBeVisible();
-    console.log('✅ Section title visible');
+    // Check audio visualization header
+    const audioHeader = page.locator('.showcase-box__header:has-text("Audio Visualization")');
+    await expect(audioHeader).toBeVisible();
     
-    // Check testimonial cards
-    const testimonials = page.locator('testimonial-card');
-    const count = await testimonials.count();
-    expect(count).toBe(3);
-    console.log('✅ 3 testimonial cards present');
-    
-    // Check first testimonial has content
-    const firstTestimonial = testimonials.first();
-    await expect(firstTestimonial).toBeVisible();
-    console.log('✅ First testimonial visible');
+    // Check wb-audio component exists
+    const wbAudio = page.locator('wb-audio');
+    await expect(wbAudio).toBeVisible();
   });
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // QUICK START
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  test('11 - Quick start guide section', async ({ page }) => {
-    console.log('🧪 Test 11: Quick start guide...');
+  test('10 - Toast notification buttons render', async ({ page }) => {
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
-    // Check section title
-    const sectionTitle = page.locator('h2:has-text("Get Started in 30 Seconds")');
-    await expect(sectionTitle).toBeVisible();
-    console.log('✅ Section title visible');
+    // Check toast notifications section exists
+    const toastHeader = page.locator('.showcase-box__header:has-text("Toast Notifications")');
+    await expect(toastHeader).toBeVisible();
     
-    // Check step numbers
-    const stepNumbers = page.locator('.quickstart-step__number');
-    const stepCount = await stepNumbers.count();
-    expect(stepCount).toBe(3);
-    console.log('✅ 3 step numbers present');
+    // Scroll to toast section
+    await toastHeader.scrollIntoViewIfNeeded();
     
-    // Check step content
-    const downloadStep = page.locator('.quickstart-step__content h3:has-text("Download")');
-    await expect(downloadStep).toBeVisible();
-    console.log('✅ Download step visible');
+    // Check toast buttons exist (4 types: info, success, warning, error)
+    const showcaseContent = toastHeader.locator('..').locator('.showcase-box__content');
+    const toastButtons = showcaseContent.locator('wb-button[x-toast]');
+    await expect(toastButtons).toHaveCount(4);
     
-    const openStep = page.locator('.quickstart-step__content h3:has-text("Open")');
-    await expect(openStep).toBeVisible();
-    console.log('✅ Open step visible');
-    
-    const buildStep = page.locator('.quickstart-step__content h3:has-text("Build")');
-    await expect(buildStep).toBeVisible();
-    console.log('✅ Build step visible');
+    // Verify all toast types are present
+    await expect(showcaseContent.locator('wb-button[data-type="info"]')).toBeVisible();
+    await expect(showcaseContent.locator('wb-button[data-type="success"]')).toBeVisible();
+    await expect(showcaseContent.locator('wb-button[data-type="warning"]')).toBeVisible();
+    await expect(showcaseContent.locator('wb-button[data-type="error"]')).toBeVisible();
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
   // CTA SECTION
   // ═══════════════════════════════════════════════════════════════════════════
 
-  test('12 - CTA section', async ({ page }) => {
-    console.log('🧪 Test 12: CTA section...');
+  test('11 - CTA section renders', async ({ page }) => {
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
     // Check CTA section
-    const ctaSection = page.locator('.home-cta');
+    const ctaSection = page.locator('.cta-section');
     await expect(ctaSection).toBeVisible();
-    console.log('✅ CTA section visible');
+    
+    // Check CTA content
+    const ctaContent = page.locator('.cta-content');
+    await expect(ctaContent).toBeVisible();
     
     // Check CTA title
-    const ctaTitle = page.locator('.home-cta h2');
-    await expect(ctaTitle).toContainText('Ready to Build');
-    console.log('✅ CTA title visible');
+    const ctaTitle = page.locator('.cta-content h2:has-text("Ready to build something amazing")');
+    await expect(ctaTitle).toBeVisible();
     
-    // Check CTA buttons
-    const exploreBtn = page.locator('.home-cta a:has-text("Explore Components")');
-    await expect(exploreBtn).toBeVisible();
-    console.log('✅ Explore Components button visible');
-    
-    const docsBtn = page.locator('.home-cta a:has-text("Read the Docs")');
-    await expect(docsBtn).toBeVisible();
-    console.log('✅ Read the Docs button visible');
-    
-    const githubBtn = page.locator('.home-cta a:has-text("Star on GitHub")');
-    await expect(githubBtn).toBeVisible();
-    console.log('✅ Star on GitHub button visible');
+    // Check CTA subtitle
+    const ctaSubtitle = page.locator('.cta-content p:has-text("No-Build Revolution")');
+    await expect(ctaSubtitle).toBeVisible();
   });
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // NAVIGATION
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  test('13 - Navigation links work', async ({ page }) => {
-    console.log('🧪 Test 13: Navigation links...');
+  test('12 - CTA buttons work', async ({ page }) => {
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
-    // Click View Components button and verify navigation
-    const viewComponentsBtn = page.locator('.home-hero__actions a:has-text("View Components")');
-    await viewComponentsBtn.click();
-    await page.waitForURL('**/page=components**');
-    console.log('✅ View Components navigates correctly');
+    // Check Get Started button - now using wb-button
+    const getStartedBtn = page.locator('.cta-actions wb-button:has-text("Get Started")');
+    await expect(getStartedBtn).toBeVisible();
     
-    // Go back to home
-    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
-    
-    // Click Documentation button
-    const docsBtn = page.locator('.home-hero__actions a:has-text("Documentation")');
-    await docsBtn.click();
-    await page.waitForURL('**/page=docs**');
-    console.log('✅ Documentation navigates correctly');
+    // Check GitHub link
+    const githubLink = page.locator('.cta-actions a:has-text("View on GitHub")');
+    await expect(githubLink).toBeVisible();
+    await expect(githubLink).toHaveAttribute('href', 'https://github.com/CieloVistaSoftware/wb-starter');
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
   // RESPONSIVE
   // ═══════════════════════════════════════════════════════════════════════════
 
-  test('14 - Mobile responsiveness', async ({ page }) => {
-    console.log('🧪 Test 14: Mobile responsiveness...');
-    
+  test('13 - Mobile responsiveness', async ({ page }) => {
     // Set mobile viewport
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
     // Check hero is visible on mobile
-    const title = page.locator('.home-hero__title');
-    await expect(title).toBeVisible();
-    console.log('✅ Hero title visible on mobile');
+    const hero = page.locator('wb-cardhero');
+    await expect(hero).toBeVisible();
     
-    // Check stats still visible
-    const statsBar = page.locator('.home-stats');
-    await expect(statsBar).toBeVisible();
-    console.log('✅ Stats bar visible on mobile');
+    // Check stats banner still visible
+    const statsBanner = page.locator('.stats-banner');
+    await expect(statsBanner).toBeVisible();
     
-    // Check buttons are still clickable
-    const viewComponentsBtn = page.locator('.home-hero__actions a:has-text("View Components")');
-    await expect(viewComponentsBtn).toBeVisible();
-    console.log('✅ CTA buttons visible on mobile');
-    
-    // Reset viewport
-    await page.setViewportSize({ width: 1280, height: 720 });
+    // Check feature cards visible
+    const featureCards = page.locator('.features-grid wb-card');
+    const count = await featureCards.count();
+    expect(count).toBe(6);
   });
 
-  test('15 - Tablet responsiveness', async ({ page }) => {
-    console.log('🧪 Test 15: Tablet responsiveness...');
-    
+  test('14 - Tablet responsiveness', async ({ page }) => {
     // Set tablet viewport
     await page.setViewportSize({ width: 768, height: 1024 });
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
     // Check main sections visible
-    const title = page.locator('.home-hero__title');
-    await expect(title).toBeVisible();
-    console.log('✅ Hero visible on tablet');
+    const hero = page.locator('wb-cardhero');
+    await expect(hero).toBeVisible();
     
-    const featureCards = page.locator('basic-card[data-hoverable]');
-    const count = await featureCards.count();
-    expect(count).toBeGreaterThanOrEqual(6);
-    console.log('✅ Feature cards visible on tablet');
+    const featuresGrid = page.locator('.features-grid');
+    await expect(featuresGrid).toBeVisible();
     
-    // Reset viewport
-    await page.setViewportSize({ width: 1280, height: 720 });
+    const ctaSection = page.locator('.cta-section');
+    await expect(ctaSection).toBeVisible();
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
   // ERROR CHECKING
   // ═══════════════════════════════════════════════════════════════════════════
 
-  test('16 - No critical console errors', async ({ page }) => {
-    console.log('🧪 Test 16: Console errors check...');
-    
+  test('15 - No critical console errors', async ({ page }) => {
     const errors: string[] = [];
     
     page.on('console', msg => {
@@ -508,16 +359,9 @@ test.describe('Home Page Showcase', () => {
       !e.includes('picsum') && // External image service
       !e.includes('pravatar') && // External avatar service
       !e.includes('Failed to load resource') && // External resources
+      !e.includes('freemusicarchive') && // External audio
       e.length > 0
     );
-    
-    if (criticalErrors.length === 0) {
-      console.log('✅ No critical console errors');
-    } else {
-      console.log('⚠️ Found console errors:');
-      criticalErrors.forEach(e => console.log(`  - ${e}`));
-      // Don't fail the test for non-blocking errors, just log them
-    }
     
     expect(criticalErrors.length).toBeLessThan(5);
   });
@@ -526,55 +370,43 @@ test.describe('Home Page Showcase', () => {
   // INTERACTION TESTS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  test('17 - Modal interaction works', async ({ page }) => {
-    console.log('🧪 Test 17: Modal interaction...');
+  test('16 - Ripple effect triggers on click', async ({ page }) => {
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
-    // Click modal button
-    const modalBtn = page.locator('wb-modal.wb-btn');
-    await modalBtn.click();
+    const rippleBtn = page.locator('.demo-preview wb-button[x-ripple]:has-text("Click Me")');
+    await rippleBtn.click();
     
-    // Wait for modal to appear
-    await page.waitForTimeout(300);
-    
-    // Check modal is visible
-    const modal = page.locator('.wb-modal, [class*="modal"]');
-    const isModalVisible = await modal.isVisible().catch(() => false);
-    
-    if (isModalVisible) {
-      console.log('✅ Modal opened successfully');
-      
-      // Close modal
-      const closeBtn = page.locator('.wb-modal__close, [class*="modal"] button:has-text("×"), [class*="modal"] button:has-text("Close")').first();
-      if (await closeBtn.isVisible().catch(() => false)) {
-        await closeBtn.click();
-        console.log('✅ Modal closed successfully');
-      }
-    } else {
-      console.log('⚠️ Modal may use different rendering approach');
-    }
+    // Button should still be functional after click
+    await expect(rippleBtn).toBeVisible();
   });
 
-  test('18 - Toast notification works', async ({ page }) => {
-    console.log('🧪 Test 18: Toast notification...');
+  test('17 - Confetti triggers on click', async ({ page }) => {
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
-    // Click toast button
-    const toastBtn = page.locator('button[x-toast]:has-text("Show Toast")');
+    const confettiBtn = page.locator('wb-button[x-confetti]');
+    await confettiBtn.click();
+    
+    // Wait for confetti animation to start
+    await page.waitForTimeout(300);
+    
+    // Button should still be visible
+    await expect(confettiBtn).toBeVisible();
+  });
+
+  test('18 - Toast button triggers notification', async ({ page }) => {
+    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
+    
+    // Find a toast button in the premium showcase
+    const toastBtn = page.locator('.showcase-box wb-button[x-toast][data-type="success"]');
+    await toastBtn.scrollIntoViewIfNeeded();
     await toastBtn.click();
     
     // Wait for toast to appear
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(300);
     
-    // Check toast is visible
-    const toast = page.locator('.wb-toast, [class*="toast"]');
-    const isToastVisible = await toast.isVisible().catch(() => false);
-    
-    if (isToastVisible) {
-      console.log('✅ Toast notification appeared');
-    } else {
-      console.log('⚠️ Toast may use different rendering approach');
-    }
+    // Toast container should exist (be specific to avoid matching button classes)
+    const toastContainer = page.locator('div.wb-toast-container');
+    await expect(toastContainer).toBeVisible({ timeout: 2000 });
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -582,64 +414,67 @@ test.describe('Home Page Showcase', () => {
   // ═══════════════════════════════════════════════════════════════════════════
 
   test('19 - Full page walkthrough', async ({ page }) => {
-    console.log('\n🧪 Test 19: Full page walkthrough...\n');
-    
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     
     // Hero
-    console.log('📍 Checking HERO section...');
-    await expect(page.locator('.home-hero__title')).toBeVisible();
-    await expect(page.locator('.home-hero__subtitle')).toBeVisible();
-    console.log('✅ HERO: Title and subtitle present\n');
+    await expect(page.locator('wb-cardhero')).toBeVisible();
+    await expect(page.locator('.home-hero__wrapper')).toBeVisible();
     
-    // Stats
-    console.log('📍 Checking STATS section...');
-    await expect(page.locator('.home-stats')).toBeVisible();
-    const statCards = page.locator('.home-stats stats-card');
-    await expect(statCards).toHaveCount(4);
-    console.log('✅ STATS: All 4 stat cards present\n');
+    // Stats Banner
+    await expect(page.locator('.stats-banner')).toBeVisible();
+    const statItems = page.locator('.stat-item');
+    await expect(statItems).toHaveCount(4);
     
-    // Features
-    console.log('📍 Checking FEATURES section...');
-    await expect(page.locator('h2:has-text("Why wb-starter")')).toBeVisible();
-    const featureCards = page.locator('basic-card[data-hoverable]');
-    expect(await featureCards.count()).toBeGreaterThanOrEqual(6);
-    console.log('✅ FEATURES: Section title and cards present\n');
+    // Interactive Demo
+    await expect(page.locator('.interactive-demo')).toBeVisible();
+    await expect(page.locator('wb-button[x-ripple]')).toBeVisible();
+    await expect(page.locator('wb-button[x-confetti]')).toBeVisible();
     
-    // Showcase
-    console.log('📍 Checking SHOWCASE section...');
-    await expect(page.locator('h2:has-text("See It In Action")')).toBeVisible();
-    await expect(page.locator('image-card')).toBeVisible();
-    await expect(page.locator('price-card')).toBeVisible();
-    console.log('✅ SHOWCASE: Cards visible\n');
+    // Feature Cards
+    await expect(page.locator('.features-grid')).toBeVisible();
+    const featureCards = page.locator('.features-grid wb-card');
+    await expect(featureCards).toHaveCount(6);
     
-    // Code Comparison
-    console.log('📍 Checking CODE COMPARISON section...');
-    await expect(page.locator('h2:has-text("Simple, Semantic HTML")')).toBeVisible();
-    const codeBlocks = page.locator('wb-code');
-    expect(await codeBlocks.count()).toBeGreaterThanOrEqual(2);
-    console.log('✅ CODE: Comparison section present\n');
-    
-    // Testimonials
-    console.log('📍 Checking TESTIMONIALS section...');
-    await expect(page.locator('h2:has-text("What Developers Say")')).toBeVisible();
-    const testimonials = page.locator('testimonial-card');
-    expect(await testimonials.count()).toBe(3);
-    console.log('✅ TESTIMONIALS: 3 cards present\n');
-    
-    // Quick Start
-    console.log('📍 Checking QUICK START section...');
-    await expect(page.locator('h2:has-text("Get Started in 30 Seconds")')).toBeVisible();
-    const steps = page.locator('.quickstart-step__number');
-    expect(await steps.count()).toBe(3);
-    console.log('✅ QUICK START: 3 steps present\n');
+    // Premium Showcase
+    await expect(page.locator('.premium-showcase-grid')).toBeVisible();
+    await expect(page.locator('wb-audio')).toBeVisible();
+    await expect(page.locator('.showcase-box:has-text("Toast Notifications")')).toBeVisible();
     
     // CTA
-    console.log('📍 Checking CTA section...');
-    await expect(page.locator('.home-cta')).toBeVisible();
-    await expect(page.locator('.home-cta h2')).toContainText('Ready to Build');
-    console.log('✅ CTA: Section present\n');
+    await expect(page.locator('.cta-section')).toBeVisible();
+    await expect(page.locator('.cta-actions')).toBeVisible();
     
-    console.log('✅✅✅ ALL SECTIONS VERIFIED - HOME PAGE WORKING! ✅✅✅\n');
+    // Status Bar
+    await expect(page.locator('wb-status')).toBeVisible();
+  });
+
+  test('20 - Status bar displays runtime info', async ({ page }) => {
+    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
+    
+    // Check status bar exists
+    const statusBar = page.locator('wb-status');
+    await expect(statusBar).toBeVisible();
+    
+    // Check status message
+    const statusMessage = page.locator('.wb-status__message');
+    await expect(statusMessage).toBeVisible();
+    
+    // Check behavior count is populated (should be a number)
+    const behaviorCount = page.locator('.wb-status__behaviors');
+    await expect(behaviorCount).toBeVisible();
+    const countText = await behaviorCount.textContent();
+    expect(parseInt(countText || '0', 10)).toBeGreaterThan(0);
+    
+    // Check render time is populated (should end with 's' for seconds)
+    const renderTime = page.locator('.wb-status__render');
+    await expect(renderTime).toBeVisible();
+    const timeText = await renderTime.textContent();
+    expect(timeText).toMatch(/\d+\.\d+s/);
+    
+    // Check timestamp is updating
+    const timestamp = page.locator('.wb-status__time');
+    await expect(timestamp).toBeVisible();
+    const timestampText = await timestamp.textContent();
+    expect(timestampText?.length).toBeGreaterThan(0);
   });
 });

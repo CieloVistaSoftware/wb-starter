@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Auto-Refresh Toggle Test</title>
+  <style>
+    body { font-family: system-ui; padding: 2rem; background: #1e1e2e; color: #cdd6f4; }
+    .test { padding: 1rem; margin: 0.5rem 0; border-radius: 4px; background: #313244; }
+    .pass { border-left: 4px solid #a6e3a1; }
+    .fail { border-left: 4px solid #f38ba8; }
+    .pending { border-left: 4px solid #f9e2af; }
+    button { padding: 0.5rem 1rem; margin: 0.25rem; cursor: pointer; }
+    .indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+    .indicator.off { background: #f38ba8; }
+    .indicator.on { background: #a6e3a1; }
+    #log { background: #11111b; padding: 1rem; border-radius: 4px; font-family: monospace; max-height: 300px; overflow-y: auto; }
+  </style>
+</head>
+<body>
+  <h1>Auto-Refresh Toggle Test</h1>
+  
+  <div style="margin: 1rem 0;">
+    <button id="auto-refresh" onclick="toggleAutoRefresh()">
+      <span class="indicator off"></span> Auto
+    </button>
+    <button onclick="runTests()">Run All Tests</button>
+    <button onclick="clearLog()">Clear Log</button>
+  </div>
+  
+  <div id="results"></div>
+  
+  <h3>Console Log:</h3>
+  <div id="log"></div>
+
+  <script>
+    // Replicate the exact same logic from log-viewer.html
+    window._autoRefreshId = null;
+    window._refreshCount = 0;
+    
+    function mockLoadLog() {
+      window._refreshCount++;
+      log('[loadLog] Called - count: ' + window._refreshCount);
+    }
+    
+    function toggleAutoRefresh() {
+      const btn = document.getElementById('auto-refresh');
+      const ind = btn.querySelector('.indicator');
+      
+      if (window._autoRefreshId !== null) {
+        // Currently ON - turn OFF
+        clearInterval(window._autoRefreshId);
+        window._autoRefreshId = null;
+        ind.className = 'indicator off';
+        log('[Auto-refresh] Stopped');
+      } else {
+        // Currently OFF - turn ON
+        window._autoRefreshId = setInterval(mockLoadLog, 1000); // 1s for testing
+        ind.className = 'indicator on';
+        log('[Auto-refresh] Started, ID: ' + window._autoRefreshId);
+      }
+    }
+    
+    // Logging
+    function log(msg) {
+      const logEl = document.getElementById('log');
+      const time = new Date().toLocaleTimeString();
+      logEl.innerHTML += `[${time}] ${msg}\n`;
+      logEl.scrollTop = logEl.scrollHeight;
+      console.log(msg);
+    }
+    
+    function clearLog() {
+      document.getElementById('log').innerHTML = '';
+      window._refreshCount = 0;
+    }
+    
+    // Test framework
+    const tests = [];
+    function test(name, fn) { tests.push({ name, fn }); }
+    
+    function assert(condition, msg) {
+      if (!condition) throw new Error(msg || 'Assertion failed');
+    }
+    
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+    
+    // Define tests
+    test('Initial state: indicator is OFF', () => {
+      const ind = document.querySelector('#auto-refresh .indicator');
+      assert(ind.classList.contains('off'), 'Indicator should have "off" class');
+      assert(!ind.classList.contains('on'), 'Indicator should not have "on" class');
+    });
+    
+    test('Initial state: no interval running', () => {
+      assert(window._autoRefreshId === null, 'autoRefreshId should be null');
+    });
+    
+    test('Click toggle: turns ON', () => {
+      toggleAutoRefresh();
+      const ind = document.querySelector('#auto-refresh .indicator');
+      assert(ind.classList.contains('on'), 'Indicator should have "on" class');
+      assert(!ind.classList.contains('off'), 'Indicator should not have "off" class');
+      assert(window._autoRefreshId !== null, 'autoRefreshId should not be null');
+    });
+    
+    test('Click toggle again: turns OFF', () => {
+      toggleAutoRefresh();
+      const ind = document.querySelector('#auto-refresh .indicator');
+      assert(ind.classList.contains('off'), 'Indicator should have "off" class');
+      assert(!ind.classList.contains('on'), 'Indicator should not have "on" class');
+      assert(window._autoRefreshId === null, 'autoRefreshId should be null after turning off');
+    });
+    
+    test('OFF state: no refresh ticks after 1.5 seconds', async () => {
+      const countBefore = window._refreshCount;
+      await sleep(1500);
+      const countAfter = window._refreshCount;
+      assert(countBefore === countAfter, `Refresh count should not change when OFF. Before: ${countBefore}, After: ${countAfter}`);
+    });
+    
+    test('ON state: refresh ticks happen', async () => {
+      toggleAutoRefresh(); // Turn ON
+      const countBefore = window._refreshCount;
+      await sleep(2500); // Wait for 2 ticks (interval is 1s)
+      const countAfter = window._refreshCount;
+      toggleAutoRefresh(); // Turn OFF
+      assert(countAfter > countBefore, `Refresh should have happened when ON. Before: ${countBefore}, After: ${countAfter}`);
+    });
+    
+    test('After OFF: no more ticks', async () => {
+      // Already OFF from previous test
+      const countBefore = window._refreshCount;
+      await sleep(1500);
+      const countAfter = window._refreshCount;
+      assert(countBefore === countAfter, `No ticks should happen after turning OFF. Before: ${countBefore}, After: ${countAfter}`);
+    });
+    
+    test('Rapid toggle: no orphaned intervals', async () => {
+      // Rapidly toggle 10 times
+      for (let i = 0; i < 10; i++) {
+        toggleAutoRefresh();
+      }
+      // Should be OFF (even number of toggles)
+      const ind = document.querySelector('#auto-refresh .indicator');
+      assert(ind.classList.contains('off'), 'After even toggles, should be OFF');
+      
+      const countBefore = window._refreshCount;
+      await sleep(1500);
+      const countAfter = window._refreshCount;
+      assert(countBefore === countAfter, `No orphaned intervals. Before: ${countBefore}, After: ${countAfter}`);
+    });
+    
+    // Run tests
+    async function runTests() {
+      const resultsEl = document.getElementById('results');
+      resultsEl.innerHTML = '';
+      
+      // Reset state
+      if (window._autoRefreshId !== null) {
+        clearInterval(window._autoRefreshId);
+        window._autoRefreshId = null;
+      }
+      const ind = document.querySelector('#auto-refresh .indicator');
+      ind.classList.remove('on');
+      ind.classList.add('off');
+      window._refreshCount = 0;
+      clearLog();
+      
+      log('=== Running Tests ===');
+      
+      let passed = 0, failed = 0;
+      
+      for (const t of tests) {
+        const div = document.createElement('div');
+        div.className = 'test pending';
+        div.textContent = `⏳ ${t.name}`;
+        resultsEl.appendChild(div);
+        
+        try {
+          await t.fn();
+          div.className = 'test pass';
+          div.textContent = `✅ ${t.name}`;
+          passed++;
+          log(`✅ PASS: ${t.name}`);
+        } catch (err) {
+          div.className = 'test fail';
+          div.textContent = `❌ ${t.name}: ${err.message}`;
+          failed++;
+          log(`❌ FAIL: ${t.name} - ${err.message}`);
+        }
+      }
+      
+      log(`=== Results: ${passed} passed, ${failed} failed ===`);
+    }
+  </script>
+</body>
+</html>

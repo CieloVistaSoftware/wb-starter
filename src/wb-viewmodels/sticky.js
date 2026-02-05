@@ -1,22 +1,8 @@
 /**
- * Sticky Behavior
- * -----------------------------------------------------------------------------
- * Makes an element stick to the top of the viewport when scrolling past it
- * 
- * Helper Attribute: [x-sticky]
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- *   <nav x-sticky>...</nav>
- *   <header x-sticky data-offset="60" data-z-index="1000">...</header>
- * 
- * Options:
- *   data-offset    - Pixels from top when stuck (default: 0)
- *   data-z-index   - Z-index when stuck (default: 100)
- *   data-threshold - Scroll position to trigger (default: element's top)
- *   data-class     - Class to add when stuck (default: "is-stuck")
- *   data-animate   - Add smooth transition (default: true)
+ * Sticky positioning behavior that activates on scroll.
+ * - `[x-sticky]` with offset, z-index, and animation options.
  */
+export function cc() {}
 
 export function sticky(element, options = {}) {
   // Add base class for compliance

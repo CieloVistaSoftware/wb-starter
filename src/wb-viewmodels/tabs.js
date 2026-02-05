@@ -1,12 +1,20 @@
 /**
- * WB Tabs Behavior
- * -----------------------------------------------------------------------------
- * Tab panels from child elements
- * 
- * Custom Tag: <wb-tabs>
- * -----------------------------------------------------------------------------
+ * Tabbed interface from child elements with panel navigation.
+ * - `<wb-tabs>` component for organizing content into tabs.
  */
-export function tabs(element, options = {}) {
+export function cc() {}
+
+/**
+ * Tabs Component
+ * 
+ * Creates a tabbed interface from child elements or pre-rendered structure.
+ * Each child becomes a tab panel with data-tab-title as the tab label.
+ * Dispatches `wb:tabs:change` on tab selection.
+ * 
+ * @param {HTMLElement} element - The container element
+ * @param {Object} [options] - Configuration options
+ * @returns {Function} Cleanup function to remove behavior
+ */export function tabs(element, options = {}) {
   element.classList.add('wb-tabs');
 
   // 1. Check if structure exists (Pre-rendered from Template)

@@ -1,8 +1,8 @@
 /**
- * Builder Templates System Module
- * Handles HTML templates and template browser integration
- * @module builder-templates-system
+ * HTML templates and template browser integration.
+ * - Template insertion, element-as-wrapper pattern.
  */
+export function cc() {}
 
 import { genId, mkEl } from './builder-components.js';
 import { addElementToCanvas } from './builder-canvas-sections.js';

@@ -1,7 +1,8 @@
 /**
- * builder-history.js
- * Undo/Redo history management for the builder
+ * Undo/Redo history management for the builder.
+ * - Snapshot-based state tracking and restoration.
  */
+export function cc() {}
 
 import { toast, updCount } from './builder-utils.js';
 import { renderTree } from './builder-tree.js';

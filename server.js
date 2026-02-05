@@ -45,8 +45,12 @@ const broadcastReload = () => {
 let reloadTimeout;
 const triggerReload = (eventType, filename) => {
   if (!filename) return;
-  // Ignore git, node_modules, and temp files
-  if (filename.includes('.git') || filename.includes('node_modules') || filename.includes('.tmp')) return;
+  // Ignore git, node_modules, temp files, and data directory
+  if (filename.includes('.git') || 
+      filename.includes('node_modules') || 
+      filename.includes('.tmp') ||
+      filename.startsWith('data\\') ||
+      filename.startsWith('data/')) return;
   
   clearTimeout(reloadTimeout);
   reloadTimeout = setTimeout(() => {
@@ -56,6 +60,7 @@ const triggerReload = (eventType, filename) => {
 };
 
 // Watch specific directories safely (CI/runners may not support recursive fs.watch)
+const WATCH_EXCLUDE = ['data', 'node_modules', '.git', 'archive', 'tmp'];
 const setupPerDirWatch = (root) => {
   const stack = [root];
   while (stack.length) {
@@ -74,7 +79,9 @@ const setupPerDirWatch = (root) => {
     }
 
     for (const ent of entries) {
-      if (ent.isDirectory()) stack.push(path.join(cur, ent.name));
+      if (ent.isDirectory() && !WATCH_EXCLUDE.includes(ent.name)) {
+        stack.push(path.join(cur, ent.name));
+      }
     }
   }
 };
@@ -253,23 +260,34 @@ app.get('/builder.html', (req, res) => {
 });
 
 app.get('/schema-viewer.html', (req, res) => {
-  res.sendFile(path.join(rootDir, 'public', 'schema-viewer.html'));
+  res.sendFile(path.join(rootDir, 'public', 'viewers', 'schema-viewer.html'));
 });
 
 app.get('/fix-viewer.html', (req, res) => {
-  res.sendFile(path.join(rootDir, 'public', 'fix-viewer.html'));
+  res.sendFile(path.join(rootDir, 'public', 'viewers', 'fix-viewer.html'));
 });
 
 app.get('/errors-viewer.html', (req, res) => {
-  res.sendFile(path.join(rootDir, 'public', 'errors-viewer.html'));
+  res.sendFile(path.join(rootDir, 'public', 'viewers', 'errors-viewer.html'));
+});
+
+app.get('/doc-viewer.html', (req, res) => {
+  res.sendFile(path.join(rootDir, 'public', 'viewers', 'doc-viewer.html'));
+});
+
+// Viewer routes with /viewers/ prefix
+app.get('/viewers/:viewer', (req, res) => {
+  const viewer = req.params.viewer;
+  const viewerPath = path.join(rootDir, 'public', 'viewers', viewer);
+  if (fs.existsSync(viewerPath)) {
+    res.sendFile(viewerPath);
+  } else {
+    res.status(404).send('Viewer not found');
+  }
 });
 
 app.get('/performance-dashboard.html', (req, res) => {
   res.sendFile(path.join(rootDir, 'public', 'performance-dashboard.html'));
-});
-
-app.get('/doc-viewer.html', (req, res) => {
-  res.sendFile(path.join(rootDir, 'public', 'doc-viewer.html'));
 });
 
 // API Endpoint to log content issues
@@ -431,7 +449,7 @@ app.post("/api/rename-page", (req, res) => {
 
 // Fallback - serve index.html for SPA routes
 app.use((req, res, next) => {
-  const staticExtensions = ['.js', '.css', '.json', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.eot', '.map'];
+  const staticExtensions = ['.js', '.css', '.json', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.eot', '.map', '.mp3', '.wav', '.ogg', '.mp4', '.webm'];
   const ext = path.extname(req.path).toLowerCase();
 
   // Allow .json files from /src/wb-models/ to be served

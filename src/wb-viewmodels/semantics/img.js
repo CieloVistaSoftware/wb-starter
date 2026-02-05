@@ -1,8 +1,9 @@
 /**
- * Image - Enhanced <img> element
- * Adds lazy loading, zoom/lightbox, fallback, aspect ratio
- * Helper Attribute: [x-behavior="img"]
+ * Enhanced `<img>` element with lazy loading, zoom, and fallbacks.
+ * - `[x-behavior="img"]` for image enhancements.
  */
+export function cc() {}
+
 export function img(element, options = {}) {
   const config = {
     lazy: options.lazy ?? element.hasAttribute('data-lazy'),

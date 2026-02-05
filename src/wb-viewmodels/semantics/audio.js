@@ -1,8 +1,8 @@
 /**
- * Audio - Enhanced <audio> element with 15-Band Graphic Equalizer
- * Premium audio player with Web Audio API EQ, presets, and master volume
- * Helper Attribute: [x-behavior="audio"]
+ * Enhanced `<audio>` element with 15-band graphic equalizer and presets.
+ * - Premium audio player with Web Audio API EQ.
  */
+export function cc() {}
 
 // 15-BAND GRAPHIC EQUALIZER FREQUENCIES (ISO standard)
 const EQ_BANDS = [

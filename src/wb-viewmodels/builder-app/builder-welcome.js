@@ -1,7 +1,8 @@
 /**
- * WB Builder Welcome Screen
- * Shows template chooser when canvas is empty
+ * Welcome screen with template chooser.
+ * - Shows when canvas is empty, template selection.
  */
+export function cc() {}
 
 import { 
   PAGE_TEMPLATES, 

@@ -1,11 +1,9 @@
 /**
- * WBStack Component
- * -----------------------------------------------------------------------------
- * Stack layout component.
- * 
- * Custom Tag: <wb-stack>
- * -----------------------------------------------------------------------------
+ * Stack layout custom element for vertical spacing.
+ * - `<wb-stack>` Web Component with configurable gap.
  */
+export function cc() {}
+
 import { stack } from './layouts.js';
 
 export class WBStack extends HTMLElement {

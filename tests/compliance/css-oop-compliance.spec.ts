@@ -197,7 +197,7 @@ test.describe('Single Source of Truth Compliance', () => {
       }
     }
     
-    expect(violations, 'Theme lists should be imported from themecontrol.js').toHaveLength(0);
+    expect(violations, 'Theme lists should be imported from theme-dropdown.js').toHaveLength(0);
   });
 
   test('no duplicate constant definitions across JS files', () => {

@@ -29,7 +29,7 @@ function scanFile(file) {
   let fenceLang = '';
 
   const shellLikeLang = /^(?:bash|sh|shell|console|text|zsh|cmd|powershell|pwsh)$/i;
-  const jsLikeTokens = /\b(const |let |var |function\b|=>|\{|\}|\.|dataset|<\w|\{\{)/;
+  const jsLikeTokens = /\b(const|let|var|function|return)\b|this\.|getAttribute\(|\.dataset\b|\{\{/;
   const commonShellCmd = /\b(git|npx|npm|curl|docker|scp|ssh|ls|cp|mv|systemctl|sed|awk)\b/;
 
   function looksLikeShellLine(line, lang) {
@@ -40,6 +40,8 @@ function scanFile(file) {
       if (commonShellCmd.test(line)) return true;
       // avoid false positives for JS/HTML template snippets
       if (jsLikeTokens.test(line)) return false;
+      // also skip obvious HTML/template lines
+      if (/^\s*<\w+/.test(line) || /\{\{/.test(line)) return false;
     }
     return false;
   }

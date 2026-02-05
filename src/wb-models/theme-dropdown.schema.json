@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "theme-dropdown.schema.json",
+  "title": "Theme Dropdown",
+  "behavior": "theme-dropdown",
+  "description": "Theme switcher dropdown control.",
+  "compliance": {
+    "baseClass": "wb-theme-dropdown",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-theme-dropdown>Basic theme dropdown content</wb-theme-dropdown>",
+      "<wb-theme-dropdown>Test permutation 2</wb-theme-dropdown>",
+      "<wb-theme-dropdown>Test permutation 3</wb-theme-dropdown>",
+      "<wb-theme-dropdown>Test permutation 4</wb-theme-dropdown>",
+      "<wb-theme-dropdown>Test permutation 5</wb-theme-dropdown>"
+    ]
+  }
+}

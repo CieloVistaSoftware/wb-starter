@@ -1,11 +1,9 @@
 /**
- * WBColumn Component
- * -----------------------------------------------------------------------------
- * Column layout component.
- * 
- * Custom Tag: <wb-column>
- * -----------------------------------------------------------------------------
+ * Column layout custom element for vertical stacking.
+ * - `<wb-column>` Web Component with flexbox vertical direction.
  */
+export function cc() {}
+
 import { flex } from './layouts.js';
 
 export class WBColumn extends HTMLElement {

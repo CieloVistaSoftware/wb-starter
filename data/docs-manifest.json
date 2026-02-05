@@ -1,6 +1,6 @@
 {
-  "generated": "2026-01-31T23:04:19.978Z",
-  "totalFiles": 126,
+  "generated": "2026-02-04T23:07:42.568Z",
+  "totalFiles": 133,
   "categories": [
     "_today",
     "architecture",
@@ -60,7 +60,7 @@
       },
       {
         "path": "docs/behavior-cross-reference.md",
-        "title": "Web Behaviors (WB) Behaviors Cross-Reference",
+        "title": "WB Behaviors Cross-Reference",
         "name": "behavior-cross-reference",
         "category": "root"
       },
@@ -128,6 +128,12 @@
         "path": "docs/code-examples-standard.md",
         "title": "Code Examples Standard",
         "name": "code-examples-standard",
+        "category": "root"
+      },
+      {
+        "path": "docs/codecomment.md",
+        "title": "Code Comment Standards",
+        "name": "codecomment",
         "category": "root"
       },
       {
@@ -203,6 +209,18 @@
         "category": "root"
       },
       {
+        "path": "docs/MARGINS.md",
+        "title": "Global margin normalization — 1rem",
+        "name": "MARGINS",
+        "category": "root"
+      },
+      {
+        "path": "docs/mcp.md",
+        "title": "MCP (Model Context Protocol) — local runner and health",
+        "name": "mcp",
+        "category": "root"
+      },
+      {
         "path": "docs/MVVM-MIGRATION-PLAN.md",
         "title": "Web Behaviors (WB) MVVM Migration Plan",
         "name": "MVVM-MIGRATION-PLAN",
@@ -257,6 +275,12 @@
         "category": "root"
       },
       {
+        "path": "docs/schema-builder.md",
+        "title": "Schema Builder",
+        "name": "schema-builder",
+        "category": "root"
+      },
+      {
         "path": "docs/schema-first-architecture.md",
         "title": "Schema-First MVVM Architecture",
         "name": "schema-first-architecture",
@@ -305,9 +329,21 @@
         "category": "root"
       },
       {
+        "path": "docs/testing-runbook.md",
+        "title": "Testing & CI — Runbook (developer-focused)",
+        "name": "testing-runbook",
+        "category": "root"
+      },
+      {
         "path": "docs/testing-strategy.md",
         "title": "Web Behaviors (WB) Testing Strategy",
         "name": "testing-strategy",
+        "category": "root"
+      },
+      {
+        "path": "docs/THEME-DEBUG.md",
+        "title": "Theme debugging (FOUC / data-theme overrides)",
+        "name": "THEME-DEBUG",
         "category": "root"
       },
       {
@@ -496,6 +532,12 @@
         "path": "docs/components/cards/README.md",
         "title": "wb-starter v3.0 - Cards",
         "name": "README",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/content/mdhtml.md",
+        "title": "wb-mdhtml",
+        "name": "mdhtml",
         "category": "components"
       },
       {
@@ -776,7 +818,7 @@
     "_today": [
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "Current Status - Builder Layout Fix",
+        "title": "Current Status - mdhtml Code Block Rendering Fix",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -791,7 +833,7 @@
   "files": [
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "Current Status - Builder Layout Fix",
+      "title": "Current Status - mdhtml Code Block Rendering Fix",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -851,7 +893,7 @@
     },
     {
       "path": "docs/behavior-cross-reference.md",
-      "title": "Web Behaviors (WB) Behaviors Cross-Reference",
+      "title": "WB Behaviors Cross-Reference",
       "name": "behavior-cross-reference",
       "category": "root"
     },
@@ -937,6 +979,12 @@
       "path": "docs/code-examples-standard.md",
       "title": "Code Examples Standard",
       "name": "code-examples-standard",
+      "category": "root"
+    },
+    {
+      "path": "docs/codecomment.md",
+      "title": "Code Comment Standards",
+      "name": "codecomment",
       "category": "root"
     },
     {
@@ -1075,6 +1123,12 @@
       "path": "docs/components/cards/README.md",
       "title": "wb-starter v3.0 - Cards",
       "name": "README",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/content/mdhtml.md",
+      "title": "wb-mdhtml",
+      "name": "mdhtml",
       "category": "components"
     },
     {
@@ -1408,6 +1462,18 @@
       "category": "root"
     },
     {
+      "path": "docs/MARGINS.md",
+      "title": "Global margin normalization — 1rem",
+      "name": "MARGINS",
+      "category": "root"
+    },
+    {
+      "path": "docs/mcp.md",
+      "title": "MCP (Model Context Protocol) — local runner and health",
+      "name": "mcp",
+      "category": "root"
+    },
+    {
       "path": "docs/MVVM-MIGRATION-PLAN.md",
       "title": "Web Behaviors (WB) MVVM Migration Plan",
       "name": "MVVM-MIGRATION-PLAN",
@@ -1459,6 +1525,12 @@
       "path": "docs/property-viewer.md",
       "title": "Property Viewer (Right Panel)",
       "name": "property-viewer",
+      "category": "root"
+    },
+    {
+      "path": "docs/schema-builder.md",
+      "title": "Schema Builder",
+      "name": "schema-builder",
       "category": "root"
     },
     {
@@ -1516,9 +1588,21 @@
       "category": "root"
     },
     {
+      "path": "docs/testing-runbook.md",
+      "title": "Testing & CI — Runbook (developer-focused)",
+      "name": "testing-runbook",
+      "category": "root"
+    },
+    {
       "path": "docs/testing-strategy.md",
       "title": "Web Behaviors (WB) Testing Strategy",
       "name": "testing-strategy",
+      "category": "root"
+    },
+    {
+      "path": "docs/THEME-DEBUG.md",
+      "title": "Theme debugging (FOUC / data-theme overrides)",
+      "name": "THEME-DEBUG",
       "category": "root"
     },
     {

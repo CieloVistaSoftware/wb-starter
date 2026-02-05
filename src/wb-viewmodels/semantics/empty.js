@@ -1,8 +1,9 @@
 /**
- * Empty State Behavior
- * Renders an empty state placeholder
- * Helper Attribute: [x-behavior="empty"]
+ * Empty state placeholder with icon, message, and description.
+ * - `[x-behavior="empty"]` for no-data states.
  */
+export function cc() {}
+
 export function empty(element, options = {}) {
   const config = {
     icon: options.icon || element.dataset.icon || '∅',

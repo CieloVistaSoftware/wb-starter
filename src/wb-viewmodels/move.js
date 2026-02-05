@@ -1,15 +1,8 @@
 /**
- * Move Behaviors
- * -----------------------------------------------------------------------------
- * Swap elements in grid/list containers.
- * Exports: moveup, movedown, moveleft, moveright
- * 
- * These behaviors attach click handlers to buttons that swap
- * their parent container with adjacent siblings.
- * 
- * Helper Attributes: [x-move-up], [x-move-down], [x-move-left], [x-move-right]
- * -----------------------------------------------------------------------------
+ * Swap elements in grid/list containers with arrow controls.
+ * - `[x-move-up]`, `[x-move-down]`, `[x-move-left]`, `[x-move-right]`
  */
+export function cc() {}
 
 /**
  * Find the moveable parent (grid item or list item)

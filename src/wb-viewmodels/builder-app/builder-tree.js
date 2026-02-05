@@ -1,3 +1,9 @@
+/**
+ * Compact component tree with canvas-order sync.
+ * - Section management, expand/collapse, highlighting.
+ */
+export function cc() {}
+
 // =============================================================================
 // BUILDER TREE - Compact 1rem rows, canvas-order sync, green selection
 // =============================================================================

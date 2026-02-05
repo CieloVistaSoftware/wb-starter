@@ -1,0 +1,15 @@
+/* wb-page: canonical site page wrapper (header + main + footer)
+   - Reuses site tokens and utility classes
+   - Lightweight: layout only, visuals driven by global site CSS
+*/
+wb-page { display: block; min-height: 100vh; background: var(--bg-color); color: var(--text-primary); }
+wb-page > header.site__header { background: var(--bg-primary); color: var(--text-primary); box-shadow: 0 1px 0 var(--border-color); }
+wb-page > main.site__main { padding: var(--site-gutter, 1.25rem); max-width: var(--content-max-width, 1100px); margin: 0 auto; }
+wb-page > footer.site__footer { border-top: 1px solid var(--border-color); padding: 1.25rem var(--site-gutter, 1.25rem); color: var(--text-tertiary); background: var(--bg-primary); }
+
+/* variants */
+wb-page[keep-header-at-top] > header.site__header { position: sticky; top: 0; z-index: 40; }
+
+@media (min-width: 1024px) {
+  wb-page > main.site__main { padding-left: calc(var(--site-gutter, 1.25rem) * 2); padding-right: calc(var(--site-gutter, 1.25rem) * 2); }
+}

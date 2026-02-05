@@ -1,16 +1,9 @@
 /**
- * WB Repeater Component
- * -----------------------------------------------------------------------------
- * Simple repeater for prototyping.
- * 
- * Custom Tag: <wb-repeater>
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- * <wb-repeater items=["S","k","l"] count="N">
- *   <template>Content {{index}}</template>
- * </wb-repeater>
+ * Simple repeater component for prototyping with templates.
+ * - `<wb-repeater>` with items array or count for content duplication.
  */
+export function cc() {}
+
 export class WBRepeater extends HTMLElement {
   constructor() {
     super();

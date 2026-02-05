@@ -1,9 +1,8 @@
 /**
- * Builder Panels Module
- * Handles sidebar, right panel, and tab switching
- * 
- * @module builder-panels
+ * Sidebar, right panel, and tab switching.
+ * - Toggle visibility, panel state management.
  */
+export function cc() {}
 
 // === TOGGLE FUNCTIONS ===
 

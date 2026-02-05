@@ -28,7 +28,8 @@ A modern website starter kit powered by [WB Behaviors](https://github.com/CieloV
 ```
 wb-starter/
 ├── index.html          # Main entry point
-├── public/             # Tools (builder.html, schema-viewer.html)
+├── public/             # Tools (builder.html)
+│   └── viewers/        # Viewer tools (fix-viewer, schema-viewer, etc.)
 ├── config/
 │   └── site.json       # Site configuration (nav, branding, footer)
 ├── pages/

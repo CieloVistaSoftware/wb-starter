@@ -1,8 +1,8 @@
 /**
- * WB Builder Properties System
- * Enhanced property panel rendering with proper UI controls
- * Uses: data/propertyconfig.json
+ * Enhanced property panel rendering with proper UI controls.
+ * - Uses `data/propertyconfig.json` for field definitions.
  */
+export function cc() {}
 
 import { CARD_TYPES } from '../card.js';
 

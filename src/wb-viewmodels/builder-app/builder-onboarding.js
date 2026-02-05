@@ -1,7 +1,8 @@
 /**
- * WB Builder Onboarding & Flow Polish
- * Guides new users through: Template → Edit → Export
+ * User onboarding and flow polish.
+ * - Guides new users: Template -> Edit -> Export.
  */
+export function cc() {}
 
 // =============================================================================
 // STATE

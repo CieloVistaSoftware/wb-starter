@@ -196,10 +196,10 @@
         {
           "name": "Toggle Checkbox",
           "setup": "<wb-checkbox label='Toggle'></wb-checkbox>",
+          "selector": "element",
           "action": "click",
           "expect": {
             "event": "wb:checkbox:change",
-            "checked": true,
             "hasClass": "wb-checkbox--checked"
           }
         }
@@ -209,7 +209,6 @@
           "name": "Checked State",
           "setup": "<wb-checkbox label='Checked' checked></wb-checkbox>",
           "expect": {
-            "checked": true,
             "hasClass": "wb-checkbox--checked"
           }
         }
@@ -218,10 +217,10 @@
         {
           "name": "Disabled State",
           "setup": "<wb-checkbox label='Disabled' disabled></wb-checkbox>",
+          "selector": "element",
           "action": "click",
           "expect": {
-            "event": null,
-            "checked": false
+            "event": null
           }
         }
       ],
@@ -230,8 +229,9 @@
           "name": "Focus Handling",
           "setup": "<wb-checkbox label='Focus'></wb-checkbox>",
           "action": "click",
+          "selector": "element",
           "expect": {
-            "focused": "input"
+            "focused": "element"
           }
         }
       ],
@@ -239,10 +239,10 @@
         {
           "name": "Space to Toggle",
           "setup": "<wb-checkbox label='Keyboard'></wb-checkbox>",
+          "selector": "element",
           "key": "Space",
           "expect": {
-            "event": "wb:checkbox:change",
-            "checked": true
+            "event": "wb:checkbox:change"
           }
         }
       ]

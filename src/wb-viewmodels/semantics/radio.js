@@ -1,8 +1,8 @@
 /**
- * Radio - Enhanced <input type="radio"> element
- * Adds visual enhancements, labels, radio groups
- * Helper Attribute: [x-behavior="radio"]
+ * Enhanced radio input with visual styling and group management.
+ * - `[x-behavior="radio"]` for styled radio buttons.
  */
+export function cc() {}
 
 let stylesInjected = false;
 function injectStyles() {

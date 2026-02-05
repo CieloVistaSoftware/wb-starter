@@ -1,11 +1,9 @@
 /**
- * Resizable Behavior
- * -----------------------------------------------------------------------------
- * Make an element resizable.
- * 
- * Helper Attribute: [x-resizable]
- * -----------------------------------------------------------------------------
+ * Make elements resizable with directional handles and constraints.
+ * - `[x-resizable]` attribute with min/max bounds and aspect ratio lock.
  */
+export function cc() {}
+
 export function resizable(element, options = {}) {
   const config = {
     directions: options.directions || element.dataset.directions || 'se', // n, s, e, w, ne, nw, se, sw, all

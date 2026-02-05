@@ -1,11 +1,8 @@
 /**
- * WB Builder Workflow System
- * Guides users through: Intent → Type → Build → Export
- * Preserves work and allows workflow switching
- * Supports named workspaces
- * 
- * KEY PRINCIPLE: Workspace always loads first, workflow is an overlay
+ * Workflow system: Intent -> Type -> Build -> Export.
+ * - Named workspaces, workflow switching.
  */
+export function cc() {}
 
 // =============================================================================
 // WORKFLOW DEFINITIONS

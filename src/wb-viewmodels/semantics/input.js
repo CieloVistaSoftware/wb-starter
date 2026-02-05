@@ -1,8 +1,9 @@
 /**
- * Input - Enhanced <input> element
- * Adds clearable, prefix/suffix, validation variants
- * Helper Attribute: [x-behavior="input"]
+ * Enhanced `<input>` element with clearable, prefix/suffix, and variants.
+ * - `[x-behavior="input"]` for styled text inputs.
  */
+export function cc() {}
+
 export function input(element, options = {}) {
   const config = {
     type: options.type || element.dataset.type || element.type || 'text',

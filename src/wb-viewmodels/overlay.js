@@ -1,18 +1,8 @@
 /**
- * Overlay Behaviors
- * -----------------------------------------------------------------------------
- * Full-screen or partial overlays like modals, drawers, and lightboxes.
- * Manages z-index, blocking backgrounds, and focus trapping.
- * 
- * Custom Tag: <wb-overlay>
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- *   <wb-drawer  data-target="#menu">Open Menu</button>
- *   <a href="img.jpg" x-lightbox>View Image</a>
- * -----------------------------------------------------------------------------
- * All overlays show visual feedback when their trigger is clicked
+ * Full-screen overlays: modals, drawers, lightboxes with focus trapping.
+ * - `<wb-drawer>`, `[x-lightbox]`, overlay management utilities.
  */
+export function cc() {}
 
 // Shared overlay styles
 const OVERLAY_STYLES = `
@@ -44,7 +34,19 @@ const DIALOG_STYLES = `
 
 /**
  * Popover - Click-triggered popup
- * Custom Tag: <wb-popover>
+ * 
+ * Displays a positioned popup with title and content on click or hover.
+ * Automatically positions relative to the trigger element.
+ * 
+ * Custom Tag: `<wb-popover>`
+ * 
+ * @param {HTMLElement} element - The trigger element
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.content] - Popover content
+ * @param {string} [options.title] - Popover title
+ * @param {string} [options.trigger] - Trigger type: click or hover
+ * @param {string} [options.position] - Position: top, bottom, left, right
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function popover(element, options = {}) {
   const config = {
@@ -136,7 +138,19 @@ function positionPopover(trigger, popover, position) {
 
 /**
  * Drawer - Slide-out panel (works on button click)
- * Custom Tag: <wb-drawer>
+ * 
+ * Opens a slide-out panel from left or right side of the screen.
+ * Includes backdrop, close button, and scroll lock on body.
+ * 
+ * Custom Tag: `<wb-drawer>`
+ * 
+ * @param {HTMLElement} element - The trigger element
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.title] - Drawer header title
+ * @param {string} [options.content] - Drawer body content
+ * @param {string} [options.position] - Slide from: left or right
+ * @param {string} [options.width] - Drawer width (default: 320px)
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function drawer(element, options = {}) {
   const config = {
@@ -205,7 +219,16 @@ export function drawer(element, options = {}) {
 
 /**
  * Lightbox - Full-screen image viewer
- * Helper Attribute: [x-lightbox]
+ * 
+ * Opens images in a full-screen overlay with zoom effect.
+ * Close with click, Escape key, or close button.
+ * 
+ * Helper Attribute: `[x-lightbox]`
+ * 
+ * @param {HTMLElement} element - The trigger element (img or anchor)
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.src] - Image source URL
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function lightbox(element, options = {}) {
   const config = {
@@ -288,7 +311,18 @@ export function lightbox(element, options = {}) {
 
 /**
  * Offcanvas - Off-canvas panel
- * Custom Tag: <wb-offcanvas>
+ * 
+ * Opens a slide-out panel from either side of the screen.
+ * Similar to drawer but with different default styling.
+ * 
+ * Custom Tag: `<wb-offcanvas>`
+ * 
+ * @param {HTMLElement} element - The trigger element
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.title] - Panel header title
+ * @param {string} [options.content] - Panel body content
+ * @param {string} [options.position] - Slide from: left, right, or start
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function offcanvas(element, options = {}) {
   const config = {
@@ -350,7 +384,20 @@ export function offcanvas(element, options = {}) {
 
 /**
  * Sheet - Notes panel from left side with resizable width
- * Custom Tag: <wb-sheet>
+ * 
+ * Opens a resizable panel from the left side, typically used for notes.
+ * Includes a textarea by default and drag-to-resize functionality.
+ * 
+ * Custom Tag: `<wb-sheet>`
+ * 
+ * @param {HTMLElement} element - The trigger element
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.title] - Panel header title
+ * @param {string} [options.content] - Panel content (or textarea if empty)
+ * @param {string} [options.width] - Initial width (default: 320px)
+ * @param {string} [options.minWidth] - Minimum width (default: 200px)
+ * @param {string} [options.maxWidth] - Maximum width (default: 600px)
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function sheet(element, options = {}) {
   const config = {
@@ -454,8 +501,20 @@ export function sheet(element, options = {}) {
 }
 
 /**
- * Helper Attribute: [x-confirm]
  * Confirm - Confirmation dialog
+ * 
+ * Shows a modal confirmation dialog with OK and Cancel buttons.
+ * Dispatches `wb:confirm:ok` or `wb:confirm:cancel` events.
+ * 
+ * Helper Attribute: `[x-confirm]`
+ * 
+ * @param {HTMLElement} element - The trigger element
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.title] - Dialog title
+ * @param {string} [options.message] - Confirmation message
+ * @param {string} [options.confirmText] - OK button text
+ * @param {string} [options.cancelText] - Cancel button text
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function confirm(element, options = {}) {
   const config = {
@@ -502,8 +561,20 @@ export function confirm(element, options = {}) {
 }
 
 /**
- * Helper Attribute: [x-prompt]
  * Prompt - Input prompt dialog
+ * 
+ * Shows a modal dialog with a text input field.
+ * Dispatches `wb:prompt:ok` (with value) or `wb:prompt:cancel` events.
+ * 
+ * Helper Attribute: `[x-prompt]`
+ * 
+ * @param {HTMLElement} element - The trigger element
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.title] - Dialog title
+ * @param {string} [options.message] - Prompt message
+ * @param {string} [options.placeholder] - Input placeholder text
+ * @param {string} [options.defaultValue] - Initial input value
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function prompt(element, options = {}) {
   const config = {

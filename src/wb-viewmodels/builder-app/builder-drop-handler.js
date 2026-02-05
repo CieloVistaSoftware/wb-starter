@@ -1,8 +1,8 @@
 /**
- * WB Builder Drop Handler
- * =======================
- * Handles smart dropping based on behavior types from behaviorMeta.js
+ * Smart drop handling based on behavior types.
+ * - Element/container/modifier drop logic from behaviorMeta.
  */
+export function cc() {}
 
 import { 
   behaviorMeta, 

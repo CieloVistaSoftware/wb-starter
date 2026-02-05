@@ -1,7 +1,8 @@
 /**
- * Documentation Viewer Module
- * Handles loading and displaying component documentation and schemas
+ * Documentation viewer for component help and schemas.
+ * - Modal display of behavior docs and schema info.
  */
+export function cc() {}
 
 // Cache for loaded docs
 const docsCache = {};

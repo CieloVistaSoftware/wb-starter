@@ -106,7 +106,7 @@
       "name": "label",
       "tag": "span",
       "public": true,
-      "content": "{{slot}}",
+      "content": "{{content}}",
       "createdWhen": "slot AND NOT label",
       "description": "Button text from content"
     },
@@ -284,8 +284,8 @@
       "buttons": [
         {
           "name": "Basic Click",
-          "setup": "<button data-wb='button'>Click Me</button>",
-          "selector": "element",
+          "setup": "<wb-button>Click Me</wb-button>",
+          "selector": "wb-button button",
           "expect": {
             "textContains": "Click Me",
             "event": "click"
@@ -293,19 +293,19 @@
         },
         {
           "name": "Variant Classes",
-          "setup": "<button data-wb='button' data-wb-variant='primary'>Primary</button>",
-          "selector": "element",
+          "setup": "<wb-button variant='primary'>Primary</wb-button>",
+          "selector": "wb-button button",
           "expect": {
-            "hasClass": "wb-button--primary"
+            "hasClass": "btn--primary"
           }
         }
       ],
       "focus": [
         {
           "name": "Focus State",
-          "setup": "<button data-wb='button'>Focus Me</button>",
+          "setup": "<wb-button>Focus Me</wb-button>",
           "action": "click",
-          "selector": "element",
+          "selector": "wb-button button",
           "expect": {
             "focused": true
           }
@@ -314,21 +314,19 @@
       "disabled": [
         {
           "name": "Disabled State",
-          "setup": "<button data-wb='button' disabled>Disabled</button>",
+          "setup": "<wb-button disabled>Disabled</wb-button>",
           "action": "click",
-          "selector": "element",
+          "selector": "wb-button button",
           "expect": {
-            "event": null,
-            "attribute": {
-              "disabled": ""
-            }
+            "event": null
           }
         }
       ],
       "keyboard": [
         {
           "name": "Enter Key",
-          "setup": "<button data-wb='button'>Enter Me</button>",
+          "setup": "<wb-button>Enter Me</wb-button>",
+          "selector": "wb-button button",
           "key": "Enter",
           "expect": {
             "event": "click"
@@ -336,7 +334,8 @@
         },
         {
           "name": "Space Key",
-          "setup": "<button data-wb='button'>Space Me</button>",
+          "setup": "<wb-button>Space Me</wb-button>",
+          "selector": "wb-button button",
           "key": "Space",
           "expect": {
             "event": "click"

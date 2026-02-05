@@ -7,7 +7,7 @@ import * as Navigation from '../navigation.js';
 import * as Media from '../media.js';
 import * as Helpers from '../helpers.js';
 import * as Overlay from '../overlay.js';
-import * as ThemeControl from '../themecontrol.js';
+import * as ThemeDropdown from '../theme-dropdown.js';
 import * as Validator from '../validator.js';
 import * as Toggle from '../toggle.js';
 import * as Copy from '../copy.js';
@@ -28,14 +28,19 @@ import * as ScrollProgress from '../scroll-progress.js';
 import * as Slider from '../slider.js';
 import * as Tooltip from '../tooltip.js';
 
-// Component type categorization
+/**
+ * Component type categorization and behavior module imports.
+ * - Maps behaviors to their source modules for the builder.
+ */
+export function cc() {}
+
 // Dynamically derived from behavior modules to avoid magic strings
 const LAYOUT_MODIFIERS = ['center', 'cover', 'fixed', 'flex', 'imposter', 'frame', 'scrollable', 'sticky', 'icon'];
 const ACTION_EFFECTS = ['confetti', 'fireworks', 'snow']; // Effects that were previously categorized as actions
 
 // Helper to get keys excluding default
 const getKeys = (module) => Object.keys(module).filter(k => k !== 'default');
-
+ 
 const layoutKeys = getKeys(Layouts);
 const effectKeys = getKeys(Effects);
 const moveKeys = getKeys(Moves);
@@ -45,7 +50,7 @@ const navigationKeys = getKeys(Navigation);
 const mediaKeys = getKeys(Media);
 const helperKeys = getKeys(Helpers);
 const overlayKeys = getKeys(Overlay);
-const themeControlKeys = getKeys(ThemeControl);
+const themeDropdownKeys = getKeys(ThemeDropdown);
 const validatorKeys = getKeys(Validator);
 const toggleKeys = getKeys(Toggle);
 const copyKeys = getKeys(Copy);
@@ -96,7 +101,7 @@ const MODIFIER_OVERRIDES = [
 
 const ACTION_OVERRIDES = [
   ...feedbackKeys, // toast, notify
-  ...themeControlKeys,
+  ...themeDropdownKeys,
   ...validatorKeys,
   ...toggleKeys,
   ...copyKeys,

@@ -1,8 +1,13 @@
 import hljs from '/src/lib/highlight.js';
 import { pre } from './pre.js';
 
-// Inject CSS if not present (codecontrol behavior will override if used)
-if (!document.querySelector('link[data-highlight-theme]')) {
+/**
+ * Enhanced `<code>` element with syntax highlighting via highlight.js.
+ * - Auto-detection, copy button, language badge with `[x-behavior="code"]`.
+ */
+export function cc() {}
+
+{
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   // Check localStorage for saved preference from codecontrol

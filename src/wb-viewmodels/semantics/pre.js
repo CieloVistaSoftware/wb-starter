@@ -1,8 +1,9 @@
 /**
- * Pre - Enhanced <pre> element (Preformatted Text)
- * Adds line numbers, copy button, scrollability, code block features
- * Helper Attribute: [x-behavior="pre"]
+ * Enhanced `<pre>` element with line numbers, copy button, and scrollability.
+ * - Code block features with `[x-behavior="pre"]`.
  */
+export function cc() {}
+
 export function pre(element, options = {}) {
   if (element.tagName !== 'PRE') {
     console.warn('[pre] Element must be a <pre>');

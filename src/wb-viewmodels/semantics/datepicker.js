@@ -1,3 +1,9 @@
+/**
+ * Minimal datepicker shim for date input enhancement.
+ * - Basic testable hook for date selection UI.
+ */
+export function cc() {}
+
 // Minimal datepicker shim for registry completeness and basic testability
 export function datepicker(element) {
   try {

@@ -75,7 +75,7 @@
       "name": "content",
       "tag": "div",
       "class": "demo-content {{contentClass}}",
-      "content": "{{slot}}"
+      "content": "{{content}}"
     },
     {
       "name": "pre",

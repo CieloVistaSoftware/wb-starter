@@ -4,6 +4,116 @@
 @import url('./behaviors/hero.css');
 @import url('./behaviors/navbar.css');
 
+/* Enforce dark-by-default when the author has NOT set an explicit theme.
+   - If the page includes `site.css` at the top, this block guarantees a
+     dark-first paint without requiring inline JS.
+   - Does not override an explicit `[data-theme]` attribute.
+*/
+:root:not([data-theme]) {
+  /* Core dark tokens (kept minimal to avoid duplication); mirrors themes.css */
+  --bg-color: hsl(220, 25%, 10%);
+  --bg-primary: hsl(220, 25%, 15%);
+  --bg-secondary: hsl(220, 20%, 20%);
+  --bg-tertiary: hsl(220, 15%, 25%);
+  --text-primary: hsl(0, 0%, 98%);
+  --text-secondary: hsl(220, 10%, 80%);
+  --text-muted: hsl(220, 10%, 60%);
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   Global margin normalization (SCOPED)
+   - Requirement: 1rem margins only when content *starts inside a container*.
+   - Implementation: apply `--global-margin` to elements that are descendants of
+     canonical content containers (e.g. `.site__main`, `.page`, `wb-container`).
+   - Full-bleed elements (header, footer, hero bands) remain edge-to-edge.
+   - Opt-out remains available via `.no-global-margin`.
+   -------------------------------------------------------------------------- */
+:root {
+  --global-margin: 1rem; /* canonical single source-of-truth */
+}
+
+/* Content-container scoped margin rules: only apply when text/content lives inside a container */
+:where(.site__main, .page, .page__hero, wb-container, .page__content, .wb-mdhtml, .page__body) :is(
+  h1,h2,h3,h4,h5,h6,
+  p,ul,ol,dl,blockquote,figure,pre,table,caption,thead,tbody,tr,td,th,section,article,aside,main,nav,form,fieldset,legend,dialog
+) {
+  margin-block-start: var(--global-margin);
+  margin-block-end: var(--global-margin);
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+/* Keep header/footer/hero bands full-bleed (explicitly zero horizontal margins) */
+header.site__header, footer.site__footer, .page__hero, .site__banner, .hero, wb-header, wb-footer {
+  margin-inline: 0;
+}
+
+/* Defensive opt-out (no changes) */
+.no-global-margin, .no-global-margin * { margin: initial !important; }
+
+/* =============================================================================
+   SURFACE ELEVATION SYSTEM
+   =============================================================================
+   Dark Mode Depth Pattern: Creates visual hierarchy through subtle color gradation
+   and thin highlight borders. Surfaces "rise" as they get lighter.
+   
+   SURFACE HIERARCHY (darkest → lightest):
+   1. --bg-color     (Level 0) Page background, recessed areas
+   2. --bg-primary   (Level 1) Major sections, footers, deep containers
+   3. --bg-secondary (Level 2) Cards, status bars, interactive surfaces
+   4. --bg-tertiary  (Level 3) Hover states, elevated cards, overlays
+   
+   HIGHLIGHT BORDER PATTERN:
+   Add `border-top: 1px solid var(--border-color)` to create the characteristic
+   "lifted edge" effect seen on status bars and toolbars.
+   
+   Example Stack (bottom to top):
+   ┌────────────────────────────────────────┐
+   │  Status Bar (--bg-secondary + border)  │  ← Level 2 + highlight
+   ├────────────────────────────────────────┤
+   │  Footer (--bg-primary)                 │  ← Level 1
+   └────────────────────────────────────────┘
+   ============================================================================= */
+
+/* Surface utility classes */
+.surface-0 { background: var(--bg-color); }
+.surface-1 { background: var(--bg-primary); }
+.surface-2 { background: var(--bg-secondary); }
+.surface-3 { background: var(--bg-tertiary); }
+
+/* Elevated surfaces with highlight border */
+.surface-elevated {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+.surface-toolbar {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Status bar pattern - generic utility for fixed bottom bars
+   Note: wb-status component is self-styling */
+.surface-status {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 24px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  z-index: 9999;
+  box-sizing: border-box;
+}
+
 /**
  * WB Starter - Site Layout Styles
  * Works with themes.css from wb-behaviors
@@ -11,7 +121,7 @@
 
 /* Reset */
 *, *::before, *::after { box-sizing: border-box; }
-body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: var(--bg-color); color: var(--text-primary); }
 
 /* =============================================================================
    SITE LAYOUT
@@ -62,9 +172,89 @@ wb-reel, wb-frame, wb-sticky, wb-drawer, wb-icon {
 
 wb-drawer {
   visibility: hidden;
+  position: relative;
 }
+
+/* Overlay drawer internals must not affect page flow */
+wb-drawer > .wb-drawer__backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+wb-drawer > .wb-drawer__panel {
+  display: none;
+  position: fixed;
+  top: 0;
+  width: min(400px, 85vw);
+  height: 100%;
+  background: var(--bg-secondary, #1f2937);
+  z-index: 1000;
+  overflow-y: auto;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+  flex-direction: column;
+}
+
+wb-drawer.wb-drawer--left > .wb-drawer__panel,
+wb-drawer:not(.wb-drawer--right) > .wb-drawer__panel {
+  left: 0;
+}
+
+wb-drawer.wb-drawer--right > .wb-drawer__panel {
+  right: 0;
+}
+
+wb-drawer > .wb-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color, #374151);
+}
+
+wb-drawer > .wb-drawer__panel > main,
+wb-drawer .wb-drawer__body {
+  padding: 1rem;
+  flex: 1;
+}
+
+wb-drawer > .wb-drawer__close {
+  background: none;
+  border: none;
+  color: var(--text-primary, #f9fafb);
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+/* Open state */
+wb-drawer[open] {
+  visibility: visible;
+}
+
+wb-drawer[open] > .wb-drawer__backdrop,
+wb-drawer[open] > .wb-drawer__panel {
+  display: flex;
+}
+
+wb-drawer[open] > .wb-drawer__backdrop {
+  display: block;
+}
+
+/* Drawer layout variant - visible in-page, not overlay */
 wb-drawer.wb-drawer-layout {
   visibility: visible;
+}
+
+wb-drawer.wb-drawer-layout > .wb-drawer__panel {
+  display: flex;
+  position: relative;
+  height: auto;
+  box-shadow: none;
 }
 
 /* =============================================================================
@@ -402,6 +592,19 @@ body > button[x-copy] {
   /* Removed overflow-y: auto - body scrolls now so nav can stick */
 }
 
+/* Top Navigation Layout - centered content */
+.site__body--top-nav {
+  display: block;
+}
+
+.site__body--top-nav .site__main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .page {
   max-width: 1200px;
   margin: 0 auto;
@@ -583,7 +786,11 @@ h5, h6 {
 }
 
 /* =============================================================================
-   RESPONSIVE
+   RESPONSIVE - MOBILE FIRST
+   Base styles = mobile (< 480px)
+   min-width: 480px = larger phones
+   min-width: 768px = tablet
+   min-width: 1024px = desktop
    ============================================================================= */
 
 /* Mobile-first: Safe viewport height for mobile browsers */
@@ -592,179 +799,325 @@ h5, h6 {
     min-height: 100dvh;
   }
   .site__body {
-    height: calc(100dvh - 60px);
+    height: calc(100dvh - 56px);
   }
 }
 
-/* Tablet (768px and below) */
-@media (max-width: 768px) {
-  /* Mobile nav - always starts hidden, toggle opens it */
+/* === BASE: MOBILE (< 480px) === */
+/* Header - compact for mobile */
+.site__header {
+  padding: 0 0.75rem;
+  height: 56px;
+}
+
+/* Nav - off-canvas drawer on mobile */
+.site__nav {
+  position: fixed;
+  left: 0;
+  top: 56px;
+  bottom: 0;
+  z-index: 99;
+  transform: translateX(-100%);
+  width: 100% !important;
+  max-width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.site__nav.site__nav--mobile-open {
+  transform: translateX(0);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.site__nav.site__nav--collapsed {
+  transform: translateX(-100%);
+  width: 100% !important;
+}
+
+.site__nav.site__nav--collapsed.site__nav--mobile-open {
+  transform: translateX(0);
+}
+
+/* Hide nav resizer on mobile */
+.nav__resizer {
+  display: none;
+}
+
+/* Show icons on mobile for better UX */
+.nav__icon {
+  display: block !important;
+}
+
+/* Touch-friendly nav items (44px minimum) */
+.nav__item {
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  min-height: 48px;
+}
+
+/* Touch-friendly header buttons */
+.nav__toggle,
+.header__notes-btn {
+  width: 44px;
+  height: 44px;
+  font-size: 1.3rem;
+}
+
+/* Main content - tight padding on mobile */
+.site__main {
+  padding: 0.75rem;
+}
+
+.site__body--top-nav .site__main {
+  padding: 0.75rem;
+  max-width: 100%;
+}
+
+.site__body {
+  height: calc(100vh - 56px);
+}
+
+/* Typography - mobile sizes */
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1rem; }
+
+.page h1 { font-size: 1.5rem; }
+.page__hero h1 { font-size: 1.75rem; }
+
+.page__hero {
+  padding: 1.5rem 0;
+}
+
+.page__hero p {
+  font-size: 0.9rem;
+}
+
+/* Full-width buttons on mobile */
+.btn, .wb-btn-gradient, .wb-btn-glass {
+  width: 100%;
+  justify-content: center;
+  min-height: 48px;
+}
+
+/* Hide logo text on small phones */
+.header__logo-text {
+  display: none;
+}
+
+/* Footer stacks on mobile */
+.footer__content {
+  flex-direction: column;
+  text-align: center;
+}
+
+.footer__left {
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Tables scroll horizontally */
+.wb-table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Page grid single column on mobile */
+.page__grid {
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* Mobile backdrop overlay */
+.site__nav-backdrop {
+  display: block;
+  position: fixed;
+  inset: 0;
+  top: 56px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 98;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.site__nav-backdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* === LARGER PHONES (480px+) === */
+@media (min-width: 480px) {
+  .site__header {
+    padding: 0 1rem;
+    height: 60px;
+  }
+  
+  .site__body {
+    height: calc(100vh - 60px);
+  }
+  
+  @supports (height: 100dvh) {
+    .site__body {
+      height: calc(100dvh - 60px);
+    }
+  }
+  
   .site__nav {
-    position: fixed;
-    left: 0;
     top: 60px;
-    bottom: 0;
-    z-index: 99;
-    transform: translateX(-100%);
     width: 280px !important;
-    transition: transform 0.3s ease;
+    max-width: 80%;
   }
   
-  /* When nav is open on mobile (controlled by JS) */
-  .site__nav.site__nav--mobile-open {
-    transform: translateX(0);
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-  }
-  
-  /* Hide desktop collapsed state on mobile */
   .site__nav.site__nav--collapsed {
-    transform: translateX(-100%);
     width: 280px !important;
   }
   
-  .site__nav.site__nav--collapsed.site__nav--mobile-open {
-    transform: translateX(0);
-  }
-  
-  /* Hide nav resizer on mobile */
-  .nav__resizer {
-    display: none;
-  }
-  
-  /* Show icons on mobile for better UX */
-  .nav__icon {
-    display: block !important;
-  }
-  
-  /* Larger touch targets */
-  .nav__item {
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
+  .site__nav-backdrop {
+    top: 60px;
   }
   
   .site__main {
     padding: 1rem;
   }
-  
-  .page h1 {
-    font-size: 1.75rem;
+
+  .site__body--top-nav .site__main {
+    padding: 1rem;
   }
-  
-  .page__hero h1 {
-    font-size: 2rem;
-  }
-  
-  .page__hero {
-    padding: 2rem 0;
-  }
-  
-  .page__hero p {
-    font-size: 1rem;
-  }
-  
-  h1 { font-size: 2rem; }
+
+  h1 { font-size: 1.75rem; }
   h2 { font-size: 1.5rem; }
   h3 { font-size: 1.1rem; }
   
-  .footer__content {
-    flex-direction: column;
-    text-align: center;
-  }
+  .page h1 { font-size: 1.75rem; }
+  .page__hero h1 { font-size: 2rem; }
+  .page__hero { padding: 2rem 0; }
+  .page__hero p { font-size: 1rem; }
   
-  /* Ensure header buttons are touch-friendly */
-  .nav__toggle,
-  .header__notes-btn {
-    width: 44px;
-    height: 44px;
-    font-size: 1.3rem;
-  }
-  
-  /* Tables scroll horizontally */
-  .wb-table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  /* Page grid single column */
-  .page__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Mobile backdrop overlay */
-.site__nav-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  top: 60px;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 98;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-@media (max-width: 768px) {
-  .site__nav-backdrop {
-    display: block;
-  }
-  
-  .site__nav-backdrop.visible {
-    opacity: 1;
-  }
-}
-
-/* Small phones (480px and below) */
-@media (max-width: 480px) {
-  .site__header {
-    padding: 0 1rem;
-    height: 56px;
-  }
-  
-  .site__body {
-    height: calc(100dvh - 56px);
-    height: calc(100vh - 56px);
-  }
-  
-  .site__nav {
-    top: 56px;
-    width: 100% !important;
-    max-width: 100%;
-  }
-  
-  .site__nav-backdrop {
-    top: 56px;
-  }
-  
-  .site__main {
-    padding: 0.75rem;
-  }
-  
-  .page h1 {
-    font-size: 1.5rem;
-  }
-  
-  .page__hero h1 {
-    font-size: 1.75rem;
-  }
-  
-  h1 { font-size: 1.5rem; }
-  h2 { font-size: 1.25rem; }
-  
-  /* Full-width buttons on small phones */
+  /* Inline buttons on larger phones */
   .btn, .wb-btn-gradient, .wb-btn-glass {
-    width: 100%;
-    justify-content: center;
+    width: auto;
   }
   
-  /* Hide logo text on small phones */
+  /* Show logo text */
   .header__logo-text {
-    display: none;
+    display: inline;
   }
   
   .footer__left {
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+}
+
+/* === TABLET (768px+) === */
+@media (min-width: 768px) {
+  .site__header {
+    padding: 0 1.5rem;
+    height: 64px;
+  }
+  
+  .site__body {
+    height: calc(100vh - 64px);
+  }
+  
+  @supports (height: 100dvh) {
+    .site__body {
+      height: calc(100dvh - 64px);
+    }
+  }
+  
+  /* Nav becomes sidebar on tablet+ */
+  .site__nav {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    width: var(--nav-width, fit-content) !important;
+    min-width: 60px;
+    max-width: none;
+    z-index: auto;
+  }
+  
+  .site__nav.site__nav--collapsed {
+    transform: none;
+    width: 60px !important;
+    min-width: 60px;
+  }
+  
+  .site__nav.site__nav--mobile-open {
+    box-shadow: none;
+  }
+  
+  /* Show nav resizer on tablet+ */
+  .nav__resizer {
+    display: block;
+  }
+  
+  /* Smaller nav items on desktop */
+  .nav__item {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    min-height: auto;
+  }
+  
+  /* Hide icons by default on desktop (shown when collapsed) */
+  .nav__icon {
+    display: none;
+  }
+  
+  .site__nav--collapsed .nav__icon {
+    display: block;
+  }
+  
+  /* Hide backdrop on tablet+ */
+  .site__nav-backdrop {
+    display: none;
+  }
+  
+  .site__main {
+    padding: 2rem;
+  }
+
+  .site__body--top-nav .site__main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem;
+  }
+
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.25rem; }
+  
+  .page h1 { font-size: 2rem; }
+  .page__hero h1 { font-size: 2.5rem; }
+  .page__hero { padding: 3rem 0; }
+  .page__hero p { font-size: 1.25rem; }
+  
+  .footer__content {
+    flex-direction: row;
+    text-align: left;
+  }
+  
+  /* Multi-column grid */
+  .page__grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* === DESKTOP (1024px+) === */
+@media (min-width: 1024px) {
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 1.75rem; }
+  
+  .page__hero h1 { font-size: 3rem; }
+
+  .site__body--top-nav .site__main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem;
   }
 }
 

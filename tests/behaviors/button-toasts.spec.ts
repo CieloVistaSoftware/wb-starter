@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Button Toast Notifications', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('file://' + process.cwd() + '/pages/components.html');
+    // use dev server route so moved page folders are resolved by the server
+    await page.goto('/pages/components.html');
   });
 
   test('Modal button should trigger toast', async ({ page }) => {

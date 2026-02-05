@@ -1,8 +1,8 @@
 /**
- * Builder Components Module
- * Core component CRUD operations
- * @module builder-components
+ * Core component CRUD operations: create, delete, duplicate, move.
+ * - Component ID generation and canvas manipulation.
  */
+export function cc() {}
 
 import { addResizeHandle } from './builder-editing.js';
 import { addElementToCanvas } from './builder-canvas-sections.js';

@@ -1,6 +1,7 @@
 // Main entry point for site logic
 import WB from './core/wb-lazy.js';
 import { NotesModal } from './core/notes-modal.js';
+import './core/compat/wb-note-compat.js';
 
 // Expose WB globally for debugging
 window.WB = WB;
@@ -77,9 +78,22 @@ window.WB = WB;
 
 // Site boot logic (moved from index.html)
 import WBSite from './core/site-engine.js';
-const site = new WBSite();
-site.init().then(() => {
-  window.__WB_INITIALIZED__ = true;
-  site.navigateTo(site.currentPage);
-});
-window.WBSite = site;
+// Only initialize full site-shell when the page contains the `#app` shell.
+// Demo pages (standalone fragments) do not include `#app` and should skip site init.
+if (document.getElementById('app')) {
+  const site = new WBSite();
+  site.init().then(() => {
+    window.__WB_INITIALIZED__ = true;
+    site.navigateTo(site.currentPage);
+  }).catch(err => {
+    console.warn('[WBSite] initialization failed:', err);
+  });
+  window.WBSite = site;
+} else {
+  console.debug('[WBSite] no #app element found — skipping site initialization (demo page).');
+  window.WBSite = null;
+}
+
+// Export runtime helpers so demos can import the module (named + default for backwards compatibility)
+export { WB, WBSite };
+export default WB;

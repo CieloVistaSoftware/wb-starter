@@ -1,9 +1,9 @@
 /**
- * Globe Behavior
- * -----------------------------------------------------------------------------
- * Custom Tag: <wb-globe>
- * -----------------------------------------------------------------------------
+ * Globe visualization component placeholder.
+ * - `<wb-globe>` for decorative globe effects.
  */
+export function cc() {}
+
 export function globe(element, options = {}) {
   element.classList.add('wb-globe');
   element.dataset.wbReady = 'globe';

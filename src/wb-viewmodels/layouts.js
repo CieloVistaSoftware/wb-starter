@@ -1,16 +1,8 @@
 /**
- * Layout Behaviors - Extended
- * -----------------------------------------------------------------------------
- * Structural layout primitives for building responsive interfaces.
- * Includes Grid, Flex, Stack, Cluster, and Masonry layouts.
- * 
- * Custom Tag: <wb-layout>
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- *   <div x-grid data-columns="3">...</div>
- *   <div data-justify="between">...</div>
+ * Layout primitives: Grid, Flex, Stack, Cluster, Masonry, Drawer layouts.
+ * Provides: `<wb-grid>`, `<wb-stack>`, `<wb-cluster>`, `<wb-row>`, `<wb-column>`
  */
+export function cc() {}
 
 /**
  * Grid - CSS Grid layout

@@ -1,8 +1,9 @@
 /**
- * List Behavior
- * Populates a list from data-items attribute
- * Helper Attribute: [x-behavior="list"]
+ * List behavior that populates from data-items attribute.
+ * - JSON or comma-separated items with divider options.
  */
+export function cc() {}
+
 export function list(element, options = {}) {
   const config = {
     items: options.items || element.dataset.items || '',

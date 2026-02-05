@@ -1,8 +1,9 @@
 /**
- * Progress - Enhanced <progress> element
- * Adds animations, colors, labels, indeterminate state
- * Helper Attribute: [x-behavior="progress"]
+ * Enhanced native `<progress>` element with animations and variants.
+ * - Labels, colors, indeterminate state with `[x-behavior="progress"]`.
  */
+export function cc() {}
+
 export function progress(element, options = {}) {
   const config = {
     value: parseFloat(options.value || element.value || element.dataset.value || 0),

@@ -1,15 +1,9 @@
 /**
- * Details - Enhanced <details> element
- * Helper Attribute: [x-behavior="details"]
- * 
- * Uses native HTML5 <details>/<summary> for:
- * - Built-in accessibility (no ARIA needed)
- * - Works without JavaScript
- * - Keyboard support (Enter/Space)
- * - Browser handles open/close state
- * 
- * JS adds: custom events, animations, programmatic API
+ * Enhanced native `<details>/<summary>` with animations and API.
+ * - Accessible expand/collapse with `[x-behavior="details"]`.
  */
+export function cc() {}
+
 export function details(element, options = {}) {
   const config = {
     open: options.open ?? element.hasAttribute('data-open'),

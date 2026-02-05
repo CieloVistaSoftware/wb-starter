@@ -1,8 +1,9 @@
 /**
- * UL - Enhanced <ul> element (Unordered List)
- * Adds styling variants, custom markers, spacing
- * Helper Attribute: [x-behavior="ul"]
+ * Enhanced `<ul>` (unordered list) with styling variants.
+ * - Custom markers, spacing, and indentation with `[x-behavior="ul"]`.
  */
+export function cc() {}
+
 export function ul(element, options = {}) {
   if (element.tagName !== 'UL') {
     console.warn('[ul] Element must be a <ul>');

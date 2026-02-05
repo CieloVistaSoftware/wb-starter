@@ -1,7 +1,8 @@
 /**
- * WB Builder Canvas Sections
- * Header/Main/Footer structure with targeted insertion
+ * Canvas structure with Header/Main/Footer targeted insertion.
+ * - Section management and drop zone handling.
  */
+export function cc() {}
 
 // State
 let currentView = 'site'; // Enforce site view

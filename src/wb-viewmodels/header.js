@@ -1,15 +1,8 @@
 /**
- * Header Behavior
- * -----------------------------------------------------------------------------
- * Generates a site/page header with logo, title, and optional elements.
- * 
- * Custom Tag: <wb-header>
- * 
- * Usage:
- * <wb-header  data-icon="📂" data-title="Project Index" data-badge="v1.0"></header>
- * <wb-header  data-icon="🚀" data-title="My App" data-subtitle="Dashboard" data-sticky></header>
- * -----------------------------------------------------------------------------
+ * Site header with logo, title, badge, and optional sticky positioning.
+ * - `<wb-header>` component for page headers.
  */
+export function cc() {}
 
 // Auto-load CSS
 const CSS_ID = 'wb-header-css';

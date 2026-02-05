@@ -1,8 +1,8 @@
 /**
- * Builder Editing Module
- * ======================
- * Handles container components and inline double-click editing
+ * Container components and inline double-click editing.
+ * - Wrapper management, drop zones, and content editing.
  */
+export function cc() {}
 
 // =============================================================================
 // CONTAINER COMPONENTS CONFIGURATION

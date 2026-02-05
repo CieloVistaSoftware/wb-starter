@@ -1,16 +1,8 @@
 /**
- * Form Enhancement Behaviors
- * -----------------------------------------------------------------------------
- * Enhances standard HTML form elements with better UX and validation.
- * Includes inputs, password toggles, search, and form validation.
- * 
- * Helper Attribute: [x-enhancements]
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- *   <form x-form data-ajax>...</form>
- *   <input x-password>
+ * Form enhancement behaviors: inputs, password toggles, validation.
+ * - `[x-form]`, `[x-password]`, `[x-search]` form utilities.
  */
+export function cc() {}
 
 /**
  * Form - Enhanced form

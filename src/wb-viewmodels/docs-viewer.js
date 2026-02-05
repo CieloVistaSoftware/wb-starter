@@ -1,11 +1,9 @@
 /**
- * Docs Viewer
- * -----------------------------------------------------------------------------
- * Documentation navigation handler
- * 
- * Helper Attribute: [x-behavior="docsviewer"]
- * -----------------------------------------------------------------------------
+ * Documentation navigation handler for browsing doc files.
+ * - `[x-behavior="docsviewer"]` for documentation panel interactions.
  */
+export function cc() {}
+
 export function docsviewer(element) {
   // Handle doc links
   const links = element.querySelectorAll('.docs-link');

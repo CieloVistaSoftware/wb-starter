@@ -1,0 +1,7 @@
+Starting browser test...
+Page loaded
+Clicked test button, waiting 6 seconds...
+Result class: test pass
+Result message: ├ó┼ôΓÇ£ ALL TESTS PASSEDToggle correctly starts/stops auto-refresh.
+
+Γ£ô TEST PASSED

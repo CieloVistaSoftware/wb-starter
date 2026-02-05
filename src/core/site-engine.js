@@ -13,6 +13,11 @@ export default class WBSite {
 
   async init() {
     const app = document.getElementById('app');
+    // Defensive: if page doesn't include the site shell (#app) — treat as a demo page and skip.
+    if (!app) {
+      console.warn('[WBSite] No #app element found — skipping site initialization (demo page).');
+      return;
+    }
     const loadingEl = app.querySelector('.site__loading');
     let loadingTimerId;
     if (loadingEl && window.WBLoadingManager) {
@@ -47,7 +52,7 @@ export default class WBSite {
         debug: false,
         autoInject: this.config.branding.autoInjectComponents || false,
         useSchemas: true,  // v3.0: Enable schema-based DOM building
-        preload: ['ripple', 'themecontrol', 'tooltip']
+        preload: ['ripple', 'theme-dropdown', 'tooltip']
       });
 
       window.addEventListener('popstate', () => {
@@ -99,11 +104,14 @@ export default class WBSite {
 
   render() {
     const app = document.getElementById('app');
+    const navPosition = this.config.navigationLayout?.navigationPosition || 'left';
+    const isTopNav = navPosition === 'top';
+    
     app.innerHTML = `
-      ${this.renderHeader()}
-      <div class="site__body" id="siteBody">
-        <div class="site__nav-backdrop" id="navBackdrop"></div>
-        ${this.renderNav()}
+      ${isTopNav ? this.renderNav() : this.renderHeader()}
+      <div class="site__body ${isTopNav ? 'site__body--top-nav' : ''}" id="siteBody">
+        ${!isTopNav ? '<div class="site__nav-backdrop" id="navBackdrop"></div>' : ''}
+        ${!isTopNav ? this.renderNav() : ''}
         <main class="site__main" id="main">
           ${this.renderPage(this.currentPage)}
         </main>
@@ -173,7 +181,7 @@ export default class WBSite {
   }
 
   renderNav() {
-    const { navigationMenu, navigationLayout } = this.config;
+    const { navigationMenu, navigationLayout, branding } = this.config;
     
     // Safety check for nav config
     if (!navigationMenu || !Array.isArray(navigationMenu)) {
@@ -181,6 +189,32 @@ export default class WBSite {
       return '<nav class="site__nav" id="siteNav"><div class="nav__items">No navigation items found</div></nav>';
     }
 
+    const navPosition = navigationLayout?.navigationPosition || 'left';
+
+    // TOP NAVIGATION: Use wb-navbar component
+    if (navPosition === 'top') {
+      const links = navigationMenu.map(item => {
+        let href = '?page=home';
+        if (item.href) {
+          href = item.href;
+        } else if (item.pageToLoad) {
+          href = `?page=${item.pageToLoad}`;
+        } else if (item.menuItemId) {
+          href = `?page=${item.menuItemId}`;
+        }
+        const target = item.target || (item.href?.startsWith('http') ? '_blank' : '');
+        const dataPage = item.menuItemId ? `data-page="${item.menuItemId}"` : '';
+        return `<a href="${href}" ${dataPage} ${target ? `target="${target}"` : ''}>${item.menuItemEmoji || ''} ${item.menuItemText || item.menuItemId}</a>`;
+      }).join('\n        ');
+
+      return `
+      <wb-navbar brand="${branding.companyName}" sticky id="siteNav">
+        ${links}
+      </wb-navbar>
+    `;
+    }
+
+    // LEFT/RIGHT SIDEBAR: Original sidebar nav
     const items = navigationMenu.map(item => {
       // Robust href handling
       let href = '?page=home';
@@ -327,7 +361,7 @@ export default class WBSite {
       return;
     }
     if (pageId === 'schema-viewer') {
-      window.open('schema-viewer.html', '_blank');
+      window.open('viewers/schema-viewer.html', '_blank');
       return;
     }
     if (pageId === 'schema-first-architecture') {
@@ -347,14 +381,34 @@ export default class WBSite {
       loadingTimerId = window.WBLoadingManager.startMonitoring(loadingEl, `Page: ${pageId}`);
     }
     try {
-      const res = await fetch(`pages/${pageId}.html`);
+      // Try multiple candidate locations so repo authors can organize pages into
+      // folders (pages/foo/foo.html or pages/foo/index.html) without changing
+      // public URLs. We attempt candidates in order and use the first successful fetch.
+      const candidates = [
+        `pages/${pageId}.html`,
+        `pages/${pageId}/${pageId}.html`,
+        `pages/${pageId}/index.html`
+      ];
+
+      let res = null;
+      for (const c of candidates) {
+        try {
+          res = await fetch(c);
+          if (res && res.ok) break;
+        } catch (err) {
+          // ignore and try next candidate
+          res = null;
+        }
+      }
+
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
-      if (res.ok) {
+
+      if (res && res.ok) {
         const html = await res.text();
         main.innerHTML = `<div class="page page--${pageId}" data-page="${pageId}" id="mainPage-${pageId}">${html}</div>`;
-        
+
         // Execute any scripts in the loaded page
         const scripts = main.querySelectorAll('script');
         scripts.forEach(oldScript => {

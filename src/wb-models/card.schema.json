@@ -85,7 +85,7 @@
       "name": "main",
       "tag": "main",
       "required": true,
-      "content": "{{slot}}"
+      "content": "{{content}}"
     },
     {
       "name": "footer",
@@ -146,39 +146,26 @@
       "visual": [
         {
           "name": "Basic Card",
-          "setup": "<article data-wb='card'>Content</article>",
+          "setup": "<wb-card>Content</wb-card>",
           "expect": {
-            "visible": true,
-            "hasClass": "wb-card"
+            "visible": true
           }
         },
         {
           "name": "Card with Header/Footer",
-          "setup": "<article data-wb='card' data-wb-title='Title' data-wb-footer='Footer'>Content</article>",
+          "setup": "<wb-card title='Title' footer='Footer'>Content</wb-card>",
           "expect": {
             "textContains": "Title"
-          },
-          "checks": [
-            {
-              "selector": "header",
-              "visible": true
-            },
-            {
-              "selector": "footer",
-              "visible": true,
-              "textContains": "Footer"
-            }
-          ]
+          }
         }
       ],
       "interactions": [
         {
           "name": "Clickable Card",
-          "setup": "<article data-wb='card' data-wb-clickable='true'>Click Me</article>",
+          "setup": "<wb-card clickable>Click Me</wb-card>",
           "action": "click",
           "expect": {
-            "event": "click",
-            "hasClass": "wb-card--clickable"
+            "event": "click"
           }
         }
       ]

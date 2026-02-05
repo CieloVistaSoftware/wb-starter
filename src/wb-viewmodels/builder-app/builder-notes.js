@@ -1,7 +1,8 @@
 /**
- * builder-notes.js
- * Notes drawer functionality for the builder
+ * Notes drawer functionality for the builder.
+ * - Persistent notes textarea with localStorage.
  */
+export function cc() {}
 
 let notesOpen = false;
 let notesModalRef = null;

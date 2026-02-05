@@ -1,24 +1,9 @@
 /**
- * WB Builder Templates Registry
- * -----------------------------------------------------------------------------
- * This file contains the definitions for all Page and Section templates used
- * in the Website Builder.
- *
- * HOW TO USE:
- * 1. To add a new Section Template:
- *    - Add an entry to the SECTION_TEMPLATES array.
- *    - Ensure it has a unique 'id'.
- *    - Assign it to a 'category' (see SECTION_CATEGORIES).
- *    - Define the 'components' array using the WB shorthand:
- *      n: name, i: icon, b: behavior, t: tag, d: data attributes
- *
- * 2. To add a new Page Template:
- *    - Add an entry to the PAGE_TEMPLATES array.
- *    - Define the 'sections' array with IDs of sections to include.
- *    - Provide a 'preview' string describing the flow.
- *
- * 3. To add a new Category:
- *    - Add to PAGE_CATEGORIES or SECTION_CATEGORIES arrays.
+ * Template definitions registry for Page and Section templates.
+ * - Section/page categories, component shorthand definitions.
+ */
+export function cc() {}
+
  *
  * 4. Theming:
  *    - Templates automatically inherit the active theme.

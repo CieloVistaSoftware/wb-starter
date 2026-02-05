@@ -1,11 +1,9 @@
 /**
- * Progress Bar Behavior
- * -----------------------------------------------------------------------------
- * Progress bar for tracking completion.
- * 
- * Custom Tag: <wb-progress>
- * -----------------------------------------------------------------------------
+ * Progress bar for tracking completion with variants and animation.
+ * - `<wb-progress>` component with striped and animated options.
  */
+export function cc() {}
+
 export default function progressbar(element, options = {}) {
   const config = {
     value: parseFloat(options.value || element.dataset.value || 0),

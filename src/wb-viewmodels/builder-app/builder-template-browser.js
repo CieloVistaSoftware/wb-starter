@@ -1,7 +1,8 @@
 /**
- * WB Builder Template Browser
- * Grid layout in left sidebar with Site Builder mode
+ * Grid layout template browser in left sidebar.
+ * - Site Builder mode, category filtering, search.
  */
+export function cc() {}
 
 let templates = [];
 let categories = [];

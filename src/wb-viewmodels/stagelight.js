@@ -1,16 +1,8 @@
 /**
- * Stage Light Component
- * -----------------------------------------------------------------------------
- * Provides three stage lighting effects:
- * 1. Beam: Decorative sweeping beam (CSS animation)
- * 2. Spotlight: Mouse-tracking overlay (fixed positioning)
- * 3. Fixture: UI element representation of a physical light
- * 
- * Usage:
- * <wb-stagelight variant="beam" color="#ff0000"></wb-stagelight>
- * <wb-stagelight variant="spotlight"></wb-stagelight>
- * -----------------------------------------------------------------------------
+ * Stage lighting effects: beam, spotlight, and fixture visuals.
+ * - `<wb-stagelight>` with variant-based lighting animations.
  */
+export function cc() {}
 
 // Inject styles lazily
 function injectStyles() {

@@ -1,8 +1,9 @@
 /**
- * Description List Behavior
- * Populates a dl from data-items JSON
- * Helper Attribute: [x-behavior="desclist"]
+ * Description list behavior that populates `<dl>` from JSON data.
+ * - Horizontal and vertical layout options with `[x-behavior="desclist"]`.
  */
+export function cc() {}
+
 export function desclist(element, options = {}) {
   const config = {
     items: options.items || element.dataset.items || '[]',

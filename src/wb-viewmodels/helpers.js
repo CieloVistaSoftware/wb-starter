@@ -1,15 +1,8 @@
 /**
- * Utility Behaviors - Extended
- * -----------------------------------------------------------------------------
- * Miscellaneous utilities for common interactions.
- * Includes lazy loading, printing, sharing, full screen, and clipboard operations.
- * 
- * Usage:
- *   <div x-lazy data-src="img.jpg"></div>
- *   <button x-copy data-target="#code">Copy</button>
- * -----------------------------------------------------------------------------
- * Fixed implementations for all utilities
+ * Utility behaviors: lazy loading, printing, sharing, fullscreen, clipboard.
+ * - `[x-lazy]`, `[x-print]`, `[x-share]`, `[x-fullscreen]` utilities.
  */
+export function cc() {}
 
 /**
  * Lazy - Lazy loading for images

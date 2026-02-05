@@ -1,14 +1,15 @@
 /**
- * builder-utils.js
- * Shared utility functions for the builder
+ * Shared utility functions for the builder: toast, counters, helpers.
+ * - Common utilities used across builder modules.
  */
+export function cc() {}
 
 /**
  * Show a toast notification
  * @param {string} message - Message to display
  * @param {string} type - 'info' | 'error' | 'success'
  */
-export function toast(message, type = 'info') {
+export function cc() {}
   const toastEl = document.getElementById('toast');
   if (!toastEl) return;
   

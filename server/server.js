@@ -233,6 +233,26 @@ if (fs.existsSync(pagesDir)) {
   });
 }
 
+// Compatibility: allow requests for /pages/:slug.html to resolve to nested page folders
+// (e.g. pages/foo/foo.html or pages/foo/index.html) so the repo can organize pages
+// into folders without breaking existing URLs or tests that fetch flat files.
+app.get('/pages/:slug.html', (req, res, next) => {
+  try {
+    const slug = req.params.slug;
+    const candidates = [
+      path.join(rootDir, 'pages', `${slug}.html`),
+      path.join(rootDir, 'pages', slug, `${slug}.html`),
+      path.join(rootDir, 'pages', slug, 'index.html')
+    ];
+    for (const c of candidates) {
+      if (fs.existsSync(c)) return res.sendFile(c);
+    }
+    return next();
+  } catch (err) {
+    return next();
+  }
+});
+
 // Builder component - special route (opens in new tab)
 app.get('/builder.html', (req, res) => {
   res.sendFile(path.join(rootDir, 'public', 'builder.html'));

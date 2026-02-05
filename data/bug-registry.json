@@ -1,12 +1,36 @@
 {
   "metadata": {
     "description": "Registry of all bugs found during development. Each bug MUST have a corresponding regression test.",
-    "lastUpdated": "2025-12-26",
-    "totalBugs": 3,
+    "lastUpdated": "2026-02-03",
+    "totalBugs": 4,
     "testedBugs": 3,
-    "untestedBugs": 0
+    "untestedBugs": 1
   },
   "bugs": [
+    {
+      "id": "BUG-2026-02-03-001",
+      "title": "wb-mdhtml code blocks not syntax highlighted",
+      "dateFound": "2026-02-03",
+      "severity": "MEDIUM",
+      "status": "OPEN",
+      "component": "code.js, mdhtml.js",
+      "function": "code(), mdhtml()",
+      "line": null,
+      "description": "Code blocks inside wb-mdhtml components are not getting syntax highlighting colors applied. The hljs library loads but colors don't appear on the rendered code.",
+      "rootCause": "Unknown - CSS override removed but issue persists",
+      "symptom": "Code examples on components.html appear plain text without syntax colors",
+      "fix": {
+        "file": "TBD",
+        "before": "TBD",
+        "after": "TBD"
+      },
+      "affectedComponents": ["mdhtml", "code", "pre"],
+      "regressionTests": [],
+      "testCases": [
+        "wb-mdhtml: code blocks have hljs syntax highlighting classes",
+        "wb-mdhtml: code blocks have colored tokens (not plain text)"
+      ]
+    },
     {
       "id": "BUG-2025-12-26-002",
       "title": "Audio EQ panel missing controls",
@@ -92,7 +116,7 @@
   "categories": {
     "attribute-routing": ["BUG-2024-12-19-001"],
     "element-creation": ["BUG-2025-12-26-001", "BUG-2025-12-26-002"],
-    "behavior-initialization": [],
+    "behavior-initialization": ["BUG-2026-02-03-001"],
     "event-handling": [],
     "styling": [],
     "accessibility": []
@@ -104,6 +128,9 @@
     "cardimage": ["BUG-2024-12-19-001"],
     "cardvideo": ["BUG-2024-12-19-001"],
     "avatar": ["BUG-2024-12-19-001"],
-    "builder": ["BUG-2024-12-19-001"]
+    "builder": ["BUG-2024-12-19-001"],
+    "mdhtml": ["BUG-2026-02-03-001"],
+    "code": ["BUG-2026-02-03-001"],
+    "pre": ["BUG-2026-02-03-001"]
   }
 }

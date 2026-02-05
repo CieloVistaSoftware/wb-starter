@@ -1,9 +1,8 @@
 /**
- * Builder Template Addition Module
- * Functions for adding templates to the canvas
- * 
- * @module builder-template-add
+ * Functions for adding templates to the canvas.
+ * - HTML template insertion, element wrapping.
  */
+export function cc() {}
 
 import { genId } from './builder-components-core.js';
 import { addElementToCanvas } from './builder-canvas-sections.js';

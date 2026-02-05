@@ -63,6 +63,95 @@ The `index.html` head must only load **TWO** CSS files for the foundation:
 
 ---
 
+## 🎨 Surface Elevation System
+
+The Surface Elevation System creates visual hierarchy in dark mode through subtle color gradation and thin highlight borders. Surfaces visually "rise" as their background gets lighter.
+
+### The Four Surface Levels
+
+| Level | CSS Variable | Use Case |
+|-------|--------------|----------|
+| 0 | `--bg-color` | Page background, recessed areas, deepest level |
+| 1 | `--bg-primary` | Major sections, footers, deep containers |
+| 2 | `--bg-secondary` | Cards, status bars, interactive surfaces |
+| 3 | `--bg-tertiary` | Hover states, elevated cards, overlays |
+
+### The Highlight Border Pattern
+
+Add `border-top: 1px solid var(--border-color)` to create the characteristic "lifted edge" effect seen on footers and status bars. This thin, slightly lighter line creates the illusion of depth.
+
+### Visual Stack Example
+
+```
+┌─────────────────────────────────┐
+│  Content (--bg-color)           │  ← Level 0 (deepest)
+├─────────────────────────────────┤  ← border-top highlight
+│  Footer (--bg-primary)          │  ← Level 1
+├─────────────────────────────────┤  ← border-top highlight  
+│  Status Bar (--bg-secondary)    │  ← Level 2 (elevated)
+└─────────────────────────────────┘
+```
+
+### CSS Implementation
+
+```css
+/* Footer - Level 1 with highlight */
+.site__footer {
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+}
+
+/* Status Bar - Level 2, fixed to viewport bottom */
+.wb-status-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  z-index: 9999;
+}
+
+/* Card - Level 2 (no border needed) */
+.card {
+  background: var(--bg-secondary);
+}
+```
+
+### Utility Classes
+
+Available in `site.css`:
+
+```css
+.surface-0 { background: var(--bg-color); }
+.surface-1 { background: var(--bg-primary); }
+.surface-2 { background: var(--bg-secondary); }
+.surface-3 { background: var(--bg-tertiary); }
+
+.surface-elevated {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+.surface-toolbar {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.surface-status {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  z-index: 9999;
+}
+```
+
+---
+
 ## 🗺️ Where Do My Styles Go?
 
 | If you are styling... | It goes in... |

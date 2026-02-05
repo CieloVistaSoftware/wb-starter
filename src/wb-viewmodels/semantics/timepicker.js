@@ -1,3 +1,9 @@
+/**
+ * Minimal timepicker shim for time input enhancement.
+ * - Basic testable hook for time selection UI.
+ */
+export function cc() {}
+
 // Minimal timepicker shim
 export function timepicker(element) {
   try {

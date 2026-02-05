@@ -13,10 +13,16 @@ const PAGES_DIR = path.join(ROOT, 'pages');
 const SITE_JSON = path.join(ROOT, 'config', 'site.json');
 
 async function listPages() {
-  const files = await fs.readdir(PAGES_DIR);
-  return files
-    .filter(f => f.endsWith('.html'))
-    .map(f => ({ file: f, slug: f.replace(/\.html$/, '') }));
+  const walk = async (dir, base = '') => {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    return (await Promise.all(entries.map(async e => {
+      const p = `${base}${e.name}`;
+      const abs = path.join(dir, e.name);
+      if (e.isDirectory()) return walk(abs, `${p}/`);
+      return e.isFile() && p.endsWith('.html') ? [{ file: p, slug: p.replace(/\.html$/, '') }] : [];
+    }))).flat();
+  };
+  return await walk(PAGES_DIR);
 }
 
 async function loadSiteConfig() {

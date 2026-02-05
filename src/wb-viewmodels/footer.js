@@ -1,15 +1,8 @@
 /**
- * Footer Behavior
- * -----------------------------------------------------------------------------
- * Generates a site/page footer with copyright, links, and optional elements.
- * 
- * Custom Tag: <wb-footer>
- * 
- * Usage:
- * <wb-footer  data-copyright="© 2025 Acme Inc"></footer>
- * <footer data-copyright="© 2025" data-links="Privacy,Terms,Contact"></footer>
- * -----------------------------------------------------------------------------
+ * Site footer with copyright, links, and optional elements.
+ * - `<wb-footer>` component with sticky positioning option.
  */
+export function cc() {}
 
 // Auto-load CSS
 const CSS_ID = 'wb-footer-css';

@@ -13,6 +13,31 @@ import { Events } from './events.js';
 import { Theme } from './theme.js';
 import { getConfig, setConfig } from './config.js';
 
+// Runtime: enforce dark-by-default EARLY when no authorial/user preference exists.
+// Rationale: prevents flash-of-light on standalone demos that don't set `data-theme`.
+// - Do NOT override an explicit attribute or an explicit site config key.
+// - This runs immediately when the module is evaluated (fallback for module-based demos).
+(function enforceDarkDefault() {
+  try {
+    const doc = document && document.documentElement;
+    const hasAuthorTheme = doc && doc.hasAttribute && doc.hasAttribute('data-theme');
+    const persisted = (typeof localStorage !== 'undefined') && (localStorage.getItem('wb-theme') || localStorage.getItem('theme') || localStorage.getItem('wb:theme'));
+
+    // Use the already-imported Theme to ensure first-paint fallback
+    try {
+      Theme.ensureFirstPaintFallback();
+    } catch (e) {
+      /* best-effort, ignore */
+    }
+
+    if (!hasAuthorTheme && !persisted && doc) {
+      doc.setAttribute('data-theme', 'dark');
+    }
+  } catch (e) {
+    /* defensive - do not crash the module */
+  }
+})();
+
 // Auto-injection mappings
 const customElementMappings = [
   // Card custom tags - BOTH wb-* AND card-* namespaces for flexibility
@@ -48,6 +73,8 @@ const customElementMappings = [
   { selector: 'wb-rating', behavior: 'rating' },
   { selector: 'wb-tabs', behavior: 'tabs' },
   { selector: 'wb-switch', behavior: 'switch' },
+  { selector: 'wb-theme-dropdown', behavior: 'theme-dropdown' },
+  { selector: 'wb-themecontrol', behavior: 'theme-dropdown' }, // backward compat alias
   
   // Attributes
   { selector: '[x-breadcrumb]', behavior: 'breadcrumb' },

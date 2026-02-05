@@ -1,9 +1,8 @@
 /**
- * Builder Selection Module
- * Handles component selection, property rendering, and updates
- * 
- * @module builder-selection
+ * Component selection, property rendering, and updates.
+ * - Tracks selected element, renders properties panel.
  */
+export function cc() {}
 
 import { renderPropertiesPanel, renderDOMElementProperties } from './builder-properties.js';
 import { showIssuesPanel, updateBadges } from './builder-incomplete.js';

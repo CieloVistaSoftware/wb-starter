@@ -58,7 +58,7 @@ Users provide simple attribute values. The schema defines how those values becom
     { "name": "header",   "tag": "header", "createdWhen": "title OR subtitle" },
     { "name": "title",    "tag": "h3",     "parent": "header", "content": "{{title}}" },
     { "name": "subtitle", "tag": "p",      "parent": "header", "content": "{{subtitle}}", "createdWhen": "subtitle" },
-    { "name": "main",     "tag": "main",   "required": true, "content": "{{slot}}" },
+    { "name": "main",     "tag": "main",   "required": true, "content": "{{content}}" },
     { "name": "footer",   "tag": "footer", "createdWhen": "footer", "content": "{{footer}}" }
   ],
   
@@ -99,7 +99,7 @@ DOM structure definition with lowercase HTML5 tags:
 "$view": [
   { "name": "header",   "tag": "header", "createdWhen": "title" },
   { "name": "title",    "tag": "h3",     "parent": "header", "content": "{{title}}" },
-  { "name": "content",  "tag": "div",    "required": true, "content": "{{slot}}" }
+  { "name": "content",  "tag": "div",    "required": true, "content": "{{content}}" }
 ]
 ```
 

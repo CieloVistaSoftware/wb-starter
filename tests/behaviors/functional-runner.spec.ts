@@ -233,9 +233,35 @@ function getSchemasWithFunctionalTests(): Array<{ file: string; schema: Schema }
  * Navigates to index.html first, then injects test HTML via evaluate
  */
 async function setupTestPage(page: Page, setupHtml: string): Promise<void> {
+  console.log(`[DEBUG] setupTestPage called with HTML: ${setupHtml.substring(0, 100)}...`);
+  
   // Navigate to index.html which has WB loaded
-  await page.goto('index.html');
-  await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 5000 });
+  try {
+    await page.goto('index.html', { timeout: 10000 });
+    console.log('[DEBUG] page.goto completed');
+  } catch (e) {
+    console.error('[DEBUG] page.goto FAILED:', e);
+    throw e;
+  }
+  
+  // Wait for WB to be available
+  try {
+    await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 5000 });
+    console.log('[DEBUG] WB.behaviors is available');
+  } catch (e) {
+    // Log what's actually available
+    const windowState = await page.evaluate(() => {
+      return {
+        hasWindow: typeof window !== 'undefined',
+        hasWB: typeof (window as any).WB !== 'undefined',
+        WBKeys: (window as any).WB ? Object.keys((window as any).WB) : [],
+        hasBehaviors: !!(window as any).WB?.behaviors,
+        url: window.location.href
+      };
+    });
+    console.error('[DEBUG] WB.behaviors NOT available. Window state:', JSON.stringify(windowState));
+    throw new Error(`WB.behaviors not available: ${JSON.stringify(windowState)}`);
+  }
   
   // Remove any existing test container
   await page.evaluate(() => {
@@ -243,24 +269,53 @@ async function setupTestPage(page: Page, setupHtml: string): Promise<void> {
   });
   
   // Inject the test HTML and scan it
-  await page.evaluate(async (html: string) => {
+  const scanResult = await page.evaluate(async (html: string) => {
     const container = document.createElement('div');
     container.id = 'test-container';
     container.innerHTML = html;
     document.body.appendChild(container);
-    await (window as any).WB.scan(container);
+    
+    // Check what we injected
+    const injectedElements = container.querySelectorAll('*');
+    const tagNames = Array.from(injectedElements).map(el => el.tagName.toLowerCase());
+    
+    try {
+      await (window as any).WB.scan(container);
+      return { success: true, tagNames, elementCount: injectedElements.length };
+    } catch (scanError: any) {
+      return { success: false, error: scanError.message, tagNames };
+    }
   }, setupHtml);
+  
+  console.log('[DEBUG] Scan result:', JSON.stringify(scanResult));
+  
+  if (!scanResult.success) {
+    throw new Error(`WB.scan failed: ${scanResult.error}`);
+  }
   
   // Small delay for behavior initialization
   await page.waitForTimeout(100);
+  
+  // Verify the element exists
+  const elementCheck = await page.evaluate((html: string) => {
+    const container = document.getElementById('test-container');
+    return {
+      containerExists: !!container,
+      containerHTML: container?.innerHTML?.substring(0, 200),
+      childCount: container?.children?.length
+    };
+  }, setupHtml);
+  console.log('[DEBUG] Element check:', JSON.stringify(elementCheck));
 }
 
 /**
  * Resolve selector - handles "element" keyword
+ * Updated to support both custom elements (wb-card) and data-wb attributes
  */
 function resolveSelector(selector: string | undefined, behavior: string): string {
   if (!selector || selector === 'element') {
-    return `[data-wb="${behavior}"]`;
+    // Try custom element first (wb-card, wb-button), fallback to data-wb attribute
+    return `wb-${behavior}, [data-wb="${behavior}"]`;
   }
   return selector;
 }

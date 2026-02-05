@@ -1,12 +1,9 @@
 /**
- * Demo Component Behavior
- * -----------------------------------------------------------------------------
- * Handles code visibility toggling and auto-population of code block
- * 
- * Custom Tag: <wb-code-card>
- * Helper Attribute: [x-behavior="demo"]
- * -----------------------------------------------------------------------------
+ * Demo card component with code visibility toggle.
+ * - `<wb-code-card>` for showcasing code examples with live preview.
  */
+export function cc() {}
+
 import { cardBase } from './card.js';
 
 export function demo(element, options = {}) {

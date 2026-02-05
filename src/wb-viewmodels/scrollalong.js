@@ -1,15 +1,8 @@
 /**
- * ScrollAlong Behavior (Sticky Sidebar / Tag Along Menu)
- * -----------------------------------------------------------------------------
- * Makes an element "stick" to the viewport using CSS sticky positioning.
- * 
- * Helper Attribute: [x-scrollalong]
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- * <nav>...</nav>
- * <aside>Sidebar</aside>
+ * Sticky sidebar behavior using CSS sticky positioning.
+ * - `[x-scrollalong]` for tag-along elements while scrolling.
  */
+export function cc() {}
 
 export function scrollalong(element) {
   // Add base class for compliance

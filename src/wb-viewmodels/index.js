@@ -1,11 +1,8 @@
 /**
- * WB Behaviors Registry - Lazy Loading
- * =====================================
- * Behaviors are loaded on-demand when first used.
- * Each behavior group is loaded only once, then cached.
- * 
- * @version 2.1.1 (2025-12-21) - Fixed semantic module paths
+ * WB Behaviors Registry with lazy loading. Maps behavior names to modules.
+ * - Behaviors are loaded on-demand and cached for performance.
  */
+export function cc() {}
 
 // Cache for loaded modules
 const moduleCache = new Map();
@@ -67,6 +64,8 @@ const behaviorModules = {
   
   // Header → header.js
   header: 'header',
+  // Page shell → page.js (canonical site page wrapper)
+  page: 'page',
   
   // Footer → footer.js
   footer: 'footer',
@@ -121,6 +120,9 @@ const behaviorModules = {
   // Notes
   notes: 'notes',
   
+  // Status bar
+  status: 'wb-status',
+  
   // Docs
   docsviewer: 'docs-viewer',
   
@@ -158,7 +160,7 @@ const behaviorModules = {
   toggle: 'toggle',
   ripple: 'ripple',
   darkmode: 'darkmode',
-  themecontrol: 'themecontrol',
+  'theme-dropdown': 'theme-dropdown',
   codecontrol: 'codecontrol',
   lazy: 'helpers', print: 'helpers', share: 'helpers', fullscreen: 'helpers',
   hotkey: 'helpers', clipboard: 'helpers', scroll: 'helpers', truncate: 'helpers',

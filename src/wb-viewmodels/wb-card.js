@@ -1,11 +1,19 @@
 /**
- * WBCard Component
- * -----------------------------------------------------------------------------
- * Custom Tag: <wb-card>
- * -----------------------------------------------------------------------------
+ * Custom Element wrapper for the card behavior system.
+ * - `<wb-card>` Web Component extending HTMLElement.
  */
+export function cc() {}
+
 import { cardBase } from './card.js';
 
+/**
+ * WBCard Custom Element
+ * 
+ * Web Component that wraps the cardBase behavior for declarative usage.
+ * Reads configuration from attributes and data attributes.
+ * 
+ * @extends HTMLElement
+ */
 export class WBCard extends HTMLElement {
   constructor() {
     super();

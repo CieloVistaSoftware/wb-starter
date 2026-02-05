@@ -1,8 +1,8 @@
 /**
- * Builder Shortcuts Module
- * Keyboard shortcuts, move/duplicate operations
- * @module builder-shortcuts
+ * Keyboard shortcuts and move/duplicate operations.
+ * - Hotkeys for undo, delete, duplicate, navigation.
  */
+export function cc() {}
 
 import { renderTree } from './builder-tree.js';
 

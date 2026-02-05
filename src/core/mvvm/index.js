@@ -28,8 +28,8 @@
  *   await SchemaBuilder.init();
  *   
  *   // Then just write HTML:
- *   <wb-card title="Hello">Content</wb-card>
- *   <wb-card  data-title="Hello">Content</article>
+ *   `<wb-card title="Hello">Content</wb-card>`
+ *   `<wb-card data-title="Hello">Content</wb-card>`
  */
 
 export { 

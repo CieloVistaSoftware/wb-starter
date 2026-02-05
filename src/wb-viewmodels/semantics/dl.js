@@ -1,8 +1,9 @@
 /**
- * DL - Enhanced <dl> element (Description List)
- * Adds styling variants, term/definition formatting
- * Helper Attribute: [x-behavior="dl"]
+ * Enhanced `<dl>` (description list) with styling variants.
+ * - Horizontal/vertical layouts, bordered, striped options.
  */
+export function cc() {}
+
 export function dl(element, options = {}) {
   if (element.tagName !== 'DL') {
     console.warn('[dl] Element must be a <dl>');

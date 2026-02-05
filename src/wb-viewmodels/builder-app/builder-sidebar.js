@@ -1,9 +1,10 @@
-import { getComponentType } from './behavior-types.js';
-
 /**
- * WB Builder Sidebar
- * Search-first component sidebar with recent/popular components
+ * Search-first component sidebar with recent/popular components.
+ * - Visual tiles, drag-and-drop, search filtering.
  */
+export function cc() {}
+
+import { getComponentType } from './behavior-types.js';
 
 // =============================================================================
 // CONFIGURATION

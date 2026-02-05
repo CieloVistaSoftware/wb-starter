@@ -1,10 +1,11 @@
 import { createToast } from '../feedback.js';
 
 /**
- * Button - Enhanced <button> element
- * Adds variants, sizes, loading state, icons
- * Helper Attribute: [x-behavior="button"]
+ * Enhanced `<button>` element with variants, sizes, icons, and loading states.
+ * - Semantic button behavior with `[x-behavior="button"]`.
  */
+export function cc() {}
+
 export function button(element, options = {}) {
   if (element.tagName !== 'BUTTON') {
     console.warn('[button] Element must be a <button>');

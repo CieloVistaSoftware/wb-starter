@@ -1,9 +1,8 @@
 /**
- * Builder Collaboration Module
- * WebSocket-based real-time collaboration
- * 
- * @module builder-collab
+ * WebSocket-based real-time collaboration for builder.
+ * - Room joining, cursor sync, and live updates.
  */
+export function cc() {}
 
 let collabSocket = null;
 let collabConnected = false;

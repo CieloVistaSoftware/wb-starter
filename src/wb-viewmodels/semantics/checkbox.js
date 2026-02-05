@@ -1,8 +1,8 @@
 /**
- * Checkbox - Enhanced <input type="checkbox"> element
- * Adds visual enhancements, labels, indeterminate state
- * Helper Attribute: [x-behavior="checkbox"]
+ * Enhanced checkbox input with visual styling and indeterminate state.
+ * - Custom checkbox appearance with `[x-behavior="checkbox"]`.
  */
+export function cc() {}
 
 let stylesInjected = false;
 function injectStyles() {

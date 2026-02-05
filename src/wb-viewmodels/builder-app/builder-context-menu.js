@@ -1,9 +1,8 @@
 /**
- * Builder Context Menu Module
- * Right-click context menu for components
- * 
- * @module builder-context-menu
+ * Right-click context menu for component actions.
+ * - Edit, duplicate, delete, and docs access.
  */
+export function cc() {}
 
 import { showDocs } from './builder-docs.js';
 

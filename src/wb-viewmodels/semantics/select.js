@@ -1,8 +1,9 @@
 /**
- * Select - Enhanced <select> element
- * Adds searchable, clearable, styling
- * Helper Attribute: [x-behavior="select"]
+ * Enhanced `<select>` element with searchable and clearable options.
+ * - Styled dropdown with `[x-behavior="select"]`.
  */
+export function cc() {}
+
 export function select(element, options = {}) {
   const config = {
     searchable: options.searchable ?? element.hasAttribute('data-searchable'),

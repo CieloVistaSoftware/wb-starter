@@ -539,6 +539,25 @@ export function renderView(viewName, data, target, body = '') {
   // Insert into target
   target.innerHTML = html;
   
+  // Apply host classes and attributes (for wb-* elements that ARE the component, not wrappers)
+  const meta = viewMeta.get(viewName);
+  if (meta) {
+    // Apply hostClass to the target element itself
+    if (meta.hostClass) {
+      const hostClasses = interpolate(meta.hostClass, fullData).trim().split(/\s+/);
+      hostClasses.forEach(cls => {
+        if (cls) target.classList.add(cls);
+      });
+    }
+    
+    // Apply hostAttrs to the target element
+    if (meta.hostAttrs && typeof meta.hostAttrs === 'object') {
+      for (const [attr, value] of Object.entries(meta.hostAttrs)) {
+        target.setAttribute(attr, interpolate(String(value), fullData));
+      }
+    }
+  }
+  
   // Apply WB behaviors to rendered content
   if (window.WB?.scan) {
     window.WB.scan(target);

@@ -1,8 +1,9 @@
 /**
- * Range - Enhanced <input type="range"> element
- * Adds value display, min/max labels, step indicators
- * Helper Attribute: [x-behavior="range"]
+ * Enhanced range slider with value display and labels.
+ * - `[x-behavior="range"]` for `<input type="range">`.
  */
+export function cc() {}
+
 export function range(element, options = {}) {
   if (element.tagName !== 'INPUT' || element.type !== 'range') {
     console.warn('[range] Element must be an <input type="range">');

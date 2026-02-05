@@ -2,7 +2,12 @@ import { test, expect } from '@playwright/test';
 import { ROOT, readFile } from '../base';
 
 test('pages/home.html: key stat-items and preview rows have IDs', async ({ page }) => {
-  const file = `${ROOT}/pages/home.html`;
+  const resolvePage = (slug) => {
+    const p1 = path.join(ROOT, 'pages', `${slug}.html`);
+    const p2 = path.join(ROOT, 'pages', slug, `${slug}.html`);
+    return fs.existsSync(p1) ? p1 : p2;
+  };
+  const file = resolvePage('home');
   const content = readFile(file);
   await page.setContent(content);
 

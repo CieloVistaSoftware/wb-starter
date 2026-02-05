@@ -1,3 +1,9 @@
+/**
+ * Minimal diff behavior for comparing before/after content.
+ * - Lightweight shim for diff visualization.
+ */
+export function cc() {}
+
 // Minimal `diff` behavior shim — lightweight and safe for CI/regression
 // Purpose: satisfy registry/consumers and provide a stable, testable hook.
 export default function diff(element) {

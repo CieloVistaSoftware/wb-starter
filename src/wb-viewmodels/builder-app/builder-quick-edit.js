@@ -1,11 +1,8 @@
 /**
- * WB Builder Quick Edit Modal
- * ==========================
- * Shows a clean 3-field editor for link-like components:
- * - Header (title)
- * - Main/Description (content)
- * - Footer (URL/href)
+ * Quick edit modal for link-like components.
+ * - 3-field editor: Header, Main/Description, Footer (URL).
  */
+export function cc() {}
 
 // =============================================================================
 // INJECT STYLES

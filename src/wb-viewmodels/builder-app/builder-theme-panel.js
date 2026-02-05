@@ -1,9 +1,10 @@
 /**
- * WB Builder Theme Panel
- * Light/Dark mode toggle and theme selection
+ * Light/Dark mode toggle and theme selection.
+ * - Persists theme preference to localStorage.
  */
+export function cc() {}
 
-import { THEMES } from '../themecontrol.js';
+import { THEMES } from '../theme-dropdown.js';
 
 // Storage keys
 const STORAGE_KEY_MODE = 'wb-builder-mode';

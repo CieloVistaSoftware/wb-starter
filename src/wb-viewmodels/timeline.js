@@ -1,11 +1,9 @@
 /**
- * WB Timeline Behavior
- * -----------------------------------------------------------------------------
- * Timeline component from items attribute
- *
- * Custom Tag: <wb-timeline>
- * -----------------------------------------------------------------------------
+ * Vertical timeline component from items attribute.
+ * - `<wb-timeline>` for displaying chronological events.
  */
+export function cc() {}
+
 export function timeline(element, options = {}) {
   element.classList.add('wb-timeline');
 

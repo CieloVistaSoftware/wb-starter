@@ -1,11 +1,9 @@
 /**
- * Dark Mode Behavior
- * -----------------------------------------------------------------------------
- * Applies dark mode immediately when injected.
- * 
- * Custom Tag: <wb-darkmode>
- * -----------------------------------------------------------------------------
+ * Dark mode toggle that applies theme immediately on injection.
+ * - `<wb-darkmode>` component for theme switching.
  */
+export function cc() {}
+
 export function darkmode(element, options = {}) {
   const config = {
     target: options.target || element.dataset.target || 'html',

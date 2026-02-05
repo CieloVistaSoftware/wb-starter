@@ -53,9 +53,15 @@ Pass options via `data-*` attributes:
 <!-- Override mdhtml defaults -->
 <wb-mdhtml 
   data-size="lg" 
-  data-highlight="false"
   data-breaks="false">
 </wb-mdhtml>
+
+<!-- For HTML code examples, use <template> to preserve tags -->
+<wb-mdhtml><template>
+```html
+<wb-button variant="primary">Click Me</wb-button>
+```
+</template></wb-mdhtml>
 
 <!-- Override card variant -->
 <wb-card data-variant="outline" data-size="sm">

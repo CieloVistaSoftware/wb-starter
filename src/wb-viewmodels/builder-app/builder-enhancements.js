@@ -1,16 +1,8 @@
 /**
- * WB Page Builder - Enhanced Features v2.0
- * 
- * FEATURES:
- * 1. Configuration Panel - User control center
- * 2. Right-click Component Browser - All WB components on context menu
- * 3. Left/Right Drawer System - Resizable panels
- * 4. Status Bar - Relative URL & Template indicator
- * 5. Smart Component Browser - Categories for cards
- * 6. Pages Dropdown - Compact menu
- * 7. Docs Page File Selector - Easy .md file navigation
- * 8. Examples Page Guidance - .md best practice tips
+ * Enhanced page builder features: config panel, component browser, drawers.
+ * - Status bar, pages dropdown, docs file selector.
  */
+export function cc() {}
 
 // ============================================================================
 // WB COMPONENT LIBRARY - Complete categorized library

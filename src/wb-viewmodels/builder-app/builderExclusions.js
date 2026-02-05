@@ -1,3 +1,9 @@
+/**
+ * Loads the exclusion list for builder UI components.
+ * - Fetches componentExclusions.json to hide certain components.
+ */
+export function cc() {}
+
 // Loads the exclusion list for builder UI
 export async function getComponentExclusions() {
   try {

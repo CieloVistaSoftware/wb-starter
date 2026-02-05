@@ -1,0 +1,1 @@
+const fs = require('fs'); const chunks = []; process.stdin.on('data', d => chunks.push(d)); process.stdin.on('end', () => { fs.writeFileSync('mcp-server/logs/log-viewer.js', Buffer.concat(chunks), 'utf8'); console.log('Done:', fs.statSync('mcp-server/logs/log-viewer.js').size, 'bytes'); });

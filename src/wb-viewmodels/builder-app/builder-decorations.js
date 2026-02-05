@@ -1,7 +1,8 @@
 /**
- * WB Builder Decorations Panel
- * Simple, clean design: show children, add/remove, adjust
+ * Decorations panel for managing component children.
+ * - Add/remove decorative elements and adjustments.
  */
+export function cc() {}
 
 import { getContainerConfig, findDropZone } from './builder-editing.js';
 

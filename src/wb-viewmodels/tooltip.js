@@ -1,16 +1,8 @@
 /**
- * WB Tooltip Behavior
- * -----------------------------------------------------------------------------
- * Adds tooltip on hover/focus to any element.
- * 
- * Custom Tag: <button-tooltip>
- * Attribute: [tooltip]
- * -----------------------------------------------------------------------------
- * 
- * @example
- * <button x-tooltip data-tooltip="Save changes">Save</button>
- * <span x-tooltip data-tooltip="More info" data-tooltip-position="right">?</span>
+ * Tooltip behavior for hover/focus information display.
+ * - `[x-tooltip]` attribute for adding tooltips to any element.
  */
+export function cc() {}
 
 // Inject styles once
 let stylesInjected = false;
@@ -69,6 +61,21 @@ function injectStyles() {
   stylesInjected = true;
 }
 
+/**
+ * Tooltip Component
+ * 
+ * Displays a positioned tooltip on hover or focus. Automatically manages
+ * visibility, positioning, and cleanup. Removes native title attributes.
+ * 
+ * @param {HTMLElement} element - The trigger element
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.content] - Tooltip text content
+ * @param {string} [options.position] - Position: top, bottom, left, right
+ * @param {number} [options.delay] - Show delay in ms (default: 200)
+ * @param {number} [options.hideDelay] - Hide delay in ms (default: 100)
+ * @param {string} [options.customClass] - Additional CSS class(es)
+ * @returns {Promise<Function>} Cleanup function to remove behavior
+ */
 export async function tooltip(element, options = {}) {
   if (!element || !(element instanceof HTMLElement)) {
     console.warn('[WB:tooltip] Invalid element');

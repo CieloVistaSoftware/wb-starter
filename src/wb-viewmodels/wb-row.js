@@ -1,11 +1,9 @@
 /**
- * WBRow Component
- * -----------------------------------------------------------------------------
- * Row layout component.
- * 
- * Custom Tag: <wb-row>
- * -----------------------------------------------------------------------------
+ * Row layout custom element for horizontal flex display.
+ * - `<wb-row>` Web Component with gap and alignment options.
  */
+export function cc() {}
+
 import { flex } from './layouts.js';
 
 export class WBRow extends HTMLElement {

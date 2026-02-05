@@ -1,44 +1,36 @@
 /**
- * Navigation Behaviors
- * -----------------------------------------------------------------------------
- * Provides responsive navigation components including navbars, sidebars,
- * menus, breadcrumbs, and pagination steps.
- * 
- * Custom Tag: <wb-navigation>
- * -----------------------------------------------------------------------------
- * 
- * Usage:
- *   <wb-navbar  data-logo="MySite">...</nav>
- *   <aside data-items='[...]'>...</aside>
- * -----------------------------------------------------------------------------
- * 
- * FIXED: v2.0
- * - Menu component: Proper flex layout with correct spacing
- * - Navbar component: Better responsive design
- * - Sidebar component: Fixed item layout and hover states
+ * Navigation components: navbars, sidebars, menus, breadcrumbs, and pagination.
+ * - `<wb-navbar>`, `<wb-sidebar>`, `<wb-menu>`, `<wb-pagination>`, `<wb-steps>`
  */
+export function cc() {}
 
 /**
- * Navbar - Navigation bar from data attributes
- * Custom Tag: <wb-navbar>
+ * Navbar - Navigation bar
  * 
- * Attributes:
- * - data-brand: Brand name text
- * - data-brand-href: Brand link URL (optional, defaults to /)
- * - data-logo: Logo image URL (optional)
- * - data-logo-size: Logo size in pixels (optional, defaults to 32)
- * - data-items: Comma-separated nav items
- * - data-sticky: Makes navbar sticky on scroll
+ * Creates a responsive horizontal navigation bar with branding, logo,
+ * and menu items. Supports sticky positioning and custom styling.
+ * 
+ * Custom Tag: `<wb-navbar>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.brand] - Brand name text
+ * @param {string} [options.brandHref] - Brand link URL (defaults to /)
+ * @param {string} [options.logo] - Logo image URL
+ * @param {string} [options.logoSize] - Logo size in pixels (defaults to 32)
+ * @param {string} [options.items] - Comma-separated nav items
+ * @param {boolean} [options.sticky] - Makes navbar sticky on scroll
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function navbar(element, options = {}) {
   const config = {
-    brand: options.brand || element.dataset.brand || '',
-    brandHref: options.brandHref || element.dataset.brandHref || '/',
-    logo: options.logo || element.dataset.logo || '',
-    logoSize: options.logoSize || element.dataset.logoSize || '32',
-    tagline: options.tagline || element.dataset.tagline || '',
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
-    sticky: options.sticky ?? element.hasAttribute('data-sticky'),
+    brand: options.brand || element.getAttribute('brand') || '',
+    brandHref: options.brandHref || element.getAttribute('brand-href') || '/',
+    logo: options.logo || element.getAttribute('logo') || '',
+    logoSize: options.logoSize || element.getAttribute('logo-size') || '32',
+    tagline: options.tagline || element.getAttribute('tagline') || '',
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
+    sticky: options.sticky ?? element.hasAttribute('sticky'),
     ...options
   };
 
@@ -46,10 +38,13 @@ export function navbar(element, options = {}) {
   element.style.display = 'flex';
   element.style.alignItems = 'center';
   element.style.justifyContent = 'space-between';
-  element.style.padding = '0.5rem 1rem';
+  element.style.padding = '0 1rem';
+  element.style.height = '56px';
   element.style.background = 'var(--bg-secondary, #1f2937)';
-  element.style.borderRadius = '6px';
-  element.style.gap = '1rem';
+  element.style.borderRadius = '0';
+  element.style.gap = '1.5rem';
+  element.style.boxShadow = '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)';
+  element.style.flexWrap = 'nowrap';
 
   if (config.sticky) {
     element.style.position = 'sticky';
@@ -83,15 +78,17 @@ export function navbar(element, options = {}) {
     
     return `
       <a class="wb-navbar__brand" href="${config.brandHref}" style="
-        font-weight: 700;
+        font-weight: 600;
+        font-size: 1.25rem;
         white-space: nowrap;
         flex-shrink: 0;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.75rem;
         text-decoration: none;
         color: inherit;
-        transition: opacity 0.15s ease;
+        transition: opacity 0.2s ease;
+        letter-spacing: -0.01em;
       " onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">
         ${logoHTML}
         ${textWrapperHTML}
@@ -102,26 +99,36 @@ export function navbar(element, options = {}) {
   // Helper to apply navbar item styling to any link element
   const styleNavbarItem = (link) => {
     link.classList.add('wb-navbar__item');
-    link.style.opacity = '0.8';
+    link.style.opacity = '0.7';
     link.style.textDecoration = 'none';
     link.style.color = 'inherit';
-    link.style.transition = 'opacity 0.15s ease';
+    link.style.transition = 'opacity 0.2s ease, color 0.2s ease';
     link.style.whiteSpace = 'nowrap';
+    link.style.fontSize = '0.875rem';
+    link.style.fontWeight = '500';
+    link.style.letterSpacing = '0.01em';
+    link.style.padding = '0.5rem 0';
     
     // Add hover effects if not already added
     if (!link._navbarHover) {
       link._navbarHover = true;
-      link.addEventListener('mouseenter', () => link.style.opacity = '1');
-      link.addEventListener('mouseleave', () => link.style.opacity = '0.8');
+      link.addEventListener('mouseenter', () => {
+        link.style.opacity = '1';
+        link.style.color = 'var(--primary, #818cf8)';
+      });
+      link.addEventListener('mouseleave', () => {
+        link.style.opacity = '0.7';
+        link.style.color = 'inherit';
+      });
     }
   };
 
   // Check for existing custom children (links dropped by user in builder)
   const existingChildren = Array.from(element.children).filter(child => {
-    // Look for links or elements with
+    // Look for links or elements with links inside
     return child.tagName === 'A' || 
            child.dataset?.wb === 'link' ||
-           child.querySelector?.('a, []');
+           child.querySelector?.('a');
   });
 
   // If items are provided via data attributes AND no custom children, generate the content
@@ -134,6 +141,9 @@ export function navbar(element, options = {}) {
         flex: 1;
         flex-wrap: wrap;
         justify-content: flex-end;
+        align-items: center;
+        max-width: 100%;
+        overflow: hidden;
       ">
         ${config.items.map(item => {
           let label = item.trim();
@@ -147,12 +157,16 @@ export function navbar(element, options = {}) {
           
           return `
           <a class="wb-navbar__item" href="${href}" style="
-            opacity: 0.8;
+            opacity: 0.7;
             text-decoration: none;
             color: inherit;
-            transition: opacity 0.15s ease;
+            transition: opacity 0.2s ease, color 0.2s ease;
             white-space: nowrap;
-          " onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'">
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            padding: 0.5rem 0;
+          " onmouseenter="this.style.opacity='1';this.style.color='var(--primary, #818cf8)'" onmouseleave="this.style.opacity='0.7';this.style.color='inherit'">
             ${label}
           </a>
         `}).join('')}
@@ -172,6 +186,8 @@ export function navbar(element, options = {}) {
       menu.style.flexWrap = 'wrap';
       menu.style.justifyContent = 'flex-end';
       menu.style.alignItems = 'center';
+      menu.style.maxWidth = '100%';
+      menu.style.overflow = 'hidden';
       
       // Move custom children into menu
       existingChildren.forEach(child => {
@@ -186,7 +202,7 @@ export function navbar(element, options = {}) {
     }
     
     // Style all links in the navbar to match
-    element.querySelectorAll('a, []').forEach(link => {
+    element.querySelectorAll('a').forEach(link => {
       // Don't style the brand link
       if (!link.classList.contains('wb-navbar__brand')) {
         styleNavbarItem(link);
@@ -203,19 +219,28 @@ export function navbar(element, options = {}) {
       list.style.margin = '0';
       list.style.padding = '0';
       list.style.flex = '1';
-      list.style.flexWrap = 'wrap';
+      list.style.flexWrap = 'nowrap';
+      list.style.alignItems = 'center';
       
       // Style links within the list
       const links = list.querySelectorAll('a');
       links.forEach(link => {
-        link.style.opacity = '0.8';
+        link.style.opacity = '0.7';
         link.style.textDecoration = 'none';
         link.style.color = 'inherit';
-        link.style.transition = 'opacity 0.15s ease';
+        link.style.transition = 'opacity 0.2s ease, color 0.2s ease';
         link.style.whiteSpace = 'nowrap';
+        link.style.fontSize = '0.875rem';
+        link.style.fontWeight = '500';
         
-        link.addEventListener('mouseenter', () => link.style.opacity = '1');
-        link.addEventListener('mouseleave', () => link.style.opacity = '0.8');
+        link.addEventListener('mouseenter', () => {
+          link.style.opacity = '1';
+          link.style.color = 'var(--primary, #818cf8)';
+        });
+        link.addEventListener('mouseleave', () => {
+          link.style.opacity = '0.7';
+          link.style.color = 'inherit';
+        });
       });
     }
     
@@ -235,15 +260,26 @@ export function navbar(element, options = {}) {
 }
 
 /**
- * Sidebar - Vertical navigation from data-items
- * Custom Tag: <wb-sidebar>
+ * Sidebar - Vertical navigation
+ * 
+ * Creates a vertical navigation sidebar with support for active states,
+ * collapsible icon-only mode, and dynamic item updates via mutation observer.
+ * 
+ * Custom Tag: `<wb-sidebar>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.items] - Comma-separated nav items
+ * @param {string} [options.active] - Currently active item label
+ * @param {boolean} [options.collapsed] - Collapse to icon-only mode
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function sidebar(element, options = {}) {
   // Initial config
   let config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
-    active: options.active || element.dataset.active || '',
-    collapsed: options.collapsed ?? element.hasAttribute('data-collapsed'),
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
+    active: options.active || element.getAttribute('active') || '',
+    collapsed: options.collapsed ?? element.hasAttribute('collapsed'),
     ...options
   };
 
@@ -306,14 +342,14 @@ export function sidebar(element, options = {}) {
   const observer = new MutationObserver((mutations) => {
     let shouldRender = false;
     for (const mutation of mutations) {
-      if (mutation.attributeName === 'data-collapsed') {
-        config.collapsed = element.hasAttribute('data-collapsed');
+      if (mutation.attributeName === 'collapsed') {
+        config.collapsed = element.hasAttribute('collapsed');
         shouldRender = true;
-      } else if (mutation.attributeName === 'data-items') {
-        config.items = (element.dataset.items || '').split(',').filter(Boolean);
+      } else if (mutation.attributeName === 'items') {
+        config.items = (element.getAttribute('items') || '').split(',').filter(Boolean);
         shouldRender = true;
-      } else if (mutation.attributeName === 'data-active') {
-        config.active = element.dataset.active || '';
+      } else if (mutation.attributeName === 'active') {
+        config.active = element.getAttribute('active') || '';
         shouldRender = true;
       }
     }
@@ -322,7 +358,7 @@ export function sidebar(element, options = {}) {
     }
   });
   
-  observer.observe(element, { attributes: true, attributeFilter: ['data-collapsed', 'data-items', 'data-active'] });
+  observer.observe(element, { attributes: true, attributeFilter: ['collapsed', 'items', 'active'] });
 
   element.dataset.wbReady = 'sidebar';
   return () => {
@@ -332,13 +368,21 @@ export function sidebar(element, options = {}) {
 }
 
 /**
- * Menu - Clickable menu from data-items
- * Custom Tag: <wb-menu>
- * FIXED: Proper flex layout, correct spacing, better hover states
+ * Menu - Clickable menu
+ * 
+ * Creates a vertical menu with keyboard navigation and selection events.
+ * Items can include optional values in `label:value` format.
+ * 
+ * Custom Tag: `<wb-menu>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.items] - Comma-separated menu items
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function menu(element, options = {}) {
   const config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
     ...options
   };
 
@@ -414,13 +458,23 @@ export function menu(element, options = {}) {
 }
 
 /**
- * Pagination - Page navigation from data-pages
- * Custom Tag: <wb-pagination>
+ * Pagination - Page navigation
+ * 
+ * Creates a pagination control with prev/next buttons and page numbers.
+ * Dispatches `wb:pagination:change` events on page selection.
+ * 
+ * Custom Tag: `<wb-pagination>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @param {number} [options.pages] - Total number of pages
+ * @param {number} [options.current] - Current page number (1-based)
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function pagination(element, options = {}) {
   const config = {
-    pages: parseInt(options.pages || element.dataset.pages || '1'),
-    current: parseInt(options.current || element.dataset.current || '1'),
+    pages: parseInt(options.pages || element.getAttribute('pages') || '1'),
+    current: parseInt(options.current || element.getAttribute('current') || '1'),
     ...options
   };
 
@@ -500,13 +554,23 @@ export function pagination(element, options = {}) {
 }
 
 /**
- * Steps - Step indicator from data-items
- * Custom Tag: <wb-steps>
+ * Steps - Step indicator
+ * 
+ * Displays a horizontal step indicator showing progress through a
+ * multi-step process. Completed steps show checkmarks.
+ * 
+ * Custom Tag: `<wb-steps>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.items] - Comma-separated step labels
+ * @param {number} [options.current] - Current step number (1-based)
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function steps(element, options = {}) {
   const config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
-    current: parseInt(options.current || element.dataset.current || '1'),
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
+    current: parseInt(options.current || element.getAttribute('current') || '1'),
     ...options
   };
 
@@ -549,11 +613,20 @@ export function steps(element, options = {}) {
 
 /**
  * Treeview - Hierarchical tree from JSON
- * Custom Tag: <wb-treeview>
+ * 
+ * Renders an expandable/collapsible tree structure from JSON data.
+ * Nodes with children can be toggled open/closed.
+ * 
+ * Custom Tag: `<wb-treeview>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @param {Array} [options.items] - Array of tree nodes `[{name, children}]`
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function treeview(element, options = {}) {
   const config = {
-    items: options.items || JSON.parse(element.dataset.items || '[]'),
+    items: options.items || JSON.parse(element.getAttribute('items') || '[]'),
     ...options
   };
 
@@ -609,11 +682,20 @@ export function treeview(element, options = {}) {
 
 /**
  * BackToTop - Scroll to top button
- * Custom Tag: <wb-backtotop>
+ * 
+ * Shows a button that appears after scrolling past a threshold and
+ * smoothly scrolls the page back to the top when clicked.
+ * 
+ * Custom Tag: `<wb-backtotop>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @param {number} [options.threshold] - Scroll distance before visible (default: 300)
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function backtotop(element, options = {}) {
   const config = {
-    threshold: parseInt(options.threshold || element.dataset.threshold || '300'),
+    threshold: parseInt(options.threshold || element.getAttribute('threshold') || '300'),
     ...options
   };
 
@@ -642,14 +724,24 @@ export function backtotop(element, options = {}) {
 
 /**
  * Link - Clickable link that navigates to internal sections or external URLs
- * Custom Tag: <wb-link>
- * Validates URLs on click - turns red and logs error if invalid
+ * 
+ * Creates an enhanced link that validates URLs on click. Invalid links
+ * turn red and log errors. Supports smooth scrolling for anchor links.
+ * 
+ * Custom Tag: `<wb-link>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.href] - Target URL or anchor
+ * @param {string} [options.text] - Link text (if not using element content)
+ * @param {number} [options.offset] - Scroll offset for anchor links (default: 0)
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function link(element, options = {}) {
   const config = {
-    href: options.href || element.dataset.href || element.getAttribute('href') || '#',
-    text: options.text || element.dataset.text || element.textContent || 'Link',
-    offset: parseInt(options.offset || element.dataset.offset || '0'),
+    href: options.href || element.getAttribute('href') || '#',
+    text: options.text || element.getAttribute('text') || element.textContent || 'Link',
+    offset: parseInt(options.offset || element.getAttribute('offset') || '0'),
     ...options
   };
 
@@ -775,12 +867,22 @@ export function link(element, options = {}) {
 
 /**
  * Statusbar - Bottom status bar
- * Custom Tag: <wb-statusbar>
+ * 
+ * Creates a fixed status bar displaying status items and messages.
+ * Listens for `wb:status:message` events to display notifications.
+ * 
+ * Custom Tag: `<wb-statusbar>`
+ * 
+ * @param {HTMLElement} element - The target element to enhance
+ * @param {Object} [options] - Configuration options
+ * @param {string} [options.items] - Comma-separated status items
+ * @param {string} [options.position] - Position: bottom, top, or fixed
+ * @returns {Function} Cleanup function to remove behavior
  */
 export function statusbar(element, options = {}) {
   const config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
-    position: options.position || element.dataset.position || 'bottom',
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
+    position: options.position || element.getAttribute('position') || 'bottom',
     ...options
   };
 
