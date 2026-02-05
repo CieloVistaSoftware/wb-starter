@@ -1,81 +1,426 @@
 {
   "jsIssues": [
     {
-      "file": "src\\builder\\index.js",
-      "import": "./src/index.js",
-      "target": "src\\builder\\src\\index.js"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-viewmodels\\builder-app\\builder-template-add.js",
+      "import": "./src/core/wb-lazy.js",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-viewmodels\\builder-app\\src\\core\\wb-lazy.js"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-viewmodels\\builder-app\\builder-templates-system.js",
+      "import": "./src/core/wb-lazy.js",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-viewmodels\\builder-app\\src\\core\\wb-lazy.js"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-viewmodels\\builder-app\\index-backup.js",
+      "import": "./src/core/wb-lazy.js",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-viewmodels\\builder-app\\src\\core\\wb-lazy.js"
     }
   ],
   "htmlIssues": [
     {
-      "file": "pages\\docs.html",
-      "link": "public/doc-viewer.html?file=",
-      "target": "pages\\public\\doc-viewer.html"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\photo.jpg"
     },
     {
-      "file": "pages\\docs.html",
-      "link": "pages/",
-      "target": "pages\\pages\\"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\photo.jpg"
     },
     {
-      "file": "pages\\home.html",
-      "link": "demos/frameworks.html",
-      "target": "pages\\demos\\frameworks.html"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\photo.jpg"
     },
     {
-      "file": "demos\\autoinject.html",
-      "link": "success.mp3",
-      "target": "demos\\success.mp3"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\photo.jpg"
     },
     {
-      "file": "demos\\autoinject.html",
-      "link": "warning.mp3",
-      "target": "demos\\warning.mp3"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "image.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image.jpg"
     },
     {
-      "file": "demos\\autoinject.html",
-      "link": "danger.mp3",
-      "target": "demos\\danger.mp3"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "image.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image.jpg"
     },
     {
-      "file": "pages\\docs.html",
-      "link": "public/doc-viewer.html?file=",
-      "target": "pages\\public\\doc-viewer.html"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "img1.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\img1.jpg"
     },
     {
-      "file": "pages\\docs.html",
-      "link": "pages/",
-      "target": "pages\\pages\\"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "img2.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\img2.jpg"
     },
     {
-      "file": "pages\\home.html",
-      "link": "demos/frameworks.html",
-      "target": "pages\\demos\\frameworks.html"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "img3.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\img3.jpg"
     },
     {
-      "file": "scripts\\tools\\scope-dashboard.html",
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "img4.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\img4.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "audio-file.mp3",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\audio-file.mp3"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\components.html",
+      "link": "image1.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image1.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\components.html",
+      "link": "image2.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image2.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\components.html",
+      "link": "image3.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image3.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\components.html",
+      "link": "image4.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image4.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\components.html",
+      "link": "audio.mp3",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\audio.mp3"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\docs.html",
+      "link": "/doc-viewer.html?file=",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\doc-viewer.html"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\home.html",
+      "link": "song.mp3",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\song.mp3"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "img1.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\img1.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "img2.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\img2.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "img3.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\img3.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "img4.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\img4.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "audio-file.mp3",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\audio-file.mp3"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "image.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "image.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "img1.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\img1.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "img2.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\img2.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "img3.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\img3.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "img4.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\img4.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\behaviors.html",
+      "link": "audio-file.mp3",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\audio-file.mp3"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\components.html",
+      "link": "image1.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image1.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\components.html",
+      "link": "image2.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image2.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\components.html",
+      "link": "image3.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image3.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\components.html",
+      "link": "image4.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\image4.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\components.html",
+      "link": "audio.mp3",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\audio.mp3"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\docs.html",
+      "link": "/doc-viewer.html?file=",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\doc-viewer.html"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\home.html",
+      "link": "song.mp3",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\pages\\song.mp3"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\project-index.html",
+      "link": "demos/card.html",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\card.html"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\project-index.html",
+      "link": "tests/index.html",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\index.html"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\scripts\\tools\\scope-dashboard.html",
       "link": "../src/styles/themes.css",
-      "target": "scripts\\src\\styles\\themes.css"
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\scripts\\src\\styles\\themes.css"
     },
     {
-      "file": "src\\behaviors\\html\\card.html",
-      "link": "../../src/styles/themes.css",
-      "target": "src\\src\\styles\\themes.css"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-views\\partials\\nav-simple.html",
+      "link": "home.html",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-views\\partials\\home.html"
     },
     {
-      "file": "demos\\autoinject.html",
-      "link": "success.mp3",
-      "target": "demos\\success.mp3"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-views\\partials\\nav-simple.html",
+      "link": "home.html",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-views\\partials\\home.html"
     },
     {
-      "file": "demos\\autoinject.html",
-      "link": "warning.mp3",
-      "target": "demos\\warning.mp3"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-views\\partials\\nav-simple.html",
+      "link": "about.html",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-views\\partials\\about.html"
     },
     {
-      "file": "demos\\autoinject.html",
-      "link": "danger.mp3",
-      "target": "demos\\danger.mp3"
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-views\\partials\\nav-simple.html",
+      "link": "services.html",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-views\\partials\\services.html"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-views\\partials\\nav-simple.html",
+      "link": "contact.html",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-views\\partials\\contact.html"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\fix-card-layout.html",
+      "link": "/src/behaviors/js/fix-card.js",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\behaviors\\js\\fix-card.js"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\repro_cardlink_autoinject.html",
+      "link": "/some-page",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\some-page"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/styles/normalize.css",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\styles\\normalize.css"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/styles/themes.css",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\styles\\themes.css"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/styles/site.css",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\styles\\site.css"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/styles/normalize.css",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\styles\\normalize.css"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/styles/themes.css",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\styles\\themes.css"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/styles/site.css",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\styles\\site.css"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/styles/safari-fixes.css",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\styles\\safari-fixes.css"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/core/wb.js",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\core\\wb.js"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/core/site-engine.js",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\core\\site-engine.js"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "config/site.json",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\config\\site.json"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/styles/transitions.css",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\styles\\transitions.css"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/styles/behaviors/navbar.css",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\styles\\behaviors\\navbar.css"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "manifest.json",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\manifest.json"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "src/lib/premium-navbar.js",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\lib\\premium-navbar.js"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\page.html",
+      "link": "./src/main.js",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tmp\\src\\main.js"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "photo.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\photo.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "img1.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\img1.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "img2.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\img2.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "img3.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\img3.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "img4.jpg",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\img4.jpg"
+    },
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\behaviors-showcase.html",
+      "link": "audio-file.mp3",
+      "target": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\audio-file.mp3"
     }
   ]
 }

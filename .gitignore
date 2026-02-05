@@ -23,3 +23,9 @@ data/content-issues.json
 archive/
 
 *.zip
+
+# Local test artifacts (ignore heavy Playwright/CI output)
+tmp/playwright-*
+tmp/run-*-artifacts/
+test-results/
+.playwright-artifacts/

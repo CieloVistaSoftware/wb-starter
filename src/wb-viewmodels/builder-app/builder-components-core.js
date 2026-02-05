@@ -435,11 +435,16 @@ export function del(id, deps = {}) {
     if (renderTree) renderTree();
     if (autoExtendCanvas) autoExtendCanvas();
     updateBadges();
+
+    if (window.sel?.id === id) window.sel = null;
+    return true;
   }
-  
+
+  // element not found
   if (window.sel?.id === id) {
     window.sel = null;
   }
+  return false;
 }
 
 /**

@@ -4,13 +4,14 @@
 
 ---
 
-## 🔴 BUGS (8 issues) - Fix First
+## 🔴 BUGS (9 issues) - Fix First
 
 | # | Issue | ID | Date | Fixed |
 |---|-------|-----|------|:-----:|
-| 1 | home page has many things not working | `note-1769445034341-p0` | 1/26 | `false` |
-| 2 | doc button from builder doesn't navigate | `note-1769445369305-p0` | 1/26 | `false` |
-| 3 | Issues viewer refresh button does not work | `issues-viewer-refresh-button` | 1/25 | `false` |
+| 1 | doc-viewer.html is flashing every 5 seconds | `doc-viewer-flashing` | 2/3 | `true` |
+| 2 | home page has many things not working | `note-1769445034341-p0` | 1/26 | `false` |
+| 3 | doc button from builder doesn't navigate | `note-1769445369305-p0` | 1/26 | `true` |
+| 4 | Issues viewer refresh button does not work | `issues-viewer-refresh-button` | 1/25 | `false` |
 | 4 | semanticContextMenu broken | `note-1769302437975-p0` | 1/24 | `false` |
 | 5 | Behavior category buttons don't scroll to section | `note-1769220751805-p0` | 1/23 | `false` |
 | 6 | adding x-draggable changes element location even when not clicked | `note-1769212201021-p0` | 1/23 | `false` |
@@ -25,7 +26,7 @@
 |---|-------|-----|------|:-----:|
 | 1 | spinner sizes wrong on components page | `note-1769470023977-p0` | 1/26 | `false` |
 | 2 | remove clicked toast in alerts section | `note-1769469995667-p0` | 1/26 | `false` |
-| 3 | code sections not colored (use mdhtml) | `note-1769469912373-p0` | 1/26 | `false` |
+| 3 | code sections not colored (use mdhtml) | `note-1769469912373-p0` | 1/26 | `true` |
 | 4 | card footer missing on components page | `note-1769469867776-p0` | 1/26 | `false` |
 | 5 | replace docs link with theme control (page/element modes) | `note-1769445571833-p0` | 1/26 | `false` |
 | 6 | builder.html needs page level theme control | `note-1769445416198-p0` | 1/26 | `false` |
