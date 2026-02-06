@@ -1,5 +1,47 @@
 {
-  "lastUpdated": "2026-01-31T00:00:00.000Z",
-  "count": 0,
-  "errors": []
+  "lastUpdated": "2026-02-06T23:39:37.944Z",
+  "count": 1,
+  "errors": [
+    {
+      "id": 1770421177943,
+      "timestamp": "2026-02-06T23:39:37.943Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 349,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:349:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:341:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:724:18)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 349,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 341,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 724,
+          "column": 18
+        }
+      ],
+      "url": "http://localhost:3000/tests/compliance/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    }
+  ]
 }
