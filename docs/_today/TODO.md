@@ -5,6 +5,64 @@
 
 ---
 
+## ❓ Questions (for automation / AI)
+Use this section to post short, machine-actionable questions for other AI agents. Follow the exact format below so agents can claim and respond automatically.
+
+- Format (required):
+  - `QID:` `q-YYYYMMDD-NN`  — unique question id
+  - `Title:` one-line summary
+  - `Priority:` low | medium | high
+  - `Context:` relative path(s) and short pointer (file:line or PR#)
+  - `Question:` single clear question (1-2 sentences)
+  - `Expected output:` checklist of artifacts (log, PR, CSV, command to run)
+
+- Claiming & answering (must follow):
+  1. Claim by editing this line to: `[~claimed <agent-id> <iso-ts>]` immediately under the question.
+  2. Run the required commands and attach logs/results to the question's PR or comment.
+  3. Answer format (machine-parseable):
+     - `QID:` q-YYYYMMDD-NN
+     - `Status:` answered | blocked | need-human
+     - `Answer:` short text (1-3 lines)
+     - `Artifacts:` `data/` path(s) or PR#/ISSUE#
+     - `Resolved-by:` `<agent-id>` `<iso-ts>`
+  4. Mark the question complete by replacing the checklist with `[x]` and add a 1-line `docs/_today/TODO.md` follow-up if needed.
+
+- SLA / expectations: aim to respond within 15 minutes for `high`, 4 hours for `medium`, 24 hours for `low`.
+
+- Example question (copy & paste to ask):
+
+  QID: q-20260206-01
+  Title: Retroactive labeler dry-run on main
+  Priority: high
+  Context: PR #101, scripts/retroactive-pr-labeler.cjs (branch: chore/convert-cjs-to-esm-20260206)
+  Question: Run a dry-run of the retroactive labeler (max 200) and list PRs that would be labeled `needs-tests`.
+  Expected output: `tmp/retro-labeler-dryrun.txt`, `data/retro-labeler-report.csv`, one-paragraph summary comment on PR #101
+
+### Active Questions
+
+- [ ] QID: q-20260206-02
+  Title: Run retroactive PR labeler on main
+  Priority: high
+  Context: MERGE-PLAN item 11, scripts/retroactive-pr-labeler.js on main branch
+  Question: Now that PRs #98-#104 are merged to main, run `node scripts/retroactive-pr-labeler.js --apply` on main to retroactively label open PRs needing Tier-1. Report results.
+  Expected output: `data/retro-labeler-report.csv`, console output showing which PRs were labeled, 1-line summary here.
+
+- [ ] QID: q-20260206-03
+  Title: Fix test-async.mjs detached process not releasing parent
+  Priority: high
+  Context: scripts/test-async.mjs, lines ~90-100 (spawn + unref)
+  Question: The script spawns Playwright with `detached: true` and calls `proc.unref()`, but the parent process doesn't exit until the child finishes (~203s). Root cause is likely the stdout/stderr pipes keeping the parent alive. Fix so the parent exits immediately after spawning. The child must still write to `data/test-status.json` every 2 seconds.
+  Expected output: Updated `scripts/test-async.mjs`, verification that `npm run test:async` returns in <2 seconds.
+
+- [ ] QID: q-20260206-04
+  Title: Restore MERGE-PLAN.md to main
+  Priority: medium
+  Context: docs/_today/MERGE-PLAN.md — existed on announce-test-policy branch but not on main after merge
+  Question: The MERGE-PLAN.md file was edited on `chore/docs/announce-test-policy-impl` but the version with updated async test rules never landed on main. Please restore it from that branch, update items 7-10 to `[x] merged to main`, and commit to main.
+  Expected output: `docs/_today/MERGE-PLAN.md` on main with all 10 items checked off, committed and pushed.
+
+---
+
 ## ✅ Completed This Session (2026-01-14)
 
 - [x] **Cross-Browser Support Infrastructure**
