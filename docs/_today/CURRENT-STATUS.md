@@ -4,12 +4,7 @@
 ## CSS Ownership Migration — Option A (co-locate with ViewModels)
 
 ### ✅ COMPLETED Extractions
-| Component | CSS File Created | Self-Load | Removed From |
-|-----------|-----------------|-----------|--------------|
-| wb-badge | `src/wb-viewmodels/badge.css` | ✅ badge.js | demo.css |
-| wb-spinner | `src/wb-viewmodels/spinner.css` | ✅ spinner.js | demo.css + site.css |
-| wb-toast | `src/wb-viewmodels/toast.css` | ✅ toast.js (path fixed) | demo.css |
-| wb-avatar | `src/wb-viewmodels/avatar.css` | ✅ avatar.js | demo.css |
+Moved to `FIXES.md` — see `docs/_today/FIXES.md` for details.
 
 ### ⏳ REMAINING Phase 1
 - [ ] **wb-card** — has `behaviors/card.css` + competing `demo.css` styles. Needs consolidation.
