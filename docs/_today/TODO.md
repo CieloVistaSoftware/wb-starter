@@ -70,6 +70,19 @@
   - Tests need to dismiss overlay before interacting with sidebar
   - File: `tests/behaviors/ui/builder-sidebar.spec.ts`
 
+- [ ] **CSS ownership migration** ⚠️ *high — active today*
+  - See `docs/_today/CSS-OWNERSHIP-MIGRATION.md` for the top-5 pickup tasks and audit instructions.
+  - Immediate pickups: run audit → create `src/styles/components/<name>.css` for top-5 offenders → update tests and add owner metadata.
+  - Owners: `@design/system` (primary), `@core-maintainers` (review)
+
+  Related migration tasks (claim individually):
+  - [ ] A — `demos/behaviors-showcase.html`: replace `.stack`/`.demo-stack` inside `wb-demo` with `x-stack`; update tests and add visual snapshot. (owner: `@frontend`)
+  - [ ] B — docs manifest: add `MIGRATE-DATA-ATTRS.md` & `MIGRATION-DEMO-STACK.md` to `docs/manifest.json` and regenerate docs. (owner: `@docs`)
+  - [ ] C — codemod runner: convert `scripts/rename-demo-stack-to-stack.js` to ESM and add a dry-run smoke in CI. (owner: `@infra`)
+  - [ ] D — schema triage: fix `gallery.schema.json` + `builder-pages.schema.json` (add `behavior`, `$view`, `$methods`, correct `test.setup` content). (owner: `@schema`)
+  - [ ] E — per-test traces: re-run failing compliance tests, capture traces, and attach to the corresponding issue. (owner: `@ci`)
+  - Suggested workflow: A → B → C → D (small PRs, visual diffs for each), E runs continuously as PRs land.
+
 - [ ] **Web Components Language Server Issue** 🔍 *Investigate*
   - VS Code shows "no custom element docs found" errors
   - Custom Elements Manifest exists at `data/custom-elements.json` (101KB)
@@ -150,6 +163,14 @@
   - `builder-templates.js` (75KB) → template data, rendering
   - `builder-editing.js` (56KB) → 2-3 modules
   - `builder-tree.js` (41KB) → tree view, selection
+
+- [x] **Break up `feedback.js` monolith** (IN PROGRESS)
+  - [x] Extract 12 behaviors into individual files
+  - [x] Update index.js registry to point to individual modules
+  - [x] Replace feedback.js with backward-compat re-export
+  - [ ] Create missing CSS files (toast, notify, spinner, avatar, etc.)
+  - [ ] Migrate inline JS styles to CSS classes
+  - [ ] Refactor component-style behaviors into proper <wb-*> HTMLElement classes
 
 ---
 

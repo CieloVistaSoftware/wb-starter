@@ -29,8 +29,9 @@
     "generate:wb-tests": "node scripts/generate-wb-tests.mjs",
     "generate:schema-tests": "node scripts/generate-schema-tests.js",
     "generate:search": "node scripts/generate-search-index.js",
+    "check:today-docs": "node scripts/check-today-docs.cjs",
     "precommit": "npm run test:integrity"
-  },
+  ,
   "keywords": [
     "website",
     "starter",
