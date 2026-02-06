@@ -1,0 +1,67 @@
+name: Auto-close stale 'needs-tests' PRs
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # daily at 09:00 UTC
+  workflow_dispatch:
+    inputs:
+      grace_days:
+        description: 'Days to wait before warning (default 7)'
+        required: false
+        default: '7'
+      close_after_days:
+        description: 'Days after warning to auto-close (default 3)'
+        required: false
+        default: '3'
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  close-stale:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close stale needs-tests PRs
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const grace = parseInt(core.getInput('grace_days') || '7');
+            const closeAfter = parseInt(core.getInput('close_after_days') || '3');
+            const cutoffWarn = new Date(Date.now() - grace * 24 * 60 * 60 * 1000);
+            const cutoffClose = new Date(Date.now() - (grace + closeAfter) * 24 * 60 * 60 * 1000);
+
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100
+            });
+
+            for (const pr of prs) {
+              const hasLabel = pr.labels.some(l => l.name === 'needs-tests');
+              if (!hasLabel) continue;
+              const updated = new Date(pr.updated_at);
+              if (updated < cutoffClose) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  body: `Closing this PR because Tier‑1 tests have been failing and there has been no activity for ${grace + closeAfter} days. Reopen when tests are fixed or open a new PR.`
+                });
+                await github.rest.pulls.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number,
+                  state: 'closed'
+                });
+              } else if (updated < cutoffWarn) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  body: `Reminder: Tier‑1 tests are still failing for this PR. Please run \`npm test\` and fix the failures within ${closeAfter} days or this PR may be closed automatically.`
+                }).catch(()=>{});
+              }
+            }
