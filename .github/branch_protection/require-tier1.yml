@@ -1,0 +1,15 @@
+# Proposed branch protection configuration (example only)
+# Apply using `gh api` (admin) or via the GitHub UI
+
+name: require-tier1
+protect:
+  branches:
+    - name: main
+      required_status_checks:
+        strict: true
+        contexts:
+          - "Tier-1 (compliance)"
+      enforce_admins: true
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+      restrictions: null
