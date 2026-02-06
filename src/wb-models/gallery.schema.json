@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gallery.schema.json",
+  "title": "Gallery (x-gallery)",
+  "description": "Image gallery container. Accepts <img> children and provides lightbox/grid behavior.",
+
+  "htmlTag": "div",
+  "type": "object",
+
+  "semanticMeaning": {
+    "description": "A responsive image grid that can optionally open images in a lightbox.",
+    "whenToUse": "Use for collections of images or media where a grid + optional lightbox is desired."
+  },
+
+  "properties": {
+    "columns": {
+      "type": "integer",
+      "description": "Number of columns for the gallery grid (responsive fallback: 1 on small screens).",
+      "htmlAttribute": "data-columns",
+      "default": 3,
+      "examples": [2,3,4]
+    },
+    "gap": {
+      "type": "string",
+      "description": "Grid gap (CSS unit).",
+      "htmlAttribute": "data-gap",
+      "default": "1rem",
+      "examples": ["0.5rem","1rem"]
+    },
+    "lightbox": {
+      "type": "boolean",
+      "description": "Enable click-to-expand lightbox (true/false).",
+      "htmlAttribute": "data-lightbox",
+      "default": true
+    },
+    "lazy": {
+      "type": "boolean",
+      "description": "If true, images inside the gallery will use native lazy loading.",
+      "htmlAttribute": "data-lazy",
+      "default": false
+    },
+    "captionPosition": {
+      "type": "string",
+      "description": "Position of captions relative to images.",
+      "enum": ["bottom","overlay","hidden"],
+      "htmlAttribute": "data-caption-position",
+      "default": "bottom"
+    },
+    "images": {
+      "type": "array",
+      "description": "Optional programmatic list of images (alternative to DOM children).",
+      "items": { "type": "object", "properties": { "src": { "type": "string" }, "alt": { "type": "string" }, "caption": { "type": "string" } } }
+    }
+  },
+
+  "structure": {
+    "preferredTemplate": "<div x-gallery data-columns=\"3\">\n  <img src=\"/images/1.jpg\" alt=\"...\">\n  <img src=\"/images/2.jpg\" alt=\"...\">\n</div>",
+    "notes": "Gallery enhances child <img> elements; alternatively use the 'images' JSON property for programmatic galleries."
+  },
+
+  "accessibility": {
+    "requirements": [
+      "Images must include meaningful alt text when they convey information.",
+      "If gallery is decorative, provide empty alt on images (alt=\"\").",
+      "Lightbox must be dismissible via keyboard (ESC) and expose focusable prev/next controls."
+    ]
+  },
+
+  "examples": {
+    "basic": "<div x-gallery data-columns=\"4\">\n  <img src=\"/images/1.jpg\" alt=\"Thumbnail 1\">\n</div>",
+    "withOptions": "<div x-gallery data-columns=\"3\" data-lightbox=\"true\" data-gap=\"0.5rem\">...</div>"
+  },
+
+  "wbComponents": {
+    "list": ["gallery", "lightbox"],
+    "description": "WB components that implement or augment gallery behavior"
+  }
+}

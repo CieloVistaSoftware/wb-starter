@@ -59,7 +59,45 @@ function openLightbox(src) {
 
 /**
  * Gallery - Image gallery
- * Custom Tag: <wb-gallery>
+ *
+ * x-gallery behavior: provides a responsive grid for <img> children and an
+ * optional lightbox viewer. Hover + editor hover/IntelliSense should show
+ * the attributes, examples and the runtime API below.
+ *
+ * HTML (recommended):
+ *   <div x-gallery data-columns="4" data-gap="0.5rem" data-lightbox="true">
+ *     <img src="/images/1.jpg" alt="...">
+ *     <img src="/images/2.jpg" alt="...">
+ *   </div>
+ *
+ * Key attributes (shown in editor hover):
+ *  - data-columns (integer) — number of grid columns (default: 3)
+ *  - data-gap (string) — CSS gap between items (default: 1rem)
+ *  - data-lightbox (boolean) — enable click-to-open lightbox (default: true)
+ *  - data-lazy (boolean) — enable native image lazy-loading
+ *  - data-caption-position ("bottom"|"overlay"|"hidden") — caption placement
+ *
+ * Runtime API (available on element.wbGallery):
+ *  - open(index)         Open the lightbox at index
+ *  - next()               Advance to next image
+ *  - prev()               Go to previous image
+ *  - destroy()            Remove gallery behaviors and listeners
+ *
+ * Accessibility:
+ *  - images should include alt text when meaningful
+ *  - lightbox exposes keyboard navigation and ESC to close
+ *
+ * Example (wb-mdhtml snippet shown exactly as in code):
+ *  <wb-mdhtml>
+ *  ```html
+ *  <div x-gallery data-columns="4">
+ *    <img src="https://picsum.photos/200/200?r=g1" alt="Gallery 1">
+ *    <img src="https://picsum.photos/200/200?r=g2" alt="Gallery 2">
+ *    <img src="https://picsum.photos/200/200?r=g3" alt="Gallery 3">
+ *    <img src="https://picsum.photos/200/200?r=g4" alt="Gallery 4">
+ *  </div>
+ *  ```
+ *  </wb-mdhtml>
  */
 export function gallery(element, options = {}) {
   const config = {

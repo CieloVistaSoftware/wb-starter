@@ -340,6 +340,42 @@ Image-focused card.
 
 ---
 
+## `<div x-gallery>` (alias: `<wb-gallery>`)
+
+**Tooltip Output:**
+```text
+Gallery — responsive image grid with optional lightbox.
+
+Attributes:
+- data-columns: integer (columns in grid)
+- data-gap: CSS size (grid gap)
+- data-lightbox: boolean (enable click-to-open)
+- data-lazy: boolean (native lazy-loading for images)
+- data-caption-position: "bottom" | "overlay" | "hidden"
+
+Methods (available on `element.wbGallery`):
+- open(index), next(), prev(), destroy()
+
+Accessibility:
+- Images should include `alt` text when informative
+- Lightbox supports keyboard navigation and ESC to close
+```
+
+<details><summary>View 6 Attribute Tooltips</summary>
+
+| Attribute | Tooltip |
+|-----------|---------|
+| `data-columns` | Number of grid columns (integer) |
+| `data-gap` | CSS gap between items (e.g. `0.5rem`) |
+| `data-lightbox` | Enable click-to-open lightbox (true/false) |
+| `data-lazy` | Enable native image lazy-loading |
+| `data-caption-position` | `bottom`, `overlay`, or `hidden` |
+| `images` (JSON) | Optional programmatic images array (`src`, `alt`, `caption`) |
+
+</details>
+
+---
+
 ## `<wb-card-link>`
 
 **Tooltip Output:**
