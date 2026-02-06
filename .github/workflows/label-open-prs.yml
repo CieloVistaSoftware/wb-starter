@@ -1,0 +1,89 @@
+name: Retroactive PR Tier‑1 labeler
+
+# Run on schedule and manually. It checks open PRs (limited batch) and labels
+# those whose Tier‑1 (compliance) check is failing or missing.
+
+on:
+  workflow_dispatch:
+    inputs:
+      max-prs:
+        description: 'Maximum PRs to check (default 10)'
+        required: false
+        default: '10'
+  schedule:
+    - cron: '0 3 * * *' # daily at 03:00 UTC
+
+permissions:
+  checks: read
+  issues: write
+  pull-requests: read
+  contents: read
+
+jobs:
+  label-open-prs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Determine PR list
+        id: prs
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const max = parseInt(core.getInput('max-prs') || '10');
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: max
+            });
+            return prs.map(p=> ({number: p.number, headSha: p.head.sha, headRef: p.head.ref}));
+
+      - name: Check and label PRs (limited)
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prs = JSON.parse(process.env['ACTIONS_STEP_OUTPUT_prs'] || '[]');
+            const maxRun = Math.min(prs.length, 10);
+            let labeled = 0;
+            for (const pr of prs.slice(0, maxRun)) {
+              // Inspect check-runs for the PR head
+              const checks = await github.rest.checks.listForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: pr.headSha
+              });
+              const tier1 = checks.data.check_runs.find(c => /compliance|Tier-?1/i.test(c.name));
+              let failed = false;
+              if (tier1) {
+                failed = tier1.conclusion !== 'success';
+              } else {
+                // No existing Tier‑1 run — attempt to run Tier‑1 locally by dispatching a check via workflow (conservative)
+                // To avoid running expensive work for many PRs, treat missing as 'needs-check' and label.
+                failed = true;
+              }
+
+              if (failed) {
+                // add label and a short comment
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  labels: ['needs-tests']
+                }).catch(()=>{});
+
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  body: `⚠️ Automated check: Tier‑1 (compliance) is failing or missing for this PR. Please run \`npm test\` locally and fix failing tests before marking the PR ready for review. If you're debugging, convert this PR to **Draft** and document the failing test(s).`
+                }).catch(()=>{});
+
+                labeled++;
+              }
+            }
+            return {labeled};
+        env:
+          ACTIONS_STEP_OUTPUT_prs: ${{ toJson(steps.prs.outputs.result) }}
