@@ -1,0 +1,56 @@
+name: PR Tier‑1 checker & labeler
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  tier1-check:
+    name: Tier‑1 (non-blocking) + labeler
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - id: run-tier1
+        name: Run Tier-1 (non-blocking)
+        run: |
+          set -o pipefail
+          npm run test:compliance || echo "failed=true" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+      - name: Add 'needs-tests' label when Tier‑1 fails
+        if: steps.run-tier1.outputs.failed == 'true'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: needs-tests
+
+      - name: Comment with remediation steps
+        if: steps.run-tier1.outputs.failed == 'true'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            ⚠️ **Tier‑1 checks failed** — please run `npm test` locally and fix the failing test(s) before marking this PR ready for review.
+
+            Quick steps:
+            - Run `npm test` locally (Tier‑1)
+            - Attach any `trace.zip` from `data/test-results/**/trace.zip` if the failure is flaky
+            - If you're debugging, open a **Draft** PR and document the failing test(s)
+
+            If you believe this is a CI flake, add `ci:recheck` to the PR and ping maintainers.
