@@ -30,8 +30,9 @@
     "generate:schema-tests": "node scripts/generate-schema-tests.js",
     "generate:search": "node scripts/generate-search-index.js",
     "check:today-docs": "node scripts/check-today-docs.cjs",
+    "check:today-updated": "node scripts/verify-today-mentions.cjs",
     "precommit": "npm run test:integrity"
-  ,
+  },
   "keywords": [
     "website",
     "starter",
