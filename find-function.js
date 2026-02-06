@@ -1,5 +1,10 @@
-const fs = require('fs');
-const content = fs.readFileSync('builder.html', 'utf8');
+#!/usr/bin/env node
+// find-function.js — ESM version of find-function.cjs
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const content = fs.readFileSync(path.resolve(__dirname, 'builder.html'), 'utf8');
 const lines = content.split('\n');
 
 // Find addNewPage function

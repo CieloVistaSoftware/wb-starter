@@ -34,6 +34,12 @@
 
 ## 🔴 High Priority - Architecture
 
+### ESM migration (in-progress)
+- [~in-progress GitHub Copilot 2026-02-06T03:00:00Z] Convert remaining `.cjs` files to ESM `.js` (see `docs/_today/MERGE-PLAN.md` for full checklist)
+  - ✅ `find-function.cjs` → `find-function.js`
+  - ✅ `find-showprops.cjs` → `find-showprops.js`
+  - Next: convert any remaining `.cjs` artifacts and remove from repo; ensure async Tier‑1 passes on the conversion PR.
+
 ### Builder Module Split (Completed Earlier)
 - [x] Split `builder-app/index.js` from 123KB to 26KB (79% reduction)
 - [x] Created 7 new modules: panels, dnd, components-core, selection, context-menu, collab, template-add
