@@ -23,7 +23,7 @@ MERGE ORDER (work items)
 4. [x] `chore/convert-cjs-to-esm-20260206` — branch pushed (scripts converted to ESM) — PR: create if missing
 5. [x] `feat/tests/tier1-gate-impl` — PR #98 — add fast Tier‑1 blocking job (merge after docs + ESM conversion)
 6. [x] `feat/tests/pr-labeler-impl` — PR #99 — PR labeler automation (merge after Tier‑1 gate)
-7. [ ] `chore/docs/announce-test-policy-impl` — PR #100 — announcement + docs updates (merge early; docs must land before enforcement)
+7. [~claimed GitHub Copilot 2026-02-06T02:50:00Z] `chore/docs/announce-test-policy-impl` — PR #100 — announcement + docs updates (in progress: draft announcement added)
 8. [ ] `feat/tests/label-open-prs-impl` — PR #101 — retroactive labeling workflow (run after Tier‑1 gate + labeler are merged)
 9. [ ] `feat/tests/auto-close-needs-tests-impl` — PR #102 — auto-close stale needs-tests PRs (depends on labeler)
 10. [ ] `chore/branch-protection-config-impl` — PR #104 — branch-protection docs & sample (admin to apply after Tier‑1 gate is live)

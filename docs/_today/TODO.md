@@ -5,6 +5,7 @@
 - [ ] **FIND ALL :5174 STRINGS AND REPLACE WITH BASEURL** — themes-showcase.spec.ts was hardcoded to localhost:5174 instead of using Playwright baseURL. Audit all test files for hardcoded ports.
 - [ ] **Fix builder app** — builder-app/index.js has 30+ module imports; the ES module chain breaks silently. All builder tests skipped until operational.
 - [ ] **Fix schema-viewer** — #schemaSelector dropdown never populates with schemas. All schema-viewer tests skipped.
+- [~claimed GitHub Copilot 2026-02-06T02:50:00Z] **PR #100 — announce test policy** — draft announcement added (`docs/ANNOUNCE_TEST_POLICY.md`); prepare rollout notes and changelog entry.
 - [ ] **wb-card status** — CSS ownership migration COMPLETE (card.css created, self-load added, demo.css cleaned). Update `CURRENT-STATUS.md` table above.
 
 - [ ] **ESM migration — convert remaining `.cjs` → `.js` (scheduled)** — Known files (whitelist for interim use):
