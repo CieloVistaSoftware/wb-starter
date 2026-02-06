@@ -32,10 +32,7 @@
 - schema-viewer: SKIPPED (schema dropdown never populates)
 
 ## TODO
-- [ ] **FIND ALL :5174 STRINGS AND REPLACE WITH BASEURL** — themes-showcase.spec.ts was hardcoded to localhost:5174 instead of using Playwright baseURL. Audit all test files for hardcoded ports.
-- [ ] **Fix builder app** — builder-app/index.js has 30+ module imports; the ES module chain breaks silently. All builder tests skipped until operational.
-- [ ] **Fix schema-viewer** — #schemaSelector dropdown never populates with schemas. All schema-viewer tests skipped.
-- [ ] **wb-card status** — CSS ownership migration COMPLETE (card.css created, self-load added, demo.css cleaned). Update table above.
+Moved to `TODO.md` — see `docs/_today/TODO.md`.
 
 ## Architecture Decision
 - **Option A**: CSS co-located next to ViewModels in `src/wb-viewmodels/`
