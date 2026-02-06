@@ -13,6 +13,34 @@
 - ❌ Never ask "what are you working on" — read the status file
 - ❌ Never fumble around looking for the project — you have MCP access
 - ❌ Never ask John to help you "reboot" or get oriented
+- ❌ **NEVER run tests synchronously** — tests MUST be async (see below)
+
+### Async Test Execution (MANDATORY)
+All tests run asynchronously via `npm run test:async`. **Never** block on anything.
+
+**Two modes:**
+
+| Mode | When | Lock | Status File |
+|------|------|------|-------------|
+| **Suite** | no spec file (e.g., `--project=compliance`, `--grep`, or bare) | `data/test.lock` — one at a time | `data/test-status.json` |
+| **Single** | specific `*.spec.ts` file | No lock — parallel OK | `data/test-single/{specname}.json` |
+
+**Syntax:**
+```
+npm run test:async                                    # suite (all)
+npm run test:async -- --project=compliance             # suite (filtered)
+npm run test:async -- tests/behaviors/badge.spec.ts    # single (parallel)
+```
+
+**MCP:** `npm_test_async(filter: "--project=compliance")` or `npm_test_async(filter: "tests/behaviors/badge.spec.ts")`
+
+**Workflow:**
+1. Launch via `npm_test_async` — returns immediately
+2. Poll status file once per minute
+3. Report to John 1x per minute
+4. If 3+ failures in a suite: STOP, fix root causes, retest
+
+**Only John runs sync tests.** No AI may ever run tests synchronously. The `npm_command` tool blocks all test commands.
 
 ### What You Have Access To
 - **Full filesystem access** via `wb-filesystem` MCP server

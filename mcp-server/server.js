@@ -5,7 +5,6 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import { spawn } from "child_process";
-import { writeFile } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -15,7 +14,7 @@ const PROJECT_DIR = join(__dirname, "..");
 const server = new Server(
   {
     name: "npm-runner",
-    version: "1.0.0",
+    version: "2.0.0",
   },
   {
     capabilities: {
@@ -29,19 +28,18 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: [
       {
-        name: "npm_test",
-        description: "Run npm test in the wb-starter project. Returns test results and writes them to data/test-results.json",
+        name: "npm_test_async",
+        description:
+          "Launch tests ASYNCHRONOUSLY via npm run test:async. Returns immediately. " +
+          "Only ONE test run at a time (enforced by lock file). " +
+          "Poll data/test-status.json to monitor. Final results in data/test-results.json.",
         inputSchema: {
           type: "object",
           properties: {
             filter: {
               type: "string",
-              description: "Optional: filter to run specific tests (e.g., 'schema' or 'compliance')",
-            },
-            singleThread: {
-              type: "boolean",
-              description: "Run tests in single-threaded mode for easier debugging",
-              default: false,
+              description:
+                "Optional: Playwright args passed through (e.g., '--grep compliance' or '--workers=1')",
             },
           },
           required: [],
@@ -49,13 +47,14 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "npm_command",
-        description: "Run any npm command in the wb-starter project",
+        description: "Run any npm command in the wb-starter project (NOT for tests)",
         inputSchema: {
           type: "object",
           properties: {
             command: {
               type: "string",
-              description: "The npm command to run (e.g., 'run build', 'install', 'run lint')",
+              description:
+                "The npm command to run (e.g., 'run build', 'install', 'run lint')",
             },
           },
           required: ["command"],
@@ -69,8 +68,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
 
-  if (name === "npm_test") {
-    return await runNpmTest(args?.filter, args?.singleThread);
+  if (name === "npm_test_async") {
+    return await launchTestsAsync(args?.filter);
   }
 
   if (name === "npm_command") {
@@ -83,67 +82,73 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   };
 });
 
-async function runNpmTest(filter, singleThread) {
-  const startTime = Date.now();
-  
-  let command = "npx";
-  let cmdArgs = ["playwright", "test"];
-  
-  if (singleThread) {
-    cmdArgs.push("--workers=1");
-  }
-  
+/**
+ * Launches npm run test:async — the script handles lock files,
+ * status updates, and everything else. We just call it and return.
+ */
+async function launchTestsAsync(filter) {
+  const parts = ["run", "test:async"];
   if (filter) {
-    cmdArgs.push("--grep", filter);
+    parts.push("--", ...filter.split(" "));
   }
 
   try {
-    const result = await runCommand(command, cmdArgs, PROJECT_DIR);
-    const duration = ((Date.now() - startTime) / 1000).toFixed(2);
-    
-    // Parse results for summary
-    const summary = parseTestOutput(result.stdout + result.stderr);
-    
-    // Write results to JSON file
-    const jsonResult = {
-      timestamp: new Date().toISOString(),
-      duration: `${duration}s`,
-      exitCode: result.exitCode,
-      summary,
-      filter: filter || null,
-      singleThread: singleThread || false,
-      stdout: result.stdout,
-      stderr: result.stderr,
-    };
-    
-    const outputPath = join(PROJECT_DIR, "data", "test-results.json");
-    await writeFile(outputPath, JSON.stringify(jsonResult, null, 2));
+    const result = await runCommand("npm", parts, PROJECT_DIR);
+
+    // The script returns immediately, so this should be fast.
+    // Check if it was blocked by the lock.
+    if (result.exitCode === 1 && result.stderr.includes("already running")) {
+      return {
+        content: [
+          {
+            type: "text",
+            text: `\u274c ${result.stderr.trim()}\n\nPoll \`data/test-status.json\` to monitor the active run.`,
+          },
+        ],
+        isError: true,
+      };
+    }
 
     return {
       content: [
         {
           type: "text",
-          text: `## Test Results (${duration}s)\n\n` +
-                `**Status:** ${result.exitCode === 0 ? "✅ PASSED" : "❌ FAILED"}\n` +
-                `**Summary:** ${summary}\n\n` +
-                `Results saved to: data/test-results.json\n\n` +
-                `### Output:\n\`\`\`\n${result.stdout}\n\`\`\`\n` +
-                (result.stderr ? `### Errors:\n\`\`\`\n${result.stderr}\n\`\`\`` : ""),
+          text: result.stdout.trim() + "\n\nPoll `data/test-status.json` to check progress.",
         },
       ],
     };
   } catch (error) {
     return {
-      content: [{ type: "text", text: `Error running tests: ${error.message}` }],
+      content: [
+        { type: "text", text: `Error launching tests: ${error.message}` },
+      ],
       isError: true,
     };
   }
 }
 
 async function runNpmCommand(command) {
+  // Guard: block test commands — use npm_test_async instead
+  const lowerCmd = command.toLowerCase();
+  if (
+    lowerCmd.includes("playwright test") ||
+    lowerCmd.match(/run\s+test/) ||
+    lowerCmd.match(/^test$/)
+  ) {
+    return {
+      content: [
+        {
+          type: "text",
+          text: "\u274c BLOCKED: Tests must run via npm_test_async only. Only John can run sync tests at the console.",
+        },
+      ],
+      isError: true,
+    };
+  }
+
   const startTime = Date.now();
   const parts = command.split(" ");
-  
+
   try {
     const result = await runCommand("npm", parts, PROJECT_DIR);
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
@@ -152,16 +157,21 @@ async function runNpmCommand(command) {
       content: [
         {
           type: "text",
-          text: `## npm ${command} (${duration}s)\n\n` +
-                `**Exit Code:** ${result.exitCode}\n\n` +
-                `### Output:\n\`\`\`\n${result.stdout}\n\`\`\`\n` +
-                (result.stderr ? `### Stderr:\n\`\`\`\n${result.stderr}\n\`\`\`` : ""),
+          text:
+            `## npm ${command} (${duration}s)\n\n` +
+            `**Exit Code:** ${result.exitCode}\n\n` +
+            `### Output:\n\`\`\`\n${result.stdout}\n\`\`\`\n` +
+            (result.stderr
+              ? `### Stderr:\n\`\`\`\n${result.stderr}\n\`\`\``
+              : ""),
         },
       ],
     };
   } catch (error) {
     return {
-      content: [{ type: "text", text: `Error running npm ${command}: ${error.message}` }],
+      content: [
+        { type: "text", text: `Error running npm ${command}: ${error.message}` },
+      ],
       isError: true,
     };
   }
@@ -194,23 +204,6 @@ function runCommand(command, args, cwd) {
       resolve({ stdout, stderr: err.message, exitCode: 1 });
     });
   });
-}
-
-function parseTestOutput(output) {
-  // Try to extract pass/fail counts from Playwright output
-  const passMatch = output.match(/(\d+) passed/);
-  const failMatch = output.match(/(\d+) failed/);
-  const skipMatch = output.match(/(\d+) skipped/);
-  
-  const passed = passMatch ? parseInt(passMatch[1]) : 0;
-  const failed = failMatch ? parseInt(failMatch[1]) : 0;
-  const skipped = skipMatch ? parseInt(skipMatch[1]) : 0;
-  
-  if (passed || failed || skipped) {
-    return `${passed} passed, ${failed} failed, ${skipped} skipped`;
-  }
-  
-  return "Could not parse test summary";
 }
 
 // Start the server

@@ -12,6 +12,7 @@
     "test:fast": "npx playwright test --max-failures=1",
     "test:dev": "npx playwright test --project=base --project=behaviors",
     "test:inc": "node scripts/test-incremental.js",
+    "test:async": "node scripts/test-async.mjs",
     "test:ui": "npx playwright test --ui",
     "test:single": "npx playwright test --workers=1",
     "test:compliance": "npx playwright test --project=compliance",
