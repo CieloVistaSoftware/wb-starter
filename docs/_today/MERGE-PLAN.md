@@ -5,10 +5,16 @@ Goal: merge outstanding branches/PRs to create a single common base on `main`. I
 
 PROCESS (high-level)
 - Checkout the branch
-- Run Tier‑1 locally: `npm run test:compliance`
+- Run Tier‑1 via `npm_test_async` (filter: compliance) — NEVER run tests synchronously
+- Poll `data/test-status.json` to monitor progress (1x per minute)
+- If 3+ failures: STOP, fix root causes, retest
 - Fix failures (make minimal, document changes in `docs/_today/TODO.md`)
 - Push branch and set PR to 'ready for review'
 - Merge when Tier‑1 passes
+
+Temporary .cjs policy: the ESM migration is scheduled and tracked in `docs/_today/TODO.md` — the following whitelisted `.cjs` files are allowed and should be used *for now* until focused conversion PR(s) land: `scripts/check-today-docs.cjs`, `scripts/verify-today-mentions.cjs`, `scripts/retroactive-pr-labeler.cjs`, `find-function.cjs`, `find-showprops.cjs`. Automation agents must **not** block PRs solely for the presence of these listed `.cjs` files; instead, create a conversion TODO/PR and follow the conversion checklist in `TODO.md`.
+
+⚠️ ASYNC TEST RULE: Only John runs sync tests at the console. AI agents must use `npm_test_async` exclusively. The `npm_command` tool blocks all test commands.
 
 MERGE ORDER (work items)
 1. [x] `chore/move-todos-to-todo-md-20260206` — PR created & pushed (docs: move TODOs) — PR: n/a (branch pushed)
@@ -37,12 +43,15 @@ PICK-UP INSTRUCTIONS (machine-actionable) — for automation/AI agents
   - Fetch base: `git fetch origin main --quiet`
   - Rebase onto main: `git rebase origin/main` (abort and create an ISSUE if rebase conflicts are non-trivial)
   - Run docs sanity: `npm run check:today-docs && npm run check:today-updated`
-  - Run Tier‑1: `npm run test:compliance`
-  - If Tier‑1 passes: run `npm run test:base` locally (optional confidence step)
+  - Run Tier‑1: call `npm_test_async` (filter: compliance) — returns immediately
+  - Poll `data/test-status.json` once per minute until state is no longer `running`
+  - If 3+ failures appear during polling: STOP tests, fix root causes, retest
+  - If Tier‑1 passes: optionally run `npm_test_async` (filter: base) for confidence
   - If all green: push branch, mark PR ready-for-review, and update this checklist to `[x] <PR#>`
+  - **NEVER use `npm_command` to run tests. It will be blocked.**
 
 - SUCCESS CRITERIA (must all be true to mark `[x]`)
-  1. `npm run test:compliance` exits 0 on the branch.
+  1. `npm_test_async` (filter: compliance) completes with state `passed` in `data/test-status.json`.
   2. `npm run check:today-docs` and `npm run check:today-updated` both exit 0.
   3. PR is opened (Draft → Ready) and includes a 1-line `docs/_today` entry if any docs changed.
   4. No behavioral regressions in `tests/compliance` specific to files touched (investigate and call out flaky tests in PR body).
@@ -56,7 +65,7 @@ PICK-UP INSTRUCTIONS (machine-actionable) — for automation/AI agents
 - PER-ITEM AUTOMATION CHECKLIST (what the AI must do for EACH unchecked item)
   - PR #98 — `feat/tests/tier1-gate-impl`
     - Preconditions: docs + ESM conversion merged to main (if not, mark as blocked).
-    - Commands: `git checkout <branch> && git rebase origin/main && npm run test:compliance && npm run check:today-updated`
+    - Commands: `git checkout <branch> && git rebase origin/main` then `npm_test_async` (filter: compliance), poll `data/test-status.json`, then `npm run check:today-updated`
     - Deliverables: GH workflow YAML updated, `docs/` entry added, PR ready.
   - PR #99 — `feat/tests/pr-labeler-impl`
     - Preconditions: Tier‑1 gate merged or mergeable.
@@ -90,10 +99,11 @@ PICK-UP INSTRUCTIONS (machine-actionable) — for automation/AI agents
   - Leave the PR as Draft and update MERGE-PLAN with `[~blocked <agent-id> <iso-ts>]`.
 
 Automation agents: follow this protocol exactly so subsequent agents can continue work deterministically.
-- Run Tier‑1 locally: `npm run test:compliance`
-- Run full suite (CI-only): `npm run test:all`
+- Run Tier‑1: `npm_test_async` (filter: compliance) — poll `data/test-status.json` for results
+- Run full suite: `npm_test_async` (no filter) — poll `data/test-status.json` for results
 - Verify docs/_today references: `npm run check:today-updated`
 - Run retroactive labeler (dry-run): `node scripts/retroactive-pr-labeler.js --max 200`
+- **NEVER run tests synchronously. Only John runs sync tests at the console.**
 
 NOTES
 - Admin action required to enable branch-protection that requires Tier‑1 to pass. PR #104 provides the sample config.
