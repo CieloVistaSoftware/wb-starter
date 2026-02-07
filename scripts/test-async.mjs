@@ -16,19 +16,21 @@
  *   npm run test:async -- --grep "wb-card"          → suite (filtered)
  *   npm run test:async -- tests/behaviors/badge.spec.ts  → single (parallel)
  * 
- * All modes:
- *   - Spawn detached, return immediately
- *   - Write progress every 2 seconds
- *   - Caller polls status file
+ * Architecture:
+ *   Launcher (no --monitor flag) → writes initial status, spawns ITSELF
+ *   with --monitor flag as a detached process with stdio:'ignore', then
+ *   exits immediately (<1s). The monitor instance spawns Playwright with
+ *   pipes and writes progress to the status file every 2 seconds.
  */
 
-import { spawn } from "child_process";
+import { spawn, fork } from "child_process";
 import { writeFile, readFile, unlink, mkdir } from "fs/promises";
 import { join, dirname, basename } from "path";
 import { fileURLToPath } from "url";
 import { existsSync } from "fs";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const ROOT = join(__dirname, "..");
 const DATA_DIR = join(ROOT, "data");
 const SINGLE_DIR = join(DATA_DIR, "test-single");
@@ -48,11 +50,6 @@ async function removeLock() {
   try { await unlink(LOCK_FILE); } catch (e) { /* ignore */ }
 }
 
-/**
- * Detect mode from args.
- * If any arg ends with .spec.ts → SINGLE mode, return the filename.
- * Otherwise → SUITE mode.
- */
 function detectMode(args) {
   const specFile = args.find((a) => a.endsWith(".spec.ts"));
   if (specFile) {
@@ -61,97 +58,6 @@ function detectMode(args) {
   return { mode: "suite", specFile: null };
 }
 
-async function main() {
-  await mkdir(DATA_DIR, { recursive: true });
-  await mkdir(SINGLE_DIR, { recursive: true });
-
-  const passthroughArgs = process.argv.slice(2);
-  const { mode, specFile } = detectMode(passthroughArgs);
-
-  if (mode === "suite") {
-    await launchSuite(passthroughArgs);
-  } else {
-    await launchSingle(passthroughArgs, specFile);
-  }
-}
-
-/**
- * SUITE mode — locked, one at a time
- */
-async function launchSuite(args) {
-  // Check lock
-  if (existsSync(LOCK_FILE)) {
-    try {
-      const lock = JSON.parse(await readFile(LOCK_FILE, "utf-8"));
-      if (lock.pid && isProcessRunning(lock.pid)) {
-        console.error(`❌ Tests already running (PID: ${lock.pid}, started: ${lock.startedAt})`);
-        console.error(`   Poll data/test-status.json for progress.`);
-        process.exit(1);
-      } else {
-        console.log(`⚠️  Stale lock (PID: ${lock.pid} dead). Clearing.`);
-        await removeLock();
-      }
-    } catch (e) {
-      console.log(`⚠️  Corrupt lock file. Clearing.`);
-      await removeLock();
-    }
-  }
-
-  const cmdArgs = buildPlaywrightArgs(args);
-  const startTime = new Date().toISOString();
-
-  const status = makeStatus(startTime, cmdArgs, null);
-  const proc = spawnPlaywright(cmdArgs);
-
-  status.pid = proc.pid;
-
-  // Write lock
-  await writeFile(LOCK_FILE, JSON.stringify({
-    pid: proc.pid,
-    startedAt: startTime,
-    command: status.command,
-  }, null, 2));
-
-  await writeFile(STATUS_FILE, JSON.stringify(status, null, 2));
-
-  monitorProcess(proc, status, STATUS_FILE, startTime, async () => {
-    await removeLock();
-  });
-
-  proc.unref();
-  console.log(`✅ Suite launched (PID: ${proc.pid})`);
-  console.log(`   Command: ${status.command}`);
-  console.log(`   Poll data/test-status.json for progress.`);
-}
-
-/**
- * SINGLE mode — no lock, parallel allowed
- */
-async function launchSingle(args, specFile) {
-  const specName = basename(specFile, ".spec.ts");
-  const singleStatusFile = join(SINGLE_DIR, `${specName}.json`);
-
-  const cmdArgs = buildPlaywrightArgs(args);
-  const startTime = new Date().toISOString();
-
-  const status = makeStatus(startTime, cmdArgs, specFile);
-  const proc = spawnPlaywright(cmdArgs);
-
-  status.pid = proc.pid;
-  await writeFile(singleStatusFile, JSON.stringify(status, null, 2));
-
-  monitorProcess(proc, status, singleStatusFile, startTime, null);
-
-  proc.unref();
-  console.log(`✅ Single test launched (PID: ${proc.pid})`);
-  console.log(`   Spec: ${specFile}`);
-  console.log(`   Command: ${status.command}`);
-  console.log(`   Poll data/test-single/${specName}.json for progress.`);
-}
-
-/**
- * Build Playwright args with default workers
- */
 function buildPlaywrightArgs(args) {
   const cmdArgs = ["playwright", "test"];
   const hasWorkers = args.some((a) => a.startsWith("--workers"));
@@ -162,9 +68,6 @@ function buildPlaywrightArgs(args) {
   return cmdArgs;
 }
 
-/**
- * Create initial status object
- */
 function makeStatus(startTime, cmdArgs, specFile) {
   return {
     state: "running",
@@ -184,24 +87,153 @@ function makeStatus(startTime, cmdArgs, specFile) {
   };
 }
 
-/**
- * Spawn Playwright detached
- */
-function spawnPlaywright(cmdArgs) {
-  return spawn("npx", cmdArgs, {
-    cwd: ROOT,
-    shell: true,
-    env: { ...process.env, FORCE_COLOR: "0" },
-    detached: true,
-    stdio: ["ignore", "pipe", "pipe"],
+// ─── ENTRY POINT ───────────────────────────────────────────────────
+const allArgs = process.argv.slice(2);
+const isMonitor = allArgs.includes("--monitor");
+const passthroughArgs = allArgs.filter((a) => a !== "--monitor");
+
+if (isMonitor) {
+  runMonitor(passthroughArgs).catch((err) => {
+    console.error("Monitor fatal:", err.message);
+    process.exit(1);
+  });
+} else {
+  runLauncher(passthroughArgs).catch((err) => {
+    console.error("Fatal:", err.message);
+    process.exit(1);
   });
 }
 
-/**
- * Monitor a spawned process — update status file every 2s, write final results
- * @param {Function|null} onComplete - called after process ends (e.g., to remove lock)
- */
-function monitorProcess(proc, status, statusFile, startTime, onComplete) {
+// ─── LAUNCHER ──────────────────────────────────────────────────────
+// Writes initial status/lock, spawns monitor detached, exits immediately.
+async function runLauncher(args) {
+  await mkdir(DATA_DIR, { recursive: true });
+  await mkdir(SINGLE_DIR, { recursive: true });
+
+  const { mode, specFile } = detectMode(args);
+  const cmdArgs = buildPlaywrightArgs(args);
+  const startTime = new Date().toISOString();
+
+  if (mode === "suite") {
+    // Check lock
+    if (existsSync(LOCK_FILE)) {
+      try {
+        const lock = JSON.parse(await readFile(LOCK_FILE, "utf-8"));
+        if (lock.pid && isProcessRunning(lock.pid)) {
+          console.error(`❌ Tests already running (PID: ${lock.pid}, started: ${lock.startedAt})`);
+          console.error(`   Poll data/test-status.json for progress.`);
+          process.exit(1);
+        } else {
+          console.log(`⚠️  Stale lock (PID: ${lock.pid} dead). Clearing.`);
+          await removeLock();
+        }
+      } catch (e) {
+        console.log(`⚠️  Corrupt lock file. Clearing.`);
+        await removeLock();
+      }
+    }
+
+    // Write initial status
+    const status = makeStatus(startTime, cmdArgs, null);
+    await writeFile(STATUS_FILE, JSON.stringify(status, null, 2));
+
+    // Write lock (PID will be the monitor process)
+    // We'll update it once monitor starts — for now use placeholder
+    await writeFile(LOCK_FILE, JSON.stringify({
+      pid: null,
+      startedAt: startTime,
+      command: status.command,
+    }, null, 2));
+  } else {
+    const specName = basename(specFile, ".spec.ts");
+    const singleStatusFile = join(SINGLE_DIR, `${specName}.json`);
+    const status = makeStatus(startTime, cmdArgs, specFile);
+    await writeFile(singleStatusFile, JSON.stringify(status, null, 2));
+  }
+
+  // Spawn monitor: detached, stdio ignored — parent exits immediately
+  const monitor = spawn(
+    process.execPath,
+    [__filename, "--monitor", ...args],
+    {
+      cwd: ROOT,
+      detached: true,
+      stdio: "ignore",
+      env: { ...process.env },
+    }
+  );
+  monitor.unref();
+
+  if (mode === "suite") {
+    // Update lock with actual monitor PID
+    await writeFile(LOCK_FILE, JSON.stringify({
+      pid: monitor.pid,
+      startedAt: startTime,
+      command: `npx ${cmdArgs.join(" ")}`,
+    }, null, 2));
+
+    console.log(`✅ Suite launched (monitor PID: ${monitor.pid})`);
+    console.log(`   Command: npx ${cmdArgs.join(" ")}`);
+    console.log(`   Poll data/test-status.json for progress.`);
+  } else {
+    const specName = basename(specFile, ".spec.ts");
+    console.log(`✅ Single test launched (monitor PID: ${monitor.pid})`);
+    console.log(`   Spec: ${specFile}`);
+    console.log(`   Poll data/test-single/${specName}.json for progress.`);
+  }
+
+  // Parent exits here — monitor runs independently
+}
+
+// ─── MONITOR ───────────────────────────────────────────────────────
+// Spawns Playwright with pipes, tracks progress, writes status every 2s.
+async function runMonitor(args) {
+  await mkdir(DATA_DIR, { recursive: true });
+  await mkdir(SINGLE_DIR, { recursive: true });
+
+  const { mode, specFile } = detectMode(args);
+  const cmdArgs = buildPlaywrightArgs(args);
+  const startTime = new Date().toISOString();
+
+  let statusFile;
+  if (mode === "suite") {
+    statusFile = STATUS_FILE;
+  } else {
+    const specName = basename(specFile, ".spec.ts");
+    statusFile = join(SINGLE_DIR, `${specName}.json`);
+  }
+
+  // Read existing status or create new
+  let status;
+  try {
+    status = JSON.parse(await readFile(statusFile, "utf-8"));
+  } catch (e) {
+    status = makeStatus(startTime, cmdArgs, specFile);
+  }
+
+  // Spawn Playwright with pipes so we can read output
+  const proc = spawn("npx", cmdArgs, {
+    cwd: ROOT,
+    shell: true,
+    env: { ...process.env, FORCE_COLOR: "0" },
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+
+  status.pid = proc.pid;
+
+  // Update lock with Playwright PID for suite mode
+  if (mode === "suite") {
+    await writeFile(LOCK_FILE, JSON.stringify({
+      pid: process.pid,
+      playwrightPid: proc.pid,
+      startedAt: status.startedAt,
+      command: status.command,
+    }, null, 2));
+  }
+
+  await writeFile(statusFile, JSON.stringify(status, null, 2));
+
+  // Track output
   let stdout = "";
   let stderr = "";
   let dirty = false;
@@ -257,7 +289,7 @@ function monitorProcess(proc, status, statusFile, startTime, onComplete) {
     clearInterval(updateTimer);
 
     const endTime = new Date().toISOString();
-    const durationMs = new Date(endTime) - new Date(startTime);
+    const durationMs = new Date(endTime) - new Date(status.startedAt);
     const duration = (durationMs / 1000).toFixed(2);
 
     status.state = exitCode === 0 ? "passed" : "failed";
@@ -268,9 +300,11 @@ function monitorProcess(proc, status, statusFile, startTime, onComplete) {
     status.output = stdout.slice(-5000);
     status.errors = stderr.slice(-2000);
 
-    const passMatch = (stdout + stderr).match(/(\d+) passed/);
-    const failMatch = (stdout + stderr).match(/(\d+) failed/);
-    const skipMatch = (stdout + stderr).match(/(\d+) skipped/);
+    // Final parse
+    const combined = stdout + stderr;
+    const passMatch = combined.match(/(\d+) passed/);
+    const failMatch = combined.match(/(\d+) failed/);
+    const skipMatch = combined.match(/(\d+) skipped/);
     status.passed = passMatch ? parseInt(passMatch[1]) : 0;
     status.failed = failMatch ? parseInt(failMatch[1]) : 0;
     status.skipped = skipMatch ? parseInt(skipMatch[1]) : 0;
@@ -281,14 +315,12 @@ function monitorProcess(proc, status, statusFile, startTime, onComplete) {
     } catch (e) { /* ignore */ }
 
     // Write full results (suite mode only)
-    if (status.mode === "suite") {
+    if (mode === "suite") {
       try {
-        const resultsFile = join(dirname(statusFile), "test-results.json");
-        await writeFile(resultsFile, JSON.stringify({
+        await writeFile(join(DATA_DIR, "test-results.json"), JSON.stringify({
           timestamp: endTime,
           duration: `${duration}s`,
           exitCode,
-          summary: parseTestOutput(stdout + stderr),
           passed: status.passed,
           failed: status.failed,
           skipped: status.skipped,
@@ -297,9 +329,9 @@ function monitorProcess(proc, status, statusFile, startTime, onComplete) {
           stderr,
         }, null, 2));
       } catch (e) { /* ignore */ }
-    }
 
-    if (onComplete) await onComplete();
+      await removeLock();
+    }
   });
 
   proc.on("error", async (err) => {
@@ -310,27 +342,6 @@ function monitorProcess(proc, status, statusFile, startTime, onComplete) {
     try {
       await writeFile(statusFile, JSON.stringify(status, null, 2));
     } catch (e) { /* ignore */ }
-    if (onComplete) await onComplete();
+    if (mode === "suite") await removeLock();
   });
 }
-
-function parseTestOutput(output) {
-  const passMatch = output.match(/(\d+) passed/);
-  const failMatch = output.match(/(\d+) failed/);
-  const skipMatch = output.match(/(\d+) skipped/);
-
-  const passed = passMatch ? parseInt(passMatch[1]) : 0;
-  const failed = failMatch ? parseInt(failMatch[1]) : 0;
-  const skipped = skipMatch ? parseInt(skipMatch[1]) : 0;
-
-  if (passed || failed || skipped) {
-    return `${passed} passed, ${failed} failed, ${skipped} skipped`;
-  }
-
-  return "Could not parse test summary";
-}
-
-main().catch((err) => {
-  console.error("Fatal:", err.message);
-  process.exit(1);
-});
