@@ -8,10 +8,22 @@
 ## Hard Rules (BOTH AIs must follow)
 
 1. **Never force-push main.** Always `git pull origin main` before pushing.
-2. **Never commit directly to main.** Create a branch, push it, John merges.
+2. **Never force-push any branch.** No rewriting shared history.
 3. **Never switch branches without stashing/committing first.**
 4. **Check `/Lock` folder before editing any file.**
-5. **Maximum 2 branches per day per AI.** Keep things manageable — don't flood main with merges.
+5. **Maximum 2 branches per day total.** Keep things manageable.
+
+## Git Ownership
+
+**Only Claude creates branches, commits, and pushes.**
+
+Copilot edits files locally and tells John when done. Claude handles all git operations:
+- Creating branches
+- Committing changes
+- Pushing to origin
+- Merging (via John's approval)
+
+Copilot must **never** run `git commit`, `git push`, `git checkout`, `git branch`, or `git merge`.
 
 ---
 
