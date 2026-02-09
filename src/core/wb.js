@@ -274,7 +274,7 @@ const WB = {
    * @param {HTMLElement} element - Element to process
    * @param {string} schemaName - Schema name (optional, auto-detected)
    */
-  processSchema(element, schemaName = null) {
+  async processSchema(element, schemaName = null, blocking = false) {
     if (schemaProcessed.has(element)) return;
     
     // Get schema name from tag or data-wb
@@ -284,32 +284,28 @@ const WB = {
     // Check if schema exists
     let schema = SchemaBuilder.getSchema(name);
     if (!schema) {
-      // Non-blocking fallback: attempt to fetch the single schema file and process the element when available.
-      // This reduces race conditions where the central index.json hasn't been loaded yet (CI/parallel runs).
       console.warn(`[WB] Schema for "${name}" not registered yet — attempting on-demand fetch`);
-      SchemaBuilder.loadSchemaFile(`${name}.schema.json`).then((loaded) => {
-        if (loaded) {
-          const s = SchemaBuilder.getSchema(name);
-          if (s) {
-            try {
-              SchemaBuilder.processElement(element, name);
-              element.dataset.wbSchema = name;
-              schemaProcessed.add(element);
-            } catch (err) {
-              console.error('[WB] Deferred schema processing failed for', name, err && err.message);
-            }
-          }
-        }
-      }).catch(err => console.warn('[WB] on-demand schema fetch failed:', err && err.message));
-      return; // exit now; processing will occur once schema is fetched
+      try {
+        // If caller requested blocking behavior (initial scan), await the fetch so processing is deterministic
+        const loaded = await SchemaBuilder.loadSchemaFile(`${name}.schema.json`);
+        if (!loaded) return;
+        schema = SchemaBuilder.getSchema(name);
+        if (!schema) return;
+      } catch (err) {
+        console.warn('[WB] on-demand schema fetch failed:', err && err.message);
+        return;
+      }
     }
-    
+
     // Process through schema builder (builds DOM from $view)
-    SchemaBuilder.processElement(element, name);
-    schemaProcessed.add(element);
-    
-    // Mark as schema-processed
-    element.dataset.wbSchema = name;
+    try {
+      SchemaBuilder.processElement(element, name);
+      schemaProcessed.add(element);
+      element.dataset.wbSchema = name;
+    } catch (err) {
+      console.error('[WB] processSchema failed for', name, err && err.message);
+    }
+  }
   },
   
   /**
@@ -347,13 +343,26 @@ const WB = {
 
     // v3.0: Process wb-* custom element tags through schema builder first
     if (useSchemas) {
+      // Collect promises so we can await schema-built elements before continuing
+      const schemaPromises = [];
       root.querySelectorAll('*').forEach(el => {
         const htmlEl = /** @type {HTMLElement} */ (el);
         const tag = htmlEl.tagName.toLowerCase();
         if (tag.startsWith('wb-') && tag !== 'wb-view') {
-          WB.processSchema(htmlEl);
+          // WB.processSchema is async-capable; collect the promise and allow it to load schemas on-demand
+          try {
+            const p = WB.processSchema(htmlEl, /*blocking*/ true);
+            if (p && typeof p.then === 'function') schemaPromises.push(p);
+          } catch (err) {
+            console.warn('[WB] processSchema threw:', err && err.message);
+          }
         }
       });
+
+      // Await processing of schema-built elements to make injection deterministic
+      if (schemaPromises.length) {
+        await Promise.all(schemaPromises);
+      }
     }
 
       // 1. Detect Legacy Usage (Strict Mode: Error) 
