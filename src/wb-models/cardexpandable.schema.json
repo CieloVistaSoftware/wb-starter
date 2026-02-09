@@ -3,7 +3,7 @@
   "$id": "cardexpandable.schema.json",
   "title": "Expandable Card",
   "description": "Card with collapsible/expandable content section",
-  "behavior": "cardexpandable",
+  "schemaFor": "cardexpandable",
   "baseClass": "wb-card-expandable",
   "semanticElement": {
     "tagName": "article",

@@ -3,7 +3,7 @@
   "$id": "demo.schema.json",
   "title": "Demo Component",
   "description": "A component to display a live demo and its source code.",
-  "behavior": "demo",
+  "schemaFor": "demo",
   "baseClass": "wb-demo",
   "semanticElement": {
     "tagName": "div",

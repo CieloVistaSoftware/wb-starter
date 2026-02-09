@@ -3,7 +3,7 @@
   "$id": "tabs.schema.json",
   "title": "Tabs",
   "description": "Tab navigation for switching between content panels",
-  "behavior": "tabs",
+  "schemaFor": "tabs",
   "baseClass": "wb-tabs",
   "semanticElement": {
     "tagName": "div",

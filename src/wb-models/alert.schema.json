@@ -3,7 +3,7 @@
   "$id": "alert.schema.json",
   "title": "Alert",
   "description": "Alert component for displaying messages with severity levels",
-  "behavior": "alert",
+  "schemaFor": "alert",
   "baseClass": "wb-alert",
   "semanticElement": {
     "tagName": "div",

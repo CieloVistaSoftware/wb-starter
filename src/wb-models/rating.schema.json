@@ -3,7 +3,7 @@
   "$id": "rating.schema.json",
   "title": "Rating",
   "description": "Star rating component for displaying or collecting ratings",
-  "behavior": "rating",
+  "schemaFor": "rating",
   "baseClass": "wb-rating",
   "semanticElement": {
     "tagName": "div",

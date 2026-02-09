@@ -3,7 +3,7 @@
   "$id": "mdhtml.schema.json",
   "title": "Markdown to HTML",
   "description": "Renders Markdown content as HTML, either from inline content or external source",
-  "behavior": "mdhtml",
+  "schemaFor": "mdhtml",
   "baseClass": "wb-mdhtml",
   "semanticElement": {
     "tagName": "div",

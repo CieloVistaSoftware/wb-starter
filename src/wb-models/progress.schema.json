@@ -3,7 +3,7 @@
   "$id": "progress.schema.json",
   "title": "Progress",
   "description": "Progress bar with determinate and indeterminate states",
-  "behavior": "progress",
+  "schemaFor": "progress",
   "baseClass": "wb-progress",
   "semanticElement": {
     "tagName": "div",

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "WB Behavior Schema",
   "description": "Master schema defining all behavior metadata, properties, interactions, accessibility, and test requirements",
-  "behavior": "behavior",
+  "schemaFor": "behavior",
   "version": "3.0.0",
   "definitions": {
     "behaviorType": {
@@ -515,9 +515,9 @@
         "required": true,
         "description": "The behavior name"
       },
-      "data-wb-ready": {
+      "wb-ready": {
         "type": "boolean",
-        "description": "Set by WB when behavior is initialized"
+        "description": "Class added by WB when behavior is initialized"
       },
       "data-variant": {
         "type": "string",
@@ -764,7 +764,7 @@
         "description": "Verify behavior initializes correctly",
         "checks": [
           "baseClass applied",
-          "data-wb-ready set",
+          "wb-ready class set",
           "required children created"
         ]
       },

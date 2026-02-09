@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "copy.schema.json",
   "title": "Copy",
-  "behavior": "copy",
   "description": "Click to copy text to clipboard.",
+  "schemaFor": "copy",
   "compliance": {
     "baseClass": "wb-copy",
     "supportLevel": "stable",

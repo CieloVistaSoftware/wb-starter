@@ -3,7 +3,7 @@
   "$id": "article.schema.json",
   "title": "Article Component",
   "description": "Semantic article component for blog posts, news, and documentation pages.",
-  "behavior": "article",
+  "schemaFor": "article",
   "baseClass": "wb-article",
   "semanticElement": {
     "tagName": "article",

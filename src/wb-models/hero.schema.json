@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "hero.schema.json",
   "title": "Hero",
-  "behavior": "hero",
   "description": "Hero section behavior.",
+  "schemaFor": "hero",
   "compliance": {
     "baseClass": "wb-hero",
     "supportLevel": "stable",

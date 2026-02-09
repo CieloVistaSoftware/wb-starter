@@ -3,7 +3,7 @@
   "$id": "fireworks.schema.json",
   "title": "Fireworks",
   "description": "Fireworks particle burst animation effect",
-  "behavior": "fireworks",
+  "schemaFor": "fireworks",
   "baseClass": "wb-fireworks",
   "semanticElement": {
     "tagName": "div"

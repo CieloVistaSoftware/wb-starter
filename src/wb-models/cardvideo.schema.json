@@ -3,7 +3,7 @@
   "$id": "cardvideo.schema.json",
   "title": "Video Card",
   "description": "Card with embedded video player",
-  "behavior": "cardvideo",
+  "schemaFor": "cardvideo",
   "baseClass": "wb-card-video",
   "semanticElement": {
     "tagName": "article",

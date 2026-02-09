@@ -3,8 +3,8 @@
   "$id": "https://wb-starter.dev/schemas/timeline.schema.json",
   "title": "WB Timeline Schema",
   "description": "Schema for validating WB Timeline component",
+  "schemaFor": "timeline",
   "type": "object",
-  "behavior": "timeline",
   "required": [
     "items"
   ],

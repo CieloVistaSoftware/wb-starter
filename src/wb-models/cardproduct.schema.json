@@ -3,7 +3,7 @@
   "$id": "cardproduct.schema.json",
   "title": "Product Card",
   "description": "E-commerce product card with image, price, rating, and CTA",
-  "behavior": "cardproduct",
+  "schemaFor": "cardproduct",
   "baseClass": "wb-product",
   "semanticElement": {
     "tagName": "article",

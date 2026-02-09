@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "darkmode.schema.json",
   "title": "Dark Mode Toggle",
-  "behavior": "darkmode",
   "description": "Button to toggle dark/light theme.",
+  "schemaFor": "darkmode",
   "compliance": {
     "baseClass": "wb-darkmode",
     "supportLevel": "stable",

@@ -3,7 +3,7 @@
   "$id": "stagelight.schema.json",
   "title": "Stage Light",
   "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
-  "behavior": "stagelight",
+  "schemaFor": "stagelight",
   "compliance": {
     "baseClass": "wb-stagelight",
     "supportLevel": "experimental",

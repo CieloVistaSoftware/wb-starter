@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "toggle.schema.json",
   "title": "Toggle",
-  "behavior": "toggle",
   "description": "Toggle visibility or state of another element.",
+  "schemaFor": "toggle",
   "compliance": {
     "baseClass": "wb-toggle",
     "supportLevel": "stable",

@@ -3,7 +3,7 @@
   "$id": "cardstats.schema.json",
   "title": "Stats Card",
   "description": "Statistics display card with value, label, icon, and trend indicator",
-  "behavior": "cardstats",
+  "schemaFor": "cardstats",
   "baseClass": "wb-stats",
   "semanticElement": {
     "tagName": "article",

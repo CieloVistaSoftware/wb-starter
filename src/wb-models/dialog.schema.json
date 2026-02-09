@@ -3,7 +3,7 @@
   "$id": "dialog.schema.json",
   "title": "Dialog",
   "description": "Modal dialog using native HTML5 dialog element",
-  "behavior": "dialog",
+  "schemaFor": "dialog",
   "baseClass": "wb-dialog",
   "semanticElement": {
     "tagName": "dialog",

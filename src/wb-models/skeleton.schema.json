@@ -3,7 +3,7 @@
   "$id": "skeleton.schema.json",
   "title": "Skeleton",
   "description": "Loading skeleton placeholder with shimmer animation",
-  "behavior": "skeleton",
+  "schemaFor": "skeleton",
   "baseClass": "wb-skeleton",
   "semanticElement": {
     "tagName": "div",

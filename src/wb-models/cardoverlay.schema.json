@@ -3,7 +3,7 @@
   "$id": "cardoverlay.schema.json",
   "title": "Overlay Card",
   "description": "Card with text overlaid on background image",
-  "behavior": "cardoverlay",
+  "schemaFor": "cardoverlay",
   "baseClass": "wb-card-overlay",
   "semanticElement": {
     "tagName": "article",

@@ -3,7 +3,7 @@
   "$id": "card.schema.json",
   "title": "Card Component",
   "description": "Base card component. IS-A article, HAS-A header, main, footer.",
-  "behavior": "card",
+  "schemaFor": "card",
   "baseClass": "wb-card",
   "semanticElement": {
     "tagName": "article",
@@ -56,7 +56,15 @@
     "size": {
       "type": "string",
       "description": "Card size variant controlling max/min width",
-      "enum": ["xs", "sm", "md", "lg", "xl", "full", "auto"],
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "full",
+        "auto"
+      ],
       "default": "auto",
       "appliesClass": "wb-card--{value}"
     }

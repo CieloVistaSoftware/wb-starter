@@ -3,7 +3,7 @@
   "$id": "cardhero.schema.json",
   "title": "Hero Card",
   "description": "Hero banner with background image, title, subtitle, and optional CTA",
-  "behavior": "cardhero",
+  "schemaFor": "cardhero",
   "baseClass": "wb-hero",
   "semanticElement": {
     "tagName": "section",

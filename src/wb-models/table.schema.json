@@ -3,7 +3,7 @@
   "$id": "table.schema.json",
   "title": "Table",
   "description": "Data table with sorting, filtering, and pagination",
-  "behavior": "table",
+  "schemaFor": "table",
   "baseClass": "wb-table",
   "semanticElement": {
     "tagName": "table",

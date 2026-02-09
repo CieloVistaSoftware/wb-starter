@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Card Base",
   "description": "BASE SCHEMA - All card variants INHERIT from this. Contains shared properties, semantic requirements, and compliance rules.",
-  "behavior": "card",
+  "schemaFor": "card",
   "isBase": true,
   "semantic": {
     "element": {

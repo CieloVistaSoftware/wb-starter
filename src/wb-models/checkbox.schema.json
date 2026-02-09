@@ -3,7 +3,7 @@
   "$id": "checkbox.schema.json",
   "title": "Checkbox",
   "description": "Checkbox input with label and custom styling",
-  "behavior": "checkbox",
+  "schemaFor": "checkbox",
   "baseClass": "wb-checkbox",
   "semanticElement": {
     "tagName": "div",

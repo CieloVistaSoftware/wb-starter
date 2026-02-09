@@ -3,7 +3,7 @@
   "$id": "audio.schema.json",
   "title": "Audio",
   "description": "Audio player with optional 15-band graphic equalizer",
-  "behavior": "audio",
+  "schemaFor": "audio",
   "baseClass": "wb-audio",
   "semanticElement": {
     "tagName": "div"

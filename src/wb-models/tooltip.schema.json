@@ -3,7 +3,7 @@
   "$id": "tooltip.schema.json",
   "title": "Tooltip",
   "description": "Tooltip for displaying additional information on hover/focus",
-  "behavior": "tooltip",
+  "schemaFor": "tooltip",
   "baseClass": "wb-tooltip-trigger",
   "semanticElement": {
     "tagName": "div",

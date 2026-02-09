@@ -3,7 +3,7 @@
   "$id": "sticky.schema.json",
   "title": "Sticky",
   "description": "Makes element stick to viewport on scroll",
-  "behavior": "sticky",
+  "schemaFor": "sticky",
   "baseClass": "wb-sticky",
   "semanticElement": {
     "tagName": "div"

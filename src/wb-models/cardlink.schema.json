@@ -3,7 +3,7 @@
   "$id": "cardlink.schema.json",
   "title": "Link Card",
   "description": "Clickable card that navigates to a URL",
-  "behavior": "cardlink",
+  "schemaFor": "cardlink",
   "baseClass": "wb-card-link",
   "semanticElement": {
     "tagName": "article",

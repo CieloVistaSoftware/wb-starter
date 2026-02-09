@@ -3,7 +3,7 @@
   "$id": "select.schema.json",
   "title": "Select",
   "description": "Enhanced select dropdown with search, clear, and multi-select",
-  "behavior": "select",
+  "schemaFor": "select",
   "baseClass": "wb-select",
   "semanticElement": {
     "tagName": "div",

@@ -3,7 +3,7 @@
   "$id": "scrollalong.schema.json",
   "title": "ScrollAlong",
   "description": "CSS sticky positioning for sidebars that stay visible while scrolling",
-  "behavior": "scrollalong",
+  "schemaFor": "scrollalong",
   "baseClass": "wb-scrollalong",
   "semanticElement": {
     "tagName": "aside"

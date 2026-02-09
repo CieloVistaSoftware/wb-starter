@@ -3,7 +3,7 @@
   "$id": "button.schema.json",
   "title": "Button",
   "description": "Interactive button with variants, sizes, and optional icon",
-  "behavior": "button",
+  "schemaFor": "button",
   "baseClass": "wb-button",
   "semanticElement": {
     "tagName": "button",

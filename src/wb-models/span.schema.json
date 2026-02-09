@@ -3,7 +3,7 @@
   "$id": "span.schema.json",
   "title": "Span",
   "description": "A generic inline container for applying utility classes and variants. Useful for traffic lights (window controls), badges, and status indicators.",
-  "behavior": "span",
+  "schemaFor": "span",
   "baseClass": "wb-span",
   "semanticElement": {
     "tagName": "span",

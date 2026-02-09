@@ -3,7 +3,7 @@
   "$id": "drawerLayout.schema.json",
   "title": "Drawer Layout",
   "description": "Collapsible sidebar layout with toggle",
-  "behavior": "drawerLayout",
+  "schemaFor": "drawerLayout",
   "baseClass": "wb-drawer-layout",
   "semanticElement": {
     "tagName": "aside"

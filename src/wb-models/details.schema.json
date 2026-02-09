@@ -3,7 +3,7 @@
   "$id": "details.schema.json",
   "title": "Details",
   "description": "Native HTML5 details disclosure widget with optional animation",
-  "behavior": "details",
+  "schemaFor": "details",
   "baseClass": "wb-details",
   "semanticElement": {
     "tagName": "details",

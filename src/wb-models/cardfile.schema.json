@@ -3,7 +3,7 @@
   "$id": "cardfile.schema.json",
   "title": "File Card",
   "description": "File display card with icon, name, size, and download",
-  "behavior": "cardfile",
+  "schemaFor": "cardfile",
   "baseClass": "wb-card-file",
   "semanticElement": {
     "tagName": "article",

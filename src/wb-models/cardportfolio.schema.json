@@ -3,7 +3,7 @@
   "$id": "cardportfolio.schema.json",
   "title": "Portfolio Card",
   "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
-  "behavior": "cardportfolio",
+  "schemaFor": "cardportfolio",
   "baseClass": "wb-portfolio",
   "semanticElement": {
     "tagName": "article",
@@ -50,7 +50,12 @@
     },
     "availability": {
       "type": "string",
-      "enum": ["available", "busy", "not-available", "open-to-opportunities"],
+      "enum": [
+        "available",
+        "busy",
+        "not-available",
+        "open-to-opportunities"
+      ],
       "default": "available",
       "description": "Current availability status"
     },
@@ -124,13 +129,25 @@
     },
     "variant": {
       "type": "string",
-      "enum": ["default", "compact", "horizontal", "full"],
+      "enum": [
+        "default",
+        "compact",
+        "horizontal",
+        "full"
+      ],
       "default": "default",
       "appliesClass": "wb-portfolio--{{value}}"
     },
     "size": {
       "type": "string",
-      "enum": ["sm", "md", "lg", "xl", "full", "auto"],
+      "enum": [
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "full",
+        "auto"
+      ],
       "default": "auto"
     }
   },
@@ -221,18 +238,50 @@
     }
   ],
   "$methods": {
-    "show": { "description": "Shows the card", "params": [] },
-    "hide": { "description": "Hides the card", "params": [] },
-    "toggle": { "description": "Toggles visibility", "params": [] },
-    "setAvailability": { "description": "Updates availability status", "params": ["status"] }
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "setAvailability": {
+      "description": "Updates availability status",
+      "params": [
+        "status"
+      ]
+    }
   },
   "$cssAPI": {
-    "--wb-portfolio-radius": { "default": "12px", "description": "Card border radius" },
-    "--wb-portfolio-bg": { "default": "var(--bg-secondary)", "description": "Card background" },
-    "--wb-portfolio-cover-height": { "default": "150px", "description": "Cover image height" },
-    "--wb-portfolio-avatar-size": { "default": "120px", "description": "Avatar size" },
-    "--wb-portfolio-avatar-border": { "default": "4px solid var(--bg-secondary)", "description": "Avatar border" },
-    "--wb-portfolio-section-gap": { "default": "1.5rem", "description": "Gap between sections" }
+    "--wb-portfolio-radius": {
+      "default": "12px",
+      "description": "Card border radius"
+    },
+    "--wb-portfolio-bg": {
+      "default": "var(--bg-secondary)",
+      "description": "Card background"
+    },
+    "--wb-portfolio-cover-height": {
+      "default": "150px",
+      "description": "Cover image height"
+    },
+    "--wb-portfolio-avatar-size": {
+      "default": "120px",
+      "description": "Avatar size"
+    },
+    "--wb-portfolio-avatar-border": {
+      "default": "4px solid var(--bg-secondary)",
+      "description": "Avatar border"
+    },
+    "--wb-portfolio-section-gap": {
+      "default": "1.5rem",
+      "description": "Gap between sections"
+    }
   },
   "test": {
     "setup": [

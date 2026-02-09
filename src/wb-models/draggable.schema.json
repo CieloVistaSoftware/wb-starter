@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "draggable.schema.json",
   "title": "Draggable",
-  "behavior": "draggable",
   "description": "Make an element draggable.",
+  "schemaFor": "draggable",
   "compliance": {
     "baseClass": "wb-draggable",
     "supportLevel": "stable",

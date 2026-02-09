@@ -3,7 +3,7 @@
   "$id": "cardtestimonial.schema.json",
   "title": "Testimonial Card",
   "description": "Customer testimonial/review card with quote, author, avatar, and rating",
-  "behavior": "cardtestimonial",
+  "schemaFor": "cardtestimonial",
   "baseClass": "wb-testimonial",
   "semanticElement": {
     "tagName": "article",

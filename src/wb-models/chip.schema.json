@@ -3,7 +3,7 @@
   "$id": "chip.schema.json",
   "title": "Chip",
   "description": "Small pill-shaped tag/label, optionally dismissible",
-  "behavior": "chip",
+  "schemaFor": "chip",
   "baseClass": "wb-chip",
   "semanticElement": {
     "tagName": "span",

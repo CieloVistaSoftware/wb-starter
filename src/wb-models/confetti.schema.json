@@ -3,7 +3,7 @@
   "$id": "confetti.schema.json",
   "title": "Confetti",
   "description": "Confetti particle animation effect",
-  "behavior": "confetti",
+  "schemaFor": "confetti",
   "baseClass": "wb-confetti",
   "semanticElement": {
     "tagName": "div"

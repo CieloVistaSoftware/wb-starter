@@ -3,7 +3,7 @@
   "$id": "switch.schema.json",
   "title": "Switch",
   "description": "Toggle switch for boolean settings",
-  "behavior": "switch",
+  "schemaFor": "switch",
   "baseClass": "wb-switch",
   "semanticElement": {
     "tagName": "div",

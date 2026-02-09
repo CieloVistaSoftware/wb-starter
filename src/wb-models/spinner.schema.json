@@ -3,7 +3,7 @@
   "$id": "spinner.schema.json",
   "title": "Spinner",
   "description": "Loading spinner indicator",
-  "behavior": "spinner",
+  "schemaFor": "spinner",
   "baseClass": "wb-spinner",
   "semanticElement": {
     "tagName": "div",

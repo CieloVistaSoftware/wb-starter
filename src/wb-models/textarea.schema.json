@@ -3,7 +3,7 @@
   "$id": "textarea.schema.json",
   "title": "Textarea",
   "description": "Multi-line text input with autosize and character count",
-  "behavior": "textarea",
+  "schemaFor": "textarea",
   "baseClass": "wb-textarea",
   "semanticElement": {
     "tagName": "div",

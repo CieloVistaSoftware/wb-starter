@@ -3,7 +3,7 @@
   "$id": "avatar.schema.json",
   "title": "Avatar",
   "description": "User avatar with image, initials fallback, and status indicator",
-  "behavior": "avatar",
+  "schemaFor": "avatar",
   "baseClass": "wb-avatar",
   "semanticElement": {
     "tagName": "div",

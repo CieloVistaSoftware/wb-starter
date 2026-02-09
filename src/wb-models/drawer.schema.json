@@ -3,7 +3,7 @@
   "$id": "drawer.schema.json",
   "title": "Drawer",
   "description": "Slide-out panel overlay from screen edge",
-  "behavior": "drawer",
+  "schemaFor": "drawer",
   "baseClass": "wb-drawer",
   "semanticElement": {
     "tagName": "aside",

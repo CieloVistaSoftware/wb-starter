@@ -3,7 +3,7 @@
   "$id": "snow.schema.json",
   "title": "Snow",
   "description": "Falling snowflake animation effect",
-  "behavior": "snow",
+  "schemaFor": "snow",
   "baseClass": "wb-snow",
   "semanticElement": {
     "tagName": "div"

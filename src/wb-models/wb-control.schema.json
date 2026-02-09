@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "wb-control.schema.json",
   "title": "WB Control",
-  "behavior": "control",
   "description": "Base control interaction behavior.",
+  "schemaFor": "wb-control",
   "compliance": {
     "baseClass": "wb-wb-control",
     "supportLevel": "stable",

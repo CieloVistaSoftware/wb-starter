@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "collapse.schema.json",
   "title": "Collapse",
-  "behavior": "collapse",
   "description": "Collapsible content area.",
+  "schemaFor": "collapse",
   "compliance": {
     "baseClass": "wb-collapse",
     "supportLevel": "stable",

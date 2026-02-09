@@ -3,6 +3,7 @@
   "$id": "https://wb-starter.dev/schemas/views.schema.json",
   "title": "WB Views Registry Schema",
   "description": "Schema for validating WB Views registry files. Views are reusable HTML templates that auto-register as custom elements.",
+  "schemaFor": "views",
   "type": "object",
   "required": [
     "views"

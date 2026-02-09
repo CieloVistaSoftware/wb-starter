@@ -3,7 +3,7 @@
   "$id": "cardimage.schema.json",
   "title": "Image Card",
   "description": "Card with featured image and optional title/subtitle",
-  "behavior": "cardimage",
+  "schemaFor": "cardimage",
   "baseClass": "wb-card-image",
   "semanticElement": {
     "tagName": "article",

@@ -3,7 +3,7 @@
   "$id": "cardnotification.schema.json",
   "title": "Notification Card",
   "description": "Dismissible notification card with type-based styling",
-  "behavior": "cardnotification",
+  "schemaFor": "cardnotification",
   "baseClass": "wb-notification",
   "semanticElement": {
     "tagName": "aside",

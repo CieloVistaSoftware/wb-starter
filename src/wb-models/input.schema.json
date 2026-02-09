@@ -3,7 +3,7 @@
   "$id": "input.schema.json",
   "title": "Input",
   "description": "Text input field with label, helper text, and validation states",
-  "behavior": "input",
+  "schemaFor": "input",
   "baseClass": "wb-input",
   "semanticElement": {
     "tagName": "div",

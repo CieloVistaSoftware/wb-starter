@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "WB Behaviors Showcase",
   "description": "Schema for demos/behaviors-showcase.html - validates the comprehensive behaviors showcase page",
-  "behavior": "behaviors-showcase",
+  "schemaFor": "behaviors-showcase",
   "type": "page-schema",
   "page": "demos/behaviors-showcase.html",
   "version": "3.0.0",

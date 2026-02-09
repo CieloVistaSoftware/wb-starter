@@ -3,7 +3,7 @@
   "$id": "cardminimizable.schema.json",
   "title": "Minimizable Card",
   "description": "Card with minimize/expand toggle button in header",
-  "behavior": "cardminimizable",
+  "schemaFor": "cardminimizable",
   "baseClass": "wb-card-minimizable",
   "semanticElement": {
     "tagName": "article",

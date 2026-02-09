@@ -3,7 +3,7 @@
   "$id": "navbar.schema.json",
   "title": "Navbar",
   "description": "Navigation bar with brand, links, and responsive menu",
-  "behavior": "navbar",
+  "schemaFor": "navbar",
   "baseClass": "wb-navbar",
   "semanticElement": {
     "tagName": "nav",

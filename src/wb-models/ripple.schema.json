@@ -3,7 +3,7 @@
   "$id": "ripple.schema.json",
   "title": "Ripple",
   "description": "Material Design ripple effect on click",
-  "behavior": "ripple",
+  "schemaFor": "ripple",
   "baseClass": "wb-ripple",
   "semanticElement": {
     "tagName": "div"

@@ -3,7 +3,7 @@
   "$id": "cardpricing.schema.json",
   "title": "Pricing Card",
   "description": "Pricing tier card with plan name, price, features list, and CTA",
-  "behavior": "cardpricing",
+  "schemaFor": "cardpricing",
   "baseClass": "wb-pricing",
   "semanticElement": {
     "tagName": "article",

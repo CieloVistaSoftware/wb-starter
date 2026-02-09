@@ -3,7 +3,7 @@
   "$id": "carddraggable.schema.json",
   "title": "Draggable Card",
   "description": "Card that can be dragged around the page",
-  "behavior": "carddraggable",
+  "schemaFor": "carddraggable",
   "baseClass": "wb-card-draggable",
   "semanticElement": {
     "tagName": "article",

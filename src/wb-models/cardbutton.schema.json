@@ -3,7 +3,7 @@
   "$id": "cardbutton.schema.json",
   "title": "Button Card",
   "description": "Card with action buttons in footer",
-  "behavior": "cardbutton",
+  "schemaFor": "cardbutton",
   "baseClass": "wb-card-button",
   "semanticElement": {
     "tagName": "article",

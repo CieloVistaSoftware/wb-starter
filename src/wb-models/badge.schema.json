@@ -3,7 +3,7 @@
   "$id": "badge.schema.json",
   "title": "Badge",
   "description": "Small label/tag for status indicators, counts, or categories",
-  "behavior": "badge",
+  "schemaFor": "badge",
   "baseClass": "wb-badge",
   "semanticElement": {
     "tagName": "span",

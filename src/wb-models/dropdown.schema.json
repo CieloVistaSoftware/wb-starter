@@ -3,7 +3,7 @@
   "$id": "dropdown.schema.json",
   "title": "Dropdown",
   "description": "Toggleable dropdown menu",
-  "behavior": "dropdown",
+  "schemaFor": "dropdown",
   "baseClass": "wb-dropdown",
   "semanticElement": {
     "tagName": "div",
