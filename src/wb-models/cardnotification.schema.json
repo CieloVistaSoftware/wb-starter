@@ -206,8 +206,8 @@
       "<wb-cardnotification elevated>with elevated</wb-cardnotification>",
       "<wb-cardnotification title=\"Sample title\">title=\"Sample title\"</wb-cardnotification>",
       "<wb-cardnotification message=\"Sample message\">message=\"Sample message\"</wb-cardnotification>",
-      "<wb-notification message=\"Info message\"></wb-notification>",
-      "<wb-notification variant=\"success\" title=\"Success\" message=\"Done!\"></wb-notification>"
+      "<wb-cardnotification message=\"Info message\"></wb-cardnotification>",
+      "<wb-cardnotification variant=\"success\" title=\"Success\" message=\"Done!\"></wb-cardnotification>"
     ],
     "matrix": {
       "combinations": [

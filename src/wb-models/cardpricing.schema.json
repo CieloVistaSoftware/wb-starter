@@ -278,9 +278,9 @@
       "<wb-cardpricing plan=\"Sample plan\">plan=\"Sample plan\"</wb-cardpricing>",
       "<wb-cardpricing price=\"Sample price\">price=\"Sample price\"</wb-cardpricing>",
       "<wb-cardpricing period=\"/month\">period=\"/month\"</wb-cardpricing>",
-      "<wb-pricing plan=\"Basic\" price=\"$9\"></wb-pricing>",
-      "<wb-pricing plan=\"Pro\" price=\"$29\" featured></wb-pricing>",
-      "<wb-pricing plan=\"Pro\" price=\"$29\" features=\"Feature 1,Feature 2,Feature 3\"></wb-pricing>"
+      "<wb-cardpricing plan=\"Basic\" price=\"$9\"></wb-cardpricing>",
+      "<wb-cardpricing plan=\"Pro\" price=\"$29\" featured></wb-cardpricing>",
+      "<wb-cardpricing plan=\"Pro\" price=\"$29\" features=\"Feature 1,Feature 2,Feature 3\"></wb-cardpricing>"
     ],
     "matrix": {
       "combinations": [
