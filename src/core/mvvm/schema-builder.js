@@ -106,6 +106,8 @@ export async function loadSchemas(basePath = '/src/wb-models') {
  * Register a single schema
  */
 export function registerSchema(schema, filename) {
+  // backwards-compat: accept new `schemaFor` while preserving `behavior` for existing code
+  if (schema && !schema.behavior && schema.schemaFor) schema.behavior = schema.schemaFor;
   const name = schema.behavior || filename.replace('.schema.json', '');
   
   schemaRegistry.set(name, schema);
@@ -115,6 +117,28 @@ export function registerSchema(schema, filename) {
   tagToSchema.set(tagName, name);
   
   console.log(`[Schema Builder] Registered: ${name} → <${tagName}>`);
+}
+
+/**
+ * Load a single schema file and register it (fallback for runtime/hydration races)
+ * Returns true if the schema was fetched & registered, false otherwise.
+ */
+export async function loadSchemaFile(filePath, basePath = '/src/wb-models') {
+  try {
+    // Accept both bare filenames (cardhero.schema.json) and schema names (cardhero)
+    const filename = filePath.endsWith('.schema.json') ? filePath : `${filePath}.schema.json`;
+    const resp = await fetch(`${basePath}/${filename}`);
+    if (!resp.ok) {
+      console.warn(`[Schema Builder] loadSchemaFile: ${filename} not found (status ${resp.status})`);
+      return false;
+    }
+    const schema = await resp.json();
+    registerSchema(schema, filename);
+    return true;
+  } catch (err) {
+    console.warn('[Schema Builder] loadSchemaFile failed:', err && err.message);
+    return false;
+  }
 }
 
 /**

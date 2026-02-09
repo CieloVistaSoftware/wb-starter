@@ -282,8 +282,27 @@ const WB = {
     if (!name) return;
     
     // Check if schema exists
-    const schema = SchemaBuilder.getSchema(name);
-    if (!schema) return;
+    let schema = SchemaBuilder.getSchema(name);
+    if (!schema) {
+      // Non-blocking fallback: attempt to fetch the single schema file and process the element when available.
+      // This reduces race conditions where the central index.json hasn't been loaded yet (CI/parallel runs).
+      console.warn(`[WB] Schema for "${name}" not registered yet — attempting on-demand fetch`);
+      SchemaBuilder.loadSchemaFile(`${name}.schema.json`).then((loaded) => {
+        if (loaded) {
+          const s = SchemaBuilder.getSchema(name);
+          if (s) {
+            try {
+              SchemaBuilder.processElement(element, name);
+              element.dataset.wbSchema = name;
+              schemaProcessed.add(element);
+            } catch (err) {
+              console.error('[WB] Deferred schema processing failed for', name, err && err.message);
+            }
+          }
+        }
+      }).catch(err => console.warn('[WB] on-demand schema fetch failed:', err && err.message));
+      return; // exit now; processing will occur once schema is fetched
+    }
     
     // Process through schema builder (builds DOM from $view)
     SchemaBuilder.processElement(element, name);
