@@ -1,0 +1,133 @@
+{
+  "total": 79,
+  "missing": [
+    {
+      "file": "alert.schema.json",
+      "schemaFor": "alert",
+      "derived": "alert"
+    },
+    {
+      "file": "article.schema.json",
+      "schemaFor": "article",
+      "derived": "article"
+    },
+    {
+      "file": "articles.schema.json",
+      "schemaFor": "articles",
+      "derived": "articles"
+    },
+    {
+      "file": "audio.schema.json",
+      "schemaFor": "audio",
+      "derived": "audio"
+    },
+    {
+      "file": "avatar.schema.json",
+      "schemaFor": "avatar",
+      "derived": "avatar"
+    },
+    {
+      "file": "badge.schema.json",
+      "schemaFor": "badge",
+      "derived": "badge"
+    },
+    {
+      "file": "builder-pages.schema.json",
+      "schemaFor": "builder-pages",
+      "derived": "builder-pages"
+    },
+    {
+      "file": "builder.schema.json",
+      "schemaFor": "builder",
+      "derived": "builder"
+    },
+    {
+      "file": "button.schema.json",
+      "schemaFor": "button",
+      "derived": "button"
+    },
+    {
+      "file": "card.schema.json",
+      "schemaFor": "card",
+      "derived": "card"
+    },
+    {
+      "file": "cardbutton.schema.json",
+      "schemaFor": "cardbutton",
+      "derived": "cardbutton"
+    },
+    {
+      "file": "carddraggable.schema.json",
+      "schemaFor": "carddraggable",
+      "derived": "carddraggable"
+    },
+    {
+      "file": "cardnotification.schema.json",
+      "schemaFor": "cardnotification",
+      "derived": "cardnotification"
+    },
+    {
+      "file": "home-page.schema.json",
+      "schemaFor": "home-page",
+      "derived": "home-page"
+    }
+  ],
+  "fixed": [
+    {
+      "file": "alert.schema.json",
+      "behavior": "alert"
+    },
+    {
+      "file": "article.schema.json",
+      "behavior": "article"
+    },
+    {
+      "file": "articles.schema.json",
+      "behavior": "articles"
+    },
+    {
+      "file": "audio.schema.json",
+      "behavior": "audio"
+    },
+    {
+      "file": "avatar.schema.json",
+      "behavior": "avatar"
+    },
+    {
+      "file": "badge.schema.json",
+      "behavior": "badge"
+    },
+    {
+      "file": "builder-pages.schema.json",
+      "behavior": "builder-pages"
+    },
+    {
+      "file": "builder.schema.json",
+      "behavior": "builder"
+    },
+    {
+      "file": "button.schema.json",
+      "behavior": "button"
+    },
+    {
+      "file": "card.schema.json",
+      "behavior": "card"
+    },
+    {
+      "file": "cardbutton.schema.json",
+      "behavior": "cardbutton"
+    },
+    {
+      "file": "carddraggable.schema.json",
+      "behavior": "carddraggable"
+    },
+    {
+      "file": "cardnotification.schema.json",
+      "behavior": "cardnotification"
+    },
+    {
+      "file": "home-page.schema.json",
+      "behavior": "home-page"
+    }
+  ]
+}
