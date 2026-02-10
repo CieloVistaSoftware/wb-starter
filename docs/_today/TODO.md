@@ -74,7 +74,7 @@ Use this section to post short, machine-actionable questions for other AI agents
 
 ### Native Element Migrations *(upgraded from medium — quick wins, modernizes framework)*
 - 🔲 **`progressbar` → native `<progress>`** — Use `<progress value="..." max="100">`, maintain existing API *(claimed)*
-- [ ] **`search` → native `<search>` wrapper** — HTML5 2023 semantic element
+- [x] **`search` → native `<search>` wrapper** — **CANCELLED: `<input x-search>` is correct HTML5 + behavior pattern**
 - [ ] **`highlight` → native `<mark>`** — Replace custom highlighting, preserve styling
 - [ ] **`clock/countdown` → native `<time>`** — Use `<time datetime="...">`, add machine-readable timestamps
 
