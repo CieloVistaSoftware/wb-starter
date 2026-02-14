@@ -53,6 +53,12 @@ npx playwright test tests/compliance/no-observer-referror.spec.ts \
 
 # or run a named compliance project
 npx playwright test --project=compliance --trace=on
+
+> TIP: to avoid starting Playwright when your grep/pattern matches no tests, use the safe wrapper:
+> ```bash
+> npm run pw:maybe -- --grep 'my-pattern'
+> ```
+> This prints a concise "no matching tests found — skipping" message instead of launching the runner.
 ```
 
 - Where to find artifacts locally:
@@ -73,29 +79,6 @@ gh workflow run "Manual Compliance (dispatch)" -f ref=main -f tests="tests/compl
 ```
 
 Please attach the generated `trace.zip` to the PR when reporting flaky failures.
-
----
-
-## Updating `docs/_today` (required for docs changes) ⚠️
-
-When you change any files under `docs/` (except `docs/_today`), you MUST add a one-line entry to `docs/_today/TODO.md` or `docs/_today/CURRENT-STATUS.md` that references the changed file and a short summary.
-
-- Why: `docs/_today` is the canonical place for recent work and rollup notes; the project uses automated checks to ensure it's kept up to date.
-
-- How to write the entry (example):
-
-```markdown
-- [ ] docs/guide/custom-elements.md — update API example for v2 (author: @you)
-```
-
-- Quick check (local):
-
-```bash
-# verify changed docs are mentioned in docs/_today
-npm run check:today-updated
-```
-
-The PR check will fail if you modify `docs/` and do not mention the change in `docs/_today`.
 ## Code Quality Rules
 
 1. **No broken links** - All CSS/JS/image paths must be valid

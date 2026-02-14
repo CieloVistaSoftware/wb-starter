@@ -34,7 +34,15 @@
     "generate:schema-tests": "node scripts/generate-schema-tests.js",
     "generate:search": "node scripts/generate-search-index.js",
     "generate:custom-elements": "node scripts/generate-custom-elements.js",
-    "precommit": "npm run test:integrity",
+    "lint:md-powershell": "node scripts/lint-md-powershell.js",
+    "lint:md-powershell:staged": "node scripts/lint-md-powershell-staged.js",
+    "check:stale-locks": "node scripts/check-stale-locks.js",
+    "check:staged-integrity": "node scripts/check-staged-integrity.js",
+    "check:critical-scripts": "node scripts/ensure-critical-scripts.js",
+    "cleanup:artifacts": "node scripts/cleanup-artifacts.js",
+    "ci:docs-safety": "npm run lint:md-powershell && npm run check:stale-locks && npm run check:critical-scripts",
+    "pw:maybe": "node scripts/playwright-if-tests.js --",
+    "precommit": "npm run check:critical-scripts && npm run lint:md-powershell:staged && npm run check:stale-locks",
     "scripts:help": "node -e \"const p=require('./package.json');const m=p['scripts-info']||{};Object.entries(m).forEach(([k,v])=>console.log(k.padEnd(30)+' - '+v));\""
   },
   "scripts-info": {
@@ -66,7 +74,15 @@
     "generate:wb-tests": "Auto-generate WB behavior tests",
     "generate:schema-tests": "Auto-generate schema tests",
     "generate:search": "Rebuild the search index",
-    "precommit": "Pre-commit hook: run integrity checks"
+    "lint:md-powershell": "PowerShell-safe markdown linter",
+    "lint:md-powershell:staged": "Lint only staged markdown files",
+    "check:stale-locks": "Check for stale Lock/ entries",
+    "check:staged-integrity": "Check staged files for integrity issues",
+    "check:critical-scripts": "Ensure critical npm scripts exist",
+    "cleanup:artifacts": "Clean up temp test artifacts",
+    "ci:docs-safety": "Run all CI doc safety checks",
+    "pw:maybe": "Run Playwright only if matching tests exist",
+    "precommit": "Pre-commit hook: critical scripts + md lint + stale locks"
   },
   "keywords": [
     "website",

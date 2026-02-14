@@ -20,6 +20,7 @@ A modern website starter kit powered by [WB Behaviors](https://github.com/CieloV
 ## Testing & CI
 
 - Quick dev run: `npm test` (fast-by-default). Use `npm test -- --full` or `CI=true npm test` to run the full ordered pipeline (compliance → fast → base → behaviors → regression). See `docs/testing-runbook.md` for the full runbook, Playwright trace examples, and CI guidance.
+- Quick copy-paste commands and PowerShell troubleshooting: see `NPXCOMMANDS.md` (recommended for contributors).
 - MCP: the project includes a local MCP helper used by tools/agents — see `docs/mcp.md` for MCP usage and `docs/testing-runbook.md` for how MCP integrates with tests and CI.
 
 ## 📁 Project Structure

@@ -1,0 +1,95 @@
+name: CI — Tests
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Playwright Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: 'true'
+      DISABLE_WATCH: 'true'
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Start server
+        run: |
+          node server.js > server.log 2>&1 &
+          echo $! > server.pid
+          # Wait for server to be ready
+          for i in {1..30}; do
+            if curl -fsS http://localhost:3000/health -m 2 >/dev/null 2>&1; then
+              echo "Server ready"
+              break
+            fi
+            sleep 1
+          done
+
+      - name: Run compliance tests
+        run: npx playwright test --project=compliance --reporter=github,html
+        continue-on-error: false
+
+      - name: Run base tests
+        run: npx playwright test --project=base --reporter=github,html
+        continue-on-error: false
+
+      - name: Run behavior tests
+        run: npx playwright test --project=behaviors --reporter=github,html
+        continue-on-error: false
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ github.run_number }}
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Upload trace on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces-${{ github.run_number }}
+          path: data/test-results/**/*.zip
+          retention-days: 7
+
+      - name: Stop server
+        if: always()
+        run: |
+          if [ -f server.pid ]; then
+            kill "$(cat server.pid)" 2>/dev/null || true
+          fi
+
+      - name: Show server log on failure
+        if: failure()
+        run: |
+          echo "=== Server Log ==="
+          cat server.log || true
