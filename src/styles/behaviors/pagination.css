@@ -1,0 +1,27 @@
+/**
+ * Pagination Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/pagination.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-pagination {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.wb-pagination button {
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wb-pagination button.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}

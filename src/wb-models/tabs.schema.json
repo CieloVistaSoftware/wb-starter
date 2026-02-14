@@ -3,7 +3,7 @@
   "$id": "tabs.schema.json",
   "title": "Tabs",
   "description": "Tab navigation for switching between content panels",
-  "behavior": "tabs",
+  "schemaFor": "tabs",
   "baseClass": "wb-tabs",
   "semanticElement": {
     "tagName": "div",
@@ -183,6 +183,19 @@
           "fullWidth": true
         }
       ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-tabs",
+      "renders": true,
+      "baseClass": "wb-tabs",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-tabs--pills",
+        "wb-tabs--sm"
+      ],
+      "checkAttributes": []
     }
   },
   "_metadata": {

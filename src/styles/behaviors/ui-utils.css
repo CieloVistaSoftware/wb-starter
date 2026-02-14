@@ -1,0 +1,37 @@
+/**
+ * Small UI Utility Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Small components: divider, empty state, keyboard shortcut
+ * -----------------------------------------------------------------------------
+ */
+
+/* Divider */
+.wb-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 0.75rem 0;
+}
+
+/* Empty State */
+.wb-empty {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+}
+
+.wb-empty-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Keyboard Shortcut */
+.wb-kbd {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.75rem;
+}

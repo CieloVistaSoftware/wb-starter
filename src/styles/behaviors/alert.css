@@ -1,0 +1,34 @@
+/**
+ * Alert Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/alert.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-alert {
+  padding: 0.75rem;
+  border-radius: 6px;
+  border-left: 3px solid;
+  font-size: 0.85rem;
+}
+
+.wb-alert--info {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: var(--primary);
+}
+
+.wb-alert--success {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: var(--success-color);
+}
+
+.wb-alert--warning {
+  background: rgba(234, 179, 8, 0.1);
+  border-color: var(--warning-color);
+}
+
+.wb-alert--error {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: var(--danger-color);
+}

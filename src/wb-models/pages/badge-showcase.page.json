@@ -1,0 +1,226 @@
+{
+  "description": "Auto-generated showcase for badge component — all variants, combinations, and toggles.",
+  "page": {
+    "lang": "en",
+    "theme": "dark",
+    "stylesheets": [
+      "../src/styles/themes.css",
+      "../src/styles/site.css",
+      "../src/styles/components.css"
+    ],
+    "scripts": [
+      {
+        "type": "module",
+        "src": "../src/core/wb-lazy.js",
+        "init": "WB.init({ autoInject: true })"
+      }
+    ],
+    "title": "🏷️ Badge Showcase"
+  },
+  "title": "🏷️ Badge Showcase",
+  "schemaFor": "badge-showcase",
+  "header": {
+    "tag": "h1",
+    "content": "🏷️ Badge Showcase",
+    "subtitle": {
+      "tag": "p",
+      "content": "Small label/tag for status indicators, counts, or categories"
+    }
+  },
+  "sections": [
+    {
+      "heading": "badge — Combinations",
+      "tag": "wb-badge",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "New"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Done",
+            "variant": "success"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Warning",
+            "variant": "warning"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Error",
+            "variant": "error"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "5",
+            "variant": "primary",
+            "pill": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "variant": "success",
+            "dot": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Tag",
+            "variant": "info",
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Outline",
+            "variant": "primary",
+            "outline": true
+          }
+        }
+      ]
+    },
+    {
+      "heading": "variant variants",
+      "tag": "wb-badge",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "variant": "default"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "variant": "primary"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "variant": "secondary"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "variant": "success"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "variant": "warning"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "variant": "error"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "variant": "info"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "size variants",
+      "tag": "wb-badge",
+      "columns": 2,
+      "demos": [
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "size": "xs"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "size": "sm"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "size": "md"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "size": "lg"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Boolean toggles",
+      "tag": "wb-badge",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "pill": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "dot": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "outline": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "removable": true
+          }
+        }
+      ]
+    }
+  ],
+  "_metadata": {
+    "category": "auto-showcase",
+    "icon": "🏷️",
+    "sourceSchema": "badge.schema.json",
+    "generatedAt": "2026-02-12T02:54:05.256Z",
+    "sectionCount": 4,
+    "totalDemos": 23
+  },
+  "_composed": {
+    "source": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\pages\\badge-showcase.page.json",
+    "composedAt": "2026-02-12T02:54:05.546Z",
+    "stats": {
+      "extendsResolved": true,
+      "refsResolved": 0,
+      "includesResolved": 0,
+      "generated": 0
+    }
+  }
+}

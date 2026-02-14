@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/semantics/js-syntax-compliance.spec.ts",
+  "startedAt": "2026-02-10T20:22:27.023Z",
+  "updatedAt": "2026-02-10T20:22:49.626Z",
+  "command": "npx playwright test --workers=8 tests/semantics/js-syntax-compliance.spec.ts",
+  "pid": 5840,
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "total": 4,
+  "currentFile": "tests\\semantics\\js-syntax-compliance.spec.ts",
+  "output": "\nRunning 4 tests using 4 workers\n\n  ok 4 [behaviors] › tests\\semantics\\js-syntax-compliance.spec.ts:70:3 › JS Syntax Compliance › all behavior modules can be imported (5.5s)\n  ok 1 [behaviors] › tests\\semantics\\js-syntax-compliance.spec.ts:93:3 › JS Syntax Compliance › critical behavior files load correctly (6.5s)\n  ok 3 [behaviors] › tests\\semantics\\js-syntax-compliance.spec.ts:52:3 › JS Syntax Compliance › WB initializes without errors (6.8s)\n  ok 2 [behaviors] › tests\\semantics\\js-syntax-compliance.spec.ts:18:3 › JS Syntax Compliance › behaviors index module loads without syntax errors (6.8s)\n\n  4 passed (14.4s)\n",
+  "errors": "Error in reporter Error: ENOENT: no such file or directory, open 'C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\data\\test-results\\behaviors.json'\n    at writeFileSync (node:fs:2426:20)\n    at WBTestReporter.writeJson (file:///C:/Users/jwpmi/Downloads/AI/wb-starter/scripts/tools/test-reporter.ts:336:5)\n    at WBTestReporter.onEnd (file:///C:/Users/jwpmi/Downloads/AI/wb-starter/scripts/tools/test-reporter.ts:249:14)\n    at ReporterV2Wrapper.onEnd (C:\\Users\\jwpmi\\node_modules\\playwright\\lib\\reporters\\reporterV2.js:77:40)\n    at C:\\Users\\jwpmi\\node_modules\\playwright\\lib\\reporters\\multiplexer.js:57:63\n    at wrapAsync (C:\\Users\\jwpmi\\node_modules\\playwright\\lib\\reporters\\multiplexer.js:89:18)\n    at Multiplexer.onEnd (C:\\Users\\jwpmi\\node_modules\\playwright\\lib\\reporters\\multiplexer.js:57:31)\n    at InternalReporter.onEnd (C:\\Users\\jwpmi\\node_modules\\playwright\\lib\\reporters\\internalReporter.js:75:40)\n    at finishTaskRun (C:\\Users\\jwpmi\\node_modules\\playwright\\lib\\runner\\tasks.js:93:49)\n    at runTasks (C:\\Users\\jwpmi\\node_modules\\playwright\\lib\\runner\\tasks.js:80:16)\n    at Runner.runAllTests (C:\\Users\\jwpmi\\node_modules\\playwright\\lib\\runner\\runner.js:71:20)\n    at runTests (C:\\Users\\jwpmi\\node_modules\\playwright\\lib\\program.js:210:18)\n    at i.<anonymous> (C:\\Users\\jwpmi\\node_modules\\playwright\\lib\\program.js:65:7) {\n  errno: -4058,\n  code: 'ENOENT',\n  syscall: 'open',\n  path: 'C:\\\\Users\\\\jwpmi\\\\Downloads\\\\AI\\\\wb-starter\\\\data\\\\test-results\\\\behaviors.json'\n}\n",
+  "failures": [],
+  "completedAt": "2026-02-10T20:22:49.626Z",
+  "duration": "22.60s",
+  "exitCode": 0
+}

@@ -154,7 +154,7 @@ export function themecontrol(element, options = {}) {
   };
 
   // Mark as ready
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' themecontrol';
+  element.classList.add('wb-ready');
 
   // Cleanup
   return () => {

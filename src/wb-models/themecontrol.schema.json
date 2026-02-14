@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "themecontrol.schema.json",
   "title": "Theme Control",
-  "behavior": "themecontrol",
   "description": "Theme switcher control.",
+  "schemaFor": "themecontrol",
   "compliance": {
     "baseClass": "wb-themecontrol",
     "supportLevel": "stable",
@@ -20,6 +20,21 @@
       "<wb-themecontrol>Test permutation 3</wb-themecontrol>",
       "<wb-themecontrol>Test permutation 4</wb-themecontrol>",
       "<wb-themecontrol>Test permutation 5</wb-themecontrol>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {}
+      ]
+    },
+    "site": {
+      "page": "interactive",
+      "tag": "wb-themecontrol",
+      "renders": true,
+      "baseClass": "wb-themecontrol",
+      "minInstances": 1,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
   }
 }

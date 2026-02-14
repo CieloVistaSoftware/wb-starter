@@ -113,7 +113,7 @@ export function rating(element, options = {}) {
     }
   };
 
-  element.dataset.wbReady = 'rating';
+  element.classList.add('wb-ready');
 
   return () => {
     // Cleanup

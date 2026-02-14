@@ -3,7 +3,7 @@
   "$id": "cardhero.schema.json",
   "title": "Hero Card",
   "description": "Hero banner with background image, title, subtitle, and optional CTA",
-  "behavior": "cardhero",
+  "schemaFor": "cardhero",
   "baseClass": "wb-hero",
   "semanticElement": {
     "tagName": "section",
@@ -255,8 +255,10 @@
       "<wb-cardhero xalign=\"center\">xalign=center</wb-cardhero>",
       "<wb-cardhero xalign=\"right\">xalign=right</wb-cardhero>",
       "<wb-cardhero overlay>with overlay</wb-cardhero>",
-      "<wb-cardhero title=\"Test Title\">With title attribute</wb-cardhero>",      "<wb-cardhero pretitle='100 Components' title='Build <span class=\"wb-gradient-text\">stunning UIs</span>' subtitle='just HTML' cta='Explore Components'></wb-cardhero>",      "<wb-hero background=\"hero.jpg\" title=\"Welcome\"></wb-hero>",
-      "<wb-hero background=\"hero.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></wb-hero>"
+      "<wb-cardhero title=\"Test Title\">With title attribute</wb-cardhero>",
+      "<wb-cardhero pretitle='100 Components' title='Build <span class=\"wb-gradient-text\">stunning UIs</span>' subtitle='just HTML' cta='Explore Components'></wb-cardhero>",
+      "<wb-cardhero background=\"hero.jpg\" title=\"Welcome\"></wb-cardhero>",
+      "<wb-cardhero background=\"hero.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></wb-cardhero>"
     ],
     "matrix": {
       "combinations": [
@@ -296,6 +298,26 @@
           "title": "Welcome",
           "fullHeight": true
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardhero",
+      "renders": true,
+      "baseClass": "wb-hero",
+      "minInstances": 7,
+      "checkText": [
+        "Welcome",
+        "Subtitle",
+        "Sub"
+      ],
+      "checkClasses": [
+        "wb-hero--cosmic",
+        "wb-hero--xalign-left"
+      ],
+      "checkAttributes": [
+        "background",
+        "title"
       ]
     }
   },

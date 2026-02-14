@@ -9,10 +9,10 @@ export default function autosize(el) {
     };
     resize();
     t.addEventListener('input', resize);
-    if (t.dataset) t.dataset.wbAutosize = '1';
+    if (t) t.setAttribute('x-autosize-init', '1');
     return () => t.removeEventListener('input', resize);
   } catch (err) {
-    try { if (el && el.dataset) el.dataset.wbError = 'autosize-failed'; } catch (e) {}
+    try { if (el) el.setAttribute('x-error', 'autosize-failed'); } catch (e) {}
     return () => {};
   }
 }

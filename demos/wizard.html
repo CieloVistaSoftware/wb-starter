@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WB Component Wizard</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/components.css">
+  <link rel="stylesheet" href="./wizard/wizard.css">
+</head>
+<body>
+
+  <header class="wiz-header">
+    <h1><span>&#x1F9D9;</span> Component Wizard</h1>
+  </header>
+
+  <nav class="wiz-tabs">
+    <button class="wiz-tab active" data-tab="build">Build</button>
+    <button class="wiz-tab" data-tab="preview">Preview</button>
+  </nav>
+
+  <!-- BUILD TAB -->
+  <div class="wiz-panel active" id="panel-build">
+    <div class="build-layout">
+
+      <div class="build-left">
+        <div class="wiz-picker">
+          <select id="componentPicker">
+            <option value="">Select a component...</option>
+          </select>
+          <span class="wiz-comp-desc" id="compDesc"></span>
+        </div>
+        <div class="container-banner" id="containerBanner"></div>
+        <div class="stack-list" id="stackList"></div>
+        <h3 class="html-heading">Code Sample</h3>
+        <div class="preview-html" id="htmlOutput"></div>
+        <div class="preview-actions">
+          <button class="btn" id="copyHtmlBtn">Copy HTML</button>
+          <button class="btn btn--danger" id="resetWizardBtn" title="Reset wizard to default state">Reset</button>
+        </div>
+        <!-- Direct test: wb-audio component -->
+        <h3 class="html-heading">Direct wb-audio Test</h3>
+        <wb-audio src="/demos/audio.mp3" volume="0.8" show-eq style="margin:2rem 0;display:block;"></wb-audio>
+      </div>
+
+      <div class="build-resize-handle" id="resizeHandle"></div>
+
+      <div class="build-right" id="propsPanel">
+        <div class="props-header" id="propsHeader">
+          <p class="props-header-empty">Select a component above</p>
+        </div>
+        <div class="props-body">
+          <div class="presets-card" id="presetsCard">
+            <div class="preset-pills" id="presetPills"></div>
+          </div>
+          <div id="primaryEditors"></div>
+          <button class="props-toggle-more" id="toggleMoreProps">
+            <span class="arrow">&#9654;</span> More Properties
+          </button>
+          <div class="props-more-section" id="secondaryEditors"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PREVIEW TAB -->
+  <div class="wiz-panel" id="panel-preview">
+    <iframe id="fullPreviewFrame" class="preview-tab-frame"></iframe>
+  </div>
+
+  <div class="wiz-toast" id="toast"></div>
+
+  <script type="module" src="./wizard/main.js"></script>
+</body>
+</html>

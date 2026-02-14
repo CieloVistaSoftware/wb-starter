@@ -3,7 +3,7 @@
   "$id": "snow.schema.json",
   "title": "Snow",
   "description": "Falling snowflake animation effect",
-  "behavior": "snow",
+  "schemaFor": "snow",
   "baseClass": "wb-snow",
   "semanticElement": {
     "tagName": "div"
@@ -113,6 +113,16 @@
           "repeat": false
         }
       ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-snow",
+      "renders": true,
+      "baseClass": "wb-snow",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
     }
   },
   "_metadata": {

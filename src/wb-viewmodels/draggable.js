@@ -192,7 +192,7 @@ export function draggable(element, options = {}) {
   };
 
   // Mark as ready
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' draggable';
+  element.classList.add('wb-ready');
 
   // Cleanup
   return () => {

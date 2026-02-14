@@ -187,7 +187,7 @@ export function sticky(element, options = {}) {
   }
 
   // Mark as ready
-  element.dataset.wbReady = 'sticky';
+  element.classList.add('wb-ready');
 
   // API
   element.wbSticky = {

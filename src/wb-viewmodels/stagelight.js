@@ -247,7 +247,7 @@ export default function stagelight(element, options = {}) {
     setSize: (s) => element.style.setProperty('--wb-stagelight-size', s)
   };
 
-  element.dataset.wbReady = 'stagelight';
+  element.classList.add('wb-ready');
   
   // Return cleanup function
   return () => {

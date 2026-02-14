@@ -94,7 +94,7 @@ export function toggle(element, options = {}) {
     isActive: () => element.classList.contains(classes[0])
   };
 
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' toggle';
+  element.classList.add('wb-ready');
 
   return () => {
     element.classList.remove('wb-toggle', ...classes);

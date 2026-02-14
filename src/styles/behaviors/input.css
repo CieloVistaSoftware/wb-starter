@@ -1,0 +1,105 @@
+/**
+ * Input, Textarea & Select Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from components.css (Post-Phase 3 cleanup)
+ * Works with src/wb-viewmodels/semantics/input.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-input,
+.wb-textarea,
+.wb-select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  background-clip: padding-box;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 6px);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.wb-input:focus,
+.wb-textarea:focus,
+.wb-select:focus {
+  border-color: var(--primary);
+  outline: 0;
+  box-shadow: 0 0 0 3px hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.2);
+}
+
+.wb-input::placeholder,
+.wb-textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+.wb-input:disabled,
+.wb-textarea:disabled,
+.wb-select:disabled {
+  background-color: var(--bg-secondary);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+/* Sizes */
+.wb-input--xs, .wb-select--xs, .wb-textarea--xs {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.wb-input--sm, .wb-select--sm, .wb-textarea--sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.wb-input--lg, .wb-select--lg, .wb-textarea--lg {
+  padding: 0.75rem 1rem;
+  font-size: 1.125rem;
+}
+
+.wb-input--xl, .wb-select--xl, .wb-textarea--xl {
+  padding: 1rem 1.25rem;
+  font-size: 1.25rem;
+}
+
+/* Validation States */
+.wb-input--success,
+.wb-textarea--success,
+.wb-select--success {
+  border-color: var(--success-color);
+}
+.wb-input--success:focus,
+.wb-textarea--success:focus,
+.wb-select--success:focus {
+  box-shadow: 0 0 0 3px hsla(142, 76%, 45%, 0.2);
+}
+
+.wb-input--error,
+.wb-textarea--error,
+.wb-select--error {
+  border-color: var(--danger-color);
+}
+.wb-input--error:focus,
+.wb-textarea--error:focus,
+.wb-select--error:focus {
+  box-shadow: 0 0 0 3px hsla(0, 84%, 60%, 0.2);
+}
+
+/* Checkbox & Radio */
+.wb-checkbox,
+.wb-radio {
+  accent-color: var(--primary);
+  width: 1.2em;
+  height: 1.2em;
+  cursor: pointer;
+}
+
+/* Range */
+.wb-range {
+  width: 100%;
+  cursor: pointer;
+  accent-color: var(--primary);
+}

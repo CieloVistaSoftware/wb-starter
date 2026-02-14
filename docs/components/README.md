@@ -2,7 +2,7 @@
 
 ## Overview
 
-The wb-starter provides 40+ components using **Light DOM architecture** and the **WBServices** pattern. All components use proper HTMLElement inheritance and ES Modules.
+The wb-starter provides 41+ components using **Light DOM architecture** and the **WBServices** pattern. All components use proper HTMLElement inheritance and ES Modules.
 
 ## Architecture (v3.0)
 
@@ -15,7 +15,7 @@ The wb-starter provides 40+ components using **Light DOM architecture** and the 
          ┌─────────────────┼─────────────────┐
          ▼                 ▼                 ▼
    ┌──────────┐      ┌──────────┐      ┌──────────┐
-   │ wb-card  │      │ wb-tabs  │      │ wb-modal │
+   │ wb-card  │      │ wb-search│      │ wb-modal │
    │  (Light  │      │  (Light  │      │  (Light  │
    │   DOM)   │      │   DOM)   │      │   DOM)   │
    └──────────┘      └──────────┘      └──────────┘
@@ -64,6 +64,7 @@ All card variants inherit from `cardBase` using semantic HTML.
 | checkbox | `<wb-checkbox>` | Checkbox input |
 | switch | `<wb-switch>` | Toggle switch |
 | select | `<wb-select>` | Dropdown select |
+| search | `<wb-search>` | Search input with results |
 | rating | `<wb-rating>` | Star rating |
 
 ### Navigation Components
@@ -104,14 +105,9 @@ All card variants inherit from `cardBase` using semantic HTML.
 <wb-card title="My Card" subtitle="Description">
   Card content goes here
 </wb-card>
-```
 
-### Data Attributes (Alternative)
-
-```html
-<article data-wb="card" data-wb-title="My Card" data-wb-subtitle="Description">
-  Card content goes here
-</article>
+<wb-search placeholder="Search for content..." variant="glass" size="large">
+</wb-search>
 ```
 
 ### Attribute-Based (Shortest)
@@ -120,6 +116,10 @@ All card variants inherit from `cardBase` using semantic HTML.
 <wb-card title="My Card" elevated clickable>
   Content here
 </wb-card>
+
+<wb-search placeholder="Search..." debounce="300">
+  <!-- Search results will appear here -->
+</wb-search>
 ```
 
 ## File Structure (v3.0)
@@ -128,15 +128,18 @@ All card variants inherit from `cardBase` using semantic HTML.
 src/
 ├── wb-models/              # JSON schemas
 │   ├── card.schema.json
+│   ├── search.schema.json
 │   ├── cardimage.schema.json
 │   └── ...
 ├── wb-viewmodels/          # Component logic (JavaScript)
 │   ├── card.js
-│   ├── tabs.js
+│   ├── wb-search.js
+│   ├── search.js
 │   └── ...
 └── styles/
     └── components/         # Component CSS
         ├── card.css
+        ├── search.css
         └── ...
 
 docs/
@@ -177,7 +180,7 @@ Each component has a JSON schema in `src/wb-models/`:
 
 ## Semantic HTML Foundation
 
-WB components use proper semantic HTML:
+Web Behaviors (WB) components use proper semantic HTML:
 
 | Element | Used By | Purpose |
 |---------|---------|---------|
@@ -190,6 +193,7 @@ WB components use proper semantic HTML:
 | `<nav>` | Tabs, Menu | Navigation links |
 | `<dialog>` | Modal | Interactive dialogs |
 | `<progress>` | Progress | Task completion |
+| `<input>` | Search, Forms | User input fields |
 
 ## CSS Variables (Design Tokens)
 
@@ -222,7 +226,8 @@ All components use CSS variables for theming:
 
 ## Documentation Files
 
-- [Cards Overview](./cards/index.md)
+- [Cards Overview](./cards/cards.index.md)
 - [Base Card](./cards/card.md)
-- [Semantic Elements](./semantic/index.md)
+- [Search Component](../search.md)
+- [Semantic Elements](./semantic/semantic.index.md)
 - [Effects](./effects/)

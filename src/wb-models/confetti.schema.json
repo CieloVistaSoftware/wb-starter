@@ -3,7 +3,7 @@
   "$id": "confetti.schema.json",
   "title": "Confetti",
   "description": "Confetti particle animation effect",
-  "behavior": "confetti",
+  "schemaFor": "confetti",
   "baseClass": "wb-confetti",
   "semanticElement": {
     "tagName": "div"
@@ -111,6 +111,16 @@
           "repeat": true
         }
       ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-confetti",
+      "renders": true,
+      "baseClass": "wb-confetti",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
     }
   },
   "_metadata": {

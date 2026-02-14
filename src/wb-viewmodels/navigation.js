@@ -230,7 +230,7 @@ export function navbar(element, options = {}) {
     }
   }
 
-  element.dataset.wbReady = 'navbar';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-navbar');
 }
 
@@ -324,7 +324,7 @@ export function sidebar(element, options = {}) {
   
   observer.observe(element, { attributes: true, attributeFilter: ['data-collapsed', 'data-items', 'data-active'] });
 
-  element.dataset.wbReady = 'sidebar';
+  element.classList.add('wb-ready');
   return () => {
     observer.disconnect();
     element.classList.remove('wb-sidebar');
@@ -409,7 +409,7 @@ export function menu(element, options = {}) {
     });
   });
 
-  element.dataset.wbReady = 'menu';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-menu');
 }
 
@@ -495,7 +495,7 @@ export function pagination(element, options = {}) {
   });
 
   render();
-  element.dataset.wbReady = 'pagination';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-pagination');
 }
 
@@ -543,7 +543,7 @@ export function steps(element, options = {}) {
     `;
   }).join('');
 
-  element.dataset.wbReady = 'steps';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-steps');
 }
 
@@ -603,7 +603,7 @@ export function treeview(element, options = {}) {
     }
   });
 
-  element.dataset.wbReady = 'treeview';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-treeview');
 }
 
@@ -633,7 +633,7 @@ export function backtotop(element, options = {}) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  element.dataset.wbReady = 'backtotop';
+  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-backtotop');
     window.removeEventListener('scroll', updateVisibility);
@@ -769,7 +769,7 @@ export function link(element, options = {}) {
     }
   };
 
-  element.dataset.wbReady = 'link';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-link');
 }
 
@@ -881,7 +881,7 @@ export function statusbar(element, options = {}) {
 
   document.addEventListener('wb:status:message', handleStatusMessage);
 
-  element.dataset.wbReady = 'statusbar';
+  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-statusbar');
     document.removeEventListener('wb:status:message', handleStatusMessage);

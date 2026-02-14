@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔔 Notification Card Showcase</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/components.css">
+
+</head>
+
+<body>
+  <h1>🔔 Notification Card Showcase</h1>
+  <p>Dismissible notification card with variant-based styling</p>
+
+  <!-- 1. cardnotification — Combinations -->
+  <h2>cardnotification — Combinations</h2>
+  <wb-demo columns="3">
+    <wb-cardnotification message="Info message">
+    </wb-cardnotification>
+    <wb-cardnotification variant="success" title="Success" message="Done!">
+    </wb-cardnotification>
+    <wb-cardnotification variant="warning" message="Warning!">
+    </wb-cardnotification>
+    <wb-cardnotification variant="error" message="Error!">
+    </wb-cardnotification>
+    <wb-cardnotification variant="info" title="Notice" message="Info" icon="🔔">
+    </wb-cardnotification>
+  </wb-demo>
+
+  <!-- 2. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-cardnotification variant="info" message="Sample message">
+    </wb-cardnotification>
+    <wb-cardnotification variant="success" message="Sample message">
+    </wb-cardnotification>
+    <wb-cardnotification variant="warning" message="Sample message">
+    </wb-cardnotification>
+    <wb-cardnotification variant="error" message="Sample message">
+    </wb-cardnotification>
+  </wb-demo>
+
+  <!-- 3. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="1">
+    <wb-cardnotification elevated message="Sample message">
+    </wb-cardnotification>
+  </wb-demo>
+
+  <!-- Load wb-starter -->
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('🔔 Notification Card Showcase initialized');
+  </script>
+</body>
+
+</html>

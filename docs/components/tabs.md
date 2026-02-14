@@ -1,39 +1,23 @@
-# Tabs - wb-starter v3.0
-
-Tabbed interface for organizing content into switchable panels.
+# Tabs Component Documentation
+[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/components/tabs.md)
 
 ## Overview
+The Tabs component provides a flexible tabbed interface for organizing content into switchable panels. It uses semantic HTML with proper accessibility features and keyboard navigation.
 
-| Property | Value |
-|----------|-------|
-| Custom Tag | `<wb-tabs>` |
-| Behavior | `tabs` |
-| Semantic | `<section>` + `<nav>` |
-| Base Class | `wb-tabs` |
-| Schema | `src/wb-models/tabs.schema.json` |
-
-## Semantic Structure
-
-```html
-<section class="wb-tabs">
-  <!-- Tab List -->
-  <nav class="wb-tabs__nav" role="tablist">
-    <button role="tab" aria-selected="true" aria-controls="panel-0">Tab 1</button>
-    <button role="tab" aria-selected="false" aria-controls="panel-1">Tab 2</button>
-  </nav>
-
-  <!-- Panels -->
-  <div class="wb-tabs__panels">
-    <section role="tabpanel" id="panel-0">Content 1</section>
-    <section role="tabpanel" id="panel-1" hidden>Content 2</section>
-  </div>
-</section>
-```
+---
 
 ## Usage
 
-### Custom Element
+### Simple Tabs
+```html
+<wb-tabs>
+  <div data-tab="Tab 1">Content 1</div>
+  <div data-tab="Tab 2">Content 2</div>
+  <div data-tab="Tab 3">Content 3</div>
+</wb-tabs>
+```
 
+### Basic Usage
 ```html
 <wb-tabs>
   <div data-tab="Overview">
@@ -51,69 +35,183 @@ Tabbed interface for organizing content into switchable panels.
 </wb-tabs>
 ```
 
-### Data Attribute
-
+### With Active Tab
 ```html
-<section data-wb="tabs">
-  <div data-tab="First">First panel content</div>
-  <div data-tab="Second">Second panel content</div>
-</section>
+<wb-tabs active-tab="1">
+  <div data-tab="Home">Welcome content</div>
+  <div data-tab="About">About us</div>
+  <div data-tab="Contact">Contact info</div>
+</wb-tabs>
 ```
 
-## Accessibility
+---
 
-The component automatically handles:
+## Attributes
 
-- `role="tablist"` on navigation container
-- `role="tab"` on buttons
-- `role="tabpanel"` on content sections
-- `aria-selected` for active tab
-- `aria-controls` and `aria-labelledby` relationships
-- Keyboard navigation (←/→ arrows)
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `active-tab` | number | 0 | Index of initially active tab (0-based) |
+| `orientation` | string | "horizontal" | Layout direction: `horizontal` or `vertical` |
 
-## Keyboard Navigation
-
-| Key | Action |
-|-----|--------|
-| `←` | Previous tab |
-| `→` | Next tab |
-| `Home` | First tab |
-| `End` | Last tab |
+---
 
 ## Events
 
 ### wb:tabs:change
+Fired when the active tab changes.
+
+**Detail properties:**
+- `index` (number): The index of the newly active tab
+- `label` (string): The label of the newly active tab
+- `previousIndex` (number): The index of the previously active tab
 
 ```javascript
-tabs.addEventListener('wb:tabs:change', (e) => {
-  console.log('Active tab:', e.detail.index);
-  console.log('Tab label:', e.detail.label);
+document.addEventListener('wb:tabs:change', (e) => {
+  console.log('Switched to tab:', e.detail.label, 'at index:', e.detail.index);
 });
 ```
 
-## JavaScript API
+---
 
+## Methods
+
+### Public API
 ```javascript
 const tabs = document.querySelector('wb-tabs');
 
-// Switch to tab by index
+// Switch to tab by index (0-based)
 tabs.setActiveTab(2);
 
-// Get active tab index
+// Get current active tab index
 const activeIndex = tabs.getActiveTab();
+
+// Get tab labels
+const labels = tabs.getTabLabels();
+
+// Get total number of tabs
+const count = tabs.getTabCount();
 ```
 
-## CSS Classes
+---
+
+## Accessibility
+
+The component automatically provides:
+
+- **Semantic HTML**: Uses `<nav>` for tab list and `<section>` for panels
+- **ARIA Roles**: `tablist`, `tab`, `tabpanel` roles
+- **ARIA States**: `aria-selected`, `aria-controls`, `aria-labelledby`
+- **Keyboard Navigation**: Arrow keys, Home, End keys
+- **Focus Management**: Proper tab order and focus indicators
+
+### Keyboard Navigation
+
+| Key | Action |
+|-----|--------|
+| `←` `→` | Navigate between tabs (horizontal) |
+| `↑` `↓` | Navigate between tabs (vertical) |
+| `Home` | First tab |
+| `End` | Last tab |
+| `Enter` `Space` | Activate focused tab |
+
+---
+
+## Semantic Structure
+
+```html
+<section class="wb-tabs">
+  <!-- Tab Navigation -->
+  <nav class="wb-tabs__nav" role="tablist" aria-orientation="horizontal">
+    <button class="wb-tabs__tab wb-tabs__tab--active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="wb-tabs-panel-0"
+            id="wb-tabs-tab-0">
+      Tab 1
+    </button>
+    <button class="wb-tabs__tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="wb-tabs-panel-1"
+            id="wb-tabs-tab-1">
+      Tab 2
+    </button>
+  </nav>
+
+  <!-- Tab Panels -->
+  <div class="wb-tabs__panels">
+    <section class="wb-tabs__panel wb-tabs__panel--active"
+             role="tabpanel"
+             aria-labelledby="wb-tabs-tab-0"
+             id="wb-tabs-panel-0">
+      Content for Tab 1
+    </section>
+    <section class="wb-tabs__panel"
+             role="tabpanel"
+             aria-labelledby="wb-tabs-tab-1"
+             id="wb-tabs-panel-1"
+             hidden>
+      Content for Tab 2
+    </section>
+  </div>
+</section>
+```
+
+---
+
+## Styling
+
+### CSS Custom Properties
+```css
+wb-tabs {
+  /* Layout */
+  --tabs-orientation: horizontal;
+  --tabs-gap: var(--space-md);
+
+  /* Colors */
+  --tabs-bg: var(--bg-secondary);
+  --tabs-border: var(--border-color);
+  --tabs-text: var(--text-primary);
+  --tabs-text-muted: var(--text-muted);
+
+  /* Active states */
+  --tabs-active-bg: var(--accent-color);
+  --tabs-active-text: var(--text-on-accent);
+  --tabs-active-border: var(--accent-color);
+
+  /* Focus states */
+  --tabs-focus-outline: 2px solid var(--accent-color);
+  --tabs-focus-outline-offset: 2px;
+
+  /* Transitions */
+  --tabs-transition: all 0.2s ease;
+}
+```
+
+### CSS Classes
 
 | Class | Description |
 |-------|-------------|
-| `.wb-tabs` | Container |
-| `.wb-tabs__nav` | Tab list |
+| `.wb-tabs` | Main container |
+| `.wb-tabs__nav` | Tab navigation container |
 | `.wb-tabs__tab` | Individual tab button |
-| `.wb-tabs__tab--active` | Active tab |
+| `.wb-tabs__tab--active` | Currently active tab |
+| `.wb-tabs__tab--disabled` | Disabled tab |
 | `.wb-tabs__panels` | Panels container |
 | `.wb-tabs__panel` | Individual panel |
+| `.wb-tabs__panel--active` | Currently active panel |
+| `.wb-tabs--vertical` | Vertical orientation modifier |
+
+---
 
 ## Schema
+- See: [src/wb-models/tabs.schema.json](../src/wb-models/tabs.schema.json)
+- Defines component properties, accessibility features, and test scenarios
 
-Location: `src/wb-models/tabs.schema.json`
+---
+
+## Implementation
+- **Custom Element**: [src/wb-viewmodels/wb-tabs.js](../src/wb-viewmodels/wb-tabs.js)
+- **Behavior**: [src/wb-viewmodels/tabs.js](../src/wb-viewmodels/tabs.js)
+- **Styles**: [src/styles/components/tabs.css](../src/styles/components/tabs.css)
+- **Tests**: Component tests located in `tests/behaviors/ui/tabs.spec.ts`

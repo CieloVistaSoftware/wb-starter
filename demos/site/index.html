@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WB Component Library — Index</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+  <link rel="stylesheet" href="../../src/styles/components.css">
+  <style>
+    .site-index { max-width: 960px; margin: 2rem auto; }
+    .page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .page-card { background: var(--surface-color, #1e1e1e); border: 1px solid var(--border-color, #333); border-radius: 12px; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; }
+    .page-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .page-card a { color: var(--text-primary, #fff); text-decoration: none; display: block; }
+    .page-card h3 { margin: 0 0 0.5rem 0; font-size: 1.25rem; }
+    .page-card p { margin: 0 0 0.75rem 0; color: var(--text-secondary, #aaa); font-size: 0.875rem; }
+    .page-card .stats { font-size: 0.75rem; color: var(--text-tertiary, #666); }
+    .site-header { text-align: center; margin-bottom: 2rem; }
+    .site-header h1 { font-size: 2.5rem; margin: 0; }
+    .site-header p { color: var(--text-secondary, #aaa); margin: 0.5rem 0 0; }
+    .site-stats { text-align: center; color: var(--text-secondary, #aaa); font-size: 0.875rem; margin-bottom: 2rem; }
+  </style>
+</head>
+
+<body>
+  <div class="site-index">
+    <div class="site-header">
+      <h1>WB Component Library</h1>
+      <p>Complete showcase of all WB Framework components, organized by category</p>
+    </div>
+    <div class="site-stats">8 pages · 70 components · 709 demos</div>
+    <div class="page-grid">
+      <div class="page-card">
+        <a href="cards.html">
+          <h3>🃏 Card Components</h3>
+          <p>18 card variants — from simple to portfolio, pricing to testimonials</p>
+          <span class="stats">19 components · 65 sections · 258 demos</span>
+        </a>
+      </div>
+      <div class="page-card">
+        <a href="feedback.html">
+          <h3>🔔 Feedback & Status</h3>
+          <p>Alerts, badges, progress bars, ratings, spinners, toasts, tooltips</p>
+          <span class="stats">10 components · 37 sections · 174 demos</span>
+        </a>
+      </div>
+      <div class="page-card">
+        <a href="forms.html">
+          <h3>📝 Form Controls</h3>
+          <p>Buttons, inputs, selects, checkboxes, switches, textareas</p>
+          <span class="stats">9 components · 34 sections · 137 demos</span>
+        </a>
+      </div>
+      <div class="page-card">
+        <a href="overlays.html">
+          <h3>🪟 Overlays & Popups</h3>
+          <p>Dialogs, drawers, dropdowns for modal content</p>
+          <span class="stats">3 components · 9 sections · 28 demos</span>
+        </a>
+      </div>
+      <div class="page-card">
+        <a href="layout.html">
+          <h3>📐 Layout & Navigation</h3>
+          <p>Headers, footers, navbars, tabs, drawers, sticky, scrollalong</p>
+          <span class="stats">9 components · 18 sections · 44 demos</span>
+        </a>
+      </div>
+      <div class="page-card">
+        <a href="content.html">
+          <h3>📄 Content & Media</h3>
+          <p>Articles, markdown rendering, audio, tables</p>
+          <span class="stats">7 components · 12 sections · 35 demos</span>
+        </a>
+      </div>
+      <div class="page-card">
+        <a href="effects.html">
+          <h3>✨ Visual Effects</h3>
+          <p>Confetti, fireworks, ripple, snow — fun stuff</p>
+          <span class="stats">5 components · 7 sections · 20 demos</span>
+        </a>
+      </div>
+      <div class="page-card">
+        <a href="interactive.html">
+          <h3>🔧 Interactive & Utility</h3>
+          <p>Draggable, resizable, copy, dark mode, views</p>
+          <span class="stats">8 components · 8 sections · 13 demos</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('WB Component Library index initialized');
+  </script>
+</body>
+
+</html>

@@ -3,7 +3,7 @@
   "$id": "cardproduct.schema.json",
   "title": "Product Card",
   "description": "E-commerce product card with image, price, rating, and CTA",
-  "behavior": "cardproduct",
+  "schemaFor": "cardproduct",
   "baseClass": "wb-product",
   "semanticElement": {
     "tagName": "article",
@@ -338,6 +338,23 @@
           "badge": "Sale",
           "featured": true
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardproduct",
+      "renders": true,
+      "baseClass": "wb-product",
+      "minInstances": 5,
+      "checkText": [
+        "Product"
+      ],
+      "checkClasses": [
+        "wb-product--compact"
+      ],
+      "checkAttributes": [
+        "title",
+        "price"
       ]
     }
   },

@@ -34,7 +34,7 @@ export function img(element, options = {}) {
     element.onclick = () => openLightbox(element.src, element.alt);
   }
 
-  element.dataset.wbReady = 'img';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-img', 'wb-img--zoomable');
 }
 

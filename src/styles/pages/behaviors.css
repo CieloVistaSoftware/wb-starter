@@ -1,0 +1,233 @@
+/* ═══════════════════════════════════════════════════════════════════
+   BEHAVIORS SHOWCASE - PAGE LAYOUT
+   Page-specific layout for the behaviors showcase page.
+   Component styles come from site.css → behaviors/*.css
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════════
+   STATS SECTION
+   ═══════════════════════════════════════════════════════════════════ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: var(--space-xl, 2rem);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HEADER ENHANCEMENTS
+   ═══════════════════════════════════════════════════════════════════ */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xl, 2rem);
+  padding-bottom: var(--space-lg, 1.5rem);
+  flex-wrap: wrap;
+  gap: var(--space-md, 1rem);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.header-subtitle {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.875rem;
+}
+
+#header-content {
+  flex: 1;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: var(--space-xl, 2rem);
+  flex-wrap: wrap;
+  padding: var(--space-md, 1rem);
+  border-radius: 12px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════════════════════════════ */
+  margin-bottom: var(--space-xl, 2rem);
+  padding-bottom: var(--space-xl, 2rem);
+}
+
+  margin: var(--space-xl, 2rem) 0 var(--space-lg, 1.5rem);
+  padding-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+  margin: var(--space-lg, 1.5rem) 0 var(--space-md, 1rem);
+  font-size: 1.125rem;
+}
+
+.section-note {
+  padding: 1rem;
+  margin-bottom: var(--space-lg, 1.5rem);
+  border-radius: 0 12px 12px 0;
+  font-size: 0.875rem;
+}
+
+.section-note strong {
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   DEMO LAYOUTS
+   ═══════════════════════════════════════════════════════════════════ */
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: var(--space-lg, 1.5rem);
+  align-items: center;
+}
+
+.demo-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.demo-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.demo-full {
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.alerts-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.progress-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.progress-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.progress-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #9ca3af);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   DEMO ELEMENTS
+   ═══════════════════════════════════════════════════════════════════ */
+.effect-demo {
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: monospace;
+  font-size: 0.875rem;
+}
+
+.effect-demo:hover {
+  text-decoration: underline;
+}
+
+.ripple-box {
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.time-display {
+  font-size: 1.125rem;
+  font-family: monospace;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.truncate-box {
+  max-width: 600px;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.demo-image {
+  border-radius: 8px;
+}
+
+.youtube-container {
+  max-width: 600px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════════ */
+footer {
+  margin-top: var(--space-xl, 2rem);
+  padding: var(--space-xl, 2rem);
+  text-align: center;
+  border-radius: 12px;
+}
+
+footer p {
+  margin: 0.5rem 0;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  .nav-links {
+    padding: 0.5rem;
+    gap: 0.25rem;
+  }
+
+  .nav-links a {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  section h2 {
+    font-size: 1.25rem;
+  }
+}

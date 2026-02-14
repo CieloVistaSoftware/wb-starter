@@ -17,6 +17,7 @@
  *   <wb-mdhtml data-src="/docs/architecture.md"></wb-mdhtml>
  * -----------------------------------------------------------------------------
  */
+import { logError } from '../core/error-logger.js';
 
 // Check if marked is available, if not load it
 let markedLoaded = false;
@@ -51,13 +52,13 @@ async function loadMarked() {
 
 export async function mdhtml(element, options = {}) {
   const config = {
-    src: options.src || element.dataset.src || element.getAttribute('src'),
-    sanitize: options.sanitize ?? (element.dataset.sanitize !== 'false'),
-    breaks: options.breaks ?? (element.dataset.breaks !== 'false'),
-    gfm: options.gfm ?? (element.dataset.gfm !== 'false'),
-    headerIds: options.headerIds ?? (element.dataset.headerIds !== 'false'),
-    highlight: options.highlight ?? element.dataset.highlight,
-    size: options.size || element.dataset.size || 'xs',
+    src: options.src || element.getAttribute('src'),
+    sanitize: options.sanitize ?? (element.getAttribute('sanitize') !== 'false'),
+    breaks: options.breaks ?? (element.getAttribute('breaks') !== 'false'),
+    gfm: options.gfm ?? (element.getAttribute('gfm') !== 'false'),
+    headerIds: options.headerIds ?? (element.getAttribute('header-ids') !== 'false'),
+    highlight: options.highlight ?? element.getAttribute('highlight'),
+    size: options.size || element.getAttribute('size') || 'xs',
     ...options
   };
 
@@ -103,9 +104,14 @@ export async function mdhtml(element, options = {}) {
         // If it's an HTTP URL, use as-is
         if (fetchPath.startsWith('http://') || fetchPath.startsWith('https://')) {
           // Use as-is
-        } else if (!fetchPath.startsWith('/')) {
-          // Relative path - prepend / for absolute resolution
-          fetchPath = '/' + fetchPath;
+        } else {
+          if (!fetchPath.startsWith('/')) {
+            fetchPath = '/' + fetchPath;
+          }
+          // In blob: or data: contexts, relative paths won't resolve — use absolute URL
+          if (window.location.protocol === 'blob:' || window.location.protocol === 'data:') {
+            fetchPath = 'http://localhost:3000' + fetchPath;
+          }
         }
         
         // Log for debugging
@@ -122,25 +128,17 @@ export async function mdhtml(element, options = {}) {
         element.classList.remove('wb-mdhtml--loading');
         element.classList.add('wb-mdhtml--error');
         
-        // Show detailed error message
-        const errorHtml = `
-          <div class="wb-mdhtml__error" style="padding: 1.5rem; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 6px; font-family: system-ui;">
-            <div style="font-weight: 600; color: #dc2626; margin-bottom: 0.5rem;">📄 Unable to Load Documentation</div>
-            <div style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">
-              <div><strong>File:</strong> <code style="background: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 3px;">${config.src}</code></div>
-              <div><strong>Error:</strong> ${err.message}</div>
-            </div>
-            <div style="font-size: 0.75rem; color: #999;">
-              <p style="margin: 0.5rem 0;">Troubleshooting:</p>
-              <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                <li>Check file path is correct</li>
-                <li>Ensure docs/ folder exists</li>
-                <li>Check browser console for more details</li>
-              </ul>
-            </div>
-          </div>
-        `;
-        element.innerHTML = errorHtml;
+        console.warn('[mdhtml] Failed to load file: ' + config.src);
+        logError('Unable to Load Documentation', {
+          file: 'src/wb-viewmodels/mdhtml.js',
+          to: 'wb-mdhtml',
+          reason: err.message,
+          response: err.message,
+          src: config.src,
+          stack: err.stack
+        });
+        
+        element.innerHTML = '<p style="color:var(--text-secondary);padding:1rem;text-align:center;">Failed to load <code>' + config.src + '</code>. See error log below for details.</p>';
         console.error('[mdhtml] Error loading file:', err);
         
         // Dispatch error event
@@ -153,7 +151,7 @@ export async function mdhtml(element, options = {}) {
       }
     } else {
       // Use inline content
-      markdown = element.textContent || element.innerText;
+      markdown = element.innerHTML;
     }
 
     // Parse markdown to HTML
@@ -173,7 +171,7 @@ export async function mdhtml(element, options = {}) {
     element.classList.remove('wb-mdhtml--loading');
     element.classList.add('wb-mdhtml--loaded');
     // Runtime/test hook: mark hydrated so tests can wait deterministically
-    try { element.dataset.wbHydrated = '1'; element.dispatchEvent(new CustomEvent('wb:mdhtml:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
+    try { element.setAttribute('x-hydrated', '1'); element.dispatchEvent(new CustomEvent('wb:mdhtml:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
 
     // Add captions to code blocks (System-wide)
     if (config.captions !== false) {
@@ -263,18 +261,26 @@ export async function mdhtml(element, options = {}) {
   } catch (err) {
     element.classList.remove('wb-mdhtml--loading');
     element.classList.add('wb-mdhtml--error');
-    element.innerHTML = `<div class="wb-mdhtml__error" style="color: #dc2626; padding: 1rem;">⚠️ Error: ${err.message}</div>`;
+    console.warn('[mdhtml] Unexpected error');
+    logError('mdhtml Unexpected Error', {
+      file: 'src/wb-viewmodels/mdhtml.js',
+      to: 'wb-mdhtml',
+      reason: err.message,
+      src: config.src,
+      stack: err.stack
+    });
+    element.innerHTML = '<p style="color:var(--text-secondary);padding:1rem;text-align:center;">Error loading content. See error log below.</p>';
     console.error('[mdhtml] Unexpected error:', err);
   }
 
   // Mark as ready
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' mdhtml';
+  element.classList.add('wb-ready');
 
   // Expose reload method
   element.wbMdhtml = {
     reload: () => mdhtml(element, options),
     load: async (src) => {
-      element.dataset.src = src;
+      element.setAttribute('src', src);
       return mdhtml(element, { ...options, src });
     }
   };

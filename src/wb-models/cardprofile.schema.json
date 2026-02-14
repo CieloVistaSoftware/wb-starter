@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Card Profile",
   "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
-  "behavior": "cardprofile",
+  "schemaFor": "cardprofile",
   "baseClass": "wb-card",
   "$extends": "card.base.schema.json",
   "$inheritance": {
@@ -218,6 +218,21 @@
           "size": "lg",
           "align": "center"
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardprofile",
+      "renders": true,
+      "baseClass": "wb-card",
+      "minInstances": 9,
+      "checkText": [
+        "John Doe",
+        "Short bio."
+      ],
+      "checkClasses": [],
+      "checkAttributes": [
+        "name"
       ]
     }
   },

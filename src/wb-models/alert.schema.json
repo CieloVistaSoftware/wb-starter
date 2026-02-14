@@ -3,7 +3,7 @@
   "$id": "alert.schema.json",
   "title": "Alert",
   "description": "Alert component for displaying messages with severity levels",
-  "behavior": "alert",
+  "schemaFor": "alert",
   "baseClass": "wb-alert",
   "semanticElement": {
     "tagName": "div",
@@ -239,6 +239,23 @@
           "icon": "⚠️",
           "dismissible": true
         }
+      ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-alert",
+      "renders": true,
+      "baseClass": "wb-alert",
+      "minInstances": 8,
+      "checkText": [
+        "Test"
+      ],
+      "checkClasses": [
+        "wb-alert--success"
+      ],
+      "checkAttributes": [
+        "variant",
+        "message"
       ]
     }
   },

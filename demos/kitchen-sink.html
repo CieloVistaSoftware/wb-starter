@@ -1,17 +1,25 @@
-<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WB Kitchen Sink - Extensive</title>
     <script type="module" src="../src/core/wb-bootstrap.js"></script>
     <link rel="stylesheet" href="../src/styles/themes.css">
-    <link rel="stylesheet" href="../src/styles/site.css"> 
+    <link rel="stylesheet" href="../src/styles/site.css">
     <link rel="stylesheet" href="../src/styles/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" data-highlight-theme>
+    <style>
+        .hljs { background: transparent !important; }
+    </style>
     <style>
         body {
             padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
+
         .demo-section {
             margin-bottom: 3rem;
             border: 1px solid var(--color-surface-3);
@@ -19,15 +27,18 @@
             padding: 2rem;
             background: var(--color-surface-1);
         }
+
         .demo-header {
             margin-bottom: 1.5rem;
             border-bottom: 1px solid var(--color-surface-2);
             padding-bottom: 1rem;
         }
+
         .demo-header h3 {
             margin: 0;
             color: var(--color-primary);
         }
+
         .demo-preview {
             padding: 1.5rem;
             border: 1px dashed var(--color-surface-3);
@@ -35,9 +46,11 @@
             margin-bottom: 1.5rem;
             background: var(--color-surface-2);
         }
+
         .demo-code {
             position: relative;
         }
+
         .demo-code::before {
             content: "Source";
             position: absolute;
@@ -52,979 +65,367 @@
         }
     </style>
 </head>
+
 <body>
-    <wb-header data-title="WB Kitchen Sink 2.0" data-subtitle="Extensive Component Library Showcase (60+ Examples)"></wb-header>
+    <wb-header title="WB Kitchen Sink 2.0" subtitle="Extensive Component Library Showcase (60+ Examples)"></wb-header>
 
     <main id="autogen-kitchen-sink-html-0">
-    <h2>All Components</h2>
-    <div class="demo-grid" id="autogen-kitchen-sink-html-69">
+        <h2>All Components</h2>
+        <div class="demo-grid" id="autogen-kitchen-sink-html-69">
 
-            <section class="demo-section" id="autogen-kitchen-sink-html-1">
-                <div class="demo-header"><h3>1. Primary Button</h3></div>
-                <div class="demo-preview">
-                    <wb-button data-variant="primary">Primary Action</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button data-variant="primary"&gt;Primary Action&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-2">
-                <div class="demo-header"><h3>2. Secondary Button</h3></div>
-                <div class="demo-preview">
-                    <wb-button data-variant="secondary">Secondary Action</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button data-variant="secondary"&gt;Secondary Action&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-3">
-                <div class="demo-header"><h3>3. Success Button</h3></div>
-                <div class="demo-preview">
-                    <wb-button style="--btn-bg: var(--color-success); --btn-text: white;">Success</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button style="--btn-bg: var(--color-success); --btn-text: white;"&gt;Success&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-4">
-                <div class="demo-header"><h3>4. Danger Button</h3></div>
-                <div class="demo-preview">
-                    <wb-button data-variant="danger">Delete Item</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button data-variant="danger"&gt;Delete Item&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-5">
-                <div class="demo-header"><h3>5. Warning Button</h3></div>
-                <div class="demo-preview">
-                    <wb-button style="--btn-bg: var(--color-warning); --btn-text: black;">Warning</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button style="--btn-bg: var(--color-warning); --btn-text: black;"&gt;Warning&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-6">
-                <div class="demo-header"><h3>6. Info Button</h3></div>
-                <div class="demo-preview">
-                    <wb-button style="--btn-bg: var(--color-info); --btn-text: white;">Info</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button style="--btn-bg: var(--color-info); --btn-text: white;"&gt;Info&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-7">
-                <div class="demo-header"><h3>7. Outline Button</h3></div>
-                <div class="demo-preview">
-                    <wb-button data-variant="outline">Outline</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button data-variant="outline"&gt;Outline&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-8">
-                <div class="demo-header"><h3>8. Ghost Button</h3></div>
-                <div class="demo-preview">
-                    <wb-button data-variant="ghost">Ghost Button</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button data-variant="ghost"&gt;Ghost Button&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-9">
-                <div class="demo-header"><h3>9. Disabled Button</h3></div>
-                <div class="demo-preview">
-                    <wb-button disabled="">Disabled</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button disabled&gt;Disabled&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-10">
-                <div class="demo-header"><h3>10. Button with Icon</h3></div>
-                <div class="demo-preview">
-                    <wb-button><span>🚀</span> Launch</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button&gt;&lt;span&gt;🚀&lt;/span&gt; Launch&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-11">
-                <div class="demo-header"><h3>11. Headings</h3></div>
-                <div class="demo-preview">
-                    <h1>H1 Heading</h1>
-<h2>H2 Heading</h2>
-<h3>H3 Heading</h3>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;h1&gt;H1 Heading&lt;/h1&gt;
-&lt;h2&gt;H2 Heading&lt;/h2&gt;
-&lt;h3&gt;H3 Heading&lt;/h3&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-12">
-                <div class="demo-header"><h3>12. Paragraphs</h3></div>
-                <div class="demo-preview">
-                    <p class="lead">Lead paragraph text.</p>
-<p>Standard paragraph text.</p>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;p class="lead"&gt;Lead paragraph text.&lt;/p&gt;
-&lt;p&gt;Standard paragraph text.&lt;/p&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-13">
-                <div class="demo-header"><h3>13. Blockquote</h3></div>
-                <div class="demo-preview">
-                    <blockquote>"Web functionality."<cite>- Author</cite></blockquote>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;blockquote&gt;"Web functionality."&lt;cite&gt;- Author&lt;/cite&gt;&lt;/blockquote&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-14">
-                <div class="demo-header"><h3>14. Lists</h3></div>
-                <div class="demo-preview">
-                    <ul><li>Item 1</li><li>Item 2</li></ul>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;ul&gt;&lt;li&gt;Item 1&lt;/li&gt;&lt;li&gt;Item 2&lt;/li&gt;&lt;/ul&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-15">
-                <div class="demo-header"><h3>15. Inline Code</h3></div>
-                <div class="demo-preview">
-                    <p>Use <code>console.log()</code>.</p>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;p&gt;Use &lt;code&gt;console.log()&lt;/code&gt;.&lt;/p&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-16">
-                <div class="demo-header"><h3>16. Text Input</h3></div>
-                <div class="demo-preview">
-                    <wb-input type="text" placeholder="Name"></wb-input>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-input type="text" placeholder="Name"&gt;&lt;/wb-input&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-17">
-                <div class="demo-header"><h3>17. Password Input</h3></div>
-                <div class="demo-preview">
-                    <wb-input type="password" placeholder="Password"></wb-input>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-input type="password" placeholder="Password"&gt;&lt;/wb-input&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-18">
-                <div class="demo-header"><h3>18. Email Input</h3></div>
-                <div class="demo-preview">
-                    <wb-input type="email" placeholder="user@example.com"></wb-input>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-input type="email" placeholder="user@example.com"&gt;&lt;/wb-input&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-19">
-                <div class="demo-header"><h3>19. Number Input</h3></div>
-                <div class="demo-preview">
-                    <wb-input type="number" min="0" max="10" value="5"></wb-input>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-input type="number" min="0" max="10" value="5"&gt;&lt;/wb-input&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-20">
-                <div class="demo-header"><h3>20. Textarea</h3></div>
-                <div class="demo-preview">
-                    <wb-textarea rows="3" placeholder="Notes..."></wb-textarea>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-textarea rows="3" placeholder="Notes..."&gt;&lt;/wb-textarea&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-21">
-                <div class="demo-header"><h3>21. Select</h3></div>
-                <div class="demo-preview">
-                    <wb-select><option>A</option><option>B</option></wb-select>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-select&gt;&lt;option&gt;A&lt;/option&gt;&lt;option&gt;B&lt;/option&gt;&lt;/wb-select&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-22">
-                <div class="demo-header"><h3>22. Checkbox</h3></div>
-                <div class="demo-preview">
-                    <wb-checkbox label="I agree"></wb-checkbox>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-checkbox label="I agree"&gt;&lt;/wb-checkbox&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-23">
-                <div class="demo-header"><h3>23. Radio Group</h3></div>
-                <div class="demo-preview">
+            <wb-demo id="autogen-kitchen-sink-html-1" title="1. Primary Button">
+                <wb-button variant="primary">Primary Action</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-2" title="2. Secondary Button">
+                <wb-button variant="secondary">Secondary Action</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-3" title="3. Success Button">
+                <wb-button variant="success">Success</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-4" title="4. Danger Button">
+                <wb-button variant="danger">Danger</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-5" title="5. Warning Button">
+                <wb-button variant="warning">Warning</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-6" title="6. Info Button">
+                <wb-button variant="info">Info</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-7" title="7. Outline Button">
+                <wb-button variant="outline">Outline</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-8" title="8. Ghost Button">
+                <wb-button variant="ghost">Ghost Button</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-9" title="9. Disabled Button">
+                <wb-button disabled="">Disabled</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-10" title="10. Button with Icon">
+                <wb-button><span>🚀</span> Launch</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-11" title="11. Headings">
+                <h1>H1 Heading</h1>
+                <h2>H2 Heading</h2>
+                <h3>H3 Heading</h3>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-12" title="12. Paragraphs">
+                <p class="lead">Lead paragraph text.</p>
+                <p>Standard paragraph text.</p>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-13" title="13. Blockquote">
+                <blockquote>"Web functionality."<cite>- Author</cite></blockquote>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-14" title="14. Lists">
+                <ul>
+                    <li>Item 1</li>
+                    <li>Item 2</li>
+                </ul>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-15" title="15. Inline Code">
+                <p>Use <code>console.log()</code>.</p>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-16" title="16. Text Input">
+                <label>Text Input:</label>
+                <wb-input type="text" placeholder="Name"></wb-input>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-17" title="17. Password Input">
+                <label>Password Input:</label>
+                <wb-input type="password" placeholder="Password"></wb-input>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-18" title="18. Email Input">
+                <label>Email Input:</label>
+                <wb-input type="email" placeholder="user@example.com"></wb-input>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-19" title="19. Number Input">
+                <label>Number Input:</label>
+                <wb-input type="number" min="0" max="10" value="5"></wb-input>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-20" title="20. Textarea">
+                <label>Textarea:</label>
+                <wb-textarea rows="3" placeholder="Notes..."></wb-textarea>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-21" title="21. Select">
+                <label>Select:</label>
+                <wb-select>
+                    <option>A</option>
+                    <option>B</option>
+                </wb-select>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-22" title="22. Checkbox">
+                <label>Checkbox:</label>
+                <wb-checkbox label="I agree"></wb-checkbox>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-23" title="23. Radio Group">
+                <label>Radio Group:</label>
+                <wb-flex gap="1rem">
+                    <input type="radio" name="g" checked=""> Yes
+                    <input type="radio" name="g"> No
+                </wb-flex>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-24" title="24. Switch">
+                <label>Switch:</label>
+                <wb-switch></wb-switch>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-25" title="25. Range Slider">
+                <label>Range Slider:</label>
+                <input type="range" class="wb-range">
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-26" title="26. Success Alert">
+                <wb-alert variant="success">Success msg.</wb-alert>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-27" title="27. Warning Alert">
+                <wb-alert variant="warning">Warning msg.</wb-alert>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-28" title="28. Error Alert">
+                <wb-alert variant="error">Error msg.</wb-alert>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-29" title="29. Info Alert">
+                <wb-alert variant="info">Info msg.</wb-alert>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-30" title="30. Badge Pill">
+                <wb-badge variant="primary">New</wb-badge>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-31" title="31. Badge Dot">
+                Status: <wb-badge variant="success" dot=""></wb-badge>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-32" title="32. Spinner">
+                <wb-spinner></wb-spinner>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-33" title="33. Progress Bar">
+                <wb-progress value="60" max="100"></wb-progress>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-34" title="34. Basic Card">
+                <wb-card>
+                    <h3 slot="header">Title</h3>
+                    <p>Content</p>
+                </wb-card>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-35" title="35. Image Card">
+                <wb-card>
+                    <img slot="media" src="https://via.placeholder.com/300x150">
+                    <p>Content</p>
+                </wb-card>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-36" title="36. Actions Card">
+                <wb-card>
+                    <p>Content</p>
+                    <div slot="footer"><wb-button>OK</wb-button></div>
+                </wb-card>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-37" title="37. Horizontal Card">
+                <wb-card>
                     <wb-flex gap="1rem">
-  <input type="radio" name="g" checked=""> Yes
-  <input type="radio" name="g"> No
-</wb-flex>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-flex gap="1rem"&gt;
-  &lt;input type="radio" name="g" checked&gt; Yes
-  &lt;input type="radio" name="g"&gt; No
-&lt;/wb-flex&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-24">
-                <div class="demo-header"><h3>24. Switch</h3></div>
-                <div class="demo-preview">
-                    <wb-switch></wb-switch>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-switch&gt;&lt;/wb-switch&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-25">
-                <div class="demo-header"><h3>25. Range Slider</h3></div>
-                <div class="demo-preview">
-                    <input type="range" class="wb-range">
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;input type="range" class="wb-range"&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-26">
-                <div class="demo-header"><h3>26. Success Alert</h3></div>
-                <div class="demo-preview">
-                    <wb-alert variant="success">Success msg.</wb-alert>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-alert variant="success"&gt;Success msg.&lt;/wb-alert&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-27">
-                <div class="demo-header"><h3>27. Warning Alert</h3></div>
-                <div class="demo-preview">
-                    <wb-alert variant="warning">Warning msg.</wb-alert>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-alert variant="warning"&gt;Warning msg.&lt;/wb-alert&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-28">
-                <div class="demo-header"><h3>28. Error Alert</h3></div>
-                <div class="demo-preview">
-                    <wb-alert variant="error">Error msg.</wb-alert>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-alert variant="error"&gt;Error msg.&lt;/wb-alert&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-29">
-                <div class="demo-header"><h3>29. Info Alert</h3></div>
-                <div class="demo-preview">
-                    <wb-alert variant="info">Info msg.</wb-alert>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-alert variant="info"&gt;Info msg.&lt;/wb-alert&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-30">
-                <div class="demo-header"><h3>30. Badge Pill</h3></div>
-                <div class="demo-preview">
-                    <wb-badge variant="primary">New</wb-badge>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-badge variant="primary"&gt;New&lt;/wb-badge&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-31">
-                <div class="demo-header"><h3>31. Badge Dot</h3></div>
-                <div class="demo-preview">
-                    Status: <wb-badge variant="success" dot=""></wb-badge>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-Status: &lt;wb-badge variant="success" dot&gt;&lt;/wb-badge&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-32">
-                <div class="demo-header"><h3>32. Spinner</h3></div>
-                <div class="demo-preview">
-                    <wb-spinner></wb-spinner>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-spinner&gt;&lt;/wb-spinner&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-33">
-                <div class="demo-header"><h3>33. Progress Bar</h3></div>
-                <div class="demo-preview">
-                    <wb-progress value="60" max="100"></wb-progress>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-progress value="60" max="100"&gt;&lt;/wb-progress&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-34">
-                <div class="demo-header"><h3>34. Basic Card</h3></div>
-                <div class="demo-preview">
-                    <wb-card><h3 slot="header">Title</h3><p>Content</p></wb-card>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-card&gt;&lt;h3 slot="header"&gt;Title&lt;/h3&gt;&lt;p&gt;Content&lt;/p&gt;&lt;/wb-card&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-35">
-                <div class="demo-header"><h3>35. Image Card</h3></div>
-                <div class="demo-preview">
-                    <wb-card style="max-width:300px"><img slot="media" src="https://via.placeholder.com/300x150"><p>Content</p></wb-card>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-card style="max-width:300px"&gt;&lt;img slot="media" src="https://via.placeholder.com/300x150"&gt;&lt;p&gt;Content&lt;/p&gt;&lt;/wb-card&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-36">
-                <div class="demo-header"><h3>36. Actions Card</h3></div>
-                <div class="demo-preview">
-                    <wb-card><p>Content</p><div slot="footer"><wb-button>OK</wb-button></div></wb-card>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-card&gt;&lt;p&gt;Content&lt;/p&gt;&lt;div slot="footer"&gt;&lt;wb-button&gt;OK&lt;/wb-button&gt;&lt;/div&gt;&lt;/wb-card&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-37">
-                <div class="demo-header"><h3>37. Horizontal Card</h3></div>
-                <div class="demo-preview">
-                    <wb-card><wb-flex gap="1rem"><div style="background:#555;width:60px;height:60px"></div><div><h4>Title</h4></div></wb-flex></wb-card>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-card&gt;&lt;wb-flex gap="1rem"&gt;&lt;div style="background:#555;width:60px;height:60px"&gt;&lt;/div&gt;&lt;div&gt;&lt;h4&gt;Title&lt;/h4&gt;&lt;/div&gt;&lt;/wb-flex&gt;&lt;/wb-card&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-38">
-                <div class="demo-header"><h3>38. Grid 2-Col</h3></div>
-                <div class="demo-preview">
-                    <wb-grid columns="2" gap="1rem"><div>1</div><div>2</div></wb-grid>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-grid columns="2" gap="1rem"&gt;&lt;div&gt;1&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;/wb-grid&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-39">
-                <div class="demo-header"><h3>39. Grid 3-Col</h3></div>
-                <div class="demo-preview">
-                    <wb-grid columns="3" gap="1rem"><div>1</div><div>2</div><div>3</div></wb-grid>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-grid columns="3" gap="1rem"&gt;&lt;div&gt;1&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;/wb-grid&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-40">
-                <div class="demo-header"><h3>40. Flex Row</h3></div>
-                <div class="demo-preview">
-                    <wb-flex gap="1rem" xalign="center"><div>A</div><div>B</div></wb-flex>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-flex gap="1rem" xalign="center"&gt;&lt;div&gt;A&lt;/div&gt;&lt;div&gt;B&lt;/div&gt;&lt;/wb-flex&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-41">
-                <div class="demo-header"><h3>41. Flex Column</h3></div>
-                <div class="demo-preview">
-                    <wb-flex direction="column" gap="1rem"><div>Top</div><div>Bottom</div></wb-flex>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-flex direction="column" gap="1rem"&gt;&lt;div&gt;Top&lt;/div&gt;&lt;div&gt;Bottom&lt;/div&gt;&lt;/wb-flex&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-42">
-                <div class="demo-header"><h3>42. Cluster (Tags)</h3></div>
-                <div class="demo-preview">
-                    <wb-cluster gap="5px"><wb-badge>1</wb-badge><wb-badge>2</wb-badge></wb-cluster>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-cluster gap="5px"&gt;&lt;wb-badge&gt;1&lt;/wb-badge&gt;&lt;wb-badge&gt;2&lt;/wb-badge&gt;&lt;/wb-cluster&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-43">
-                <div class="demo-header"><h3>43. Container</h3></div>
-                <div class="demo-preview">
-                    <wb-container maxwidth="600px" style="background:var(--color-surface-2)">Centered Content</wb-container>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-container maxWidth="600px" style="background:var(--color-surface-2)"&gt;Centered Content&lt;/wb-container&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-44">
-                <div class="demo-header"><h3>44. Breadcrumbs</h3></div>
-                <div class="demo-preview">
-                    <nav aria-label="Breadcrumb"><ol style="list-style:none;display:flex;gap:0.5rem"><li><a href="#">Home</a> /</li><li>Current</li></ol></nav>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;nav aria-label="Breadcrumb"&gt;&lt;ol style="list-style:none;display:flex;gap:0.5rem"&gt;&lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt; /&lt;/li&gt;&lt;li&gt;Current&lt;/li&gt;&lt;/ol&gt;&lt;/nav&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-45">
-                <div class="demo-header"><h3>45. Tabs</h3></div>
-                <div class="demo-preview">
-                    <wb-flex gap="1rem" style="border-bottom:1px solid #555"><wb-button data-variant="ghost">Tab 1</wb-button><wb-button disabled="" data-variant="ghost">Tab 2</wb-button></wb-flex>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-flex gap="1rem" style="border-bottom:1px solid #555"&gt;&lt;wb-button data-variant="ghost"&gt;Tab 1&lt;/wb-button&gt;&lt;wb-button disabled data-variant="ghost"&gt;Tab 2&lt;/wb-button&gt;&lt;/wb-flex&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-46">
-                <div class="demo-header"><h3>46. Details</h3></div>
-                <div class="demo-preview">
-                    <wb-details><summary>Expand</summary><p>Hidden</p></wb-details>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-details&gt;&lt;summary&gt;Expand&lt;/summary&gt;&lt;p&gt;Hidden&lt;/p&gt;&lt;/wb-details&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-47">
-                <div class="demo-header"><h3>47. Pagination</h3></div>
-                <div class="demo-preview">
-                    <wb-flex gap="0.5rem"><wb-button>&lt;</wb-button><wb-button data-variant="ghost">1</wb-button><wb-button data-variant="ghost">2</wb-button><wb-button>&gt;</wb-button></wb-flex>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-flex gap="0.5rem"&gt;&lt;wb-button&gt;&amp;lt;&lt;/wb-button&gt;&lt;wb-button data-variant="ghost"&gt;1&lt;/wb-button&gt;&lt;wb-button data-variant="ghost"&gt;2&lt;/wb-button&gt;&lt;wb-button&gt;&amp;gt;&lt;/wb-button&gt;&lt;/wb-flex&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-48">
-                <div class="demo-header"><h3>48. Link</h3></div>
-                <div class="demo-preview">
-                    <a href="#" class="wb-link">Styled Link</a>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;a href="#" class="wb-link"&gt;Styled Link&lt;/a&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-49">
-                <div class="demo-header"><h3>49. Avatar</h3></div>
-                <div class="demo-preview">
-                    <img src="https://via.placeholder.com/50" style="border-radius:50%">
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;img src="https://via.placeholder.com/50" style="border-radius:50%"&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-50">
-                <div class="demo-header"><h3>50. Avatar Group</h3></div>
-                <div class="demo-preview">
-                    <wb-cluster gap="-10px"><img src="https://via.placeholder.com/40" style="border-radius:50%;border:2px solid black"><img src="https://via.placeholder.com/40" style="border-radius:50%;border:2px solid black"></wb-cluster>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-cluster gap="-10px"&gt;&lt;img src="https://via.placeholder.com/40" style="border-radius:50%;border:2px solid black"&gt;&lt;img src="https://via.placeholder.com/40" style="border-radius:50%;border:2px solid black"&gt;&lt;/wb-cluster&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-51">
-                <div class="demo-header"><h3>51. Tooltip</h3></div>
-                <div class="demo-preview">
-                    <wb-button x-tooltip="" title="Tooltip Text">Hover Me</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button x-tooltip title="Tooltip Text"&gt;Hover Me&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-52">
-                <div class="demo-header"><h3>52. Dialog Trigger</h3></div>
-                <div class="demo-preview">
-                    <wb-button onclick="alert('Dialog')">Alert</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button onclick="alert('Dialog')"&gt;Alert&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-53">
-                <div class="demo-header"><h3>53. Toast Trigger</h3></div>
-                <div class="demo-preview">
-                    <wb-button onclick="console.log('Toast')">Log Toast</wb-button>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;wb-button onclick="console.log('Toast')"&gt;Log Toast&lt;/wb-button&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-54">
-                <div class="demo-header"><h3>54. Code Block</h3></div>
-                <div class="demo-preview">
-                    <pre><code>const a = 1;</code></pre>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;pre&gt;&lt;code&gt;const a = 1;&lt;/code&gt;&lt;/pre&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-55">
-                <div class="demo-header"><h3>55. Keyboard</h3></div>
-                <div class="demo-preview">
-                    <kbd>Ctrl</kbd> + <kbd>S</kbd>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;S&lt;/kbd&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-56">
-                <div class="demo-header"><h3>56. Highlighter</h3></div>
-                <div class="demo-preview">
-                    <p><mark>Highlighted</mark> text.</p>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;p&gt;&lt;mark&gt;Highlighted&lt;/mark&gt; text.&lt;/p&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-57">
-                <div class="demo-header"><h3>57. Small Text</h3></div>
-                <div class="demo-preview">
-                    <small>Small text</small>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;small&gt;Small text&lt;/small&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-58">
-                <div class="demo-header"><h3>58. Deleted Text</h3></div>
-                <div class="demo-preview">
-                    <del>Deleted</del>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;del&gt;Deleted&lt;/del&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-59">
-                <div class="demo-header"><h3>59. Inserted Text</h3></div>
-                <div class="demo-preview">
-                    <ins>Inserted</ins>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;ins&gt;Inserted&lt;/ins&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-60">
-                <div class="demo-header"><h3>60. Abbreviation</h3></div>
-                <div class="demo-preview">
-                    <abbr title="Definition">Def</abbr>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;abbr title="Definition"&gt;Def&lt;/abbr&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-61">
-                <div class="demo-header"><h3>61. Description List</h3></div>
-                <div class="demo-preview">
-                    <dl><dt>Name</dt><dd>Value</dd></dl>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;dl&gt;&lt;dt&gt;Name&lt;/dt&gt;&lt;dd&gt;Value&lt;/dd&gt;&lt;/dl&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-62">
-                <div class="demo-header"><h3>62. Address</h3></div>
-                <div class="demo-preview">
-                    <address>123 Street</address>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;address&gt;123 Street&lt;/address&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-63">
-                <div class="demo-header"><h3>63. Horizontal Rule</h3></div>
-                <div class="demo-preview">
-                    <hr>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;hr&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-64">
-                <div class="demo-header"><h3>64. Time</h3></div>
-                <div class="demo-preview">
-                    <time datetime="2025-01-01">Jan 1</time>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;time datetime="2025-01-01"&gt;Jan 1&lt;/time&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-65">
-                <div class="demo-header"><h3>65. Var</h3></div>
-                <div class="demo-preview">
-                    <var>x</var> = <var>y</var> + 2
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;var&gt;x&lt;/var&gt; = &lt;var&gt;y&lt;/var&gt; + 2
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-66">
-                <div class="demo-header"><h3>66. Superscript</h3></div>
-                <div class="demo-preview">
-                    x<sup>2</sup>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-x&lt;sup&gt;2&lt;/sup&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-67">
-                <div class="demo-header"><h3>67. Subscript</h3></div>
-                <div class="demo-preview">
-                    H<sub>2</sub>O
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-H&lt;sub&gt;2&lt;/sub&gt;O
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-            <section class="demo-section" id="autogen-kitchen-sink-html-68">
-                <div class="demo-header"><h3>68. Figure</h3></div>
-                <div class="demo-preview">
-                    <figure><img src="https://via.placeholder.com/150" <figcaption="">Caption</figure>
-                </div>
-                <div class="demo-code">
-                    <wb-mdhtml>
-```html
-&lt;figure&gt;&lt;img src="https://via.placeholder.com/150"&lt;figcaption&gt;Caption&lt;/figcaption&gt;&lt;/figure&gt;
-```
-                    </wb-mdhtml>
-                </div>
-            </section>
-    
-    </div>
+                        <div>
+                            <h4>Title</h4>
+                        </div>
+                    </wb-flex>
+                </wb-card>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-38" title="38. Grid 2-Col">
+                <wb-grid columns="2" gap="1rem">
+                    <div>1</div>
+                    <div>2</div>
+                </wb-grid>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-39" title="39. Grid 3-Col">
+                <wb-grid columns="3" gap="1rem">
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                </wb-grid>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-40" title="40. Flex Row">
+                <wb-flex gap="1rem" xalign="center">
+                    <div>A</div>
+                    <div>B</div>
+                </wb-flex>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-41" title="41. Flex Column">
+                <wb-flex direction="column" gap="1rem">
+                    <div>Top</div>
+                    <div>Bottom</div>
+                </wb-flex>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-42" title="42. Cluster (Tags)">
+                <wb-cluster gap="5px">
+                    <wb-badge>1</wb-badge>
+                    <wb-badge>2</wb-badge>
+                </wb-cluster>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-43" title="43. Container">
+                <wb-container maxwidth="600px">Centered Content</wb-container>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-44" title="44. Breadcrumbs">
+                <nav aria-label="Breadcrumb">
+                    <ol>
+                        <li><a href="#">Home</a> /</li>
+                        <li>Current</li>
+                    </ol>
+                </nav>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-45" title="45. Tabs">
+                <wb-flex gap="1rem">
+                    <wb-button variant="ghost">Tab 1</wb-button>
+                    <wb-button disabled="" variant="ghost">Tab 2</wb-button>
+                </wb-flex>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-46" title="46. Details">
+                <wb-details>
+                    <summary>Expand</summary>
+                    <p>Hidden</p>
+                </wb-details>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-47" title="47. Pagination">
+                <wb-flex gap="0.5rem">
+                    <wb-button>&lt;</wb-button>
+                    <wb-button variant="ghost">1</wb-button>
+                    <wb-button variant="ghost">2</wb-button>
+                    <wb-button>&gt;</wb-button>
+                </wb-flex>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-48" title="48. Link">
+                <a href="#" class="wb-link">Styled Link</a>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-49" title="49. Avatar">
+                <img src="https://via.placeholder.com/50">
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-50" title="50. Avatar Group">
+                <wb-cluster gap="-10px">
+                    <img src="https://via.placeholder.com/40">
+                    <img src="https://via.placeholder.com/40">
+                </wb-cluster>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-51" title="51. Tooltip">
+                <wb-button x-tooltip="" title="Tooltip Text">Hover Me</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-52" title="52. Dialog Trigger">
+                <wb-button>Alert</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-53" title="53. Toast Trigger">
+                <wb-button>Log Toast</wb-button>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-54" title="54. Code Block">
+                <pre><code>const a = 1;</code></pre>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-55" title="55. Keyboard">
+                <kbd>Ctrl</kbd> + <kbd>S</kbd>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-56" title="56. Highlighter">
+                <p><mark>Highlighted</mark> text.</p>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-57" title="57. Small Text">
+                <small>Small text</small>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-58" title="58. Deleted Text">
+                <del>Deleted</del>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-59" title="59. Inserted Text">
+                <ins>Inserted</ins>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-60" title="60. Abbreviation">
+                <abbr title="Definition">Def</abbr>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-61" title="61. Description List">
+                <dl>
+                    <dt>Name</dt>
+                    <dd>Value</dd>
+                </dl>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-62" title="62. Address">
+                <address>123 Street</address>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-63" title="63. Horizontal Rule">
+                <hr>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-64" title="64. Time">
+                <time datetime="2025-01-01">Jan 1</time>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-65" title="65. Var">
+                <math><mi>x</mi><mo>=</mo><mi>y</mi><mo>+</mo><mn>2</mn></math>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-66" title="66. Superscript">
+                x<sup>2</sup>
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-67" title="67. Subscript">
+                H<sub>2</sub>O
+            </wb-demo>
+
+            <wb-demo id="autogen-kitchen-sink-html-68" title="68. Figure">
+                <figure><img src="https://via.placeholder.com/150" width="150" height="150" alt="Placeholder image">
+                    <figcaption>Caption</figcaption>
+                </figure>
+            </wb-demo>
+
+        </div>
     </main>
 
 
-</body></html>
+</body>
+
+</html>

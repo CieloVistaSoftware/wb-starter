@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📊 Progress Showcase</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/components.css">
+
+</head>
+
+<body>
+  <h1>📊 Progress Showcase</h1>
+  <p>Progress bar with determinate and indeterminate states</p>
+
+  <!-- 1. progress — Combinations -->
+  <h2>progress — Combinations</h2>
+  <wb-demo columns="3">
+    <wb-progress value="0">
+    </wb-progress>
+    <wb-progress value="25">
+    </wb-progress>
+    <wb-progress value="50">
+    </wb-progress>
+    <wb-progress value="75">
+    </wb-progress>
+    <wb-progress value="100">
+    </wb-progress>
+    <wb-progress value="50" label="Loading...">
+    </wb-progress>
+    <wb-progress value="50" show-value>
+    </wb-progress>
+    <wb-progress value="50" striped>
+    </wb-progress>
+    <wb-progress value="50" variant="success">
+    </wb-progress>
+    <wb-progress value="50" variant="warning">
+    </wb-progress>
+    <wb-progress value="50" variant="error">
+    </wb-progress>
+    <wb-progress value="50" size="sm">
+    </wb-progress>
+    <wb-progress value="50" size="lg">
+    </wb-progress>
+    <wb-progress indeterminate>
+    </wb-progress>
+  </wb-demo>
+
+  <!-- 2. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="3">
+    <wb-progress variant="default">
+    </wb-progress>
+    <wb-progress variant="primary">
+    </wb-progress>
+    <wb-progress variant="success">
+    </wb-progress>
+    <wb-progress variant="warning">
+    </wb-progress>
+    <wb-progress variant="error">
+    </wb-progress>
+    <wb-progress variant="info">
+    </wb-progress>
+  </wb-demo>
+
+  <!-- 3. size variants -->
+  <h2>size variants</h2>
+  <wb-demo columns="3">
+    <wb-progress size="xs">
+    </wb-progress>
+    <wb-progress size="sm">
+    </wb-progress>
+    <wb-progress size="md">
+    </wb-progress>
+    <wb-progress size="lg">
+    </wb-progress>
+    <wb-progress size="xl">
+    </wb-progress>
+  </wb-demo>
+
+  <!-- 4. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="3">
+    <wb-progress show-value>
+    </wb-progress>
+    <wb-progress striped>
+    </wb-progress>
+  </wb-demo>
+
+  <!-- Load wb-starter -->
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('📊 Progress Showcase initialized');
+  </script>
+</body>
+
+</html>

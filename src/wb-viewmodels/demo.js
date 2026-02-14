@@ -1,172 +1,177 @@
+import { WB_DOC_MAP } from './demo-docmap.js';
 /**
- * Demo Component Behavior
+ * Demo Container Behavior
  * -----------------------------------------------------------------------------
- * Handles code visibility toggling and auto-population of code block
- * 
- * Custom Tag: <wb-code-card>
- * Helper Attribute: [x-behavior="demo"]
+ * <wb-demo> is a parent container. It:
+ *   1. Renders its children normally (in a CSS grid)
+ *   2. Shows the raw HTML as a colored code sample below
+ *
+ * Raw source is fetched from the page file to avoid post-render inflation.
+ * Code block uses textContent to prevent the browser from parsing raw HTML
+ * into real custom elements.
+ *
+ * Attributes:
+ *   columns — grid columns (default 3)
+ *
+ * CSS: src/styles/behaviors/demo.css
+ * Zero inline styles.
  * -----------------------------------------------------------------------------
  */
-import { cardBase } from './card.js';
 
-export function demo(element, options = {}) {
-    // If element is <wb-code-card>, apply card behavior first
-    element.classList.add('wb-demo');
-    let cleanupCard = null;
-    if (element.tagName === 'WB-CODE-CARD' || element.classList.contains('wb-code-card')) {
-        // Ensure card structure if missing
-        if (!element.querySelector('header')) {
-            const header = document.createElement('header');
-            header.className = 'demo-header';
-            header.style.display = 'flex';
-            header.style.justifyContent = 'space-between';
-            header.style.alignItems = 'center';
-            
-            const title = document.createElement('h3');
-            title.style.margin = '0';
-            title.style.fontSize = '1.1rem';
-            title.textContent = options.title || element.getAttribute('title') || 'Demo';
-            header.appendChild(title);
+let _pageSource = null;
+let _pageSourcePromise = null;
 
-            const controls = document.createElement('div');
-            controls.style.display = 'flex';
-            controls.style.gap = '0.5rem';
-            controls.style.alignItems = 'center';
-
-            if (options.tag || element.getAttribute('tag')) {
-                const tag = document.createElement('span');
-                tag.className = 'demo-tag';
-                tag.textContent = options.tag || element.getAttribute('tag');
-                controls.appendChild(tag);
-            }
-
-            const btn = document.createElement('button');
-            btn.className = 'toggle-code';
-            btn.textContent = 'View Code';
-            btn.style.fontSize = '0.85rem';
-            btn.style.cursor = 'pointer';
-            btn.style.background = 'transparent';
-            btn.style.border = '1px solid var(--border-color)';
-            btn.style.padding = '0.25rem 0.5rem';
-            btn.style.borderRadius = '4px';
-            controls.appendChild(btn);
-
-            header.appendChild(controls);
-            element.insertBefore(header, element.firstChild);
-        }
-
-        // Ensure main content wrapper
-        let content = element.querySelector('.demo-content');
-        if (!content) {
-            content = document.createElement('main');
-            content.className = 'demo-content';
-            // Move non-header/footer children into content
-            Array.from(element.children).forEach(child => {
-                if (child.tagName !== 'HEADER' && child.tagName !== 'FOOTER') {
-                    content.appendChild(child);
-                }
-            });
-            if (element.querySelector('header')) {
-                element.insertBefore(content, element.querySelector('header').nextSibling);
-            } else {
-                element.appendChild(content);
-            }
-        }
-
-        // Ensure footer with code
-        let footer = element.querySelector('footer');
-        if (!footer) {
-            footer = document.createElement('footer');
-            footer.style.padding = '0';
-            footer.style.borderTop = 'none';
-            footer.style.background = 'transparent';
-            
-            const pre = document.createElement('pre');
-            pre.style.margin = '0';
-            pre.style.display = 'none';
-            pre.style.background = '#1e1e1e';
-            pre.style.padding = '1rem';
-            pre.style.overflowX = 'auto';
-            
-            const code = document.createElement('code');
-            pre.appendChild(code);
-            footer.appendChild(pre);
-            element.appendChild(footer);
-        }
-
-        // Apply card base styles
-        const card = cardBase(element, { ...options, behavior: 'card' });
-        card.buildStructure({ showHeader: false, showMain: false, showFooter: false }); // We built it manually
-        cleanupCard = card.cleanup;
-        
-        element.style.width = '100%';
-        element.style.marginBottom = '2rem';
-    }
-
-    const config = {
-        ...options
-    };
-
-    // Find elements
-    const toggleBtn = element.querySelector('.toggle-code');
-    // Support both .demo-content and standard card main
-    const content = element.querySelector('.demo-content') || element.querySelector('main');
-    
-    // Find pre block (could be in footer or direct child)
-    const preBlock = element.querySelector('pre');
-    const codeBlock = preBlock ? preBlock.querySelector('code') : null;
-
-    // Populate code if empty and content exists
-    if (content && codeBlock && !codeBlock.textContent.trim()) {
-        let html = content.innerHTML;
-        
-        // Clean up indentation
-        html = html.replace(/^\n+/, "").replace(/\n+$/, "");
-        const lines = html.split("\n");
-        if (lines.length > 0) {
-            // Find first non-empty line to determine indentation
-            const firstLine = lines.find(l => l.trim().length > 0);
-            if (firstLine) {
-                const match = firstLine.match(/^\s*/);
-                const indent = match ? match[0].length : 0;
-                if (indent > 0) {
-                    const re = new RegExp(`^\\s{${indent}}`);
-                    html = lines.map(line => line.replace(re, "")).join("\n");
-                }
-            }
-        }
-        
-        // Set text content (escapes HTML)
-        codeBlock.textContent = html;
-    }
-
-    // Toggle logic
-    const handleToggle = () => {
-        if (preBlock) {
-            preBlock.classList.toggle('visible');
-            if (preBlock.style.display === 'none') {
-                preBlock.style.display = 'block';
-            } else if (preBlock.style.display === 'block') {
-                preBlock.style.display = 'none';
-            }
-            
-            if (toggleBtn) {
-                const isVisible = preBlock.classList.contains('visible') || preBlock.style.display === 'block';
-                toggleBtn.textContent = isVisible ? "Hide Code" : "View Code";
-            }
-        }
-    };
-
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', handleToggle);
-    }
-
-    element.dataset.wbReady = 'demo';
-
-    return () => {
-        if (toggleBtn) {
-            toggleBtn.removeEventListener('click', handleToggle);
-        }
-        if (cleanupCard) cleanupCard();
-    };
+function getPageSource() {
+    if (_pageSource) return Promise.resolve(_pageSource);
+    if (_pageSourcePromise) return _pageSourcePromise;
+    _pageSourcePromise = fetch(location.href).then(r => r.text()).then(text => {
+        _pageSource = text;
+        return text;
+    });
+    return _pageSourcePromise;
 }
+
+function extractDemoBlock(source, idx) {
+    const regex = /<wb-demo[^>]*>([\s\S]*?)<\/wb-demo>/gi;
+    let match;
+    let i = 0;
+    while ((match = regex.exec(source)) !== null) {
+        if (i === idx) return formatHtml(match[1]);
+        i++;
+    }
+    return '';
+}
+
+function formatHtml(raw) {
+    // Split into lines, drop blank leading/trailing
+    const lines = raw.replace(/\r\n/g, '\n').split('\n');
+
+    // Trim blank lines top and bottom
+    while (lines.length && !lines[0].trim()) lines.shift();
+    while (lines.length && !lines[lines.length - 1].trim()) lines.pop();
+    if (!lines.length) return '';
+
+    // Find minimum indent (ignoring blank lines)
+    let minIndent = Infinity;
+    for (const line of lines) {
+        if (!line.trim()) continue;
+        const indent = line.match(/^(\s*)/)[1].length;
+        if (indent < minIndent) minIndent = indent;
+    }
+
+    // Strip common indent, re-indent with 2 spaces per level
+    const stripped = lines.map(line => {
+        if (!line.trim()) return '';
+        return line.slice(minIndent);
+    });
+
+    // Auto-indent based on tags
+    const result = [];
+    let depth = 0;
+    const indent = '  ';
+    const voidTags = new Set(['br','hr','img','input','meta','link','area','base','col','embed','source','track','wbr']);
+
+    for (const line of stripped) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        // Closing tag first — dedent before writing
+        const closingOnly = /^<\/[^>]+>/.test(trimmed) && !/<[^/][^>]*>/.test(trimmed);
+        if (closingOnly) depth = Math.max(0, depth - 1);
+
+        result.push(indent.repeat(depth) + trimmed);
+
+        // Self-closing, void, or closing-only — no indent change
+        const selfClosing = /\/>\s*$/.test(trimmed);
+        if (selfClosing || closingOnly) continue;
+
+        // Check for opening tags (increase depth)
+        const opens = trimmed.match(/<([a-z][a-z0-9-]*)/gi) || [];
+        const closes = trimmed.match(/<\/[a-z][a-z0-9-]*/gi) || [];
+
+        let delta = 0;
+        for (const o of opens) {
+            const tag = o.slice(1).toLowerCase();
+            if (!voidTags.has(tag)) delta++;
+        }
+        delta -= closes.length;
+        depth = Math.max(0, depth + delta);
+    }
+
+    return result.join('\n');
+}
+
+function findWbComponents(html) {
+    const regex = /<wb-([a-z0-9-]+)/gi;
+    const matches = [];
+    let match;
+    while ((match = regex.exec(html)) !== null) {
+        matches.push(match[1]);
+    }
+    return [...new Set(matches)]; // unique
+}
+
+export async function demo(element, options = {}) {
+    element.classList.add('wb-demo');
+
+    const pageSource = await getPageSource();
+    const allDemos = document.querySelectorAll('wb-demo');
+    const idx = Array.from(allDemos).indexOf(element);
+    const rawBlock = extractDemoBlock(pageSource, idx);
+
+    const cols = options.columns || element.getAttribute('columns') || '3';
+
+    // Add doc links
+    const wbComponents = findWbComponents(rawBlock);
+    if (wbComponents.length > 0) {
+        const linksDiv = document.createElement('div');
+        linksDiv.className = 'wb-demo__links';
+        linksDiv.textContent = 'Docs: ';
+        wbComponents.forEach((comp, i) => {
+            const link = document.createElement('a');
+            link.href = WB_DOC_MAP[comp] || `/docs/components/${comp}.md`;
+            link.textContent = `wb-${comp}`;
+            link.target = '_blank';
+            linksDiv.appendChild(link);
+            if (i < wbComponents.length - 1) {
+                linksDiv.appendChild(document.createTextNode(', '));
+            }
+        });
+        element.appendChild(linksDiv);
+    }
+
+    // Wrap children in a grid
+    const grid = document.createElement('div');
+    grid.className = 'wb-demo__grid wb-demo__grid--cols-' + cols;
+    while (element.firstChild) {
+        grid.appendChild(element.firstChild);
+    }
+    element.appendChild(grid);
+
+    // Create code block directly — textContent prevents browser from
+    // parsing raw HTML into real custom elements that get inflated
+    const pre = document.createElement('pre');
+    pre.className = 'wb-demo__code';
+    pre.setAttribute('x-behavior', 'pre');
+    pre.dataset.language = 'html';
+                link.href = WB_DOC_MAP[comp] || `/docs/components/${comp}.md`;
+    pre.dataset.showCopy = 'true';
+
+    const code = document.createElement('code');
+    code.className = 'language-html';
+    code.setAttribute('x-behavior', 'code');
+    code.dataset.language = 'html';
+    code.textContent = rawBlock;
+    pre.appendChild(code);
+    element.appendChild(pre);
+
+    // Syntax highlight
+    if (window.WB) {
+        window.WB.scan(element);
+    }
+
+    element.classList.add('wb-ready');
+    return () => {};
+}
+
+export default demo;

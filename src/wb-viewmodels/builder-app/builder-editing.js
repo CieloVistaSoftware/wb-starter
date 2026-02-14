@@ -807,7 +807,7 @@ function finishEditing(el, { onSave, WB, hrefInput } = {}) {
       // Re-scan if WB is available (to re-render component)
       // But skip for simple text changes
       if (WB && needsRescan(key)) {
-        delete wbEl.dataset.wbReady;
+        wbEl.classList.remove('wb-ready');
         WB.remove(wbEl);
         WB.scan(wrapper);
       }

@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/abbreviation-definitions.spec.ts",
+  "startedAt": "2026-02-08T23:28:05.683Z",
+  "updatedAt": "2026-02-08T23:28:25.899Z",
+  "command": "npx playwright test --workers=8 tests/compliance/abbreviation-definitions.spec.ts",
+  "pid": 11612,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\compliance\\abbreviation-definitions.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 1 [compliance] › tests\\compliance\\abbreviation-definitions.spec.ts:131:3 › Abbreviation Definition Compliance › known abbreviations list is complete (11ms)\n  ok 2 [compliance] › tests\\compliance\\abbreviation-definitions.spec.ts:113:3 › Abbreviation Definition Compliance › all project abbreviations must be defined on first use in docs (2.0s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 3.5s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (3.8s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-08T23:28:25.899Z",
+  "duration": "20.22s",
+  "exitCode": 0
+}

@@ -3,7 +3,7 @@
   "$id": "notes.schema.json",
   "title": "Notes",
   "description": "Slide-out notes drawer with multiple display modes",
-  "behavior": "notes",
+  "schemaFor": "notes",
   "baseClass": "wb-notes",
   "semanticElement": {
     "tagName": "aside"
@@ -236,6 +236,18 @@
           "position": "modal"
         }
       ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-notes",
+      "renders": true,
+      "baseClass": "wb-notes",
+      "minInstances": 4,
+      "checkText": [],
+      "checkClasses": [
+        "wb-notes--right"
+      ],
+      "checkAttributes": []
     }
   },
   "_metadata": {

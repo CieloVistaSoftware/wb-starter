@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/error-log-empty.spec.ts",
+  "startedAt": "2026-02-08T23:28:50.695Z",
+  "updatedAt": "2026-02-08T23:28:56.895Z",
+  "command": "npx playwright test --workers=8 tests/compliance/error-log-empty.spec.ts",
+  "pid": 5876,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\compliance\\error-log-empty.spec.ts",
+  "output": "\nRunning 3 tests using 3 workers\n\n  ok 1 [compliance] › tests\\compliance\\error-log-empty.spec.ts:45:3 › Error Log Compliance › error log should be empty (no runtime errors) (12ms)\n  ok 2 [compliance] › tests\\compliance\\error-log-empty.spec.ts:40:3 › Error Log Compliance › error log should exist (12ms)\n  ok 3 [compliance] › tests\\compliance\\error-log-empty.spec.ts:86:3 › Error Log Compliance › error count should match errors array length (14ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 1.4s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 3/3 passed\n════════════════════════════════════════════════════════════\n\n\n  3 passed (1.7s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-08T23:28:56.895Z",
+  "duration": "6.20s",
+  "exitCode": 0
+}

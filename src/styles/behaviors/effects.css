@@ -12,9 +12,13 @@
 }
 
 .wb-spinner {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: wb-spin 0.8s linear infinite;
+  display: inline-block;
 }
 
 /* =============================================================================
@@ -221,8 +225,20 @@
 }
 
 /* =============================================================================
-   ANIMATION UTILITY CLASSES
+MARQUEE & RIPPLE
 ============================================================================= */
+@keyframes wb-marquee {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes wb-ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* =============================================================================
+   ANIMATION UTILITY CLASSES
+   ============================================================================= */
 .wb-animate-bounce { animation: wb-bounce 1s ease; }
 .wb-animate-shake { animation: wb-shake 0.8s ease; }
 .wb-animate-pulse { animation: wb-pulse 1s ease; }

@@ -60,6 +60,14 @@
                 "text": "default | glass | bordered | flat"
               },
               "default": "default"
+            },
+            {
+              "name": "data-size",
+              "description": "Card size variant controlling max/min width",
+              "type": {
+                "text": "xs | sm | md | lg | xl | full | auto"
+              },
+              "default": "auto"
             }
           ],
           "slots": [
@@ -826,11 +834,28 @@
               }
             },
             {
+              "name": "data-pretitle",
+              "description": "Small label or count shown above the title (e.g. '100 Components')",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
               "name": "data-subtitle",
               "description": "Hero tagline/subheadline",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
+            },
+            {
+              "name": "data-content",
+              "description": "HTML content rendered in the hero content area (allows attribute-only usage instead of slots)",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
             },
             {
               "name": "data-cta",
@@ -842,6 +867,22 @@
             {
               "name": "data-cta-href",
               "description": "Call-to-action link URL",
+              "type": {
+                "text": "string"
+              },
+              "default": "#"
+            },
+            {
+              "name": "data-cta-secondary",
+              "description": "Secondary CTA text",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "data-cta-secondary-href",
+              "description": "Secondary CTA URL",
               "type": {
                 "text": "string"
               },
@@ -1079,7 +1120,7 @@
           "name": "wb-cardportfolio",
           "tagName": "wb-cardportfolio",
           "customElement": true,
-          "description": "Professional portfolio/profile card with cover, avatar, bio, contact, and social",
+          "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
           "attributes": [
             {
               "name": "data-name",
@@ -1090,45 +1131,60 @@
             },
             {
               "name": "data-title",
-              "description": "Job title",
+              "description": "Job title / role",
               "type": {
                 "text": "string"
               }
             },
             {
               "name": "data-company",
-              "description": "Company name",
+              "description": "Current company name",
               "type": {
                 "text": "string"
               }
             },
             {
               "name": "data-location",
-              "description": "Location",
+              "description": "Location (city, country)",
               "type": {
                 "text": "string"
               }
             },
             {
               "name": "data-cover",
-              "description": "Cover image URL",
+              "description": "Cover/banner image URL",
               "type": {
                 "text": "string"
               }
             },
             {
               "name": "data-avatar",
-              "description": "Avatar image URL",
+              "description": "Profile photo URL",
               "type": {
                 "text": "string"
               }
             },
             {
               "name": "data-bio",
-              "description": "Biography text",
+              "description": "Short biography / summary",
               "type": {
                 "text": "string"
               }
+            },
+            {
+              "name": "data-tagline",
+              "description": "Professional tagline or motto",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-availability",
+              "description": "Current availability status",
+              "type": {
+                "text": "available | busy | not-available | open-to-opportunities"
+              },
+              "default": "available"
             },
             {
               "name": "data-email",
@@ -1146,14 +1202,105 @@
             },
             {
               "name": "data-website",
-              "description": "Website URL",
+              "description": "Personal website URL",
               "type": {
                 "text": "string"
               }
             },
             {
-              "name": "data-social",
-              "description": "Social links as JSON [{name, url, icon}]",
+              "name": "data-linkedin",
+              "description": "LinkedIn profile URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-twitter",
+              "description": "Twitter/X profile URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-github",
+              "description": "GitHub profile URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-dribbble",
+              "description": "Dribbble profile URL",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-skills",
+              "description": "Comma-separated list of skills",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-skill-levels",
+              "description": "JSON array of {name, level (0-100)} for skill bars",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-experience",
+              "description": "JSON array of {company, role, period, description}",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-education",
+              "description": "JSON array of {school, degree, year}",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-projects",
+              "description": "JSON array of {name, description, url, image}",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-certifications",
+              "description": "Comma-separated list of certifications",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-languages",
+              "description": "Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)')",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-stats",
+              "description": "JSON array of {label, value} for stats display",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-cta",
+              "description": "Call-to-action button text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "data-cta-href",
+              "description": "Call-to-action button link",
               "type": {
                 "text": "string"
               }
@@ -1162,9 +1309,17 @@
               "name": "data-variant",
               "description": "variant property",
               "type": {
-                "text": "default | compact | horizontal"
+                "text": "default | compact | horizontal | full"
               },
               "default": "default"
+            },
+            {
+              "name": "data-size",
+              "description": "size property",
+              "type": {
+                "text": "sm | md | lg | xl | full | auto"
+              },
+              "default": "auto"
             }
           ],
           "slots": [

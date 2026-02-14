@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout & Navigation</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+  <link rel="stylesheet" href="../../src/styles/components.css">
+
+</head>
+
+<body>
+  <nav style="margin-bottom: 1rem;">
+    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  </nav>
+  <h1>📐 Layout & Navigation</h1>
+  <p>Headers, footers, navbars, tabs, drawers, sticky, scrollalong</p>
+
+  <!-- 1. 📰 Header -->
+  <h2>📰 Header</h2>
+  <wb-demo columns="2">
+    <wb-header title="Title">
+    </wb-header>
+    <wb-header icon="📂" title="Title">
+    </wb-header>
+    <wb-header icon="🚀" title="App" badge="v1.0">
+    </wb-header>
+    <wb-header title="Site" sticky>
+    </wb-header>
+  </wb-demo>
+
+  <!-- 2. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="1">
+    <wb-header sticky>
+    </wb-header>
+  </wb-demo>
+
+  <!-- 3. 📄 Footer -->
+  <h2>📄 Footer</h2>
+  <wb-demo columns="2">
+    <wb-footer copyright="© 2025">
+    </wb-footer>
+    <wb-footer brand="Acme" copyright="© 2025">
+    </wb-footer>
+    <wb-footer copyright="© 2025" sticky>
+    </wb-footer>
+  </wb-demo>
+
+  <!-- 4. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="1">
+    <wb-footer sticky>
+    </wb-footer>
+  </wb-demo>
+
+  <!-- 5. 🧭 Navbar -->
+  <h2>🧭 Navbar</h2>
+  <wb-demo columns="2">
+    <wb-navbar brand="MySite">
+    </wb-navbar>
+    <wb-navbar brand="MySite" sticky>
+    </wb-navbar>
+    <wb-navbar brand="MySite" variant="dark">
+    </wb-navbar>
+  </wb-demo>
+
+  <!-- 6. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-navbar variant="default">
+    </wb-navbar>
+    <wb-navbar variant="dark">
+    </wb-navbar>
+    <wb-navbar variant="transparent">
+    </wb-navbar>
+  </wb-demo>
+
+  <!-- 7. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="1">
+    <wb-navbar sticky>
+    </wb-navbar>
+  </wb-demo>
+
+  <!-- 8. 📑 Tabs -->
+  <h2>📑 Tabs</h2>
+  <wb-demo columns="3">
+    <wb-tabs active-tab="0">
+    </wb-tabs>
+    <wb-tabs active-tab="1">
+    </wb-tabs>
+    <wb-tabs variant="pills">
+    </wb-tabs>
+    <wb-tabs variant="underline">
+    </wb-tabs>
+    <wb-tabs full-width>
+    </wb-tabs>
+  </wb-demo>
+
+  <!-- 9. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-tabs variant="default">
+    </wb-tabs>
+    <wb-tabs variant="bordered">
+    </wb-tabs>
+  </wb-demo>
+
+  <!-- 10. size variants -->
+  <h2>size variants</h2>
+  <wb-demo columns="2">
+    <wb-tabs size="sm">
+    </wb-tabs>
+    <wb-tabs size="md">
+    </wb-tabs>
+    <wb-tabs size="lg">
+    </wb-tabs>
+  </wb-demo>
+
+  <!-- 11. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="2">
+    <wb-tabs vertical>
+    </wb-tabs>
+  </wb-demo>
+
+  <!-- 12. 📂 Details -->
+  <h2>📂 Details</h2>
+  <wb-demo columns="2">
+    <wb-details summary="Details">
+    </wb-details>
+    <wb-details summary="Details" open>
+    </wb-details>
+    <wb-details summary="Details" animated>
+    </wb-details>
+  </wb-demo>
+
+  <!-- 13. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-details variant="default" summary="Sample summary">
+    </wb-details>
+    <wb-details variant="bordered" summary="Sample summary">
+    </wb-details>
+    <wb-details variant="filled" summary="Sample summary">
+    </wb-details>
+  </wb-demo>
+
+  <!-- 14. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="1">
+    <wb-details open summary="Sample summary">
+    </wb-details>
+  </wb-demo>
+
+  <!-- 15. 📐 Drawer Layout -->
+  <h2>📐 Drawer Layout</h2>
+  <wb-demo columns="2">
+    <wb-drawerLayout position="left">
+    </wb-drawerLayout>
+    <wb-drawerLayout position="right">
+    </wb-drawerLayout>
+    <wb-drawerLayout collapsed>
+    </wb-drawerLayout>
+  </wb-demo>
+
+  <!-- 16. 📜 ScrollAlong -->
+  <h2>📜 ScrollAlong</h2>
+  <wb-demo columns="1">
+    <wb-scrollalong>
+    </wb-scrollalong>
+  </wb-demo>
+
+  <!-- 17. 📌 Sticky -->
+  <h2>📌 Sticky</h2>
+  <wb-demo columns="2">
+    <wb-sticky>
+    </wb-sticky>
+    <wb-sticky offset="60">
+    </wb-sticky>
+    <wb-sticky animated>
+    </wb-sticky>
+  </wb-demo>
+
+  <!-- 18. 📦 WB Timeline Schema -->
+  <h2>📦 WB Timeline Schema</h2>
+  <wb-demo columns="2">
+    <wb-timeline items="Project Kickoff,Design Phase,Development,Testing,Launch">
+    </wb-timeline>
+    <wb-timeline items="Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery">
+    </wb-timeline>
+    <wb-timeline items="Research,Prototype,Build,Ship">
+    </wb-timeline>
+  </wb-demo>
+
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('Layout & Navigation initialized');
+  </script>
+</body>
+
+</html>

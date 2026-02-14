@@ -1,0 +1,105 @@
+{
+  "title": "WB Component Library",
+  "description": "Interactive showcase of all WB Framework components — generated from schemas",
+  "outputDir": "demos/site",
+  "navBrand": "🧩 WB Library",
+  "nav": true,
+  "defaults": {
+    "page": {
+      "lang": "en",
+      "theme": "dark",
+      "stylesheets": [
+        "../src/styles/themes.css",
+        "../src/styles/site.css",
+        "../src/styles/components.css"
+      ],
+      "scripts": [{
+        "type": "module",
+        "src": "../src/core/wb-lazy.js",
+        "init": "WB.init({ autoInject: true })"
+      }]
+    }
+  },
+  "sharedFooter": {
+    "content": "WB Component Library — Generated from schemas",
+    "links": [
+      { "label": "GitHub", "href": "#" },
+      { "label": "Documentation", "href": "#" }
+    ]
+  },
+  "pages": [
+    {
+      "$ref": "src/wb-models/pages/badge-showcase.page.json",
+      "slug": "badges",
+      "navTitle": "Badges",
+      "icon": "🏷️",
+      "description": "Labels, statuses, and tag indicators"
+    },
+    {
+      "$ref": "src/wb-models/pages/progress-showcase.page.json",
+      "slug": "progress",
+      "navTitle": "Progress",
+      "icon": "📊",
+      "description": "Progress bars, loading states, and completion indicators"
+    },
+    {
+      "$ref": "src/wb-models/pages/cardnotification-showcase.page.json",
+      "slug": "notifications",
+      "navTitle": "Notifications",
+      "icon": "🔔",
+      "description": "Alerts, toasts, and notification cards"
+    },
+    {
+      "$ref": "src/wb-models/pages/cardportfolio-showcase.page.json",
+      "slug": "portfolio",
+      "navTitle": "Portfolio",
+      "icon": "👤",
+      "description": "Professional profile and portfolio cards"
+    },
+    {
+      "$ref": "src/wb-models/pages/behaviors-card-code.page.json",
+      "slug": "cards",
+      "navTitle": "Cards",
+      "icon": "🃏",
+      "description": "Card variants including hero, pricing, stats, and draggable"
+    },
+    {
+      "slug": "all-components",
+      "title": "All Components",
+      "navTitle": "All",
+      "icon": "🧩",
+      "description": "Every component type generated from test matrices",
+      "header": {
+        "tag": "h1",
+        "content": "🧩 All Components",
+        "subtitle": { "tag": "p", "content": "Auto-generated from component schemas and test matrices" }
+      },
+      "sections": [
+        {
+          "$generate": {
+            "component": "badge",
+            "source": "matrix",
+            "baseAttrs": { "label": "Badge" }
+          },
+          "heading": "Badges — Matrix Combos",
+          "columns": 4
+        },
+        {
+          "$generate": {
+            "component": "cardnotification",
+            "source": "matrix",
+            "baseAttrs": { "message": "Notification message" }
+          },
+          "heading": "Notifications — Matrix Combos"
+        },
+        {
+          "$generate": {
+            "component": "progress",
+            "source": "enums"
+          },
+          "heading": "Progress — All Variants"
+        }
+      ]
+    }
+  ]
+}

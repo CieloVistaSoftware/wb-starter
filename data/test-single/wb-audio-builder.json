@@ -1,0 +1,20 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/integration/wb-audio-builder.spec.ts",
+  "startedAt": "2026-02-13T19:55:10.202Z",
+  "updatedAt": "2026-02-13T19:55:15.449Z",
+  "command": "npx playwright test --workers=8 tests/integration/wb-audio-builder.spec.ts",
+  "pid": 94448,
+  "passed": 0,
+  "failed": 0,
+  "skipped": 0,
+  "total": 0,
+  "currentFile": null,
+  "output": "",
+  "errors": "",
+  "completedAt": "2026-02-13T19:55:15.449Z",
+  "duration": "5.25s",
+  "exitCode": 3221225786,
+  "failures": []
+}

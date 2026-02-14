@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "darkmode.schema.json",
   "title": "Dark Mode Toggle",
-  "behavior": "darkmode",
   "description": "Button to toggle dark/light theme.",
+  "schemaFor": "darkmode",
   "compliance": {
     "baseClass": "wb-darkmode",
     "supportLevel": "stable",
@@ -20,6 +20,21 @@
       "<wb-darkmode>Test permutation 3</wb-darkmode>",
       "<wb-darkmode>Test permutation 4</wb-darkmode>",
       "<wb-darkmode>Test permutation 5</wb-darkmode>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {}
+      ]
+    },
+    "site": {
+      "page": "interactive",
+      "tag": "wb-darkmode",
+      "renders": true,
+      "baseClass": "wb-darkmode",
+      "minInstances": 1,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
   }
 }

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content & Media</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+  <link rel="stylesheet" href="../../src/styles/components.css">
+
+</head>
+
+<body>
+  <nav style="margin-bottom: 1rem;">
+    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  </nav>
+  <h1>📄 Content & Media</h1>
+  <p>Articles, markdown rendering, audio, tables</p>
+
+  <!-- 1. 📄 Article Component -->
+  <h2>📄 Article Component</h2>
+  <wb-demo columns="3">
+    <wb-article title="Article">
+    </wb-article>
+    <wb-article title="Article" subtitle="Deck">
+    </wb-article>
+    <wb-article title="Article" image="cover.jpg">
+    </wb-article>
+    <wb-article title="Article" author="John Doe" date="2026-01-01">
+    </wb-article>
+    <wb-article title="Article" featured>
+    </wb-article>
+  </wb-demo>
+
+  <!-- 2. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="1">
+    <wb-article featured>
+    </wb-article>
+  </wb-demo>
+
+  <!-- 3. 📰 Articles List Component -->
+  <h2>📰 Articles List Component</h2>
+  <wb-demo columns="2">
+    <wb-articles layout="grid">
+    </wb-articles>
+    <wb-articles layout="list">
+    </wb-articles>
+    <wb-articles layout="grid" columns="2">
+    </wb-articles>
+  </wb-demo>
+
+  <!-- 4. layout variants -->
+  <h2>layout variants</h2>
+  <wb-demo columns="2">
+    <wb-articles layout="masonry">
+    </wb-articles>
+  </wb-demo>
+
+  <!-- 5. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="1">
+    <wb-articles pagination>
+    </wb-articles>
+  </wb-demo>
+
+  <!-- 6. 📝 Markdown to HTML -->
+  <h2>📝 Markdown to HTML</h2>
+  <wb-demo columns="2">
+    <wb-mdhtml src="../demos/code.md">
+    </wb-mdhtml>
+    <wb-mdhtml gfm>
+    </wb-mdhtml>
+    <wb-mdhtml sanitize gfm>
+    </wb-mdhtml>
+  </wb-demo>
+
+  <!-- 7. 🎵 Audio -->
+  <h2>🎵 Audio</h2>
+  <wb-demo columns="2">
+    <wb-audio src="audio.mp3">
+    </wb-audio>
+    <wb-audio src="audio.mp3" show-eq>
+    </wb-audio>
+    <wb-audio src="audio.mp3" volume="0.5">
+    </wb-audio>
+    <wb-audio src="audio.mp3" loop>
+    </wb-audio>
+  </wb-demo>
+
+  <!-- 8. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="3">
+    <wb-audio loop src="Sample src">
+    </wb-audio>
+    <wb-audio autoplay src="Sample src">
+    </wb-audio>
+    <wb-audio muted src="Sample src">
+    </wb-audio>
+    <wb-audio show-eq src="Sample src">
+    </wb-audio>
+  </wb-demo>
+
+  <!-- 9. 📊 Table -->
+  <h2>📊 Table</h2>
+  <wb-demo columns="2">
+    <wb-table>
+    </wb-table>
+    <wb-table sortable>
+    </wb-table>
+    <wb-table striped>
+    </wb-table>
+    <wb-table paginated page-size="5">
+    </wb-table>
+  </wb-demo>
+
+  <!-- 10. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="3">
+    <wb-table filterable>
+    </wb-table>
+    <wb-table paginated>
+    </wb-table>
+    <wb-table compact>
+    </wb-table>
+    <wb-table bordered>
+    </wb-table>
+  </wb-demo>
+
+  <!-- 11. 📝 Notes -->
+  <h2>📝 Notes</h2>
+  <wb-demo columns="2">
+    <wb-notes>
+    </wb-notes>
+    <wb-notes position="left">
+    </wb-notes>
+    <wb-notes position="right">
+    </wb-notes>
+    <wb-notes position="modal">
+    </wb-notes>
+  </wb-demo>
+
+  <!-- 12. 📦 Code Control -->
+  <h2>📦 Code Control</h2>
+  <wb-demo columns="1">
+    <wb-codecontrol>
+    </wb-codecontrol>
+  </wb-demo>
+
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('Content & Media initialized');
+  </script>
+</body>
+
+</html>

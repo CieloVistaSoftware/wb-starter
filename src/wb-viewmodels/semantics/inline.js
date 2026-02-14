@@ -28,7 +28,7 @@ export function kbd(element, options = {}) {
     });
   }
 
-  element.dataset.wbReady = 'kbd';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-kbd');
 }
 
@@ -60,7 +60,7 @@ export function mark(element, options = {}) {
     borderRadius: '2px'
   });
 
-  element.dataset.wbReady = 'mark';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-mark');
 }
 

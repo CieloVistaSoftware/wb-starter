@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "🔔 Notification Card Showcase",
+  "description": "Auto-generated showcase for cardnotification component — all variants, combinations, and toggles.",
+  "schemaFor": "cardnotification-showcase",
+  "page": {
+    "lang": "en",
+    "theme": "dark",
+    "title": "🔔 Notification Card Showcase",
+    "stylesheets": [
+      "../src/styles/themes.css",
+      "../src/styles/site.css",
+      "../src/styles/components.css"
+    ],
+    "scripts": [
+      {
+        "type": "module",
+        "src": "../src/core/wb-lazy.js",
+        "init": "WB.init({ autoInject: true })"
+      }
+    ]
+  },
+  "header": {
+    "tag": "h1",
+    "content": "🔔 Notification Card Showcase",
+    "subtitle": {
+      "tag": "p",
+      "content": "Dismissible notification card with variant-based styling"
+    }
+  },
+  "sections": [
+    {
+      "heading": "cardnotification — Combinations",
+      "tag": "wb-cardnotification",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "message": "Info message"
+          }
+        },
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "variant": "success",
+            "title": "Success",
+            "message": "Done!"
+          }
+        },
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "variant": "warning",
+            "message": "Warning!"
+          }
+        },
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "variant": "error",
+            "message": "Error!",
+            "dismissible": false
+          }
+        },
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "variant": "info",
+            "title": "Notice",
+            "message": "Info",
+            "icon": "🔔"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "variant variants",
+      "tag": "wb-cardnotification",
+      "columns": 2,
+      "demos": [
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "variant": "info",
+            "message": "Sample message"
+          }
+        },
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "variant": "success",
+            "message": "Sample message"
+          }
+        },
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "variant": "warning",
+            "message": "Sample message"
+          }
+        },
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "variant": "error",
+            "message": "Sample message"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Boolean toggles",
+      "tag": "wb-cardnotification",
+      "columns": 1,
+      "demos": [
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "elevated": true,
+            "message": "Sample message"
+          }
+        }
+      ]
+    }
+  ],
+  "_metadata": {
+    "category": "auto-showcase",
+    "icon": "🔔",
+    "sourceSchema": "cardnotification.schema.json",
+    "generatedAt": "2026-02-12T02:31:35.442Z",
+    "sectionCount": 3,
+    "totalDemos": 10
+  }
+}

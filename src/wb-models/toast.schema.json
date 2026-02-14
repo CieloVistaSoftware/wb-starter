@@ -3,7 +3,7 @@
   "$id": "toast.schema.json",
   "title": "Toast",
   "description": "Toast notification system for temporary messages",
-  "behavior": "toast",
+  "schemaFor": "toast",
   "baseClass": "wb-toast-trigger",
   "semanticElement": {
     "tagName": "div",
@@ -366,6 +366,22 @@
           "message": "Test",
           "action": "Undo"
         }
+      ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-toast",
+      "renders": true,
+      "baseClass": "wb-toast",
+      "minInstances": 9,
+      "checkText": [
+        "Test"
+      ],
+      "checkClasses": [
+        "wb-toast--success"
+      ],
+      "checkAttributes": [
+        "message"
       ]
     }
   },

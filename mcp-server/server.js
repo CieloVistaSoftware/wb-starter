@@ -209,3 +209,40 @@ function runCommand(command, args, cwd) {
 // Start the server
 const transport = new StdioServerTransport();
 await server.connect(transport);
+
+// --- Ensure a TCP /health endpoint when MCP_HEALTH_PORT is configured ---
+// This allows external tooling (CI, healthcheck scripts, wrappers) to
+// reliably detect that the MCP npm-runner is up even when the primary
+// transport is stdio. The wrapper `scripts/start-mcp.js` relies on this.
+const healthPort = Number(process.env.MCP_HEALTH_PORT || process.env.MCP_PORT || 0);
+if (healthPort) {
+  try {
+    const { createServer } = await import('http');
+
+    const healthServer = createServer((req, res) => {
+      if (req.url === '/health') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ status: 'ok', pid: process.pid, ts: new Date().toISOString() }));
+        return;
+      }
+      res.writeHead(404);
+      res.end();
+    });
+
+    healthServer.listen(healthPort, '127.0.0.1', () => {
+      console.log(`[mcp-server] health endpoint available at http://127.0.0.1:${healthPort}/health`);
+    });
+
+    healthServer.on('error', (err) => {
+      console.error('[mcp-server] health server error:', err && err.message);
+    });
+
+    // Best-effort cleanup on exit/signals
+    const _closeHealth = () => {
+      try { healthServer.close(); } catch (e) {}
+    };
+    ['exit','SIGINT','SIGTERM','SIGHUP'].forEach(ev => process.on(ev, _closeHealth));
+  } catch (err) {
+    console.error('[mcp-server] failed to start health endpoint:', err && err.message);
+  }
+}

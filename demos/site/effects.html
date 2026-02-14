@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Effects</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+  <link rel="stylesheet" href="../../src/styles/components.css">
+
+</head>
+
+<body>
+  <nav style="margin-bottom: 1rem;">
+    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  </nav>
+  <h1>✨ Visual Effects</h1>
+  <p>Confetti, fireworks, ripple, snow — fun stuff</p>
+
+  <!-- 1. 🎉 Confetti -->
+  <h2>🎉 Confetti</h2>
+  <wb-demo columns="2">
+    <wb-confetti>
+    </wb-confetti>
+    <wb-confetti count="100">
+    </wb-confetti>
+    <wb-confetti repeat>
+    </wb-confetti>
+  </wb-demo>
+
+  <!-- 2. 🎆 Fireworks -->
+  <h2>🎆 Fireworks</h2>
+  <wb-demo columns="2">
+    <wb-fireworks>
+    </wb-fireworks>
+    <wb-fireworks count="50">
+    </wb-fireworks>
+    <wb-fireworks repeat>
+    </wb-fireworks>
+  </wb-demo>
+
+  <!-- 3. 💧 Ripple -->
+  <h2>💧 Ripple</h2>
+  <wb-demo columns="2">
+    <wb-ripple>
+    </wb-ripple>
+    <wb-ripple color="rgba(0,0,0,0.2)">
+    </wb-ripple>
+    <wb-ripple duration="300">
+    </wb-ripple>
+  </wb-demo>
+
+  <!-- 4. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="1">
+    <wb-ripple centered>
+    </wb-ripple>
+  </wb-demo>
+
+  <!-- 5. ❄️ Snow -->
+  <h2>❄️ Snow</h2>
+  <wb-demo columns="2">
+    <wb-snow>
+    </wb-snow>
+    <wb-snow count="50">
+    </wb-snow>
+    <wb-snow>
+    </wb-snow>
+  </wb-demo>
+
+  <!-- 6. 📦 Stage Light -->
+  <h2>📦 Stage Light</h2>
+  <wb-demo columns="2">
+    <wb-stagelight variant="beam" color="#6366f1" intensity="0.7">
+    </wb-stagelight>
+    <wb-stagelight variant="spotlight" color="#f59e0b" intensity="0.5" size="400px">
+    </wb-stagelight>
+    <wb-stagelight variant="fixture" color="#ef4444" label="Red Light">
+    </wb-stagelight>
+    <wb-stagelight variant="beam" color="#22c55e" speed="5s">
+    </wb-stagelight>
+  </wb-demo>
+
+  <!-- 7. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-stagelight variant="beam">
+    </wb-stagelight>
+    <wb-stagelight variant="spotlight">
+    </wb-stagelight>
+    <wb-stagelight variant="fixture">
+    </wb-stagelight>
+  </wb-demo>
+
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('Visual Effects initialized');
+  </script>
+</body>
+
+</html>

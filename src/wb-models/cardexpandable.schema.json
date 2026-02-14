@@ -3,7 +3,7 @@
   "$id": "cardexpandable.schema.json",
   "title": "Expandable Card",
   "description": "Card with collapsible/expandable content section",
-  "behavior": "cardexpandable",
+  "schemaFor": "cardexpandable",
   "baseClass": "wb-card-expandable",
   "semanticElement": {
     "tagName": "article",
@@ -176,6 +176,25 @@
           "content": "Content",
           "maxHeight": "150px"
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardexpandable",
+      "renders": true,
+      "baseClass": "wb-card-expandable",
+      "minInstances": 3,
+      "checkText": [
+        "Basic",
+        "Expanded",
+        "Custom"
+      ],
+      "checkClasses": [
+        "wb-card-expandable--elevated"
+      ],
+      "checkAttributes": [
+        "title",
+        "content"
       ]
     }
   },

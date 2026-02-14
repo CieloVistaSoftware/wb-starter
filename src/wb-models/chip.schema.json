@@ -3,7 +3,7 @@
   "$id": "chip.schema.json",
   "title": "Chip",
   "description": "Small pill-shaped tag/label, optionally dismissible",
-  "behavior": "chip",
+  "schemaFor": "chip",
   "baseClass": "wb-chip",
   "semanticElement": {
     "tagName": "span",
@@ -171,6 +171,23 @@
           "label": "Tag",
           "icon": "🏷️"
         }
+      ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-chip",
+      "renders": true,
+      "baseClass": "wb-chip",
+      "minInstances": 4,
+      "checkText": [
+        "Tag"
+      ],
+      "checkClasses": [
+        "wb-chip--primary",
+        "wb-chip--sm"
+      ],
+      "checkAttributes": [
+        "label"
       ]
     }
   },

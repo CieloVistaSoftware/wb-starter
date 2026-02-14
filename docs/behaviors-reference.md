@@ -138,7 +138,7 @@ Rich interactive components.
 | `hero` | `<section>` | - | Hero section component |
 | [`card`](components/cards/card.md) | `<article>` | - | Card component |
 | `cardlink` | `<article data-href>` | - | Clickable card |
-| [`card*`](components/cards/index.md) | `<article>` | - | Card variants (image, video, etc.) |
+| [`card*`](components/cards/cards.index.md) | `<article>` | - | Card variants (image, video, etc.) |
 | [`progressbar`](components/semantics/progress.md) | `<progress>` | Decorate | Progress bar styling |
 | `spinner` | `<div>` | - | Loading spinner |
 | `toast` | `<div>` | - | Toast notification |

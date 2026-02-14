@@ -168,7 +168,7 @@ export function validator(element, options = {}) {
   };
 
   // Mark as ready
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' validator';
+  element.classList.add('wb-ready');
 
   // Cleanup
   return () => {

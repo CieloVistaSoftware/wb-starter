@@ -3,7 +3,7 @@
   "$id": "drawer.schema.json",
   "title": "Drawer",
   "description": "Slide-out panel overlay from screen edge",
-  "behavior": "drawer",
+  "schemaFor": "drawer",
   "baseClass": "wb-drawer",
   "semanticElement": {
     "tagName": "aside",
@@ -225,6 +225,26 @@
           "title": "Wide",
           "width": "400px"
         }
+      ]
+    },
+    "site": {
+      "page": "overlays",
+      "tag": "wb-drawer",
+      "renders": true,
+      "baseClass": "wb-drawer",
+      "minInstances": 3,
+      "checkText": [
+        "Right Drawer",
+        "Left Drawer",
+        "Wide"
+      ],
+      "checkClasses": [
+        "wb-drawer--left",
+        "wb-drawer--default"
+      ],
+      "checkAttributes": [
+        "title",
+        "position"
       ]
     }
   },

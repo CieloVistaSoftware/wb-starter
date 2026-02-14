@@ -35,6 +35,7 @@
 export { 
   init, 
   loadSchemas, 
+  loadSchemaFile,
   registerSchema, 
   getSchema,
   getMethods,

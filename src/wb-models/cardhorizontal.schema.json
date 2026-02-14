@@ -3,7 +3,7 @@
   "$id": "cardhorizontal.schema.json",
   "title": "Horizontal Card",
   "description": "Card with horizontal layout - image on side, content on other",
-  "behavior": "cardhorizontal",
+  "schemaFor": "cardhorizontal",
   "baseClass": "wb-card-horizontal",
   "semanticElement": {
     "tagName": "article",
@@ -216,6 +216,25 @@
           "title": "Title",
           "variant": "elevated"
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardhorizontal",
+      "renders": true,
+      "baseClass": "wb-card-horizontal",
+      "minInstances": 4,
+      "checkText": [
+        "Title",
+        "Subtitle"
+      ],
+      "checkClasses": [
+        "wb-card-horizontal--image-right",
+        "wb-card-horizontal--elevated"
+      ],
+      "checkAttributes": [
+        "image",
+        "title"
       ]
     }
   },

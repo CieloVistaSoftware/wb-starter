@@ -1,0 +1,9 @@
+{
+  "generatedAt": "2026-02-12T02:54:05.580Z",
+  "sourceSchema": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\badge.schema.json",
+  "pageSchema": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\pages\\badge-showcase.page.json",
+  "outputHtml": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\badge-showcase.html",
+  "component": "badge",
+  "sections": 4,
+  "totalDemos": 23
+}

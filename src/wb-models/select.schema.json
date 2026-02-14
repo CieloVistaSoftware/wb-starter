@@ -3,7 +3,7 @@
   "$id": "select.schema.json",
   "title": "Select",
   "description": "Enhanced select dropdown with search, clear, and multi-select",
-  "behavior": "select",
+  "schemaFor": "select",
   "baseClass": "wb-select",
   "semanticElement": {
     "tagName": "div",
@@ -288,6 +288,19 @@
           "disabled": true
         }
       ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "wb-select",
+      "renders": true,
+      "baseClass": "wb-select",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-select--sm",
+        "wb-select--success"
+      ],
+      "checkAttributes": []
     }
   },
   "_metadata": {

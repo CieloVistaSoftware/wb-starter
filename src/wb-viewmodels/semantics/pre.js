@@ -251,7 +251,7 @@ export function pre(element, options = {}) {
     element.style.lineHeight = '1.5';
   }
 
-  element.dataset.wbReady = 'pre';
+  element.classList.add('wb-ready');
 
   return () => {
     element.classList.remove('x-pre');

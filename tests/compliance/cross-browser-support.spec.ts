@@ -360,11 +360,11 @@ test.describe('Cross-Browser Support Infrastructure', () => {
   // 7. ESCAPE HATCHES
   // ═══════════════════════════════════════════════════════════════
   
-  test('data-wb-skip prevents behavior injection', async ({ page }) => {
+  test('x-ignore prevents behavior injection', async ({ page }) => {
     const skipped = await page.evaluate(async () => {
       // Create element with skip attribute
       const pre = document.createElement('pre');
-      pre.setAttribute('data-wb-skip', '');
+      pre.setAttribute('x-ignore', '');
       pre.textContent = 'test code';
       document.body.appendChild(pre);
       
@@ -372,7 +372,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
       await new Promise(r => setTimeout(r, 100));
       
       // Check if behavior was applied
-      const hasWbReady = pre.hasAttribute('data-wb-ready');
+      const hasWbReady = pre.classList.contains('wb-ready');
       pre.remove();
       
       return !hasWbReady;
@@ -397,7 +397,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
       // Wait for potential processing
       await new Promise(r => setTimeout(r, 100));
       
-      const hasWbReady = btn.hasAttribute('data-wb-ready');
+      const hasWbReady = btn.classList.contains('wb-ready');
       btn.remove();
       
       return !hasWbReady;
@@ -432,7 +432,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
     
     const content = fs.readFileSync(docPath, 'utf-8');
     expect(content).toContain('CSS Custom Properties');
-    expect(content).toContain('data-wb-skip');
+    expect(content).toContain('x-ignore');
     expect(content).toContain('x-ignore');
   });
 

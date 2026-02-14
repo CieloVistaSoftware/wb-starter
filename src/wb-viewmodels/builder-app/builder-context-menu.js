@@ -37,6 +37,8 @@ export function showContextMenu(x, y, wrapper) {
 
   menu.innerHTML = `
     <button class="ctx-item" onclick="viewSchema('${c.b}')">View Schema</button>
+    <button class="ctx-item" onclick="inspectElement('${wrapper.id}')">Inspect</button>
+    <hr class="ctx-divider">
     <button class="ctx-item" onclick="selComp(document.getElementById('${wrapper.id}'))">Edit Properties</button>
     <hr class="ctx-divider">
     <button class="ctx-item" onclick="dup('${wrapper.id}')">Duplicate</button>
@@ -89,15 +91,35 @@ export function showContextMenu(x, y, wrapper) {
 }
 
 /**
- * View component schema in docs modal
- * @param {string} behavior - Behavior name
+ * Inspect element in inspector panel
+ * @param {string} elementId - ID of element to inspect
  */
-export function viewSchema(behavior) {
+export function inspectElement(elementId) {
   // Close context menu
   document.getElementById('builderContextMenu')?.remove();
 
-  // Open the docs modal
-  showDocs(behavior, 'schema');
+  const element = document.getElementById(elementId);
+  if (!element) return;
+
+  // Trigger browser inspect if available
+  if (window.inspect) {
+    window.inspect(element);
+  } else if (window.chrome && window.chrome.devtools) {
+    // Chrome devtools
+    window.chrome.devtools.inspectedWindow.eval(`inspect(document.getElementById('${elementId}'))`);
+  } else {
+    // Fallback: log to console
+    console.log('Inspecting element:', element);
+    console.log('Element details:', {
+      tagName: element.tagName,
+      id: element.id,
+      className: element.className,
+      dataset: element.dataset,
+      attributes: Array.from(element.attributes).map(attr => `${attr.name}="${attr.value}"`),
+      computedStyle: window.getComputedStyle(element),
+      boundingRect: element.getBoundingClientRect()
+    });
+  }
 }
 
 /**
@@ -117,3 +139,4 @@ export function createContextMenuHandler() {
 // Expose to window
 window.showContextMenu = showContextMenu;
 window.viewSchema = viewSchema;
+window.inspectElement = inspectElement;

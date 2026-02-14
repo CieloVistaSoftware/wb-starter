@@ -97,7 +97,7 @@ export function textarea(element, options = {}) {
     update();
   }
 
-  element.dataset.wbReady = 'textarea';
+  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-textarea');
     if (config.size !== 'md') {

@@ -253,7 +253,7 @@ export function codecontrol(element, options = {}) {
   };
 
   // Mark as ready
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' codecontrol';
+  element.classList.add('wb-ready');
 
   // Cleanup
   return () => {

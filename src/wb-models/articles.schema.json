@@ -3,7 +3,7 @@
   "$id": "articles.schema.json",
   "title": "Articles List Component",
   "description": "A wrapper component to display a list or grid of articles.",
-  "behavior": "articles",
+  "schemaFor": "articles",
   "baseClass": "wb-articles",
   "semanticElement": {
     "tagName": "section",
@@ -101,6 +101,18 @@
           "layout": "grid",
           "columns": 2
         }
+      ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-articles",
+      "renders": true,
+      "baseClass": "wb-articles",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "layout"
       ]
     }
   },

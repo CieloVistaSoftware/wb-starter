@@ -5,6 +5,7 @@ import express from 'express';
 import compression from 'compression';
 import { WebSocketServer } from 'ws';
 import { exec } from 'child_process';
+import { marked } from 'marked';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -107,12 +108,22 @@ const watchDir = (dir) => {
 ['pages', 'src', 'config', 'public'].forEach(d => watchDir(path.join(rootDir, d)));
 watchDir(rootDir); // Watch root for index.html changes
 
+// CORS - Allow cross-origin requests from dev servers
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
+  next();
+});
+
 // Request logging (for debugging)
 app.use((req, res, next) => {
   if (req.path.endsWith('.js')) {
     res.on('finish', () => {
       if (res.statusCode !== 304) {
-        console.log(`[Request] ${req.method} ${req.path} (${res.statusCode})`);
+          const referer = req.headers['referer'] || 'unknown';
+          console.log(`[Request] ${req.method} ${req.path} (${res.statusCode}) [Referer: ${referer}]`);
       }
     });
   }
@@ -240,6 +251,114 @@ app.get('/pages/:page', (req, res, next) => {
   } else {
     // It's an SPA fetch (or other asset request), serve raw file
     next();
+  }
+});
+
+// ============================================
+// DOCS MARKDOWN ROUTE - Convert .md to HTML
+// Intercepts /docs/*.md requests before static
+// ============================================
+app.use((req, res, next) => {
+  if (!req.path.startsWith('/docs/') || !req.path.endsWith('.md')) return next();
+  if (req.method !== 'GET') return next();
+
+  // Security: prevent path traversal
+  const safePath = path.normalize(req.path).replace(/^(\.\.[/\\])+/, '');
+  const fullPath = path.join(rootDir, safePath);
+
+  // Ensure path stays within project
+  if (!fullPath.startsWith(rootDir)) {
+    return res.status(403).send('Access denied');
+  }
+
+  if (!fs.existsSync(fullPath)) {
+    return res.status(404).send(`<div class="error-container">
+  <h1>Unable to Load Document</h1>
+  <p>The file <code>${req.path}</code> was not found.</p>
+  <h2>Troubleshooting</h2>
+  <ul>
+    <li>Check the file path for typos</li>
+    <li>Ensure the file exists in the docs directory</li>
+    <li>Verify the filename and extension are correct</li>
+  </ul>
+</div>`);
+  }
+
+  try {
+    const mdContent = fs.readFileSync(fullPath, 'utf8');
+    const html = marked(mdContent);
+    res.type('text/html').send(html);
+  } catch (err) {
+    console.error(`[Docs] Error converting ${req.path}:`, err);
+    return res.status(500).send(`<div class="error-container">
+  <h1>Unable to Load Document</h1>
+  <p>Error reading <code>${req.path}</code>: ${err.message}</p>
+  <h2>Troubleshooting</h2>
+  <ul>
+    <li>The file may be corrupted or unreadable</li>
+    <li>Check server logs for details</li>
+  </ul>
+</div>`);
+  }
+});
+
+// ============================================
+// MARKDOWN API - GET /api/markdown?file=path
+// ============================================
+app.get('/api/markdown', (req, res) => {
+  const file = req.query.file;
+  if (!file) {
+    return res.status(400).send('<p>Missing <code>file</code> query parameter</p>');
+  }
+
+  // Security: prevent path traversal
+  const safePath = path.normalize(file).replace(/^(\.\.[/\\])+/, '');
+  const fullPath = path.join(rootDir, safePath);
+
+  if (!fullPath.startsWith(rootDir)) {
+    return res.status(403).send('Access denied');
+  }
+
+  if (!fs.existsSync(fullPath)) {
+    return res.status(404).send(`<div class="error-container">
+  <h1>Unable to Load Document</h1>
+  <p>The file <code>${file}</code> was not found.</p>
+  <h2>Troubleshooting</h2>
+  <ul>
+    <li>Check the file path for typos</li>
+    <li>Ensure the file exists</li>
+    <li>Verify the filename and extension are correct</li>
+  </ul>
+</div>`);
+  }
+
+  try {
+    const mdContent = fs.readFileSync(fullPath, 'utf8');
+    const html = marked(mdContent);
+    res.type('text/html').send(html);
+  } catch (err) {
+    console.error(`[API Markdown] Error converting ${file}:`, err);
+    res.status(500).send(`<div class="error-container">
+  <h1>Unable to Load Document</h1>
+  <p>Error reading <code>${file}</code>: ${err.message}</p>
+  <h2>Troubleshooting</h2>
+  <ul>
+    <li>The file may be corrupted or unreadable</li>
+    <li>Check server logs for details</li>
+  </ul>
+</div>`);
+  }
+});
+
+// ============================================
+// MARKDOWN API - POST /api/markdown (raw MD)
+// ============================================
+app.post('/api/markdown', express.text({ type: '*/*' }), (req, res) => {
+  try {
+    const html = marked.parse(req.body || '');
+    res.type('text/html').send(html);
+  } catch (err) {
+    res.status(500).send('Markdown conversion error');
   }
 });
 

@@ -1,0 +1,16 @@
+/**
+ * Code Display Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with x-code behavior
+ * -----------------------------------------------------------------------------
+ */
+
+.x-code {
+  background: var(--bg-tertiary);
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  overflow-x: auto;
+}

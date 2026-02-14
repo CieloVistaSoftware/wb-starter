@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Components — WB Component Library</title>
+  <meta name="description" content="Every component type generated from test matrices">
+  <link rel="stylesheet" href="..\../src/styles/themes.css">
+  <link rel="stylesheet" href="..\../src/styles/site.css">
+  <link rel="stylesheet" href="..\../src/styles/components.css">
+
+</head>
+
+<body>
+  <nav class="wb-site-nav" style="display:flex;gap:0.25rem;padding:0.5rem 1rem;background:var(--bg-tertiary,#1e293b);border-bottom:1px solid var(--border-color,#374151);overflow-x:auto;position:sticky;top:0;z-index:100;">
+    <a href="index.html" style="padding:0.5rem 1rem;color:var(--text-primary,#f9fafb);text-decoration:none;font-weight:700;font-size:1rem;margin-right:1rem;">🧩 WB Library</a>
+      <a href="badges.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🏷️ Badges</a>
+      <a href="progress.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">📊 Progress</a>
+      <a href="notifications.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🔔 Notifications</a>
+      <a href="portfolio.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">👤 Portfolio</a>
+      <a href="cards.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🃏 Cards</a>
+      <a href="all-components.html" class="wb-nav__link--active" style="padding:0.5rem 1rem;color:var(--primary,#6366f1);text-decoration:none;font-size:0.9rem;border-bottom:2px solid var(--primary,#6366f1);white-space:nowrap;">🧩 All</a>
+  </nav>
+
+  <h1 style="padding:1rem 1.5rem 0;">🧩 🧩 All Components</h1>
+  <p style="padding:0 1.5rem;color:var(--text-secondary,#9ca3af);">Auto-generated from component schemas and test matrices</p>
+
+  <!-- 1. Badges — Matrix Combos -->
+  <h2 style="padding:0 1.5rem;">Badges — Matrix Combos</h2>
+  <wb-demo columns="4">
+    <wb-badge label="New">
+    </wb-badge>
+    <wb-badge label="Done" variant="success">
+    </wb-badge>
+    <wb-badge label="Warning" variant="warning">
+    </wb-badge>
+    <wb-badge label="Error" variant="error">
+    </wb-badge>
+    <wb-badge label="5" variant="primary" pill>
+    </wb-badge>
+    <wb-badge label="Badge" variant="success" dot>
+    </wb-badge>
+    <wb-badge label="Tag" variant="info" removable>
+    </wb-badge>
+    <wb-badge label="Outline" variant="primary" outline>
+    </wb-badge>
+  </wb-demo>
+
+  <!-- 2. Notifications — Matrix Combos -->
+  <h2 style="padding:0 1.5rem;">Notifications — Matrix Combos</h2>
+  <wb-demo columns="3">
+    <wb-cardnotification message="Info message">
+    </wb-cardnotification>
+    <wb-cardnotification message="Done!" variant="success" title="Success">
+    </wb-cardnotification>
+    <wb-cardnotification message="Warning!" variant="warning">
+    </wb-cardnotification>
+    <wb-cardnotification message="Error!" variant="error">
+    </wb-cardnotification>
+    <wb-cardnotification message="Info" variant="info" title="Notice" icon="🔔">
+    </wb-cardnotification>
+  </wb-demo>
+
+  <!-- 3. Progress — All Variants -->
+  <h2 style="padding:0 1.5rem;">Progress — All Variants</h2>
+  <wb-demo columns="3">
+    <wb-progress variant="default">
+    </wb-progress>
+    <wb-progress variant="primary">
+    </wb-progress>
+    <wb-progress variant="success">
+    </wb-progress>
+    <wb-progress variant="warning">
+    </wb-progress>
+    <wb-progress variant="error">
+    </wb-progress>
+    <wb-progress variant="info">
+    </wb-progress>
+    <wb-progress size="xs">
+    </wb-progress>
+    <wb-progress size="sm">
+    </wb-progress>
+    <wb-progress size="md">
+    </wb-progress>
+    <wb-progress size="lg">
+    </wb-progress>
+    <wb-progress size="xl">
+    </wb-progress>
+  </wb-demo>
+
+  <footer class="wb-site-footer" style="padding:1.5rem;text-align:center;border-top:1px solid var(--border-color,#374151);color:var(--text-secondary,#9ca3af);font-size:0.85rem;margin-top:2rem;">
+    <p>WB Component Library — Generated from schemas</p>
+    <div style="margin-top:0.5rem;display:flex;gap:1rem;justify-content:center;">
+      <a href="#" style="color:var(--primary,#6366f1);text-decoration:none;">GitHub</a>
+      <a href="#" style="color:var(--primary,#6366f1);text-decoration:none;">Documentation</a>
+    </div>
+  </footer>
+
+  <script type="module">
+    import WB from '..\../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+
+</html>

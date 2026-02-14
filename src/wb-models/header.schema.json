@@ -3,7 +3,7 @@
   "$id": "header.schema.json",
   "title": "Header",
   "description": "Page header with logo, title, and optional navigation",
-  "behavior": "header",
+  "schemaFor": "header",
   "baseClass": "wb-header",
   "semanticElement": {
     "tagName": "header",
@@ -193,6 +193,22 @@
           "title": "Site",
           "sticky": true
         }
+      ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-header",
+      "renders": true,
+      "baseClass": "wb-header",
+      "minInstances": 4,
+      "checkText": [
+        "Title",
+        "App",
+        "Site"
+      ],
+      "checkClasses": [],
+      "checkAttributes": [
+        "title"
       ]
     }
   },

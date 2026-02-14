@@ -3,7 +3,7 @@
   "$id": "cardbutton.schema.json",
   "title": "Button Card",
   "description": "Card with action buttons in footer",
-  "behavior": "cardbutton",
+  "schemaFor": "cardbutton",
   "baseClass": "wb-card-button",
   "semanticElement": {
     "tagName": "article",
@@ -198,6 +198,23 @@
           "primary": "Yes",
           "secondary": "No"
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardbutton",
+      "renders": true,
+      "baseClass": "wb-card-button",
+      "minInstances": 3,
+      "checkText": [
+        "Card"
+      ],
+      "checkClasses": [
+        "wb-card-button--elevated"
+      ],
+      "checkAttributes": [
+        "title",
+        "primary"
       ]
     }
   },

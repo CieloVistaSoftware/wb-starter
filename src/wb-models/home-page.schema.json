@@ -1,0 +1,433 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Home Page",
+  "description": "Schema for validating the home page structure, behaviors, and all permutations.",
+  "schemaFor": "home-page",
+  "properties": {
+    "hero": {
+      "type": "object",
+      "description": "Hero section with wb-cardhero.",
+      "required": true,
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": [
+          {
+            "variant": "cosmic",
+            "background": "url",
+            "pretitle": "100 Components",
+            "title": "Build stunning UIs",
+            "subtitle": "just HTML — no build step",
+            "cta": "Explore Components",
+            "cta-secondary": "Documentation"
+          }
+        ],
+        "assertions": {
+          "variant": {
+            "selector": "wb-cardhero",
+            "checks": {
+              "hasAttribute": "variant",
+              "hasClass": "wb-cardhero--cosmic"
+            }
+          },
+          "cta": {
+            "selector": "wb-cardhero",
+            "checks": {
+              "hasAttribute": "cta",
+              "textContains": "Explore Components"
+            }
+          }
+        }
+      }
+    },
+    "stats": {
+      "type": "array",
+      "description": "Stats banner with stat-item elements.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "permutations": {
+          "type": "EXPLICIT",
+          "values": [
+            {
+              "value": "100",
+              "label": "Behaviors"
+            },
+            {
+              "value": "Light",
+              "label": "DOM Architecture"
+            },
+            {
+              "value": "0s",
+              "label": "Build Time"
+            },
+            {
+              "value": "100%",
+              "label": "Standards Compliant"
+            }
+          ],
+          "assertions": {
+            "value": {
+              "selector": ".stat-value",
+              "checks": {
+                "textContains": "100"
+              }
+            },
+            "label": {
+              "selector": ".stat-label",
+              "checks": {
+                "textContains": "Behaviors"
+              }
+            }
+          }
+        }
+      }
+    },
+    "demo": {
+      "type": "object",
+      "description": "Every example/demo block must use wb-demo tag for compliance.",
+      "required": true,
+      "permutations": {
+        "type": "EXPLICIT",
+        "values": [
+          {
+            "tag": "wb-demo",
+            "button": "x-ripple",
+            "tooltip": "x-tooltip",
+            "draggable": "x-draggable",
+            "confetti": "x-confetti"
+          }
+        ],
+        "assertions": {
+          "tag": {
+            "selector": "wb-demo",
+            "checks": {
+              "visible": true,
+              "hasClass": "wb-demo"
+            }
+          },
+          "button": {
+            "selector": "wb-demo button[x-ripple]",
+            "checks": {
+              "clickable": true,
+              "event": "ripple"
+            }
+          },
+          "tooltip": {
+            "selector": "wb-demo button[x-tooltip]",
+            "checks": {
+              "hoverable": true,
+              "event": "tooltip"
+            }
+          },
+          "draggable": {
+            "selector": "wb-demo div[x-draggable]",
+            "checks": {
+              "draggable": true
+            }
+          },
+          "confetti": {
+            "selector": "wb-demo button[x-confetti]",
+            "checks": {
+              "clickable": true,
+              "event": "confetti"
+            }
+          },
+          "codeSection": {
+            "selector": "wb-demo .demo-code",
+            "checks": {
+              "visible": true
+            }
+          },
+          "copyTag": {
+            "selector": "wb-demo .copy-tag",
+            "checks": {
+              "clickable": true,
+              "textContains": "Copy"
+            }
+          }
+        }
+      }
+    },
+    "features": {
+      "type": "array",
+      "description": "Feature cards grid.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "icon": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "permutations": {
+          "type": "EXPLICIT",
+          "values": [
+            {
+              "icon": "🧩",
+              "title": "Component Library",
+              "description": "Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation."
+            },
+            {
+              "icon": "⚡",
+              "title": "Behaviors System",
+              "description": "Compose interactions like Lego bricks. Add x-fade-in, x-sticky, or x-validate to any element."
+            },
+            {
+              "icon": "🎨",
+              "title": "Theme Engine",
+              "description": "23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection support out of the box."
+            },
+            {
+              "icon": "📊",
+              "title": "Data Viz",
+              "description": "Built-in charts, stats cards, and audio visualizations powered by Web Standards."
+            },
+            {
+              "icon": "♿",
+              "title": "Accessible",
+              "description": "ARIA attributes and keyboard navigation are baked into every component by default."
+            },
+            {
+              "icon": "🚀",
+              "title": "Performance",
+              "description": "Zero-runtime compilation. Browsers are fast now. We let them do their job."
+            }
+          ],
+          "assertions": {
+            "icon": {
+              "selector": ".feature-icon",
+              "checks": {
+                "textContains": "🧩"
+              }
+            },
+            "title": {
+              "selector": "h3",
+              "checks": {
+                "textContains": "Component Library"
+              }
+            },
+            "description": {
+              "selector": "p",
+              "checks": {
+                "textContains": "Over 40 ready-to-use UI components"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "compliance": {
+    "baseClass": "wb-home-page",
+    "supportLevel": "stable",
+    "accessibility": "high",
+    "requiredChildren": {
+      "wb-cardhero": {
+        "required": true
+      },
+      ".stat-item": {
+        "minCount": 4
+      },
+      "wb-card[variant=glass]": {
+        "required": true
+      },
+      "wb-card[variant=float]": {
+        "minCount": 6
+      }
+    },
+    "styles": {
+      "borderRadius": {
+        "required": true,
+        "value": "8px"
+      },
+      "background": {
+        "required": true
+      }
+    }
+  },
+  "interactions": {
+    "elements": {
+      "button[x-ripple]": {
+        "clickable": true
+      },
+      "button[x-tooltip]": {
+        "hoverable": true
+      },
+      "div[x-draggable]": {
+        "draggable": true
+      },
+      "button[x-confetti]": {
+        "clickable": true
+      }
+    }
+  },
+  "accessibility": {
+    "aria": {
+      "wb-cardhero": {
+        "role": "banner"
+      },
+      "wb-card[variant=float]": {
+        "role": "region"
+      }
+    }
+  },
+  "events": {
+    "button[x-ripple]": {
+      "event": "ripple"
+    },
+    "button[x-confetti]": {
+      "event": "confetti"
+    }
+  },
+  "$view": [
+    {
+      "name": "hero",
+      "tag": "wb-stack",
+      "public": true,
+      "required": true,
+      "description": "Hero section must use <wb-stack> and contain a <wb-cardhero> as its child. No generic or page-specific classes allowed.",
+      "children": [
+        {
+          "tag": "wb-cardhero",
+          "required": true,
+          "attributes": [
+            {
+              "name": "variant",
+              "required": true,
+              "example": "cosmic"
+            },
+            {
+              "name": "background",
+              "required": false,
+              "example": "url"
+            },
+            {
+              "name": "pretitle",
+              "required": false,
+              "example": "100 Components"
+            },
+            {
+              "name": "title",
+              "required": true,
+              "example": "Build stunning UIs"
+            },
+            {
+              "name": "subtitle",
+              "required": false,
+              "example": "just HTML — no build step"
+            },
+            {
+              "name": "cta",
+              "required": true,
+              "example": "Explore Components"
+            },
+            {
+              "name": "cta-secondary",
+              "required": false,
+              "example": "Documentation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "stats",
+      "tag": "wb-row",
+      "public": true,
+      "description": "Stats banner must use <wb-row> and <wb-card> or <wb-control> for stat items. No generic or page-specific classes allowed."
+    },
+    {
+      "name": "demo",
+      "tag": "wb-stack",
+      "public": true,
+      "description": "Interactive demo section must use <wb-stack> and <wb-demo> for all content. No generic or page-specific classes allowed."
+    },
+    {
+      "name": "features",
+      "tag": "wb-grid",
+      "public": true,
+      "description": "Feature cards grid must use <wb-grid> and <wb-card> for all features. No generic or page-specific classes allowed."
+    }
+  ],
+  "$methods": {
+    "init": {
+      "description": "Initializes the home page layout and behaviors",
+      "params": []
+    },
+    "scrollToSection": {
+      "description": "Scrolls to a named section on the page",
+      "params": [
+        "sectionName"
+      ]
+    }
+  },
+  "$cssAPI": {
+    "--home-hero-height": {
+      "default": "100vh",
+      "description": "Hero section height"
+    },
+    "--home-section-gap": {
+      "default": "4rem",
+      "description": "Gap between page sections"
+    },
+    "--home-feature-columns": {
+      "default": "3",
+      "description": "Number of feature card columns"
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-cardhero variant='cosmic' title='Build stunning UIs'></wb-cardhero>",
+      "<wb-card variant='glass'>Live Demo</wb-card>",
+      "<wb-card variant='float'>Feature Card</wb-card>"
+    ],
+    "functional": {
+      "visual": [
+        {
+          "name": "Hero Section",
+          "setup": "<wb-cardhero ... />",
+          "expect": {
+            "visible": true,
+            "hasClass": "wb-cardhero--cosmic"
+          }
+        },
+        {
+          "name": "Stats Banner",
+          "setup": "<div class=\"stat-item\">...</div>",
+          "expect": {
+            "visible": true,
+            "textContains": "Behaviors"
+          }
+        },
+        {
+          "name": "Live Demo",
+          "setup": "<wb-card variant=\"glass\">...</wb-card>",
+          "expect": {
+            "visible": true,
+            "hasClass": "wb-card--glass"
+          }
+        },
+        {
+          "name": "Feature Cards",
+          "setup": "<wb-card variant=\"float\">...</wb-card>",
+          "expect": {
+            "visible": true,
+            "hasClass": "wb-card--float"
+          }
+        }
+      ]
+    }
+  }
+}

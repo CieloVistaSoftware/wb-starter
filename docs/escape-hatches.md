@@ -1,6 +1,6 @@
 # wb-starter Escape Hatches
 
-Override or customize any WB component behavior when defaults don't fit your needs.
+Override or customize any Web Behaviors (WB) component behavior when defaults don't fit your needs.
 
 ## CSS Custom Properties
 

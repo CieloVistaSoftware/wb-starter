@@ -1,0 +1,95 @@
+/**
+ * Data Component Styles
+ * -----------------------------------------------------------------------------
+ * Tables, timelines, stats, accordion, gallery, and data display components.
+ * Consolidated from site.css, components.css, and demo.css (Phase 1 migration).
+ * 
+ * Inherits from: themes.css (via index.html or direct import)
+ * -----------------------------------------------------------------------------
+ */
+
+/* =============================================================================
+   TABLE
+   Consolidated from: site.css (base + responsive + variants),
+                      components.css (base + variants + sorted + active),
+                      demo.css (base)
+   ============================================================================= */
+
+/* Responsive wrapper — allows horizontal scroll on narrow viewports */
+.wb-table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* When wb-table IS the <table> element directly */
+table.wb-table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+/* When wb-table wraps a <table> child */
+.wb-table > table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.wb-table th,
+.wb-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.wb-table th {
+  font-weight: 600;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  user-select: none;
+}
+
+/* --- Variants ------------------------------------------------------------ */
+
+.wb-table--striped tbody tr:nth-of-type(odd) {
+  background-color: var(--bg-secondary);
+}
+
+.wb-table--hover tbody tr:hover {
+  background-color: var(--bg-tertiary);
+}
+
+/* Active row (from components.css) */
+.wb-table tbody tr.active {
+  background-color: var(--bg-tertiary);
+  border-left: 3px solid var(--primary);
+}
+
+.wb-table--bordered {
+  border: 1px solid var(--border-color);
+}
+
+.wb-table--bordered th,
+.wb-table--bordered td {
+  border: 1px solid var(--border-color);
+}
+
+.wb-table--compact th,
+.wb-table--compact td {
+  padding: 0.5rem;
+}
+
+/* Sort indicators (from components.css) */
+.wb-table--sorted-asc::after {
+  content: " ↑";
+  opacity: 0.5;
+}
+
+.wb-table--sorted-desc::after {
+  content: " ↓";
+  opacity: 0.5;
+}

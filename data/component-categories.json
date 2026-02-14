@@ -1,0 +1,170 @@
+{
+  "total": 86,
+  "categories": {
+    "feedback": [
+      "alert",
+      "avatar",
+      "badge",
+      "chip",
+      "progress",
+      "rating",
+      "skeleton",
+      "spinner",
+      "toast",
+      "tooltip"
+    ],
+    "content": [
+      "article",
+      "mdhtml"
+    ],
+    "layout": [
+      "articles",
+      "details",
+      "drawerLayout",
+      "footer",
+      "header",
+      "navbar",
+      "scrollalong",
+      "span",
+      "sticky"
+    ],
+    "media": [
+      "audio"
+    ],
+    "uncategorized": [
+      "behavior",
+      "behaviors-showcase",
+      "behaviors",
+      "builder",
+      "card",
+      "cardprofile",
+      "codecontrol",
+      "collapse",
+      "copy",
+      "darkmode",
+      "demo",
+      "draggable",
+      "fix-card",
+      "globe",
+      "hero",
+      "home-page",
+      "move",
+      "resizable",
+      "search-index",
+      "slider",
+      "stagelight",
+      "themecontrol",
+      "timeline",
+      "toggle",
+      "views",
+      "wb-control",
+      "wb-repeater"
+    ],
+    "builder": [
+      "builder-pages",
+      "page-builder"
+    ],
+    "forms": [
+      "button",
+      "checkbox",
+      "input",
+      "search",
+      "select",
+      "switch",
+      "textarea"
+    ],
+    "cards": [
+      "card",
+      "cardbutton",
+      "carddraggable",
+      "cardexpandable",
+      "cardfile",
+      "cardhero",
+      "cardhorizontal",
+      "cardimage",
+      "cardlink",
+      "cardminimizable",
+      "cardnotification",
+      "cardoverlay",
+      "cardportfolio",
+      "cardpricing",
+      "cardproduct",
+      "cardstats",
+      "cardtestimonial",
+      "cardvideo"
+    ],
+    "effects": [
+      "confetti",
+      "fireworks",
+      "ripple",
+      "snow"
+    ],
+    "overlay": [
+      "dialog",
+      "drawer",
+      "dropdown"
+    ],
+    "utility": [
+      "notes"
+    ],
+    "data": [
+      "table"
+    ],
+    "navigation": [
+      "tabs"
+    ]
+  },
+  "withMatrix": [
+    "alert",
+    "article",
+    "articles",
+    "audio",
+    "avatar",
+    "badge",
+    "builder",
+    "cardbutton",
+    "carddraggable",
+    "cardexpandable",
+    "cardfile",
+    "cardhero",
+    "cardhorizontal",
+    "cardimage",
+    "cardlink",
+    "cardminimizable",
+    "cardnotification",
+    "cardoverlay",
+    "cardpricing",
+    "cardproduct",
+    "cardprofile",
+    "cardstats",
+    "cardtestimonial",
+    "cardvideo",
+    "chip",
+    "confetti",
+    "details",
+    "dialog",
+    "drawer",
+    "drawerLayout",
+    "dropdown",
+    "fireworks",
+    "footer",
+    "header",
+    "navbar",
+    "notes",
+    "progress",
+    "rating",
+    "ripple",
+    "scrollalong",
+    "select",
+    "skeleton",
+    "snow",
+    "spinner",
+    "sticky",
+    "switch",
+    "table",
+    "tabs",
+    "textarea",
+    "toast",
+    "tooltip"
+  ]
+}

@@ -3,7 +3,7 @@
   "$id": "cardvideo.schema.json",
   "title": "Video Card",
   "description": "Card with embedded video player",
-  "behavior": "cardvideo",
+  "schemaFor": "cardvideo",
   "baseClass": "wb-card-video",
   "semanticElement": {
     "tagName": "article",
@@ -275,6 +275,22 @@
           "src": "video.mp4",
           "aspect": "4/3"
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardvideo",
+      "renders": true,
+      "baseClass": "wb-card-video",
+      "minInstances": 7,
+      "checkText": [
+        "Video Title"
+      ],
+      "checkClasses": [
+        "wb-card-video--minimal"
+      ],
+      "checkAttributes": [
+        "src"
       ]
     }
   },

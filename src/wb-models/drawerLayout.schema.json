@@ -3,7 +3,7 @@
   "$id": "drawerLayout.schema.json",
   "title": "Drawer Layout",
   "description": "Collapsible sidebar layout with toggle",
-  "behavior": "drawerLayout",
+  "schemaFor": "drawerLayout",
   "baseClass": "wb-drawer-layout",
   "semanticElement": {
     "tagName": "aside"
@@ -123,6 +123,20 @@
         {
           "collapsed": true
         }
+      ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-drawer-layout",
+      "renders": true,
+      "baseClass": "wb-drawer-layout",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [
+        "wb-drawer-layout--right"
+      ],
+      "checkAttributes": [
+        "position"
       ]
     }
   },

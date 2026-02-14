@@ -3,7 +3,7 @@
   "$id": "dropdown.schema.json",
   "title": "Dropdown",
   "description": "Toggleable dropdown menu",
-  "behavior": "dropdown",
+  "schemaFor": "dropdown",
   "baseClass": "wb-dropdown",
   "semanticElement": {
     "tagName": "div",
@@ -183,6 +183,20 @@
         {
           "trigger": "hover"
         }
+      ]
+    },
+    "site": {
+      "page": "overlays",
+      "tag": "wb-dropdown",
+      "renders": true,
+      "baseClass": "wb-dropdown",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [
+        "wb-dropdown--bottom-end"
+      ],
+      "checkAttributes": [
+        "position"
       ]
     }
   },

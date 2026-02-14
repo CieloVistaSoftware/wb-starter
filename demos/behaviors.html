@@ -239,7 +239,7 @@
       <p>Interactive demo of all available behaviors</p>
     </div>
     <div style="display: flex; gap: 1rem; align-items: center;">
-      <wb-codecontrol data-size="sm"</div>
+      <wb-codecontrol size="sm"</div>
       <wb-themecontrol></div>
     </div>
   </header>
@@ -260,7 +260,7 @@
       <strong style="color: var(--primary); font-size: 1.1rem;">🎨 Live Code Theme Preview</strong>
       <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: var(--text-secondary);">Change ANY dropdown → ALL code blocks update instantly. They're synced! Try <code>grayscale</code> for black/white.</p>
     </div>
-    <wb-codecontrol data-size="sm" data-show-label="false"</div>
+    <wb-codecontrol size="sm" show-label="false"</div>
   </div>
 
   <!-- Auto-Inject Mode Callout -->
@@ -277,7 +277,7 @@
       <!-- BEFORE column -->
       <div>
         <div style="font-size: 0.85rem; font-weight: 600; color: var(--danger-color); margin-bottom: 0.5rem;">❌ BEFORE (Web Behaviors v1.0)</div>
-        <wb-mdhtml data-size="xs" style="margin: 0; border: 1px solid var(--danger-color); border-radius: var(--radius-sm); display: block;">
+        <wb-mdhtml size="xs" style="margin: 0; border: 1px solid var(--danger-color); border-radius: var(--radius-sm); display: block;">
 ```html
 &lt;!-- Every element needs data-wb --&gt;
 &lt;button  
@@ -307,7 +307,7 @@
       <!-- AFTER column -->
       <div>
         <div style="font-size: 0.85rem; font-weight: 600; color: var(--success-color); margin-bottom: 0.5rem;">✅ AFTER (WB v2.0)</div>
-        <wb-mdhtml data-size="xs" style="margin: 0; border: 1px solid var(--success-color); border-radius: var(--radius-sm); display: block;">
+        <wb-mdhtml size="xs" style="margin: 0; border: 1px solid var(--success-color); border-radius: var(--radius-sm); display: block;">
 ```html
 &lt;!-- Just write semantic HTML --&gt;
 &lt;button 
@@ -522,8 +522,8 @@
           <wb-badge variant="danger">Error</wb-badge>
         </div>
         <div class="demo-row">
-          <wb-badge variant="info" data-pill>Pill</wb-badge>
-          <wb-badge variant="success" data-dot></wb-badge>
+          <wb-badge variant="info" pill>Pill</wb-badge>
+          <wb-badge variant="success" dot></wb-badge>
           <span>Status Dot</span>
         </div>
       </div>
@@ -764,7 +764,7 @@
     <div class="behavior-card">
       <div class="behavior-title">Grid <span class="behavior-code">x-grid</span></div>
       <div class="demo-area" style="display:block">
-        <wb-grid data-columns="2" data-gap="sm"
+        <wb-grid columns="2" gap="sm"
           <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">1</div>
           <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">2</div>
           <div style="background:var(--bg-tertiary); padding:1rem; text-align:center; border-radius: 4px;">3</div>
@@ -894,7 +894,7 @@
     <div class="behavior-card">
       <div class="behavior-title">Audio <span class="behavior-code">&lt;audio&gt;</span></div>
       <div class="demo-area">
-        <wb-audio data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" data-controls="true"</div>
+        <wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" controls="true"</div>
       </div>
     </div>
     <div class="behavior-card">

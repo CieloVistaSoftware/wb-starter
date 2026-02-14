@@ -197,7 +197,7 @@ export function dropdown(element, options = {}) {
     item.setAttribute('role', 'menuitem');
   });
 
-  element.dataset.wbReady = 'dropdown';
+  element.classList.add('wb-ready');
   
   return () => { 
     element.removeEventListener('click', clickHandler);

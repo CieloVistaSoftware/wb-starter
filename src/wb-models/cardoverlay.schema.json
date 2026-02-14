@@ -3,7 +3,7 @@
   "$id": "cardoverlay.schema.json",
   "title": "Overlay Card",
   "description": "Card with text overlaid on background image",
-  "behavior": "cardoverlay",
+  "schemaFor": "cardoverlay",
   "baseClass": "wb-card-overlay",
   "semanticElement": {
     "tagName": "article",
@@ -234,6 +234,26 @@
           "title": "Title",
           "xalign": "center"
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardoverlay",
+      "renders": true,
+      "baseClass": "wb-card-overlay",
+      "minInstances": 6,
+      "checkText": [
+        "Title",
+        "Subtitle"
+      ],
+      "checkClasses": [
+        "wb-card-overlay--top",
+        "wb-card-overlay--xalign-center",
+        "wb-card-overlay--dark"
+      ],
+      "checkAttributes": [
+        "image",
+        "title"
       ]
     }
   },

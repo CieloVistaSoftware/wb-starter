@@ -3,6 +3,48 @@
 @import url('./behaviors/stock.css');
 @import url('./behaviors/hero.css');
 @import url('./behaviors/navbar.css');
+@import url('./behaviors/data.css');
+@import url('./behaviors/card.css');
+@import url('./behaviors/dialog.css');
+@import url('./behaviors/switch.css');
+@import url('./behaviors/progress.css');
+@import url('./behaviors/badge.css');
+@import url('./behaviors/alert.css');
+@import url('./behaviors/avatar.css');
+@import url('./behaviors/chip.css');
+@import url('./behaviors/skeleton.css');
+@import url('./behaviors/rating.css');
+@import url('./behaviors/stat.css');
+@import url('./behaviors/timeline.css');
+@import url('./behaviors/steps.css');
+@import url('./behaviors/pagination.css');
+@import url('./behaviors/otp.css');
+@import url('./behaviors/tags.css');
+@import url('./behaviors/gallery.css');
+@import url('./behaviors/dropdown.css');
+@import url('./behaviors/accordion.css');
+@import url('./behaviors/popover.css');
+@import url('./behaviors/modal.css');
+@import url('./behaviors/toast.css');
+@import url('./behaviors/mdhtml.css');
+@import url('./behaviors/breadcrumb.css');
+@import url('./behaviors/demo.css');
+@import url('./behaviors/code.css');
+@import url('./behaviors/ui-utils.css');
+@import url('./behaviors/details.css');
+@import url('./behaviors/footer.css');
+@import url('./behaviors/header.css');
+@import url('./behaviors/notes.css');
+@import url('./behaviors/audio.css');
+@import url('./behaviors/notification.css');
+@import url('./behaviors/button.css');
+@import url('./behaviors/input.css');
+@import url('./behaviors/themecontrol.css');
+
+body {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 
 /**
  * WB Starter - Site Layout Styles
@@ -153,94 +195,7 @@ body > button[x-copy] {
 
 @keyframes wb-spin { to { transform: rotate(360deg); } }
 
-/* =============================================================================
-   DIALOG / MODAL
-   ============================================================================= */
-.wb-dialog {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  padding: 0;
-}
-
-.wb-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
-}
-
-.wb-dialog__header {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--bg-tertiary);
-}
-
-.wb-dialog__title {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.wb-dialog__close {
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-}
-
-.wb-dialog__close:hover {
-  color: var(--text-primary);
-}
-
-.wb-dialog__body {
-  padding: 1.5rem;
-  color: var(--text-secondary);
-}
-
-.wb-dialog__footer {
-  padding: 1rem 1.5rem;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  background: var(--bg-tertiary);
-}
-
-.wb-button {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: all 0.2s;
-}
-
-.wb-button--primary {
-  background: var(--primary);
-  color: white;
-}
-
-.wb-button--primary:hover {
-  filter: brightness(1.1);
-}
-
-.wb-button--secondary {
-  background: transparent;
-  border-color: var(--border-color);
-  color: var(--text-primary);
-}
-
-.wb-button--secondary:hover {
-  border-color: var(--text-secondary);
-}
+/* Dialog styles → src/styles/behaviors/dialog.css (migrated Phase 2) */
 
 .header__notes-btn {
   display: flex;
@@ -999,46 +954,7 @@ h5, h6 {
 
 /* Resizing handled by JS overlay now */
 
-/* =============================================================================
-   TABLES
-   ============================================================================= */
-.wb-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1rem;
-  color: var(--text-primary);
-}
-
-.wb-table th,
-.wb-table td {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.wb-table th {
-  background: var(--bg-tertiary);
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.wb-table--striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(255, 255, 255, 0.03);
-}
-
-.wb-table--hover tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.wb-table--bordered th,
-.wb-table--bordered td {
-  border: 1px solid var(--border-color);
-}
-
-.wb-table--compact th,
-.wb-table--compact td {
-  padding: 0.5rem;
-}
+/* Table styles → src/styles/behaviors/data.css (migrated Phase 1) */
 
 /* =============================================================================
    PREMIUM HERO STYLES
@@ -1246,36 +1162,7 @@ h5, h6 {
   50% { opacity: 0.5; transform: scale(1.2); }
 }
 
-/* =============================================================================
-   FLOATING CARDS
-   ============================================================================= */
-.wb-card-float,
-.wb-card--float {
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  transition: all 0.3s ease;
-}
-
-.wb-card-float:hover,
-.wb-card--float:hover {
-  transform: translateY(-8px);
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.3);
-}
-
-.wb-card-float h3,
-.wb-card--float h3 {
-  margin: 0 0 0.75rem;
-  color: var(--text-primary);
-}
-
-.wb-card-float p,
-.wb-card--float p {
-  margin: 0;
-}
+/* Floating card styles → src/styles/behaviors/card.css (migrated Phase 1) */
 
 /* =============================================================================
    WINDOW CONTROLS (Traffic Lights)
@@ -1307,29 +1194,7 @@ h5, h6 {
   flex-wrap: wrap;
 }
 
-/* =============================================================================
-   PROGRESS BARS
-   ============================================================================= */
-.wb-progress-gradient {
-  width: 100%;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.wb-progress-gradient__bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-  background-size: 200% 100%;
-  border-radius: 999px;
-  animation: wb-progress-shimmer 2s linear infinite;
-}
-
-@keyframes wb-progress-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
+/* Progress styles → src/styles/behaviors/progress.css (migrated Phase 2) */
 
 /* =============================================================================
    AVATARS
@@ -1612,69 +1477,7 @@ h5, h6 {
   justify-content: center;
 }
 
-/* =============================================================================
-   STRIPED PROGRESS BAR
-   ============================================================================= */
-.wb-progress-striped {
-  width: 100%;
-  height: 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  overflow: hidden;
-  position: relative;
-  margin-bottom: 0.75rem;
-}
-
-.wb-progress-striped__bar {
-  height: 100%;
-  background-color: var(--primary);
-  background-image: linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.15) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.15) 75%,
-    transparent 75%,
-    transparent
-  );
-  background-size: 1rem 1rem;
-  border-radius: 999px;
-  animation: wb-progress-stripes 1s linear infinite, wb-progress-grow 2s ease-out forwards;
-  width: 0;
-}
-
-@keyframes wb-progress-stripes {
-  from { background-position: 1rem 0; }
-  to { background-position: 0 0; }
-}
-
-@keyframes wb-progress-grow {
-  from { width: 0; }
-  to { width: var(--target-width, 100%); }
-}
-
-/* Color Variants */
-.wb-progress-striped__bar--primary { background-color: var(--primary); }
-.wb-progress-striped__bar--success { background-color: var(--success-color); }
-.wb-progress-striped__bar--warning { background-color: var(--warning-color); }
-.wb-progress-striped__bar--danger { background-color: var(--danger-color); }
-.wb-progress-striped__bar--info { background-color: var(--info-color, #0ea5e9); }
-
-.wb-progress-striped__bar--gradient { 
-  background-color: transparent;
-  background-image: linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.15) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.15) 75%,
-    transparent 75%,
-    transparent
-  ), linear-gradient(90deg, var(--primary), #a855f7, #ec4899);
-  background-size: 1rem 1rem, 100% 100%;
-}
+/* Striped progress styles → src/styles/behaviors/progress.css (migrated Phase 2) */
 
 /* =============================================================================
    RACKMOUNT COMPONENT

@@ -269,7 +269,7 @@ export function code(element, options = {}) {
     }
   }
 
-  element.dataset.wbReady = 'code';
+  element.classList.add('wb-ready');
 
   return () => {
     element.classList.remove('x-code');

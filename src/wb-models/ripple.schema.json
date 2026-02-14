@@ -3,7 +3,7 @@
   "$id": "ripple.schema.json",
   "title": "Ripple",
   "description": "Material Design ripple effect on click",
-  "behavior": "ripple",
+  "schemaFor": "ripple",
   "baseClass": "wb-ripple",
   "semanticElement": {
     "tagName": "div"
@@ -84,6 +84,16 @@
           "duration": 300
         }
       ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-ripple",
+      "renders": true,
+      "baseClass": "wb-ripple",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
     }
   },
   "_metadata": {

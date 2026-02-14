@@ -1,4 +1,4 @@
-# WB Page Builder - Content Creation Rules
+# Web Behaviors (WB) Page Builder - Content Creation Rules
 
 ## 📄 PAGE
 

@@ -3,7 +3,7 @@
   "$id": "stagelight.schema.json",
   "title": "Stage Light",
   "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
-  "behavior": "stagelight",
+  "schemaFor": "stagelight",
   "compliance": {
     "baseClass": "wb-stagelight",
     "supportLevel": "experimental",
@@ -111,6 +111,48 @@
       "<wb-stagelight intensity=\"0.5\">intensity=0.5</wb-stagelight>",
       "<wb-stagelight size=\"300px\">size=\"300px\"</wb-stagelight>",
       "<wb-stagelight speed=\"3s\">speed=\"3s\"</wb-stagelight>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "variant": "beam",
+          "color": "#6366f1",
+          "intensity": 0.7
+        },
+        {
+          "variant": "spotlight",
+          "color": "#f59e0b",
+          "intensity": 0.5,
+          "size": "400px"
+        },
+        {
+          "variant": "fixture",
+          "color": "#ef4444",
+          "label": "Red Light"
+        },
+        {
+          "variant": "beam",
+          "color": "#22c55e",
+          "speed": "5s"
+        }
+      ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-stagelight",
+      "renders": true,
+      "baseClass": "wb-stagelight",
+      "minInstances": 4,
+      "checkText": [
+        "Red Light"
+      ],
+      "checkClasses": [
+        "wb-stagelight--spotlight"
+      ],
+      "checkAttributes": [
+        "variant",
+        "color"
+      ]
+    }
   }
 }

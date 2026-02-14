@@ -3,7 +3,7 @@
   "$id": "rating.schema.json",
   "title": "Rating",
   "description": "Star rating component for displaying or collecting ratings",
-  "behavior": "rating",
+  "schemaFor": "rating",
   "baseClass": "wb-rating",
   "semanticElement": {
     "tagName": "div",
@@ -166,6 +166,18 @@
           "readonly": true
         }
       ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-rating",
+      "renders": true,
+      "baseClass": "wb-rating",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-rating--sm"
+      ],
+      "checkAttributes": []
     }
   },
   "_metadata": {

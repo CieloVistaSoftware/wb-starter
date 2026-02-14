@@ -2,7 +2,7 @@
 
 ## Overview
 
-wb-starter v3.0 implements a **Schema-Driven MVVM Architecture** that eliminates the need for build steps while providing a robust, type-safe component system. This document describes the architecture, migration status, and implementation details.
+Web Behaviors (WB) starter v3.0 implements a **Schema-Driven MVVM Architecture** that eliminates the need for build steps while providing a robust, type-safe component system. This document describes the architecture, migration status, and implementation details.
 
 ## Architecture Diagram
 
@@ -332,7 +332,7 @@ console.log(WB.schema.registry);
 ```javascript
 // See what behaviors are on an element
 const card = document.querySelector('wb-card');
-console.log(card.dataset.wbReady); // Lists applied behaviors
+console.log(card.classList.contains("wb-ready")); // Lists applied behaviors
 ```
 
 ## Resources

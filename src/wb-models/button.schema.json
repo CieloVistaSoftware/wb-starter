@@ -3,7 +3,7 @@
   "$id": "button.schema.json",
   "title": "Button",
   "description": "Interactive button with variants, sizes, and optional icon",
-  "behavior": "button",
+  "schemaFor": "button",
   "baseClass": "wb-button",
   "semanticElement": {
     "tagName": "button",
@@ -21,7 +21,29 @@
     },
     "icon": {
       "type": "string",
-      "description": "Icon (emoji or icon name)"
+      "description": "Icon name from built-in library, or any emoji/text",
+      "enum": [
+        "star",
+        "check",
+        "close",
+        "warning",
+        "info",
+        "error",
+        "heart",
+        "search",
+        "edit",
+        "trash",
+        "plus",
+        "minus",
+        "home",
+        "settings",
+        "download",
+        "upload",
+        "arrow_right",
+        "arrow_left",
+        "copy",
+        "save"
+      ]
     },
     "iconPosition": {
       "type": "string",
@@ -342,6 +364,79 @@
             "event": "click"
           }
         }
+      ]
+    },
+    "matrix": {
+      "combinations": [
+        {
+          "label": "Primary",
+          "variant": "primary"
+        },
+        {
+          "label": "Secondary",
+          "variant": "secondary"
+        },
+        {
+          "label": "Success",
+          "variant": "success"
+        },
+        {
+          "label": "Warning",
+          "variant": "warning"
+        },
+        {
+          "label": "Error",
+          "variant": "error"
+        },
+        {
+          "label": "Ghost",
+          "variant": "ghost"
+        },
+        {
+          "label": "Outline",
+          "variant": "outline"
+        },
+        {
+          "label": "Small",
+          "variant": "primary",
+          "size": "sm"
+        },
+        {
+          "label": "Large",
+          "variant": "primary",
+          "size": "lg"
+        },
+        {
+          "label": "Loading...",
+          "variant": "primary",
+          "loading": true
+        },
+        {
+          "label": "🚀 With Icon",
+          "variant": "primary",
+          "icon": "🚀"
+        }
+      ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "wb-button",
+      "renders": true,
+      "baseClass": "wb-button",
+      "minInstances": 11,
+      "checkText": [
+        "Primary",
+        "Secondary",
+        "Success",
+        "Warning"
+      ],
+      "checkClasses": [
+        "wb-button--secondary",
+        "wb-button--xs"
+      ],
+      "checkAttributes": [
+        "label",
+        "variant"
       ]
     }
   },

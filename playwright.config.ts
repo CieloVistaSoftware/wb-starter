@@ -104,10 +104,10 @@ export default defineConfig({
     // ═══════════════════════════════════════════════════════════════
     {
       name: 'base',
-      testDir: './tests/behaviors/ui',
+      testDir: './tests',
       testMatch: [
-        'card.spec.ts',
-        'behaviors.spec.ts',
+        'cards/card.spec.ts',
+        'behaviors/behaviors.spec.ts',
       ],
     },
     
@@ -115,49 +115,27 @@ export default defineConfig({
     // TIER 3: DECORATED BEHAVIORS
     // Full component testing - all variants, interactions, events
     // GATE: compliance + base must pass first (enforced by npm scripts)
+    //
+    // Auto-discovers all .spec.ts files in these directories:
+    // - behaviors/ (all behavior tests)
+    // - builder/ (builder component tests)
+    // - cards/ (card variant tests)
+    // - components/ (component tests)
+    // - pages/ (page integration tests)
+    // - semantics/ (semantic rendering tests)
+    // Plus root-level darkmode-standard.spec.ts
     // ═══════════════════════════════════════════════════════════════
     {
       name: 'behaviors',
-      testDir: './tests/behaviors',
+      testDir: './tests',
       testMatch: [
-        'behavior-validation.spec.ts',
-        'builder-api.spec.ts',
-        'builder-mkel.spec.ts',
-        'permutation-compliance.spec.ts',
-        'semantics-new.spec.ts',
-        'semantics-code-scroll.spec.ts',
-        'js-syntax-compliance.spec.ts',
-        'ui/cardbutton.spec.ts',
-        'ui/cardchip.spec.ts',
-        'ui/cardhero.spec.ts',
-        'ui/cardoverlay.spec.ts',
-        'ui/cardportfolio.spec.ts',
-        'ui/cardproduct.spec.ts',
-        'ui/cardprogressbar.spec.ts',
-        'ui/cardspinner.spec.ts',
-        'ui/notes.spec.ts',
-        'notes-updates.spec.ts',
-        'ui/audio.spec.ts',
-        'ui/feedback-visual.spec.ts',
-        'ui/behavior-verification.spec.ts',
-        'ui/builder-sidebar.spec.ts',
-        'ui/figure.spec.ts',
-        'ui/all-components.spec.ts',
-        'behaviors-showcase.spec.ts',
-        'pill-shortcut.spec.ts',
-        'input-switch.spec.ts',
-        'scrollalong.spec.ts',
-        'header.spec.ts',
-        'components-page.spec.ts',
-        'global-attributes.spec.ts',
-        'pce.spec.ts',
-        'pce-demo.spec.ts',
-        'autoinject.spec.ts',
-      ],
-      // Explicitly exclude deprecated files
-      testIgnore: [
-        '**/compliance.spec.ts',
-        '**/schema-compliance.spec.ts',
+        'behaviors/**/*.spec.ts',
+        'builder/**/*.spec.ts',
+        'cards/**/*.spec.ts',
+        'components/**/*.spec.ts',
+        'pages/**/*.spec.ts',
+        'semantics/**/*.spec.ts',
+        'darkmode-standard.spec.ts',
       ],
     },
     // ═══════════════════════════════════════════════════════════════
@@ -182,6 +160,16 @@ export default defineConfig({
     },
     
     // ═══════════════════════════════════════════════════════════════
+    // INTEGRATION TESTS
+    // Phase 2: Wizard validation, builder integration, end-to-end flows
+    // ═══════════════════════════════════════════════════════════════
+    {
+      name: 'integration',
+      testDir: './tests/integration',
+      testMatch: '**/*.spec.ts',
+    },
+    
+    // ═══════════════════════════════════════════════════════════════
     // SCHEMA VIEWER TESTS
     // Tests that all schemas render correctly in the schema viewer
     // ═══════════════════════════════════════════════════════════════
@@ -198,39 +186,39 @@ export default defineConfig({
     // ═══════════════════════════════════════════════════════════════
     {
       name: 'firefox',
-      testDir: './tests/behaviors/ui',
+      testDir: './tests',
       testMatch: [
-        'card.spec.ts',
-        'behaviors.spec.ts',
-        'all-components.spec.ts',
+        'cards/card.spec.ts',
+        'behaviors/behaviors.spec.ts',
+        'pages/all-components.spec.ts',
       ],
       use: { ...devices['Desktop Firefox'] },
     },
     {
       name: 'webkit',
-      testDir: './tests/behaviors/ui',
+      testDir: './tests',
       testMatch: [
-        'card.spec.ts',
-        'behaviors.spec.ts',
-        'all-components.spec.ts',
+        'cards/card.spec.ts',
+        'behaviors/behaviors.spec.ts',
+        'pages/all-components.spec.ts',
       ],
       use: { ...devices['Desktop Safari'] },
     },
     {
       name: 'mobile-chrome',
-      testDir: './tests/behaviors/ui',
+      testDir: './tests',
       testMatch: [
-        'card.spec.ts',
-        'behaviors.spec.ts',
+        'cards/card.spec.ts',
+        'behaviors/behaviors.spec.ts',
       ],
       use: { ...devices['Pixel 5'] },
     },
     {
       name: 'mobile-safari',
-      testDir: './tests/behaviors/ui',
+      testDir: './tests',
       testMatch: [
-        'card.spec.ts',
-        'behaviors.spec.ts',
+        'cards/card.spec.ts',
+        'behaviors/behaviors.spec.ts',
       ],
       use: { ...devices['iPhone 12'] },
     },

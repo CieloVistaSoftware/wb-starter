@@ -26,16 +26,16 @@ test.describe('Schema Validation: JSON Syntax', () => {
 
 test.describe('Schema Validation: Required Sections', () => {
   
-  test('component schemas have "behavior" field', () => {
+  test('component schemas have "schemaFor" field', () => {
     const files = getSchemaFiles();
     const missing: string[] = [];
     
     for (const file of files) {
       const schema = loadSchema(file);
-      if (schema && !schema.behavior) missing.push(file);
+      if (schema && !schema.schemaFor) missing.push(file);
     }
     
-    expect(missing, `Schemas missing "behavior" field: ${missing.join(', ')}`).toEqual([]);
+    expect(missing, `Schemas missing "schemaFor" field: ${missing.join(', ')}`).toEqual([]);
   });
   
   test('component schemas have "compliance" section', () => {
@@ -247,8 +247,8 @@ test.describe('Schema Validation: Test Section Completeness', () => {
     for (const [file, schema] of schemas) {
       if (!schema.test?.setup) continue;
       
-      const possibleTags = getPossibleTags(schema.behavior);
-      const dataWbPattern = `data-wb="${schema.behavior}"`;
+      const possibleTags = getPossibleTags(schema.schemaFor);
+      const dataWbPattern = `data-wb="${schema.schemaFor}"`;
       
       for (let i = 0; i < schema.test.setup.length; i++) {
         const html = schema.test.setup[i];
@@ -257,11 +257,11 @@ test.describe('Schema Validation: Test Section Completeness', () => {
         const hasDataWb = html.includes(dataWbPattern);
         
         // Also allow card variants to use base card behavior in setup
-        const usesCardBase = schema.behavior.startsWith('card') && 
+        const usesCardBase = schema.schemaFor.startsWith('card') && 
           (html.includes('data-wb="card"') || html.includes('<wb-card'));
         
         if (!hasWbTag && !hasDataWb && !usesCardBase) {
-          issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.behavior}> or data-wb="${schema.behavior}"`);
+          issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.schemaFor}> or data-wb="${schema.schemaFor}"`);
         }
       }
     }

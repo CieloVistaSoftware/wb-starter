@@ -69,7 +69,7 @@ export function range(element, options = {}) {
     element._updateValue = updateValue;
   }
 
-  element.dataset.wbReady = 'range';
+  element.classList.add('wb-ready');
 
   return () => {
     element.classList.remove('wb-range');

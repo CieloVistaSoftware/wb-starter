@@ -3,7 +3,7 @@
   "$id": "card.schema.json",
   "title": "Card Component",
   "description": "Base card component. IS-A article, HAS-A header, main, footer.",
-  "behavior": "card",
+  "schemaFor": "card",
   "baseClass": "wb-card",
   "semanticElement": {
     "tagName": "article",
@@ -56,7 +56,15 @@
     "size": {
       "type": "string",
       "description": "Card size variant controlling max/min width",
-      "enum": ["xs", "sm", "md", "lg", "xl", "full", "auto"],
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "full",
+        "auto"
+      ],
       "default": "auto",
       "appliesClass": "wb-card--{value}"
     }
@@ -182,6 +190,75 @@
           }
         }
       ]
+    },
+    "matrix": {
+      "combinations": [
+        {
+          "title": "Default Card",
+          "subtitle": "A simple card",
+          "footer": "Card footer"
+        },
+        {
+          "title": "Glass Card",
+          "variant": "glass",
+          "subtitle": "With glass effect"
+        },
+        {
+          "title": "Bordered Card",
+          "variant": "bordered",
+          "footer": "Bordered style"
+        },
+        {
+          "title": "Flat Card",
+          "variant": "flat",
+          "subtitle": "Minimal look"
+        },
+        {
+          "title": "Elevated Card",
+          "elevated": true,
+          "subtitle": "With shadow"
+        },
+        {
+          "title": "Clickable Card",
+          "clickable": true,
+          "subtitle": "Click me",
+          "footer": "Interactive"
+        },
+        {
+          "title": "Small Card",
+          "size": "sm",
+          "subtitle": "Compact size"
+        },
+        {
+          "title": "Large Card",
+          "size": "lg",
+          "subtitle": "Spacious layout",
+          "footer": "Extra room"
+        }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-card",
+      "renders": true,
+      "baseClass": "wb-card",
+      "minInstances": 8,
+      "checkText": [
+        "Default Card",
+        "A simple card",
+        "Card footer",
+        "Glass Card",
+        "With glass effect",
+        "Bordered Card"
+      ],
+      "checkClasses": [
+        "wb-card--xs"
+      ],
+      "checkAttributes": [
+        "title",
+        "subtitle",
+        "footer"
+      ]
     }
   },
   "_metadata": {
@@ -191,7 +268,21 @@
       "cardprofile",
       "cardpricing",
       "cardstats",
-      "cardimage"
+      "cardimage",
+      "cardbutton",
+      "carddraggable",
+      "cardexpandable",
+      "cardfile",
+      "cardhero",
+      "cardhorizontal",
+      "cardlink",
+      "cardminimizable",
+      "cardnotification",
+      "cardoverlay",
+      "cardportfolio",
+      "cardproduct",
+      "cardtestimonial",
+      "cardvideo"
     ]
   }
 }

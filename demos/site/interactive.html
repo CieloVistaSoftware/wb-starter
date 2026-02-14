@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive & Utility</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+  <link rel="stylesheet" href="../../src/styles/components.css">
+
+</head>
+
+<body>
+  <nav style="margin-bottom: 1rem;">
+    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  </nav>
+  <h1>🔧 Interactive & Utility</h1>
+  <p>Draggable, resizable, copy, dark mode, views</p>
+
+  <!-- 1. 📦 Draggable -->
+  <h2>📦 Draggable</h2>
+  <wb-demo columns="2">
+    <wb-draggable axis="both">
+    </wb-draggable>
+    <wb-draggable axis="x">
+    </wb-draggable>
+    <wb-draggable axis="y">
+    </wb-draggable>
+  </wb-demo>
+
+  <!-- 2. 📦 Resizable -->
+  <h2>📦 Resizable</h2>
+  <wb-demo columns="1">
+    <wb-resizable handles="se">
+    </wb-resizable>
+  </wb-demo>
+
+  <!-- 3. 📦 Copy -->
+  <h2>📦 Copy</h2>
+  <wb-demo columns="2">
+    <wb-copy text="Hello World">
+    </wb-copy>
+    <wb-copy text="npm install wb-starter">
+    </wb-copy>
+  </wb-demo>
+
+  <!-- 4. 📦 Dark Mode Toggle -->
+  <h2>📦 Dark Mode Toggle</h2>
+  <wb-demo columns="1">
+    <wb-darkmode>
+    </wb-darkmode>
+  </wb-demo>
+
+  <!-- 5. 📦 Theme Control -->
+  <h2>📦 Theme Control</h2>
+  <wb-demo columns="1">
+    <wb-themecontrol>
+    </wb-themecontrol>
+  </wb-demo>
+
+  <!-- 6. 📦 Collapse -->
+  <h2>📦 Collapse</h2>
+  <wb-demo columns="2">
+    <wb-collapse>
+    </wb-collapse>
+    <wb-collapse expanded>
+    </wb-collapse>
+  </wb-demo>
+
+  <!-- 7. 📦 Hero -->
+  <h2>📦 Hero</h2>
+  <wb-demo columns="2">
+    <wb-hero variant="default">
+    </wb-hero>
+    <wb-hero variant="cosmic">
+    </wb-hero>
+  </wb-demo>
+
+  <!-- 8. 📦 WB Views Registry Schema -->
+  <h2>📦 WB Views Registry Schema</h2>
+  <wb-demo columns="1">
+    <wb-views>
+    </wb-views>
+  </wb-demo>
+
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('Interactive & Utility initialized');
+  </script>
+</body>
+
+</html>

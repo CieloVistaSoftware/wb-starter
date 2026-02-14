@@ -31,12 +31,12 @@ test.describe('Behaviors Showcase Visual Tests', () => {
   test.describe('Drawer Layout', () => {
     
     test('drawer-layout should have wb-drawer-layout class', async ({ page }) => {
-      const drawer = page.locator('[data-wb="drawer-layout"]').first();
+      const drawer = page.locator('[x-drawer-layout]').first();
       await expect(drawer).toHaveClass(/wb-drawer-layout|wb-drawer/);
     });
 
     test('drawer text should not be cut off', async ({ page }) => {
-      const drawer = page.locator('[data-wb="drawer-layout"]').first();
+      const drawer = page.locator('[x-drawer-layout]').first();
       const drawerBox = await drawer.boundingBox();
       
       // Get text elements inside drawer
@@ -55,7 +55,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('drawer toggle button should not overlap content text', async ({ page }) => {
-      const drawer = page.locator('[data-wb="drawer-layout"]').first();
+      const drawer = page.locator('[x-drawer-layout]').first();
       const toggle = drawer.locator('.wb-drawer-toggle, button:has-text("◀"), button:has-text("▶")');
       const sidebarText = drawer.locator('div:has-text("Sidebar")').first();
       
@@ -76,7 +76,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('"Main Content" text should be fully visible', async ({ page }) => {
-      const mainContent = page.locator('[data-wb="drawer-layout"] >> text=Main Content').first();
+      const mainContent = page.locator('[x-drawer-layout] >> text=Main Content').first();
       
       if (await mainContent.count() > 0) {
         const isVisible = await mainContent.isVisible();
@@ -99,12 +99,12 @@ test.describe('Behaviors Showcase Visual Tests', () => {
   test.describe('Dropdown', () => {
     
     test('dropdown should have wb-dropdown class', async ({ page }) => {
-      const dropdown = page.locator('[data-wb="dropdown"]').first();
+      const dropdown = page.locator('wb-dropdown').first();
       await expect(dropdown).toHaveClass(/wb-dropdown/);
     });
 
     test('dropdown should create a trigger button', async ({ page }) => {
-      const dropdown = page.locator('[data-wb="dropdown"]').first();
+      const dropdown = page.locator('wb-dropdown').first();
       const trigger = dropdown.locator('.wb-dropdown__trigger, button');
       
       const triggerCount = await trigger.count();
@@ -112,7 +112,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('dropdown should create a menu container', async ({ page }) => {
-      const dropdown = page.locator('[data-wb="dropdown"]').first();
+      const dropdown = page.locator('wb-dropdown').first();
       const menu = dropdown.locator('.wb-dropdown__menu');
       
       const menuCount = await menu.count();
@@ -120,7 +120,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('dropdown menu should be hidden initially', async ({ page }) => {
-      const dropdown = page.locator('[data-wb="dropdown"]').first();
+      const dropdown = page.locator('wb-dropdown').first();
       const menu = dropdown.locator('.wb-dropdown__menu');
       
       if (await menu.count() > 0) {
@@ -131,7 +131,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('dropdown should NOT show raw links without trigger', async ({ page }) => {
-      const dropdown = page.locator('[data-wb="dropdown"]').first();
+      const dropdown = page.locator('wb-dropdown').first();
       
       // Check if links are directly visible children (bad - means dropdown didn't process them)
       const directLinks = dropdown.locator('> a');
@@ -145,7 +145,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('clicking dropdown trigger should open menu', async ({ page }) => {
-      const dropdown = page.locator('[data-wb="dropdown"]').first();
+      const dropdown = page.locator('wb-dropdown').first();
       const trigger = dropdown.locator('.wb-dropdown__trigger').first();
       const menu = dropdown.locator('.wb-dropdown__menu');
       
@@ -166,7 +166,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
   test.describe('Toggle', () => {
     
     test('toggle button should have visible background color', async ({ page }) => {
-      const toggle = page.locator('[data-wb="toggle"]').first();
+      const toggle = page.locator('wb-toggle').first();
       
       if (await toggle.count() > 0) {
         const bgColor = await toggle.evaluate(el => getComputedStyle(el).backgroundColor);
@@ -181,7 +181,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('toggle button should maintain styling after click', async ({ page }) => {
-      const toggle = page.locator('[data-wb="toggle"]').first();
+      const toggle = page.locator('wb-toggle').first();
       
       if (await toggle.count() > 0) {
         // Get initial styles
@@ -205,7 +205,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('toggle button text should be visible (not white on white)', async ({ page }) => {
-      const toggle = page.locator('[data-wb="toggle"]').first();
+      const toggle = page.locator('wb-toggle').first();
       
       if (await toggle.count() > 0) {
         await toggle.click(); // Toggle to off state
@@ -228,12 +228,12 @@ test.describe('Behaviors Showcase Visual Tests', () => {
   test.describe('Masonry', () => {
     
     test('masonry should have wb-masonry class', async ({ page }) => {
-      const masonry = page.locator('[data-wb="masonry"]').first();
+      const masonry = page.locator('wb-masonry').first();
       await expect(masonry).toHaveClass(/wb-masonry/);
     });
 
     test('masonry should have column-count CSS applied', async ({ page }) => {
-      const masonry = page.locator('[data-wb="masonry"]').first();
+      const masonry = page.locator('wb-masonry').first();
       
       if (await masonry.count() > 0) {
         const columnCount = await masonry.evaluate(el => getComputedStyle(el).columnCount);
@@ -248,7 +248,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('masonry children should have break-inside: avoid', async ({ page }) => {
-      const masonry = page.locator('[data-wb="masonry"]').first();
+      const masonry = page.locator('wb-masonry').first();
       const children = masonry.locator('> *');
       
       const count = await children.count();
@@ -262,7 +262,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('masonry items should be distributed across columns', async ({ page }) => {
-      const masonry = page.locator('[data-wb="masonry"]').first();
+      const masonry = page.locator('wb-masonry').first();
       const children = masonry.locator('> *');
       
       const count = await children.count();
@@ -288,7 +288,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
   test.describe('Tabs', () => {
     
     test('tabs should have wb-tabs class', async ({ page }) => {
-      const tabs = page.locator('[data-wb="tabs"]').first();
+      const tabs = page.locator('wb-tabs').first();
       await expect(tabs).toHaveClass(/wb-tabs/);
     });
 
@@ -313,14 +313,14 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('tabs navigation should exist', async ({ page }) => {
-      const tabs = page.locator('[data-wb="tabs"]').first();
+      const tabs = page.locator('wb-tabs').first();
       const nav = tabs.locator('.wb-tabs__nav');
       
       expect(await nav.count(), 'Tabs should have navigation container').toBeGreaterThan(0);
     });
 
     test('clicking tab should switch content', async ({ page }) => {
-      const tabs = page.locator('[data-wb="tabs"]').first();
+      const tabs = page.locator('wb-tabs').first();
       const secondTab = tabs.locator('.wb-tabs__tab').nth(1);
       
       if (await secondTab.count() > 0) {
@@ -401,20 +401,25 @@ test.describe('Behaviors Showcase Visual Tests', () => {
       expect(hasHorizontalScroll, 'Page should not have horizontal scrollbar').toBe(false);
     });
 
-    test('all data-wb elements should be initialized', async ({ page }) => {
+    test('all behavior elements should be initialized', async ({ page }) => {
       const uninitializedElements = await page.evaluate(() => {
-        const elements = document.querySelectorAll('[data-wb]');
+        // In v3.0, behaviors use x-* attributes. Find all elements with x-* attrs.
+        const allElements = document.querySelectorAll('*');
         const uninitialized: string[] = [];
         
-        elements.forEach((el, i) => {
-          const wb = el.getAttribute('data-wb');
-          const ready = el.getAttribute('data-wb-ready');
+        allElements.forEach((el, i) => {
+          const attrs = Array.from(el.attributes);
+          const xAttr = attrs.find(a => a.name.startsWith('x-'));
+          if (!xAttr) return;
+          
+          const ready = el.classList.contains('wb-ready');
+          const behaviorName = xAttr.name.replace('x-', '');
           
           // Skip certain behaviors that don't set ready
           const skipBehaviors = ['ripple', 'tooltip', 'copy', 'hotkey'];
           
-          if (!ready && wb && !skipBehaviors.some(s => wb.includes(s))) {
-            uninitialized.push(`${wb} (element ${i})`);
+          if (!ready && !skipBehaviors.some(s => behaviorName.includes(s))) {
+            uninitialized.push(`${behaviorName} (element ${i})`);
           }
         });
         
@@ -437,7 +442,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
         const textElements = document.querySelectorAll('p, span, div, button, a, h1, h2, h3, h4, h5, h6, li, td, th');
         
         textElements.forEach((el, i) => {
-          if (el.closest('[data-wb="mdhtml"], wb-mdhtml')) return; // Skip code blocks
+          if (el.closest('wb-mdhtml, wb-mdhtml')) return; // Skip code blocks
           
           const style = getComputedStyle(el);
           if (style.overflow === 'hidden' || style.display === 'none') return;
@@ -471,7 +476,7 @@ test.describe('Known Issues Detection', () => {
   });
 
   test('KNOWN ISSUE: drawer-layout toggle overlaps text', async ({ page }) => {
-    const drawer = page.locator('[data-wb="drawer-layout"]').first();
+    const drawer = page.locator('[x-drawer-layout]').first();
     
     if (await drawer.count() > 0) {
       const toggle = drawer.locator('.wb-drawer-toggle, button').first();
@@ -497,7 +502,7 @@ test.describe('Known Issues Detection', () => {
   });
 
   test('KNOWN ISSUE: toggle button loses styling', async ({ page }) => {
-    const toggle = page.locator('[data-wb="toggle"]').first();
+    const toggle = page.locator('wb-toggle').first();
     
     if (await toggle.count() > 0) {
       // Click to toggle off

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WB Test Harness</title>
+    <link rel="stylesheet" href="../src/styles/normalize.css">
+    <link rel="stylesheet" href="../src/styles/themes.css">
+    <link rel="stylesheet" href="../src/styles/site.css">
+    <link rel="stylesheet" href="../src/styles/components.css">
+    <link rel="stylesheet" href="../src/styles/safari-fixes.css">
+    <script type="module">
+        import WB from '../src/core/wb-lazy.js';
+        
+        WB.init({
+            debug: false,
+            scan: true,
+            observe: true
+        });
+        
+        window.WB = WB;
+    </script>
+    <style>
+        body { 
+            font-family: system-ui, sans-serif; 
+            padding: 1rem; 
+            background: var(--bg-color); 
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <h1>WB Test Harness</h1>
+    <p>Lightweight page for auto-generated behavior tests.</p>
+    <!-- Test containers injected dynamically by Playwright -->
+</body>
+</html>

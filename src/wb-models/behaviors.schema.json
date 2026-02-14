@@ -1,0 +1,374 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WB Behaviors Schema",
+  "description": "Master schema defining all behavior metadata, properties, interactions, accessibility, and test requirements",
+  "schemaFor": "behaviors",
+  "type": "behavior-schema",
+  "version": "3.0.0",
+  "definitions": {
+    "behaviorType": {
+      "type": "string",
+      "enum": [
+        "element",
+        "container",
+        "modifier",
+        "action"
+      ],
+      "description": "The fundamental type of this behavior"
+    },
+    "htmlElement": {
+      "type": "string",
+      "enum": [
+        "div",
+        "span",
+        "section",
+        "article",
+        "aside",
+        "nav",
+        "header",
+        "footer",
+        "main",
+        "button",
+        "a",
+        "input",
+        "textarea",
+        "select",
+        "form",
+        "fieldset",
+        "label",
+        "img",
+        "video",
+        "audio",
+        "iframe",
+        "figure",
+        "picture",
+        "table",
+        "ul",
+        "ol",
+        "dl",
+        "li",
+        "dt",
+        "dd",
+        "details"
+      ],
+      "description": "Supported HTML elements for behaviors"
+    },
+    "behaviorCategory": {
+      "type": "string",
+      "enum": [
+        "buttons",
+        "inputs",
+        "selection",
+        "feedback",
+        "overlays",
+        "navigation",
+        "data",
+        "media",
+        "effects",
+        "utilities"
+      ],
+      "description": "Categorization of behaviors for organization"
+    }
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Unique identifier for the behavior"
+    },
+    "type": {
+      "$ref": "#/definitions/behaviorType"
+    },
+    "category": {
+      "$ref": "#/definitions/behaviorCategory"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of what the behavior does"
+    },
+    "selector": {
+      "type": "string",
+      "description": "CSS selector that identifies elements this behavior applies to"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Configuration attributes for the behavior",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "events": {
+      "type": "array",
+      "description": "Events this behavior responds to",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Other behaviors or components this behavior depends on",
+      "items": {
+        "type": "string"
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "description": "Accessibility requirements and ARIA attributes",
+      "properties": {
+        "role": {"type": "string"},
+        "ariaAttributes": {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        },
+        "keyboardSupport": {"type": "boolean"}
+      }
+    },
+    "testCases": {
+      "type": "array",
+      "description": "Test scenarios for this behavior",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": {"type": "string"},
+          "setup": {"type": "string"},
+          "action": {"type": "string"},
+          "expected": {"type": "string"}
+        }
+      }
+    }
+  },
+  "required": ["name", "type", "category", "description"],
+  "behaviorInventory": {
+    "categories": {
+      "buttons": [
+        {"name": "wb-btn", "type": "modifier", "description": "Button styling and variants"},
+        {"name": "x-ripple", "type": "action", "description": "Material design ripple effect"},
+        {"name": "x-toast", "type": "action", "description": "Toast notification trigger"},
+        {"name": "x-tooltip", "type": "modifier", "description": "Tooltip display"}
+      ],
+      "inputs": [
+        {"name": "input", "type": "element", "description": "Enhanced input styling"},
+        {"name": "x-password", "type": "modifier", "description": "Password visibility toggle"},
+        {"name": "x-search", "type": "modifier", "description": "Search input with icon"},
+        {"name": "x-colorpicker", "type": "modifier", "description": "Color picker input"},
+        {"name": "x-masked", "type": "modifier", "description": "Input masking"},
+        {"name": "textarea", "type": "element", "description": "Enhanced textarea"}
+      ],
+      "selection": [
+        {"name": "checkbox", "type": "element", "description": "Enhanced checkbox"},
+        {"name": "radio", "type": "element", "description": "Enhanced radio button"},
+        {"name": "wb-switch", "type": "element", "description": "Toggle switch"},
+        {"name": "select", "type": "element", "description": "Enhanced select dropdown"},
+        {"name": "wb-rating", "type": "element", "description": "Star rating component"},
+        {"name": "x-stepper", "type": "modifier", "description": "Number stepper"},
+        {"name": "range", "type": "element", "description": "Enhanced range slider"}
+      ],
+      "feedback": [
+        {"name": "wb-alert", "type": "element", "description": "Alert/notification component"},
+        {"name": "wb-badge", "type": "element", "description": "Badge component"},
+        {"name": "wb-progress", "type": "element", "description": "Progress bar"},
+        {"name": "wb-spinner", "type": "element", "description": "Loading spinner"},
+        {"name": "x-toast", "type": "action", "description": "Toast notification"}
+      ],
+      "overlays": [
+        {"name": "wb-modal", "type": "element", "description": "Modal dialog"},
+        {"name": "wb-drawer", "type": "element", "description": "Slide-out drawer"},
+        {"name": "x-tooltip", "type": "modifier", "description": "Tooltip"},
+        {"name": "x-popover", "type": "modifier", "description": "Popover"},
+        {"name": "x-confirm", "type": "action", "description": "Confirmation dialog"},
+        {"name": "x-prompt", "type": "action", "description": "Prompt dialog"},
+        {"name": "x-lightbox", "type": "modifier", "description": "Image lightbox"}
+      ],
+      "navigation": [
+        {"name": "wb-tabs", "type": "element", "description": "Tab navigation"},
+        {"name": "wb-accordion", "type": "element", "description": "Collapsible accordion"},
+        {"name": "x-breadcrumb", "type": "modifier", "description": "Breadcrumb navigation"},
+        {"name": "x-pagination", "type": "modifier", "description": "Pagination controls"},
+        {"name": "x-steps", "type": "modifier", "description": "Step wizard"}
+      ],
+      "data": [
+        {"name": "wb-avatar", "type": "element", "description": "User avatar"},
+        {"name": "wb-skeleton", "type": "element", "description": "Loading skeleton"},
+        {"name": "x-timeline", "type": "modifier", "description": "Timeline display"},
+        {"name": "x-kbd", "type": "modifier", "description": "Keyboard key display"}
+      ],
+      "media": [
+        {"name": "x-image", "type": "modifier", "description": "Enhanced images"},
+        {"name": "x-gallery", "type": "modifier", "description": "Image gallery"},
+        {"name": "wb-audio", "type": "element", "description": "Audio player"},
+        {"name": "x-youtube", "type": "modifier", "description": "YouTube embed"}
+      ],
+      "effects": [
+        {"name": "x-bounce", "type": "action", "description": "Bounce animation"},
+        {"name": "x-shake", "type": "action", "description": "Shake animation"},
+        {"name": "x-pulse", "type": "action", "description": "Pulse animation"},
+        {"name": "x-flash", "type": "action", "description": "Flash animation"},
+        {"name": "x-tada", "type": "action", "description": "Tada animation"},
+        {"name": "x-wobble", "type": "action", "description": "Wobble animation"},
+        {"name": "x-jello", "type": "action", "description": "Jello animation"},
+        {"name": "x-heartbeat", "type": "action", "description": "Heartbeat animation"},
+        {"name": "x-fadein", "type": "action", "description": "Fade in animation"},
+        {"name": "x-slidein", "type": "action", "description": "Slide in animation"},
+        {"name": "x-zoomin", "type": "action", "description": "Zoom in animation"},
+        {"name": "x-flip", "type": "action", "description": "Flip animation"},
+        {"name": "x-confetti", "type": "action", "description": "Confetti effect"},
+        {"name": "x-fireworks", "type": "action", "description": "Fireworks effect"},
+        {"name": "x-snow", "type": "action", "description": "Snow effect"},
+        {"name": "x-sparkle", "type": "action", "description": "Sparkle effect"},
+        {"name": "x-glow", "type": "action", "description": "Glow effect"},
+        {"name": "x-rainbow", "type": "action", "description": "Rainbow effect"},
+        {"name": "x-ripple", "type": "action", "description": "Ripple effect"}
+      ],
+      "utilities": [
+        {"name": "x-copy", "type": "action", "description": "Copy to clipboard"},
+        {"name": "x-share", "type": "action", "description": "Native share"},
+        {"name": "x-print", "type": "action", "description": "Print page"},
+        {"name": "x-fullscreen", "type": "action", "description": "Toggle fullscreen"},
+        {"name": "x-clock", "type": "modifier", "description": "Live clock"},
+        {"name": "x-countdown", "type": "modifier", "description": "Countdown timer"},
+        {"name": "x-relativetime", "type": "modifier", "description": "Relative time"},
+        {"name": "x-darkmode", "type": "action", "description": "Dark mode toggle"},
+        {"name": "wb-themecontrol", "type": "element", "description": "Theme selector"},
+        {"name": "x-truncate", "type": "modifier", "description": "Text truncation"}
+      ]
+    }
+  },
+  "$view": [
+    {
+      "name": "header",
+      "tag": "header",
+      "required": true,
+      "attributes": {
+        "id": "header"
+      }
+    },
+    {
+      "name": "headerDiv",
+      "tag": "div",
+      "parent": "header",
+      "attributes": {
+        "id": "autogen-behaviors-html-0"
+      }
+    },
+    {
+      "name": "headerTitle",
+      "tag": "h1",
+      "parent": "headerDiv",
+      "content": "⚡ WB Behaviors Showcase"
+    },
+    {
+      "name": "headerSubtitle",
+      "tag": "p",
+      "parent": "headerDiv",
+      "attributes": {
+        "class": "header-subtitle"
+      },
+      "content": "170+ behaviors • Interactive demos • Copy-ready code"
+    },
+    {
+      "name": "themeControl",
+      "tag": "wb-themecontrol",
+      "parent": "header"
+    },
+    {
+      "name": "nav",
+      "tag": "nav",
+      "required": true,
+      "attributes": {
+        "id": "nav",
+        "class": "nav-links"
+      }
+    },
+    {
+      "name": "navButtons",
+      "tag": "a",
+      "parent": "nav",
+      "attributes": {
+        "href": "#buttons"
+      },
+      "content": "🔘 Buttons"
+    },
+    {
+      "name": "navInputs",
+      "tag": "a",
+      "parent": "nav",
+      "attributes": {
+        "href": "#inputs"
+      },
+      "content": "📝 Inputs"
+    },
+    {
+      "name": "navSelection",
+      "tag": "a",
+      "parent": "nav",
+      "attributes": {
+        "href": "#selection"
+      },
+      "content": "☑️ Selection"
+    },
+    {
+      "name": "navFeedback",
+      "tag": "a",
+      "parent": "nav",
+      "attributes": {
+        "href": "#feedback"
+      },
+      "content": "📢 Feedback"
+    },
+    {
+      "name": "navOverlays",
+      "tag": "a",
+      "parent": "nav",
+      "attributes": {
+        "href": "#overlays"
+      },
+      "content": "🪟 Overlays"
+    },
+    {
+      "name": "navNavigation",
+      "tag": "a",
+      "parent": "nav",
+      "attributes": {
+        "href": "#navigation"
+      },
+      "content": "🧭 Navigation"
+    },
+    {
+      "name": "navData",
+      "tag": "a",
+      "parent": "nav",
+      "attributes": {
+        "href": "#data"
+      },
+      "content": "📊 Data"
+    },
+    {
+      "name": "navMedia",
+      "tag": "a",
+      "parent": "nav",
+      "attributes": {
+        "href": "#media"
+      },
+      "content": "🖼️ Media"
+    },
+    {
+      "name": "navEffects",
+      "tag": "a",
+      "parent": "nav",
+      "attributes": {
+        "href": "#effects"
+      },
+      "content": "✨ Effects"
+    },
+    {
+      "name": "navUtilities",
+      "tag": "a",
+      "parent": "nav",
+      "attributes": {
+        "href": "#utilities"
+      },
+      "content": "🔧 Utilities"
+    }
+  ],
+  "$methods": {},
+  "$cssAPI": {}
+}

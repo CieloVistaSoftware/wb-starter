@@ -1,0 +1,97 @@
+{
+  "generated": "2026-02-10T22:15:00.000Z",
+  "title": "data-wb Migration Triage — Corrected After Runtime Analysis",
+  "summary": {
+    "total_hits": 76,
+    "applied": 1,
+    "keep_as_is": 57,
+    "needs_runtime_migration_first": 11,
+    "manual_review_needed": 7
+  },
+  "applied_conversions": [
+    {
+      "file": "tests/base.ts",
+      "line": 271,
+      "change": "Regex data-wb='mdhtml' → x-mdhtml in stripDynamicContent()",
+      "reason": "HTML source files already migrated to x-mdhtml"
+    }
+  ],
+  "blocked_by_runtime": {
+    "description": "These test assertions check runtime-set markers (dataset.wb*). The runtime code still sets these. Tests are CORRECT. Migrate runtime first, then update tests.",
+    "items": [
+      {
+        "file": "tests/behaviors/autosize.spec.ts:17",
+        "code": "getAttribute('data-wb-autosize')",
+        "runtime_source": "src/wb-viewmodels/autosize.js:12 → t.dataset.wbAutosize = '1'"
+      },
+      {
+        "file": "tests/components/datepicker.spec.ts:17",
+        "code": "getAttribute('data-wb-datepicker')",
+        "runtime_source": "src/wb-viewmodels/semantics/datepicker.js:4 → element.dataset.wbDatepicker = '1'"
+      },
+      {
+        "file": "tests/components/diff.spec.ts:21",
+        "code": "getAttribute('data-wb-diff')",
+        "runtime_source": "src/wb-viewmodels/semantics/diff.js:6 → element.dataset.wbDiff = '1'"
+      },
+      {
+        "file": "tests/components/timepicker.spec.ts:17",
+        "code": "getAttribute('data-wb-timepicker')",
+        "runtime_source": "src/wb-viewmodels/semantics/timepicker.js:4 → element.dataset.wbTimepicker = '1'"
+      },
+      {
+        "file": "tests/behaviors/fixes-verification.spec.ts:209",
+        "code": "not.toHaveAttribute('data-wb-error', 'true')",
+        "runtime_source": "src/core/wb.js:233, wb-lazy.js:338 → element.dataset.wbError = 'true'"
+      }
+    ]
+  },
+  "blocked_by_builder_migration": {
+    "description": "These selectors find elements created by the builder app, which still outputs data-wb attributes (28 hits in builder-app/). Tests are CORRECT until builder is migrated.",
+    "items": [
+      {
+        "file": "tests/builder/builder-mkel.spec.ts:398",
+        "code": "page.locator(`[data-wb=\"${testCase.component.b}\"]`).first()",
+        "note": "Builder tests already SKIPPED"
+      },
+      {
+        "file": "tests/builder/builder-mkel.spec.ts:482",
+        "code": "page.locator(`[data-wb=\"${testCase.component.b}\"]`).first()",
+        "note": "Builder tests already SKIPPED"
+      },
+      {
+        "file": "tests/builder/builder-mkel.spec.ts:555",
+        "code": "page.locator(`[data-wb=\"${tc.b}\"]`).first()",
+        "note": "Builder tests already SKIPPED"
+      },
+      {
+        "file": "tests/regression/regression-tests.spec.ts:466",
+        "code": "page.locator(`[data-wb=\"${comp.behavior}\"]`).first()",
+        "note": "Uses builder's add() which outputs data-wb"
+      }
+    ]
+  },
+  "intentionally_legacy": {
+    "description": "Debug/diagnostic tests that look for legacy patterns on purpose",
+    "items": [
+      {
+        "file": "tests/debug/find-pill.spec.ts:10",
+        "code": "querySelectorAll('[data-wb], [data-wb-error]...')",
+        "reason": "Debug test scanning for legacy pill elements"
+      },
+      {
+        "file": "tests/debug/find-pill.spec.ts:12",
+        "code": "getAttribute('data-wb') === 'pill'",
+        "reason": "Filters for specific legacy pattern"
+      }
+    ]
+  },
+  "comments_leave_alone": 18,
+  "compliance_tests_leave_alone": 34,
+  "migration_order": [
+    "1. Runtime init markers (autosize, datepicker, diff, timepicker) → update viewmodels to use new marker pattern, then update 4 tests",
+    "2. Runtime error markers (data-wb-error) → update core/wb.js, wb-lazy.js, all viewmodels, then update assertion tests",
+    "3. Builder app (28 hits) → full builder migration, then update builder-mkel + regression tests",
+    "4. Debug tests → update after all runtime migration complete"
+  ]
+}

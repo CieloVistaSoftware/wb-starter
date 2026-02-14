@@ -3,7 +3,7 @@
   "$id": "tooltip.schema.json",
   "title": "Tooltip",
   "description": "Tooltip for displaying additional information on hover/focus",
-  "behavior": "tooltip",
+  "schemaFor": "tooltip",
   "baseClass": "wb-tooltip-trigger",
   "semanticElement": {
     "tagName": "div",
@@ -266,6 +266,21 @@
           "content": "Tooltip text",
           "delay": 500
         }
+      ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-tooltip",
+      "renders": true,
+      "baseClass": "wb-tooltip",
+      "minInstances": 9,
+      "checkText": [],
+      "checkClasses": [
+        "wb-tooltip--bottom",
+        "wb-tooltip--dark"
+      ],
+      "checkAttributes": [
+        "content"
       ]
     }
   },

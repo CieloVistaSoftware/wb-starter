@@ -86,7 +86,7 @@ export function radio(element, options = {}) {
     element.classList.add(`wb-radio--${config.variant}`);
   }
 
-  element.dataset.wbReady = 'radio';
+  element.classList.add('wb-ready');
 
   return () => {
     element.classList.remove('wb-radio', `wb-radio--${config.variant}`, `wb-radio--${config.size}`);

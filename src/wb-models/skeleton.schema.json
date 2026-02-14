@@ -3,7 +3,7 @@
   "$id": "skeleton.schema.json",
   "title": "Skeleton",
   "description": "Loading skeleton placeholder with shimmer animation",
-  "behavior": "skeleton",
+  "schemaFor": "skeleton",
   "baseClass": "wb-skeleton",
   "semanticElement": {
     "tagName": "div",
@@ -143,6 +143,20 @@
         {
           "variant": "card"
         }
+      ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-skeleton",
+      "renders": true,
+      "baseClass": "wb-skeleton",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-skeleton--circle"
+      ],
+      "checkAttributes": [
+        "variant"
       ]
     }
   },

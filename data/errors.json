@@ -1,39 +1,39 @@
 {
-  "lastUpdated": "2026-02-06T23:39:37.944Z",
+  "lastUpdated": "2026-02-13T23:02:30.100Z",
   "count": 1,
   "errors": [
     {
-      "id": 1770421177943,
-      "timestamp": "2026-02-06T23:39:37.943Z",
+      "id": 1771023750099,
+      "timestamp": "2026-02-13T23:02:30.099Z",
       "level": "error",
       "source": "WB:LegacySyntax",
       "module": "wb.js",
-      "line": 349,
+      "line": 364,
       "column": 41,
       "function": "(anonymous)",
       "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
-      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:349:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:341:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:724:18)",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:364:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:356:42)\n    at async Object.init (http://localhost:3000/src/core/wb.js:746:9)",
       "frames": [
         {
           "function": "(anonymous)",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 349,
+          "line": 364,
           "column": 41
         },
         {
           "function": "Object.scan",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 341,
+          "line": 356,
           "column": 42
         },
         {
           "function": "Object.init",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 724,
-          "column": 18
+          "line": 746,
+          "column": 9
         }
       ],
       "url": "http://localhost:3000/tests/compliance/legacy-syntax-check.html",

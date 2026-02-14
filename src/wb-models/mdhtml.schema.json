@@ -3,7 +3,7 @@
   "$id": "mdhtml.schema.json",
   "title": "Markdown to HTML",
   "description": "Renders Markdown content as HTML, either from inline content or external source",
-  "behavior": "mdhtml",
+  "schemaFor": "mdhtml",
   "baseClass": "wb-mdhtml",
   "semanticElement": {
     "tagName": "div",
@@ -47,6 +47,32 @@
       "<wb-mdhtml gfm>with gfm</wb-mdhtml>",
       "<wb-mdhtml src=\"Sample src\">src=\"Sample src\"</wb-mdhtml>",
       "<wb-mdhtml sanitize gfm>Combined: with sanitize, with gfm</wb-mdhtml>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "src": "../demos/code.md"
+        },
+        {
+          "gfm": true
+        },
+        {
+          "sanitize": true,
+          "gfm": true
+        }
+      ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-mdhtml",
+      "renders": true,
+      "baseClass": "wb-mdhtml",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "src"
+      ]
+    }
   }
 }

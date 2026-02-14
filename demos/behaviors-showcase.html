@@ -83,6 +83,10 @@
       flex-wrap: wrap;
       justify-content: center;
     }
+    .showcase-stats wb-cardstats {
+      flex: 1 1 0;
+      min-width: 150px;
+    }
 
     /* Sections */
     section {
@@ -240,6 +244,16 @@
     .wb-btn:disabled {
       opacity: 0.5;
       cursor: not-allowed;
+    }
+
+    /* Button gaps in all demo containers */
+    .demo-row, .demo-grid-2, .demo-grid-3, .demo-grid-4 {
+      gap: 1rem;
+    }
+    section button + button,
+    section wb-modal + wb-modal,
+    section wb-drawer + wb-drawer {
+      margin-left: 0; /* let flex gap handle it */
     }
 
     /* Form Elements */
@@ -752,17 +766,17 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-40">
       <div class="demo-area">
         <div class="demo-stack">
-          <wb-alert type="info" title="Information" message="This is an informational message for the user." data-dismissible=""></wb-alert>
-          <wb-alert type="success" title="Success" message="The operation completed successfully." data-dismissible=""></wb-alert>
-          <wb-alert type="warning" title="Warning" message="Please review this before continuing." data-dismissible=""></wb-alert>
-          <wb-alert type="error" title="Error" message="Something went wrong. Please try again." data-dismissible=""></wb-alert>
+          <wb-alert type="info" title="Information" message="This is an informational message for the user." dismissible=""></wb-alert>
+          <wb-alert type="success" title="Success" message="The operation completed successfully." dismissible=""></wb-alert>
+          <wb-alert type="warning" title="Warning" message="Please review this before continuing." dismissible=""></wb-alert>
+          <wb-alert type="error" title="Error" message="Something went wrong. Please try again." dismissible=""></wb-alert>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<wb-alert type="info" title="Information" message="Informational message." data-dismissible=""></wb-alert>
+<wb-alert type="info" title="Information" message="Informational message." dismissible=""></wb-alert>
 
-<wb-alert type="success" title="Success" message="Operation completed." data-dismissible=""></wb-alert>
+<wb-alert type="success" title="Success" message="Operation completed." dismissible=""></wb-alert>
 
 <wb-alert type="warning" title="Warning" message="Please review."></wb-alert>
 
@@ -780,7 +794,7 @@
           <wb-badge variant="warning">Warning</wb-badge>
           <wb-badge variant="error">Error</wb-badge>
           <wb-badge variant="info">Info</wb-badge>
-          <wb-badge data-pill="">Pill Style</wb-badge>
+          <wb-badge pill="">Pill Style</wb-badge>
         </div>
       </div>
       <wb-mdhtml>
@@ -790,7 +804,7 @@
 <wb-badge variant="warning">Warning</wb-badge>
 <wb-badge variant="error">Error</wb-badge>
 <wb-badge variant="info">Info</wb-badge>
-<wb-badge data-pill="">Pill Style</wb-badge>
+<wb-badge pill="">Pill Style</wb-badge>
 ```
       </wb-mdhtml>
     </div>
@@ -801,7 +815,7 @@
         <div class="demo-stack">
           <wb-progress value="25"></wb-progress>
           <wb-progress value="50"></wb-progress>
-          <wb-progress value="75" data-striped=""></wb-progress>
+          <wb-progress value="75" striped=""></wb-progress>
           <wb-progress value="100"></wb-progress>
         </div>
       </div>
@@ -809,7 +823,7 @@
 ```html
 <wb-progress value="25"></wb-progress>
 <wb-progress value="50"></wb-progress>
-<wb-progress value="75" data-striped=""></wb-progress>
+<wb-progress value="75" striped=""></wb-progress>
 <wb-progress value="100"></wb-progress>
 ```
       </wb-mdhtml>
@@ -883,12 +897,12 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-45">
       <div class="demo-area">
         <div class="demo-row">
-          <wb-modal class="wb-btn wb-btn--primary" data-modal-title="Modal Dialog" data-modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
+          <wb-modal class="wb-btn wb-btn--primary" modal-title="Modal Dialog" modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<wb-modal class="wb-btn wb-btn--primary" data-modal-title="Modal Dialog" data-modal-content="Modal content goes here.">
+<wb-modal class="wb-btn wb-btn--primary" modal-title="Modal Dialog" modal-content="Modal content goes here.">
   Open Modal
 </wb-modal>
 ```
@@ -1236,10 +1250,10 @@
       <wb-mdhtml>
 ```html
 <div x-gallery="" data-columns="4">
-  <img src="img1.jpg" alt="Image 1">
-  <img src="img2.jpg" alt="Image 2">
-  <img src="img3.jpg" alt="Image 3">
-  <img src="img4.jpg" alt="Image 4">
+  <img src="https://picsum.photos/200/200?r=code1" alt="Image 1">
+  <img src="https://picsum.photos/200/200?r=code2" alt="Image 2">
+  <img src="https://picsum.photos/200/200?r=code3" alt="Image 3">
+  <img src="https://picsum.photos/200/200?r=code4" alt="Image 4">
 </div>
 ```
       </wb-mdhtml>
@@ -1248,11 +1262,11 @@
     <h3>Audio Player with EQ</h3>
     <div class="demo-container" id="autogen-behaviors-showcase-html-62">
       <div class="demo-area">
-        <wb-audio data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" data-show-eq="true" data-volume="0.7"></wb-audio>
+        <wb-audio src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" show-eq="true" volume="0.7"></wb-audio>
       </div>
       <wb-mdhtml>
 ```html
-<wb-audio data-src="audio-file.mp3" data-show-eq="true" data-volume="0.7">
+<wb-audio src="audio-file.mp3" show-eq="true" volume="0.7">
 </wb-audio>
 ```
       </wb-mdhtml>
@@ -1509,7 +1523,6 @@
     window.WB = WB;
 
     await WB.init({ autoInject: true });
-    await WB.scan();
 
     console.log('✅ wb-starter Behaviors Showcase initialized');
   </script>

@@ -734,7 +734,7 @@ export function audio(element, options = {}) {
     getAudioContext: () => audioContext
   };
 
-  element.dataset.wbReady = 'audio';
+  element.classList.add('wb-ready');
   return () => {
     container.classList.remove('wb-audio');
     if (wrapper && wrapper.parentNode) {
@@ -927,7 +927,7 @@ export function youtube(element, options = {}) {
   element.innerHTML = '';
   element.appendChild(iframe);
 
-  element.dataset.wbReady = 'youtube';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-youtube');
 }
 
@@ -971,7 +971,7 @@ export function vimeo(element, options = {}) {
   element.innerHTML = '';
   element.appendChild(iframe);
 
-  element.dataset.wbReady = 'vimeo';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-vimeo');
 }
 

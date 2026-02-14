@@ -1,0 +1,32 @@
+/**
+ * Modal Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/modal.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9998;
+  align-items: center;
+  justify-content: center;
+}
+
+.wb-modal.open {
+  display: flex;
+}
+
+.wb-modal-content {
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 90%;
+}

@@ -3,7 +3,7 @@
   "$id": "cardimage.schema.json",
   "title": "Image Card",
   "description": "Card with featured image and optional title/subtitle",
-  "behavior": "cardimage",
+  "schemaFor": "cardimage",
   "baseClass": "wb-card-image",
   "semanticElement": {
     "tagName": "article",
@@ -304,6 +304,24 @@
           "src": "photo.jpg",
           "variant": "elevated"
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardimage",
+      "renders": true,
+      "baseClass": "wb-card-image",
+      "minInstances": 8,
+      "checkText": [
+        "Title",
+        "Subtitle"
+      ],
+      "checkClasses": [
+        "wb-card-image--bottom",
+        "wb-card-image--elevated"
+      ],
+      "checkAttributes": [
+        "src"
       ]
     }
   },

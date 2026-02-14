@@ -7,7 +7,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Themes Showcase Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:5174/?page=themes');
+    await page.goto('/?page=themes');
     await page.waitForTimeout(1000);
   });
 
@@ -93,7 +93,7 @@ test.describe('Themes Showcase Page', () => {
 
     test('has code example with wb-mdhtml', async ({ page }) => {
       // Check for code block in HCS section
-      const codeBlock = page.locator('.page__section').first().locator('wb-mdhtml, [data-wb="mdhtml"]');
+      const codeBlock = page.locator('.page__section').first().locator('wb-mdhtml, wb-mdhtml');
       await expect(codeBlock).toBeVisible();
     });
   });

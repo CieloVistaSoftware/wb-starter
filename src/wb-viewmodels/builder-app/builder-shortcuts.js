@@ -122,7 +122,7 @@ export function copyAsHTML(options = {}) {
 
   // Clone and clean up
   const clone = el.cloneNode(true);
-  clone.removeAttribute('data-wb-ready');
+  clone.classList.remove('wb-ready');
   clone.classList.remove('wb-mdhtml--loading', 'wb-mdhtml--loaded');
 
   // Remove contenteditable attributes

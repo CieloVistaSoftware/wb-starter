@@ -3,7 +3,7 @@
   "$id": "cardportfolio.schema.json",
   "title": "Portfolio Card",
   "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
-  "behavior": "cardportfolio",
+  "schemaFor": "cardportfolio",
   "baseClass": "wb-portfolio",
   "semanticElement": {
     "tagName": "article",
@@ -50,7 +50,12 @@
     },
     "availability": {
       "type": "string",
-      "enum": ["available", "busy", "not-available", "open-to-opportunities"],
+      "enum": [
+        "available",
+        "busy",
+        "not-available",
+        "open-to-opportunities"
+      ],
       "default": "available",
       "description": "Current availability status"
     },
@@ -124,13 +129,25 @@
     },
     "variant": {
       "type": "string",
-      "enum": ["default", "compact", "horizontal", "full"],
+      "enum": [
+        "default",
+        "compact",
+        "horizontal",
+        "full"
+      ],
       "default": "default",
       "appliesClass": "wb-portfolio--{{value}}"
     },
     "size": {
       "type": "string",
-      "enum": ["sm", "md", "lg", "xl", "full", "auto"],
+      "enum": [
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "full",
+        "auto"
+      ],
       "default": "auto"
     }
   },
@@ -221,25 +238,118 @@
     }
   ],
   "$methods": {
-    "show": { "description": "Shows the card", "params": [] },
-    "hide": { "description": "Hides the card", "params": [] },
-    "toggle": { "description": "Toggles visibility", "params": [] },
-    "setAvailability": { "description": "Updates availability status", "params": ["status"] }
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "setAvailability": {
+      "description": "Updates availability status",
+      "params": [
+        "status"
+      ]
+    }
   },
   "$cssAPI": {
-    "--wb-portfolio-radius": { "default": "12px", "description": "Card border radius" },
-    "--wb-portfolio-bg": { "default": "var(--bg-secondary)", "description": "Card background" },
-    "--wb-portfolio-cover-height": { "default": "150px", "description": "Cover image height" },
-    "--wb-portfolio-avatar-size": { "default": "120px", "description": "Avatar size" },
-    "--wb-portfolio-avatar-border": { "default": "4px solid var(--bg-secondary)", "description": "Avatar border" },
-    "--wb-portfolio-section-gap": { "default": "1.5rem", "description": "Gap between sections" }
+    "--wb-portfolio-radius": {
+      "default": "12px",
+      "description": "Card border radius"
+    },
+    "--wb-portfolio-bg": {
+      "default": "var(--bg-secondary)",
+      "description": "Card background"
+    },
+    "--wb-portfolio-cover-height": {
+      "default": "150px",
+      "description": "Cover image height"
+    },
+    "--wb-portfolio-avatar-size": {
+      "default": "120px",
+      "description": "Avatar size"
+    },
+    "--wb-portfolio-avatar-border": {
+      "default": "4px solid var(--bg-secondary)",
+      "description": "Avatar border"
+    },
+    "--wb-portfolio-section-gap": {
+      "default": "1.5rem",
+      "description": "Gap between sections"
+    }
   },
   "test": {
     "setup": [
       "<wb-cardportfolio name=\"John Doe\"></wb-cardportfolio>",
       "<wb-cardportfolio name=\"Jane Smith\" title=\"Designer\" skills=\"UI/UX,Figma,CSS\"></wb-cardportfolio>",
       "<wb-cardportfolio name=\"Dev\" variant=\"full\" experience='[{\"company\":\"ACME\",\"role\":\"Engineer\"}]'></wb-cardportfolio>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "name": "Jane Smith",
+          "title": "UX Designer",
+          "company": "Anthropic",
+          "skills": "Figma,CSS,React",
+          "bio": "Creative designer with 8 years experience",
+          "availability": "available"
+        },
+        {
+          "name": "John Doe",
+          "title": "Senior Engineer",
+          "company": "Cielo Vista",
+          "skills": "TypeScript,Node,SQL",
+          "variant": "compact",
+          "availability": "busy"
+        },
+        {
+          "name": "Sarah Chen",
+          "title": "Product Manager",
+          "company": "TechCorp",
+          "variant": "horizontal",
+          "bio": "Building products users love",
+          "cta": "Contact Me"
+        },
+        {
+          "name": "Alex Rivera",
+          "title": "Full Stack Dev",
+          "skills": "Python,Go,Rust",
+          "variant": "full",
+          "availability": "open-to-opportunities",
+          "stats": "[{\"label\":\"Projects\",\"value\":\"24\"},{\"label\":\"Years\",\"value\":\"10\"}]"
+        }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardportfolio",
+      "renders": true,
+      "baseClass": "wb-portfolio",
+      "minInstances": 4,
+      "checkText": [
+        "UX Designer",
+        "Jane Smith",
+        "Creative designer with 8 years experience",
+        "Senior Engineer",
+        "John Doe",
+        "Product Manager"
+      ],
+      "checkClasses": [
+        "wb-portfolio--compact"
+      ],
+      "checkAttributes": [
+        "name",
+        "title",
+        "company",
+        "skills",
+        "availability"
+      ]
+    }
   },
   "_metadata": {
     "category": "cards",

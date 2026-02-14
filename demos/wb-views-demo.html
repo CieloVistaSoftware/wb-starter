@@ -43,7 +43,7 @@
           <slot></slot>
         </div>
         <div class="example-codes" wb-if="code">
-          <wb-mdhtml data-size="sm" data-highlight data-captions="true">{{code}}</wb-mdhtml>
+          <wb-mdhtml size="sm" highlight captions="true">{{code}}</wb-mdhtml>
         </div>
       </div>
     </template>
@@ -227,7 +227,7 @@
 
 &lt;!-- 3. Both produce: --&gt;
 &lt;span class="badge-tag badge-tag--primary"&gt;New&lt;/span&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <!-- 1. Define a template ONCE -->
 <template wb-view="badge-tag">
@@ -274,7 +274,7 @@
     &lt;span class="tile__badge" wb-if="badge"&gt;{{badge}}&lt;/span&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="component-tile">
   <div class="tile">
@@ -308,7 +308,7 @@
     &lt;button class="alert__dismiss" wb-if="dismissible"&gt;✕&lt;/button&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="alert-box">
   <div class="alert alert--{{variant || 'info'}}">
@@ -343,7 +343,7 @@
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="stat-tile">
   <div class="stat">
@@ -376,7 +376,7 @@
     &lt;slot&gt;{{text}}&lt;/slot&gt;
   &lt;/span&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="badge-tag">
   <span class="badge-tag badge-tag--{{variant || 'primary'}}">
@@ -409,7 +409,7 @@
     &lt;span class="tag" wb-for="tag in tags"&gt;{{tag}}&lt;/span&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="tag-list">
   <div class="tags">
@@ -437,7 +437,7 @@
     &lt;slot&gt;&lt;/slot&gt;
   &lt;/div&gt;
 &lt;/template&gt;</pre>
-            <wb-mdhtml data-size="sm" data-highlight data-captions="true">
+            <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <template wb-view="user-card">
   <div class="user-card">
@@ -505,7 +505,7 @@
     <!-- ============================================ -->
 
     <demo-section title="📚 Documentation" badge="Read Me" description="Overview of the WB Views system features and usage.">
-        <wb-mdhtml data-src="wb-views-demo.md" data-size="md"></wb-mdhtml>
+        <wb-mdhtml src="wb-views-demo.md" size="md"></wb-mdhtml>
     </demo-section>
 
   </div>

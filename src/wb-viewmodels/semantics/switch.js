@@ -22,7 +22,7 @@ export function switchInput(element, options = {}) {
   slider.className = 'wb-switch__slider';
   wrapper.appendChild(slider);
 
-  element.dataset.wbReady = 'switch';
+  element.classList.add('wb-ready');
   
   return () => {
     // Cleanup: move element back out and remove wrapper

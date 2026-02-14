@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "demo.schema.json",
-  "title": "Demo Component",
-  "description": "A component to display a live demo and its source code.",
-  "behavior": "demo",
+  "title": "Demo Container",
+  "description": "A container that renders children normally in a CSS grid and shows the raw HTML as a syntax-highlighted, auto-formatted code sample below. Uses fetch for raw page source, formatHtml for consistent 2-space indentation, and textContent to prevent browser inflation.",
+  "schemaFor": "demo",
   "baseClass": "wb-demo",
   "semanticElement": {
     "tagName": "div",
@@ -15,87 +15,47 @@
     "accessibility": "high"
   },
   "properties": {
-    "title": {
-      "type": "string",
-      "description": "Title of the demo",
-      "default": "Demo"
-    },
-    "tag": {
-      "type": "string",
-      "description": "Tag/Category of the demo",
-      "default": "UI"
-    },
-    "contentClass": {
-      "type": "string",
-      "description": "Additional classes for the content wrapper",
-      "default": ""
+    "columns": {
+      "type": "integer",
+      "description": "Number of grid columns for children (1-6)",
+      "default": 3,
+      "minimum": 1,
+      "maximum": 6
     }
   },
   "$cssAPI": {
-    "--bg-ternary": {
-      "description": "Header background"
-    },
     "--border-color": {
-      "description": "Border color"
+      "description": "Border color for code sample"
     }
   },
   "$view": [
     {
-      "name": "header",
-      "tag": "header",
-      "class": "demo-header"
-    },
-    {
-      "name": "title",
-      "tag": "span",
-      "class": "demo-title",
-      "parent": "header",
-      "content": "{{title}}"
-    },
-    {
-      "name": "controls",
+      "name": "grid",
       "tag": "div",
-      "parent": "header"
-    },
-    {
-      "name": "tag",
-      "tag": "span",
-      "class": "demo-tag",
-      "parent": "controls",
-      "content": "{{tag}}"
-    },
-    {
-      "name": "toggle",
-      "tag": "button",
-      "class": "toggle-code",
-      "parent": "controls",
-      "content": "View Code"
-    },
-    {
-      "name": "content",
-      "tag": "div",
-      "class": "demo-content {{contentClass}}",
+      "class": "wb-demo__grid wb-demo__grid--cols-{{columns}}",
       "content": "{{slot}}"
     },
     {
-      "name": "pre",
-      "tag": "pre",
-      "class": "x-code"
-    },
-    {
       "name": "code",
-      "tag": "code",
-      "parent": "pre"
+      "tag": "pre",
+      "class": "wb-demo__code",
+      "attributes": { "x-pre": "", "data-language": "html" },
+      "children": [
+        {
+          "tag": "code",
+          "class": "language-html",
+          "attributes": { "x-code": "" },
+          "content": "Raw HTML source via textContent (not innerHTML)"
+        }
+      ]
     }
   ],
   "$methods": {},
   "test": {
     "setup": [
-      "<wb-demo>Basic demo content</wb-demo>",
-      "<wb-demo title=\"Demo\">title=\"Demo\"</wb-demo>",
-      "<wb-demo tag=\"UI\">tag=\"UI\"</wb-demo>",
-      "<wb-demo content-class=\"Sample contentClass\">contentClass=\"Sample contentClass\"</wb-demo>",
-      "<wb-demo title=\"Demo\" tag=\"UI\">Combined: title=\"Demo\", tag=\"UI\"</wb-demo>"
+      "<wb-demo><p>Simple content</p></wb-demo>",
+      "<wb-demo columns=\"2\"><p>A</p><p>B</p></wb-demo>",
+      "<wb-demo columns=\"3\"><wb-card title=\"One\"><p>Card 1</p></wb-card><wb-card title=\"Two\"><p>Card 2</p></wb-card><wb-card title=\"Three\"><p>Card 3</p></wb-card></wb-demo>"
     ]
   }
 }

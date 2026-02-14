@@ -3,7 +3,7 @@
   "$id": "footer.schema.json",
   "title": "Footer",
   "description": "Page footer with copyright, links, and social icons",
-  "behavior": "footer",
+  "schemaFor": "footer",
   "baseClass": "wb-footer",
   "semanticElement": {
     "tagName": "footer",
@@ -151,6 +151,18 @@
           "copyright": "© 2025",
           "sticky": true
         }
+      ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-footer",
+      "renders": true,
+      "baseClass": "wb-footer",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "copyright"
       ]
     }
   },

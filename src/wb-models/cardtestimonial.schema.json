@@ -3,7 +3,7 @@
   "$id": "cardtestimonial.schema.json",
   "title": "Testimonial Card",
   "description": "Customer testimonial/review card with quote, author, avatar, and rating",
-  "behavior": "cardtestimonial",
+  "schemaFor": "cardtestimonial",
   "baseClass": "wb-testimonial",
   "semanticElement": {
     "tagName": "article",
@@ -314,6 +314,22 @@
           "author": "John",
           "variant": "centered"
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardtestimonial",
+      "renders": true,
+      "baseClass": "wb-testimonial",
+      "minInstances": 8,
+      "checkText": [],
+      "checkClasses": [
+        "wb-testimonial--elevated",
+        "wb-testimonial--sm"
+      ],
+      "checkAttributes": [
+        "quote",
+        "author"
       ]
     }
   },

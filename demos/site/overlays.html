@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overlays & Popups</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+  <link rel="stylesheet" href="../../src/styles/components.css">
+
+</head>
+
+<body>
+  <nav style="margin-bottom: 1rem;">
+    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  </nav>
+  <h1>🪟 Overlays & Popups</h1>
+  <p>Dialogs, drawers, dropdowns for modal content</p>
+
+  <!-- 1. 🪟 Dialog -->
+  <h2>🪟 Dialog</h2>
+  <wb-demo columns="2">
+    <wb-dialog title="Basic Dialog">
+    </wb-dialog>
+    <wb-dialog title="Large" size="lg">
+    </wb-dialog>
+    <wb-dialog title="No Close">
+    </wb-dialog>
+    <wb-dialog title="Centered" variant="centered">
+    </wb-dialog>
+  </wb-demo>
+
+  <!-- 2. size variants -->
+  <h2>size variants</h2>
+  <wb-demo columns="3">
+    <wb-dialog size="sm">
+    </wb-dialog>
+    <wb-dialog size="md">
+    </wb-dialog>
+    <wb-dialog size="lg">
+    </wb-dialog>
+    <wb-dialog size="xl">
+    </wb-dialog>
+    <wb-dialog size="full">
+    </wb-dialog>
+  </wb-demo>
+
+  <!-- 3. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-dialog variant="default">
+    </wb-dialog>
+    <wb-dialog variant="centered">
+    </wb-dialog>
+    <wb-dialog variant="fullscreen">
+    </wb-dialog>
+  </wb-demo>
+
+  <!-- 4. 📜 Drawer -->
+  <h2>📜 Drawer</h2>
+  <wb-demo columns="2">
+    <wb-drawer title="Right Drawer" position="right">
+    </wb-drawer>
+    <wb-drawer title="Left Drawer" position="left">
+    </wb-drawer>
+    <wb-drawer title="Wide" width="400px">
+    </wb-drawer>
+  </wb-demo>
+
+  <!-- 5. position variants -->
+  <h2>position variants</h2>
+  <wb-demo columns="2">
+    <wb-drawer position="left">
+    </wb-drawer>
+    <wb-drawer position="right">
+    </wb-drawer>
+    <wb-drawer position="top">
+    </wb-drawer>
+    <wb-drawer position="bottom">
+    </wb-drawer>
+  </wb-demo>
+
+  <!-- 6. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-drawer variant="default">
+    </wb-drawer>
+    <wb-drawer variant="overlay">
+    </wb-drawer>
+    <wb-drawer variant="push">
+    </wb-drawer>
+  </wb-demo>
+
+  <!-- 7. 📋 Dropdown -->
+  <h2>📋 Dropdown</h2>
+  <wb-demo columns="2">
+    <wb-dropdown position="bottom-start">
+    </wb-dropdown>
+    <wb-dropdown position="bottom-end">
+    </wb-dropdown>
+    <wb-dropdown trigger="hover">
+    </wb-dropdown>
+  </wb-demo>
+
+  <!-- 8. position variants -->
+  <h2>position variants</h2>
+  <wb-demo columns="2">
+    <wb-dropdown position="top-start">
+    </wb-dropdown>
+    <wb-dropdown position="top-end">
+    </wb-dropdown>
+  </wb-demo>
+
+  <!-- 9. trigger variants -->
+  <h2>trigger variants</h2>
+  <wb-demo columns="2">
+    <wb-dropdown trigger="click">
+    </wb-dropdown>
+  </wb-demo>
+
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('Overlays & Popups initialized');
+  </script>
+</body>
+
+</html>

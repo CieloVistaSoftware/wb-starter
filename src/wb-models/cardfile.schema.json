@@ -3,7 +3,7 @@
   "$id": "cardfile.schema.json",
   "title": "File Card",
   "description": "File display card with icon, name, size, and download",
-  "behavior": "cardfile",
+  "schemaFor": "cardfile",
   "baseClass": "wb-card-file",
   "semanticElement": {
     "tagName": "article",
@@ -181,6 +181,20 @@
           "size": "2.4 MB",
           "href": "/files/photo.jpg"
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardfile",
+      "renders": true,
+      "baseClass": "wb-card-file",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [
+        "wb-card-file--compact"
+      ],
+      "checkAttributes": [
+        "filename"
       ]
     }
   },

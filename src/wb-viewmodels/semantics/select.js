@@ -87,7 +87,7 @@ export function select(element, options = {}) {
     clear: () => { element.selectedIndex = -1; }
   };
 
-  element.dataset.wbReady = 'select';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-select', 'wb-select--searchable');
 }
 

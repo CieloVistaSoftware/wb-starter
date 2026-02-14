@@ -1,0 +1,927 @@
+[
+  {
+    "file": "tests\\base.ts",
+    "line": 140,
+    "text": "export function getJsFiles(dir: string = PATHS.behaviorsJs): string[] {"
+  },
+  {
+    "file": "tests\\base.ts",
+    "line": 216,
+    "text": "if (schema?.behavior) {"
+  },
+  {
+    "file": "tests\\base.ts",
+    "line": 458,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\autosize.spec.ts",
+    "line": 5,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors, null, { timeout: 5000 });"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 136,
+    "text": "return module.behaviorMeta || module.default || {};"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 190,
+    "text": "expect(schema!.behaviors).toBeDefined();"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 191,
+    "text": "expect(schema!.behaviors.types).toBeDefined();"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 192,
+    "text": "expect(schema!.behaviors.categories).toBeDefined();"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 199,
+    "text": "const definedTypes = schema.definitions.behaviorType.enum;"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 215,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 226,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 244,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 262,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 283,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 303,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 323,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 341,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 376,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 384,
+    "text": "for (const category of Object.values(schema.behaviors.categories)) {"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 385,
+    "text": "category.behaviors.forEach(b => categorized.add(b));"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 404,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 433,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 495,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 520,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 568,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 586,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 609,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "line": 634,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behavior-verification.spec.ts",
+    "line": 30,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+    "line": 343,
+    "text": "const codeBlocks = page.locator('.wb-mdhtml pre, .behavior-card pre');"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+    "line": 355,
+    "text": "const parent = await block.evaluate(el => el.closest('.behavior-card')?.querySelector('.behavior-title')?.textContent || `block-${i}`);"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+    "line": 364,
+    "text": "const codeBlocks = page.locator('.wb-mdhtml code, .behavior-card code');"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+    "line": 39,
+    "text": "const cards = await page.locator('.behavior-card').all();"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+    "line": 55,
+    "text": "document.querySelectorAll('.behavior-card, .demo-area, .info-callout').forEach(container => {"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+    "line": 92,
+    "text": "const drawerCard = page.locator('.behavior-card:has(.behavior-title:has-text(\"Drawer\"))');"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+    "line": 250,
+    "text": "const drawerCard = page.locator('.behavior-card:has(.behavior-title:has-text(\"Drawer\"))');"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+    "line": 265,
+    "text": "const drawerCard = page.locator('.behavior-card:has(.behavior-title:has-text(\"Drawer\"))');"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+    "line": 363,
+    "text": "const cards = await page.locator('.behavior-card').all();"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+    "line": 380,
+    "text": "console.log('Code overflow in card:', await card.locator('.behavior-title').textContent());"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+    "line": 389,
+    "text": "const codeBlocks = await page.locator('.behavior-card pre code').all();"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors.spec.ts",
+    "line": 11,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0);"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors.spec.ts",
+    "line": 13,
+    "text": "if (!(window as any).WB || !(window as any).WB.behaviors) return required;"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors.spec.ts",
+    "line": 14,
+    "text": "return required.filter(name => !(name in (window as any).WB.behaviors));"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors.spec.ts",
+    "line": 21,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\behaviors.spec.ts",
+    "line": 22,
+    "text": "const count = await page.evaluate(() => Object.keys((window as any).WB.behaviors).length);"
+  },
+  {
+    "file": "tests\\behaviors\\functional-runner.spec.ts",
+    "line": 206,
+    "text": "if (!schema?.behavior) continue;"
+  },
+  {
+    "file": "tests\\behaviors\\functional-runner.spec.ts",
+    "line": 208,
+    "text": "if (SKIP_BEHAVIORS.includes(schema.behavior)) continue;"
+  },
+  {
+    "file": "tests\\behaviors\\functional-runner.spec.ts",
+    "line": 238,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 5000 });"
+  },
+  {
+    "file": "tests\\behaviors\\functional-runner.spec.ts",
+    "line": 497,
+    "text": "console.log(`  • ${schema.behavior}: ${counts}`);"
+  },
+  {
+    "file": "tests\\behaviors\\functional-runner.spec.ts",
+    "line": 505,
+    "text": "const behavior = schema.behavior;"
+  },
+  {
+    "file": "tests\\behaviors\\permutation-compliance.spec.ts",
+    "line": 232,
+    "text": "// Only load schemas with 'behavior' property (component schemas)"
+  },
+  {
+    "file": "tests\\behaviors\\permutation-compliance.spec.ts",
+    "line": 233,
+    "text": "if (!schema.behavior) {"
+  },
+  {
+    "file": "tests\\behaviors\\permutation-compliance.spec.ts",
+    "line": 237,
+    "text": "const name = schema.behavior || file.replace('.schema.json', '');"
+  },
+  {
+    "file": "tests\\behaviors\\permutation-compliance.spec.ts",
+    "line": 371,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\behaviors\\permutation-compliance.spec.ts",
+    "line": 655,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\card.spec.ts",
+    "line": 9,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\cards\\cardbutton.spec.ts",
+    "line": 6,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardbutton.spec.ts",
+    "line": 32,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardbutton.spec.ts",
+    "line": 57,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardchip.spec.ts",
+    "line": 6,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardchip.spec.ts",
+    "line": 26,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardchip.spec.ts",
+    "line": 45,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardhero.spec.ts",
+    "line": 6,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardhero.spec.ts",
+    "line": 35,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardhero.spec.ts",
+    "line": 54,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardhero.spec.ts",
+    "line": 75,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardoverlay.spec.ts",
+    "line": 6,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardoverlay.spec.ts",
+    "line": 35,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardoverlay.spec.ts",
+    "line": 56,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardoverlay.spec.ts",
+    "line": 76,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardportfolio.spec.ts",
+    "line": 6,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardportfolio.spec.ts",
+    "line": 79,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardportfolio.spec.ts",
+    "line": 98,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardproduct.spec.ts",
+    "line": 6,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardproduct.spec.ts",
+    "line": 60,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardprogressbar.spec.ts",
+    "line": 6,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardprogressbar.spec.ts",
+    "line": 25,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardprogressbar.spec.ts",
+    "line": 50,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardprogressbar.spec.ts",
+    "line": 73,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardprogressbar.spec.ts",
+    "line": 95,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardspinner.spec.ts",
+    "line": 6,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0);"
+  },
+  {
+    "file": "tests\\cards\\cardspinner.spec.ts",
+    "line": 35,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\cards\\cardspinner.spec.ts",
+    "line": 53,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\compliance\\behavior-registry-validation.spec.ts",
+    "line": 12,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors, null, { timeout: 10000 });"
+  },
+  {
+    "file": "tests\\compliance\\behavior-registry-validation.spec.ts",
+    "line": 15,
+    "text": "const reg = Object.keys((window as any).WB?.behaviors || {});"
+  },
+  {
+    "file": "tests\\compliance\\css-oop-compliance.spec.ts",
+    "line": 161,
+    "text": "if (!fileExists(PATHS.behaviorsCss) || !fileExists(PATHS.behaviorsJs)) return;"
+  },
+  {
+    "file": "tests\\compliance\\css-oop-compliance.spec.ts",
+    "line": 163,
+    "text": "const cssFiles = fs.readdirSync(PATHS.behaviorsCss).filter(f => f.endsWith('.css'));"
+  },
+  {
+    "file": "tests\\compliance\\css-oop-compliance.spec.ts",
+    "line": 164,
+    "text": "const jsFiles = fs.readdirSync(PATHS.behaviorsJs).filter(f => f.endsWith('.js'));"
+  },
+  {
+    "file": "tests\\compliance\\css-oop-compliance.spec.ts",
+    "line": 205,
+    "text": "if (!fileExists(PATHS.behaviorsJs)) return;"
+  },
+  {
+    "file": "tests\\compliance\\css-oop-compliance.spec.ts",
+    "line": 207,
+    "text": "const jsFiles = fs.readdirSync(PATHS.behaviorsJs).filter(f => f.endsWith('.js'));"
+  },
+  {
+    "file": "tests\\compliance\\css-oop-compliance.spec.ts",
+    "line": 212,
+    "text": "const content = readFile(path.join(PATHS.behaviorsJs, file));"
+  },
+  {
+    "file": "tests\\compliance\\proposed-css-architecture.spec.ts",
+    "line": 38,
+    "text": "const filePath = path.join(PATHS.behaviorsCss, file);"
+  },
+  {
+    "file": "tests\\compliance\\schema-validation.spec.ts",
+    "line": 250,
+    "text": "const possibleTags = getPossibleTags(schema.behavior);"
+  },
+  {
+    "file": "tests\\compliance\\schema-validation.spec.ts",
+    "line": 251,
+    "text": "const dataWbPattern = `data-wb=\"${schema.behavior}\"`;"
+  },
+  {
+    "file": "tests\\compliance\\schema-validation.spec.ts",
+    "line": 260,
+    "text": "const usesCardBase = schema.behavior.startsWith('card') &&"
+  },
+  {
+    "file": "tests\\compliance\\schema-validation.spec.ts",
+    "line": 264,
+    "text": "issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.behavior}> or data-wb=\"${schema.behavior}\"`);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 24,
+    "text": "return getJsFiles(PATHS.behaviorsJs)"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 25,
+    "text": ".map(f => readFile(path.join(PATHS.behaviorsJs, f)))"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 34,
+    "text": "for (const jsFile of getJsFiles(PATHS.behaviorsJs)) {"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 35,
+    "text": "const filePath = path.join(PATHS.behaviorsJs, jsFile);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 91,
+    "text": "for (const jsFile of getJsFiles(PATHS.behaviorsJs)) {"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 92,
+    "text": "const filePath = path.join(PATHS.behaviorsJs, jsFile);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 127,
+    "text": "if (!schema?.behavior) continue;"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 128,
+    "text": "if (NON_FUNCTIONAL_SCHEMAS.includes(schema.behavior)) continue;"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 130,
+    "text": "const funcName = FUNCTION_NAME_MAP[schema.behavior] || schema.behavior;"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 133,
+    "text": "issues.push(`${file}: no exported function \"${schema.behavior}\"`);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 154,
+    "text": "if (!schema?.behavior || !schema.compliance?.baseClass) continue;"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 156,
+    "text": "const funcBody = extractFunction(allJs, schema.behavior);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 164,
+    "text": "if (!classAdded) issues.push(`${schema.behavior}: should add class \"${baseClass}\"`);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 179,
+    "text": "if (!schema?.behavior || !schema.compliance?.requiredChildren) continue;"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 181,
+    "text": "const funcBody = extractFunction(allJs, schema.behavior);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 189,
+    "text": "issues.push(`${schema.behavior}: should create <${tagName}> for ${selector}`);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 201,
+    "text": "const cardJsPath = path.join(PATHS.behaviorsJs, 'card.js');"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 221,
+    "text": "if (!schema?.behavior || !schema.events) continue;"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 223,
+    "text": "const funcBody = extractFunction(allJs, schema.behavior);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 228,
+    "text": "if (!dispatches) issues.push(`${schema.behavior}: should dispatch \"${eventName}\"`);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 242,
+    "text": "const schemas = getSchemaFiles().map(loadSchema).filter(s => s?.behavior);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 249,
+    "text": "const funcBody = extractFunction(allJs, schema.behavior);"
+  },
+  {
+    "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+    "line": 254,
+    "text": "console.log(`  ⚠️ No function for: ${schema.behavior}`);"
+  },
+  {
+    "file": "tests\\compliance\\test-coverage-compliance.spec.ts",
+    "line": 135,
+    "text": "if (!schema?.behavior || !schema.test) continue;"
+  },
+  {
+    "file": "tests\\compliance\\test-coverage-compliance.spec.ts",
+    "line": 137,
+    "text": "const hasTestFile = testFileExistsForBehavior(schema.behavior) !== null;"
+  },
+  {
+    "file": "tests\\compliance\\test-coverage-compliance.spec.ts",
+    "line": 138,
+    "text": "const inPermTests = isInPermutationTests(schema.behavior);"
+  },
+  {
+    "file": "tests\\compliance\\test-coverage-compliance.spec.ts",
+    "line": 140,
+    "text": "if (!hasTestFile && !inPermTests) missing.push(`${schema.behavior} (from ${file})`);"
+  },
+  {
+    "file": "tests\\compliance\\test-coverage-compliance.spec.ts",
+    "line": 167,
+    "text": "if (!schema?.behavior || !schema.properties) continue;"
+  },
+  {
+    "file": "tests\\compliance\\test-coverage-compliance.spec.ts",
+    "line": 175,
+    "text": "if (!hasPermutation && !inMatrix) uncovered.push(`${schema.behavior}.${propName}`);"
+  },
+  {
+    "file": "tests\\compliance\\test-coverage-compliance.spec.ts",
+    "line": 239,
+    "text": "const schemas = getSchemaFiles().map(loadSchema).filter(s => s?.behavior);"
+  },
+  {
+    "file": "tests\\compliance\\test-coverage-compliance.spec.ts",
+    "line": 248,
+    "text": "if (testFileExistsForBehavior(schema.behavior) !== null || isInPermutationTests(schema.behavior)) {"
+  },
+  {
+    "file": "tests\\compliance\\v3-syntax-compliance.spec.ts",
+    "line": 258,
+    "text": "// Check for data-wb=\"behavior\" on native elements"
+  },
+  {
+    "file": "tests\\components\\codecontrol.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\collapse.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\copy.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\darkmode.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\datepicker.spec.ts",
+    "line": 5,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors, null, { timeout: 5000 });"
+  },
+  {
+    "file": "tests\\components\\diff.spec.ts",
+    "line": 5,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors, null, { timeout: 5000 });"
+  },
+  {
+    "file": "tests\\components\\docs-viewer.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\draggable.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\dropdown.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\effects.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\feedback-visual.spec.ts",
+    "line": 13,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\components\\feedback-visual.spec.ts",
+    "line": 36,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\components\\feedback-visual.spec.ts",
+    "line": 64,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\components\\feedback-visual.spec.ts",
+    "line": 87,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\components\\feedback-visual.spec.ts",
+    "line": 120,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\components\\feedback-visual.spec.ts",
+    "line": 145,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\components\\feedback-visual.spec.ts",
+    "line": 170,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\components\\feedback-visual.spec.ts",
+    "line": 207,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\components\\figure.spec.ts",
+    "line": 6,
+    "text": "await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);"
+  },
+  {
+    "file": "tests\\components\\footer.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\globe.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\hero.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\layouts.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\mdhtml.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\media.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\move.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\navigation.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\notes.spec.ts",
+    "line": 9,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\overlay.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\progressbar.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\resizable.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\ripple.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\scroll-progress.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\slider.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\span.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\stagelight.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\tabs.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\themecontrol.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\timeline.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\timepicker.spec.ts",
+    "line": 5,
+    "text": "await page.waitForFunction(() => (window as any).WB?.behaviors, null, { timeout: 5000 });"
+  },
+  {
+    "file": "tests\\components\\toggle.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\tooltip.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\validator.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\wb-cluster.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\wb-column.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\wb-control.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\wb-grid.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\wb-repeater.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\wb-row.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\components\\wb-stack.spec.ts",
+    "line": 13,
+    "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
+  },
+  {
+    "file": "tests\\regression\\regression-tests.spec.ts",
+    "line": 448,
+    "text": "const testValue = comp.prop === 'id' ? 'test123456' : `https://test.com/${comp.behavior}.mp3`;"
+  },
+  {
+    "file": "tests\\regression\\regression-tests.spec.ts",
+    "line": 462,
+    "text": "}, { behavior: comp.behavior, prop: comp.prop, value: testValue });"
+  },
+  {
+    "file": "tests\\regression\\regression-tests.spec.ts",
+    "line": 466,
+    "text": "const element = page.locator(`[data-wb=\"${comp.behavior}\"]`).first();"
+  },
+  {
+    "file": "tests\\semantics\\js-syntax-compliance.spec.ts",
+    "line": 80,
+    "text": "// Check both WBServices.behaviors (legacy) and WB.behaviors (current)"
+  },
+  {
+    "file": "tests\\semantics\\js-syntax-compliance.spec.ts",
+    "line": 84,
+    "text": "const behaviors = services.behaviors;"
+  },
+  {
+    "file": "tests\\semantics\\js-syntax-compliance.spec.ts",
+    "line": 113,
+    "text": "// Check both WBServices.behaviors (legacy) and WB.behaviors (current)"
+  },
+  {
+    "file": "tests\\semantics\\js-syntax-compliance.spec.ts",
+    "line": 118,
+    "text": "const behaviors = services.behaviors;"
+  }
+]

@@ -92,7 +92,7 @@ test.describe('Behaviors Showcase Page', () => {
       const drawerCard = page.locator('.behavior-card:has(.behavior-title:has-text("Drawer"))');
       
       // Get the sidebar text element
-      const sidebarText = drawerCard.locator('.demo-area [data-wb="drawer-layout"] > div:first-child');
+      const sidebarText = drawerCard.locator('.demo-area [x-drawer-layout] > div:first-child');
       const toggleButton = drawerCard.locator('.wb-drawer-toggle');
       
       if (await toggleButton.count() > 0) {
@@ -131,7 +131,7 @@ test.describe('Behaviors Showcase Page', () => {
 
   test.describe('Dropdown Behavior', () => {
     test('dropdown should have items attribute OR proper children structure', async ({ page }) => {
-      const dropdowns = await page.locator('[data-wb="dropdown"]').all();
+      const dropdowns = await page.locator('wb-dropdown').all();
       
       for (const dropdown of dropdowns) {
         // Check if data-items is set
@@ -155,7 +155,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('dropdown shows menu when clicked', async ({ page }) => {
-      const dropdown = page.locator('[data-wb="dropdown"]').first();
+      const dropdown = page.locator('wb-dropdown').first();
       
       // Click the dropdown
       await dropdown.click();
@@ -174,7 +174,7 @@ test.describe('Behaviors Showcase Page', () => {
 
   test.describe('Tabs Behavior', () => {
     test('tabs children should use data-tab-title attribute', async ({ page }) => {
-      const tabContainers = await page.locator('[data-wb="tabs"]').all();
+      const tabContainers = await page.locator('wb-tabs').all();
       
       for (const tabs of tabContainers) {
         const children = await tabs.locator('> div[data-tab-title], > div[data-tab]').all();
@@ -195,7 +195,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('tabs generate tab buttons', async ({ page }) => {
-      const tabContainers = await page.locator('[data-wb="tabs"]').all();
+      const tabContainers = await page.locator('wb-tabs').all();
       
       for (const tabs of tabContainers) {
         const nav = tabs.locator('.wb-tabs__nav');
@@ -221,7 +221,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('clicking tab shows corresponding panel', async ({ page }) => {
-      const tabContainer = page.locator('[data-wb="tabs"]').first();
+      const tabContainer = page.locator('wb-tabs').first();
       
       // Click second tab
       const secondTab = tabContainer.locator('.wb-tabs__tab').nth(1);
@@ -240,7 +240,7 @@ test.describe('Behaviors Showcase Page', () => {
 
   test.describe('Drawer Layout Behavior', () => {
     test('drawer-layout behavior initializes', async ({ page }) => {
-      const drawer = page.locator('[data-wb="drawer-layout"]').first();
+      const drawer = page.locator('[x-drawer-layout]').first();
       
       // Should have wb-drawer class after initialization
       await expect(drawer).toHaveClass(/wb-drawer/);
@@ -280,7 +280,7 @@ test.describe('Behaviors Showcase Page', () => {
 
   test.describe('Toggle Behavior', () => {
     test('toggle button has visible styling', async ({ page }) => {
-      const toggleButton = page.locator('[data-wb="toggle"]').first();
+      const toggleButton = page.locator('wb-toggle').first();
       
       // Get computed styles
       const styles = await toggleButton.evaluate(el => {
@@ -303,7 +303,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('toggle toggles class on target', async ({ page }) => {
-      const toggleButton = page.locator('[data-wb="toggle"][data-target="#toggle-box"]');
+      const toggleButton = page.locator('wb-toggle[data-target="#toggle-box"]');
       const target = page.locator('#toggle-box');
       
       // Initial state
@@ -321,7 +321,7 @@ test.describe('Behaviors Showcase Page', () => {
 
   test.describe('Masonry Layout', () => {
     test('masonry container uses column layout', async ({ page }) => {
-      const masonry = page.locator('[data-wb="masonry"]').first();
+      const masonry = page.locator('wb-masonry').first();
       
       const styles = await masonry.evaluate(el => {
         const computed = window.getComputedStyle(el);
@@ -336,7 +336,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('masonry children are visible', async ({ page }) => {
-      const masonry = page.locator('[data-wb="masonry"]').first();
+      const masonry = page.locator('wb-masonry').first();
       const children = await masonry.locator('> *').all();
       
       expect(children.length).toBeGreaterThan(0);
@@ -347,7 +347,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('masonry items have correct break-inside', async ({ page }) => {
-      const masonry = page.locator('[data-wb="masonry"]').first();
+      const masonry = page.locator('wb-masonry').first();
       const firstChild = masonry.locator('> *').first();
       
       const breakInside = await firstChild.evaluate(el => {
@@ -412,12 +412,12 @@ test.describe('Behaviors Showcase Page', () => {
   });
 
   test.describe('Behavior Initialization', () => {
-    test('all data-wb elements are initialized', async ({ page }) => {
+    test('all behavior elements are initialized', async ({ page }) => {
       const uninitializedCount = await page.evaluate(() => {
         let count = 0;
-        document.querySelectorAll('[data-wb]').forEach(el => {
+        document.querySelectorAll('.wb-ready').forEach(el => {
           // Check for wb-ready or class starting with wb-
-          const hasReady = el.dataset.wbReady;
+          const hasReady = el.classList.contains("wb-ready");
           const hasWbClass = Array.from(el.classList).some(c => c.startsWith('wb-'));
           
           if (!hasReady && !hasWbClass) {
@@ -458,7 +458,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('spinners are animating', async ({ page }) => {
-      const spinners = await page.locator('[data-wb="spinner"]').all();
+      const spinners = await page.locator('wb-spinner').all();
       
       expect(spinners.length).toBeGreaterThan(0);
       

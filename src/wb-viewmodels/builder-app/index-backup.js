@@ -2278,7 +2278,7 @@ window.updP = async (wid, k, v) => {
 
     // Force re-render: remove wbReady flag and re-scan
     // This makes WB treat it as a new element
-    delete el.dataset.wbReady;
+    el.classList.remove('wb-ready');
     WB.remove(el); // Clean up old behavior
     WB.scan(w);    // Re-apply behavior with new data
 
@@ -3607,7 +3607,7 @@ window.copyAsHTML = () => {
 
   // Clone and clean up
   const elementClone = el.cloneNode(true);
-  clone.removeAttribute('data-wb-ready');
+  clone.classList.remove('wb-ready');
   clone.classList.remove('wb-mdhtml--loading', 'wb-mdhtml--loaded');
 
   // Remove contenteditable attributes

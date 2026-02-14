@@ -3,7 +3,7 @@
   "$id": "cardminimizable.schema.json",
   "title": "Minimizable Card",
   "description": "Card with minimize/expand toggle button in header",
-  "behavior": "cardminimizable",
+  "schemaFor": "cardminimizable",
   "baseClass": "wb-card-minimizable",
   "semanticElement": {
     "tagName": "article",
@@ -140,6 +140,24 @@
           "content": "Content",
           "minimized": true
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardminimizable",
+      "renders": true,
+      "baseClass": "wb-card-minimizable",
+      "minInstances": 2,
+      "checkText": [
+        "Basic",
+        "Minimized"
+      ],
+      "checkClasses": [
+        "wb-card-minimizable--elevated"
+      ],
+      "checkAttributes": [
+        "title",
+        "content"
       ]
     }
   },

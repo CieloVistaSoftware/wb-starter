@@ -199,7 +199,7 @@ export function resizable(element, options = {}) {
   };
 
   // Mark as ready
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' resizable';
+  element.classList.add('wb-ready');
 
   // Cleanup
   return () => {

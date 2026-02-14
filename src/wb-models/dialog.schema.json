@@ -3,7 +3,7 @@
   "$id": "dialog.schema.json",
   "title": "Dialog",
   "description": "Modal dialog using native HTML5 dialog element",
-  "behavior": "dialog",
+  "schemaFor": "dialog",
   "baseClass": "wb-dialog",
   "semanticElement": {
     "tagName": "dialog",
@@ -261,6 +261,26 @@
           "title": "Centered",
           "variant": "centered"
         }
+      ]
+    },
+    "site": {
+      "page": "overlays",
+      "tag": "wb-dialog",
+      "renders": true,
+      "baseClass": "wb-dialog",
+      "minInstances": 4,
+      "checkText": [
+        "Basic Dialog",
+        "Large",
+        "No Close",
+        "Centered"
+      ],
+      "checkClasses": [
+        "wb-dialog--sm",
+        "wb-dialog--centered"
+      ],
+      "checkAttributes": [
+        "title"
       ]
     }
   },

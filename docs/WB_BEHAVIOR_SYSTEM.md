@@ -460,7 +460,7 @@ export function img(element, options = {}) {
   }
 
   // 7. Mark as ready
-  element.dataset.wbReady = 'img';
+  element.classList.add("wb-ready");
 
   // 8. Return cleanup function
   return () => element.classList.remove('wb-img', 'wb-img--zoomable');
@@ -474,7 +474,7 @@ export default { img };
 1. **Config Merging** - Combine options + data attributes
 2. **Element Enhancement** - Add classes, styles, listeners
 3. **Feature Implementation** - Core behavior logic
-4. **Ready Marker** - `element.dataset.wbReady = 'behaviorName'`
+4. **Ready Marker** - `element.classList.add("wb-ready")`
 5. **Cleanup Function** - Remove all changes when behavior removed
 
 ---
@@ -703,7 +703,7 @@ export function mycustom(element, options = {}) {
   };
 
   // 6. Mark as ready
-  element.dataset.wbReady = 'mycustom';
+  element.classList.add("wb-ready");
 
   // 7. Return cleanup function
   return () => {
@@ -822,10 +822,10 @@ export function button(element, options = {}) {
 
 ```javascript
 // ✅ Good - Mark when done
-element.dataset.wbReady = 'behaviorName';
+element.classList.add("wb-ready");
 
 // Can check if already initialized
-if (element.dataset.wbReady === 'behaviorName') {
+if (element.classList.contains("wb-ready")) {
   console.log('Already initialized');
 }
 ```

@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "slider.schema.json",
   "title": "Slider",
-  "behavior": "slider",
   "description": "Image comparison slider or carousel.",
+  "schemaFor": "slider",
   "compliance": {
     "baseClass": "wb-slider",
     "supportLevel": "stable",
@@ -20,6 +20,21 @@
       "<wb-slider>Test permutation 3</wb-slider>",
       "<wb-slider>Test permutation 4</wb-slider>",
       "<wb-slider>Test permutation 5</wb-slider>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {}
+      ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "wb-slider",
+      "renders": true,
+      "baseClass": "wb-slider",
+      "minInstances": 1,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
   }
 }

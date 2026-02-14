@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏷️ Badge Showcase — WB Component Library</title>
+  <meta name="description" content="Labels, statuses, and tag indicators">
+  <link rel="stylesheet" href="..\../src/styles/themes.css">
+  <link rel="stylesheet" href="..\../src/styles/site.css">
+  <link rel="stylesheet" href="..\../src/styles/components.css">
+
+</head>
+
+<body>
+  <nav class="wb-site-nav" style="display:flex;gap:0.25rem;padding:0.5rem 1rem;background:var(--bg-tertiary,#1e293b);border-bottom:1px solid var(--border-color,#374151);overflow-x:auto;position:sticky;top:0;z-index:100;">
+    <a href="index.html" style="padding:0.5rem 1rem;color:var(--text-primary,#f9fafb);text-decoration:none;font-weight:700;font-size:1rem;margin-right:1rem;">🧩 WB Library</a>
+      <a href="badges.html" class="wb-nav__link--active" style="padding:0.5rem 1rem;color:var(--primary,#6366f1);text-decoration:none;font-size:0.9rem;border-bottom:2px solid var(--primary,#6366f1);white-space:nowrap;">🏷️ Badges</a>
+      <a href="progress.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">📊 Progress</a>
+      <a href="notifications.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🔔 Notifications</a>
+      <a href="portfolio.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">👤 Portfolio</a>
+      <a href="cards.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🃏 Cards</a>
+      <a href="all-components.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🧩 All</a>
+  </nav>
+
+  <h1 style="padding:1rem 1.5rem 0;">🏷️ 🏷️ Badge Showcase</h1>
+  <p style="padding:0 1.5rem;color:var(--text-secondary,#9ca3af);">Small label/tag for status indicators, counts, or categories</p>
+
+  <!-- 1. badge — Combinations -->
+  <h2 style="padding:0 1.5rem;">badge — Combinations</h2>
+  <wb-demo columns="3">
+    <wb-badge label="New">
+    </wb-badge>
+    <wb-badge label="Done" variant="success">
+    </wb-badge>
+    <wb-badge label="Warning" variant="warning">
+    </wb-badge>
+    <wb-badge label="Error" variant="error">
+    </wb-badge>
+    <wb-badge label="5" variant="primary" pill>
+    </wb-badge>
+    <wb-badge variant="success" dot>
+    </wb-badge>
+    <wb-badge label="Tag" variant="info" removable>
+    </wb-badge>
+    <wb-badge label="Outline" variant="primary" outline>
+    </wb-badge>
+  </wb-demo>
+
+  <!-- 2. variant variants -->
+  <h2 style="padding:0 1.5rem;">variant variants</h2>
+  <wb-demo columns="3">
+    <wb-badge variant="default">
+    </wb-badge>
+    <wb-badge variant="primary">
+    </wb-badge>
+    <wb-badge variant="secondary">
+    </wb-badge>
+    <wb-badge variant="success">
+    </wb-badge>
+    <wb-badge variant="warning">
+    </wb-badge>
+    <wb-badge variant="error">
+    </wb-badge>
+    <wb-badge variant="info">
+    </wb-badge>
+  </wb-demo>
+
+  <!-- 3. size variants -->
+  <h2 style="padding:0 1.5rem;">size variants</h2>
+  <wb-demo columns="2">
+    <wb-badge size="xs">
+    </wb-badge>
+    <wb-badge size="sm">
+    </wb-badge>
+    <wb-badge size="md">
+    </wb-badge>
+    <wb-badge size="lg">
+    </wb-badge>
+  </wb-demo>
+
+  <!-- 4. Boolean toggles -->
+  <h2 style="padding:0 1.5rem;">Boolean toggles</h2>
+  <wb-demo columns="3">
+    <wb-badge pill>
+    </wb-badge>
+    <wb-badge dot>
+    </wb-badge>
+    <wb-badge outline>
+    </wb-badge>
+    <wb-badge removable>
+    </wb-badge>
+  </wb-demo>
+
+  <footer class="wb-site-footer" style="padding:1.5rem;text-align:center;border-top:1px solid var(--border-color,#374151);color:var(--text-secondary,#9ca3af);font-size:0.85rem;margin-top:2rem;">
+    <p>WB Component Library — Generated from schemas</p>
+    <div style="margin-top:0.5rem;display:flex;gap:1rem;justify-content:center;">
+      <a href="#" style="color:var(--primary,#6366f1);text-decoration:none;">GitHub</a>
+      <a href="#" style="color:var(--primary,#6366f1);text-decoration:none;">Documentation</a>
+    </div>
+  </footer>
+
+  <script type="module">
+    import WB from '..\../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+
+</html>

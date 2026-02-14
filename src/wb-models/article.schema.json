@@ -3,7 +3,7 @@
   "$id": "article.schema.json",
   "title": "Article Component",
   "description": "Semantic article component for blog posts, news, and documentation pages.",
-  "behavior": "article",
+  "schemaFor": "article",
   "baseClass": "wb-article",
   "semanticElement": {
     "tagName": "article",
@@ -201,6 +201,21 @@
           "title": "Article",
           "featured": true
         }
+      ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-article",
+      "renders": true,
+      "baseClass": "wb-article",
+      "minInstances": 5,
+      "checkText": [
+        "Article",
+        "Deck"
+      ],
+      "checkClasses": [],
+      "checkAttributes": [
+        "title"
       ]
     }
   },

@@ -29,7 +29,7 @@ test.describe('Auto-Inject Demo', () => {
       // Check if classes are added
       const hasClass = await checkbox.evaluate(el => el.classList.contains('wb-checkbox__input') || el.parentElement.classList.contains('wb-checkbox'));
       // Or check if it has x-behavior attribute added (some implementations add it)
-      // Or check if data-wb-ready is there
+      // Or check if .wb-ready class is there
       
       // Let's assume some class or attribute changes.
       // WB Core usually doesn't modify the DOM structure aggressively unless it's a specific behavior.
