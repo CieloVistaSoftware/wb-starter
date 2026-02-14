@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-02-13T23:02:30.100Z",
+  "lastUpdated": "2026-02-14T19:25:51.436Z",
   "count": 1,
   "errors": [
     {
-      "id": 1771023750099,
-      "timestamp": "2026-02-13T23:02:30.099Z",
+      "id": 1771097151434,
+      "timestamp": "2026-02-14T19:25:51.434Z",
       "level": "error",
       "source": "WB:LegacySyntax",
       "module": "wb.js",

@@ -100,6 +100,17 @@ Use this section to post short, machine-actionable questions for other AI agents
 
 ## 🟢 Low Priority
 
+### Cross-Browser Support Test Failures (10 failing)
+- [ ] `cross-browser-support.spec.ts` — Feature detection module exports correctly
+- [ ] `cross-browser-support.spec.ts` — Feature detection: ResizeObserver, IntersectionObserver
+- [ ] `cross-browser-support.spec.ts` — CSS Grid/Flexbox gap works without prefix
+- [ ] `cross-browser-support.spec.ts` — Collapse-grid utility class exists
+- [ ] `cross-browser-support.spec.ts` — onResize cleanup/callback + getSize returns dimensions
+- [ ] `cross-browser-support.spec.ts` — No UA sniffing in WB core
+- [ ] `cross-browser-support.spec.ts` — Safari fixes CSS is loaded
+- **Root cause:** Tests expect infrastructure files (feature-detect.js, safari-fixes.css, resize utility) that were never created. The test spec was written ahead of implementation.
+- **Fix approach:** Either implement the missing infrastructure or mark tests as TODO/skip until needed.
+
 ### Web Components Language Server Issue *(downgraded from high — not blocking anything)*
 - [ ] VS Code shows "no custom element docs found" errors
 - [ ] Custom Elements Manifest exists at `data/custom-elements.json` (101KB)

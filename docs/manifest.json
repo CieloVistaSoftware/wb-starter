@@ -27,57 +27,6 @@
           "description": "Domain-specific implementation guides"
         },
         {
-          "file": "claude/TIER3-REFERENCE.md",
-          "title": "Tier 3 Reference",
-          "description": "Detailed technical reference documentation"
-        }
-      ]
-    },
-    {
-      "name": "Architecture",
-      "icon": "🏗️",
-      "docs": [
-        {
-          "file": "builder.md",
-          "title": "WB Builder",
-          "description": "The heart of wb-starter - Schema-driven architecture explained"
-        },
-        {
-          "file": "architecture.md",
-          "title": "System Architecture",
-          "description": "Overview of the WB system design"
-        },
-        {
-          "file": "WB_BEHAVIOR_SYSTEM.md",
-          "title": "Behavior System",
-          "description": "How behaviors work"
-        },
-        {
-          "file": "container-pattern.md",
-          "title": "Container Pattern",
-          "description": "Container component patterns"
-        },
-        {
-          "file": "semantic-standard.md",
-          "title": "Semantic Standard",
-          "description": "HTML5 semantic guidelines"
-        },
-        {
-          "file": "architecture/proposed-custom-elements.md",
-          "title": "Proposed Custom Elements",
-          "description": "Documentation for Proposed Custom Elements"
-        },
-        {
-          "file": "architecture/SCHEMA-SPECIFICATION.md",
-          "title": "SCHEMA SPECIFICATION",
-          "description": "Documentation for SCHEMA SPECIFICATION"
-        },
-        {
-          "file": "index.md",
-          "title": "Index",
-          "description": "Documentation for Index"
-        },
-        {
           "file": "linkedin-standards-article.md",
           "title": "Linkedin Standards Article",
           "description": "Documentation for Linkedin Standards Article"

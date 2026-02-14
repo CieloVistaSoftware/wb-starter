@@ -1,1 +1,1338 @@
-{}
+{
+  "state": "running",
+  "mode": "suite",
+  "specFile": null,
+  "startedAt": "2026-02-14T07:35:29.181Z",
+  "updatedAt": "2026-02-14T19:44:21.184Z",
+  "command": "npx playwright test --workers=8",
+  "pid": 17192,
+  "passed": 886,
+  "failed": 330,
+  "skipped": 5,
+  "total": 1221,
+  "currentFile": "tests\\behaviors\\scrollalong.spec.ts",
+  "output": "ient contrast (bg != text color) (2.7s)\n  ok 906 [behaviors] › tests\\behaviors\\badge.spec.ts:299:3 › Badge — Accessibility › badge content is readable (3.1s)\n  ok 915 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:178:3 › Behavior Schema Compliance › behavior.schema.json exists and is valid JSON (6ms)\n  ok 916 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:195:3 › Behavior Schema Compliance › all behavior types are documented in schema (5ms)\n  ok 912 [behaviors] › tests\\behaviors\\badge.spec.ts:404:3 › Badge — Edge Cases › badge with numeric content renders (1.2s)\n  ok 914 [behaviors] › tests\\behaviors\\badge.spec.ts:430:3 › Badge — Edge Cases › badge next to heading renders inline (1.1s)\n  ok 913 [behaviors] › tests\\behaviors\\badge.spec.ts:409:3 › Badge — Edge Cases › badge inside flex container aligns properly (1.2s)\n  ok 917 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:213:3 › BehaviorMeta Validation › behaviorMeta.js exports valid module (1.6s)\n  ok 918 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:224:3 › BehaviorMeta Validation › every behavior has required type property (1.9s)\n  ok 911 [behaviors] › tests\\behaviors\\badge.spec.ts:393:3 › Badge — Edge Cases › badge with long text does not break layout (3.9s)\n  ok 910 [behaviors] › tests\\behaviors\\badge.spec.ts:360:3 › Badge — Schema Fixtures › all schema test.matrix combinations render (4.1s)\n  ok 909 [behaviors] › tests\\behaviors\\badge.spec.ts:333:3 › Badge — Schema Fixtures › all schema test.setup fixtures render (4.6s)\n  ok 919 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:242:3 › BehaviorMeta Validation › element behaviors have valid element property (2.0s)\n  ok 920 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:260:3 › BehaviorMeta Validation › container behaviors have valid structure (2.0s)\n  ok 921 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:281:3 › BehaviorMeta Validation › modifier behaviors have valid attachTo property (2.0s)\n  ok 922 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:301:3 › BehaviorMeta Validation › action behaviors have valid trigger property (1.5s)\n  ok 924 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:339:3 › BehaviorMeta Validation › templates contain valid HTML (2.0s)\nBehavior type counts: { element: \u001b[33m86\u001b[39m, container: \u001b[33m21\u001b[39m, modifier: \u001b[33m53\u001b[39m, action: \u001b[33m23\u001b[39m }\n  ok 926 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:402:3 › Behavior Categorization › behavior type counts are accurate (1.6s)\n  ok 925 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:374:3 › Behavior Categorization › all behaviors are categorized in schema (2.8s)\n  ok 923 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:321:3 › BehaviorMeta Validation › input behaviors have valid inputType (3.2s)\n  ok 932 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:607:3 › Type Requirement Validation › action behaviors with groups have templates (1.5s)\nBehavior inventory written to: C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\data\\behavior-inventory.json\nTotal behaviors: 183\nElements: 86\nContainers: 21\nModifiers: 53\nActions: 23\n  ok 933 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:632:3 › Behavior Inventory Report › generate behavior inventory (2.4s)\n  x  897 [behaviors] › tests\\behaviors\\badge.spec.ts:70:3 › Badge — Basic Rendering › wb-badge renders as inline-level display (retry #1) (5.3s)\n  ok 930 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:566:3 › Type Requirement Validation › element behaviors do not have modifier-only properties (5.2s)\n  ok 931 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:584:3 › Type Requirement Validation › modifier behaviors do not have element-only properties (5.1s)\n  ok 934 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:44:3 › RATING: Click Stars Changes Color › clicking star 3 fills stars 1-3 with gold (8.9s)\n  ok 935 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:64:3 › RATING: Click Stars Changes Color › clicking star dispatches wb:rating:change event (8.0s)\n  ok 929 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:518:3 › Behavior Initialization › action behaviors create proper triggers (14.0s)\n  ok 937 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:140:5 › ANIMATIONS: Click Triggers Animation › bounce button animates on click (8.2s)\n  ok 940 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:140:5 › ANIMATIONS: Click Triggers Animation › pulse button animates on click (5.8s)\n  ok 942 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:140:5 › ANIMATIONS: Click Triggers Animation › wobble button animates on click (5.0s)\n  ok 941 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:140:5 › ANIMATIONS: Click Triggers Animation › tada button animates on click (5.5s)\n  ok 928 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:493:3 › Behavior Initialization › container behaviors create drop zones (19.9s)\n  ok 939 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:140:5 › ANIMATIONS: Click Triggers Animation › shake button animates on click (8.6s)\n  ok 943 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:140:5 › ANIMATIONS: Click Triggers Animation › jello button animates on click (4.8s)\n  ok 945 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:140:5 › ANIMATIONS: Click Triggers Animation › swing button animates on click (6.4s)\n  ok 944 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:140:5 › ANIMATIONS: Click Triggers Animation › flash button animates on click (6.9s)\n  ok 946 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:140:5 › ANIMATIONS: Click Triggers Animation › heartbeat button animates on click (6.5s)\n  ok 947 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:140:5 › ANIMATIONS: Click Triggers Animation › rubberband button animates on click (5.8s)\n  ok 948 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:160:3 › FORMS: Dark Mode Styling › input has dark background in dark theme (4.8s)\n  ok 949 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › card has visible border (4.7s)\n  ok 950 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardimage has visible border (4.6s)\n  ok 951 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardbutton has visible border (4.7s)\n  ok 953 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardpricing has visible border (3.9s)\n  x  927 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:431:3 › Behavior Initialization › element behaviors initialize correctly (21.0s)\n  x  936 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:113:3 › TABLE: Sortable Columns › table header shows sort indicator (13.1s)\n  ok 955 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardtestimonial has visible border (5.1s)\n  ok 956 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardproduct has visible border (5.2s)\n  ok 954 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardstats has visible border (5.5s)\n  ok 957 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardnotification has visible border (4.9s)\n  ok 952 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardprofile has visible border (12.1s)\n  x  938 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:86:3 › TABLE: Sortable Columns › clicking header sorts column ascending then descending (11.2s)\n  ok 960 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardexpandable has visible border (10.6s)\n  ok 958 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardfile has visible border (11.5s)\n  ok 959 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardhorizontal has visible border (11.3s)\n  ok 961 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardminimizable has visible border (11.5s)\n  ok 963 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:191:5 › CARDS: Have Correct Styling › cardportfolio has visible border (10.7s)\n  ok 965 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:221:5 › CARDS: Have Correct Styling › cardhero has borderRadius (6.4s)\n  ok 966 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:239:3 › SPINNER: Actually Spins › spinner has infinite animation (6.5s)\n  ok 967 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:221:5 › CARDS: Have Correct Styling › cardoverlay has borderRadius (6.9s)\n  ok 973 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:69:3 › Page Structure › wb-starter initializes correctly (4.7s)\n  ok 971 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:287:3 › CONFETTI: Shows Effect › confetti button creates particles on click (6.8s)\n  ok 972 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:53:3 › Page Structure › page loads without JavaScript errors (6.0s)\n  ok 974 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:74:3 › Page Structure › header section exists with title (3.6s)\n  ok 975 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:79:3 › Page Structure › navigation section exists with all 10 section links (3.2s)\n  ok 976 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:90:3 › Page Structure › stats section displays correct counts (3.0s)\n  ok 978 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:104:3 › Page Structure › footer section exists (2.7s)\n  ok 977 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:95:3 › Page Structure › all 10 main content sections exist (3.1s)\n  ok 980 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:126:3 › Buttons Section › button variants exist (primary, secondary, ghost) (2.1s)\n  ok 981 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:133:3 › Buttons Section › disabled button exists and is disabled (2.3s)\n  ok 982 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:139:3 › Buttons Section › button sizes exist (sm, md, lg) (2.4s)\n  ok 983 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:145:3 › Buttons Section › ripple button has x-ripple attribute (2.4s)\n  ok 985 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:156:3 › Buttons Section › tooltip button has x-tooltip attribute (1.5s)\n  ok 984 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:149:3 › Buttons Section › toast button has proper attributes (2.1s)\n  x  970 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:270:3 › DRAWER: Position Works › drawer right opens on right side (11.1s)\n  ok 986 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:160:3 › Buttons Section › buttons section has wb-mdhtml code examples (1.9s)\n  ok 987 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:176:3 › Inputs Section › basic input types exist (text, email, number) (1.9s)\n  x  979 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:108:3 › Page Structure › page has no horizontal scrollbar (2.3s)\n  ok 989 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:190:3 › Inputs Section › password input has x-password behavior (2.2s)\n  ok 988 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:183:3 › Inputs Section › validation variant inputs exist (2.3s)\n  ok 991 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:199:3 › Inputs Section › textareas exist (2.0s)\n  ok 990 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:194:3 › Inputs Section › masked inputs exist with data-mask (2.4s)\n  x  968 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:255:3 › DRAWER: Position Works › drawer left opens on left side (30.4s)\n  ok 992 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:204:3 › Inputs Section › inputs section has code examples (2.0s)\n  ok 993 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:220:3 › Selection Section › checkboxes exist with various states (1.8s)\n  ok 996 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:230:3 › Selection Section › wb-switch components exist (2.0s)\n  ok 995 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:225:3 › Selection Section › radio buttons exist in a group (2.3s)\n  ok 998 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:235:3 › Selection Section › select dropdowns exist (2.8s)\n  ok 999 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:240:3 › Selection Section › wb-rating components exist (2.9s)\n  x  962 [behaviors] › tests\\behaviors\\behavior-validation.spec.ts:431:3 › Behavior Initialization › element behaviors initialize correctly (retry #1) (33.5s)\n  ok 1001 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:249:3 › Selection Section › range input exists (4.3s)\n  x  964 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:113:3 › TABLE: Sortable Columns › table header shows sort indicator (retry #1) (31.3s)\n  ok 1002 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:273:3 › Feedback Section › badge components exist with variants (1.7s)\n  ok 1004 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:283:3 › Feedback Section › spinners exist with various colors (2.3s)\n  ok 1005 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:288:3 › Feedback Section › toast trigger buttons exist (3.0s)\n  ok 1007 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:304:3 › Overlays Section › modal trigger exists (3.2s)\n  ok 1008 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:308:3 › Overlays Section › drawer triggers exist (left and right) (2.8s)\n  ok 1010 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:313:3 › Overlays Section › tooltip buttons exist for all positions (2.4s)\n  ok 1009 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:278:3 › Feedback Section › progress bars exist (2.8s)\n  ok 1012 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:322:3 › Overlays Section › confirm dialog trigger exists (2.9s)\n  ok 1011 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:318:3 › Overlays Section › popover trigger exists (3.4s)\n  ok 1013 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:326:3 › Overlays Section › prompt dialog trigger exists (2.6s)\n  ok 1014 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:330:3 › Overlays Section › lightbox triggers exist (2.6s)\n  x  969 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:86:3 › TABLE: Sortable Columns › clicking header sorts column ascending then descending (retry #1) (22.8s)\n  ok 1016 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:354:3 › Navigation Section › wb-accordion component exists with sections (2.5s)\n  ok 1015 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:346:3 › Navigation Section › wb-tabs component exists with panels (2.9s)\n  x  1000 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:245:3 › Selection Section › stepper exists with x-stepper (9.5s)\n  x  997 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:108:3 › Page Structure › page has no horizontal scrollbar (retry #1) (14.2s)\n  x  1006 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:264:3 › Feedback Section › all 4 alert types exist (info, success, warning, error) (14.3s)\n  x  1003 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:255:3 › DRAWER: Position Works › drawer left opens on left side (retry #1) (23.0s)\n  x  994 [behaviors] › tests\\behaviors\\behavior-verification.spec.ts:270:3 › DRAWER: Position Works › drawer right opens on right side (retry #1) (32.5s)\n  ok 1021 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:385:3 › Data Section › avatar components exist (2.6s)\n  x  1018 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:366:3 › Navigation Section › pagination exists (7.8s)\n  x  1017 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:370:3 › Navigation Section › steps wizard exists (7.5s)\n  ok 1023 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:401:3 › Data Section › keyboard key elements exist (2.3s)\n  ok 1024 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:390:3 › Data Section › skeleton loaders exist (3.4s)\n  ok 1025 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:417:3 › Media Section › enhanced images exist with x-image (3.7s)\n  ok 1026 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:422:3 › Media Section › gallery exists with images (2.7s)\n  ok 1027 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:395:3 › Data Section › timeline exists (2.4s)\n  ok 1030 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:449:3 › Effects Section › attention seeker effects exist (2.6s)\n  x  1019 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:362:3 › Navigation Section › breadcrumb exists (8.5s)\n  ok 1033 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:458:3 › Effects Section › entrance animation effects exist (3.2s)\n  x  1022 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:264:3 › Feedback Section › all 4 alert types exist (info, success, warning, error) (retry #1) (11.7s)\n  ok 1034 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:467:3 › Effects Section › special effects exist (2.7s)\n  x  1029 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:434:3 › Media Section › YouTube embed exists (7.9s)\n  x  1028 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:430:3 › Media Section › audio player component exists (8.5s)\n  x  1020 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:245:3 › Selection Section › stepper exists with x-stepper (retry #1) (11.2s)\n  ok 1035 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:492:3 › Utilities Section › copy buttons exist (2.4s)\n  ok 1036 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:501:3 › Utilities Section › print button exists (2.1s)\n  ok 1037 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:505:3 › Utilities Section › fullscreen button exists (2.9s)\n  ok 1039 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:476:3 › Effects Section › ripple elements exist (3.0s)\n  x  1032 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:370:3 › Navigation Section › steps wizard exists (retry #1) (11.9s)\n  x  1040 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:509:3 › Utilities Section › clock element exists (7.5s)\n  x  1031 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:366:3 › Navigation Section › pagination exists (retry #1) (13.1s)\n  ok 1044 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:497:3 › Utilities Section › share button exists (3.1s)\n  ok 1045 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:536:3 › Code Examples (wb-mdhtml) › every section has at least 3 code examples (1.7s)\n  x  1038 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:362:3 › Navigation Section › breadcrumb exists (retry #1) (10.7s)\n  ok 1046 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:547:3 › Code Examples (wb-mdhtml) › code examples render with content (1.9s)\n  ok 1047 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:517:3 › Utilities Section › dark mode toggle exists (3.9s)\n  ok 1050 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:579:3 › Interactive Behaviors › radio buttons work in group (3.8s)\n  ok 1048 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:521:3 › Utilities Section › truncate element exists (4.8s)\n  ok 1051 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:589:3 › Interactive Behaviors › ripple effect triggers on click (3.8s)\n  ok 1052 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:598:3 › Interactive Behaviors › toast shows on button click (2.9s)\n  x  1043 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:513:3 › Utilities Section › countdown element exists (8.9s)\n  x  1041 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:434:3 › Media Section › YouTube embed exists (retry #1) (15.5s)\n  x  1042 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:430:3 › Media Section › audio player component exists (retry #1) (13.0s)\n  x  1055 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:666:3 › Visual Quality › page is responsive at mobile width (3.0s)\n  x  1053 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:619:3 › Visual Quality › no text overflows container horizontally (2.6s)\n  x  1049 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:509:3 › Utilities Section › clock element exists (retry #1) (11.5s)\n  ok 1058 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:702:3 › Accessibility › page has proper heading hierarchy (6.0s)\n  ok 1062 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:721:3 › Accessibility › form inputs have proper associations (2.6s)\n  x  1054 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:644:3 › Visual Quality › spinners have animation (7.6s)\n  x  1059 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:676:3 › Visual Quality › sections have proper spacing (2.7s)\n  ok 1063 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:710:3 › Accessibility › images have alt attributes (2.3s)\n  ok 1064 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:727:3 › Accessibility › buttons have accessible text (3.0s)\n  x  1060 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:666:3 › Visual Quality › page is responsive at mobile width (retry #1) (6.8s)\n  x  1057 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:513:3 › Utilities Section › countdown element exists (retry #1) (11.4s)\n  x  1061 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:619:3 › Visual Quality › no text overflows container horizontally (retry #1) (5.3s)\n  x  1065 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:752:3 › Behavior Initialization › wb-* custom elements are upgraded (6.9s)\n  x  1066 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:764:3 › Behavior Initialization › x-* behavior attributes are processed (7.1s)\n  x  1068 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:676:3 › Visual Quality › sections have proper spacing (retry #1) (5.5s)\n  x  1070 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:33:5 › Behaviors Showcase Visual Tests › Drawer Layout › drawer-layout should have wb-drawer-layout class (4.8s)\n  x  1069 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:57:5 › Behaviors Showcase Visual Tests › Drawer Layout › drawer toggle button should not overlap content text (4.9s)\n  x  1071 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:38:5 › Behaviors Showcase Visual Tests › Drawer Layout › drawer text should not be cut off (4.5s)\n  x  1067 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:644:3 › Visual Quality › spinners have animation (retry #1) (8.7s)\n  x  1074 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:78:5 › Behaviors Showcase Visual Tests › Drawer Layout › \"Main Content\" text should be fully visible (4.8s)\n  x  1056 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:571:3 › Interactive Behaviors › checkbox toggles on click (30.3s)\n  x  1075 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:33:5 › Behaviors Showcase Visual Tests › Drawer Layout › drawer-layout should have wb-drawer-layout class (retry #1) (3.6s)\n  x  1078 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:101:5 › Behaviors Showcase Visual Tests › Dropdown › dropdown should have wb-dropdown class (3.8s)\n  x  1077 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:38:5 › Behaviors Showcase Visual Tests › Drawer Layout › drawer text should not be cut off (retry #1) (5.1s)\n  x  1073 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:764:3 › Behavior Initialization › x-* behavior attributes are processed (retry #1) (12.1s)\n  x  1076 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:57:5 › Behaviors Showcase Visual Tests › Drawer Layout › drawer toggle button should not overlap content text (retry #1) (5.0s)\n  x  1072 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:752:3 › Behavior Initialization › wb-* custom elements are upgraded (retry #1) (12.0s)\n  x  1079 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:78:5 › Behaviors Showcase Visual Tests › Drawer Layout › \"Main Content\" text should be fully visible (retry #1) (5.6s)\n  x  1082 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:101:5 › Behaviors Showcase Visual Tests › Dropdown › dropdown should have wb-dropdown class (retry #1) (4.9s)\n  x  1083 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:114:5 › Behaviors Showcase Visual Tests › Dropdown › dropdown should create a menu container (3.6s)\n  x  1081 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:106:5 › Behaviors Showcase Visual Tests › Dropdown › dropdown should create a trigger button (4.7s)\n  x  1085 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:133:5 › Behaviors Showcase Visual Tests › Dropdown › dropdown should NOT show raw links without trigger (4.4s)\n  x  1084 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:122:5 › Behaviors Showcase Visual Tests › Dropdown › dropdown menu should be hidden initially (4.6s)\n  x  1086 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:147:5 › Behaviors Showcase Visual Tests › Dropdown › clicking dropdown trigger should open menu (4.0s)\n  x  1087 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:168:5 › Behaviors Showcase Visual Tests › Toggle › toggle button should have visible background color (4.3s)\n  x  1090 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:183:5 › Behaviors Showcase Visual Tests › Toggle › toggle button should maintain styling after click (4.4s)\n  x  1088 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:114:5 › Behaviors Showcase Visual Tests › Dropdown › dropdown should create a menu container (retry #1) (5.3s)\n  x  1089 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:106:5 › Behaviors Showcase Visual Tests › Dropdown › dropdown should create a trigger button (retry #1) (4.9s)\n  x  1093 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:147:5 › Behaviors Showcase Visual Tests › Dropdown › clicking dropdown trigger should open menu (retry #1) (3.7s)\n  x  1092 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:133:5 › Behaviors Showcase Visual Tests › Dropdown › dropdown should NOT show raw links without trigger (retry #1) (4.3s)\n  x  1091 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:122:5 › Behaviors Showcase Visual Tests › Dropdown › dropdown menu should be hidden initially (retry #1) (4.6s)\n  x  1094 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:168:5 › Behaviors Showcase Visual Tests › Toggle › toggle button should have visible background color (retry #1) (3.8s)\n  x  1096 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:207:5 › Behaviors Showcase Visual Tests › Toggle › toggle button text should be visible (not white on white) (4.8s)\n  x  1095 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:183:5 › Behaviors Showcase Visual Tests › Toggle › toggle button should maintain styling after click (retry #1) (3.4s)\n  x  1080 [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:571:3 › Interactive Behaviors › checkbox toggles on click (retry #1) (30.8s)\n  x  1097 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:230:5 › Behaviors Showcase Visual Tests › Masonry › masonry should have wb-masonry class (3.9s)\n  x  1099 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:235:5 › Behaviors Showcase Visual Tests › Masonry › masonry should have column-count CSS applied (3.6s)\n  x  1098 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:250:5 › Behaviors Showcase Visual Tests › Masonry › masonry children should have break-inside: avoid (3.6s)\n  x  1100 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:264:5 › Behaviors Showcase Visual Tests › Masonry › masonry items should be distributed across columns (4.6s)\n  x  1101 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:290:5 › Behaviors Showcase Visual Tests › Tabs › tabs should have wb-tabs class (4.0s)\n  x  1103 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:295:5 › Behaviors Showcase Visual Tests › Tabs › tab buttons should have reasonable height/padding (4.6s)\n  x  1104 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:315:5 › Behaviors Showcase Visual Tests › Tabs › tabs navigation should exist (3.8s)\n  x  1102 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:207:5 › Behaviors Showcase Visual Tests › Toggle › toggle button text should be visible (not white on white) (retry #1) (5.6s)\n  x  1105 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:230:5 › Behaviors Showcase Visual Tests › Masonry › masonry should have wb-masonry class (retry #1) (4.2s)\n  x  1107 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:235:5 › Behaviors Showcase Visual Tests › Masonry › masonry should have column-count CSS applied (retry #1) (4.6s)\n  x  1106 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:250:5 › Behaviors Showcase Visual Tests › Masonry › masonry children should have break-inside: avoid (retry #1) (5.5s)\n  x  1109 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:290:5 › Behaviors Showcase Visual Tests › Tabs › tabs should have wb-tabs class (retry #1) (3.8s)\n  x  1108 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:264:5 › Behaviors Showcase Visual Tests › Masonry › masonry items should be distributed across columns (retry #1) (4.2s)\n  x  1113 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:342:5 › Behaviors Showcase Visual Tests › Code Examples › code blocks should not have horizontal overflow (3.3s)\n  x  1110 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:315:5 › Behaviors Showcase Visual Tests › Tabs › tabs navigation should exist (retry #1) (4.9s)\n  x  1111 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:295:5 › Behaviors Showcase Visual Tests › Tabs › tab buttons should have reasonable height/padding (retry #1) (4.7s)\n  x  1112 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:322:5 › Behaviors Showcase Visual Tests › Tabs › clicking tab should switch content (4.1s)\n  x  1117 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:437:5 › Behaviors Showcase Visual Tests › Global Page Tests › no visible text should overflow its container (4.3s)\n  x  1115 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:404:5 › Behaviors Showcase Visual Tests › Global Page Tests › all behavior elements should be initialized (4.9s)\n  x  1114 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:363:5 › Behaviors Showcase Visual Tests › Code Examples › code example HTML should be parseable (5.1s)\n  x  1116 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:396:5 › Behaviors Showcase Visual Tests › Global Page Tests › page should not have horizontal scrollbar (4.3s)\n  x  1118 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:342:5 › Behaviors Showcase Visual Tests › Code Examples › code blocks should not have horizontal overflow (retry #1) (4.4s)\n  x  1120 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:478:3 › Known Issues Detection › KNOWN ISSUE: drawer-layout toggle overlaps text (5.2s)\n  x  1121 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:504:3 › Known Issues Detection › KNOWN ISSUE: toggle button loses styling (4.1s)\n  x  1119 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:322:5 › Behaviors Showcase Visual Tests › Tabs › clicking tab should switch content (retry #1) (5.5s)\n  ok 1126 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:17:5 › Behaviors Showcase Page › Page Structure › page loads without console errors (5.6s)\n  x  1122 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:437:5 › Behaviors Showcase Visual Tests › Global Page Tests › no visible text should overflow its container (retry #1) (6.0s)\n  x  1124 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:363:5 › Behaviors Showcase Visual Tests › Code Examples › code example HTML should be parseable (retry #1) (5.0s)\n  x  1123 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:404:5 › Behaviors Showcase Visual Tests › Global Page Tests › all behavior elements should be initialized (retry #1) (5.3s)\n  x  1125 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:396:5 › Behaviors Showcase Visual Tests › Global Page Tests › page should not have horizontal scrollbar (retry #1) (5.0s)\n  ok 1130 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:50:5 › Behaviors Showcase Page › Text Overflow Detection › no text overflows parent containers (2.8s)\n  x  1129 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:38:5 › Behaviors Showcase Page › Page Structure › all behavior cards have demo areas (3.3s)\n  x  1128 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:478:3 › Known Issues Detection › KNOWN ISSUE: drawer-layout toggle overlaps text (retry #1) (4.7s)\n  x  1127 [behaviors] › tests\\behaviors\\behaviors-showcase-visual.spec.ts:504:3 › Known Issues Detection › KNOWN ISSUE: toggle button loses styling (retry #1) (5.1s)\n  ok 1131 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:176:5 › Behaviors Showcase Page › Tabs Behavior › tabs children should use data-tab-title attribute (2.7s)\n  ok 1133 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:91:5 › Behaviors Showcase Page › Text Overflow Detection › drawer-layout text is not covered by toggle button (4.8s)\n  ok 1136 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:133:5 › Behaviors Showcase Page › Dropdown Behavior › dropdown should have items attribute OR proper children structure (3.3s)\n  ok 1134 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:115:5 › Behaviors Showcase Page › Text Overflow Detection › all \"Main Content\" text is fully visible (4.6s)\n  ok 1141 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:264:5 › Behaviors Showcase Page › Drawer Layout Behavior › sidebar content is readable when drawer is open (3.1s)\n  ok 1140 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:249:5 › Behaviors Showcase Page › Drawer Layout Behavior › drawer toggle button is visible and accessible (3.3s)\n  ok 1138 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:211:5 › Behaviors Showcase Page › Tabs Behavior › tab buttons are properly sized (not too tall) (4.5s)\n  x  1139 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:242:5 › Behaviors Showcase Page › Drawer Layout Behavior › drawer-layout behavior initializes (8.3s)\n  x  1137 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:38:5 › Behaviors Showcase Page › Page Structure › all behavior cards have demo areas (retry #1) (8.9s)\n  x  1142 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:197:5 › Behaviors Showcase Page › Tabs Behavior › tabs generate tab buttons (9.6s)\n  x  1147 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:338:5 › Behaviors Showcase Page › Masonry Layout › masonry children are visible (3.9s)\n  x  1132 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:223:5 › Behaviors Showcase Page › Tabs Behavior › clicking tab shows corresponding panel (30.1s)\n  x  1146 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:242:5 › Behaviors Showcase Page › Drawer Layout Behavior › drawer-layout behavior initializes (retry #1) (8.3s)\n  x  1135 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:157:5 › Behaviors Showcase Page › Dropdown Behavior › dropdown shows menu when clicked (30.4s)\n  x  1148 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:197:5 › Behaviors Showcase Page › Tabs Behavior › tabs generate tab buttons (retry #1) (9.0s)\n  x  1149 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:338:5 › Behaviors Showcase Page › Masonry Layout › masonry children are visible (retry #1) (4.4s)\n  ok 1153 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:362:5 › Behaviors Showcase Page › Code Examples › code blocks are contained within cards (2.8s)\n  ok 1154 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:388:5 › Behaviors Showcase Page › Code Examples › code examples have small font size (3.1s)\n  x  1145 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:323:5 › Behaviors Showcase Page › Masonry Layout › masonry container uses column layout (30.2s)\n  x  1143 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:282:5 › Behaviors Showcase Page › Toggle Behavior › toggle button has visible styling (30.2s)\n  x  1144 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:305:5 › Behaviors Showcase Page › Toggle Behavior › toggle toggles class on target (30.4s)\n  ok 1155 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:401:5 › Behaviors Showcase Page › Code Examples › line numbers column is narrow (2.0s)\n  ok 1156 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:415:5 › Behaviors Showcase Page › Behavior Initialization › all behavior elements are initialized (2.1s)\n  ok 1157 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:441:5 › Behaviors Showcase Page › Visual Regression Checks › buttons have consistent styling (1.8s)\n  ok 1159 [behaviors] › tests\\behaviors\\behaviors.spec.ts:9:3 › Behaviors Registry › should have all required card behaviors registered (1.5s)\n  ok 1161 [behaviors] › tests\\behaviors\\behaviors.spec.ts:19:3 › Behaviors Registry › should have more than 100 behaviors registered (2.6s)\n  x  1158 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:460:5 › Behaviors Showcase Page › Visual Regression Checks › spinners are animating (2.2s)\n  x  1164 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:20:3 › Fix Verification Tests › Card handles empty boolean attributes correctly (5.4s)\n  x  1150 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:349:5 › Behaviors Showcase Page › Masonry Layout › masonry items have correct break-inside (30.2s)\n  x  1165 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:460:5 › Behaviors Showcase Page › Visual Regression Checks › spinners are animating (retry #1) (4.4s)\n  x  1151 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:223:5 › Behaviors Showcase Page › Tabs Behavior › clicking tab shows corresponding panel (retry #1) (30.6s)\n  x  1166 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:20:3 › Fix Verification Tests › Card handles empty boolean attributes correctly (retry #1) (6.1s)\n  x  1152 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:157:5 › Behaviors Showcase Page › Dropdown Behavior › dropdown shows menu when clicked (retry #1) (32.1s)\n  x  1169 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:49:3 › Fix Verification Tests › Figure component renders caption from data-caption (6.2s)\n  x  1160 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:323:5 › Behaviors Showcase Page › Masonry Layout › masonry container uses column layout (retry #1) (30.5s)\n  x  1171 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:100:3 › Fix Verification Tests › WBColorPicker meets all requirements (1.9s)\n  x  1162 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:305:5 › Behaviors Showcase Page › Toggle Behavior › toggle toggles class on target (retry #1) (30.8s)\n  x  1170 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:64:3 › Fix Verification Tests › EQ panel contains play button and volume slider (6.2s)\n  x  1163 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:282:5 › Behaviors Showcase Page › Toggle Behavior › toggle button has visible styling (retry #1) (31.0s)\n  x  1174 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:100:3 › Fix Verification Tests › WBColorPicker meets all requirements (retry #1) (2.6s)\n  x  1172 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:49:3 › Fix Verification Tests › Figure component renders caption from data-caption (retry #1) (6.9s)\n  x  1173 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:159:3 › Fix Verification Tests › New semantic behaviors render correctly (6.6s)\n  x  1178 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:267:3 › Fix Verification Tests › Syntax fixes verification (822ms)\n  x  1175 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:198:3 › Fix Verification Tests › Card behavior fixes (6.2s)\n  x  1179 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:283:3 › Fix Verification Tests › Builder Property Rendering (015) (614ms)\n  x  1176 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:64:3 › Fix Verification Tests › EQ panel contains play button and volume slider (retry #1) (7.3s)\n  x  1177 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:235:3 › Fix Verification Tests › Builder properties and Core behaviors work correctly (5.8s)\n  x  1181 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:267:3 › Fix Verification Tests › Syntax fixes verification (retry #1) (1.8s)\n  x  1183 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:283:3 › Fix Verification Tests › Builder Property Rendering (015) (retry #1) (1.6s)\n  x  1168 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:32:3 › Fix Verification Tests › Clickable card toggles active state on click (30.1s)\n  x  1167 [behaviors] › tests\\behaviors\\behaviors-showcase.spec.ts:349:5 › Behaviors Showcase Page › Masonry Layout › masonry items have correct break-inside (retry #1) (31.6s)\n  ok 1184 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:316:3 › Fix Verification Tests › Demo files load without error (031) (1.9s)\n  x  1180 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:159:3 › Fix Verification Tests › New semantic behaviors render correctly (retry #1) (7.2s)\n\n📋 Found 0 schemas with functional tests:\n  x  1188 [behaviors] › tests\\behaviors\\functional-runner.spec.ts:483:3 › Functional Test Runner › schema discovery (84ms)\n\n📊 Functional Test Coverage:\n   Total: 0 tests across 0 behaviors\n   By category:\n     buttons     :   0 ░\n     interactions:   0 ░\n     keyboard    :   0 ░\n     hover       :   0 ░\n     visual      :   0 ░\n     dismiss     :   0 ░\n     focus       :   0 ░\n     disabled    :   0 ░\n\n   ⚠️  Missing test categories: hover (CRITICAL for tooltip!), focus, disabled\n  x  1190 [behaviors] › tests\\behaviors\\functional-runner.spec.ts:829:3 › Functional Test Summary › coverage report (111ms)\n  x  1182 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:198:3 › Fix Verification Tests › Card behavior fixes (retry #1) (7.4s)\n\n📋 Found 0 schemas with functional tests:\n  x  1192 [behaviors] › tests\\behaviors\\functional-runner.spec.ts:483:3 › Functional Test Runner › schema discovery (retry #1) (25ms)\n  x  1187 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:334:3 › Fix Verification Tests › Media behavior export (017) (2.9s)\n  x  1185 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:235:3 › Fix Verification Tests › Builder properties and Core behaviors work correctly (retry #1) (7.2s)\n\n📊 Functional Test Coverage:\n   Total: 0 tests across 0 behaviors\n   By category:\n     buttons     :   0 ░\n     interactions:   0 ░\n     keyboard    :   0 ░\n     hover       :   0 ░\n     visual      :   0 ░\n     dismiss     :   0 ░\n     focus       :   0 ░\n     disabled    :   0 ░\n\n   ⚠️  Missing test categories: hover (CRITICAL for tooltip!), focus, disabled\n  x  1193 [behaviors] › tests\\behaviors\\functional-runner.spec.ts:829:3 › Functional Test Summary › coverage report (retry #1) (73ms)\n  x  1186 [behaviors] › tests\\behaviors\\global-attributes.spec.ts:9:3 › Global Attributes › tooltip global attribute creates tooltip (12.3s)\n  x  1196 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:334:3 › Fix Verification Tests › Media behavior export (017) (retry #1) (1.6s)\n  x  1191 [behaviors] › tests\\behaviors\\global-attributes.spec.ts:22:3 › Global Attributes › toast-message global attribute creates toast (10.2s)\n  ok 1201 [behaviors] › tests\\behaviors\\pce-demo.spec.ts:69:3 › PCE Demo Page › debug status check works (7.2s)\n  x  1194 [behaviors] › tests\\behaviors\\global-attributes.spec.ts:35:3 › Global Attributes › ripple global attribute creates ripple effect (12.4s)\n  x  1198 [behaviors] › tests\\behaviors\\pce-demo.spec.ts:5:3 › PCE Demo Page › loads pce-test.html and renders custom elements (10.7s)\n  x  1195 [behaviors] › tests\\behaviors\\global-attributes.spec.ts:49:3 › Global Attributes › badge global attribute applies badge styles (12.5s)\n  x  1197 [behaviors] › tests\\behaviors\\global-attributes.spec.ts:58:3 › Global Attributes › badge global attribute with no value applies default (11.7s)\n  x  1189 [behaviors] › tests\\behaviors\\fixes-verification.spec.ts:32:3 › Fix Verification Tests › Clickable card toggles active state on click (retry #1) (31.8s)\n  x  1202 [behaviors] › tests\\behaviors\\pce.spec.ts:10:3 › Pseudo-Custom Elements (PCE) v3.0 › wb-cardprofile is recognized as PCE (7.3s)\n  ok 1207 [behaviors] › tests\\behaviors\\pce.spec.ts:36:3 › Pseudo-Custom Elements (PCE) v3.0 › profile-card alias also works (7.5s)\n  x  1205 [behaviors] › tests\\behaviors\\pce-demo.spec.ts:5:3 › PCE Demo Page › loads pce-test.html and renders custom elements (retry #1) (15.0s)\n  ok 1209 [behaviors] › tests\\behaviors\\pce.spec.ts:53:3 › Pseudo-Custom Elements (PCE) v3.0 › wb-cardhero is recognized as PCE (3.9s)\n  x  1199 [behaviors] › tests\\behaviors\\global-attributes.spec.ts:9:3 › Global Attributes › tooltip global attribute creates tooltip (retry #1) (29.3s)\n  ok 1210 [behaviors] › tests\\behaviors\\pce.spec.ts:91:3 › Pseudo-Custom Elements (PCE) v3.0 › wb-cardnotification is recognized as PCE (2.9s)\n  ok 1211 [behaviors] › tests\\behaviors\\pce.spec.ts:131:3 › Pseudo-Custom Elements (PCE) v3.0 › wb-card basic element works (3.4s)\n  ok 1212 [behaviors] › tests\\behaviors\\pce.spec.ts:146:3 › Pseudo-Custom Elements (PCE) v3.0 › multiple PCE elements on same page (2.0s)\n  x  1200 [behaviors] › tests\\behaviors\\global-attributes.spec.ts:22:3 › Global Attributes › toast-message global attribute creates toast (retry #1) (35.6s)\n  ok 1213 [behaviors] › tests\\behaviors\\pce.spec.ts:70:3 › Pseudo-Custom Elements (PCE) v3.0 › wb-cardstats is recognized as PCE (4.4s)\n  ok 1215 [behaviors] › tests\\behaviors\\pce.spec.ts:176:3 › Pseudo-Custom Elements (PCE) v3.0 › PCE elements respond to lazy loading (4.3s)\n  ok 1214 [behaviors] › tests\\behaviors\\pce.spec.ts:109:3 › Pseudo-Custom Elements (PCE) v3.0 › x-behavior attribute triggers tooltip behavior (8.4s)\n  ok 1218 [behaviors] › tests\\behaviors\\scrollalong.spec.ts:33:3 › ScrollAlong Behavior - Real Site › nav stays visible when scrolling page content (3.0s)\n  x  1203 [behaviors] › tests\\behaviors\\global-attributes.spec.ts:35:3 › Global Attributes › ripple global attribute creates ripple effect (retry #1) (33.7s)\n  x  1206 [behaviors] › tests\\behaviors\\global-attributes.spec.ts:58:3 › Global Attributes › badge global attribute with no value applies default (retry #1) (35.7s)\n  ok 1220 [behaviors] › tests\\behaviors\\scrollalong.spec.ts:56:3 › ScrollAlong Behavior - Real Site › nav remains accessible after multiple scroll operations (4.1s)\n  x  1204 [behaviors] › tests\\behaviors\\global-attributes.spec.ts:49:3 › Global Attributes › badge global attribute applies badge styles (retry #1) (36.0s)\n  x  1217 [behaviors] › tests\\behaviors\\scrollalong.spec.ts:25:3 › ScrollAlong Behavior - Real Site › nav has sticky positioning applied (7.2s)\n  x  1216 [behaviors] › tests\\behaviors\\scrollalong.spec.ts:20:3 › ScrollAlong Behavior - Real Site › nav has wb-scrollalong class applied (6.7s)\n  x  1208 [behaviors] › tests\\behaviors\\pce.spec.ts:10:3 › Pseudo-Custom Elements (PCE) v3.0 › wb-cardprofile is recognized as PCE (retry #1) (18.4s)\n  ok 1222 [behaviors] › tests\\behaviors\\scrollalong.spec.ts:76:3 › ScrollAlong Behavior - Real Site › nav items remain clickable after scrolling (3.2s)\n  x  1219 [behaviors] › tests\\behaviors\\scrollalong.spec.ts:15:3 › ScrollAlong Behavior - Real Site › nav element exists with scrollalong behavior (7.4s)\n",
+  "errors": "stributed across columns\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: code blocks should not have horizontal overflow\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: tabs navigation should exist\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: tab buttons should have reasonable height/padding\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: clicking tab should switch content\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: no visible text should overflow its container\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: all behavior elements should be initialized\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: code example HTML should be parseable\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: page should not have horizontal scrollbar\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: code blocks should not have horizontal overflow\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: KNOWN ISSUE: drawer-layout toggle overlaps text\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: KNOWN ISSUE: toggle button loses styling\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: clicking tab should switch content\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: no visible text should overflow its container\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: code example HTML should be parseable\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: all behavior elements should be initialized\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: page should not have horizontal scrollbar\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: all behavior cards have demo areas\n   Error: expect(received).toBeGreaterThan(expected)\n\n❌ FAILED: KNOWN ISSUE: drawer-layout toggle overlaps text\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: KNOWN ISSUE: toggle button loses styling\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/demos/behaviors.html\n\n❌ FAILED: drawer-layout behavior initializes\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n❌ FAILED: all behavior cards have demo areas\n   Error: expect(received).toBeGreaterThan(expected)\n\n❌ FAILED: tabs generate tab buttons\n   Error: Timed out 5000ms waiting for expect(locator).toBeVisible()\n\n❌ FAILED: masonry children are visible\n   Error: expect(received).toBeGreaterThan(expected)\n\n⏱️ FAILED: clicking tab shows corresponding panel\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: drawer-layout behavior initializes\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n⏱️ FAILED: dropdown shows menu when clicked\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: tabs generate tab buttons\n   Error: Timed out 5000ms waiting for expect(locator).toBeVisible()\n\n❌ FAILED: masonry children are visible\n   Error: expect(received).toBeGreaterThan(expected)\n\n⏱️ FAILED: masonry container uses column layout\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: toggle button has visible styling\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: toggle toggles class on target\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: spinners are animating\n   Error: expect(received).toBe(expected) // Object.is equality\n\n❌ FAILED: Card handles empty boolean attributes correctly\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n⏱️ FAILED: masonry items have correct break-inside\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: spinners are animating\n   Error: expect(received).toBe(expected) // Object.is equality\n\n⏱️ FAILED: clicking tab shows corresponding panel\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: Card handles empty boolean attributes correctly\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n⏱️ FAILED: dropdown shows menu when clicked\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: Figure component renders caption from data-caption\n   Error: Timed out 5000ms waiting for expect(locator).toBeVisible()\n\n⏱️ FAILED: masonry container uses column layout\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: WBColorPicker meets all requirements\n   Error: expect(received).toBe(expected) // Object.is equality\n\n⏱️ FAILED: toggle toggles class on target\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: EQ panel contains play button and volume slider\n   Error: Timed out 5000ms waiting for expect(locator).toBeVisible()\n\n⏱️ FAILED: toggle button has visible styling\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: WBColorPicker meets all requirements\n   Error: expect(received).toBe(expected) // Object.is equality\n\n❌ FAILED: Figure component renders caption from data-caption\n   Error: Timed out 5000ms waiting for expect(locator).toBeVisible()\n\n❌ FAILED: New semantic behaviors render correctly\n   Error: Timed out 5000ms waiting for expect(locator).toHaveCount(expected)\n\n❌ FAILED: Syntax fixes verification\n   Error: expect(received).toBe(expected) // Object.is equality\n\n❌ FAILED: Card behavior fixes\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n❌ FAILED: Builder Property Rendering (015)\n   Error: expect(received).toContain(expected) // indexOf\n\n❌ FAILED: EQ panel contains play button and volume slider\n   Error: Timed out 5000ms waiting for expect(locator).toBeVisible()\n\n❌ FAILED: Builder properties and Core behaviors work correctly\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n❌ FAILED: Syntax fixes verification\n   Error: expect(received).toBe(expected) // Object.is equality\n\n❌ FAILED: Builder Property Rendering (015)\n   Error: expect(received).toContain(expected) // indexOf\n\n⏱️ FAILED: Clickable card toggles active state on click\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: masonry items have correct break-inside\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: New semantic behaviors render correctly\n   Error: Timed out 5000ms waiting for expect(locator).toHaveCount(expected)\n\n❌ FAILED: schema discovery\n   Error: expect(received).toBeGreaterThan(expected)\n\n❌ FAILED: coverage report\n   Error: expect(received).toBeGreaterThan(expected)\n\n❌ FAILED: Card behavior fixes\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n❌ FAILED: schema discovery\n   Error: expect(received).toBeGreaterThan(expected)\n\n❌ FAILED: Media behavior export (017)\n   Error: page.evaluate: TypeError: Failed to resolve module specifier '/src/behaviors/js/media.js'\n\n❌ FAILED: Builder properties and Core behaviors work correctly\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n❌ FAILED: coverage report\n   Error: expect(received).toBeGreaterThan(expected)\n\n❌ FAILED: tooltip global attribute creates tooltip\n   Error: Timed out 5000ms waiting for expect(locator).toBeVisible()\n\n❌ FAILED: Media behavior export (017)\n   Error: page.evaluate: TypeError: Failed to resolve module specifier '/src/behaviors/js/media.js'\n\n❌ FAILED: toast-message global attribute creates toast\n   Error: Timed out 5000ms waiting for expect(locator).toBeVisible()\n\n❌ FAILED: ripple global attribute creates ripple effect\n   Error: Timed out 5000ms waiting for expect(locator).toBeAttached()\n\n❌ FAILED: loads pce-test.html and renders custom elements\n   Error: Timed out 5000ms waiting for expect(locator).toHaveAttribute(expected)\n\n❌ FAILED: badge global attribute applies badge styles\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n❌ FAILED: badge global attribute with no value applies default\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n⏱️ FAILED: Clickable card toggles active state on click\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: wb-cardprofile is recognized as PCE\n   TypeError: Cannot read properties of undefined (reading 'contains')\n\n❌ FAILED: loads pce-test.html and renders custom elements\n   Error: Timed out 5000ms waiting for expect(locator).toHaveAttribute(expected)\n\n❌ FAILED: tooltip global attribute creates tooltip\n   Error: Timed out 5000ms waiting for expect(locator).toBeVisible()\n\n❌ FAILED: toast-message global attribute creates toast\n   Error: Timed out 5000ms waiting for expect(locator).toBeVisible()\n\n❌ FAILED: ripple global attribute creates ripple effect\n   Error: Timed out 5000ms waiting for expect(locator).toBeAttached()\n\n❌ FAILED: badge global attribute with no value applies default\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n❌ FAILED: badge global attribute applies badge styles\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n❌ FAILED: nav has sticky positioning applied\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n❌ FAILED: nav has wb-scrollalong class applied\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n\n❌ FAILED: wb-cardprofile is recognized as PCE\n   TypeError: Cannot read properties of undefined (reading 'contains')\n\n❌ FAILED: nav element exists with scrollalong behavior\n   Error: Timed out 5000ms waiting for expect(locator).toHaveAttribute(expected)\n",
+  "failures": [
+    {
+      "file": "tests\\compliance\\abbreviation-definitions.spec.ts",
+      "name": "Abbreviation Definition Compliance › all project abbreviations must be defined on first use in docs"
+    },
+    {
+      "file": "tests\\compliance\\cross-browser-support.spec.ts",
+      "name": "Cross-Browser Support Infrastructure › Feature detection module exports correctly"
+    },
+    {
+      "file": "tests\\compliance\\cross-browser-support.spec.ts",
+      "name": "Cross-Browser Support Infrastructure › Feature detection detects ResizeObserver"
+    },
+    {
+      "file": "tests\\compliance\\cross-browser-support.spec.ts",
+      "name": "Cross-Browser Support Infrastructure › Feature detection detects IntersectionObserver"
+    },
+    {
+      "file": "tests\\compliance\\cross-browser-support.spec.ts",
+      "name": "Cross-Browser Support Infrastructure › CSS Grid works without prefix"
+    },
+    {
+      "file": "tests\\compliance\\cross-browser-support.spec.ts",
+      "name": "Cross-Browser Support Infrastructure › CSS Flexbox gap works"
+    },
+    {
+      "file": "tests\\compliance\\cross-browser-support.spec.ts",
+      "name": "Cross-Browser Support Infrastructure › Collapse-grid utility class exists"
+    },
+    {
+      "file": "tests\\compliance\\cross-browser-support.spec.ts",
+      "name": "Cross-Browser Support Infrastructure › onResize cleanup works"
+    },
+    {
+      "file": "tests\\compliance\\cross-browser-support.spec.ts",
+      "name": "Cross-Browser Support Infrastructure › No UA sniffing in WB core"
+    },
+    {
+      "file": "tests\\compliance\\cross-browser-support.spec.ts",
+      "name": "Cross-Browser Support Infrastructure › onResize fires callback with size"
+    },
+    {
+      "file": "tests\\compliance\\cross-browser-support.spec.ts",
+      "name": "Cross-Browser Support Infrastructure › Safari fixes CSS is loaded"
+    },
+    {
+      "file": "tests\\compliance\\cross-browser-support.spec.ts",
+      "name": "Cross-Browser Support Infrastructure › getSize returns dimensions (7.4h)"
+    },
+    {
+      "file": "tests\\compliance\\css-oop-compliance.spec.ts",
+      "name": "CSS OOP Compliance › no hardcoded colors in CSS (except themes.css)"
+    },
+    {
+      "file": "tests\\compliance\\docs-manifest-integrity.spec.ts",
+      "name": "Docs Manifest Integrity › All markdown files in docs/ should be listed in manifest.json"
+    },
+    {
+      "file": "tests\\compliance\\html-ids.spec.ts",
+      "name": "HTML Compliance: ID Attributes › File demos\\wizard.html should have IDs on containers with >1 children (4.3h)"
+    },
+    {
+      "file": "tests\\compliance\\html-ids.spec.ts",
+      "name": "HTML Compliance: ID Attributes › File pages\\behaviors.html should have IDs on containers with >1 children (4.3h)"
+    },
+    {
+      "file": "tests\\compliance\\html-ids.spec.ts",
+      "name": "HTML Compliance: ID Attributes › File index.html should have IDs on containers with >1 children (4.3h)"
+    },
+    {
+      "file": "tests\\compliance\\html-ids.spec.ts",
+      "name": "HTML Compliance: ID Attributes › File pages\\ai-permutation-test.html should have IDs on containers with >1 children (4.3h)"
+    },
+    {
+      "file": "tests\\compliance\\html-ids.spec.ts",
+      "name": "HTML Compliance: ID Attributes › File pages\\about.html should have IDs on containers with >1 children (4.3h)"
+    },
+    {
+      "file": "tests\\compliance\\html-ids.spec.ts",
+      "name": "HTML Compliance: ID Attributes › File docs\\diagrams\\builder-sections.html should have IDs on containers with >1 children (4.3h)"
+    },
+    {
+      "file": "tests\\compliance\\html-ids.spec.ts",
+      "name": "HTML Compliance: ID Attributes › File demos\\test-harness.html should have IDs on containers with >1 children (4.3h)"
+    },
+    {
+      "file": "tests\\compliance\\html-ids.spec.ts",
+      "name": "HTML Compliance: ID Attributes › File demos\\kitchen-sink.html should have IDs on containers with >1 children (4.3h)"
+    },
+    {
+      "file": "tests\\compliance\\powershell-snippets.spec.ts",
+      "name": "docs: no POSIX-only one-liners in markdown (PowerShell-safe)"
+    },
+    {
+      "file": "tests\\compliance\\project-integrity.spec.ts",
+      "name": "Project Integrity › all HTML resource links point to existing files"
+    },
+    {
+      "file": "tests\\compliance\\schema-validation.spec.ts",
+      "name": "Schema Validation: Required Sections › test section has \"setup\" examples"
+    },
+    {
+      "file": "tests\\compliance\\schema-validation.spec.ts",
+      "name": "Schema Validation: Required Sections › component schemas have \"schemaFor\" field"
+    },
+    {
+      "file": "tests\\compliance\\schema-validation.spec.ts",
+      "name": "Schema Validation: Property Definitions › properties have \"type\" field"
+    },
+    {
+      "file": "tests\\compliance\\schema-validation.spec.ts",
+      "name": "Schema Validation: Test Section Completeness › setup examples are valid HTML strings"
+    },
+    {
+      "file": "tests\\compliance\\source-schema-compliance.spec.ts",
+      "name": "Source-Schema: Duplicate Variable Detection › no duplicate const/let declarations in JS files"
+    },
+    {
+      "file": "tests\\compliance\\stale-locks.spec.ts",
+      "name": "Lock directory must be empty before merge"
+    },
+    {
+      "file": "tests\\compliance\\semantic-article-to-card.spec.ts",
+      "name": "semantic <article> should be processed to card synchronously on page load"
+    },
+    {
+      "file": "tests\\compliance\\v3-syntax-compliance.spec.ts",
+      "name": "v3.0 Schema Format Compliance › all component schemas have $cssAPI section"
+    },
+    {
+      "file": "tests\\compliance\\v3-syntax-compliance.spec.ts",
+      "name": "v3.0 Schema Format Compliance › all component schemas have $view section"
+    },
+    {
+      "file": "tests\\compliance\\v3-syntax-compliance.spec.ts",
+      "name": "v3.0 Schema Format Compliance › all component schemas have $methods section"
+    },
+    {
+      "file": "tests\\compliance\\strict-mode-runtime.spec.ts",
+      "name": "Strict Mode Runtime Compliance › should throw error for legacy data-wb usage and NOT process it"
+    },
+    {
+      "file": "tests\\compliance\\no-observer-referror.spec.ts",
+      "name": "Runtime: no undefined-observer ReferenceError › public/builder.html should not throw observer ReferenceError"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Page Structure › page loads without console errors"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Inputs Section › validation variant inputs render"
+    },
+    {
+      "file": "tests\\compliance\\terminology.spec.ts",
+      "name": "Terminology Compliance › no usage of forbidden term \"wb-starter\""
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Buttons Section › buttons section has code examples"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Inputs Section › inputs section has code examples"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Selection Section › rating components render"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Selection Section › stepper renders"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Selection Section › selection section has code examples"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Inputs Section › validation variant inputs render (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Inputs Section › inputs section has code examples (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › ALL 4 alert variants render and are visible"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Buttons Section › buttons section has code examples (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Selection Section › selection section has code examples (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › alerts have title and message content"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Selection Section › stepper renders (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › progress bars render with visible fill"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › spinners render and are animating"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › toast buttons exist and have proper attributes"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › feedback section has code examples"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Overlays Section › overlays section has code examples"
+    },
+    {
+      "file": "tests\\compliance\\playwright-if-tests.spec.ts",
+      "name": "playwright-if-tests: exits 0 when no tests match (2.3m)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › feedback section has code examples (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › toast buttons exist and have proper attributes (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › spinners render and are animating (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › alerts have title and message content (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › ALL 4 alert variants render and are visible (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Feedback Section › progress bars render with visible fill (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Navigation Section › pagination renders"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Overlays Section › overlays section has code examples (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Navigation Section › accordion component renders with sections"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Navigation Section › breadcrumb renders"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Navigation Section › steps wizard renders"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Media Section › media section has code examples"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Navigation Section › navigation section has code examples"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Data Section › data section has code examples"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Effects Section › effects section has code examples"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Navigation Section › steps wizard renders (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Navigation Section › accordion component renders with sections (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Navigation Section › pagination renders (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Navigation Section › breadcrumb renders (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Media Section › media section has code examples (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Navigation Section › navigation section has code examples (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Code Examples › code examples render with syntax highlighting or code content"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Utilities Section › copy buttons exist"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Utilities Section › utilities section has code examples"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Effects Section › effects section has code examples (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Data Section › data section has code examples (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Code Examples › every section has at least 3 code examples"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Utilities Section › utilities section has code examples (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Code Examples › code examples render with syntax highlighting or code content (retry #1)"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Layout Quality › sections have adequate padding/margin"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Utilities Section › copy buttons exist (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 01 - Hero section renders correctly"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Code Examples › every section has at least 3 code examples (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 05 - Feedback & Status showcase"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 03 - Why wb-starter section with feature cards"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 04 - Cards showcase section"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 02 - Stats bar displays all metrics"
+    },
+    {
+      "file": "tests\\views\\behaviors-showcase.spec.ts",
+      "name": "Layout Quality › sections have adequate padding/margin (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 06 - Animation buttons showcase"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 07 - Overlay buttons showcase"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 01 - Hero section renders correctly (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 02 - Stats bar displays all metrics (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 04 - Cards showcase section (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 03 - Why wb-starter section with feature cards (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 05 - Feedback & Status showcase (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 08 - Form elements showcase"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 06 - Animation buttons showcase (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 07 - Overlay buttons showcase (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 10 - Testimonials section"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 09 - Code comparison section"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 12 - CTA section"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 11 - Quick start guide section"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 08 - Form elements showcase (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 13 - Navigation links work"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 14 - Mobile responsiveness"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 15 - Tablet responsiveness"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 16 - No critical console errors"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 09 - Code comparison section (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 11 - Quick start guide section (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 10 - Testimonials section (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 12 - CTA section (retry #1)"
+    },
+    {
+      "file": "tests\\views\\issues-viewer.spec.ts",
+      "name": "Issues viewer — refresh behavior › refresh updates issues panel after component is fixed"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 13 - Navigation links work (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 16 - No critical console errors (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 19 - Full page walkthrough"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 15 - Tablet responsiveness (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 14 - Mobile responsiveness (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 18 - Toast notification works"
+    },
+    {
+      "file": "tests\\views\\issues-viewer.spec.ts",
+      "name": "Issues viewer — refresh behavior › refresh updates issues panel after component is fixed (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 17 - Modal interaction works"
+    },
+    {
+      "file": "tests\\views\\themes-showcase.spec.ts",
+      "name": "Themes Showcase Page › Stats Cards - v3.0 Syntax › stats cards render with direct attributes"
+    },
+    {
+      "file": "tests\\views\\themes-showcase.spec.ts",
+      "name": "Themes Showcase Page › Live Preview Section › badges render with visible text"
+    },
+    {
+      "file": "tests\\views\\themes-showcase.spec.ts",
+      "name": "Themes Showcase Page › Live Preview Section › alerts show all variants with proper colors"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 19 - Full page walkthrough (retry #1)"
+    },
+    {
+      "file": "tests\\views\\views-permutations.spec.ts",
+      "name": "Views Permutations › generate and run permutation tests"
+    },
+    {
+      "file": "tests\\views\\views.spec.ts",
+      "name": "Template Rendering › basic interpolation works"
+    },
+    {
+      "file": "tests\\views\\themes-showcase.spec.ts",
+      "name": "Themes Showcase Page › Live Preview Section › progress bars render and have width"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 18 - Toast notification works (retry #1)"
+    },
+    {
+      "file": "tests\\views\\home-showcase.spec.ts",
+      "name": "Home Page Showcase › 17 - Modal interaction works (retry #1)"
+    },
+    {
+      "file": "tests\\views\\views.spec.ts",
+      "name": "Template Rendering › basic interpolation works (retry #1)"
+    },
+    {
+      "file": "tests\\views\\views-permutations.spec.ts",
+      "name": "Views Permutations › generate and run permutation tests (retry #1)"
+    },
+    {
+      "file": "tests\\views\\themes-showcase.spec.ts",
+      "name": "Themes Showcase Page › Stats Cards - v3.0 Syntax › stats cards render with direct attributes (retry #1)"
+    },
+    {
+      "file": "tests\\views\\themes-showcase.spec.ts",
+      "name": "Themes Showcase Page › Live Preview Section › alerts show all variants with proper colors (retry #1)"
+    },
+    {
+      "file": "tests\\views\\views.spec.ts",
+      "name": "Variant Classes › wb-avatar sizes apply correct classes"
+    },
+    {
+      "file": "tests\\views\\views.spec.ts",
+      "name": "Attribute Handling › missing optional attributes handled gracefully"
+    },
+    {
+      "file": "tests\\views\\views.spec.ts",
+      "name": "View Composition › user-card renders nested wb-avatar"
+    },
+    {
+      "file": "tests\\views\\themes-showcase.spec.ts",
+      "name": "Themes Showcase Page › Live Preview Section › progress bars render and have width (retry #1)"
+    },
+    {
+      "file": "tests\\views\\views.spec.ts",
+      "name": "View Composition › user-card renders nested wb-avatar (retry #1)"
+    },
+    {
+      "file": "tests\\views\\views.spec.ts",
+      "name": "Template Rendering › default values work with || syntax"
+    },
+    {
+      "file": "tests\\views\\views.spec.ts",
+      "name": "Attribute Handling › missing optional attributes handled gracefully (retry #1)"
+    },
+    {
+      "file": "tests\\views\\views.spec.ts",
+      "name": "Variant Classes › wb-avatar sizes apply correct classes (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\auto-injection-compliance.spec.ts",
+      "name": "Auto-Injection Compliance › Dialog should be auto-injected as Dialog"
+    },
+    {
+      "file": "tests\\behaviors\\auto-injection-compliance.spec.ts",
+      "name": "Auto-Injection Compliance › Article with x-card=\"\" SHOULD be a Card"
+    },
+    {
+      "file": "tests\\behaviors\\auto-injection-compliance.spec.ts",
+      "name": "Auto-Injection Compliance › Nav should be auto-injected as Navbar"
+    },
+    {
+      "file": "tests\\behaviors\\autoinject.spec.ts",
+      "name": "Auto-Inject Demo › Form Elements › Selects are enhanced"
+    },
+    {
+      "file": "tests\\behaviors\\autoinject.spec.ts",
+      "name": "Auto-Inject Demo › Form Elements › Checkboxes have enhancements"
+    },
+    {
+      "file": "tests\\behaviors\\autosize.spec.ts",
+      "name": "autosize modifier adjusts textarea and marks element"
+    },
+    {
+      "file": "tests\\behaviors\\autoinject.spec.ts",
+      "name": "Auto-Inject Demo › Form Elements › Cards are enhanced"
+    },
+    {
+      "file": "tests\\behaviors\\auto-injection-compliance.spec.ts",
+      "name": "Auto-Injection Compliance › Nav should be auto-injected as Navbar (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\auto-injection-compliance.spec.ts",
+      "name": "Auto-Injection Compliance › Dialog should be auto-injected as Dialog (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\auto-injection-compliance.spec.ts",
+      "name": "Auto-Injection Compliance › Article with x-card=\"\" SHOULD be a Card (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\autoinject.spec.ts",
+      "name": "Auto-Inject Demo › Form Elements › Checkboxes have enhancements (retry #1)"
+    },
+    {
+      "file": "tests\\views\\views.spec.ts",
+      "name": "Template Rendering › default values work with || syntax (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\autoinject.spec.ts",
+      "name": "Auto-Inject Demo › Form Elements › Selects are enhanced (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\autosize.spec.ts",
+      "name": "autosize modifier adjusts textarea and marks element (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\badge.spec.ts",
+      "name": "Badge — Basic Rendering › wb-badge renders as inline-level display"
+    },
+    {
+      "file": "tests\\behaviors\\autoinject.spec.ts",
+      "name": "Auto-Inject Demo › Form Elements › Cards are enhanced (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\badge.spec.ts",
+      "name": "Badge — Basic Rendering › wb-badge renders as inline-level display (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behavior-validation.spec.ts",
+      "name": "Behavior Initialization › element behaviors initialize correctly"
+    },
+    {
+      "file": "tests\\behaviors\\behavior-verification.spec.ts",
+      "name": "TABLE: Sortable Columns › table header shows sort indicator"
+    },
+    {
+      "file": "tests\\behaviors\\behavior-verification.spec.ts",
+      "name": "TABLE: Sortable Columns › clicking header sorts column ascending then descending"
+    },
+    {
+      "file": "tests\\behaviors\\behavior-verification.spec.ts",
+      "name": "DRAWER: Position Works › drawer right opens on right side"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › page has no horizontal scrollbar"
+    },
+    {
+      "file": "tests\\behaviors\\behavior-verification.spec.ts",
+      "name": "DRAWER: Position Works › drawer left opens on left side"
+    },
+    {
+      "file": "tests\\behaviors\\behavior-validation.spec.ts",
+      "name": "Behavior Initialization › element behaviors initialize correctly (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behavior-verification.spec.ts",
+      "name": "TABLE: Sortable Columns › table header shows sort indicator (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behavior-verification.spec.ts",
+      "name": "TABLE: Sortable Columns › clicking header sorts column ascending then descending (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › stepper exists with x-stepper"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › page has no horizontal scrollbar (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › all 4 alert types exist (info, success, warning, error)"
+    },
+    {
+      "file": "tests\\behaviors\\behavior-verification.spec.ts",
+      "name": "DRAWER: Position Works › drawer left opens on left side (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behavior-verification.spec.ts",
+      "name": "DRAWER: Position Works › drawer right opens on right side (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › pagination exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › steps wizard exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › breadcrumb exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › all 4 alert types exist (info, success, warning, error) (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › YouTube embed exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › audio player component exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › stepper exists with x-stepper (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › steps wizard exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › clock element exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › pagination exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › breadcrumb exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › countdown element exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › YouTube embed exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › audio player component exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › page is responsive at mobile width"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › no text overflows container horizontally"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › clock element exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › spinners have animation"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › sections have proper spacing"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › page is responsive at mobile width (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › countdown element exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › no text overflows container horizontally (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Behavior Initialization › wb-* custom elements are upgraded"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Behavior Initialization › x-* behavior attributes are processed"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › sections have proper spacing (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Drawer Layout › drawer-layout should have wb-drawer-layout class"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Drawer Layout › drawer toggle button should not overlap content text"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Drawer Layout › drawer text should not be cut off"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › spinners have animation (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Drawer Layout › \"Main Content\" text should be fully visible"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Interactive Behaviors › checkbox toggles on click"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Drawer Layout › drawer-layout should have wb-drawer-layout class (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › dropdown should have wb-dropdown class"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Drawer Layout › drawer text should not be cut off (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Behavior Initialization › x-* behavior attributes are processed (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Drawer Layout › drawer toggle button should not overlap content text (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Behavior Initialization › wb-* custom elements are upgraded (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Drawer Layout › \"Main Content\" text should be fully visible (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › dropdown should have wb-dropdown class (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › dropdown should create a menu container"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › dropdown should create a trigger button"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › dropdown should NOT show raw links without trigger"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › dropdown menu should be hidden initially"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › clicking dropdown trigger should open menu"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Toggle › toggle button should have visible background color"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Toggle › toggle button should maintain styling after click"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › dropdown should create a menu container (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › dropdown should create a trigger button (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › clicking dropdown trigger should open menu (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › dropdown should NOT show raw links without trigger (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Dropdown › dropdown menu should be hidden initially (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Toggle › toggle button should have visible background color (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Toggle › toggle button text should be visible (not white on white)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Toggle › toggle button should maintain styling after click (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Interactive Behaviors › checkbox toggles on click (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Masonry › masonry should have wb-masonry class"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Masonry › masonry should have column-count CSS applied"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Masonry › masonry children should have break-inside: avoid"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Masonry › masonry items should be distributed across columns"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Tabs › tabs should have wb-tabs class"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Tabs › tab buttons should have reasonable height/padding"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Tabs › tabs navigation should exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Toggle › toggle button text should be visible (not white on white) (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Masonry › masonry should have wb-masonry class (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Masonry › masonry should have column-count CSS applied (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Masonry › masonry children should have break-inside: avoid (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Tabs › tabs should have wb-tabs class (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Masonry › masonry items should be distributed across columns (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Code Examples › code blocks should not have horizontal overflow"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Tabs › tabs navigation should exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Tabs › tab buttons should have reasonable height/padding (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Tabs › clicking tab should switch content"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Global Page Tests › no visible text should overflow its container"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Global Page Tests › all behavior elements should be initialized"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Code Examples › code example HTML should be parseable"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Global Page Tests › page should not have horizontal scrollbar"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Code Examples › code blocks should not have horizontal overflow (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Known Issues Detection › KNOWN ISSUE: drawer-layout toggle overlaps text"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Known Issues Detection › KNOWN ISSUE: toggle button loses styling"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Tabs › clicking tab should switch content (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Global Page Tests › no visible text should overflow its container (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Code Examples › code example HTML should be parseable (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Global Page Tests › all behavior elements should be initialized (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Behaviors Showcase Visual Tests › Global Page Tests › page should not have horizontal scrollbar (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Page Structure › all behavior cards have demo areas"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Known Issues Detection › KNOWN ISSUE: drawer-layout toggle overlaps text (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
+      "name": "Known Issues Detection › KNOWN ISSUE: toggle button loses styling (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Drawer Layout Behavior › drawer-layout behavior initializes"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Page Structure › all behavior cards have demo areas (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Tabs Behavior › tabs generate tab buttons"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Masonry Layout › masonry children are visible"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Tabs Behavior › clicking tab shows corresponding panel"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Drawer Layout Behavior › drawer-layout behavior initializes (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Dropdown Behavior › dropdown shows menu when clicked"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Tabs Behavior › tabs generate tab buttons (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Masonry Layout › masonry children are visible (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Masonry Layout › masonry container uses column layout"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Toggle Behavior › toggle button has visible styling"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Toggle Behavior › toggle toggles class on target"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Visual Regression Checks › spinners are animating"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Card handles empty boolean attributes correctly"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Masonry Layout › masonry items have correct break-inside"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Visual Regression Checks › spinners are animating (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Tabs Behavior › clicking tab shows corresponding panel (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Card handles empty boolean attributes correctly (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Dropdown Behavior › dropdown shows menu when clicked (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Figure component renders caption from data-caption"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Masonry Layout › masonry container uses column layout (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › WBColorPicker meets all requirements"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Toggle Behavior › toggle toggles class on target (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › EQ panel contains play button and volume slider"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Toggle Behavior › toggle button has visible styling (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › WBColorPicker meets all requirements (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Figure component renders caption from data-caption (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › New semantic behaviors render correctly"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Syntax fixes verification"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Card behavior fixes"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Builder Property Rendering (015)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › EQ panel contains play button and volume slider (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Builder properties and Core behaviors work correctly"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Syntax fixes verification (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Builder Property Rendering (015) (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Clickable card toggles active state on click"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
+      "name": "Behaviors Showcase Page › Masonry Layout › masonry items have correct break-inside (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › New semantic behaviors render correctly (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\functional-runner.spec.ts",
+      "name": "Functional Test Runner › schema discovery"
+    },
+    {
+      "file": "tests\\behaviors\\functional-runner.spec.ts",
+      "name": "Functional Test Summary › coverage report"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Card behavior fixes (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\functional-runner.spec.ts",
+      "name": "Functional Test Runner › schema discovery (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Media behavior export (017)"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Builder properties and Core behaviors work correctly (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\functional-runner.spec.ts",
+      "name": "Functional Test Summary › coverage report (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\global-attributes.spec.ts",
+      "name": "Global Attributes › tooltip global attribute creates tooltip"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Media behavior export (017) (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\global-attributes.spec.ts",
+      "name": "Global Attributes › toast-message global attribute creates toast"
+    },
+    {
+      "file": "tests\\behaviors\\global-attributes.spec.ts",
+      "name": "Global Attributes › ripple global attribute creates ripple effect"
+    },
+    {
+      "file": "tests\\behaviors\\pce-demo.spec.ts",
+      "name": "PCE Demo Page › loads pce-test.html and renders custom elements"
+    },
+    {
+      "file": "tests\\behaviors\\global-attributes.spec.ts",
+      "name": "Global Attributes › badge global attribute applies badge styles"
+    },
+    {
+      "file": "tests\\behaviors\\global-attributes.spec.ts",
+      "name": "Global Attributes › badge global attribute with no value applies default"
+    },
+    {
+      "file": "tests\\behaviors\\fixes-verification.spec.ts",
+      "name": "Fix Verification Tests › Clickable card toggles active state on click (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\pce.spec.ts",
+      "name": "Pseudo-Custom Elements (PCE) v3.0 › wb-cardprofile is recognized as PCE"
+    },
+    {
+      "file": "tests\\behaviors\\pce-demo.spec.ts",
+      "name": "PCE Demo Page › loads pce-test.html and renders custom elements (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\global-attributes.spec.ts",
+      "name": "Global Attributes › tooltip global attribute creates tooltip (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\global-attributes.spec.ts",
+      "name": "Global Attributes › toast-message global attribute creates toast (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\global-attributes.spec.ts",
+      "name": "Global Attributes › ripple global attribute creates ripple effect (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\global-attributes.spec.ts",
+      "name": "Global Attributes › badge global attribute with no value applies default (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\global-attributes.spec.ts",
+      "name": "Global Attributes › badge global attribute applies badge styles (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\scrollalong.spec.ts",
+      "name": "ScrollAlong Behavior - Real Site › nav has sticky positioning applied"
+    },
+    {
+      "file": "tests\\behaviors\\scrollalong.spec.ts",
+      "name": "ScrollAlong Behavior - Real Site › nav has wb-scrollalong class applied"
+    },
+    {
+      "file": "tests\\behaviors\\pce.spec.ts",
+      "name": "Pseudo-Custom Elements (PCE) v3.0 › wb-cardprofile is recognized as PCE (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\scrollalong.spec.ts",
+      "name": "ScrollAlong Behavior - Real Site › nav element exists with scrollalong behavior"
+    }
+  ]
+}
