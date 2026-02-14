@@ -14,21 +14,21 @@
 }
 
 .wb-alert--info {
-  background: rgba(99, 102, 241, 0.1);
+  background: var(--alert-info-bg);
   border-color: var(--primary);
 }
 
 .wb-alert--success {
-  background: rgba(34, 197, 94, 0.1);
+  background: var(--alert-success-bg);
   border-color: var(--success-color);
 }
 
 .wb-alert--warning {
-  background: rgba(234, 179, 8, 0.1);
+  background: var(--alert-warning-bg);
   border-color: var(--warning-color);
 }
 
 .wb-alert--error {
-  background: rgba(239, 68, 68, 0.1);
+  background: var(--alert-danger-bg);
   border-color: var(--danger-color);
 }

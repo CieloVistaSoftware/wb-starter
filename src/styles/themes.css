@@ -32,6 +32,31 @@
   --text-primary: hsl(220, 15%, 95%);
   --text-secondary: hsl(220, 10%, 80%);
   --text-muted: hsl(220, 10%, 60%);
+  
+  /* Semantic state colors — used by alert, notification, rating */
+  --info-color: hsl(217, 91%, 60%);
+  --success-color: hsl(142, 71%, 45%);
+  --warning-color: hsl(45, 93%, 47%);
+  --danger-color: hsl(0, 84%, 60%);
+  
+  /* Alert backgrounds (10% opacity tints) */
+  --alert-info-bg: hsla(217, 91%, 60%, 0.1);
+  --alert-success-bg: hsla(142, 71%, 45%, 0.1);
+  --alert-warning-bg: hsla(45, 93%, 47%, 0.1);
+  --alert-danger-bg: hsla(0, 84%, 60%, 0.1);
+  
+  /* Notification dark backgrounds (12% opacity tints) */
+  --notification-info-dark-bg: hsla(207, 90%, 54%, 0.12);
+  --notification-info-dark-color: hsl(207, 89%, 78%);
+  --notification-success-dark-bg: hsla(122, 39%, 49%, 0.12);
+  --notification-success-dark-color: hsl(125, 39%, 72%);
+  --notification-warning-dark-bg: hsla(36, 100%, 50%, 0.12);
+  --notification-warning-dark-color: hsl(33, 100%, 75%);
+  --notification-danger-dark-bg: hsla(4, 90%, 58%, 0.12);
+  --notification-danger-dark-color: hsl(0, 74%, 77%);
+  
+  /* Rating star color */
+  --rating-active-color: hsl(45, 96%, 56%);
 }
 
 /* =============================================================================

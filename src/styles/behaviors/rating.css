@@ -13,5 +13,5 @@
 }
 
 .wb-rating span.active {
-  color: #fbbf24;
+  color: var(--rating-active-color);
 }

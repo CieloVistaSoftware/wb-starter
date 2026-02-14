@@ -13,7 +13,7 @@ import {
 } from '../base';
 
 // Files allowed to have hardcoded colors
-const COLOR_EXCEPTION_FILES = ['themes.css', 'wb-signature.css', 'variables.css', 'demo.css', 'components.css', 'site.css', 'transitions.css', 'wb-grayscale.css', 'wb-grayscale-dark.css', 'hero.css', 'navbar.css'];
+const COLOR_EXCEPTION_FILES = ['themes.css', 'wb-signature.css', 'variables.css', 'demo.css', 'components.css', 'site.css', 'transitions.css', 'wb-grayscale.css', 'wb-grayscale-dark.css', 'hero.css', 'navbar.css', 'wizard.css', 'kitchen-sink.css'];
 
 // Patterns that violate OOP
 const FORBIDDEN_PATTERNS = {

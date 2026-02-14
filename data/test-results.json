@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-02-14T19:44:21.184Z",
-  "duration": "43732.01s",
+  "timestamp": "2026-02-14T19:51:21.738Z",
+  "duration": "44152.56s",
   "exitCode": null,
-  "passed": 886,
-  "failed": 330,
+  "passed": 926,
+  "failed": 496,
   "skipped": 5,
-  "total": 1221,
+  "total": 1427,
   "results": [
     {
       "status": "passed",
@@ -8553,6 +8553,1448 @@
       "file": "tests\\behaviors\\scrollalong.spec.ts",
       "name": "ScrollAlong Behavior - Real Site › nav element exists with scrollalong behavior",
       "duration": "7.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › becomes fixed when scrolled past trigger point",
+      "duration": "7.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › respects data-offset attribute",
+      "duration": "2.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › adds wb-sticky class on init",
+      "duration": "8.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › unsticks when scrolled back up",
+      "duration": "10.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › creates placeholder to prevent layout shift",
+      "duration": "10.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\scrollalong.spec.ts",
+      "name": "ScrollAlong Behavior - Real Site › nav has sticky positioning applied (retry #1)",
+      "duration": "33.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › adds wb-sticky class on init (retry #1)",
+      "duration": "10.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › respects data-offset attribute (retry #1)",
+      "duration": "10.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\scrollalong.spec.ts",
+      "name": "ScrollAlong Behavior - Real Site › nav has wb-scrollalong class applied (retry #1)",
+      "duration": "30.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\scrollalong.spec.ts",
+      "name": "ScrollAlong Behavior - Real Site › nav element exists with scrollalong behavior (retry #1)",
+      "duration": "31.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › unsticks when scrolled back up (retry #1)",
+      "duration": "11.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › becomes fixed when scrolled past trigger point (retry #1)",
+      "duration": "13.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: isStuck() returns correct state",
+      "duration": "4.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Hero section renders and is compliant",
+      "duration": "2.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › creates placeholder to prevent layout shift (retry #1)",
+      "duration": "9.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Stats banner displays all stat items",
+      "duration": "3.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Live demo section (wb-demo) interactive elements",
+      "duration": "3.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › respects custom stuck class via data-class",
+      "duration": "10.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: stick() forces element to stick",
+      "duration": "8.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Feature cards grid renders all cards",
+      "duration": "5.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: unstick() forces element to unstick",
+      "duration": "8.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: isStuck() returns correct state (retry #1)",
+      "duration": "10.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › respects custom stuck class via data-class (retry #1)",
+      "duration": "14.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Stats banner displays all stat items (retry #1)",
+      "duration": "17.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Hero section renders and is compliant (retry #1)",
+      "duration": "21.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Live demo section (wb-demo) interactive elements (retry #1)",
+      "duration": "17.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › add() creates a dropped wrapper",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › remove() deletes a dropped wrapper",
+      "duration": "0ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\wizard.spec.ts",
+      "name": "Wizard: select wb-demo, then wb-audio, render and locate audio element",
+      "duration": "1.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › reset() clears all components",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › update() changes builder attributes",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: stick() forces element to stick (retry #1)",
+      "duration": "13.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › add() creates a dropped wrapper (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › remove() deletes a dropped wrapper (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: unstick() forces element to unstick (retry #1)",
+      "duration": "10.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Compliance: required children and styles",
+      "duration": "4.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › update() changes builder attributes (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Feature cards grid renders all cards (retry #1)",
+      "duration": "9.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › get() returns the wrapper element",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › reset() clears all components (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Audio: src goes to dataset.src (not native src) for div container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Video (div container): src goes to dataset.src",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Image (IMG element): src goes to native src attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card Image: src goes to dataset.src for article container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › YouTube: id goes to dataset.id",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › get() returns the wrapper element (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Avatar: src goes to dataset.src for div container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Audio: src goes to dataset.src (not native src) for div container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Video (div container): src goes to dataset.src (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Image (IMG element): src goes to native src attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card Image: src goes to dataset.src for article container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › YouTube: id goes to dataset.id (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Link (A element): href goes to native href attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Avatar: src goes to dataset.src for div container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card Link: href goes to dataset for div container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Search (input): placeholder goes to native attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Autocomplete (input): placeholder goes to native attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Input: placeholder goes to native attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Badge: text becomes textContent",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Link (A element): href goes to native href attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Alert: message goes to dataset",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card Link: href goes to dataset for div container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Autocomplete (input): placeholder goes to native attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Search (input): placeholder goes to native attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Input: placeholder goes to native attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Badge: text becomes textContent (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Component with class: class becomes className",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Alert: message goes to dataset (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Audio: loop as boolean dataset",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Null/undefined properties should be skipped",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Empty src should not create native src attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Special characters in values should be preserved",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card: elevated as boolean",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Compliance: required children and styles (retry #1)",
+      "duration": "13.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Component with class: class becomes className (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › URL with query params preserved",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Audio: loop as boolean dataset (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Null/undefined properties should be skipped (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Empty src should not create native src attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card: elevated as boolean (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Special characters in values should be preserved (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Textarea creates TEXTAREA element",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Input creates INPUT element",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › URL with query params preserved (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Default creates DIV element",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Audio creates DIV container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Default builder component",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Video behavior creates DIV container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Dark theme",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Textarea creates TEXTAREA element (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Input creates INPUT element (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Info variant",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Default creates DIV element (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Audio creates DIV container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Default builder component (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Dark theme (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Video behavior creates DIV container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Clickable",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Not hoverable",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Info variant (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Elevated",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › All features",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-sidebar.spec.ts",
+      "name": "Builder Sidebar Drawer › should collapse to exactly 1.5rem width",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-sidebar.spec.ts",
+      "name": "Builder Sidebar Drawer › Right panel should also collapse to 1.5rem",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Not hoverable (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Clickable (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Elevated (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › All features (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-sidebar.spec.ts",
+      "name": "Builder Sidebar Drawer › Right panel should also collapse to 1.5rem (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-sidebar.spec.ts",
+      "name": "Builder Sidebar Drawer › should collapse to exactly 1.5rem width (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-image-render.spec.ts",
+      "name": "Card Image Rendering › wb-cardimage should display images on cards-showcase",
+      "duration": "5.6s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-image-render.spec.ts",
+      "name": "Card Image Rendering › wb-cardimage should have 1rem padding",
+      "duration": "5.2s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should have a border on basic card",
+      "duration": "4.3s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should have a border on cardimage",
+      "duration": "5.7s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should have a border on cardbutton",
+      "duration": "4.3s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-styling.spec.ts",
+      "name": "Card Styling Standards › wb-cardstats has proper internal padding",
+      "duration": "4.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should have a border on cardfile",
+      "duration": "4.6s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should have a border on cardhorizontal",
+      "duration": "3.9s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-styling.spec.ts",
+      "name": "Card Styling Standards › all cards have at least 1rem (16px) content padding",
+      "duration": "8.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-styling.spec.ts",
+      "name": "Card Styling Standards › text content does not touch card edges",
+      "duration": "4.4s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should render a basic card with wb-card class",
+      "duration": "3.3s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should not apply wb-card--hoverable if data-hoverable=\"false\"",
+      "duration": "3.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should apply wb-card--clickable if data-clickable is present",
+      "duration": "4.4s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should apply wb-card--hoverable by default",
+      "duration": "5.8s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should apply wb-card--elevated if data-elevated is present",
+      "duration": "5.6s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should have base wb-card class without variant modifier when no variant specified",
+      "duration": "4.8s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card.spec.ts",
+      "name": "Card Behavior (integration) › should apply custom variant class if specified",
+      "duration": "5.8s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardbutton.spec.ts",
+      "name": "Card Button (integration) › should render button with primary action",
+      "duration": "7.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardbutton.spec.ts",
+      "name": "Card Button (integration) › should render both primary and secondary buttons",
+      "duration": "6.9s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardbutton.spec.ts",
+      "name": "Card Button (integration) › should have border",
+      "duration": "7.8s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardchip.spec.ts",
+      "name": "Chip (integration) › should render chip with wb-chip class",
+      "duration": "8.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardchip.spec.ts",
+      "name": "Chip (integration) › should have pill-shaped border radius",
+      "duration": "6.7s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardchip.spec.ts",
+      "name": "Chip (integration) › should add dismiss button when dismissible",
+      "duration": "5.7s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardhero.spec.ts",
+      "name": "Card Hero (integration) › should render hero card with title",
+      "duration": "6.8s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardhero.spec.ts",
+      "name": "Card Hero (integration) › should have minimum height",
+      "duration": "5.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardimage-render.spec.ts",
+      "name": "wb-cardimage Rendering › wb-cardimage should have img elements",
+      "duration": "2.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-styling.spec.ts",
+      "name": "Card Styling Standards › elevated cards have LIGHTER background than base cards",
+      "duration": "8.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-styling.spec.ts",
+      "name": "Card Styling Standards › elevated cards have box-shadow",
+      "duration": "9.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-product-behavior.spec.ts",
+      "name": "Card Product Behavior › should dispatch wb:cardproduct:addtocart event on CTA click",
+      "duration": "8.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardhero.spec.ts",
+      "name": "Card Hero (integration) › should support background image",
+      "duration": "4.3s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardimage-render.spec.ts",
+      "name": "wb-cardimage Rendering › wb-cardimage should have title rendered",
+      "duration": "2.9s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardimage-render.spec.ts",
+      "name": "wb-cardimage Rendering › wb-cardimage with aspect ratio",
+      "duration": "2.7s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardimage-render.spec.ts",
+      "name": "wb-cardimage Rendering › wb-cardvideo should have video elements",
+      "duration": "3.0s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardoverlay.spec.ts",
+      "name": "Card Overlay (integration) › should create overlay element with data-title text",
+      "duration": "3.9s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardoverlay.spec.ts",
+      "name": "Card Overlay (integration) › should have gradient background on overlay",
+      "duration": "4.1s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardoverlay.spec.ts",
+      "name": "Card Overlay (integration) › should position overlay at bottom by default",
+      "duration": "2.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardhero.spec.ts",
+      "name": "Card Hero (integration) › should support text alignment",
+      "duration": "8.9s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardimage-render.spec.ts",
+      "name": "wb-cardimage Rendering › ALL cards with images should render them",
+      "duration": "3.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardoverlay.spec.ts",
+      "name": "Card Overlay (integration) › should support background image",
+      "duration": "2.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardportfolio.spec.ts",
+      "name": "Portfolio Card - Business Card (integration) › should render all portfolio fields",
+      "duration": "9.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-product-behavior.spec.ts",
+      "name": "Card Product Behavior › should dispatch wb:cardproduct:addtocart event on CTA click (retry #1)",
+      "duration": "9.7s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardhero.spec.ts",
+      "name": "Card Hero (integration) › should support background image (retry #1)",
+      "duration": "13.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-styling.spec.ts",
+      "name": "Card Styling Standards › elevated cards have LIGHTER background than base cards (retry #1)",
+      "duration": "11.7s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardportfolio.spec.ts",
+      "name": "Portfolio Card - Business Card (integration) › should have border",
+      "duration": "6.9s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-styling.spec.ts",
+      "name": "Card Styling Standards › elevated cards have box-shadow (retry #1)",
+      "duration": "14.7s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardproduct.spec.ts",
+      "name": "Product Card (integration) › should render image",
+      "duration": "5.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardimage-render.spec.ts",
+      "name": "wb-cardimage Rendering › ALL cards with images should render them (retry #1)",
+      "duration": "6.9s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardportfolio.spec.ts",
+      "name": "Portfolio Card - Business Card (integration) › should render with cover image",
+      "duration": "9.4s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardoverlay.spec.ts",
+      "name": "Card Overlay (integration) › should support background image (retry #1)",
+      "duration": "25.9s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should render progress bar with wb-progress class",
+      "duration": "2.9s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should have rounded corners",
+      "duration": "2.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardhero.spec.ts",
+      "name": "Card Hero (integration) › should support text alignment (retry #1)",
+      "duration": "28.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardportfolio.spec.ts",
+      "name": "Portfolio Card - Business Card (integration) › should render all portfolio fields (retry #1)",
+      "duration": "24.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardproduct.spec.ts",
+      "name": "Product Card (integration) › should render all product properties",
+      "duration": "8.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should show progress bar fill",
+      "duration": "7.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should have appropriate height",
+      "duration": "3.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardportfolio.spec.ts",
+      "name": "Portfolio Card - Business Card (integration) › should render with cover image (retry #1)",
+      "duration": "20.9s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should have appropriate height (retry #1)",
+      "duration": "13.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › renders with title and subtitle",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should animate progress bar fill",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should show progress bar fill (retry #1)",
+      "duration": "14.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardproduct.spec.ts",
+      "name": "Product Card (integration) › should render all product properties (retry #1)",
+      "duration": "18.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › elevated variant has shadow",
+      "duration": "30.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › clickable variant is interactive",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › renders with href and navigates",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › glass variant has backdrop filter",
+      "duration": "30.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › renders with title and subtitle (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › shows external indicator for _blank target",
+      "duration": "30.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › renders badge when provided",
+      "duration": "30.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should animate progress bar fill (retry #1)",
+      "duration": "33.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › clickable variant is interactive (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › elevated variant has shadow (retry #1)",
+      "duration": "30.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › renders with href and navigates (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardbutton › renders with primary and secondary buttons",
+      "duration": "30.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › glass variant has backdrop filter (retry #1)",
+      "duration": "30.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › shows external indicator for _blank target (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › renders badge when provided (retry #1)",
+      "duration": "30.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardtestimonial › renders with quote, author, rating",
+      "duration": "30.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardprofile › renders with name, role, avatar",
+      "duration": "30.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardprofile › renders cover image when provided",
+      "duration": "30.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardimage › renders image with correct src and alt",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardimage › respects aspect ratio",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardbutton › renders with primary and secondary buttons (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardvideo › renders video element with controls",
+      "duration": "30.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardfile › renders file info with icon",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardtestimonial › renders with quote, author, rating (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardprofile › renders with name, role, avatar (retry #1)",
+      "duration": "30.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardprofile › renders cover image when provided (retry #1)",
+      "duration": "30.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardimage › renders image with correct src and alt (retry #1)",
+      "duration": "30.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Data Cards › cardstats › renders value and label",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardimage › respects aspect ratio (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardfile › renders file info with icon (retry #1)",
+      "duration": "30.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardvideo › renders video element with controls (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Data Cards › cardstats › shows trend indicator",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Data Cards › cardstats › shows icon when provided",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Data Cards › cardpricing › renders plan, price, and features",
+      "duration": "30.1s"
     }
   ],
   "failures": [
@@ -10865,6 +12307,1168 @@
       "file": "tests\\behaviors\\scrollalong.spec.ts",
       "name": "ScrollAlong Behavior - Real Site › nav element exists with scrollalong behavior",
       "duration": "7.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › becomes fixed when scrolled past trigger point",
+      "duration": "7.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › respects data-offset attribute",
+      "duration": "2.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › adds wb-sticky class on init",
+      "duration": "8.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › unsticks when scrolled back up",
+      "duration": "10.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › creates placeholder to prevent layout shift",
+      "duration": "10.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\scrollalong.spec.ts",
+      "name": "ScrollAlong Behavior - Real Site › nav has sticky positioning applied (retry #1)",
+      "duration": "33.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › adds wb-sticky class on init (retry #1)",
+      "duration": "10.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › respects data-offset attribute (retry #1)",
+      "duration": "10.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\scrollalong.spec.ts",
+      "name": "ScrollAlong Behavior - Real Site › nav has wb-scrollalong class applied (retry #1)",
+      "duration": "30.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\scrollalong.spec.ts",
+      "name": "ScrollAlong Behavior - Real Site › nav element exists with scrollalong behavior (retry #1)",
+      "duration": "31.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › unsticks when scrolled back up (retry #1)",
+      "duration": "11.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › becomes fixed when scrolled past trigger point (retry #1)",
+      "duration": "13.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: isStuck() returns correct state",
+      "duration": "4.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Hero section renders and is compliant",
+      "duration": "2.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › creates placeholder to prevent layout shift (retry #1)",
+      "duration": "9.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Stats banner displays all stat items",
+      "duration": "3.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Live demo section (wb-demo) interactive elements",
+      "duration": "3.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › respects custom stuck class via data-class",
+      "duration": "10.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: stick() forces element to stick",
+      "duration": "8.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Feature cards grid renders all cards",
+      "duration": "5.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: unstick() forces element to unstick",
+      "duration": "8.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: isStuck() returns correct state (retry #1)",
+      "duration": "10.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › respects custom stuck class via data-class (retry #1)",
+      "duration": "14.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Stats banner displays all stat items (retry #1)",
+      "duration": "17.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Hero section renders and is compliant (retry #1)",
+      "duration": "21.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Live demo section (wb-demo) interactive elements (retry #1)",
+      "duration": "17.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › add() creates a dropped wrapper",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › remove() deletes a dropped wrapper",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › reset() clears all components",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › update() changes builder attributes",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: stick() forces element to stick (retry #1)",
+      "duration": "13.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › add() creates a dropped wrapper (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › remove() deletes a dropped wrapper (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\sticky.spec.ts",
+      "name": "Sticky Behavior › API: unstick() forces element to unstick (retry #1)",
+      "duration": "10.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Compliance: required children and styles",
+      "duration": "4.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › update() changes builder attributes (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Feature cards grid renders all cards (retry #1)",
+      "duration": "9.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › get() returns the wrapper element",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › reset() clears all components (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Audio: src goes to dataset.src (not native src) for div container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Video (div container): src goes to dataset.src",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Image (IMG element): src goes to native src attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card Image: src goes to dataset.src for article container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › YouTube: id goes to dataset.id",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-api.spec.ts",
+      "name": "Builder API › get() returns the wrapper element (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Avatar: src goes to dataset.src for div container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Audio: src goes to dataset.src (not native src) for div container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Video (div container): src goes to dataset.src (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Image (IMG element): src goes to native src attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card Image: src goes to dataset.src for article container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › YouTube: id goes to dataset.id (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Link (A element): href goes to native href attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Avatar: src goes to dataset.src for div container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card Link: href goes to dataset for div container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Search (input): placeholder goes to native attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Autocomplete (input): placeholder goes to native attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Input: placeholder goes to native attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Badge: text becomes textContent",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Link (A element): href goes to native href attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Alert: message goes to dataset",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card Link: href goes to dataset for div container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Autocomplete (input): placeholder goes to native attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Search (input): placeholder goes to native attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Input: placeholder goes to native attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Badge: text becomes textContent (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Component with class: class becomes className",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Alert: message goes to dataset (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Audio: loop as boolean dataset",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Null/undefined properties should be skipped",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Empty src should not create native src attribute",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Special characters in values should be preserved",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card: elevated as boolean",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\ui\\home-page-permutation.spec.ts",
+      "name": "Home Page Permutation Compliance › Compliance: required children and styles (retry #1)",
+      "duration": "13.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Component with class: class becomes className (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › URL with query params preserved",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Audio: loop as boolean dataset (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Null/undefined properties should be skipped (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Empty src should not create native src attribute (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Attribute Routing › Card: elevated as boolean (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › Special characters in values should be preserved (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Textarea creates TEXTAREA element",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Input creates INPUT element",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Edge Cases › URL with query params preserved (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Default creates DIV element",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Audio creates DIV container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Default builder component",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Video behavior creates DIV container",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Dark theme",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Textarea creates TEXTAREA element (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Input creates INPUT element (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Info variant",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Default creates DIV element (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Audio creates DIV container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Default builder component (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Dark theme (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-mkel.spec.ts",
+      "name": "Builder mkEl() Element Types › Video behavior creates DIV container (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Clickable",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Not hoverable",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Info variant (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Elevated",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › All features",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-sidebar.spec.ts",
+      "name": "Builder Sidebar Drawer › should collapse to exactly 1.5rem width",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-sidebar.spec.ts",
+      "name": "Builder Sidebar Drawer › Right panel should also collapse to 1.5rem",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Not hoverable (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Clickable (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › Elevated (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-permutations.spec.ts",
+      "name": "Builder Component Permutations › All features (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-sidebar.spec.ts",
+      "name": "Builder Sidebar Drawer › Right panel should also collapse to 1.5rem (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\builder\\builder-sidebar.spec.ts",
+      "name": "Builder Sidebar Drawer › should collapse to exactly 1.5rem width (retry #1)",
+      "duration": "0ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-styling.spec.ts",
+      "name": "Card Styling Standards › elevated cards have LIGHTER background than base cards",
+      "duration": "8.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-styling.spec.ts",
+      "name": "Card Styling Standards › elevated cards have box-shadow",
+      "duration": "9.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-product-behavior.spec.ts",
+      "name": "Card Product Behavior › should dispatch wb:cardproduct:addtocart event on CTA click",
+      "duration": "8.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardhero.spec.ts",
+      "name": "Card Hero (integration) › should support background image",
+      "duration": "4.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardhero.spec.ts",
+      "name": "Card Hero (integration) › should support text alignment",
+      "duration": "8.9s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardimage-render.spec.ts",
+      "name": "wb-cardimage Rendering › ALL cards with images should render them",
+      "duration": "3.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardoverlay.spec.ts",
+      "name": "Card Overlay (integration) › should support background image",
+      "duration": "2.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardportfolio.spec.ts",
+      "name": "Portfolio Card - Business Card (integration) › should render all portfolio fields",
+      "duration": "9.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-product-behavior.spec.ts",
+      "name": "Card Product Behavior › should dispatch wb:cardproduct:addtocart event on CTA click (retry #1)",
+      "duration": "9.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-styling.spec.ts",
+      "name": "Card Styling Standards › elevated cards have LIGHTER background than base cards (retry #1)",
+      "duration": "11.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\card-styling.spec.ts",
+      "name": "Card Styling Standards › elevated cards have box-shadow (retry #1)",
+      "duration": "14.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardimage-render.spec.ts",
+      "name": "wb-cardimage Rendering › ALL cards with images should render them (retry #1)",
+      "duration": "6.9s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardportfolio.spec.ts",
+      "name": "Portfolio Card - Business Card (integration) › should render with cover image",
+      "duration": "9.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardhero.spec.ts",
+      "name": "Card Hero (integration) › should support text alignment (retry #1)",
+      "duration": "28.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardportfolio.spec.ts",
+      "name": "Portfolio Card - Business Card (integration) › should render all portfolio fields (retry #1)",
+      "duration": "24.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardproduct.spec.ts",
+      "name": "Product Card (integration) › should render all product properties",
+      "duration": "8.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should show progress bar fill",
+      "duration": "7.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should have appropriate height",
+      "duration": "3.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardportfolio.spec.ts",
+      "name": "Portfolio Card - Business Card (integration) › should render with cover image (retry #1)",
+      "duration": "20.9s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › renders with title and subtitle",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should animate progress bar fill",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should show progress bar fill (retry #1)",
+      "duration": "14.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardproduct.spec.ts",
+      "name": "Product Card (integration) › should render all product properties (retry #1)",
+      "duration": "18.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › elevated variant has shadow",
+      "duration": "30.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › clickable variant is interactive",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › renders with href and navigates",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › glass variant has backdrop filter",
+      "duration": "30.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › renders with title and subtitle (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › shows external indicator for _blank target",
+      "duration": "30.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › renders badge when provided",
+      "duration": "30.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cardprogressbar.spec.ts",
+      "name": "Progress Bar (integration) › should animate progress bar fill (retry #1)",
+      "duration": "33.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › clickable variant is interactive (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › elevated variant has shadow (retry #1)",
+      "duration": "30.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › renders with href and navigates (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardbutton › renders with primary and secondary buttons",
+      "duration": "30.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › card (base) › glass variant has backdrop filter (retry #1)",
+      "duration": "30.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › shows external indicator for _blank target (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardlink › renders badge when provided (retry #1)",
+      "duration": "30.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardtestimonial › renders with quote, author, rating",
+      "duration": "30.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardprofile › renders with name, role, avatar",
+      "duration": "30.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardprofile › renders cover image when provided",
+      "duration": "30.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardimage › renders image with correct src and alt",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardimage › respects aspect ratio",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Base Cards › cardbutton › renders with primary and secondary buttons (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardvideo › renders video element with controls",
+      "duration": "30.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardfile › renders file info with icon",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardtestimonial › renders with quote, author, rating (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardprofile › renders with name, role, avatar (retry #1)",
+      "duration": "30.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Content Cards › cardprofile › renders cover image when provided (retry #1)",
+      "duration": "30.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardimage › renders image with correct src and alt (retry #1)",
+      "duration": "30.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Data Cards › cardstats › renders value and label",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardimage › respects aspect ratio (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardfile › renders file info with icon (retry #1)",
+      "duration": "30.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Media Cards › cardvideo › renders video element with controls (retry #1)",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Data Cards › cardstats › shows trend indicator",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Data Cards › cardstats › shows icon when provided",
+      "duration": "30.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\cards\\cards-comprehensive.spec.ts",
+      "name": "Data Cards › cardpricing › renders plan, price, and features",
+      "duration": "30.1s"
     }
   ]
 }
