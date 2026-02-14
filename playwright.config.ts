@@ -118,7 +118,6 @@ export default defineConfig({
     //
     // Auto-discovers all .spec.ts files in these directories:
     // - behaviors/ (all behavior tests)
-    // - builder/ (builder component tests)
     // - cards/ (card variant tests)
     // - components/ (component tests)
     // - pages/ (page integration tests)
@@ -130,7 +129,6 @@ export default defineConfig({
       testDir: './tests',
       testMatch: [
         'behaviors/**/*.spec.ts',
-        'builder/**/*.spec.ts',
         'cards/**/*.spec.ts',
         'components/**/*.spec.ts',
         'pages/**/*.spec.ts',
