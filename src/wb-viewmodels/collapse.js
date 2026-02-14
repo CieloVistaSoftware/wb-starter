@@ -90,7 +90,7 @@ export function collapse(element, options = {}) {
     get isOpen() { return isOpen; }
   };
 
-  element.dataset.wbReady = 'collapse';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-collapse');
 }
 

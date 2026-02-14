@@ -1,0 +1,314 @@
+{
+  "description": "Default page settings shared by all WB showcase/demo pages. Use $extends to inherit.",
+  "page": {
+    "lang": "en",
+    "theme": "dark",
+    "stylesheets": [
+      "../src/styles/themes.css",
+      "../src/styles/site.css",
+      "../src/styles/components.css"
+    ],
+    "scripts": [
+      {
+        "type": "module",
+        "src": "../src/core/wb-lazy.js",
+        "init": "WB.init({ autoInject: true })"
+      }
+    ],
+    "title": "🧩 Multi-Component Demo"
+  },
+  "title": "🧩 Multi-Component Demo",
+  "schemaFor": "multi-component-demo",
+  "header": {
+    "tag": "h1",
+    "content": "🧩 Multi-Component Demo",
+    "subtitle": {
+      "tag": "p",
+      "content": "Composed from multiple sources using $extends, $generate, $ref, and $include"
+    }
+  },
+  "sections": [
+    {
+      "heading": "Badges — From Matrix",
+      "tag": "wb-badge",
+      "columns": 4,
+      "demos": [
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "New"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Done",
+            "variant": "success"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Warning",
+            "variant": "warning"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Error",
+            "variant": "error"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "5",
+            "variant": "primary",
+            "pill": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Badge",
+            "variant": "success",
+            "dot": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Tag",
+            "variant": "info",
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Outline",
+            "variant": "primary",
+            "outline": true
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Notifications — Matrix Combos",
+      "tag": "wb-cardnotification",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "message": "Info message"
+          }
+        },
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "message": "Done!",
+            "variant": "success",
+            "title": "Success"
+          }
+        },
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "message": "Warning!",
+            "variant": "warning"
+          }
+        },
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "message": "Error!",
+            "variant": "error",
+            "dismissible": false
+          }
+        },
+        {
+          "tag": "wb-cardnotification",
+          "attrs": {
+            "message": "Info",
+            "variant": "info",
+            "title": "Notice",
+            "icon": "🔔"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Progress — All Enum Variants",
+      "tag": "wb-progress",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "default"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "primary"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "success"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "warning"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "error"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "info"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "size": "xs"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "size": "sm"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "size": "md"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "size": "lg"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "size": "xl"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "badge — Combinations",
+      "tag": "wb-badge",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "New"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Done",
+            "variant": "success"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Warning",
+            "variant": "warning"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Error",
+            "variant": "error"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "5",
+            "variant": "primary",
+            "pill": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "variant": "success",
+            "dot": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Tag",
+            "variant": "info",
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Outline",
+            "variant": "primary",
+            "outline": true
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Custom Hand-Authored Section",
+      "tag": "wb-badge",
+      "columns": 2,
+      "demos": [
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Hand-crafted",
+            "variant": "primary",
+            "pill": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Also custom",
+            "variant": "success",
+            "size": "lg"
+          }
+        }
+      ]
+    }
+  ],
+  "_composed": {
+    "source": "src/wb-models/pages/multi-component-demo.composed.page.json",
+    "composedAt": "2026-02-12T02:49:54.337Z",
+    "stats": {
+      "extendsResolved": true,
+      "refsResolved": 1,
+      "includesResolved": 0,
+      "generated": 3
+    }
+  }
+}

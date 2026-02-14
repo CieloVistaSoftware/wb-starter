@@ -163,6 +163,20 @@
           "variant": "dark"
         }
       ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-navbar",
+      "renders": true,
+      "baseClass": "wb-navbar",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [
+        "wb-navbar--dark"
+      ],
+      "checkAttributes": [
+        "brand"
+      ]
     }
   },
   "_metadata": {

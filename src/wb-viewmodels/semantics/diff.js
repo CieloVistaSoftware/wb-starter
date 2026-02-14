@@ -3,7 +3,7 @@
 export default function diff(element) {
   try {
     // Mark the element as having the diff behavior applied so tests can assert
-    if (element && element.dataset) element.dataset.wbDiff = '1';
+    if (element) element.setAttribute('x-diff-init', '1');
 
     // Non-destructive: attempt a simple DOM hydration if content present
     const before = element.querySelector('.diff-before');
@@ -16,11 +16,11 @@ export default function diff(element) {
       element.appendChild(wrapper);
     }
   } catch (err) {
-    try { if (element && element.dataset) element.dataset.wbError = 'diff-behavior-failed'; } catch (e) { /* best-effort */ }
+    try { if (element) element.setAttribute('x-error', 'diff-behavior-failed'); } catch (e) { /* best-effort */ }
   }
 
   // Return teardown function for runtime compatibility
   return () => {
-    try { if (element && element.dataset) delete element.dataset.wbDiff; } catch (e) { /* noop */ }
+    try { if (element) element.removeAttribute('x-diff-init'); } catch (e) { /* noop */ }
   };
 }

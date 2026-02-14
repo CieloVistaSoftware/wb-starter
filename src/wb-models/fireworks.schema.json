@@ -111,6 +111,16 @@
           "repeat": true
         }
       ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-fireworks",
+      "renders": true,
+      "baseClass": "wb-fireworks",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
     }
   },
   "_metadata": {

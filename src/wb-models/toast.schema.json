@@ -367,6 +367,22 @@
           "action": "Undo"
         }
       ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-toast",
+      "renders": true,
+      "baseClass": "wb-toast",
+      "minInstances": 9,
+      "checkText": [
+        "Test"
+      ],
+      "checkClasses": [
+        "wb-toast--success"
+      ],
+      "checkAttributes": [
+        "message"
+      ]
     }
   },
   "_metadata": {

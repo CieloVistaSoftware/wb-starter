@@ -124,6 +124,20 @@
           "collapsed": true
         }
       ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-drawer-layout",
+      "renders": true,
+      "baseClass": "wb-drawer-layout",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [
+        "wb-drawer-layout--right"
+      ],
+      "checkAttributes": [
+        "position"
+      ]
     }
   },
   "_metadata": {

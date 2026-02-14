@@ -315,6 +315,21 @@
           "featured": true
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardpricing",
+      "renders": true,
+      "baseClass": "wb-pricing",
+      "minInstances": 6,
+      "checkText": [],
+      "checkClasses": [
+        "wb-pricing--bordered"
+      ],
+      "checkAttributes": [
+        "plan",
+        "price"
+      ]
     }
   },
   "_metadata": {

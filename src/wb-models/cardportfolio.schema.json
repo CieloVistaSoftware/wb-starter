@@ -288,7 +288,68 @@
       "<wb-cardportfolio name=\"John Doe\"></wb-cardportfolio>",
       "<wb-cardportfolio name=\"Jane Smith\" title=\"Designer\" skills=\"UI/UX,Figma,CSS\"></wb-cardportfolio>",
       "<wb-cardportfolio name=\"Dev\" variant=\"full\" experience='[{\"company\":\"ACME\",\"role\":\"Engineer\"}]'></wb-cardportfolio>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "name": "Jane Smith",
+          "title": "UX Designer",
+          "company": "Anthropic",
+          "skills": "Figma,CSS,React",
+          "bio": "Creative designer with 8 years experience",
+          "availability": "available"
+        },
+        {
+          "name": "John Doe",
+          "title": "Senior Engineer",
+          "company": "Cielo Vista",
+          "skills": "TypeScript,Node,SQL",
+          "variant": "compact",
+          "availability": "busy"
+        },
+        {
+          "name": "Sarah Chen",
+          "title": "Product Manager",
+          "company": "TechCorp",
+          "variant": "horizontal",
+          "bio": "Building products users love",
+          "cta": "Contact Me"
+        },
+        {
+          "name": "Alex Rivera",
+          "title": "Full Stack Dev",
+          "skills": "Python,Go,Rust",
+          "variant": "full",
+          "availability": "open-to-opportunities",
+          "stats": "[{\"label\":\"Projects\",\"value\":\"24\"},{\"label\":\"Years\",\"value\":\"10\"}]"
+        }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardportfolio",
+      "renders": true,
+      "baseClass": "wb-portfolio",
+      "minInstances": 4,
+      "checkText": [
+        "UX Designer",
+        "Jane Smith",
+        "Creative designer with 8 years experience",
+        "Senior Engineer",
+        "John Doe",
+        "Product Manager"
+      ],
+      "checkClasses": [
+        "wb-portfolio--compact"
+      ],
+      "checkAttributes": [
+        "name",
+        "title",
+        "company",
+        "skills",
+        "availability"
+      ]
+    }
   },
   "_metadata": {
     "category": "cards",

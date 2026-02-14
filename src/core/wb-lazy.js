@@ -93,6 +93,7 @@ const customElementMappings = [
   { selector: 'link-card', behavior: 'cardlink' },
   { selector: 'horizontal-card', behavior: 'cardhorizontal' },
   
+  { selector: 'wb-demo', behavior: 'demo' },
   { selector: 'wb-code-card', behavior: 'demo' },
   { selector: 'wb-mdhtml', behavior: 'mdhtml' },
   
@@ -149,6 +150,14 @@ const customElementMappings = [
   { selector: '[x-password]', behavior: 'password' },
   { selector: '[x-tags]', behavior: 'tags' },
   { selector: '[x-file]', behavior: 'file' },
+  { selector: '[x-masked]', behavior: 'masked' },
+  { selector: '[x-stepper]', behavior: 'stepper' },
+  { selector: '[x-counter]', behavior: 'counter' },
+  { selector: '[x-autocomplete]', behavior: 'autocomplete' },
+  { selector: '[x-otp]', behavior: 'otp' },
+  { selector: '[x-colorpicker]', behavior: 'colorpicker' },
+  { selector: '[x-search]', behavior: 'search' },
+  { selector: '[x-floatinglabel]', behavior: 'floatinglabel' },
 
   // New Components
   { selector: 'wb-codecontrol', behavior: 'codecontrol' },
@@ -158,7 +167,28 @@ const customElementMappings = [
   { selector: 'wb-footer', behavior: 'footer' },
   { selector: 'wb-header', behavior: 'header' },
   { selector: 'wb-globe', behavior: 'globe' },
-  { selector: 'wb-stagelight', behavior: 'stagelight' }
+  { selector: 'wb-stagelight', behavior: 'stagelight' },
+  { selector: 'wb-audio', behavior: 'audio' },
+  { selector: 'wb-button', behavior: 'button' },
+  { selector: 'wb-dialog', behavior: 'dialog' },
+  { selector: 'wb-details', behavior: 'details' },
+  { selector: 'wb-hero', behavior: 'hero' },
+  { selector: 'wb-input', behavior: 'input' },
+  { selector: 'wb-notes', behavior: 'notes' },
+  { selector: 'wb-select', behavior: 'select' },
+  { selector: 'wb-skeleton', behavior: 'skeleton' },
+  { selector: 'wb-slider', behavior: 'slider' },
+  { selector: 'wb-table', behavior: 'table' },
+  { selector: 'wb-textarea', behavior: 'textarea' },
+  { selector: 'wb-timeline', behavior: 'timeline' },
+  { selector: 'wb-toast', behavior: 'toast' },
+  { selector: 'wb-toggle', behavior: 'toggle' },
+  { selector: 'wb-tooltip', behavior: 'tooltip' },
+  { selector: 'wb-resizable', behavior: 'resizable' },
+  { selector: 'wb-navbar', behavior: 'navbar' },
+  { selector: 'wb-checkbox', behavior: 'checkbox' },
+  { selector: 'wb-search', behavior: 'search' },
+  { selector: 'wb-rating', behavior: 'rating' }
 ];
 
 const autoInjectMappings = [
@@ -214,7 +244,7 @@ function getAutoInjectBehaviors(element) {
 
   if (!getConfig('autoInject')) return behaviors;
   
-  // Skip if data-wb is already present (explicit overrides implicit)
+  // Skip if x-behavior is already present (explicit overrides implicit)
   if (element.hasAttribute('x-behavior')) return behaviors;
   
   for (const { selector, behavior } of autoInjectMappings) {
@@ -276,6 +306,28 @@ const WB = {
    * @param {Object} options - Behavior options (override data attributes)
    * @returns {Promise<Function|null>} Cleanup function or null if failed
    */
+  /**
+  * Workflow for injecting behaviors:
+  *
+  * 1. Identify the target element:
+  *    - Use a proper HTML5 element (e.g., <div>, <section>, <article>, <aside>, <header>, <footer>, <main>, <nav>) as the base.
+  *    - Reference it by selector (e.g., '#myElem') or pass the element directly.
+  *
+  * 2. Choose the behavior/component to inject (e.g., 'card', 'stack', 'repeater').
+  *
+  * 3. Select the injection method:
+  *    a) Inject by URL:
+  *       WB.inject('#myElem', 'card', { url: 'https://example.com/wb-card.js' });
+  *       // WBCard can inject into elements like <wb-card>, <card-basic>, <wb-cardimage>, <wb-cardvideo>, etc.
+  *
+  *    b) Inject by function/class:
+  *       WB.inject('#myElem', 'stack', { factory: WBStack });
+  *
+  *    c) Inject by config object:
+  *       WB.inject('#myElem', 'repeater', { config: { name: 'repeater', factory: () => new WBRepeater() } });
+  *
+  * 4. The behavior will be loaded and applied to the element asynchronously.
+   */
   async inject(element, behaviorName, options = {}) {
     // Resolve element if string selector
     if (typeof element === 'string') {
@@ -335,7 +387,7 @@ const WB = {
       });
       
       // Mark element as having an error
-      element.dataset.wbError = 'true';
+      element.setAttribute('x-error', 'true');
       
       return null;
     } finally {
@@ -400,7 +452,7 @@ const WB = {
   },
 
   /**
-   * Scan DOM for elements with data-wb and inject behaviors
+   * Scan DOM for x-* behaviors and wb-* custom elements
    * Uses batching for better performance
    * @param {HTMLElement} root - Root element to scan (default: document.body)
    */
@@ -434,7 +486,7 @@ const WB = {
       autoInjectMappings.forEach(({ selector, behavior }) => {
         const autoElements = root.querySelectorAll(selector);
         autoElements.forEach(element => {
-          // Skip if data-wb is present (already handled)
+          // Skip if x-behavior is present (already handled)
           if (!element.hasAttribute('x-behavior')) {
             WB.lazyInject(element, behavior);
           }
@@ -451,7 +503,7 @@ const WB = {
   },
 
   /**
-   * Watch for new elements with data-wb (MutationObserver)
+   * Watch for new elements with x-* behaviors (MutationObserver)
    * @param {HTMLElement} root - Root element to observe (default: document.body)
    * @returns {MutationObserver} The observer instance
    */
@@ -704,7 +756,7 @@ const WB = {
     }
 
     // 4. Apply Behaviors
-    // If we didn't find a custom tag, or if there are extra behaviors, add data-wb
+    // If we didn't find a custom tag, or if there are extra behaviors, set x-behavior
     const behaviors = data.behaviors || [];
     if (data.b && !isCustomTag) {
       behaviors.push(data.b);

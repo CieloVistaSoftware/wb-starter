@@ -1,11 +1,12 @@
 {
-  "generated": "2026-01-31T23:04:19.978Z",
-  "totalFiles": 126,
+  "generated": "2026-02-14T07:07:26.099Z",
+  "totalFiles": 169,
   "categories": [
     "_today",
     "architecture",
     "audits",
     "builder",
+    "claude",
     "compliance",
     "components",
     "guides",
@@ -13,33 +14,13 @@
     "standards"
   ],
   "byCategory": {
-    "architecture": [
-      {
-        "path": "docs/architecture/ATTRIBUTE-NAMING-STANDARD.md",
-        "title": "Web Behaviors (WB) Attribute Naming Standard",
-        "name": "ATTRIBUTE-NAMING-STANDARD",
-        "category": "architecture"
-      },
-      {
-        "path": "docs/architecture/proposed-custom-elements.md",
-        "title": "Proposed Custom HTML Tags for Layouts",
-        "name": "proposed-custom-elements",
-        "category": "architecture"
-      },
-      {
-        "path": "docs/architecture/SCHEMA-SPECIFICATION.md",
-        "title": "Web Behaviors (WB) Schema Specification v3.0",
-        "name": "SCHEMA-SPECIFICATION",
-        "category": "architecture"
-      },
-      {
-        "path": "docs/architecture/WBVIEWS.md",
-        "title": "wb-views System",
-        "name": "WBVIEWS",
-        "category": "architecture"
-      }
-    ],
     "root": [
+      {
+        "path": "docs/ANNOUNCE_TEST_POLICY.md",
+        "title": "Release announcement: Local test gating and PR policy",
+        "name": "ANNOUNCE_TEST_POLICY",
+        "category": "root"
+      },
       {
         "path": "docs/architecture.md",
         "title": "Project Architecture<br>(AI-Friendly)",
@@ -68,6 +49,12 @@
         "path": "docs/behaviors-reference.md",
         "title": "Web Behaviors (WB) Reference",
         "name": "behaviors-reference",
+        "category": "root"
+      },
+      {
+        "path": "docs/BRANCH_PROTECTION.md",
+        "title": "Branch protection: require fast Tier‑1 check",
+        "name": "BRANCH_PROTECTION",
         "category": "root"
       },
       {
@@ -203,6 +190,12 @@
         "category": "root"
       },
       {
+        "path": "docs/mcp.md",
+        "title": "MCP Runner & Docs Access",
+        "name": "mcp",
+        "category": "root"
+      },
+      {
         "path": "docs/MVVM-MIGRATION-PLAN.md",
         "title": "Web Behaviors (WB) MVVM Migration Plan",
         "name": "MVVM-MIGRATION-PLAN",
@@ -222,13 +215,13 @@
       },
       {
         "path": "docs/PAGE-BUILDER-RULES.md",
-        "title": "WB Page Builder - Content Creation Rules",
+        "title": "Web Behaviors (WB) Page Builder - Content Creation Rules",
         "name": "PAGE-BUILDER-RULES",
         "category": "root"
       },
       {
         "path": "docs/pce-candidates.md",
-        "title": "PCE (Pseudo-Custom Elements) - WB v3.0",
+        "title": "PCE (Pseudo-Custom Elements) - Web Behaviors (WB) v3.0",
         "name": "pce-candidates",
         "category": "root"
       },
@@ -269,9 +262,27 @@
         "category": "root"
       },
       {
+        "path": "docs/schema.md",
+        "title": "Schema Standards for Web Behaviors (WB) Components & Pages",
+        "name": "schema",
+        "category": "root"
+      },
+      {
+        "path": "docs/schema.migration.md",
+        "title": "Web Behaviors (WB) Schema Migration Plan",
+        "name": "schema.migration",
+        "category": "root"
+      },
+      {
         "path": "docs/schemaTestValue.md",
         "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
         "name": "schemaTestValue",
+        "category": "root"
+      },
+      {
+        "path": "docs/search.md",
+        "title": "Search Component Documentation",
+        "name": "search",
         "category": "root"
       },
       {
@@ -288,7 +299,7 @@
       },
       {
         "path": "docs/styles.md",
-        "title": "WB Style Constitution & Golden Rules",
+        "title": "Class Naming & Semantics",
         "name": "styles",
         "category": "root"
       },
@@ -302,6 +313,12 @@
         "path": "docs/test-schema-standard.md",
         "title": "Comprehensive Test Schema Standard",
         "name": "test-schema-standard",
+        "category": "root"
+      },
+      {
+        "path": "docs/testing-runbook.md",
+        "title": "Testing & CI — Runbook (developer-focused)",
+        "name": "testing-runbook",
         "category": "root"
       },
       {
@@ -329,10 +346,60 @@
         "category": "root"
       },
       {
+        "path": "docs/wbservices.md",
+        "title": "wbservices",
+        "name": "wbservices",
+        "category": "root"
+      },
+      {
         "path": "docs/WB_BEHAVIOR_SYSTEM.md",
         "title": "Web Behaviors (WB) Behavior System - Technical Workflow",
         "name": "WB_BEHAVIOR_SYSTEM",
         "category": "root"
+      },
+      {
+        "path": "docs/wizard.md",
+        "title": "wizard",
+        "name": "wizard",
+        "category": "root"
+      }
+    ],
+    "architecture": [
+      {
+        "path": "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md",
+        "title": "x- Prefix Migration — Phase 1: Core Infrastructure",
+        "name": "X-PREFIX-MIGRATION-PHASE1",
+        "category": "architecture"
+      },
+      {
+        "path": "docs/architecture/proposals/proposed-custom-elements.md",
+        "title": "Proposed Custom HTML Tags for Layouts",
+        "name": "proposed-custom-elements",
+        "category": "architecture"
+      },
+      {
+        "path": "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
+        "title": "Web Behaviors (WB) Attribute Naming Standard",
+        "name": "ATTRIBUTE-NAMING-STANDARD",
+        "category": "architecture"
+      },
+      {
+        "path": "docs/architecture/standards/ERROR-MESSAGE.md",
+        "title": "ERROR-MESSAGE",
+        "name": "ERROR-MESSAGE",
+        "category": "architecture"
+      },
+      {
+        "path": "docs/architecture/standards/SCHEMA-SPECIFICATION.md",
+        "title": "Web Behaviors (WB) Schema Specification v3.0",
+        "name": "SCHEMA-SPECIFICATION",
+        "category": "architecture"
+      },
+      {
+        "path": "docs/architecture/WBVIEWS.md",
+        "title": "wb-views System",
+        "name": "WBVIEWS",
+        "category": "architecture"
       }
     ],
     "audits": [
@@ -363,6 +430,38 @@
         "category": "builder"
       }
     ],
+    "claude": [
+      {
+        "path": "docs/claude/PAGE-GENERATION.md",
+        "title": "Page Generation Pipeline",
+        "name": "PAGE-GENERATION",
+        "category": "claude"
+      },
+      {
+        "path": "docs/claude/README.md",
+        "title": "AI Documentation Tier System",
+        "name": "README",
+        "category": "claude"
+      },
+      {
+        "path": "docs/claude/TIER1-LAWS.md",
+        "title": "TIER 1 — LAWS (Read Every Session, No Exceptions)",
+        "name": "TIER1-LAWS",
+        "category": "claude"
+      },
+      {
+        "path": "docs/claude/TIER2-DOMAIN-GUIDES.md",
+        "title": "TIER 2 — DOMAIN GUIDES (Read When Working In That Area)",
+        "name": "TIER2-DOMAIN-GUIDES",
+        "category": "claude"
+      },
+      {
+        "path": "docs/claude/TIER3-REFERENCE.md",
+        "title": "TIER 3 — REFERENCE (Don't Read Unless Specifically Needed)",
+        "name": "TIER3-REFERENCE",
+        "category": "claude"
+      }
+    ],
     "compliance": [
       {
         "path": "docs/compliance/iso-42001-alignment.md",
@@ -374,7 +473,7 @@
     "components": [
       {
         "path": "docs/components/cards/card.md",
-        "title": "Card - wb-starter v3.0",
+        "title": "## Composition for Specialized Functionality",
         "name": "card",
         "category": "components"
       },
@@ -469,6 +568,18 @@
         "category": "components"
       },
       {
+        "path": "docs/components/cards/cards.index.md",
+        "title": "Card Components - wb-starter v3.0",
+        "name": "cards.index",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/cards.readme.md",
+        "title": "Cards Components Documentation",
+        "name": "cards.readme",
+        "category": "components"
+      },
+      {
         "path": "docs/components/cards/cardstats.md",
         "title": "Card Stats - wb-starter v3.0",
         "name": "cardstats",
@@ -487,15 +598,21 @@
         "category": "components"
       },
       {
-        "path": "docs/components/cards/index.md",
-        "title": "Card Components - wb-starter v3.0",
-        "name": "index",
-        "category": "components"
-      },
-      {
         "path": "docs/components/cards/README.md",
         "title": "wb-starter v3.0 - Cards",
         "name": "README",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/components.md",
+        "title": "components",
+        "name": "components",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/demo/demo.md",
+        "title": "wb-demo",
+        "name": "demo",
         "category": "components"
       },
       {
@@ -523,27 +640,129 @@
         "category": "components"
       },
       {
-        "path": "docs/components/feedback/README.md",
-        "title": "Feedback Components",
-        "name": "README",
+        "path": "docs/components/feedback/alert.md",
+        "title": "Alert",
+        "name": "alert",
         "category": "components"
       },
       {
-        "path": "docs/components/forms/README.md",
-        "title": "Form Components",
-        "name": "README",
+        "path": "docs/components/feedback/badge.md",
+        "title": "Badge",
+        "name": "badge",
         "category": "components"
       },
       {
-        "path": "docs/components/layout/README.md",
-        "title": "Layout Components",
-        "name": "README",
+        "path": "docs/components/feedback/feedback.readme.md",
+        "title": "Feedback Components Documentation",
+        "name": "feedback.readme",
         "category": "components"
       },
       {
-        "path": "docs/components/navigation/README.md",
-        "title": "Navigation Components",
-        "name": "README",
+        "path": "docs/components/feedback/progress.md",
+        "title": "Progress",
+        "name": "progress",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/feedback/spinner.md",
+        "title": "Spinner",
+        "name": "spinner",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/forms/button.md",
+        "title": "Button",
+        "name": "button",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/forms/card.md",
+        "title": "Card",
+        "name": "card",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/forms/checkbox.md",
+        "title": "Checkbox",
+        "name": "checkbox",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/forms/forms.readme.md",
+        "title": "Form Components Documentation",
+        "name": "forms.readme",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/forms/input.md",
+        "title": "Input",
+        "name": "input",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/forms/select.md",
+        "title": "Select",
+        "name": "select",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/forms/switch.md",
+        "title": "Switch",
+        "name": "switch",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/forms/textarea.md",
+        "title": "Textarea",
+        "name": "textarea",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/cluster.md",
+        "title": "Cluster",
+        "name": "cluster",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/container.md",
+        "title": "Container",
+        "name": "container",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/flex.md",
+        "title": "Flex",
+        "name": "flex",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/grid.md",
+        "title": "Grid",
+        "name": "grid",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/header.md",
+        "title": "Header",
+        "name": "header",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/layout.readme.md",
+        "title": "Layout Components Documentation",
+        "name": "layout.readme",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/mdhtml.md",
+        "title": "WB mdhtml User Guide",
+        "name": "mdhtml",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/navigation/navigation.readme.md",
+        "title": "Navigation Components Documentation",
+        "name": "navigation.readme",
         "category": "components"
       },
       {
@@ -583,21 +802,27 @@
         "category": "components"
       },
       {
+        "path": "docs/components/semantic/details.md",
+        "title": "Details",
+        "name": "details",
+        "category": "components"
+      },
+      {
         "path": "docs/components/semantic/figure.md",
         "title": "`<figure>` and `<figcaption>` Elements",
         "name": "figure",
         "category": "components"
       },
       {
-        "path": "docs/components/semantic/index.md",
+        "path": "docs/components/semantic/semantic.index.md",
         "title": "Semantic HTML Elements - wb-starter v3.0",
-        "name": "index",
+        "name": "semantic.index",
         "category": "components"
       },
       {
-        "path": "docs/components/semantic/README.md",
-        "title": "Semantic HTML Elements",
-        "name": "README",
+        "path": "docs/components/semantic/semantic.readme.md",
+        "title": "Semantic HTML Components Documentation",
+        "name": "semantic.readme",
         "category": "components"
       },
       {
@@ -752,7 +977,7 @@
       },
       {
         "path": "docs/components/tabs.md",
-        "title": "Tabs - wb-starter v3.0",
+        "title": "Tabs Component Documentation",
         "name": "tabs",
         "category": "components"
       }
@@ -775,9 +1000,45 @@
     ],
     "_today": [
       {
+        "path": "docs/_today/AI-COORDINATION.md",
+        "title": "AI Coordination Protocol",
+        "name": "AI-COORDINATION",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/ANSWERS.md",
+        "title": "AI Answers",
+        "name": "ANSWERS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/BEHAVIORS-TODO.md",
+        "title": "Behaviors Test Fix TODO",
+        "name": "BEHAVIORS-TODO",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.md",
+        "title": "CSS Ownership Migration Plan",
+        "name": "CSS-OWNERSHIP-MIGRATION",
+        "category": "_today"
+      },
+      {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "Current Status - Builder Layout Fix",
+        "title": "Current Status - wb-demo Component Complete",
         "name": "CURRENT-STATUS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/MERGE-PLAN.md",
+        "title": "Merge Plan - Completed",
+        "name": "MERGE-PLAN",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/QUESTIONS.md",
+        "title": "AI Questions",
+        "name": "QUESTIONS",
         "category": "_today"
       },
       {
@@ -790,9 +1051,45 @@
   },
   "files": [
     {
+      "path": "docs/_today/AI-COORDINATION.md",
+      "title": "AI Coordination Protocol",
+      "name": "AI-COORDINATION",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/ANSWERS.md",
+      "title": "AI Answers",
+      "name": "ANSWERS",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/BEHAVIORS-TODO.md",
+      "title": "Behaviors Test Fix TODO",
+      "name": "BEHAVIORS-TODO",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.md",
+      "title": "CSS Ownership Migration Plan",
+      "name": "CSS-OWNERSHIP-MIGRATION",
+      "category": "_today"
+    },
+    {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "Current Status - Builder Layout Fix",
+      "title": "Current Status - wb-demo Component Complete",
       "name": "CURRENT-STATUS",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/MERGE-PLAN.md",
+      "title": "Merge Plan - Completed",
+      "name": "MERGE-PLAN",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/QUESTIONS.md",
+      "title": "AI Questions",
+      "name": "QUESTIONS",
       "category": "_today"
     },
     {
@@ -802,25 +1099,43 @@
       "category": "_today"
     },
     {
+      "path": "docs/ANNOUNCE_TEST_POLICY.md",
+      "title": "Release announcement: Local test gating and PR policy",
+      "name": "ANNOUNCE_TEST_POLICY",
+      "category": "root"
+    },
+    {
       "path": "docs/architecture.md",
       "title": "Project Architecture<br>(AI-Friendly)",
       "name": "architecture",
       "category": "root"
     },
     {
-      "path": "docs/architecture/ATTRIBUTE-NAMING-STANDARD.md",
-      "title": "Web Behaviors (WB) Attribute Naming Standard",
-      "name": "ATTRIBUTE-NAMING-STANDARD",
+      "path": "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md",
+      "title": "x- Prefix Migration — Phase 1: Core Infrastructure",
+      "name": "X-PREFIX-MIGRATION-PHASE1",
       "category": "architecture"
     },
     {
-      "path": "docs/architecture/proposed-custom-elements.md",
+      "path": "docs/architecture/proposals/proposed-custom-elements.md",
       "title": "Proposed Custom HTML Tags for Layouts",
       "name": "proposed-custom-elements",
       "category": "architecture"
     },
     {
-      "path": "docs/architecture/SCHEMA-SPECIFICATION.md",
+      "path": "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
+      "title": "Web Behaviors (WB) Attribute Naming Standard",
+      "name": "ATTRIBUTE-NAMING-STANDARD",
+      "category": "architecture"
+    },
+    {
+      "path": "docs/architecture/standards/ERROR-MESSAGE.md",
+      "title": "ERROR-MESSAGE",
+      "name": "ERROR-MESSAGE",
+      "category": "architecture"
+    },
+    {
+      "path": "docs/architecture/standards/SCHEMA-SPECIFICATION.md",
       "title": "Web Behaviors (WB) Schema Specification v3.0",
       "name": "SCHEMA-SPECIFICATION",
       "category": "architecture"
@@ -859,6 +1174,12 @@
       "path": "docs/behaviors-reference.md",
       "title": "Web Behaviors (WB) Reference",
       "name": "behaviors-reference",
+      "category": "root"
+    },
+    {
+      "path": "docs/BRANCH_PROTECTION.md",
+      "title": "Branch protection: require fast Tier‑1 check",
+      "name": "BRANCH_PROTECTION",
       "category": "root"
     },
     {
@@ -934,6 +1255,36 @@
       "category": "root"
     },
     {
+      "path": "docs/claude/PAGE-GENERATION.md",
+      "title": "Page Generation Pipeline",
+      "name": "PAGE-GENERATION",
+      "category": "claude"
+    },
+    {
+      "path": "docs/claude/README.md",
+      "title": "AI Documentation Tier System",
+      "name": "README",
+      "category": "claude"
+    },
+    {
+      "path": "docs/claude/TIER1-LAWS.md",
+      "title": "TIER 1 — LAWS (Read Every Session, No Exceptions)",
+      "name": "TIER1-LAWS",
+      "category": "claude"
+    },
+    {
+      "path": "docs/claude/TIER2-DOMAIN-GUIDES.md",
+      "title": "TIER 2 — DOMAIN GUIDES (Read When Working In That Area)",
+      "name": "TIER2-DOMAIN-GUIDES",
+      "category": "claude"
+    },
+    {
+      "path": "docs/claude/TIER3-REFERENCE.md",
+      "title": "TIER 3 — REFERENCE (Don't Read Unless Specifically Needed)",
+      "name": "TIER3-REFERENCE",
+      "category": "claude"
+    },
+    {
       "path": "docs/code-examples-standard.md",
       "title": "Code Examples Standard",
       "name": "code-examples-standard",
@@ -953,7 +1304,7 @@
     },
     {
       "path": "docs/components/cards/card.md",
-      "title": "Card - wb-starter v3.0",
+      "title": "## Composition for Specialized Functionality",
       "name": "card",
       "category": "components"
     },
@@ -1048,6 +1399,18 @@
       "category": "components"
     },
     {
+      "path": "docs/components/cards/cards.index.md",
+      "title": "Card Components - wb-starter v3.0",
+      "name": "cards.index",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/cards/cards.readme.md",
+      "title": "Cards Components Documentation",
+      "name": "cards.readme",
+      "category": "components"
+    },
+    {
       "path": "docs/components/cards/cardstats.md",
       "title": "Card Stats - wb-starter v3.0",
       "name": "cardstats",
@@ -1066,15 +1429,21 @@
       "category": "components"
     },
     {
-      "path": "docs/components/cards/index.md",
-      "title": "Card Components - wb-starter v3.0",
-      "name": "index",
-      "category": "components"
-    },
-    {
       "path": "docs/components/cards/README.md",
       "title": "wb-starter v3.0 - Cards",
       "name": "README",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/components.md",
+      "title": "components",
+      "name": "components",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/demo/demo.md",
+      "title": "wb-demo",
+      "name": "demo",
       "category": "components"
     },
     {
@@ -1102,27 +1471,129 @@
       "category": "components"
     },
     {
-      "path": "docs/components/feedback/README.md",
-      "title": "Feedback Components",
-      "name": "README",
+      "path": "docs/components/feedback/alert.md",
+      "title": "Alert",
+      "name": "alert",
       "category": "components"
     },
     {
-      "path": "docs/components/forms/README.md",
-      "title": "Form Components",
-      "name": "README",
+      "path": "docs/components/feedback/badge.md",
+      "title": "Badge",
+      "name": "badge",
       "category": "components"
     },
     {
-      "path": "docs/components/layout/README.md",
-      "title": "Layout Components",
-      "name": "README",
+      "path": "docs/components/feedback/feedback.readme.md",
+      "title": "Feedback Components Documentation",
+      "name": "feedback.readme",
       "category": "components"
     },
     {
-      "path": "docs/components/navigation/README.md",
-      "title": "Navigation Components",
-      "name": "README",
+      "path": "docs/components/feedback/progress.md",
+      "title": "Progress",
+      "name": "progress",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/feedback/spinner.md",
+      "title": "Spinner",
+      "name": "spinner",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/forms/button.md",
+      "title": "Button",
+      "name": "button",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/forms/card.md",
+      "title": "Card",
+      "name": "card",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/forms/checkbox.md",
+      "title": "Checkbox",
+      "name": "checkbox",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/forms/forms.readme.md",
+      "title": "Form Components Documentation",
+      "name": "forms.readme",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/forms/input.md",
+      "title": "Input",
+      "name": "input",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/forms/select.md",
+      "title": "Select",
+      "name": "select",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/forms/switch.md",
+      "title": "Switch",
+      "name": "switch",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/forms/textarea.md",
+      "title": "Textarea",
+      "name": "textarea",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/cluster.md",
+      "title": "Cluster",
+      "name": "cluster",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/container.md",
+      "title": "Container",
+      "name": "container",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/flex.md",
+      "title": "Flex",
+      "name": "flex",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/grid.md",
+      "title": "Grid",
+      "name": "grid",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/header.md",
+      "title": "Header",
+      "name": "header",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/layout.readme.md",
+      "title": "Layout Components Documentation",
+      "name": "layout.readme",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/mdhtml.md",
+      "title": "WB mdhtml User Guide",
+      "name": "mdhtml",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/navigation/navigation.readme.md",
+      "title": "Navigation Components Documentation",
+      "name": "navigation.readme",
       "category": "components"
     },
     {
@@ -1162,21 +1633,27 @@
       "category": "components"
     },
     {
+      "path": "docs/components/semantic/details.md",
+      "title": "Details",
+      "name": "details",
+      "category": "components"
+    },
+    {
       "path": "docs/components/semantic/figure.md",
       "title": "`<figure>` and `<figcaption>` Elements",
       "name": "figure",
       "category": "components"
     },
     {
-      "path": "docs/components/semantic/index.md",
+      "path": "docs/components/semantic/semantic.index.md",
       "title": "Semantic HTML Elements - wb-starter v3.0",
-      "name": "index",
+      "name": "semantic.index",
       "category": "components"
     },
     {
-      "path": "docs/components/semantic/README.md",
-      "title": "Semantic HTML Elements",
-      "name": "README",
+      "path": "docs/components/semantic/semantic.readme.md",
+      "title": "Semantic HTML Components Documentation",
+      "name": "semantic.readme",
       "category": "components"
     },
     {
@@ -1331,7 +1808,7 @@
     },
     {
       "path": "docs/components/tabs.md",
-      "title": "Tabs - wb-starter v3.0",
+      "title": "Tabs Component Documentation",
       "name": "tabs",
       "category": "components"
     },
@@ -1408,6 +1885,12 @@
       "category": "root"
     },
     {
+      "path": "docs/mcp.md",
+      "title": "MCP Runner & Docs Access",
+      "name": "mcp",
+      "category": "root"
+    },
+    {
       "path": "docs/MVVM-MIGRATION-PLAN.md",
       "title": "Web Behaviors (WB) MVVM Migration Plan",
       "name": "MVVM-MIGRATION-PLAN",
@@ -1427,13 +1910,13 @@
     },
     {
       "path": "docs/PAGE-BUILDER-RULES.md",
-      "title": "WB Page Builder - Content Creation Rules",
+      "title": "Web Behaviors (WB) Page Builder - Content Creation Rules",
       "name": "PAGE-BUILDER-RULES",
       "category": "root"
     },
     {
       "path": "docs/pce-candidates.md",
-      "title": "PCE (Pseudo-Custom Elements) - WB v3.0",
+      "title": "PCE (Pseudo-Custom Elements) - Web Behaviors (WB) v3.0",
       "name": "pce-candidates",
       "category": "root"
     },
@@ -1474,9 +1957,27 @@
       "category": "root"
     },
     {
+      "path": "docs/schema.md",
+      "title": "Schema Standards for Web Behaviors (WB) Components & Pages",
+      "name": "schema",
+      "category": "root"
+    },
+    {
+      "path": "docs/schema.migration.md",
+      "title": "Web Behaviors (WB) Schema Migration Plan",
+      "name": "schema.migration",
+      "category": "root"
+    },
+    {
       "path": "docs/schemaTestValue.md",
       "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
       "name": "schemaTestValue",
+      "category": "root"
+    },
+    {
+      "path": "docs/search.md",
+      "title": "Search Component Documentation",
+      "name": "search",
       "category": "root"
     },
     {
@@ -1499,7 +2000,7 @@
     },
     {
       "path": "docs/styles.md",
-      "title": "WB Style Constitution & Golden Rules",
+      "title": "Class Naming & Semantics",
       "name": "styles",
       "category": "root"
     },
@@ -1513,6 +2014,12 @@
       "path": "docs/test-schema-standard.md",
       "title": "Comprehensive Test Schema Standard",
       "name": "test-schema-standard",
+      "category": "root"
+    },
+    {
+      "path": "docs/testing-runbook.md",
+      "title": "Testing & CI — Runbook (developer-focused)",
+      "name": "testing-runbook",
       "category": "root"
     },
     {
@@ -1543,6 +2050,18 @@
       "path": "docs/wb-parts-spec.md",
       "title": "gcan# Web Behaviors (WB) Parts Specification",
       "name": "wb-parts-spec",
+      "category": "root"
+    },
+    {
+      "path": "docs/wbservices.md",
+      "title": "wbservices",
+      "name": "wbservices",
+      "category": "root"
+    },
+    {
+      "path": "docs/wizard.md",
+      "title": "wizard",
+      "name": "wizard",
       "category": "root"
     }
   ]

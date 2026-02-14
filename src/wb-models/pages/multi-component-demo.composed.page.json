@@ -1,0 +1,51 @@
+{
+  "$extends": "wb-page-defaults",
+  "title": "🧩 Multi-Component Demo",
+  "schemaFor": "multi-component-demo",
+  "header": {
+    "tag": "h1",
+    "content": "🧩 Multi-Component Demo",
+    "subtitle": {
+      "tag": "p",
+      "content": "Composed from multiple sources using $extends, $generate, $ref, and $include"
+    }
+  },
+  "sections": [
+    {
+      "$generate": {
+        "component": "badge",
+        "source": "matrix",
+        "baseAttrs": { "label": "Badge" }
+      },
+      "heading": "Badges — From Matrix",
+      "columns": 4
+    },
+    {
+      "$generate": {
+        "component": "cardnotification",
+        "source": "matrix",
+        "baseAttrs": { "message": "Notification message" }
+      },
+      "heading": "Notifications — Matrix Combos"
+    },
+    {
+      "$generate": {
+        "component": "progress",
+        "source": "enums"
+      },
+      "heading": "Progress — All Enum Variants"
+    },
+    {
+      "$ref": "badge-showcase#0"
+    },
+    {
+      "heading": "Custom Hand-Authored Section",
+      "tag": "wb-badge",
+      "columns": 2,
+      "demos": [
+        { "tag": "wb-badge", "attrs": { "label": "Hand-crafted", "variant": "primary", "pill": true } },
+        { "tag": "wb-badge", "attrs": { "label": "Also custom", "variant": "success", "size": "lg" } }
+      ]
+    }
+  ]
+}

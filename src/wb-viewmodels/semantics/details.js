@@ -105,7 +105,7 @@ export function details(element, options = {}) {
     get isOpen() { return element.open; }
   };
 
-  element.dataset.wbReady = 'details';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-details');
 }
 

@@ -194,6 +194,22 @@
           "sticky": true
         }
       ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-header",
+      "renders": true,
+      "baseClass": "wb-header",
+      "minInstances": 4,
+      "checkText": [
+        "Title",
+        "App",
+        "Site"
+      ],
+      "checkClasses": [],
+      "checkAttributes": [
+        "title"
+      ]
     }
   },
   "_metadata": {

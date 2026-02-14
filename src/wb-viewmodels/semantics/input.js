@@ -87,7 +87,7 @@ export function input(element, options = {}) {
     wrapper.appendChild(clear);
   }
 
-  element.dataset.wbReady = 'input';
+  element.classList.add('wb-ready');
   return () => {
     wrapper.parentNode.insertBefore(element, wrapper);
     wrapper.remove();

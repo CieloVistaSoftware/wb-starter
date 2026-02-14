@@ -1,0 +1,142 @@
+{
+  "title": "WB Component Library",
+  "description": "Complete showcase of all WB Framework components, organized by category",
+  "outputDir": "demos/site",
+  "generateIndex": true,
+  "pages": [
+    {
+      "id": "cards",
+      "title": "Card Components",
+      "description": "18 card variants — from simple to portfolio, pricing to testimonials",
+      "icon": "🃏",
+      "components": [
+        "card",
+        "cardbutton",
+        "carddraggable",
+        "cardexpandable",
+        "cardfile",
+        "cardhero",
+        "cardhorizontal",
+        "cardimage",
+        "cardlink",
+        "cardminimizable",
+        "cardnotification",
+        "cardoverlay",
+        "cardportfolio",
+        "cardpricing",
+        "cardproduct",
+        "cardprofile",
+        "cardstats",
+        "cardtestimonial",
+        "cardvideo"
+      ]
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback & Status",
+      "description": "Alerts, badges, progress bars, ratings, spinners, toasts, tooltips",
+      "icon": "🔔",
+      "components": [
+        "alert",
+        "avatar",
+        "badge",
+        "chip",
+        "progress",
+        "rating",
+        "skeleton",
+        "spinner",
+        "toast",
+        "tooltip"
+      ]
+    },
+    {
+      "id": "forms",
+      "title": "Form Controls",
+      "description": "Buttons, inputs, selects, checkboxes, switches, textareas",
+      "icon": "📝",
+      "components": [
+        "button",
+        "checkbox",
+        "input",
+        "search",
+        "select",
+        "switch",
+        "textarea",
+        "slider",
+        "toggle"
+      ]
+    },
+    {
+      "id": "overlays",
+      "title": "Overlays & Popups",
+      "description": "Dialogs, drawers, dropdowns for modal content",
+      "icon": "🪟",
+      "components": [
+        "dialog",
+        "drawer",
+        "dropdown"
+      ]
+    },
+    {
+      "id": "layout",
+      "title": "Layout & Navigation",
+      "description": "Headers, footers, navbars, tabs, drawers, sticky, scrollalong",
+      "icon": "📐",
+      "components": [
+        "header",
+        "footer",
+        "navbar",
+        "tabs",
+        "details",
+        "drawerLayout",
+        "scrollalong",
+        "sticky",
+        "timeline"
+      ]
+    },
+    {
+      "id": "content",
+      "title": "Content & Media",
+      "description": "Articles, markdown rendering, audio, tables",
+      "icon": "📄",
+      "components": [
+        "article",
+        "articles",
+        "mdhtml",
+        "audio",
+        "table",
+        "notes",
+        "codecontrol"
+      ]
+    },
+    {
+      "id": "effects",
+      "title": "Visual Effects",
+      "description": "Confetti, fireworks, ripple, snow — fun stuff",
+      "icon": "✨",
+      "components": [
+        "confetti",
+        "fireworks",
+        "ripple",
+        "snow",
+        "stagelight"
+      ]
+    },
+    {
+      "id": "interactive",
+      "title": "Interactive & Utility",
+      "description": "Draggable, resizable, copy, dark mode, views",
+      "icon": "🔧",
+      "components": [
+        "draggable",
+        "resizable",
+        "copy",
+        "darkmode",
+        "themecontrol",
+        "collapse",
+        "hero",
+        "views"
+      ]
+    }
+  ]
+}

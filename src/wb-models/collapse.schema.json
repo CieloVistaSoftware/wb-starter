@@ -26,6 +26,26 @@
       "<wb-collapse>Test permutation 3</wb-collapse>",
       "<wb-collapse>Test permutation 4</wb-collapse>",
       "<wb-collapse>Test permutation 5</wb-collapse>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "expanded": false
+        },
+        {
+          "expanded": true
+        }
+      ]
+    },
+    "site": {
+      "page": "interactive",
+      "tag": "wb-collapse",
+      "renders": true,
+      "baseClass": "wb-collapse",
+      "minInstances": 2,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
   }
 }

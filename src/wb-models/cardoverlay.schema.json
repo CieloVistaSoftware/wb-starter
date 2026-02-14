@@ -235,6 +235,26 @@
           "xalign": "center"
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardoverlay",
+      "renders": true,
+      "baseClass": "wb-card-overlay",
+      "minInstances": 6,
+      "checkText": [
+        "Title",
+        "Subtitle"
+      ],
+      "checkClasses": [
+        "wb-card-overlay--top",
+        "wb-card-overlay--xalign-center",
+        "wb-card-overlay--dark"
+      ],
+      "checkAttributes": [
+        "image",
+        "title"
+      ]
     }
   },
   "_metadata": {

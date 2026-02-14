@@ -242,7 +242,7 @@ test.describe('x- Prefix Behavior Syntax', () => {
   
   test('behavior additions use x- prefix not data-wb', () => {
     // Check that adding behaviors to elements uses x- prefix
-    // e.g., <button x-ripple> not <button data-wb="ripple">
+    // e.g., <button x-ripple> not <button x-ripple>
     const violations: SyntaxViolation[] = [];
     
     const checkFile = (filePath: string) => {

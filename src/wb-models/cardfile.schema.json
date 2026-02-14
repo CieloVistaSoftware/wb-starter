@@ -182,6 +182,20 @@
           "href": "/files/photo.jpg"
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardfile",
+      "renders": true,
+      "baseClass": "wb-card-file",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [
+        "wb-card-file--compact"
+      ],
+      "checkAttributes": [
+        "filename"
+      ]
     }
   },
   "_metadata": {

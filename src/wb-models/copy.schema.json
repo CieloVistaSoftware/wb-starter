@@ -29,6 +29,31 @@
       "<wb-copy target=\"Sample target\">target=\"Sample target\"</wb-copy>",
       "<wb-copy text=\"Sample text\" target=\"Sample target\">Combined: text=\"Sample text\", target=\"Sample target\"</wb-copy>",
       "<wb-copy>Test permutation 5</wb-copy>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "text": "Hello World"
+        },
+        {
+          "text": "npm install wb-starter"
+        }
+      ]
+    },
+    "site": {
+      "page": "interactive",
+      "tag": "wb-copy",
+      "renders": true,
+      "baseClass": "wb-copy",
+      "minInstances": 2,
+      "checkText": [
+        "Hello World",
+        "npm install wb-starter"
+      ],
+      "checkClasses": [],
+      "checkAttributes": [
+        "text"
+      ]
+    }
   }
 }

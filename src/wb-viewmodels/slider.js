@@ -8,7 +8,7 @@
  */
 export function slider(element, options = {}) {
   element.classList.add('wb-slider');
-  element.dataset.wbReady = 'slider';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-slider');
 }
 export default slider;

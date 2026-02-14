@@ -144,6 +144,20 @@
           "variant": "card"
         }
       ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-skeleton",
+      "renders": true,
+      "baseClass": "wb-skeleton",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-skeleton--circle"
+      ],
+      "checkAttributes": [
+        "variant"
+      ]
     }
   },
   "_metadata": {

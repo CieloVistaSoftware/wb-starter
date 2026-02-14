@@ -84,6 +84,16 @@
           "duration": 300
         }
       ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-ripple",
+      "renders": true,
+      "baseClass": "wb-ripple",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
     }
   },
   "_metadata": {

@@ -1,0 +1,22 @@
+/**
+ * Stat Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/stat.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-stat {
+  text-align: center;
+}
+
+.wb-stat__value {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.wb-stat__label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}

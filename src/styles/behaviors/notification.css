@@ -1,0 +1,151 @@
+/* ==========================================================================
+ * wb-cardnotification — Notification Card Styles
+ * ==========================================================================
+ * Variant colors: info=blue, success=green, warning=yellow, error=red
+ * Uses CSS custom properties from cardnotification.schema.json $cssAPI
+ * ========================================================================== */
+
+/* Base notification layout */
+.wb-notification {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--wb-notification-gap, 0.75rem);
+  padding: var(--wb-notification-padding, 1rem);
+  border-radius: var(--wb-notification-radius, 8px);
+  border-left: 4px solid var(--border-color, #374151);
+  background: var(--bg-secondary, #1f2937);
+  color: var(--text-primary, #f9fafb);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Icon */
+.wb-notification__icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: var(--wb-notification-icon-size, 0.85rem);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Content area */
+.wb-notification__content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Title */
+.wb-notification__title {
+  display: block;
+  font-weight: var(--wb-notification-title-weight, 600);
+  margin-bottom: 0.25rem;
+}
+
+/* Message */
+.wb-notification__message {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* Dismiss button */
+.wb-notification__dismiss {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: inherit;
+  opacity: 0.5;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: opacity 0.2s, background 0.2s;
+}
+
+.wb-notification__dismiss:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Elevated */
+.wb-notification--elevated {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ── INFO (Blue) ── */
+.wb-notification--info {
+  background: var(--wb-notification-info-bg, #e3f2fd);
+  border-left-color: var(--wb-notification-info-border, #2196f3);
+  color: var(--wb-notification-info-color, #1565c0);
+}
+
+.wb-notification--info .wb-notification__icon {
+  background: var(--wb-notification-info-border, #2196f3);
+  color: #fff;
+}
+
+/* ── SUCCESS (Green) ── */
+.wb-notification--success {
+  background: var(--wb-notification-success-bg, #e8f5e9);
+  border-left-color: var(--wb-notification-success-border, #4caf50);
+  color: var(--wb-notification-success-color, #2e7d32);
+}
+
+.wb-notification--success .wb-notification__icon {
+  background: var(--wb-notification-success-border, #4caf50);
+  color: #fff;
+}
+
+/* ── WARNING (Yellow) ── */
+.wb-notification--warning {
+  background: var(--wb-notification-warning-bg, #fff3e0);
+  border-left-color: var(--wb-notification-warning-border, #ff9800);
+  color: var(--wb-notification-warning-color, #e65100);
+}
+
+.wb-notification--warning .wb-notification__icon {
+  background: var(--wb-notification-warning-border, #ff9800);
+  color: #fff;
+}
+
+/* ── ERROR (Red) ── */
+.wb-notification--error {
+  background: var(--wb-notification-error-bg, #ffebee);
+  border-left-color: var(--wb-notification-error-border, #f44336);
+  color: var(--wb-notification-error-color, #c62828);
+}
+
+.wb-notification--error .wb-notification__icon {
+  background: var(--wb-notification-error-border, #f44336);
+  color: #fff;
+}
+
+/* ── Dark theme adjustments ── */
+[data-theme="dark"] .wb-notification--info {
+  background: rgba(33, 150, 243, 0.12);
+  color: #90caf9;
+}
+
+[data-theme="dark"] .wb-notification--success {
+  background: rgba(76, 175, 80, 0.12);
+  color: #a5d6a7;
+}
+
+[data-theme="dark"] .wb-notification--warning {
+  background: rgba(255, 152, 0, 0.12);
+  color: #ffcc80;
+}
+
+[data-theme="dark"] .wb-notification--error {
+  background: rgba(244, 67, 54, 0.12);
+  color: #ef9a9a;
+}

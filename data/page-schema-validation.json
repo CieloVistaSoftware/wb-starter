@@ -1,0 +1,19 @@
+{
+  "validated": "2026-02-12T03:09:13.538Z",
+  "componentSchemasLoaded": 85,
+  "pagesValidated": 1,
+  "totalErrors": 0,
+  "totalWarnings": 0,
+  "allValid": true,
+  "results": [
+    {
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\data\\.temp-validate-all-components.page.json",
+      "title": "All Components",
+      "sections": 3,
+      "totalDemos": 24,
+      "errors": [],
+      "warnings": [],
+      "valid": true
+    }
+  ]
+}

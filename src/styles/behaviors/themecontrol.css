@@ -1,0 +1,11 @@
+/**
+ * Theme Control Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from components.css (Post-Phase 3 cleanup)
+ * Works with src/wb-viewmodels/semantics/themecontrol.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-themecontrol {
+  display: inline-block;
+}

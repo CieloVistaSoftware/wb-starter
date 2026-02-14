@@ -1,0 +1,31 @@
+/**
+ * Steps Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/steps.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-steps {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wb-steps span {
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.wb-steps span.active {
+  background: var(--primary);
+  color: white;
+}
+
+.wb-steps span.done {
+  background: var(--success-color);
+  color: white;
+}

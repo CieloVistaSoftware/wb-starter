@@ -152,6 +152,18 @@
           "sticky": true
         }
       ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-footer",
+      "renders": true,
+      "baseClass": "wb-footer",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "copyright"
+      ]
     }
   },
   "_metadata": {

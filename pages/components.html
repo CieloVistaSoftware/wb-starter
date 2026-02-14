@@ -20,37 +20,20 @@
   
   <!-- Basic Cards -->
   <h3>Basic Cards</h3>
-  <div class="demo-row" id="autogen-components-html-8">
-    <div class="demo-item">
+  <wb-demo>
       <wb-card title="Basic Card" elevated="">
         <p>Simple card with title and hover effect.</p>
       </wb-card>
-    </div>
-    <div class="demo-item">
+     
       <wb-card title="With Footer" footer="Card Footer" elevated="">
         <p>Card with header and footer.</p>
       </wb-card>
-    </div>
-    <div class="demo-item">
       <wb-card title="Outlined Card" outlined="">
-        <p>Card with outline border instead of elevation.</p>
+        <p>Card with outline border.</p>
       </wb-card>
     </div>
   </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-card title="Basic Card" elevated&gt;
-  &lt;p&gt;Simple card content.&lt;/p&gt;
-&lt;/wb-card&gt;
-
-&lt;wb-card title="With Footer" footer="Card Footer" elevated&gt;
-  &lt;p&gt;Card with header and footer.&lt;/p&gt;
-&lt;/wb-card&gt;
-
-&lt;wb-card title="Outlined Card" outlined&gt;
-  &lt;p&gt;Card with outline border.&lt;/p&gt;
-&lt;/wb-card&gt;</code></pre>
-  </div>
-
+  </wb-demo>
   <!-- Image Cards -->
   <h3>Image Cards</h3>
   <div class="demo-row" id="autogen-components-html-9">
@@ -146,7 +129,7 @@
   <h3>Product Cards</h3>
   <div class="demo-row demo-row--four" id="autogen-components-html-13">
     <wb-cardproduct title="Basic Widget" price="$19.99" image="https://picsum.photos/200/200?r=p1" description="Perfect for beginners"></wb-cardproduct>
-    <wb-cardproduct title="Premium Widget" price="$49.99" data-original-price="$79.99" image="https://picsum.photos/200/200?r=p2" badge="Sale" description="Most popular" featured=""></wb-cardproduct>
+    <wb-cardproduct title="Premium Widget" price="$49.99" original-price="$79.99" image="https://picsum.photos/200/200?r=p2" badge="Sale" description="Most popular" featured=""></wb-cardproduct>
     <wb-cardproduct title="Enterprise" price="$149.99" image="https://picsum.photos/200/200?r=p3" description="Full features" badge="Pro"></wb-cardproduct>
     <wb-cardproduct title="Deluxe Widget" price="$79.99" image="https://picsum.photos/200/200?r=p4" description="Premium features" badge="Hot"></wb-cardproduct>
   </div>
@@ -263,7 +246,7 @@
     <wb-badge variant="purple">Premium</wb-badge>
     <wb-badge variant="pink">Featured</wb-badge>
     <wb-badge variant="orange">Hot</wb-badge>
-    <wb-badge variant="teal" data-pill="">Live</wb-badge>
+    <wb-badge variant="teal" pill="">Live</wb-badge>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-badge variant="gray"&gt;Pending&lt;/wb-badge&gt;
@@ -297,10 +280,10 @@
   <!-- Progress Bars -->
   <h3>Progress Bars</h3>
   <div class="demo-stack" style="max-width: 400px;">
-    <wb-progress data-value="25"></wb-progress>
-    <wb-progress data-value="50"></wb-progress>
-    <wb-progress data-value="75" data-striped=""></wb-progress>
-    <wb-progress data-value="100"></wb-progress>
+    <wb-progress value="25"></wb-progress>
+    <wb-progress value="50"></wb-progress>
+    <wb-progress value="75" striped=""></wb-progress>
+    <wb-progress value="100"></wb-progress>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-progress data-value="25"&gt;&lt;/wb-progress&gt;
@@ -313,23 +296,23 @@
   <h3>Spinners</h3>
   <div class="demo-inline" style="align-items: flex-end;">
     <div style="text-align: center;">
-      <wb-spinner data-size="xs" data-color="primary"></wb-spinner>
+      <wb-spinner size="xs" color="primary"></wb-spinner>
       <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">xs</div>
     </div>
     <div style="text-align: center;">
-      <wb-spinner data-size="sm" data-color="success"></wb-spinner>
+      <wb-spinner size="sm" color="success"></wb-spinner>
       <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">sm</div>
     </div>
     <div style="text-align: center;">
-      <wb-spinner data-size="md" data-color="warning"></wb-spinner>
+      <wb-spinner size="md" color="warning"></wb-spinner>
       <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">md</div>
     </div>
     <div style="text-align: center;">
-      <wb-spinner data-size="lg" data-color="error"></wb-spinner>
+      <wb-spinner size="lg" color="error"></wb-spinner>
       <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">lg</div>
     </div>
     <div style="text-align: center;">
-      <wb-spinner data-size="xl" data-color="info"></wb-spinner>
+      <wb-spinner size="xl" color="info"></wb-spinner>
       <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">xl</div>
     </div>
   </div>
@@ -384,7 +367,7 @@
     <div class="component-box">
       <h4>Modal</h4>
       <p>Centered dialog with backdrop</p>
-      <wb-modal class="wb-btn" data-modal-title="Modal Dialog" data-modal-content="This is modal content. Press ESC or click outside to close.">Open Modal</wb-modal>
+      <wb-modal class="wb-btn" modal-title="Modal Dialog" modal-content="This is modal content. Press ESC or click outside to close.">Open Modal</wb-modal>
     </div>
     
     <div class="component-box">
@@ -651,7 +634,7 @@
 
   <!-- Audio Player -->
   <h3>Audio Player</h3>
-  <wb-audio data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" data-show-eq="true" data-volume="0.7"></wb-audio>
+  <wb-audio src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" show-eq="true" volume="0.7"></wb-audio>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-audio 
   data-src="audio.mp3" 

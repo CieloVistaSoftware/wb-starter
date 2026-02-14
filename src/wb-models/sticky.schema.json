@@ -111,6 +111,16 @@
           "animated": true
         }
       ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-sticky",
+      "renders": true,
+      "baseClass": "wb-sticky",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
     }
   },
   "_metadata": {

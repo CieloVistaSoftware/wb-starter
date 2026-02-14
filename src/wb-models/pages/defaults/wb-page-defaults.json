@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wb-page-defaults",
+  "description": "Default page settings shared by all WB showcase/demo pages. Use $extends to inherit.",
+  "page": {
+    "lang": "en",
+    "theme": "dark",
+    "stylesheets": [
+      "../src/styles/themes.css",
+      "../src/styles/site.css",
+      "../src/styles/components.css"
+    ],
+    "scripts": [
+      {
+        "type": "module",
+        "src": "../src/core/wb-lazy.js",
+        "init": "WB.init({ autoInject: true })"
+      }
+    ]
+  }
+}

@@ -315,6 +315,22 @@
           "variant": "centered"
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardtestimonial",
+      "renders": true,
+      "baseClass": "wb-testimonial",
+      "minInstances": 8,
+      "checkText": [],
+      "checkClasses": [
+        "wb-testimonial--elevated",
+        "wb-testimonial--sm"
+      ],
+      "checkAttributes": [
+        "quote",
+        "author"
+      ]
     }
   },
   "_metadata": {

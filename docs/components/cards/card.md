@@ -1,6 +1,76 @@
-# Card - wb-starter v3.0
+### Composition for Specialized Functionality
 
-Base card component using Light DOM architecture and WBServices pattern.
+While all card types inherit core logic and structure from `cardBase` (is-a relationship), each variant uses **composition** to add or customize features unique to its purpose. For example:
+
+- `wb-cardimage` composes an image section into the card layout.
+- `wb-cardhero` adds a hero banner region and may include call-to-action buttons.
+- `wb-cardprofile` composes avatar, user info, and social links.
+- `wb-cardstats` adds stat blocks or data visualizations.
+
+This means each card variant is built by combining (composing) the base card structure with additional elements, behaviors, or logic as needed. Composition allows for maximum flexibility—new features can be added to specific card types without affecting the base or other variants.
+
+**Summary:**
+- All card types are cards (inherit from cardBase)
+- Each variant composes in new features or layouts to serve its specialized role
+
+## Card Architecture and the Role of cardBase
+
+The `wb-card` component is the root of a flexible, extensible card system. All card types in wb-starter—including `wb-card`, `wb-cardimage`, `wb-cardhero`, `wb-cardprofile`, `wb-cardstats`, and more—possess an **is-a** relationship to the shared base class `cardBase`. This means every card variant is fundamentally a card, inheriting all core card logic and structure.
+
+### Card Structure
+- **Header:** Displays the title, subtitle, and optional badge.
+- **Main:** Contains the primary card content (user-provided).
+- **Footer:** Optional area for footer text or actions.
+- **Variants:** Support for different visual styles (e.g., glass, elevated, clickable).
+
+By inheriting from `cardBase`, every card variant (such as `wb-cardimage`, `wb-cardhero`, `wb-cardprofile`, `wb-cardstats`, `wb-cardpricing`, etc.) guarantees consistent behavior and a unified API. This is the classic is-a relationship: every card variant is a card, and can be used wherever a card is expected.
+
+### Why Use cardBase?
+- **Shared Logic:** cardBase encapsulates all common logic, rendering, and property handling for cards, so each variant only needs to define what’s unique.
+- **Consistency:** Ensures all card variants behave the same way for core features (header, footer, elevation, clickability, etc.).
+- **DRY Principle:** Avoids code duplication—shared features are written once in cardBase and reused everywhere.
+- **Easy Maintenance:** Bug fixes and improvements to cardBase automatically benefit all card variants.
+- **Extensibility:** New card types can be created quickly by extending cardBase and customizing only what’s needed.
+
+### Example (Conceptual)
+```js
+class cardBase extends HTMLElement {
+  // Shared logic for all cards
+}
+
+class WbCard extends cardBase {
+  // Only card-specific logic here
+}
+
+class WbCardImage extends cardBase {
+  // Only image-card-specific logic here
+}
+```
+
+**In summary:** The card architecture is modular and extensible, and inheriting from cardBase is the right thing to do because it guarantees consistency, reduces duplication, and makes the card system robust and maintainable.
+## Why Inheritance Matters
+
+The wb-card component (and all wb-starter components) use proper HTMLElement inheritance instead of a custom base class. This is the right choice because:
+
+- **Native API Compatibility:** Extending HTMLElement ensures full compatibility with the browser’s built-in element lifecycle, events, and properties.
+- **No Framework Lock-in:** You aren’t tied to a custom base class or legacy framework code. This makes components portable and future-proof.
+- **Standards Compliance:** Modern web standards recommend extending HTMLElement directly for custom elements.
+- **Interoperability:** Components work seamlessly with other libraries, tools, and browser features.
+- **Performance:** Native inheritance avoids extra indirection and complexity, resulting in faster, leaner components.
+- **Testability:** Components are easier to test and debug because they behave like standard DOM elements.
+
+In summary: Proper inheritance means your components are robust, maintainable, and play well with the entire web platform.
+
+# Card Component Overview
+
+The `wb-card` is the foundational card component in the wb-starter library, designed for maximum flexibility, accessibility, and maintainability. Built on the Light DOM architecture and the WBServices pattern, it provides a robust base for dozens of card variants (image, hero, testimonial, product, etc.) while ensuring:
+
+- **Consistent UI/UX:** All cards share a unified structure and behavior, making your app look and feel cohesive.
+- **Modern Web Standards:** Uses proper HTMLElement inheritance, ES Modules, and schema-driven properties.
+- **Easy Customization:** Extend or compose new card types with minimal code, thanks to the cardBase class.
+- **Performance & Accessibility:** No Shadow DOM, so styles cascade naturally and accessibility is preserved.
+
+This doc explains the core features, usage, and architectural choices behind `wb-card` and its variants.
 
 ## Overview
 
@@ -221,5 +291,5 @@ Located at `src/wb-models/card.schema.json`:
 
 ## Related
 
-- [Cards Overview](./index.md) - All card components
+- [Cards Overview](./cards.index.md) - All card components
 - [Article Element](../semantic/article.md) - Semantic foundation

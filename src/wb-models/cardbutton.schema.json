@@ -199,6 +199,23 @@
           "secondary": "No"
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardbutton",
+      "renders": true,
+      "baseClass": "wb-card-button",
+      "minInstances": 3,
+      "checkText": [
+        "Card"
+      ],
+      "checkClasses": [
+        "wb-card-button--elevated"
+      ],
+      "checkAttributes": [
+        "title",
+        "primary"
+      ]
     }
   },
   "_metadata": {

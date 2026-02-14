@@ -1,0 +1,747 @@
+{
+  "generated": "2026-02-11T02:50:09.380Z",
+  "note": "behaviors: x-attr API + wb- CSS output (same file). components: standalone wb- elements with no x- behavior driver.",
+  "behaviors": {
+    "x-animate": {
+      "js": "src/wb-viewmodels/effects.js",
+      "cssClass": "wb-animate"
+    },
+    "x-card": {
+      "js": "src/wb-viewmodels/fix-card.js",
+      "css": "src/styles/behaviors/card.css",
+      "schema": "src/wb-models/card.schema.json",
+      "cssClass": "wb-card"
+    },
+    "x-clipboard": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-clipboard"
+    },
+    "x-clock": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-clock"
+    },
+    "x-code": {
+      "js": "src/wb-viewmodels/semantics/code.js",
+      "css": "src/styles/behaviors/code.css"
+    },
+    "x-codecontrol": {
+      "js": "src/wb-viewmodels/codecontrol.js",
+      "schema": "src/wb-models/codecontrol.schema.json",
+      "cssClass": "wb-codecontrol"
+    },
+    "x-collapse": {
+      "js": "src/wb-viewmodels/collapse.js",
+      "schema": "src/wb-models/collapse.schema.json",
+      "cssClass": "wb-collapse"
+    },
+    "x-confetti": {
+      "js": "src/wb-viewmodels/effects.js",
+      "schema": "src/wb-models/confetti.schema.json",
+      "cssClass": "wb-confetti"
+    },
+    "x-confirm": {
+      "js": "src/wb-viewmodels/overlay.js"
+    },
+    "x-copy": {
+      "js": "src/wb-viewmodels/copy.js",
+      "schema": "src/wb-models/copy.schema.json",
+      "cssClass": "wb-copy"
+    },
+    "x-countdown": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-countdown"
+    },
+    "x-debug": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-debug"
+    },
+    "x-draggable": {
+      "js": "src/wb-viewmodels/draggable.js",
+      "schema": "src/wb-models/draggable.schema.json",
+      "cssClass": "wb-draggable"
+    },
+    "x-external": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-external"
+    },
+    "x-fadein": {
+      "js": "src/wb-viewmodels/effects.js"
+    },
+    "x-fadeout": {
+      "js": "src/wb-viewmodels/effects.js"
+    },
+    "x-file": {
+      "js": "src/wb-viewmodels/enhancements.js",
+      "cssClass": "wb-file"
+    },
+    "x-form": {
+      "js": "src/wb-viewmodels/enhancements.js",
+      "cssClass": "wb-form"
+    },
+    "x-fullscreen": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-fullscreen"
+    },
+    "x-highlight": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-highlight"
+    },
+    "x-hotkey": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-hotkey"
+    },
+    "x-image": {
+      "js": "src/wb-viewmodels/media.js",
+      "cssClass": "wb-image"
+    },
+    "x-lazy": {
+      "js": "src/wb-viewmodels/helpers.js"
+    },
+    "x-lightbox": {
+      "js": "src/wb-viewmodels/overlay.js",
+      "cssClass": "wb-lightbox"
+    },
+    "x-move-down": {
+      "js": "src/wb-viewmodels/move.js"
+    },
+    "x-move-left": {
+      "js": "src/wb-viewmodels/move.js"
+    },
+    "x-move-right": {
+      "js": "src/wb-viewmodels/move.js"
+    },
+    "x-move-up": {
+      "js": "src/wb-viewmodels/move.js"
+    },
+    "x-offline": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-offline"
+    },
+    "x-password": {
+      "js": "src/wb-viewmodels/enhancements.js",
+      "cssClass": "wb-password"
+    },
+    "x-pre": {
+      "js": "src/wb-viewmodels/semantics/pre.js"
+    },
+    "x-print": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-print"
+    },
+    "x-prompt": {
+      "js": "src/wb-viewmodels/overlay.js"
+    },
+    "x-relativetime": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-relativetime"
+    },
+    "x-resizable": {
+      "js": "src/wb-viewmodels/resizable.js",
+      "schema": "src/wb-models/resizable.schema.json",
+      "cssClass": "wb-resizable"
+    },
+    "x-ripple": {
+      "js": "src/wb-viewmodels/ripple.js",
+      "schema": "src/wb-models/ripple.schema.json",
+      "cssClass": "wb-ripple"
+    },
+    "x-scroll": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-scroll"
+    },
+    "x-scroll-progress": {
+      "js": "src/wb-viewmodels/scroll-progress.js",
+      "cssClass": "wb-scroll-progress"
+    },
+    "x-scrollalong": {
+      "js": "src/wb-viewmodels/scrollalong.js",
+      "schema": "src/wb-models/scrollalong.schema.json",
+      "cssClass": "wb-scrollalong"
+    },
+    "x-shake": {
+      "js": "src/wb-viewmodels/effects.js"
+    },
+    "x-share": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-share"
+    },
+    "x-slidein": {
+      "js": "src/wb-viewmodels/effects.js"
+    },
+    "x-sticky": {
+      "js": "src/wb-viewmodels/sticky.js",
+      "schema": "src/wb-models/sticky.schema.json",
+      "cssClass": "wb-sticky"
+    },
+    "x-tags": {
+      "js": "src/wb-viewmodels/enhancements.js",
+      "css": "src/styles/behaviors/tags.css",
+      "cssClass": "wb-tags"
+    },
+    "x-toast": {
+      "js": "src/wb-viewmodels/feedback.js",
+      "css": "src/styles/behaviors/toast.css",
+      "schema": "src/wb-models/toast.schema.json"
+    },
+    "x-toggle": {
+      "js": "src/wb-viewmodels/toggle.js",
+      "schema": "src/wb-models/toggle.schema.json",
+      "cssClass": "wb-toggle"
+    },
+    "x-tooltip": {
+      "js": "src/wb-viewmodels/tooltip.js",
+      "schema": "src/wb-models/tooltip.schema.json",
+      "cssClass": "wb-tooltip"
+    },
+    "x-trigger": {
+      "js": "src/wb-viewmodels/overlay.js"
+    },
+    "x-truncate": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-truncate"
+    },
+    "x-typewriter": {
+      "js": "src/wb-viewmodels/effects.js",
+      "cssClass": "wb-typewriter"
+    },
+    "x-validate": {
+      "js": "src/wb-viewmodels/validator.js"
+    },
+    "x-visible": {
+      "js": "src/wb-viewmodels/helpers.js",
+      "cssClass": "wb-visible"
+    }
+  },
+  "components": {
+    "wb-alert": {
+      "js": "src/wb-viewmodels/feedback.js",
+      "css": "src/styles/behaviors/alert.css",
+      "schema": "src/wb-models/alert.schema.json"
+    },
+    "wb-audio": {
+      "js": "src/wb-viewmodels/media.js",
+      "variants": [
+        "wb-audio-wrapper"
+      ],
+      "css": "src/styles/behaviors/audio.css",
+      "schema": "src/wb-models/audio.schema.json"
+    },
+    "wb-avatar": {
+      "js": "src/wb-viewmodels/feedback.js",
+      "css": "src/styles/behaviors/avatar.css",
+      "schema": "src/wb-models/avatar.schema.json"
+    },
+    "wb-backtotop": {
+      "js": "src/wb-viewmodels/navigation.js"
+    },
+    "wb-badge": {
+      "js": "src/wb-viewmodels/feedback.js",
+      "css": "src/styles/behaviors/badge.css",
+      "schema": "src/wb-models/badge.schema.json"
+    },
+    "wb-btn": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-builder": {
+      "js": "src/wb-viewmodels/builder.js",
+      "variants": [
+        "wb-builder-component"
+      ],
+      "schema": "src/wb-models/builder.schema.json"
+    },
+    "wb-button": {
+      "js": "src/wb-viewmodels/semantics/button.js",
+      "css": "src/styles/behaviors/button.css",
+      "schema": "src/wb-models/button.schema.json"
+    },
+    "wb-card-button": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-card-draggable": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-card-expandable": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-card-file": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-card-horizontal": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-card-image": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-card-link": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-card-minimizable": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-card-video": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-cardhero": {
+      "js": "src/wb-viewmodels/card.js",
+      "schema": "src/wb-models/cardhero.schema.json"
+    },
+    "wb-cardportfolio": {
+      "js": "src/wb-viewmodels/card.js",
+      "schema": "src/wb-models/cardportfolio.schema.json"
+    },
+    "wb-center": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-checkbox": {
+      "js": "src/wb-viewmodels/semantics/checkbox.js",
+      "variants": [
+        "wb-checkbox-input",
+        "wb-checkbox-label",
+        "wb-checkbox-wrapper"
+      ],
+      "schema": "src/wb-models/checkbox.schema.json"
+    },
+    "wb-chip": {
+      "js": "src/wb-viewmodels/feedback.js",
+      "css": "src/styles/behaviors/chip.css",
+      "schema": "src/wb-models/chip.schema.json"
+    },
+    "wb-cluster": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-code-card": {
+      "js": "src/wb-viewmodels/demo.js"
+    },
+    "wb-colorpicker": {
+      "js": "src/wb-viewmodels/enhancements.js"
+    },
+    "wb-column": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-confetti-trigger": {
+      "js": "src/wb-viewmodels/effects.js"
+    },
+    "wb-control": {
+      "js": "src/wb-viewmodels/wb-control.js",
+      "variants": [
+        "wb-control-btn"
+      ]
+    },
+    "wb-counter": {
+      "js": "src/wb-viewmodels/enhancements.js"
+    },
+    "wb-countup": {
+      "js": "src/wb-viewmodels/effects.js"
+    },
+    "wb-cover": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-darkmode": {
+      "js": "src/wb-viewmodels/darkmode.js",
+      "schema": "src/wb-models/darkmode.schema.json"
+    },
+    "wb-debug-messages": {
+      "js": "src/wb-viewmodels/helpers.js"
+    },
+    "wb-demo": {
+      "js": "src/wb-viewmodels/demo.js",
+      "schema": "src/wb-models/demo.schema.json"
+    },
+    "wb-details": {
+      "js": "src/wb-viewmodels/semantics/details.js",
+      "css": "src/styles/behaviors/details.css",
+      "schema": "src/wb-models/details.schema.json"
+    },
+    "wb-dialog": {
+      "js": "src/wb-viewmodels/semantics/dialog.js",
+      "variants": [
+        "wb-dialog-title"
+      ],
+      "css": "src/styles/behaviors/dialog.css",
+      "schema": "src/wb-models/dialog.schema.json"
+    },
+    "wb-divider": {
+      "js": "src/wb-viewmodels/feedback.js"
+    },
+    "wb-dl": {
+      "js": "src/wb-viewmodels/semantics/desclist.js"
+    },
+    "wb-drawer": {
+      "js": "src/wb-viewmodels/layouts.js",
+      "variants": [
+        "wb-drawer-handle",
+        "wb-drawer-layout",
+        "wb-drawer-toggle"
+      ],
+      "schema": "src/wb-models/drawer.schema.json"
+    },
+    "wb-dropdown": {
+      "js": "src/wb-viewmodels/dropdown.js",
+      "css": "src/styles/behaviors/dropdown.css",
+      "schema": "src/wb-models/dropdown.schema.json"
+    },
+    "wb-empty": {
+      "js": "src/wb-viewmodels/semantics/empty.js"
+    },
+    "wb-error": {
+      "js": "src/wb-viewmodels/enhancements.js",
+      "variants": [
+        "wb-error-copy",
+        "wb-error-toast"
+      ]
+    },
+    "wb-fieldset": {
+      "js": "src/wb-viewmodels/enhancements.js"
+    },
+    "wb-figure": {
+      "js": "src/wb-viewmodels/media.js"
+    },
+    "wb-file-dropzone": {
+      "js": "src/wb-viewmodels/enhancements.js"
+    },
+    "wb-file-progress": {
+      "js": "src/wb-viewmodels/enhancements.js"
+    },
+    "wb-fireworks": {
+      "js": "src/wb-viewmodels/effects.js",
+      "variants": [
+        "wb-fireworks-trigger"
+      ],
+      "schema": "src/wb-models/fireworks.schema.json"
+    },
+    "wb-fixed": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-flex": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-footer": {
+      "js": "src/wb-viewmodels/footer.js",
+      "css": "src/styles/behaviors/footer.css",
+      "schema": "src/wb-models/footer.schema.json"
+    },
+    "wb-form-row": {
+      "js": "src/wb-viewmodels/enhancements.js"
+    },
+    "wb-gallery": {
+      "js": "src/wb-viewmodels/media.js",
+      "css": "src/styles/behaviors/gallery.css"
+    },
+    "wb-globe": {
+      "js": "src/wb-viewmodels/globe.js",
+      "schema": "src/wb-models/globe.schema.json"
+    },
+    "wb-grid": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-header": {
+      "js": "src/wb-viewmodels/header.js",
+      "css": "src/styles/behaviors/header.css",
+      "schema": "src/wb-models/header.schema.json"
+    },
+    "wb-help": {
+      "js": "src/wb-viewmodels/enhancements.js"
+    },
+    "wb-hero": {
+      "js": "src/wb-viewmodels/card.js",
+      "css": "src/styles/behaviors/hero.css",
+      "schema": "src/wb-models/hero.schema.json"
+    },
+    "wb-icon": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-img": {
+      "js": "src/wb-viewmodels/semantics/img.js"
+    },
+    "wb-imposter": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-input": {
+      "js": "src/wb-viewmodels/semantics/input.js",
+      "variants": [
+        "wb-input-group"
+      ],
+      "css": "src/styles/behaviors/input.css",
+      "schema": "src/wb-models/input.schema.json"
+    },
+    "wb-json": {
+      "js": "src/wb-viewmodels/semantics/json.js"
+    },
+    "wb-kbd": {
+      "js": "src/wb-viewmodels/semantics/inline.js"
+    },
+    "wb-label": {
+      "js": "src/wb-viewmodels/enhancements.js"
+    },
+    "wb-layout": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-link": {
+      "js": "src/wb-viewmodels/navigation.js"
+    },
+    "wb-mark": {
+      "js": "src/wb-viewmodels/semantics/inline.js"
+    },
+    "wb-marquee": {
+      "js": "src/wb-viewmodels/effects.js"
+    },
+    "wb-masked": {
+      "js": "src/wb-viewmodels/enhancements.js"
+    },
+    "wb-masonry": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-mdhtml": {
+      "js": "src/wb-viewmodels/behaviors-showcase.js",
+      "css": "src/styles/behaviors/mdhtml.css",
+      "schema": "src/wb-models/mdhtml.schema.json"
+    },
+    "wb-media": {
+      "js": "src/wb-viewmodels/media.js"
+    },
+    "wb-menu": {
+      "js": "src/wb-viewmodels/navigation.js"
+    },
+    "wb-modal": {
+      "js": "src/wb-viewmodels/semantics/dialog.js",
+      "css": "src/styles/behaviors/modal.css"
+    },
+    "wb-navbar": {
+      "js": "src/wb-viewmodels/navigation.js",
+      "css": "src/styles/behaviors/navbar.css",
+      "schema": "src/wb-models/navbar.schema.json"
+    },
+    "wb-navigation": {
+      "js": "src/wb-viewmodels/navigation.js"
+    },
+    "wb-notes": {
+      "js": "src/wb-viewmodels/notes.js",
+      "css": "src/styles/behaviors/notes.css",
+      "schema": "src/wb-models/notes.schema.json"
+    },
+    "wb-notification": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-offcanvas": {
+      "js": "src/wb-viewmodels/overlay.js"
+    },
+    "wb-ol": {
+      "js": "src/wb-viewmodels/semantics/ol.js"
+    },
+    "wb-otp": {
+      "js": "src/wb-viewmodels/enhancements.js",
+      "css": "src/styles/behaviors/otp.css"
+    },
+    "wb-pagination": {
+      "js": "src/wb-viewmodels/navigation.js",
+      "css": "src/styles/behaviors/pagination.css"
+    },
+    "wb-popover": {
+      "js": "src/wb-viewmodels/overlay.js",
+      "css": "src/styles/behaviors/popover.css"
+    },
+    "wb-portfolio": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-pricing": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-product": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-progress": {
+      "js": "src/wb-viewmodels/feedback.js",
+      "variants": [
+        "wb-progress-label"
+      ],
+      "css": "src/styles/behaviors/progress.css",
+      "schema": "src/wb-models/progress.schema.json"
+    },
+    "wb-radio": {
+      "js": "src/wb-viewmodels/semantics/radio.js",
+      "variants": [
+        "wb-radio-label",
+        "wb-radio-wrapper"
+      ]
+    },
+    "wb-range": {
+      "js": "src/wb-viewmodels/semantics/range.js",
+      "variants": [
+        "wb-range-value",
+        "wb-range-wrapper"
+      ]
+    },
+    "wb-rating": {
+      "js": "src/wb-viewmodels/semantics/rating.js",
+      "css": "src/styles/behaviors/rating.css",
+      "schema": "src/wb-models/rating.schema.json"
+    },
+    "wb-ratio": {
+      "js": "src/wb-viewmodels/media.js"
+    },
+    "wb-reel": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-repeater": {
+      "js": "src/wb-viewmodels/wb-repeater.js"
+    },
+    "wb-row": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-scrollable": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-search": {
+      "js": "src/wb-viewmodels/enhancements.js",
+      "css": "src/styles/behaviors/search.css",
+      "schema": "src/wb-models/search.schema.json"
+    },
+    "wb-select": {
+      "js": "src/wb-viewmodels/semantics/select.js",
+      "variants": [
+        "wb-select-wrapper"
+      ],
+      "schema": "src/wb-models/select.schema.json"
+    },
+    "wb-sheet": {
+      "js": "src/wb-viewmodels/overlay.js"
+    },
+    "wb-showcase": {
+      "js": "src/wb-viewmodels/behaviors-showcase.js"
+    },
+    "wb-sidebar": {
+      "js": "src/wb-viewmodels/layouts.js",
+      "variants": [
+        "wb-sidebar-layout"
+      ]
+    },
+    "wb-skeleton": {
+      "js": "src/wb-viewmodels/feedback.js",
+      "css": "src/styles/behaviors/skeleton.css",
+      "schema": "src/wb-models/skeleton.schema.json"
+    },
+    "wb-slider": {
+      "js": "src/wb-viewmodels/slider.js",
+      "schema": "src/wb-models/slider.schema.json"
+    },
+    "wb-snow": {
+      "js": "src/wb-viewmodels/effects.js",
+      "variants": [
+        "wb-snow-trigger"
+      ],
+      "schema": "src/wb-models/snow.schema.json"
+    },
+    "wb-span": {
+      "js": "src/wb-viewmodels/span.js",
+      "schema": "src/wb-models/span.schema.json"
+    },
+    "wb-sparkle": {
+      "js": "src/wb-viewmodels/effects.js",
+      "variants": [
+        "wb-sparkle-trigger"
+      ]
+    },
+    "wb-spinner": {
+      "js": "src/wb-viewmodels/feedback.js",
+      "schema": "src/wb-models/spinner.schema.json"
+    },
+    "wb-stack": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-stagelight": {
+      "js": "src/wb-viewmodels/stagelight.js",
+      "variants": [
+        "wb-stagelight-color",
+        "wb-stagelight-intensity",
+        "wb-stagelight-size"
+      ],
+      "schema": "src/wb-models/stagelight.schema.json"
+    },
+    "wb-stat": {
+      "js": "src/wb-viewmodels/semantics/stat.js",
+      "css": "src/styles/behaviors/stat.css"
+    },
+    "wb-stats": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-statusbar": {
+      "js": "src/wb-viewmodels/navigation.js"
+    },
+    "wb-step": {
+      "js": "src/wb-viewmodels/semantics/ol.js"
+    },
+    "wb-stepper": {
+      "js": "src/wb-viewmodels/enhancements.js"
+    },
+    "wb-steps": {
+      "js": "src/wb-viewmodels/navigation.js",
+      "css": "src/styles/behaviors/steps.css"
+    },
+    "wb-switch": {
+      "js": "src/wb-viewmodels/semantics/switch.js",
+      "css": "src/styles/behaviors/switch.css",
+      "schema": "src/wb-models/switch.schema.json"
+    },
+    "wb-switcher": {
+      "js": "src/wb-viewmodels/layouts.js"
+    },
+    "wb-table": {
+      "js": "src/wb-viewmodels/semantics/table.js",
+      "schema": "src/wb-models/table.schema.json"
+    },
+    "wb-tabs": {
+      "js": "src/wb-viewmodels/tabs.js",
+      "schema": "src/wb-models/tabs.schema.json"
+    },
+    "wb-tag": {
+      "js": "src/wb-viewmodels/enhancements.js"
+    },
+    "wb-testimonial": {
+      "js": "src/wb-viewmodels/card.js"
+    },
+    "wb-textarea": {
+      "js": "src/wb-viewmodels/semantics/textarea.js",
+      "variants": [
+        "wb-textarea-wrapper"
+      ],
+      "schema": "src/wb-models/textarea.schema.json"
+    },
+    "wb-theme": {
+      "js": "src/wb-viewmodels/themecontrol.js",
+      "variants": [
+        "wb-theme-control"
+      ]
+    },
+    "wb-themecontrol": {
+      "js": "src/wb-viewmodels/themecontrol.js",
+      "css": "src/styles/behaviors/themecontrol.css",
+      "schema": "src/wb-models/themecontrol.schema.json"
+    },
+    "wb-timeline": {
+      "js": "src/wb-viewmodels/semantics/timeline.js",
+      "css": "src/styles/behaviors/timeline.css",
+      "schema": "src/wb-models/timeline.schema.json"
+    },
+    "wb-tooltip-trigger": {
+      "js": "src/wb-viewmodels/tooltip.js"
+    },
+    "wb-treeview": {
+      "js": "src/wb-viewmodels/navigation.js"
+    },
+    "wb-ul": {
+      "js": "src/wb-viewmodels/semantics/ul.js"
+    },
+    "wb-validator": {
+      "js": "src/wb-viewmodels/validator.js"
+    },
+    "wb-video": {
+      "js": "src/wb-viewmodels/media.js"
+    },
+    "wb-vimeo": {
+      "js": "src/wb-viewmodels/media.js"
+    },
+    "wb-youtube": {
+      "js": "src/wb-viewmodels/media.js"
+    }
+  }
+}

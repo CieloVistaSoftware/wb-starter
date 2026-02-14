@@ -1,0 +1,150 @@
+/**
+ * Button Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from components.css (Post-Phase 3 cleanup)
+ * Works with src/wb-viewmodels/semantics/button.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-button,
+button-tooltip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md, 6px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.5;
+  text-decoration: none;
+  user-select: none;
+}
+
+.wb-button:focus-visible,
+button-tooltip:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.wb-button:disabled,
+button-tooltip[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Sizes */
+.wb-button--xs {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.wb-button--sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.wb-button--md {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+.wb-button--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+}
+
+.wb-button--xl {
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+}
+
+/* Variants */
+.wb-button--primary {
+  background-color: var(--primary);
+  color: white;
+  border-color: transparent;
+}
+.wb-button--primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.wb-button--secondary {
+  background-color: var(--secondary);
+  color: white;
+  border-color: transparent;
+}
+.wb-button--secondary:hover {
+  background-color: var(--secondary-dark);
+}
+
+.wb-button--success {
+  background-color: var(--success-color);
+  color: white;
+  border-color: transparent;
+}
+.wb-button--success:hover {
+  filter: brightness(0.9);
+}
+
+.wb-button--danger,
+.wb-button--error {
+  background-color: var(--danger-color);
+  color: white;
+  border-color: transparent;
+}
+.wb-button--danger:hover,
+.wb-button--error:hover {
+  filter: brightness(0.9);
+}
+
+.wb-button--warning {
+  background-color: var(--warning-color);
+  color: white;
+  border-color: transparent;
+}
+.wb-button--warning:hover {
+  filter: brightness(0.9);
+}
+
+.wb-button--ghost {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+.wb-button--ghost:hover {
+  background-color: var(--bg-tertiary);
+  border-color: var(--text-secondary);
+}
+
+.wb-button--link {
+  background-color: transparent;
+  color: var(--primary);
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}
+.wb-button--link:hover {
+  text-decoration: underline;
+}
+
+/* Loading Spinner — uses wb-spin from effects.css */
+.wb-button__spinner {
+  display: inline-block;
+  animation: wb-spin 1s linear infinite;
+}
+
+/* Loading state */
+.wb-button--loading {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Disabled state */
+.wb-button--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏷️ Badge Showcase</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/components.css">
+
+</head>
+
+<body>
+  <h1>🏷️ Badge Showcase</h1>
+  <p>Small label/tag for status indicators, counts, or categories</p>
+
+  <!-- 1. badge — Combinations -->
+  <h2>badge — Combinations</h2>
+  <wb-demo columns="3">
+    <wb-badge label="New">
+    </wb-badge>
+    <wb-badge label="Done" variant="success">
+    </wb-badge>
+    <wb-badge label="Warning" variant="warning">
+    </wb-badge>
+    <wb-badge label="Error" variant="error">
+    </wb-badge>
+    <wb-badge label="5" variant="primary" pill>
+    </wb-badge>
+    <wb-badge variant="success" dot>
+    </wb-badge>
+    <wb-badge label="Tag" variant="info" removable>
+    </wb-badge>
+    <wb-badge label="Outline" variant="primary" outline>
+    </wb-badge>
+  </wb-demo>
+
+  <!-- 2. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="3">
+    <wb-badge variant="default">
+    </wb-badge>
+    <wb-badge variant="primary">
+    </wb-badge>
+    <wb-badge variant="secondary">
+    </wb-badge>
+    <wb-badge variant="success">
+    </wb-badge>
+    <wb-badge variant="warning">
+    </wb-badge>
+    <wb-badge variant="error">
+    </wb-badge>
+    <wb-badge variant="info">
+    </wb-badge>
+  </wb-demo>
+
+  <!-- 3. size variants -->
+  <h2>size variants</h2>
+  <wb-demo columns="2">
+    <wb-badge size="xs">
+    </wb-badge>
+    <wb-badge size="sm">
+    </wb-badge>
+    <wb-badge size="md">
+    </wb-badge>
+    <wb-badge size="lg">
+    </wb-badge>
+  </wb-demo>
+
+  <!-- 4. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="3">
+    <wb-badge pill>
+    </wb-badge>
+    <wb-badge dot>
+    </wb-badge>
+    <wb-badge outline>
+    </wb-badge>
+    <wb-badge removable>
+    </wb-badge>
+  </wb-demo>
+
+  <!-- Load wb-starter -->
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('🏷️ Badge Showcase initialized');
+  </script>
+</body>
+
+</html>

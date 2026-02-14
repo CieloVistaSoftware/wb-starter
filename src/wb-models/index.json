@@ -66,6 +66,7 @@
     "resizable.schema.json",
     "ripple.schema.json",
     "scrollalong.schema.json",
+    "search.schema.json",
     "search-index.schema.json",
     "select.schema.json",
     "skeleton.schema.json",
@@ -118,11 +119,12 @@
     },
     "forms": {
       "description": "Form input and control components",
-      "count": 6,
+      "count": 7,
       "schemas": [
         "button.schema.json",
         "checkbox.schema.json",
         "input.schema.json",
+        "search.schema.json",
         "select.schema.json",
         "switch.schema.json",
         "textarea.schema.json"

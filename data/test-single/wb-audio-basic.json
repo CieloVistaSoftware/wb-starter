@@ -1,0 +1,20 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/integration/wb-audio-basic.spec.ts",
+  "startedAt": "2026-02-13T21:03:09.640Z",
+  "updatedAt": "2026-02-13T21:03:14.913Z",
+  "command": "npx playwright test --workers=8 tests/integration/wb-audio-basic.spec.ts",
+  "pid": 45348,
+  "passed": 0,
+  "failed": 0,
+  "skipped": 0,
+  "total": 0,
+  "currentFile": null,
+  "output": "Error: No tests found.\nMake sure that arguments are regular expressions matching test files.\nYou may need to escape symbols like \"$\" or \"*\" and quote the arguments.\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 0 tests in 0.0s\n  ✓ Passed:  0\n  ✗ Failed:  0\n\n  By Project:\n════════════════════════════════════════════════════════════\n\n\n",
+  "errors": "",
+  "completedAt": "2026-02-13T21:03:14.913Z",
+  "duration": "5.27s",
+  "exitCode": 1,
+  "failures": []
+}

@@ -1,0 +1,48 @@
+[
+  {
+    "file": "demos\\wb-views-demo.css",
+    "count": 4,
+    "samples": [
+      {
+        "color": "rgba(",
+        "line": ".alert--info { border-left: 4px solid var(--info-color); background: var(--info-"
+      },
+      {
+        "color": "rgba(",
+        "line": ".alert--success { border-left: 4px solid var(--success-color); background: var(-"
+      },
+      {
+        "color": "rgba(",
+        "line": ".alert--warning { border-left: 4px solid var(--warning-color); background: var(-"
+      }
+    ]
+  },
+  {
+    "file": "src\\styles\\behaviors\\card.css",
+    "count": 4,
+    "samples": [
+      {
+        "color": "#1e293b",
+        "line": "--text-primary: var(--color-text, #1e293b);"
+      },
+      {
+        "color": "#64748b",
+        "line": "--text-secondary: var(--color-text-muted, #64748b);"
+      },
+      {
+        "color": "#e2e8f0",
+        "line": "--border-color: var(--color-border, #e2e8f0);"
+      }
+    ]
+  },
+  {
+    "file": "src\\styles\\components\\home.css",
+    "count": 1,
+    "samples": [
+      {
+        "color": "#334155",
+        "line": "border: 1px solid #334155;"
+      }
+    ]
+  }
+]

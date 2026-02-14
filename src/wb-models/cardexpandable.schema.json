@@ -177,6 +177,25 @@
           "maxHeight": "150px"
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardexpandable",
+      "renders": true,
+      "baseClass": "wb-card-expandable",
+      "minInstances": 3,
+      "checkText": [
+        "Basic",
+        "Expanded",
+        "Custom"
+      ],
+      "checkClasses": [
+        "wb-card-expandable--elevated"
+      ],
+      "checkAttributes": [
+        "title",
+        "content"
+      ]
     }
   },
   "_metadata": {

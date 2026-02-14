@@ -26,7 +26,7 @@
       },
       "affectedComponents": ["audio"],
       "regressionTests": [
-        "tests/behaviors/ui/audio.spec.ts"
+        "tests/components/audio.spec.ts"
       ],
       "testCases": [
         "Audio: EQ panel has Play/Pause button",
@@ -52,7 +52,7 @@
       },
       "affectedComponents": ["figure"],
       "regressionTests": [
-        "tests/behaviors/ui/figure.spec.ts"
+        "tests/components/figure.spec.ts"
       ],
       "testCases": [
         "Figure: renders caption from data-caption attribute"
@@ -77,8 +77,8 @@
       },
       "affectedComponents": ["audio", "video", "cardimage", "cardvideo", "avatar", "youtube", "vimeo"],
       "regressionTests": [
-        "tests/behaviors/builder-mkel.spec.ts",
-        "tests/behaviors/ui/audio.spec.ts",
+        "tests/builder/builder-mkel.spec.ts",
+        "tests/components/audio.spec.ts",
         "tests/regression/regression-tests.spec.ts"
       ],
       "testCases": [

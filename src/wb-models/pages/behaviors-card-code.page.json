@@ -1,0 +1,232 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Card Behaviors Demo (Code)",
+  "description": "All 19 card behavior variants wrapped in wb-demo for each section.",
+  "schemaFor": "behaviors-card-code",
+
+  "page": {
+    "lang": "en",
+    "theme": "dark",
+    "title": "Card Behaviors Demo (Code)",
+    "stylesheets": [
+      "../src/styles/themes.css",
+      "../src/styles/site.css",
+      "../src/styles/components.css",
+      "../src/styles/behaviors/card.css"
+    ],
+    "scripts": [
+      {
+        "type": "module",
+        "src": "../src/core/wb-lazy.js",
+        "init": "WB.init({ autoInject: true })"
+      }
+    ]
+  },
+
+  "header": {
+    "tag": "h1",
+    "content": "🃏 Card Behaviors Demo (Code)",
+    "subtitle": {
+      "tag": "p",
+      "content": "All 19 card behavior variants wrapped in wb-demo for each section."
+    }
+  },
+
+  "sections": [
+    {
+      "heading": "card (base)",
+      "tag": "wb-card",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-card", "attrs": { "title": "Elevated Card", "elevated": true }, "children": "<p>This card has elevation shadow.</p>" },
+        { "tag": "wb-card", "attrs": { "title": "Clickable Card", "clickable": true }, "children": "<p>Click me! I'm interactive.</p>" },
+        { "tag": "wb-card", "attrs": { "title": "With Footer", "footer": "Last updated: Today" }, "children": "<p>This card has a footer section.</p>" }
+      ]
+    },
+    {
+      "heading": "cardprofile",
+      "tag": "wb-cardprofile",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardprofile", "attrs": { "name": "Alice Chen", "role": "UX Designer", "avatar": "https://i.pravatar.cc/80?img=1" } },
+        { "tag": "wb-cardprofile", "attrs": { "name": "Bob Martinez", "role": "Lead Engineer", "avatar": "https://i.pravatar.cc/80?img=3", "bio": "Building scalable systems." } },
+        { "tag": "wb-cardprofile", "attrs": { "name": "Clara Novak", "role": "Product Manager", "avatar": "https://i.pravatar.cc/80?img=5", "align": "left" } }
+      ]
+    },
+    {
+      "heading": "cardpricing",
+      "tag": "wb-cardpricing",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardpricing", "attrs": { "plan": "Basic", "price": "$9", "period": "/month", "features": "5 Projects,1 GB Storage,Email Support" } },
+        { "tag": "wb-cardpricing", "attrs": { "plan": "Pro", "price": "$29", "period": "/month", "featured": true, "features": "Unlimited Projects,10 GB Storage,Priority Support,API Access" } },
+        { "tag": "wb-cardpricing", "attrs": { "plan": "Enterprise", "price": "$99", "period": "/month", "features": "Everything in Pro,SSO,Dedicated Manager,SLA", "description": "For large teams" } }
+      ]
+    },
+    {
+      "heading": "cardstats",
+      "tag": "wb-cardstats",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardstats", "attrs": { "value": "1,234", "label": "Users", "icon": "👥", "trend": "up", "trend-value": "+12%" } },
+        { "tag": "wb-cardstats", "attrs": { "value": "$50K", "label": "Revenue", "icon": "💰", "trend": "up", "trend-value": "+8.3%" } },
+        { "tag": "wb-cardstats", "attrs": { "value": "98.5%", "label": "Uptime", "icon": "⚡", "trend": "neutral", "trend-value": "0%" } }
+      ]
+    },
+    {
+      "heading": "cardimage",
+      "tag": "wb-cardimage",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardimage", "attrs": { "src": "https://picsum.photos/400/250?random=1", "alt": "Mountain landscape", "title": "Mountain View" } },
+        { "tag": "wb-cardimage", "attrs": { "src": "https://picsum.photos/400/250?random=2", "alt": "City skyline", "title": "Urban Life", "subtitle": "Downtown at dusk" } },
+        { "tag": "wb-cardimage", "attrs": { "src": "https://picsum.photos/400/250?random=3", "alt": "Ocean waves", "title": "Coastal Drive", "caption": "Photo by Jane Doe" } }
+      ]
+    },
+    {
+      "heading": "cardbutton",
+      "tag": "wb-cardbutton",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardbutton", "attrs": { "title": "Confirm Action", "content": "Are you sure you want to proceed?", "primary": "Confirm", "secondary": "Cancel" } },
+        { "tag": "wb-cardbutton", "attrs": { "title": "Save Changes", "content": "Your draft has unsaved edits.", "primary": "Save" } },
+        { "tag": "wb-cardbutton", "attrs": { "title": "Delete Item", "content": "This action cannot be undone.", "primary": "Delete", "secondary": "Keep" } }
+      ]
+    },
+    {
+      "heading": "carddraggable",
+      "tag": "wb-carddraggable",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-carddraggable", "attrs": { "title": "Drag Me", "content": "I can be moved around." } },
+        { "tag": "wb-carddraggable", "attrs": { "title": "X Axis Only", "content": "Horizontal drag only.", "axis": "x" } },
+        { "tag": "wb-carddraggable", "attrs": { "title": "Constrained", "content": "Stays within parent.", "constrain": "parent" } }
+      ]
+    },
+    {
+      "heading": "cardexpandable",
+      "tag": "wb-cardexpandable",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardexpandable", "attrs": { "title": "Read More", "content": "This is the expanded content that was previously hidden. It reveals additional details about the topic." } },
+        { "tag": "wb-cardexpandable", "attrs": { "title": "Already Open", "content": "This card starts in expanded state.", "expanded": true } },
+        { "tag": "wb-cardexpandable", "attrs": { "title": "Custom Height", "content": "Collapsed at 50px instead of default.", "max-height": "50px" } }
+      ]
+    },
+    {
+      "heading": "cardfile",
+      "tag": "wb-cardfile",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardfile", "attrs": { "filename": "report.pdf", "file-type": "pdf", "size": "2.4 MB", "href": "/files/report.pdf" } },
+        { "tag": "wb-cardfile", "attrs": { "filename": "photo.jpg", "file-type": "image", "size": "1.8 MB", "date": "Feb 10, 2026" } },
+        { "tag": "wb-cardfile", "attrs": { "filename": "archive.zip", "file-type": "zip", "size": "45 MB", "href": "/files/archive.zip" } }
+      ]
+    },
+    {
+      "heading": "cardhero",
+      "tag": "wb-cardhero",
+      "columns": 1,
+      "demos": [
+        { "tag": "wb-cardhero", "attrs": { "background": "https://picsum.photos/1200/400?random=10", "title": "Welcome to WB Framework", "subtitle": "Build stunning UIs with just HTML", "cta": "Get Started" } }
+      ]
+    },
+    {
+      "heading": "cardhorizontal",
+      "tag": "wb-cardhorizontal",
+      "columns": 2,
+      "demos": [
+        { "tag": "wb-cardhorizontal", "attrs": { "image": "https://picsum.photos/300/200?random=4", "title": "Horizontal Layout", "subtitle": "Image on the left, content on the right." } },
+        { "tag": "wb-cardhorizontal", "attrs": { "image": "https://picsum.photos/300/200?random=5", "title": "Right Image", "subtitle": "Image position flipped.", "image-position": "right" } }
+      ]
+    },
+    {
+      "heading": "cardlink",
+      "tag": "wb-cardlink",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardlink", "attrs": { "href": "/docs", "title": "Documentation", "description": "Read the full API reference", "icon": "📖" } },
+        { "tag": "wb-cardlink", "attrs": { "href": "/github", "title": "GitHub Repo", "description": "View the source code", "icon": "🐙", "target": "_blank" } },
+        { "tag": "wb-cardlink", "attrs": { "href": "/changelog", "title": "What's New", "description": "Latest release notes", "icon": "🆕", "badge": "v3.0" } }
+      ]
+    },
+    {
+      "heading": "cardminimizable",
+      "tag": "wb-cardminimizable",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardminimizable", "attrs": { "title": "Panel A", "content": "This content can be minimized." } },
+        { "tag": "wb-cardminimizable", "attrs": { "title": "Panel B (Minimized)", "content": "Start minimized.", "minimized": true } },
+        { "tag": "wb-cardminimizable", "attrs": { "title": "Panel C", "content": "Another minimizable panel with some text." } }
+      ]
+    },
+    {
+      "heading": "cardnotification",
+      "tag": "wb-cardnotification",
+      "columns": 2,
+      "demos": [
+        { "tag": "wb-cardnotification", "attrs": { "variant": "info", "title": "Info", "message": "This is an informational notice." } },
+        { "tag": "wb-cardnotification", "attrs": { "variant": "success", "title": "Success", "message": "Operation completed successfully!" } },
+        { "tag": "wb-cardnotification", "attrs": { "variant": "warning", "title": "Warning", "message": "Please review before continuing." } },
+        { "tag": "wb-cardnotification", "attrs": { "variant": "error", "title": "Error", "message": "Something went wrong. Try again." } }
+      ]
+    },
+    {
+      "heading": "cardoverlay",
+      "tag": "wb-cardoverlay",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardoverlay", "attrs": { "image": "https://picsum.photos/400/300?random=6", "title": "Bottom Text", "subtitle": "Default position" } },
+        { "tag": "wb-cardoverlay", "attrs": { "image": "https://picsum.photos/400/300?random=7", "title": "Centered", "subtitle": "Position center", "position": "center" } },
+        { "tag": "wb-cardoverlay", "attrs": { "image": "https://picsum.photos/400/300?random=8", "title": "Top Aligned", "subtitle": "Position top", "position": "top" } }
+      ]
+    },
+    {
+      "heading": "cardportfolio",
+      "tag": "wb-cardportfolio",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardportfolio", "attrs": { "name": "John Peters", "title": "Lead Software Engineer", "company": "Cielo Vista Software", "location": "Rochester, MN", "avatar": "https://i.pravatar.cc/120?img=12", "bio": "30+ years building enterprise solutions.", "skills": "JavaScript,TypeScript,.NET,PowerShell", "email": "john@example.com", "website": "https://example.com", "cta": "View Full Profile" } },
+        { "tag": "wb-cardportfolio", "attrs": { "name": "Maya Rodriguez", "title": "AI Research Engineer", "company": "Anthropic Labs", "location": "San Francisco, CA", "avatar": "https://i.pravatar.cc/120?img=32", "bio": "Building safe AI systems with Claude and Python.", "skills": "Python,Claude API,PyTorch,LangChain,FastAPI", "github": "https://github.com/mayarodriguez", "stats": "[{\"label\":\"Papers\",\"value\":\"12\"},{\"label\":\"Repos\",\"value\":\"34\"},{\"label\":\"Models\",\"value\":\"200+\"}]", "cta": "View Research" } },
+        { "tag": "wb-cardportfolio", "attrs": { "name": "David Kowalski", "title": "Senior .NET Architect", "company": "Contoso Solutions", "location": "Chicago, IL", "avatar": "https://i.pravatar.cc/120?img=57", "bio": "Cloud-native apps with C# and Azure.", "skills": "C#,ASP.NET Core,Azure,Blazor,SQL Server", "github": "https://github.com/dkowalski", "stats": "[{\"label\":\"Packages\",\"value\":\"18\"},{\"label\":\"Deploys\",\"value\":\"500+\"},{\"label\":\"Team\",\"value\":\"35\"}]", "cta": "Connect" } }
+      ]
+    },
+    {
+      "heading": "cardproduct",
+      "tag": "wb-cardproduct",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardproduct", "attrs": { "image": "https://picsum.photos/400/300?random=20", "title": "Wireless Headphones", "price": "$79", "original-price": "$129", "badge": "Sale", "rating": "4.5", "reviews": "234" } },
+        { "tag": "wb-cardproduct", "attrs": { "image": "https://picsum.photos/400/300?random=21", "title": "Mechanical Keyboard", "price": "$149", "rating": "4.8", "reviews": "89", "cta": "Buy Now" } },
+        { "tag": "wb-cardproduct", "attrs": { "image": "https://picsum.photos/400/300?random=22", "title": "USB-C Hub", "price": "$39", "description": "7-in-1 adapter", "featured": true } }
+      ]
+    },
+    {
+      "heading": "cardtestimonial",
+      "tag": "wb-cardtestimonial",
+      "columns": 3,
+      "demos": [
+        { "tag": "wb-cardtestimonial", "attrs": { "quote": "This framework changed how we build UIs.", "author": "Sarah Kim", "role": "CTO, TechCorp", "avatar": "https://i.pravatar.cc/48?img=10", "rating": "5" } },
+        { "tag": "wb-cardtestimonial", "attrs": { "quote": "Clean, fast, and easy to use. Highly recommend.", "author": "Marcus Lee", "role": "Frontend Lead", "avatar": "https://i.pravatar.cc/48?img=11", "rating": "4" } },
+        { "tag": "wb-cardtestimonial", "attrs": { "quote": "The best component library I've worked with.", "author": "Priya Patel", "role": "Developer", "avatar": "https://i.pravatar.cc/48?img=16", "rating": "5" } }
+      ]
+    },
+    {
+      "heading": "cardvideo",
+      "tag": "wb-cardvideo",
+      "columns": 2,
+      "demos": [
+        { "tag": "wb-cardvideo", "attrs": { "src": "https://www.w3schools.com/html/mov_bbb.mp4", "title": "Sample Video", "description": "Big Buck Bunny clip", "poster": "https://picsum.photos/640/360?random=30" } },
+        { "tag": "wb-cardvideo", "attrs": { "src": "https://www.w3schools.com/html/mov_bbb.mp4", "title": "Looping Muted", "muted": true, "loop": true, "aspect": "4/3" } }
+      ]
+    }
+  ],
+
+  "_metadata": {
+    "category": "demo-page",
+    "icon": "🃏",
+    "sourceFile": "demos/behaviors-card-code.html",
+    "sectionCount": 19,
+    "generatedFrom": "manual extraction of existing HTML page"
+  }
+}

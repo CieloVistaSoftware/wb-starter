@@ -1,0 +1,5858 @@
+{
+  "generatedAt": "2026-02-13T01:09:05.190Z",
+  "count": 81,
+  "schemas": [
+    {
+      "file": "alert.schema.json",
+      "name": "alert",
+      "title": "Alert",
+      "description": "Alert component for displaying messages with severity levels",
+      "tag": "wb-alert",
+      "baseClass": "wb-alert",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "description": "Alert severity/style variant",
+          "enum": [
+            "info",
+            "success",
+            "warning",
+            "error"
+          ],
+          "default": "info",
+          "appliesClass": "wb-alert--{{value}}"
+        },
+        "title": {
+          "type": "string",
+          "description": "Alert title (optional heading)"
+        },
+        "message": {
+          "type": "string",
+          "description": "Alert message content",
+          "required": true
+        },
+        "icon": {
+          "type": "string",
+          "description": "Icon (emoji or icon name)",
+          "default": ""
+        },
+        "dismissible": {
+          "type": "boolean",
+          "description": "Show close button to dismiss alert",
+          "default": false
+        }
+      },
+      "matrix": [
+        {
+          "variant": "info",
+          "message": "Test"
+        },
+        {
+          "variant": "success",
+          "message": "Test"
+        },
+        {
+          "variant": "warning",
+          "message": "Test"
+        },
+        {
+          "variant": "error",
+          "message": "Test"
+        },
+        {
+          "variant": "info",
+          "title": "Title",
+          "message": "Test"
+        },
+        {
+          "variant": "info",
+          "message": "Test",
+          "icon": "ℹ️"
+        },
+        {
+          "variant": "info",
+          "message": "Test",
+          "dismissible": true
+        },
+        {
+          "variant": "warning",
+          "title": "Warning",
+          "message": "Be careful",
+          "icon": "⚠️",
+          "dismissible": true
+        }
+      ],
+      "_metadata": {
+        "category": "feedback",
+        "icon": "🔔",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "article.schema.json",
+      "name": "article",
+      "title": "Article Component",
+      "description": "Semantic article component for blog posts, news, and documentation pages.",
+      "tag": "wb-article",
+      "baseClass": "wb-article",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Article title",
+          "default": ""
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Article subtitle or deck",
+          "default": ""
+        },
+        "author": {
+          "type": "string",
+          "description": "Author name",
+          "default": ""
+        },
+        "date": {
+          "type": "string",
+          "description": "Publication date",
+          "default": ""
+        },
+        "category": {
+          "type": "string",
+          "description": "Category or tag",
+          "default": ""
+        },
+        "image": {
+          "type": "string",
+          "description": "Cover image URL",
+          "default": ""
+        },
+        "imageAlt": {
+          "type": "string",
+          "description": "Cover image alt text",
+          "default": ""
+        },
+        "readingTime": {
+          "type": "string",
+          "description": "Estimated reading time",
+          "default": ""
+        },
+        "featured": {
+          "type": "boolean",
+          "description": "Whether the article is featured",
+          "default": false,
+          "appliesClass": "wb-article--featured"
+        }
+      },
+      "matrix": [
+        {
+          "title": "Article"
+        },
+        {
+          "title": "Article",
+          "subtitle": "Deck"
+        },
+        {
+          "title": "Article",
+          "image": "cover.jpg"
+        },
+        {
+          "title": "Article",
+          "author": "John Doe",
+          "date": "2026-01-01"
+        },
+        {
+          "title": "Article",
+          "featured": true
+        }
+      ],
+      "_metadata": {
+        "category": "content",
+        "icon": "📄",
+        "related": [
+          "card",
+          "hero"
+        ]
+      }
+    },
+    {
+      "file": "articles.schema.json",
+      "name": "articles",
+      "title": "Articles List Component",
+      "description": "A wrapper component to display a list or grid of articles.",
+      "tag": "wb-articles",
+      "baseClass": "wb-articles",
+      "properties": {
+        "layout": {
+          "type": "string",
+          "description": "Layout mode: grid, list, or masonry",
+          "enum": [
+            "grid",
+            "list",
+            "masonry"
+          ],
+          "default": "grid"
+        },
+        "columns": {
+          "type": "number",
+          "description": "Number of columns for grid layout",
+          "default": 3
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum number of articles to show",
+          "default": 10
+        },
+        "source": {
+          "type": "string",
+          "description": "Data source URL for fetching articles dynamically",
+          "default": ""
+        },
+        "pagination": {
+          "type": "boolean",
+          "description": "Enable pagination",
+          "default": false
+        }
+      },
+      "matrix": [
+        {
+          "layout": "grid"
+        },
+        {
+          "layout": "list"
+        },
+        {
+          "layout": "grid",
+          "columns": 2
+        }
+      ],
+      "_metadata": {
+        "category": "layout",
+        "icon": "📰",
+        "related": [
+          "article",
+          "grid"
+        ]
+      }
+    },
+    {
+      "file": "audio.schema.json",
+      "name": "audio",
+      "title": "Audio",
+      "description": "Audio player with optional 15-band graphic equalizer",
+      "tag": "wb-audio",
+      "baseClass": "wb-audio",
+      "properties": {
+        "src": {
+          "type": "string",
+          "description": "Audio source URL",
+          "required": true
+        },
+        "volume": {
+          "type": "number",
+          "description": "Initial volume (0-1)",
+          "default": 0.8
+        },
+        "loop": {
+          "type": "boolean",
+          "description": "Loop playback",
+          "default": false
+        },
+        "autoplay": {
+          "type": "boolean",
+          "description": "Auto-play (requires muted)",
+          "default": false
+        },
+        "muted": {
+          "type": "boolean",
+          "description": "Start muted",
+          "default": false
+        },
+        "showEq": {
+          "type": "boolean",
+          "description": "Show 15-band equalizer",
+          "default": false
+        },
+        "bass": {
+          "type": "number",
+          "description": "Bass boost (-12 to 12 dB)",
+          "default": 0
+        },
+        "treble": {
+          "type": "number",
+          "description": "Treble boost (-12 to 12 dB)",
+          "default": 0
+        }
+      },
+      "matrix": [
+        {
+          "src": "audio.mp3"
+        },
+        {
+          "src": "audio.mp3",
+          "showEq": true
+        },
+        {
+          "src": "audio.mp3",
+          "volume": 0.5
+        },
+        {
+          "src": "audio.mp3",
+          "loop": true
+        }
+      ],
+      "_metadata": {
+        "category": "media",
+        "icon": "🎵",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "avatar.schema.json",
+      "name": "avatar",
+      "title": "Avatar",
+      "description": "User avatar with image, initials fallback, and status indicator",
+      "tag": "wb-avatar",
+      "baseClass": "wb-avatar",
+      "properties": {
+        "src": {
+          "type": "string",
+          "description": "Image source URL"
+        },
+        "alt": {
+          "type": "string",
+          "description": "Alt text for image"
+        },
+        "initials": {
+          "type": "string",
+          "description": "Fallback initials (2 chars)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name (generates initials if not provided)"
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "2xl"
+          ],
+          "default": "md",
+          "appliesClass": "wb-avatar--{{value}}"
+        },
+        "shape": {
+          "type": "string",
+          "enum": [
+            "circle",
+            "square",
+            "rounded"
+          ],
+          "default": "circle",
+          "appliesClass": "wb-avatar--{{value}}"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "online",
+            "offline",
+            "busy",
+            "away"
+          ],
+          "description": "Status indicator"
+        },
+        "bordered": {
+          "type": "boolean",
+          "description": "Show border",
+          "default": false,
+          "appliesClass": "wb-avatar--bordered"
+        }
+      },
+      "matrix": [
+        {
+          "initials": "JD"
+        },
+        {
+          "src": "avatar.jpg"
+        },
+        {
+          "initials": "JD",
+          "size": "lg"
+        },
+        {
+          "initials": "JD",
+          "status": "online"
+        },
+        {
+          "initials": "JD",
+          "shape": "square"
+        }
+      ],
+      "_metadata": {
+        "category": "feedback",
+        "icon": "👤",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "badge.schema.json",
+      "name": "badge",
+      "title": "Badge",
+      "description": "Small label/tag for status indicators, counts, or categories",
+      "tag": "wb-badge",
+      "baseClass": "wb-badge",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Badge text content"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Color variant",
+          "enum": [
+            "default",
+            "primary",
+            "secondary",
+            "success",
+            "warning",
+            "error",
+            "info"
+          ],
+          "default": "default",
+          "appliesClass": "wb-badge--{{value}}"
+        },
+        "size": {
+          "type": "string",
+          "description": "Badge size",
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "appliesClass": "wb-badge--{{value}}"
+        },
+        "pill": {
+          "type": "boolean",
+          "description": "Pill shape with full border radius",
+          "default": false,
+          "appliesClass": "wb-badge--pill"
+        },
+        "dot": {
+          "type": "boolean",
+          "description": "Dot indicator (no text)",
+          "default": false,
+          "appliesClass": "wb-badge--dot"
+        },
+        "outline": {
+          "type": "boolean",
+          "description": "Outline style (transparent background)",
+          "default": false,
+          "appliesClass": "wb-badge--outline"
+        },
+        "removable": {
+          "type": "boolean",
+          "description": "Show remove/close button",
+          "default": false
+        }
+      },
+      "matrix": [
+        {
+          "label": "New"
+        },
+        {
+          "label": "Done",
+          "variant": "success"
+        },
+        {
+          "label": "Warning",
+          "variant": "warning"
+        },
+        {
+          "label": "Error",
+          "variant": "error"
+        },
+        {
+          "label": "5",
+          "variant": "primary",
+          "pill": true
+        },
+        {
+          "variant": "success",
+          "dot": true
+        },
+        {
+          "label": "Tag",
+          "variant": "info",
+          "removable": true
+        },
+        {
+          "label": "Outline",
+          "variant": "primary",
+          "outline": true
+        }
+      ],
+      "_metadata": {
+        "category": "feedback",
+        "icon": "🏷️",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "builder.schema.json",
+      "name": "builder",
+      "title": "Builder Schema",
+      "description": "Unified schema for builder components and UI interactions.",
+      "tag": "wb-builder",
+      "baseClass": "wb-builder",
+      "properties": {
+        "label": {
+          "type": "string",
+          "default": "Builder",
+          "appliesAttribute": "label"
+        },
+        "icon": {
+          "type": "string",
+          "default": "🎨",
+          "appliesAttribute": "icon"
+        },
+        "components": {
+          "type": "array",
+          "description": "List of components in the builder.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Component type (e.g., 'card', 'button', etc.)"
+              },
+              "id": {
+                "type": "string",
+                "description": "Unique component ID. Auto-generated as readable camelCase with counter (e.g., sidebarLeft-1, column2-1, hero-1)"
+              },
+              "props": {
+                "type": "object",
+                "description": "Component properties (see individual schemas)."
+              },
+              "children": {
+                "$ref": "#/properties/components"
+              }
+            },
+            "required": [
+              "type",
+              "id",
+              "props"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "meta": {
+          "type": "object",
+          "description": "Builder-level metadata (optional)",
+          "properties": {
+            "version": {
+              "type": "string"
+            },
+            "created": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "author": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "matrix": [
+        {
+          "components": [
+            {
+              "type": "card",
+              "id": "test1",
+              "props": {}
+            }
+          ]
+        },
+        {
+          "components": [
+            {
+              "type": "button",
+              "id": "test2",
+              "props": {}
+            }
+          ]
+        }
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "button.schema.json",
+      "name": "button",
+      "title": "Button",
+      "description": "Interactive button with variants, sizes, and optional icon",
+      "tag": "wb-button",
+      "baseClass": "wb-button",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Button text"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Icon name from built-in library, or any emoji/text",
+          "enum": [
+            "star",
+            "check",
+            "close",
+            "warning",
+            "info",
+            "error",
+            "heart",
+            "search",
+            "edit",
+            "trash",
+            "plus",
+            "minus",
+            "home",
+            "settings",
+            "download",
+            "upload",
+            "arrow_right",
+            "arrow_left",
+            "copy",
+            "save"
+          ]
+        },
+        "iconPosition": {
+          "type": "string",
+          "description": "Icon position relative to label",
+          "enum": [
+            "start",
+            "end"
+          ],
+          "default": "start"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "primary",
+            "secondary",
+            "success",
+            "warning",
+            "error",
+            "ghost",
+            "outline",
+            "link"
+          ],
+          "default": "primary",
+          "appliesClass": "wb-button--{{value}}"
+        },
+        "size": {
+          "type": "string",
+          "description": "Button size",
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md",
+          "appliesClass": "wb-button--{{value}}"
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Disabled state",
+          "default": false
+        },
+        "loading": {
+          "type": "boolean",
+          "description": "Loading state with spinner",
+          "default": false,
+          "appliesClass": "wb-button--loading"
+        },
+        "fullWidth": {
+          "type": "boolean",
+          "description": "Full width button",
+          "default": false,
+          "appliesClass": "wb-button--full"
+        },
+        "iconOnly": {
+          "type": "boolean",
+          "description": "Icon-only button (square)",
+          "default": false,
+          "appliesClass": "wb-button--icon-only"
+        }
+      },
+      "matrix": [
+        {
+          "label": "Primary",
+          "variant": "primary"
+        },
+        {
+          "label": "Secondary",
+          "variant": "secondary"
+        },
+        {
+          "label": "Success",
+          "variant": "success"
+        },
+        {
+          "label": "Warning",
+          "variant": "warning"
+        },
+        {
+          "label": "Error",
+          "variant": "error"
+        },
+        {
+          "label": "Ghost",
+          "variant": "ghost"
+        },
+        {
+          "label": "Outline",
+          "variant": "outline"
+        },
+        {
+          "label": "Small",
+          "variant": "primary",
+          "size": "sm"
+        },
+        {
+          "label": "Large",
+          "variant": "primary",
+          "size": "lg"
+        },
+        {
+          "label": "Loading...",
+          "variant": "primary",
+          "loading": true
+        },
+        {
+          "label": "🚀 With Icon",
+          "variant": "primary",
+          "icon": "🚀"
+        }
+      ],
+      "_metadata": {
+        "category": "forms",
+        "icon": "🔘",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardbutton.schema.json",
+      "name": "cardbutton",
+      "title": "Button Card",
+      "description": "Card with action buttons in footer",
+      "tag": "wb-cardbutton",
+      "baseClass": "wb-card-button",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Card title"
+        },
+        "content": {
+          "type": "string",
+          "description": "Card content/description"
+        },
+        "primary": {
+          "type": "string",
+          "description": "Primary button text",
+          "required": true
+        },
+        "primaryHref": {
+          "type": "string",
+          "description": "Primary button link URL"
+        },
+        "secondary": {
+          "type": "string",
+          "description": "Secondary button text"
+        },
+        "secondaryHref": {
+          "type": "string",
+          "description": "Secondary button link URL"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "elevated",
+            "bordered"
+          ],
+          "default": "default",
+          "appliesClass": "wb-card-button--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "title": "Card",
+          "primary": "OK"
+        },
+        {
+          "title": "Card",
+          "primary": "Submit",
+          "content": "Content"
+        },
+        {
+          "title": "Card",
+          "primary": "Yes",
+          "secondary": "No"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "🔘",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "card.schema.json",
+      "name": "card",
+      "title": "Card Component",
+      "description": "Base card component. IS-A article, HAS-A header, main, footer.",
+      "tag": "wb-card",
+      "baseClass": "wb-card",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Card title displayed in header",
+          "default": ""
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Card subtitle displayed below title",
+          "default": ""
+        },
+        "footer": {
+          "type": "string",
+          "description": "Card footer text",
+          "default": ""
+        },
+        "elevated": {
+          "type": "boolean",
+          "description": "Add drop shadow",
+          "default": false,
+          "appliesClass": "wb-card--elevated"
+        },
+        "clickable": {
+          "type": "boolean",
+          "description": "Make card clickable",
+          "default": false,
+          "appliesClass": "wb-card--clickable"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "glass",
+            "bordered",
+            "flat"
+          ],
+          "default": "default"
+        },
+        "size": {
+          "type": "string",
+          "description": "Card size variant controlling max/min width",
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "full",
+            "auto"
+          ],
+          "default": "auto",
+          "appliesClass": "wb-card--{value}"
+        }
+      },
+      "matrix": [
+        {
+          "title": "Default Card",
+          "subtitle": "A simple card",
+          "footer": "Card footer"
+        },
+        {
+          "title": "Glass Card",
+          "variant": "glass",
+          "subtitle": "With glass effect"
+        },
+        {
+          "title": "Bordered Card",
+          "variant": "bordered",
+          "footer": "Bordered style"
+        },
+        {
+          "title": "Flat Card",
+          "variant": "flat",
+          "subtitle": "Minimal look"
+        },
+        {
+          "title": "Elevated Card",
+          "elevated": true,
+          "subtitle": "With shadow"
+        },
+        {
+          "title": "Clickable Card",
+          "clickable": true,
+          "subtitle": "Click me",
+          "footer": "Interactive"
+        },
+        {
+          "title": "Small Card",
+          "size": "sm",
+          "subtitle": "Compact size"
+        },
+        {
+          "title": "Large Card",
+          "size": "lg",
+          "subtitle": "Spacious layout",
+          "footer": "Extra room"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "🃏",
+        "variants": [
+          "cardprofile",
+          "cardpricing",
+          "cardstats",
+          "cardimage",
+          "cardbutton",
+          "carddraggable",
+          "cardexpandable",
+          "cardfile",
+          "cardhero",
+          "cardhorizontal",
+          "cardlink",
+          "cardminimizable",
+          "cardnotification",
+          "cardoverlay",
+          "cardportfolio",
+          "cardproduct",
+          "cardtestimonial",
+          "cardvideo"
+        ]
+      }
+    },
+    {
+      "file": "cardprofile.schema.json",
+      "name": "cardprofile",
+      "title": "Card Profile",
+      "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
+      "tag": "wb-cardprofile",
+      "baseClass": "wb-card",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Person's name",
+          "required": true,
+          "default": "John Doe"
+        },
+        "role": {
+          "type": "string",
+          "description": "Job title or role",
+          "default": "Designer"
+        },
+        "avatar": {
+          "type": "string",
+          "description": "Avatar image URL",
+          "default": "https://i.pravatar.cc/80?img=1"
+        },
+        "bio": {
+          "type": "string",
+          "description": "Short biography",
+          "inputType": "textarea"
+        },
+        "cover": {
+          "type": "string",
+          "description": "Cover/banner image URL"
+        },
+        "size": {
+          "type": "string",
+          "description": "Avatar size",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "inputType": "select"
+        },
+        "align": {
+          "type": "string",
+          "description": "Content alignment",
+          "enum": [
+            "left",
+            "center"
+          ],
+          "default": "center",
+          "inputType": "select"
+        },
+        "hoverText": {
+          "type": "string",
+          "description": "Tooltip text shown on hover",
+          "default": "",
+          "appliesAttribute": "title"
+        }
+      },
+      "matrix": [
+        {
+          "name": "John Doe"
+        },
+        {
+          "name": "John Doe",
+          "role": "Developer"
+        },
+        {
+          "name": "John Doe",
+          "avatar": "https://i.pravatar.cc/80"
+        },
+        {
+          "name": "John Doe",
+          "bio": "Short bio."
+        },
+        {
+          "name": "John Doe",
+          "cover": "https://picsum.photos/400/100"
+        },
+        {
+          "name": "John Doe",
+          "size": "sm"
+        },
+        {
+          "name": "John Doe",
+          "size": "lg"
+        },
+        {
+          "name": "John Doe",
+          "align": "left"
+        },
+        {
+          "name": "Full",
+          "role": "CEO",
+          "avatar": "https://i.pravatar.cc/80",
+          "bio": "Leader.",
+          "cover": "https://picsum.photos/400/100",
+          "size": "lg",
+          "align": "center"
+        }
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "checkbox.schema.json",
+      "name": "checkbox",
+      "title": "Checkbox",
+      "description": "Checkbox input with label and custom styling",
+      "tag": "wb-checkbox",
+      "baseClass": "wb-checkbox",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Label text"
+        },
+        "checked": {
+          "type": "boolean",
+          "description": "Checked state",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Disabled state",
+          "default": false
+        },
+        "indeterminate": {
+          "type": "boolean",
+          "description": "Indeterminate state",
+          "default": false
+        },
+        "name": {
+          "type": "string",
+          "description": "Form field name"
+        },
+        "value": {
+          "type": "string",
+          "description": "Form field value"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Required field",
+          "default": false
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "appliesClass": "wb-checkbox--{{value}}"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "primary",
+            "success"
+          ],
+          "default": "default",
+          "appliesClass": "wb-checkbox--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "label": "Default checkbox"
+        },
+        {
+          "label": "Checked",
+          "checked": true
+        },
+        {
+          "label": "Disabled",
+          "disabled": true
+        },
+        {
+          "label": "Primary",
+          "variant": "primary"
+        },
+        {
+          "label": "Success variant",
+          "variant": "success",
+          "checked": true
+        },
+        {
+          "label": "Small checkbox",
+          "size": "sm"
+        },
+        {
+          "label": "Large checkbox",
+          "size": "lg"
+        }
+      ],
+      "_metadata": {
+        "category": "forms",
+        "icon": "☑️",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "chip.schema.json",
+      "name": "chip",
+      "title": "Chip",
+      "description": "Small pill-shaped tag/label, optionally dismissible",
+      "tag": "wb-chip",
+      "baseClass": "wb-chip",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Chip text content"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Leading icon"
+        },
+        "dismissible": {
+          "type": "boolean",
+          "description": "Show dismiss button",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Disabled state",
+          "default": false
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "primary",
+            "success",
+            "warning",
+            "error",
+            "info"
+          ],
+          "default": "default",
+          "appliesClass": "wb-chip--{{value}}"
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "appliesClass": "wb-chip--{{value}}"
+        },
+        "outlined": {
+          "type": "boolean",
+          "description": "Outlined style",
+          "default": false,
+          "appliesClass": "wb-chip--outlined"
+        }
+      },
+      "matrix": [
+        {
+          "label": "Tag"
+        },
+        {
+          "label": "Tag",
+          "dismissible": true
+        },
+        {
+          "label": "Tag",
+          "variant": "primary"
+        },
+        {
+          "label": "Tag",
+          "icon": "🏷️"
+        }
+      ],
+      "_metadata": {
+        "category": "feedback",
+        "icon": "🏷️",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "codecontrol.schema.json",
+      "name": "codecontrol",
+      "title": "Code Control",
+      "description": "Interactive code editor/viewer control.",
+      "tag": "wb-codecontrol",
+      "baseClass": "wb-codecontrol",
+      "properties": {},
+      "matrix": [
+        {}
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "collapse.schema.json",
+      "name": "collapse",
+      "title": "Collapse",
+      "description": "Collapsible content area.",
+      "tag": "wb-collapse",
+      "baseClass": "wb-collapse",
+      "properties": {
+        "expanded": {
+          "type": "boolean",
+          "default": false,
+          "description": "Ideally open"
+        }
+      },
+      "matrix": [
+        {
+          "expanded": false
+        },
+        {
+          "expanded": true
+        }
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "confetti.schema.json",
+      "name": "confetti",
+      "title": "Confetti",
+      "description": "Confetti particle animation effect",
+      "tag": "wb-confetti",
+      "baseClass": "wb-confetti",
+      "properties": {
+        "count": {
+          "type": "number",
+          "description": "Number of particles",
+          "default": 50
+        },
+        "label": {
+          "type": "string",
+          "description": "Trigger button label",
+          "default": "Fire Confetti!"
+        },
+        "showButton": {
+          "type": "boolean",
+          "description": "Show trigger button",
+          "default": true
+        },
+        "repeat": {
+          "type": "boolean",
+          "description": "Loop animation",
+          "default": false
+        },
+        "delay": {
+          "type": "string",
+          "description": "Start delay",
+          "default": "0s"
+        },
+        "duration": {
+          "type": "string",
+          "description": "Animation duration",
+          "default": "3s"
+        },
+        "colors": {
+          "type": "string",
+          "description": "Particle colors as JSON array",
+          "default": "[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]"
+        }
+      },
+      "matrix": [
+        {},
+        {
+          "count": 100
+        },
+        {
+          "repeat": true
+        }
+      ],
+      "_metadata": {
+        "category": "effects",
+        "icon": "🎉",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "copy.schema.json",
+      "name": "copy",
+      "title": "Copy",
+      "description": "Click to copy text to clipboard.",
+      "tag": "wb-copy",
+      "baseClass": "wb-copy",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Text to copy"
+        },
+        "target": {
+          "type": "string",
+          "description": "Selector of element to copy from"
+        }
+      },
+      "matrix": [
+        {
+          "text": "Hello World"
+        },
+        {
+          "text": "npm install wb-starter"
+        }
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "darkmode.schema.json",
+      "name": "darkmode",
+      "title": "Dark Mode Toggle",
+      "description": "Button to toggle dark/light theme.",
+      "tag": "wb-darkmode",
+      "baseClass": "wb-darkmode",
+      "properties": {},
+      "matrix": [
+        {}
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "demo.schema.json",
+      "name": "demo",
+      "title": "Demo Container",
+      "description": "A container that renders children normally in a CSS grid and shows the raw HTML as a syntax-highlighted, auto-formatted code sample below. Uses fetch for raw page source, formatHtml for consistent 2-space indentation, and textContent to prevent browser inflation.",
+      "tag": "wb-demo",
+      "baseClass": "wb-demo",
+      "properties": {
+        "columns": {
+          "type": "integer",
+          "description": "Number of grid columns for children (1-6)",
+          "default": 3,
+          "minimum": 1,
+          "maximum": 6
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "details.schema.json",
+      "name": "details",
+      "title": "Details",
+      "description": "Native HTML5 details disclosure widget with optional animation",
+      "tag": "wb-details",
+      "baseClass": "wb-details",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "description": "Clickable summary text",
+          "required": true
+        },
+        "open": {
+          "type": "boolean",
+          "description": "Initially expanded",
+          "default": false
+        },
+        "name": {
+          "type": "string",
+          "description": "Accordion group name (native exclusive behavior)"
+        },
+        "animated": {
+          "type": "boolean",
+          "description": "Animate open/close",
+          "default": true
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "bordered",
+            "filled"
+          ],
+          "default": "default",
+          "appliesClass": "wb-details--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "summary": "Details"
+        },
+        {
+          "summary": "Details",
+          "open": true
+        },
+        {
+          "summary": "Details",
+          "animated": true
+        }
+      ],
+      "_metadata": {
+        "category": "layout",
+        "icon": "📂",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "dialog.schema.json",
+      "name": "dialog",
+      "title": "Dialog",
+      "description": "Modal dialog using native HTML5 dialog element",
+      "tag": "wb-dialog",
+      "baseClass": "wb-dialog",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Dialog title"
+        },
+        "content": {
+          "type": "string",
+          "description": "Dialog body content"
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "full"
+          ],
+          "default": "md",
+          "appliesClass": "wb-dialog--{{value}}"
+        },
+        "closeOnBackdrop": {
+          "type": "boolean",
+          "description": "Close on backdrop click",
+          "default": true
+        },
+        "closeOnEscape": {
+          "type": "boolean",
+          "description": "Close on Escape key",
+          "default": true
+        },
+        "showClose": {
+          "type": "boolean",
+          "description": "Show close button",
+          "default": true
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "centered",
+            "fullscreen"
+          ],
+          "default": "default",
+          "appliesClass": "wb-dialog--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "title": "Basic Dialog"
+        },
+        {
+          "title": "Large",
+          "size": "lg"
+        },
+        {
+          "title": "No Close",
+          "showClose": false
+        },
+        {
+          "title": "Centered",
+          "variant": "centered"
+        }
+      ],
+      "_metadata": {
+        "category": "overlay",
+        "icon": "🪟",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "draggable.schema.json",
+      "name": "draggable",
+      "title": "Draggable",
+      "description": "Make an element draggable.",
+      "tag": "wb-draggable",
+      "baseClass": "wb-draggable",
+      "properties": {
+        "axis": {
+          "type": "string",
+          "enum": [
+            "x",
+            "y",
+            "both"
+          ],
+          "default": "both"
+        },
+        "handle": {
+          "type": "string",
+          "description": "Selector for drag handle"
+        }
+      },
+      "matrix": [
+        {
+          "axis": "both"
+        },
+        {
+          "axis": "x"
+        },
+        {
+          "axis": "y"
+        }
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "carddraggable.schema.json",
+      "name": "carddraggable",
+      "title": "Draggable Card",
+      "description": "Card that can be dragged around the page",
+      "tag": "wb-carddraggable",
+      "baseClass": "wb-card-draggable",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Card title"
+        },
+        "content": {
+          "type": "string",
+          "description": "Card content"
+        },
+        "constrain": {
+          "type": "string",
+          "description": "Constrain to area",
+          "enum": [
+            "none",
+            "parent",
+            "viewport"
+          ],
+          "default": "none"
+        },
+        "axis": {
+          "type": "string",
+          "description": "Drag axis",
+          "enum": [
+            "both",
+            "x",
+            "y"
+          ],
+          "default": "both"
+        },
+        "snapToGrid": {
+          "type": "number",
+          "description": "Snap grid size (0=disabled)",
+          "default": 0
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "elevated"
+          ],
+          "default": "default",
+          "appliesClass": "wb-card-draggable--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "title": "Basic",
+          "content": "Content"
+        },
+        {
+          "title": "Constrained",
+          "content": "Content",
+          "constrain": "parent"
+        },
+        {
+          "title": "X Only",
+          "content": "Content",
+          "axis": "x"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "🎯",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "drawer.schema.json",
+      "name": "drawer",
+      "title": "Drawer",
+      "description": "Slide-out panel overlay from screen edge",
+      "tag": "wb-drawer",
+      "baseClass": "wb-drawer",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Drawer title"
+        },
+        "content": {
+          "type": "string",
+          "description": "Drawer body content"
+        },
+        "position": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right",
+            "top",
+            "bottom"
+          ],
+          "default": "right",
+          "appliesClass": "wb-drawer--{{value}}"
+        },
+        "width": {
+          "type": "string",
+          "description": "Drawer width (left/right)",
+          "default": "320px"
+        },
+        "height": {
+          "type": "string",
+          "description": "Drawer height (top/bottom)",
+          "default": "auto"
+        },
+        "closeOnBackdrop": {
+          "type": "boolean",
+          "description": "Close on backdrop click",
+          "default": true
+        },
+        "closeOnEscape": {
+          "type": "boolean",
+          "description": "Close on Escape key",
+          "default": true
+        },
+        "showClose": {
+          "type": "boolean",
+          "description": "Show close button",
+          "default": true
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "overlay",
+            "push"
+          ],
+          "default": "overlay",
+          "appliesClass": "wb-drawer--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "title": "Right Drawer",
+          "position": "right"
+        },
+        {
+          "title": "Left Drawer",
+          "position": "left"
+        },
+        {
+          "title": "Wide",
+          "width": "400px"
+        }
+      ],
+      "_metadata": {
+        "category": "overlay",
+        "icon": "📜",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "drawerLayout.schema.json",
+      "name": "drawerLayout",
+      "title": "Drawer Layout",
+      "description": "Collapsible sidebar layout with toggle",
+      "tag": "wb-drawerLayout",
+      "baseClass": "wb-drawer-layout",
+      "properties": {
+        "position": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right"
+          ],
+          "default": "left",
+          "appliesClass": "wb-drawer-layout--{{value}}"
+        },
+        "width": {
+          "type": "string",
+          "description": "Expanded width",
+          "default": "250px"
+        },
+        "minWidth": {
+          "type": "string",
+          "description": "Collapsed width",
+          "default": "48px"
+        },
+        "collapsed": {
+          "type": "boolean",
+          "description": "Initial collapsed state",
+          "default": false
+        }
+      },
+      "matrix": [
+        {
+          "position": "left"
+        },
+        {
+          "position": "right"
+        },
+        {
+          "collapsed": true
+        }
+      ],
+      "_metadata": {
+        "category": "layout",
+        "icon": "📐",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "dropdown.schema.json",
+      "name": "dropdown",
+      "title": "Dropdown",
+      "description": "Toggleable dropdown menu",
+      "tag": "wb-dropdown",
+      "baseClass": "wb-dropdown",
+      "properties": {
+        "position": {
+          "type": "string",
+          "enum": [
+            "bottom-start",
+            "bottom-end",
+            "top-start",
+            "top-end"
+          ],
+          "default": "bottom-start",
+          "appliesClass": "wb-dropdown--{{value}}"
+        },
+        "trigger": {
+          "type": "string",
+          "enum": [
+            "click",
+            "hover"
+          ],
+          "default": "click"
+        },
+        "closeOnSelect": {
+          "type": "boolean",
+          "description": "Close on item select",
+          "default": true
+        },
+        "closeOnOutside": {
+          "type": "boolean",
+          "description": "Close on outside click",
+          "default": true
+        },
+        "offset": {
+          "type": "number",
+          "description": "Offset from trigger (px)",
+          "default": 4
+        }
+      },
+      "matrix": [
+        {
+          "position": "bottom-start"
+        },
+        {
+          "position": "bottom-end"
+        },
+        {
+          "trigger": "hover"
+        }
+      ],
+      "_metadata": {
+        "category": "overlay",
+        "icon": "📋",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardexpandable.schema.json",
+      "name": "cardexpandable",
+      "title": "Expandable Card",
+      "description": "Card with collapsible/expandable content section",
+      "tag": "wb-cardexpandable",
+      "baseClass": "wb-card-expandable",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Card title",
+          "required": true
+        },
+        "content": {
+          "type": "string",
+          "description": "Expandable content"
+        },
+        "expanded": {
+          "type": "boolean",
+          "description": "Initial expanded state",
+          "default": false,
+          "appliesClass": "wb-card-expandable--expanded"
+        },
+        "maxHeight": {
+          "type": "string",
+          "description": "Max height when collapsed",
+          "default": "100px"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "elevated",
+            "bordered"
+          ],
+          "default": "default",
+          "appliesClass": "wb-card-expandable--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "title": "Basic",
+          "content": "Content"
+        },
+        {
+          "title": "Expanded",
+          "content": "Content",
+          "expanded": true
+        },
+        {
+          "title": "Custom",
+          "content": "Content",
+          "maxHeight": "150px"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "➕",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardfile.schema.json",
+      "name": "cardfile",
+      "title": "File Card",
+      "description": "File display card with icon, name, size, and download",
+      "tag": "wb-cardfile",
+      "baseClass": "wb-card-file",
+      "properties": {
+        "filename": {
+          "type": "string",
+          "description": "File name",
+          "required": true
+        },
+        "fileType": {
+          "type": "string",
+          "description": "File type for icon",
+          "enum": [
+            "pdf",
+            "doc",
+            "image",
+            "video",
+            "audio",
+            "zip",
+            "file"
+          ],
+          "default": "file"
+        },
+        "size": {
+          "type": "string",
+          "description": "File size (e.g., 2.4 MB)"
+        },
+        "date": {
+          "type": "string",
+          "description": "File date"
+        },
+        "href": {
+          "type": "string",
+          "description": "Download URL"
+        },
+        "downloadable": {
+          "type": "boolean",
+          "description": "Show download link",
+          "default": true
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "compact",
+            "elevated"
+          ],
+          "default": "default",
+          "appliesClass": "wb-card-file--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "filename": "document.pdf"
+        },
+        {
+          "filename": "document.pdf",
+          "fileType": "pdf",
+          "size": "1.2 MB"
+        },
+        {
+          "filename": "photo.jpg",
+          "fileType": "image",
+          "size": "2.4 MB",
+          "href": "/files/photo.jpg"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "📄",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "fireworks.schema.json",
+      "name": "fireworks",
+      "title": "Fireworks",
+      "description": "Fireworks particle burst animation effect",
+      "tag": "wb-fireworks",
+      "baseClass": "wb-fireworks",
+      "properties": {
+        "count": {
+          "type": "number",
+          "description": "Particles per burst",
+          "default": 30
+        },
+        "label": {
+          "type": "string",
+          "description": "Trigger button label",
+          "default": "Fireworks!"
+        },
+        "showButton": {
+          "type": "boolean",
+          "description": "Show trigger button",
+          "default": true
+        },
+        "repeat": {
+          "type": "boolean",
+          "description": "Loop animation",
+          "default": false
+        },
+        "delay": {
+          "type": "string",
+          "description": "Start delay",
+          "default": "0s"
+        },
+        "duration": {
+          "type": "string",
+          "description": "Animation duration",
+          "default": "1.5s"
+        },
+        "colors": {
+          "type": "string",
+          "description": "Particle colors as JSON array",
+          "default": "[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]"
+        }
+      },
+      "matrix": [
+        {},
+        {
+          "count": 50
+        },
+        {
+          "repeat": true
+        }
+      ],
+      "_metadata": {
+        "category": "effects",
+        "icon": "🎆",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "fix-card.schema.json",
+      "name": "fix-card",
+      "title": "Fix Card",
+      "description": "Component for displaying fix/remediation details.",
+      "tag": "wb-fix-card",
+      "baseClass": "wb-fix-card",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "footer.schema.json",
+      "name": "footer",
+      "title": "Footer",
+      "description": "Page footer with copyright, links, and social icons",
+      "tag": "wb-footer",
+      "baseClass": "wb-footer",
+      "properties": {
+        "copyright": {
+          "type": "string",
+          "description": "Copyright text"
+        },
+        "brand": {
+          "type": "string",
+          "description": "Brand name"
+        },
+        "links": {
+          "type": "string",
+          "description": "Navigation links as JSON [{label, href}]"
+        },
+        "social": {
+          "type": "string",
+          "description": "Social links as JSON [{platform, href}]"
+        },
+        "sticky": {
+          "type": "boolean",
+          "description": "Sticky at bottom",
+          "default": false,
+          "appliesClass": "wb-footer--sticky"
+        }
+      },
+      "matrix": [
+        {
+          "copyright": "© 2025"
+        },
+        {
+          "brand": "Acme",
+          "copyright": "© 2025"
+        },
+        {
+          "copyright": "© 2025",
+          "sticky": true
+        }
+      ],
+      "_metadata": {
+        "category": "layout",
+        "icon": "📄",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "globe.schema.json",
+      "name": "globe",
+      "title": "Globe",
+      "description": "3D Globe visualization.",
+      "tag": "wb-globe",
+      "baseClass": "wb-globe",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "header.schema.json",
+      "name": "header",
+      "title": "Header",
+      "description": "Page header with logo, title, and optional navigation",
+      "tag": "wb-header",
+      "baseClass": "wb-header",
+      "properties": {
+        "icon": {
+          "type": "string",
+          "description": "Logo icon (emoji or text)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Header title"
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Subtitle text"
+        },
+        "badge": {
+          "type": "string",
+          "description": "Badge text (e.g., version)"
+        },
+        "logoHref": {
+          "type": "string",
+          "description": "Logo link URL",
+          "default": "/"
+        },
+        "sticky": {
+          "type": "boolean",
+          "description": "Sticky at top",
+          "default": false,
+          "appliesClass": "wb-header--sticky"
+        }
+      },
+      "matrix": [
+        {
+          "title": "Title"
+        },
+        {
+          "icon": "📂",
+          "title": "Title"
+        },
+        {
+          "icon": "🚀",
+          "title": "App",
+          "badge": "v1.0"
+        },
+        {
+          "title": "Site",
+          "sticky": true
+        }
+      ],
+      "_metadata": {
+        "category": "layout",
+        "icon": "📰",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "hero.schema.json",
+      "name": "hero",
+      "title": "Hero",
+      "description": "Hero section behavior.",
+      "tag": "wb-hero",
+      "baseClass": "wb-hero",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "cosmic"
+          ]
+        }
+      },
+      "matrix": [
+        {
+          "variant": "default"
+        },
+        {
+          "variant": "cosmic"
+        }
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "cardhero.schema.json",
+      "name": "cardhero",
+      "title": "Hero Card",
+      "description": "Hero banner with background image, title, subtitle, and optional CTA",
+      "tag": "wb-cardhero",
+      "baseClass": "wb-hero",
+      "properties": {
+        "background": {
+          "type": "string",
+          "description": "Background image URL",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "description": "Hero headline",
+          "required": true
+        },
+        "pretitle": {
+          "type": "string",
+          "description": "Small label or count shown above the title (e.g. '100 Components')",
+          "default": ""
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Hero tagline/subheadline",
+          "default": ""
+        },
+        "content": {
+          "type": "string",
+          "description": "HTML content rendered in the hero content area (allows attribute-only usage instead of slots)",
+          "default": ""
+        },
+        "cta": {
+          "type": "string",
+          "description": "Call-to-action button text"
+        },
+        "ctaHref": {
+          "type": "string",
+          "description": "Call-to-action link URL",
+          "default": "#"
+        },
+        "ctaSecondary": {
+          "type": "string",
+          "description": "Secondary CTA text",
+          "default": ""
+        },
+        "ctaSecondaryHref": {
+          "type": "string",
+          "description": "Secondary CTA URL",
+          "default": "#"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "cosmic",
+            "split",
+            "minimal",
+            "gradient"
+          ],
+          "default": "default",
+          "appliesClass": "wb-hero--{{value}}"
+        },
+        "xalign": {
+          "type": "string",
+          "description": "Horizontal content alignment (x-axis)",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "default": "center",
+          "appliesClass": "wb-hero--xalign-{{value}}"
+        },
+        "overlay": {
+          "type": "boolean",
+          "description": "Show gradient overlay for text readability",
+          "default": true,
+          "appliesClass": "wb-hero--overlay"
+        },
+        "fullHeight": {
+          "type": "boolean",
+          "description": "Make hero full viewport height",
+          "default": false,
+          "appliesClass": "wb-hero--full"
+        }
+      },
+      "matrix": [
+        {
+          "background": "hero.jpg",
+          "title": "Welcome"
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "subtitle": "Subtitle"
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "cta": "Click Me"
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "subtitle": "Sub",
+          "cta": "Go",
+          "variant": "cosmic"
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "xalign": "left"
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "overlay": false
+        },
+        {
+          "background": "hero.jpg",
+          "title": "Welcome",
+          "fullHeight": true
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "🦸",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "home-page.schema.json",
+      "name": "home-page",
+      "title": "Home Page",
+      "description": "Schema for validating the home page structure, behaviors, and all permutations.",
+      "tag": "wb-home-page",
+      "baseClass": "wb-home-page",
+      "properties": {
+        "hero": {
+          "type": "object",
+          "description": "Hero section with wb-cardhero.",
+          "required": true,
+          "permutations": {
+            "type": "EXPLICIT",
+            "values": [
+              {
+                "variant": "cosmic",
+                "background": "url",
+                "pretitle": "100 Components",
+                "title": "Build stunning UIs",
+                "subtitle": "just HTML — no build step",
+                "cta": "Explore Components",
+                "cta-secondary": "Documentation"
+              }
+            ],
+            "assertions": {
+              "variant": {
+                "selector": "wb-cardhero",
+                "checks": {
+                  "hasAttribute": "variant",
+                  "hasClass": "wb-cardhero--cosmic"
+                }
+              },
+              "cta": {
+                "selector": "wb-cardhero",
+                "checks": {
+                  "hasAttribute": "cta",
+                  "textContains": "Explore Components"
+                }
+              }
+            }
+          }
+        },
+        "stats": {
+          "type": "array",
+          "description": "Stats banner with stat-item elements.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            },
+            "permutations": {
+              "type": "EXPLICIT",
+              "values": [
+                {
+                  "value": "100",
+                  "label": "Behaviors"
+                },
+                {
+                  "value": "Light",
+                  "label": "DOM Architecture"
+                },
+                {
+                  "value": "0s",
+                  "label": "Build Time"
+                },
+                {
+                  "value": "100%",
+                  "label": "Standards Compliant"
+                }
+              ],
+              "assertions": {
+                "value": {
+                  "selector": ".stat-value",
+                  "checks": {
+                    "textContains": "100"
+                  }
+                },
+                "label": {
+                  "selector": ".stat-label",
+                  "checks": {
+                    "textContains": "Behaviors"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "demo": {
+          "type": "object",
+          "description": "Every example/demo block must use wb-demo tag for compliance.",
+          "required": true,
+          "permutations": {
+            "type": "EXPLICIT",
+            "values": [
+              {
+                "tag": "wb-demo",
+                "button": "x-ripple",
+                "tooltip": "x-tooltip",
+                "draggable": "x-draggable",
+                "confetti": "x-confetti"
+              }
+            ],
+            "assertions": {
+              "tag": {
+                "selector": "wb-demo",
+                "checks": {
+                  "visible": true,
+                  "hasClass": "wb-demo"
+                }
+              },
+              "button": {
+                "selector": "wb-demo button[x-ripple]",
+                "checks": {
+                  "clickable": true,
+                  "event": "ripple"
+                }
+              },
+              "tooltip": {
+                "selector": "wb-demo button[x-tooltip]",
+                "checks": {
+                  "hoverable": true,
+                  "event": "tooltip"
+                }
+              },
+              "draggable": {
+                "selector": "wb-demo div[x-draggable]",
+                "checks": {
+                  "draggable": true
+                }
+              },
+              "confetti": {
+                "selector": "wb-demo button[x-confetti]",
+                "checks": {
+                  "clickable": true,
+                  "event": "confetti"
+                }
+              },
+              "codeSection": {
+                "selector": "wb-demo .demo-code",
+                "checks": {
+                  "visible": true
+                }
+              },
+              "copyTag": {
+                "selector": "wb-demo .copy-tag",
+                "checks": {
+                  "clickable": true,
+                  "textContains": "Copy"
+                }
+              }
+            }
+          }
+        },
+        "features": {
+          "type": "array",
+          "description": "Feature cards grid.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "permutations": {
+              "type": "EXPLICIT",
+              "values": [
+                {
+                  "icon": "🧩",
+                  "title": "Component Library",
+                  "description": "Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation."
+                },
+                {
+                  "icon": "⚡",
+                  "title": "Behaviors System",
+                  "description": "Compose interactions like Lego bricks. Add x-fade-in, x-sticky, or x-validate to any element."
+                },
+                {
+                  "icon": "🎨",
+                  "title": "Theme Engine",
+                  "description": "23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection support out of the box."
+                },
+                {
+                  "icon": "📊",
+                  "title": "Data Viz",
+                  "description": "Built-in charts, stats cards, and audio visualizations powered by Web Standards."
+                },
+                {
+                  "icon": "♿",
+                  "title": "Accessible",
+                  "description": "ARIA attributes and keyboard navigation are baked into every component by default."
+                },
+                {
+                  "icon": "🚀",
+                  "title": "Performance",
+                  "description": "Zero-runtime compilation. Browsers are fast now. We let them do their job."
+                }
+              ],
+              "assertions": {
+                "icon": {
+                  "selector": ".feature-icon",
+                  "checks": {
+                    "textContains": "🧩"
+                  }
+                },
+                "title": {
+                  "selector": "h3",
+                  "checks": {
+                    "textContains": "Component Library"
+                  }
+                },
+                "description": {
+                  "selector": "p",
+                  "checks": {
+                    "textContains": "Over 40 ready-to-use UI components"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "cardhorizontal.schema.json",
+      "name": "cardhorizontal",
+      "title": "Horizontal Card",
+      "description": "Card with horizontal layout - image on side, content on other",
+      "tag": "wb-cardhorizontal",
+      "baseClass": "wb-card-horizontal",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Image URL"
+        },
+        "imageAlt": {
+          "type": "string",
+          "description": "Image alt text",
+          "default": ""
+        },
+        "imagePosition": {
+          "type": "string",
+          "description": "Image position",
+          "enum": [
+            "left",
+            "right"
+          ],
+          "default": "left",
+          "appliesClass": "wb-card-horizontal--image-{{value}}"
+        },
+        "imageWidth": {
+          "type": "string",
+          "description": "Image width (CSS value)",
+          "default": "40%"
+        },
+        "title": {
+          "type": "string",
+          "description": "Card title"
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Card subtitle"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "elevated",
+            "bordered",
+            "minimal"
+          ],
+          "default": "default",
+          "appliesClass": "wb-card-horizontal--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "image": "photo.jpg",
+          "title": "Title"
+        },
+        {
+          "image": "photo.jpg",
+          "title": "Title",
+          "subtitle": "Subtitle"
+        },
+        {
+          "image": "photo.jpg",
+          "title": "Title",
+          "imagePosition": "right"
+        },
+        {
+          "image": "photo.jpg",
+          "title": "Title",
+          "variant": "elevated"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "↔️",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardimage.schema.json",
+      "name": "cardimage",
+      "title": "Image Card",
+      "description": "Card with featured image and optional title/subtitle",
+      "tag": "wb-cardimage",
+      "baseClass": "wb-card-image",
+      "properties": {
+        "src": {
+          "type": "string",
+          "description": "Image source URL",
+          "required": true
+        },
+        "alt": {
+          "type": "string",
+          "description": "Image alt text (accessibility)",
+          "default": ""
+        },
+        "title": {
+          "type": "string",
+          "description": "Card title"
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Card subtitle"
+        },
+        "caption": {
+          "type": "string",
+          "description": "Image caption (displayed below image)"
+        },
+        "href": {
+          "type": "string",
+          "description": "Link URL (makes card clickable)"
+        },
+        "aspect": {
+          "type": "string",
+          "description": "Image aspect ratio",
+          "enum": [
+            "16/9",
+            "4/3",
+            "1/1",
+            "3/2",
+            "21/9",
+            "auto"
+          ],
+          "default": "16/9"
+        },
+        "position": {
+          "type": "string",
+          "description": "Image position relative to content",
+          "enum": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ],
+          "default": "top",
+          "appliesClass": "wb-card-image--{{value}}"
+        },
+        "fit": {
+          "type": "string",
+          "description": "Image object-fit mode",
+          "enum": [
+            "cover",
+            "contain",
+            "fill",
+            "none"
+          ],
+          "default": "cover"
+        },
+        "loading": {
+          "type": "string",
+          "description": "Image loading strategy",
+          "enum": [
+            "lazy",
+            "eager"
+          ],
+          "default": "lazy"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "elevated",
+            "bordered",
+            "minimal"
+          ],
+          "default": "default",
+          "appliesClass": "wb-card-image--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "src": "photo.jpg"
+        },
+        {
+          "src": "photo.jpg",
+          "alt": "Description"
+        },
+        {
+          "src": "photo.jpg",
+          "title": "Title"
+        },
+        {
+          "src": "photo.jpg",
+          "title": "Title",
+          "subtitle": "Subtitle"
+        },
+        {
+          "src": "photo.jpg",
+          "caption": "Photo by John"
+        },
+        {
+          "src": "photo.jpg",
+          "aspect": "1/1"
+        },
+        {
+          "src": "photo.jpg",
+          "position": "bottom",
+          "title": "Title"
+        },
+        {
+          "src": "photo.jpg",
+          "variant": "elevated"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "🖼️",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "input.schema.json",
+      "name": "input",
+      "title": "Input",
+      "description": "Text input field with label, helper text, and validation states",
+      "tag": "wb-input",
+      "baseClass": "wb-input",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Input label text"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Placeholder text"
+        },
+        "value": {
+          "type": "string",
+          "description": "Input value"
+        },
+        "name": {
+          "type": "string",
+          "description": "Form field name"
+        },
+        "inputType": {
+          "type": "string",
+          "description": "HTML input type",
+          "enum": [
+            "text",
+            "email",
+            "password",
+            "number",
+            "tel",
+            "url",
+            "search",
+            "date",
+            "time",
+            "datetime-local"
+          ],
+          "default": "text"
+        },
+        "helper": {
+          "type": "string",
+          "description": "Helper text below input"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message (shows error state)"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual validation state",
+          "enum": [
+            "default",
+            "success",
+            "error"
+          ],
+          "default": "default",
+          "appliesClass": "wb-input--{{value}}"
+        },
+        "size": {
+          "type": "string",
+          "description": "Input size",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "appliesClass": "wb-input--{{value}}"
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Disabled state",
+          "default": false
+        },
+        "readonly": {
+          "type": "boolean",
+          "description": "Read-only state",
+          "default": false
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Required field",
+          "default": false
+        },
+        "icon": {
+          "type": "string",
+          "description": "Icon (emoji or icon name)"
+        },
+        "iconPosition": {
+          "type": "string",
+          "description": "Icon position",
+          "enum": [
+            "start",
+            "end"
+          ],
+          "default": "start"
+        },
+        "clearable": {
+          "type": "boolean",
+          "description": "Show clear button when has value",
+          "default": false
+        }
+      },
+      "matrix": [
+        {
+          "label": "Text Input",
+          "placeholder": "Enter text..."
+        },
+        {
+          "label": "Email",
+          "inputType": "email",
+          "placeholder": "you@example.com"
+        },
+        {
+          "label": "Password",
+          "inputType": "password",
+          "placeholder": "••••••••"
+        },
+        {
+          "label": "With Helper",
+          "placeholder": "Type here",
+          "helper": "This is helper text"
+        },
+        {
+          "label": "Error State",
+          "variant": "error",
+          "error": "This field is required",
+          "value": ""
+        },
+        {
+          "label": "Success State",
+          "variant": "success",
+          "value": "Valid input"
+        },
+        {
+          "label": "With Icon",
+          "icon": "🔍",
+          "placeholder": "Search...",
+          "clearable": true
+        },
+        {
+          "label": "Disabled",
+          "disabled": true,
+          "value": "Cannot edit"
+        },
+        {
+          "label": "Small Input",
+          "size": "sm",
+          "placeholder": "Small"
+        },
+        {
+          "label": "Large Input",
+          "size": "lg",
+          "placeholder": "Large"
+        }
+      ],
+      "_metadata": {
+        "category": "forms",
+        "icon": "📝",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardlink.schema.json",
+      "name": "cardlink",
+      "title": "Link Card",
+      "description": "Clickable card that navigates to a URL",
+      "tag": "wb-cardlink",
+      "baseClass": "wb-card-link",
+      "properties": {
+        "href": {
+          "type": "string",
+          "description": "Link destination URL",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "description": "Card title"
+        },
+        "description": {
+          "type": "string",
+          "description": "Card description text"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Icon (emoji or icon name)"
+        },
+        "badge": {
+          "type": "string",
+          "description": "Badge text"
+        },
+        "target": {
+          "type": "string",
+          "description": "Link target",
+          "enum": [
+            "_self",
+            "_blank"
+          ],
+          "default": "_self"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "elevated",
+            "bordered",
+            "minimal",
+            "glass"
+          ],
+          "default": "default",
+          "appliesClass": "wb-card-link--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "href": "/page"
+        },
+        {
+          "href": "/page",
+          "title": "Link Title"
+        },
+        {
+          "href": "/page",
+          "title": "Title",
+          "description": "Description"
+        },
+        {
+          "href": "/page",
+          "icon": "🔗"
+        },
+        {
+          "href": "/page",
+          "badge": "NEW"
+        },
+        {
+          "href": "/page",
+          "target": "_blank"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "🔗",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "mdhtml.schema.json",
+      "name": "mdhtml",
+      "title": "Markdown to HTML",
+      "description": "Renders Markdown content as HTML, either from inline content or external source",
+      "tag": "wb-mdhtml",
+      "baseClass": "wb-mdhtml",
+      "properties": {
+        "src": {
+          "type": "string",
+          "description": "Path to external markdown file",
+          "attribute": "src"
+        },
+        "sanitize": {
+          "type": "boolean",
+          "default": true,
+          "attribute": "data-sanitize"
+        },
+        "gfm": {
+          "type": "boolean",
+          "default": true,
+          "attribute": "data-gfm"
+        }
+      },
+      "matrix": [
+        {
+          "src": "../demos/code.md"
+        },
+        {
+          "gfm": true
+        },
+        {
+          "sanitize": true,
+          "gfm": true
+        }
+      ],
+      "_metadata": {
+        "category": "content",
+        "icon": "📝",
+        "since": "2.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardminimizable.schema.json",
+      "name": "cardminimizable",
+      "title": "Minimizable Card",
+      "description": "Card with minimize/expand toggle button in header",
+      "tag": "wb-cardminimizable",
+      "baseClass": "wb-card-minimizable",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Card title (always visible)",
+          "required": true
+        },
+        "content": {
+          "type": "string",
+          "description": "Minimizable content"
+        },
+        "minimized": {
+          "type": "boolean",
+          "description": "Initial minimized state",
+          "default": false,
+          "appliesClass": "wb-card-minimizable--minimized"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "elevated",
+            "bordered"
+          ],
+          "default": "default",
+          "appliesClass": "wb-card-minimizable--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "title": "Basic",
+          "content": "Content"
+        },
+        {
+          "title": "Minimized",
+          "content": "Content",
+          "minimized": true
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "➖",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "move.schema.json",
+      "name": "move",
+      "title": "Move",
+      "description": "Animation behavior to move elements.",
+      "tag": "wb-move",
+      "baseClass": "wb-move",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "navbar.schema.json",
+      "name": "navbar",
+      "title": "Navbar",
+      "description": "Navigation bar with brand, links, and responsive menu",
+      "tag": "wb-navbar",
+      "baseClass": "wb-navbar",
+      "properties": {
+        "brand": {
+          "type": "string",
+          "description": "Brand text"
+        },
+        "brandHref": {
+          "type": "string",
+          "description": "Brand link URL",
+          "default": "/"
+        },
+        "logo": {
+          "type": "string",
+          "description": "Logo image URL"
+        },
+        "logoSize": {
+          "type": "string",
+          "description": "Logo size in pixels",
+          "default": "32"
+        },
+        "tagline": {
+          "type": "string",
+          "description": "Brand tagline or subtitle"
+        },
+        "items": {
+          "type": "string",
+          "description": "Navigation items as JSON [{label, href}]"
+        },
+        "sticky": {
+          "type": "boolean",
+          "description": "Sticky positioning",
+          "default": false,
+          "appliesClass": "wb-navbar--sticky"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "dark",
+            "transparent"
+          ],
+          "default": "default",
+          "appliesClass": "wb-navbar--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "brand": "MySite"
+        },
+        {
+          "brand": "MySite",
+          "sticky": true
+        },
+        {
+          "brand": "MySite",
+          "variant": "dark"
+        }
+      ],
+      "_metadata": {
+        "category": "layout",
+        "icon": "🧭",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "notes.schema.json",
+      "name": "notes",
+      "title": "Notes",
+      "description": "Slide-out notes drawer with multiple display modes",
+      "tag": "wb-notes",
+      "baseClass": "wb-notes",
+      "properties": {
+        "position": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right",
+            "modal"
+          ],
+          "default": "left",
+          "appliesClass": "wb-notes--{{value}}"
+        },
+        "maxWidth": {
+          "type": "string",
+          "description": "Max width when resizing",
+          "default": "50vw"
+        },
+        "minWidth": {
+          "type": "string",
+          "description": "Min width when resizing",
+          "default": "200px"
+        },
+        "defaultWidth": {
+          "type": "string",
+          "description": "Default width",
+          "default": "320px"
+        },
+        "autoSave": {
+          "type": "boolean",
+          "description": "Auto-save to localStorage",
+          "default": true
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Textarea placeholder",
+          "default": "Add your notes here..."
+        }
+      },
+      "matrix": [
+        {},
+        {
+          "position": "left"
+        },
+        {
+          "position": "right"
+        },
+        {
+          "position": "modal"
+        }
+      ],
+      "_metadata": {
+        "category": "utility",
+        "icon": "📝",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardnotification.schema.json",
+      "name": "cardnotification",
+      "title": "Notification Card",
+      "description": "Dismissible notification card with variant-based styling",
+      "tag": "wb-cardnotification",
+      "baseClass": "wb-notification",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "description": "Notification type/severity",
+          "enum": [
+            "info",
+            "success",
+            "warning",
+            "error"
+          ],
+          "default": "info",
+          "appliesClass": "wb-notification--{{value}}"
+        },
+        "title": {
+          "type": "string",
+          "description": "Notification title"
+        },
+        "message": {
+          "type": "string",
+          "description": "Notification message",
+          "required": true
+        },
+        "icon": {
+          "type": "string",
+          "description": "Custom icon (overrides variant-based icon)"
+        },
+        "dismissible": {
+          "type": "boolean",
+          "description": "Show dismiss button",
+          "default": true
+        },
+        "elevated": {
+          "type": "boolean",
+          "description": "Add shadow elevation",
+          "default": false,
+          "appliesClass": "wb-notification--elevated"
+        }
+      },
+      "matrix": [
+        {
+          "message": "Info message"
+        },
+        {
+          "variant": "success",
+          "title": "Success",
+          "message": "Done!"
+        },
+        {
+          "variant": "warning",
+          "message": "Warning!"
+        },
+        {
+          "variant": "error",
+          "message": "Error!",
+          "dismissible": false
+        },
+        {
+          "variant": "info",
+          "title": "Notice",
+          "message": "Info",
+          "icon": "🔔"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "🔔",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardoverlay.schema.json",
+      "name": "cardoverlay",
+      "title": "Overlay Card",
+      "description": "Card with text overlaid on background image",
+      "tag": "wb-cardoverlay",
+      "baseClass": "wb-card-overlay",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Background image URL",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "description": "Overlay title"
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Overlay subtitle"
+        },
+        "position": {
+          "type": "string",
+          "description": "Content position",
+          "enum": [
+            "top",
+            "center",
+            "bottom"
+          ],
+          "default": "bottom",
+          "appliesClass": "wb-card-overlay--{{value}}"
+        },
+        "xalign": {
+          "type": "string",
+          "description": "Horizontal text alignment (x-axis)",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "default": "left",
+          "appliesClass": "wb-card-overlay--xalign-{{value}}"
+        },
+        "gradient": {
+          "type": "boolean",
+          "description": "Show gradient overlay for text readability",
+          "default": true,
+          "appliesClass": "wb-card-overlay--gradient"
+        },
+        "height": {
+          "type": "string",
+          "description": "Card height (CSS value)",
+          "default": "300px"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "dark",
+            "light",
+            "blur"
+          ],
+          "default": "default",
+          "appliesClass": "wb-card-overlay--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "image": "bg.jpg",
+          "title": "Title"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "subtitle": "Subtitle"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "position": "top"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "position": "center"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "gradient": false
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "xalign": "center"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "🖼️",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "page-builder.schema.json",
+      "name": "page-builder",
+      "title": "Page Builder",
+      "description": "Schema for WB Page Builder multi-page website creation system",
+      "tag": "wb-page-builder",
+      "baseClass": "wb-page-builder",
+      "properties": {
+        "pages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Page"
+          },
+          "description": "All pages in the site"
+        },
+        "globalSections": {
+          "type": "object",
+          "properties": {
+            "header": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Component"
+              },
+              "description": "Shared header components"
+            },
+            "footer": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Component"
+              },
+              "description": "Shared footer components"
+            }
+          }
+        },
+        "currentPageId": {
+          "type": "string",
+          "description": "Currently active page ID"
+        },
+        "settings": {
+          "type": "object",
+          "$ref": "#/definitions/SiteSettings"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "category": "builder",
+        "icon": "🏗️",
+        "since": "2.0.0",
+        "status": "stable",
+        "documentation": "docs/builder/pages.md"
+      }
+    },
+    {
+      "file": "cardportfolio.schema.json",
+      "name": "cardportfolio",
+      "title": "Portfolio Card",
+      "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
+      "tag": "wb-cardportfolio",
+      "baseClass": "wb-portfolio",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Full name",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "description": "Job title / role"
+        },
+        "company": {
+          "type": "string",
+          "description": "Current company name"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location (city, country)"
+        },
+        "cover": {
+          "type": "string",
+          "description": "Cover/banner image URL"
+        },
+        "avatar": {
+          "type": "string",
+          "description": "Profile photo URL"
+        },
+        "bio": {
+          "type": "string",
+          "description": "Short biography / summary"
+        },
+        "tagline": {
+          "type": "string",
+          "description": "Professional tagline or motto"
+        },
+        "availability": {
+          "type": "string",
+          "enum": [
+            "available",
+            "busy",
+            "not-available",
+            "open-to-opportunities"
+          ],
+          "default": "available",
+          "description": "Current availability status"
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number"
+        },
+        "website": {
+          "type": "string",
+          "description": "Personal website URL"
+        },
+        "linkedin": {
+          "type": "string",
+          "description": "LinkedIn profile URL"
+        },
+        "twitter": {
+          "type": "string",
+          "description": "Twitter/X profile URL"
+        },
+        "github": {
+          "type": "string",
+          "description": "GitHub profile URL"
+        },
+        "dribbble": {
+          "type": "string",
+          "description": "Dribbble profile URL"
+        },
+        "skills": {
+          "type": "string",
+          "description": "Comma-separated list of skills"
+        },
+        "skillLevels": {
+          "type": "string",
+          "description": "JSON array of {name, level (0-100)} for skill bars"
+        },
+        "experience": {
+          "type": "string",
+          "description": "JSON array of {company, role, period, description}"
+        },
+        "education": {
+          "type": "string",
+          "description": "JSON array of {school, degree, year}"
+        },
+        "projects": {
+          "type": "string",
+          "description": "JSON array of {name, description, url, image}"
+        },
+        "certifications": {
+          "type": "string",
+          "description": "Comma-separated list of certifications"
+        },
+        "languages": {
+          "type": "string",
+          "description": "Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)')"
+        },
+        "stats": {
+          "type": "string",
+          "description": "JSON array of {label, value} for stats display"
+        },
+        "cta": {
+          "type": "string",
+          "description": "Call-to-action button text"
+        },
+        "ctaHref": {
+          "type": "string",
+          "description": "Call-to-action button link"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "compact",
+            "horizontal",
+            "full"
+          ],
+          "default": "default",
+          "appliesClass": "wb-portfolio--{{value}}"
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "full",
+            "auto"
+          ],
+          "default": "auto"
+        }
+      },
+      "matrix": [
+        {
+          "name": "Jane Smith",
+          "title": "UX Designer",
+          "company": "Anthropic",
+          "skills": "Figma,CSS,React",
+          "bio": "Creative designer with 8 years experience",
+          "availability": "available"
+        },
+        {
+          "name": "John Doe",
+          "title": "Senior Engineer",
+          "company": "Cielo Vista",
+          "skills": "TypeScript,Node,SQL",
+          "variant": "compact",
+          "availability": "busy"
+        },
+        {
+          "name": "Sarah Chen",
+          "title": "Product Manager",
+          "company": "TechCorp",
+          "variant": "horizontal",
+          "bio": "Building products users love",
+          "cta": "Contact Me"
+        },
+        {
+          "name": "Alex Rivera",
+          "title": "Full Stack Dev",
+          "skills": "Python,Go,Rust",
+          "variant": "full",
+          "availability": "open-to-opportunities",
+          "stats": "[{\"label\":\"Projects\",\"value\":\"24\"},{\"label\":\"Years\",\"value\":\"10\"}]"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "💼",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardpricing.schema.json",
+      "name": "cardpricing",
+      "title": "Pricing Card",
+      "description": "Pricing tier card with plan name, price, features list, and CTA",
+      "tag": "wb-cardpricing",
+      "baseClass": "wb-pricing",
+      "properties": {
+        "plan": {
+          "type": "string",
+          "description": "Plan name (e.g., Basic, Pro, Enterprise)",
+          "required": true
+        },
+        "price": {
+          "type": "string",
+          "description": "Price amount (e.g., $29)",
+          "required": true
+        },
+        "period": {
+          "type": "string",
+          "description": "Billing period (e.g., /month, /year)",
+          "default": "/month"
+        },
+        "description": {
+          "type": "string",
+          "description": "Short plan description"
+        },
+        "features": {
+          "type": "string",
+          "description": "Comma-separated list of features"
+        },
+        "cta": {
+          "type": "string",
+          "description": "Call-to-action button text",
+          "default": "Get Started"
+        },
+        "ctaHref": {
+          "type": "string",
+          "description": "Call-to-action link URL",
+          "default": "#"
+        },
+        "featured": {
+          "type": "boolean",
+          "description": "Highlight as featured/recommended plan",
+          "default": false,
+          "appliesClass": "wb-pricing--featured"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "bordered",
+            "elevated",
+            "minimal"
+          ],
+          "default": "default",
+          "appliesClass": "wb-pricing--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "plan": "Basic",
+          "price": "$9"
+        },
+        {
+          "plan": "Pro",
+          "price": "$29",
+          "featured": true
+        },
+        {
+          "plan": "Basic",
+          "price": "$9",
+          "period": "/year"
+        },
+        {
+          "plan": "Pro",
+          "price": "$29",
+          "features": "Feature 1,Feature 2"
+        },
+        {
+          "plan": "Pro",
+          "price": "$29",
+          "cta": "Subscribe Now"
+        },
+        {
+          "plan": "Enterprise",
+          "price": "$99",
+          "description": "For large teams",
+          "featured": true
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "💰",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardproduct.schema.json",
+      "name": "cardproduct",
+      "title": "Product Card",
+      "description": "E-commerce product card with image, price, rating, and CTA",
+      "tag": "wb-cardproduct",
+      "baseClass": "wb-product",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Product image URL"
+        },
+        "title": {
+          "type": "string",
+          "description": "Product name",
+          "required": true
+        },
+        "description": {
+          "type": "string",
+          "description": "Product description"
+        },
+        "price": {
+          "type": "string",
+          "description": "Current price",
+          "required": true
+        },
+        "originalPrice": {
+          "type": "string",
+          "description": "Original price (shows discount)"
+        },
+        "badge": {
+          "type": "string",
+          "description": "Badge text (Sale, New, etc.)"
+        },
+        "rating": {
+          "type": "number",
+          "description": "Product rating (0-5)"
+        },
+        "reviews": {
+          "type": "number",
+          "description": "Number of reviews"
+        },
+        "cta": {
+          "type": "string",
+          "description": "CTA button text",
+          "default": "Add to Cart"
+        },
+        "featured": {
+          "type": "boolean",
+          "description": "Highlight as featured",
+          "default": false,
+          "appliesClass": "wb-product--featured"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "compact",
+            "horizontal",
+            "minimal"
+          ],
+          "default": "default",
+          "appliesClass": "wb-product--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "title": "Product",
+          "price": "$29"
+        },
+        {
+          "title": "Product",
+          "price": "$29",
+          "originalPrice": "$49"
+        },
+        {
+          "image": "product.jpg",
+          "title": "Product",
+          "price": "$29"
+        },
+        {
+          "title": "Product",
+          "price": "$29",
+          "rating": 4.5,
+          "reviews": 128
+        },
+        {
+          "title": "Product",
+          "price": "$29",
+          "badge": "Sale",
+          "featured": true
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "🛒",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "progress.schema.json",
+      "name": "progress",
+      "title": "Progress",
+      "description": "Progress bar with determinate and indeterminate states",
+      "tag": "wb-progress",
+      "baseClass": "wb-progress",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Current progress value (0-100)",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 100
+        },
+        "max": {
+          "type": "number",
+          "description": "Maximum value",
+          "default": 100
+        },
+        "label": {
+          "type": "string",
+          "description": "Progress label text"
+        },
+        "showValue": {
+          "type": "boolean",
+          "description": "Show percentage value",
+          "default": false
+        },
+        "variant": {
+          "type": "string",
+          "description": "Color variant",
+          "enum": [
+            "default",
+            "primary",
+            "success",
+            "warning",
+            "error",
+            "info"
+          ],
+          "default": "primary",
+          "appliesClass": "wb-progress--{{value}}"
+        },
+        "size": {
+          "type": "string",
+          "description": "Bar height size",
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md",
+          "appliesClass": "wb-progress--{{value}}"
+        },
+        "animated": {
+          "type": "boolean",
+          "description": "Animate on load",
+          "default": true
+        },
+        "striped": {
+          "type": "boolean",
+          "description": "Show striped pattern",
+          "default": false,
+          "appliesClass": "wb-progress--striped"
+        },
+        "indeterminate": {
+          "type": "boolean",
+          "description": "Indeterminate loading state",
+          "default": false,
+          "appliesClass": "wb-progress--indeterminate"
+        }
+      },
+      "matrix": [
+        {
+          "value": 0
+        },
+        {
+          "value": 25
+        },
+        {
+          "value": 50
+        },
+        {
+          "value": 75
+        },
+        {
+          "value": 100
+        },
+        {
+          "value": 50,
+          "label": "Loading..."
+        },
+        {
+          "value": 50,
+          "showValue": true
+        },
+        {
+          "value": 50,
+          "striped": true
+        },
+        {
+          "value": 50,
+          "variant": "success"
+        },
+        {
+          "value": 50,
+          "variant": "warning"
+        },
+        {
+          "value": 50,
+          "variant": "error"
+        },
+        {
+          "value": 50,
+          "size": "sm"
+        },
+        {
+          "value": 50,
+          "size": "lg"
+        },
+        {
+          "indeterminate": true
+        }
+      ],
+      "_metadata": {
+        "category": "feedback",
+        "icon": "📊",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "rating.schema.json",
+      "name": "rating",
+      "title": "Rating",
+      "description": "Star rating component for displaying or collecting ratings",
+      "tag": "wb-rating",
+      "baseClass": "wb-rating",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Current rating value",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 5
+        },
+        "max": {
+          "type": "number",
+          "description": "Maximum rating",
+          "default": 5
+        },
+        "readonly": {
+          "type": "boolean",
+          "description": "Display only, not interactive",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Disabled state",
+          "default": false
+        },
+        "half": {
+          "type": "boolean",
+          "description": "Allow half-star ratings",
+          "default": false
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "appliesClass": "wb-rating--{{value}}"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Custom icon (emoji or symbol)",
+          "default": "★"
+        }
+      },
+      "matrix": [
+        {
+          "value": 0
+        },
+        {
+          "value": 3
+        },
+        {
+          "value": 5
+        },
+        {
+          "value": 3.5,
+          "half": true
+        },
+        {
+          "value": 4,
+          "readonly": true
+        }
+      ],
+      "_metadata": {
+        "category": "feedback",
+        "icon": "⭐",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "wb-repeater.schema.json",
+      "name": "wb-repeater",
+      "title": "Repeater",
+      "description": "Repeat content based on data.",
+      "tag": "wb-wb-repeater",
+      "baseClass": "wb-wb-repeater",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "resizable.schema.json",
+      "name": "resizable",
+      "title": "Resizable",
+      "description": "Make an element resizable.",
+      "tag": "wb-resizable",
+      "baseClass": "wb-resizable",
+      "properties": {
+        "handles": {
+          "type": "string",
+          "default": "se"
+        }
+      },
+      "matrix": [
+        {
+          "handles": "se"
+        }
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "ripple.schema.json",
+      "name": "ripple",
+      "title": "Ripple",
+      "description": "Material Design ripple effect on click",
+      "tag": "wb-ripple",
+      "baseClass": "wb-ripple",
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "Ripple color",
+          "default": "rgba(255,255,255,0.3)"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Animation duration (ms)",
+          "default": 600
+        },
+        "centered": {
+          "type": "boolean",
+          "description": "Center ripple instead of click position",
+          "default": false
+        }
+      },
+      "matrix": [
+        {},
+        {
+          "color": "rgba(0,0,0,0.2)"
+        },
+        {
+          "duration": 300
+        }
+      ],
+      "_metadata": {
+        "category": "effects",
+        "icon": "💧",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "scrollalong.schema.json",
+      "name": "scrollalong",
+      "title": "ScrollAlong",
+      "description": "CSS sticky positioning for sidebars that stay visible while scrolling",
+      "tag": "wb-scrollalong",
+      "baseClass": "wb-scrollalong",
+      "properties": {
+        "offset": {
+          "type": "string",
+          "description": "Top offset",
+          "default": "0"
+        }
+      },
+      "matrix": [
+        {}
+      ],
+      "_metadata": {
+        "category": "layout",
+        "icon": "📜",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "search.schema.json",
+      "name": "search",
+      "title": "Search",
+      "description": "Search input component with icon and debounced search events",
+      "tag": "wb-search",
+      "baseClass": "wb-search",
+      "properties": {
+        "placeholder": {
+          "type": "string",
+          "description": "Placeholder text",
+          "default": "Search..."
+        },
+        "value": {
+          "type": "string",
+          "description": "Search value"
+        },
+        "name": {
+          "type": "string",
+          "description": "Form field name"
+        },
+        "debounce": {
+          "type": "number",
+          "description": "Debounce delay in milliseconds",
+          "default": 300,
+          "minimum": 0,
+          "maximum": 2000
+        },
+        "instant": {
+          "type": "boolean",
+          "description": "Search on every keystroke (no debounce)",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Disabled state",
+          "default": false
+        },
+        "size": {
+          "type": "string",
+          "description": "Search input size",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "appliesClass": "wb-search--{{value}}"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual variant",
+          "enum": [
+            "default",
+            "glass",
+            "minimal"
+          ],
+          "default": "default",
+          "appliesClass": "wb-search--{{value}}"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Search icon (emoji or icon name)",
+          "default": "🔍"
+        },
+        "clearable": {
+          "type": "boolean",
+          "description": "Show clear button when has value",
+          "default": true
+        },
+        "loading": {
+          "type": "boolean",
+          "description": "Show loading state",
+          "default": false
+        }
+      },
+      "matrix": [
+        {
+          "placeholder": "Search..."
+        },
+        {
+          "placeholder": "Search docs...",
+          "size": "lg"
+        },
+        {
+          "placeholder": "Glass search",
+          "variant": "glass"
+        },
+        {
+          "placeholder": "Minimal",
+          "variant": "minimal"
+        },
+        {
+          "placeholder": "Instant search",
+          "instant": true
+        },
+        {
+          "placeholder": "Loading...",
+          "loading": true
+        }
+      ],
+      "_metadata": {
+        "category": "forms",
+        "icon": "🔍",
+        "since": "3.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "select.schema.json",
+      "name": "select",
+      "title": "Select",
+      "description": "Enhanced select dropdown with search, clear, and multi-select",
+      "tag": "wb-select",
+      "baseClass": "wb-select",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Select label"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Placeholder text",
+          "default": "Select..."
+        },
+        "options": {
+          "type": "string",
+          "description": "Options as JSON [{value, label}]"
+        },
+        "value": {
+          "type": "string",
+          "description": "Selected value"
+        },
+        "name": {
+          "type": "string",
+          "description": "Form field name"
+        },
+        "searchable": {
+          "type": "boolean",
+          "description": "Enable search",
+          "default": false,
+          "appliesClass": "wb-select--searchable"
+        },
+        "clearable": {
+          "type": "boolean",
+          "description": "Enable clear button",
+          "default": false,
+          "appliesClass": "wb-select--clearable"
+        },
+        "multiple": {
+          "type": "boolean",
+          "description": "Allow multiple selection",
+          "default": false,
+          "appliesClass": "wb-select--multiple"
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Disabled state",
+          "default": false
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Required field",
+          "default": false
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "appliesClass": "wb-select--{{value}}"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "success",
+            "error"
+          ],
+          "default": "default",
+          "appliesClass": "wb-select--{{value}}"
+        }
+      },
+      "matrix": [
+        {},
+        {
+          "searchable": true
+        },
+        {
+          "clearable": true
+        },
+        {
+          "multiple": true
+        },
+        {
+          "disabled": true
+        }
+      ],
+      "_metadata": {
+        "category": "forms",
+        "icon": "📋",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "skeleton.schema.json",
+      "name": "skeleton",
+      "title": "Skeleton",
+      "description": "Loading skeleton placeholder with shimmer animation",
+      "tag": "wb-skeleton",
+      "baseClass": "wb-skeleton",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "enum": [
+            "text",
+            "circle",
+            "rect",
+            "card"
+          ],
+          "default": "text",
+          "appliesClass": "wb-skeleton--{{value}}"
+        },
+        "lines": {
+          "type": "number",
+          "description": "Number of text lines",
+          "default": 1
+        },
+        "width": {
+          "type": "string",
+          "description": "Width (CSS value)",
+          "default": "100%"
+        },
+        "height": {
+          "type": "string",
+          "description": "Height (CSS value)",
+          "default": "1em"
+        },
+        "animated": {
+          "type": "boolean",
+          "description": "Enable shimmer animation",
+          "default": true
+        }
+      },
+      "matrix": [
+        {
+          "variant": "text"
+        },
+        {
+          "variant": "text",
+          "lines": 3
+        },
+        {
+          "variant": "circle"
+        },
+        {
+          "variant": "rect",
+          "height": "150px"
+        },
+        {
+          "variant": "card"
+        }
+      ],
+      "_metadata": {
+        "category": "feedback",
+        "icon": "▓",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "slider.schema.json",
+      "name": "slider",
+      "title": "Slider",
+      "description": "Image comparison slider or carousel.",
+      "tag": "wb-slider",
+      "baseClass": "wb-slider",
+      "properties": {},
+      "matrix": [
+        {}
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "snow.schema.json",
+      "name": "snow",
+      "title": "Snow",
+      "description": "Falling snowflake animation effect",
+      "tag": "wb-snow",
+      "baseClass": "wb-snow",
+      "properties": {
+        "count": {
+          "type": "number",
+          "description": "Number of snowflakes",
+          "default": 30
+        },
+        "label": {
+          "type": "string",
+          "description": "Trigger button label",
+          "default": "Let it Snow!"
+        },
+        "showButton": {
+          "type": "boolean",
+          "description": "Show trigger button",
+          "default": true
+        },
+        "repeat": {
+          "type": "boolean",
+          "description": "Loop animation",
+          "default": true
+        },
+        "delay": {
+          "type": "string",
+          "description": "Start delay",
+          "default": "0s"
+        },
+        "duration": {
+          "type": "string",
+          "description": "Fall duration",
+          "default": "8s"
+        }
+      },
+      "matrix": [
+        {},
+        {
+          "count": 50
+        },
+        {
+          "repeat": false
+        }
+      ],
+      "_metadata": {
+        "category": "effects",
+        "icon": "❄️",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "span.schema.json",
+      "name": "span",
+      "title": "Span",
+      "description": "A generic inline container for applying utility classes and variants. Useful for traffic lights (window controls), badges, and status indicators.",
+      "tag": "wb-span",
+      "baseClass": "wb-span",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "red",
+            "yellow",
+            "green",
+            "dot",
+            "primary",
+            "secondary",
+            "success",
+            "error",
+            "warning",
+            "info"
+          ],
+          "default": "default",
+          "appliesClass": "wb-span--{{value}}"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "category": "layout",
+        "icon": "📝",
+        "since": "1.0.0",
+        "status": "stable",
+        "generateAttribute": false
+      }
+    },
+    {
+      "file": "spinner.schema.json",
+      "name": "spinner",
+      "title": "Spinner",
+      "description": "Loading spinner indicator",
+      "tag": "wb-spinner",
+      "baseClass": "wb-spinner",
+      "properties": {
+        "size": {
+          "type": "string",
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md",
+          "appliesClass": "wb-spinner--{{value}}"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "primary",
+            "success",
+            "warning",
+            "error"
+          ],
+          "default": "primary",
+          "appliesClass": "wb-spinner--{{value}}"
+        },
+        "speed": {
+          "type": "string",
+          "enum": [
+            "slow",
+            "medium",
+            "fast"
+          ],
+          "default": "medium",
+          "appliesClass": "wb-spinner--{{value}}"
+        },
+        "label": {
+          "type": "string",
+          "description": "Accessible label",
+          "default": "Loading"
+        }
+      },
+      "matrix": [
+        {},
+        {
+          "size": "sm"
+        },
+        {
+          "size": "lg"
+        },
+        {
+          "variant": "success"
+        },
+        {
+          "speed": "fast"
+        }
+      ],
+      "_metadata": {
+        "category": "feedback",
+        "icon": "⏳",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "stagelight.schema.json",
+      "name": "stagelight",
+      "title": "Stage Light",
+      "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
+      "tag": "wb-stagelight",
+      "baseClass": "wb-stagelight",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "description": "Type of light effect",
+          "enum": [
+            "beam",
+            "spotlight",
+            "fixture"
+          ],
+          "default": "beam",
+          "appliesClass": "wb-stagelight--{{value}}"
+        },
+        "color": {
+          "type": "string",
+          "description": "Color of the light (hex, rgb, or named)",
+          "default": "#ffffff"
+        },
+        "intensity": {
+          "type": "number",
+          "description": "Brightness/Opacity (0-1)",
+          "default": 0.5
+        },
+        "size": {
+          "type": "string",
+          "description": "Size of the light/beam",
+          "default": "300px"
+        },
+        "speed": {
+          "type": "string",
+          "description": "Animation speed (e.g., 3s)",
+          "default": "3s"
+        },
+        "target": {
+          "type": "string",
+          "description": "Selector for element to track (for spotlight/fixture)",
+          "default": "mouse"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for the fixture variant",
+          "default": ""
+        }
+      },
+      "matrix": [
+        {
+          "variant": "beam",
+          "color": "#6366f1",
+          "intensity": 0.7
+        },
+        {
+          "variant": "spotlight",
+          "color": "#f59e0b",
+          "intensity": 0.5,
+          "size": "400px"
+        },
+        {
+          "variant": "fixture",
+          "color": "#ef4444",
+          "label": "Red Light"
+        },
+        {
+          "variant": "beam",
+          "color": "#22c55e",
+          "speed": "5s"
+        }
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "cardstats.schema.json",
+      "name": "cardstats",
+      "title": "Stats Card",
+      "description": "Statistics display card with value, label, icon, and trend indicator",
+      "tag": "wb-cardstats",
+      "baseClass": "wb-stats",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "The main statistic value (e.g., 1,234 or $50K)",
+          "required": true
+        },
+        "label": {
+          "type": "string",
+          "description": "Label describing what the value represents"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Icon (emoji or icon name)"
+        },
+        "trend": {
+          "type": "string",
+          "description": "Trend direction",
+          "enum": [
+            "up",
+            "down",
+            "neutral"
+          ],
+          "appliesClass": "wb-stats--trend-{{value}}"
+        },
+        "trendValue": {
+          "type": "string",
+          "description": "Trend amount (e.g., +12%, -5%)"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "compact",
+            "large",
+            "minimal"
+          ],
+          "default": "default",
+          "appliesClass": "wb-stats--{{value}}"
+        },
+        "color": {
+          "type": "string",
+          "description": "Accent color (CSS color value)"
+        }
+      },
+      "matrix": [
+        {
+          "value": "100"
+        },
+        {
+          "value": "1,234",
+          "label": "Users"
+        },
+        {
+          "value": "100",
+          "icon": "📊"
+        },
+        {
+          "value": "100",
+          "trend": "up",
+          "trendValue": "+10%"
+        },
+        {
+          "value": "100",
+          "trend": "down",
+          "trendValue": "-5%"
+        },
+        {
+          "value": "$50K",
+          "label": "Revenue",
+          "icon": "💰",
+          "trend": "up",
+          "trendValue": "+12%"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "📊",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "sticky.schema.json",
+      "name": "sticky",
+      "title": "Sticky",
+      "description": "Makes element stick to viewport on scroll",
+      "tag": "wb-sticky",
+      "baseClass": "wb-sticky",
+      "properties": {
+        "offset": {
+          "type": "string",
+          "description": "Offset from top when stuck",
+          "default": "0"
+        },
+        "zIndex": {
+          "type": "number",
+          "description": "Z-index when stuck",
+          "default": 100
+        },
+        "threshold": {
+          "type": "number",
+          "description": "Scroll position to trigger sticky"
+        },
+        "stuckClass": {
+          "type": "string",
+          "description": "Class added when stuck",
+          "default": "is-stuck"
+        },
+        "animated": {
+          "type": "boolean",
+          "description": "Animate stick/unstick",
+          "default": true
+        }
+      },
+      "matrix": [
+        {},
+        {
+          "offset": "60"
+        },
+        {
+          "animated": true
+        }
+      ],
+      "_metadata": {
+        "category": "layout",
+        "icon": "📌",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "switch.schema.json",
+      "name": "switch",
+      "title": "Switch",
+      "description": "Toggle switch for boolean settings",
+      "tag": "wb-switch",
+      "baseClass": "wb-switch",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Switch label"
+        },
+        "checked": {
+          "type": "boolean",
+          "description": "On/off state",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Disabled state",
+          "default": false
+        },
+        "name": {
+          "type": "string",
+          "description": "Form field name"
+        },
+        "value": {
+          "type": "string",
+          "description": "Form field value when checked"
+        },
+        "labelPosition": {
+          "type": "string",
+          "enum": [
+            "start",
+            "end"
+          ],
+          "default": "end"
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "appliesClass": "wb-switch--{{value}}"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "primary",
+            "success"
+          ],
+          "default": "default",
+          "appliesClass": "wb-switch--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "label": "Test"
+        },
+        {
+          "label": "Test",
+          "checked": true
+        },
+        {
+          "label": "Test",
+          "disabled": true
+        },
+        {
+          "label": "Test",
+          "size": "lg"
+        }
+      ],
+      "_metadata": {
+        "category": "forms",
+        "icon": "🔘",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "table.schema.json",
+      "name": "table",
+      "title": "Table",
+      "description": "Data table with sorting, filtering, and pagination",
+      "tag": "wb-table",
+      "baseClass": "wb-table",
+      "properties": {
+        "data": {
+          "type": "string",
+          "description": "Table data as JSON array"
+        },
+        "columns": {
+          "type": "string",
+          "description": "Column config as JSON [{key, label, sortable}]"
+        },
+        "sortable": {
+          "type": "boolean",
+          "description": "Enable column sorting",
+          "default": true
+        },
+        "filterable": {
+          "type": "boolean",
+          "description": "Enable filtering",
+          "default": false
+        },
+        "paginated": {
+          "type": "boolean",
+          "description": "Enable pagination",
+          "default": false
+        },
+        "pageSize": {
+          "type": "number",
+          "description": "Rows per page",
+          "default": 10
+        },
+        "striped": {
+          "type": "boolean",
+          "description": "Striped rows",
+          "default": false,
+          "appliesClass": "wb-table--striped"
+        },
+        "hoverable": {
+          "type": "boolean",
+          "description": "Hover effect on rows",
+          "default": true,
+          "appliesClass": "wb-table--hoverable"
+        },
+        "compact": {
+          "type": "boolean",
+          "description": "Compact row spacing",
+          "default": false,
+          "appliesClass": "wb-table--compact"
+        },
+        "bordered": {
+          "type": "boolean",
+          "description": "Cell borders",
+          "default": false,
+          "appliesClass": "wb-table--bordered"
+        }
+      },
+      "matrix": [
+        {},
+        {
+          "sortable": true
+        },
+        {
+          "striped": true
+        },
+        {
+          "paginated": true,
+          "pageSize": 5
+        }
+      ],
+      "_metadata": {
+        "category": "data",
+        "icon": "📊",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "tabs.schema.json",
+      "name": "tabs",
+      "title": "Tabs",
+      "description": "Tab navigation for switching between content panels",
+      "tag": "wb-tabs",
+      "baseClass": "wb-tabs",
+      "properties": {
+        "activeTab": {
+          "type": "number",
+          "description": "Initially active tab index",
+          "default": 0
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "pills",
+            "underline",
+            "bordered"
+          ],
+          "default": "default",
+          "appliesClass": "wb-tabs--{{value}}"
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "appliesClass": "wb-tabs--{{value}}"
+        },
+        "fullWidth": {
+          "type": "boolean",
+          "description": "Tabs fill container width",
+          "default": false,
+          "appliesClass": "wb-tabs--full-width"
+        },
+        "vertical": {
+          "type": "boolean",
+          "description": "Vertical tab layout",
+          "default": false,
+          "appliesClass": "wb-tabs--vertical"
+        }
+      },
+      "matrix": [
+        {
+          "activeTab": 0
+        },
+        {
+          "activeTab": 1
+        },
+        {
+          "variant": "pills"
+        },
+        {
+          "variant": "underline"
+        },
+        {
+          "fullWidth": true
+        }
+      ],
+      "_metadata": {
+        "category": "navigation",
+        "icon": "📑",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardtestimonial.schema.json",
+      "name": "cardtestimonial",
+      "title": "Testimonial Card",
+      "description": "Customer testimonial/review card with quote, author, avatar, and rating",
+      "tag": "wb-cardtestimonial",
+      "baseClass": "wb-testimonial",
+      "properties": {
+        "quote": {
+          "type": "string",
+          "description": "Testimonial quote text",
+          "required": true
+        },
+        "author": {
+          "type": "string",
+          "description": "Author name",
+          "required": true
+        },
+        "role": {
+          "type": "string",
+          "description": "Author role/title/company"
+        },
+        "avatar": {
+          "type": "string",
+          "description": "Author avatar image URL"
+        },
+        "rating": {
+          "type": "number",
+          "description": "Star rating (0-5)",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "elevated",
+            "bordered",
+            "minimal",
+            "centered"
+          ],
+          "default": "default",
+          "appliesClass": "wb-testimonial--{{value}}"
+        },
+        "size": {
+          "type": "string",
+          "description": "Card size",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "appliesClass": "wb-testimonial--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "quote": "Great!",
+          "author": "John"
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "role": "CEO"
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "avatar": "avatar.jpg"
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "rating": 5
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "rating": 3
+        },
+        {
+          "quote": "Excellent service!",
+          "author": "Jane",
+          "role": "CTO at Acme",
+          "avatar": "jane.jpg",
+          "rating": 5
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "variant": "elevated"
+        },
+        {
+          "quote": "Great!",
+          "author": "John",
+          "variant": "centered"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "💬",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "textarea.schema.json",
+      "name": "textarea",
+      "title": "Textarea",
+      "description": "Multi-line text input with autosize and character count",
+      "tag": "wb-textarea",
+      "baseClass": "wb-textarea",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Field label"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Placeholder text"
+        },
+        "value": {
+          "type": "string",
+          "description": "Text value"
+        },
+        "name": {
+          "type": "string",
+          "description": "Form field name"
+        },
+        "rows": {
+          "type": "number",
+          "description": "Visible rows",
+          "default": 3
+        },
+        "maxLength": {
+          "type": "number",
+          "description": "Max character limit",
+          "default": 0
+        },
+        "showCount": {
+          "type": "boolean",
+          "description": "Show character count",
+          "default": false
+        },
+        "autosize": {
+          "type": "boolean",
+          "description": "Auto-resize to content",
+          "default": false,
+          "appliesClass": "wb-textarea--autosize"
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Disabled state",
+          "default": false
+        },
+        "readonly": {
+          "type": "boolean",
+          "description": "Read-only state",
+          "default": false
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Required field",
+          "default": false
+        },
+        "resize": {
+          "type": "string",
+          "enum": [
+            "none",
+            "vertical",
+            "horizontal",
+            "both"
+          ],
+          "default": "vertical"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "success",
+            "error"
+          ],
+          "default": "default",
+          "appliesClass": "wb-textarea--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "placeholder": "Enter text..."
+        },
+        {
+          "rows": 5
+        },
+        {
+          "maxLength": 500,
+          "showCount": true
+        },
+        {
+          "autosize": true
+        },
+        {
+          "disabled": true
+        }
+      ],
+      "_metadata": {
+        "category": "forms",
+        "icon": "📝",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "themecontrol.schema.json",
+      "name": "themecontrol",
+      "title": "Theme Control",
+      "description": "Theme switcher control.",
+      "tag": "wb-themecontrol",
+      "baseClass": "wb-themecontrol",
+      "properties": {},
+      "matrix": [
+        {}
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "toast.schema.json",
+      "name": "toast",
+      "title": "Toast",
+      "description": "Toast notification system for temporary messages",
+      "tag": "wb-toast",
+      "baseClass": "wb-toast-trigger",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Toast notification message",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "description": "Toast title (optional)"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Toast severity/type",
+          "enum": [
+            "info",
+            "success",
+            "warning",
+            "error"
+          ],
+          "default": "info",
+          "appliesClass": "wb-toast--{{value}}"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Icon (emoji or icon name)"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Auto-dismiss duration in milliseconds (0 = no auto-dismiss)",
+          "default": 3000,
+          "minimum": 0,
+          "maximum": 30000
+        },
+        "position": {
+          "type": "string",
+          "description": "Toast container position",
+          "enum": [
+            "top-right",
+            "top-left",
+            "top-center",
+            "bottom-right",
+            "bottom-left",
+            "bottom-center"
+          ],
+          "default": "top-right"
+        },
+        "dismissible": {
+          "type": "boolean",
+          "description": "Show close button",
+          "default": true
+        },
+        "action": {
+          "type": "string",
+          "description": "Action button text"
+        },
+        "actionHref": {
+          "type": "string",
+          "description": "Action button link URL"
+        }
+      },
+      "matrix": [
+        {
+          "message": "Test"
+        },
+        {
+          "message": "Test",
+          "variant": "info"
+        },
+        {
+          "message": "Test",
+          "variant": "success"
+        },
+        {
+          "message": "Test",
+          "variant": "warning"
+        },
+        {
+          "message": "Test",
+          "variant": "error"
+        },
+        {
+          "message": "Test",
+          "title": "Notice"
+        },
+        {
+          "message": "Test",
+          "duration": 5000
+        },
+        {
+          "message": "Test",
+          "position": "bottom-right"
+        },
+        {
+          "message": "Test",
+          "action": "Undo"
+        }
+      ],
+      "_metadata": {
+        "category": "feedback",
+        "icon": "🔔",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "toggle.schema.json",
+      "name": "toggle",
+      "title": "Toggle",
+      "description": "Toggle visibility or state of another element.",
+      "tag": "wb-toggle",
+      "baseClass": "wb-toggle",
+      "properties": {
+        "target": {
+          "type": "string",
+          "description": "Selector of target element"
+        }
+      },
+      "matrix": [
+        {
+          "target": "#content"
+        }
+      ],
+      "_metadata": {}
+    },
+    {
+      "file": "tooltip.schema.json",
+      "name": "tooltip",
+      "title": "Tooltip",
+      "description": "Tooltip for displaying additional information on hover/focus",
+      "tag": "wb-tooltip",
+      "baseClass": "wb-tooltip-trigger",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "Tooltip text content",
+          "required": true
+        },
+        "position": {
+          "type": "string",
+          "description": "Tooltip position relative to trigger",
+          "enum": [
+            "top",
+            "bottom",
+            "left",
+            "right",
+            "top-start",
+            "top-end",
+            "bottom-start",
+            "bottom-end"
+          ],
+          "default": "top",
+          "appliesClass": "wb-tooltip--{{value}}"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "dark",
+            "light",
+            "primary"
+          ],
+          "default": "default",
+          "appliesClass": "wb-tooltip--{{value}}"
+        },
+        "delay": {
+          "type": "number",
+          "description": "Delay before showing (ms)",
+          "default": 200
+        },
+        "hideDelay": {
+          "type": "number",
+          "description": "Delay before hiding (ms)",
+          "default": 0
+        },
+        "trigger": {
+          "type": "string",
+          "description": "What triggers the tooltip",
+          "enum": [
+            "hover",
+            "focus",
+            "click",
+            "hover-focus"
+          ],
+          "default": "hover"
+        },
+        "arrow": {
+          "type": "boolean",
+          "description": "Show arrow pointing to trigger",
+          "default": true
+        },
+        "interactive": {
+          "type": "boolean",
+          "description": "Allow hovering over tooltip content",
+          "default": false
+        },
+        "maxWidth": {
+          "type": "string",
+          "description": "Maximum tooltip width",
+          "default": "200px"
+        }
+      },
+      "matrix": [
+        {
+          "content": "Tooltip text"
+        },
+        {
+          "content": "Tooltip text",
+          "position": "top"
+        },
+        {
+          "content": "Tooltip text",
+          "position": "bottom"
+        },
+        {
+          "content": "Tooltip text",
+          "position": "left"
+        },
+        {
+          "content": "Tooltip text",
+          "position": "right"
+        },
+        {
+          "content": "Tooltip text",
+          "variant": "light"
+        },
+        {
+          "content": "Tooltip text",
+          "variant": "primary"
+        },
+        {
+          "content": "Tooltip text",
+          "arrow": false
+        },
+        {
+          "content": "Tooltip text",
+          "delay": 500
+        }
+      ],
+      "_metadata": {
+        "category": "feedback",
+        "icon": "💬",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "cardvideo.schema.json",
+      "name": "cardvideo",
+      "title": "Video Card",
+      "description": "Card with embedded video player",
+      "tag": "wb-cardvideo",
+      "baseClass": "wb-card-video",
+      "properties": {
+        "src": {
+          "type": "string",
+          "description": "Video source URL",
+          "required": true
+        },
+        "poster": {
+          "type": "string",
+          "description": "Poster image URL"
+        },
+        "title": {
+          "type": "string",
+          "description": "Video title"
+        },
+        "description": {
+          "type": "string",
+          "description": "Video description"
+        },
+        "autoplay": {
+          "type": "boolean",
+          "description": "Auto-play video (requires muted)",
+          "default": false
+        },
+        "muted": {
+          "type": "boolean",
+          "description": "Mute video",
+          "default": false
+        },
+        "loop": {
+          "type": "boolean",
+          "description": "Loop video playback",
+          "default": false
+        },
+        "controls": {
+          "type": "boolean",
+          "description": "Show video controls",
+          "default": true
+        },
+        "aspect": {
+          "type": "string",
+          "description": "Video aspect ratio",
+          "enum": [
+            "16/9",
+            "4/3",
+            "1/1",
+            "21/9",
+            "9/16"
+          ],
+          "default": "16/9"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "minimal",
+            "bordered",
+            "elevated"
+          ],
+          "default": "default",
+          "appliesClass": "wb-card-video--{{value}}"
+        }
+      },
+      "matrix": [
+        {
+          "src": "video.mp4"
+        },
+        {
+          "src": "video.mp4",
+          "title": "Video Title"
+        },
+        {
+          "src": "video.mp4",
+          "poster": "poster.jpg"
+        },
+        {
+          "src": "video.mp4",
+          "autoplay": true,
+          "muted": true
+        },
+        {
+          "src": "video.mp4",
+          "loop": true
+        },
+        {
+          "src": "video.mp4",
+          "controls": false
+        },
+        {
+          "src": "video.mp4",
+          "aspect": "4/3"
+        }
+      ],
+      "_metadata": {
+        "category": "cards",
+        "icon": "🎬",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
+      "file": "behaviors.schema.json",
+      "name": "behaviors",
+      "title": "WB Behaviors Schema",
+      "description": "Master schema defining all behavior metadata, properties, interactions, accessibility, and test requirements",
+      "tag": "wb-behaviors",
+      "baseClass": "wb-behaviors",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique identifier for the behavior"
+        },
+        "type": {
+          "$ref": "#/definitions/behaviorType"
+        },
+        "category": {
+          "$ref": "#/definitions/behaviorCategory"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of what the behavior does"
+        },
+        "selector": {
+          "type": "string",
+          "description": "CSS selector that identifies elements this behavior applies to"
+        },
+        "attributes": {
+          "type": "object",
+          "description": "Configuration attributes for the behavior",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "events": {
+          "type": "array",
+          "description": "Events this behavior responds to",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "description": "Other behaviors or components this behavior depends on",
+          "items": {
+            "type": "string"
+          }
+        },
+        "accessibility": {
+          "type": "object",
+          "description": "Accessibility requirements and ARIA attributes",
+          "properties": {
+            "role": {
+              "type": "string"
+            },
+            "ariaAttributes": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "keyboardSupport": {
+              "type": "boolean"
+            }
+          }
+        },
+        "testCases": {
+          "type": "array",
+          "description": "Test scenarios for this behavior",
+          "items": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "setup": {
+                "type": "string"
+              },
+              "action": {
+                "type": "string"
+              },
+              "expected": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "wb-control.schema.json",
+      "name": "wb-control",
+      "title": "WB Control",
+      "description": "Base control interaction behavior.",
+      "tag": "wb-wb-control",
+      "baseClass": "wb-wb-control",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "builder-pages.schema.json",
+      "name": "builder-pages",
+      "title": "WB Page Builder - Pages Schema",
+      "description": "Schema for the WB Page Builder pages system including navigation, breadcrumbs, and component management",
+      "tag": "wb-builder-pages",
+      "baseClass": "wb-builder-pages",
+      "properties": {
+        "pages": {
+          "type": "array",
+          "description": "All pages in the site",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/Page"
+          }
+        },
+        "globalSections": {
+          "type": "object",
+          "description": "Shared header and footer components",
+          "properties": {
+            "header": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Component"
+              }
+            },
+            "footer": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Component"
+              }
+            }
+          }
+        },
+        "currentPageId": {
+          "type": "string",
+          "description": "Currently active page ID"
+        },
+        "settings": {
+          "type": "object",
+          "$ref": "#/definitions/SiteSettings"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "category": "builder",
+        "icon": "📄",
+        "since": "2.0.0",
+        "status": "stable",
+        "author": "wb-starter",
+        "lastUpdated": "2026-01-16"
+      }
+    },
+    {
+      "file": "timeline.schema.json",
+      "name": "timeline",
+      "title": "WB Timeline Schema",
+      "description": "Schema for validating WB Timeline component",
+      "tag": "wb-timeline",
+      "baseClass": "wb-timeline",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "description": "Reference to this schema file"
+        },
+        "items": {
+          "type": "string",
+          "description": "Comma-separated list of timeline items",
+          "minLength": 1
+        }
+      },
+      "matrix": [
+        {
+          "items": "Project Kickoff,Design Phase,Development,Testing,Launch"
+        },
+        {
+          "items": "Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery"
+        },
+        {
+          "items": "Research,Prototype,Build,Ship"
+        }
+      ],
+      "_metadata": {}
+    }
+  ]
+}

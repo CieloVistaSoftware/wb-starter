@@ -21,7 +21,7 @@ test.describe('Sticky Behavior', () => {
           nav { background: #333; color: #fff; padding: 1rem; }
         </style>
         <div class="spacer">Scroll down to see sticky behavior</div>
-        <nav data-wb="sticky" id="stickyNav">Sticky Navigation</nav>
+        <nav id="stickyNav" x-sticky>Sticky Navigation</nav>
         <div class="content">Main content area</div>
       `;
     });
@@ -99,7 +99,7 @@ test.describe('Sticky Behavior', () => {
           nav { background: #333; color: #fff; padding: 1rem; }
         </style>
         <div class="spacer"></div>
-        <nav data-wb="sticky" data-offset="50" id="stickyNav">Sticky with Offset</nav>
+        <nav data-offset="50" id="stickyNav" x-sticky>Sticky with Offset</nav>
         <div class="content"></div>
       `;
     });
@@ -133,7 +133,7 @@ test.describe('Sticky Behavior', () => {
           nav { background: #333; color: #fff; padding: 1rem; }
         </style>
         <div class="spacer"></div>
-        <nav data-wb="sticky" data-class="nav-fixed" id="stickyNav">Custom Class</nav>
+        <nav data-class="nav-fixed" id="stickyNav" x-sticky>Custom Class</nav>
         <div class="content"></div>
       `;
     });

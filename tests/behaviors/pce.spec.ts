@@ -26,9 +26,9 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await expect(element).toHaveAttribute('data-name', 'John Doe');
     await expect(element).toHaveAttribute('data-role', 'Developer');
     
-    // Check if behavior was applied (may set data-wb-ready)
-    const wbReady = await element.getAttribute('data-wb-ready');
-    // Behavior either sets data-wb-ready or adds content
+    // Check if behavior was applied (may add .wb-ready class)
+    const wbReady = await element.classList.contains('wb-ready');
+    // Behavior either adds .wb-ready class or adds content
     const hasContent = (await element.textContent())?.trim().length > 0;
     expect(wbReady !== null || hasContent).toBeTruthy();
   });

@@ -31,6 +31,7 @@ if (typeof window !== 'undefined' && typeof window.WB === 'undefined') {
 import { behaviors } from '../wb-viewmodels/index.js';
 import { Events } from './events.js';
 import { Theme } from './theme.js';
+import { getNativeBehavior, nativeMap, getElementBehavior } from './tag-map.js';
 
 // Register Layout Custom Elements
 import '../wb-viewmodels/wb-grid.js';
@@ -38,6 +39,8 @@ import '../wb-viewmodels/wb-cluster.js';
 import '../wb-viewmodels/wb-stack.js';
 import '../wb-viewmodels/wb-row.js';
 import '../wb-viewmodels/wb-column.js';
+import '../wb-viewmodels/wb-search.js';
+import '../wb-viewmodels/wb-demo.js';
 
 import { getConfig, setConfig } from './config.js';
 import { pubsub } from './pubsub.js';
@@ -55,38 +58,12 @@ try {
   }
 } catch (e) { /* best-effort */ }
 
-// Auto-injection mappings
-const autoInjectMappings = [
-  // Form Elements
-  { selector: 'input[type="checkbox"]', behavior: 'checkbox' },
-  { selector: 'input[type="radio"]', behavior: 'radio' },
-  { selector: 'input[type="range"]', behavior: 'range' },
-  { selector: 'select', behavior: 'select' },
-  { selector: 'textarea', behavior: 'textarea' },
-  { selector: 'button', behavior: 'button' },
-  { selector: 'form', behavior: 'form' },
-  { selector: 'fieldset', behavior: 'fieldset' },
-  { selector: 'label', behavior: 'label' },
-  
-  // Media
-  { selector: 'img', behavior: 'image' },
-  { selector: 'video', behavior: 'video' },
-  { selector: 'audio', behavior: 'audio' },
-  
-  // Semantic Text
-  { selector: 'code', behavior: 'code' },
-  { selector: 'pre', behavior: 'pre' },
-  { selector: 'kbd', behavior: 'kbd' },
-  { selector: 'mark', behavior: 'mark' },
-  
-  // Structure
-  { selector: 'table', behavior: 'table' },
-  { selector: 'details', behavior: 'details' },
-  { selector: 'dialog', behavior: 'dialog' },
-  { selector: 'progress', behavior: 'progress' },
-  { selector: 'header', behavior: 'header' },
-  { selector: 'footer', behavior: 'footer' }
-];
+// Auto-injection mappings (from tag-map.js)
+// Convert nativeMap {selector: behavior} to [{selector, behavior}]
+const autoInjectMappings = Object.entries(nativeMap).map(([selector, behavior]) => ({
+  selector,
+  behavior
+}));
 
 // Reserved attributes that should never trigger a behavior
 const RESERVED_ATTRIBUTES = new Set([
@@ -106,6 +83,7 @@ const RESERVED_ATTRIBUTES = new Set([
 
 /**
  * Get implicit behavior for an element based on its type
+ * Uses tag-map.js getNativeBehavior for matching
  * @param {HTMLElement} element 
  * @returns {string|null} Behavior name or null
  */
@@ -118,13 +96,8 @@ function getAutoInjectBehavior(element) {
   // Auto-injection is additive unless explicitly ignored.
   // The inject() function handles duplicate prevention.
 
-  let candidate = null;
-  for (const { selector, behavior } of autoInjectMappings) {
-    if (element.matches(selector)) {
-      candidate = behavior;
-      break;
-    }
-  }
+  // Use tag-map.js getNativeBehavior for efficient matching
+  const candidate = getNativeBehavior(element);
   
   if (!candidate) return null;
 
@@ -134,7 +107,7 @@ function getAutoInjectBehavior(element) {
   const prefix = getConfig('prefix') || 'x';
   if (element.hasAttribute(`${prefix}-${candidate}`)) return null;
   if (element.hasAttribute(candidate) && !RESERVED_ATTRIBUTES.has(candidate)) return null;
-  if (element.hasAttribute(`data-wb-${candidate}`)) return null;
+  if (element.hasAttribute(`x-${candidate}-init`)) return null;
 
   return candidate;
 }
@@ -228,7 +201,7 @@ const WB = {
       });
       
       // Mark element as having an error
-      element.dataset.wbError = 'true';
+      element.setAttribute('x-error', 'true');
       
       return null;
     } finally {
@@ -277,8 +250,9 @@ const WB = {
   async processSchema(element, schemaName = null, blocking = false) {
     if (schemaProcessed.has(element)) return;
     
-    // Get schema name from tag or data-wb
+    // Get schema name from tag or x-* attributes
     const name = schemaName || WB._detectSchemaName(element);
+    console.log(`[WB.processSchema] Processing element ${element.tagName}, detected schema: ${name}`);
     if (!name) return;
     
     // Check if schema exists
@@ -299,25 +273,28 @@ const WB = {
 
     // Process through schema builder (builds DOM from $view)
     try {
+      console.log(`[WB.processSchema] Calling SchemaBuilder.processElement for ${element.tagName}`);
       SchemaBuilder.processElement(element, name);
       schemaProcessed.add(element);
-      element.dataset.wbSchema = name;
+      element.setAttribute('x-schema', name);
+      console.log(`[WB.processSchema] Schema processing complete for ${element.tagName}`);
     } catch (err) {
       console.error('[WB] processSchema failed for', name, err && err.message);
     }
-  }
   },
   
   /**
    * Detect schema name from element
+   * Uses tag-map.js to resolve wb-* tags to behavior names
    * @private
    */
   _detectSchemaName(element) {
     const tagName = element.tagName.toLowerCase();
     
-    // <wb-card> → card
+    // <wb-card> → card (using tag-map.js)
     if (tagName.startsWith('wb-')) {
-      return tagName.replace('wb-', '').replace(/-/g, '');
+      const behavior = getElementBehavior(tagName);
+      return behavior || null;
     }
     
     // → ERROR (Strict Mode)
@@ -330,39 +307,49 @@ const WB = {
   },
 
   /**
-   * Scan DOM for elements with data-wb and inject behaviors
+   * Scan DOM for x-* behaviors, wb-* custom elements, and detect legacy data-wb usage
    * @param {HTMLElement} root - Root element to scan (default: document.body)
    * @returns {Promise<void>}
    */
   async scan(root = document.body) {
+    console.log(`[WB.scan] Starting scan on root:`, root.tagName || 'document.body');
     const promises = [];
     const behaviorNames = Object.keys(behaviors);
     const knownBehaviors = new Set(behaviorNames);
     const prefix = getConfig('prefix') || 'x'; // Default to x-
     const useSchemas = getConfig('useSchemas');
+    console.log(`[WB.scan] useSchemas =`, useSchemas);
 
     // v3.0: Process wb-* custom element tags through schema builder first
     if (useSchemas) {
+      console.log(`[WB.scan] useSchemas is true, scanning for wb-* elements in root:`, root.tagName || 'document.body');
       // Collect promises so we can await schema-built elements before continuing
       const schemaPromises = [];
       root.querySelectorAll('*').forEach(el => {
         const htmlEl = /** @type {HTMLElement} */ (el);
         const tag = htmlEl.tagName.toLowerCase();
         if (tag.startsWith('wb-') && tag !== 'wb-view') {
+          console.log(`[WB.scan] Found wb-* element: ${tag} (${htmlEl.id || 'no-id'})`);
           // WB.processSchema is async-capable; collect the promise and allow it to load schemas on-demand
           try {
-            const p = WB.processSchema(htmlEl, /*blocking*/ true);
+            const p = WB.processSchema(htmlEl, null, /*blocking*/ true);
             if (p && typeof p.then === 'function') schemaPromises.push(p);
           } catch (err) {
-            console.warn('[WB] processSchema threw:', err && err.message);
+            console.warn('[WB.scan] processSchema threw:', err && err.message);
           }
         }
       });
 
       // Await processing of schema-built elements to make injection deterministic
       if (schemaPromises.length) {
+        console.log(`[WB.scan] Awaiting ${schemaPromises.length} schema processing promises`);
         await Promise.all(schemaPromises);
+        console.log(`[WB.scan] Schema processing complete`);
+      } else {
+        console.log(`[WB.scan] No wb-* elements found to process`);
       }
+    } else {
+      console.log(`[WB.scan] useSchemas is false, skipping schema processing`);
     }
 
       // 1. Detect Legacy Usage (Strict Mode: Error) 
@@ -380,7 +367,7 @@ const WB = {
         });
       
         // Mark element but do not process
-        element.setAttribute('data-wb-error', 'legacy');
+        element.setAttribute('x-error', 'legacy');
       });
 
     // 2. Semantic Shorthand: {prefix}-{name} (Decoration) and {prefix}-as-{name} (Morph/Layout)
@@ -454,11 +441,12 @@ const WB = {
   },
 
   /**
-   * Watch for new elements with data-wb (MutationObserver)
+   * Watch for new elements with x-* behaviors (MutationObserver)
    * @param {HTMLElement} root - Root element to observe (default: document.body)
    * @returns {MutationObserver} The observer instance
    */
   observe(root = document.body) {
+    console.log(`[WB.observe] Starting observer on root:`, root.tagName || 'document.body');
     // Disconnect existing observer if present to prevent duplicates
     if (WB._observer) {
       WB._observer.disconnect();
@@ -468,6 +456,7 @@ const WB = {
     const knownBehaviors = new Set(behaviorNames);
     const prefix = getConfig('prefix') || 'x'; // Default to x-
     const useSchemas = getConfig('useSchemas');
+    console.log(`[WB.observe] useSchemas =`, useSchemas);
     
     // Build attribute filter list
     const attributeFilter = ['x-behavior'];
@@ -477,6 +466,7 @@ const WB = {
     });
 
     const observer = new MutationObserver(mutations => {
+      console.log(`[WB.observe] MutationObserver triggered with ${mutations.length} mutations`);
       for (const mutation of mutations) {
         // Handle added nodes
         for (const node of mutation.addedNodes) {
@@ -486,19 +476,21 @@ const WB = {
           // Cast to HTMLElement after type check
           const el = /** @type {HTMLElement} */ (node);
           const tag = el.tagName.toLowerCase();
+          console.log(`[WB.observe] Processing added node: ${tag}`);
             
           // v3.0: Process wb-* tags through schema builder
           if (useSchemas && tag.startsWith('wb-') && tag !== 'wb-view') {
+            console.log(`[WB.observe] Found wb-* element in mutation: ${tag}`);
             WB.processSchema(el);
           }
             
           // 1. Check node itself
-          // Legacy data-wb check
-          if (el.dataset?.wb) {
-            const val = el.dataset.wb;
-            const name = val.split(/\s+/)[0];
-            console.error(`[WB] Legacy syntax detected:. Use <wb-${name}>.`);
-            // Do not process
+          // Legacy data-wb detection (reject and log)
+          if (el.hasAttribute('data-wb')) {
+            const val = el.getAttribute('data-wb') || '';
+            const name = val.split(/\s+/)[0] || 'unknown';
+            console.error(`[WB] Legacy syntax data-wb="${val}" detected. Use <wb-${name}> or x-${name}.`);
+            el.setAttribute('x-error', 'legacy');
           }
             
           // Shorthand ({prefix}-* and {prefix}-as-*)
@@ -539,13 +531,13 @@ const WB = {
             });
           }
             
-          // Legacy data-wb check (descendants)
-          // Note: data-wb is deprecated - use wb-* custom elements or x-* attributes
+          // Legacy data-wb detection (descendants — reject and log)
           el.querySelectorAll('[data-wb]').forEach(descendant => {
             const descEl = /** @type {HTMLElement} */ (descendant);
-            const val = descEl.dataset.wb || '';
+            const val = descEl.getAttribute('data-wb') || '';
             const name = val.split(/\s+/)[0] || 'unknown';
-            console.error(`[WB] Legacy syntax detected:. Use <wb-${name}>.`);
+            console.error(`[WB] Legacy syntax data-wb="${val}" detected. Use <wb-${name}> or x-${name}.`);
+            descEl.setAttribute('x-error', 'legacy');
           });
             
           // Shorthand - we need to query for all known shorthand attributes
@@ -598,12 +590,10 @@ const WB = {
           const element = /** @type {HTMLElement} */ (mutation.target);
           
           if (mutation.attributeName === 'x-behavior') {
-            // ... existing data-wb logic ...
-            const behaviorList = element.dataset.wb?.split(/\s+/).filter(Boolean) || [];
+            const behaviorList = (element.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean);
             const current = applied.get(element) || [];
             current.forEach(({ name, cleanup }) => {
               if (!behaviorList.includes(name)) {
-                // Only remove if not also present as shorthand
                 const hasShorthand = element.hasAttribute(`${prefix}-${name}`) || element.hasAttribute(`${prefix}-as-${name}`);
                 if (!hasShorthand) {
                   if (typeof cleanup === 'function') cleanup();
@@ -627,8 +617,8 @@ const WB = {
                 const options = element.getAttribute(mutation.attributeName) ? { config: element.getAttribute(mutation.attributeName) } : {};
                 WB.inject(element, behaviorName, options);
               } else {
-                // Attribute removed - check if it's still in data-wb
-                const list = element.dataset.wb?.split(/\s+/).filter(Boolean) || [];
+                // Attribute removed — check if still declared via x-behavior
+                const list = (element.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean);
                 if (!list.includes(behaviorName)) {
                   WB.remove(element, behaviorName);
                 }
@@ -733,14 +723,18 @@ const WB = {
       console.log('═══════════════════════════════════════════════════════');
       console.log('  WB Behaviors v3.0 - MVVM Architecture');
       console.log('═══════════════════════════════════════════════════════');
+      console.log('[WB.init] useSchemas is true, initializing SchemaBuilder...');
       
       try {
         await SchemaBuilder.loadSchemas(schemaPath);
-        console.log(`[WB] Schema Builder loaded ${SchemaBuilder.registry.size} schemas`);
+        console.log(`[WB.init] Schema Builder loaded ${SchemaBuilder.registry.size} schemas`);
+        console.log('[WB.init] Available schemas:', Array.from(SchemaBuilder.registry.keys()));
       } catch (error) {
-        console.warn('[WB] Failed to load schemas:', error);
+        console.warn('[WB.init] Failed to load schemas:', error);
         // Continue without schemas - behaviors still work
       }
+    } else {
+      console.log('[WB.init] useSchemas is false, skipping schema initialization');
     }
 
     // Scan existing elements

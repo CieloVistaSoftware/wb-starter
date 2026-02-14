@@ -1,4 +1,4 @@
-# PCE (Pseudo-Custom Elements) - WB v3.0
+# PCE (Pseudo-Custom Elements) - Web Behaviors (WB) v3.0
 
 > **Version:** 3.0  
 > **Updated:** 2026-01-14
@@ -172,7 +172,7 @@ const customElementMappings = [
    ```javascript
    export function mycomponent(element, options = {}) {
      // Enhance element
-     element.dataset.wbReady = 'mycomponent';
+     element.classList.add("wb-ready");
      
      return () => {
        // Cleanup function

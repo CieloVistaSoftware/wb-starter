@@ -1,0 +1,401 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "search.schema.json",
+  "title": "Search",
+  "description": "Search input component with icon and debounced search events",
+  "schemaFor": "search",
+  "baseClass": "wb-search",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "search"
+  },
+  "compliance": {
+    "baseClass": "wb-search",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "placeholder": {
+      "type": "string",
+      "description": "Placeholder text",
+      "default": "Search..."
+    },
+    "value": {
+      "type": "string",
+      "description": "Search value"
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name"
+    },
+    "debounce": {
+      "type": "number",
+      "description": "Debounce delay in milliseconds",
+      "default": 300,
+      "minimum": 0,
+      "maximum": 2000
+    },
+    "instant": {
+      "type": "boolean",
+      "description": "Search on every keystroke (no debounce)",
+      "default": false
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Disabled state",
+      "default": false
+    },
+    "size": {
+      "type": "string",
+      "description": "Search input size",
+      "enum": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "appliesClass": "wb-search--{{value}}"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual variant",
+      "enum": [
+        "default",
+        "glass",
+        "minimal"
+      ],
+      "default": "default",
+      "appliesClass": "wb-search--{{value}}"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Search icon (emoji or icon name)",
+      "default": "🔍"
+    },
+    "clearable": {
+      "type": "boolean",
+      "description": "Show clear button when has value",
+      "default": true
+    },
+    "loading": {
+      "type": "boolean",
+      "description": "Show loading state",
+      "default": false
+    }
+  },
+  "$view": [
+    {
+      "name": "wrapper",
+      "tag": "div",
+      "public": false,
+      "required": true,
+      "description": "Search wrapper container"
+    },
+    {
+      "name": "icon",
+      "tag": "span",
+      "parent": "wrapper",
+      "public": true,
+      "content": "{{icon}}",
+      "createdWhen": "icon",
+      "description": "Search icon"
+    },
+    {
+      "name": "input",
+      "tag": "input",
+      "parent": "wrapper",
+      "public": true,
+      "required": true,
+      "description": "Native search input"
+    },
+    {
+      "name": "clear",
+      "tag": "button",
+      "parent": "wrapper",
+      "public": true,
+      "content": "✕",
+      "createdWhen": "clearable",
+      "description": "Clear button"
+    },
+    {
+      "name": "loading",
+      "tag": "span",
+      "parent": "wrapper",
+      "public": true,
+      "content": "⏳",
+      "createdWhen": "loading",
+      "description": "Loading indicator"
+    }
+  ],
+  "$methods": {
+    "getValue": {
+      "description": "Gets the current search value",
+      "params": [],
+      "returns": "string"
+    },
+    "setValue": {
+      "description": "Sets the search value",
+      "params": [
+        "value"
+      ]
+    },
+    "clear": {
+      "description": "Clears the search value",
+      "params": []
+    },
+    "focus": {
+      "description": "Focuses the search input",
+      "params": []
+    },
+    "blur": {
+      "description": "Removes focus from search input",
+      "params": []
+    },
+    "search": {
+      "description": "Triggers a search with current value",
+      "params": []
+    },
+    "setLoading": {
+      "description": "Sets loading state",
+      "params": [
+        "loading"
+      ]
+    }
+  },
+  "$cssAPI": {
+    "--wb-search-height": {
+      "default": "2.5rem",
+      "description": "Search input height"
+    },
+    "--wb-search-padding-x": {
+      "default": "0.75rem",
+      "description": "Horizontal padding"
+    },
+    "--wb-search-radius": {
+      "default": "6px",
+      "description": "Border radius"
+    },
+    "--wb-search-font-size": {
+      "default": "0.875rem",
+      "description": "Font size"
+    },
+    "--wb-search-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Background color"
+    },
+    "--wb-search-border": {
+      "default": "1px solid var(--border-color, #d1d5db)",
+      "description": "Border style"
+    },
+    "--wb-search-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Text color"
+    },
+    "--wb-search-placeholder-color": {
+      "default": "var(--text-tertiary, #9ca3af)",
+      "description": "Placeholder color"
+    },
+    "--wb-search-focus-border": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Focus border color"
+    },
+    "--wb-search-focus-ring": {
+      "default": "0 0 0 3px rgba(99, 102, 241, 0.2)",
+      "description": "Focus ring shadow"
+    },
+    "--wb-search-icon-size": {
+      "default": "1rem",
+      "description": "Icon size"
+    },
+    "--wb-search-icon-color": {
+      "default": "var(--text-secondary, #6b7280)",
+      "description": "Icon color"
+    },
+    "--wb-search-clear-size": {
+      "default": "0.75rem",
+      "description": "Clear button size"
+    },
+    "--wb-search-clear-color": {
+      "default": "var(--text-secondary, #6b7280)",
+      "description": "Clear button color"
+    },
+    "--wb-search-loading-color": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Loading indicator color"
+    }
+  },
+  "accessibility": {
+    "role": "searchbox",
+    "ariaLabel": "Search input",
+    "ariaDescribedBy": "search results if applicable"
+  },
+  "events": {
+    "wb:search": {
+      "description": "Fired when search is triggered (debounced or instant)",
+      "detail": {
+        "query": "string",
+        "instant": "boolean"
+      }
+    },
+    "wb:search:clear": {
+      "description": "Fired when search is cleared",
+      "detail": {}
+    },
+    "input": {
+      "description": "Fired on every input change",
+      "detail": {
+        "value": "string"
+      }
+    },
+    "focus": {
+      "description": "Fired when input receives focus",
+      "detail": {}
+    },
+    "blur": {
+      "description": "Fired when input loses focus",
+      "detail": {}
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-search>Basic search</wb-search>",
+      "<wb-search placeholder='Search docs...'>Custom placeholder</wb-search>",
+      "<wb-search size='lg'>Large search</wb-search>",
+      "<wb-search variant='glass'>Glass variant</wb-search>",
+      "<wb-search instant>Instant search</wb-search>"
+    ],
+    "functional": {
+      "interactions": [
+        {
+          "name": "Search Typing",
+          "setup": "<wb-search placeholder='Type here'></wb-search>",
+          "action": "type",
+          "value": "test",
+          "expect": {
+            "event": "wb:search",
+            "detail": {
+              "query": "test"
+            }
+          }
+        },
+        {
+          "name": "Clear Button",
+          "setup": "<wb-search value='search term' clearable></wb-search>",
+          "steps": [
+            {
+              "action": "click",
+              "selector": "button"
+            }
+          ],
+          "expect": {
+            "value": "",
+            "event": "wb:search:clear"
+          }
+        },
+        {
+          "name": "Instant Search",
+          "setup": "<wb-search instant></wb-search>",
+          "action": "type",
+          "value": "a",
+          "expect": {
+            "event": "wb:search",
+            "detail": {
+              "instant": true
+            }
+          }
+        }
+      ],
+      "visual": [
+        {
+          "name": "Loading State",
+          "setup": "<wb-search loading></wb-search>",
+          "expect": {
+            "textContains": "⏳"
+          }
+        },
+        {
+          "name": "Icon Display",
+          "setup": "<wb-search icon='🔎'></wb-search>",
+          "expect": {
+            "textContains": "🔎"
+          }
+        }
+      ],
+      "disabled": [
+        {
+          "name": "Disabled Search",
+          "setup": "<wb-search disabled></wb-search>",
+          "action": "click",
+          "expect": {
+            "attribute": {
+              "disabled": ""
+            }
+          }
+        }
+      ],
+      "focus": [
+        {
+          "name": "Focus Search",
+          "setup": "<wb-search></wb-search>",
+          "action": "click",
+          "expect": {
+            "focused": "input"
+          }
+        }
+      ]
+    },
+    "matrix": {
+      "combinations": [
+        {
+          "placeholder": "Search..."
+        },
+        {
+          "placeholder": "Search docs...",
+          "size": "lg"
+        },
+        {
+          "placeholder": "Glass search",
+          "variant": "glass"
+        },
+        {
+          "placeholder": "Minimal",
+          "variant": "minimal"
+        },
+        {
+          "placeholder": "Instant search",
+          "instant": true
+        },
+        {
+          "placeholder": "Loading...",
+          "loading": true
+        }
+      ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "wb-search",
+      "renders": true,
+      "baseClass": "wb-search",
+      "minInstances": 6,
+      "checkText": [
+        "Search...",
+        "Search docs...",
+        "Glass search",
+        "Minimal"
+      ],
+      "checkClasses": [
+        "wb-search--sm",
+        "wb-search--glass"
+      ],
+      "checkAttributes": [
+        "placeholder"
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "forms",
+    "icon": "🔍",
+    "since": "3.0.0",
+    "status": "stable"
+  }
+}

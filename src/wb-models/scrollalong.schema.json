@@ -41,6 +41,16 @@
       "combinations": [
         {}
       ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-scrollalong",
+      "renders": true,
+      "baseClass": "wb-scrollalong",
+      "minInstances": 1,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
     }
   },
   "_metadata": {

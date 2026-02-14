@@ -26,4 +26,4 @@ This folder contains documentation for all card components.
 | [carddraggable](./carddraggable.md) | `<wb-carddraggable>` | Draggable |
 | [cardportfolio](./cardportfolio.md) | `<wb-cardportfolio>` | Portfolio/contact |
 
-See [index.md](./index.md) for detailed architecture overview.
+See [cards.index.md](./cards.index.md) for detailed architecture overview.

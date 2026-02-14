@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Wizard Page Schema",
+  "description": "Schema for MVVM wizard page structure, steps, and data binding.",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the wizard page"
+    },
+    "steps": {
+      "type": "array",
+      "description": "Ordered steps in the wizard",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": { "type": "string", "description": "Step label" },
+          "content": { "type": "string", "description": "HTML or template for step" },
+          "viewModel": { "type": "string", "description": "ViewModel binding for step" }
+        },
+        "required": ["label", "content"]
+      }
+    },
+    "test": {
+      "setup": [
+        "<div id=\"wizard\"></div>"
+      ],
+      "matrix": {
+        "combinations": [
+          {
+            "description": "Should create a wizard with a single step",
+            "input": { "title": "Site Builder Wizard", "steps": [{"label": "Build", "content": "<section>...</section>"}] },
+            "expected": "Wizard renders with one step labeled 'Build'"
+          },
+          {
+            "description": "Should create a wizard with preview step active",
+            "input": { "title": "Preview Wizard", "steps": [{"label": "Preview", "content": "<section>...</section>"}], "activeStep": 0 },
+            "expected": "Wizard renders with 'Preview' step active"
+          },
+          {
+            "description": "Should create a multi-step wizard with second step active",
+            "input": { "title": "Multi-Step", "steps": [
+              {"label": "Step 1", "content": "<section>...</section>"},
+              {"label": "Step 2", "content": "<section>...</section>"}
+            ], "activeStep": 1 },
+            "expected": "Wizard renders with two steps and 'Step 2' active"
+          },
+          {
+            "description": "Open wizard, click Build tab, choose wb-demo, add 5 random components (wb-card, wb-modal, wb-badge, wb-table, wb-alert, wb-audio with graphic equalizer), verify all render and are functional in Preview tab",
+            "actions": [
+              "Open wizard.html",
+              "Click 'Build' tab",
+              "Select 'wb-demo' component",
+              "Add 5 random components: wb-card, wb-modal, wb-badge, wb-table, wb-alert, and wb-audio with graphic equalizer",
+              "Switch to 'Preview' tab"
+            ],
+            "expected": "All 6 components (wb-demo, wb-card, wb-modal, wb-badge, wb-table, wb-alert, wb-audio with graphic equalizer) are rendered and fully functional in Preview tab"
+          }
+        ]
+      }
+    }
+  }
+}

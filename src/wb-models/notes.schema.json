@@ -236,6 +236,18 @@
           "position": "modal"
         }
       ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-notes",
+      "renders": true,
+      "baseClass": "wb-notes",
+      "minInstances": 4,
+      "checkText": [],
+      "checkClasses": [
+        "wb-notes--right"
+      ],
+      "checkAttributes": []
     }
   },
   "_metadata": {

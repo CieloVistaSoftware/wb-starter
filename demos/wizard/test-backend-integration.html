@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Markdown API Tests</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui; background: #111; color: #eee; padding: 2rem; }
+    h1 { margin-bottom: 0.5rem; }
+    .subtitle { color: #888; margin-bottom: 2rem; }
+    .test { padding: 1rem; margin: 0.5rem 0; border-radius: 6px; border-left: 4px solid #333; background: #1a1a1a; }
+    .test.pass { border-left-color: #22c55e; }
+    .test.fail { border-left-color: #ef4444; }
+    .test.running { border-left-color: #f59e0b; }
+    .test-name { font-weight: 600; margin-bottom: 0.25rem; }
+    .test-detail { font-size: 0.85rem; color: #888; }
+    .test-detail code { background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-left: 0.5rem; }
+    .badge.pass { background: #22c55e22; color: #22c55e; }
+    .badge.fail { background: #ef444422; color: #ef4444; }
+    .badge.running { background: #f59e0b22; color: #f59e0b; }
+    #summary { margin-top: 2rem; padding: 1.5rem; background: #1a1a1a; border-radius: 8px; font-size: 1.1rem; }
+    .preview { margin-top: 0.5rem; font-size: 0.8rem; color: #666; max-height: 80px; overflow: hidden; white-space: pre-wrap; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <h1>🧪 Server Markdown API Tests</h1>
+  <p class="subtitle">Backend: <code>http://localhost:3000</code> | Tests CORS, health, markdown conversion, 404 errors</p>
+  
+  <div id="results"></div>
+  <div id="summary"></div>
+
+  <script>
+    const BASE = 'http://localhost:3000';
+    const resultsEl = document.getElementById('results');
+    const summaryEl = document.getElementById('summary');
+    let passed = 0, failed = 0;
+
+    function addResult(name, ok, detail, preview) {
+      if (ok) passed++; else failed++;
+      const div = document.createElement('div');
+      div.className = 'test ' + (ok ? 'pass' : 'fail');
+      div.innerHTML = `<div class="test-name">${name}<span class="badge ${ok ? 'pass' : 'fail'}">${ok ? 'PASS' : 'FAIL'}</span></div>`
+        + `<div class="test-detail">${detail}</div>`
+        + (preview ? `<div class="preview">${preview.substring(0, 300)}</div>` : '');
+      resultsEl.appendChild(div);
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const total = passed + failed;
+      summaryEl.innerHTML = `<strong>Total:</strong> ${total} | <strong style="color:#22c55e">Passed:</strong> ${passed} | <strong style="color:#ef4444">Failed:</strong> ${failed}`
+        + (failed === 0 && total > 0 ? '<br><span style="color:#22c55e;font-weight:600;">🎉 ALL TESTS PASSED</span>' : '');
+    }
+
+    async function runTests() {
+
+      // 1. Health check
+      try {
+        const res = await fetch(BASE + '/health');
+        const data = await res.json();
+        addResult('Health Check', res.ok && data.status === 'ok',
+          `GET /health → ${res.status}, status: ${data.status}`,
+          JSON.stringify(data));
+      } catch (err) {
+        addResult('Health Check', false,
+          `GET /health → FAILED: ${err.message}. Is the server running on port 3000?`);
+        // Stop early - nothing else will work
+        summaryEl.innerHTML += '<br><strong style="color:#ef4444;">⛔ Server not reachable. Run: npm run start</strong>';
+        return;
+      }
+
+      // 2. CORS headers present
+      try {
+        const res = await fetch(BASE + '/health');
+        const cors = res.headers.get('access-control-allow-origin');
+        addResult('CORS Headers', cors === '*',
+          `Access-Control-Allow-Origin: ${cors || '(missing)'}`);
+      } catch (err) {
+        addResult('CORS Headers', false, `Error: ${err.message}`);
+      }
+
+      // 3. Good files - markdown converted to HTML
+      const goodFiles = [
+        { path: '/docs/schema.md', desc: 'schema.md' },
+        { path: '/docs/wizard.md', desc: 'wizard.md' },
+        { path: '/docs/builder.md', desc: 'builder.md' },
+        { path: '/docs/index.md', desc: 'index.md' },
+        { path: '/docs/components/components.md', desc: 'components.md' },
+        { path: '/docs/components/mdhtml.md', desc: 'mdhtml.md' },
+      ];
+
+      for (const file of goodFiles) {
+        try {
+          const res = await fetch(BASE + file.path);
+          const text = await res.text();
+          const hasHTML = (text.includes('<h1') || text.includes('<h2') || text.includes('<h3') || text.includes('<p')) && !text.includes('Unable to Load');
+          const isRawMD = text.trimStart().startsWith('#');
+          addResult(`[GOOD] ${file.desc}`,
+            res.ok && hasHTML,
+            `GET ${file.path} → ${res.status}, HTML tags: ${hasHTML}, raw MD: ${isRawMD}`,
+            text.substring(0, 200));
+        } catch (err) {
+          addResult(`[GOOD] ${file.desc}`, false, `Error: ${err.message}`);
+        }
+      }
+
+      // 4. Bad files - proper 404 with error format
+      const badFiles = [
+        { path: '/docs/nonexistent-xyz.md', desc: 'nonexistent file' },
+        { path: '/docs/does-not-exist.md', desc: 'nonexistent file' },
+        { path: '/docs/typo/schema.md', desc: 'bad path' },
+        { path: '/docs/file%20with%20spaces.md', desc: 'special chars' },
+        { path: '/docs/.md', desc: 'empty filename' },
+      ];
+
+      for (const file of badFiles) {
+        try {
+          const res = await fetch(BASE + file.path);
+          const text = await res.text();
+          const hasErrorFormat = text.includes('Unable to Load') && text.includes('Troubleshooting');
+          const is404 = res.status === 404;
+          addResult(`[BAD] ${file.desc}`,
+            is404 && hasErrorFormat,
+            `GET ${file.path} → ${res.status}, error format: ${hasErrorFormat}`,
+            text.substring(0, 200));
+        } catch (err) {
+          addResult(`[BAD] ${file.desc}`, false, `Error: ${err.message}`);
+        }
+      }
+
+      // 5. API endpoint - GET /api/markdown?file=
+      try {
+        const res = await fetch(BASE + '/api/markdown?file=docs/schema.md');
+        const text = await res.text();
+        const hasHTML = text.includes('<h1') || text.includes('<h2');
+        addResult('API GET /api/markdown?file=docs/schema.md',
+          res.ok && hasHTML,
+          `→ ${res.status}, HTML: ${hasHTML}`,
+          text.substring(0, 200));
+      } catch (err) {
+        addResult('API GET /api/markdown', false, `Error: ${err.message}`);
+      }
+
+      // 6. API endpoint - GET /api/markdown missing file
+      try {
+        const res = await fetch(BASE + '/api/markdown?file=docs/nope.md');
+        const text = await res.text();
+        const hasErrorFormat = text.includes('Unable to Load') && text.includes('Troubleshooting');
+        addResult('API GET /api/markdown (missing file)',
+          res.status === 404 && hasErrorFormat,
+          `→ ${res.status}, error format: ${hasErrorFormat}`,
+          text.substring(0, 200));
+      } catch (err) {
+        addResult('API GET /api/markdown (missing)', false, `Error: ${err.message}`);
+      }
+
+      // 7. API endpoint - POST /api/markdown
+      try {
+        const res = await fetch(BASE + '/api/markdown', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: '# Hello\nThis is **bold**.'
+        });
+        const text = await res.text();
+        const hasHTML = text.includes('<h1') && text.includes('<strong>bold</strong>');
+        addResult('API POST /api/markdown (raw MD)',
+          res.ok && hasHTML,
+          `→ ${res.status}, converted: ${hasHTML}`,
+          text);
+      } catch (err) {
+        addResult('API POST /api/markdown', false, `Error: ${err.message}`);
+      }
+    }
+
+    runTests();
+  </script>
+</body>
+</html>

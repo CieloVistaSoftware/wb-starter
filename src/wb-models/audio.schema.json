@@ -17,6 +17,7 @@
     "src": {
       "type": "string",
       "description": "Audio source URL",
+      "default": "/demos/audio.mp3",
       "required": true
     },
     "volume": {
@@ -207,20 +208,32 @@
     "matrix": {
       "combinations": [
         {
-          "src": "audio.mp3"
+          "src": "/demos/audio.mp3"
         },
         {
-          "src": "audio.mp3",
+          "src": "/demos/audio.mp3",
           "showEq": true
         },
         {
-          "src": "audio.mp3",
+          "src": "/demos/audio.mp3",
           "volume": 0.5
         },
         {
-          "src": "audio.mp3",
+          "src": "/demos/audio.mp3",
           "loop": true
         }
+      ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-audio",
+      "renders": true,
+      "baseClass": "wb-audio",
+      "minInstances": 4,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "src"
       ]
     }
   },

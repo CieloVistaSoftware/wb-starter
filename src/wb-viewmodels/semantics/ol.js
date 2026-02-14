@@ -98,7 +98,7 @@ export function ol(element, options = {}) {
     });
   }
 
-  element.dataset.wbReady = 'ol';
+  element.classList.add('wb-ready');
 
   return () => {
     element.classList.remove('wb-ol', `wb-ol--${config.variant}`);

@@ -240,6 +240,23 @@
           "dismissible": true
         }
       ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-alert",
+      "renders": true,
+      "baseClass": "wb-alert",
+      "minInstances": 8,
+      "checkText": [
+        "Test"
+      ],
+      "checkClasses": [
+        "wb-alert--success"
+      ],
+      "checkAttributes": [
+        "variant",
+        "message"
+      ]
     }
   },
   "_metadata": {

@@ -8,39 +8,10 @@
  * -----------------------------------------------------------------------------
  */
 
-/* Map Global Variables to Component Variables */
-:root {
-  --bg-secondary: var(--color-surface, #f8fafc);
-  --bg-tertiary: var(--color-bg, #ffffff);
-  --bg-elevated: var(--color-elevated, #ffffff);
-  --text-primary: var(--color-text, #1e293b);
-  --text-secondary: var(--color-text-muted, #64748b);
-  --border-color: var(--color-border, #e2e8f0);
-  --primary: var(--color-primary, #3b82f6);
-  --shadow-elevated: var(--shadow-md);
-}
 
-[data-theme="dark"] {
-  --bg-secondary: var(--card-dark-bg-secondary);
-  --bg-tertiary: var(--card-dark-bg-tertiary);
-  --bg-elevated: var(--card-dark-bg-elevated); /* Lighter (Slate 500) to show shadow */
-  --text-primary: var(--card-dark-text-primary);
-  --text-secondary: var(--card-dark-text-secondary);
-  --border-color: var(--card-dark-border);
-  --shadow-elevated: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
-}
+/* REMOVED: Global :root and [data-theme] overrides (Law 10) */
+/* Theme variables belong exclusively in themes.css */
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg-secondary: var(--card-dark-bg-secondary);
-    --bg-tertiary: var(--card-dark-bg-tertiary);
-    --bg-elevated: var(--card-dark-bg-elevated);
-    --text-primary: var(--card-dark-text-primary);
-    --text-secondary: var(--card-dark-text-secondary);
-    --border-color: var(--card-dark-border);
-    --shadow-elevated: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
-  }
-}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    BASE CARD - ALL CARDS INHERIT FROM THIS
@@ -305,12 +276,6 @@
   color: var(--text-primary);
 }
 
-.wb-card__notification-dismiss:hover {
-  opacity: 1;
-  background: rgba(0,0,0,0.1);
-  border-radius: 4px;
-}
-
 /* Figure elements */
 .wb-card__figure {
   margin: 0;
@@ -324,6 +289,112 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NOTIFICATION CARD - Variant colors via CSS (not inline styles)
+   Schema: cardnotification.schema.json  |  Behavior: card.js → cardnotification()
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+wb-cardnotification,
+.wb-notification {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-left: 4px solid var(--border-color);
+  border-radius: var(--radius-lg, 8px);
+  background: var(--bg-secondary);
+  overflow: visible;
+}
+
+/* Icon: colored circle with letter */
+.wb-notification__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #fff;
+  background: var(--text-secondary, #6b7280);
+}
+
+/* Content container */
+.wb-notification__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.wb-notification__title {
+  display: block;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.wb-notification__message {
+  margin: 0.25rem 0 0;
+  color: var(--text-primary);
+  opacity: 0.9;
+}
+
+/* Dismiss button */
+.wb-notification__dismiss {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 0;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.wb-notification__dismiss:hover {
+  opacity: 1;
+  background: rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+/* ── Variant: Info ── */
+.wb-notification--info {
+  border-left-color: var(--info, #3b82f6);
+  background: var(--bg-info-subtle, rgba(59,130,246,0.15));
+}
+.wb-notification--info > .wb-notification__icon {
+  background: var(--info, #3b82f6);
+}
+
+/* ── Variant: Success ── */
+.wb-notification--success {
+  border-left-color: var(--success, #22c55e);
+  background: var(--bg-success-subtle, rgba(34,197,94,0.15));
+}
+.wb-notification--success > .wb-notification__icon {
+  background: var(--success, #22c55e);
+}
+
+/* ── Variant: Warning ── */
+.wb-notification--warning {
+  border-left-color: var(--warning, #f59e0b);
+  background: var(--bg-warning-subtle, rgba(245,158,11,0.15));
+}
+.wb-notification--warning > .wb-notification__icon {
+  background: var(--warning, #f59e0b);
+}
+
+/* ── Variant: Error ── */
+.wb-notification--error {
+  border-left-color: var(--error, #ef4444);
+  background: var(--bg-error-subtle, rgba(239,68,68,0.15));
+}
+.wb-notification--error > .wb-notification__icon {
+  background: var(--error, #ef4444);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

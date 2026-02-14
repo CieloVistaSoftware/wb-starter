@@ -184,6 +184,25 @@
           "axis": "x"
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-carddraggable",
+      "renders": true,
+      "baseClass": "wb-card-draggable",
+      "minInstances": 3,
+      "checkText": [
+        "Basic",
+        "Constrained",
+        "X Only"
+      ],
+      "checkClasses": [
+        "wb-card-draggable--elevated"
+      ],
+      "checkAttributes": [
+        "title",
+        "content"
+      ]
     }
   },
   "_metadata": {

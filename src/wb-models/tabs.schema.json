@@ -183,6 +183,19 @@
           "fullWidth": true
         }
       ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-tabs",
+      "renders": true,
+      "baseClass": "wb-tabs",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-tabs--pills",
+        "wb-tabs--sm"
+      ],
+      "checkAttributes": []
     }
   },
   "_metadata": {

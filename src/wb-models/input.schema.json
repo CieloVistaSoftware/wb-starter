@@ -451,6 +451,84 @@
           }
         }
       ]
+    },
+    "matrix": {
+      "combinations": [
+        {
+          "label": "Text Input",
+          "placeholder": "Enter text..."
+        },
+        {
+          "label": "Email",
+          "inputType": "email",
+          "placeholder": "you@example.com"
+        },
+        {
+          "label": "Password",
+          "inputType": "password",
+          "placeholder": "••••••••"
+        },
+        {
+          "label": "With Helper",
+          "placeholder": "Type here",
+          "helper": "This is helper text"
+        },
+        {
+          "label": "Error State",
+          "variant": "error",
+          "error": "This field is required",
+          "value": ""
+        },
+        {
+          "label": "Success State",
+          "variant": "success",
+          "value": "Valid input"
+        },
+        {
+          "label": "With Icon",
+          "icon": "🔍",
+          "placeholder": "Search...",
+          "clearable": true
+        },
+        {
+          "label": "Disabled",
+          "disabled": true,
+          "value": "Cannot edit"
+        },
+        {
+          "label": "Small Input",
+          "size": "sm",
+          "placeholder": "Small"
+        },
+        {
+          "label": "Large Input",
+          "size": "lg",
+          "placeholder": "Large"
+        }
+      ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "wb-input",
+      "renders": true,
+      "baseClass": "wb-input",
+      "minInstances": 10,
+      "checkText": [
+        "Text Input",
+        "Enter text...",
+        "Email",
+        "you@example.com",
+        "Password",
+        "••••••••"
+      ],
+      "checkClasses": [
+        "wb-input--success",
+        "wb-input--sm"
+      ],
+      "checkAttributes": [
+        "label",
+        "placeholder"
+      ]
     }
   },
   "_metadata": {

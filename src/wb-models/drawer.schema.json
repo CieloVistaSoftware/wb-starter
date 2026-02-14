@@ -226,6 +226,26 @@
           "width": "400px"
         }
       ]
+    },
+    "site": {
+      "page": "overlays",
+      "tag": "wb-drawer",
+      "renders": true,
+      "baseClass": "wb-drawer",
+      "minInstances": 3,
+      "checkText": [
+        "Right Drawer",
+        "Left Drawer",
+        "Wide"
+      ],
+      "checkClasses": [
+        "wb-drawer--left",
+        "wb-drawer--default"
+      ],
+      "checkAttributes": [
+        "title",
+        "position"
+      ]
     }
   },
   "_metadata": {

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Behaviors Demo (Code)</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/components.css">
+  <link rel="stylesheet" href="../src/styles/behaviors/card.css">
+
+</head>
+
+<body>
+  <h1>🃏 Card Behaviors Demo (Code)</h1>
+  <p>All 19 card behavior variants wrapped in wb-demo for each section.</p>
+
+  <!-- 1. card (base) -->
+  <h2>card (base)</h2>
+  <wb-demo columns="3">
+    <wb-card title="Elevated Card" elevated>
+      <p>This card has elevation shadow.</p>
+    </wb-card>
+    <wb-card title="Clickable Card" clickable>
+      <p>Click me! I'm interactive.</p>
+    </wb-card>
+    <wb-card title="With Footer" footer="Last updated: Today">
+      <p>This card has a footer section.</p>
+    </wb-card>
+  </wb-demo>
+
+  <!-- 2. cardprofile -->
+  <h2>cardprofile</h2>
+  <wb-demo columns="3">
+    <wb-cardprofile name="Alice Chen" role="UX Designer" avatar="https://i.pravatar.cc/80?img=1">
+    </wb-cardprofile>
+    <wb-cardprofile name="Bob Martinez" role="Lead Engineer" avatar="https://i.pravatar.cc/80?img=3" bio="Building scalable systems.">
+    </wb-cardprofile>
+    <wb-cardprofile name="Clara Novak" role="Product Manager" avatar="https://i.pravatar.cc/80?img=5" align="left">
+    </wb-cardprofile>
+  </wb-demo>
+
+  <!-- 3. cardpricing -->
+  <h2>cardpricing</h2>
+  <wb-demo columns="3">
+    <wb-cardpricing plan="Basic" price="$9" period="/month" features="5 Projects,1 GB Storage,Email Support">
+    </wb-cardpricing>
+    <wb-cardpricing plan="Pro" price="$29" period="/month" featured features="Unlimited Projects,10 GB Storage,Priority Support,API Access">
+    </wb-cardpricing>
+    <wb-cardpricing plan="Enterprise" price="$99" period="/month" features="Everything in Pro,SSO,Dedicated Manager,SLA" description="For large teams">
+    </wb-cardpricing>
+  </wb-demo>
+
+  <!-- 4. cardstats -->
+  <h2>cardstats</h2>
+  <wb-demo columns="3">
+    <wb-cardstats value="1,234" label="Users" icon="👥" trend="up" trend-value="+12%">
+    </wb-cardstats>
+    <wb-cardstats value="$50K" label="Revenue" icon="💰" trend="up" trend-value="+8.3%">
+    </wb-cardstats>
+    <wb-cardstats value="98.5%" label="Uptime" icon="⚡" trend="neutral" trend-value="0%">
+    </wb-cardstats>
+  </wb-demo>
+
+  <!-- 5. cardimage -->
+  <h2>cardimage</h2>
+  <wb-demo columns="3">
+    <wb-cardimage src="https://picsum.photos/400/250?random=1" alt="Mountain landscape" title="Mountain View">
+    </wb-cardimage>
+    <wb-cardimage src="https://picsum.photos/400/250?random=2" alt="City skyline" title="Urban Life" subtitle="Downtown at dusk">
+    </wb-cardimage>
+    <wb-cardimage src="https://picsum.photos/400/250?random=3" alt="Ocean waves" title="Coastal Drive" caption="Photo by Jane Doe">
+    </wb-cardimage>
+  </wb-demo>
+
+  <!-- 6. cardbutton -->
+  <h2>cardbutton</h2>
+  <wb-demo columns="3">
+    <wb-cardbutton title="Confirm Action" content="Are you sure you want to proceed?" primary="Confirm" secondary="Cancel">
+    </wb-cardbutton>
+    <wb-cardbutton title="Save Changes" content="Your draft has unsaved edits." primary="Save">
+    </wb-cardbutton>
+    <wb-cardbutton title="Delete Item" content="This action cannot be undone." primary="Delete" secondary="Keep">
+    </wb-cardbutton>
+  </wb-demo>
+
+  <!-- 7. carddraggable -->
+  <h2>carddraggable</h2>
+  <wb-demo columns="3">
+    <wb-carddraggable title="Drag Me" content="I can be moved around.">
+    </wb-carddraggable>
+    <wb-carddraggable title="X Axis Only" content="Horizontal drag only." axis="x">
+    </wb-carddraggable>
+    <wb-carddraggable title="Constrained" content="Stays within parent." constrain="parent">
+    </wb-carddraggable>
+  </wb-demo>
+
+  <!-- 8. cardexpandable -->
+  <h2>cardexpandable</h2>
+  <wb-demo columns="3">
+    <wb-cardexpandable title="Read More" content="This is the expanded content that was previously hidden. It reveals additional details about the topic.">
+    </wb-cardexpandable>
+    <wb-cardexpandable title="Already Open" content="This card starts in expanded state." expanded>
+    </wb-cardexpandable>
+    <wb-cardexpandable title="Custom Height" content="Collapsed at 50px instead of default." max-height="50px">
+    </wb-cardexpandable>
+  </wb-demo>
+
+  <!-- 9. cardfile -->
+  <h2>cardfile</h2>
+  <wb-demo columns="3">
+    <wb-cardfile filename="report.pdf" file-type="pdf" size="2.4 MB" href="/files/report.pdf">
+    </wb-cardfile>
+    <wb-cardfile filename="photo.jpg" file-type="image" size="1.8 MB" date="Feb 10, 2026">
+    </wb-cardfile>
+    <wb-cardfile filename="archive.zip" file-type="zip" size="45 MB" href="/files/archive.zip">
+    </wb-cardfile>
+  </wb-demo>
+
+  <!-- 10. cardhero -->
+  <h2>cardhero</h2>
+  <wb-demo columns="1">
+    <wb-cardhero background="https://picsum.photos/1200/400?random=10" title="Welcome to WB Framework" subtitle="Build stunning UIs with just HTML" cta="Get Started">
+    </wb-cardhero>
+  </wb-demo>
+
+  <!-- 11. cardhorizontal -->
+  <h2>cardhorizontal</h2>
+  <wb-demo columns="2">
+    <wb-cardhorizontal image="https://picsum.photos/300/200?random=4" title="Horizontal Layout" subtitle="Image on the left, content on the right.">
+    </wb-cardhorizontal>
+    <wb-cardhorizontal image="https://picsum.photos/300/200?random=5" title="Right Image" subtitle="Image position flipped." image-position="right">
+    </wb-cardhorizontal>
+  </wb-demo>
+
+  <!-- 12. cardlink -->
+  <h2>cardlink</h2>
+  <wb-demo columns="3">
+    <wb-cardlink href="/docs" title="Documentation" description="Read the full API reference" icon="📖">
+    </wb-cardlink>
+    <wb-cardlink href="/github" title="GitHub Repo" description="View the source code" icon="🐙" target="_blank">
+    </wb-cardlink>
+    <wb-cardlink href="/changelog" title="What's New" description="Latest release notes" icon="🆕" badge="v3.0">
+    </wb-cardlink>
+  </wb-demo>
+
+  <!-- 13. cardminimizable -->
+  <h2>cardminimizable</h2>
+  <wb-demo columns="3">
+    <wb-cardminimizable title="Panel A" content="This content can be minimized.">
+    </wb-cardminimizable>
+    <wb-cardminimizable title="Panel B (Minimized)" content="Start minimized." minimized>
+    </wb-cardminimizable>
+    <wb-cardminimizable title="Panel C" content="Another minimizable panel with some text.">
+    </wb-cardminimizable>
+  </wb-demo>
+
+  <!-- 14. cardnotification -->
+  <h2>cardnotification</h2>
+  <wb-demo columns="2">
+    <wb-cardnotification variant="info" title="Info" message="This is an informational notice.">
+    </wb-cardnotification>
+    <wb-cardnotification variant="success" title="Success" message="Operation completed successfully!">
+    </wb-cardnotification>
+    <wb-cardnotification variant="warning" title="Warning" message="Please review before continuing.">
+    </wb-cardnotification>
+    <wb-cardnotification variant="error" title="Error" message="Something went wrong. Try again.">
+    </wb-cardnotification>
+  </wb-demo>
+
+  <!-- 15. cardoverlay -->
+  <h2>cardoverlay</h2>
+  <wb-demo columns="3">
+    <wb-cardoverlay image="https://picsum.photos/400/300?random=6" title="Bottom Text" subtitle="Default position">
+    </wb-cardoverlay>
+    <wb-cardoverlay image="https://picsum.photos/400/300?random=7" title="Centered" subtitle="Position center" position="center">
+    </wb-cardoverlay>
+    <wb-cardoverlay image="https://picsum.photos/400/300?random=8" title="Top Aligned" subtitle="Position top" position="top">
+    </wb-cardoverlay>
+  </wb-demo>
+
+  <!-- 16. cardportfolio -->
+  <h2>cardportfolio</h2>
+  <wb-demo columns="1">
+    <wb-cardportfolio name="John Peters" title="Lead Software Engineer" company="Cielo Vista Software" location="Rochester, MN" avatar="https://i.pravatar.cc/120?img=12" bio="30+ years building enterprise solutions." skills="JavaScript,TypeScript,.NET,PowerShell" email="john@example.com" website="https://example.com" cta="View Full Profile">
+    </wb-cardportfolio>
+  </wb-demo>
+
+  <!-- 17. cardproduct -->
+  <h2>cardproduct</h2>
+  <wb-demo columns="3">
+    <wb-cardproduct image="https://picsum.photos/400/300?random=20" title="Wireless Headphones" price="$79" original-price="$129" badge="Sale" rating="4.5" reviews="234">
+    </wb-cardproduct>
+    <wb-cardproduct image="https://picsum.photos/400/300?random=21" title="Mechanical Keyboard" price="$149" rating="4.8" reviews="89" cta="Buy Now">
+    </wb-cardproduct>
+    <wb-cardproduct image="https://picsum.photos/400/300?random=22" title="USB-C Hub" price="$39" description="7-in-1 adapter" featured>
+    </wb-cardproduct>
+  </wb-demo>
+
+  <!-- 18. cardtestimonial -->
+  <h2>cardtestimonial</h2>
+  <wb-demo columns="3">
+    <wb-cardtestimonial quote="This framework changed how we build UIs." author="Sarah Kim" role="CTO, TechCorp" avatar="https://i.pravatar.cc/48?img=10" rating="5">
+    </wb-cardtestimonial>
+    <wb-cardtestimonial quote="Clean, fast, and easy to use. Highly recommend." author="Marcus Lee" role="Frontend Lead" avatar="https://i.pravatar.cc/48?img=11" rating="4">
+    </wb-cardtestimonial>
+    <wb-cardtestimonial quote="The best component library I've worked with." author="Priya Patel" role="Developer" avatar="https://i.pravatar.cc/48?img=16" rating="5">
+    </wb-cardtestimonial>
+  </wb-demo>
+
+  <!-- 19. cardvideo -->
+  <h2>cardvideo</h2>
+  <wb-demo columns="2">
+    <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" title="Sample Video" description="Big Buck Bunny clip" poster="https://picsum.photos/640/360?random=30">
+    </wb-cardvideo>
+    <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" title="Looping Muted" muted loop aspect="4/3">
+    </wb-cardvideo>
+  </wb-demo>
+
+  <!-- Load wb-starter -->
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('Card Behaviors Demo initialized');
+  </script>
+</body>
+
+</html>

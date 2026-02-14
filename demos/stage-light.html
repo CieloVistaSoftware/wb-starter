@@ -248,7 +248,7 @@
             const spotlight = document.getElementById('demoSpotlight');
             
             // Ensure spotlight has the stagelight behavior applied
-            if (spotlight && !spotlight.dataset.wbReady) {
+            if (spotlight && !spotlight.classList.contains('wb-ready')) {
                 const stagelight = await getBehavior('stagelight');
                 stagelight(spotlight);
             }

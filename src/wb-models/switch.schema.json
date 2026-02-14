@@ -219,6 +219,23 @@
           "size": "lg"
         }
       ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "wb-switch",
+      "renders": true,
+      "baseClass": "wb-switch",
+      "minInstances": 4,
+      "checkText": [
+        "Test"
+      ],
+      "checkClasses": [
+        "wb-switch--sm",
+        "wb-switch--primary"
+      ],
+      "checkAttributes": [
+        "label"
+      ]
     }
   },
   "_metadata": {

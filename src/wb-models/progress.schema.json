@@ -6,7 +6,7 @@
   "schemaFor": "progress",
   "baseClass": "wb-progress",
   "semanticElement": {
-    "tagName": "div",
+    "tagName": "progress",
     "implicitRole": "progressbar"
   },
   "compliance": {
@@ -201,14 +201,14 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-progress>Basic progress content</wb-progress>",
-      "<wb-progress variant=\"default\">variant=default</wb-progress>",
-      "<wb-progress variant=\"primary\">variant=primary</wb-progress>",
-      "<wb-progress variant=\"success\">variant=success</wb-progress>",
-      "<wb-progress size=\"xs\">size=xs</wb-progress>",
-      "<wb-progress size=\"sm\">size=sm</wb-progress>",
-      "<wb-progress size=\"md\">size=md</wb-progress>",
-      "<wb-progress show-value>with showValue</wb-progress>"
+      "<progress value=\"50\" max=\"100\">50%</progress>",
+      "<progress value=\"25\" max=\"100\" data-variant=\"default\">25%</progress>",
+      "<progress value=\"50\" max=\"100\" data-variant=\"primary\">50%</progress>",
+      "<progress value=\"75\" max=\"100\" data-variant=\"success\">75%</progress>",
+      "<progress value=\"30\" max=\"100\" data-size=\"xs\">30%</progress>",
+      "<progress value=\"40\" max=\"100\" data-size=\"sm\">40%</progress>",
+      "<progress value=\"60\" max=\"100\" data-size=\"md\">60%</progress>",
+      "<progress value=\"80\" max=\"100\" data-show-label>80%</progress>"
     ],
     "matrix": {
       "combinations": [
@@ -263,6 +263,19 @@
           "indeterminate": true
         }
       ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-progress",
+      "renders": true,
+      "baseClass": "wb-progress",
+      "minInstances": 14,
+      "checkText": [],
+      "checkClasses": [
+        "wb-progress--default",
+        "wb-progress--xs"
+      ],
+      "checkAttributes": []
     }
   },
   "_metadata": {

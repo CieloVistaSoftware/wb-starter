@@ -25,6 +25,25 @@
       "<wb-resizable>Test permutation 3</wb-resizable>",
       "<wb-resizable>Test permutation 4</wb-resizable>",
       "<wb-resizable>Test permutation 5</wb-resizable>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "handles": "se"
+        }
+      ]
+    },
+    "site": {
+      "page": "interactive",
+      "tag": "wb-resizable",
+      "renders": true,
+      "baseClass": "wb-resizable",
+      "minInstances": 1,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "handles"
+      ]
+    }
   }
 }

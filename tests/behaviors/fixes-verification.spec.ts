@@ -48,7 +48,7 @@ test.describe('Fix Verification Tests', () => {
   // WB_FIGURE_CAPTION_021
   test('Figure component renders caption from data-caption', async ({ page }) => {
     await page.setContent(`
-      <figure id="test-figure" data-wb="media" data-caption="Test Caption">
+      <figure id="test-figure" data-caption="Test Caption" x-media>
         <img src="/assets/images/placeholder.jpg" alt="Test">
       </figure>
       <script src="/src/index.js" type="module"></script>
@@ -65,7 +65,7 @@ test.describe('Fix Verification Tests', () => {
     // We need to mock the audio context or just check if the controls are rendered
     // Since we can't easily play audio in headless, we'll check structure
     await page.setContent(`
-      <div id="test-eq" data-wb="media" data-type="audio" data-src="/assets/audio/test.mp3" data-eq="true"></div>
+      <div id="test-eq" data-type="audio" data-src="/assets/audio/test.mp3" data-eq="true" x-media></div>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -260,8 +260,8 @@ test.describe('Fix Verification Tests', () => {
 
     // 032: Async loading (WB.inject/scan)
     // If the page loaded and behaviors applied, async loading is working.
-    // We can verify by checking if data-wb-ready is set on elements
-    await expect(rating).toHaveAttribute('data-wb-ready', 'true');
+    // We can verify by checking if .wb-ready class is on elements
+    await expect(rating).toHaveClass(/wb-ready/);
   });
 
   test('Syntax fixes verification', async ({ page }) => {

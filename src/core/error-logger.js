@@ -53,8 +53,14 @@ function initErrorDisplay() {
     const errorText = errors.map((e, i) => {
       let text = `[${i + 1}] ${e.message}`;
       if (e.details?.file) text += `\n    File: ${e.details.file}:${e.details.line || '?'}`;
-      if (e.details?.stack) text += `\n    Stack: ${e.details.stack.split('\n')[0]}`;
+      if (e.to) text += `\n    To: ${e.to}`;
       if (e.details?.reason) text += `\n    Reason: ${e.details.reason}`;
+      if (e.details?.response) text += `\n    Response: ${e.details.response}`;
+      if (e.details?.src) text += `\n    Src: ${e.details.src}`;
+      if (e.details?.stack) text += `\n    Stack:\n${e.details.stack.split('\n').map(l => '      ' + l.trim()).join('\n')}`;
+      if (e.details?.column) text += `\n    Column: ${e.details.column}`;
+      text += `\n    Time: ${e.timestamp}`;
+      text += `\n    URL: ${e.url}`;
       return text;
     }).join('\n\n');
     
@@ -99,6 +105,7 @@ export async function logError(message, details = {}) {
     timestamp: new Date().toISOString(),
     message: String(message),
     details: details,
+    to: details.to || '',
     url: window.location.href,
     userAgent: navigator.userAgent
   };
@@ -121,6 +128,9 @@ export async function logError(message, details = {}) {
   const time = new Date(error.timestamp).toLocaleTimeString();
   let detailsHtml = '';
   if (details.file) detailsHtml += `<div style="color:#888;font-size:11px;">📁 ${details.file}:${details.line || '?'}</div>`;
+  if (error.to) detailsHtml += `<div style="color:#3b82f6;font-size:11px;">➡️ To: ${escapeHtml(error.to)}</div>`;
+  if (details.response) detailsHtml += `<div style="color:#f59e0b;font-size:11px;">📡 Response: ${escapeHtml(details.response)}</div>`;
+  if (details.src) detailsHtml += `<div style="color:#a78bfa;font-size:11px;">📄 Src: ${escapeHtml(details.src)}</div>`;
   if (details.stack) detailsHtml += `<div style="color:#666;font-size:10px;margin-top:4px;max-height:60px;overflow:auto;">${escapeHtml(details.stack)}</div>`;
   
   item.innerHTML = `

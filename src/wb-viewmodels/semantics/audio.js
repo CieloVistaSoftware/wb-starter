@@ -24,13 +24,17 @@ const EQ_BANDS = [
 ];
 
 export function audio(element, options = {}) {
+  // Read plain attributes first (wb-* custom elements), fall back to data-*
+  function attr(name) {
+    return element.getAttribute(name) ?? element.dataset[name.replace(/-([a-z])/g, (_, c) => c.toUpperCase())] ?? null;
+  }
   const config = {
-    src: options.src || element.dataset.src || '',
-    controls: options.controls ?? element.dataset.controls !== 'false',
-    autoplay: options.autoplay ?? element.hasAttribute('data-autoplay'),
-    loop: options.loop ?? element.hasAttribute('data-loop'),
-    volume: parseFloat(options.volume || element.dataset.volume || '0.8'),
-    showEq: options.showEq ?? (element.dataset.showEq === 'true' || (element.hasAttribute('data-show-eq') && element.dataset.showEq !== 'false')),
+    src: options.src || attr('src') || '',
+    controls: options.controls ?? attr('controls') !== 'false',
+    autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || element.hasAttribute('data-autoplay')),
+    loop: options.loop ?? (element.hasAttribute('loop') || element.hasAttribute('data-loop')),
+    volume: parseFloat(options.volume || attr('volume') || '0.8'),
+    showEq: options.showEq ?? (element.hasAttribute('show-eq') || element.hasAttribute('data-show-eq') || attr('show-eq') === 'true' || element.dataset.showEq === 'true'),
     ...options
   };
 
@@ -49,12 +53,11 @@ export function audio(element, options = {}) {
 
   // Create audio element if needed
   let audioEl = element;
-  if (element.tagName !== 'AUDIO' && config.src) {
+  if (element.tagName !== 'AUDIO') {
     element.innerHTML = '';
     audioEl = document.createElement('audio');
-    // CORS required for Web Audio API
     if (config.showEq) audioEl.crossOrigin = 'anonymous';
-    audioEl.src = config.src;
+    if (config.src) audioEl.src = config.src;
     element.appendChild(audioEl);
   } else if (element.tagName === 'AUDIO' && config.showEq && !audioEl.crossOrigin) {
     // Try to enable CORS for existing elements if EQ is requested
@@ -153,7 +156,7 @@ export function audio(element, options = {}) {
     getAudioContext: () => audioContext
   };
 
-  element.dataset.wbReady = 'audio';
+  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-audio');
     if (audioContext) audioContext.close();
@@ -225,6 +228,20 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
     filters.forEach(f => { if (f) f.gain.value = 0; });
   };
   buttonRow.appendChild(zeroBtn);
+
+  // Demo Track button
+  const demoBtn = createPresetButton('Demo Track');
+  demoBtn.onclick = () => {
+    // Set demo audio source and play
+    audioEl.src = 'demos/audio.mp3';
+    audioEl.load();
+    audioEl.play();
+    // Optionally update UI to show demo is playing
+    if (element.querySelector('.wb-audio-nowplaying')) {
+      element.querySelector('.wb-audio-nowplaying').textContent = 'Now Playing: Demo Track';
+    }
+  };
+  buttonRow.appendChild(demoBtn);
 
   Object.entries(presetData).forEach(([name, values]) => {
     const btn = createPresetButton(name);

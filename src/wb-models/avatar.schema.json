@@ -183,6 +183,21 @@
           "shape": "square"
         }
       ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-avatar",
+      "renders": true,
+      "baseClass": "wb-avatar",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-avatar--xs",
+        "wb-avatar--square"
+      ],
+      "checkAttributes": [
+        "initials"
+      ]
     }
   },
   "_metadata": {

@@ -367,6 +367,12 @@ export default class WBSite {
           newScript.textContent = oldScript.textContent;
           oldScript.parentNode.replaceChild(newScript, oldScript);
         });
+        
+        // Process wb-* elements that were just added
+        if (window.WB) {
+          // Small delay to ensure DOM is fully updated
+          setTimeout(() => window.WB.scan(main), 10);
+        }
       } else {
         main.innerHTML = this.render404(pageId);
       }

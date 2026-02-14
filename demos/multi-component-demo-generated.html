@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧩 Multi-Component Demo</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/components.css">
+
+</head>
+
+<body>
+  <h1>🧩 Multi-Component Demo</h1>
+  <p>Composed from multiple sources using $extends, $generate, $ref, and $include</p>
+
+  <!-- 1. Badges — From Matrix -->
+  <h2>Badges — From Matrix</h2>
+  <wb-demo columns="4">
+    <wb-badge label="New">
+    </wb-badge>
+    <wb-badge label="Done" variant="success">
+    </wb-badge>
+    <wb-badge label="Warning" variant="warning">
+    </wb-badge>
+    <wb-badge label="Error" variant="error">
+    </wb-badge>
+    <wb-badge label="5" variant="primary" pill>
+    </wb-badge>
+    <wb-badge label="Badge" variant="success" dot>
+    </wb-badge>
+    <wb-badge label="Tag" variant="info" removable>
+    </wb-badge>
+    <wb-badge label="Outline" variant="primary" outline>
+    </wb-badge>
+  </wb-demo>
+
+  <!-- 2. Notifications — Matrix Combos -->
+  <h2>Notifications — Matrix Combos</h2>
+  <wb-demo columns="3">
+    <wb-cardnotification message="Info message">
+    </wb-cardnotification>
+    <wb-cardnotification message="Done!" variant="success" title="Success">
+    </wb-cardnotification>
+    <wb-cardnotification message="Warning!" variant="warning">
+    </wb-cardnotification>
+    <wb-cardnotification message="Error!" variant="error">
+    </wb-cardnotification>
+    <wb-cardnotification message="Info" variant="info" title="Notice" icon="🔔">
+    </wb-cardnotification>
+  </wb-demo>
+
+  <!-- 3. Progress — All Enum Variants -->
+  <h2>Progress — All Enum Variants</h2>
+  <wb-demo columns="3">
+    <wb-progress variant="default">
+    </wb-progress>
+    <wb-progress variant="primary">
+    </wb-progress>
+    <wb-progress variant="success">
+    </wb-progress>
+    <wb-progress variant="warning">
+    </wb-progress>
+    <wb-progress variant="error">
+    </wb-progress>
+    <wb-progress variant="info">
+    </wb-progress>
+    <wb-progress size="xs">
+    </wb-progress>
+    <wb-progress size="sm">
+    </wb-progress>
+    <wb-progress size="md">
+    </wb-progress>
+    <wb-progress size="lg">
+    </wb-progress>
+    <wb-progress size="xl">
+    </wb-progress>
+  </wb-demo>
+
+  <!-- 4. badge — Combinations -->
+  <h2>badge — Combinations</h2>
+  <wb-demo columns="3">
+    <wb-badge label="New">
+    </wb-badge>
+    <wb-badge label="Done" variant="success">
+    </wb-badge>
+    <wb-badge label="Warning" variant="warning">
+    </wb-badge>
+    <wb-badge label="Error" variant="error">
+    </wb-badge>
+    <wb-badge label="5" variant="primary" pill>
+    </wb-badge>
+    <wb-badge variant="success" dot>
+    </wb-badge>
+    <wb-badge label="Tag" variant="info" removable>
+    </wb-badge>
+    <wb-badge label="Outline" variant="primary" outline>
+    </wb-badge>
+  </wb-demo>
+
+  <!-- 5. Custom Hand-Authored Section -->
+  <h2>Custom Hand-Authored Section</h2>
+  <wb-demo columns="2">
+    <wb-badge label="Hand-crafted" variant="primary" pill>
+    </wb-badge>
+    <wb-badge label="Also custom" variant="success" size="lg">
+    </wb-badge>
+  </wb-demo>
+
+  <!-- Load wb-starter -->
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('🧩 Multi-Component Demo initialized');
+  </script>
+</body>
+
+</html>

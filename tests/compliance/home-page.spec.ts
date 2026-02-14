@@ -11,8 +11,13 @@ test.describe('Home Page Compliance', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    // Wait for the hero card to appear, ensuring content is loaded
-    await page.waitForSelector('wb-cardhero', { state: 'attached', timeout: 10000 });
+    // Wait for WB to be initialized
+    await page.waitForFunction(() => window.WB && window.WBSite, { timeout: 10000 });
+    // Wait for navigation to complete and content to be loaded
+    await page.waitForFunction(() => {
+      const main = document.getElementById('main');
+      return main && main.innerHTML.includes('wb-cardhero');
+    }, { timeout: 10000 });
     // Additional small buffer for hydration
     await page.waitForTimeout(500); 
   });
@@ -20,6 +25,29 @@ test.describe('Home Page Compliance', () => {
   test('first panel should be wb-cardhero with expected content', async ({ page }) => {
     // First panel must be wb-cardhero
     const hero = page.locator('wb-cardhero').first();
+    
+    // Debug: Check if element exists and its visibility
+    const heroExists = await hero.count() > 0;
+    console.log('wb-cardhero exists:', heroExists);
+    
+    if (heroExists) {
+      const isVisible = await hero.isVisible();
+      const boundingBox = await hero.boundingBox();
+      const computedStyle = await hero.evaluate(el => {
+        const style = window.getComputedStyle(el);
+        return {
+          display: style.display,
+          visibility: style.visibility,
+          opacity: style.opacity,
+          width: style.width,
+          height: style.height
+        };
+      });
+      console.log('wb-cardhero visibility:', isVisible);
+      console.log('wb-cardhero bounding box:', boundingBox);
+      console.log('wb-cardhero computed style:', computedStyle);
+    }
+    
     await expect(hero, 'First panel must be <wb-cardhero>').toBeVisible();
     
     // Must have the cosmic variant
@@ -45,9 +73,9 @@ test.describe('Home Page Compliance', () => {
     await expect(hero).toHaveAttribute('cta', /Explore Components/);
     await expect(hero).toHaveAttribute('cta-secondary', /Documentation/);
     
-    // Must have component count badge in pretitle (supports slot OR attribute)
-    const pretitle = page.locator('wb-cardhero [slot="pretitle"], wb-cardhero[pretitle]');
-    await expect(pretitle).toContainText(/\d+ Components/);
+    // Must have component count badge in pretitle (attribute-based API)
+    // Value is like "41+ Components" — the \+ matches the literal plus sign
+    await expect(hero).toHaveAttribute('pretitle', /\d+\+? Components/);
   });
 
   test('home page should have "Why WB Behaviors" section', async ({ page }) => {

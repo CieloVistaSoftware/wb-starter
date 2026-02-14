@@ -154,5 +154,22 @@
   ],
   "$view": [],
   "$methods": {},
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "matrix": {
+      "combinations": [
+        {}
+      ]
+    },
+    "site": {
+      "page": "interactive",
+      "tag": "wb-views",
+      "renders": true,
+      "baseClass": "wb-views",
+      "minInstances": 1,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
+  }
 }

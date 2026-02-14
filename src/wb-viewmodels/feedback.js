@@ -89,7 +89,7 @@ export function toast(element, options = {}) {
   };
 
   element.addEventListener('click', showToast);
-  element.dataset.wbReady = 'toast';
+  element.classList.add('wb-ready');
   return () => element.removeEventListener('click', showToast);
 }
 
@@ -98,7 +98,7 @@ export function toast(element, options = {}) {
  * Attribute: [badge]
  */
 export function badge(element, options = {}) {
-  const rawVariant = options.variant || element.dataset.variant || element.getAttribute('badge') || 'default';
+  const rawVariant = options.variant || element.getAttribute('variant') || element.dataset.variant || element.getAttribute('badge') || 'default';
   // Sanitize variant for use as CSS class (replace spaces with dashes, lowercase)
   const sanitizedVariant = rawVariant.replace(/\s+/g, '-').toLowerCase();
   
@@ -107,6 +107,7 @@ export function badge(element, options = {}) {
     size: options.size || element.dataset.size || element.getAttribute('size') || 'md',
     pill: options.pill ?? (element.hasAttribute('data-pill') || element.hasAttribute('pill')),
     dot: options.dot ?? (element.hasAttribute('data-dot') || element.hasAttribute('dot')),
+    outline: options.outline ?? (element.hasAttribute('data-outline') || element.hasAttribute('outline')),
     ...options
   };
 
@@ -114,6 +115,7 @@ export function badge(element, options = {}) {
   const colors = {
     default: { bg: '#6b7280', text: 'white' },
     primary: { bg: '#6366f1', text: 'white' },
+    secondary: { bg: '#64748b', text: 'white' },
     success: { bg: '#22c55e', text: 'white' },
     warning: { bg: '#f59e0b', text: 'white' },
     error: { bg: '#ef4444', text: 'white' },
@@ -144,6 +146,11 @@ export function badge(element, options = {}) {
     element.classList.add('wb-badge--dot');
   }
 
+  // Add outline class
+  if (config.outline) {
+    element.classList.add('wb-badge--outline');
+  }
+
   element.style.display = 'inline-block';
   element.style.fontWeight = '600';
   element.style.background = c.bg;
@@ -163,15 +170,18 @@ export function badge(element, options = {}) {
     element.style.borderRadius = config.pill ? '9999px' : '4px';
   }
 
-  element.dataset.wbReady = 'badge';
+  element.classList.add('wb-ready');
   return () => {
-    element.classList.remove('wb-badge', `wb-badge--${config.variant}`, `wb-badge--${config.size}`, 'wb-badge--pill', 'wb-badge--dot');
+    element.classList.remove('wb-badge', `wb-badge--${config.variant}`, `wb-badge--${config.size}`, 'wb-badge--pill', 'wb-badge--dot', 'wb-badge--outline');
   };
 }
 
 /**
- * Progress - Animated progress bars (0.6rem height)
- * Custom Tag: <progress>
+ * Progress - Animated progress bars (DEPRECATED)
+ * @deprecated Behavior routing moved to semantics/progress.js (2026-02-09).
+ * This function is retained for direct imports but is no longer loaded
+ * by the behavior registry for <progress> elements.
+ * Use native <progress> element instead.
  */
 export function progress(element, options = {}) {
   const config = {
@@ -242,7 +252,7 @@ export function progress(element, options = {}) {
     }
   };
 
-  element.dataset.wbReady = 'progress';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-progress');
 }
 
@@ -251,13 +261,13 @@ export function progress(element, options = {}) {
  */
 export function spinner(element, options = {}) {
   // Guard against re-initialization - check FIRST before any modifications
-  if (element.dataset.wbReady?.includes('spinner') || element._wbSpinnerInit) {
+  if (element.classList.contains('wb-ready') || element._wbSpinnerInit) {
     return () => {};
   }
   
   // Set flag IMMEDIATELY to prevent race conditions (before any DOM changes)
   element._wbSpinnerInit = true;
-  element.dataset.wbReady = 'spinner';
+  element.classList.add('wb-ready');
 
   const config = {
     size: options.size || element.dataset.size || 'md',
@@ -363,7 +373,7 @@ export function avatar(element, options = {}) {
     element.innerHTML += `<span style="position:absolute;bottom:0;right:0;width:25%;height:25%;background:${statusColors[config.status] || statusColors.offline};border-radius:50%;border:2px solid var(--bg-primary,#1f2937);"></span>`;
   }
 
-  element.dataset.wbReady = 'avatar';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-avatar');
 }
 
@@ -414,7 +424,7 @@ export function chip(element, options = {}) {
     element.appendChild(btn);
   }
 
-  element.dataset.wbReady = 'chip';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-chip');
 }
 
@@ -461,7 +471,7 @@ export function alert(element, options = {}) {
     ${config.dismissible ? `<button class="wb-alert__close" onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;opacity:0.7;font-size:1.25rem;line-height:1;">×</button>` : ''}
   `;
 
-  element.dataset.wbReady = 'alert';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-alert');
 }
 
@@ -520,7 +530,7 @@ export function skeleton(element, options = {}) {
 
   (variants[config.variant] || variants.text)();
 
-  element.dataset.wbReady = 'skeleton';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-skeleton');
 }
 
@@ -563,7 +573,7 @@ export function divider(element, options = {}) {
     }
   }
 
-  element.dataset.wbReady = 'divider';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-divider');
 }
 
@@ -594,7 +604,7 @@ export function breadcrumb(element, options = {}) {
     }).join('');
   }
 
-  element.dataset.wbReady = 'breadcrumb';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-breadcrumb');
 }
 

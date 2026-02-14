@@ -1,0 +1,68 @@
+/**
+ * Demo Container Styles
+ * <wb-demo columns="3"> lays out children in a grid. Default 3 columns.
+ * Colored code sample below via <wb-mdhtml>.
+ */
+
+wb-demo,
+wb-code-card {
+  display: block;
+  margin-bottom: 1rem;
+  max-width: 100vw;
+  margin-left: 0;
+  margin-right: 0;
+  overflow: hidden;
+}
+
+.wb-demo__grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.wb-demo__grid--cols-1 { grid-template-columns: 1fr; }
+.wb-demo__grid--cols-2 { grid-template-columns: repeat(2, 1fr); }
+.wb-demo__grid--cols-3 { grid-template-columns: repeat(3, 1fr); }
+.wb-demo__grid--cols-4 { grid-template-columns: repeat(4, 1fr); }
+.wb-demo__grid--cols-5 { grid-template-columns: repeat(5, 1fr); }
+.wb-demo__grid--cols-6 { grid-template-columns: repeat(6, 1fr); }
+
+.wb-demo__grid > * {
+  min-width: 0;
+}
+
+wb-demo > wb-mdhtml,
+wb-code-card > wb-mdhtml,
+wb-demo > .x-pre-wrapper {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .wb-demo__grid--cols-3,
+  .wb-demo__grid--cols-4,
+  .wb-demo__grid--cols-5,
+  .wb-demo__grid--cols-6 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .wb-demo__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wb-demo__links {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-2);
+}
+
+.wb-demo__links a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.wb-demo__links a:hover {
+  text-decoration: underline;
+}

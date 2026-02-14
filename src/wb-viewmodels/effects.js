@@ -43,7 +43,7 @@ export function animate(element, options = {}) {
   }
 
   element.wbAnimate = { play };
-  element.dataset.wbReady = 'animate';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-animate');
 }
 
@@ -61,7 +61,7 @@ function clickAnim(element, animName, duration = '0.5s') {
     element.onclick = playAnimation;
   }
   element.wbAnim = { play: playAnimation };
-  element.dataset.wbReady = animName;
+  element.classList.add('wb-ready');
   return () => element.classList.remove(`wb-${animName}`);
 }
 
@@ -211,7 +211,7 @@ export function confetti(element, options = {}) {
   
   element.onclick = fire;
   element.wbConfetti = { fire };
-  element.dataset.wbReady = 'confetti';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-confetti-trigger');
 }
 
@@ -250,7 +250,7 @@ export function typewriter(element, options = {}) {
   }
   
   element.wbTypewriter = { type };
-  element.dataset.wbReady = 'typewriter';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-typewriter');
 }
 
@@ -295,7 +295,7 @@ export function countup(element, options = {}) {
   observer.observe(element);
   
   element.wbCountup = { count };
-  element.dataset.wbReady = 'countup';
+  element.classList.add('wb-ready');
   return () => { observer.disconnect(); element.classList.remove('wb-countup'); };
 }
 
@@ -356,7 +356,7 @@ export function reveal(element, options = {}) {
   }, { threshold: config.threshold });
   
   observer.observe(element);
-  element.dataset.wbReady = 'reveal';
+  element.classList.add('wb-ready');
   return () => { observer.disconnect(); element.classList.remove('wb-reveal'); };
 }
 
@@ -378,7 +378,7 @@ export function marquee(element, options = {}) {
     element.appendChild(span);
   }
   
-  element.dataset.wbReady = 'marquee';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-marquee');
 }
 
@@ -432,7 +432,7 @@ export function sparkle(element, options = {}) {
   
   element.onclick = fire;
   element.wbSparkle = { fire };
-  element.dataset.wbReady = 'sparkle';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-sparkle-trigger');
 }
 
@@ -446,7 +446,7 @@ export function glow(element, options = {}) {
   element.style.animation = 'wb-glow 1.5s ease-in-out infinite';
   element.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}, 0 0 30px ${color}`;
   
-  element.dataset.wbReady = 'glow';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-glow');
 }
 
@@ -478,7 +478,7 @@ export function rainbow(element, options = {}) {
   element.style.color = 'transparent';
   element.style.animation = `wb-rainbow ${duration} linear infinite`;
   
-  element.dataset.wbReady = 'rainbow';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-rainbow');
 }
 
@@ -542,7 +542,7 @@ export function fireworks(element, options = {}) {
   
   element.onclick = fire;
   element.wbFireworks = { fire };
-  element.dataset.wbReady = 'fireworks';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-fireworks-trigger');
 }
 
@@ -599,7 +599,7 @@ export function snow(element, options = {}) {
   
   element.onclick = fire;
   element.wbSnow = { fire };
-  element.dataset.wbReady = 'snow';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-snow-trigger');
 }
 
@@ -646,7 +646,7 @@ export function particle(element, options = {}) {
     particles.push(p);
   }
   
-  element.dataset.wbReady = 'particle';
+  element.classList.add('wb-ready');
   return () => {
     particles.forEach(p => p.remove());
     element.classList.remove('wb-particle');

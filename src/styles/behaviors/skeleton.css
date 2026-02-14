@@ -1,0 +1,16 @@
+/**
+ * Skeleton Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/skeleton.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-skeleton {
+  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: wb-skeleton-shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* Keyframe defined in effects.css as wb-skeleton-shimmer */

@@ -69,7 +69,7 @@ export function dl(element, options = {}) {
     element.style.padding = '1rem';
   }
 
-  element.dataset.wbReady = 'dl';
+  element.classList.add('wb-ready');
 
   return () => {
     element.classList.remove('wb-dl');

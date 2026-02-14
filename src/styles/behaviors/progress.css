@@ -1,0 +1,133 @@
+/**
+ * Progress Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Consolidated from demo.css + components.css + site.css (Phase 2 migration)
+ * Works with src/wb-viewmodels/semantics/progress.js
+ * -----------------------------------------------------------------------------
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE PROGRESS BAR (from demo.css)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-progress {
+  height: 6px;
+  background: var(--bg-tertiary);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.wb-progress__bar {
+  height: 100%;
+  background: var(--primary);
+  transition: width 0.3s;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANIMATED VARIANT (from components.css)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-progress--animated .wb-progress__bar {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+  animation: wb-progress-stripes 1s linear infinite;
+}
+
+@keyframes wb-progress-stripes {
+  from { background-position: 1rem 0; }
+  to { background-position: 0 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GRADIENT VARIANT (from site.css)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-progress-gradient {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.wb-progress-gradient__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+  background-size: 200% 100%;
+  border-radius: 999px;
+  animation: wb-progress-shimmer 2s linear infinite;
+}
+
+@keyframes wb-progress-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STRIPED VARIANT (from site.css)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-progress-striped {
+  width: 100%;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.wb-progress-striped__bar {
+  height: 100%;
+  background-color: var(--primary);
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+  border-radius: 999px;
+  animation: wb-progress-stripes 1s linear infinite, wb-progress-grow 2s ease-out forwards;
+  width: 0;
+}
+
+@keyframes wb-progress-grow {
+  from { width: 0; }
+  to { width: var(--target-width, 100%); }
+}
+
+/* Color Variants */
+.wb-progress-striped__bar--primary { background-color: var(--primary); }
+.wb-progress-striped__bar--success { background-color: var(--success-color); }
+.wb-progress-striped__bar--warning { background-color: var(--warning-color); }
+.wb-progress-striped__bar--danger { background-color: var(--danger-color); }
+.wb-progress-striped__bar--info { background-color: var(--info-color, #0ea5e9); }
+
+.wb-progress-striped__bar--gradient {
+  background-color: transparent;
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  ), linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+  background-size: 1rem 1rem, 100% 100%;
+}

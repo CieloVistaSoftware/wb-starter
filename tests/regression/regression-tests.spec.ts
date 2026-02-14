@@ -163,7 +163,7 @@ test.describe('BUG-2025-12-26-001: Figure data-caption', () => {
 
     await page.waitForTimeout(300);
     
-    const figure = page.locator('[data-wb="figure"]');
+    const figure = page.locator('[x-figure]');
     const figcaption = figure.locator('figcaption');
     
     await expect(figcaption).toBeVisible();
@@ -199,7 +199,7 @@ test.describe('BUG-2024-12-19-001: src attribute routing', () => {
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('[data-wb="audio"]').first();
+    const element = page.locator('wb-audio').first();
     
     // CRITICAL CHECK 1: src should be in dataset
     const datasetSrc = await element.evaluate(el => (el as HTMLElement).dataset.src);
@@ -236,7 +236,7 @@ test.describe('BUG-2024-12-19-001: src attribute routing', () => {
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('[data-wb="video"]').first();
+    const element = page.locator('wb-video').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -266,7 +266,7 @@ test.describe('BUG-2024-12-19-001: src attribute routing', () => {
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('[data-wb="cardimage"]').first();
+    const element = page.locator('wb-cardimage').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -295,7 +295,7 @@ test.describe('BUG-2024-12-19-001: src attribute routing', () => {
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('[data-wb="cardvideo"]').first();
+    const element = page.locator('wb-cardvideo').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -325,7 +325,7 @@ test.describe('BUG-2024-12-19-001: src attribute routing', () => {
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('[data-wb="avatar"]').first();
+    const element = page.locator('wb-avatar').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -354,7 +354,7 @@ test.describe('BUG-2024-12-19-001: src attribute routing', () => {
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('[data-wb="youtube"]').first();
+    const element = page.locator('wb-youtube').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -380,7 +380,7 @@ test.describe('BUG-2024-12-19-001: src attribute routing', () => {
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('[data-wb="vimeo"]').first();
+    const element = page.locator('wb-vimeo').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -408,7 +408,7 @@ test.describe('BUG-2024-12-19-001: src attribute routing', () => {
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('[data-wb="image"]').first();
+    const element = page.locator('wb-image').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -513,7 +513,7 @@ test.describe('Attribute Routing Permutations', () => {
 
       await page.waitForTimeout(300);
       
-      const element = page.locator('[data-wb="audio"]').first();
+      const element = page.locator('wb-audio').first();
       const count = await element.count();
       
       if (count > 0) {
@@ -558,7 +558,7 @@ test.describe('Audio Component Regression Suite', () => {
 
       await page.waitForTimeout(300);
       
-      const audio = page.locator('[data-wb="audio"] audio').first();
+      const audio = page.locator('wb-audio audio').first();
       const count = await audio.count();
       
       if (count > 0) {
@@ -595,7 +595,7 @@ test.describe('Audio Component Regression Suite', () => {
 
       await page.waitForTimeout(300);
       
-      const eqPanel = page.locator('[data-wb="audio"] .wb-audio__eq-container');
+      const eqPanel = page.locator('wb-audio .wb-audio__eq-container');
       const panelCount = await eqPanel.count();
       
       if (state.expectPanel) {
@@ -634,7 +634,7 @@ test.describe('Audio Component Regression Suite', () => {
 
       await page.waitForTimeout(300);
       
-      const audio = page.locator('[data-wb="audio"] audio').first();
+      const audio = page.locator('wb-audio audio').first();
       const count = await audio.count();
       
       if (count > 0) {

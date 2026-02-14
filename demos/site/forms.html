@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Controls</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+  <link rel="stylesheet" href="../../src/styles/components.css">
+
+</head>
+
+<body>
+  <nav style="margin-bottom: 1rem;">
+    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  </nav>
+  <h1>📝 Form Controls</h1>
+  <p>Buttons, inputs, selects, checkboxes, switches, textareas</p>
+
+  <!-- 1. 🔘 Button -->
+  <h2>🔘 Button</h2>
+  <wb-demo columns="3">
+    <wb-button label="Primary" variant="primary">
+    </wb-button>
+    <wb-button label="Secondary" variant="secondary">
+    </wb-button>
+    <wb-button label="Success" variant="success">
+    </wb-button>
+    <wb-button label="Warning" variant="warning">
+    </wb-button>
+    <wb-button label="Error" variant="error">
+    </wb-button>
+    <wb-button label="Ghost" variant="ghost">
+    </wb-button>
+    <wb-button label="Outline" variant="outline">
+    </wb-button>
+    <wb-button label="Small" variant="primary" size="sm">
+    </wb-button>
+    <wb-button label="Large" variant="primary" size="lg">
+    </wb-button>
+    <wb-button label="Loading..." variant="primary" loading>
+    </wb-button>
+    <wb-button label="🚀 With Icon" variant="primary" icon="🚀">
+    </wb-button>
+  </wb-demo>
+
+  <!-- 2. iconPosition variants -->
+  <h2>iconPosition variants</h2>
+  <wb-demo columns="2">
+    <wb-button icon-position="start">
+    </wb-button>
+    <wb-button icon-position="end">
+    </wb-button>
+  </wb-demo>
+
+  <!-- 3. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="3">
+    <wb-button variant="primary">
+    </wb-button>
+    <wb-button variant="secondary">
+    </wb-button>
+    <wb-button variant="success">
+    </wb-button>
+    <wb-button variant="warning">
+    </wb-button>
+    <wb-button variant="error">
+    </wb-button>
+    <wb-button variant="ghost">
+    </wb-button>
+    <wb-button variant="outline">
+    </wb-button>
+    <wb-button variant="link">
+    </wb-button>
+  </wb-demo>
+
+  <!-- 4. size variants -->
+  <h2>size variants</h2>
+  <wb-demo columns="3">
+    <wb-button size="xs">
+    </wb-button>
+    <wb-button size="sm">
+    </wb-button>
+    <wb-button size="md">
+    </wb-button>
+    <wb-button size="lg">
+    </wb-button>
+    <wb-button size="xl">
+    </wb-button>
+  </wb-demo>
+
+  <!-- 5. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="3">
+    <wb-button disabled>
+    </wb-button>
+    <wb-button loading>
+    </wb-button>
+    <wb-button full-width>
+    </wb-button>
+    <wb-button icon-only>
+    </wb-button>
+  </wb-demo>
+
+  <!-- 6. ☑️ Checkbox -->
+  <h2>☑️ Checkbox</h2>
+  <wb-demo columns="3">
+    <wb-checkbox label="Default checkbox">
+    </wb-checkbox>
+    <wb-checkbox label="Checked" checked>
+    </wb-checkbox>
+    <wb-checkbox label="Disabled" disabled>
+    </wb-checkbox>
+    <wb-checkbox label="Primary" variant="primary">
+    </wb-checkbox>
+    <wb-checkbox label="Success variant" variant="success" checked>
+    </wb-checkbox>
+    <wb-checkbox label="Small checkbox" size="sm">
+    </wb-checkbox>
+    <wb-checkbox label="Large checkbox" size="lg">
+    </wb-checkbox>
+  </wb-demo>
+
+  <!-- 7. size variants -->
+  <h2>size variants</h2>
+  <wb-demo columns="2">
+    <wb-checkbox size="sm">
+    </wb-checkbox>
+    <wb-checkbox size="md">
+    </wb-checkbox>
+    <wb-checkbox size="lg">
+    </wb-checkbox>
+  </wb-demo>
+
+  <!-- 8. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-checkbox variant="default">
+    </wb-checkbox>
+    <wb-checkbox variant="primary">
+    </wb-checkbox>
+    <wb-checkbox variant="success">
+    </wb-checkbox>
+  </wb-demo>
+
+  <!-- 9. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="3">
+    <wb-checkbox checked>
+    </wb-checkbox>
+    <wb-checkbox disabled>
+    </wb-checkbox>
+    <wb-checkbox indeterminate>
+    </wb-checkbox>
+    <wb-checkbox required>
+    </wb-checkbox>
+  </wb-demo>
+
+  <!-- 10. 📝 Input -->
+  <h2>📝 Input</h2>
+  <wb-demo columns="3">
+    <wb-input label="Text Input" placeholder="Enter text...">
+    </wb-input>
+    <wb-input label="Email" input-type="email" placeholder="you@example.com">
+    </wb-input>
+    <wb-input label="Password" input-type="password" placeholder="••••••••">
+    </wb-input>
+    <wb-input label="With Helper" placeholder="Type here" helper="This is helper text">
+    </wb-input>
+    <wb-input label="Error State" variant="error" error="This field is required" value="">
+    </wb-input>
+    <wb-input label="Success State" variant="success" value="Valid input">
+    </wb-input>
+    <wb-input label="With Icon" icon="🔍" placeholder="Search..." clearable>
+    </wb-input>
+    <wb-input label="Disabled" disabled value="Cannot edit">
+    </wb-input>
+    <wb-input label="Small Input" size="sm" placeholder="Small">
+    </wb-input>
+    <wb-input label="Large Input" size="lg" placeholder="Large">
+    </wb-input>
+  </wb-demo>
+
+  <!-- 11. inputType variants -->
+  <h2>inputType variants</h2>
+  <wb-demo columns="3">
+    <wb-input input-type="text">
+    </wb-input>
+    <wb-input input-type="email">
+    </wb-input>
+    <wb-input input-type="password">
+    </wb-input>
+    <wb-input input-type="number">
+    </wb-input>
+    <wb-input input-type="tel">
+    </wb-input>
+    <wb-input input-type="url">
+    </wb-input>
+    <wb-input input-type="search">
+    </wb-input>
+    <wb-input input-type="date">
+    </wb-input>
+    <wb-input input-type="time">
+    </wb-input>
+    <wb-input input-type="datetime-local">
+    </wb-input>
+  </wb-demo>
+
+  <!-- 12. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-input variant="default">
+    </wb-input>
+    <wb-input variant="success">
+    </wb-input>
+    <wb-input variant="error">
+    </wb-input>
+  </wb-demo>
+
+  <!-- 13. size variants -->
+  <h2>size variants</h2>
+  <wb-demo columns="2">
+    <wb-input size="sm">
+    </wb-input>
+    <wb-input size="md">
+    </wb-input>
+    <wb-input size="lg">
+    </wb-input>
+  </wb-demo>
+
+  <!-- 14. iconPosition variants -->
+  <h2>iconPosition variants</h2>
+  <wb-demo columns="2">
+    <wb-input icon-position="start">
+    </wb-input>
+    <wb-input icon-position="end">
+    </wb-input>
+  </wb-demo>
+
+  <!-- 15. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="3">
+    <wb-input disabled>
+    </wb-input>
+    <wb-input readonly>
+    </wb-input>
+    <wb-input required>
+    </wb-input>
+    <wb-input clearable>
+    </wb-input>
+  </wb-demo>
+
+  <!-- 16. 🔍 Search -->
+  <h2>🔍 Search</h2>
+  <wb-demo columns="3">
+    <wb-search placeholder="Search...">
+    </wb-search>
+    <wb-search placeholder="Search docs..." size="lg">
+    </wb-search>
+    <wb-search placeholder="Glass search" variant="glass">
+    </wb-search>
+    <wb-search placeholder="Minimal" variant="minimal">
+    </wb-search>
+    <wb-search placeholder="Instant search" instant>
+    </wb-search>
+    <wb-search placeholder="Loading..." loading>
+    </wb-search>
+  </wb-demo>
+
+  <!-- 17. size variants -->
+  <h2>size variants</h2>
+  <wb-demo columns="2">
+    <wb-search size="sm">
+    </wb-search>
+    <wb-search size="md">
+    </wb-search>
+    <wb-search size="lg">
+    </wb-search>
+  </wb-demo>
+
+  <!-- 18. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-search variant="default">
+    </wb-search>
+    <wb-search variant="glass">
+    </wb-search>
+    <wb-search variant="minimal">
+    </wb-search>
+  </wb-demo>
+
+  <!-- 19. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="3">
+    <wb-search instant>
+    </wb-search>
+    <wb-search disabled>
+    </wb-search>
+    <wb-search loading>
+    </wb-search>
+  </wb-demo>
+
+  <!-- 20. 📋 Select -->
+  <h2>📋 Select</h2>
+  <wb-demo columns="3">
+    <wb-select>
+    </wb-select>
+    <wb-select searchable>
+    </wb-select>
+    <wb-select clearable>
+    </wb-select>
+    <wb-select multiple>
+    </wb-select>
+    <wb-select disabled>
+    </wb-select>
+  </wb-demo>
+
+  <!-- 21. size variants -->
+  <h2>size variants</h2>
+  <wb-demo columns="2">
+    <wb-select size="sm">
+    </wb-select>
+    <wb-select size="md">
+    </wb-select>
+    <wb-select size="lg">
+    </wb-select>
+  </wb-demo>
+
+  <!-- 22. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-select variant="default">
+    </wb-select>
+    <wb-select variant="success">
+    </wb-select>
+    <wb-select variant="error">
+    </wb-select>
+  </wb-demo>
+
+  <!-- 23. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="3">
+    <wb-select required>
+    </wb-select>
+  </wb-demo>
+
+  <!-- 24. 🔘 Switch -->
+  <h2>🔘 Switch</h2>
+  <wb-demo columns="2">
+    <wb-switch label="Test">
+    </wb-switch>
+    <wb-switch label="Test" checked>
+    </wb-switch>
+    <wb-switch label="Test" disabled>
+    </wb-switch>
+    <wb-switch label="Test" size="lg">
+    </wb-switch>
+  </wb-demo>
+
+  <!-- 25. labelPosition variants -->
+  <h2>labelPosition variants</h2>
+  <wb-demo columns="2">
+    <wb-switch label-position="start">
+    </wb-switch>
+    <wb-switch label-position="end">
+    </wb-switch>
+  </wb-demo>
+
+  <!-- 26. size variants -->
+  <h2>size variants</h2>
+  <wb-demo columns="2">
+    <wb-switch size="sm">
+    </wb-switch>
+    <wb-switch size="md">
+    </wb-switch>
+    <wb-switch size="lg">
+    </wb-switch>
+  </wb-demo>
+
+  <!-- 27. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-switch variant="default">
+    </wb-switch>
+    <wb-switch variant="primary">
+    </wb-switch>
+    <wb-switch variant="success">
+    </wb-switch>
+  </wb-demo>
+
+  <!-- 28. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="2">
+    <wb-switch checked>
+    </wb-switch>
+    <wb-switch disabled>
+    </wb-switch>
+  </wb-demo>
+
+  <!-- 29. 📝 Textarea -->
+  <h2>📝 Textarea</h2>
+  <wb-demo columns="3">
+    <wb-textarea placeholder="Enter text...">
+    </wb-textarea>
+    <wb-textarea rows="5">
+    </wb-textarea>
+    <wb-textarea max-length="500" show-count>
+    </wb-textarea>
+    <wb-textarea autosize>
+    </wb-textarea>
+    <wb-textarea disabled>
+    </wb-textarea>
+  </wb-demo>
+
+  <!-- 30. resize variants -->
+  <h2>resize variants</h2>
+  <wb-demo columns="2">
+    <wb-textarea resize="none">
+    </wb-textarea>
+    <wb-textarea resize="vertical">
+    </wb-textarea>
+    <wb-textarea resize="horizontal">
+    </wb-textarea>
+    <wb-textarea resize="both">
+    </wb-textarea>
+  </wb-demo>
+
+  <!-- 31. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-textarea variant="default">
+    </wb-textarea>
+    <wb-textarea variant="success">
+    </wb-textarea>
+    <wb-textarea variant="error">
+    </wb-textarea>
+  </wb-demo>
+
+  <!-- 32. Boolean toggles -->
+  <h2>Boolean toggles</h2>
+  <wb-demo columns="3">
+    <wb-textarea show-count>
+    </wb-textarea>
+    <wb-textarea readonly>
+    </wb-textarea>
+    <wb-textarea required>
+    </wb-textarea>
+  </wb-demo>
+
+  <!-- 33. 📦 Slider -->
+  <h2>📦 Slider</h2>
+  <wb-demo columns="1">
+    <wb-slider>
+    </wb-slider>
+  </wb-demo>
+
+  <!-- 34. 📦 Toggle -->
+  <h2>📦 Toggle</h2>
+  <wb-demo columns="1">
+    <wb-toggle target="#content">
+    </wb-toggle>
+  </wb-demo>
+
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('Form Controls initialized');
+  </script>
+</body>
+
+</html>

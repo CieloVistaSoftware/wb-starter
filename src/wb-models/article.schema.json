@@ -202,6 +202,21 @@
           "featured": true
         }
       ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-article",
+      "renders": true,
+      "baseClass": "wb-article",
+      "minInstances": 5,
+      "checkText": [
+        "Article",
+        "Deck"
+      ],
+      "checkClasses": [],
+      "checkAttributes": [
+        "title"
+      ]
     }
   },
   "_metadata": {

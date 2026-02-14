@@ -339,6 +339,23 @@
           "featured": true
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardproduct",
+      "renders": true,
+      "baseClass": "wb-product",
+      "minInstances": 5,
+      "checkText": [
+        "Product"
+      ],
+      "checkClasses": [
+        "wb-product--compact"
+      ],
+      "checkAttributes": [
+        "title",
+        "price"
+      ]
     }
   },
   "_metadata": {

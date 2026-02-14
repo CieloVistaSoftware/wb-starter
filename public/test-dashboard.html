@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WB Test Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --bg-card: #111827;
+      --bg-card-alt: #0f1623;
+      --border: #1e293b;
+      --border-focus: #334155;
+      --text: #e2e8f0;
+      --text-dim: #64748b;
+      --text-muted: #475569;
+      --green: #22c55e;
+      --green-dim: #16a34a;
+      --green-bg: rgba(34,197,94,0.08);
+      --red: #ef4444;
+      --red-dim: #dc2626;
+      --red-bg: rgba(239,68,68,0.08);
+      --yellow: #eab308;
+      --yellow-bg: rgba(234,179,8,0.08);
+      --blue: #3b82f6;
+      --blue-bg: rgba(59,130,246,0.08);
+      --cyan: #06b6d4;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'IBM Plex Sans', system-ui, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo {
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--cyan);
+    }
+    .state-badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: var(--text-muted);
+      color: var(--bg);
+    }
+    .state-badge[data-state="running"] { background: var(--blue); color: #fff; animation: pulse 1.5s ease infinite; }
+    .state-badge[data-state="passed"] { background: var(--green); color: #000; }
+    .state-badge[data-state="failed"] { background: var(--red); color: #fff; }
+    .state-badge[data-state="stopped"] { background: var(--yellow); color: #000; }
+    .state-badge[data-state="error"] { background: var(--red); color: #fff; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      background: var(--bg-card-alt);
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .btn:hover { border-color: var(--border-focus); background: var(--border); }
+    .btn-stop { border-color: var(--red-dim); color: var(--red); }
+    .btn-stop:hover { background: var(--red-bg); }
+    .btn-stop:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    /* ─── STATS ROW ─── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat {
+      background: var(--bg-card);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+    }
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+    .stat-value.green { color: var(--green); }
+    .stat-value.red { color: var(--red); }
+    .stat-value.yellow { color: var(--yellow); }
+    .stat-value.blue { color: var(--blue); }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-container {
+      height: 4px;
+      background: var(--bg-card-alt);
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+    }
+    .progress-pass { background: var(--green); transition: width 0.5s ease; }
+    .progress-fail { background: var(--red); transition: width 0.5s ease; }
+    .progress-skip { background: var(--yellow); transition: width 0.5s ease; }
+
+    /* ─── TABS ─── */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    .tab {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 10px 20px;
+      cursor: pointer;
+      color: var(--text-dim);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--cyan); border-bottom-color: var(--cyan); }
+    .tab .count {
+      font-weight: 400;
+      font-size: 10px;
+      margin-left: 6px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      background: var(--border);
+      color: var(--text-dim);
+    }
+    .tab.active .count { background: rgba(6,182,212,0.15); color: var(--cyan); }
+
+    /* ─── FILTER BAR ─── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card-alt);
+    }
+    .filter-input {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg);
+      color: var(--text);
+      flex: 1;
+      max-width: 400px;
+      outline: none;
+    }
+    .filter-input:focus { border-color: var(--cyan); }
+    .filter-input::placeholder { color: var(--text-muted); }
+
+    .filter-chips {
+      display: flex;
+      gap: 6px;
+    }
+    .chip {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      transition: all 0.15s;
+    }
+    .chip:hover { border-color: var(--border-focus); }
+    .chip.active { background: var(--blue-bg); border-color: var(--blue); color: var(--blue); }
+    .chip.active-pass { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+    .chip.active-fail { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+    .chip.active-skip { background: var(--yellow-bg); border-color: var(--yellow); color: var(--yellow); }
+
+    /* ─── CONTENT ─── */
+    .content {
+      overflow-y: auto;
+      height: calc(100vh - 230px);
+    }
+
+    /* ─── FAILURES TABLE ─── */
+    .failures-list { padding: 0; }
+    .failure-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+      transition: background 0.1s;
+    }
+    .failure-item:hover { background: var(--bg-card); }
+    .failure-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .failure-icon.fail { background: var(--red-bg); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+    .failure-file {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-bottom: 2px;
+    }
+    .failure-name {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    /* ─── RESULTS TABLE ─── */
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .results-table th {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+      padding: 10px 16px;
+      text-align: left;
+      position: sticky;
+      top: 0;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+    .results-table th:hover { color: var(--text); }
+    .results-table th .sort-arrow { margin-left: 4px; font-size: 9px; }
+    .results-table td {
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+    .results-table tr:hover td { background: var(--bg-card); }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .status-dot.passed { background: var(--green); }
+    .status-dot.failed { background: var(--red); }
+    .status-dot.skipped { background: var(--yellow); }
+    .results-table .file-cell { color: var(--text-dim); }
+    .results-table .name-cell { color: var(--text); font-family: var(--sans); }
+    .results-table .dur-cell { color: var(--text-muted); text-align: right; width: 80px; }
+    .results-table .project-cell { color: var(--cyan); width: 100px; }
+
+    /* ─── COMMAND BAR ─── */
+    .command-bar {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card-alt);
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .command-bar code {
+      background: var(--bg);
+      padding: 3px 8px;
+      border-radius: 3px;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 13px;
+      gap: 8px;
+    }
+    .empty-state .icon { font-size: 32px; opacity: 0.3; }
+
+    /* ─── CURRENT FILE ─── */
+    .current-file {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 400px;
+    }
+    .current-file::before { content: '▸ '; color: var(--cyan); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--border-focus); }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <span class="logo">⬡ WB Tests</span>
+      <span class="state-badge" id="stateBadge" data-state="idle">IDLE</span>
+      <span class="current-file" id="currentFile" style="display:none"></span>
+    </div>
+    <div class="header-right">
+      <span class="meta" id="duration"></span>
+      <span class="meta" id="lastUpdate"></span>
+      <button class="btn btn-stop" id="btnStop" disabled onclick="stopTests()">■ STOP</button>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-label">Total</span>
+      <span class="stat-value" id="statTotal">0</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Passed</span>
+      <span class="stat-value green" id="statPassed">0</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Failed</span>
+      <span class="stat-value red" id="statFailed">0</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Skipped</span>
+      <span class="stat-value yellow" id="statSkipped">0</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Pass Rate</span>
+      <span class="stat-value blue" id="statRate">–</span>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar">
+      <div class="progress-pass" id="progressPass"></div>
+      <div class="progress-fail" id="progressFail"></div>
+      <div class="progress-skip" id="progressSkip"></div>
+    </div>
+  </div>
+
+  <!-- COMMAND BAR -->
+  <div class="command-bar" id="commandBar" style="display:none">
+    <span>Command:</span>
+    <code id="commandText"></code>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" data-tab="failures" onclick="switchTab('failures')">
+      Failures <span class="count" id="failuresCount">0</span>
+    </div>
+    <div class="tab" data-tab="results" onclick="switchTab('results')">
+      All Results <span class="count" id="resultsCount">0</span>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar" id="filterBar" style="display:none">
+    <input type="text" class="filter-input" id="filterInput" placeholder="Filter by file or test name..." oninput="applyFilters()">
+    <div class="filter-chips">
+      <button class="chip active" data-filter="all" onclick="toggleStatusFilter('all')">All</button>
+      <button class="chip" data-filter="passed" onclick="toggleStatusFilter('passed')">Passed</button>
+      <button class="chip" data-filter="failed" onclick="toggleStatusFilter('failed')">Failed</button>
+      <button class="chip" data-filter="skipped" onclick="toggleStatusFilter('skipped')">Skipped</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content" id="content">
+    <div id="panelFailures">
+      <div class="empty-state" id="failuresEmpty">
+        <span class="icon">✓</span>
+        <span>No failures yet</span>
+      </div>
+      <div class="failures-list" id="failuresList"></div>
+    </div>
+    <div id="panelResults" style="display:none">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th class="status-cell" onclick="sortResults('status')">● <span class="sort-arrow" id="sort-status"></span></th>
+            <th onclick="sortResults('project')">Project <span class="sort-arrow" id="sort-project"></span></th>
+            <th onclick="sortResults('file')">File <span class="sort-arrow" id="sort-file"></span></th>
+            <th onclick="sortResults('name')">Test Name <span class="sort-arrow" id="sort-name"></span></th>
+            <th onclick="sortResults('duration')" style="text-align:right">Duration <span class="sort-arrow" id="sort-duration"></span></th>
+          </tr>
+        </thead>
+        <tbody id="resultsBody"></tbody>
+      </table>
+      <div class="empty-state" id="resultsEmpty">
+        <span class="icon">⏳</span>
+        <span>Waiting for results...</span>
+      </div>
+    </div>
+  </div>
+
+<script>
+  let currentTab = 'failures';
+  let statusFilter = 'all';
+  let sortField = 'status';
+  let sortDir = 'asc';
+  let allResults = [];
+  let pollTimer = null;
+
+  async function poll() {
+    try {
+      const [statusRes, resultsRes] = await Promise.all([
+        fetch('/data/test-status.json?' + Date.now()),
+        fetch('/data/test-results.json?' + Date.now()),
+      ]);
+      if (statusRes.ok) {
+        const status = await statusRes.json();
+        if (status.state) updateStatus(status);
+      }
+      if (resultsRes.ok) {
+        const results = await resultsRes.json();
+        if (results.results && results.results.length > 0) {
+          allResults = results.results;
+          document.getElementById('resultsCount').textContent = allResults.length;
+          if (currentTab === 'results') renderResults();
+        }
+      }
+    } catch (e) { /* server down */ }
+  }
+
+  function startPolling() {
+    poll();
+    pollTimer = setInterval(poll, 2000);
+  }
+
+  function updateStatus(s) {
+    const badge = document.getElementById('stateBadge');
+    const state = s.state || 'idle';
+    badge.dataset.state = state;
+    badge.textContent = state.toUpperCase();
+
+    document.getElementById('btnStop').disabled = state !== 'running';
+
+    document.getElementById('statTotal').textContent = s.total || 0;
+    document.getElementById('statPassed').textContent = s.passed || 0;
+    document.getElementById('statFailed').textContent = s.failed || 0;
+    document.getElementById('statSkipped').textContent = s.skipped || 0;
+
+    const total = s.total || 0;
+    const passed = s.passed || 0;
+    document.getElementById('statRate').textContent = total > 0 ? Math.round((passed / total) * 100) + '%' : '–';
+
+    // Progress bar
+    if (total > 0) {
+      const exp = getExpectedTotal(s);
+      document.getElementById('progressPass').style.width = ((passed / exp) * 100) + '%';
+      document.getElementById('progressFail').style.width = (((s.failed || 0) / exp) * 100) + '%';
+      document.getElementById('progressSkip').style.width = (((s.skipped || 0) / exp) * 100) + '%';
+    }
+
+    // Duration
+    if (s.startedAt) {
+      const start = new Date(s.startedAt);
+      const now = s.completedAt ? new Date(s.completedAt) : new Date();
+      const sec = Math.round((now - start) / 1000);
+      const min = Math.floor(sec / 60);
+      const rem = sec % 60;
+      document.getElementById('duration').textContent = min > 0 ? min + 'm ' + rem + 's' : rem + 's';
+    }
+
+    if (s.updatedAt) {
+      document.getElementById('lastUpdate').textContent = new Date(s.updatedAt).toLocaleTimeString();
+    }
+
+    const cf = document.getElementById('currentFile');
+    if (state === 'running' && s.currentFile) {
+      cf.style.display = '';
+      cf.textContent = s.currentFile.replace(/\\/g, '/');
+    } else {
+      cf.style.display = 'none';
+    }
+
+    if (s.command) {
+      document.getElementById('commandBar').style.display = '';
+      document.getElementById('commandText').textContent = s.command;
+    }
+
+    if (s.failures) {
+      renderFailures(s.failures);
+      document.getElementById('failuresCount').textContent = s.failures.length;
+    }
+  }
+
+  function getExpectedTotal(s) {
+    const m = (s.output || '').match(/Running (\d+) tests/);
+    if (m) return parseInt(m[1]);
+    return s.total || 1;
+  }
+
+  function renderFailures(failures) {
+    const list = document.getElementById('failuresList');
+    const empty = document.getElementById('failuresEmpty');
+    if (failures.length === 0) {
+      empty.style.display = '';
+      list.innerHTML = '';
+      return;
+    }
+    empty.style.display = 'none';
+    list.innerHTML = failures.map(f =>
+      '<div class="failure-item">' +
+        '<div class="failure-icon fail">✗</div>' +
+        '<div>' +
+          '<div class="failure-file">' + esc(f.file || '').replace(/\\/g, '/') + '</div>' +
+          '<div class="failure-name">' + esc(f.name || '') + '</div>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+  }
+
+  function renderResults() {
+    const body = document.getElementById('resultsBody');
+    const empty = document.getElementById('resultsEmpty');
+    const filterText = (document.getElementById('filterInput').value || '').toLowerCase();
+
+    let filtered = allResults;
+    if (statusFilter !== 'all') filtered = filtered.filter(r => r.status === statusFilter);
+    if (filterText) {
+      filtered = filtered.filter(r =>
+        (r.file || '').toLowerCase().includes(filterText) ||
+        (r.name || '').toLowerCase().includes(filterText) ||
+        (r.project || '').toLowerCase().includes(filterText)
+      );
+    }
+
+    filtered = [...filtered].sort((a, b) => {
+      let va, vb;
+      if (sortField === 'duration') {
+        va = parseDur(a.duration); vb = parseDur(b.duration);
+      } else if (sortField === 'status') {
+        const o = { failed: 0, skipped: 1, passed: 2 };
+        va = o[a.status] ?? 3; vb = o[b.status] ?? 3;
+      } else {
+        va = (a[sortField] || '').toLowerCase(); vb = (b[sortField] || '').toLowerCase();
+      }
+      if (va < vb) return sortDir === 'asc' ? -1 : 1;
+      if (va > vb) return sortDir === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    document.getElementById('resultsCount').textContent = filtered.length;
+    if (filtered.length === 0) { empty.style.display = ''; body.innerHTML = ''; return; }
+    empty.style.display = 'none';
+
+    body.innerHTML = filtered.map(r =>
+      '<tr>' +
+        '<td class="status-cell"><span class="status-dot ' + r.status + '"></span></td>' +
+        '<td class="project-cell">' + esc(r.project || '') + '</td>' +
+        '<td class="file-cell">' + esc((r.file || '').replace(/\\/g, '/')) + '</td>' +
+        '<td class="name-cell">' + esc(r.name || '') + '</td>' +
+        '<td class="dur-cell">' + esc(r.duration || '–') + '</td>' +
+      '</tr>'
+    ).join('');
+  }
+
+  function parseDur(d) {
+    if (!d) return 0;
+    if (d.endsWith('ms')) return parseFloat(d);
+    if (d.endsWith('s')) return parseFloat(d) * 1000;
+    return parseFloat(d) || 0;
+  }
+
+  function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    document.getElementById('panelFailures').style.display = tab === 'failures' ? '' : 'none';
+    document.getElementById('panelResults').style.display = tab === 'results' ? '' : 'none';
+    document.getElementById('filterBar').style.display = tab === 'results' ? '' : 'none';
+    if (tab === 'results') renderResults();
+  }
+
+  function toggleStatusFilter(filter) {
+    statusFilter = filter;
+    document.querySelectorAll('.chip').forEach(c => {
+      const f = c.dataset.filter;
+      c.className = 'chip';
+      if (f === filter) {
+        if (f === 'passed') c.classList.add('active-pass');
+        else if (f === 'failed') c.classList.add('active-fail');
+        else if (f === 'skipped') c.classList.add('active-skip');
+        else c.classList.add('active');
+      }
+    });
+    renderResults();
+  }
+
+  function applyFilters() { renderResults(); }
+
+  function sortResults(field) {
+    if (sortField === field) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+    else { sortField = field; sortDir = 'asc'; }
+    document.querySelectorAll('.sort-arrow').forEach(el => el.textContent = '');
+    const arrow = document.getElementById('sort-' + field);
+    if (arrow) arrow.textContent = sortDir === 'asc' ? '▲' : '▼';
+    renderResults();
+  }
+
+  function stopTests() {
+    document.getElementById('btnStop').disabled = true;
+    alert('Run from terminal:\nnpm run test:stop\n\nor:\nnode scripts/test-async.mjs --stop');
+  }
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  startPolling();
+</script>
+</body>
+</html>

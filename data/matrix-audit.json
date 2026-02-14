@@ -1,0 +1,519 @@
+{
+  "total": 70,
+  "withMatrix": 50,
+  "withoutMatrix": 20,
+  "missing": [
+    "card",
+    "cardportfolio",
+    "button",
+    "checkbox",
+    "input",
+    "search",
+    "slider",
+    "toggle",
+    "timeline",
+    "mdhtml",
+    "codecontrol",
+    "stagelight",
+    "draggable",
+    "resizable",
+    "copy",
+    "darkmode",
+    "themecontrol",
+    "collapse",
+    "hero",
+    "views"
+  ],
+  "details": [
+    {
+      "name": "card",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 7,
+      "file": "card.schema.json"
+    },
+    {
+      "name": "cardbutton",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 7,
+      "file": "cardbutton.schema.json"
+    },
+    {
+      "name": "carddraggable",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 6,
+      "file": "carddraggable.schema.json"
+    },
+    {
+      "name": "cardexpandable",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 5,
+      "file": "cardexpandable.schema.json"
+    },
+    {
+      "name": "cardfile",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 7,
+      "file": "cardfile.schema.json"
+    },
+    {
+      "name": "cardhero",
+      "hasMatrix": true,
+      "matrixCount": 7,
+      "propCount": 13,
+      "file": "cardhero.schema.json"
+    },
+    {
+      "name": "cardhorizontal",
+      "hasMatrix": true,
+      "matrixCount": 4,
+      "propCount": 7,
+      "file": "cardhorizontal.schema.json"
+    },
+    {
+      "name": "cardimage",
+      "hasMatrix": true,
+      "matrixCount": 8,
+      "propCount": 11,
+      "file": "cardimage.schema.json"
+    },
+    {
+      "name": "cardlink",
+      "hasMatrix": true,
+      "matrixCount": 6,
+      "propCount": 7,
+      "file": "cardlink.schema.json"
+    },
+    {
+      "name": "cardminimizable",
+      "hasMatrix": true,
+      "matrixCount": 2,
+      "propCount": 4,
+      "file": "cardminimizable.schema.json"
+    },
+    {
+      "name": "cardnotification",
+      "hasMatrix": true,
+      "matrixCount": 5,
+      "propCount": 6,
+      "file": "cardnotification.schema.json"
+    },
+    {
+      "name": "cardoverlay",
+      "hasMatrix": true,
+      "matrixCount": 6,
+      "propCount": 8,
+      "file": "cardoverlay.schema.json"
+    },
+    {
+      "name": "cardportfolio",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 28,
+      "file": "cardportfolio.schema.json"
+    },
+    {
+      "name": "cardpricing",
+      "hasMatrix": true,
+      "matrixCount": 6,
+      "propCount": 9,
+      "file": "cardpricing.schema.json"
+    },
+    {
+      "name": "cardproduct",
+      "hasMatrix": true,
+      "matrixCount": 5,
+      "propCount": 11,
+      "file": "cardproduct.schema.json"
+    },
+    {
+      "name": "cardprofile",
+      "hasMatrix": true,
+      "matrixCount": 9,
+      "propCount": 8,
+      "file": "cardprofile.schema.json"
+    },
+    {
+      "name": "cardstats",
+      "hasMatrix": true,
+      "matrixCount": 6,
+      "propCount": 7,
+      "file": "cardstats.schema.json"
+    },
+    {
+      "name": "cardtestimonial",
+      "hasMatrix": true,
+      "matrixCount": 8,
+      "propCount": 7,
+      "file": "cardtestimonial.schema.json"
+    },
+    {
+      "name": "cardvideo",
+      "hasMatrix": true,
+      "matrixCount": 7,
+      "propCount": 10,
+      "file": "cardvideo.schema.json"
+    },
+    {
+      "name": "alert",
+      "hasMatrix": true,
+      "matrixCount": 8,
+      "propCount": 5,
+      "file": "alert.schema.json"
+    },
+    {
+      "name": "avatar",
+      "hasMatrix": true,
+      "matrixCount": 5,
+      "propCount": 8,
+      "file": "avatar.schema.json"
+    },
+    {
+      "name": "badge",
+      "hasMatrix": true,
+      "matrixCount": 8,
+      "propCount": 7,
+      "file": "badge.schema.json"
+    },
+    {
+      "name": "chip",
+      "hasMatrix": true,
+      "matrixCount": 4,
+      "propCount": 7,
+      "file": "chip.schema.json"
+    },
+    {
+      "name": "progress",
+      "hasMatrix": true,
+      "matrixCount": 14,
+      "propCount": 9,
+      "file": "progress.schema.json"
+    },
+    {
+      "name": "rating",
+      "hasMatrix": true,
+      "matrixCount": 5,
+      "propCount": 7,
+      "file": "rating.schema.json"
+    },
+    {
+      "name": "skeleton",
+      "hasMatrix": true,
+      "matrixCount": 5,
+      "propCount": 5,
+      "file": "skeleton.schema.json"
+    },
+    {
+      "name": "spinner",
+      "hasMatrix": true,
+      "matrixCount": 5,
+      "propCount": 4,
+      "file": "spinner.schema.json"
+    },
+    {
+      "name": "toast",
+      "hasMatrix": true,
+      "matrixCount": 9,
+      "propCount": 9,
+      "file": "toast.schema.json"
+    },
+    {
+      "name": "tooltip",
+      "hasMatrix": true,
+      "matrixCount": 9,
+      "propCount": 9,
+      "file": "tooltip.schema.json"
+    },
+    {
+      "name": "button",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 9,
+      "file": "button.schema.json"
+    },
+    {
+      "name": "checkbox",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 9,
+      "file": "checkbox.schema.json"
+    },
+    {
+      "name": "input",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 15,
+      "file": "input.schema.json"
+    },
+    {
+      "name": "search",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 11,
+      "file": "search.schema.json"
+    },
+    {
+      "name": "select",
+      "hasMatrix": true,
+      "matrixCount": 5,
+      "propCount": 12,
+      "file": "select.schema.json"
+    },
+    {
+      "name": "switch",
+      "hasMatrix": true,
+      "matrixCount": 4,
+      "propCount": 8,
+      "file": "switch.schema.json"
+    },
+    {
+      "name": "textarea",
+      "hasMatrix": true,
+      "matrixCount": 5,
+      "propCount": 13,
+      "file": "textarea.schema.json"
+    },
+    {
+      "name": "slider",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 0,
+      "file": "slider.schema.json"
+    },
+    {
+      "name": "toggle",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 1,
+      "file": "toggle.schema.json"
+    },
+    {
+      "name": "dialog",
+      "hasMatrix": true,
+      "matrixCount": 4,
+      "propCount": 7,
+      "file": "dialog.schema.json"
+    },
+    {
+      "name": "drawer",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 9,
+      "file": "drawer.schema.json"
+    },
+    {
+      "name": "dropdown",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 5,
+      "file": "dropdown.schema.json"
+    },
+    {
+      "name": "header",
+      "hasMatrix": true,
+      "matrixCount": 4,
+      "propCount": 6,
+      "file": "header.schema.json"
+    },
+    {
+      "name": "footer",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 5,
+      "file": "footer.schema.json"
+    },
+    {
+      "name": "navbar",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 8,
+      "file": "navbar.schema.json"
+    },
+    {
+      "name": "tabs",
+      "hasMatrix": true,
+      "matrixCount": 5,
+      "propCount": 5,
+      "file": "tabs.schema.json"
+    },
+    {
+      "name": "details",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 5,
+      "file": "details.schema.json"
+    },
+    {
+      "name": "drawerLayout",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 4,
+      "file": "drawerLayout.schema.json"
+    },
+    {
+      "name": "scrollalong",
+      "hasMatrix": true,
+      "matrixCount": 1,
+      "propCount": 1,
+      "file": "scrollalong.schema.json"
+    },
+    {
+      "name": "sticky",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 5,
+      "file": "sticky.schema.json"
+    },
+    {
+      "name": "timeline",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 2,
+      "file": "timeline.schema.json"
+    },
+    {
+      "name": "article",
+      "hasMatrix": true,
+      "matrixCount": 5,
+      "propCount": 9,
+      "file": "article.schema.json"
+    },
+    {
+      "name": "articles",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 5,
+      "file": "articles.schema.json"
+    },
+    {
+      "name": "mdhtml",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 3,
+      "file": "mdhtml.schema.json"
+    },
+    {
+      "name": "audio",
+      "hasMatrix": true,
+      "matrixCount": 4,
+      "propCount": 8,
+      "file": "audio.schema.json"
+    },
+    {
+      "name": "table",
+      "hasMatrix": true,
+      "matrixCount": 4,
+      "propCount": 10,
+      "file": "table.schema.json"
+    },
+    {
+      "name": "notes",
+      "hasMatrix": true,
+      "matrixCount": 4,
+      "propCount": 6,
+      "file": "notes.schema.json"
+    },
+    {
+      "name": "codecontrol",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 0,
+      "file": "codecontrol.schema.json"
+    },
+    {
+      "name": "confetti",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 7,
+      "file": "confetti.schema.json"
+    },
+    {
+      "name": "fireworks",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 7,
+      "file": "fireworks.schema.json"
+    },
+    {
+      "name": "ripple",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 3,
+      "file": "ripple.schema.json"
+    },
+    {
+      "name": "snow",
+      "hasMatrix": true,
+      "matrixCount": 3,
+      "propCount": 6,
+      "file": "snow.schema.json"
+    },
+    {
+      "name": "stagelight",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 7,
+      "file": "stagelight.schema.json"
+    },
+    {
+      "name": "draggable",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 2,
+      "file": "draggable.schema.json"
+    },
+    {
+      "name": "resizable",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 1,
+      "file": "resizable.schema.json"
+    },
+    {
+      "name": "copy",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 2,
+      "file": "copy.schema.json"
+    },
+    {
+      "name": "darkmode",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 0,
+      "file": "darkmode.schema.json"
+    },
+    {
+      "name": "themecontrol",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 0,
+      "file": "themecontrol.schema.json"
+    },
+    {
+      "name": "collapse",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 1,
+      "file": "collapse.schema.json"
+    },
+    {
+      "name": "hero",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 1,
+      "file": "hero.schema.json"
+    },
+    {
+      "name": "views",
+      "hasMatrix": false,
+      "matrixCount": 0,
+      "propCount": 4,
+      "file": "views.schema.json"
+    }
+  ]
+}

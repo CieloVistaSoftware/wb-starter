@@ -55,8 +55,8 @@ const behaviorModules = {
   mdhtml: 'mdhtml',
   builder: 'builder',
   
-  // Feedback (10) → feedback.js
-  toast: 'feedback', badge: 'feedback', progress: 'feedback', spinner: 'feedback',
+  // Feedback (10) → feedback.js (progress moved to semantics/progress)
+  toast: 'feedback', badge: 'feedback', spinner: 'feedback',
   avatar: 'feedback', chip: 'feedback', alert: 'feedback', skeleton: 'feedback',
   divider: 'feedback', breadcrumb: 'feedback', notify: 'feedback', pill: 'feedback',
   
@@ -72,6 +72,7 @@ const behaviorModules = {
   footer: 'footer',
   
   // Data Display - Semantic HTML
+  progress: 'semantics/progress',
   table: 'semantics/table',
   code: 'semantics/code',
   pre: 'semantics/pre',
@@ -87,7 +88,7 @@ const behaviorModules = {
   diff: 'semantics/diff',
   
   // Media (10) → media.js
-  image: 'media', gallery: 'media', video: 'media', audio: 'media',
+  image: 'media', gallery: 'media', video: 'media', audio: 'semantics/audio',
   youtube: 'media', vimeo: 'media', embed: 'media', figure: 'media',
   carousel: 'media', ratio: 'media',
   
@@ -296,7 +297,7 @@ export const behaviors = new Proxy({}, {
         });
         if (!fn || typeof fn !== 'function') {
           // Behavior missing or invalid — mark element and return noop cleanup
-          try { if (element && element.dataset) element.dataset.wbError = 'missing-behavior'; } catch (e) { /* best-effort */ }
+          try { if (element) element.setAttribute('x-error', 'missing-behavior'); } catch (e) { /* best-effort */ }
           return () => {};
         }
 
@@ -306,19 +307,19 @@ export const behaviors = new Proxy({}, {
           if (result && typeof result.then === 'function') {
             return await result.catch(err => {
               console.error(`[WB] Behavior '${prop}' threw (async):`, err && err.message ? err.message : err);
-              try { if (element && element.dataset) element.dataset.wbError = (err && err.message) || 'behavior-async-failed'; } catch (e) { /* best-effort */ }
+              try { if (element) element.setAttribute('x-error', (err && err.message) || 'behavior-async-failed'); } catch (e) { /* best-effort */ }
               return () => {};
             });
           }
           return result;
         } catch (err) {
           console.error(`[WB] Behavior '${prop}' threw (sync):`, err && err.message ? err.message : err);
-          try { if (element && element.dataset) element.dataset.wbError = (err && err.message) || 'behavior-sync-failed'; } catch (e) { /* best-effort */ }
+          try { if (element) element.setAttribute('x-error', (err && err.message) || 'behavior-sync-failed'); } catch (e) { /* best-effort */ }
           return () => {};
         }
       } catch (err) {
         console.error(`[WB] Unexpected error invoking behavior '${String(prop)}':`, err && err.message ? err.message : err);
-        try { if (element && element.dataset) element.dataset.wbError = 'behavior-invocation-failed'; } catch (e) { /* best-effort */ }
+        try { if (element) element.setAttribute('x-error', 'behavior-invocation-failed'); } catch (e) { /* best-effort */ }
         return () => {};
       }
     };

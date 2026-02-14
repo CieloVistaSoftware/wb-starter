@@ -158,6 +158,20 @@
           "animated": true
         }
       ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-details",
+      "renders": true,
+      "baseClass": "wb-details",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [
+        "wb-details--bordered"
+      ],
+      "checkAttributes": [
+        "summary"
+      ]
     }
   },
   "_metadata": {

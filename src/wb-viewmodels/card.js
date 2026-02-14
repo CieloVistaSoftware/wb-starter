@@ -83,7 +83,7 @@ function validateSemanticContainer(element, behaviorName) {
 export function cardBase(element, options = {}) {
   // v3.0: Check if schema builder already processed this element
   // When true, DOM structure is already built from $view - we only add interactivity
-  const schemaProcessed = options.schemaProcessed || element.dataset.wbSchema;
+  const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
   
   const config = {
     ...options, // Spread first to allow overrides, but specific logic below takes precedence
@@ -260,7 +260,7 @@ export function cardBase(element, options = {}) {
     });
   }
 
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ` ${config.behavior}`;
+  element.classList.add('wb-ready');
 
   // Return base context for variants to use
   return {
@@ -1141,12 +1141,12 @@ export function cardstats(element, options = {}) {
   element.appendChild(content);
 
   // Runtime/test hook: mark cardstats as hydrated so tests can wait on it
-  try { element.dataset.wbHydrated = '1'; element.dispatchEvent(new CustomEvent('wb:cardstats:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
+  try { element.setAttribute('x-hydrated', '1'); element.dispatchEvent(new CustomEvent('wb:cardstats:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
 
   return base.cleanup;
   } catch (err) {
     // Prevent unhandled errors from closing the test page; surface diagnostics instead.
-    try { console.error('[cardstats] init error:', err && err.message ? err.message : err); element.dataset.wbError = (err && err.message) || 'init-failed'; element.classList.add('wb-cardstats--error'); } catch (e) { /* best-effort */ }
+    try { console.error('[cardstats] init error:', err && err.message ? err.message : err); element.setAttribute('x-error', (err && err.message) || 'init-failed'); element.classList.add('wb-cardstats--error'); } catch (e) { /* best-effort */ }
     return () => {};
   }
 }
@@ -1366,110 +1366,138 @@ export function cardproduct(element, options = {}) {
 
 /**
  * Card Notification Component
- * Custom Tag: <card-notification>
+ * Custom Tag: <wb-cardnotification>
+ *
+ * v3.0 MVVM:
+ *   Schema  → owns DOM structure + CSS class-based variant colors
+ *   Behavior → owns interactivity (dismiss, keyboard, aria, default icon text)
+ *
+ * Attribute: variant="info|success|warning|error" (NOT "type")
  */
 export function cardnotification(element, options = {}) {
-  const config = {
-    type: options.type || element.dataset.type || element.getAttribute('type') || 'info',
-    message: options.message || element.dataset.message || element.getAttribute('message') || element.textContent,
-    dismissible: parseBoolean(options.dismissible) ?? (element.dataset.dismissible !== 'false' && element.getAttribute('dismissible') !== 'false'),
-    icon: options.icon || element.dataset.icon || element.getAttribute('icon'),
-    ...options
-  };
+  const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
 
-  const icons = { info: 'ℹ️', success: '✅', warning: '⚠️', error: '❌', primary: '🔵', secondary: '⚪' };
-  const colors = { 
-    info: 'var(--info, #3b82f6)', 
-    success: 'var(--success, #22c55e)', 
-    warning: 'var(--warning, #f59e0b)', 
-    error: 'var(--error, #ef4444)',
-    primary: 'var(--primary, #6366f1)',
-    secondary: 'var(--text-secondary, #6b7280)'
-  };
-  // Use CSS variables for backgrounds if possible, or fallback to rgba
-  const bgColors = { 
-    info: 'var(--bg-info-subtle, rgba(59,130,246,0.15))', 
-    success: 'var(--bg-success-subtle, rgba(34,197,94,0.15))', 
-    warning: 'var(--bg-warning-subtle, rgba(245,158,11,0.15))', 
-    error: 'var(--bg-error-subtle, rgba(239,68,68,0.15))',
-    primary: 'var(--bg-primary-subtle, rgba(99,102,241,0.15))',
-    secondary: 'var(--bg-secondary-subtle, rgba(107,114,128,0.15))'
-  };
+  // Read variant (primary) with fallback to type (legacy)
+  const variant = options.variant || element.getAttribute('variant')
+    || options.type || element.getAttribute('type') || 'info';
+  const title = options.title || element.getAttribute('title') || '';
+  const message = options.message || element.getAttribute('message') || element.textContent || '';
+  const dismissible = parseBoolean(
+    options.dismissible ?? element.getAttribute('dismissible')
+  ) !== false;
+  const customIcon = options.icon || element.getAttribute('icon');
 
-  const base = cardBase(element, { ...config, behavior: 'cardnotification', hoverable: false });
-  element.classList.add('wb-notification');
-  
-  element.innerHTML = '';
+  // Default icon letters per variant
+  const defaultIcons = { info: 'i', success: 's', warning: 'w', error: 'e' };
+
+  // ── Accessibility (always) ──
   element.setAttribute('role', 'alert');
-  element.style.padding = '0.875rem 1rem';
-  element.style.flexDirection = 'row';
-  element.style.alignItems = 'flex-start';
-  element.style.gap = '0.75rem';
-  element.style.borderLeft = `4px solid ${colors[config.type]}`;
-  element.style.background = bgColors[config.type];
+
+  // ── Dismiss handler (shared by both paths) ──
+  const dismiss = () => {
+    element.dispatchEvent(new CustomEvent('wb:cardnotification:dismiss', {
+      bubbles: true,
+      detail: { variant, title }
+    }));
+    element.remove();
+  };
+
+  const keyHandler = (e) => {
+    if (e.key === 'Escape') dismiss();
+  };
+
+  // ═══════════════════════════════════════════════════════
+  // PATH A: Schema already built the DOM — enhance only
+  // ═══════════════════════════════════════════════════════
+  if (schemaProcessed) {
+    // Ensure variant class is present (schema should have added it,
+    // but belt-and-suspenders for edge cases)
+    element.classList.add('wb-notification');
+    if (variant !== 'default') {
+      element.classList.add(`wb-notification--${variant}`);
+    }
+
+    // Fill in default icon text if schema left it empty
+    const iconEl = element.querySelector('.wb-notification__icon');
+    if (iconEl && !iconEl.textContent.trim()) {
+      iconEl.textContent = customIcon || defaultIcons[variant] || 'i';
+    }
+
+    // Wire up dismiss button
+    const dismissBtn = element.querySelector('.wb-notification__dismiss');
+    if (dismissBtn) {
+      dismissBtn.setAttribute('aria-label', 'Dismiss notification');
+      dismissBtn.addEventListener('click', dismiss);
+    }
+
+    // Keyboard: Escape to dismiss
+    if (dismissible) {
+      element.setAttribute('tabindex', '0');
+      element.addEventListener('keydown', keyHandler);
+    }
+
+    element.classList.add('wb-ready');
+
+    return () => {
+      if (dismissBtn) dismissBtn.removeEventListener('click', dismiss);
+      element.removeEventListener('keydown', keyHandler);
+    };
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // PATH B: No schema — build DOM from scratch (standalone)
+  // Uses CSS classes, no inline color styles
+  // ═══════════════════════════════════════════════════════
+  element.classList.add('wb-notification');
+  if (variant !== 'default') {
+    element.classList.add(`wb-notification--${variant}`);
+  }
+  element.innerHTML = '';
 
   // Icon
   const iconEl = document.createElement('span');
-  iconEl.className = 'wb-card__notification-icon';
-  iconEl.style.cssText = 'font-size:1.25rem;flex-shrink:0;';
-  iconEl.textContent = config.icon || icons[config.type];
+  iconEl.className = 'wb-notification__icon';
+  iconEl.textContent = customIcon || defaultIcons[variant] || 'i';
   element.appendChild(iconEl);
 
   // Content
   const content = document.createElement('main');
-  content.className = 'wb-card__notification-content';
-  content.style.cssText = 'flex:1;min-width:0;';
+  content.className = 'wb-notification__content';
 
-  if (base.config.title) {
+  if (title) {
     const titleEl = document.createElement('strong');
-    titleEl.className = 'wb-card__notification-title';
-    titleEl.style.cssText = 'display:block;color:var(--text-primary,#f9fafb);';
-    titleEl.textContent = base.config.title;
+    titleEl.className = 'wb-notification__title';
+    titleEl.textContent = title;
     content.appendChild(titleEl);
   }
 
-  if (config.message) {
+  if (message) {
     const msgEl = document.createElement('p');
-    msgEl.className = 'wb-card__notification-message';
-    msgEl.style.cssText = 'margin:0.25rem 0 0;color:var(--text-primary,#f9fafb);opacity:0.9;';
-    msgEl.textContent = config.message;
+    msgEl.className = 'wb-notification__message';
+    msgEl.textContent = message;
     content.appendChild(msgEl);
   }
 
   element.appendChild(content);
 
   // Dismiss button
-  if (config.dismissible) {
+  if (dismissible) {
     const closeBtn = document.createElement('button');
-    closeBtn.className = 'wb-card__notification-dismiss';
-    closeBtn.style.cssText = 'background:none;border:none;font-size:1.25rem;cursor:pointer;opacity:0.5;padding:0;color:var(--text-primary,#f9fafb);';
-    closeBtn.textContent = '×';
+    closeBtn.className = 'wb-notification__dismiss';
+    closeBtn.textContent = '\u2715';
     closeBtn.setAttribute('aria-label', 'Dismiss notification');
-    
-    const dismiss = () => {
-      element.remove();
-      element.dispatchEvent(new CustomEvent('wb:cardnotification:dismiss', {
-        bubbles: true,
-        detail: { 
-          type: config.type,
-          title: base.config.title
-        }
-      }));
-    };
-
-    closeBtn.onclick = dismiss;
+    closeBtn.addEventListener('click', dismiss);
     element.appendChild(closeBtn);
-    
-    // Keyboard support (Escape)
-    element.setAttribute('tabindex', '0'); // Make focusable to catch key events
-    element.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        dismiss();
-      }
-    });
+
+    element.setAttribute('tabindex', '0');
+    element.addEventListener('keydown', keyHandler);
   }
 
-  return base.cleanup;
+  element.classList.add('wb-ready');
+
+  return () => {
+    element.removeEventListener('keydown', keyHandler);
+  };
 }
 
 /**
@@ -2018,38 +2046,42 @@ export function carddraggable(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'carddraggable' });
+  const base = cardBase(element, { ...config, behavior: 'carddraggable', hoverable: false });
   element.classList.add('wb-card-draggable');
   
   element.innerHTML = '';
-  element.style.position = 'relative'; // Or absolute, depending on layout
+  // Only set position if not already positioned (absolute/fixed)
+  const computed = window.getComputedStyle(element);
+  if (computed.position === 'static') {
+    element.style.position = 'relative';
+  }
   element.classList.add('wb-card--draggable');
 
   // Header with drag handle
   const headerEl = document.createElement('header');
-  header.className = 'wb-card__header wb-card__drag-handle';
-  header.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);cursor:grab;display:flex;align-items:center;gap:0.5rem;';
-  header.setAttribute('aria-label', 'Drag to move card');
-  header.setAttribute('role', 'button');
+  headerEl.className = 'wb-card__header wb-card__drag-handle';
+  headerEl.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);cursor:grab;display:flex;align-items:center;gap:0.5rem;';
+  headerEl.setAttribute('aria-label', 'Drag to move card');
+  headerEl.setAttribute('role', 'button');
 
   const handleIcon = document.createElement('span');
   handleIcon.style.cssText = 'opacity:0.5;';
   handleIcon.textContent = '⋮⋮';
-  header.appendChild(handleIcon);
+  headerEl.appendChild(handleIcon);
 
   if (base.config.title) {
-    const headerTitle = document.createElement('h3');
+    const titleEl = document.createElement('h3');
     titleEl.className = 'wb-card__title';
     titleEl.style.cssText = 'margin:0;flex:1;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
-    header.appendChild(titleEl);
+    headerEl.appendChild(titleEl);
   }
 
-  element.appendChild(header);
+  element.appendChild(headerEl);
 
   // Content
   const contentArea = base.createMain();
-  element.appendChild(content);
+  element.appendChild(contentArea);
 
   // Footer
   if (base.config.footer) {
@@ -2058,28 +2090,43 @@ export function carddraggable(element, options = {}) {
 
   // Drag behavior
   let isDragging = false;
-  let startX, startY, initialX, initialY;
+  let startX, startY, initialLeft, initialTop;
+
+  // Read current CSS left/top (works for both relative and absolute positioning)
+  const getCurrentLeft = () => parseInt(element.style.left, 10) || 0;
+  const getCurrentTop = () => parseInt(element.style.top, 10) || 0;
 
   const onMouseDown = (e) => {
+    if (e.button !== 0) return; // Left click only
     e.preventDefault(); // Prevent text selection
     isDragging = true;
     startX = e.clientX;
     startY = e.clientY;
-    initialX = element.offsetLeft;
-    initialY = element.offsetTop;
+    // Read the current CSS left/top values, NOT offsetLeft/offsetTop
+    // offsetLeft includes the element's normal flow position which causes
+    // a massive jump when applied back as left/top on a relative element
+    initialLeft = getCurrentLeft();
+    initialTop = getCurrentTop();
     
-    header.style.cursor = 'grabbing';
+    headerEl.style.cursor = 'grabbing';
     element.classList.add('wb-card--dragging');
     element.style.opacity = '0.8';
     element.style.zIndex = '1000';
     
     element.dispatchEvent(new CustomEvent('wb:carddraggable:dragstart', {
       bubbles: true,
-      detail: { x: initialX, y: initialY }
+      detail: { x: initialLeft, y: initialTop }
     }));
   };
 
-  header.addEventListener('mousedown', onMouseDown);
+  headerEl.addEventListener('mousedown', onMouseDown);
+
+  // Touch support
+  const onTouchStart = (e) => {
+    const touch = e.touches[0];
+    onMouseDown({ clientX: touch.clientX, clientY: touch.clientY, button: 0, preventDefault: () => e.preventDefault() });
+  };
+  headerEl.addEventListener('touchstart', onTouchStart, { passive: false });
 
   const onMouseMove = (e) => {
     if (!isDragging) return;
@@ -2091,8 +2138,8 @@ export function carddraggable(element, options = {}) {
     if (config.axis === 'x') deltaY = 0;
     if (config.axis === 'y') deltaX = 0;
     
-    let newX = initialX + deltaX;
-    let newY = initialY + deltaY;
+    let newX = initialLeft + deltaX;
+    let newY = initialTop + deltaY;
     
     // Snap to grid
     if (config.snapToGrid > 0) {
@@ -2103,12 +2150,31 @@ export function carddraggable(element, options = {}) {
     // Parent constraint
     if (config.constrain === 'parent' && element.parentElement) {
       const parentRect = element.parentElement.getBoundingClientRect();
-      // Assuming relative positioning within parent
-      const maxX = element.parentElement.clientWidth - element.offsetWidth;
-      const maxY = element.parentElement.clientHeight - element.offsetHeight;
+      const elemRect = element.getBoundingClientRect();
+      // Calculate bounds relative to current CSS left/top
+      const currentLeft = getCurrentLeft();
+      const currentTop = getCurrentTop();
+      const minX = currentLeft - (elemRect.left - parentRect.left);
+      const minY = currentTop - (elemRect.top - parentRect.top);
+      const maxX = currentLeft + (parentRect.right - elemRect.right);
+      const maxY = currentTop + (parentRect.bottom - elemRect.bottom);
       
-      newX = Math.max(0, Math.min(newX, maxX));
-      newY = Math.max(0, Math.min(newY, maxY));
+      newX = Math.max(minX, Math.min(maxX, newX));
+      newY = Math.max(minY, Math.min(maxY, newY));
+    }
+    
+    // Viewport constraint
+    if (config.constrain === 'viewport') {
+      const elemRect = element.getBoundingClientRect();
+      const currentLeft = getCurrentLeft();
+      const currentTop = getCurrentTop();
+      const minX = currentLeft - elemRect.left;
+      const minY = currentTop - elemRect.top;
+      const maxX = currentLeft + (window.innerWidth - elemRect.right);
+      const maxY = currentTop + (window.innerHeight - elemRect.bottom);
+      
+      newX = Math.max(minX, Math.min(maxX, newX));
+      newY = Math.max(minY, Math.min(maxY, newY));
     }
     
     element.style.left = newX + 'px';
@@ -2125,10 +2191,17 @@ export function carddraggable(element, options = {}) {
     }));
   };
 
+  const onTouchMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    onMouseMove({ clientX: touch.clientX, clientY: touch.clientY });
+  };
+
   const onMouseUp = () => {
     if (isDragging) {
       isDragging = false;
-      header.style.cursor = 'grab';
+      headerEl.style.cursor = 'grab';
       element.classList.remove('wb-card--dragging');
       element.style.opacity = '';
       element.style.zIndex = '';
@@ -2136,8 +2209,8 @@ export function carddraggable(element, options = {}) {
       element.dispatchEvent(new CustomEvent('wb:carddraggable:dragend', {
         bubbles: true,
         detail: { 
-          x: parseInt(element.style.left || 0), 
-          y: parseInt(element.style.top || 0) 
+          x: getCurrentLeft(), 
+          y: getCurrentTop() 
         }
       }));
     }
@@ -2145,6 +2218,8 @@ export function carddraggable(element, options = {}) {
 
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
+  document.addEventListener('touchmove', onTouchMove, { passive: false });
+  document.addEventListener('touchend', onMouseUp);
 
   // API
   element.wbCardDraggable = {
@@ -2166,9 +2241,12 @@ export function carddraggable(element, options = {}) {
   const originalCleanup = base.cleanup;
   return () => {
     originalCleanup();
-    header.removeEventListener('mousedown', onMouseDown);
+    headerEl.removeEventListener('mousedown', onMouseDown);
+    headerEl.removeEventListener('touchstart', onTouchStart);
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
+    document.removeEventListener('touchmove', onTouchMove);
+    document.removeEventListener('touchend', onMouseUp);
   };
 }
 
@@ -2292,7 +2370,7 @@ export function cardportfolio(element, options = {}) {
   if (config.name) {
     const nameEl = document.createElement('h2');
     nameEl.className = 'wb-portfolio__name';
-    nameEl.style.cssText = 'margin:1rem 0 0;font-size:1.75rem;font-weight:700;color:var(--text-primary,#f9fafb);';
+    nameEl.style.cssText = 'margin:1rem 0 0;font-size:clamp(0.9rem,5vw,1.75rem);font-weight:700;color:var(--text-primary,#f9fafb);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;';
     nameEl.textContent = config.name;
     header.appendChild(nameEl);
   }
@@ -2354,19 +2432,19 @@ export function cardportfolio(element, options = {}) {
   if (config.stats && config.stats.length > 0) {
     const statsSection = document.createElement('section');
     statsSection.className = 'wb-portfolio__stats';
-    statsSection.style.cssText = 'display:flex;justify-content:space-around;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:8px;margin-bottom:1.5rem;';
+    statsSection.style.cssText = 'display:flex;flex-direction:column;gap:0.5rem;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:8px;margin-bottom:1.5rem;';
     
     config.stats.forEach(stat => {
       const statItem = document.createElement('div');
-      statItem.style.cssText = 'text-align:center;';
+      statItem.style.cssText = 'display:flex;align-items:baseline;gap:0.5rem;';
       
-      const valueEl = document.createElement('div');
-      valueEl.style.cssText = 'font-size:1.5rem;font-weight:700;color:var(--primary,#6366f1);';
+      const valueEl = document.createElement('span');
+      valueEl.style.cssText = 'font-size:1.25rem;font-weight:700;color:var(--primary,#6366f1);';
       valueEl.textContent = stat.value;
       statItem.appendChild(valueEl);
       
-      const labelEl = document.createElement('div');
-      labelEl.style.cssText = 'font-size:0.8rem;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+      const labelEl = document.createElement('span');
+      labelEl.style.cssText = 'font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
       labelEl.textContent = stat.label;
       statItem.appendChild(labelEl);
       

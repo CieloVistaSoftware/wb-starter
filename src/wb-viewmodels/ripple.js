@@ -82,7 +82,7 @@ export function ripple(element, options = {}) {
   element.addEventListener('mousedown', createRipple);
 
   // Mark as ready
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' ripple';
+  element.classList.add('wb-ready');
 
   // Cleanup
   return () => {

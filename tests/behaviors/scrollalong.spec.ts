@@ -14,7 +14,7 @@ test.describe('ScrollAlong Behavior - Real Site', () => {
 
   test('nav element exists with scrollalong behavior', async ({ page }) => {
     const nav = page.locator('#siteNav');
-    await expect(nav).toHaveAttribute('data-wb', 'scrollalong');
+    await expect(nav).toHaveAttribute('x-scrollalong', '');
   });
 
   test('nav has wb-scrollalong class applied', async ({ page }) => {

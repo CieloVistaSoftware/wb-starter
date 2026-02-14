@@ -166,6 +166,18 @@
           "readonly": true
         }
       ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-rating",
+      "renders": true,
+      "baseClass": "wb-rating",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-rating--sm"
+      ],
+      "checkAttributes": []
     }
   },
   "_metadata": {

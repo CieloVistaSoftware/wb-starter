@@ -1,0 +1,20 @@
+/**
+ * Avatar Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/avatar.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+}

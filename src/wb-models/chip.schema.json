@@ -172,6 +172,23 @@
           "icon": "🏷️"
         }
       ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-chip",
+      "renders": true,
+      "baseClass": "wb-chip",
+      "minInstances": 4,
+      "checkText": [
+        "Tag"
+      ],
+      "checkClasses": [
+        "wb-chip--primary",
+        "wb-chip--sm"
+      ],
+      "checkAttributes": [
+        "label"
+      ]
     }
   },
   "_metadata": {

@@ -20,6 +20,21 @@
       "<wb-themecontrol>Test permutation 3</wb-themecontrol>",
       "<wb-themecontrol>Test permutation 4</wb-themecontrol>",
       "<wb-themecontrol>Test permutation 5</wb-themecontrol>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {}
+      ]
+    },
+    "site": {
+      "page": "interactive",
+      "tag": "wb-themecontrol",
+      "renders": true,
+      "baseClass": "wb-themecontrol",
+      "minInstances": 1,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
   }
 }

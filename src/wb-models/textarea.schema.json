@@ -240,6 +240,22 @@
           "disabled": true
         }
       ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "wb-textarea",
+      "renders": true,
+      "baseClass": "wb-textarea",
+      "minInstances": 5,
+      "checkText": [
+        "Enter text..."
+      ],
+      "checkClasses": [
+        "wb-textarea--success"
+      ],
+      "checkAttributes": [
+        "placeholder"
+      ]
     }
   },
   "_metadata": {

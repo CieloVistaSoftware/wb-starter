@@ -28,7 +28,7 @@ export function behaviorsShowcase(element, options = {}) {
   initDemoInteractions(element);
   
   // Mark as ready
-  element.dataset.wbReady = 'true';
+  element.classList.add('wb-ready');
   
   console.log('✅ wb-starter Behaviors Showcase initialized');
 }

@@ -175,7 +175,7 @@ export interface Schema {
   $schema?: string;
   title?: string;
   description?: string;
-  behavior: string;
+  schemaFor: string;
   properties?: Record<string, any>;
   compliance?: {
     baseClass: string;
@@ -200,7 +200,10 @@ export interface Schema {
 export function loadSchema(filename: string): Schema | null {
   try {
     const content = fs.readFileSync(path.join(PATHS.schemas, filename), 'utf-8');
-    return JSON.parse(content);
+    const schema = JSON.parse(content) as any;
+    // backwards-compat: populate legacy `behavior` for code/tests that still read it
+    if (schema && !schema.behavior && schema.schemaFor) schema.behavior = schema.schemaFor;
+    return schema;
   } catch {
     return null;
   }
@@ -213,7 +216,7 @@ export function getComponentSchemas(): Map<string, Schema> {
   const schemas = new Map<string, Schema>();
   for (const file of getSchemaFiles()) {
     const schema = loadSchema(file);
-    if (schema?.behavior) {
+    if (schema?.schemaFor) {
       schemas.set(file, schema);
     }
   }
@@ -264,8 +267,8 @@ export function stripDynamicContent(html: string): string {
   let result = html;
   // Remove <script>...</script> blocks
   result = result.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
-  // Remove content inside data-wb="mdhtml" elements or wb-mdhtml components
-  result = result.replace(/data-wb=['"]mdhtml['"][^>]*>[\s\S]*?<\/div>/gi, '');
+  // Remove content inside x-mdhtml elements or wb-mdhtml components
+  result = result.replace(/x-mdhtml[^>]*>[\s\S]*?<\/div>/gi, '');
   result = result.replace(/<wb-mdhtml[^>]*>[\s\S]*?<\/wb-mdhtml>/gi, '');
   // Remove markdown code blocks
   result = result.replace(/```[\s\S]*?```/g, '');
@@ -477,7 +480,14 @@ export async function setupTestContainer(page: Page, html: string): Promise<Loca
     }
   }, html);
   
-  await page.waitForTimeout(150);
+  // Wait for lazy-loaded behavior modules to initialize
+  // Behaviors add .wb-ready class after init completes
+  try {
+    await page.waitForSelector('#test-container > .wb-ready', { timeout: 3000 });
+  } catch {
+    // Some elements (native inputs) may not get .wb-ready — fall through
+    await page.waitForTimeout(300);
+  }
   
   return page.locator('#test-container > *').first();
 }

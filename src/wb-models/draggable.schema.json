@@ -34,6 +34,31 @@
       "<wb-draggable axis=\"y\">axis=y</wb-draggable>",
       "<wb-draggable axis=\"both\">axis=both</wb-draggable>",
       "<wb-draggable handle=\"Sample handle\">handle=\"Sample handle\"</wb-draggable>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "axis": "both"
+        },
+        {
+          "axis": "x"
+        },
+        {
+          "axis": "y"
+        }
+      ]
+    },
+    "site": {
+      "page": "interactive",
+      "tag": "wb-draggable",
+      "renders": true,
+      "baseClass": "wb-draggable",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "axis"
+      ]
+    }
   }
 }

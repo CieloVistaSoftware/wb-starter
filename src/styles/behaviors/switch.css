@@ -1,0 +1,111 @@
+/**
+ * Switch Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Consolidated from components.css + demo.css (Phase 2 migration)
+ * Works with src/wb-viewmodels/semantics/switch.js
+ * Uses .wb-switch__slider (BEM) as canonical selector
+ * -----------------------------------------------------------------------------
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE SWITCH
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-switch {
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 1.5rem;
+}
+
+.wb-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SLIDER TRACK (BEM - canonical)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-switch__slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-tertiary);
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.wb-switch__slider:before {
+  position: absolute;
+  content: "";
+  height: 1.1rem;
+  width: 1.1rem;
+  left: 0.2rem;
+  bottom: 0.2rem;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STATES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+input:checked + .wb-switch__slider {
+  background-color: var(--primary);
+}
+
+input:focus + .wb-switch__slider {
+  box-shadow: 0 0 1px var(--primary);
+}
+
+input:checked + .wb-switch__slider:before {
+  transform: translateX(1.5rem);
+}
+
+input:disabled + .wb-switch__slider {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LEGACY: demo.css used bare `span` instead of __slider
+   Keep for backward compatibility with any demo pages
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-switch span:not(.wb-switch__slider) {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-tertiary);
+  border-radius: 22px;
+  transition: 0.3s;
+}
+
+.wb-switch span:not(.wb-switch__slider)::before {
+  position: absolute;
+  content: '';
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.wb-switch input:checked + span:not(.wb-switch__slider) {
+  background: var(--primary);
+}
+
+.wb-switch input:checked + span:not(.wb-switch__slider)::before {
+  transform: translateX(22px);
+}

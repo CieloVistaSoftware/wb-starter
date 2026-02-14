@@ -183,7 +183,7 @@ export async function updP(wid, k, v) {
     }
 
     // Force re-render: remove wbReady flag and re-scan
-    delete el.dataset.wbReady;
+    el.classList.remove('wb-ready');
     if (window.WB) {
       window.WB.remove(el);
       window.WB.scan(w);

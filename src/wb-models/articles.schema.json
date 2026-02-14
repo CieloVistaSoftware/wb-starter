@@ -102,6 +102,18 @@
           "columns": 2
         }
       ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-articles",
+      "renders": true,
+      "baseClass": "wb-articles",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "layout"
+      ]
     }
   },
   "_metadata": {

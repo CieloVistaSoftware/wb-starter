@@ -246,6 +246,58 @@
           }
         }
       ]
+    },
+    "matrix": {
+      "combinations": [
+        {
+          "label": "Default checkbox"
+        },
+        {
+          "label": "Checked",
+          "checked": true
+        },
+        {
+          "label": "Disabled",
+          "disabled": true
+        },
+        {
+          "label": "Primary",
+          "variant": "primary"
+        },
+        {
+          "label": "Success variant",
+          "variant": "success",
+          "checked": true
+        },
+        {
+          "label": "Small checkbox",
+          "size": "sm"
+        },
+        {
+          "label": "Large checkbox",
+          "size": "lg"
+        }
+      ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "wb-checkbox",
+      "renders": true,
+      "baseClass": "wb-checkbox",
+      "minInstances": 7,
+      "checkText": [
+        "Default checkbox",
+        "Checked",
+        "Disabled",
+        "Primary"
+      ],
+      "checkClasses": [
+        "wb-checkbox--sm",
+        "wb-checkbox--primary"
+      ],
+      "checkAttributes": [
+        "label"
+      ]
     }
   },
   "_metadata": {

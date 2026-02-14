@@ -127,6 +127,20 @@
           "speed": "fast"
         }
       ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-spinner",
+      "renders": true,
+      "baseClass": "wb-spinner",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-spinner--xs",
+        "wb-spinner--default",
+        "wb-spinner--slow"
+      ],
+      "checkAttributes": []
     }
   },
   "_metadata": {

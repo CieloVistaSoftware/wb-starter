@@ -276,6 +276,22 @@
           "aspect": "4/3"
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardvideo",
+      "renders": true,
+      "baseClass": "wb-card-video",
+      "minInstances": 7,
+      "checkText": [
+        "Video Title"
+      ],
+      "checkClasses": [
+        "wb-card-video--minimal"
+      ],
+      "checkAttributes": [
+        "src"
+      ]
     }
   },
   "_metadata": {

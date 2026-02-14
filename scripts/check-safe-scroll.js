@@ -1,4 +1,4 @@
-const { execSync } = require('child_process');
+import { execSync } from 'child_process';
 
 try {
   const out = execSync("git grep -n " + 'scrollIntoViewIfNeeded\\(\\)' + " -- 'tests/**/*.ts' || true", { encoding: 'utf8' });

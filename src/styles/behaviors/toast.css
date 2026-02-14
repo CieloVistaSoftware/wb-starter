@@ -1,0 +1,29 @@
+/**
+ * Toast Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/toast.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.wb-toast {
+  padding: 0.75rem 1rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  min-width: 200px;
+  animation: wb-slide-in 0.3s;
+  font-size: 0.85rem;
+}
+
+/* Keyframe defined in effects.css as wb-slide-in */

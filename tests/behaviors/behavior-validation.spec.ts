@@ -150,12 +150,12 @@ function generateTestHtml(behaviorName: string, meta: BehaviorMeta, content: str
   // Determine tag
   let tag = meta.element || 'div';
   
-  // Handle input types - put type BEFORE data-wb for proper parsing
+  // v3.0: Use x-{name} shorthand instead of legacy data-wb
   let attrs = '';
   if (meta.inputType) {
-    attrs = `type="${meta.inputType}" data-wb="${behaviorName}"`;
+    attrs = `type="${meta.inputType}" x-${behaviorName}`;
   } else {
-    attrs = `data-wb="${behaviorName}"`;
+    attrs = `x-${behaviorName}`;
   }
   
   // Self-closing tags
@@ -454,13 +454,13 @@ test.describe('Behavior Initialization', () => {
         continue;
       }
       
-      // Check data-wb-ready or class applied
-      const ready = await element.getAttribute('data-wb-ready');
-      const hasClass = await element.evaluate((el, cls) => 
+      // Check .wb-ready class or behavior class applied
+      const ready = await element.evaluate((el: Element) => el.classList.contains('wb-ready'));
+      const hasClass = await element.evaluate((el: Element, cls: string) => 
         el.classList.contains(`wb-${cls}`), name);
       
       if (!ready && !hasClass) {
-        errors.push(`${name}: not initialized (no data-wb-ready or wb-${name} class)`);
+        errors.push(`${name}: not initialized (no .wb-ready or wb-${name} class)`);
       }
     }
     
@@ -541,9 +541,12 @@ test.describe('Behavior Initialization', () => {
       if (def.trigger === 'button') {
         const btn = await element.locator('button').count();
         if (btn === 0) {
-          // Check if root is button
-          const isBtn = await element.evaluate(el => el.tagName === 'BUTTON');
-          if (!isBtn) {
+          // Check if root is button OR a custom element (self-manages triggers)
+          const tagInfo = await element.evaluate(el => ({
+            isBtn: el.tagName === 'BUTTON',
+            isCustom: el.tagName.includes('-')
+          }));
+          if (!tagInfo.isBtn && !tagInfo.isCustom) {
             errors.push(`${name}: no button trigger found`);
           }
         }

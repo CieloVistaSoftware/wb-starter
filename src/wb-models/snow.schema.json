@@ -113,6 +113,16 @@
           "repeat": false
         }
       ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-snow",
+      "renders": true,
+      "baseClass": "wb-snow",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
     }
   },
   "_metadata": {

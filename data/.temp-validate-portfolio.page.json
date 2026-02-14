@@ -1,0 +1,179 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "💼 Portfolio Card Showcase",
+  "description": "Professional profile and portfolio cards",
+  "schemaFor": "cardportfolio-showcase",
+  "page": {
+    "lang": "en",
+    "theme": "dark",
+    "title": "💼 Portfolio Card Showcase",
+    "stylesheets": [
+      "../src/styles/themes.css",
+      "../src/styles/site.css",
+      "../src/styles/components.css"
+    ],
+    "scripts": [
+      {
+        "type": "module",
+        "src": "../src/core/wb-lazy.js",
+        "init": "WB.init({ autoInject: true })"
+      }
+    ]
+  },
+  "header": {
+    "tag": "h1",
+    "content": "💼 Portfolio Card Showcase",
+    "subtitle": {
+      "tag": "p",
+      "content": "Full-featured professional portfolio card with skills, experience, projects, and more"
+    }
+  },
+  "sections": [
+    {
+      "heading": "availability variants",
+      "tag": "wb-cardportfolio",
+      "columns": 2,
+      "demos": [
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "availability": "available",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "availability": "busy",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "availability": "not-available",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "availability": "open-to-opportunities",
+            "name": "Sample name"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "variant variants",
+      "tag": "wb-cardportfolio",
+      "columns": 2,
+      "demos": [
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "variant": "default",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "variant": "compact",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "variant": "horizontal",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "variant": "full",
+            "name": "Sample name"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "size variants",
+      "tag": "wb-cardportfolio",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "size": "sm",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "size": "md",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "size": "lg",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "size": "xl",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "size": "full",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "size": "auto",
+            "name": "Sample name"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "cardportfolio — Defaults",
+      "tag": "wb-cardportfolio",
+      "columns": 1,
+      "demos": [
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "name": "Sample name",
+            "availability": "available",
+            "variant": "default",
+            "size": "auto"
+          }
+        }
+      ]
+    }
+  ],
+  "_metadata": {
+    "category": "auto-showcase",
+    "icon": "💼",
+    "sourceSchema": "cardportfolio.schema.json",
+    "generatedAt": "2026-02-12T02:33:10.856Z",
+    "sectionCount": 4,
+    "totalDemos": 15
+  },
+  "slug": "portfolio",
+  "navTitle": "Portfolio",
+  "icon": "👤"
+}

@@ -217,6 +217,25 @@
           "variant": "elevated"
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardhorizontal",
+      "renders": true,
+      "baseClass": "wb-card-horizontal",
+      "minInstances": 4,
+      "checkText": [
+        "Title",
+        "Subtitle"
+      ],
+      "checkClasses": [
+        "wb-card-horizontal--image-right",
+        "wb-card-horizontal--elevated"
+      ],
+      "checkAttributes": [
+        "image",
+        "title"
+      ]
     }
   },
   "_metadata": {

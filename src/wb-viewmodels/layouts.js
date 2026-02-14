@@ -130,7 +130,7 @@ export function container(element, options = {}) {
     </div>`;
   }
   
-  element.dataset.wbReady = 'container';
+  element.classList.add('wb-ready');
 
   return () => {
     element.classList.remove('wb-container');

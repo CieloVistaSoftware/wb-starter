@@ -222,6 +222,26 @@
           "outline": true
         }
       ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-badge",
+      "renders": true,
+      "baseClass": "wb-badge",
+      "minInstances": 8,
+      "checkText": [
+        "New",
+        "Done",
+        "Warning",
+        "Error"
+      ],
+      "checkClasses": [
+        "wb-badge--primary",
+        "wb-badge--xs"
+      ],
+      "checkAttributes": [
+        "label"
+      ]
     }
   },
   "_metadata": {

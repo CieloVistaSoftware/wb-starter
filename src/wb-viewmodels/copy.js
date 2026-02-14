@@ -100,7 +100,7 @@ export function copy(element, options = {}) {
   element.style.cursor = 'pointer';
 
   // Mark as ready
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' copy';
+  element.classList.add('wb-ready');
 
   // Cleanup
   return () => {

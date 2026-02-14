@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💼 Portfolio Card Showcase — WB Component Library</title>
+  <meta name="description" content="Professional profile and portfolio cards">
+  <link rel="stylesheet" href="..\../src/styles/themes.css">
+  <link rel="stylesheet" href="..\../src/styles/site.css">
+  <link rel="stylesheet" href="..\../src/styles/components.css">
+
+</head>
+
+<body>
+  <nav class="wb-site-nav" style="display:flex;gap:0.25rem;padding:0.5rem 1rem;background:var(--bg-tertiary,#1e293b);border-bottom:1px solid var(--border-color,#374151);overflow-x:auto;position:sticky;top:0;z-index:100;">
+    <a href="index.html" style="padding:0.5rem 1rem;color:var(--text-primary,#f9fafb);text-decoration:none;font-weight:700;font-size:1rem;margin-right:1rem;">🧩 WB Library</a>
+      <a href="badges.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🏷️ Badges</a>
+      <a href="progress.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">📊 Progress</a>
+      <a href="notifications.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🔔 Notifications</a>
+      <a href="portfolio.html" class="wb-nav__link--active" style="padding:0.5rem 1rem;color:var(--primary,#6366f1);text-decoration:none;font-size:0.9rem;border-bottom:2px solid var(--primary,#6366f1);white-space:nowrap;">👤 Portfolio</a>
+      <a href="cards.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🃏 Cards</a>
+      <a href="all-components.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🧩 All</a>
+  </nav>
+
+  <h1 style="padding:1rem 1.5rem 0;">👤 💼 Portfolio Card Showcase</h1>
+  <p style="padding:0 1.5rem;color:var(--text-secondary,#9ca3af);">Full-featured professional portfolio card with skills, experience, projects, and more</p>
+
+  <!-- 1. availability variants -->
+  <h2 style="padding:0 1.5rem;">availability variants</h2>
+  <wb-demo columns="2">
+    <wb-cardportfolio availability="available" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio availability="busy" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio availability="not-available" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio availability="open-to-opportunities" name="Sample name">
+    </wb-cardportfolio>
+  </wb-demo>
+
+  <!-- 2. variant variants -->
+  <h2 style="padding:0 1.5rem;">variant variants</h2>
+  <wb-demo columns="2">
+    <wb-cardportfolio variant="default" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio variant="compact" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio variant="horizontal" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio variant="full" name="Sample name">
+    </wb-cardportfolio>
+  </wb-demo>
+
+  <!-- 3. size variants -->
+  <h2 style="padding:0 1.5rem;">size variants</h2>
+  <wb-demo columns="3">
+    <wb-cardportfolio size="sm" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio size="md" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio size="lg" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio size="xl" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio size="full" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio size="auto" name="Sample name">
+    </wb-cardportfolio>
+  </wb-demo>
+
+  <!-- 4. cardportfolio — Defaults -->
+  <h2 style="padding:0 1.5rem;">cardportfolio — Defaults</h2>
+  <wb-demo columns="1">
+    <wb-cardportfolio name="Sample name" availability="available" variant="default" size="auto">
+    </wb-cardportfolio>
+  </wb-demo>
+
+  <footer class="wb-site-footer" style="padding:1.5rem;text-align:center;border-top:1px solid var(--border-color,#374151);color:var(--text-secondary,#9ca3af);font-size:0.85rem;margin-top:2rem;">
+    <p>WB Component Library — Generated from schemas</p>
+    <div style="margin-top:0.5rem;display:flex;gap:1rem;justify-content:center;">
+      <a href="#" style="color:var(--primary,#6366f1);text-decoration:none;">GitHub</a>
+      <a href="#" style="color:var(--primary,#6366f1);text-decoration:none;">Documentation</a>
+    </div>
+  </footer>
+
+  <script type="module">
+    import WB from '..\../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+
+</html>

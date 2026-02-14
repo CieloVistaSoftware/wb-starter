@@ -1,0 +1,17 @@
+/**
+ * Rating Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/rating.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-rating span {
+  font-size: 1.2rem;
+  color: var(--border-color);
+  cursor: pointer;
+}
+
+.wb-rating span.active {
+  color: #fbbf24;
+}

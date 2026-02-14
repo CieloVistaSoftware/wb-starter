@@ -88,9 +88,10 @@ test.describe('Project Integrity', () => {
     const issues = new IssueCollector();
     
     for (const file of htmlFiles) {
-      const content = stripDynamicContent(readFile(file));
+      const content = stripCodeExamples(stripDynamicContent(readFile(file)));
       
-      const linkRegex = /(?:src|href)=['"]([^'"]+)['"]/g;
+      // Negative lookbehind prevents matching data-src, x-src, etc.
+      const linkRegex = /(?<![\w-])(?:src|href)=['"]([^'"]+)['"]/g;
       let match;
       
       while ((match = linkRegex.exec(content)) !== null) {

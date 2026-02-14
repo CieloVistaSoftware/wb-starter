@@ -288,6 +288,19 @@
           "disabled": true
         }
       ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "wb-select",
+      "renders": true,
+      "baseClass": "wb-select",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-select--sm",
+        "wb-select--success"
+      ],
+      "checkAttributes": []
     }
   },
   "_metadata": {

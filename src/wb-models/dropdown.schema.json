@@ -184,6 +184,20 @@
           "trigger": "hover"
         }
       ]
+    },
+    "site": {
+      "page": "overlays",
+      "tag": "wb-dropdown",
+      "renders": true,
+      "baseClass": "wb-dropdown",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [
+        "wb-dropdown--bottom-end"
+      ],
+      "checkAttributes": [
+        "position"
+      ]
     }
   },
   "_metadata": {

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "cardnotification.schema.json",
   "title": "Notification Card",
-  "description": "Dismissible notification card with type-based styling",
+  "description": "Dismissible notification card with variant-based styling",
   "schemaFor": "cardnotification",
   "baseClass": "wb-notification",
   "semanticElement": {
@@ -38,7 +38,7 @@
     },
     "icon": {
       "type": "string",
-      "description": "Custom icon (overrides type-based icon)"
+      "description": "Custom icon (overrides variant-based icon)"
     },
     "dismissible": {
       "type": "boolean",
@@ -58,7 +58,7 @@
       "tag": "span",
       "public": true,
       "content": "{{icon}}",
-      "description": "Type icon"
+      "description": "Variant icon"
     },
     {
       "name": "content",
@@ -234,6 +234,26 @@
           "message": "Info",
           "icon": "🔔"
         }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardnotification",
+      "renders": true,
+      "baseClass": "wb-notification",
+      "minInstances": 5,
+      "checkText": [
+        "Info message",
+        "Success",
+        "Done!",
+        "Warning!",
+        "Error!"
+      ],
+      "checkClasses": [
+        "wb-notification--success"
+      ],
+      "checkAttributes": [
+        "message"
       ]
     }
   },

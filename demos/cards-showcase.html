@@ -239,14 +239,14 @@
 
 
   <wb-card 
-  data-title=" wb-card title goes here" 
-  data-subtitle="The wb-card subTitle is here" 
-  data-elevated="false"
-  data-clickable="true"
-  data-on-click="alert('You clicked the card!')" 
-  data-hoverable="true" 
-  data-tooltip="This is a tooltip" 
-  data-footer="Start using cards today">
+  title=" wb-card title goes here" 
+  subtitle="The wb-card subTitle is here" 
+  elevated="false"
+  clickable="true"
+  on-click="alert('You clicked the card!')" 
+  hoverable="true" 
+  tooltip="This is a tooltip" 
+  footer="Start using cards today">
     <p>This single card demonstrates <strong>all</strong> supported properties of the base component simultaneously.
       It
       casts a shadow, reacts to hover, handles clicks, and displays a footerre.</p>
@@ -255,14 +255,14 @@
   <wb-mdhtml>
     ```html
     <wb-card 
-      data-title=" The Title Goes Here" 
-      data-subtitle="The SubTitle is next" 
-      data-elevated="false"
-      data-clickable="true"
-      data-on-click="alert('You clicked the card!')" 
-      data-hoverable="true" 
-      data-tooltip="This is a tooltip" 
-      data-footer="Start using cards today">
+      title=" The Title Goes Here" 
+      subtitle="The SubTitle is next" 
+      elevated="false"
+      clickable="true"
+      on-click="alert('You clicked the card!')" 
+      hoverable="true" 
+      tooltip="This is a tooltip" 
+      footer="Start using cards today">
       <p>This single card demonstrates <strong>all</strong> supported properties of the base component simultaneously.
         It
         casts a shadow, reacts to hover, handles clicks, and displays a footer.</p>
@@ -280,8 +280,8 @@
 
   <div class="demo-row" id="demo-cardstats">
     <wb-cardstats value="1,234" label="Total Users"></wb-cardstats>
-    <wb-cardstats value="$50K" label="Revenue" icon="💰" trend="up" data-trend-value="+12%"></wb-cardstats>
-    <wb-cardstats value="85%" label="Bounce Rate" icon="📉" trend="down" data-trend-value="-5%"></wb-cardstats>
+    <wb-cardstats value="$50K" label="Revenue" icon="💰" trend="up" trend-value="+12%"></wb-cardstats>
+    <wb-cardstats value="85%" label="Bounce Rate" icon="📉" trend="down" trend-value="-5%"></wb-cardstats>
     <wb-cardstats value="42" label="Active Projects" icon="🚀"></wb-cardstats>
   </div>
 
@@ -291,11 +291,11 @@
     <wb-cardstats value="1,234" label="Total Users"></wb-cardstats>
 
     <!-- Stats with Trend Up -->
-    <wb-cardstats value="$50K" label="Revenue" icon="💰" trend="up" data-trend-value="+12%">
+    <wb-cardstats value="$50K" label="Revenue" icon="💰" trend="up" trend-value="+12%">
     </wb-cardstats>
 
     <!-- Stats with Trend Down -->
-    <wb-cardstats value="85%" label="Bounce Rate" icon="📉" trend="down" data-trend-value="-5%">
+    <wb-cardstats value="85%" label="Bounce Rate" icon="📉" trend="down" trend-value="-5%">
     </wb-cardstats>
 
     <!-- Stats with Icon Only -->
@@ -569,7 +569,7 @@
 
     <wb-cardproduct title="Smart Watch Pro" description="Track your fitness goals"
       image="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" price="$299.99"
-      data-original-price="$399.99" badge="SALE" rating="4.8" reviews="256" cta="Add to Cart">
+      original-price="$399.99" badge="SALE" rating="4.8" reviews="256" cta="Add to Cart">
     </wb-cardproduct>
 
     <wb-cardproduct title="Mechanical Keyboard" description="RGB backlit, Cherry MX switches"
@@ -588,7 +588,7 @@
     <!-- With sale badge and original price -->
     <wb-cardproduct title="Smart Watch Pro" description="Track your fitness goals"
       image="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" price="$299.99"
-      data-original-price="$399.99" badge="SALE" rating="4.8" reviews="256" cta="Add to Cart">
+      original-price="$399.99" badge="SALE" rating="4.8" reviews="256" cta="Add to Cart">
     </wb-cardproduct>
 
     <!-- Keyboard -->

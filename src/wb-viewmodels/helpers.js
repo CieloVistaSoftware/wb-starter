@@ -128,7 +128,7 @@ export function print(element, options = {}) {
     }
   };
 
-  element.dataset.wbReady = 'print';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-print');
 }
 
@@ -166,7 +166,7 @@ export function share(element, options = {}) {
     }
   };
 
-  element.dataset.wbReady = 'share';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-share');
 }
 
@@ -234,7 +234,7 @@ export function fullscreen(element, options = {}) {
     }
   };
 
-  element.dataset.wbReady = 'fullscreen';
+  element.classList.add('wb-ready');
   return () => {
     document.removeEventListener('fullscreenchange', handleFullscreenChange);
     element.classList.remove('wb-fullscreen');
@@ -364,7 +364,7 @@ export function clipboard(element, options = {}) {
     }
   };
 
-  element.dataset.wbReady = 'clipboard';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-clipboard', 'wb-clipboard--copied');
 }
 
@@ -404,7 +404,7 @@ export function scroll(element, options = {}) {
     }
   };
 
-  element.dataset.wbReady = 'scroll';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-scroll');
 }
 
@@ -576,7 +576,7 @@ export function countdown(element, options = {}) {
   update();
   const interval = setInterval(update, 1000);
 
-  element.dataset.wbReady = 'countdown';
+  element.classList.add('wb-ready');
   return () => { 
     clearInterval(interval); 
     element.classList.remove('wb-countdown', 'wb-countdown--complete'); 
@@ -643,7 +643,7 @@ export function clock(element, options = {}) {
   update();
   const updateInterval = setInterval(update, 1000);
 
-  element.dataset.wbReady = 'clock';
+  element.classList.add('wb-ready');
   return () => { 
     clearInterval(interval); 
     element.classList.remove('wb-clock', `wb-clock--${config.variant}`); 
@@ -721,7 +721,7 @@ export function offline(element, options = {}) {
   window.addEventListener('offline', update);
   update();
 
-  element.dataset.wbReady = 'offline';
+  element.classList.add('wb-ready');
   return () => {
     window.removeEventListener('online', update);
     window.removeEventListener('offline', update);
@@ -902,7 +902,7 @@ export function debug(element, options = {}) {
     count = 0;
   };
   
-  element.dataset.wbReady = 'debug';
+  element.classList.add('wb-ready');
   
   return () => {
     // Restore original console methods

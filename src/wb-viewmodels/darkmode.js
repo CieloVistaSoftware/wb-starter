@@ -51,7 +51,7 @@ export function darkmode(element, options = {}) {
   }));
 
   // Mark as ready
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' darkmode';
+  element.classList.add('wb-ready');
 
   // Cleanup - restore original theme
   return () => {

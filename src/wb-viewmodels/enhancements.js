@@ -203,6 +203,11 @@ export function search(element, options = {}) {
     ...options
   };
 
+  if (!element.parentNode) {
+    console.warn('[x-search] not in DOM');
+    return () => {};
+  }
+
   const wrapper = document.createElement('div');
   wrapper.className = 'wb-search';
   element.parentNode.insertBefore(wrapper, element);
@@ -241,6 +246,11 @@ export function password(element, options = {}) {
     strength: options.strength ?? element.hasAttribute('data-strength'),
     ...options
   };
+
+  if (!element.parentNode) {
+    console.warn('[x-password] Element not in DOM, skipping');
+    return () => {};
+  }
 
   const wrapper = document.createElement('div');
   wrapper.className = 'wb-password';
@@ -332,7 +342,7 @@ export function password(element, options = {}) {
     });
   }
 
-  element.dataset.wbReady = 'password';
+  element.classList.add('wb-ready');
   return () => {
     wrapper.parentNode.insertBefore(element, wrapper);
     wrapper.remove();
@@ -366,82 +376,105 @@ export function masked(element, options = {}) {
 
   if (!config.mask) return () => element.classList.remove('wb-masked');
 
-  // Show mask as placeholder hint
   if (!element.placeholder) {
-    element.placeholder = config.mask.replace(/9/g, config.placeholder);
+    element.placeholder = config.mask.replace(/9/g, config.placeholder).replace(/A/g, config.placeholder);
+  }
+
+  function isSlot(c) { return c === '9' || c === 'A'; }
+  function matchesSlot(m, c) {
+    if (m === '9') return /\d/.test(c);
+    if (m === 'A') return /[a-zA-Z]/.test(c);
+    return false;
+  }
+
+  function extractRaw(value) {
+    let raw = '';
+    let mi = 0;
+    for (let i = 0; i < value.length && mi < config.mask.length; i++) {
+      if (isSlot(config.mask[mi])) {
+        if (matchesSlot(config.mask[mi], value[i])) {
+          raw += config.mask[mi] === 'A' ? value[i].toUpperCase() : value[i];
+          mi++;
+        }
+      } else {
+        if (value[i] === config.mask[mi]) mi++;
+      }
+    }
+    return raw;
+  }
+
+  function buildMasked(raw) {
+    let result = '';
+    let ri = 0;
+    for (let i = 0; i < config.mask.length && ri < raw.length; i++) {
+      if (isSlot(config.mask[i])) {
+        result += raw[ri++];
+      } else {
+        result += config.mask[i];
+      }
+    }
+    return result;
+  }
+
+  function getMaskedPos(rawIndex) {
+    let rc = 0;
+    for (let i = 0; i < config.mask.length; i++) {
+      if (isSlot(config.mask[i])) {
+        if (rc === rawIndex) return i;
+        rc++;
+      }
+    }
+    return config.mask.length;
+  }
+
+  function getRawCount(masked, pos) {
+    let count = 0;
+    let mi = 0;
+    for (let i = 0; i < pos && i < masked.length && mi < config.mask.length; i++) {
+      if (isSlot(config.mask[mi])) count++;
+      mi++;
+    }
+    return count;
   }
 
   const applyMask = () => {
-    // Extract only digits from current value
-    const digits = element.value.replace(/\D/g, '');
-    let result = '';
-    let digitIndex = 0;
-    
-    // Build masked value
-    for (let i = 0; i < config.mask.length && digitIndex < digits.length; i++) {
-      if (config.mask[i] === '9') {
-        // This position accepts a digit
-        result += digits[digitIndex++];
-      } else {
-        // This is a literal character - add it
-        result += config.mask[i];
-        // If user typed this literal, skip it in digits
-        if (digits[digitIndex] === config.mask[i]) {
-          digitIndex++;
-        }
-      }
+    const cursor = element.selectionStart;
+    const oldVal = element.value;
+    const raw = extractRaw(oldVal);
+    const newVal = buildMasked(raw);
+    if (element.value !== newVal) element.value = newVal;
+    const rawBefore = getRawCount(oldVal, cursor);
+    let newCursor = getMaskedPos(rawBefore);
+    if (newCursor < config.mask.length && !isSlot(config.mask[newCursor]) && rawBefore > 0) {
+      while (newCursor < newVal.length && newCursor < config.mask.length && !isSlot(config.mask[newCursor])) newCursor++;
     }
-    
-    element.value = result;
+    newCursor = Math.min(newCursor, newVal.length);
+    element.setSelectionRange(newCursor, newCursor);
   };
 
-  // Handle input - apply mask after each keystroke
   element.addEventListener('input', applyMask);
-  
-  // Handle keydown for better UX
+
   element.addEventListener('keydown', (e) => {
-    // Allow navigation and control keys
-    if (['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'].includes(e.key)) {
-      return;
-    }
-    
-    // Only allow digits
-    if (!/^\d$/.test(e.key) && !e.ctrlKey && !e.metaKey) {
-      e.preventDefault();
-    }
+    if (['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'].includes(e.key)) return;
+    if (e.ctrlKey || e.metaKey) return;
+    let mp = 0;
+    for (let i = 0; i < element.selectionStart && i < element.value.length; i++) mp++;
+    while (mp < config.mask.length && !isSlot(config.mask[mp])) mp++;
+    if (mp >= config.mask.length) { e.preventDefault(); return; }
+    if (!matchesSlot(config.mask[mp], e.key)) e.preventDefault();
   });
 
-  // Handle paste
   element.addEventListener('paste', (e) => {
     e.preventDefault();
-    const pastedText = (e.clipboardData || window.clipboardData).getData('text');
-    const pastedDigits = pastedText.replace(/\D/g, '');
-    
-    // Insert digits at cursor position
-    const start = element.selectionStart;
-    const currentDigits = element.value.replace(/\D/g, '');
-    const beforeCursor = currentDigits.slice(0, getDigitIndex(element.value, start));
-    const afterCursor = currentDigits.slice(getDigitIndex(element.value, start));
-    
-    element.value = beforeCursor + pastedDigits + afterCursor;
+    const pasted = (e.clipboardData || window.clipboardData).getData('text');
+    element.value = element.value.substring(0, element.selectionStart) + pasted + element.value.substring(element.selectionEnd);
     applyMask();
   });
 
-  // Helper to get digit index from cursor position
-  function getDigitIndex(value, cursorPos) {
-    let digitCount = 0;
-    for (let i = 0; i < cursorPos && i < value.length; i++) {
-      if (/\d/.test(value[i])) digitCount++;
-    }
-    return digitCount;
-  }
-
-  // Apply mask if there's an initial value
   if (element.value) applyMask();
 
-  return () => {
-    element.classList.remove('wb-masked');
-  };
+  element.classList.add('wb-ready');
+  return () => { element.classList.remove('wb-masked'); };
 }
 
 /**

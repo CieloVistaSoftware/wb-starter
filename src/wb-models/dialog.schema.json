@@ -262,6 +262,26 @@
           "variant": "centered"
         }
       ]
+    },
+    "site": {
+      "page": "overlays",
+      "tag": "wb-dialog",
+      "renders": true,
+      "baseClass": "wb-dialog",
+      "minInstances": 4,
+      "checkText": [
+        "Basic Dialog",
+        "Large",
+        "No Close",
+        "Centered"
+      ],
+      "checkClasses": [
+        "wb-dialog--sm",
+        "wb-dialog--centered"
+      ],
+      "checkAttributes": [
+        "title"
+      ]
     }
   },
   "_metadata": {

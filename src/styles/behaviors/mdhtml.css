@@ -1,0 +1,92 @@
+/**
+ * MDHTML (Markdown Rendering) Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/mdhtml.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-mdhtml h1 {
+  font-size: 1.75rem;
+  margin: 0 0 1rem;
+  color: var(--primary);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.wb-mdhtml h2 {
+  font-size: 1.25rem;
+  margin: 1.5rem 0 0.75rem;
+  color: var(--text-primary);
+}
+
+.wb-mdhtml h3 {
+  font-size: 1rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.wb-mdhtml p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+.wb-mdhtml code {
+  background: var(--bg-tertiary);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.wb-mdhtml pre {
+  background: var(--bg-tertiary);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.wb-mdhtml pre code {
+  background: none;
+  padding: 0;
+}
+
+.wb-mdhtml table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.wb-mdhtml th,
+.wb-mdhtml td {
+  padding: 0.5rem;
+  text-align: left;
+  border: 1px solid var(--border-color);
+}
+
+.wb-mdhtml th {
+  background: var(--bg-secondary);
+}
+
+.wb-mdhtml ul,
+.wb-mdhtml ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+.wb-mdhtml li {
+  margin: 0.25rem 0;
+}
+
+.wb-mdhtml--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--text-muted);
+}
+
+.wb-mdhtml--error {
+  color: var(--danger-color);
+  padding: 1rem;
+}

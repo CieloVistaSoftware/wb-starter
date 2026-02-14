@@ -268,6 +268,23 @@
           "trendValue": "+12%"
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardstats",
+      "renders": true,
+      "baseClass": "wb-stats",
+      "minInstances": 6,
+      "checkText": [
+        "Users"
+      ],
+      "checkClasses": [
+        "wb-stats--trend-up",
+        "wb-stats--compact"
+      ],
+      "checkAttributes": [
+        "value"
+      ]
     }
   },
   "_metadata": {

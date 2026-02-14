@@ -1,0 +1,38 @@
+/**
+ * Tags Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/tags.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+}
+
+.wb-tags span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.2rem 0.4rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 999px;
+  font-size: 0.7rem;
+}
+
+.wb-tags input {
+  border: none;
+  background: none;
+  outline: none;
+  flex: 1;
+  min-width: 60px;
+  color: var(--text-primary);
+  font-size: 0.8rem;
+}

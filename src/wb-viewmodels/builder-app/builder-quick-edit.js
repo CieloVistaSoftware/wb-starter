@@ -450,7 +450,7 @@ function saveQuickEdit() {
       
       // Re-render via WB
       if (window.WB) {
-        delete wbEl.dataset.wbReady;
+        wbEl.classList.remove('wb-ready');
         window.WB.remove(wbEl);
         window.WB.scan(currentWrapper);
       }

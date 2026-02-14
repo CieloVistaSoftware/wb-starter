@@ -200,7 +200,7 @@ export function checkbox(element, options = {}) {
     element.classList.add(`wb-checkbox--${config.variant}`);
   }
 
-  element.dataset.wbReady = 'checkbox';
+  element.classList.add('wb-ready');
 
   return () => {
     element.classList.remove('wb-checkbox-input', `wb-checkbox--${config.variant}`, `wb-checkbox--${config.size}`);

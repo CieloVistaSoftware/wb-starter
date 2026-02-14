@@ -28,6 +28,28 @@
       "<wb-hero variant=\"cosmic\">variant=cosmic</wb-hero>",
       "<wb-hero variant=\"default\" variant=\"cosmic\">Combined: variant=default, variant=cosmic</wb-hero>",
       "<wb-hero>Test permutation 5</wb-hero>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "variant": "default"
+        },
+        {
+          "variant": "cosmic"
+        }
+      ]
+    },
+    "site": {
+      "page": "interactive",
+      "tag": "wb-hero",
+      "renders": true,
+      "baseClass": "wb-hero",
+      "minInstances": 2,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "variant"
+      ]
+    }
   }
 }

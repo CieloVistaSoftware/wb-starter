@@ -1,0 +1,12 @@
+{
+  "$id": "variant-grid",
+  "description": "Grid showing all enum values for a property. Requires: tag, property, values[].",
+  "template": {
+    "columns": 3,
+    "demoPattern": {
+      "attrs": {
+        "{{property}}": "{{value}}"
+      }
+    }
+  }
+}

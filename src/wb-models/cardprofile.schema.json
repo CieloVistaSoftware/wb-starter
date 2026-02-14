@@ -219,6 +219,21 @@
           "align": "center"
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardprofile",
+      "renders": true,
+      "baseClass": "wb-card",
+      "minInstances": 9,
+      "checkText": [
+        "John Doe",
+        "Short bio."
+      ],
+      "checkClasses": [],
+      "checkAttributes": [
+        "name"
+      ]
     }
   },
   "builder": {

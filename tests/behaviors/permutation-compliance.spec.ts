@@ -245,7 +245,7 @@ function loadSchemas(): Map<string, Schema> {
 
 // Generate HTML for testing
 function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName: string = 'div'): string {
-  let attrs = `data-wb="${behavior}"`;
+  let attrs = `x-${behavior}=""`;
   
   // Special handling for input type="checkbox"
   if (tagName === 'input' && behavior === 'checkbox') {
@@ -444,11 +444,11 @@ test.describe('Component Compliance', () => {
           
           const el = await setupTestContainer(page, html);
           
-          // Check if component rendered - look for baseClass OR data-wb-ready
+          // Check if component rendered - look for baseClass OR .wb-ready class
           const hasBaseClass = schema.compliance?.baseClass 
             ? await el.evaluate((e, cls) => e.classList.contains(cls), schema.compliance.baseClass)
             : true;
-          const wbReady = await el.getAttribute('data-wb-ready');
+          const wbReady = await el.classList.contains('wb-ready');
           
           if (!hasBaseClass && !wbReady) {
             allErrors.push(`[PERMUTATION] ${propName}=${JSON.stringify(value)}: Component did not initialize`);
@@ -470,11 +470,11 @@ test.describe('Component Compliance', () => {
           const html = generateHtml(behaviorName, combo, 'Test Content', schema.element);
           const el = await setupTestContainer(page, html);
           
-          // Check if component rendered - look for baseClass OR data-wb-ready
+          // Check if component rendered - look for baseClass OR .wb-ready class
           const hasBaseClass = schema.compliance?.baseClass 
             ? await el.evaluate((e, cls) => e.classList.contains(cls), schema.compliance.baseClass)
             : true;
-          const wbReady = await el.getAttribute('data-wb-ready');
+          const wbReady = await el.classList.contains('wb-ready');
           
           if (!hasBaseClass && !wbReady) {
             allErrors.push(`[MATRIX] Combo ${JSON.stringify(combo)}: Component did not initialize`);

@@ -37,5 +37,34 @@
   "$methods": {
     "timeline": "timeline"
   },
-  "$cssAPI": {}
+  "$cssAPI": {},
+  "test": {
+    "matrix": {
+      "combinations": [
+        {
+          "items": "Project Kickoff,Design Phase,Development,Testing,Launch"
+        },
+        {
+          "items": "Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery"
+        },
+        {
+          "items": "Research,Prototype,Build,Ship"
+        }
+      ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-timeline",
+      "renders": true,
+      "baseClass": "wb-timeline",
+      "minInstances": 3,
+      "checkText": [
+        "Project Kickoff,Design Phase,Development,Testing,Launch",
+        "Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery",
+        "Research,Prototype,Build,Ship"
+      ],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
+  }
 }

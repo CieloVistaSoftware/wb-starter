@@ -123,7 +123,7 @@ export function progress(element, options = {}) {
     }
   };
 
-  element.dataset.wbReady = 'progress';
+  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-progress', `wb-progress--${config.size}`, `wb-progress--${config.variant}`);
     if (label) label.remove();

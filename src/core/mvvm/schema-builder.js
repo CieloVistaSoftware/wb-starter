@@ -145,6 +145,8 @@ export async function loadSchemaFile(filePath, basePath = '/src/wb-models') {
  * Get schema by name or tag
  */
 export function getSchema(identifier) {
+  if (!identifier || typeof identifier !== 'string') return null;
+  
   if (schemaRegistry.has(identifier)) {
     return schemaRegistry.get(identifier);
   }
@@ -599,7 +601,9 @@ export function processElement(element, schemaName = null) {
   }
   
   const name = schemaName || detectSchema(element);
+  console.log(`[Schema Builder] Processing element: ${element.tagName}, detected schema: ${name}`);
   if (!name) {
+    console.log(`[Schema Builder] No schema detected for ${element.tagName}`);
     return { skipped: true, reason: 'no schema detected' };
   }
   
@@ -609,15 +613,19 @@ export function processElement(element, schemaName = null) {
     return { skipped: true, reason: `schema "${name}" not found` };
   }
   
+  console.log(`[Schema Builder] Processing ${element.tagName} with schema ${name}`);
+  
   // Extract data from attributes
   const data = extractData(element, schema);
+  console.log(`[Schema Builder] Extracted data:`, data);
   
   // Build DOM structure from $view
   buildStructure(element, schema, data);
+  console.log(`[Schema Builder] After buildStructure, element.innerHTML:`, element.innerHTML);
   
   // Mark as processed
   processedElements.add(element);
-  element.dataset.wbSchema = name;
+  element.setAttribute('x-schema', name);
   
   // Bind $methods to element
   if (schema.$methods) {
@@ -759,7 +767,7 @@ export function scan(root = document.body) {
       continue;
     }
     
-    // Process data-wb elements
+    // Process x-behavior elements
     if (el.hasAttribute('x-behavior')) {
       processElement(el);
     }
@@ -827,6 +835,7 @@ export async function init(options = {}) {
 export default {
   init,
   loadSchemas,
+  loadSchemaFile,
   registerSchema,
   getSchema,
   getMethods,

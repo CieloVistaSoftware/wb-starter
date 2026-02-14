@@ -141,6 +141,24 @@
           "minimized": true
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardminimizable",
+      "renders": true,
+      "baseClass": "wb-card-minimizable",
+      "minInstances": 2,
+      "checkText": [
+        "Basic",
+        "Minimized"
+      ],
+      "checkClasses": [
+        "wb-card-minimizable--elevated"
+      ],
+      "checkAttributes": [
+        "title",
+        "content"
+      ]
     }
   },
   "_metadata": {

@@ -218,6 +218,16 @@
           "pageSize": 5
         }
       ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-table",
+      "renders": true,
+      "baseClass": "wb-table",
+      "minInstances": 4,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
     }
   },
   "_metadata": {

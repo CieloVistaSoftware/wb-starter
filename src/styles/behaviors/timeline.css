@@ -1,0 +1,38 @@
+/**
+ * Timeline Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/timeline.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-timeline {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.wb-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.4rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-color);
+}
+
+.wb-timeline-item {
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.wb-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -1.1rem;
+  top: 0.2rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary);
+}

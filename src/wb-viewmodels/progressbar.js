@@ -1,9 +1,16 @@
 /**
- * Progress Bar Behavior
+ * Progress Bar Behavior (DEPRECATED)
  * -----------------------------------------------------------------------------
- * Progress bar for tracking completion.
+ * @deprecated Use native <progress> element instead. The `progress` behavior
+ * in `semantics/progress.js` enhances native <progress> with proper
+ * cross-browser styling via pseudo-elements.
  * 
- * Custom Tag: <wb-progress>
+ * Migration:
+ *   Before: <wb-progress data-value="50" data-max="100">Loading</wb-progress>
+ *   After:  <progress value="50" max="100">50%</progress>
+ * 
+ * This file is retained for backward compatibility with existing <wb-progress>
+ * custom tags but will be removed in a future version.
  * -----------------------------------------------------------------------------
  */
 export default function progressbar(element, options = {}) {

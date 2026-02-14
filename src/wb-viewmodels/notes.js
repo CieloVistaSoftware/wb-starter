@@ -558,7 +558,7 @@ export function notes(element, options = {}) {
     btn.classList.add('active');
   });
 
-  element.dataset.wbReady = (element.dataset.wbReady || '') + ' notes';
+  element.classList.add('wb-ready');
 
   // Cleanup
   return () => {

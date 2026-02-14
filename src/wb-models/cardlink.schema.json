@@ -251,6 +251,23 @@
           "target": "_blank"
         }
       ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardlink",
+      "renders": true,
+      "baseClass": "wb-card-link",
+      "minInstances": 6,
+      "checkText": [
+        "Link Title",
+        "Title"
+      ],
+      "checkClasses": [
+        "wb-card-link--elevated"
+      ],
+      "checkAttributes": [
+        "href"
+      ]
     }
   },
   "_metadata": {

@@ -130,7 +130,7 @@ export function tabs(element, options = {}) {
 
   nav.addEventListener('click', clickHandler);
 
-  element.dataset.wbReady = 'tabs';
+  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-tabs');
     nav.removeEventListener('click', clickHandler);

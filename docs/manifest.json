@@ -3,6 +3,37 @@
   "description": "WB Starter documentation and guides",
   "categories": [
     {
+      "name": "Claude Documentation",
+      "icon": "🤖",
+      "docs": [
+        {
+          "file": "claude/PAGE-GENERATION.md",
+          "title": "Page Generation",
+          "description": "Claude page generation documentation"
+        },
+        {
+          "file": "claude/README.md",
+          "title": "Claude README",
+          "description": "Claude documentation index"
+        },
+        {
+          "file": "claude/TIER1-LAWS.md",
+          "title": "Tier 1 Laws",
+          "description": "Core architectural laws and principles"
+        },
+        {
+          "file": "claude/TIER2-DOMAIN-GUIDES.md",
+          "title": "Tier 2 Domain Guides",
+          "description": "Domain-specific implementation guides"
+        },
+        {
+          "file": "claude/TIER3-REFERENCE.md",
+          "title": "Tier 3 Reference",
+          "description": "Detailed technical reference documentation"
+        }
+      ]
+    },
+    {
       "name": "Architecture",
       "icon": "🏗️",
       "docs": [
@@ -198,6 +229,16 @@
           "description": "Documentation for cards Readme"
         },
         {
+          "file": "components/cards/cards.index.md",
+          "title": "Cards Index",
+          "description": "Index of all card components"
+        },
+        {
+          "file": "components/cards/cards.readme.md",
+          "title": "Cards README",
+          "description": "Card components overview"
+        },
+        {
           "file": "components/drawer.md",
           "title": "Drawer",
           "description": "Documentation for Drawer"
@@ -208,9 +249,19 @@
           "description": "Documentation for feedback Readme"
         },
         {
+          "file": "components/feedback/feedback.readme.md",
+          "title": "Feedback Components README",
+          "description": "Feedback component overview"
+        },
+        {
           "file": "components/forms/README.md",
           "title": "forms Readme",
           "description": "Documentation for forms Readme"
+        },
+        {
+          "file": "components/forms/forms.readme.md",
+          "title": "Forms Components README",
+          "description": "Form component overview"
         },
         {
           "file": "components/layout/README.md",
@@ -218,14 +269,44 @@
           "description": "Documentation for layout Readme"
         },
         {
+          "file": "components/layout/layout.readme.md",
+          "title": "Layout Components README",
+          "description": "Layout component overview"
+        },
+        {
           "file": "components/navigation/README.md",
           "title": "navigation Readme",
           "description": "Documentation for navigation Readme"
         },
         {
+          "file": "components/navigation/navigation.readme.md",
+          "title": "Navigation Components README",
+          "description": "Navigation component overview"
+        },
+        {
           "file": "components/README.md",
           "title": "components Readme",
           "description": "Documentation for components Readme"
+        },
+        {
+          "file": "components/components.readme.md",
+          "title": "Components README",
+          "description": "All components overview"
+        },
+        {
+          "file": "components/demo/demo.md",
+          "title": "Demo Components",
+          "description": "Demo component documentation"
+        },
+        {
+          "file": "components/semantic/semantic.index.md",
+          "title": "Semantic Components Index",
+          "description": "Index of semantic components"
+        },
+        {
+          "file": "components/semantic/semantic.readme.md",
+          "title": "Semantic Components README",
+          "description": "Semantic component overview"
         },
         {
           "file": "components/tabs.md",
@@ -278,6 +359,16 @@
           "file": "schemaTestValue.md",
           "title": "Schema Test Value",
           "description": "Testing the schema test value"
+        },
+        {
+          "file": "ANNOUNCE_TEST_POLICY.md",
+          "title": "Test Policy Announcement",
+          "description": "Testing policy and enforcement"
+        },
+        {
+          "file": "testing-runbook.md",
+          "title": "Testing Runbook",
+          "description": "Step-by-step testing procedures"
         }
       ]
     },
@@ -309,6 +400,16 @@
           "file": "property-viewer.md",
           "title": "Property Viewer",
           "description": "Documentation for the Unified Split View/Property Panel"
+        },
+        {
+          "file": "search.md",
+          "title": "Search",
+          "description": "Search functionality documentation"
+        },
+        {
+          "file": "wizard.md",
+          "title": "Wizard",
+          "description": "Wizard component documentation"
         }
       ]
     },
@@ -367,6 +468,16 @@
           "description": "Documentation for Builder Tree"
         },
         {
+          "file": "builder/pages.md",
+          "title": "Builder Pages",
+          "description": "Builder page management"
+        },
+        {
+          "file": "PAGE-BUILDER-RULES.md",
+          "title": "Page Builder Rules",
+          "description": "Content creation rules for WB Page Builder"
+        },
+        {
           "file": "MVVM-MIGRATION-PLAN.md",
           "title": "MVVM MIGRATION PLAN",
           "description": "Documentation for MVVM MIGRATION PLAN"
@@ -397,6 +508,16 @@
           "file": "compliance/iso-42001-alignment.md",
           "title": "Iso-42001-alignment",
           "description": "Documentation for Iso-42001-alignment"
+        },
+        {
+          "file": "BRANCH_PROTECTION.md",
+          "title": "Branch Protection",
+          "description": "Branch protection rules and policies"
+        },
+        {
+          "file": "CommittingFixes.md",
+          "title": "Committing Fixes",
+          "description": "Guidelines for committing fixes"
         }
       ]
     },
@@ -675,6 +796,26 @@
           "file": "INTELLISENSE-TOOLTIPS.md",
           "title": "INTELLISENSE TOOLTIPS",
           "description": "Documentation for INTELLISENSE TOOLTIPS"
+        },
+        {
+          "file": "escape-hatches.md",
+          "title": "Escape Hatches",
+          "description": "Override and customize WB component behavior"
+        },
+        {
+          "file": "mcp.md",
+          "title": "MCP Server",
+          "description": "MCP server configuration and usage"
+        },
+        {
+          "file": "schema.md",
+          "title": "Schema Standards",
+          "description": "Standard structure and conventions for all JSON schemas"
+        },
+        {
+          "file": "schema.migration.md",
+          "title": "Schema Migration Plan",
+          "description": "Step-by-step plan to migrate schemas to the new modular structure"
         }
       ]
     }

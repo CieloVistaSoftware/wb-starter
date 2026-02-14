@@ -111,6 +111,16 @@
           "repeat": true
         }
       ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-confetti",
+      "renders": true,
+      "baseClass": "wb-confetti",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
     }
   },
   "_metadata": {

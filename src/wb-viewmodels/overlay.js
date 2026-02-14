@@ -282,7 +282,7 @@ export function lightbox(element, options = {}) {
     document.body.appendChild(overlay);
   };
 
-  element.dataset.wbReady = 'lightbox';
+  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-lightbox-trigger');
 }
 
@@ -445,7 +445,7 @@ export function sheet(element, options = {}) {
   element.addEventListener('click', toggle);
   element.wbSheet = { show, hide, toggle };
 
-  element.dataset.wbReady = 'sheet';
+  element.classList.add('wb-ready');
   return () => { 
     hide(); 
     element.removeEventListener('click', toggle);

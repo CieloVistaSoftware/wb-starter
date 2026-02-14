@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💼 Portfolio Card Showcase</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/components.css">
+
+</head>
+
+<body>
+  <h1>💼 Portfolio Card Showcase</h1>
+  <p>Full-featured professional portfolio card with skills, experience, projects, and more</p>
+
+  <!-- 1. availability variants -->
+  <h2>availability variants</h2>
+  <wb-demo columns="2">
+    <wb-cardportfolio availability="available" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio availability="busy" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio availability="not-available" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio availability="open-to-opportunities" name="Sample name">
+    </wb-cardportfolio>
+  </wb-demo>
+
+  <!-- 2. variant variants -->
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-cardportfolio variant="default" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio variant="compact" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio variant="horizontal" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio variant="full" name="Sample name">
+    </wb-cardportfolio>
+  </wb-demo>
+
+  <!-- 3. size variants -->
+  <h2>size variants</h2>
+  <wb-demo columns="3">
+    <wb-cardportfolio size="sm" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio size="md" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio size="lg" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio size="xl" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio size="full" name="Sample name">
+    </wb-cardportfolio>
+    <wb-cardportfolio size="auto" name="Sample name">
+    </wb-cardportfolio>
+  </wb-demo>
+
+  <!-- 4. cardportfolio — Defaults -->
+  <h2>cardportfolio — Defaults</h2>
+  <wb-demo columns="1">
+    <wb-cardportfolio name="Sample name" availability="available" variant="default" size="auto">
+    </wb-cardportfolio>
+  </wb-demo>
+
+  <!-- Load wb-starter -->
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('💼 Portfolio Card Showcase initialized');
+  </script>
+</body>
+
+</html>

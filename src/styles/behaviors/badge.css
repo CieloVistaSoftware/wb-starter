@@ -1,0 +1,20 @@
+/**
+ * Badge Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/badge.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.7rem;
+  border-radius: 999px;
+  background: var(--primary);
+  color: white;
+}
+
+.wb-badge--success { background: var(--success-color); }
+.wb-badge--warning { background: var(--warning-color); color: black; }
+.wb-badge--error { background: var(--danger-color); }
