@@ -1,63 +1,137 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Wizard Page Schema",
-  "description": "Schema for MVVM wizard page structure, steps, and data binding.",
-  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "wizard.schema.json",
+  "title": "Wizard",
+  "description": "Multi-step wizard for guided workflows with step navigation",
+  "schemaFor": "wizard",
+  "baseClass": "wb-wizard",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "form"
+  },
+  "compliance": {
+    "baseClass": "wb-wizard",
+    "supportLevel": "experimental",
+    "accessibility": "medium"
+  },
   "properties": {
     "title": {
       "type": "string",
-      "description": "Title of the wizard page"
+      "description": "Title of the wizard",
+      "default": ""
     },
     "steps": {
       "type": "array",
       "description": "Ordered steps in the wizard",
-      "items": {
-        "type": "object",
-        "properties": {
-          "label": { "type": "string", "description": "Step label" },
-          "content": { "type": "string", "description": "HTML or template for step" },
-          "viewModel": { "type": "string", "description": "ViewModel binding for step" }
-        },
-        "required": ["label", "content"]
-      }
+      "default": []
     },
-    "test": {
-      "setup": [
-        "<div id=\"wizard\"></div>"
-      ],
-      "matrix": {
-        "combinations": [
-          {
-            "description": "Should create a wizard with a single step",
-            "input": { "title": "Site Builder Wizard", "steps": [{"label": "Build", "content": "<section>...</section>"}] },
-            "expected": "Wizard renders with one step labeled 'Build'"
-          },
-          {
-            "description": "Should create a wizard with preview step active",
-            "input": { "title": "Preview Wizard", "steps": [{"label": "Preview", "content": "<section>...</section>"}], "activeStep": 0 },
-            "expected": "Wizard renders with 'Preview' step active"
-          },
-          {
-            "description": "Should create a multi-step wizard with second step active",
-            "input": { "title": "Multi-Step", "steps": [
-              {"label": "Step 1", "content": "<section>...</section>"},
-              {"label": "Step 2", "content": "<section>...</section>"}
-            ], "activeStep": 1 },
-            "expected": "Wizard renders with two steps and 'Step 2' active"
-          },
-          {
-            "description": "Open wizard, click Build tab, choose wb-demo, add 5 random components (wb-card, wb-modal, wb-badge, wb-table, wb-alert, wb-audio with graphic equalizer), verify all render and are functional in Preview tab",
-            "actions": [
-              "Open wizard.html",
-              "Click 'Build' tab",
-              "Select 'wb-demo' component",
-              "Add 5 random components: wb-card, wb-modal, wb-badge, wb-table, wb-alert, and wb-audio with graphic equalizer",
-              "Switch to 'Preview' tab"
-            ],
-            "expected": "All 6 components (wb-demo, wb-card, wb-modal, wb-badge, wb-table, wb-alert, wb-audio with graphic equalizer) are rendered and fully functional in Preview tab"
-          }
-        ]
-      }
+    "activeStep": {
+      "type": "integer",
+      "description": "Zero-based index of the currently active step",
+      "default": 0,
+      "minimum": 0
     }
+  },
+  "$view": [
+    {
+      "name": "header",
+      "tag": "header",
+      "public": true,
+      "createdWhen": "title",
+      "description": "Wizard title bar"
+    },
+    {
+      "name": "title",
+      "tag": "h2",
+      "parent": "header",
+      "public": true,
+      "content": "{{title}}",
+      "createdWhen": "title"
+    },
+    {
+      "name": "nav",
+      "tag": "nav",
+      "public": true,
+      "required": true,
+      "description": "Step indicator/navigation"
+    },
+    {
+      "name": "content",
+      "tag": "main",
+      "public": true,
+      "required": true,
+      "description": "Active step content area"
+    },
+    {
+      "name": "footer",
+      "tag": "footer",
+      "public": true,
+      "required": true,
+      "description": "Navigation buttons (prev/next)"
+    }
+  ],
+  "$methods": {
+    "show": {
+      "description": "Shows the wizard",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the wizard",
+      "params": []
+    },
+    "next": {
+      "description": "Advances to the next step",
+      "params": [],
+      "returns": "boolean"
+    },
+    "prev": {
+      "description": "Goes back to the previous step",
+      "params": [],
+      "returns": "boolean"
+    },
+    "goTo": {
+      "description": "Jumps to a specific step by index",
+      "params": ["stepIndex"]
+    },
+    "reset": {
+      "description": "Resets wizard to first step",
+      "params": []
+    }
+  },
+  "$cssAPI": {
+    "--wb-wizard-padding": {
+      "default": "1.5rem",
+      "description": "Wizard container padding"
+    },
+    "--wb-wizard-step-indicator-color": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Active step indicator color"
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-wizard title=\"Test Wizard\"></wb-wizard>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "title": "Site Builder Wizard"
+        },
+        {
+          "title": "Preview Wizard",
+          "activeStep": 0
+        },
+        {
+          "title": "Multi-Step",
+          "activeStep": 1
+        }
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "layout",
+    "icon": "🧙",
+    "since": "1.0.0",
+    "status": "experimental"
   }
 }

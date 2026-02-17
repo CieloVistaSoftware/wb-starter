@@ -1,205 +1,197 @@
-<header class="page__hero">
+<header id="page-hero" class="page__hero pt-hero--tight">
   <h1 class="wb-gradient-text">AI Permutation Testing</h1>
-  <p>Automated combinatorial testing powered by Artificial Intelligence.</p>
+  <p>Find &amp; test missing attribute combos in WB components.</p>
 </header>
 
-<section class="page__section">
-  <wb-grid columns="1fr 300px" gap="2rem">
-    
-    <!-- Main Content -->
-    <article>
-      <h2>The Theory</h2>
-      <p>
-        Traditional testing often relies on happy-path scenarios or manually defined edge cases. 
-        <strong>Permutation Testing</strong> takes a different approach: it identifies the key 
-        dimensions of variability (e.g., User Roles, Device Types, Data States) and generates 
-        every possible combination.
-      </p>
-      <p>
-        When combined with <strong>AI Agents</strong>, we can not only generate these scenarios 
-        but autonomously execute them, analyzing the results for anomalies that a human tester 
-        might miss.
-      </p>
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MAIN LAYOUT: H1 + Schema Picker + 3 Tabs              -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="section-engine" class="page__section pt-section--tight">
 
-      <wb-card variant="float" title="Interactive Demo" style="margin-top: 2rem;">
-        <p style="margin-bottom: 1rem;">Define your test dimensions below to see the combinatorial explosion.</p>
-        
-        <wb-stack id="dimensions-container" gap="1rem">
-          <!-- Dimensions will be injected here -->
-        </wb-stack>
+  <h2>Permutation Engine</h2>
 
-        <div style="margin-top: 1rem;">
-          <button class="btn btn-secondary" onclick="addDimension()">+ Add Dimension</button>
-          <button class="btn btn-primary" onclick="generatePermutations()" style="margin-left: 0.5rem;">Generate Scenarios</button>
+  <!-- Schema Picker (always visible) -->
+  <div id="schema-picker-card" class="pt-panel pt-schema-picker">
+    <h3 class="pt-panel__title">Select Schema</h3>
+    <div id="schema-picker-row" class="pt-schema-picker-row">
+      <select id="schema-select" class="pt-select">
+        <option value="">— choose a schema —</option>
+      </select>
+      <button id="reset-btn" class="pt-btn pt-reset-btn">↻ Reset</button>
+    </div>
+    <div id="schema-info" class="pt-schema-info"></div>
+  </div>
+
+  <!-- Tab Bar — 3 tabs -->
+  <div class="pt-tabs" id="main-tabs">
+    <button class="pt-tabs__btn pt-tabs__btn--active" data-tab="tab-engine">🔧 Permutation Engine</button>
+    <button class="pt-tabs__btn" data-tab="tab-howto">📖 How to Use</button>
+    <button class="pt-tabs__btn" data-tab="tab-pages">📁 Project Pages</button>
+    <button class="pt-tabs__btn" data-tab="tab-results" id="tab-results-btn">🧪 Test Results <span id="tab-results-badge" class="pt-tabs__badge pt-hidden"></span></button>
+  </div>
+
+  <!-- Tab: Permutation Engine -->
+  <div id="tab-engine" class="pt-tab-panel pt-tab-panel--active">
+  <div id="engine-layout" class="pt-layout pt-layout--single">
+
+    <!-- Main Panel -->
+    <div id="main-panel" class="pt-main">
+
+      <!-- Activity Log — shows what the tool is doing -->
+      <div class="pt-panel pt-hidden" id="log-panel">
+        <h3 class="pt-panel__title">Activity Log</h3>
+        <p class="pt-hint">Real-time trace of what the engine is doing and why.</p>
+        <div id="activity-log" class="pt-log"></div>
+      </div>
+
+      <!-- Dimensions -->
+      <div class="pt-panel pt-hidden" id="dimensions-card">
+        <h3 class="pt-panel__title">Step 2 — Extracted Dimensions</h3>
+        <p class="pt-hint">These are the testable axes pulled from the schema's <code>properties</code>. Each enum or boolean becomes a dimension.</p>
+        <div id="dimensions-list"></div>
+        <p id="full-count" class="pt-muted"></p>
+      </div>
+
+      <!-- Existing combos -->
+      <div class="pt-panel pt-hidden" id="existing-card">
+        <h3 class="pt-panel__title">Step 3 — All Test Coverage</h3>
+        <p class="pt-hint">All combinations — existing from the schema plus newly generated gaps <span class="pt-legend-new">(outlined in green)</span>.</p>
+        <div id="existing-combos"></div>
+      </div>
+
+      <!-- Missing permutations — the main output -->
+      <div class="pt-panel pt-hidden" id="missing-card">
+        <h3 class="pt-panel__title">Step 4 — Missing Permutations (Gaps Found)</h3>
+        <p class="pt-hint" id="missing-explanation"></p>
+        <div id="missing-toolbar" class="pt-toolbar">
+          <label class="pt-toggle-label">
+            <input type="checkbox" id="pairwise-toggle" checked>
+            <span>Pairwise mode</span>
+          </label>
+          <button class="pt-btn pt-btn--accent" id="copy-json-btn">Copy All Missing as JSON</button>
+          <button class="pt-btn pt-btn--secondary" id="copy-html-btn">Copy All as HTML Setup</button>
+          <button class="pt-btn pt-btn--save" id="save-to-schema-btn">💾 Save Missing to Schema</button>
         </div>
-      </wb-card>
+        <div id="missing-combos"></div>
+        <p id="missing-summary" class="pt-summary"></p>
+      </div>
 
-      <wb-card id="results-area" title="Generated Scenarios" style="margin-top: 2rem; display: none;">
-        <h3>Generated Scenarios (<span id="scenario-count">0</span>)</h3>
-        
-        <progress id="test-progress" max="100" value="0" style="width: 100%; display: none; margin-bottom: 1rem;"></progress>
-        
-        <div style="max-height: 300px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px;">
-          <table class="wb-table wb-table--striped" id="scenario-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Combination</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+
+      <!-- Hidden sandbox for live element injection -->
+      <div id="test-sandbox" class="pt-test-sandbox"></div>
+    </div>
+
+  </div>
+  </div><!-- /tab-engine -->
+
+  <!-- Tab: How to Use -->
+  <div id="tab-howto" class="pt-tab-panel">
+    <div id="section-howto" class="pt-panel">
+      <h3 class="pt-panel__title">How to Use This Tool</h3>
+      <p class="pt-hint">Schema-driven combinatorial testing — reads your component schemas, finds gaps in test coverage, and tells you exactly how to fix them.</p>
+      <div id="howto-steps" class="pt-explain">
+        <div id="howto-step-1" class="pt-explain__step">
+          <span class="pt-step-num">1</span>
+          <div>
+            <strong>Select a Schema</strong>
+            <p>Pick any <code>*.schema.json</code> from the dropdown. The tool fetches it live from <code>src/wb-models/</code> and parses it.</p>
+          </div>
         </div>
-      </wb-card>
-    </article>
-
-    <!-- Sidebar / Stats -->
-    <aside>
-      <wb-card title="Coverage Analysis" style="position: sticky; top: 2rem;">
-        <canvas id="coverageChart"></canvas>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
-          <strong>X-Axis:</strong> The dimension being tested (e.g., Browser, Role).<br>
-          <strong>Y-Axis:</strong> Percentage of total possible values covered by the current test suite.
-        </p>
-
-        <div style="margin-top: 2rem;">
-          <h4>AI Insights</h4>
-          <ul style="font-size: 0.9rem; color: var(--text-secondary); padding-left: 1.2rem;">
-            <li>Exponential growth detected in scenario count.</li>
-            <li>Recommended: Pairwise testing to reduce volume by 85%.</li>
-          </ul>
+        <div id="howto-step-2" class="pt-explain__step">
+          <span class="pt-step-num">2</span>
+          <div>
+            <strong>Dimensions Are Extracted Automatically</strong>
+            <p>Every property with an <code>enum</code> array, a <code>boolean</code> type, or a set of defined values becomes a testable dimension. For example, <code>variant</code> with 7 enum values = 7 options, and any boolean property becomes a 2-value dimension (true/false). These are the axes of your test matrix.</p>
+          </div>
         </div>
-      </wb-card>
-    </aside>
-  </wb-grid>
+        <div id="howto-step-3" class="pt-explain__step">
+          <span class="pt-step-num">3</span>
+          <div>
+            <strong>Existing Coverage Is Shown</strong>
+            <p>The schema's <code>test.matrix.combinations</code> array is displayed. These are the combos you already test. The tool fingerprints each one so it can diff against what's generated.</p>
+          </div>
+        </div>
+        <div id="howto-step-4" class="pt-explain__step">
+          <span class="pt-step-num">4</span>
+          <div>
+            <strong>Missing Permutations Are Computed</strong>
+            <p><strong>Pairwise mode (default):</strong> Generates the minimum set of test cases where every pair of values across every pair of dimensions appears at least once. This catches interaction bugs (e.g., "pill + error variant breaks layout") while reducing test count by 80–90% vs full cartesian.</p>
+            <p><strong>Full cartesian:</strong> Every possible combination. Use this for small schemas (≤3 dimensions). For badge with 7 variants × 4 sizes × 4 booleans = 448 combos — that's too many, use pairwise.</p>
+          </div>
+        </div>
+        <div id="howto-step-5" class="pt-explain__step">
+          <span class="pt-step-num">5</span>
+          <div>
+            <strong>Each Gap Is Explained With a Fix</strong>
+            <p>Every missing permutation shows: what combination is untested, why it matters (which interaction it covers), suggested HTML markup, and the JSON to paste into your schema's test matrix.</p>
+            <p><strong>💾 Save Missing to Schema</strong> writes all missing permutations directly into the schema file — both <code>test.matrix.combinations</code> (JSON) and <code>test.setup</code> (HTML lines) — via the dev server's <code>/api/save</code> endpoint. One click, no copy-paste. The page auto-reloads the schema afterward so coverage stats update immediately.</p>
+          </div>
+        </div>
+        <div id="howto-step-6" class="pt-explain__step">
+          <span class="pt-step-num">6</span>
+          <div>
+            <strong>Run All Tests Live</strong>
+            <p>Click <strong>▶ Run All Tests Live</strong> to inject every missing permutation as a real DOM element right here in the browser. The runner creates each <code>&lt;wb-*&gt;</code> element, sets the attributes from the combo, waits for WB to initialize the behavior, then verifies 5 things:</p>
+            <p>① Element exists in DOM &mdash; ② Base class is present (e.g., <code>wb-badge</code>) &mdash; ③ Each <code>appliesClass</code> from the schema is applied (e.g., <code>wb-badge--primary</code>) &mdash; ④ Element has visible dimensions (not 0×0) &mdash; ⑤ Element is not hidden via CSS.</p>
+            <p>Failures show the expected vs. actual value and a suggested fix pointing to the specific ViewModel or CSS file to update.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-howto -->
+
+  <!-- Tab: Project Pages -->
+  <div id="tab-pages" class="pt-tab-panel">
+    <div id="section-pages" class="pt-panel">
+      <h3 class="pt-panel__title">Project Pages</h3>
+      <p class="pt-hint">Quick links to all pages in the WB-Starter project. The current page is highlighted.</p>
+      <div class="pt-page-grid" id="page-links-grid"></div>
+    </div>
+  </div><!-- /tab-pages -->
+
+  <!-- Tab: Test Results -->
+  <div id="tab-results" class="pt-tab-panel">
+    <div class="pt-panel" id="results-tab-panel">
+      <h3 class="pt-panel__title" id="results-tab-title">Live Test Results</h3>
+      <p class="pt-hint" id="results-tab-hint">Select a schema and click <strong>▶ Run All Tests Live</strong> in the Coverage panel to start.</p>
+
+      <div id="test-progress-wrap-tab" class="pt-hidden">
+        <div id="test-progress-bar" class="pt-progress-bar">
+          <div class="pt-progress-bar__fill" id="test-progress-fill-tab"></div>
+          <span class="pt-progress-bar__label" id="test-progress-label-tab">0 / 0</span>
+        </div>
+      </div>
+
+      <div id="test-summary-tab" class="pt-hidden"></div>
+
+      <div id="test-results-wrap" class="pt-table-wrap pt-table-wrap--tall">
+        <table class="pt-table pt-table--results" id="test-results-table">
+          <thead id="test-results-thead">
+            <tr><th class="pt-th-num">#</th><th>Status</th><th>Source</th><th>Description</th><th>Checks</th><th>Failed</th><th>Details</th></tr>
+          </thead>
+          <tbody id="test-results-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div><!-- /tab-results -->
+
 </section>
 
-<script>
-  // Simple State Management
-  let dimensions = [
-    { name: 'Browser', values: ['Chrome', 'Firefox', 'Safari'] },
-    { name: 'User Role', values: ['Admin', 'Editor', 'Viewer'] }
-  ];
+<!-- Floating Coverage Panel (draggable, always visible) -->
+<div id="coverage-float" class="pt-float pt-hidden">
+  <div id="coverage-float-header" class="pt-float__header">
+    <h3 class="pt-float__title" id="coverage-title">Coverage Status</h3>
+    <button id="coverage-float-minimize" class="pt-float__minimize" title="Restore">□</button>
+  </div>
+  <div id="coverage-float-body" class="pt-float__body">
+    <button class="pt-btn pt-btn--run pt-run-btn-full" id="run-tests-btn">▶ Run All Tests Live</button>
+    <div id="coverage-stats">
+      <p class="pt-muted">Select a schema to begin.</p>
+    </div>
+    <canvas id="coverageChart" width="260" height="180"></canvas>
+  </div>
+</div>
 
-  function renderDimensions() {
-    const container = document.getElementById('dimensions-container');
-    container.innerHTML = dimensions.map((dim, idx) => `
-      <wb-card variant="glass" padding="1rem">
-        <wb-flex justify="space-between" style="margin-bottom: 0.5rem;">
-          <input type="text" value="${dim.name}" class="wb-input-glass" style="width: 40%;" onchange="updateDimName(${idx}, this.value)">
-          <button class="btn btn-secondary" onclick="removeDimension(${idx})" style="padding: 0.25rem 0.5rem;">×</button>
-        </wb-flex>
-        <input type="text" value="${dim.values.join(', ')}" class="wb-input-glass" placeholder="Values (comma separated)" onchange="updateDimValues(${idx}, this.value)">
-      </wb-card>
-    `).join('');
-  }
 
-  window.addDimension = () => {
-    dimensions.push({ name: 'New Dimension', values: ['Value A', 'Value B'] });
-    renderDimensions();
-  };
-
-  window.removeDimension = (idx) => {
-    dimensions.splice(idx, 1);
-    renderDimensions();
-  };
-
-  window.updateDimName = (idx, val) => { dimensions[idx].name = val; };
-  window.updateDimValues = (idx, val) => { dimensions[idx].values = val.split(',').map(s => s.trim()).filter(s => s); };
-
-  window.generatePermutations = () => {
-    const resultsArea = document.getElementById('results-area');
-    const tableBody = document.querySelector('#scenario-table tbody');
-    const countSpan = document.getElementById('scenario-count');
-    const progress = document.getElementById('test-progress');
-
-    resultsArea.style.display = 'block';
-    progress.style.display = 'block';
-    progress.value = 0;
-
-    // Cartesian Product
-    const cartesian = (...a) => a.reduce((a, b) => a.flatMap(d => b.map(e => [d, e].flat())));
-    const valueArrays = dimensions.map(d => d.values);
-    const scenarios = cartesian(...valueArrays);
-
-    countSpan.textContent = scenarios.length;
-    
-    // Render Table
-    tableBody.innerHTML = scenarios.map((s, i) => `
-      <tr>
-        <td>#${i + 1}</td>
-        <td>${Array.isArray(s) ? s.join(' + ') : s}</td>
-        <td><span class="wb-dot-pulse" style="background: var(--text-muted);"></span> Pending</td>
-      </tr>
-    `).join('');
-
-    // Simulate AI Testing
-    let completed = 0;
-    const total = scenarios.length;
-    const interval = setInterval(() => {
-      completed += Math.floor(Math.random() * 3) + 1;
-      if (completed > total) completed = total;
-      
-      const pct = (completed / total) * 100;
-      progress.value = pct;
-
-      // Update rows
-      const rows = tableBody.querySelectorAll('tr');
-      for(let i=0; i<completed; i++) {
-        if(rows[i]) {
-          const isPass = Math.random() > 0.1; // 10% fail rate
-          const statusCell = rows[i].cells[2];
-          statusCell.innerHTML = isPass 
-            ? '<span style="color: var(--success-color)">✓ Passed</span>' 
-            : '<span style="color: var(--danger-color)">✗ Failed</span>';
-        }
-      }
-
-      if (completed >= total) {
-        clearInterval(interval);
-        updateChart();
-      }
-    }, 100);
-  };
-
-  function updateChart() {
-    // Lazy load chart if needed, or just update
-    if (window.Chart) {
-      const ctx = document.getElementById('coverageChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'radar',
-        data: {
-          labels: dimensions.map(d => d.name),
-          datasets: [{
-            label: 'Test Coverage',
-            data: dimensions.map(() => 100), // Full permutation = 100%
-            backgroundColor: 'rgba(99, 102, 241, 0.2)',
-            borderColor: '#6366f1',
-            pointBackgroundColor: '#fff'
-          }]
-        },
-        options: {
-          scales: {
-            r: {
-              angleLines: { color: 'rgba(255,255,255,0.1)' },
-              grid: { color: 'rgba(255,255,255,0.1)' },
-              pointLabels: { color: '#94a3b8' },
-              ticks: { display: false }
-            }
-          }
-        }
-      });
-    }
-  }
-
-  // Init
-  renderDimensions();
-  
-  // Load Chart.js dynamically if not present
-  if (!window.Chart) {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-    document.head.appendChild(script);
-  }
-</script>
+<link rel="stylesheet" href="../src/styles/pages/ai-permutation-test.css">

@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/test-coverage-compliance.spec.ts",
+  "startedAt": "2026-02-16T04:50:01.046Z",
+  "updatedAt": "2026-02-16T04:50:12.948Z",
+  "command": "npx playwright test --workers=8 tests/compliance/test-coverage-compliance.spec.ts",
+  "pid": 31284,
+  "passed": 15,
+  "failed": 0,
+  "skipped": 0,
+  "total": 15,
+  "currentFile": "tests\\compliance\\test-coverage-compliance.spec.ts",
+  "output": "\nRunning 15 tests using 8 workers\n\n  ok 2 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:146:3 › Schema Test Coverage › critical schemas have dedicated test files (21ms)\n  ok 1 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:130:3 › Schema Test Coverage › schemas with test section have test coverage (370ms)\n  ok 3 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:162:3 › Permutation Coverage › enum properties have permutation coverage (95ms)\n  ok 4 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:185:3 › Regression Test Structure › regression test file exists (48ms)\n  ok 6 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:194:3 › Regression Test Structure › regression tests cover each bug ID (34ms)\n  ok 5 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:189:3 › Regression Test Structure › regression tests validate bug registry (68ms)\n  ok 7 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:207:3 › Test File Quality › test files follow naming convention (5ms)\n  ok 8 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:221:3 › Test File Quality › test files import playwright correctly (47ms)\n\n═══════════════════════════════════════════════════════\n           TEST COVERAGE COMPLIANCE REPORT              \n═══════════════════════════════════════════════════════\n\n📁 SCHEMAS: 27/79 covered\n🐛 BUGS: 3/3 tested\n📝 TEST FILES: 100 total\n═══════════════════════════════════════════════════════\n\n  ok 9 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:238:3 › Test Coverage Summary › generate coverage report (137ms)\n  ok 10 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:59:3 › Bug Registry Compliance › bug registry exists (30ms)\n  ok 11 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:85:3 › Bug Registry Compliance › regression test files actually exist (15ms)\n  ok 12 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:101:3 › Bug Registry Compliance › affected components have test coverage (21ms)\n  ok 13 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:63:3 › Bug Registry Compliance › all bugs have regression tests (17ms)\n  ok 14 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:74:3 › Bug Registry Compliance › all bugs have test cases documented (21ms)\n  ok 15 [compliance] › tests\\compliance\\test-coverage-compliance.spec.ts:121:3 › Bug Registry Compliance › zero untested bugs allowed (16ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 15 tests in 6.5s\n  ✓ Passed:  15\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 15/15 passed\n════════════════════════════════════════════════════════════\n\n\n  15 passed (6.8s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-16T04:50:12.948Z",
+  "duration": "11.90s",
+  "exitCode": 0
+}

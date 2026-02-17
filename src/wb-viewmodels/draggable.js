@@ -192,8 +192,6 @@ export function draggable(element, options = {}) {
   };
 
   // Mark as ready
-  element.classList.add('wb-ready');
-
   // Cleanup
   return () => {
     element.classList.remove('wb-draggable', 'wb-draggable--dragging');

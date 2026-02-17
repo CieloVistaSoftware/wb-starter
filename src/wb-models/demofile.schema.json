@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "demofile.schema.json",
+  "title": "Demo File Contract",
+  "description": "Defines the structural contract for HTML demo files in demos/. Demos are self-contained full HTML documents that run 100% on their own — no server wrapping, no fragment loading. This is the SINGLE SOURCE OF TRUTH for what a valid demo file looks like.",
+  "schemaType": "definition",
+
+  "fileLocation": "demos/",
+  "filePattern": "*.html",
+
+  "required": {
+    "doctype": {
+      "description": "Must start with <!DOCTYPE html> — demos are full documents, not fragments",
+      "pattern": "<!DOCTYPE html>",
+      "required": true
+    },
+    "htmlTag": {
+      "description": "Must have <html lang='en' data-theme='...'> — lang for accessibility, data-theme for theming",
+      "pattern": "<html lang=\"en\" data-theme=\"...\">",
+      "requiredAttributes": ["lang", "data-theme"],
+      "required": true
+    },
+    "charset": {
+      "description": "Must have <meta charset='UTF-8'> in <head>",
+      "pattern": "<meta charset=\"UTF-8\">",
+      "required": true
+    },
+    "viewport": {
+      "description": "Must have <meta name='viewport'> in <head> for responsive design",
+      "pattern": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+      "required": true
+    },
+    "title": {
+      "description": "Must have <title> with descriptive text — not generic like 'Document' or 'Test'",
+      "pattern": "<title>Descriptive Name</title>",
+      "required": true,
+      "validation": {
+        "minLength": 3,
+        "forbiddenValues": ["untitled", "document", "page", "test", "demo"]
+      }
+    },
+    "headSection": {
+      "description": "Must have <head> section containing charset, viewport, title, and stylesheets",
+      "required": true
+    },
+    "bodySection": {
+      "description": "Must have <body> section containing the demo content",
+      "required": true
+    },
+    "closingHtml": {
+      "description": "Must have closing </html> tag",
+      "required": true
+    }
+  },
+
+  "stylesheets": {
+    "description": "How demos load styles — themes.css and site.css are mandatory for consistent theming",
+    "required": {
+      "themesCSS": {
+        "description": "Must link to themes.css for theme variables to work",
+        "pattern": "href=\"...themes.css\"",
+        "required": true
+      },
+      "siteCSS": {
+        "description": "Must link to site.css for base component styles",
+        "pattern": "href=\"...site.css\"",
+        "required": true
+      }
+    },
+    "allowed": {
+      "styleBlocks": {
+        "description": "Allowed: <style> block in <head> for demo-specific layout. Keep minimal — prefer CSS files.",
+        "location": "<head> only",
+        "guidance": "If styles grow beyond ~20 lines, extract to a CSS file"
+      },
+      "inlineStyles": {
+        "description": "Discouraged but tolerated for quick prototyping. Production demos should use classes.",
+        "maxSignificant": 5,
+        "guidance": "Significant = style attribute with 20+ chars of CSS, excluding color swatches and CSS custom properties"
+      },
+      "additionalCSS": {
+        "description": "Demos may link additional CSS files (behavior CSS, external libs like highlight.js themes)",
+        "guidance": "Use <link> in <head>, never inject via JS"
+      }
+    }
+  },
+
+  "scripts": {
+    "description": "How demos load JavaScript",
+    "wbComponents": {
+      "description": "Demos that use <wb-*> tags or data-wb= attributes MUST load WB",
+      "required": "conditional — only if demo uses WB components",
+      "acceptedLoaders": [
+        "src/core/wb-lazy.js",
+        "src/core/wb-bootstrap.js"
+      ],
+      "pattern": "<script type=\"module\" src=\"../src/core/wb-lazy.js\"></script>"
+    },
+    "demoSpecific": {
+      "description": "Demos may include their own <script> blocks for demo-specific interactivity",
+      "allowed": true
+    },
+    "backendDependency": {
+      "description": "If a demo calls backend APIs (e.g. /api/save, /api/markdown), document this in a comment at the top",
+      "values": ["none", "optional", "required"],
+      "guidance": "Add <!-- Server dependency: required|optional --> as first comment"
+    }
+  },
+
+  "selfContained": {
+    "description": "Demos MUST work when opened directly in a browser or served by the backend. They do NOT rely on the server's fragment-wrapping. If you open demos/badge-showcase.html in a browser, it must render correctly.",
+    "value": true
+  },
+
+  "partials": {
+    "description": "A demo file WITHOUT <!DOCTYPE html> is a partial/fragment. Partials cannot stand alone — they MUST be loaded by a parent demo that provides the shell (imports, CSS, JS). Every partial must declare its parent.",
+    "detection": "Absence of <!DOCTYPE html> at start of file",
+    "requirements": {
+      "parentDeclaration": {
+        "description": "First line of a partial MUST be a comment naming the parent: <!-- Parent: filename.html -->",
+        "pattern": "<!-- Parent: {parent-filename}.html -->",
+        "required": true
+      },
+      "parentMustExist": {
+        "description": "The declared parent file must exist in the same directory or a parent directory",
+        "required": true
+      },
+      "parentMustBeFullDocument": {
+        "description": "The parent file must itself be a full document (has <!DOCTYPE html>), not another partial",
+        "required": true
+      },
+      "noOrphans": {
+        "description": "A partial with no valid parent is an orphan — it will never render. This is always a bug.",
+        "required": true
+      }
+    }
+  },
+
+  "naming": {
+    "description": "Demo file naming conventions",
+    "pattern": "kebab-case.html",
+    "guidance": "Use descriptive names: badge-showcase.html, not test1.html"
+  }
+}

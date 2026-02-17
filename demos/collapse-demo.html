@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collapse Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>Collapse Demo</h1>
+  <p>Demonstrates the <code>x-collapse</code> behavior.</p>
+  <button x-collapse data-target="#collapse-content">Toggle Content</button>
+  <div id="collapse-content" style="margin-top: 1rem; padding: 1rem; background: var(--bg-tertiary);">
+    This content can be collapsed and expanded.
+  </div>
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+</html>

@@ -48,10 +48,10 @@ const DIALOG_STYLES = `
  */
 export function popover(element, options = {}) {
   const config = {
-    content: options.content || element.dataset.popoverContent || element.dataset.content || '',
-    title: options.title || element.dataset.popoverTitle || element.dataset.title || '',
-    trigger: options.trigger || element.dataset.trigger || 'click',
-    position: options.position || element.dataset.position || 'top',
+    content: options.content || element.getAttribute('popover-content') || element.getAttribute('description') || '',
+    title: options.title || element.getAttribute('popover-title') || element.getAttribute('heading') || '',
+    trigger: options.trigger || element.getAttribute('trigger') || 'click',
+    position: options.position || element.getAttribute('position') || 'top',
     ...options
   };
 
@@ -140,10 +140,10 @@ function positionPopover(trigger, popover, position) {
  */
 export function drawer(element, options = {}) {
   const config = {
-    title: options.title || element.dataset.drawerTitle || element.dataset.title || 'Drawer',
-    content: options.content || element.dataset.drawerContent || element.dataset.content || 'Drawer content',
-    position: options.position || element.dataset.position || 'right',
-    width: options.width || element.dataset.width || '320px',
+    title: options.title || element.getAttribute('drawer-title') || element.getAttribute('heading') || 'Drawer',
+    content: options.content || element.getAttribute('drawer-content') || element.getAttribute('description') || 'Drawer content',
+    position: options.position || element.getAttribute('position') || 'right',
+    width: options.width || element.getAttribute('width') || '320px',
     ...options
   };
 
@@ -209,7 +209,7 @@ export function drawer(element, options = {}) {
  */
 export function lightbox(element, options = {}) {
   const config = {
-    src: options.src || element.dataset.src || element.src || element.href || '',
+    src: options.src || element.getAttribute('src') || element.src || element.href || '',
     ...options
   };
 
@@ -282,7 +282,6 @@ export function lightbox(element, options = {}) {
     document.body.appendChild(overlay);
   };
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-lightbox-trigger');
 }
 
@@ -292,9 +291,9 @@ export function lightbox(element, options = {}) {
  */
 export function offcanvas(element, options = {}) {
   const config = {
-    title: options.title || element.dataset.offcanvasTitle || element.dataset.title || 'Panel',
-    content: options.content || element.dataset.offcanvasContent || element.dataset.content || 'Panel content',
-    position: options.position || element.dataset.position || 'left',
+    title: options.title || element.getAttribute('offcanvas-title') || element.getAttribute('heading') || 'Panel',
+    content: options.content || element.getAttribute('offcanvas-content') || element.getAttribute('description') || 'Panel content',
+    position: options.position || element.getAttribute('position') || 'left',
     ...options
   };
 
@@ -354,11 +353,11 @@ export function offcanvas(element, options = {}) {
  */
 export function sheet(element, options = {}) {
   const config = {
-    title: options.title || element.dataset.sheetTitle || element.dataset.title || 'Notes',
-    content: options.content || element.dataset.sheetContent || element.dataset.content || '',
-    width: options.width || element.dataset.width || '320px',
-    minWidth: options.minWidth || element.dataset.minWidth || '200px',
-    maxWidth: options.maxWidth || element.dataset.maxWidth || '600px',
+    title: options.title || element.getAttribute('sheet-title') || element.getAttribute('heading') || 'Notes',
+    content: options.content || element.getAttribute('sheet-content') || element.getAttribute('description') || '',
+    width: options.width || element.getAttribute('width') || '320px',
+    minWidth: options.minWidth || element.getAttribute('min-width') || '200px',
+    maxWidth: options.maxWidth || element.getAttribute('max-width') || '600px',
     ...options
   };
 
@@ -445,7 +444,6 @@ export function sheet(element, options = {}) {
   element.addEventListener('click', toggle);
   element.wbSheet = { show, hide, toggle };
 
-  element.classList.add('wb-ready');
   return () => { 
     hide(); 
     element.removeEventListener('click', toggle);
@@ -459,10 +457,10 @@ export function sheet(element, options = {}) {
  */
 export function confirm(element, options = {}) {
   const config = {
-    title: options.title || element.dataset.confirmTitle || element.dataset.title || 'Confirm',
-    message: options.message || element.dataset.confirmMessage || element.dataset.message || 'Are you sure?',
-    confirmText: options.confirmText || element.dataset.confirmText || 'OK',
-    cancelText: options.cancelText || element.dataset.cancelText || 'Cancel',
+    title: options.title || element.getAttribute('confirm-title') || element.getAttribute('heading') || 'Confirm',
+    message: options.message || element.getAttribute('confirm-message') || element.getAttribute('message') || 'Are you sure?',
+    confirmText: options.confirmText || element.getAttribute('confirm-text') || 'OK',
+    cancelText: options.cancelText || element.getAttribute('cancel-text') || 'Cancel',
     ...options
   };
 
@@ -507,10 +505,10 @@ export function confirm(element, options = {}) {
  */
 export function prompt(element, options = {}) {
   const config = {
-    title: options.title || element.dataset.promptTitle || element.dataset.title || 'Input',
-    message: options.message || element.dataset.promptMessage || element.dataset.message || '',
-    placeholder: options.placeholder || element.dataset.placeholder || '',
-    defaultValue: options.defaultValue || element.dataset.defaultValue || '',
+    title: options.title || element.getAttribute('prompt-title') || element.getAttribute('heading') || 'Input',
+    message: options.message || element.getAttribute('prompt-message') || element.getAttribute('message') || '',
+    placeholder: options.placeholder || element.getAttribute('placeholder') || '',
+    defaultValue: options.defaultValue || element.getAttribute('default-value') || '',
     ...options
   };
 

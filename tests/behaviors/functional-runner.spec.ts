@@ -31,7 +31,7 @@ const ROOT = process.cwd();
 const SCHEMA_DIR = path.join(ROOT, 'src/wb-models');
 
 // Behaviors to skip (not implemented or special cases)
-const SKIP_BEHAVIORS = ['switch', 'builder'];
+const SKIP_BEHAVIORS = ['switch'];
 
 // ═══════════════════════════════════════════════════════════════════════════
 // TYPES

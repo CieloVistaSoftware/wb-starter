@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Masked Input Behavior",
+  "type": "object",
+  "description": "Schema for x-masked behavior (input masking)",
+  "properties": {
+    "mask": { "type": "string", "description": "Input mask pattern (e.g. '999-99-9999')" },
+    "placeholder": { "type": "string", "description": "Mask placeholder character" }
+  },
+  "required": [],
+  "wbBehavior": {
+    "name": "masked",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Applies input masking to text fields.",
+    "src": "src/wb-viewmodels/masked.js"
+  }
+}

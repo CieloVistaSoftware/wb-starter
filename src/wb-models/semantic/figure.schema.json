@@ -3,33 +3,39 @@
   "$id": "figure.schema.json",
   "title": "Figure Semantic Element",
   "description": "Self-contained content with optional caption - images, diagrams, code snippets, illustrations.",
-  
   "$inheritance": {
     "extends": "_element.base.schema.json",
     "reason": "Figure IS-A element with all base properties"
   },
-  
   "htmlTag": "figure",
   "role": "figure",
-  
   "semanticMeaning": {
     "description": "Self-contained content that is referenced from main flow but could be moved without affecting meaning",
-    "examples": ["Image with caption", "Code snippet", "Diagram", "Chart", "Video", "Audio", "Illustration"],
+    "examples": [
+      "Image with caption",
+      "Code snippet",
+      "Diagram",
+      "Chart",
+      "Video",
+      "Audio",
+      "Illustration"
+    ],
     "whenToUse": "Content that is referenced but self-contained - typically with a caption"
   },
-  
   "type": "object",
   "properties": {
     "imgSrc": {
       "type": "string",
       "description": "Image source URL - auto-generates <img> child if provided",
       "htmlAttribute": "data-img-src",
-      "canvasEditable": false
+      "canvasEditable": false,
+      "default": ""
     },
     "src": {
       "type": "string",
       "description": "Source URL for image/video/audio (legacy, use imgSrc for attribute-driven)",
-      "canvasEditable": false
+      "canvasEditable": false,
+      "default": ""
     },
     "alt": {
       "type": "string",
@@ -49,22 +55,35 @@
     "aspectRatio": {
       "type": "string",
       "description": "Aspect ratio for media",
-      "enum": ["16/9", "4/3", "1/1", "3/2", "21/9"],
+      "enum": [
+        "16/9",
+        "4/3",
+        "1/1",
+        "3/2",
+        "21/9"
+      ],
       "default": "16/9"
     },
     "fit": {
       "type": "string",
       "description": "Object-fit for media",
-      "enum": ["cover", "contain", "fill", "none", "scale-down"],
+      "enum": [
+        "cover",
+        "contain",
+        "fill",
+        "none",
+        "scale-down"
+      ],
       "default": "cover"
     }
   },
-  
   "textProperties": {
     "description": "Canvas-editable text properties",
-    "list": ["alt", "caption"]
+    "list": [
+      "alt",
+      "caption"
+    ]
   },
-  
   "structure": {
     "preferredTemplate": "<figure data-img-src=\"{{imgSrc}}\" data-alt=\"{{alt}}\" data-caption=\"{{caption}}\"></figure>",
     "legacyTemplate": "<figure data-caption=\"{{caption}}\">\n  <img src=\"{{src}}\" alt=\"{{alt}}\" />\n</figure>",
@@ -73,7 +92,6 @@
       "alt": "If omitted, defaults to imgSrc value"
     }
   },
-  
   "accessibility": {
     "requirements": [
       "Images must have alt text",
@@ -81,11 +99,27 @@
       "figcaption provides visible caption"
     ]
   },
-  
-  "canContain": ["img", "video", "audio", "picture", "iframe", "svg", "canvas", "figcaption", "pre", "code"],
-  
+  "canContain": [
+    "img",
+    "video",
+    "audio",
+    "picture",
+    "iframe",
+    "svg",
+    "canvas",
+    "figcaption",
+    "pre",
+    "code"
+  ],
   "wbComponents": {
     "description": "WB components that extend figure",
-    "list": ["image", "cardimage", "cardvideo", "gallery", "lightbox"]
-  }
+    "list": [
+      "image",
+      "cardimage",
+      "cardvideo",
+      "gallery",
+      "lightbox"
+    ]
+  },
+  "schemaType": "base"
 }

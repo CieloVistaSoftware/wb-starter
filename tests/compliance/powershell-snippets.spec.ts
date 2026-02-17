@@ -23,10 +23,25 @@ test('docs: no POSIX-only one-liners in markdown (PowerShell-safe)', async () =>
     const txt = fs.readFileSync(f, 'utf8');
     const lines = txt.split(/\r?\n/);
     let inCode = false;
+    let codeLanguage = '';
+    const shellLangs = /^```(bash|sh|shell|powershell|pwsh|cmd|console|terminal)$/i;
     for (let i = 0; i < lines.length; i++) {
-      const m = lines[i].match(/^```/);
-      if (m) { inCode = !inCode; continue; }
+      const fence = lines[i].match(/^```(.*)$/);
+      if (fence) {
+        if (!inCode) {
+          inCode = true;
+          codeLanguage = (fence[1] || '').trim().toLowerCase();
+        } else {
+          inCode = false;
+          codeLanguage = '';
+        }
+        continue;
+      }
       if (!inCode) continue;
+      // Only check shell/bash/cmd code blocks, not JS/HTML/template code
+      if (!shellLangs.test('```' + codeLanguage) && codeLanguage !== '') continue;
+      // Skip unfenced code blocks too (codeLanguage === '') — too many false positives in JS
+      if (codeLanguage === '') continue;
       for (const r of forbidden) {
         if (r.test(lines[i])) errors.push(`${f}:${i+1} => ${lines[i].trim()}`);
       }

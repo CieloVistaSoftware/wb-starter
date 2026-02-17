@@ -1,0 +1,429 @@
+{
+  "timestamp": "2026-02-15T23:22:29.101Z",
+  "total": 84,
+  "passed": 84,
+  "failed": 0,
+  "errors": [],
+  "details": [
+    {
+      "file": "alert.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "article.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "articles.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "audio.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "avatar.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "badge.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "behavior.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "behaviors-showcase.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "behaviors.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "button.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "card.base.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "card.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardbutton.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "carddraggable.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardexpandable.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardfile.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardhero.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardhorizontal.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardimage.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardlink.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardminimizable.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardnotification.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardoverlay.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardportfolio.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardpricing.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardproduct.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardprofile.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardstats.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardtestimonial.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "cardvideo.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "checkbox.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "chip.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "codecontrol.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "collapse.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "confetti.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "copy.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "darkmode.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "demo.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "details.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "dialog.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "draggable.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "drawer.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "drawerLayout.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "dropdown.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "fireworks.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "fix-card.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "footer.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "globe.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "header.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "hero.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "home-page.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "input.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "mdhtml.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "move.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "navbar.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "notes.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "progress.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "rating.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "resizable.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "ripple.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "scrollalong.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "search-index.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "search.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "select.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "skeleton.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "slider.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "snow.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "span.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "spinner.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "stagelight.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "sticky.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "switch.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "table.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "tabs.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "textarea.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "themecontrol.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "timeline.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "toast.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "toggle.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "tooltip.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "views.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "wb-control.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "wb-repeater.schema.json",
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "file": "wizard.schema.json",
+      "status": "PASS",
+      "issues": []
+    }
+  ]
+}

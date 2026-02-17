@@ -558,8 +558,6 @@ export function notes(element, options = {}) {
     btn.classList.add('active');
   });
 
-  element.classList.add('wb-ready');
-
   // Cleanup
   return () => {
     element.classList.remove('wb-notes', `wb-notes--${currentPosition}`, 'wb-notes--open');

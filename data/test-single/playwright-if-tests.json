@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/playwright-if-tests.spec.ts",
+  "startedAt": "2026-02-16T04:24:05.212Z",
+  "updatedAt": "2026-02-16T04:24:21.370Z",
+  "command": "npx playwright test --workers=8 tests/compliance/playwright-if-tests.spec.ts",
+  "pid": 26072,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\compliance\\playwright-if-tests.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [compliance] › tests\\compliance\\playwright-if-tests.spec.ts:5:1 › playwright-if-tests: exits 0 when no tests match (9.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 10.9s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (11.1s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-16T04:24:21.370Z",
+  "duration": "16.16s",
+  "exitCode": 0
+}

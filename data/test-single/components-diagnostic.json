@@ -1,0 +1,25 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/mobile/components-diagnostic.spec.ts",
+  "startedAt": "2026-02-16T05:29:54.281Z",
+  "updatedAt": "2026-02-16T05:30:10.344Z",
+  "command": "npx playwright test --workers=8 --project=mobile-validation-pixel tests/mobile/components-diagnostic.spec.ts",
+  "pid": 24584,
+  "passed": 1,
+  "failed": 1,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\mobile\\components-diagnostic.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  x  1 [mobile-validation-pixel] › tests\\mobile\\components-diagnostic.spec.ts:8:1 › diagnose components.html rendering (5.6s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 9.5s\n  ✓ Passed:  0\n  ✗ Failed:  1\n\n  By Project:\n    ✗ mobile-validation-pixel: 0/1 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [mobile-validation-pixel] › tests\\mobile\\components-diagnostic.spec.ts:8:1 › diagnose components.html rendering \n\n    ReferenceError: require is not defined\n\n      58 |\n      59 |   // Write diagnostic report\n    > 60 |   const fs = require('fs');\n         |              ^\n      61 |   const reportPath = 'data/components-diagnostic.json';\n      62 |   \n      63 |   console.log('\\n═══ COMPONENTS.HTML RENDER DIAGNOSTIC ═══\\n');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\mobile\\components-diagnostic.spec.ts:60:14\n\n    Error Context: data\\test-results\\components-diagnostic-diagnose-components-html-rendering-mobile-validation-pixel\\error-context.md\n\n  1 failed\n    [mobile-validation-pixel] › tests\\mobile\\components-diagnostic.spec.ts:8:1 › diagnose components.html rendering \n",
+  "errors": "\n❌ FAILED: diagnose components.html rendering\n   ReferenceError: require is not defined\n",
+  "failures": [
+    {
+      "file": "tests\\mobile\\components-diagnostic.spec.ts",
+      "name": "diagnose components.html rendering"
+    }
+  ],
+  "completedAt": "2026-02-16T05:30:10.344Z",
+  "duration": "16.06s",
+  "exitCode": 1
+}

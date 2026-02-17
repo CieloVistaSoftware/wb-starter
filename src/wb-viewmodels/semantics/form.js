@@ -140,7 +140,6 @@ export function form(element, options = {}) {
     showMessage
   };
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-form', 'wb-form--loading');
 }
 

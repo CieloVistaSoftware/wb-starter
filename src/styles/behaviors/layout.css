@@ -1,0 +1,57 @@
+/* Layout custom elements extracted from site.css */
+wb-grid, wb-flex, wb-stack, wb-cluster, wb-container,
+wb-row, wb-column,
+wb-sidebar, wb-center, wb-cover, wb-masonry, wb-switcher,
+wb-reel, wb-frame, wb-sticky, wb-drawer, wb-icon {
+  display: block;
+}
+
+wb-drawer {
+  visibility: hidden;
+}
+wb-drawer.wb-drawer-layout {
+  visibility: visible;
+}
+
+.site {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-color);
+  color: var(--text-primary);
+}
+
+.site__body {
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+}
+
+.site__main {
+  flex: 1;
+  padding: 2rem;
+  background: var(--bg-color);
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s ease;
+}
+
+.page__section {
+  margin-bottom: 3rem;
+}
+
+.page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

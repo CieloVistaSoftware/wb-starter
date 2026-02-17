@@ -3,48 +3,63 @@
   "$id": "article.schema.json",
   "title": "Article Semantic Element",
   "description": "Self-contained composition - cards, posts, comments, widgets. The PREFERRED container for card components.",
-  
   "$inheritance": {
     "extends": "_element.base.schema.json",
     "reason": "Article IS-A element with all base properties"
   },
-  
   "htmlTag": "article",
   "role": "article",
-  
   "semanticMeaning": {
     "description": "A self-contained composition that could be distributed independently",
-    "examples": ["Blog post", "News article", "Card", "Comment", "Forum post", "Product card"],
+    "examples": [
+      "Blog post",
+      "News article",
+      "Card",
+      "Comment",
+      "Forum post",
+      "Product card"
+    ],
     "whenToUse": "Content that makes sense on its own, could be syndicated"
   },
-  
   "type": "object",
   "properties": {
     "header": {
       "$ref": "header.schema.json",
       "description": "Article header containing title, subtitle, metadata",
-      "canvasEditable": true
+      "canvasEditable": true,
+      "type": "string",
+      "default": ""
     },
     "main": {
       "$ref": "main.schema.json",
       "description": "Primary content of the article",
-      "canvasEditable": true
+      "canvasEditable": true,
+      "type": "string",
+      "default": ""
     },
     "footer": {
       "$ref": "footer.schema.json",
       "description": "Article footer containing actions, author, timestamp",
-      "canvasEditable": true
+      "canvasEditable": true,
+      "type": "string",
+      "default": ""
     }
   },
-  
   "structure": {
     "description": "Standard article structure",
     "template": "<article>\n  <header><!-- title, subtitle --></header>\n  <main><!-- content --></main>\n  <footer><!-- actions, meta --></footer>\n</article>",
     "requiredChildren": [],
-    "optionalChildren": ["header", "main", "footer", "section", "aside", "figure", "nav"],
+    "optionalChildren": [
+      "header",
+      "main",
+      "footer",
+      "section",
+      "aside",
+      "figure",
+      "nav"
+    ],
     "allowsArbitraryChildren": true
   },
-  
   "accessibility": {
     "landmarkRole": "article",
     "labelledBy": "header > h1, header > h2, header > h3",
@@ -53,14 +68,28 @@
       "Use article for content that would make sense in an RSS feed"
     ]
   },
-  
   "wbComponents": {
     "description": "WB components that extend article",
     "list": [
-      "card", "cardimage", "cardvideo", "cardbutton", "cardhero", 
-      "cardprofile", "cardtestimonial", "cardportfolio", "cardpricing",
-      "cardproduct", "cardfile", "cardlink", "cardhorizontal", "cardoverlay",
-      "carddraggable", "cardexpandable", "cardminimizable", "cardstats"
+      "card",
+      "cardimage",
+      "cardvideo",
+      "cardbutton",
+      "cardhero",
+      "cardprofile",
+      "cardtestimonial",
+      "cardportfolio",
+      "cardpricing",
+      "cardproduct",
+      "cardfile",
+      "cardlink",
+      "cardhorizontal",
+      "cardoverlay",
+      "carddraggable",
+      "cardexpandable",
+      "cardminimizable",
+      "cardstats"
     ]
-  }
+  },
+  "schemaType": "base"
 }

@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/behavior-registry.spec.ts",
+  "startedAt": "2026-02-16T04:56:48.940Z",
+  "updatedAt": "2026-02-16T04:56:55.399Z",
+  "command": "npx playwright test --workers=8 tests/compliance/behavior-registry.spec.ts",
+  "pid": 35920,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\compliance\\behavior-registry.spec.ts",
+  "output": "\nRunning 3 tests using 3 workers\n\n  ok 1 [compliance] › tests\\compliance\\behavior-registry.spec.ts:43:3 › Behavior Registry Integrity › all referenced behavior modules exist on disk (23ms)\n  ok 2 [compliance] › tests\\compliance\\behavior-registry.spec.ts:39:3 › Behavior Registry Integrity › index.js exists (14ms)\n  ok 3 [compliance] › tests\\compliance\\behavior-registry.spec.ts:64:3 › Behavior Registry Integrity › no duplicate behavior keys in registry (16ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 2.1s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 3/3 passed\n════════════════════════════════════════════════════════════\n\n\n  3 passed (2.4s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-16T04:56:55.399Z",
+  "duration": "6.46s",
+  "exitCode": 0
+}

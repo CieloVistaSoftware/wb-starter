@@ -17,37 +17,45 @@
   "properties": {
     "image": {
       "type": "string",
-      "description": "Product image URL"
+      "description": "Product image URL",
+      "default": ""
     },
     "title": {
       "type": "string",
       "description": "Product name",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "description": {
       "type": "string",
-      "description": "Product description"
+      "description": "Product description",
+      "default": ""
     },
     "price": {
       "type": "string",
       "description": "Current price",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "originalPrice": {
       "type": "string",
-      "description": "Original price (shows discount)"
+      "description": "Original price (shows discount)",
+      "default": ""
     },
     "badge": {
       "type": "string",
-      "description": "Badge text (Sale, New, etc.)"
+      "description": "Badge text (Sale, New, etc.)",
+      "default": ""
     },
     "rating": {
       "type": "number",
-      "description": "Product rating (0-5)"
+      "description": "Product rating (0-5)",
+      "default": 0
     },
     "reviews": {
       "type": "number",
-      "description": "Number of reviews"
+      "description": "Number of reviews",
+      "default": 0
     },
     "cta": {
       "type": "string",

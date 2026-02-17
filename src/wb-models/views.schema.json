@@ -16,23 +16,27 @@
   "properties": {
     "$schema": {
       "type": "string",
-      "description": "Reference to this schema file"
+      "description": "Reference to this schema file",
+      "default": ""
     },
     "version": {
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
-      "description": "Semantic version of the views registry"
+      "description": "Semantic version of the views registry",
+      "default": ""
     },
     "description": {
       "type": "string",
-      "description": "Description of this views registry"
+      "description": "Description of this views registry",
+      "default": ""
     },
     "views": {
       "type": "object",
       "description": "Map of view names to their definitions",
       "additionalProperties": {
         "$ref": "#/definitions/ViewDefinition"
-      }
+      },
+      "default": {}
     }
   },
   "definitions": {

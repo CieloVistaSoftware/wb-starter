@@ -18,11 +18,13 @@
     "title": {
       "type": "string",
       "description": "Card title (always visible)",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "content": {
       "type": "string",
-      "description": "Minimizable content"
+      "description": "Minimizable content",
+      "default": ""
     },
     "minimized": {
       "type": "boolean",

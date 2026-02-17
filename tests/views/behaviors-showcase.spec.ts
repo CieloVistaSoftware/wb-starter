@@ -1,7 +1,7 @@
 /**
  * WB Behaviors Showcase - Comprehensive Tests
  * ============================================
- * Tests every section, component, and code example on behaviors.html
+ * Tests every section, component, and code example on behaviors-showcase.html
  */
 
 import { test, expect, Page } from '@playwright/test';

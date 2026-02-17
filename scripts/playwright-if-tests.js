@@ -39,7 +39,14 @@ const stdout = (list.stdout || '').trim();
 const stderr = (list.stderr || '').trim();
 
 if (list.code !== 0) {
-  // If listing failed for some reason, fall back to running the runner so errors surface
+  // Playwright exits non-zero when no tests match --list. Check output before falling back.
+  const combined = stdout + ' ' + stderr;
+  const noTests = /no tests found/i.test(combined) || combined.trim() === '';
+  if (noTests) {
+    console.log('playwright-if-tests: no matching tests found — skipping Playwright runner (exit 0)');
+    process.exit(0);
+  }
+  // Listing failed for a real reason — fall back to running so errors surface
   console.log('playwright-if-tests: could not list tests reliably — running playwright to surface errors');
   runPlaywright(rawArgs);
   // runPlaywright will exit the process

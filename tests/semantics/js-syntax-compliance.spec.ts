@@ -121,7 +121,6 @@ test.describe('JS Syntax Compliance', () => {
       return {
         hasCard: !!behaviors.card,
         hasCardimage: !!behaviors.cardimage,
-        hasBuilder: !!behaviors.builder,
         hasModal: !!behaviors.modal,
         hasTooltip: !!behaviors.tooltip,
         hasAccordion: !!behaviors.accordion,
@@ -132,7 +131,6 @@ test.describe('JS Syntax Compliance', () => {
 
     expect(moduleLoadErrors, `Module load errors:\n${moduleLoadErrors.join('\n')}`).toHaveLength(0);
     expect(loadedGroups.hasCard).toBe(true);
-    expect(loadedGroups.hasBuilder).toBe(true);
     expect(loadedGroups.hasModal).toBe(true);
   });
 });

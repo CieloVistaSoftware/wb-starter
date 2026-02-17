@@ -168,8 +168,6 @@ export function validator(element, options = {}) {
   };
 
   // Mark as ready
-  element.classList.add('wb-ready');
-
   // Cleanup
   return () => {
     element.classList.remove('wb-validator');

@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/no-observer-referror.spec.ts",
+  "startedAt": "2026-02-16T04:54:42.761Z",
+  "updatedAt": "2026-02-16T04:54:53.982Z",
+  "command": "npx playwright test --workers=8 tests/compliance/no-observer-referror.spec.ts",
+  "pid": 37872,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 1,
+  "total": 3,
+  "currentFile": "tests\\compliance\\no-observer-referror.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  -  1 [compliance] › tests\\compliance\\no-observer-referror.spec.ts:17:8 › Runtime: no undefined-observer ReferenceError › public/builder.html should not throw observer ReferenceError\n  ok 2 [compliance] › tests\\compliance\\no-observer-referror.spec.ts:37:3 › Runtime: no undefined-observer ReferenceError › demos and showcase pages should not throw observer ReferenceError (3.9s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 6.2s\n  ✓ Passed:  1\n  ✗ Failed:  0\n  ○ Skipped: 1\n\n  By Project:\n    ✓ compliance: 1/2 passed\n════════════════════════════════════════════════════════════\n\n\n  1 skipped\n  1 passed (6.8s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-16T04:54:53.982Z",
+  "duration": "11.22s",
+  "exitCode": 0
+}

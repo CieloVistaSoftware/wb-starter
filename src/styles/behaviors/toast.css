@@ -1,29 +1,69 @@
 /**
- * Toast Behavior Styles
- * -----------------------------------------------------------------------------
- * Extracted from demo.css (Phase 3 migration)
- * Works with src/wb-viewmodels/semantics/toast.js
- * -----------------------------------------------------------------------------
+ * Toast Notification Styles
+ * CSS targets .wb-toast-container and .wb-toast classes.
+ * Toast auto-dismisses — close button is optional.
  */
 
 .wb-toast-container {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  z-index: 9999;
+  z-index: 10000;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  pointer-events: none;
 }
 
 .wb-toast {
-  padding: 0.75rem 1rem;
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 6px;
-  min-width: 200px;
-  animation: wb-slide-in 0.3s;
-  font-size: 0.85rem;
+  color: white;
+  font-size: 0.8rem;
+  min-width: 160px;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  animation: wb-toast-in 0.3s ease;
 }
 
-/* Keyframe defined in effects.css as wb-slide-in */
+/* Variants */
+.wb-toast--info    { background: var(--info-color, #3b82f6); }
+.wb-toast--success { background: var(--success-color, #22c55e); }
+.wb-toast--warning { background: var(--warning-color, #f59e0b); }
+.wb-toast--error,
+.wb-toast--danger  { background: var(--danger-color, #ef4444); }
+.wb-toast--primary { background: var(--primary, #6366f1); }
+.wb-toast--secondary { background: var(--secondary, #64748b); }
+
+/* Close button */
+.wb-toast__close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.7;
+}
+.wb-toast__close:hover { opacity: 1; }
+
+/* Exit animation */
+.wb-toast--exiting {
+  animation: wb-toast-out 0.3s ease forwards;
+}
+
+@keyframes wb-toast-in {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes wb-toast-out {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(100%); opacity: 0; }
+}

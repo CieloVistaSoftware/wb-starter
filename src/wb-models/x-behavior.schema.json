@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "x-behavior Attribute",
+  "type": "object",
+  "description": "Schema for x-behavior attribute. Used for generic behavior attachment.",
+  "properties": {
+    "x-behavior": {
+      "type": "string",
+      "description": "Name of the behavior to attach."
+    }
+  },
+  "required": ["x-behavior"]
+}

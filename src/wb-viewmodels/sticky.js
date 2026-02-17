@@ -19,16 +19,17 @@
  */
 
 export function sticky(element, options = {}) {
+  console.log('[WB:sticky] Invoked on', element, 'with options:', options, 'dataset:', element.dataset);
   // Add base class for compliance
   element.classList.add('wb-sticky');
 
-  // Config from options and data attributes
+  // Config from options and data attributes (prefer data-*)
   const config = {
     offset: parseInt(options.offset || element.dataset.offset || '0', 10),
     zIndex: parseInt(options.zIndex || element.dataset.zIndex || '100', 10),
     threshold: options.threshold || element.dataset.threshold || null,
     stuckClass: options.class || element.dataset.class || 'is-stuck',
-    animate: options.animate !== false && element.dataset.animate !== 'false'
+    animate: options.animate !== false && (element.dataset.animate !== 'false')
   };
 
   // Store original styles
@@ -187,8 +188,6 @@ export function sticky(element, options = {}) {
   }
 
   // Mark as ready
-  element.classList.add('wb-ready');
-
   // API
   element.wbSticky = {
     isStuck: () => isStuck,

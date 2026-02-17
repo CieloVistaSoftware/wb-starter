@@ -17,19 +17,23 @@
   "properties": {
     "copyright": {
       "type": "string",
-      "description": "Copyright text"
+      "description": "Copyright text",
+      "default": ""
     },
     "brand": {
       "type": "string",
-      "description": "Brand name"
+      "description": "Brand name",
+      "default": ""
     },
     "links": {
       "type": "string",
-      "description": "Navigation links as JSON [{label, href}]"
+      "description": "Navigation links as JSON [{label, href}]",
+      "default": ""
     },
     "social": {
       "type": "string",
-      "description": "Social links as JSON [{platform, href}]"
+      "description": "Social links as JSON [{platform, href}]",
+      "default": ""
     },
     "sticky": {
       "type": "boolean",

@@ -18,7 +18,8 @@
     "summary": {
       "type": "string",
       "description": "Clickable summary text",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "open": {
       "type": "boolean",
@@ -27,7 +28,8 @@
     },
     "name": {
       "type": "string",
-      "description": "Accordion group name (native exclusive behavior)"
+      "description": "Accordion group name (native exclusive behavior)",
+      "default": ""
     },
     "animated": {
       "type": "boolean",

@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/stale-locks.spec.ts",
+  "startedAt": "2026-02-16T04:24:12.268Z",
+  "updatedAt": "2026-02-16T04:24:19.260Z",
+  "command": "npx playwright test --workers=8 tests/compliance/stale-locks.spec.ts",
+  "pid": 29320,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\compliance\\stale-locks.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [compliance] › tests\\compliance\\stale-locks.spec.ts:5:1 › Lock directory must be empty before merge (16ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 2.0s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (2.2s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-16T04:24:19.260Z",
+  "duration": "6.99s",
+  "exitCode": 0
+}

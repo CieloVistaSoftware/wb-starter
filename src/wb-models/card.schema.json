@@ -124,19 +124,24 @@
   },
   "$cssAPI": {
     "--bg-secondary": {
-      "description": "Card background color"
+      "description": "Card background color",
+      "default": "inherit"
     },
     "--border-color": {
-      "description": "Card border color"
+      "description": "Card border color",
+      "default": "inherit"
     },
     "--radius-lg": {
-      "description": "Card border radius"
+      "description": "Card border radius",
+      "default": "inherit"
     },
     "--shadow-elevated": {
-      "description": "Box shadow for elevated state; 0 4px 12px rgba(0,0,0,0.15)"
+      "description": "Box shadow for elevated state; 0 4px 12px rgba(0,0,0,0.15)",
+      "default": "inherit"
     },
     "--shadow-hover": {
-      "description": "Box shadow on hover; 0 8px 24px rgba(0,0,0,0.2)"
+      "description": "Box shadow on hover; 0 8px 24px rgba(0,0,0,0.2)",
+      "default": "inherit"
     }
   },
   "test": {

@@ -29,16 +29,19 @@
     },
     "title": {
       "type": "string",
-      "description": "Notification title"
+      "description": "Notification title",
+      "default": ""
     },
     "message": {
       "type": "string",
       "description": "Notification message",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "icon": {
       "type": "string",
-      "description": "Custom icon (overrides variant-based icon)"
+      "description": "Custom icon (overrides variant-based icon)",
+      "default": ""
     },
     "dismissible": {
       "type": "boolean",

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fieldset Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>Fieldset Demo</h1>
+  <p>Demonstrates the <code>x-fieldset</code> behavior.</p>
+  <fieldset x-fieldset>
+    <legend>Personal Info</legend>
+    <label>Name: <input type="text"></label>
+    <label>Email: <input type="email"></label>
+  </fieldset>
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+</html>

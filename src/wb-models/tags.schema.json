@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tags Behavior",
+  "type": "object",
+  "description": "Schema for x-tags behavior (tag input)",
+  "properties": {},
+  "required": [],
+  "wbBehavior": {
+    "name": "tags",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Allows entry and removal of tags.",
+    "src": "src/wb-viewmodels/tags.js"
+  }
+}

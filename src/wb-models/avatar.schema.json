@@ -17,19 +17,23 @@
   "properties": {
     "src": {
       "type": "string",
-      "description": "Image source URL"
+      "description": "Image source URL",
+      "default": ""
     },
     "alt": {
       "type": "string",
-      "description": "Alt text for image"
+      "description": "Alt text for image",
+      "default": ""
     },
     "initials": {
       "type": "string",
-      "description": "Fallback initials (2 chars)"
+      "description": "Fallback initials (2 chars)",
+      "default": ""
     },
     "name": {
       "type": "string",
-      "description": "Full name (generates initials if not provided)"
+      "description": "Full name (generates initials if not provided)",
+      "default": ""
     },
     "size": {
       "type": "string",
@@ -57,12 +61,14 @@
     "status": {
       "type": "string",
       "enum": [
+        "",
         "online",
         "offline",
         "busy",
         "away"
       ],
-      "description": "Status indicator"
+      "description": "Status indicator (empty = no indicator)",
+      "default": ""
     },
     "bordered": {
       "type": "boolean",

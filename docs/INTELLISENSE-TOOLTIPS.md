@@ -167,7 +167,7 @@ Master schema defining all behavior metadata, properties, interactions, accessib
 ```text
 Behaviors Showcase
 
-Schema for demos/behaviors.html - validates all behaviors render correctly
+Schema for behaviors-showcase.html - validates all behaviors render correctly
 ```
 
 ---

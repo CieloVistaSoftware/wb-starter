@@ -116,7 +116,6 @@ export function figure(element, options = {}) {
     getCaption: () => figcaption?.textContent
   };
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-figure');
 }
 

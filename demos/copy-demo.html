@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>Copy Demo</h1>
+  <p>Demonstrates the <code>x-copy</code> behavior.</p>
+  <input id="copy-target" value="Copy this text!" style="padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+  <button x-copy data-target="#copy-target" style="padding:0.5rem 1rem; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer; overflow:hidden; position:relative;">📋 Copy</button>
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+</html>

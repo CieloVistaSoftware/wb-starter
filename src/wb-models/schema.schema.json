@@ -1,0 +1,452 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schema.schema.json",
+  "schemaType": "definition",
+  "title": "WB Component Schema Meta-Schema",
+  "description": "Validates WB schema files across 3 tiers. Component schemas (default) require all fields. Base schemas (inherited from, never instantiated) relax $view/$methods/behavior. Definition schemas (pure reference docs) require only title + description. Enforces v3.0 rules: every property must have type + default, enums must be arrays, $view items need name + tag.",
+
+  "type": "object",
+
+  "_schemaTypes": {
+    "component": {
+      "description": "Default. Real components users interact with. Full rules apply.",
+      "required": ["title", "description", "properties", "$view", "$methods"],
+      "requiresBehaviorOrSchemaFor": true,
+      "propertyRules": "type + default mandatory on every property"
+    },
+    "base": {
+      "description": "Abstract schemas inherited by other schemas. Never instantiated directly.",
+      "required": ["title", "description", "properties"],
+      "requiresBehaviorOrSchemaFor": false,
+      "propertyRules": "type + default mandatory on every property"
+    },
+    "definition": {
+      "description": "Pure reference documents defining rules or contracts. Not components.",
+      "required": ["title", "description"],
+      "requiresBehaviorOrSchemaFor": false,
+      "propertyRules": "none — properties section optional"
+    }
+  },
+
+  "required": ["title", "description"],
+
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "Path to the JavaScript file implementing this behavior (e.g. 'src/wb-viewmodels/ripple.js')"
+    },
+    "category": {
+      "type": "string",
+      "description": "Behavior category (e.g. 'inputs', 'buttons', etc.)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Unique identifier for the behavior"
+    },
+
+    "schemaType": {
+      "type": "string",
+      "enum": ["component", "base", "definition"],
+      "default": "component",
+      "description": "Schema tier. 'component' (default) = full rules. 'base' = abstract/inherited, $view/$methods optional. 'definition' = reference doc, only title+description required."
+    },
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema draft reference"
+    },
+    "$id": {
+      "type": "string",
+      "description": "Schema identifier (filename)",
+      "pattern": "^[a-z][a-z0-9-]*\\.schema\\.json$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable component name"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What this component does"
+    },
+
+    "behavior": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Behavior name in kebab-case"
+    },
+    "schemaFor": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Legacy behavior identifier (prefer 'behavior')"
+    },
+    "baseClass": {
+      "type": "string",
+      "pattern": "^wb-[a-z][a-z0-9-]*$",
+      "description": "Base CSS class (BEM block). Must start with wb-"
+    },
+
+    "semanticElement": {
+      "type": "object",
+      "properties": {
+        "tagName": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "Default HTML element (lowercase)"
+        },
+        "implicitRole": {
+          "type": "string",
+          "description": "WAI-ARIA implicit role"
+        }
+      },
+      "required": ["tagName"]
+    },
+
+    "compliance": {
+      "type": "object",
+      "description": "Legacy compliance section (retained for backward compat)",
+      "properties": {
+        "baseClass": { "type": "string" },
+        "supportLevel": {
+          "type": "string",
+          "enum": ["stable", "experimental", "deprecated"]
+        },
+        "accessibility": {
+          "type": "string",
+          "enum": ["high", "medium", "low", "none"]
+        }
+      }
+    },
+
+    "properties": {
+      "type": "object",
+      "description": "Model — data inputs (attributes). Every property MUST have type + default.",
+      "additionalProperties": {
+        "$ref": "#/$defs/componentProperty"
+      }
+    },
+
+    "$view": {
+      "type": "array",
+      "description": "View — DOM structure. Array of view items (can be empty).",
+      "items": {
+        "$ref": "#/$defs/viewItem"
+      }
+    },
+
+    "$methods": {
+      "type": "object",
+      "description": "ViewModel — callable functions bound to the element.",
+      "additionalProperties": {
+        "$ref": "#/$defs/methodItem"
+      }
+    },
+
+    "$cssAPI": {
+      "type": "object",
+      "description": "Public CSS custom properties for theming.",
+      "additionalProperties": {
+        "$ref": "#/$defs/cssApiItem"
+      }
+    },
+
+    "accessibility": {
+      "type": "object",
+      "description": "Accessibility configuration",
+      "properties": {
+        "role": { "type": "string" },
+        "ariaValueMin": { "type": "string" },
+        "ariaValueMax": { "type": "string" },
+        "ariaValueNow": { "type": "string" },
+        "ariaLabel": { "type": "string" }
+      }
+    },
+
+    "test": {
+      "$ref": "#/$defs/testConfig"
+    },
+
+    "_metadata": {
+      "type": "object",
+      "description": "Categorization, icons, versioning",
+      "properties": {
+        "category": { "type": "string" },
+        "icon": { "type": "string" },
+        "since": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["stable", "experimental", "deprecated"]
+        }
+      }
+    }
+  },
+
+  "anyOf": [
+    { "required": ["behavior"] },
+    { "required": ["schemaFor"] }
+  ],
+
+  "$defs": {
+
+    "componentProperty": {
+      "type": "object",
+      "description": "A single component property (attribute). Must have type and default.",
+      "required": ["type", "default"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["string", "boolean", "number", "integer", "array", "object"],
+          "description": "Data type"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description"
+        },
+        "default": {
+          "description": "Default value when attribute is absent. MANDATORY — no exceptions."
+        },
+        "enum": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Complete set of allowed values. If present, no other values are valid."
+        },
+        "minimum": {
+          "type": "number",
+          "description": "Minimum allowed value (number/integer types only)"
+        },
+        "maximum": {
+          "type": "number",
+          "description": "Maximum allowed value (number/integer types only)"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Is this attribute required?"
+        },
+        "appliesClass": {
+          "type": "string",
+          "description": "CSS class applied when truthy. Supports {{value}} template."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "type": { "const": "string" } },
+            "required": ["type"]
+          },
+          "then": {
+            "properties": {
+              "default": { "type": "string" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "type": { "const": "boolean" } },
+            "required": ["type"]
+          },
+          "then": {
+            "properties": {
+              "default": { "type": "boolean" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "type": { "enum": ["number", "integer"] } },
+            "required": ["type"]
+          },
+          "then": {
+            "properties": {
+              "default": { "type": "number" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "minimum": true
+            },
+            "required": ["minimum"]
+          },
+          "then": {
+            "properties": {
+              "type": { "enum": ["number", "integer"] }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "maximum": true
+            },
+            "required": ["maximum"]
+          },
+          "then": {
+            "properties": {
+              "type": { "enum": ["number", "integer"] }
+            }
+          }
+        }
+      ]
+    },
+
+    "viewItem": {
+      "type": "object",
+      "description": "A single element in the $view DOM structure.",
+      "required": ["name", "tag"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-zA-Z0-9-]*$",
+          "description": "Part identifier — generates BEM class"
+        },
+        "tag": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "HTML element tag (lowercase)"
+        },
+        "parent": {
+          "type": "string",
+          "description": "Nest inside another part (by name)"
+        },
+        "content": {
+          "type": "string",
+          "description": "Template with {{prop}} interpolation"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Always create this element"
+        },
+        "createdWhen": {
+          "type": "string",
+          "description": "Conditional creation expression (e.g. 'title OR subtitle')"
+        },
+        "public": {
+          "type": "boolean",
+          "default": true,
+          "description": "Is this part of the public API? Private parts get __- prefix."
+        },
+        "class": {
+          "type": "string",
+          "description": "Additional CSS classes"
+        },
+        "description": {
+          "type": "string",
+          "description": "Documentation for this part"
+        }
+      }
+    },
+
+    "methodItem": {
+      "type": "object",
+      "description": "A callable method on the component.",
+      "required": ["description"],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "What the method does"
+        },
+        "params": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Parameter names"
+        },
+        "returns": {
+          "type": "string",
+          "description": "Return type"
+        }
+      }
+    },
+
+    "cssApiItem": {
+      "type": "object",
+      "description": "A public CSS custom property.",
+      "required": ["default", "description"],
+      "properties": {
+        "default": {
+          "type": "string",
+          "description": "Default CSS value"
+        },
+        "description": {
+          "type": "string",
+          "description": "What this property controls"
+        },
+        "type": {
+          "type": "string",
+          "description": "CSS value type hint (color, length, number, etc.)"
+        }
+      }
+    },
+
+    "testConfig": {
+      "type": "object",
+      "description": "Test configuration for the component.",
+      "properties": {
+        "functional": {
+          "type": "boolean",
+          "description": "Whether functional tests exist"
+        },
+        "setup": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "HTML strings to instantiate the component for testing"
+        },
+        "matrix": {
+          "type": "object",
+          "description": "Permutation test matrix",
+          "properties": {
+            "combinations": {
+              "type": "array",
+              "items": { "type": "object" },
+              "minItems": 1,
+              "description": "Array of attribute objects — each is one test permutation. Single source of truth for what is tested."
+            }
+          },
+          "required": ["combinations"]
+        },
+        "site": {
+          "type": "object",
+          "description": "Page-level integration test config",
+          "properties": {
+            "page": {
+              "type": "string",
+              "description": "Which page this component appears on"
+            },
+            "tag": {
+              "type": "string",
+              "description": "HTML tag to search for"
+            },
+            "renders": {
+              "type": "boolean",
+              "description": "Whether the component renders on the page"
+            },
+            "baseClass": {
+              "type": "string",
+              "description": "Base CSS class to verify"
+            },
+            "minInstances": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Minimum expected instances on page"
+            },
+            "checkText": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Text content to verify exists"
+            },
+            "checkClasses": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "CSS classes to verify exist"
+            },
+            "checkAttributes": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Attributes to verify exist"
+            }
+          }
+        }
+      }
+    }
+  }
+}

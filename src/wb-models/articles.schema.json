@@ -67,16 +67,7 @@
       "content": "{{slot}}"
     }
   ],
-  "$cssAPI": {
-    "vars": {
-      "--gap": "Gap between articles",
-      "--col-min-width": "Minimum column width for responsive grid"
-    },
-    "parts": [
-      "list",
-      "article"
-    ]
-  },
+  "$cssAPI": {},
   "test": {
     "setup": [
       "<wb-articles>Basic articles content</wb-articles>",

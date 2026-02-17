@@ -765,6 +765,166 @@
           "file": "schema.migration.md",
           "title": "Schema Migration Plan",
           "description": "Step-by-step plan to migrate schemas to the new modular structure"
+        },
+        {
+          "file": "architecture/historical/X-PREFIX-MIGRATION-PHASE1.md",
+          "title": "X-Prefix Migration Phase 1",
+          "description": "Historical: X-prefix migration plan"
+        },
+        {
+          "file": "architecture/proposals/proposed-custom-elements.md",
+          "title": "Proposed Custom Elements",
+          "description": "Architecture proposal for custom elements"
+        },
+        {
+          "file": "architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
+          "title": "Attribute Naming Standard",
+          "description": "Standards for attribute naming conventions"
+        },
+        {
+          "file": "architecture/standards/ERROR-MESSAGE.md",
+          "title": "Error Message Standard",
+          "description": "Error message format and conventions"
+        },
+        {
+          "file": "architecture/standards/SCHEMA-SPECIFICATION.md",
+          "title": "Schema Specification",
+          "description": "Detailed schema specification standard"
+        },
+        {
+          "file": "architecture.md",
+          "title": "Architecture Overview",
+          "description": "High-level architecture documentation"
+        },
+        {
+          "file": "claude/SCHEMAS-GUIDE.md",
+          "title": "Schemas Guide",
+          "description": "Claude guide for working with schemas"
+        },
+        {
+          "file": "claude/TIER3-REFERENCE.md",
+          "title": "Tier 3 Reference",
+          "description": "Tier 3 reference documentation"
+        },
+        {
+          "file": "components/components.md",
+          "title": "Components Overview",
+          "description": "Overview of all components"
+        },
+        {
+          "file": "components/feedback/alert.md",
+          "title": "Alert",
+          "description": "Alert feedback component"
+        },
+        {
+          "file": "components/feedback/badge.md",
+          "title": "Badge",
+          "description": "Badge feedback component"
+        },
+        {
+          "file": "components/feedback/progress.md",
+          "title": "Progress",
+          "description": "Progress feedback component"
+        },
+        {
+          "file": "components/feedback/spinner.md",
+          "title": "Spinner",
+          "description": "Spinner feedback component"
+        },
+        {
+          "file": "components/forms/button.md",
+          "title": "Button",
+          "description": "Button form component"
+        },
+        {
+          "file": "components/forms/card.md",
+          "title": "Card Form",
+          "description": "Card form component"
+        },
+        {
+          "file": "components/forms/checkbox.md",
+          "title": "Checkbox",
+          "description": "Checkbox form component"
+        },
+        {
+          "file": "components/forms/input.md",
+          "title": "Input",
+          "description": "Input form component"
+        },
+        {
+          "file": "components/forms/select.md",
+          "title": "Select",
+          "description": "Select form component"
+        },
+        {
+          "file": "components/forms/switch.md",
+          "title": "Switch",
+          "description": "Switch form component"
+        },
+        {
+          "file": "components/forms/textarea.md",
+          "title": "Textarea",
+          "description": "Textarea form component"
+        },
+        {
+          "file": "components/layout/cluster.md",
+          "title": "Cluster",
+          "description": "Cluster layout component"
+        },
+        {
+          "file": "components/layout/container.md",
+          "title": "Container",
+          "description": "Container layout component"
+        },
+        {
+          "file": "components/layout/flex.md",
+          "title": "Flex",
+          "description": "Flex layout component"
+        },
+        {
+          "file": "components/layout/grid.md",
+          "title": "Grid",
+          "description": "Grid layout component"
+        },
+        {
+          "file": "components/layout/header.md",
+          "title": "Header",
+          "description": "Header layout component"
+        },
+        {
+          "file": "components/mdhtml.md",
+          "title": "Markdown HTML",
+          "description": "Markdown to HTML component"
+        },
+        {
+          "file": "components/semantic/details.md",
+          "title": "Details Semantic",
+          "description": "Details semantic component"
+        },
+        {
+          "file": "container-pattern.md",
+          "title": "Container Pattern",
+          "description": "Container pattern documentation"
+        },
+        {
+          "file": "index.md",
+          "title": "Docs Index",
+          "description": "Documentation index page"
+        },
+        {
+          "file": "semantic-standard.md",
+          "title": "Semantic Standard",
+          "description": "Semantic HTML standard documentation"
+        },
+        {
+          "file": "wbservices.md",
+          "title": "WBServices",
+          "description": "WBServices pattern documentation"
+        },
+        {
+          "file": "WB_BEHAVIOR_SYSTEM.md",
+          "title": "WB Behavior System",
+          "description": "Core behavior system documentation"
         }
       ]
     }

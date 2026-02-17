@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autosize Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>Autosize Demo</h1>
+  <p>Demonstrates the <code>x-autosize</code> behavior.<br>
+    <strong>Doc:</strong> <a href="../docs/behaviors/autosize.md" target="_blank">autosize.md</a>
+  </p>
+  <textarea x-autosize style="width: 100%; min-height: 2rem;">Type here and watch me grow!</textarea>
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+</html>

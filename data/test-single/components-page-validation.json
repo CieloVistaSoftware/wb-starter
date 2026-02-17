@@ -1,0 +1,229 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/mobile/components-page-validation.spec.ts",
+  "startedAt": "2026-02-16T05:33:33.416Z",
+  "updatedAt": "2026-02-16T05:36:44.753Z",
+  "command": "npx playwright test --workers=8 --project=mobile-validation-pixel tests/mobile/components-page-validation.spec.ts",
+  "pid": 34652,
+  "passed": 26,
+  "failed": 52,
+  "skipped": 0,
+  "total": 78,
+  "currentFile": "tests\\mobile\\components-page-validation.spec.ts",
+  "output": "\nRunning 133 tests using 8 workers\n\n  ok 3 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:96:11 › Components Page — Schema Validation › Section: Cards › wb-card: has required inner elements (11.9s)\n  ok 5 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-card: has 3+ instances (11.2s)\n  ok 2 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-card: renders inner content (13.0s)\n  ok 4 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Cards › wb-card: contains expected text (10.9s)\n  ok 1 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:48:3 › Components Page — Schema Validation › page has 8 sections (13.2s)\n  ok 8 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:38:3 › Components Page — Schema Validation › hero section renders (8.4s)\n  ok 7 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardimage: has 2+ instances (9.1s)\n  ok 6 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardimage: renders inner content (9.0s)\n  ok 9 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:96:11 › Components Page — Schema Validation › Section: Cards › wb-cardimage: has required inner elements (4.4s)\n  x  13 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardoverlay: has 1+ instances (5.7s)\n  x  10 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardvideo: has 1+ instances (8.8s)\n  x  17 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Cards › wb-cardhero: contains expected text (4.6s)\n  x  14 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardoverlay: renders inner content (8.2s)\n  x  16 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardhero: renders inner content (7.3s)\n  x  15 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardhero: has 1+ instances (7.9s)\n  x  11 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardvideo: renders inner content (8.6s)\n  ok 22 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardpricing: has 3+ instances (8.6s)\n  ok 18 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardlink: has 4+ instances (14.5s)\n  x  12 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:96:11 › Components Page — Schema Validation › Section: Cards › wb-cardvideo: has required inner elements (8.6s)\n  ok 24 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardproduct: has 4+ instances (6.3s)\n  x  25 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardproduct: renders inner content (4.6s)\n  x  26 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Cards › wb-cardproduct: contains expected text (5.5s)\n  x  27 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardtestimonial: has 2+ instances (5.2s)\n  x  20 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardpricing: renders inner content (9.0s)\n  x  21 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardlink: renders inner content (13.6s)\n  ok 31 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardnotification: has 4+ instances (5.8s)\n  x  23 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:96:11 › Components Page — Schema Validation › Section: Cards › wb-cardpricing: has required inner elements (8.1s)\n  x  19 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Cards › wb-cardpricing: contains expected text (9.2s)\n  x  28 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:96:11 › Components Page — Schema Validation › Section: Cards › wb-cardproduct: has required inner elements (4.4s)\n  x  30 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Cards › wb-cardtestimonial: contains expected text (6.9s)\n  ok 37 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardhorizontal: has 1+ instances (4.7s)\n  x  34 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardfile: has 4+ instances (4.6s)\n  x  32 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardnotification: renders inner content (7.2s)\n  x  33 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Cards › wb-cardnotification: contains expected text (5.4s)\n  x  29 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardtestimonial: renders inner content (10.9s)\n  ok 40 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Cards › wb-cardportfolio: has 1+ instances (4.9s)\n  x  36 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Cards › wb-cardfile: contains expected text (6.2s)\n  x  35 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardfile: renders inner content (9.2s)\n  x  39 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:96:11 › Components Page — Schema Validation › Section: Cards › wb-cardhorizontal: has required inner elements (4.3s)\n  x  38 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardhorizontal: renders inner content (8.4s)\n  x  44 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Feedback Components › wb-badge: renders inner content (5.1s)\n  ok 45 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Feedback Components › wb-badge: contains expected text (4.0s)\n  x  42 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Cards › wb-cardportfolio: contains expected text (5.4s)\n  ok 46 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Feedback Components › wb-progress: has 4+ instances (4.1s)\n  x  41 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Cards › wb-cardportfolio: renders inner content (6.5s)\n  x  43 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Feedback Components › wb-badge: has 10+ instances (4.8s)\n  x  49 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:96:11 › Components Page — Schema Validation › Section: Feedback Components › wb-progress: has required inner elements (12.8s)\n  x  47 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Feedback Components › wb-progress: renders inner content (4.6s)\n  x  51 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Feedback Components › wb-avatar: has 7+ instances (9.4s)\n  ok 55 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Feedback Components › wb-skeleton: has 3+ instances (4.4s)\n  x  53 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Feedback Components › wb-avatar: renders inner content (4.3s)\n  x  50 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Feedback Components › wb-spinner: has 5+ instances (9.8s)\n  x  48 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Feedback Components › wb-spinner: renders inner content (6.8s)\n  x  52 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:108:11 › Components Page — Schema Validation › Section: Feedback Components › wb-spinner: is visible with proper dimensions (11.2s)\n  x  54 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Feedback Components › wb-avatar: contains expected text (4.4s)\n  x  58 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Feedback Components › wb-rating: has 2+ instances (5.1s)\n  x  60 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Overlays & Dialogs › wb-modal: contains expected text (8.5s)\n  x  57 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Feedback Components › wb-rating: renders inner content (4.3s)\n  ok 63 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Overlays & Dialogs › x-confirm: has 1+ instances (4.7s)\n  x  59 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Overlays & Dialogs › wb-modal: has 1+ instances (8.5s)\n  x  56 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Feedback Components › wb-skeleton: renders inner content (4.8s)\n  ok 65 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Overlays & Dialogs › x-lightbox: has 1+ instances (4.1s)\n  x  61 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Overlays & Dialogs › x-drawer: has 2+ instances (8.2s)\n  ok 68 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Overlays & Dialogs › x-popover: contains expected text (4.4s)\n  x  62 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Overlays & Dialogs › x-drawer: contains expected text (10.5s)\n  x  72 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Navigation › wb-tabs: has 1+ instances (9ms)\n  x  66 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Overlays & Dialogs › x-prompt: has 1+ instances (7.7s)\n  ok 70 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Overlays & Dialogs › x-popover: has 1+ instances (6.4s)\n  ok 69 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Overlays & Dialogs › x-lightbox: contains expected text (6.5s)\n  ok 71 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Navigation › wb-tabs: renders inner content (4.0s)\n  ok 75 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:67:9 › Components Page — Schema Validation › Section: Navigation › x-breadcrumb: has 1+ instances (4.9s)\n  ok 73 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Navigation › wb-details: renders inner content (4.9s)\n  x  64 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Overlays & Dialogs › x-confirm: contains expected text (4.9s)\n  x  67 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Overlays & Dialogs › x-prompt: contains expected text (6.8s)\n  x  80 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Navigation › x-breadcrumb: contains expected text (5.5s)\n  x  74 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:84:11 › Components Page — Schema Validation › Section: Navigation › wb-details: contains expected text (4.9s)\n  x  77 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:96:11 › Components Page — Schema Validation › Section: Navigation › wb-tabs: has required inner elements (8.2s)\n  x  79 [mobile-validation-pixel] › tests\\mobile\\components-page-validation.spec.ts:75:11 › Components Page — Schema Validation › Section: Navigation › x-breadcrumb: renders inner content (5.8s)\n",
+  "errors": "\n❌ FAILED: wb-cardoverlay: has 1+ instances\n   Error: wb-cardoverlay: expected 1+ but found 0\n\n❌ FAILED: wb-cardvideo: has 1+ instances\n   Error: wb-cardvideo: expected 1+ but found 0\n\n❌ FAILED: wb-cardhero: contains expected text\n   Error: wb-cardhero: missing text \"Hero Card\"\n\n❌ FAILED: wb-cardoverlay: renders inner content\n   Error: wb-cardoverlay: innerHTML is empty — component did not render\n\n❌ FAILED: wb-cardhero: renders inner content\n   Error: wb-cardhero: innerHTML is empty — component did not render\n\n❌ FAILED: wb-cardhero: has 1+ instances\n   Error: locator.count: Execution context was destroyed, most likely because of a navigation\n\n❌ FAILED: wb-cardvideo: renders inner content\n   Error: wb-cardvideo: innerHTML is empty — component did not render\n\n❌ FAILED: wb-cardvideo: has required inner elements\n   Error: wb-cardvideo: missing inner element matching \"video\"\n\n❌ FAILED: wb-cardproduct: renders inner content\n   Error: wb-cardproduct: innerHTML is empty — component did not render\n\n❌ FAILED: wb-cardproduct: contains expected text\n   Error: wb-cardproduct: missing text \"$19.99\"\n\n❌ FAILED: wb-cardtestimonial: has 2+ instances\n   Error: locator.count: Execution context was destroyed, most likely because of a navigation\n\n❌ FAILED: wb-cardpricing: renders inner content\n   Error: wb-cardpricing: innerHTML is empty — component did not render\n\n❌ FAILED: wb-cardlink: renders inner content\n   Error: wb-cardlink: innerHTML is empty — component did not render\n\n❌ FAILED: wb-cardpricing: has required inner elements\n   Error: locator.count: Execution context was destroyed, most likely because of a navigation\n\n❌ FAILED: wb-cardpricing: contains expected text\n   Error: wb-cardpricing: missing text \"Starter\"\n\n❌ FAILED: wb-cardproduct: has required inner elements\n   Error: wb-cardproduct: missing inner element matching \"img\"\n\n❌ FAILED: wb-cardtestimonial: contains expected text\n   Error: wb-cardtestimonial: missing text \"Jane Smith\"\n\n❌ FAILED: wb-cardfile: has 4+ instances\n   Error: locator.count: Execution context was destroyed, most likely because of a navigation\n\n❌ FAILED: wb-cardnotification: renders inner content\n   Error: wb-cardnotification: innerHTML is empty — component did not render\n\n❌ FAILED: wb-cardnotification: contains expected text\n   Error: wb-cardnotification: missing text \"Info\"\n\n❌ FAILED: wb-cardtestimonial: renders inner content\n   Error: wb-cardtestimonial: innerHTML is empty — component did not render\n\n❌ FAILED: wb-cardfile: contains expected text\n   Error: wb-cardfile: missing text \"report.pdf\"\n\n❌ FAILED: wb-cardfile: renders inner content\n   Error: wb-cardfile: innerHTML is empty — component did not render\n\n❌ FAILED: wb-cardhorizontal: has required inner elements\n   Error: wb-cardhorizontal: missing inner element matching \"img\"\n\n❌ FAILED: wb-cardhorizontal: renders inner content\n   Error: wb-cardhorizontal: innerHTML is empty — component did not render\n\n❌ FAILED: wb-badge: renders inner content\n   Error: wb-badge: innerHTML is empty — component did not render\n\n❌ FAILED: wb-cardportfolio: contains expected text\n   Error: wb-cardportfolio: missing text \"Jane Smith\"\n\n❌ FAILED: wb-cardportfolio: renders inner content\n   Error: wb-cardportfolio: innerHTML is empty — component did not render\n\n❌ FAILED: wb-badge: has 10+ instances\n   Error: wb-badge: expected 10+ but found 0\n\n❌ FAILED: wb-progress: has required inner elements\n   Error: wb-progress: missing inner element matching \".wb-progress__bar, .wb-progress__fill, [class*='progress']\"\n\n❌ FAILED: wb-progress: renders inner content\n   Error: wb-progress: innerHTML is empty — component did not render\n\n❌ FAILED: wb-avatar: has 7+ instances\n   Error: wb-avatar: expected 7+ but found 0\n\n❌ FAILED: wb-avatar: renders inner content\n   Error: wb-avatar: innerHTML is empty — component did not render\n\n❌ FAILED: wb-spinner: has 5+ instances\n   Error: wb-spinner: expected 5+ but found 0\n\n❌ FAILED: wb-spinner: renders inner content\n   Error: wb-spinner: innerHTML is empty — component did not render\n\n❌ FAILED: wb-spinner: is visible with proper dimensions\n   Error: Timed out 5000ms waiting for expect(locator).toBeVisible()\n\n❌ FAILED: wb-avatar: contains expected text\n   Error: wb-avatar: missing text \"JS\"\n\n❌ FAILED: wb-rating: has 2+ instances\n   Error: wb-rating: expected 2+ but found 0\n\n❌ FAILED: wb-modal: contains expected text\n   Error: wb-modal: missing text \"Open Modal\"\n\n❌ FAILED: wb-rating: renders inner content\n   Error: wb-rating: innerHTML is empty — component did not render\n\n❌ FAILED: wb-modal: has 1+ instances\n   Error: wb-modal: expected 1+ but found 0\n\n❌ FAILED: wb-skeleton: renders inner content\n   Error: wb-skeleton: innerHTML is empty — component did not render\n\n❌ FAILED: x-drawer: has 2+ instances\n   Error: locator.count: Execution context was destroyed, most likely because of a navigation\n\n❌ FAILED: x-drawer: contains expected text\n   Error: x-drawer: missing text \"Left\"\n\n❌ FAILED: wb-tabs: has 1+ instances\n   Error: browserType.launch: Target page, context or browser has been closed\n\n❌ FAILED: x-prompt: has 1+ instances\n   Error: x-prompt: expected 1+ but found 0\n\n❌ FAILED: x-confirm: contains expected text\n   Error: locator.evaluateAll: Execution context was destroyed, most likely because of a navigation\n\n❌ FAILED: x-prompt: contains expected text\n   Error: x-prompt: missing text \"Prompt\"\n\n❌ FAILED: x-breadcrumb: contains expected text\n   Error: page.goto: net::ERR_ABORTED at http://localhost:3000/pages/components.html\n\n❌ FAILED: wb-details: contains expected text\n   Error: wb-details: missing text \"What is wb-starter\"\n\n❌ FAILED: wb-tabs: has required inner elements\n   Error: wb-tabs: missing inner element matching \"[role='tab'], .wb-tabs__tab, button\"\n\n❌ FAILED: x-breadcrumb: renders inner content\n   Error: x-breadcrumb: innerHTML is empty — component did not render\n",
+  "failures": [
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardoverlay: has 1+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardvideo: has 1+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardhero: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardoverlay: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardhero: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardhero: has 1+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardvideo: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardvideo: has required inner elements"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardproduct: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardproduct: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardtestimonial: has 2+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardpricing: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardlink: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardpricing: has required inner elements"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardpricing: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardproduct: has required inner elements"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardtestimonial: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardfile: has 4+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardnotification: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardnotification: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardtestimonial: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardfile: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardfile: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardhorizontal: has required inner elements"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardhorizontal: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-badge: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardportfolio: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Cards › wb-cardportfolio: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-badge: has 10+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-progress: has required inner elements"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-progress: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-avatar: has 7+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-avatar: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-spinner: has 5+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-spinner: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-spinner: is visible with proper dimensions"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-avatar: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-rating: has 2+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Overlays & Dialogs › wb-modal: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-rating: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Overlays & Dialogs › wb-modal: has 1+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Feedback Components › wb-skeleton: renders inner content"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Overlays & Dialogs › x-drawer: has 2+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Overlays & Dialogs › x-drawer: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Navigation › wb-tabs: has 1+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Overlays & Dialogs › x-prompt: has 1+ instances"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Overlays & Dialogs › x-confirm: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Overlays & Dialogs › x-prompt: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Navigation › x-breadcrumb: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Navigation › wb-details: contains expected text"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Navigation › wb-tabs: has required inner elements"
+    },
+    {
+      "file": "tests\\mobile\\components-page-validation.spec.ts",
+      "name": "Components Page — Schema Validation › Section: Navigation › x-breadcrumb: renders inner content"
+    }
+  ],
+  "completedAt": "2026-02-16T05:36:44.753Z",
+  "duration": "191.34s",
+  "exitCode": 3221225786
+}

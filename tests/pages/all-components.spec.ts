@@ -1,3 +1,11 @@
+
+// Extend the Window interface to include WB for TypeScript
+declare global {
+  interface Window {
+    WB?: any;
+  }
+}
+
 import { test, expect } from '@playwright/test';
 import { safeScrollIntoView } from '../base';
 
@@ -8,7 +16,7 @@ test.describe('WB Components & Behaviors', () => {
     page.on('console', msg => console.log(`BROWSER LOG: ${msg.text()}`));
     page.on('pageerror', exception => console.log(`BROWSER ERROR: ${exception}`));
     
-    await page.goto('/demos/behaviors.html');
+
     // Wait for WB to be available
     await page.waitForFunction(() => window.WB, null, { timeout: 10000 }).catch(() => {
         console.log('Timed out waiting for window.WB');
@@ -72,18 +80,18 @@ test.describe('WB Components & Behaviors', () => {
     
     test('Masonry component works', async ({ page }) => {
        const el = page.locator('[data-columns][style*="width: 100%"]').first(); // Masonry demo uses div with data-columns, explicitly checking implicit masonry or wb-masonry if used
-       // usage in behaviors.html: <div data-columns="3" data-gap="0.5rem" ...> (under Masonry section)
+
        // This relies on implicit behavior injection or just layout classes. 
-       // In behaviors.html, it's just a div. Wait, does it have x-masonry? 
+
        // The HTML shows: <div data-columns="3" ...> inside the Masonry card.
        // It doesn't have x-masonry or wb-masonry tag in the snippet I saw.
        // Let's check if the generic 'Masonry' card title implies implicit behavior?
        // Actually wb-lazy.js has `{ selector: 'wb-masonry', behavior: 'masonry' }`.
-       // But the demo uses `div`? Let's check behaviors.html again.
-       // Ah, in behaviors.html snippet: <div class="behavior-card"> ... Masonry ... <div data-columns="3" ...>
+
+
        // It seems likely it relies on `WB.render` or Manual injection? 
        // Or the user is expected to put `x-masonry`?
-       // The snippet in behaviors.html for Masonry is:
+
        /*
        <div
           data-columns="3"

@@ -94,3 +94,72 @@
     display: none;
   }
 }
+
+/* Additional header styles from site.css */
+.site__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 64px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+.site__header--hidden {
+  transform: translateY(-100%);
+}
+.site__header--sticky {
+  position: sticky;
+  top: 0;
+}
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.header__logo-icon {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+.header__logo:hover {
+  color: var(--primary);
+}
+.header__notes-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.2s;
+}
+.header__notes-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--primary);
+}
+.header__logo-text {
+  white-space: nowrap;
+}

@@ -1,42 +1,20 @@
 {
-  "lastUpdated": "2026-02-14T19:25:51.436Z",
+  "lastUpdated": "2026-02-17T17:38:46.893Z",
   "count": 1,
   "errors": [
     {
-      "id": 1771097151434,
-      "timestamp": "2026-02-14T19:25:51.434Z",
+      "id": 1771349926893,
+      "timestamp": "2026-02-17T17:38:46.893Z",
       "level": "error",
-      "source": "WB:LegacySyntax",
-      "module": "wb.js",
-      "line": 364,
-      "column": 41,
-      "function": "(anonymous)",
-      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
-      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:364:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:356:42)\n    at async Object.init (http://localhost:3000/src/core/wb.js:746:9)",
-      "frames": [
-        {
-          "function": "(anonymous)",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 364,
-          "column": 41
-        },
-        {
-          "function": "Object.scan",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 356,
-          "column": 42
-        },
-        {
-          "function": "Object.init",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 746,
-          "column": 9
-        }
-      ],
-      "url": "http://localhost:3000/tests/compliance/legacy-syntax-check.html",
+      "source": "WB: copy",
+      "module": "unknown",
+      "line": "?",
+      "column": "?",
+      "function": "unknown",
+      "message": "Unexpected token '=='",
+      "stack": "SyntaxError: Unexpected token '=='",
+      "frames": [],
+      "url": "http://localhost:3000/pages/components.html",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
       "interaction": {
         "from": "System",

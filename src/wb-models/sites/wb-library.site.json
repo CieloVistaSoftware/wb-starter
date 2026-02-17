@@ -1,6 +1,6 @@
 {
   "title": "WB Component Library",
-  "description": "Interactive showcase of all WB Framework components — generated from schemas",
+  "description": "Interactive showcase of all WB-Starter components — generated from schemas",
   "outputDir": "demos/site",
   "navBrand": "🧩 WB Library",
   "nav": true,

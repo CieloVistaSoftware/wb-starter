@@ -21,7 +21,8 @@
     },
     "handle": {
       "type": "string",
-      "description": "Selector for drag handle"
+      "description": "Selector for drag handle",
+      "default": ""
     }
   },
   "$view": [],

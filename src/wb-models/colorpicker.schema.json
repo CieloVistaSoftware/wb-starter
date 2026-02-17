@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Color Picker Behavior",
+  "type": "object",
+  "description": "Schema for x-colorpicker behavior (color input)",
+  "properties": {},
+  "required": [],
+  "wbBehavior": {
+    "name": "colorpicker",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Adds a color picker input.",
+    "src": "src/wb-viewmodels/colorpicker.js"
+  }
+}

@@ -12,7 +12,8 @@
   "properties": {
     "target": {
       "type": "string",
-      "description": "Selector of target element"
+      "description": "Selector of target element",
+      "default": ""
     }
   },
   "$view": [],

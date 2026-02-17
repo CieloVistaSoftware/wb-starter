@@ -3,21 +3,24 @@
   "$id": "aside.schema.json",
   "title": "Aside Semantic Element",
   "description": "Content tangentially related to main content - sidebars, callouts, notes, notifications.",
-  
   "$inheritance": {
     "extends": "_element.base.schema.json",
     "reason": "Aside IS-A element with all base properties"
   },
-  
   "htmlTag": "aside",
   "role": "complementary",
-  
   "semanticMeaning": {
     "description": "Content indirectly related to main content - could be removed without affecting main flow",
-    "examples": ["Sidebar", "Pull quote", "Callout box", "Related links", "Notification", "Alert"],
+    "examples": [
+      "Sidebar",
+      "Pull quote",
+      "Callout box",
+      "Related links",
+      "Notification",
+      "Alert"
+    ],
     "whenToUse": "Supplementary content that enhances but isn't essential"
   },
-  
   "type": "object",
   "properties": {
     "title": {
@@ -35,20 +38,26 @@
     "type": {
       "type": "string",
       "description": "Visual variant for notifications/alerts",
-      "enum": ["default", "info", "success", "warning", "error"],
+      "enum": [
+        "default",
+        "info",
+        "success",
+        "warning",
+        "error"
+      ],
       "default": "default"
     }
   },
-  
   "textProperties": {
     "description": "Canvas-editable text",
-    "list": ["title", "content"]
+    "list": [
+      "title",
+      "content"
+    ]
   },
-  
   "structure": {
     "template": "<aside>\n  {{#title}}<h4>{{title}}</h4>{{/title}}\n  <p>{{content}}</p>\n</aside>"
   },
-  
   "accessibility": {
     "landmarkRole": "complementary",
     "requirements": [
@@ -56,11 +65,19 @@
       "Use aria-label if role needs clarification"
     ]
   },
-  
-  "canContain": ["*"],
-  
+  "canContain": [
+    "*"
+  ],
   "wbComponents": {
     "description": "WB components that extend aside",
-    "list": ["alert", "cardnotification", "sidebar", "drawer", "callout", "note"]
-  }
+    "list": [
+      "alert",
+      "cardnotification",
+      "sidebar",
+      "drawer",
+      "callout",
+      "note"
+    ]
+  },
+  "schemaType": "base"
 }

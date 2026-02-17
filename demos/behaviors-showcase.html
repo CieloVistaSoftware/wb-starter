@@ -4,18 +4,24 @@
   <title>WB Behaviors Showcase</title>
   <link rel="stylesheet" href="../src/styles/themes.css">
   <link rel="stylesheet" href="../src/styles/components.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
   <style>
     /* ═══════════════════════════════════════════════════════════════════
        SHOWCASE LAYOUT - SPACIOUS & PROFESSIONAL
        All styling uses theme variables
        ═══════════════════════════════════════════════════════════════════ */
     
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
     body {
       background: var(--bg-color);
       color: var(--text-primary);
       font-family: system-ui, -apple-system, sans-serif;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
 
     /* Header */
@@ -184,62 +190,6 @@
     }
 
     /* Button Styles */
-    .wb-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-sm);
-      padding: var(--space-sm) var(--space-lg);
-      font-size: var(--text-sm);
-      font-weight: 600;
-      border-radius: var(--radius-md);
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      transition: var(--transition-base);
-      font-family: inherit;
-    }
-
-    .wb-btn--primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .wb-btn--primary:hover:not(:disabled) {
-      opacity: 0.9;
-      transform: translateY(-1px);
-    }
-
-    .wb-btn--secondary {
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
-      border: 1px solid var(--border-color);
-    }
-
-    .wb-btn--secondary:hover:not(:disabled) {
-      background: var(--bg-secondary);
-      border-color: var(--primary);
-    }
-
-    .wb-btn--ghost {
-      background: transparent;
-      color: var(--text-secondary);
-      border: 1px solid var(--border-color);
-    }
-
-    .wb-btn--ghost:hover:not(:disabled) {
-      background: var(--bg-secondary);
-    }
-
-    .wb-btn--sm {
-      padding: var(--space-xs) var(--space-md);
-      font-size: var(--text-xs);
-    }
-
-    .wb-btn--lg {
-      padding: var(--space-md) var(--space-xl);
-      font-size: var(--text-base);
-    }
 
     .wb-btn:disabled {
       opacity: 0.5;
@@ -280,15 +230,15 @@
       box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
     }
 
-    input[data-variant="success"] {
+    input[variant="success"] {
       border-color: var(--success-color);
     }
 
-    input[data-variant="warning"] {
+    input[variant="warning"] {
       border-color: var(--warning-color);
     }
 
-    input[data-variant="error"] {
+    input[variant="error"] {
       border-color: var(--error-color);
     }
 
@@ -431,18 +381,18 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-26">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-1">
-          <button class="wb-btn wb-btn--primary">Primary</button>
-          <button class="wb-btn wb-btn--secondary">Secondary</button>
-          <button class="wb-btn wb-btn--ghost">Ghost</button>
-          <button class="wb-btn wb-btn--primary" disabled="">Disabled</button>
+          <wb-button variant="primary">Primary</wb-button>
+          <wb-button variant="secondary">Secondary</wb-button>
+          <wb-button variant="ghost">Ghost</wb-button>
+          <wb-button variant="primary" disabled>Disabled</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button class="wb-btn wb-btn--primary">Primary</button>
-<button class="wb-btn wb-btn--secondary">Secondary</button>
-<button class="wb-btn wb-btn--ghost">Ghost</button>
-<button class="wb-btn wb-btn--primary" disabled="">Disabled</button>
+<wb-button variant="primary">Primary</wb-button>
+<wb-button variant="secondary">Secondary</wb-button>
+<wb-button variant="ghost">Ghost</wb-button>
+<wb-button variant="primary" disabled>Disabled</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -451,16 +401,16 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-27">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-2">
-          <button class="wb-btn wb-btn--primary wb-btn--sm">Small</button>
-          <button class="wb-btn wb-btn--primary">Medium (Default)</button>
-          <button class="wb-btn wb-btn--primary wb-btn--lg">Large</button>
+          <wb-button variant="primary" size="sm">Small</wb-button>
+          <wb-button variant="primary">Medium (Default)</wb-button>
+          <wb-button variant="primary" size="lg">Large</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button class="wb-btn wb-btn--primary wb-btn--sm">Small</button>
-<button class="wb-btn wb-btn--primary">Medium</button>
-<button class="wb-btn wb-btn--primary wb-btn--lg">Large</button>
+<wb-button variant="primary" size="sm">Small</wb-button>
+<wb-button variant="primary">Medium</wb-button>
+<wb-button variant="primary" size="lg">Large</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -469,27 +419,27 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-28">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-3">
-          <button class="wb-btn wb-btn--primary" x-ripple="">With Ripple Effect</button>
-          <button class="wb-btn wb-btn--primary" x-toast="" data-message="Action completed successfully!" data-type="success">Shows Toast</button>
-          <button class="wb-btn wb-btn--secondary" x-tooltip="Helpful information here" data-position="top">With Tooltip</button>
+          <wb-button variant="primary" x-ripple>With Ripple Effect</wb-button>
+          <wb-button variant="primary" x-toast message="Action completed successfully!" toast-variant="success">Shows Toast</wb-button>
+          <wb-button variant="secondary" x-tooltip="Helpful information here" position="top">With Tooltip</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <!-- Ripple effect on click -->
-<button class="wb-btn wb-btn--primary" x-ripple="">
+<wb-button variant="primary" x-ripple>
   With Ripple Effect
-</button>
+</wb-button>
 
 <!-- Toast notification on click -->
-<button class="wb-btn wb-btn--primary" x-toast="" data-message="Action completed!" data-type="success">
+<wb-button variant="primary" x-toast message="Action completed!" toast-variant="success">
   Shows Toast
-</button>
+</wb-button>
 
 <!-- Tooltip on hover -->
-<button class="wb-btn wb-btn--secondary" x-tooltip="Helpful information" data-position="top">
+<wb-button variant="secondary" x-tooltip="Helpful information" position="top">
   With Tooltip
-</button>
+</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -528,16 +478,16 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-30">
       <div class="demo-area">
         <div class="demo-grid-3">
-          <input type="text" placeholder="Success state" data-variant="success">
-          <input type="text" placeholder="Warning state" data-variant="warning">
-          <input type="text" placeholder="Error state" data-variant="error">
+          <input type="text" placeholder="Success state" variant="success">
+          <input type="text" placeholder="Warning state" variant="warning">
+          <input type="text" placeholder="Error state" variant="error">
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<input type="text" placeholder="Success" data-variant="success">
-<input type="text" placeholder="Warning" data-variant="warning">
-<input type="text" placeholder="Error" data-variant="error">
+<input type="text" placeholder="Success" variant="success">
+<input type="text" placeholder="Warning" variant="warning">
+<input type="text" placeholder="Error" variant="error">
 ```
       </wb-mdhtml>
     </div>
@@ -546,21 +496,21 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-31">
       <div class="demo-area">
         <div class="demo-grid-3">
-          <input type="password" x-password="" placeholder="Password with toggle">
-          <input type="text" x-search="" placeholder="Search with icon">
-          <input type="text" x-colorpicker="" value="#6366f1">
+          <input type="password" x-password placeholder="Password with toggle">
+          <input type="text" x-search placeholder="Search with icon">
+          <input type="text" x-colorpicker value="#6366f1">
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <!-- Password with visibility toggle -->
-<input type="password" x-password="" placeholder="Password">
+<input type="password" x-password placeholder="Password">
 
 <!-- Search with icon -->
-<input type="text" x-search="" placeholder="Search...">
+<input type="text" x-search placeholder="Search...">
 
 <!-- Color picker -->
-<input type="text" x-colorpicker="" value="#6366f1">
+<input type="text" x-colorpicker value="#6366f1">
 ```
       </wb-mdhtml>
     </div>
@@ -569,23 +519,23 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-32">
       <div class="demo-area" id="autogen-behaviors-showcase-html-73">
         <div class="demo-grid-3">
-          <input x-masked="" data-mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
-          <input x-masked="" data-mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
-          <input x-masked="" data-mask="9999 9999 9999 9999" placeholder="Credit Card">
+          <input x-masked mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
+          <input x-masked mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
+          <input x-masked mask="9999 9999 9999 9999" placeholder="Credit Card">
         </div>
         <div class="demo-grid-3" style="margin-top: var(--space-md);">
-          <input x-masked="" data-mask="999-99-9999" placeholder="SSN: 999-99-9999">
-          <input x-masked="" data-mask="99999" placeholder="ZIP Code">
-          <input x-masked="" data-mask="AA-9999" placeholder="License: AA-9999">
+          <input x-masked mask="999-99-9999" placeholder="SSN: 999-99-9999">
+          <input x-masked mask="99999" placeholder="ZIP Code">
+          <input x-masked mask="AA-9999" placeholder="License: AA-9999">
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <!-- 9 = any digit, A = any letter -->
-<input x-masked="" data-mask="(999) 999-9999" placeholder="Phone">
-<input x-masked="" data-mask="99/99/9999" placeholder="Date">
-<input x-masked="" data-mask="9999 9999 9999 9999" placeholder="Card">
-<input x-masked="" data-mask="AA-9999" placeholder="License Plate">
+<input x-masked mask="(999) 999-9999" placeholder="Phone">
+<input x-masked mask="99/99/9999" placeholder="Date">
+<input x-masked mask="9999 9999 9999 9999" placeholder="Card">
+<input x-masked mask="AA-9999" placeholder="License Plate">
 ```
       </wb-mdhtml>
     </div>
@@ -595,7 +545,7 @@
       <div class="demo-area">
         <div class="demo-grid-2">
           <textarea placeholder="Standard textarea with fixed rows" rows="4"></textarea>
-          <textarea data-autosize="" placeholder="Auto-sizing textarea - grows as you type more content into it"></textarea>
+          <textarea autosize placeholder="Auto-sizing textarea - grows as you type more content into it"></textarea>
         </div>
       </div>
       <wb-mdhtml>
@@ -604,7 +554,7 @@
 <textarea placeholder="Standard textarea" rows="4"></textarea>
 
 <!-- Auto-sizing textarea -->
-<textarea data-autosize="" placeholder="Grows as you type..."></textarea>
+<textarea autosize placeholder="Grows as you type..."></textarea>
 ```
       </wb-mdhtml>
     </div>
@@ -624,17 +574,17 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-34">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-4">
-          <label><input type="checkbox"> Unchecked</label>
-          <label><input type="checkbox" checked=""> Checked</label>
-          <label><input type="checkbox" disabled=""> Disabled</label>
-          <label><input type="checkbox" checked="" disabled=""> Checked Disabled</label>
+            <label><input type="checkbox"> Unchecked</label>
+            <label><input type="checkbox" checked> Checked</label>
+            <label><input type="checkbox" disabled> Disabled</label>
+            <label><input type="checkbox" checked disabled> Checked Disabled</label>
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <label><input type="checkbox"> Unchecked</label>
-<label><input type="checkbox" checked=""> Checked</label>
-<label><input type="checkbox" disabled=""> Disabled</label>
+<label><input type="checkbox" checked> Checked</label>
+<label><input type="checkbox" disabled> Disabled</label>
 ```
       </wb-mdhtml>
     </div>
@@ -643,16 +593,16 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-35">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-5">
-          <label><input type="radio" name="demo-radio" checked=""> Option A</label>
+          <label><input type="radio" name="demo-radio" checked> Option A</label>
           <label><input type="radio" name="demo-radio"> Option B</label>
           <label><input type="radio" name="demo-radio"> Option C</label>
-          <label><input type="radio" name="demo-radio" disabled=""> Disabled</label>
+          <label><input type="radio" name="demo-radio" disabled> Disabled</label>
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <!-- Radio buttons share the same name to form a group -->
-<label><input type="radio" name="choice" checked=""> Option A</label>
+<label><input type="radio" name="choice" checked> Option A</label>
 <label><input type="radio" name="choice"> Option B</label>
 <label><input type="radio" name="choice"> Option C</label>
 ```
@@ -664,15 +614,15 @@
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-6">
           <wb-switch label="Dark Mode"></wb-switch>
-          <wb-switch label="Notifications" checked=""></wb-switch>
-          <wb-switch label="Disabled" disabled=""></wb-switch>
+          <wb-switch label="Notifications" checked></wb-switch>
+          <wb-switch label="Disabled" disabled></wb-switch>
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <wb-switch label="Dark Mode"></wb-switch>
-<wb-switch label="Notifications" checked=""></wb-switch>
-<wb-switch label="Disabled" disabled=""></wb-switch>
+<wb-switch label="Notifications" checked></wb-switch>
+<wb-switch label="Disabled" disabled></wb-switch>
 ```
       </wb-mdhtml>
     </div>
@@ -681,31 +631,31 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-37">
       <div class="demo-area">
         <div class="demo-grid-2">
-          <select>
-            <option value="">Select an option...</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-          </select>
-          <select multiple="" size="4">
-            <option>Multiple Select 1</option>
-            <option>Multiple Select 2</option>
-            <option>Multiple Select 3</option>
-            <option>Multiple Select 4</option>
-          </select>
+            <select>
+              <option value>Select an option...</option>
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+            </select>
+            <select multiple size="4">
+              <option>Multiple Select 1</option>
+              <option>Multiple Select 2</option>
+              <option>Multiple Select 3</option>
+              <option>Multiple Select 4</option>
+            </select>
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <!-- Single select -->
 <select>
-  <option value="">Select an option...</option>
+  <option value>Select an option...</option>
   <option value="1">Option 1</option>
   <option value="2">Option 2</option>
 </select>
 
 <!-- Multiple select -->
-<select multiple="" size="4">
+<select multiple size="4">
   <option>Item 1</option>
   <option>Item 2</option>
   <option>Item 3</option>
@@ -736,14 +686,14 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-39">
       <div class="demo-area">
         <div class="demo-grid-2" style="align-items: center;">
-          <div x-stepper="" data-value="5" data-min="0" data-max="10"></div>
+          <div x-stepper value="5" min="0" max="10"></div>
           <input type="range" min="0" max="100" value="50">
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <!-- Stepper with min/max bounds -->
-<div x-stepper="" data-value="5" data-min="0" data-max="10"></div>
+<div x-stepper value="5" min="0" max="10"></div>
 
 <!-- Range slider -->
 <input type="range" min="0" max="100" value="50">
@@ -766,21 +716,21 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-40">
       <div class="demo-area">
         <div class="demo-stack">
-          <wb-alert type="info" title="Information" message="This is an informational message for the user." dismissible=""></wb-alert>
-          <wb-alert type="success" title="Success" message="The operation completed successfully." dismissible=""></wb-alert>
-          <wb-alert type="warning" title="Warning" message="Please review this before continuing." dismissible=""></wb-alert>
-          <wb-alert type="error" title="Error" message="Something went wrong. Please try again." dismissible=""></wb-alert>
+            <wb-alert variant="info" title="Information" message="This is an informational message for the user." dismissible></wb-alert>
+            <wb-alert variant="success" title="Success" message="The operation completed successfully." dismissible></wb-alert>
+            <wb-alert variant="warning" title="Warning" message="Please review this before continuing." dismissible></wb-alert>
+            <wb-alert variant="error" title="Error" message="Something went wrong. Please try again." dismissible></wb-alert>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<wb-alert type="info" title="Information" message="Informational message." dismissible=""></wb-alert>
+<wb-alert variant="info" title="Information" message="Informational message." dismissible></wb-alert>
 
-<wb-alert type="success" title="Success" message="Operation completed." dismissible=""></wb-alert>
+<wb-alert variant="success" title="Success" message="Operation completed." dismissible></wb-alert>
 
-<wb-alert type="warning" title="Warning" message="Please review."></wb-alert>
+<wb-alert variant="warning" title="Warning" message="Please review."></wb-alert>
 
-<wb-alert type="error" title="Error" message="Something went wrong."></wb-alert>
+<wb-alert variant="error" title="Error" message="Something went wrong."></wb-alert>
 ```
       </wb-mdhtml>
     </div>
@@ -794,7 +744,7 @@
           <wb-badge variant="warning">Warning</wb-badge>
           <wb-badge variant="error">Error</wb-badge>
           <wb-badge variant="info">Info</wb-badge>
-          <wb-badge pill="">Pill Style</wb-badge>
+          <wb-badge pill>Pill Style</wb-badge>
         </div>
       </div>
       <wb-mdhtml>
@@ -804,7 +754,7 @@
 <wb-badge variant="warning">Warning</wb-badge>
 <wb-badge variant="error">Error</wb-badge>
 <wb-badge variant="info">Info</wb-badge>
-<wb-badge pill="">Pill Style</wb-badge>
+<wb-badge pill>Pill Style</wb-badge>
 ```
       </wb-mdhtml>
     </div>
@@ -815,7 +765,7 @@
         <div class="demo-stack">
           <wb-progress value="25"></wb-progress>
           <wb-progress value="50"></wb-progress>
-          <wb-progress value="75" striped=""></wb-progress>
+          <wb-progress value="75" striped></wb-progress>
           <wb-progress value="100"></wb-progress>
         </div>
       </div>
@@ -823,7 +773,7 @@
 ```html
 <wb-progress value="25"></wb-progress>
 <wb-progress value="50"></wb-progress>
-<wb-progress value="75" striped=""></wb-progress>
+<wb-progress value="75" striped></wb-progress>
 <wb-progress value="100"></wb-progress>
 ```
       </wb-mdhtml>
@@ -855,29 +805,29 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-44">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-10">
-          <button class="wb-btn wb-btn--secondary" x-toast="" data-message="This is an info message" data-type="info">Info Toast</button>
-          <button class="wb-btn wb-btn--secondary" x-toast="" data-message="Action completed successfully!" data-type="success">Success Toast</button>
-          <button class="wb-btn wb-btn--secondary" x-toast="" data-message="Please check your input" data-type="warning">Warning Toast</button>
-          <button class="wb-btn wb-btn--secondary" x-toast="" data-message="An error occurred" data-type="error">Error Toast</button>
+          <wb-button variant="secondary" x-toast message="This is an info message" toast-variant="info">Info Toast</wb-button>
+          <wb-button variant="secondary" x-toast message="Action completed successfully!" toast-variant="success">Success Toast</wb-button>
+          <wb-button variant="secondary" x-toast message="Please check your input" toast-variant="warning">Warning Toast</wb-button>
+          <wb-button variant="secondary" x-toast message="An error occurred" toast-variant="error">Error Toast</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button x-toast="" data-message="Info message" data-type="info">
+<wb-button variant="secondary" x-toast message="Info message" toast-variant="info">
   Info Toast
-</button>
+</wb-button>
 
-<button x-toast="" data-message="Success!" data-type="success">
+<wb-button variant="secondary" x-toast message="Success!" toast-variant="success">
   Success Toast
-</button>
+</wb-button>
 
-<button x-toast="" data-message="Warning!" data-type="warning">
+<wb-button variant="secondary" x-toast message="Warning!" toast-variant="warning">
   Warning Toast
-</button>
+</wb-button>
 
-<button x-toast="" data-message="Error!" data-type="error">
+<wb-button variant="secondary" x-toast message="Error!" toast-variant="error">
   Error Toast
-</button>
+</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -897,12 +847,12 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-45">
       <div class="demo-area">
         <div class="demo-row">
-          <wb-modal class="wb-btn wb-btn--primary" modal-title="Modal Dialog" modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
+          <wb-modal modal-title="Modal Dialog" modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<wb-modal class="wb-btn wb-btn--primary" modal-title="Modal Dialog" modal-content="Modal content goes here.">
+<wb-modal modal-title="Modal Dialog" modal-content="Modal content goes here.">
   Open Modal
 </wb-modal>
 ```
@@ -913,17 +863,17 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-46">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-11">
-          <wb-drawer class="wb-btn wb-btn--primary" title="Left Drawer" content="This is a slide-out panel from the left side of the screen." position="left">Left Drawer</wb-drawer>
-          <wb-drawer class="wb-btn wb-btn--primary" title="Right Drawer" content="This is a slide-out panel from the right side of the screen." position="right">Right Drawer</wb-drawer>
+          <wb-drawer title="Left Drawer" content="This is a slide-out panel from the left side of the screen." position="left">Left Drawer</wb-drawer>
+          <wb-drawer title="Right Drawer" content="This is a slide-out panel from the right side of the screen." position="right">Right Drawer</wb-drawer>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<wb-drawer class="wb-btn wb-btn--primary" title="Left Drawer" content="Panel content here." position="left">
+<wb-drawer title="Left Drawer" content="Panel content here." position="left">
   Left Drawer
 </wb-drawer>
 
-<wb-drawer class="wb-btn wb-btn--primary" title="Right Drawer" content="Panel content here." position="right">
+<wb-drawer title="Right Drawer" content="Panel content here." position="right">
   Right Drawer
 </wb-drawer>
 ```
@@ -934,18 +884,18 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-47">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-12">
-          <button class="wb-btn wb-btn--secondary" x-tooltip="Tooltip on top" data-position="top">Top</button>
-          <button class="wb-btn wb-btn--secondary" x-tooltip="Tooltip on bottom" data-position="bottom">Bottom</button>
-          <button class="wb-btn wb-btn--secondary" x-tooltip="Tooltip on left" data-position="left">Left</button>
-          <button class="wb-btn wb-btn--secondary" x-tooltip="Tooltip on right" data-position="right">Right</button>
+          <wb-button variant="secondary" x-tooltip="Tooltip on top" position="top">Top</wb-button>
+          <wb-button variant="secondary" x-tooltip="Tooltip on bottom" position="bottom">Bottom</wb-button>
+          <wb-button variant="secondary" x-tooltip="Tooltip on left" position="left">Left</wb-button>
+          <wb-button variant="secondary" x-tooltip="Tooltip on right" position="right">Right</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button x-tooltip="Tooltip text" data-position="top">Top</button>
-<button x-tooltip="Tooltip text" data-position="bottom">Bottom</button>
-<button x-tooltip="Tooltip text" data-position="left">Left</button>
-<button x-tooltip="Tooltip text" data-position="right">Right</button>
+<wb-button x-tooltip="Tooltip text" position="top">Top</wb-button>
+<wb-button x-tooltip="Tooltip text" position="bottom">Bottom</wb-button>
+<wb-button x-tooltip="Tooltip text" position="left">Left</wb-button>
+<wb-button x-tooltip="Tooltip text" position="right">Right</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -954,14 +904,14 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-48">
       <div class="demo-area">
         <div class="demo-row">
-          <button class="wb-btn wb-btn--primary" x-popover="" data-title="Popover Title" data-content="This is additional information displayed in a popover. It can contain longer content than a tooltip.">Show Popover</button>
+          <wb-button variant="primary" x-popover heading="Popover Title" description="This is additional information displayed in a popover. It can contain longer content than a tooltip.">Show Popover</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button x-popover="" data-title="Popover Title" data-content="Additional information here.">
+<button x-popover heading="Popover Title" description="Additional information here.">
   Show Popover
-</button>
+</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -970,19 +920,19 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-49">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-13">
-          <button class="wb-btn wb-btn--primary" x-confirm="" data-title="Confirm Action" data-message="Are you sure you want to proceed with this action?">Confirm Dialog</button>
-          <button class="wb-btn wb-btn--primary" x-prompt="" data-title="Enter Value" data-message="Please enter your name:">Prompt Dialog</button>
+          <wb-button variant="primary" x-confirm heading="Confirm Action" message="Are you sure you want to proceed with this action?">Confirm Dialog</wb-button>
+          <wb-button variant="primary" x-prompt heading="Enter Value" message="Please enter your name:">Prompt Dialog</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button x-confirm="" data-title="Confirm Action" data-message="Are you sure?">
+<button x-confirm heading="Confirm Action" message="Are you sure?">
   Confirm Dialog
-</button>
+</wb-button>
 
-<button x-prompt="" data-title="Enter Value" data-message="Please enter your name:">
+<button x-prompt heading="Enter Value" message="Please enter your name:">
   Prompt Dialog
-</button>
+</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -991,15 +941,15 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-50">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-14">
-          <button class="wb-btn wb-btn--primary" x-lightbox="" data-src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>
-          <button class="wb-btn wb-btn--primary" x-lightbox="" data-src="https://picsum.photos/1200/800?r=lb2">View Image 2</button>
+          <wb-button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb1">View Image 1</wb-button>
+          <wb-button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb2">View Image 2</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button x-lightbox="" data-src="https://example.com/large-image.jpg">
+<button x-lightbox src="https://example.com/large-image.jpg">
   View Image
-</button>
+</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -1019,13 +969,13 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-51">
       <div class="demo-area">
         <wb-tabs>
-          <div data-tab-title="Overview">
+          <div tab-title="Overview">
             <p style="padding: var(--space-md) 0;">This is the overview tab content. Tabs organize content into separate views with keyboard navigation and full ARIA accessibility support.</p>
           </div>
-          <div data-tab-title="Features">
+          <div tab-title="Features">
             <p style="padding: var(--space-md) 0;">Features include smooth transitions, responsive design, keyboard navigation, and accessibility compliance.</p>
           </div>
-          <div data-tab-title="Usage">
+          <div tab-title="Usage">
             <p style="padding: var(--space-md) 0;">Simply wrap your content panels in a wb-tabs element and add data-tab-title to each panel.</p>
           </div>
         </wb-tabs>
@@ -1033,13 +983,13 @@
       <wb-mdhtml>
 ```html
 <wb-tabs>
-  <div data-tab-title="Overview">
+  <div tab-title="Overview">
     <p>Overview content...</p>
   </div>
-  <div data-tab-title="Features">
+  <div tab-title="Features">
     <p>Features content...</p>
   </div>
-  <div data-tab-title="Usage">
+  <div tab-title="Usage">
     <p>Usage content...</p>
   </div>
 </wb-tabs>
@@ -1047,34 +997,29 @@
       </wb-mdhtml>
     </div>
 
-    <h3>Accordion</h3>
+    <h3>Collapse / Accordion</h3>
     <div class="demo-container" id="autogen-behaviors-showcase-html-52">
       <div class="demo-area">
-        <wb-accordion>
-          <div data-accordion-title="What is wb-starter?">
-            <p>wb-starter is a zero-build web component library with 232 behaviors and 23 themes. It uses Light DOM architecture for easy styling and debugging.</p>
-          </div>
-          <div data-accordion-title="How do I install it?">
+        <div class="demo-stack">
+          <wb-collapse heading="What is WB-Starter?">
+            <p>WB-Starter is a zero-build web component library with 232 behaviors and 23 themes. It uses Light DOM architecture for easy styling and debugging.</p>
+          </wb-collapse>
+          <wb-collapse heading="How do I install it?">
             <p>No installation or build step required! Just include the script tag and start using components immediately. Works with any HTML page.</p>
-          </div>
-          <div data-accordion-title="Is it production ready?">
-            <p>Yes! wb-starter is schema-driven, fully tested, and enterprise hardened. It's used in production applications.</p>
-          </div>
-        </wb-accordion>
+          </wb-collapse>
+          <wb-collapse heading="Is it production ready?" expanded>
+            <p>Yes! WB-Starter is schema-driven, fully tested, and enterprise hardened. It's used in production applications.</p>
+          </wb-collapse>
+        </div>
       </div>
       <wb-mdhtml>
 ```html
-<wb-accordion>
-  <div data-accordion-title="Section 1">
-    <p>Content for section 1...</p>
-  </div>
-  <div data-accordion-title="Section 2">
-    <p>Content for section 2...</p>
-  </div>
-  <div data-accordion-title="Section 3">
-    <p>Content for section 3...</p>
-  </div>
-</wb-accordion>
+<wb-collapse heading="Section Title">
+  <p>Content goes here...</p>
+</wb-collapse>
+<wb-collapse heading="Another Section" expanded>
+  <p>This section starts open.</p>
+</wb-collapse>
 ```
       </wb-mdhtml>
     </div>
@@ -1082,11 +1027,11 @@
     <h3>Breadcrumb</h3>
     <div class="demo-container" id="autogen-behaviors-showcase-html-53">
       <div class="demo-area">
-        <nav x-breadcrumb="" data-items="Home,Products,Electronics,Smartphones,iPhone 15"></nav>
+        <nav x-breadcrumb items="Home,Products,Electronics,Smartphones,iPhone 15"></nav>
       </div>
       <wb-mdhtml>
 ```html
-<nav x-breadcrumb="" data-items="Home,Products,Electronics,Smartphones">
+<nav x-breadcrumb items="Home,Products,Electronics,Smartphones">
 </nav>
 ```
       </wb-mdhtml>
@@ -1095,11 +1040,11 @@
     <h3>Pagination</h3>
     <div class="demo-container" id="autogen-behaviors-showcase-html-54">
       <div class="demo-area">
-        <nav x-pagination="" data-total="100" data-per-page="10" data-current="5"></nav>
+        <nav x-pagination total="100" per-page="10" current="5"></nav>
       </div>
       <wb-mdhtml>
 ```html
-<nav x-pagination="" data-total="100" data-per-page="10" data-current="5">
+<nav x-pagination total="100" per-page="10" current="5">
 </nav>
 ```
       </wb-mdhtml>
@@ -1108,11 +1053,11 @@
     <h3>Steps Wizard</h3>
     <div class="demo-container" id="autogen-behaviors-showcase-html-55">
       <div class="demo-area">
-        <div x-steps="" data-items="Cart,Shipping,Payment,Review,Confirm" data-current="3"></div>
+        <div x-steps items="Cart,Shipping,Payment,Review,Confirm" current="3"></div>
       </div>
       <wb-mdhtml>
 ```html
-<div x-steps="" data-items="Cart,Shipping,Payment,Review,Confirm" data-current="3">
+<div x-steps items="Cart,Shipping,Payment,Review,Confirm" current="3">
 </div>
 ```
       </wb-mdhtml>
@@ -1132,23 +1077,36 @@
     <h3>Avatars</h3>
     <div class="demo-container" id="autogen-behaviors-showcase-html-56">
       <div class="demo-area">
-        <div class="demo-row" id="autogen-behaviors-showcase-html-15">
-          <wb-avatar src="https://i.pravatar.cc/150?img=1"></wb-avatar>
-          <wb-avatar src="https://i.pravatar.cc/150?img=2" size="lg"></wb-avatar>
+        <div class="demo-row">
+          <wb-avatar src="https://i.pravatar.cc/150?img=1" size="sm"></wb-avatar>
+          <wb-avatar src="https://i.pravatar.cc/150?img=2"></wb-avatar>
+          <wb-avatar src="https://i.pravatar.cc/150?img=3" size="lg"></wb-avatar>
+          <wb-avatar src="https://i.pravatar.cc/150?img=4" size="xl"></wb-avatar>
           <wb-avatar initials="JD"></wb-avatar>
-          <wb-avatar src="https://i.pravatar.cc/150?img=3" status="online"></wb-avatar>
-          <wb-avatar src="https://i.pravatar.cc/150?img=4" status="away"></wb-avatar>
-          <wb-avatar src="https://i.pravatar.cc/150?img=5" status="busy"></wb-avatar>
+          <wb-avatar initials="AB" size="lg"></wb-avatar>
+          <wb-avatar src="https://i.pravatar.cc/150?img=5" status="online"></wb-avatar>
+          <wb-avatar src="https://i.pravatar.cc/150?img=6" status="away"></wb-avatar>
+          <wb-avatar src="https://i.pravatar.cc/150?img=7" status="busy"></wb-avatar>
+          <wb-avatar src="https://i.pravatar.cc/150?img=8" size="lg" status="online"></wb-avatar>
         </div>
       </div>
       <wb-mdhtml>
 ```html
+<!-- Sizes -->
+<wb-avatar src="photo.jpg" size="sm"></wb-avatar>
 <wb-avatar src="photo.jpg"></wb-avatar>
 <wb-avatar src="photo.jpg" size="lg"></wb-avatar>
+<wb-avatar src="photo.jpg" size="xl"></wb-avatar>
+
+<!-- Initials -->
 <wb-avatar initials="JD"></wb-avatar>
+<wb-avatar initials="AB" size="lg"></wb-avatar>
+
+<!-- Status dots -->
 <wb-avatar src="photo.jpg" status="online"></wb-avatar>
 <wb-avatar src="photo.jpg" status="away"></wb-avatar>
 <wb-avatar src="photo.jpg" status="busy"></wb-avatar>
+<wb-avatar src="photo.jpg" size="lg" status="online"></wb-avatar>
 ```
       </wb-mdhtml>
     </div>
@@ -1179,11 +1137,11 @@
     <h3>Timeline</h3>
     <div class="demo-container" id="autogen-behaviors-showcase-html-58">
       <div class="demo-area">
-        <div x-timeline="" data-items="Project Kickoff,Design Phase,Development Sprint,Testing &amp; QA,Launch Day"></div>
+        <div x-timeline items="Project Kickoff,Design Phase,Development Sprint,Testing &amp; QA,Launch Day"></div>
       </div>
       <wb-mdhtml>
 ```html
-<div x-timeline="" data-items="Kickoff,Design,Development,Testing,Launch">
+<div x-timeline items="Kickoff,Design,Development,Testing,Launch">
 </div>
 ```
       </wb-mdhtml>
@@ -1193,15 +1151,15 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-59">
       <div class="demo-area">
         <p style="font-size: var(--text-base); line-height: 2;">
-          Press <span x-kbd="">Ctrl</span> + <span x-kbd="">S</span> to save, 
-          <span x-kbd="">Ctrl</span> + <span x-kbd="">Z</span> to undo, or 
-          <span x-kbd="">⌘</span> + <span x-kbd="">K</span> to open command palette.
+          Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, 
+          <span x-kbd>Ctrl</span> + <span x-kbd>Z</span> to undo, or 
+          <span x-kbd>⌘</span> + <span x-kbd>K</span> to open command palette.
         </p>
       </div>
       <wb-mdhtml>
 ```html
 <p>
-  Press <span x-kbd="">Ctrl</span> + <span x-kbd="">S</span> to save.
+  Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save.
 </p>
 ```
       </wb-mdhtml>
@@ -1222,17 +1180,17 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-60">
       <div class="demo-area">
         <div class="demo-row" style="align-items: flex-start;" id="autogen-behaviors-showcase-html-17">
-          <img x-image="" src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded image" data-lazy="" style="border-radius: var(--radius-lg);">
-          <img x-image="" src="https://picsum.photos/200/150?r=enh2" alt="Zoomable image" data-zoomable="" style="border-radius: var(--radius-lg); cursor: zoom-in;">
+          <img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded image" lazy style="border-radius: var(--radius-lg);">
+          <img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable image" zoomable style="border-radius: var(--radius-lg); cursor: zoom-in;">
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <!-- Lazy loaded image -->
-<img x-image="" src="image.jpg" alt="Description" data-lazy="">
+<img x-image src="image.jpg" alt="Description" lazy>
 
 <!-- Zoomable image (click to zoom) -->
-<img x-image="" src="image.jpg" alt="Description" data-zoomable="">
+<img x-image src="image.jpg" alt="Description" zoomable>
 ```
       </wb-mdhtml>
     </div>
@@ -1240,7 +1198,7 @@
     <h3>Gallery</h3>
     <div class="demo-container" id="autogen-behaviors-showcase-html-61">
       <div class="demo-area">
-        <div x-gallery="" data-columns="4">
+        <div x-gallery columns="4">
           <img src="https://picsum.photos/200/200?r=gal1" alt="Gallery 1">
           <img src="https://picsum.photos/200/200?r=gal2" alt="Gallery 2">
           <img src="https://picsum.photos/200/200?r=gal3" alt="Gallery 3">
@@ -1249,7 +1207,7 @@
       </div>
       <wb-mdhtml>
 ```html
-<div x-gallery="" data-columns="4">
+<div x-gallery columns="4">
   <img src="https://picsum.photos/200/200?r=code1" alt="Image 1">
   <img src="https://picsum.photos/200/200?r=code2" alt="Image 2">
   <img src="https://picsum.photos/200/200?r=code3" alt="Image 3">
@@ -1275,11 +1233,11 @@
     <h3>YouTube Embed</h3>
     <div class="demo-container" id="autogen-behaviors-showcase-html-63">
       <div class="demo-area">
-        <div x-youtube="" data-id="dQw4w9WgXcQ" data-ratio="16:9" style="max-width: 560px;"></div>
+        <div x-youtube video-id="dQw4w9WgXcQ" ratio="16:9" style="max-width: 560px;"></div>
       </div>
       <wb-mdhtml>
 ```html
-<div x-youtube="" data-id="dQw4w9WgXcQ" data-ratio="16:9">
+<div x-youtube video-id="dQw4w9WgXcQ" ratio="16:9">
 </div>
 ```
       </wb-mdhtml>
@@ -1300,26 +1258,26 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-64">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-18">
-          <button class="wb-btn wb-btn--primary" x-bounce="">Bounce</button>
-          <button class="wb-btn wb-btn--primary" x-shake="">Shake</button>
-          <button class="wb-btn wb-btn--primary" x-pulse="">Pulse</button>
-          <button class="wb-btn wb-btn--primary" x-flash="">Flash</button>
-          <button class="wb-btn wb-btn--primary" x-tada="">Tada!</button>
-          <button class="wb-btn wb-btn--primary" x-wobble="">Wobble</button>
-          <button class="wb-btn wb-btn--primary" x-jello="">Jello</button>
-          <button class="wb-btn wb-btn--primary" x-heartbeat="">💓 Heartbeat</button>
+          <wb-button variant="primary" x-bounce>Bounce</wb-button>
+          <wb-button variant="primary" x-shake>Shake</wb-button>
+          <wb-button variant="primary" x-pulse>Pulse</wb-button>
+          <wb-button variant="primary" x-flash>Flash</wb-button>
+          <wb-button variant="primary" x-tada>Tada!</wb-button>
+          <wb-button variant="primary" x-wobble>Wobble</wb-button>
+          <wb-button variant="primary" x-jello>Jello</wb-button>
+          <wb-button variant="primary" x-heartbeat>💓 Heartbeat</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button x-bounce="">Bounce</button>
-<button x-shake="">Shake</button>
-<button x-pulse="">Pulse</button>
-<button x-flash="">Flash</button>
-<button x-tada="">Tada!</button>
-<button x-wobble="">Wobble</button>
-<button x-jello="">Jello</button>
-<button x-heartbeat="">Heartbeat</button>
+<wb-button x-bounce>Bounce</wb-button>
+<wb-button x-shake>Shake</wb-button>
+<wb-button x-pulse>Pulse</wb-button>
+<wb-button x-flash>Flash</wb-button>
+<wb-button x-tada>Tada!</wb-button>
+<wb-button x-wobble>Wobble</wb-button>
+<wb-button x-jello>Jello</wb-button>
+<wb-button x-heartbeat>Heartbeat</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -1328,22 +1286,22 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-65">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-19">
-          <button class="wb-btn wb-btn--secondary" x-fadein="">Fade In</button>
-          <button class="wb-btn wb-btn--secondary" x-slidein="" data-direction="left">Slide Left</button>
-          <button class="wb-btn wb-btn--secondary" x-slidein="" data-direction="right">Slide Right</button>
-          <button class="wb-btn wb-btn--secondary" x-slidein="" data-direction="up">Slide Up</button>
-          <button class="wb-btn wb-btn--secondary" x-zoomin="">Zoom In</button>
-          <button class="wb-btn wb-btn--secondary" x-flip="">Flip</button>
+          <wb-button variant="secondary" x-fadein>Fade In</wb-button>
+          <wb-button variant="secondary" x-slidein direction="left">Slide Left</wb-button>
+          <wb-button variant="secondary" x-slidein direction="right">Slide Right</wb-button>
+          <wb-button variant="secondary" x-slidein direction="up">Slide Up</wb-button>
+          <wb-button variant="secondary" x-zoomin>Zoom In</wb-button>
+          <wb-button variant="secondary" x-flip>Flip</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button x-fadein="">Fade In</button>
-<button x-slidein="" data-direction="left">Slide Left</button>
-<button x-slidein="" data-direction="right">Slide Right</button>
-<button x-slidein="" data-direction="up">Slide Up</button>
-<button x-zoomin="">Zoom In</button>
-<button x-flip="">Flip</button>
+<wb-button x-fadein>Fade In</wb-button>
+<wb-button x-slidein direction="left">Slide Left</wb-button>
+<wb-button x-slidein direction="right">Slide Right</wb-button>
+<wb-button x-slidein direction="up">Slide Up</wb-button>
+<wb-button x-zoomin>Zoom In</wb-button>
+<wb-button x-flip>Flip</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -1352,22 +1310,22 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-66">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-20">
-          <button class="wb-btn wb-btn--primary" x-confetti="">🎊 Confetti</button>
-          <button class="wb-btn wb-btn--primary" x-fireworks="">🎆 Fireworks</button>
-          <button class="wb-btn wb-btn--primary" x-snow="">❄️ Snow</button>
-          <button class="wb-btn wb-btn--primary" x-sparkle="">✨ Sparkle</button>
-          <button class="wb-btn wb-btn--primary" x-glow="">💡 Glow</button>
-          <button class="wb-btn wb-btn--primary" x-rainbow="">🌈 Rainbow</button>
+          <wb-button variant="primary" x-confetti>🎊 Confetti</wb-button>
+          <wb-button variant="primary" x-fireworks>🎆 Fireworks</wb-button>
+          <wb-button variant="primary" x-snow>❄️ Snow</wb-button>
+          <wb-button variant="primary" x-sparkle>✨ Sparkle</wb-button>
+          <wb-button variant="primary" x-glow>💡 Glow</wb-button>
+          <wb-button variant="primary" x-rainbow>🌈 Rainbow</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button x-confetti="">🎊 Confetti</button>
-<button x-fireworks="">🎆 Fireworks</button>
-<button x-snow="">❄️ Snow</button>
-<button x-sparkle="">✨ Sparkle</button>
-<button x-glow="">💡 Glow</button>
-<button x-rainbow="">🌈 Rainbow</button>
+<wb-button x-confetti>🎊 Confetti</wb-button>
+<wb-button x-fireworks>🎆 Fireworks</wb-button>
+<wb-button x-snow>❄️ Snow</wb-button>
+<wb-button x-sparkle>✨ Sparkle</wb-button>
+<wb-button x-glow>💡 Glow</wb-button>
+<wb-button x-rainbow>🌈 Rainbow</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -1376,19 +1334,19 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-67">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-21">
-          <button class="wb-btn wb-btn--primary" x-ripple="">Button with Ripple</button>
-          <div class="ripple-box" x-ripple="">Click anywhere on this box for ripple effect</div>
+          <wb-button variant="primary" x-ripple>Button with Ripple</wb-button>
+          <div class="ripple-box" x-ripple>Click anywhere on this box for ripple effect</div>
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <!-- Ripple on button -->
-<button class="wb-btn wb-btn--primary" x-ripple="">
+<wb-button variant="primary" x-ripple>
   Button with Ripple
-</button>
+</wb-button>
 
 <!-- Ripple on any element -->
-<div x-ripple="" style="padding: 2rem; cursor: pointer;">
+<div x-ripple style="padding: 2rem; cursor: pointer;">
   Click for ripple effect
 </div>
 ```
@@ -1410,15 +1368,15 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-68">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-22">
-          <button class="wb-btn wb-btn--primary" x-copy="" data-copy="Hello, this text was copied to your clipboard!">📋 Copy Text</button>
-          <button class="wb-btn wb-btn--primary" x-copy="" data-copy="npm install wb-framework">📋 Copy Install Command</button>
+          <wb-button variant="primary" x-copy copy-text="Hello, this text was copied to your clipboard!">📋 Copy Text</wb-button>
+          <wb-button variant="primary" x-copy copy-text="npm install wb-framework">📋 Copy Install Command</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button x-copy="" data-copy="Text to copy">
+<button x-copy copy-text="Text to copy">
   📋 Copy Text
-</button>
+</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -1427,20 +1385,20 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-69">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-23">
-          <button class="wb-btn wb-btn--secondary" x-share="" data-share-title="wb-starter" data-share-url="https://example.com">📤 Share</button>
-          <button class="wb-btn wb-btn--secondary" x-print="">🖨️ Print Page</button>
-          <button class="wb-btn wb-btn--secondary" x-fullscreen="">⛶ Fullscreen</button>
+          <wb-button variant="secondary" x-share share-title="wb-starter" share-url="https://example.com">📤 Share</wb-button>
+          <wb-button variant="secondary" x-print>🖨️ Print Page</wb-button>
+          <wb-button variant="secondary" x-fullscreen>⛶ Fullscreen</wb-button>
         </div>
       </div>
       <wb-mdhtml>
 ```html
-<button x-share="" data-share-title="Title" data-share-url="https://...">
+<button x-share share-title="Title" share-url="https://...">
   📤 Share
-</button>
+</wb-button>
 
-<button x-print="">🖨️ Print Page</button>
+<wb-button x-print>🖨️ Print Page</wb-button>
 
-<button x-fullscreen="">⛶ Fullscreen</button>
+<wb-button x-fullscreen>⛶ Fullscreen</wb-button>
 ```
       </wb-mdhtml>
     </div>
@@ -1449,21 +1407,21 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-70">
       <div class="demo-area">
         <div class="demo-row" style="align-items: center;" id="autogen-behaviors-showcase-html-24">
-          <div x-clock="" class="clock-display"></div>
-          <div x-countdown="" data-to="2026-12-31" class="countdown-display"></div>
-          <span x-relativetime="" data-date="2025-01-01" style="font-size: var(--text-base);">Jan 1, 2025</span>
+          <div x-clock class="clock-display"></div>
+          <div x-countdown date="2026-12-31" class="countdown-display"></div>
+          <span x-relativetime date="2025-01-01" style="font-size: var(--text-base);">Jan 1, 2025</span>
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <!-- Live clock -->
-<div x-clock=""></div>
+<div x-clock></div>
 
 <!-- Countdown to specific date -->
-<div x-countdown="" data-to="2026-12-31"></div>
+<div x-countdown to="2026-12-31"></div>
 
 <!-- Relative time display -->
-<span x-relativetime="" data-date="2025-01-01"></span>
+<span x-relativetime date="2025-01-01"></span>
 ```
       </wb-mdhtml>
     </div>
@@ -1472,14 +1430,14 @@
     <div class="demo-container" id="autogen-behaviors-showcase-html-71">
       <div class="demo-area">
         <div class="demo-row" id="autogen-behaviors-showcase-html-25">
-          <button class="wb-btn wb-btn--primary" x-darkmode="">🌙 Toggle Dark Mode</button>
+          <wb-button variant="primary" x-darkmode>🌙 Toggle Dark Mode</wb-button>
           <wb-themecontrol></wb-themecontrol>
         </div>
       </div>
       <wb-mdhtml>
 ```html
 <!-- Simple dark mode toggle -->
-<button x-darkmode="">🌙 Toggle Dark Mode</button>
+<wb-button x-darkmode>🌙 Toggle Dark Mode</wb-button>
 
 <!-- Full theme control dropdown -->
 <wb-themecontrol></wb-themecontrol>
@@ -1490,13 +1448,13 @@
     <h3>Text Truncate</h3>
     <div class="demo-container" id="autogen-behaviors-showcase-html-72">
       <div class="demo-area">
-        <p x-truncate="" data-lines="2" class="truncate-box">
+        <p x-truncate lines="2" class="truncate-box">
           This is a very long paragraph of text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
         </p>
       </div>
       <wb-mdhtml>
 ```html
-<p x-truncate="" data-lines="2">
+<p x-truncate lines="2">
   Long text that will be truncated after 2 lines...
 </p>
 ```

@@ -18,12 +18,14 @@
     "background": {
       "type": "string",
       "description": "Background image URL",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "title": {
       "type": "string",
       "description": "Hero headline",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "pretitle": {
       "type": "string",
@@ -42,7 +44,8 @@
     },
     "cta": {
       "type": "string",
-      "description": "Call-to-action button text"
+      "description": "Call-to-action button text",
+      "default": ""
     },
     "ctaHref": {
       "type": "string",

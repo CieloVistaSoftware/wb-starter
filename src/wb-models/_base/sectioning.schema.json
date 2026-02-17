@@ -3,6 +3,7 @@
   "$id": "_base/sectioning.schema.json",
   "title": "Sectioning Content",
   "description": "Base schema for sectioning elements: article, section, nav, aside, header, footer, main, address. These define document outline and landmark regions.",
+  "schemaType": "base",
   
   "allOf": [
     { "$ref": "html-element.schema.json" }

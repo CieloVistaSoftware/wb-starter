@@ -69,8 +69,6 @@ export function dl(element, options = {}) {
     element.style.padding = '1rem';
   }
 
-  element.classList.add('wb-ready');
-
   return () => {
     element.classList.remove('wb-dl');
     terms.forEach(dt => dt.classList.remove('wb-dl__term'));

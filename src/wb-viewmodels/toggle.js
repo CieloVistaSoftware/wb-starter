@@ -9,10 +9,10 @@
 export function toggle(element, options = {}) {
   const config = {
     // Support both data-class/data-toggle-class for flexibility
-    class: options.class || element.dataset.class || element.dataset.toggleClass || 'active',
+    class: options.class || element.getAttribute('class') || element.getAttribute('toggle-class') || 'active',
     // Support both data-target/data-toggle-target for flexibility
-    target: options.target || element.dataset.target || element.dataset.toggleTarget,
-    self: options.self ?? (element.dataset.toggleSelf !== 'false'),
+    target: options.target || element.getAttribute('target') || element.getAttribute('toggle-target'),
+    self: options.self ?? (element.getAttribute('toggle-self') !== 'false'),
     ...options
   };
 
@@ -93,8 +93,6 @@ export function toggle(element, options = {}) {
     toggle: () => { onMouseDown(new Event('click')); setTimeout(onMouseUp, 150); },
     isActive: () => element.classList.contains(classes[0])
   };
-
-  element.classList.add('wb-ready');
 
   return () => {
     element.classList.remove('wb-toggle', ...classes);

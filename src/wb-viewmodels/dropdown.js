@@ -18,10 +18,10 @@
  */
 export function dropdown(element, options = {}) {
   const config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
-    label: options.label || element.dataset.label || '',
-    position: options.position || element.dataset.position || 'bottom-left',
-    closeOnSelect: options.closeOnSelect ?? (element.dataset.closeOnSelect !== 'false'),
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
+    label: options.label || element.getAttribute('label') || '',
+    position: options.position || element.getAttribute('position') || 'bottom-left',
+    closeOnSelect: options.closeOnSelect ?? (element.getAttribute('close-on-select') !== 'false'),
     ...options
   };
 
@@ -197,8 +197,6 @@ export function dropdown(element, options = {}) {
     item.setAttribute('role', 'menuitem');
   });
 
-  element.classList.add('wb-ready');
-  
   return () => { 
     element.removeEventListener('click', clickHandler);
     document.removeEventListener('click', outsideClickHandler);

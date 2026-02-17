@@ -269,8 +269,6 @@ export function code(element, options = {}) {
     }
   }
 
-  element.classList.add('wb-ready');
-
   return () => {
     element.classList.remove('x-code');
     if (wrapper && wrapper.parentNode) {

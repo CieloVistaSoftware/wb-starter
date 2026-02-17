@@ -2,25 +2,140 @@
  * SCHEMA VALIDATION - Static Compliance
  * =====================================
  * Validates all .schema.json files are complete and well-formed.
+ * 
+ * Respects schemaType tiers:
+ *   "component" (default) — full rules: title, description, properties, $view, $methods, behavior/schemaFor
+ *   "base"               — abstract/inherited: title, description, properties (type+default on props)
+ *   "definition"         — reference docs: title, description only
  */
 
 import { test, expect } from '@playwright/test';
+import * as fs from 'fs';
+import * as path from 'path';
 import {
   PATHS, getSchemaFiles, loadSchema, getComponentSchemas, Schema
 } from '../base';
 
+// ═══════════════════════════════════════════════════════════════════════════
+// HELPERS — Schema Type Resolution
+// ═══════════════════════════════════════════════════════════════════════════
+
+type SchemaType = 'component' | 'base' | 'definition';
+
+/**
+ * Get all schema files recursively (including subdirs like semantic/, _base/)
+ */
+function getAllSchemaFiles(): string[] {
+  const results: string[] = [];
+  function walk(dir: string) {
+    if (!fs.existsSync(dir)) return;
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(full);
+      } else if (entry.name.endsWith('.schema.json') && entry.name !== 'schema.schema.json') {
+        results.push(path.relative(PATHS.schemas, full));
+      }
+    }
+  }
+  walk(PATHS.schemas);
+  return results;
+}
+
+function loadSchemaFull(relPath: string): any | null {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(PATHS.schemas, relPath), 'utf-8'));
+  } catch { return null; }
+}
+
+function getSchemaType(schema: any): SchemaType {
+  return schema?.schemaType || 'component';
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// TESTS — Tier-Aware Validation
+// ═══════════════════════════════════════════════════════════════════════════
+
 test.describe('Schema Validation: JSON Syntax', () => {
   
   test('all schema files are valid JSON', () => {
-    const files = getSchemaFiles();
+    const files = getAllSchemaFiles();
     const invalid: string[] = [];
-    
     for (const file of files) {
-      const schema = loadSchema(file);
-      if (!schema) invalid.push(file);
+      if (!loadSchemaFull(file)) invalid.push(file);
     }
-    
     expect(invalid, `Invalid JSON files: ${invalid.join(', ')}`).toEqual([]);
+  });
+});
+
+test.describe('Schema Validation: SchemaType Tiers', () => {
+
+  test('all schemas have title and description (required for ALL tiers)', () => {
+    const files = getAllSchemaFiles();
+    const issues: string[] = [];
+    for (const file of files) {
+      const schema = loadSchemaFull(file);
+      if (!schema) continue;
+      if (!schema.title) issues.push(`${file}: missing title`);
+      if (!schema.description) issues.push(`${file}: missing description`);
+    }
+    expect(issues, `Missing title/description:\n${issues.join('\n')}`).toEqual([]);
+  });
+
+  test('component schemas have required fields (properties, $view, $methods, behavior/schemaFor)', () => {
+    const files = getAllSchemaFiles();
+    const issues: string[] = [];
+    for (const file of files) {
+      const schema = loadSchemaFull(file);
+      if (!schema || getSchemaType(schema) !== 'component') continue;
+      if (!schema.properties) issues.push(`${file}: component missing "properties"`);
+      if (schema.$view === undefined) issues.push(`${file}: component missing "$view"`);
+      if (schema.$methods === undefined) issues.push(`${file}: component missing "$methods"`);
+      if (!schema.behavior && !schema.schemaFor) issues.push(`${file}: component missing "behavior" or "schemaFor"`);
+    }
+    expect(issues, `Component schema violations:\n${issues.join('\n')}`).toEqual([]);
+  });
+
+  test('base schemas have required fields (properties)', () => {
+    const files = getAllSchemaFiles();
+    const issues: string[] = [];
+    for (const file of files) {
+      const schema = loadSchemaFull(file);
+      if (!schema || getSchemaType(schema) !== 'base') continue;
+      if (!schema.properties) issues.push(`${file}: base schema missing "properties"`);
+    }
+    expect(issues, `Base schema violations:\n${issues.join('\n')}`).toEqual([]);
+  });
+
+  test('schemaType field is valid when present', () => {
+    const files = getAllSchemaFiles();
+    const valid = ['component', 'base', 'definition'];
+    const issues: string[] = [];
+    for (const file of files) {
+      const schema = loadSchemaFull(file);
+      if (!schema?.schemaType) continue;
+      if (!valid.includes(schema.schemaType)) {
+        issues.push(`${file}: invalid schemaType "${schema.schemaType}" (must be: ${valid.join(', ')})`);
+      }
+    }
+    expect(issues, `Invalid schemaType values:\n${issues.join('\n')}`).toEqual([]);
+  });
+
+  test('schema tier inventory', () => {
+    const files = getAllSchemaFiles();
+    const counts = { component: 0, base: 0, definition: 0 };
+    for (const file of files) {
+      const schema = loadSchemaFull(file);
+      if (!schema) continue;
+      counts[getSchemaType(schema)]++;
+    }
+    console.log(`\n📋 Schema Tier Inventory:`);
+    console.log(`  Component: ${counts.component}`);
+    console.log(`  Base:      ${counts.base}`);
+    console.log(`  Definition: ${counts.definition}`);
+    console.log(`  Total:     ${counts.component + counts.base + counts.definition}\n`);
+    // All files should have a valid tier
+    expect(counts.component + counts.base + counts.definition).toBe(files.length);
   });
 });
 
@@ -31,8 +146,11 @@ test.describe('Schema Validation: Required Sections', () => {
     const missing: string[] = [];
     
     for (const file of files) {
-      const schema = loadSchema(file);
-      if (schema && !schema.schemaFor) missing.push(file);
+      const schema = loadSchema(file) as any;
+      if (!schema) continue;
+      // Skip non-component schemas (base, definition)
+      if (schema.schemaType && schema.schemaType !== 'component') continue;
+      if (!schema.schemaFor) missing.push(file);
     }
     
     expect(missing, `Schemas missing "schemaFor" field: ${missing.join(', ')}`).toEqual([]);
@@ -50,8 +168,6 @@ test.describe('Schema Validation: Required Sections', () => {
       console.warn(`Schemas missing "compliance" section: ${missing.length}`);
       missing.slice(0, 5).forEach(f => console.warn(`  - ${f}`));
     }
-    // Track progress - goal is to reduce this over time
-    // Current state: 52 missing, target: 0
     expect(missing.length, `${missing.length} schemas missing compliance`).toBeLessThan(55);
   });
   
@@ -78,7 +194,6 @@ test.describe('Schema Validation: Required Sections', () => {
       console.warn(`Schemas missing "test" section: ${missing.length}`);
       missing.slice(0, 5).forEach(f => console.warn(`  - ${f}`));
     }
-    // Track progress - goal is to reduce this over time
     expect(missing.length, `${missing.length} schemas missing test section`).toBeLessThan(30);
   });
   
@@ -98,20 +213,47 @@ test.describe('Schema Validation: Required Sections', () => {
 
 test.describe('Schema Validation: Property Definitions', () => {
   
-  test('properties have "type" field', () => {
-    const schemas = getComponentSchemas();
+  test('properties have "type" field (component + base tiers)', () => {
+    const files = getAllSchemaFiles();
     const issues: string[] = [];
     
-    for (const [file, schema] of schemas) {
-      if (!schema.properties) continue;
+    for (const file of files) {
+      const schema = loadSchemaFull(file);
+      if (!schema?.properties) continue;
+      const tier = getSchemaType(schema);
+      if (tier === 'definition') continue;
       
       for (const [propName, propDef] of Object.entries(schema.properties)) {
-        if (propName.startsWith('$')) continue;
+        if (propName.startsWith('$') || propName.startsWith('_')) continue;
+        if (typeof propDef !== 'object' || propDef === null) continue;
+        // Skip nested property groups (type: "object" with sub-properties)
+        if (propDef.type === 'object' && propDef.properties) continue;
         if (!propDef.type) issues.push(`${file}: property "${propName}" missing type`);
       }
     }
     
     expect(issues, `Properties missing type:\n${issues.join('\n')}`).toEqual([]);
+  });
+
+  test('properties have "default" field (component + base tiers)', () => {
+    const files = getAllSchemaFiles();
+    const issues: string[] = [];
+    
+    for (const file of files) {
+      const schema = loadSchemaFull(file);
+      if (!schema?.properties) continue;
+      const tier = getSchemaType(schema);
+      if (tier === 'definition') continue;
+      
+      for (const [propName, propDef] of Object.entries(schema.properties)) {
+        if (propName.startsWith('$') || propName.startsWith('_')) continue;
+        if (typeof propDef !== 'object' || propDef === null) continue;
+        if (propDef.type === 'object' && propDef.properties) continue;
+        if (propDef.default === undefined) issues.push(`${file}: property "${propName}" missing default`);
+      }
+    }
+    
+    expect(issues, `Properties missing default:\n${issues.join('\n')}`).toEqual([]);
   });
   
   test('enum properties have "enum" array', () => {
@@ -191,7 +333,6 @@ test.describe('Schema Validation: Events', () => {
       console.warn(`Undefined events: ${issues.length}`);
       issues.slice(0, 5).forEach(i => console.warn(`  - ${i}`));
     }
-    // Track progress
     expect(issues.length, `${issues.length} undefined events`).toBeLessThan(20);
   });
 });
@@ -210,7 +351,6 @@ test.describe('Schema Validation: Test Section Completeness', () => {
         if (typeof html !== 'string') {
           issues.push(`${file}: setup[${i}] is not a string`);
         } else {
-          // v3.0: Accept either <wb-*> tags OR data-wb attribute
           const hasWbTag = html.includes('<wb-');
           const hasDataWb = html.includes('data-wb=');
           if (!hasWbTag && !hasDataWb) {
@@ -227,16 +367,12 @@ test.describe('Schema Validation: Test Section Completeness', () => {
     const schemas = getComponentSchemas();
     const issues: string[] = [];
     
-    // Helper: Convert behavior name to possible tag formats
-    // cardprofile → [wb-cardprofile, wb-card-profile]
     function getPossibleTags(behavior: string): string[] {
       const tags = [`<wb-${behavior}`];
-      // Also check hyphenated version: cardprofile → card-profile
       const hyphenated = behavior.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
       if (hyphenated !== behavior) {
         tags.push(`<wb-${hyphenated}`);
       }
-      // For compound names like "cardprofile", also try "card-profile"
       const compoundMatch = behavior.match(/^(card|button|input|nav|tab)(.+)$/);
       if (compoundMatch) {
         tags.push(`<wb-${compoundMatch[1]}-${compoundMatch[2].toLowerCase()}`);
@@ -252,11 +388,9 @@ test.describe('Schema Validation: Test Section Completeness', () => {
       
       for (let i = 0; i < schema.test.setup.length; i++) {
         const html = schema.test.setup[i];
-        // v3.0: Accept either <wb-{behavior}> (various formats) OR data-wb="{behavior}"
         const hasWbTag = possibleTags.some(tag => html.includes(tag));
         const hasDataWb = html.includes(dataWbPattern);
         
-        // Also allow card variants to use base card behavior in setup
         const usesCardBase = schema.schemaFor.startsWith('card') && 
           (html.includes('data-wb="card"') || html.includes('<wb-card'));
         
@@ -266,7 +400,6 @@ test.describe('Schema Validation: Test Section Completeness', () => {
       }
     }
     
-    // Track progress - many legacy setups need updating
     if (issues.length > 0) {
       console.warn(`Setup/behavior mismatches: ${issues.length}`);
       issues.slice(0, 5).forEach(i => console.warn(`  - ${i}`));
@@ -326,8 +459,6 @@ test.describe('Schema Validation: Summary', () => {
     console.log(`  ⚠️ Incomplete: ${incomplete}\n`);
     
     const ratio = complete / schemas.size;
-    // Track progress - most schemas still need compliance sections
-    // Current: ~4%, Target: 80%
     expect(ratio, 'At least 5% of schemas should be complete').toBeGreaterThanOrEqual(0.02);
   });
 });

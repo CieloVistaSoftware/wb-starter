@@ -38,9 +38,9 @@
       "tag": "wb-card",
       "columns": 3,
       "demos": [
-        { "tag": "wb-card", "attrs": { "title": "Elevated Card", "elevated": true }, "children": "<p>This card has elevation shadow.</p>" },
-        { "tag": "wb-card", "attrs": { "title": "Clickable Card", "clickable": true }, "children": "<p>Click me! I'm interactive.</p>" },
-        { "tag": "wb-card", "attrs": { "title": "With Footer", "footer": "Last updated: Today" }, "children": "<p>This card has a footer section.</p>" }
+        { "tag": "wb-card", "attrs": { "title": "Elevated Card", "elevated": true }, "content": "<p>This card has elevation shadow.</p>" },
+        { "tag": "wb-card", "attrs": { "title": "Clickable Card", "clickable": true }, "content": "<p>Click me! I'm interactive.</p>" },
+        { "tag": "wb-card", "attrs": { "title": "With Footer", "footer": "Last updated: Today" }, "content": "<p>This card has a footer section.</p>" }
       ]
     },
     {
@@ -128,7 +128,7 @@
       "tag": "wb-cardhero",
       "columns": 1,
       "demos": [
-        { "tag": "wb-cardhero", "attrs": { "background": "https://picsum.photos/1200/400?random=10", "title": "Welcome to WB Framework", "subtitle": "Build stunning UIs with just HTML", "cta": "Get Started" } }
+        { "tag": "wb-cardhero", "attrs": { "background": "https://picsum.photos/1200/400?random=10", "title": "Welcome to WB-Starter", "subtitle": "Build stunning UIs with just HTML", "cta": "Get Started" } }
       ]
     },
     {

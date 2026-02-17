@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Error Behavior",
+  "type": "object",
+  "description": "Schema for x-error behavior (error message)",
+  "properties": {},
+  "required": [],
+  "wbBehavior": {
+    "name": "error",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Displays error messages for form fields.",
+    "src": "src/wb-viewmodels/error.js"
+  }
+}

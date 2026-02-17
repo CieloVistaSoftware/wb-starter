@@ -17,11 +17,13 @@
   "properties": {
     "data": {
       "type": "string",
-      "description": "Table data as JSON array"
+      "description": "Table data as JSON array",
+      "default": ""
     },
     "columns": {
       "type": "string",
-      "description": "Column config as JSON [{key, label, sortable}]"
+      "description": "Column config as JSON [{key, label, sortable}]",
+      "default": ""
     },
     "sortable": {
       "type": "boolean",

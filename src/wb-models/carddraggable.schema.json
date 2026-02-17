@@ -17,11 +17,13 @@
   "properties": {
     "title": {
       "type": "string",
-      "description": "Card title"
+      "description": "Card title",
+      "default": ""
     },
     "content": {
       "type": "string",
-      "description": "Card content"
+      "description": "Card content",
+      "default": ""
     },
     "constrain": {
       "type": "string",

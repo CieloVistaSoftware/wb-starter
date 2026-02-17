@@ -1,0 +1,29 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/compliance/css-oop-compliance.spec.ts",
+  "startedAt": "2026-02-16T05:00:40.997Z",
+  "updatedAt": "2026-02-16T05:00:56.845Z",
+  "command": "npx playwright test --workers=8 tests/compliance/css-oop-compliance.spec.ts",
+  "pid": 21948,
+  "passed": 10,
+  "failed": 2,
+  "skipped": 0,
+  "total": 12,
+  "currentFile": "tests\\compliance\\css-oop-compliance.spec.ts",
+  "output": "\nRunning 10 tests using 8 workers\n\n  ok 2 [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:26:3 › CSS OOP Compliance › forbidden files should not exist (9ms)\n  ok 4 [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:90:3 › CSS OOP Compliance › CSS variables only defined in themes.css (77ms)\n  x  1 [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:147:3 › CSS OOP Compliance › minimal !important usage (262ms)\n  ok 3 [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:204:3 › Single Source of Truth Compliance › no duplicate constant definitions across JS files (165ms)\n  ok 5 [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:233:3 › Theme Variable Coverage › all theme variables are defined (27ms)\n  ok 7 [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:74:3 › CSS OOP Compliance › no --wb-* variable aliases (153ms)\n  x  6 [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:35:3 › CSS OOP Compliance › no hardcoded colors in CSS (except themes.css) (190ms)\n  ok 8 [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:160:3 › CSS OOP Compliance › behavior CSS files match JS group naming (6ms)\n  ok 10 [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:176:3 › Single Source of Truth Compliance › no hardcoded theme lists in HTML files (450ms)\n  ok 9 [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:120:3 › CSS OOP Compliance › HTML files import CSS in correct order (542ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 10 tests in 6.2s\n  ✓ Passed:  8\n  ✗ Failed:  2\n\n  By Project:\n    ✗ compliance: 8/10 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:35:3 › CSS OOP Compliance › no hardcoded colors in CSS (except themes.css) \n\n    Error: CSS files should use var(--*) instead of hardcoded colors\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n    Expected length: \u001b[32m0\u001b[39m\n    Received length: \u001b[31m7\u001b[39m\n    Received array:  \u001b[31m[\"src\\\\styles\\\\behaviors\\\\card.css: #fff\", \"src\\\\styles\\\\behaviors\\\\notification.css: #fff, #fff, #fff...\", \"src\\\\styles\\\\pages\\\\about.css: rgba(, rgba(\", \"src\\\\styles\\\\pages\\\\ai-permutation-test.css: #64748b, #94a3b8, #c7d2fe...\", \"src\\\\styles\\\\pages\\\\home.css: #ef4444, #f59e0b, #10b981...\", \"src\\\\styles\\\\pages\\\\services.css: rgba(, rgba(\", \"src\\\\styles\\\\pages\\\\themes-showcase.css: hsl(, hsl(, hsl(...\"]\u001b[39m\n\n      69 |     }\n      70 |\n    > 71 |     expect(violations, 'CSS files should use var(--*) instead of hardcoded colors').toHaveLength(0);\n         |                                                                                     ^\n      72 |   });\n      73 |\n      74 |   test('no --wb-* variable aliases', () => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\compliance\\css-oop-compliance.spec.ts:71:85\n\n  2) [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:147:3 › CSS OOP Compliance › minimal !important usage \n\n    Error: Total !important usage should be minimal\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n    Expected: < \u001b[32m130\u001b[39m\n    Received:   \u001b[31m159\u001b[39m\n\n      155 |     }\n      156 |\n    > 157 |     expect(total, 'Total !important usage should be minimal').toBeLessThan(130);\n          |                                                               ^\n      158 |   });\n      159 |\n      160 |   test('behavior CSS files match JS group naming', () => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\compliance\\css-oop-compliance.spec.ts:157:63\n\n  2 failed\n    [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:35:3 › CSS OOP Compliance › no hardcoded colors in CSS (except themes.css) \n    [compliance] › tests\\compliance\\css-oop-compliance.spec.ts:147:3 › CSS OOP Compliance › minimal !important usage \n  8 passed (7.3s)\n",
+  "errors": "⚠️ Consider moving variable definitions to themes.css\n\n❌ FAILED: minimal !important usage\n   Error: Total !important usage should be minimal\n\n❌ FAILED: no hardcoded colors in CSS (except themes.css)\n   Error: CSS files should use var(--*) instead of hardcoded colors\n",
+  "failures": [
+    {
+      "file": "tests\\compliance\\css-oop-compliance.spec.ts",
+      "name": "CSS OOP Compliance › minimal !important usage"
+    },
+    {
+      "file": "tests\\compliance\\css-oop-compliance.spec.ts",
+      "name": "CSS OOP Compliance › no hardcoded colors in CSS (except themes.css)"
+    }
+  ],
+  "completedAt": "2026-02-16T05:00:56.845Z",
+  "duration": "15.85s",
+  "exitCode": 1
+}

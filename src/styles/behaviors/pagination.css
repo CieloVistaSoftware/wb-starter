@@ -1,27 +1,52 @@
 /**
  * Pagination Behavior Styles
  * -----------------------------------------------------------------------------
- * Extracted from demo.css (Phase 3 migration)
- * Works with src/wb-viewmodels/semantics/pagination.js
+ * Custom element: <nav x-pagination> or context with [role="navigation"]
+ * Children are <span role="button"> — not <button> (avoids auto-inject).
+ * CSS targets the tag/attribute context, not JS-added classes.
  * -----------------------------------------------------------------------------
  */
 
-.wb-pagination {
+nav[x-pagination],
+[role="navigation"][x-pagination] {
   display: flex;
   gap: 0.25rem;
+  align-items: center;
 }
 
-.wb-pagination button {
+nav[x-pagination] > span[role="button"],
+[role="navigation"][x-pagination] > span[role="button"] {
   min-width: 2rem;
   height: 2rem;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: var(--radius-md, 6px);
+  border: 1px solid var(--border-color, #374151);
+  background: var(--bg-tertiary, #374151);
+  color: var(--text-primary, #f9fafb);
+  cursor: pointer;
+  font-size: var(--text-sm, 0.875rem);
+  user-select: none;
 }
 
-.wb-pagination button.active {
-  background: var(--primary);
+nav[x-pagination] > span[role="button"]:hover,
+[role="navigation"][x-pagination] > span[role="button"]:hover {
+  background: var(--bg-secondary, #1f2937);
+  border-color: var(--primary, #6366f1);
+}
+
+nav[x-pagination] > span[aria-current="page"],
+[role="navigation"][x-pagination] > span[aria-current="page"] {
+  background: var(--primary, #6366f1);
   color: white;
-  border-color: var(--primary);
+  border-color: var(--primary, #6366f1);
+}
+
+nav[x-pagination] > span[aria-disabled="true"],
+[role="navigation"][x-pagination] > span[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
 }

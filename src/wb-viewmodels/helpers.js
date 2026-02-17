@@ -18,10 +18,10 @@
  */
 export function lazy(element, options = {}) {
   const config = {
-    src: options.src || element.dataset.src || '',
-    srcset: options.srcset || element.dataset.srcset || '',
-    threshold: parseFloat(options.threshold || element.dataset.threshold || '0.1'),
-    placeholder: options.placeholder || element.dataset.placeholder || '',
+    src: options.src || element.getAttribute('src') || '',
+    srcset: options.srcset || element.getAttribute('srcset') || '',
+    threshold: parseFloat(options.threshold || element.getAttribute('threshold') || '0.1'),
+    placeholder: options.placeholder || element.getAttribute('placeholder') || '',
     ...options
   };
 
@@ -100,8 +100,8 @@ export function lazy(element, options = {}) {
  */
 export function print(element, options = {}) {
   const config = {
-    target: options.target || element.dataset.target || '',
-    label: options.label || element.dataset.label || '🖨️ Print',
+    target: options.target || element.getAttribute('target') || '',
+    label: options.label || element.getAttribute('label') || '🖨️ Print',
     ...options
   };
 
@@ -128,7 +128,6 @@ export function print(element, options = {}) {
     }
   };
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-print');
 }
 
@@ -138,10 +137,10 @@ export function print(element, options = {}) {
  */
 export function share(element, options = {}) {
   const config = {
-    title: options.title || element.dataset.shareTitle || element.dataset.title || document.title,
-    text: options.text || element.dataset.shareText || element.dataset.text || '',
-    url: options.url || element.dataset.shareUrl || element.dataset.url || window.location.href,
-    label: options.label || element.dataset.label || '📤 Share',
+    title: options.title || element.getAttribute('share-title') || element.getAttribute('title') || document.title,
+    text: options.text || element.getAttribute('share-text') || element.getAttribute('text') || '',
+    url: options.url || element.getAttribute('share-url') || element.getAttribute('url') || window.location.href,
+    label: options.label || element.getAttribute('label') || '📤 Share',
     ...options
   };
 
@@ -166,7 +165,6 @@ export function share(element, options = {}) {
     }
   };
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-share');
 }
 
@@ -176,8 +174,8 @@ export function share(element, options = {}) {
  */
 export function fullscreen(element, options = {}) {
   const config = {
-    target: options.target || element.dataset.target || '',
-    label: options.label || element.dataset.label || '⛶ Fullscreen',
+    target: options.target || element.getAttribute('target') || '',
+    label: options.label || element.getAttribute('label') || '⛶ Fullscreen',
     ...options
   };
 
@@ -234,7 +232,6 @@ export function fullscreen(element, options = {}) {
     }
   };
 
-  element.classList.add('wb-ready');
   return () => {
     document.removeEventListener('fullscreenchange', handleFullscreenChange);
     element.classList.remove('wb-fullscreen');
@@ -247,7 +244,7 @@ export function fullscreen(element, options = {}) {
  */
 export function hotkey(element, options = {}) {
   const config = {
-    key: (options.key || element.dataset.key || '').toLowerCase(),
+    key: (options.key || element.getAttribute('key') || '').toLowerCase(),
     ...options
   };
 
@@ -327,10 +324,10 @@ export function hotkey(element, options = {}) {
  */
 export function clipboard(element, options = {}) {
   const config = {
-    target: options.target || element.dataset.target || '',
-    text: options.text || element.dataset.clipboardText || element.dataset.text || '',
-    label: options.label || element.dataset.label || '📋 Copy to Clipboard',
-    feedback: options.feedback || element.dataset.feedback || '✓ Copied!',
+    target: options.target || element.getAttribute('target') || '',
+    text: options.text || element.getAttribute('clipboard-text') || element.getAttribute('text') || '',
+    label: options.label || element.getAttribute('label') || '📋 Copy to Clipboard',
+    feedback: options.feedback || element.getAttribute('feedback') || '✓ Copied!',
     ...options
   };
 
@@ -364,7 +361,6 @@ export function clipboard(element, options = {}) {
     }
   };
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-clipboard', 'wb-clipboard--copied');
 }
 
@@ -374,10 +370,10 @@ export function clipboard(element, options = {}) {
  */
 export function scroll(element, options = {}) {
   const config = {
-    target: options.target || element.dataset.scrollTo || element.dataset.target || '',
-    behavior: options.behavior || element.dataset.behavior || 'smooth',
-    offset: parseInt(options.offset || element.dataset.offset || '0'),
-    label: options.label || element.dataset.label || '↓ Scroll',
+    target: options.target || element.getAttribute('scroll-to') || element.getAttribute('target') || '',
+    behavior: options.behavior || element.getAttribute('behavior') || 'smooth',
+    offset: parseInt(options.offset || element.getAttribute('offset') || '0'),
+    label: options.label || element.getAttribute('label') || '↓ Scroll',
     ...options
   };
 
@@ -404,7 +400,6 @@ export function scroll(element, options = {}) {
     }
   };
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-scroll');
 }
 
@@ -414,7 +409,7 @@ export function scroll(element, options = {}) {
  */
 export function truncate(element, options = {}) {
   const config = {
-    lines: parseInt(options.lines || element.dataset.lines || '1'),
+    lines: parseInt(options.lines || element.getAttribute('lines') || '1'),
     expandable: options.expandable ?? element.hasAttribute('data-expandable'),
     ...options
   };
@@ -448,8 +443,8 @@ export function truncate(element, options = {}) {
  */
 export function highlight(element, options = {}) {
   const config = {
-    color: options.color || element.dataset.color || '#fef08a', // Yellow
-    textColor: options.textColor || element.dataset.textColor || '#1f2937', // Dark text
+    color: options.color || element.getAttribute('color') || '#fef08a', // Yellow
+    textColor: options.textColor || element.getAttribute('text-color') || '#1f2937', // Dark text
     ...options
   };
 
@@ -476,8 +471,8 @@ export function highlight(element, options = {}) {
  */
 export function external(element, options = {}) {
   const config = {
-    icon: options.icon ?? element.dataset.icon !== 'false',
-    newTab: options.newTab ?? element.dataset.newTab !== 'false',
+    icon: options.icon ?? element.getAttribute('icon') !== 'false',
+    newTab: options.newTab ?? element.getAttribute('new-tab') !== 'false',
     ...options
   };
 
@@ -503,9 +498,9 @@ export function external(element, options = {}) {
  */
 export function countdown(element, options = {}) {
   const config = {
-    date: options.date || element.dataset.date || '',
-    seconds: parseInt(options.seconds || element.dataset.seconds || '0') || 0,
-    format: options.format || element.dataset.format || 'auto',
+    date: options.date || element.getAttribute('date') || '',
+    seconds: parseInt(options.seconds || element.getAttribute('seconds') || '0') || 0,
+    format: options.format || element.getAttribute('format') || 'auto',
     ...options
   };
 
@@ -576,7 +571,6 @@ export function countdown(element, options = {}) {
   update();
   const interval = setInterval(update, 1000);
 
-  element.classList.add('wb-ready');
   return () => { 
     clearInterval(interval); 
     element.classList.remove('wb-countdown', 'wb-countdown--complete'); 
@@ -589,9 +583,9 @@ export function countdown(element, options = {}) {
  */
 export function clock(element, options = {}) {
   const config = {
-    variant: options.variant || element.dataset.variant || 'digital',
-    format: options.format || element.dataset.format || '24',
-    showSeconds: (options.showSeconds ?? element.dataset.showSeconds) !== 'false',
+    variant: options.variant || element.getAttribute('variant') || 'digital',
+    format: options.format || element.getAttribute('format') || '24',
+    showSeconds: (options.showSeconds ?? element.getAttribute('show-seconds')) !== 'false',
     ...options
   };
 
@@ -643,7 +637,6 @@ export function clock(element, options = {}) {
   update();
   const updateInterval = setInterval(update, 1000);
 
-  element.classList.add('wb-ready');
   return () => { 
     clearInterval(interval); 
     element.classList.remove('wb-clock', `wb-clock--${config.variant}`); 
@@ -656,8 +649,8 @@ export function clock(element, options = {}) {
  */
 export function relativetime(element, options = {}) {
   const config = {
-    date: options.date || element.dataset.date || element.getAttribute('datetime') || '',
-    refresh: parseInt(options.refresh || element.dataset.refresh || '60000'),
+    date: options.date || element.getAttribute('date') || element.getAttribute('datetime') || '',
+    refresh: parseInt(options.refresh || element.getAttribute('refresh') || '60000'),
     ...options
   };
 
@@ -721,7 +714,6 @@ export function offline(element, options = {}) {
   window.addEventListener('offline', update);
   update();
 
-  element.classList.add('wb-ready');
   return () => {
     window.removeEventListener('online', update);
     window.removeEventListener('offline', update);
@@ -752,11 +744,11 @@ export function visible(element, options = {}) {
  */
 export function debug(element, options = {}) {
   const config = {
-    showErrors: options.showErrors ?? element.dataset.showErrors !== 'false',
-    showWarnings: options.showWarnings ?? element.dataset.showWarnings !== 'false',
+    showErrors: options.showErrors ?? element.getAttribute('show-errors') !== 'false',
+    showWarnings: options.showWarnings ?? element.getAttribute('show-warnings') !== 'false',
     showLogs: options.showLogs ?? element.hasAttribute('data-show-logs'),
-    maxMessages: parseInt(options.maxMessages || element.dataset.maxMessages || '50'),
-    position: options.position || element.dataset.position || 'bottom-right',
+    maxMessages: parseInt(options.maxMessages || element.getAttribute('max-messages') || '50'),
+    position: options.position || element.getAttribute('position') || 'bottom-right',
     ...options
   };
 
@@ -901,8 +893,6 @@ export function debug(element, options = {}) {
     messages.innerHTML = '';
     count = 0;
   };
-  
-  element.classList.add('wb-ready');
   
   return () => {
     // Restore original console methods

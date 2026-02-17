@@ -2,19 +2,24 @@
   "state": "failed",
   "mode": "single",
   "specFile": "tests/compliance/semantic-article-to-card.spec.ts",
-  "startedAt": "2026-02-09T23:15:52.651Z",
-  "updatedAt": "2026-02-09T23:16:27.659Z",
+  "startedAt": "2026-02-16T04:53:37.102Z",
+  "updatedAt": "2026-02-16T04:53:53.754Z",
   "command": "npx playwright test --workers=8 tests/compliance/semantic-article-to-card.spec.ts",
-  "pid": 31460,
+  "pid": 27416,
   "passed": 1,
   "failed": 1,
   "skipped": 0,
   "total": 2,
-  "currentFile": null,
-  "output": "\nRunning 1 test using 1 worker\n\n  ✘  1 [compliance] › tests\\compliance\\semantic-article-to-card.spec.ts:3:1 › semantic <article> should be processed to card synchronously on page load (6.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 19.5s\n  ✓ Passed:  0\n  ✗ Failed:  1\n\n  By Project:\n    ✗ compliance: 0/1 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [compliance] › tests\\compliance\\semantic-article-to-card.spec.ts:3:1 › semantic <article> should be processed to card synchronously on page load \n\n    Error: \u001b[31mTimed out 5000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n    Locator: locator('article').first()\n    Expected pattern: \u001b[32m/wb-card/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('article').first()\u001b[22m\n    \u001b[2m    8 × locator resolved to <article id=\"semantic-card\">…</article>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n       6 |   // The semantic article should be processed into a card with proper classes\n       7 |   const article = page.locator('article').first();\n    >  8 |   await expect(article).toHaveClass(/wb-card/);\n         |                         ^\n       9 |\n      10 |   // Should have card structure (header, main content, etc.)\n      11 |   await expect(article.locator('.wb-card__header, .wb-card__main, .wb-card__footer')).toHaveCount(await article.locator('[class*=\"wb-card__\"]').count());\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\compliance\\semantic-article-to-card.spec.ts:8:25\n\n    Error Context: data\\test-results\\semantic-article-to-card-s-2b6fa--synchronously-on-page-load-compliance\\error-context.md\n\n  1 failed\n    [compliance] › tests\\compliance\\semantic-article-to-card.spec.ts:3:1 › semantic <article> should be processed to card synchronously on page load \n",
+  "currentFile": "tests\\compliance\\semantic-article-to-card.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  x  1 [compliance] › tests\\compliance\\semantic-article-to-card.spec.ts:3:1 › semantic <article> should be processed to card synchronously on page load (6.4s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 9.4s\n  ✓ Passed:  0\n  ✗ Failed:  1\n\n  By Project:\n    ✗ compliance: 0/1 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [compliance] › tests\\compliance\\semantic-article-to-card.spec.ts:3:1 › semantic <article> should be processed to card synchronously on page load \n\n    Error: \u001b[31mTimed out 5000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n    Locator: locator('article').first()\n    Expected pattern: \u001b[32m/wb-card/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('article').first()\u001b[22m\n    \u001b[2m    8 × locator resolved to <article id=\"semantic-card\">…</article>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n       6 |   // The semantic article should be processed into a card with proper classes\n       7 |   const article = page.locator('article').first();\n    >  8 |   await expect(article).toHaveClass(/wb-card/);\n         |                         ^\n       9 |\n      10 |   // Should have card structure (header, main content, etc.)\n      11 |   await expect(article.locator('.wb-card__header, .wb-card__main, .wb-card__footer')).toHaveCount(await article.locator('[class*=\"wb-card__\"]').count());\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\compliance\\semantic-article-to-card.spec.ts:8:25\n\n    Error Context: data\\test-results\\semantic-article-to-card-s-2b6fa--synchronously-on-page-load-compliance\\error-context.md\n\n  1 failed\n    [compliance] › tests\\compliance\\semantic-article-to-card.spec.ts:3:1 › semantic <article> should be processed to card synchronously on page load \n",
   "errors": "\n❌ FAILED: semantic <article> should be processed to card synchronously on page load\n   Error: Timed out 5000ms waiting for expect(locator).toHaveClass(expected)\n",
-  "failures": [],
-  "completedAt": "2026-02-09T23:16:27.659Z",
-  "duration": "35.01s",
+  "failures": [
+    {
+      "file": "tests\\compliance\\semantic-article-to-card.spec.ts",
+      "name": "semantic <article> should be processed to card synchronously on page load"
+    }
+  ],
+  "completedAt": "2026-02-16T04:53:53.754Z",
+  "duration": "16.65s",
   "exitCode": 1
 }

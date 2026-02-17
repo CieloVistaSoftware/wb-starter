@@ -4,7 +4,7 @@
  * Validates that data/errors.json has no errors.
  * If errors exist, we need to go into FIX MODE.
  * 
- * The error log captures runtime errors from the builder
+ * The error log captures runtime errors from pages
  * and other pages. A clean error log means no unhandled
  * exceptions are occurring.
  */

@@ -39,7 +39,7 @@ test.describe('CSS OOP Compliance', () => {
     for (const file of cssFiles) {
       const filename = path.basename(file);
       if (COLOR_EXCEPTION_FILES.includes(filename)) continue;
-      if (filename === 'builder.css' || filename === 'audio.css') continue;
+      if (filename === 'audio.css') continue;
       if (file.includes('tmp') || file.includes('.playwright-artifacts')) continue;
 
       const content = readFile(file);
@@ -102,7 +102,7 @@ test.describe('CSS OOP Compliance', () => {
       if (matches && matches.length > 0) {
         const globalVars = matches.filter(m => {
           const varName = m.match(/--[a-z][a-z0-9-]*/)?.[0];
-          if (varName?.startsWith('--builder-') || varName?.startsWith('--page-') || varName?.startsWith('--notes-')) return false;
+          if (varName?.startsWith('--page-') || varName?.startsWith('--notes-')) return false;
           return true;
         });
 

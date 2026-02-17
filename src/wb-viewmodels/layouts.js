@@ -130,8 +130,6 @@ export function container(element, options = {}) {
     </div>`;
   }
   
-  element.classList.add('wb-ready');
-
   return () => {
     element.classList.remove('wb-container');
     element.style.cssText = '';

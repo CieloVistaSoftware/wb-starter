@@ -8,7 +8,7 @@ test.describe('Legacy Pill Migration', () => {
     });
 
     // Check root page and the behaviors demo (where badges live)
-    for (const url of ['/', '/demos/behaviors.html']) {
+    for (const url of ['/', '/demos/behaviors-showcase.html']) {
       await page.goto(url);
       await page.waitForFunction(() => (window as any).WB);
       await page.waitForTimeout(300);

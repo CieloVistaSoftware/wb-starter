@@ -63,7 +63,7 @@ export default defineConfig({
   
   use: {
     baseURL: 'http://localhost:3000',
-    trace: 'on-first-retry',
+    trace: 'off',
   },
   
   // Web server - automatically starts before tests
@@ -128,11 +128,13 @@ export default defineConfig({
       name: 'behaviors',
       testDir: './tests',
       testMatch: [
+        'behaviors/behavior-verification.spec.ts',
         'behaviors/**/*.spec.ts',
         'cards/**/*.spec.ts',
         'components/**/*.spec.ts',
         'pages/**/*.spec.ts',
         'semantics/**/*.spec.ts',
+        'demos/**/*.spec.ts',
         'darkmode-standard.spec.ts',
       ],
     },
@@ -221,6 +223,26 @@ export default defineConfig({
       use: { ...devices['iPhone 12'] },
     },
     
+    // ═══════════════════════════════════════════════════════════════
+    // MOBILE VALIDATION — Visual screenshots + layout checks
+    // Run: npm run test:mobile-validation
+    // Two devices: Pixel 5 (Android) + iPhone 12 (iOS)
+    // ═══════════════════════════════════════════════════════════════
+    {
+      name: 'mobile-validation-pixel',
+      testDir: './tests/mobile',
+      testMatch: '**/*.spec.ts',
+      retries: 0,
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'mobile-validation-iphone',
+      testDir: './tests/mobile',
+      testMatch: '**/*.spec.ts',
+      retries: 0,
+      use: { ...devices['iPhone 12'] },
+    },
+
     // ═══════════════════════════════════════════════════════════════
     // PERFORMANCE TESTS (optional)
     // ═══════════════════════════════════════════════════════════════

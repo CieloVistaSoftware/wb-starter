@@ -17,28 +17,34 @@
   "properties": {
     "title": {
       "type": "string",
-      "description": "Card title"
+      "description": "Card title",
+      "default": ""
     },
     "content": {
       "type": "string",
-      "description": "Card content/description"
+      "description": "Card content/description",
+      "default": ""
     },
     "primary": {
       "type": "string",
       "description": "Primary button text",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "primaryHref": {
       "type": "string",
-      "description": "Primary button link URL"
+      "description": "Primary button link URL",
+      "default": ""
     },
     "secondary": {
       "type": "string",
-      "description": "Secondary button text"
+      "description": "Secondary button text",
+      "default": ""
     },
     "secondaryHref": {
       "type": "string",
-      "description": "Secondary button link URL"
+      "description": "Secondary button link URL",
+      "default": ""
     },
     "variant": {
       "type": "string",

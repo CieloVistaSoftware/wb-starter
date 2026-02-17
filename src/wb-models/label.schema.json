@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Label Behavior",
+  "type": "object",
+  "description": "Schema for x-label behavior (label enhancements)",
+  "properties": {
+    "required": { "type": "boolean", "description": "Mark label as required" },
+    "optional": { "type": "boolean", "description": "Mark label as optional" }
+  },
+  "required": [],
+  "wbBehavior": {
+    "name": "label",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Enhances labels with required/optional styling.",
+    "src": "src/wb-viewmodels/label.js"
+  },
+  "test": {
+    "setup": [
+      "<label x-label id='test-label'>Label</label>"
+    ],
+    "permutations": [
+      { "required": true, "optional": false },
+      { "required": false, "optional": true },
+      { "required": false, "optional": false }
+    ],
+    "assertions": [
+      {
+        "description": "Label initializes with wb-label class",
+        "selector": "#test-label",
+        "checks": { "hasClass": "wb-label" }
+      },
+      {
+        "description": "Required state applies wb-label--required class",
+        "selector": "#test-label",
+        "checks": { "hasClass": "wb-label--required" },
+        "when": { "required": true }
+      },
+      {
+        "description": "Optional state applies wb-label--optional class",
+        "selector": "#test-label",
+        "checks": { "hasClass": "wb-label--optional" },
+        "when": { "optional": true }
+      }
+    ]
+  }
+}

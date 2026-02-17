@@ -25,31 +25,11 @@
   },
   "$cssAPI": {
     "--border-color": {
-      "description": "Border color for code sample"
+      "description": "Border color for code sample",
+      "default": "inherit"
     }
   },
-  "$view": [
-    {
-      "name": "grid",
-      "tag": "div",
-      "class": "wb-demo__grid wb-demo__grid--cols-{{columns}}",
-      "content": "{{slot}}"
-    },
-    {
-      "name": "code",
-      "tag": "pre",
-      "class": "wb-demo__code",
-      "attributes": { "x-pre": "", "data-language": "html" },
-      "children": [
-        {
-          "tag": "code",
-          "class": "language-html",
-          "attributes": { "x-code": "" },
-          "content": "Raw HTML source via textContent (not innerHTML)"
-        }
-      ]
-    }
-  ],
+  "$view": [],
   "$methods": {},
   "test": {
     "setup": [

@@ -18,35 +18,43 @@
     "name": {
       "type": "string",
       "description": "Full name",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "title": {
       "type": "string",
-      "description": "Job title / role"
+      "description": "Job title / role",
+      "default": ""
     },
     "company": {
       "type": "string",
-      "description": "Current company name"
+      "description": "Current company name",
+      "default": ""
     },
     "location": {
       "type": "string",
-      "description": "Location (city, country)"
+      "description": "Location (city, country)",
+      "default": ""
     },
     "cover": {
       "type": "string",
-      "description": "Cover/banner image URL"
+      "description": "Cover/banner image URL",
+      "default": ""
     },
     "avatar": {
       "type": "string",
-      "description": "Profile photo URL"
+      "description": "Profile photo URL",
+      "default": ""
     },
     "bio": {
       "type": "string",
-      "description": "Short biography / summary"
+      "description": "Short biography / summary",
+      "default": ""
     },
     "tagline": {
       "type": "string",
-      "description": "Professional tagline or motto"
+      "description": "Professional tagline or motto",
+      "default": ""
     },
     "availability": {
       "type": "string",
@@ -61,71 +69,88 @@
     },
     "email": {
       "type": "string",
-      "description": "Email address"
+      "description": "Email address",
+      "default": ""
     },
     "phone": {
       "type": "string",
-      "description": "Phone number"
+      "description": "Phone number",
+      "default": ""
     },
     "website": {
       "type": "string",
-      "description": "Personal website URL"
+      "description": "Personal website URL",
+      "default": ""
     },
     "linkedin": {
       "type": "string",
-      "description": "LinkedIn profile URL"
+      "description": "LinkedIn profile URL",
+      "default": ""
     },
     "twitter": {
       "type": "string",
-      "description": "Twitter/X profile URL"
+      "description": "Twitter/X profile URL",
+      "default": ""
     },
     "github": {
       "type": "string",
-      "description": "GitHub profile URL"
+      "description": "GitHub profile URL",
+      "default": ""
     },
     "dribbble": {
       "type": "string",
-      "description": "Dribbble profile URL"
+      "description": "Dribbble profile URL",
+      "default": ""
     },
     "skills": {
       "type": "string",
-      "description": "Comma-separated list of skills"
+      "description": "Comma-separated list of skills",
+      "default": ""
     },
     "skillLevels": {
       "type": "string",
-      "description": "JSON array of {name, level (0-100)} for skill bars"
+      "description": "JSON array of {name, level (0-100)} for skill bars",
+      "default": ""
     },
     "experience": {
       "type": "string",
-      "description": "JSON array of {company, role, period, description}"
+      "description": "JSON array of {company, role, period, description}",
+      "default": ""
     },
     "education": {
       "type": "string",
-      "description": "JSON array of {school, degree, year}"
+      "description": "JSON array of {school, degree, year}",
+      "default": ""
     },
     "projects": {
       "type": "string",
-      "description": "JSON array of {name, description, url, image}"
+      "description": "JSON array of {name, description, url, image}",
+      "default": ""
     },
     "certifications": {
       "type": "string",
-      "description": "Comma-separated list of certifications"
+      "description": "Comma-separated list of certifications",
+      "default": ""
     },
     "languages": {
       "type": "string",
-      "description": "Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)')"
+      "description": "Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)')",
+      "default": ""
     },
     "stats": {
       "type": "string",
-      "description": "JSON array of {label, value} for stats display"
+      "description": "JSON array of {label, value} for stats display",
+      "default": ""
     },
     "cta": {
       "type": "string",
-      "description": "Call-to-action button text"
+      "description": "Call-to-action button text",
+      "default": ""
     },
     "ctaHref": {
       "type": "string",
-      "description": "Call-to-action button link"
+      "description": "Call-to-action button link",
+      "default": ""
     },
     "variant": {
       "type": "string",

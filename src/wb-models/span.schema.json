@@ -19,6 +19,7 @@
       "type": "string",
       "description": "Visual style variant",
       "enum": [
+        "default",
         "red",
         "yellow",
         "green",

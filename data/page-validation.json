@@ -1,0 +1,356 @@
+{
+  "timestamp": "2026-02-15T23:47:28.758Z",
+  "pages": {
+    "total": 16,
+    "pass": 7,
+    "fail": 9,
+    "details": [
+      {
+        "file": "about.html",
+        "status": "FAIL",
+        "issues": [
+          "WARNING: 11 significant inline styles found — use CSS classes instead",
+          "WARNING: 11 total inline style attributes — pages should use layout classes (.page__hero, .page__section, .page__grid)"
+        ]
+      },
+      {
+        "file": "ai-permutation-test.html",
+        "status": "FAIL",
+        "issues": [
+          "WARNING: 7 significant inline styles found — use CSS classes instead",
+          "MISSING: No <h1> found — every page should have a title"
+        ]
+      },
+      {
+        "file": "behaviors.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "components.html",
+        "status": "FAIL",
+        "issues": [
+          "WARNING: 19 significant inline styles found — use CSS classes instead",
+          "WARNING: 32 total inline style attributes — pages should use layout classes (.page__hero, .page__section, .page__grid)"
+        ]
+      },
+      {
+        "file": "contact.html",
+        "status": "FAIL",
+        "issues": [
+          "WARNING: 9 significant inline styles found — use CSS classes instead"
+        ]
+      },
+      {
+        "file": "demos.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "docs.html",
+        "status": "FAIL",
+        "issues": [
+          "WARNING: 19 significant inline styles found — use CSS classes instead",
+          "WARNING: 19 total inline style attributes — pages should use layout classes (.page__hero, .page__section, .page__grid)"
+        ]
+      },
+      {
+        "file": "features.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "hero-variants.html",
+        "status": "FAIL",
+        "issues": [
+          "WARNING: 100 significant inline styles found — use CSS classes instead",
+          "WARNING: 130 total inline style attributes — pages should use layout classes (.page__hero, .page__section, .page__grid)"
+        ]
+      },
+      {
+        "file": "home.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "links.html",
+        "status": "FAIL",
+        "issues": [
+          "WARNING: 10 significant inline styles found — use CSS classes instead",
+          "WARNING: 15 total inline style attributes — pages should use layout classes (.page__hero, .page__section, .page__grid)"
+        ]
+      },
+      {
+        "file": "newbehaviors.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "newpage.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "offshoring.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "services.html",
+        "status": "FAIL",
+        "issues": [
+          "WARNING: 21 significant inline styles found — use CSS classes instead",
+          "WARNING: 21 total inline style attributes — pages should use layout classes (.page__hero, .page__section, .page__grid)"
+        ]
+      },
+      {
+        "file": "themes.html",
+        "status": "FAIL",
+        "issues": [
+          "PROHIBITED: Links to themes.css — server injects this automatically",
+          "WARNING: 121 significant inline styles found — use CSS classes instead",
+          "WARNING: 125 total inline style attributes — pages should use layout classes (.page__hero, .page__section, .page__grid)"
+        ]
+      }
+    ]
+  },
+  "demos": {
+    "total": 34,
+    "pass": 32,
+    "fail": 2,
+    "details": [
+      {
+        "file": "autoinject.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "badge-showcase.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "behaviors-card-code-generated.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "behaviors-card-code.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "behaviors-card.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "behaviors-showcase.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "behaviors.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "button-variants-demo.html",
+        "status": "FAIL",
+        "issues": [
+          "MISSING: No <!DOCTYPE html> — demos must be full standalone documents",
+          "MISSING: No <head> tag — demos must include <head> with meta tags",
+          "MISSING: No charset meta tag — add <meta charset=\"UTF-8\">",
+          "MISSING: No viewport meta tag — add <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+          "MISSING: No <title> tag — demos need a descriptive title",
+          "MISSING: Uses wb-* components but no WB import found — add <script type=\"module\"> with WB.init()"
+        ]
+      },
+      {
+        "file": "button-variants-simple.html",
+        "status": "FAIL",
+        "issues": [
+          "MISSING: No <!DOCTYPE html> — demos must be full standalone documents",
+          "MISSING: No <head> tag — demos must include <head> with meta tags",
+          "MISSING: No charset meta tag — add <meta charset=\"UTF-8\">",
+          "MISSING: No viewport meta tag — add <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+          "MISSING: No <title> tag — demos need a descriptive title"
+        ]
+      },
+      {
+        "file": "cardnotification-showcase.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "cardportfolio-showcase.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "cards-showcase.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "charity-food.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "code.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "frameworks.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "intellisense-check.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "kitchen-sink.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "layout-test.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "legacy-syntax-check.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "mdhtml-pre-debug.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "multi-component-demo-generated.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "pce-test.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "pre-debug.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "progress-showcase.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "registry-browser.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "schema-first-architecture.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "semantics-forms.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "semantics-media.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "semantics-structure.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "semantics-theme.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "stage-light.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "test-harness.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "wb-views-demo.html",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "wizard.html",
+        "status": "PASS",
+        "issues": []
+      }
+    ]
+  },
+  "pageSchemas": {
+    "total": 7,
+    "pass": 6,
+    "fail": 1,
+    "details": [
+      {
+        "file": "badge-showcase.page.json",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "behaviors-card-code.page.json",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "cardnotification-showcase.page.json",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "cardportfolio-showcase.page.json",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "multi-component-demo.composed.page.json",
+        "status": "FAIL",
+        "issues": [
+          "Missing required field: description",
+          "sections[0]: missing or invalid 'demos' array",
+          "sections[1]: missing or invalid 'demos' array",
+          "sections[2]: missing or invalid 'demos' array",
+          "sections[3]: missing 'heading'",
+          "sections[3]: missing or invalid 'demos' array"
+        ]
+      },
+      {
+        "file": "multi-component-demo.page.json",
+        "status": "PASS",
+        "issues": []
+      },
+      {
+        "file": "progress-showcase.page.json",
+        "status": "PASS",
+        "issues": []
+      }
+    ]
+  }
+}

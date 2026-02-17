@@ -17,11 +17,13 @@
   "properties": {
     "title": {
       "type": "string",
-      "description": "Drawer title"
+      "description": "Drawer title",
+      "default": ""
     },
     "content": {
       "type": "string",
-      "description": "Drawer body content"
+      "description": "Drawer body content",
+      "default": ""
     },
     "position": {
       "type": "string",

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Autocomplete Behavior",
+  "type": "object",
+  "description": "Schema for x-autocomplete behavior (autocomplete input)",
+  "properties": {
+    "items": { "type": "array", "items": { "type": "string" }, "description": "Autocomplete options" }
+  },
+  "required": [],
+  "wbBehavior": {
+    "name": "autocomplete",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Provides autocomplete suggestions for text input.",
+    "src": "src/wb-viewmodels/autocomplete.js"
+  }
+}

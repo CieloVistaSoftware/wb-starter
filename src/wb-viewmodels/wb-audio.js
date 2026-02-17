@@ -32,7 +32,7 @@ export class WBAudio extends HTMLElement {
 
   connectedCallback() {
     // v3.0: Read attributes directly (plain attributes, not data-*)
-    // as per WB Framework v3.0 standards
+    // as per WB-Starter v3.0 standards
     
     // If no src provided, use pleasant default demo
     let src = this.getAttribute('src');

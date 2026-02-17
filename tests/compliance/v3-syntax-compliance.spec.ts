@@ -160,19 +160,26 @@ test.describe('v3.0 Syntax Compliance', () => {
 
 test.describe('v3.0 Schema Format Compliance', () => {
   
+  // Helper: skip non-component schemas (definition schemas, base schemas, meta schemas)
+  // Uses schemaType field — "definition" and "base" schemas don't have $view/$methods/$cssAPI
+  function isComponentSchema(file: string, schemasDir: string): boolean {
+    const schema = JSON.parse(fs.readFileSync(path.join(schemasDir, file), 'utf-8'));
+    // Skip schemas with schemaType = "definition" or "base" — these are meta/structural
+    if (schema.schemaType === 'definition' || schema.schemaType === 'base') return false;
+    // Skip if it has a .demo field (demo-only schema)
+    if (schema.demo) return false;
+    return true;
+  }
+
   test('all component schemas have $view section', () => {
     const schemasDir = 'src/wb-models';
     const files = fs.readdirSync(schemasDir).filter(f => f.endsWith('.schema.json'));
     const missing: string[] = [];
     
-    // Skip meta schemas
-    const metaSchemas = ['behavior.schema.json', 'behaviors-showcase.schema.json', 'builder.schema.json', 'views.schema.json', 'card.base.schema.json', 'search-index.schema.json', 'demo.schema.json'];
-    
     for (const file of files) {
-      if (metaSchemas.includes(file)) continue;
-      
+      if (!isComponentSchema(file, schemasDir)) continue;
       const schema = JSON.parse(fs.readFileSync(path.join(schemasDir, file), 'utf-8'));
-      if (!schema.$view && !schema.demo) {
+      if (!schema.$view) {
         missing.push(file);
       }
     }
@@ -185,13 +192,10 @@ test.describe('v3.0 Schema Format Compliance', () => {
     const files = fs.readdirSync(schemasDir).filter(f => f.endsWith('.schema.json'));
     const missing: string[] = [];
     
-    const metaSchemas = ['behavior.schema.json', 'behaviors-showcase.schema.json', 'builder.schema.json', 'views.schema.json', 'card.base.schema.json', 'search-index.schema.json', 'demo.schema.json'];
-    
     for (const file of files) {
-      if (metaSchemas.includes(file)) continue;
-      
+      if (!isComponentSchema(file, schemasDir)) continue;
       const schema = JSON.parse(fs.readFileSync(path.join(schemasDir, file), 'utf-8'));
-      if (!schema.$methods && !schema.demo) {
+      if (!schema.$methods) {
         missing.push(file);
       }
     }
@@ -204,13 +208,10 @@ test.describe('v3.0 Schema Format Compliance', () => {
     const files = fs.readdirSync(schemasDir).filter(f => f.endsWith('.schema.json'));
     const missing: string[] = [];
     
-    const metaSchemas = ['behavior.schema.json', 'behaviors-showcase.schema.json', 'builder.schema.json', 'views.schema.json', 'card.base.schema.json', 'search-index.schema.json'];
-    
     for (const file of files) {
-      if (metaSchemas.includes(file)) continue;
-      
+      if (!isComponentSchema(file, schemasDir)) continue;
       const schema = JSON.parse(fs.readFileSync(path.join(schemasDir, file), 'utf-8'));
-      if (!schema.$cssAPI && !schema.demo) {
+      if (!schema.$cssAPI) {
         missing.push(file);
       }
     }

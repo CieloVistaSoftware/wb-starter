@@ -3,21 +3,22 @@
   "$id": "header.schema.json",
   "title": "Header Semantic Element",
   "description": "Introductory content - titles, subtitles, navigation, logos. Used within article, section, or body.",
-  
   "$inheritance": {
     "extends": "_element.base.schema.json",
     "reason": "Header IS-A element with all base properties"
   },
-  
   "htmlTag": "header",
   "role": "banner (when child of body) or generic",
-  
   "semanticMeaning": {
     "description": "Introductory content for its nearest sectioning content ancestor",
-    "examples": ["Page header", "Article header", "Card header", "Section header"],
+    "examples": [
+      "Page header",
+      "Article header",
+      "Card header",
+      "Section header"
+    ],
     "whenToUse": "Group of introductory or navigational aids"
   },
-  
   "type": "object",
   "properties": {
     "title": {
@@ -43,15 +44,16 @@
       "default": ""
     }
   },
-  
   "required": [],
-  
   "textProperties": {
     "description": "ALL of these are canvas-editable when they have content",
-    "list": ["title", "subtitle", "metadata"],
+    "list": [
+      "title",
+      "subtitle",
+      "metadata"
+    ],
     "rule": "If property has value, element is rendered and editable"
   },
-  
   "structure": {
     "template": "<header>\n  <h3 class=\"wb-*__title\">{{title}}</h3>\n  <p class=\"wb-*__subtitle\">{{subtitle}}</p>\n</header>",
     "conditionalRendering": {
@@ -59,13 +61,25 @@
       "subtitle": "Render p only if subtitle is not empty"
     }
   },
-  
   "accessibility": {
     "requirements": [
       "Header should contain at least one heading element (h1-h6)",
       "Heading level should be appropriate for document outline"
     ]
   },
-  
-  "canContain": ["h1", "h2", "h3", "h4", "h5", "h6", "p", "nav", "img", "figure", "button", "a"]
+  "canContain": [
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "p",
+    "nav",
+    "img",
+    "figure",
+    "button",
+    "a"
+  ],
+  "schemaType": "base"
 }

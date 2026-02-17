@@ -322,10 +322,6 @@ export default class WBSite {
     if (!this.config.navigationMenu.find(n => n.menuItemId === pageId)) {
       pageId = 'home';
     }
-    if (pageId === 'builder') {
-      window.open('builder.html', '_blank');
-      return;
-    }
     if (pageId === 'schema-viewer') {
       window.open('schema-viewer.html', '_blank');
       return;

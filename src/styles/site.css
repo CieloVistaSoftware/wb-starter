@@ -28,7 +28,6 @@
 @import url('./behaviors/toast.css');
 @import url('./behaviors/mdhtml.css');
 @import url('./behaviors/breadcrumb.css');
-@import url('./behaviors/demo.css');
 @import url('./behaviors/code.css');
 @import url('./behaviors/ui-utils.css');
 @import url('./behaviors/details.css');
@@ -36,6 +35,7 @@
 @import url('./behaviors/header.css');
 @import url('./behaviors/notes.css');
 @import url('./behaviors/audio.css');
+@import url('./behaviors/demo.css');
 @import url('./behaviors/notification.css');
 @import url('./behaviors/button.css');
 @import url('./behaviors/input.css');

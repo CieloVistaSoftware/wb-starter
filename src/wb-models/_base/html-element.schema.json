@@ -3,6 +3,7 @@
   "$id": "_base/html-element.schema.json",
   "title": "HTMLElement Base",
   "description": "Base schema for ALL HTML elements. Every component inherits these properties.",
+  "schemaType": "base",
   
   "type": "object",
   

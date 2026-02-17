@@ -8,7 +8,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Behaviors Page Category Navigation', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/pages/behaviors.html');
+
     await page.waitForLoadState('networkidle');
   });
 

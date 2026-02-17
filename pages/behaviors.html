@@ -1,18 +1,13 @@
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     wb-starter - BEHAVIORS SHOWCASE
-     Auto-generated from behaviors.schema.json
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<html>
-
-<head>
-  <link rel="stylesheet" href="../src/styles/pages/behaviors.css">
-</head>
-
-<body>
-  <header id="header">
+<!-- This file has been removed as it is legacy and all references are being removed. -->
+<header id="header">
     <div id="autogen-behaviors-html-0">
-      <h1>⚡ WB Behaviors Showcase</h1>
-      <p class="header-subtitle">170+ behaviors • Interactive demos • Copy-ready code</p>
+      <div class="page__hero">
+  <h1>⚡ WB Behaviors Showcase</h1>
+  <p class="header-subtitle">170+ behaviors • Interactive demos • Copy-ready code</p>
+</div>
+
+<div class="page__section">
+
     </div>
     <wb-themecontrol></wb-themecontrol>
   </header>
@@ -523,28 +518,5 @@
   </footer>
 
 </body>
-</body>
-<script type="module">
-// Minimal WB Behaviors loader for demo buttons
-import * as WB from '../src/wb-viewmodels/index.js';
 
-// Helper to initialize a behavior by name for all matching elements
-async function initBehavior(name, selector) {
-  if (!WB.hasBehavior(name)) return;
-  const fn = await WB.getBehavior(name);
-  document.querySelectorAll(selector).forEach(el => fn(el));
-}
-
-// Initialize button base behavior for all demo buttons
-initBehavior('button', 'button.wb-btn');
-// Button-related behaviors
-initBehavior('ripple', '[x-ripple]');
-initBehavior('toast', '[x-toast]');
-initBehavior('tooltip', '[x-tooltip]');
-initBehavior('copy', '[x-copy]');
-// Card notifications
-initBehavior('cardnotification', 'wb-cardnotification');
-// Add more as needed for other button behaviors
-</script>
-
-</html>
+</div>

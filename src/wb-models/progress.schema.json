@@ -29,7 +29,8 @@
     },
     "label": {
       "type": "string",
-      "description": "Progress label text"
+      "description": "Progress label text",
+      "default": ""
     },
     "showValue": {
       "type": "boolean",
@@ -201,14 +202,14 @@
   "test": {
     "functional": true,
     "setup": [
-      "<progress value=\"50\" max=\"100\">50%</progress>",
-      "<progress value=\"25\" max=\"100\" data-variant=\"default\">25%</progress>",
-      "<progress value=\"50\" max=\"100\" data-variant=\"primary\">50%</progress>",
-      "<progress value=\"75\" max=\"100\" data-variant=\"success\">75%</progress>",
-      "<progress value=\"30\" max=\"100\" data-size=\"xs\">30%</progress>",
-      "<progress value=\"40\" max=\"100\" data-size=\"sm\">40%</progress>",
-      "<progress value=\"60\" max=\"100\" data-size=\"md\">60%</progress>",
-      "<progress value=\"80\" max=\"100\" data-show-label>80%</progress>"
+      "<wb-progress value=\"50\" max=\"100\"></wb-progress>",
+      "<wb-progress value=\"25\" max=\"100\" variant=\"default\"></wb-progress>",
+      "<wb-progress value=\"50\" max=\"100\" variant=\"primary\"></wb-progress>",
+      "<wb-progress value=\"75\" max=\"100\" variant=\"success\"></wb-progress>",
+      "<wb-progress value=\"30\" max=\"100\" size=\"xs\"></wb-progress>",
+      "<wb-progress value=\"40\" max=\"100\" size=\"sm\"></wb-progress>",
+      "<wb-progress value=\"60\" max=\"100\" size=\"md\"></wb-progress>",
+      "<wb-progress value=\"80\" max=\"100\" show-label></wb-progress>"
     ],
     "matrix": {
       "combinations": [

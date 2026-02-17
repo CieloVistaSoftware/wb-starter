@@ -16,6 +16,7 @@
 - [$cssAPI (CSS Custom Properties)](#cssapi-css-custom-properties)
 - [Public vs Private Parts](#public-vs-private-parts)
 - [Complete Example](#complete-example)
+- [Test Configuration](#test-configuration)
 - [Migration Guide](#migration-guide)
 
 ---
@@ -127,14 +128,24 @@ The `properties` section defines **data inputs** - the attributes users provide.
 
 ### Property Fields
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `type` | string | `"string"`, `"boolean"`, `"number"`, `"array"`, `"object"` |
-| `description` | string | Human-readable description (for docs/IDE) |
-| `default` | any | Default value if not provided |
-| `enum` | array | Valid values (for dropdowns) |
-| `appliesClass` | string | CSS class applied when truthy |
-| `required` | boolean | Is this attribute required? |
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `type` | string | ✅ | `"string"`, `"boolean"`, `"number"`, `"integer"`, `"array"`, `"object"` |
+| `description` | string | ✅ | Human-readable description (for docs/IDE) |
+| `default` | any | ✅ | Default value when attribute is absent. Every property MUST have a default. |
+| `enum` | array | 🔶 | Valid values (for dropdowns). Defines the complete set of allowed values. |
+| `minimum` | number | 🔶 | Minimum allowed value (for `number`/`integer` types) |
+| `maximum` | number | 🔶 | Maximum allowed value (for `number`/`integer` types) |
+| `appliesClass` | string | 🔶 | CSS class applied when truthy |
+| `required` | boolean | 🔶 | Is this attribute required? |
+
+### Property Constraint Rules
+
+1. **`default` is mandatory.** Every property must declare a `default`. A property with no default is an invalid schema — the engine cannot determine baseline behavior without it.
+2. **`enum` defines the universe.** If a property has `enum`, those are the ONLY valid values. No other value should be accepted.
+3. **`boolean` implies `[true, false]`.** Any `type: "boolean"` property has exactly two valid states.
+4. **`minimum` + `maximum` define the range.** For `number`/`integer` types, these define the valid boundaries. If either is missing, the range is open on that side.
+5. **No constraints = invalid.** Every property must have at least `type` + `default`. Properties with no type information are schema errors.
 
 ### Naming Rules
 
@@ -440,15 +451,18 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
     },
     "title": {
       "type": "string",
-      "description": "Alert title"
+      "description": "Alert title",
+      "default": ""
     },
     "message": {
       "type": "string",
-      "description": "Alert message content"
+      "description": "Alert message content",
+      "default": ""
     },
     "icon": {
       "type": "string",
-      "description": "Icon (emoji or icon name)"
+      "description": "Icon (emoji or icon name)",
+      "default": ""
     },
     "dismissible": {
       "type": "boolean",
@@ -578,6 +592,53 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
   }
 }
 ```
+
+---
+
+## Test Configuration
+
+The `test` section defines how the component is tested, including setup HTML and the permutation matrix.
+
+```json
+{
+  "test": {
+    "setup": [
+      "<wb-alert message=\"Test alert\"></wb-alert>"
+    ],
+    "matrix": {
+      "combinations": [
+        { "variant": "info", "message": "Info message" },
+        { "variant": "success", "message": "Success!" },
+        { "variant": "warning", "title": "Warning", "message": "Be careful" },
+        { "variant": "error", "message": "Error", "dismissible": true }
+      ]
+    }
+  }
+}
+```
+
+### Test Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `setup` | array | HTML strings used to instantiate the component for testing |
+| `matrix.combinations` | array | Array of attribute objects — each is one test permutation |
+
+### Test Coverage Requirements
+
+`test.matrix.combinations` is the **single source of truth** for what permutations are tested. The permutation engine validates completeness by comparing combinations against property constraints:
+
+| Property Type | Expected Boundary Coverage |
+|---------------|---------------------------|
+| `enum` | Every enum value must appear in at least one combination |
+| `boolean` | Both `true` and `false` must appear across combinations |
+| `number`/`integer` with `minimum` + `maximum` | `minimum`, `default`, midpoint, and `maximum` must be covered |
+| `number`/`integer` with only `minimum` or `maximum` | The defined bound + `default` must be covered |
+| `string` (no enum) | `default` + at least one non-default value |
+
+**Midpoint calculation:** For a property with `minimum: 0`, `maximum: 100`, `default: 50` — the midpoint is `(minimum + maximum) / 2 = 50`. If midpoint equals default, no extra test is needed. If they differ, both must be covered.
+
+**Coverage gaps** are reported by the permutation engine, not silently ignored. Missing boundary coverage is a test deficiency, not a schema error.
 
 ---
 

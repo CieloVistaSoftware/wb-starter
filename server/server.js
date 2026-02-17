@@ -233,11 +233,6 @@ if (fs.existsSync(pagesDir)) {
   });
 }
 
-// Builder component - special route (opens in new tab)
-app.get('/builder.html', (req, res) => {
-  res.sendFile(path.join(rootDir, 'public', 'builder.html'));
-});
-
 // Fallback - serve index.html for SPA routes (but NOT for static assets)
 app.use((req, res, next) => {
   // Don't intercept requests for static files (js, css, json, images, etc.)

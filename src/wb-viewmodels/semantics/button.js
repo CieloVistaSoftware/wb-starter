@@ -1,10 +1,14 @@
 /**
- * Button - Self-contained semantic enhancement for <button> and <wb-button>
+ * Button - Semantic enhancement for <button> and <wb-button>
  * 
- * SELF-CONTAINED: Injects its own CSS if not already present.
- * Works in iframes, shadow roots, or any document without external stylesheets.
+ * For <wb-button>: CSS targets the tag and attributes directly.
+ *   No inner <button> created. No classes added.
+ *   <wb-button variant="primary" size="lg">Click</wb-button>
+ *
+ * For native <button>: Adds .wb-button class for opt-in styling.
+ *   Only when auto-injected on plain buttons without existing styles.
+ *
  * Predefined icon library via SVG.
- * Reads plain attributes AND data-* attributes.
  */
 
 // --- Predefined Icon Map (inline SVG, 1em square) ---
@@ -34,10 +38,54 @@ const ICONS = {
 // --- Self-contained CSS (injected once per document) ---
 const STYLE_ID = 'wb-button-styles';
 const BUTTON_CSS = `
-/* wb-button self-contained styles */
-wb-button { display: inline-block; }
-.wb-button,
-button-tooltip {
+/* wb-button: tag + attribute selectors — no JS classes needed */
+wb-button {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.5rem; border: 1px solid transparent; border-radius: var(--radius-md, 6px);
+  font-weight: 500; cursor: pointer; transition: all 0.2s ease;
+  line-height: 1.5; text-decoration: none; user-select: none;
+  font-family: inherit; font-size: inherit; color: inherit;
+  background: var(--bg-secondary, #2a2a2a); padding: 0.5rem 1rem;
+}
+wb-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
+wb-button[disabled] { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+
+/* Sizes */
+wb-button[size="xs"] { padding: 0.125rem 0.5rem; font-size: 0.75rem; }
+wb-button[size="sm"] { padding: 0.25rem 0.75rem; font-size: 0.875rem; }
+wb-button[size="md"] { padding: 0.5rem 1rem; font-size: 1rem; }
+wb-button[size="lg"] { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
+wb-button[size="xl"] { padding: 1rem 2rem; font-size: 1.25rem; }
+
+/* Variants */
+wb-button[variant="primary"] { background: var(--primary, #6366f1); color: #fff; }
+wb-button[variant="primary"]:hover { filter: brightness(0.85); }
+wb-button[variant="secondary"] { background: var(--secondary, #64748b); color: #fff; }
+wb-button[variant="secondary"]:hover { filter: brightness(0.85); }
+wb-button[variant="success"] { background: var(--success-color, #22c55e); color: #fff; }
+wb-button[variant="success"]:hover { filter: brightness(0.85); }
+wb-button[variant="danger"], wb-button[variant="error"] { background: var(--danger-color, #ef4444); color: #fff; }
+wb-button[variant="danger"]:hover, wb-button[variant="error"]:hover { filter: brightness(0.85); }
+wb-button[variant="warning"] { background: var(--warning-color, #f59e0b); color: #fff; }
+wb-button[variant="warning"]:hover { filter: brightness(0.85); }
+wb-button[variant="info"] { background: var(--info-color, #3b82f6); color: #fff; }
+wb-button[variant="info"]:hover { filter: brightness(0.85); }
+wb-button[variant="ghost"] { background: transparent; color: var(--text-primary, #e5e5e5); border-color: var(--border-color, #404040); }
+wb-button[variant="ghost"]:hover { background: var(--bg-tertiary, #333); border-color: var(--text-secondary, #aaa); }
+wb-button[variant="link"] { background: transparent; color: var(--primary, #6366f1); padding: 0; border: none; }
+wb-button[variant="link"]:hover { text-decoration: underline; }
+
+/* Loading state */
+wb-button[loading] { cursor: not-allowed; opacity: 0.7; }
+
+/* Icon inside button */
+wb-button .wb-button__icon { display: inline-flex; align-items: center; flex-shrink: 0; }
+wb-button .wb-button__icon svg { width: 1em; height: 1em; }
+wb-button .wb-button__spinner { display: inline-block; animation: wb-btn-spin 1s linear infinite; }
+@keyframes wb-btn-spin { to { transform: rotate(360deg); } }
+
+/* Native <button> opt-in styling (for auto-injected plain buttons) */
+.wb-button {
   display: inline-flex; align-items: center; justify-content: center;
   gap: 0.5rem; border: 1px solid transparent; border-radius: var(--radius-md, 6px);
   font-weight: 500; cursor: pointer; transition: all 0.2s ease;
@@ -47,52 +95,16 @@ button-tooltip {
 }
 .wb-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
 .wb-button:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
-
-/* Sizes */
-.wb-button--xs { padding: 0.125rem 0.5rem; font-size: 0.75rem; }
-.wb-button--sm { padding: 0.25rem 0.75rem; font-size: 0.875rem; }
-.wb-button--md { padding: 0.5rem 1rem; font-size: 1rem; }
-.wb-button--lg { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
-.wb-button--xl { padding: 1rem 2rem; font-size: 1.25rem; }
-
-/* Variants with hardcoded fallback colors */
-.wb-button--primary { background: var(--primary, #6366f1); color: #fff; }
-.wb-button--primary:hover { filter: brightness(0.85); }
-.wb-button--secondary { background: var(--secondary, #64748b); color: #fff; }
-.wb-button--secondary:hover { filter: brightness(0.85); }
-.wb-button--success { background: var(--success-color, #22c55e); color: #fff; }
-.wb-button--success:hover { filter: brightness(0.85); }
-.wb-button--danger, .wb-button--error { background: var(--danger-color, #ef4444); color: #fff; }
-.wb-button--danger:hover, .wb-button--error:hover { filter: brightness(0.85); }
-.wb-button--warning { background: var(--warning-color, #f59e0b); color: #fff; }
-.wb-button--warning:hover { filter: brightness(0.85); }
-.wb-button--info { background: var(--info-color, #3b82f6); color: #fff; }
-.wb-button--info:hover { filter: brightness(0.85); }
-.wb-button--ghost { background: transparent; color: var(--text-primary, #e5e5e5); border-color: var(--border-color, #404040); }
-.wb-button--ghost:hover { background: var(--bg-tertiary, #333); border-color: var(--text-secondary, #aaa); }
-.wb-button--link { background: transparent; color: var(--primary, #6366f1); padding: 0; border: none; }
-.wb-button--link:hover { text-decoration: underline; }
-
-/* Icon */
-.wb-button__icon { display: inline-flex; align-items: center; flex-shrink: 0; }
-.wb-button__icon svg { width: 1em; height: 1em; }
-
-/* Spinner */
-.wb-button__spinner { display: inline-block; animation: wb-btn-spin 1s linear infinite; }
-@keyframes wb-btn-spin { to { transform: rotate(360deg); } }
-.wb-button--loading { cursor: not-allowed; opacity: 0.7; }
-.wb-button--disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 `;
 
 function ensureStyles(doc) {
   if (doc.getElementById(STYLE_ID)) return;
-  var style = doc.createElement('style');
+  const style = doc.createElement('style');
   style.id = STYLE_ID;
   style.textContent = BUTTON_CSS;
   (doc.head || doc.documentElement).appendChild(style);
 }
 
-// --- Resolve icon: known name → SVG, or pass through as text/emoji ---
 function resolveIcon(name) {
   if (!name) return '';
   return ICONS[name.toLowerCase()] || name;
@@ -100,105 +112,68 @@ function resolveIcon(name) {
 
 // --- Main behavior ---
 export function button(element, options = {}) {
-  // Inject CSS into this document if missing
   ensureStyles(element.ownerDocument);
 
-  const isCustom = element.tagName !== "BUTTON";
-  let btnEl = element;
+  const isCustom = element.tagName === 'WB-BUTTON';
 
   if (isCustom) {
-    var label = element.getAttribute('label') || element.textContent.trim() || '';
-    element.innerHTML = '';
-    btnEl = document.createElement('button');
-    btnEl.type = 'button';
-    if (label) btnEl.textContent = label;
-    element.appendChild(btnEl);
+    // <wb-button> — CSS targets the tag directly. No inner button, no classes.
+    // JS only handles icon injection and loading state.
+    const icon = options.icon || element.getAttribute('icon') || '';
+    const iconPosition = options.iconPosition || element.getAttribute('icon-position') || 'start';
+    const loading = options.loading ?? element.hasAttribute('loading');
+
+    if (loading) {
+      const spinner = document.createElement('span');
+      spinner.className = 'wb-button__spinner';
+      spinner.textContent = '\u23f3';
+      if (iconPosition === 'start' || iconPosition === 'left') {
+        element.insertBefore(spinner, element.firstChild);
+      } else {
+        element.appendChild(spinner);
+      }
+    }
+
+    if (icon && !loading) {
+      const iconEl = document.createElement('span');
+      iconEl.className = 'wb-button__icon';
+      const resolved = resolveIcon(icon);
+      if (resolved.startsWith('<svg')) {
+        iconEl.innerHTML = resolved;
+      } else {
+        iconEl.textContent = resolved;
+      }
+      if (iconPosition === 'start' || iconPosition === 'left') {
+        element.insertBefore(iconEl, element.firstChild);
+      } else {
+        element.appendChild(iconEl);
+      }
+    }
+
+    // Make it focusable and clickable
+    if (!element.hasAttribute('tabindex')) element.setAttribute('tabindex', '0');
+    element.setAttribute('role', 'button');
+
+    return () => {};
   }
 
-  // Read plain attributes first, fall back to data-*
-  function attr(name) {
-    return element.getAttribute(name) ?? element.dataset[name.replace(/-([a-z])/g, (_, c) => c.toUpperCase())] ?? null;
-  }
-
+  // Native <button> — add .wb-button class for styling
   // Skip if already styled by another system
-  var hasExistingStyle = btnEl.className.match(/wb-btn--|wb-button--/);
-  var hasOtherBehaviors = Array.from(btnEl.attributes).some(
-    a => a.name.startsWith("x-") && a.name !== "x-behavior" && a.name !== "x-eager" && a.name !== "x-hydrated"
+  const hasExistingStyle = element.className.match(/wb-btn--|wb-button--/);
+  const hasOtherBehaviors = Array.from(element.attributes).some(
+    a => a.name.startsWith('x-') && a.name !== 'x-behavior' && a.name !== 'x-eager' && a.name !== 'x-hydrated'
   );
 
-  btnEl.classList.add("wb-button");
-  if (isCustom) element.classList.add("wb-button");
-
   if (hasExistingStyle || hasOtherBehaviors) {
-    btnEl.classList.add("wb-ready");
-    if (isCustom) element.classList.add("wb-ready");
-    return function() { btnEl.classList.remove("wb-button"); };
+    return () => {};
   }
 
-  var config = {
-    variant: options.variant || attr('variant') || null,
-    size: options.size || attr('size') || null,
-    icon: options.icon || attr('icon') || "",
-    iconPosition: options.iconPosition || attr('icon-position') || element.dataset.iconPosition || "start",
-    loading: options.loading ?? (element.hasAttribute('loading') || element.hasAttribute("data-loading")),
-    disabled: options.disabled ?? (element.hasAttribute('disabled') || element.hasAttribute("data-disabled")),
-    label: options.label || attr('label') || ''
-  };
+  element.classList.add('wb-button');
 
-  if (config.variant) btnEl.classList.add("wb-button--" + config.variant);
-  if (config.size && config.size !== "md") btnEl.classList.add("wb-button--" + config.size);
-
-  // Loading
-  var spinner = null;
-  if (config.loading) {
-    btnEl.disabled = true;
-    btnEl.classList.add("wb-button--loading");
-    spinner = document.createElement("span");
-    spinner.className = "wb-button__spinner";
-    spinner.textContent = "\u23f3";
-    if (config.iconPosition === "left" || config.iconPosition === "start") {
-      btnEl.insertBefore(spinner, btnEl.firstChild);
-    } else {
-      btnEl.appendChild(spinner);
-    }
-  }
-
-  // Icon — resolve named icons to SVG
-  var iconEl = null;
-  if (config.icon && !config.loading) {
-    iconEl = document.createElement("span");
-    iconEl.className = "wb-button__icon";
-    var resolved = resolveIcon(config.icon);
-    if (resolved.startsWith('<svg')) {
-      iconEl.innerHTML = resolved;
-    } else {
-      iconEl.textContent = resolved;
-    }
-    if (config.iconPosition === "left" || config.iconPosition === "start") {
-      btnEl.insertBefore(iconEl, btnEl.firstChild);
-    } else {
-      btnEl.appendChild(iconEl);
-    }
-  }
-
-  // Disabled
-  if (config.disabled) {
-    btnEl.disabled = true;
-    btnEl.classList.add("wb-button--disabled");
-  }
-
-  btnEl.classList.add("wb-ready");
-  if (isCustom) element.classList.add("wb-ready");
-
-  return function() {
-    btnEl.classList.remove("wb-button", "wb-button--loading", "wb-button--disabled");
-    if (config.variant) btnEl.classList.remove("wb-button--" + config.variant);
-    if (config.size) btnEl.classList.remove("wb-button--" + config.size);
-    if (spinner) spinner.remove();
-    if (iconEl) iconEl.remove();
+  return () => {
+    element.classList.remove('wb-button');
   };
 }
 
-// Expose icon list for wizard/other tools
 export { ICONS };
 export default { button };

@@ -1,7 +1,7 @@
 /**
  * Behaviors Showcase Tests
  * ========================
- * Tests for demos/behaviors.html
+ * Tests for demos/behaviors-showcase.html
  * Tests all behavior demos are working correctly
  */
 
@@ -135,7 +135,7 @@ test.describe('Behaviors Showcase Page', () => {
       
       for (const dropdown of dropdowns) {
         // Check if data-items is set
-        const hasItems = await dropdown.getAttribute('data-items');
+        const hasItems = await dropdown.getAttribute('items');
         
         // Check if proper child structure exists
         const hasTrigger = await dropdown.locator('.wb-dropdown-trigger, .wb-dropdown__trigger').count() > 0;
@@ -150,7 +150,7 @@ test.describe('Behaviors Showcase Page', () => {
           console.log('Invalid dropdown structure:', html.substring(0, 200));
         }
         
-        expect(isValid, 'Dropdown must have data-items OR trigger+menu children').toBe(true);
+        expect(isValid, 'Dropdown must have items OR trigger+menu children').toBe(true);
       }
     });
 
@@ -173,23 +173,23 @@ test.describe('Behaviors Showcase Page', () => {
   });
 
   test.describe('Tabs Behavior', () => {
-    test('tabs children should use data-tab-title attribute', async ({ page }) => {
+    test('tabs children should use tab-title attribute', async ({ page }) => {
       const tabContainers = await page.locator('wb-tabs').all();
       
       for (const tabs of tabContainers) {
-        const children = await tabs.locator('> div[data-tab-title], > div[data-tab]').all();
+        const children = await tabs.locator('> div[tab-title], > div[tab]').all();
         
         // Check each child has the correct attribute
         for (const child of children) {
-          const hasTabTitle = await child.getAttribute('data-tab-title');
-          const hasTab = await child.getAttribute('data-tab');
+          const hasTabTitle = await child.getAttribute('tab-title');
+          const hasTab = await child.getAttribute('tab');
           
           // Prefer data-tab-title per schema, but data-tab might work
           if (!hasTabTitle && hasTab) {
-            console.warn('Tab uses data-tab instead of data-tab-title (non-standard)');
+            console.warn('Tab uses tab instead of tab-title (non-standard)');
           }
           
-          expect(hasTabTitle || hasTab, 'Tab panel must have data-tab-title or data-tab').toBeTruthy();
+          expect(hasTabTitle || hasTab, 'Tab panel must have tab-title or tab').toBeTruthy();
         }
       }
     });
@@ -303,7 +303,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('toggle toggles class on target', async ({ page }) => {
-      const toggleButton = page.locator('wb-toggle[data-target="#toggle-box"]');
+      const toggleButton = page.locator('wb-toggle[target="#toggle-box"]');
       const target = page.locator('#toggle-box');
       
       // Initial state
@@ -439,7 +439,7 @@ test.describe('Behaviors Showcase Page', () => {
 
   test.describe('Visual Regression Checks', () => {
     test('buttons have consistent styling', async ({ page }) => {
-      const buttons = await page.locator('button[data-variant]').all();
+      const buttons = await page.locator('button[variant]').all();
       
       for (const button of buttons) {
         // Buttons with data-variant should have WB styling
@@ -451,7 +451,7 @@ test.describe('Behaviors Showcase Page', () => {
         });
         
         if (!hasStyle) {
-          const variant = await button.getAttribute('data-variant');
+          const variant = await button.getAttribute('variant');
           console.log(`Button with variant="${variant}" may be unstyled`);
         }
       }

@@ -3,26 +3,31 @@
   "$id": "container.schema.json",
   "title": "Container Semantic Element",
   "description": "Layout container for child elements. Supports row, column, and grid layouts.",
-  
   "$inheritance": {
     "extends": "_element.base.schema.json",
     "reason": "Container IS-A element with all base properties"
   },
-  
   "htmlTag": "div",
   "role": "group",
-  
   "semanticMeaning": {
     "description": "A generic container for grouping and laying out child elements",
-    "examples": ["Card grid", "Form layout", "Button group", "Flexbox container", "CSS Grid"],
+    "examples": [
+      "Card grid",
+      "Form layout",
+      "Button group",
+      "Flexbox container",
+      "CSS Grid"
+    ],
     "whenToUse": "When you need to control the layout of child elements"
   },
-  
   "type": "object",
   "properties": {
     "direction": {
       "type": "string",
-      "enum": ["column", "row"],
+      "enum": [
+        "column",
+        "row"
+      ],
       "default": "column",
       "description": "Primary flow direction - column (top-down) or row (left-right)",
       "canvasEditable": false
@@ -55,14 +60,27 @@
     },
     "align": {
       "type": "string",
-      "enum": ["start", "center", "end", "stretch", "baseline"],
+      "enum": [
+        "start",
+        "center",
+        "end",
+        "stretch",
+        "baseline"
+      ],
       "default": "stretch",
       "description": "Cross-axis alignment (align-items)",
       "canvasEditable": false
     },
     "justify": {
       "type": "string",
-      "enum": ["start", "center", "end", "space-between", "space-around", "space-evenly"],
+      "enum": [
+        "start",
+        "center",
+        "end",
+        "space-between",
+        "space-around",
+        "space-evenly"
+      ],
       "default": "start",
       "description": "Main-axis alignment (justify-content)",
       "canvasEditable": false
@@ -75,14 +93,22 @@
     },
     "childWidth": {
       "type": "string",
-      "enum": ["auto", "equal", "fit"],
+      "enum": [
+        "auto",
+        "equal",
+        "fit"
+      ],
       "default": "auto",
       "description": "How children are sized: auto (content), equal (1fr), fit (available space)",
       "canvasEditable": false
     },
     "childHeight": {
       "type": "string",
-      "enum": ["auto", "equal", "fit"],
+      "enum": [
+        "auto",
+        "equal",
+        "fit"
+      ],
       "default": "auto",
       "description": "How children are sized vertically",
       "canvasEditable": false
@@ -100,17 +126,35 @@
       "canvasEditable": false
     }
   },
-  
   "layoutModes": {
     "description": "How columns + direction combine to create layouts",
     "table": [
-      { "columns": 1, "direction": "column", "result": "Stack (vertical list)", "css": "display: flex; flex-direction: column" },
-      { "columns": 1, "direction": "row", "result": "Row (horizontal list)", "css": "display: flex; flex-direction: row" },
-      { "columns": "2+", "direction": "column", "result": "Grid, fills columns first", "css": "display: grid; grid-template-columns: repeat(N, 1fr)" },
-      { "columns": "2+", "direction": "row", "result": "Grid, fills rows first", "css": "display: grid; grid-auto-flow: row" }
+      {
+        "columns": 1,
+        "direction": "column",
+        "result": "Stack (vertical list)",
+        "css": "display: flex; flex-direction: column"
+      },
+      {
+        "columns": 1,
+        "direction": "row",
+        "result": "Row (horizontal list)",
+        "css": "display: flex; flex-direction: row"
+      },
+      {
+        "columns": "2+",
+        "direction": "column",
+        "result": "Grid, fills columns first",
+        "css": "display: grid; grid-template-columns: repeat(N, 1fr)"
+      },
+      {
+        "columns": "2+",
+        "direction": "row",
+        "result": "Grid, fills rows first",
+        "css": "display: grid; grid-auto-flow: row"
+      }
     ]
   },
-  
   "structure": {
     "template": "<div class=\"wb-container\" style=\"{{computedStyles}}\">\n  {{children}}\n</div>",
     "computedStyles": {
@@ -119,49 +163,95 @@
       "columnsN": "display: grid; grid-template-columns: repeat({{columns}}, 1fr); gap: {{gap}}; align-items: {{align}}; justify-content: {{justify}};"
     }
   },
-  
   "containerBehavior": {
     "acceptsChildren": true,
     "childTypes": "any",
     "dropZoneSelector": "[data-wb='container'], .wb-container",
     "visualIndicator": "Show grid lines when dragging over"
   },
-  
   "builderConfig": {
     "propertyPanel": {
       "groups": [
         {
           "name": "Layout",
-          "properties": ["direction", "columns", "gap"]
+          "properties": [
+            "direction",
+            "columns",
+            "gap"
+          ]
         },
         {
-          "name": "Alignment", 
-          "properties": ["align", "justify", "wrap"]
+          "name": "Alignment",
+          "properties": [
+            "align",
+            "justify",
+            "wrap"
+          ]
         },
         {
           "name": "Child Sizing",
-          "properties": ["childWidth", "childHeight", "minChildWidth", "maxChildWidth"]
+          "properties": [
+            "childWidth",
+            "childHeight",
+            "minChildWidth",
+            "maxChildWidth"
+          ]
         },
         {
           "name": "Spacing",
-          "properties": ["padding", "rows"]
+          "properties": [
+            "padding",
+            "rows"
+          ]
         }
       ]
     }
   },
-  
   "presetConfigurations": {
     "description": "Named presets that are shortcuts for common layouts",
-    "stack": { "columns": 1, "direction": "column", "gap": "1rem" },
-    "row": { "columns": 1, "direction": "row", "gap": "1rem" },
-    "grid2": { "columns": 2, "gap": "1rem" },
-    "grid3": { "columns": 3, "gap": "1rem" },
-    "grid4": { "columns": 4, "gap": "1rem" },
-    "centered": { "columns": 1, "direction": "column", "align": "center", "justify": "center" }
+    "stack": {
+      "columns": 1,
+      "direction": "column",
+      "gap": "1rem"
+    },
+    "row": {
+      "columns": 1,
+      "direction": "row",
+      "gap": "1rem"
+    },
+    "grid2": {
+      "columns": 2,
+      "gap": "1rem"
+    },
+    "grid3": {
+      "columns": 3,
+      "gap": "1rem"
+    },
+    "grid4": {
+      "columns": 4,
+      "gap": "1rem"
+    },
+    "centered": {
+      "columns": 1,
+      "direction": "column",
+      "align": "center",
+      "justify": "center"
+    }
   },
-  
   "wbComponents": {
     "description": "WB components that extend container",
-    "list": ["container", "flex", "stack", "grid", "group", "form", "fieldset", "modal", "drawer", "sidebar"]
-  }
+    "list": [
+      "container",
+      "flex",
+      "stack",
+      "grid",
+      "group",
+      "form",
+      "fieldset",
+      "modal",
+      "drawer",
+      "sidebar"
+    ]
+  },
+  "schemaType": "base"
 }

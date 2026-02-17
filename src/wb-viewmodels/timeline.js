@@ -16,7 +16,6 @@ export function timeline(element, options = {}) {
   // Set items on element for template binding
   element.items = items;
 
-  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-timeline');
   };

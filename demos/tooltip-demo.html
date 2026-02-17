@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tooltip Button Showcase</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>Tooltip Button Showcase</h1>
+  <p>This demo shows <code>x-tooltip</code> on <code>&lt;wb-button&gt;</code> in all positions.<br>
+    <strong>Schema:</strong> <a href="../src/wb-models/tooltip.schema.json" target="_blank">tooltip.schema.json</a> |
+    <strong>Demo Schema:</strong> <a href="../src/wb-models/tooltip-demo.schema.json" target="_blank">tooltip-demo.schema.json</a> |
+    <strong>Test:</strong> <a href="../tests/behaviors/tooltip-demo.spec.ts" target="_blank">tooltip-demo.spec.ts</a> |
+    <strong>Doc:</strong> <a href="../docs/behaviors/tooltip.md" target="_blank">tooltip.md</a>
+  </p>
+  <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+    <wb-button id="btn-top" x-tooltip="Tooltip text" position="top" class="wb-tooltip-trigger" aria-describedby="wb-tooltip-31meeb932" tabindex="0" role="button">Top</wb-button>
+    <wb-button id="btn-bottom" x-tooltip="Tooltip text" position="bottom" class="wb-tooltip-trigger" aria-describedby="wb-tooltip-7fdk7lbe4" tabindex="0" role="button">Bottom</wb-button>
+    <wb-button id="btn-left" x-tooltip="Tooltip text" position="left" class="wb-tooltip-trigger" aria-describedby="wb-tooltip-h3x4mhv2e" tabindex="0" role="button">Left</wb-button>
+    <wb-button id="btn-right" x-tooltip="Tooltip text" position="right" class="wb-tooltip-trigger" aria-describedby="wb-tooltip-4d62ypq51" tabindex="0" role="button">Right</wb-button>
+  </div>
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    // In-browser schema validation (Ajv)
+    const schemaUrl = '../src/wb-models/tooltip-demo.schema.json';
+    (async () => {
+      const AjvModule = await import('https://cdn.jsdelivr.net/npm/ajv@8.12.0/dist/ajv.min.js');
+      const Ajv = AjvModule.default || AjvModule;
+      const ajv = new Ajv();
+      const schema = await fetch(schemaUrl).then(r => r.json());
+      const data = {
+        components: [
+          { type: 'wb-button', id: 'btn-top', attributes: { xTooltip: 'Tooltip text', position: 'top' }, text: 'Top' },
+          { type: 'wb-button', id: 'btn-bottom', attributes: { xTooltip: 'Tooltip text', position: 'bottom' }, text: 'Bottom' },
+          { type: 'wb-button', id: 'btn-left', attributes: { xTooltip: 'Tooltip text', position: 'left' }, text: 'Left' },
+          { type: 'wb-button', id: 'btn-right', attributes: { xTooltip: 'Tooltip text', position: 'right' }, text: 'Right' }
+        ]
+      };
+      const valid = ajv.validate(schema, data);
+      const out = document.createElement('pre');
+      out.style.background = '#222';
+      out.style.color = '#fff';
+      out.style.padding = '0.5em';
+      out.textContent = valid ? 'Schema validation: PASS' : 'Schema validation: FAIL\n' + JSON.stringify(ajv.errors, null, 2);
+      document.body.appendChild(out);
+    })();
+  </script>
+</body>
+</html>

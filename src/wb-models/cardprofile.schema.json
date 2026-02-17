@@ -34,11 +34,13 @@
     "bio": {
       "type": "string",
       "description": "Short biography",
-      "inputType": "textarea"
+      "inputType": "textarea",
+      "default": ""
     },
     "cover": {
       "type": "string",
-      "description": "Cover/banner image URL"
+      "description": "Cover/banner image URL",
+      "default": ""
     },
     "size": {
       "type": "string",
@@ -155,13 +157,16 @@
   },
   "$cssAPI": {
     "--bg-secondary": {
-      "description": "Avatar border color"
+      "description": "Avatar border color",
+      "default": "inherit"
     },
     "--primary": {
-      "description": "Role text color"
+      "description": "Role text color",
+      "default": "inherit"
     },
     "--text-secondary": {
-      "description": "Bio text color"
+      "description": "Bio text color",
+      "default": "inherit"
     }
   },
   "test": {

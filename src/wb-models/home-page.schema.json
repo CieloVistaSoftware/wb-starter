@@ -37,7 +37,8 @@
             }
           }
         }
-      }
+      },
+      "default": {}
     },
     "stats": {
       "type": "array",
@@ -87,7 +88,8 @@
             }
           }
         }
-      }
+      },
+      "default": []
     },
     "demo": {
       "type": "object",
@@ -153,7 +155,8 @@
             }
           }
         }
-      }
+      },
+      "default": {}
     },
     "features": {
       "type": "array",
@@ -226,7 +229,8 @@
             }
           }
         }
-      }
+      },
+      "default": []
     }
   },
   "compliance": {

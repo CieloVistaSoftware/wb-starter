@@ -69,8 +69,6 @@ export function range(element, options = {}) {
     element._updateValue = updateValue;
   }
 
-  element.classList.add('wb-ready');
-
   return () => {
     element.classList.remove('wb-range');
     if (wrapper && wrapper.parentNode) {

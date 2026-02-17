@@ -1,17 +1,25 @@
-<div class="wb-hero" style="min-height: 40vh;">
+<link rel="stylesheet" href="../src/styles/pages/links.css">
+
+<div class="wb-hero">
   <div class="wb-hero__content">
-    <h1>Interesting <span class="wb-gradient-text">Links</span></h1>
-    <p class="wb-hero__subtitle">A curated list of interesting resources.</p>
+    <div class="page__hero">
+  <h1>Interesting <span class="wb-gradient-text">Links</span></h1>
+  <p class="wb-hero__subtitle">A curated list of interesting resources.</p>
+</div>
+
+<div class="page__section">
+  <h2>Content</h2>
+
   </div>
 </div>
 
-<section style="padding: 2rem;">
-  <div style="max-width: 800px; margin: 0 auto;">
+<section class="links-content-area">
+  <div class="links-container">
     
     <!-- Add Form -->
-    <div class="wb-glass" style="padding: 2rem; margin-bottom: 2rem;">
-      <h3 style="margin-top: 0;">Add New Link</h3>
-      <form id="add-link-form" style="display: flex; flex-direction: column; gap: 1rem;">
+    <div class="wb-glass links-add-form-card">
+      <h3>Add New Link</h3>
+      <form id="add-link-form" class="links-add-form">
         <input type="text" id="link-url" placeholder="URL (e.g. https://github.com/...)" class="wb-input-glass" required>
         <input type="text" id="link-title" placeholder="Title" class="wb-input-glass" required>
         <input type="text" id="link-desc" placeholder="Description" class="wb-input-glass">
@@ -20,7 +28,7 @@
     </div>
 
     <!-- Links List -->
-    <div id="links-list" style="display: flex; flex-direction: column; gap: 1rem;">
+    <div id="links-list" class="links-list">
       <!-- Links will be injected here -->
     </div>
 
@@ -137,3 +145,5 @@
 
   loadLinks();
 </script>
+
+</div>

@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/html-ids-home.spec.ts",
+  "startedAt": "2026-02-16T04:51:40.930Z",
+  "updatedAt": "2026-02-16T04:51:51.165Z",
+  "command": "npx playwright test --workers=8 tests/compliance/html-ids-home.spec.ts",
+  "pid": 34208,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\compliance\\html-ids-home.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [compliance] › tests\\compliance\\html-ids-home.spec.ts:4:1 › pages/home.html: key stat-items and preview rows have IDs (1.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 5.7s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (6.4s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-16T04:51:51.165Z",
+  "duration": "10.23s",
+  "exitCode": 0
+}

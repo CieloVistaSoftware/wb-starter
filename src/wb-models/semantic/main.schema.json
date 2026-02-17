@@ -3,21 +3,22 @@
   "$id": "main.schema.json",
   "title": "Main Semantic Element",
   "description": "Primary content of the document or component. The dominant content area.",
-  
   "$inheritance": {
     "extends": "_element.base.schema.json",
     "reason": "Main IS-A element with all base properties"
   },
-  
   "htmlTag": "main",
   "role": "main",
-  
   "semanticMeaning": {
     "description": "The dominant content of the document/component - unique content that is not repeated",
-    "examples": ["Page main content", "Card body", "Article body", "Primary content area"],
+    "examples": [
+      "Page main content",
+      "Card body",
+      "Article body",
+      "Primary content area"
+    ],
     "whenToUse": "Central content that is the focus, not navigation or sidebars"
   },
-  
   "type": "object",
   "properties": {
     "content": {
@@ -29,25 +30,23 @@
       "cssClass": "wb-*__content, wb-*__main"
     }
   },
-  
   "textProperties": {
     "description": "ALL of these are canvas-editable",
-    "list": ["content"],
+    "list": [
+      "content"
+    ],
     "rule": "Main always renders, content is editable even when empty (placeholder shown)"
   },
-  
   "structure": {
     "template": "<main class=\"wb-*__main\">\n  {{content}}\n  {{children}}\n</main>",
     "notes": "Main can contain text content AND child elements"
   },
-  
   "containerBehavior": {
     "description": "Main is a DROP ZONE for child components",
     "acceptsChildren": true,
     "childTypes": "any",
     "dropZoneSelector": ".wb-*__main, main"
   },
-  
   "accessibility": {
     "landmarkRole": "main",
     "requirements": [
@@ -55,6 +54,8 @@
       "Can have multiple main elements in components (card main, article main)"
     ]
   },
-  
-  "canContain": ["*"]
+  "canContain": [
+    "*"
+  ],
+  "schemaType": "base"
 }

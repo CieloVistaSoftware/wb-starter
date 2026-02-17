@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "x-copy Attribute",
+  "type": "object",
+  "description": "Schema for x-copy attribute. Enables copy-to-clipboard functionality.",
+  "properties": {
+    "x-copy": {
+      "type": "boolean",
+      "description": "Whether the element supports copy-to-clipboard."
+    }
+  },
+  "required": ["x-copy"]
+}

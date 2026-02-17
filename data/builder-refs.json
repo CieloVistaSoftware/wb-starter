@@ -1,0 +1,1289 @@
+[
+  {
+    "file": ".github\\copilot-instructions.md",
+    "hits": [
+      "L17: | **Tier 2 — DOMAIN GUIDES** | When task touches that area | Component specs, testing, CSS, builder, schemas, etc. |"
+    ]
+  },
+  {
+    "file": ".test-cache.json",
+    "hits": [
+      "L4: \"compliance\\\\builder.schema.spec.ts\": 1767241689917,"
+    ]
+  },
+  {
+    "file": ".test-results-temp.json",
+    "hits": [
+      "L77: \"builder-api.spec.ts\",",
+      "L78: \"builder-mkel.spec.ts\",",
+      "L95: \"ui/builder-sidebar.spec.ts\",",
+      "L180: \"message\": \"Error: \\nAbbreviation Violations:\\n  docs\\\\architecture.md:4\\n    Found: \\\"WB\\\"\\n    Expected: \\\"Web Behavio",
+      "L181: \"stack\": \"Error: \\nAbbreviation Violations:\\n  docs\\\\architecture.md:4\\n    Found: \\\"WB\\\"\\n    Expected: \\\"Web Behaviors",
+      "L196: \"message\": \"Error: \\nAbbreviation Violations:\\n  docs\\\\architecture.md:4\\n    Found: \\\"WB\\\"\\n    Expected: \\\"Web Behavio",
+      "L378: \"title\": \"compliance\\\\builder.schema.spec.ts\",",
+      "L379: \"file\": \"compliance/builder.schema.spec.ts\",",
+      "L384: \"title\": \"builder schema placeholder\",",
+      "L413: \"file\": \"compliance/builder.schema.spec.ts\","
+    ]
+  },
+  {
+    "file": ".vscode\\html-custom-data.json",
+    "hits": [
+      "L364: \"name\": \"wb-builder\",",
+      "L365: \"description\": \"Builder Schema\\n\\nUnified schema for builder components and UI interactions.\",",
+      "L377: \"description\": \"List of components in the builder.\"",
+      "L381: \"description\": \"Builder-level metadata (optional)\"",
+      "L4993: \"name\": \"builder\"",
+      "L6283: \"name\": \"x-builder\",",
+      "L6284: \"description\": \"Unified schema for builder components and UI interactions.\\n\\nUsage: [<div x-builder>]\""
+    ]
+  },
+  {
+    "file": "CLAUDE.md",
+    "hits": [
+      "L31: | **Tier 2 — DOMAIN GUIDES** | When task touches that area | Component specs, testing, CSS, builder, schemas, etc. |"
+    ]
+  },
+  {
+    "file": "config\\site.json",
+    "hits": [
+      "L28: \"menuItemId\": \"builder\",",
+      "L31: \"pageToLoad\": \"builder\""
+    ]
+  },
+  {
+    "file": "CUSTOMER_READY.md",
+    "hits": [
+      "L3: ## ✅ CRITICAL UPDATE: Builder.html Now Shows Clean Customer Site",
+      "L5: **Previous Issue:** `/builder.html` was showing the editor interface",
+      "L6: **Solution:** Created proper `builder.html` that is the customer-facing website",
+      "L14: 👉 http://localhost:3000/builder.html",
+      "L28: ## 📄 **Pages Accessible from Builder.html**",
+      "L98: http://localhost:3000/builder.html",
+      "L104: http://localhost:3000/builder.html?page=home",
+      "L105: http://localhost:3000/builder.html?page=about",
+      "L106: http://localhost:3000/builder.html?page=services",
+      "L122: ├── builder.html                          ✅ CUSTOMER-FACING SITE"
+    ]
+  },
+  {
+    "file": "data\\add-schemafor-results.json",
+    "hits": [
+      "L37: \"page-builder.schema.json\","
+    ]
+  },
+  {
+    "file": "data\\behavior-component-index.json",
+    "hits": [
+      "L245: \"wb-builder\": {",
+      "L246: \"js\": \"src/wb-viewmodels/builder.js\",",
+      "L248: \"wb-builder-component\"",
+      "L250: \"schema\": \"src/wb-models/builder.schema.json\""
+    ]
+  },
+  {
+    "file": "data\\behavior-fix-results.json",
+    "hits": [
+      "L35: \"file\": \"builder-pages.schema.json\",",
+      "L36: \"schemaFor\": \"builder-pages\",",
+      "L37: \"derived\": \"builder-pages\"",
+      "L40: \"file\": \"builder.schema.json\",",
+      "L41: \"schemaFor\": \"builder\",",
+      "L42: \"derived\": \"builder\"",
+      "L101: \"file\": \"builder-pages.schema.json\",",
+      "L102: \"behavior\": \"builder-pages\"",
+      "L105: \"file\": \"builder.schema.json\",",
+      "L106: \"behavior\": \"builder\""
+    ]
+  },
+  {
+    "file": "data\\behavior-inventory.json",
+    "hits": [
+      "L241: \"builderOnly\": ["
+    ]
+  },
+  {
+    "file": "data\\bug-registry.json",
+    "hits": [
+      "L67: \"component\": \"builder.js\",",
+      "L74: \"file\": \"builder.js\",",
+      "L106: \"builder\": [\"BUG-2024-12-19-001\"]"
+    ]
+  },
+  {
+    "file": "data\\builder-refs.json",
+    "hits": [
+      "L5: \"L20: const BEHAVIOR_META_PATH = path.join(PATHS.src, 'wb-viewmodels', 'builder-app', 'behaviorMeta.js');\",",
+      "L6: \"L23: // Builder was retired — skip all tests that depend on behaviorMeta.js\",",
+      "L7: \"L24: const BUILDER_RETIRED = !fs.existsSync(BEHAVIOR_META_PATH);\",",
+      "L8: \"L49: builderOnly?: boolean;\",",
+      "L9: \"L94: optional: ['multiple', 'nativeElement', 'builderOnly'],\",",
+      "L10: \"L138: const module = await import('/src/wb-viewmodels/builder-app/behaviorMeta.js');\",",
+      "L11: \"L215: test.skip(BUILDER_RETIRED, 'Builder retired — behaviorMeta.js not available');\",",
+      "L12: \"L377: test.skip(BUILDER_RETIRED, 'Builder retired — behaviorMeta.js not available');\",",
+      "L13: \"L396: if (!categorized.has(name) && !meta[name].builderOnly) {\",",
+      "L14: \"L435: test.skip(BUILDER_RETIRED, 'Builder retired — behaviorMeta.js not available');\""
+    ]
+  },
+  {
+    "file": "data\\component-categories.json",
+    "hits": [
+      "L38: \"builder\",",
+      "L63: \"builder\": [",
+      "L64: \"builder-pages\",",
+      "L65: \"page-builder\"",
+      "L124: \"builder\","
+    ]
+  },
+  {
+    "file": "data\\data-wb-categorized.json",
+    "hits": [
+      "L69: \"file\": \"src/core/mvvm/schema-builder.js\",",
+      "L74: \"file\": \"src/core/mvvm/schema-builder.js\",",
+      "L79: \"file\": \"src/core/mvvm/schema-builder.js\",",
+      "L84: \"file\": \"src/core/mvvm/schema-builder.js\",",
+      "L189: \"file\": \"src/wb-viewmodels/builder-app/index.js\",",
+      "L194: \"file\": \"src/wb-viewmodels/builder.js\",",
+      "L196: \"text\": \"* Helper Attribute: [x-behavior=\\\"builder\\\"]\""
+    ]
+  },
+  {
+    "file": "data\\data-wb-sources.json",
+    "hits": [
+      "L22: \"src/core/mvvm/schema-builder.js\",",
+      "L27: \"src/wb-viewmodels/builder-app/index.js\",",
+      "L28: \"src/wb-viewmodels/builder.js\",",
+      "L280: \"text\": \"\\\"text\\\": \\\"* Helper Attribute: [x-behavior=\\\\\\\"builder\\\\\\\"]\\\"\"",
+      "L840: \"src/core/mvvm/schema-builder.js\": [",
+      "L842: \"file\": \"src/core/mvvm/schema-builder.js\",",
+      "L847: \"file\": \"src/core/mvvm/schema-builder.js\",",
+      "L852: \"file\": \"src/core/mvvm/schema-builder.js\",",
+      "L857: \"file\": \"src/core/mvvm/schema-builder.js\",",
+      "L970: \"src/wb-viewmodels/builder-app/index.js\": ["
+    ]
+  },
+  {
+    "file": "data\\data-wb-triage.json",
+    "hits": [
+      "L49: \"blocked_by_builder_migration\": {",
+      "L50: \"description\": \"These selectors find elements created by the builder app, which still outputs data-wb attributes (28 hit",
+      "L53: \"file\": \"tests/builder/builder-mkel.spec.ts:398\",",
+      "L55: \"note\": \"Builder tests already SKIPPED\"",
+      "L58: \"file\": \"tests/builder/builder-mkel.spec.ts:482\",",
+      "L60: \"note\": \"Builder tests already SKIPPED\"",
+      "L63: \"file\": \"tests/builder/builder-mkel.spec.ts:555\",",
+      "L65: \"note\": \"Builder tests already SKIPPED\"",
+      "L70: \"note\": \"Uses builder's add() which outputs data-wb\"",
+      "L94: \"3. Builder app (28 hits) → full builder migration, then update builder-mkel + regression tests\","
+    ]
+  },
+  {
+    "file": "data\\docs-manifest.json",
+    "hits": [
+      "L168: \"path\": \"docs/PAGE-BUILDER-RULES.md\",",
+      "L169: \"title\": \"Web Behaviors (WB) Page Builder - Content Creation Rules\",",
+      "L170: \"name\": \"PAGE-BUILDER-RULES\",",
+      "L288: \"path\": \"docs/USER-PAGE-BUILDER-PLAN.md\",",
+      "L289: \"title\": \"User Page Builder Plan\",",
+      "L290: \"name\": \"USER-PAGE-BUILDER-PLAN\",",
+      "L1813: \"path\": \"docs/PAGE-BUILDER-RULES.md\",",
+      "L1814: \"title\": \"Web Behaviors (WB) Page Builder - Content Creation Rules\",",
+      "L1815: \"name\": \"PAGE-BUILDER-RULES\",",
+      "L1939: \"path\": \"docs/USER-PAGE-BUILDER-PLAN.md\","
+    ]
+  },
+  {
+    "file": "data\\duplicate-fixes-applied.json",
+    "hits": [
+      "L5: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-canvas-sections.js\",",
+      "L11: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-editing.js\",",
+      "L17: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-quick-edit.js\",",
+      "L23: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-quick-edit.js\",",
+      "L29: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-quick-edit.js\",",
+      "L35: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-template-browser.js\",",
+      "L41: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-template-browser.js\",",
+      "L47: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-tree.js\",",
+      "L53: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-tree.js\",",
+      "L59: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-welcome.js\","
+    ]
+  },
+  {
+    "file": "data\\duplicate-refactor-report.json",
+    "hits": [
+      "L10: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\index.js\",",
+      "L125: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-workflow.js\",",
+      "L136: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-template-browser.js\",",
+      "L156: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-quick-edit.js\",",
+      "L165: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-tree.js\",",
+      "L176: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-canvas-sections.js\",",
+      "L187: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-editing.js\",",
+      "L198: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-quick-edit.js\",",
+      "L210: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-quick-edit.js\",",
+      "L221: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-template-browser.js\","
+    ]
+  },
+  {
+    "file": "data\\fixes.json",
+    "hits": [
+      "L78: \"title\": \"Builder files archived — duplicate check fails\",",
+      "L79: \"problem\": \"Test tried to readFile on builder-components-core.js, builder-components.js, builder-dnd.js which were all a",
+      "L80: \"fix\": \"Added fileExists guard — test skips when builder files don't exist\",",
+      "L82: \"category\": \"builder-archived\"",
+      "L87: \"title\": \"Bug registry references missing builder test\",",
+      "L88: \"problem\": \"Bug BUG-2024-12-19-001 referenced tests/builder/builder-mkel.spec.ts which was archived\",",
+      "L89: \"fix\": \"Removed builder-mkel.spec.ts from regressionTests array in bug-registry.json (audio.spec.ts and regression-tests",
+      "L91: \"category\": \"builder-archived\"",
+      "L105: \"title\": \"Builder-io.js missing\",",
+      "L106: \"problem\": \"Test tried to readFile on builder-app/builder-io.js which was archived\","
+    ]
+  },
+  {
+    "file": "data\\full-data-wb-audit.json",
+    "hits": [
+      "L18: \"builder\": 29,",
+      "L20: \"tests-builder\": 4,",
+      "L2398: \"file\": \"archive/cleanup-2026-01-07/old-builder/builder-canvas-sections.js\",",
+      "L2406: \"file\": \"archive/cleanup-2026-01-07/old-builder/builder-canvas-sections.js\",",
+      "L2414: \"file\": \"archive/cleanup-2026-01-07/old-builder/builder-canvas-sections.js\",",
+      "L4515: \"text\": \"\\\"description\\\": \\\"These selectors find elements created by the builder app, which still outputs data-wb attrib",
+      "L4555: \"text\": \"\\\"note\\\": \\\"Uses builder's add() which outputs data-wb\\\"\"",
+      "L8563: \"text\": \"\\\"originalSnippet\\\": \\\"<div class=\\\\\\\"card\\\\\\\" id=\\\\\\\"empty-card\\\\\\\" data-wb=\\\\\\\"card\\\\\\\" data-title=\\\\\\\"Builde",
+      "L8955: \"text\": \"\\\"originalSnippet\\\": \\\"<div class=\\\\\\\"card\\\\\\\" id=\\\\\\\"empty-card\\\\\\\" data-wb=\\\\\\\"card\\\\\\\" data-title=\\\\\\\"Builde",
+      "L15910: \"file\": \"src/core/mvvm/schema-builder.js\","
+    ]
+  },
+  {
+    "file": "data\\integrity-issues.json",
+    "hits": [
+      "L4: \"file\": \"src\\\\builder\\\\index.js\",",
+      "L6: \"target\": \"src\\\\builder\\\\src\\\\index.js\""
+    ]
+  },
+  {
+    "file": "data\\issues-todo.json",
+    "hits": [
+      "L42: \"description\": \"builder.html needs page level theme control\",",
+      "L49: \"description\": \"doc button from builder does not navigate\",",
+      "L77: \"description\": \"builder add component popup uneven rows\",",
+      "L84: \"description\": \"remove issues button in builder bottom right\","
+    ]
+  },
+  {
+    "file": "data\\migration-queue.json",
+    "hits": [
+      "L4926: \"originalSnippet\": \"<div class=\\\"card\\\" id=\\\"empty-card\\\" data-wb=\\\"card\\\" data-title=\\\"Builder Title\\\" data-content=\\\"B",
+      "L7689: \"originalSnippet\": \"<div class=\\\"card\\\" id=\\\"empty-card\\\" data-wb=\\\"card\\\" data-title=\\\"Builder Title\\\" data-content=\\\"B"
+    ]
+  },
+  {
+    "file": "data\\propertyconfig.schema.json",
+    "hits": [
+      "L5: \"description\": \"Schema for the WB Builder property configuration system. Defines UI types, property definitions, categor"
+    ]
+  },
+  {
+    "file": "data\\remove-behavior-results.json",
+    "hits": [
+      "L11: \"builder-pages.schema.json\",",
+      "L12: \"builder.schema.json\",",
+      "L51: \"page-builder.schema.json\","
+    ]
+  },
+  {
+    "file": "data\\schema-index.json",
+    "hits": [
+      "L509: \"file\": \"builder.schema.json\",",
+      "L510: \"name\": \"builder\",",
+      "L511: \"title\": \"Builder Schema\",",
+      "L512: \"description\": \"Unified schema for builder components and UI interactions.\",",
+      "L513: \"tag\": \"wb-builder\",",
+      "L514: \"baseClass\": \"wb-builder\",",
+      "L518: \"default\": \"Builder\",",
+      "L528: \"description\": \"List of components in the builder.\",",
+      "L558: \"description\": \"Builder-level metadata (optional)\",",
+      "L3449: \"file\": \"page-builder.schema.json\","
+    ]
+  },
+  {
+    "file": "data\\schema-test-audit.json",
+    "hits": [
+      "L11: \"builder\",",
+      "L255: \"builder\": {",
+      "L256: \"file\": \"builder.schema.json\",",
+      "L257: \"behavior\": \"builder\",",
+      "L262: \"<wb-builder>Basic builder content</wb-builder>\",",
+      "L263: \"<wb-builder label=\\\"Builder\\\">label=\\\"Builder\\\"</wb-builder>\",",
+      "L264: \"<wb-builder icon=\\\"🎨\\\">icon=\\\"🎨\\\"</wb-builder>\",",
+      "L265: \"<wb-builder label=\\\"Builder\\\" icon=\\\"🎨\\\">Combined: label=\\\"Builder\\\", icon=\\\"🎨\\\"</wb-builder>\",",
+      "L266: \"<wb-builder>Test permutation 5</wb-builder>\"",
+      "L269: \"<wb-builder>Basic content</wb-builder>\","
+    ]
+  },
+  {
+    "file": "data\\schema-tests.json",
+    "hits": [
+      "L1216: \"builder\": {",
+      "L1217: \"behavior\": \"builder\",",
+      "L1218: \"baseClass\": \"wb-builder\",",
+      "L1219: \"tagName\": \"wb-builder\",",
+      "L1224: \"html\": \"<wb-builder></wb-builder>\",",
+      "L1227: \"wb-builder\"",
+      "L1237: \"html\": \"<wb-builder label=\\\"Test label\\\"></wb-builder>\",",
+      "L1240: \"wb-builder\"",
+      "L1250: \"html\": \"<wb-builder icon=\\\"Test icon\\\"></wb-builder>\",",
+      "L1253: \"wb-builder\""
+    ]
+  },
+  {
+    "file": "data\\schemas-with-behavior.json",
+    "hits": [
+      "L8: \"builder-pages.schema.json\",",
+      "L9: \"builder.schema.json\",",
+      "L48: \"page-builder.schema.json\","
+    ]
+  },
+  {
+    "file": "data\\search.json",
+    "hits": [
+      "L539: \"id\": \"pages/builder\",",
+      "L540: \"url\": \"?page=builder\",",
+      "L541: \"title\": \"builder\",",
+      "L586: \"text\": \"Interactive Card Builder\"",
+      "L633: \"content\": \"The Heart of WB Welcome to the Builder Learn how WB Behaviors' declarative, schema-driven architecture lets ",
+      "L1362: \"title\": \"🆕 Page Builder\",",
+      "L1367: \"text\": \"🆕 Page Builder\",",
+      "L1371: \"content\": \"🆕 Page Builder Create new pages visually with drag-and-drop components.\",",
+      "L1769: \"content\": \"# Project Architecture (AI-Friendly) ## Overview This project is a modern, config-driven website starter kit",
+      "L1780: \"content\": \"# Audio Component ## Overview The Audio component provides advanced audio playback and a 15-band graphic equ"
+    ]
+  },
+  {
+    "file": "data\\templates.json",
+    "hits": [
+      "L450: { \"b\": \"card\", \"d\": { \"title\": \"About Our Company\", \"content\": \"We're a team of passionate builders dedicated to making "
+    ]
+  },
+  {
+    "file": "data\\test-failures.json",
+    "hits": [
+      "L6: \"description\": \"Test failures from builder property validation. Used for next test run.\",",
+      "L7: \"source\": \"builder-validation\""
+    ]
+  },
+  {
+    "file": "data\\test-results.json",
+    "hits": [
+      "L315: \"name\": \"Dark Mode Compliance › archive/builder/schema-builder-test.html renders in dark mode without errors\",",
+      "L322: \"name\": \"Dark Mode Compliance › archive/builder/builder.html renders in dark mode without errors\",",
+      "L378: \"name\": \"Dark Mode Compliance › archive/cleanup-2026-02-10/builder.html renders in dark mode without errors\",",
+      "L784: \"name\": \"Dark Mode Compliance › docs/diagrams/builder-gui-diagram.html renders in dark mode without errors\",",
+      "L805: \"name\": \"Dark Mode Compliance › docs/diagrams/builder-sections.html renders in dark mode without errors\",",
+      "L7644: \"name\": \"builder-io: exported HTML should reference /src/index.js (no local ./src/ path)\",",
+      "L7924: \"name\": \"HTML Compliance: ID Attributes › File archive\\\\builder\\\\builder.html should have IDs on containers with >1 chil",
+      "L7931: \"name\": \"HTML Compliance: ID Attributes › File archive\\\\builder\\\\schema-builder-test.html should have IDs on containers ",
+      "L7952: \"name\": \"HTML Compliance: ID Attributes › File archive\\\\cleanup-2026-02-10\\\\builder.html should have IDs on containers w",
+      "L8435: \"name\": \"HTML Compliance: ID Attributes › File docs\\\\diagrams\\\\builder-gui-diagram.html should have IDs on containers wi"
+    ]
+  },
+  {
+    "file": "data\\test-single\\dark-mode.json",
+    "hits": [
+      "L14: \"output\": \"\\nRunning 164 tests using 8 workers\\n\\n  ok 4 [compliance] › tests\\\\compliance\\\\dark-mode.spec.ts:66:5 › Dark"
+    ]
+  },
+  {
+    "file": "data\\test-single\\export-html-imports.json",
+    "hits": [
+      "L14: \"output\": \"\\nRunning 1 test using 1 worker\\n\\n  -  1 [compliance] › tests\\\\compliance\\\\export-html-imports.spec.ts:5:1 ›"
+    ]
+  },
+  {
+    "file": "data\\test-single\\input-switch.json",
+    "hits": [
+      "L14: \"output\": \"\\nRunning 4 tests using 4 workers\\n\\n  ok 4 [behaviors] › tests\\\\components\\\\progressbar.spec.ts:63:3 › progr",
+      "L15: \"errors\": \"\\n❌ FAILED: renders without errors\\n   Error: Console errors: SchemaBuilder.loadSchemaFile is not a function,"
+    ]
+  },
+  {
+    "file": "data\\test-single\\no-observer-referror.json",
+    "hits": [
+      "L14: \"output\": \"\\nRunning 2 tests using 2 workers\\n\\n  -  1 [compliance] › tests\\\\compliance\\\\no-observer-referror.spec.ts:17"
+    ]
+  },
+  {
+    "file": "data\\test-single\\wb-audio-builder.json",
+    "hits": [
+      "L4: \"specFile\": \"tests/integration/wb-audio-builder.spec.ts\",",
+      "L7: \"command\": \"npx playwright test --workers=8 tests/integration/wb-audio-builder.spec.ts\","
+    ]
+  },
+  {
+    "file": "data\\test-status.json",
+    "hits": [
+      "L14: \"output\": \"ok 2286 [compliance] › tests\\\\compliance\\\\page-schema-validation.spec.ts:163:9 › Page Schema — Demo Items ($d"
+    ]
+  },
+  {
+    "file": "data\\wb-ready-migration.json",
+    "hits": [
+      "L10: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-editing.js\",",
+      "L14: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-quick-edit.js\",",
+      "L18: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-selection.js\",",
+      "L22: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-shortcuts.js\",",
+      "L26: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\index-backup.js\","
+    ]
+  },
+  {
+    "file": "demos\\wizard\\editors.js",
+    "hits": [
+      "L303: 'docs': { folders: ['components', 'architecture', 'guides', '_today', 'standards'], files: ['index.md', 'wizard.md', 'sc"
+    ]
+  },
+  {
+    "file": "demos\\wizard\\test-backend-integration.html",
+    "hits": [
+      "L90: { path: '/docs/builder.md', desc: 'builder.md' },"
+    ]
+  },
+  {
+    "file": "docs\\architecture\\historical\\X-PREFIX-MIGRATION-PHASE1.md",
+    "hits": [
+      "L12: Phase 1 refactors the core behavior injection system to extract hardcoded mappings into dedicated, maintainable modules.",
+      "L24: - No way to auto-generate mappings for builder, schemas, or documentation",
+      "L34: - **Builders & IDEs** can't auto-detect valid components/attributes",
+      "L77: - Builder (Phase 3)",
+      "L540: 4. **Builder integration timeline:** Is Phase 3 (Builder) planned soon?"
+    ]
+  },
+  {
+    "file": "docs\\architecture.md",
+    "hits": [
+      "L4: This project is a modern, config-driven website starter kit built with the Web Behaviors (WB) library (Release 2.0). It ",
+      "L10: - **public/**: Entry points (`index.html`, `builder.html`).",
+      "L18: - **builder/**: Visual builder logic (`builder.js`, `builder-tree.js`, etc.).",
+      "L31: - **Visual Builder**: A drag-and-drop interface (`builder.html`) allows users to construct pages visually, which are the",
+      "L44: - **Builder Engine (`src/builder/`)**:",
+      "L45: - `index.js`: Entry point for the builder.",
+      "L46: - `builder.js`: Main builder logic (drag-and-drop, canvas management).",
+      "L47: - `builder-tree.js`: Manages the component tree view.",
+      "L48: - `builder-properties.js`: Handles the property editor panel.",
+      "L61: ### Builder Runtime"
+    ]
+  },
+  {
+    "file": "docs\\audio.md",
+    "hits": [
+      "L4: The Audio component provides advanced audio playback and a 15-band graphic equalizer UI for user-controlled sound shapin",
+      "L22: <!-- The builder enhances this with the EQ UI -->"
+    ]
+  },
+  {
+    "file": "docs\\behaviors\\wb-card.md",
+    "hits": [
+      "L14: - Designed for use with the WBServices pattern and builder",
+      "L29: - Designed for use with the WBServices pattern and builder",
+      "L96: - Designed for use with the WBServices pattern and builder",
+      "L154: - Designed for use with the WBServices pattern and builder"
+    ]
+  },
+  {
+    "file": "docs\\behaviors-reference.md",
+    "hits": [
+      "L226: | `builder` | `<div>` | - | Page builder container |"
+    ]
+  },
+  {
+    "file": "docs\\claude\\SCHEMAS-GUIDE.md",
+    "hits": [
+      "L9: Schemas are the **single source of truth** for every component in WB-Starter. They define what a component accepts (prop",
+      "L79: | `data/propertyconfig.schema.json` | Property configuration system for builder/property panel UI | Manual — no automate",
+      "L168: | `description` | string | `\"Alert component...\"` | Docs, tooltips, builder UI |"
+    ]
+  },
+  {
+    "file": "docs\\claude\\TIER1-LAWS.md",
+    "hits": [
+      "L155: - **Builder app** — AI regressed it. Builder tests are SKIPPED. Don't touch builder files unless John explicitly asks."
+    ]
+  },
+  {
+    "file": "docs\\claude\\TIER2-DOMAIN-GUIDES.md",
+    "hits": [
+      "L61: | `docs/builder-testing.md` | Builder-specific test rules |",
+      "L73: Read when: modifying schemas, schema-builder, or MVVM migration work",
+      "L152: ## 🪄 WIZARD (Builder Replacement)",
+      "L154: The legacy builder is deprecated. The new workflow for guided component/page creation is the **Component Wizard**:",
+      "L174: 5. John says \"builder work\" → Read **Builder** (and remember Tier 1: don't touch without permission)"
+    ]
+  },
+  {
+    "file": "docs\\CommittingFixes.md",
+    "hits": [
+      "L39: git checkout -b fix/ui/remove-builder-issues-button"
+    ]
+  },
+  {
+    "file": "docs\\container-pattern.md",
+    "hits": [
+      "L42: ## Builder Configuration",
+      "L44: In `builder.js`, container components are marked with `container: true`. The configuration uses abbreviated keys for com",
+      "L68: When a component is dragged over the canvas, the builder checks:"
+    ]
+  },
+  {
+    "file": "docs\\css-standards.md",
+    "hits": [
+      "L40: │  builder.css      - Standalone builder app (pages/builder.html) │",
+      "L108: **MUST import from the top of hierarchy** - builder.html, test pages, etc.",
+      "L111: <!-- pages/builder.html - standalone, needs full imports -->",
+      "L119: <link rel=\"stylesheet\" href=\"builder.css\">",
+      "L309: ├── builder.html        ← Standalone, HAS CSS imports",
+      "L310: └── builder.css         ← Layer 3: Page-specific only"
+    ]
+  },
+  {
+    "file": "docs\\DATA-FILES.md",
+    "hits": [
+      "L14: | [behavior-inventory.json](#behavior-inventoryjson) | Runtime behavior catalog | Test runner / Web Behaviors (WB).scan(",
+      "L16: | [builder-page.json](#builder-pagejson) | Saved builder page state | Builder UI | Builder UI |",
+      "L18: | [componentExclusions.json](#componentexclusionsjson) | Builder component exclusions | Manual | Builder |",
+      "L24: | [propertyconfig.json](#propertyconfigjson) | Builder property definitions | Manual | Builder property panel |",
+      "L25: | [templates.json](#templatesjson) | Page generation templates | Manual | Builder |",
+      "L50: \"builderOnly\": [\"moveup\", \"movedown\", ...],",
+      "L59: - Builder sidebar for categorization",
+      "L103: ### builder-page.json",
+      "L105: **Purpose**: Stores the current state of a builder page being designed.",
+      "L125: **Created By**: [public/builder.html](../public/builder.html) - Builder UI save functionality."
+    ]
+  },
+  {
+    "file": "docs\\deploying-wb-starter-to-render.md",
+    "hits": [
+      "L11: - **Visual Builder** - Edit your site in real-time",
+      "L283: ├── builder.html        # Visual builder",
+      "L306: 4. **Use the Visual Builder** - Visit `/builder.html` to edit visually"
+    ]
+  },
+  {
+    "file": "docs\\diagrams\\builder-gui-diagram.html",
+    "hits": [
+      "L2: <html id=\"builderguidiagram-html-1\" lang=\"en\">",
+      "L3: <head id=\"builderguidiagram-head-2\">",
+      "L4: <meta id=\"builderguidiagram-meta-3\" charset=\"UTF-8\">",
+      "L5: <meta id=\"builderguidiagram-meta-4\" name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+      "L6: <title id=\"builderguidiagram-title-5\">Builder GUI Diagram</title>",
+      "L7: <style id=\"builderguidiagram-style-6\">",
+      "L23: /* Main Builder Layout */",
+      "L24: .builder-diagram {",
+      "L397: <body id=\"builderguidiagram-body-7\">",
+      "L398: <h1 id=\"builderguidiagram-h1-8\">WB Page Builder - GUI Layout</h1>"
+    ]
+  },
+  {
+    "file": "docs\\diagrams\\builder-sections.html",
+    "hits": [
+      "L2: <html id=\"buildersections-html-1\" lang=\"en\">",
+      "L3: <head id=\"buildersections-head-2\">",
+      "L4: <meta id=\"buildersections-meta-3\" charset=\"UTF-8\">",
+      "L5: <meta id=\"buildersections-meta-4\" name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+      "L6: <title id=\"buildersections-title-5\">Builder GUI - Named Sections</title>",
+      "L7: <style id=\"buildersections-style-6\">",
+      "L24: .builder {",
+      "L657: <body id=\"buildersections-body-7\">",
+      "L658: <h1 id=\"buildersections-h1-8\">WB Page Builder - Section Map</h1>",
+      "L659: <p id=\"buildersections-p-9\" class=\"subtitle\">Canvas = Content (WYSIWYG) • Properties = Settings Only</p>"
+    ]
+  },
+  {
+    "file": "docs\\IMPROVEMENTS.md",
+    "hits": [
+      "L18: - **Video Tutorials:** Short, focused videos demonstrating how to build common layouts (Hero, Pricing Table, Contact For",
+      "L26: - **E2E Testing for Builder:** Automated tests to verify drag-and-drop functionality and property updates in the builder"
+    ]
+  },
+  {
+    "file": "docs\\inline-editing.md",
+    "hits": [
+      "L27: // In builder.js or separate editing module",
+      "L262: ## Builder CSS Additions"
+    ]
+  },
+  {
+    "file": "docs\\INTELLISENSE-TOOLTIPS.md",
+    "hits": [
+      "L175: ## `<wb-builder>`",
+      "L179: Builder Schema",
+      "L181: Unified schema for builder components and UI interactions.",
+      "L190: | `components` | List of components in the builder. |",
+      "L191: | `meta` | Builder-level metadata (optional) |"
+    ]
+  },
+  {
+    "file": "docs\\manifest.json",
+    "hits": [
+      "L303: \"file\": \"builder-testing.md\",",
+      "L304: \"title\": \"Builder Testing\",",
+      "L305: \"description\": \"Testing the page builder\"",
+      "L375: \"file\": \"USER-PAGE-BUILDER-PLAN.md\",",
+      "L376: \"title\": \"Page Builder Plan\",",
+      "L377: \"description\": \"Builder roadmap\"",
+      "L380: \"file\": \"builder.todo.md\",",
+      "L381: \"title\": \"Builder TODO\",",
+      "L382: \"description\": \"Builder task list\"",
+      "L395: \"file\": \"builder/BUILDER-FIXES.md\","
+    ]
+  },
+  {
+    "file": "docs\\MVVM-MIGRATION-PLAN.md",
+    "hits": [
+      "L134: - [x] Create schema-builder.js",
+      "L137: - [ ] Update schema-builder for `$view` format",
+      "L176: - [ ] Wire schema-builder into WB.init()",
+      "L183: ### schema-builder.js Updates",
+      "L262: Keep old `structure.children` and `$containment` support in schema-builder as fallback until all schemas migrated.",
+      "L276: Update schema-builder.js to support `$view` format with lowercase tags and `$methods` binding."
+    ]
+  },
+  {
+    "file": "docs\\MVVM-MIGRATION.md",
+    "hits": [
+      "L23: │  3. Process through Schema Builder                         │",
+      "L141: │   │   └── schema-builder.js    # DOM generation from schemas",
+      "L218: - [x] Schema Builder integrated into WB.init()",
+      "L340: - [Builder Documentation](/docs/builder.md) - The heart of wb-starter"
+    ]
+  },
+  {
+    "file": "docs\\PAGE-BUILDER-RULES.md",
+    "hits": [
+      "L1: # Web Behaviors (WB) Page Builder - Content Creation Rules",
+      "L25: | **Auto-switch after create** | Builder switches to new page immediately |",
+      "L43: The builder currently generates a traditional multi-page website where each page is a separate HTML file.",
+      "L267: | `wb-page-builder-site` | Complete site JSON |"
+    ]
+  },
+  {
+    "file": "docs\\properties.md",
+    "hits": [
+      "L9: The WB Behaviors Property System provides a unified configuration for all component properties in the Page Builder. This",
+      "L603: 2. Implement renderer in `builder-properties.js`",
+      "L612: | `builder.js` | Property panel rendering |",
+      "L613: | `builder-properties.js` | Enhanced property editors |",
+      "L614: | `src/builder-editing.js` | Canvas editing handlers |",
+      "L615: | `builder.css` | Property panel styles |"
+    ]
+  },
+  {
+    "file": "docs\\property-viewer.md",
+    "hits": [
+      "L5: The **Property Viewer** refers to the dynamic right-hand panel in the Web Behaviors (WB) Builder interface. Historically",
+      "L33: ### Controller Logic (`src/wb-viewmodels/builder-app/index.js`)",
+      "L38: // src/wb-viewmodels/builder-app/index.js"
+    ]
+  },
+  {
+    "file": "docs\\schema-first-architecture.md",
+    "hits": [
+      "L26: *   **Role**: The \"Enhancer\". It observes the View, binds event listeners, manages state, and handles user interaction. ",
+      "L40: *   **Builder Mode (Fallback)**: \"I see an empty container. I will use the Model (Schema) defaults to generate a standar"
+    ]
+  },
+  {
+    "file": "docs\\schema-first-audit-report.md",
+    "hits": [
+      "L5: The goal is to ensure that JavaScript behaviors act as **Enhancers** (hydrating existing DOM) rather than **Builders** (",
+      "L9: | **Card** | `src/behaviors/js/card.js` | **TRUE** | 1. **Decouple Validation**: Update `validateSemanticContainer` to a"
+    ]
+  },
+  {
+    "file": "docs\\semantic-audit.md",
+    "hits": [
+      "L111: 5. **Update builder.js** - Ensure components are created with correct element tags"
+    ]
+  },
+  {
+    "file": "docs\\styles.md",
+    "hits": [
+      "L137: | A standalone page (e.g., Builder) | `pages/[page].css` (loaded manually) |"
+    ]
+  },
+  {
+    "file": "docs\\templates.md",
+    "hits": [
+      "L6: This document describes the structure and usage of the `templates.json` file, which powers the \"Instant Page Generation\"",
+      "L99: ## Usage in Builder",
+      "L101: The Builder application reads this file to populate the \"Templates\" modal or sidebar. When a user selects a template:",
+      "L103: 2.  The Builder converts the shorthand JSON into the internal Builder Page JSON format."
+    ]
+  },
+  {
+    "file": "docs\\testing-runbook.md",
+    "hits": [
+      "L63: - `docs/builder-testing.md` — component-level test guidance"
+    ]
+  },
+  {
+    "file": "docs\\testing-strategy.md",
+    "hits": [
+      "L60: │   ├── builder-mkEl-compliance.spec.ts  # Builder function tests",
+      "L217: \"component\": \"builder.js\","
+    ]
+  },
+  {
+    "file": "docs\\USER-PAGE-BUILDER-PLAN.md",
+    "hits": [
+      "L1: # User Page Builder Plan",
+      "L5: A drag-and-drop page builder that lets users create professional web pages without writing code. Components are schema-d",
+      "L24: - **No schema integration** — Builder doesn't read from `*.schema.json` files",
+      "L35: *.schema.json → Builder UI → Properties Panel → Rendered Component",
+      "L99: **File:** `builder.js` (add ~50 lines)",
+      "L115: **File:** `builder.js` (C.All definition)",
+      "L145: - **Builder Mode**: Only inject elements if structure is missing.",
+      "L324: | `builder.js` | Context menu, undo/redo, schema loading, save/load |",
+      "L325: | `builder.css` | Context menu styles, layers panel |",
+      "L326: | `builder.html` | Layers panel markup, toolbar buttons |"
+    ]
+  },
+  {
+    "file": "docs\\_today\\021426FIXPLAN.md",
+    "hits": [
+      "L5: This document outlines the prioritized plan to fix all remaining broken link, missing file, and rendering issues in the ",
+      "L8: - Excludes all builder-related files, tests, and reports (already archived/removed)",
+      "L21: ### CLAIMED: Claude — Builder test cleanup (~80 failures)",
+      "L23: - **Root cause:** Builder was removed but tests/builder/ still exists. All fail with \"Cannot find module\".",
+      "L24: - **Fix:** Delete tests/builder/ directory entirely.",
+      "L25: - **Tests affected:** builder-api, builder-mkel, builder-permutations, builder-sidebar (~80 test cases)",
+      "L42: - 2026-02-14: Plan created. Builder artifacts and reports removed. Ready to begin systematic fixes.",
+      "L43: - 2026-02-14: CSS OOP compliance FIXED (commit 0ce7524). Claimed builder cleanup, audio CSP, docs manifest."
+    ]
+  },
+  {
+    "file": "docs\\_today\\CSS-OWNERSHIP-MIGRATION.PLAN.md",
+    "hits": [
+      "L30: Layer 3: Page-specific  → builder.css, etc. (standalone pages only)"
+    ]
+  },
+  {
+    "file": "docs\\_today\\CURRENT-STATUS.md",
+    "hits": [
+      "L50: - 3 remaining fails were infrastructure: themes-showcase (wrong port), builder-mkel (builderAPI broken), schema-viewer (",
+      "L52: - builder-mkel + all builder tests: SKIPPED (builder app not operational, AI regressed it)"
+    ]
+  },
+  {
+    "file": "docs\\_today\\REPAIR-PLAN-021526.md",
+    "hits": [
+      "L20: | 8 | newpage.html | Missing `<h2>` | Builder placeholder, no section heading | Add `<h2>` inside `.page__section` |"
+    ]
+  },
+  {
+    "file": "docs\\_today\\TODO.md",
+    "hits": [
+      "L68: ## Priority 4 — Remove Builder References (22 failures)",
+      "L70: **File:** `fixes-verification.spec.ts` — 5 builder mentions, tests for builder properties, syntax fixes",
+      "L71: **Decision:** Builder is no longer supported",
+      "L73: - [ ] Remove all builder-related tests from `fixes-verification.spec.ts`",
+      "L75: - [ ] Keep valid non-builder tests (card behavior, figure, EQ panel)",
+      "L187: - [x] Duplicate identifiers in builder files (archived, tests skip)",
+      "L190: - [x] Export-html-imports builder guard added",
+      "L191: - [x] No-observer-referror builder test skipped",
+      "L192: - [x] Behavior-registry builder entry removed"
+    ]
+  },
+  {
+    "file": "EDITMODE_GUIDE.md",
+    "hits": [
+      "L28: http://localhost:3000/builder.html",
+      "L171: http://localhost:3000/builder.html",
+      "L260: 1. Visit `/builder.html`",
+      "L310: http://localhost:3000/builder.html?page=services",
+      "L377: ├── builder.html              ← Main site (reads from site.json)",
+      "L399: - ✅ Visit `http://localhost:3000/builder.html` to start editing"
+    ]
+  },
+  {
+    "file": "EDITMODE_SETUP.md",
+    "hits": [
+      "L27: ### 2. **Builder.html Reads from site.json**",
+      "L31: http://localhost:3000/builder.html",
+      "L67: builder.html                  ← Main site (reads site.json dynamically)",
+      "L86: http://localhost:3000/builder.html",
+      "L194: - ✅ builder.html loads content from site.json dynamically",
+      "L208: http://localhost:3000/builder.html",
+      "L246: http://localhost:3000/builder.html"
+    ]
+  },
+  {
+    "file": "EDITOR_PANEL_GUIDE.md",
+    "hits": [
+      "L65: http://localhost:3000/builder.html",
+      "L97: http://localhost:3000/builder.html",
+      "L161: builder.html              ← Main editor & site",
+      "L255: - Visit `/builder.html` to start editing",
+      "L265: http://localhost:3000/builder.html"
+    ]
+  },
+  {
+    "file": "FIXLANDINGPAGES.md",
+    "hits": [
+      "L9: Recent test results and audits revealed broken links, missing files, and rendering issues on several key pages. The buil",
+      "L22: - 2026-02-14: Document created. Builder artifacts archived, manifest updated, and commit completed. Ready to proceed wit"
+    ]
+  },
+  {
+    "file": "manifest.json",
+    "hits": [
+      "L77: \"name\": \"Builder\",",
+      "L78: \"url\": \"/pages/builder.html\",",
+      "L79: \"description\": \"Open page builder\""
+    ]
+  },
+  {
+    "file": "NPXCOMMANDS.md",
+    "hits": [
+      "L14: npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' -g 'remove' --timeout=120000 --trace=on",
+      "L17: npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' --timeout=120000",
+      "L20: npx playwright test tests/behaviors/ui/builder-api.spec.ts:42",
+      "L54: 4. Run a simple smoke test: `npx playwright test tests/behaviors/ui/builder-api.spec.ts -g 'add()'`",
+      "L62: npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' -g 'remove' --timeout=120000 --trace=on",
+      "L64: - Run the whole builder API file:",
+      "L65: npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' --timeout=120000",
+      "L69: npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' -g 'remove' --timeout=120000",
+      "L74: - Use explicit file-level runs in CI for flaky areas: `npx playwright test tests/behaviors/ui/builder-api.spec.ts -g 're",
+      "L86: If you want, I can: add this to the repo README, open a PR that enforces `--trace=on` for failures, and run the failing "
+    ]
+  },
+  {
+    "file": "PageBuilder_Specs.md",
+    "hits": [
+      "L1: # 🏗️ WB Page Builder - Specification Document",
+      "L5: WB Page Builder is a **drag-and-drop website builder** that allows users to create professional websites by combining pr",
+      "L12: The builder interface consists of **4 main areas**:",
+      "L202: - Displays: **\"🏗️ WB Page Builder\"**",
+      "L203: - Indicates this is the editor/builder interface",
+      "L465: ├── builder.html              ← Main builder interface",
+      "L475: └── BUILDER_SPECS.md     ← This document",
+      "L509: The **WB Page Builder** is a professional website builder that:"
+    ]
+  },
+  {
+    "file": "pages\\components.html",
+    "hits": [
+      "L8: <a href=\"?page=builder\" class=\"wb-btn\">🚀 Get Started</a>",
+      "L712: <a href=\"?page=builder\">Get Started</a> •"
+    ]
+  },
+  {
+    "file": "pages\\newpage.html",
+    "hits": [
+      "L2: <h1 id=\"newpage-h1-2\">🆕 Page Builder</h1>",
+      "L7: <h2 id=\"newpage-h2-6\">Page Builder Tool</h2>",
+      "L8: <wb-builder id=\"newpage-builder-5\" label=\"New Page\" icon=\"🎨\">",
+      "L9: <!-- Builder component will be injected here -->",
+      "L10: </wb-builder>"
+    ]
+  },
+  {
+    "file": "playwright-report\\cards-card-Card-Behavior-i-68cc3--have-a-border-on-cardimage-mobile-chrome\\error-context.md",
+    "hits": [
+      "L39: - /url: \"?page=builder\""
+    ]
+  },
+  {
+    "file": "playwright-report\\cards-card-Card-Behavior-i-929e3--a-border-on-cardhorizontal-mobile-chrome\\error-context.md",
+    "hits": [
+      "L39: - /url: \"?page=builder\""
+    ]
+  },
+  {
+    "file": "playwright-report\\cards-card-Card-Behavior-i-9f7a7-have-a-border-on-cardbutton-mobile-chrome\\error-context.md",
+    "hits": [
+      "L39: - /url: \"?page=builder\""
+    ]
+  },
+  {
+    "file": "playwright.config.ts",
+    "hits": [
+      "L164: // Phase 2: Wizard validation, builder integration, end-to-end flows"
+    ]
+  },
+  {
+    "file": "project-index.html",
+    "hits": [
+      "L56: <wb-card-link href=\"public/builder.html\" title=\"builder.html\" description=\"public/builder.html\" badge=\"Tool\"></wb-card-l"
+    ]
+  },
+  {
+    "file": "public\\schema-viewer.html",
+    "hits": [
+      "L6: <title id=\"schemaviewer-title-5\">Builder Schema Viewer</title>"
+    ]
+  },
+  {
+    "file": "README.md",
+    "hits": [
+      "L18: > **Note**: While the site can run as a static file (`index.html`), the development server is required for the Visual Bu",
+      "L31: ├── public/             # Tools (builder.html, schema-viewer.html)",
+      "L48: └── builder/        # Visual builder logic"
+    ]
+  },
+  {
+    "file": "scripts\\analyze-failures.js",
+    "hits": [
+      "L56: // Check fixes-verification for builder references",
+      "L57: console.log('\\n=== fixes-verification builder references ===');",
+      "L59: const builderRefs = [...fv.matchAll(/[Bb]uilder/g)];",
+      "L60: console.log('Builder mentions: ' + builderRefs.length);"
+    ]
+  },
+  {
+    "file": "scripts\\final-cleanup.js",
+    "hits": [
+      "L49: content = content.replace(//g, 'wb-builder');"
+    ]
+  },
+  {
+    "file": "scripts\\find-builder-refs.js",
+    "hits": [
+      "L20: if (content.toLowerCase().includes('builder')) {",
+      "L25: if (line.toLowerCase().includes('builder')) {",
+      "L36: fs.writeFileSync(path.join(ROOT, 'data', 'builder-refs.json'), JSON.stringify(results, null, 2));",
+      "L37: console.log(`Found ${results.length} test files with builder references`);"
+    ]
+  },
+  {
+    "file": "scripts\\generate-demo-page.js",
+    "hits": [
+      "L4: * Generic demo page generator - schema is the map, this is the builder."
+    ]
+  },
+  {
+    "file": "scripts\\nuke-all.js",
+    "hits": [
+      "L53: 'statusbar', 'mdhtml', 'sheet', 'builder'"
+    ]
+  },
+  {
+    "file": "scripts\\scan-categorized.js",
+    "hits": [
+      "L41: file.includes('builder/') || file.includes('behaviorMeta') ||"
+    ]
+  },
+  {
+    "file": "server\\server.js",
+    "hits": [
+      "L236: // Builder component - special route (opens in new tab)",
+      "L237: app.get('/builder.html', (req, res) => {",
+      "L238: res.sendFile(path.join(rootDir, 'public', 'builder.html'));"
+    ]
+  },
+  {
+    "file": "server.js",
+    "hits": [
+      "L370: app.get('/builder.html', (req, res) => {",
+      "L371: res.sendFile(path.join(rootDir, 'public', 'builder.html'));"
+    ]
+  },
+  {
+    "file": "src\\core\\mvvm\\index.js",
+    "hits": [
+      "L27: *   import SchemaBuilder from '/src/core/mvvm/index.js';",
+      "L28: *   await SchemaBuilder.init();",
+      "L46: } from './schema-builder.js';",
+      "L48: import SchemaBuilder from './schema-builder.js';",
+      "L50: export default SchemaBuilder;"
+    ]
+  },
+  {
+    "file": "src\\core\\mvvm\\schema-builder.js",
+    "hits": [
+      "L2: * WB Schema Builder - MVVM Core",
+      "L71: console.warn('[Schema Builder] No index.json found, using fallback');",
+      "L78: console.log(`[Schema Builder] Loading ${schemaFiles.length} schemas...`);",
+      "L90: console.warn(`[Schema Builder] Failed to load ${file}:`, e.message);",
+      "L98: console.log(`[Schema Builder] ✅ Loaded ${loaded}/${schemaFiles.length} schemas`);",
+      "L101: console.error('[Schema Builder] Failed to load schemas:', error);",
+      "L119: console.log(`[Schema Builder] Registered: ${name} → <${tagName}>`);",
+      "L132: console.warn(`[Schema Builder] loadSchemaFile: ${filename} not found (status ${resp.status})`);",
+      "L139: console.warn('[Schema Builder] loadSchemaFile failed:', err && err.message);",
+      "L406: console.warn(`[Schema Builder] Parent \"${parentName}\" not found for \"${part.name}\"`);"
+    ]
+  },
+  {
+    "file": "src\\core\\mvvm-test.html",
+    "hits": [
+      "L6: <title>MVVM Schema Builder Test v3</title>",
+      "L154: <h1>🏗️ MVVM Schema Builder v3.0</h1>",
+      "L372: import SchemaBuilder from './mvvm/index.js';",
+      "L403: await SchemaBuilder.init({ schemaPath: '/src/wb-models' });",
+      "L405: const schemas = [...SchemaBuilder.registry.keys()];",
+      "L410: status.textContent = `✓ Schema Builder v3.0 ready! ${schemas.length} schemas loaded.`;"
+    ]
+  },
+  {
+    "file": "src\\core\\site-engine.js",
+    "hits": [
+      "L325: if (pageId === 'builder') {",
+      "L326: window.open('builder.html', '_blank');"
+    ]
+  },
+  {
+    "file": "src\\core\\wb.js",
+    "hits": [
+      "L16: * - Integrated MVVM Schema Builder",
+      "L47: import SchemaBuilder from './mvvm/schema-builder.js';",
+      "L130: // Expose SchemaBuilder for direct access",
+      "L131: schema: SchemaBuilder,",
+      "L245: * Process element through schema builder (v3.0)",
+      "L259: let schema = SchemaBuilder.getSchema(name);",
+      "L264: const loaded = await SchemaBuilder.loadSchemaFile(`${name}.schema.json`);",
+      "L266: schema = SchemaBuilder.getSchema(name);",
+      "L274: // Process through schema builder (builds DOM from $view)",
+      "L276: console.log(`[WB.processSchema] Calling SchemaBuilder.processElement for ${element.tagName}`);"
+    ]
+  },
+  {
+    "file": "src\\lib\\highlight.js",
+    "hits": [
+      "L404: const Ne=e=>b(/\\b/,e,/\\w$/.test(e)?/\\b/:/\\B/),ke=[\"Protocol\",\"Type\"].map(Ne),xe=[\"init\",\"self\"].map(Ne),Oe=[\"Any\",\"Self\""
+    ]
+  },
+  {
+    "file": "src\\wb-models\\behavior.schema.json",
+    "hits": [
+      "L839: \"description\": \"Has drop zone for builder\"",
+      "L891: \"builderOnly\": {",
+      "L893: \"description\": \"Only available in builder\""
+    ]
+  },
+  {
+    "file": "src\\wb-models\\cardprofile.schema.json",
+    "hits": [
+      "L244: \"builder\": {"
+    ]
+  },
+  {
+    "file": "src\\wb-models\\index.json",
+    "hits": [
+      "L17: \"builder.schema.json\",",
+      "L241: \"builder.schema.json\","
+    ]
+  },
+  {
+    "file": "src\\wb-models\\semantic\\container.schema.json",
+    "hits": [
+      "L172: \"builderConfig\": {"
+    ]
+  },
+  {
+    "file": "src\\wb-models\\semantic\\_inheritance.schema.json",
+    "hits": [
+      "L99: \"builder\": {",
+      "L125: \"step4\": \"Update builder to read inheritance chain\","
+    ]
+  },
+  {
+    "file": "src\\wb-models\\wizard.schema.json",
+    "hits": [
+      "L118: \"title\": \"Site Builder Wizard\""
+    ]
+  },
+  {
+    "file": "src\\wb-viewmodels\\card.js",
+    "hits": [
+      "L26: * ALL text elements are EDITABLE via double-click in the builder",
+      "L84: // v3.0: Check if schema builder already processed this element",
+      "L484: // If main is empty (e.g. created by SchemaBuilder with empty slot)",
+      "L536: // This happens because SchemaBuilder wraps ALL content in the 'main' part defined in schema"
+    ]
+  },
+  {
+    "file": "src\\wb-viewmodels\\layouts.js",
+    "hits": [
+      "L118: // Visual indicator in builder"
+    ]
+  },
+  {
+    "file": "src\\wb-viewmodels\\navigation.js",
+    "hits": [
+      "L119: // Check for existing custom children (links dropped by user in builder)",
+      "L660: // Log to Events if available (builder debug log)"
+    ]
+  },
+  {
+    "file": "src\\wb-views\\partials\\content-about.html",
+    "hits": [
+      "L5: <p>We're a team of passionate builders dedicated to making the web a better place. Since 2020, we've helped over 10,000 "
+    ]
+  },
+  {
+    "file": "tests\\behaviors\\behavior-validation.spec.ts",
+    "hits": [
+      "L20: const BEHAVIOR_META_PATH = path.join(PATHS.src, 'wb-viewmodels', 'builder-app', 'behaviorMeta.js');",
+      "L23: // Builder was retired — skip all tests that depend on behaviorMeta.js",
+      "L24: const BUILDER_RETIRED = !fs.existsSync(BEHAVIOR_META_PATH);",
+      "L49: builderOnly?: boolean;",
+      "L94: optional: ['multiple', 'nativeElement', 'builderOnly'],",
+      "L138: const module = await import('/src/wb-viewmodels/builder-app/behaviorMeta.js');",
+      "L215: test.skip(BUILDER_RETIRED, 'Builder retired — behaviorMeta.js not available');",
+      "L377: test.skip(BUILDER_RETIRED, 'Builder retired — behaviorMeta.js not available');",
+      "L396: if (!categorized.has(name) && !meta[name].builderOnly) {",
+      "L435: test.skip(BUILDER_RETIRED, 'Builder retired — behaviorMeta.js not available');"
+    ]
+  },
+  {
+    "file": "tests\\behaviors\\fixes-verification.spec.ts",
+    "hits": [
+      "L233: // BUILDER & CORE FIXES (015, 018, 028, 029, 032, 040)",
+      "L235: test('Builder properties and Core behaviors work correctly', async ({ page }) => {",
+      "L283: test('Builder Property Rendering (015)', async ({ page }) => {",
+      "L284: // Mock the builder property rendering function",
+      "L287: import { renderPropertyControl } from '/src/builder/builder-properties.js';"
+    ]
+  },
+  {
+    "file": "tests\\behaviors\\functional-runner.spec.ts",
+    "hits": [
+      "L34: const SKIP_BEHAVIORS = ['switch', 'builder'];"
+    ]
+  },
+  {
+    "file": "tests\\compliance\\css-oop-compliance.spec.ts",
+    "hits": [
+      "L42: if (filename === 'builder.css' || filename === 'audio.css') continue;",
+      "L105: if (varName?.startsWith('--builder-') || varName?.startsWith('--page-') || varName?.startsWith('--notes-')) return false"
+    ]
+  },
+  {
+    "file": "tests\\compliance\\dark-mode.spec.ts",
+    "hits": [
+      "L53: 'pages/builder.html',                    // Redirects to builder.html"
+    ]
+  },
+  {
+    "file": "tests\\compliance\\duplicate-spot-checks.spec.ts",
+    "hits": [
+      "L6: // NOTE: Builder files were archived — test skips if files don't exist.",
+      "L8: const corePath = 'src/wb-viewmodels/builder-app/builder-components-core.js';",
+      "L9: const componentsPath = 'src/wb-viewmodels/builder-app/builder-components.js';",
+      "L10: const dndPath = 'src/wb-viewmodels/builder-app/builder-dnd.js';",
+      "L12: // Skip if builder files have been archived/removed",
+      "L22: expect(core.includes('const semanticTags'), 'builder-components-core.js should not declare \"semanticTags\"').toBe(false);",
+      "L23: expect(components.includes('const semanticTags'), 'builder-components.js should not declare \"semanticTags\"').toBe(false)",
+      "L24: expect(dnd.includes('templateComponent'), 'builder-dnd.js should use \"templateComponent\" after rename').toBe(true);"
+    ]
+  },
+  {
+    "file": "tests\\compliance\\error-log-empty.spec.ts",
+    "hits": [
+      "L7: * The error log captures runtime errors from the builder"
+    ]
+  },
+  {
+    "file": "tests\\compliance\\export-html-imports.spec.ts",
+    "hits": [
+      "L4: // NOTE: Builder files were archived — test skips if files don't exist.",
+      "L5: test('builder-io: exported HTML should reference /src/index.js (no local ./src/ path)', () => {",
+      "L6: const filePath = 'src/wb-viewmodels/builder-app/builder-io.js';"
+    ]
+  },
+  {
+    "file": "tests\\compliance\\fragment-registration.spec.ts",
+    "hits": [
+      "L62: // Skip builder — it's a special route, not a fragment",
+      "L63: if (navPage === 'builder') continue;"
+    ]
+  },
+  {
+    "file": "tests\\compliance\\no-duplicate-specs.spec.ts",
+    "hits": [
+      "L128: 'builder/builder-api.spec.ts',",
+      "L129: 'builder/builder-mkel.spec.ts',",
+      "L130: 'builder/builder-sidebar.spec.ts',"
+    ]
+  },
+  {
+    "file": "tests\\compliance\\no-observer-referror.spec.ts",
+    "hits": [
+      "L16: // Builder is known broken/archived — skip this test",
+      "L17: test.skip('public/builder.html should not throw observer ReferenceError', async ({ page }) => {",
+      "L23: await page.goto('/public/builder.html');"
+    ]
+  },
+  {
+    "file": "tests\\compliance\\schema-on-demand.spec.ts",
+    "hits": [
+      "L5: test('schema builder should process wb-cardhero when index.json is missing (on-demand fetch)', async ({ page }) => {"
+    ]
+  },
+  {
+    "file": "tests\\components\\audio.spec.ts",
+    "hits": [
+      "L192: await page.goto('http://localhost:3000/builder.html');",
+      "L323: await page.goto('http://localhost:3000/builder.html');",
+      "L420: await page.goto('http://localhost:3000/builder.html');"
+    ]
+  },
+  {
+    "file": "tests\\issues\\issue-note-1769211301098-p0.spec.ts",
+    "hits": [
+      "L9: await page.goto('http://localhost:3000/builder.html');"
+    ]
+  },
+  {
+    "file": "tests\\regression\\regression-tests.spec.ts",
+    "hits": [
+      "L101: await page.goto('http://localhost:3000/builder.html');",
+      "L143: await page.goto('http://localhost:3000/builder.html');",
+      "L179: await page.goto('http://localhost:3000/builder.html');",
+      "L442: await page.goto('http://localhost:3000/builder.html');",
+      "L535: await page.goto('http://localhost:3000/builder.html');"
+    ]
+  },
+  {
+    "file": "tests\\semantics\\js-syntax-compliance.spec.ts",
+    "hits": [
+      "L124: hasBuilder: !!behaviors.builder,",
+      "L135: expect(loadedGroups.hasBuilder).toBe(true);"
+    ]
+  },
+  {
+    "file": "tests\\spa-site-validation\\spa-site.test.ts",
+    "hits": [
+      "L3: const BASE_URL = 'http://localhost:3000/builder.html';"
+    ]
+  },
+  {
+    "file": "tests\\views\\card-schema-test.html",
+    "hits": [
+      "L24: <!-- 2. Empty Card (Builder Fallback) -->",
+      "L25: <wb-card class=\"card\" id=\"empty-card\" title=\"Builder Title\" content=\"Builder Body\"></wb-card>"
+    ]
+  },
+  {
+    "file": "tests\\views\\card-schema.spec.ts",
+    "hits": [
+      "L33: test('Builder: Creates structure when missing', async ({ page }) => {",
+      "L37: await expect(card.locator('h3')).toHaveText('Builder Title');",
+      "L38: await expect(card.locator('main')).toHaveText('Builder Body');"
+    ]
+  },
+  {
+    "file": "tests\\views\\issues-viewer.spec.ts",
+    "hits": [
+      "L5: console.log('STEP: navigate to builder');",
+      "L6: await page.goto('/builder.html');",
+      "L8: // Wait for the canvas and a known test component (used by other builder tests)"
+    ]
+  },
+  {
+    "file": "WB-ISSUES-TODO.md",
+    "hits": [
+      "L12: | 2 | doc button from builder doesn't navigate | `note-1769445369305-p0` | 1/26 | `false` |",
+      "L31: | 6 | builder.html needs page level theme control | `note-1769445416198-p0` | 1/26 | `false` |",
+      "L33: | 8 | builder add component popup uneven rows | `note-1769306014994-p0` | 1/24 | `false` |",
+      "L34: | 9 | remove issues button in builder bottom right | `note-1769305932956-p0` | 1/24 | `false` |",
+      "L68: 5. **doc button navigation** - Builder doesn't navigate"
+    ]
+  }
+]

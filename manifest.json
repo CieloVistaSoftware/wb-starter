@@ -72,11 +72,6 @@
       "name": "Documentation",
       "url": "/#docs",
       "description": "View documentation"
-    },
-    {
-      "name": "Builder",
-      "url": "/pages/builder.html",
-      "description": "Open page builder"
     }
   ],
   "screenshots": [

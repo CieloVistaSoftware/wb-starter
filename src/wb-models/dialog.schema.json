@@ -17,11 +17,13 @@
   "properties": {
     "title": {
       "type": "string",
-      "description": "Dialog title"
+      "description": "Dialog title",
+      "default": ""
     },
     "content": {
       "type": "string",
-      "description": "Dialog body content"
+      "description": "Dialog body content",
+      "default": ""
     },
     "size": {
       "type": "string",

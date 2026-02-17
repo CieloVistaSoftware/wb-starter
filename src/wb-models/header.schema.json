@@ -17,19 +17,23 @@
   "properties": {
     "icon": {
       "type": "string",
-      "description": "Logo icon (emoji or text)"
+      "description": "Logo icon (emoji or text)",
+      "default": ""
     },
     "title": {
       "type": "string",
-      "description": "Header title"
+      "description": "Header title",
+      "default": ""
     },
     "subtitle": {
       "type": "string",
-      "description": "Subtitle text"
+      "description": "Subtitle text",
+      "default": ""
     },
     "badge": {
       "type": "string",
-      "description": "Badge text (e.g., version)"
+      "description": "Badge text (e.g., version)",
+      "default": ""
     },
     "logoHref": {
       "type": "string",

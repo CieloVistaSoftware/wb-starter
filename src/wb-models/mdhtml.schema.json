@@ -18,7 +18,8 @@
     "src": {
       "type": "string",
       "description": "Path to external markdown file",
-      "attribute": "src"
+      "attribute": "src",
+      "default": ""
     },
     "sanitize": {
       "type": "boolean",

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OTP Behavior",
+  "type": "object",
+  "description": "Schema for x-otp behavior (one-time password input)",
+  "properties": {
+    "length": { "type": "integer", "description": "Number of OTP digits" }
+  },
+  "required": [],
+  "wbBehavior": {
+    "name": "otp",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Renders a multi-input OTP field.",
+    "src": "src/wb-viewmodels/otp.js"
+  }
+}

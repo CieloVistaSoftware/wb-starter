@@ -1,0 +1,204 @@
+# Page snapshot
+
+```yaml
+- banner:
+  - button "Toggle Navigation": ☰
+  - link "WB Logo":
+    - /url: "?page=home"
+    - img "WB Logo"
+  - button "Toggle Notes": 📝
+  - combobox:
+    - option "Dark" [selected]
+    - option "Light"
+    - option "Cyberpunk"
+    - option "Ocean"
+    - option "Sunset"
+    - option "Forest"
+    - option "Midnight"
+    - option "Twilight"
+    - option "Sakura"
+    - option "Arctic"
+    - option "Desert"
+    - option "Neon Dreams"
+    - option "Retro Wave"
+    - option "Lavender"
+    - option "Emerald"
+    - option "Ruby"
+    - option "Golden"
+    - option "Slate"
+    - option "Coffee"
+    - option "Mint"
+    - option "Noir"
+    - option "Aurora"
+    - option "Grape"
+  - button "Get Started"
+- navigation:
+  - link "🏠 Home":
+    - /url: "?page=home"
+  - link "🚀 Get Started":
+    - /url: "?page=builder"
+  - link "🧩 Components":
+    - /url: "?page=components"
+  - link "⚡ Behaviors":
+    - /url: "?page=behaviors"
+  - link "🎨 Themes":
+    - /url: "?page=themes"
+  - link "📖 Docs":
+    - /url: "?page=docs"
+  - link "ℹ️ About":
+    - /url: "?page=about"
+- main:
+  - text: 41+ Components
+  - heading "Build stunning UIs with behaviors" [level=3]
+  - link "Explore Components":
+    - /url: /pages/components.html
+  - link "Documentation":
+    - /url: /pages/docs.html
+  - heading "WB Starter — Build Stunning UIs with Behaviors" [level=1]
+  - text: 0 0 Behaviors Light DOM Architecture 0s Build Time 100% Standards Compliant
+  - heading "It's Just HTML Attributes" [level=2]
+  - paragraph:
+    - text: Add complex interactive behaviors with simple
+    - code: x-*
+    - text: attributes.
+  - alert:
+    - main:
+      - button
+      - button "Click Me (Ripple)"
+      - button
+      - button "Hover Me"
+      - button
+      - button "Open Modal"
+      - text: ✋ Drag Me Around
+      - button
+      - button "Celebrate! 🎉"
+    - text: HTML
+  - alert:
+    - button "Click Me"
+    - button "Hover Me"
+    - text: ✋ Drag Me Around
+    - button "Celebrate! 🎉"
+    - text: HTML
+  - heading "Everything You Need" [level=2]
+  - paragraph: A complete toolkit for modern web development.
+  - alert:
+    - main:
+      - text: 🧩
+      - heading "Component Library" [level=3]
+      - paragraph: Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation.
+    - text: HTML
+  - alert:
+    - main:
+      - text: ⚡
+      - heading "Behaviors System" [level=3]
+      - paragraph:
+        - text: Compose interactions like Lego bricks. Add
+        - code: x-fade-in
+        - text: ","
+        - code: x-sticky
+        - text: ", or"
+        - code: x-validate
+        - text: to any element.
+    - text: HTML
+  - alert:
+    - main:
+      - text: 🎨
+      - heading "Theme Engine" [level=3]
+      - paragraph: 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box.
+    - text: HTML
+  - alert:
+    - main:
+      - text: 📊
+      - heading "Data Viz" [level=3]
+      - paragraph: Built-in charts, stats cards, and audio visualizations powered by Web Standards.
+    - text: HTML
+  - alert:
+    - main:
+      - text: ♿
+      - heading "Accessible" [level=3]
+      - paragraph: ARIA attributes and keyboard navigation are baked into every component by default.
+    - text: HTML
+  - alert:
+    - main:
+      - text: 🚀
+      - heading "Performance" [level=3]
+      - paragraph: Zero-runtime compilation. Browsers are fast now. We let them do their job.
+    - text: HTML
+  - heading "Premium Components Included" [level=2]
+  - paragraph: Production-ready complex interfaces.
+  - text: Audio Visualization
+  - alert:
+    - text: 🎛️ 15-BAND GRAPHIC EQUALIZER
+    - button "Zero All"
+    - button "Demo Track"
+    - button "Flat"
+    - button "Bass Boost"
+    - button "Treble"
+    - button "V-Shape"
+    - button "Vocal"
+    - text: "0"
+    - slider: "0"
+    - text: 25 Hz 0
+    - slider: "0"
+    - text: 40 Hz 0
+    - slider: "0"
+    - text: 63 Hz 0
+    - slider: "0"
+    - text: 100 Hz 0
+    - slider: "0"
+    - text: 160 Hz 0
+    - slider: "0"
+    - text: 250 Hz 0
+    - slider: "0"
+    - text: 400 Hz 0
+    - slider: "0"
+    - text: 630 Hz 0
+    - slider: "0"
+    - text: 1K Hz 0
+    - slider: "0"
+    - text: 1.6K Hz 0
+    - slider: "0"
+    - text: 2.5K Hz 0
+    - slider: "0"
+    - text: 4K Hz 0
+    - slider: "0"
+    - text: 6.3K Hz 0
+    - slider: "0"
+    - text: 10K Hz 0
+    - slider: "0"
+    - text: 16K Hz
+    - button "🔊"
+    - text: MASTER
+    - slider: "50"
+    - text: 50% HTML
+  - text: Smart Notifications
+  - heading "Ready to ship faster?" [level=2]
+  - heading "Ready to build something" [level=2]
+  - paragraph: Join the No-Build Revolution today.
+  - link "Get Started":
+    - /url: /pages/components.html
+  - link "View on GitHub":
+    - /url: https://github.com/CieloVistaSoftware/wb-starter
+- contentinfo:
+  - text: © 2025 Your Company. All rights reserved.
+  - link "Privacy Policy":
+    - /url: "?page=privacy"
+  - text: ·
+  - link "Terms of Service":
+    - /url: "?page=terms"
+  - link "GitHub":
+    - /url: https://github.com
+    - img
+  - link "Twitter":
+    - /url: https://twitter.com
+    - img
+  - link "LinkedIn":
+    - /url: https://linkedin.com
+    - img
+- banner:
+  - heading "Test" [level=3]
+- main:
+  - paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- contentinfo:
+  - button "Click"
+```

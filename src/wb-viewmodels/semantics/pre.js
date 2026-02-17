@@ -251,8 +251,6 @@ export function pre(element, options = {}) {
     element.style.lineHeight = '1.5';
   }
 
-  element.classList.add('wb-ready');
-
   return () => {
     element.classList.remove('x-pre');
     if (wrapper && wrapper.parentNode) {

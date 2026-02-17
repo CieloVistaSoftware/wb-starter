@@ -3,7 +3,7 @@ import { getHtmlFiles, ROOT, relativePath, readFile } from '../base';
 
 // Files that are allowed to have missing IDs (test files, demos, etc.)
 const SKIP_FILES = [
-  'demos/behaviors.html',           // Large demo file with dynamic content
+  'demos/behaviors-showcase.html',           // Large demo file with dynamic content
   'demos/semantics-structure.html', // Demo file
   'tests/',                         // All test HTML files
   'public/papers/',                 // Paper documents

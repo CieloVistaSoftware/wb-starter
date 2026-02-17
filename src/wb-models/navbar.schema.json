@@ -17,7 +17,8 @@
   "properties": {
     "brand": {
       "type": "string",
-      "description": "Brand text"
+      "description": "Brand text",
+      "default": ""
     },
     "brandHref": {
       "type": "string",
@@ -26,7 +27,8 @@
     },
     "logo": {
       "type": "string",
-      "description": "Logo image URL"
+      "description": "Logo image URL",
+      "default": ""
     },
     "logoSize": {
       "type": "string",
@@ -35,11 +37,13 @@
     },
     "tagline": {
       "type": "string",
-      "description": "Brand tagline or subtitle"
+      "description": "Brand tagline or subtitle",
+      "default": ""
     },
     "items": {
       "type": "string",
-      "description": "Navigation items as JSON [{label, href}]"
+      "description": "Navigation items as JSON [{label, href}]",
+      "default": ""
     },
     "sticky": {
       "type": "boolean",

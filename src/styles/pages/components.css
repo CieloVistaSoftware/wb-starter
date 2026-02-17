@@ -1,0 +1,247 @@
+
+
+/* Extracted from pages/components.html */
+/* Page Hero */
+.page__hero {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  margin-bottom: 2rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+}
+
+.page__hero h1 {
+  margin: 0 0 0.5rem;
+  color: var(--primary);
+  font-size: 2rem;
+}
+
+.page__hero p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* Component Sections */
+.component-section {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.component-section:last-of-type {
+  border-bottom: none;
+}
+
+.component-section h2 {
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+.component-section h3 {
+  margin: 2rem 0 1rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Demo Layouts */
+.demo-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.demo-row--single {
+  grid-template-columns: 1fr;
+  max-width: 600px;
+}
+
+.demo-row--four {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.demo-item {
+  min-width: 0;
+}
+
+.demo-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.demo-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Component Box (for overlays section) */
+.component-box {
+  background: var(--bg-secondary);
+  padding: 1.25rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.component-box h4 {
+  margin: 0 0 0.5rem;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.component-box p {
+  margin: 0 0 1rem;
+  }
+
+  /* MOBILE-FIRST: Responsive overrides for components page */
+  @media (max-width: 600px) {
+    .page__hero,
+    .component-section,
+    .demo-row,
+    .demo-stack,
+    .demo-inline,
+    .component-box {
+      padding: 1rem !important;
+      margin: 0 !important;
+      border-radius: 8px !important;
+      max-width: 100vw !important;
+      box-sizing: border-box;
+    }
+    .page__hero h1 {
+      font-size: 1.2rem !important;
+    }
+    .demo-row {
+      grid-template-columns: 1fr !important;
+      gap: 1rem !important;
+    }
+    .component-box h4 {
+      font-size: 1rem !important;
+    }
+  }
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Code Examples */
+.code-example {
+  margin: 1rem 0 2rem;
+  background: #0f172a;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.code-example pre {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.code-example code {
+  font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+  white-space: pre;
+}
+
+/* Buttons */
+.wb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: var(--primary);
+  color: white;
+}
+
+.wb-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.wb-btn--secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.wb-btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* Form Elements */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* Time Display */
+.time-display {
+  font-family: monospace;
+  font-size: 1.25rem;
+  background: var(--bg-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+/* Footer */
+.page-footer {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+}
+
+.page-footer p {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.page-footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.page-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .demo-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .demo-row--four {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .demo-row,
+  .demo-row--four {
+    grid-template-columns: 1fr;
+  }
+}

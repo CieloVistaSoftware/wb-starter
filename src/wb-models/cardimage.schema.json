@@ -18,7 +18,8 @@
     "src": {
       "type": "string",
       "description": "Image source URL",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "alt": {
       "type": "string",
@@ -27,19 +28,23 @@
     },
     "title": {
       "type": "string",
-      "description": "Card title"
+      "description": "Card title",
+      "default": ""
     },
     "subtitle": {
       "type": "string",
-      "description": "Card subtitle"
+      "description": "Card subtitle",
+      "default": ""
     },
     "caption": {
       "type": "string",
-      "description": "Image caption (displayed below image)"
+      "description": "Image caption (displayed below image)",
+      "default": ""
     },
     "href": {
       "type": "string",
-      "description": "Link URL (makes card clickable)"
+      "description": "Link URL (makes card clickable)",
+      "default": ""
     },
     "aspect": {
       "type": "string",

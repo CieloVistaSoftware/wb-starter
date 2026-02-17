@@ -20,9 +20,9 @@ export function image(element, options = {}) {
   const config = {
     lazy: options.lazy ?? element.hasAttribute('data-lazy'),
     zoomable: options.zoomable ?? element.hasAttribute('data-zoomable'),
-    placeholder: options.placeholder || element.dataset.placeholder || '',
-    fallback: options.fallback || element.dataset.fallback || '',
-    aspectRatio: options.aspectRatio || element.dataset.aspectRatio || '',
+    placeholder: options.placeholder || element.getAttribute('placeholder') || '',
+    fallback: options.fallback || element.getAttribute('fallback') || '',
+    aspectRatio: options.aspectRatio || element.getAttribute('aspect-ratio') || '',
     ...options
   };
 
@@ -63,9 +63,9 @@ function openLightbox(src) {
  */
 export function gallery(element, options = {}) {
   const config = {
-    columns: parseInt(options.columns || element.dataset.columns || '3'),
-    gap: options.gap || element.dataset.gap || '1rem',
-    lightbox: options.lightbox ?? element.dataset.lightbox !== 'false',
+    columns: parseInt(options.columns || element.getAttribute('columns') || '3'),
+    gap: options.gap || element.getAttribute('gap') || '1rem',
+    lightbox: options.lightbox ?? element.getAttribute('lightbox') !== 'false',
     ...options
   };
 
@@ -114,13 +114,13 @@ function openGalleryLightbox(images, index) {
  */
 export function video(element, options = {}) {
   const config = {
-    src: options.src || element.dataset.src || '',
-    controls: options.controls ?? element.dataset.controls !== 'false',
+    src: options.src || element.getAttribute('src') || '',
+    controls: options.controls ?? element.getAttribute('controls') !== 'false',
     autoplay: options.autoplay ?? element.hasAttribute('data-autoplay'),
     muted: options.muted ?? element.hasAttribute('data-muted'),
     loop: options.loop ?? element.hasAttribute('data-loop'),
-    poster: options.poster || element.dataset.poster || '',
-    playsinline: options.playsinline ?? element.dataset.playsinline !== 'false',
+    poster: options.poster || element.getAttribute('poster') || '',
+    playsinline: options.playsinline ?? element.getAttribute('playsinline') !== 'false',
     ...options
   };
 
@@ -182,12 +182,12 @@ const EQ_BANDS = [
  */
 export function audio(element, options = {}) {
   const config = {
-    src: options.src || element.dataset.src || '',
-    controls: options.controls ?? element.dataset.controls !== 'false',
-    autoplay: options.autoplay ?? (element.hasAttribute('data-autoplay') && element.dataset.autoplay !== 'false'),
-    loop: options.loop ?? (element.hasAttribute('data-loop') && element.dataset.loop !== 'false'),
-    volume: parseFloat(options.volume || element.dataset.volume || '0.8'),
-    showEq: options.showEq ?? (element.dataset.showEq === 'true' || (element.hasAttribute('data-show-eq') && element.dataset.showEq !== 'false')),
+    src: options.src || element.getAttribute('src') || '',
+    controls: options.controls ?? element.getAttribute('controls') !== 'false',
+    autoplay: options.autoplay ?? (element.hasAttribute('data-autoplay') && element.getAttribute('autoplay') !== 'false'),
+    loop: options.loop ?? (element.hasAttribute('data-loop') && element.getAttribute('loop') !== 'false'),
+    volume: parseFloat(options.volume || element.getAttribute('volume') || '0.8'),
+    showEq: options.showEq ?? (element.getAttribute('show-eq') === 'true' || element.hasAttribute('show-eq')),
     ...options
   };
 
@@ -734,7 +734,6 @@ export function audio(element, options = {}) {
     getAudioContext: () => audioContext
   };
 
-  element.classList.add('wb-ready');
   return () => {
     container.classList.remove('wb-audio');
     if (wrapper && wrapper.parentNode) {
@@ -887,11 +886,11 @@ function injectAudioStyles() {
  */
 export function youtube(element, options = {}) {
   const config = {
-    id: options.id || element.dataset.id,
+    id: options.id || element.getAttribute('video-id'),
     autoplay: options.autoplay ?? element.hasAttribute('data-autoplay'),
     muted: options.muted ?? element.hasAttribute('data-muted'),
     loop: options.loop ?? element.hasAttribute('data-loop'),
-    controls: options.controls ?? (element.dataset.controls !== 'false'),
+    controls: options.controls ?? (element.getAttribute('controls') !== 'false'),
     ...options
   };
 
@@ -927,7 +926,6 @@ export function youtube(element, options = {}) {
   element.innerHTML = '';
   element.appendChild(iframe);
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-youtube');
 }
 
@@ -937,7 +935,7 @@ export function youtube(element, options = {}) {
  */
 export function vimeo(element, options = {}) {
   const config = {
-    id: options.id || element.dataset.id,
+    id: options.id || element.getAttribute('video-id'),
     autoplay: options.autoplay ?? element.hasAttribute('data-autoplay'),
     muted: options.muted ?? element.hasAttribute('data-muted'),
     loop: options.loop ?? element.hasAttribute('data-loop'),
@@ -971,7 +969,6 @@ export function vimeo(element, options = {}) {
   element.innerHTML = '';
   element.appendChild(iframe);
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-vimeo');
 }
 
@@ -981,7 +978,7 @@ export function vimeo(element, options = {}) {
  */
 export function ratio(element, options = {}) {
   const config = {
-    ratio: options.ratio || element.dataset.ratio || '16x9',
+    ratio: options.ratio || element.getAttribute('ratio') || '16x9',
     ...options
   };
   
@@ -1012,10 +1009,10 @@ export function ratio(element, options = {}) {
  */
 export function figure(element, options = {}) {
   const config = {
-    zoom: options.zoom ?? (element.dataset.zoom === 'true'),
-    lightbox: options.lightbox ?? (element.dataset.lightbox === 'true'),
-    captionPosition: options.captionPosition || element.dataset.captionPosition || 'bottom',
-    caption: options.caption || element.dataset.caption,
+    zoom: options.zoom ?? (element.getAttribute('zoom') === 'true' || element.hasAttribute('zoom')),
+    lightbox: options.lightbox ?? (element.getAttribute('lightbox') !== 'false'),
+    captionPosition: options.captionPosition || element.getAttribute('caption-position') || 'bottom',
+    caption: options.caption || element.getAttribute('caption'),
     ...options
   };
 

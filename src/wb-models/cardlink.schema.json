@@ -18,23 +18,28 @@
     "href": {
       "type": "string",
       "description": "Link destination URL",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "title": {
       "type": "string",
-      "description": "Card title"
+      "description": "Card title",
+      "default": ""
     },
     "description": {
       "type": "string",
-      "description": "Card description text"
+      "description": "Card description text",
+      "default": ""
     },
     "icon": {
       "type": "string",
-      "description": "Icon (emoji or icon name)"
+      "description": "Icon (emoji or icon name)",
+      "default": ""
     },
     "badge": {
       "type": "string",
-      "description": "Badge text"
+      "description": "Badge text",
+      "default": ""
     },
     "target": {
       "type": "string",

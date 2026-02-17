@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "x-effects Attributes",
+  "type": "object",
+  "description": "Schema for x-effects attributes (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter).",
+  "properties": {
+    "x-animate": { "type": "boolean" },
+    "x-fadein": { "type": "boolean" },
+    "x-fadeout": { "type": "boolean" },
+    "x-slidein": { "type": "boolean" },
+    "x-confetti": { "type": "boolean" },
+    "x-typewriter": { "type": "boolean" }
+  },
+  "anyOf": [
+    { "required": ["x-animate"] },
+    { "required": ["x-fadein"] },
+    { "required": ["x-fadeout"] },
+    { "required": ["x-slidein"] },
+    { "required": ["x-confetti"] },
+    { "required": ["x-typewriter"] }
+  ]
+}

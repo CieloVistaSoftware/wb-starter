@@ -17,7 +17,8 @@
   "properties": {
     "label": {
       "type": "string",
-      "description": "Select label"
+      "description": "Select label",
+      "default": ""
     },
     "placeholder": {
       "type": "string",
@@ -26,15 +27,18 @@
     },
     "options": {
       "type": "string",
-      "description": "Options as JSON [{value, label}]"
+      "description": "Options as JSON [{value, label}]",
+      "default": ""
     },
     "value": {
       "type": "string",
-      "description": "Selected value"
+      "description": "Selected value",
+      "default": ""
     },
     "name": {
       "type": "string",
-      "description": "Form field name"
+      "description": "Form field name",
+      "default": ""
     },
     "searchable": {
       "type": "boolean",

@@ -151,22 +151,7 @@
       "createdWhen": "footer"
     }
   ],
-  "$cssAPI": {
-    "vars": {
-      "--text-primary": "Main text color",
-      "--text-secondary": "Meta/Subtitle text color",
-      "--bg-primary": "Article background",
-      "--font-heading": "Heading font family",
-      "--font-body": "Body font family"
-    },
-    "parts": [
-      "header",
-      "meta",
-      "title",
-      "content",
-      "footer"
-    ]
-  },
+  "$cssAPI": {},
   "test": {
     "setup": [
       "<wb-article>Basic article content</wb-article>",

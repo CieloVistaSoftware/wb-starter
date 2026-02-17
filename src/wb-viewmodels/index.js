@@ -53,7 +53,6 @@ const behaviorModules = {
   tabs: 'tabs',
   details: 'semantics/details',
   mdhtml: 'mdhtml',
-  builder: 'builder',
   
   // Feedback (10) → feedback.js (progress moved to semantics/progress)
   toast: 'feedback', badge: 'feedback', spinner: 'feedback',
@@ -107,14 +106,25 @@ const behaviorModules = {
   range: 'semantics/range',
   rating: 'semantics/rating',
   
-  // Form Enhancements (13) → enhancements.js
-  form: 'enhancements', fieldset: 'enhancements', label: 'enhancements',
-  help: 'enhancements', error: 'enhancements', inputgroup: 'enhancements',
-  formrow: 'enhancements', stepper: 'enhancements', search: 'enhancements',
-  password: 'enhancements', masked: 'enhancements', counter: 'enhancements',
-  floatinglabel: 'enhancements',
-  otp: 'enhancements', colorpicker: 'enhancements', tags: 'enhancements',
-  autocomplete: 'enhancements', file: 'enhancements',
+  // Form Enhancements (now standalone files)
+  form: 'form',
+  fieldset: 'fieldset',
+  label: 'label',
+  help: 'help',
+  error: 'error',
+  inputgroup: 'inputgroup',
+  formrow: 'formrow',
+  stepper: 'stepper',
+  search: 'search',
+  password: 'password',
+  masked: 'masked',
+  counter: 'counter',
+  floatinglabel: 'floatinglabel',
+  otp: 'otp',
+  colorpicker: 'colorpicker',
+  tags: 'tags',
+  autocomplete: 'autocomplete',
+  file: 'file',
   
   // Validation
   validator: 'validator',

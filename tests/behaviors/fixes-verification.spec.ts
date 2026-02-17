@@ -230,9 +230,9 @@ test.describe('Fix Verification Tests', () => {
   });
 
   // ==========================================================================
-  // BUILDER & CORE FIXES (015, 018, 028, 029, 032, 040)
+  // CORE FIXES (028, 029, 032, 040)
   // ==========================================================================
-  test('Builder properties and Core behaviors work correctly', async ({ page }) => {
+  test('Core behaviors work correctly', async ({ page }) => {
     await page.setContent(`
       <div id="test-rating" data-behavior="rating"></div>
       <script src="/src/index.js" type="module"></script>
@@ -278,39 +278,6 @@ test.describe('Fix Verification Tests', () => {
       }
     });
     expect(syntaxCheck).toBe(true);
-  });
-
-  test('Builder Property Rendering (015)', async ({ page }) => {
-    // Mock the builder property rendering function
-    await page.setContent(`
-      <script type="module">
-        import { renderPropertyControl } from '/src/builder/builder-properties.js';
-        window.renderPropertyControl = renderPropertyControl;
-      </script>
-    `);
-
-    const result = await page.evaluate(() => {
-      try {
-        // Test case: Select with object options
-        const prop = {
-          name: 'test',
-          type: 'select',
-          options: [
-            { label: 'Option A', value: 'a' },
-            { label: 'Option B', value: 'b' }
-          ]
-        };
-        const html = window.renderPropertyControl(prop, 'a');
-        return html;
-      } catch (e) {
-        return 'ERROR: ' + e.toString();
-      }
-    });
-
-    // Should contain the labels, not [object Object]
-    expect(result).toContain('Option A');
-    expect(result).toContain('Option B');
-    expect(result).not.toContain('[object Object]');
   });
 
   test('Demo files load without error (031)', async ({ page }) => {

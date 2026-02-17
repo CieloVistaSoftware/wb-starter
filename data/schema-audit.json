@@ -1,0 +1,409 @@
+{
+  "pass": [
+    {
+      "file": "alert.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "article.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "articles.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "audio.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "avatar.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "badge.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "behavior.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "behaviors-showcase.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "behaviors.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "button.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "card.base.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "card.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardbutton.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "carddraggable.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardexpandable.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardfile.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardhero.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardhorizontal.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardimage.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardlink.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardminimizable.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardnotification.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardoverlay.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardportfolio.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardpricing.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardproduct.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardprofile.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardstats.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardtestimonial.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "cardvideo.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "checkbox.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "chip.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "codecontrol.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "collapse.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "confetti.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "copy.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "darkmode.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "demo.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "details.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "dialog.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "draggable.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "drawer.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "drawerLayout.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "dropdown.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "fireworks.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "fix-card.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "footer.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "globe.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "header.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "hero.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "home-page.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "input.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "mdhtml.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "move.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "navbar.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "notes.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "page.schema.json",
+      "tier": "definition"
+    },
+    {
+      "file": "progress.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "rating.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "resizable.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "ripple.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "scrollalong.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "search-index.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "search.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "select.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "semantic\\address.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\article.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\aside.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\blockquote.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\cite.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\container.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\figure.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\footer.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\header.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\main.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\nav.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\section.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\_element.base.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "semantic\\_inheritance.schema.json",
+      "tier": "definition"
+    },
+    {
+      "file": "skeleton.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "slider.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "snow.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "span.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "spinner.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "stagelight.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "sticky.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "switch.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "table.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "tabs.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "textarea.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "themecontrol.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "timeline.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "toast.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "toggle.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "tooltip.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "views.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "wb-control.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "wb-repeater.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "wizard.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "_base\\html-element.schema.json",
+      "tier": "base"
+    },
+    {
+      "file": "_base\\sectioning.schema.json",
+      "tier": "base"
+    }
+  ],
+  "fail": []
+}

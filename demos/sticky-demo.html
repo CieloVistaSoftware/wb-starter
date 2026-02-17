@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>Sticky Demo</h1>
+  <p>Demonstrates the <code>x-sticky</code> behavior.</p>
+  <div style="height: 200px; background: #eee; margin-bottom: 1rem;">Scroll down to see sticky effect</div>
+  <div x-sticky style="background: var(--primary); color: white; padding: 1rem; border-radius: 4px; position: sticky; top: 0;">I stick to the top!</div>
+  <div style="height: 600px;"></div>
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+</html>

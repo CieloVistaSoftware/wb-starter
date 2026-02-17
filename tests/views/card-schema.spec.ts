@@ -30,10 +30,10 @@ test.describe('Card Schema-First Architecture', () => {
     await expect(card.locator('h3')).toHaveText('Title');
   });
 
-  test('Builder: Creates structure when missing', async ({ page }) => {
+  test('Schema: Creates structure when missing', async ({ page }) => {
     const card = page.locator('#empty-card');
     
-    // The JS should have built the structure
+    // The schema-builder should have built the structure
     await expect(card.locator('h3')).toHaveText('Builder Title');
     await expect(card.locator('main')).toHaveText('Builder Body');
   });

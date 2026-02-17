@@ -1,0 +1,159 @@
+{
+  "timestamp": "2026-02-15T23:20:24.005Z",
+  "fixes": [
+    {
+      "file": "article.schema.json",
+      "type": "cssapi_invalid_key",
+      "key": "vars",
+      "action": "removed"
+    },
+    {
+      "file": "article.schema.json",
+      "type": "cssapi_invalid_key",
+      "key": "parts",
+      "action": "removed"
+    },
+    {
+      "file": "articles.schema.json",
+      "type": "cssapi_invalid_key",
+      "key": "vars",
+      "action": "removed"
+    },
+    {
+      "file": "articles.schema.json",
+      "type": "cssapi_invalid_key",
+      "key": "parts",
+      "action": "removed"
+    },
+    {
+      "file": "behaviors.schema.json",
+      "type": "add_missing_type",
+      "property": "type"
+    },
+    {
+      "file": "behaviors.schema.json",
+      "type": "add_missing_default",
+      "property": "type"
+    },
+    {
+      "file": "behaviors.schema.json",
+      "type": "add_missing_type",
+      "property": "category"
+    },
+    {
+      "file": "behaviors.schema.json",
+      "type": "add_missing_default",
+      "property": "category"
+    },
+    {
+      "file": "card.base.schema.json",
+      "type": "fix_default_type",
+      "property": "title",
+      "from": "object",
+      "to": "\"\""
+    },
+    {
+      "file": "card.base.schema.json",
+      "type": "fix_default_type",
+      "property": "subtitle",
+      "from": "object",
+      "to": "\"\""
+    },
+    {
+      "file": "card.base.schema.json",
+      "type": "fix_default_type",
+      "property": "footer",
+      "from": "object",
+      "to": "\"\""
+    },
+    {
+      "file": "card.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--bg-secondary"
+    },
+    {
+      "file": "card.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--border-color"
+    },
+    {
+      "file": "card.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--radius-lg"
+    },
+    {
+      "file": "card.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--shadow-elevated"
+    },
+    {
+      "file": "card.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--shadow-hover"
+    },
+    {
+      "file": "cardprofile.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--bg-secondary"
+    },
+    {
+      "file": "cardprofile.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--primary"
+    },
+    {
+      "file": "cardprofile.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--text-secondary"
+    },
+    {
+      "file": "cardstats.schema.json",
+      "type": "enum_add_empty",
+      "property": "trend"
+    },
+    {
+      "file": "demo.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--border-color"
+    },
+    {
+      "file": "drawerLayout.schema.json",
+      "type": "fix_kebab_case",
+      "field": "schemaFor",
+      "from": "drawerLayout",
+      "to": "drawer-layout"
+    },
+    {
+      "file": "hero.schema.json",
+      "type": "enum_add_empty",
+      "property": "variant"
+    },
+    {
+      "file": "hero.schema.json",
+      "type": "fix_default_value",
+      "property": "variant",
+      "from": "",
+      "to": "default"
+    },
+    {
+      "file": "span.schema.json",
+      "type": "enum_add_default",
+      "property": "variant"
+    },
+    {
+      "file": "stagelight.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--wb-stagelight-color"
+    },
+    {
+      "file": "stagelight.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--wb-stagelight-size"
+    },
+    {
+      "file": "stagelight.schema.json",
+      "type": "cssapi_add_default",
+      "variable": "--wb-stagelight-intensity"
+    }
+  ]
+}

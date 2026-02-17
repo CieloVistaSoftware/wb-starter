@@ -83,7 +83,17 @@ export async function tooltip(element, options = {}) {
   injectStyles();
 
   // Config
-  const content = String(options.content ?? element.dataset.content ?? element.getAttribute('x-content') ?? element.dataset.tooltip ?? element.getAttribute('tooltip') ?? element.getAttribute('title') ?? element.innerText.trim() ?? '');
+  const content = String(
+    options.content ??
+    element.getAttribute('x-tooltip') ??
+    element.getAttribute('data-tooltip') ??
+    element.getAttribute('content') ??
+    element.getAttribute('x-content') ??
+    element.getAttribute('tooltip') ??
+    element.getAttribute('title') ??
+    element.innerText.trim() ??
+    ''
+  );
   if (!content) {
     console.warn('[WB:tooltip] No content');
     return () => {};
@@ -91,11 +101,24 @@ export async function tooltip(element, options = {}) {
 
   const config = {
     content,
-    position: ['top', 'bottom', 'left', 'right'].includes(options.position ?? element.getAttribute('x-position') ?? element.dataset.tooltipPosition ?? element.getAttribute('tooltip-position'))
-      ? (options.position ?? element.getAttribute('x-position') ?? element.dataset.tooltipPosition ?? element.getAttribute('tooltip-position')) : 'top',
-    delay: Math.max(0, parseInt(options.delay ?? element.getAttribute('x-delay') ?? element.dataset.tooltipDelay ?? '200', 10)),
-    hideDelay: Math.max(0, parseInt(options.hideDelay ?? element.getAttribute('x-hide-delay') ?? element.dataset.tooltipHideDelay ?? '100', 10)),
-    customClass: options.customClass ?? element.getAttribute('x-custom-class') ?? element.dataset.tooltipClass ?? '',
+    position: ['top', 'bottom', 'left', 'right'].includes(
+      options.position ??
+      element.getAttribute('x-position') ??
+      element.getAttribute('data-tooltip-position') ??
+      element.getAttribute('position') ??
+      element.getAttribute('tooltip-position')
+    )
+      ? (
+        options.position ??
+        element.getAttribute('x-position') ??
+        element.getAttribute('data-tooltip-position') ??
+        element.getAttribute('position') ??
+        element.getAttribute('tooltip-position')
+      )
+      : 'top',
+    delay: Math.max(0, parseInt(options.delay ?? element.getAttribute('x-delay') ?? element.getAttribute('tooltip-delay') ?? '200', 10)),
+    hideDelay: Math.max(0, parseInt(options.hideDelay ?? element.getAttribute('x-hide-delay') ?? element.getAttribute('tooltip-hide-delay') ?? '100', 10)),
+    customClass: options.customClass ?? element.getAttribute('x-custom-class') ?? element.getAttribute('tooltip-class') ?? '',
   };
 
   // Remove native title

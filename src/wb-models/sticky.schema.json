@@ -26,7 +26,8 @@
     },
     "threshold": {
       "type": "number",
-      "description": "Scroll position to trigger sticky"
+      "description": "Scroll position to trigger sticky",
+      "default": 0
     },
     "stuckClass": {
       "type": "string",

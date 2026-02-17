@@ -18,19 +18,23 @@
     "src": {
       "type": "string",
       "description": "Video source URL",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "poster": {
       "type": "string",
-      "description": "Poster image URL"
+      "description": "Poster image URL",
+      "default": ""
     },
     "title": {
       "type": "string",
-      "description": "Video title"
+      "description": "Video title",
+      "default": ""
     },
     "description": {
       "type": "string",
-      "description": "Video description"
+      "description": "Video description",
+      "default": ""
     },
     "autoplay": {
       "type": "boolean",

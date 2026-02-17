@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>x-help Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>x-help Demo</h1>
+  <p>
+    Demonstrates the <code>x-help</code> behavior.<br>
+    <strong>Note:</strong> <code>x-help</code> displays help text inline, always visible, and does <strong>not</strong> show on hover. For hover-based help, use <code>x-tooltip</code> instead.<br>
+    <strong>Value:</strong> <code>x-help</code> is functionally the same as a <code>&lt;span&gt;</code> except it adds consistent styling and accessibility (like <code>role="note"</code> and a help class). If you don't need those, use a regular element instead.<br>
+    <strong>Schema:</strong> <a href="../src/wb-models/help.schema.json" target="_blank">help.schema.json</a> |
+    <strong>Demo Schema:</strong> <a href="../src/wb-models/help-demo.schema.json" target="_blank">help-demo.schema.json</a> |
+    <strong>Test:</strong> <a href="../tests/behaviors/help.spec.ts" target="_blank">help.spec.ts</a> |
+    <strong>Doc:</strong> <a href="../docs/behaviors/help.md" target="_blank">help.md</a>
+  </p>
+  <div>
+    <span x-help>This is help text for a field.</span>
+  </div>
+  <div>
+    <span x-help>Another help message for users.</span>
+  </div>
+  <div>
+    <span x-help>Short help.</span>
+  </div>
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    // In-browser schema validation (Ajv)
+    import Ajv from 'https://cdn.jsdelivr.net/npm/ajv@8.12.0/dist/ajv.min.js';
+    const schemaUrl = '../src/wb-models/help-demo.schema.json';
+    const ajv = new Ajv();
+    fetch(schemaUrl).then(r => r.json()).then(schema => {
+      const data = {
+        components: [
+          { type: 'span', attributes: { xHelp: '' }, text: 'This is help text for a field.' },
+          { type: 'span', attributes: { xHelp: '' }, text: 'Another help message for users.' },
+          { type: 'span', attributes: { xHelp: '' }, text: 'Short help.' }
+        ]
+      };
+      const valid = ajv.validate(schema, data);
+      const out = document.createElement('pre');
+      out.style.background = '#222';
+      out.style.color = '#fff';
+      out.style.padding = '0.5em';
+      out.textContent = valid ? 'Schema validation: PASS' : 'Schema validation: FAIL\n' + JSON.stringify(ajv.errors, null, 2);
+      document.body.appendChild(out);
+    });
+  </script>
+</body>
+</html>

@@ -14,11 +14,13 @@
     "$generated": {
       "type": "string",
       "format": "date-time",
-      "description": "ISO timestamp when index was generated"
+      "description": "ISO timestamp when index was generated",
+      "default": ""
     },
     "$version": {
       "type": "string",
-      "description": "Schema version for cache busting"
+      "description": "Schema version for cache busting",
+      "default": ""
     },
     "$stats": {
       "type": "object",
@@ -37,14 +39,16 @@
           },
           "description": "Document count per source folder"
         }
-      }
+      },
+      "default": {}
     },
     "documents": {
       "type": "array",
       "description": "Searchable documents",
       "items": {
         "$ref": "#/$defs/SearchDocument"
-      }
+      },
+      "default": []
     },
     "index": {
       "type": "object",
@@ -54,7 +58,8 @@
         "items": {
           "type": "string"
         }
-      }
+      },
+      "default": {}
     }
   },
   "required": [

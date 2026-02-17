@@ -1,0 +1,25 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/compliance/strict-mode-runtime.spec.ts",
+  "startedAt": "2026-02-16T04:50:44.609Z",
+  "updatedAt": "2026-02-16T04:50:59.802Z",
+  "command": "npx playwright test --workers=8 tests/compliance/strict-mode-runtime.spec.ts",
+  "pid": 8064,
+  "passed": 1,
+  "failed": 1,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\compliance\\strict-mode-runtime.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  x  1 [compliance] › tests\\compliance\\strict-mode-runtime.spec.ts:5:3 › Strict Mode Runtime Compliance › should throw error for legacy data-wb usage and NOT process it (6.4s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 8.8s\n  ✓ Passed:  0\n  ✗ Failed:  1\n\n  By Project:\n    ✗ compliance: 0/1 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [compliance] › tests\\compliance\\strict-mode-runtime.spec.ts:5:3 › Strict Mode Runtime Compliance › should throw error for legacy data-wb usage and NOT process it \n\n    Error: \u001b[31mTimed out 5000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n    Locator: locator('#modern-card')\n    Expected string: \u001b[32m\"card\"\u001b[39m\n    Received string: \u001b[31m\"\"\u001b[39m\n    Call log:\n    \u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#modern-card')\u001b[22m\n    \u001b[2m    9 × locator resolved to <wb-card title=\"Modern\" x-schema=\"card\" id=\"modern-card\" class=\"wb-card wb-card--auto wb-card--hoverable wb-ready\">…</wb-card>\u001b[22m\n    \u001b[2m      - unexpected value \"null\"\u001b[22m\n\n\n      27 |     // 2. Check that Modern component processed\n      28 |     const modernCard = page.locator('#modern-card');\n    > 29 |     await expect(modernCard).toHaveAttribute('data-wb-schema', 'card');\n         |                              ^\n      30 |\n      31 |     // 3. Check that Legacy component is NOT processed/upgraded\n      32 |     const legacyCard = page.locator('#legacy-card');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\compliance\\strict-mode-runtime.spec.ts:29:30\n\n    Error Context: data\\test-results\\strict-mode-runtime-Strict-83f3f-wb-usage-and-NOT-process-it-compliance\\error-context.md\n\n  1 failed\n    [compliance] › tests\\compliance\\strict-mode-runtime.spec.ts:5:3 › Strict Mode Runtime Compliance › should throw error for legacy data-wb usage and NOT process it \n",
+  "errors": "\n❌ FAILED: should throw error for legacy data-wb usage and NOT process it\n   Error: Timed out 5000ms waiting for expect(locator).toHaveAttribute(expected)\n",
+  "failures": [
+    {
+      "file": "tests\\compliance\\strict-mode-runtime.spec.ts",
+      "name": "Strict Mode Runtime Compliance › should throw error for legacy data-wb usage and NOT process it"
+    }
+  ],
+  "completedAt": "2026-02-16T04:50:59.802Z",
+  "duration": "15.19s",
+  "exitCode": 1
+}

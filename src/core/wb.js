@@ -406,6 +406,8 @@ const WB = {
           }
 
           if (behaviorName) {
+            // Debug log for behavior injection
+            console.log('[WB.scan] Injecting behavior:', behaviorName, 'on', htmlEl, 'with options:', attr.value ? { config: attr.value } : {});
             // Pass the attribute value as config if present
             const options = attr.value ? { config: attr.value } : {};
             promises.push(WB.inject(htmlEl, behaviorName, options));

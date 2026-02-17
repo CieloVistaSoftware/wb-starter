@@ -259,3 +259,96 @@ wb-navbar [data-brand]::after {
     background: rgba(15, 23, 42, 0.98);
   }
 }
+
+/* Navigation styles extracted from site.css */
+.site__nav {
+  width: var(--nav-width, fit-content);
+  min-width: 60px;
+  padding-right: 0;
+  background: var(--bg-primary);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  overflow: visible;
+  align-self: flex-start;
+  max-height: calc(100vh - 60px);
+  position: relative;
+}
+.site__nav--collapsed {
+  width: 60px;
+  min-width: 60px;
+}
+.site__nav--collapsed .nav__label {
+  opacity: 0;
+  width: 0;
+  display: none;
+}
+.site__nav--collapsed .nav__item {
+  padding-left: 0.5rem;
+  padding-right: 2rem;
+}
+.nav__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.2s;
+}
+.nav__toggle:hover {
+  background: var(--bg-tertiary);
+  color: var(--primary);
+}
+.nav__items {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  gap: 0.25rem;
+  overflow-y: auto;
+  flex: 1;
+}
+.nav__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: var(--text-secondary);
+  border-radius: 0;
+  transition: all 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 0.85rem;
+}
+.nav__item:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+.nav__item--active {
+  background: var(--primary);
+  color: white;
+}
+.nav__item--active:hover {
+  background: var(--primary-dark);
+  color: white;
+}
+.nav__icon {
+  display: none;
+  font-size: 1rem;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+.site__nav--collapsed .nav__icon {
+  display: block;
+}
+.nav__label {
+  transition: opacity 0.2s, width 0.2s;
+}

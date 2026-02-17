@@ -18,7 +18,8 @@
     "filename": {
       "type": "string",
       "description": "File name",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "fileType": {
       "type": "string",
@@ -36,15 +37,18 @@
     },
     "size": {
       "type": "string",
-      "description": "File size (e.g., 2.4 MB)"
+      "description": "File size (e.g., 2.4 MB)",
+      "default": ""
     },
     "date": {
       "type": "string",
-      "description": "File date"
+      "description": "File date",
+      "default": ""
     },
     "href": {
       "type": "string",
-      "description": "Download URL"
+      "description": "Download URL",
+      "default": ""
     },
     "downloadable": {
       "type": "boolean",

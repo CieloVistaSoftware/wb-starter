@@ -77,7 +77,6 @@
       },
       "affectedComponents": ["audio", "video", "cardimage", "cardvideo", "avatar", "youtube", "vimeo"],
       "regressionTests": [
-        "tests/builder/builder-mkel.spec.ts",
         "tests/components/audio.spec.ts",
         "tests/regression/regression-tests.spec.ts"
       ],

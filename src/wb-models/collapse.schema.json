@@ -10,10 +10,19 @@
     "accessibility": "high"
   },
   "properties": {
+    "heading": {
+      "type": "string",
+      "default": "Toggle",
+      "description": "Text displayed on the clickable trigger button"
+    },
     "expanded": {
       "type": "boolean",
       "default": false,
-      "description": "Ideally open"
+      "description": "Whether the content is initially visible"
+    },
+    "target": {
+      "type": "string",
+      "description": "CSS selector of a remote element to toggle instead of wrapping content"
     }
   },
   "$view": [],

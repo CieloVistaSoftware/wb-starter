@@ -1,34 +1,70 @@
 /**
  * Alert Behavior Styles
  * -----------------------------------------------------------------------------
- * Extracted from demo.css (Phase 3 migration)
- * Works with src/wb-viewmodels/semantics/alert.js
+ * Works with src/wb-viewmodels/feedback.js alert()
  * -----------------------------------------------------------------------------
  */
 
 .wb-alert {
-  padding: 0.75rem;
-  border-radius: 6px;
-  border-left: 3px solid;
-  font-size: 0.85rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  border-left: 4px solid;
+  color: white;
 }
 
+/* Variants */
 .wb-alert--info {
-  background: var(--alert-info-bg);
-  border-color: var(--primary);
+  background: var(--info-color, #3b82f6);
+  border-color: var(--info-dark, #1e40af);
 }
 
 .wb-alert--success {
-  background: var(--alert-success-bg);
-  border-color: var(--success-color);
+  background: var(--success-color, #22c55e);
+  border-color: var(--success-dark, #166534);
 }
 
 .wb-alert--warning {
-  background: var(--alert-warning-bg);
-  border-color: var(--warning-color);
+  background: var(--warning-color, #f59e0b);
+  border-color: var(--warning-dark, #92400e);
 }
 
 .wb-alert--error {
-  background: var(--alert-danger-bg);
-  border-color: var(--danger-color);
+  background: var(--danger-color, #ef4444);
+  border-color: var(--danger-dark, #991b1b);
+}
+
+/* Internal structure */
+.wb-alert__icon {
+  flex-shrink: 0;
+}
+
+.wb-alert__content {
+  flex: 1;
+}
+
+.wb-alert__title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.wb-alert__message {
+  margin: 0;
+}
+
+.wb-alert__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: inherit;
+  padding: 0;
+}
+
+.wb-alert__close:hover {
+  opacity: 1;
 }

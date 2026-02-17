@@ -3,21 +3,22 @@
   "$id": "cite.schema.json",
   "title": "Cite Semantic Element",
   "description": "Attribution for a quotation or reference. Author name, work title, source.",
-  
   "$inheritance": {
     "extends": "_element.base.schema.json",
     "reason": "Cite IS-A element with all base properties"
   },
-  
   "htmlTag": "cite",
   "role": "none (inline element)",
-  
   "semanticMeaning": {
     "description": "Reference to a creative work - title of work, author name",
-    "examples": ["Author attribution", "Book title", "Article title", "Movie name"],
+    "examples": [
+      "Author attribution",
+      "Book title",
+      "Article title",
+      "Movie name"
+    ],
     "whenToUse": "When crediting a source - typically with blockquote"
   },
-  
   "type": "object",
   "properties": {
     "author": {
@@ -41,22 +42,27 @@
     "url": {
       "type": "string",
       "description": "Link to source",
-      "canvasEditable": false
+      "canvasEditable": false,
+      "default": ""
     }
   },
-  
   "textProperties": {
     "description": "Canvas-editable text",
-    "list": ["author", "role", "source"]
+    "list": [
+      "author",
+      "role",
+      "source"
+    ]
   },
-  
   "structure": {
     "template": "<cite>{{author}}</cite>",
     "withRole": "<cite>{{author}}, {{role}}</cite>"
   },
-  
   "wbComponents": {
     "description": "WB components that use cite",
-    "list": ["cardtestimonial"]
-  }
+    "list": [
+      "cardtestimonial"
+    ]
+  },
+  "schemaType": "base"
 }

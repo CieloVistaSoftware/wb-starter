@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Label Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>Label Demo</h1>
+  <p>Demonstrates the <code>x-label</code> behavior.<br>
+    <strong>Schema:</strong> <a href="../src/wb-models/label.schema.json" target="_blank">label.schema.json</a> |
+    <strong>Test:</strong> <a href="../tests/behaviors/label.spec.ts" target="_blank">label.spec.ts</a> |
+    <strong>Doc:</strong> <a href="../docs/behaviors/label.md" target="_blank">label.md</a>
+  </p>
+  <label x-label for="input1">Label for input:</label>
+  <input id="input1" type="text">
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    // In-browser schema validation (Ajv)
+    import Ajv from 'https://cdn.jsdelivr.net/npm/ajv@8.12.0/dist/ajv.min.js';
+    const schemaUrl = '../src/wb-models/label.schema.json';
+    const ajv = new Ajv();
+    fetch(schemaUrl).then(r => r.json()).then(schema => {
+      const data = {
+        required: false,
+        optional: false
+      };
+      const valid = ajv.validate(schema, data);
+      const out = document.createElement('pre');
+      out.style.background = '#222';
+      out.style.color = '#fff';
+      out.style.padding = '0.5em';
+      out.textContent = valid ? 'Schema validation: PASS' : 'Schema validation: FAIL\n' + JSON.stringify(ajv.errors, null, 2);
+      document.body.appendChild(out);
+    });
+  </script>
+</body>
+</html>

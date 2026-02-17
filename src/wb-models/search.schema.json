@@ -22,11 +22,13 @@
     },
     "value": {
       "type": "string",
-      "description": "Search value"
+      "description": "Search value",
+      "default": ""
     },
     "name": {
       "type": "string",
-      "description": "Form field name"
+      "description": "Form field name",
+      "default": ""
     },
     "debounce": {
       "type": "number",

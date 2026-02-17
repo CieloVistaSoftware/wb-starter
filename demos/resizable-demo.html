@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resizable Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>Resizable Demo</h1>
+  <p>Demonstrates the <code>x-resizable</code> behavior.</p>
+  <div x-resizable style="width: 100px; height: 100px; background: var(--bg-tertiary); border: 1px solid var(--border-color); overflow: hidden;">Resize Me</div>
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+</html>

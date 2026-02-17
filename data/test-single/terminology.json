@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/terminology.spec.ts",
+  "startedAt": "2026-02-16T04:47:25.037Z",
+  "updatedAt": "2026-02-16T04:47:32.901Z",
+  "command": "npx playwright test --workers=8 tests/compliance/terminology.spec.ts",
+  "pid": 37720,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\compliance\\terminology.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [compliance] › tests\\compliance\\terminology.spec.ts:19:3 › Terminology Compliance › no usage of forbidden term \"WB Framework\" (269ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 2.0s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (2.5s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-16T04:47:32.901Z",
+  "duration": "7.86s",
+  "exitCode": 0
+}

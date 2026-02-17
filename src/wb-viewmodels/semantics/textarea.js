@@ -10,12 +10,12 @@ export function textarea(element, options = {}) {
   }
 
   const config = {
-    autosize: options.autosize ?? element.hasAttribute('data-autosize'),
-    maxLength: parseInt(options.maxLength || element.dataset.maxLength || '0'),
-    showCount: options.showCount ?? element.hasAttribute('data-show-count'),
-    minRows: parseInt(options.minRows || element.dataset.minRows || '2'),
-    maxRows: parseInt(options.maxRows || element.dataset.maxRows || '10'),
-    size: options.size || element.dataset.size || 'md',
+    autosize: options.autosize ?? element.hasAttribute('autosize'),
+    maxLength: parseInt(options.maxLength || element.getAttribute('max-length') || '0'),
+    showCount: options.showCount ?? element.hasAttribute('show-count'),
+    minRows: parseInt(options.minRows || element.getAttribute('min-rows') || '2'),
+    maxRows: parseInt(options.maxRows || element.getAttribute('max-rows') || '10'),
+    size: options.size || element.getAttribute('size') || 'md',
     ...options
   };
 
@@ -97,7 +97,6 @@ export function textarea(element, options = {}) {
     update();
   }
 
-  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-textarea');
     if (config.size !== 'md') {

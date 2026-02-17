@@ -1,207 +1,240 @@
-# TODO List
-
-**Last Updated:** 2026-02-09  
-**Source:** CURRENT-STATUS.md
+---
+# TODO — WB-Starter Project
+**Generated:** 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipped / 2730 total)
+**Updated:** 2026-02-16 — Prioritized action items with completion tracking
 
 ---
 
-## ❓ Questions (for automation / AI)
-Use this section to post short, machine-actionable questions for other AI agents. Follow the exact format below so agents can claim and respond automatically.
+## Priority 1 — Showcase Page: Match Tests to Reality (54 failures)
 
-- Format (required):
-  - `QID:` `q-YYYYMMDD-NN`  — unique question id
-  - `Title:` one-line summary
-  - `Priority:` low | medium | high
-  - `Context:` relative path(s) and short pointer (file:line or PR#)
-  - `Question:` single clear question (1-2 sentences)
-  - `Expected output:` checklist of artifacts (log, PR, CSV, command to run)
+### behaviors-showcase-definitive.spec.ts (32 → 15 failures)
+- [x] **FIXED: Registered 30+ missing behaviors in `src/core/wb-lazy.js`** — x-clock, x-countdown, x-youtube, x-pagination, x-steps, x-timeline, x-kbd, x-gallery, x-image, x-popover, x-confirm, x-prompt, x-lightbox, x-share, x-print, x-fullscreen, x-darkmode, x-truncate, x-sticky, x-scrollalong, x-masonry, x-dropdown, x-toggle, x-drawer-layout, x-autosize, wb-accordion, wb-modal
+- [x] **FIXED: Improved waitForWB** to wait for behavior rendering signals
+- [ ] countdown element still not visible (x-countdown)
+- [ ] spinners have animation check (SVG animation)
+- [ ] sections have proper spacing (CSS)
+- [ ] page is responsive at mobile width (horizontal scroll at 375px)
+- [ ] checkbox toggles on click (not clickable)
+- [ ] wb-* custom elements are upgraded (some not visible)
+- [ ] x-* behavior attributes are processed (some not visible)
+- [ ] Rerun tests and confirm all pass
 
-- Claiming & answering (must follow):
-  1. Claim by editing this line to: `[~claimed <agent-id> <iso-ts>]` immediately under the question.
-  2. Run the required commands and attach logs/results to the question's PR or comment.
-  3. Answer format (machine-parseable):
-     - `QID:` q-YYYYMMDD-NN
-     - `Status:` answered | blocked | need-human
-     - `Answer:` short text (1-3 lines)
-     - `Artifacts:` `data/` path(s) or PR#/ISSUE#
-     - `Resolved-by:` `<agent-id>` `<iso-ts>`
-  4. Mark the question complete by replacing the checklist with `[x]` and add a 1-line `docs/_today/TODO.md` follow-up if needed.
+### behaviors-showcase.spec.ts (22 failures)  
+- [ ] Tabs interaction timeout — verify wb-tabs renders and tab switching works
+- [ ] Dropdown interaction — add `x-dropdown` to showcase page (currently 0 instances)
+- [ ] Masonry layout — add `x-masonry` to showcase page (currently 0 instances)
+- [ ] Toggle behavior — add `x-toggle` to showcase page (currently 0 instances)
+- [ ] Drawer-layout — add `x-drawer-layout` to showcase page (currently 0 instances)
+- [ ] Rerun tests and confirm pass
 
-- SLA / expectations: aim to respond within 15 minutes for `high`, 4 hours for `medium`, 24 hours for `low`.
-
-### Active Questions
-
-- [x] QID: q-20260206-03 ✅
-  Title: Fix test-async.mjs detached process not releasing parent
-  Priority: **high** — **RESOLVED 2026-02-09**
-  Answer: Already fixed. Two-phase architecture (launcher→monitor) with `detached:true`, `stdio:"ignore"`, `unref()`. Verified: returns in <1s.
-
-- [x] QID: q-20260206-02 ✅
-  Title: Run retroactive PR labeler on main
-  Priority: **medium** *(downgraded from high — 3 days stale, verify if still needed)*
-  Context: MERGE-PLAN item 11, scripts/retroactive-pr-labeler.js on main branch
-  Question: Now that PRs #98-#104 are merged to main, run `node scripts/retroactive-pr-labeler.js --apply` on main to retroactively label open PRs needing Tier-1. Report results.
-  Expected output: `data/retro-labeler-report.csv`, console output showing which PRs were labeled, 1-line summary here.
-  **COMPLETED:** Script executed successfully. Labeled 1 PR (#108) with "needs-tests" label and added automated comment. Generated `data/retro-labeler-report.csv` showing 50+ PRs identified as needing Tier-1 checks. Note: jq parsing error occurred but didn't prevent labeling.
-
-- [x] QID: q-20260206-04 ✅
-  Title: Restore MERGE-PLAN.md to main
-  Priority: **medium** *(downgraded from high — 3 days stale, verify if still needed)*
-  Context: docs/_today/MERGE-PLAN.md — existed on announce-test-policy branch but not on main after merge
-  Question: The MERGE-PLAN.md file was edited on `chore/docs/announce-test-policy-impl` but the version with updated async test rules never landed on main. Please restore it from that branch, update items 7-10 to `[x] merged to main`, and commit to main.
-  Expected output: `docs/_today/MERGE-PLAN.md` on main with all 10 items checked off, committed and pushed.
-  **COMPLETED:** Restored MERGE-PLAN.md with all 10 items marked as completed. Committed to branch `chore/restore-merge-plan-20260210` and pushed for review.
+### behaviors-showcase-visual.spec.ts (56 failures — FIXED port issue)
+- [ ] Rerun tests and confirm pass
 
 ---
 
-## 🔴 High Priority
+## Priority 2 — Sticky Behavior (18 failures)
 
-### ✅ Fix test-async.mjs Detached Process (q-20260206-03)
-- ~~Parent process hangs ~203s instead of exiting immediately~~
-- **RESOLVED** — Two-phase launcher/monitor architecture already in place. Tested: returns in <1s.
+**File:** `sticky.spec.ts` — Tests go to `/demos/autoinject.html`, inject `x-sticky` HTML, call `WB.scan()`
+**Root cause:** WB engine not processing `x-sticky` attribute on scan — `wb-sticky` class never applied, API never attached
 
-### x- Prefix Migration
-- [ ] **Phase 1: Core Infrastructure** (see `docs/architecture/CODE-AUDIT-X-MIGRATION.md`)
-  - [ ] Update `src/core/wb.js` - add custom element + x-* scanning
-  - [ ] Create `src/core/tag-map.js` - tag-to-behavior mapping
-  - [ ] Create `src/core/extensions.js` - extension behavior registry
-- [ ] **Phase 2: Behaviors** - Update attribute names (title→heading, type→variant)
-- [ ] **Phase 3: Builder** - Generate new syntax
-- [ ] **Phase 4: HTML Pages** - Convert ~200 files
-- [ ] **Phase 5: Tests** - Update fixtures
-- [ ] **Phase 6: Schemas** - Add customElement metadata
-- [ ] **Phase 7: Documentation** - Update examples
-
-### Native Element Migrations *(upgraded from medium — quick wins, modernizes framework)*
-- 🔲 **`progressbar` → native `<progress>`** — Use `<progress value="..." max="100">`, maintain existing API *(claimed)*
-- [x] **`search` → native `<search>` wrapper** — **CANCELLED: `<input x-search>` is correct HTML5 + behavior pattern**
-- [ ] **`highlight` → native `<mark>`** — Replace custom highlighting, preserve styling
-- [ ] **`clock/countdown` → native `<time>`** — Use `<time datetime="...">`, add machine-readable timestamps
+- [ ] Verify `sticky` is registered in `wb-viewmodels/index.js` behavior registry (confirmed: `sticky: 'sticky'`)
+	[~claimed copilot 2026-02-16T00:00Z]
+- [ ] Debug WB.scan() → does it find and invoke `sticky()` for `x-sticky` elements?
+- [ ] Fix sticky behavior initialization via WB.scan
+- [ ] Verify `wb-sticky` class applied on init
+- [ ] Verify `is-stuck` class applied on scroll past trigger
+- [ ] Verify `wbSticky.isStuck()`, `.stick()`, `.unstick()` API works
+- [ ] Verify `data-offset` and `data-class` attributes respected
+- [ ] Rerun `sticky.spec.ts` and confirm 18/18 pass
 
 ---
 
-## 🟡 Medium Priority
+## Priority 3 — ScrollAlong Behavior (6 failures) — Standalone Test Needed
 
-### Builder Fixes *(downgraded from high — builder app not operational, AI regressed it)*
-- [ ] **Fix Config Loading Bug** — Builder properties panel crashes when `propertyconfig.json` missing. Add fallback: `fetch(...).catch(() => ({}))`. File: `src/builder/builder-properties.js`
-- [ ] **Fix Builder Sidebar Tests (4 failing)** — Workflow overlay (`#wfOverlay`) blocks click events. Tests need to dismiss overlay before interacting. File: `tests/behaviors/ui/builder-sidebar.spec.ts`
+**File:** `scrollalong.spec.ts` — Tests reference `#siteNav` which no longer exists
+**Root cause:** `#siteNav` was removed but scrollalong concept is still valid
 
-### Builder Polish
-- [ ] Integrate `builder-drop-handler.js` into `builder.js` — wire up smart drop handling
-- [ ] Add visual feedback during drag — implement `getDragFeedback()` calls, show drop zone indicators
-- [ ] Add effects dropdown to property panel — list available modifiers, allow applying/removing
+- [ ] Create standalone test page: `demos/scrollalong-test.html` with a nav element using `x-scrollalong`
+- [ ] Update `scrollalong.spec.ts` to use the standalone test page instead of `#siteNav`
+- [ ] Verify `wb-scrollalong` class applied on init
+- [ ] Verify `position: sticky` applied
+- [ ] Verify element stays visible on scroll
+- [ ] Verify element remains clickable after scroll
+- [ ] Rerun `scrollalong.spec.ts` and confirm 6/6 pass
 
-### Mobile Testing on Real Devices
-- [ ] Verify responsive fixes on actual phones
+---
+
+## Priority 4 — Remove Builder References (22 failures)
+
+**File:** `fixes-verification.spec.ts` — 5 builder mentions, tests for builder properties, syntax fixes
+**Decision:** Builder is no longer supported
+
+- [ ] Remove all builder-related tests from `fixes-verification.spec.ts`
+- [ ] Remove or update `media.js` module import test (missing module)
+- [ ] Keep valid non-builder tests (card behavior, figure, EQ panel)
+- [ ] Rerun `fixes-verification.spec.ts` and confirm remaining tests pass
+
+---
+
+## Priority 5 — Autoinject Compliance (14 failures)
+
+**Files:** `autoinject.spec.ts` (8), `auto-injection-compliance.spec.ts` (6)
+
+- [ ] Check if autoinject behavior changed vs what tests expect
+- [ ] Verify `demos/autoinject.html` loads and WB initializes properly
+- [ ] Fix or update test expectations to match current autoinject system
+- [ ] Rerun both autoinject specs and confirm 14/14 pass
+
+---
+
+## Priority 6 — Home Page Permutation (10 failures)
+
+**File:** `home-page-permutation.spec.ts` — 404 errors on resource loading
+
+- [ ] Identify which resources return 404 (hero images, stat icons, demo assets)
+- [ ] Add missing resources or update page references
+- [ ] Verify hero section, stats banner, live demo, feature cards render
+- [ ] Rerun `home-page-permutation.spec.ts` and confirm 10/10 pass
+
+---
+
+## Priority 7 — Card Integration Tests (33 failures across 8 files)
+
+- [ ] `cards-comprehensive.spec.ts` — card base, cardlink, cardbutton, cardprofile, cardtestimonial, cardimage, cardfile, cardvideo rendering
+- [ ] `card-styling.spec.ts` — elevated cards missing shadow/lighter background
+- [ ] `cardprogressbar.spec.ts` — progress bar not rendering with `wb-progress` class, height, fill, animation
+- [ ] `cardportfolio.spec.ts` — portfolio fields, cover image not rendering
+- [ ] `cardproduct.spec.ts` — product properties not rendering
+- [ ] `cardhero.spec.ts` — background image, text alignment
+- [ ] `cardimage-render.spec.ts` — images not rendering in cards
+- [ ] `cardoverlay.spec.ts` — background image not rendering
+- [ ] `card-product-behavior.spec.ts` — addtocart event not dispatching
+- [ ] Rerun all card specs and confirm 33/33 pass
+
+---
+
+## Priority 8 — Compliance Tests (7 failures)
+
+- [ ] `css-oop-compliance.spec.ts` — Fix hardcoded colors in CSS (except themes.css)
+- [ ] `css-oop-compliance.spec.ts` — Reduce excessive `!important` usage
+- [ ] `terminology.spec.ts` — Find and replace forbidden term "WB Framework" 
+- [ ] `project-integrity.spec.ts` — Fix HTML resource links pointing to non-existent files
+- [ ] `page-compliance.spec.ts` — Fix root page `/` compliance failure
+- [ ] `universal-compliance.spec.ts` — Fix root page `/` universal compliance failure
+- [ ] `fix-viewer.spec.ts` — Fix duplicate IDs in fix viewer
+- [ ] Rerun compliance specs and confirm 7/7 pass
+
+---
+
+## Priority 9 — Deep Fix Items (2 failures)
+
+- [ ] `strict-mode-runtime.spec.ts` — `data-wb` usage should throw error and NOT process it (WB engine change)
+- [ ] `semantic-article-to-card.spec.ts` — `<article>` → card sync processing on page load
+- [ ] Rerun both and confirm pass
+
+---
+
+## Priority 10 — Other Behavior Failures (20 failures)
+
+### Behavior Verification (8 failures)
+- [ ] Table sortable columns — header sort indicator, click sorts ascending/descending (4 tests)
+- [ ] Drawer position — left/right drawer opens correctly (4 tests)
+
+### Badge (2 failures)
+- [ ] `wb-badge` renders as inline-level display check failing
+
+### PCE (4 failures)
+- [ ] `wb-cardprofile` PCE recognition — TypeError: Cannot read properties of undefined
+- [ ] `pce-test.html` rendering failures
+
+### Autosize (2 failures)
+- [ ] autosize modifier not adjusting textarea and marking element
+
+### Functional Runner (4 failures)
+- [ ] Schema discovery finds 0 schemas with functional tests
+
+- [ ] Rerun all and confirm 20/20 pass
+
+---
+
+## Priority 11 — Global Attributes (10 failures) — Needs Decision
+
+**File:** `global-attributes.spec.ts`
+**Tests expect:** Plain attributes `tooltip`, `toast-message`, `badge`, `ripple` on any HTML element auto-processed by WB engine
+**Current system:** Uses `x-tooltip`, `x-ripple`, `x-toast` prefix pattern
+
+**Options:**
+- A) Update tests to use `x-` prefix pattern (matches existing system)
+- B) Implement bare attribute scanning in WB init (new feature)
+
+- [ ] Decision made: ___
+- [ ] Implementation complete
+- [ ] Rerun `global-attributes.spec.ts` and confirm 10/10 pass
+
+---
+
+## ✅ Completed Items
+
+- [x] Behaviors test suite fixes (legacy `data-wb`, Locator API, autoinject, badge display)
+- [x] CSS Ownership Migration (Phase 1-5 complete)
+- [x] Page & Demo Repair (newpage.html h2, button-variants-simple.html)
+- [x] Home page stat/preview IDs added
+- [x] Abbreviation definitions fixed
+- [x] POSIX-only commands rewritten as PowerShell-safe
+- [x] Stale Lock directory cleaned
+- [x] Forbidden "WB Framework" terminology replaced in 9 source files
+- [x] Duplicate identifiers in builder files (archived, tests skip)
+- [x] Regression test file refs cleaned from bug registry
+- [x] Playwright-if-tests exit 0 fix
+- [x] Export-html-imports builder guard added
+- [x] No-observer-referror builder test skipped
+- [x] Behavior-registry builder entry removed
+- [x] Docs-manifest-integrity — 32 entries added
+- [x] MCP Server v2.0 async test execution
+- [x] wb-demo component complete
+- [x] themes.css regression fix
+- [x] `behaviors-showcase-visual.spec.ts` — port 5173 → relative URL
+
+---
+
+## 🟡 Medium Priority (after test failures resolved)
+
+### Mobile Testing
+- [ ] Verify responsive fixes on real devices
 - [ ] Test nav menu toggle, backdrop, scroll lock
 - [ ] Check 480px breakpoint on small phones
+
+### Native Element Migrations
+- [ ] `progressbar` → native `<progress>`
+- [ ] `highlight` → native `<mark>`
+- [ ] `clock/countdown` → native `<time>`
 
 ---
 
 ## 🟢 Low Priority
 
-### Cross-Browser Support Test Failures (10 failing)
-- [ ] `cross-browser-support.spec.ts` — Feature detection module exports correctly
-- [ ] `cross-browser-support.spec.ts` — Feature detection: ResizeObserver, IntersectionObserver
-- [ ] `cross-browser-support.spec.ts` — CSS Grid/Flexbox gap works without prefix
-- [ ] `cross-browser-support.spec.ts` — Collapse-grid utility class exists
-- [ ] `cross-browser-support.spec.ts` — onResize cleanup/callback + getSize returns dimensions
-- [ ] `cross-browser-support.spec.ts` — No UA sniffing in WB core
-- [ ] `cross-browser-support.spec.ts` — Safari fixes CSS is loaded
-- **Root cause:** Tests expect infrastructure files (feature-detect.js, safari-fixes.css, resize utility) that were never created. The test spec was written ahead of implementation.
-- **Fix approach:** Either implement the missing infrastructure or mark tests as TODO/skip until needed.
-
-### Web Components Language Server Issue *(downgraded from high — not blocking anything)*
-- [ ] VS Code shows "no custom element docs found" errors
-- [ ] Custom Elements Manifest exists at `data/custom-elements.json` (101KB)
-- [ ] May need VS Code restart or extension configuration
-
-### Production Bundling
-- [ ] Currently 60+ separate JS files
-- [ ] Consider esbuild or rollup for single bundle
-- [ ] Keep lazy loading benefits
-
-### Expand Test Coverage
-- [ ] Current: 26 cross-browser tests + existing suite
-- [ ] Target: 100+ tests total
-- [ ] Add edge case coverage for behaviors
-
-### Performance Profiling
-- [ ] Measure lazy load impact
-- [ ] Profile behavior injection time
-- [ ] Check memory usage with many behaviors
-
-### TypeScript Migration (gradual)
-- [ ] Start with `src/core/` files
-- [ ] Add `.d.ts` declarations for behaviors
-- [ ] Improves IDE support and catches errors
-
-### Schema Coverage
-- [ ] Currently ~80% of behaviors have schemas
-- [ ] Missing: some layout and effect behaviors
-- [ ] Target: 100% for builder compatibility
-
-### Split Remaining Large Files (if needed)
-- [ ] `builder-template-browser.js` (75KB) → 3-4 modules
-- [ ] `builder-templates.js` (75KB) → template data, rendering
-- [ ] `builder-editing.js` (56KB) → 2-3 modules
-- [ ] `builder-tree.js` (41KB) → tree view, selection
-
----
-
-## ✅ Completed
-
-### CSS Ownership Migration (2026-02-09)
-- [x] Phase 1: wb-card, wb-table extracted
-- [x] Phase 2: Duplicate resolution (dialog, switch, progress)
-- [x] Phase 3: 20+ component styles extracted from demo.css → `src/styles/behaviors/`
-- [x] 40 behavior CSS files total, `components.css` emptied, `demo.css` layout-only
-- [x] All 28 imports added to site.css
-- [x] Badge tests fixed (14 pass, 3 infrastructure skipped)
-- [x] themes-showcase port fix
-
-### Cross-Browser Support Infrastructure (2026-01-14)
-- [x] CSS Normalization, Safari/WebKit Fixes, ResizeObserver Utility
-- [x] Feature Detection (no UA sniffing), Escape Hatches Documentation
-- [x] Cross-browser test suite (26 tests passing)
-- [x] Playwright projects: Firefox, WebKit, Mobile Chrome, Mobile Safari
-
-### VS Code Custom Elements Support (2026-01-14)
-- [x] Custom Elements Manifest generator + generated `data/custom-elements.json` (54 components)
-
-### Builder Module Split (earlier)
-- [x] Split `builder-app/index.js` from 123KB to 26KB (79% reduction)
-- [x] Created 7 new modules
-
-### HTML Parts System (earlier)
-- [x] `<wb-part>` system with interpolation, conditionals, loops
-- [x] Part registry (12 parts), IntelliSense support, documentation
+- [ ] **Draggable cards** — Write specs for position swapping behavior (cards currently drag but don't swap). Needs: drag-to-reorder spec, drop target detection, position swap animation, accessibility (keyboard reorder). Removed from card-examples demo until swap is implemented.
+- [ ] Cross-browser support (feature-detect.js, safari-fixes.css, resize utility)
+- [ ] Web Components Language Server ("no custom element docs found" in VS Code)
+- [ ] Production bundling (esbuild/rollup)
+- [ ] Expand test coverage to 100+ edge case tests
+- [ ] Performance profiling (lazy load, behavior injection, memory)
+- [ ] TypeScript migration (src/core/ → TS, .d.ts for behaviors)
+- [ ] Schema coverage 100% for all behaviors
 
 ---
 
 ## 🧪 Test Commands
 
-```bash
+```powershell
 # Async only (mandatory for AI agents)
-npm run test:async                     # Full suite
-npm run test:async -- --project=compliance  # Compliance only
-npm run test:async -- tests/behaviors/badge.spec.ts  # Single spec
+npm run test:async                                    # Full suite
+npm run test:async -- --project=compliance            # Compliance only
+npm run test:async -- tests/behaviors/badge.spec.ts   # Single spec
 
 # Cross-browser
 npm run test:firefox
 npm run test:webkit
 npm run test:mobile
 npm run test:browsers
-
-# Utilities
-npm run test:ui          # Playwright UI mode
-```
-
----
-
-## Quick Reference
-
-```bash
-npm start                           # http://localhost:3000
-node scripts/generate-custom-elements.js  # Regenerate CEM
 ```

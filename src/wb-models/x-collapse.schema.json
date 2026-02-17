@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "x-collapse Attribute",
+  "type": "object",
+  "description": "Schema for x-collapse attribute. Enables collapsible UI sections.",
+  "properties": {
+    "x-collapse": {
+      "type": "boolean",
+      "description": "Whether the element is collapsible."
+    }
+  },
+  "required": ["x-collapse"]
+}

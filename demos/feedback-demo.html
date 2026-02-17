@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>Feedback Demo</h1>
+  <p>Demonstrates the <code>x-feedback</code> behavior (toast/notify).</p>
+  <button x-toast data-message="Action saved successfully!" data-type="success" class="wb-button">Show Toast</button>
+  <button x-notify data-message="New notification received" class="wb-button">Show Notify</button>
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+</html>

@@ -17,7 +17,8 @@
   "properties": {
     "image": {
       "type": "string",
-      "description": "Image URL"
+      "description": "Image URL",
+      "default": ""
     },
     "imageAlt": {
       "type": "string",
@@ -41,11 +42,13 @@
     },
     "title": {
       "type": "string",
-      "description": "Card title"
+      "description": "Card title",
+      "default": ""
     },
     "subtitle": {
       "type": "string",
-      "description": "Card subtitle"
+      "description": "Card subtitle",
+      "default": ""
     },
     "variant": {
       "type": "string",

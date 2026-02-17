@@ -6,7 +6,7 @@
 
 ## Overview
 
-Three scripts form a pipeline that turns component schemas into validated, pixel-perfect HTML pages. Every generated page passes validation before a single line of HTML is written.
+Three scripts form a pipeline that turns WB-Starter component schemas into validated, pixel-perfect HTML pages. Every generated page passes validation before a single line of HTML is written.
 
 ```
 Component Schema (.schema.json)

@@ -143,7 +143,6 @@ export function dialog(element, options = {}) {
     // The existing logic creates a new dialog, but for auto-injection on <dialog>,
     // we just want to style the existing one.
     
-    element.classList.add('wb-ready');
     return () => {
       element.classList.remove('wb-dialog', 'wb-modal');
     };
@@ -159,7 +158,6 @@ export function dialog(element, options = {}) {
   };
 
   element.addEventListener('click', showDialog);
-  element.classList.add('wb-ready');
   return () => element.removeEventListener('click', showDialog);
 }
 

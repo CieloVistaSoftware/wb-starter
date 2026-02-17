@@ -900,9 +900,12 @@
   "compliance": {
     "baseClass": "wb-behavior"
   },
+  "properties": {},
   "test": {
     "setup": [],
-    "matrix": {}
+    "matrix": {
+      "combinations": [{}]
+    }
   },
   "$view": [],
   "$methods": {},

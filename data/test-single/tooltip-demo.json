@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/behaviors/tooltip-demo.spec.ts",
+  "startedAt": "2026-02-16T23:42:26.201Z",
+  "updatedAt": "2026-02-16T23:42:43.251Z",
+  "command": "npx playwright test --workers=8 tests/behaviors/tooltip-demo.spec.ts",
+  "pid": 43328,
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "total": 4,
+  "currentFile": null,
+  "output": "\nRunning 4 tests using 4 workers\n\n  ✓  3 [behaviors] › tests\\behaviors\\tooltip-demo.spec.ts:31:3 › Tooltip Button Showcase › shows tooltip on hover (right) (4.6s)\n  ✓  4 [behaviors] › tests\\behaviors\\tooltip-demo.spec.ts:22:3 › Tooltip Button Showcase › shows tooltip on hover (left) (3.4s)\n  ✓  1 [behaviors] › tests\\behaviors\\tooltip-demo.spec.ts:13:3 › Tooltip Button Showcase › shows tooltip on hover (bottom) (5.0s)\n  ✓  2 [behaviors] › tests\\behaviors\\tooltip-demo.spec.ts:4:3 › Tooltip Button Showcase › shows tooltip on hover (top) (5.3s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 4 tests in 11.3s\n  ✓ Passed:  4\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 4/4 passed\n════════════════════════════════════════════════════════════\n\n\n  4 passed (11.6s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-16T23:42:43.251Z",
+  "duration": "17.05s",
+  "exitCode": 0
+}

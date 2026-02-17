@@ -29,12 +29,14 @@
     },
     "title": {
       "type": "string",
-      "description": "Alert title (optional heading)"
+      "description": "Alert title (optional heading)",
+      "default": ""
     },
     "message": {
       "type": "string",
       "description": "Alert message content",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "icon": {
       "type": "string",

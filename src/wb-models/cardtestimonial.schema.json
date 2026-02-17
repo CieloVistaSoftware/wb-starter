@@ -18,26 +18,31 @@
     "quote": {
       "type": "string",
       "description": "Testimonial quote text",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "author": {
       "type": "string",
       "description": "Author name",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "role": {
       "type": "string",
-      "description": "Author role/title/company"
+      "description": "Author role/title/company",
+      "default": ""
     },
     "avatar": {
       "type": "string",
-      "description": "Author avatar image URL"
+      "description": "Author avatar image URL",
+      "default": ""
     },
     "rating": {
       "type": "number",
       "description": "Star rating (0-5)",
       "minimum": 0,
-      "maximum": 5
+      "maximum": 5,
+      "default": 0
     },
     "variant": {
       "type": "string",

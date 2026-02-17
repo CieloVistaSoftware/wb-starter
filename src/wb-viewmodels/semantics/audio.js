@@ -156,7 +156,6 @@ export function audio(element, options = {}) {
     getAudioContext: () => audioContext
   };
 
-  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-audio');
     if (audioContext) audioContext.close();

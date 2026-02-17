@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ripple Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>Ripple Demo</h1>
+  <p>Demonstrates the <code>x-ripple</code> behavior.</p>
+  <button x-ripple style="padding:1rem 2rem; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer; overflow:hidden; position:relative; font-size: 1rem;">
+    Click for Ripple Effect
+  </button>
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+</html>

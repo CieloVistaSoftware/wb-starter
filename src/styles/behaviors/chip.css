@@ -1,34 +1,45 @@
 /**
  * Chip Behavior Styles
  * -----------------------------------------------------------------------------
- * Extracted from demo.css (Phase 3 migration)
- * Works with src/wb-viewmodels/semantics/chip.js
+ * Works with src/wb-viewmodels/feedback.js chip()
+ * Zero inline styles in JS.
  * -----------------------------------------------------------------------------
  */
 
 .wb-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.25rem 0.6rem;
-  background: var(--primary);
-  color: white;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--bg-tertiary, #374151);
+  color: var(--text-primary, #f9fafb);
 }
 
-.wb-chip button {
+/* Variants */
+.wb-chip--primary { background: var(--primary, #6366f1); color: white; }
+.wb-chip--success { background: var(--success-color, #22c55e); color: white; }
+.wb-chip--warning { background: var(--warning-color, #f59e0b); color: white; }
+.wb-chip--error   { background: var(--danger-color, #ef4444); color: white; }
+.wb-chip--info    { background: var(--info-color, #3b82f6); color: white; }
+
+/* Remove button */
+.wb-chip__remove {
   background: none;
   border: none;
-  color: white;
+  color: inherit;
   cursor: pointer;
-  padding: 0;
-  font-size: 1rem;
-  line-height: 1;
   opacity: 0.7;
+  padding: 0;
+  margin-left: 0.25rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
 
-.wb-chip button:hover {
+.wb-chip__remove:hover {
   opacity: 1;
-  background: none;
 }

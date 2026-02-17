@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Form Row Behavior",
+  "type": "object",
+  "description": "Schema for x-formrow behavior (form row layout)",
+  "properties": {
+    "inline": { "type": "boolean", "description": "Display row inline" }
+  },
+  "required": [],
+  "wbBehavior": {
+    "name": "formrow",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Arranges form fields in a row, optionally inline.",
+    "src": "src/wb-viewmodels/formrow.js"
+  }
+}

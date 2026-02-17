@@ -17,7 +17,8 @@
   "properties": {
     "label": {
       "type": "string",
-      "description": "Label text"
+      "description": "Label text",
+      "default": ""
     },
     "checked": {
       "type": "boolean",
@@ -36,11 +37,13 @@
     },
     "name": {
       "type": "string",
-      "description": "Form field name"
+      "description": "Form field name",
+      "default": ""
     },
     "value": {
       "type": "string",
-      "description": "Form field value"
+      "description": "Form field value",
+      "default": ""
     },
     "required": {
       "type": "boolean",

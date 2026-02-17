@@ -139,7 +139,6 @@ export function table(element, options = {}) {
     tableEl.style.cursor = 'pointer';
   }
 
-  element.classList.add('wb-ready');
   return () => {
     tableEl.classList.remove('wb-table', 'wb-table--striped', 'wb-table--hover', 'wb-table--bordered', 'wb-table--compact');
   };

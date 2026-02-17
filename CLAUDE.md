@@ -1,14 +1,17 @@
+
 # CLAUDE.md - WB Behaviors Project
 
 ## Session Start (DO THIS FIRST - NO EXCEPTIONS)
 
-1. **Call `list_allowed_directories`** to confirm MCP access
-2. **Read `docs/claude/TIER1-LAWS.md`** — the 10 non-negotiable rules
-3. **Read `docs/_today/CURRENT-STATUS.md`** — current project state
-4. **Check `/Lock` folder** — what's off-limits
-5. **Use `recent_chats`** — continue from last session, don't start blind
-6. **Identify task domain** → load only the relevant section from `docs/claude/TIER2-DOMAIN-GUIDES.md`
-7. **Start working** — no questions, no fumbling
+1. **We are not using Claude.ai web — do not start a Chrome task. Instead, use Claude Desktop and you have full MCP access.**
+2. **Call `list_allowed_directories`** to confirm MCP access
+3. **Read `docs/claude/TIER1-LAWS.md`** — the 10 non-negotiable rules
+4. **Read `docs/_today/CURRENT-STATUS.md`** — current project state
+5. **Do not use Lock protocol any longer all locks should be deleted
+6. **Use `recent_chats`** — continue from last session, don't start blind
+7. **Identify task domain** → load only the relevant section from `docs/claude/TIER2-DOMAIN-GUIDES.md`
+8. **Start working** — no questions, no fumbling
+9. **Acknowledge that you will not use Claude.ai web, but only use MCP access.**
 
 ### What NOT To Do
 - ❌ Never ask John to upload files — you have MCP access

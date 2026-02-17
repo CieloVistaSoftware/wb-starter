@@ -260,8 +260,6 @@ export function cardBase(element, options = {}) {
     });
   }
 
-  element.classList.add('wb-ready');
-
   // Return base context for variants to use
   return {
     element,
@@ -1265,7 +1263,7 @@ export function cardproduct(element, options = {}) {
     const img = document.createElement('img');
     img.src = config.image;
     img.alt = base.config.title || 'Product';
-    img.style.cssText = 'width:100%;aspect-ratio:1;object-fit:cover;display:block;';
+    img.style.cssText = 'width:100%;aspect-ratio:3/2;object-fit:cover;display:block;';
     figure.appendChild(img);
 
 
@@ -1436,8 +1434,6 @@ export function cardnotification(element, options = {}) {
       element.addEventListener('keydown', keyHandler);
     }
 
-    element.classList.add('wb-ready');
-
     return () => {
       if (dismissBtn) dismissBtn.removeEventListener('click', dismiss);
       element.removeEventListener('keydown', keyHandler);
@@ -1492,8 +1488,6 @@ export function cardnotification(element, options = {}) {
     element.setAttribute('tabindex', '0');
     element.addEventListener('keydown', keyHandler);
   }
-
-  element.classList.add('wb-ready');
 
   return () => {
     element.removeEventListener('keydown', keyHandler);
@@ -1701,11 +1695,13 @@ export function cardhorizontal(element, options = {}) {
     const figure = base.createFigure();
     figure.style.width = config.imageWidth;
     figure.style.flexShrink = '0';
+    figure.style.minHeight = '200px';
+    figure.style.alignSelf = 'stretch';
     
     const img = document.createElement('img');
     img.src = config.image;
     img.alt = base.config.title || '';
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;min-height:200px;';
     figure.appendChild(img);
     element.appendChild(figure);
   }

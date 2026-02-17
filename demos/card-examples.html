@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🃏 Card Examples</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+
+<body>
+  <h1>🃏 Card Examples</h1>
+  <p>All card variants in action</p>
+
+  <wb-stack gap="1rem">
+
+    <h2>Base Card</h2>
+    <wb-demo id="demo-base" columns="2">
+      <wb-card title="Welcome" subtitle="Standard card" hoverable>This is a basic card with default styling.</wb-card>
+      <wb-card title="Glass Card" subtitle="With Badge" badge="NEW" variant="glass" clickable hoverable elevated>All features enabled.</wb-card>
+    </wb-demo>
+
+    <h2>Image Card</h2>
+    <wb-demo id="demo-image" columns="2">
+      <wb-cardimage src="https://picsum.photos/seed/mountain/600/400" title="Mountain Vista" subtitle="Nature photography"></wb-cardimage>
+      <wb-cardimage src="https://picsum.photos/seed/ocean22/600/400" title="Ocean Breeze" subtitle="Coastal landscapes"></wb-cardimage>
+    </wb-demo>
+
+    <h2>Hero Card</h2>
+    <wb-demo id="demo-hero" columns="1">
+      <wb-cardhero title="Summer Collection 2026" subtitle="Fresh styles, bold colors" cta="Shop Now" cta-secondary="Learn More" background="https://picsum.photos/seed/hero99/1200/600" height="360px"></wb-cardhero>
+    </wb-demo>
+
+    <h2>Profile Card</h2>
+    <wb-demo id="demo-profile" columns="1">
+      <wb-cardprofile avatar="https://i.pravatar.cc/150?u=janedoe" cover="https://picsum.photos/seed/cover1/800/200" name="Jane Doe" role="UI/UX Designer" bio="Creating beautiful, accessible interfaces."></wb-cardprofile>
+    </wb-demo>
+
+    <h2>Button Card</h2>
+    <wb-demo id="demo-button" columns="2">
+      <wb-cardbutton title="Save Document" subtitle="Your changes are ready" primary="Save Now" secondary="Discard"></wb-cardbutton>
+      <wb-cardbutton title="Delete Account" subtitle="This action is permanent" primary="Confirm Delete" secondary="Go Back"></wb-cardbutton>
+    </wb-demo>
+
+    <h2>Pricing Cards</h2>
+    <wb-demo id="demo-pricing" columns="3">
+      <wb-cardpricing plan="Starter" price="$0" period="/month" features="3 Projects,Community Support,1 GB Storage" cta="Get Started"></wb-cardpricing>
+      <wb-cardpricing plan="Pro" price="$19" period="/month" features="Unlimited Projects,Priority Support,50 GB Storage,API Access" cta="Upgrade" featured></wb-cardpricing>
+      <wb-cardpricing plan="Enterprise" price="$99" period="/month" features="Everything in Pro,SSO & SAML,Dedicated Manager,SLA" cta="Contact Sales"></wb-cardpricing>
+    </wb-demo>
+
+    <h2>Stats Cards</h2>
+    <wb-demo id="demo-stats" columns="4">
+      <wb-cardstats value="42K" label="Users" icon="👥" trend="up" trend-value="+12.5%"></wb-cardstats>
+      <wb-cardstats value="$1.2M" label="Revenue" icon="💰" trend="up" trend-value="+8.3%"></wb-cardstats>
+      <wb-cardstats value="99.9%" label="Uptime" icon="⚡" trend="up" trend-value="+0.1%"></wb-cardstats>
+      <wb-cardstats value="4.8" label="Rating" icon="⭐" trend="up" trend-value="+0.3"></wb-cardstats>
+    </wb-demo>
+
+    <h2>Testimonial Card</h2>
+    <wb-demo id="demo-testimonial" columns="2">
+      <wb-cardtestimonial quote="This framework completely transformed how we build web components." author="Alex Rivera" role="Lead Developer, TechCorp" avatar="https://i.pravatar.cc/150?u=alex" rating="5"></wb-cardtestimonial>
+      <wb-cardtestimonial quote="Clean API, great docs, incredibly comprehensive." author="Maria Chen" role="CTO, StartupLab" avatar="https://i.pravatar.cc/150?u=maria" rating="5"></wb-cardtestimonial>
+    </wb-demo>
+
+    <h2>Product Card</h2>
+    <wb-demo id="demo-product" columns="3">
+      <wb-cardproduct image="https://picsum.photos/seed/sneaker/400/300" title="Premium Sneakers" description="Lightweight with responsive cushioning" price="$129" rating="4.5" reviews="238"></wb-cardproduct>
+      <wb-cardproduct image="https://picsum.photos/seed/watch99/400/300" title="Smart Watch" description="Health tracking and notifications" price="$299" rating="4.8" reviews="1024"></wb-cardproduct>
+      <wb-cardproduct image="https://picsum.photos/seed/headphone/400/300" title="Wireless Headphones" description="Active noise cancellation" price="$89" rating="4.3" reviews="567"></wb-cardproduct>
+    </wb-demo>
+
+    <h2>Notification Card</h2>
+    <wb-demo id="demo-notification" columns="2">
+      <wb-cardnotification variant="success" title="Changes Saved!" message="Your profile has been updated successfully."></wb-cardnotification>
+      <wb-cardnotification variant="error" title="Upload Failed" message="File exceeds the 10MB size limit."></wb-cardnotification>
+    </wb-demo>
+
+    <h2>File Card</h2>
+    <wb-demo id="demo-file" columns="3">
+      <wb-cardfile filename="quarterly-report.pdf" type="pdf" size="2.4 MB" date="2026-02-16"></wb-cardfile>
+      <wb-cardfile filename="team-photo.jpg" type="image" size="4.1 MB" date="2026-02-15"></wb-cardfile>
+      <wb-cardfile filename="backup.zip" type="zip" size="128 MB" date="2026-02-14"></wb-cardfile>
+    </wb-demo>
+
+    <h2>Link Card</h2>
+    <wb-demo id="demo-link" columns="2">
+      <wb-cardlink href="https://example.com" icon="📚" title="Documentation" description="Browse the full API reference." target="_blank"></wb-cardlink>
+      <wb-cardlink href="https://example.com" icon="🚀" title="Release Notes" description="See what's new in the latest version." target="_blank"></wb-cardlink>
+    </wb-demo>
+
+    <h2>Horizontal Card</h2>
+    <wb-demo id="demo-horizontal" columns="1">
+      <wb-cardhorizontal image="https://picsum.photos/seed/horiz88/400/300" title="Featured Article" subtitle="The Future of Web Components" content="Web components are evolving rapidly with native browser APIs."></wb-cardhorizontal>
+    </wb-demo>
+
+    <h2>Expandable Card</h2>
+    <wb-demo id="demo-expandable" columns="1">
+      <wb-cardexpandable title="FAQ: How does it work?" subtitle="Click to reveal the answer" content="The card system uses a behavior-based architecture. Each variant inherits from cardBase."></wb-cardexpandable>
+    </wb-demo>
+
+    <h2>Minimizable Card</h2>
+    <wb-demo id="demo-minimizable" columns="1">
+      <wb-cardminimizable title="Dashboard Widget" subtitle="Server Status" content="Active connections: 1,234 | CPU: 45% | Memory: 67%"></wb-cardminimizable>
+    </wb-demo>
+
+    <h2>Overlay Card</h2>
+    <wb-demo id="demo-overlay" columns="2">
+      <wb-cardoverlay image="https://picsum.photos/seed/overlay1/800/500" title="City Lights" subtitle="Urban photography" height="300px"></wb-cardoverlay>
+      <wb-cardoverlay image="https://picsum.photos/seed/overlay2/800/500" title="Mountain Trail" subtitle="Adventure awaits" height="300px"></wb-cardoverlay>
+    </wb-demo>
+
+    <h2>Video Card</h2>
+    <wb-demo id="demo-video" columns="1">
+      <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" title="Big Buck Bunny" subtitle="Sample video" controls></wb-cardvideo>
+    </wb-demo>
+
+    <h2>Portfolio Card</h2>
+    <wb-demo id="demo-portfolio" columns="1">
+      <wb-cardportfolio name="Jane Doe" title="Senior UI Engineer" company="Cielo Vista Software" location="Rochester, MN" avatar="https://i.pravatar.cc/150?u=portfolio" cover="https://picsum.photos/seed/wbcover/800/300" bio="Full-stack developer with 10+ years experience." skills="JavaScript,TypeScript,Web Components,CSS" email="jane@example.com" website="https://example.com" github="https://github.com" linkedin="https://linkedin.com" cta="View Full Profile" availability="available" tagline="Building the web, one component at a time"></wb-cardportfolio>
+    </wb-demo>
+
+  </wb-stack>
+
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('🃏 Card Examples initialized');
+  </script>
+</body>
+
+</html>

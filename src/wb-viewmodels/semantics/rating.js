@@ -113,8 +113,6 @@ export function rating(element, options = {}) {
     }
   };
 
-  element.classList.add('wb-ready');
-
   return () => {
     // Cleanup
     element.innerHTML = '';

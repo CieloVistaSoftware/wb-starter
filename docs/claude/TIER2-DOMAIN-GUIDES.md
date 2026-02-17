@@ -1,3 +1,4 @@
+
 # TIER 2 — DOMAIN GUIDES (Read When Working In That Area)
 
 **Only load these when the task touches this domain.**  
@@ -13,12 +14,14 @@ Read when: modifying `src/core/`, component registration, behavior system, or WB
 |------|---------------|
 | `docs/standards/V3-STANDARDS.md` | **THE** v3 spec — naming, file structure, syntax, BEM classes |
 | `docs/architecture.md` | Overall architecture overview |
-| `docs/architecture/ATTRIBUTE-NAMING-STANDARD.md` | Why `x-*` for behaviors, clean names for properties |
-| `docs/architecture/SCHEMA-SPECIFICATION.md` | Schema JSON structure spec |
+| `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md` | Why `x-*` for behaviors, clean names for properties |
+| `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Schema JSON structure spec |
 | `docs/WB_BEHAVIOR_SYSTEM.md` | How behaviors attach to elements |
 | `docs/Auto-Injection.md` | How CSS/JS auto-loading works |
 | `docs/container-pattern.md` | Container component pattern |
 | `docs/escape-hatches.md` | How to override framework defaults |
+| `docs/architecture/proposals/proposed-custom-elements.md` | Custom elements proposals |
+| `docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md` | X-prefix migration history |
 
 ---
 
@@ -33,43 +36,19 @@ Read when: working on a specific `<wb-*>` component or `x-*` behavior
 | `docs/components/semantic/` | Semantic HTML wrappers (address, article, aside, blockquote, etc.) |
 | `docs/components/semantics/` | Form/interactive elements (button, checkbox, dialog, input, etc.) |
 | `docs/components/effects/` | Visual effects (confetti, fireworks, snow) |
-| `docs/components/drawer.md` | Drawer component |
-| `docs/components/tabs.md` | Tabs component |
 | `docs/components/feedback/` | Feedback components |
 | `docs/components/forms/` | Form components |
 | `docs/components/layout/` | Layout components |
 | `docs/components/navigation/` | Navigation components |
+| `docs/components/demo/` | Demo and showcase components |
+| `docs/components/drawer.md` | Drawer component |
+| `docs/components/tabs.md` | Tabs component |
 | `docs/behaviors-reference.md` | All behaviors cross-reference |
 | `docs/behavior-cross-reference.md` | Behavior ↔ component mapping |
 | `docs/properties.md` | Component property patterns |
 
 ---
 
-## 🏗️ BUILDER
-
-Read when: John explicitly asks you to work on builder (remember: AI already broke it, Tier 1 says don't touch without permission)
-
-| File | What It Covers |
-|------|---------------|
-| `docs/builder.md` | Builder overview |
-| `docs/builder/BUILDER-FIXES.md` | Known builder bugs and fixes |
-| `docs/builder/builder-tree.md` | Builder DOM tree panel |
-| `docs/builder/pages.md` | Builder page management |
-| `docs/builder-interaction-rules.md` | How builder handles user interactions |
-| `docs/builder-onboarding-flow.md` | Builder first-run experience |
-| `docs/builder-properties.md` | Builder properties panel |
-| `docs/builder-section-focus.md` | Builder section focus behavior |
-| `docs/builder-testing.md` | Builder-specific testing rules |
-| `docs/builder-workflow.md` | Builder workflow patterns |
-| `docs/builder.todo.md` | Builder backlog |
-| `docs/PAGE-BUILDER-RULES.md` | Page builder constraints |
-| `docs/USER-PAGE-BUILDER-PLAN.md` | User-facing page builder plan |
-| `PageBuilder_Specs.md` | Full page builder specification |
-| `EDITMODE_GUIDE.md` | Edit mode usage guide |
-| `EDITMODE_SETUP.md` | Edit mode setup |
-| `EDITOR_PANEL_GUIDE.md` | Editor panel guide |
-
----
 
 ## 🧪 TESTING
 
@@ -84,6 +63,8 @@ Read when: writing tests, fixing test failures, or modifying test infrastructure
 | `docs/schemaTestValue.md` | Test value conventions for schemas |
 | `docs/ANNOUNCE_TEST_POLICY.md` | Test policy announcement |
 | `data/FUNCTIONAL-TEST-ANALYSIS.md` | Analysis of test gaps |
+| `docs/compliance/iso-42001-alignment.md` | Compliance alignment |
+| `docs/audits/X-USAGE-AUDIT.md` | X-usage audit |
 
 ---
 
@@ -93,9 +74,10 @@ Read when: modifying schemas, schema-builder, or MVVM migration work
 
 | File | What It Covers |
 |------|---------------|
+| **`docs/claude/SCHEMAS-GUIDE.md`** | **⭐ START HERE — Claude's guide to schemas: rules, mistakes to avoid, test workflow** |
+| `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Full v3.0 schema spec with complete examples |
 | `docs/schema.md` | Schema system overview |
 | `docs/schema-first-architecture.md` | Schema-first design philosophy |
-| `docs/architecture/SCHEMA-SPECIFICATION.md` | Schema JSON structure (also in Core) |
 | `docs/schema.migration.md` | Schema migration patterns |
 | `docs/MVVM-MIGRATION.md` | MVVM migration overview |
 | `docs/MVVM-MIGRATION-PLAN.md` | MVVM migration detailed plan |
@@ -114,7 +96,8 @@ Read when: modifying CSS files, style extraction, or theme work
 | `docs/css-standards.md` | CSS naming and organization rules |
 | `docs/styles.md` | Style system overview |
 | `docs/themes.md` | Theme system and CSS variables |
-| `docs/_today/CSS-OWNERSHIP-MIGRATION.md` | Current CSS migration status |
+| `docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md` | Current CSS migration status |
+| `docs/_today/CSS-OWNERSHIP-MIGRATION.md` | (legacy) CSS migration status |
 
 ---
 
@@ -158,6 +141,27 @@ Read when: starting a session (CURRENT-STATUS.md is Tier 1), or when John points
 | `docs/_today/MERGE-PLAN.md` | Branch merge status |
 | `docs/_today/AI-COORDINATION.md` | Multi-AI coordination rules |
 | `docs/_today/BEHAVIORS-TODO.md` | Behavior-specific backlog |
+| `docs/_today/PAGE-REPAIR-PLAN.md` | Page repair plan |
+| `docs/_today/REPAIR-PLAN-021526.md` | Repair plan 021526 |
+| `docs/_today/021426FIXPLAN.md` | 021426 Fix Plan |
+| `docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md` | CSS migration plan |
+
+---
+
+
+## 🪄 WIZARD (Builder Replacement)
+
+The legacy builder is deprecated. The new workflow for guided component/page creation is the **Component Wizard**:
+
+- **docs/wizard.md** — Full user guide for the wizard system
+- **demos/wizard.html** — Visual tool for assembling, configuring, and previewing WB custom elements (open in browser)
+
+Use the wizard for:
+- Visual, no-code assembly of components
+- Live property editing and preview
+- Exporting HTML for use in your project
+
+See docs/wizard.md for full instructions and workflow.
 
 ---
 

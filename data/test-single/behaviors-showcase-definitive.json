@@ -1,0 +1,669 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/behaviors/behaviors-showcase-definitive.spec.ts",
+  "startedAt": "2026-02-17T05:03:58.901Z",
+  "updatedAt": "2026-02-17T05:19:46.668Z",
+  "command": "npx playwright test --workers=8 tests/behaviors/behaviors-showcase-definitive.spec.ts",
+  "pid": 20528,
+  "passed": 162,
+  "failed": 81,
+  "skipped": 0,
+  "total": 243,
+  "currentFile": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+  "output": "ehaviors\\behaviors-showcase-definitive.spec.ts:456:3 › Effects Section › attention seeker effects exist \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      449 |   test('entrance animation effects exist', async ({ page }) => {\n      450 |     const effects = ['x-fadein', 'x-slidein', 'x-zoomin', 'x-flip'];\n    > 451 |     \n          |     ^\n      452 |     for (const effect of effects) {\n      453 |       const el = page.locator(`#effects [${effect}]`).first();\n      454 |       await expect(el, `Effect ${effect} should exist`).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:451:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-af9b8-ention-seeker-effects-exist-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      449 |   test('entrance animation effects exist', async ({ page }) => {\n      450 |     const effects = ['x-fadein', 'x-slidein', 'x-zoomin', 'x-flip'];\n    > 451 |     \n          |     ^\n      452 |     for (const effect of effects) {\n      453 |       const el = page.locator(`#effects [${effect}]`).first();\n      454 |       await expect(el, `Effect ${effect} should exist`).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:451:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-af9b8-ention-seeker-effects-exist-behaviors-retry1\\error-context.md\n\n  55) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:465:3 › Effects Section › entrance animation effects exist \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      449 |   test('entrance animation effects exist', async ({ page }) => {\n      450 |     const effects = ['x-fadein', 'x-slidein', 'x-zoomin', 'x-flip'];\n    > 451 |     \n          |     ^\n      452 |     for (const effect of effects) {\n      453 |       const el = page.locator(`#effects [${effect}]`).first();\n      454 |       await expect(el, `Effect ${effect} should exist`).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:451:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-68cdc-nce-animation-effects-exist-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      449 |   test('entrance animation effects exist', async ({ page }) => {\n      450 |     const effects = ['x-fadein', 'x-slidein', 'x-zoomin', 'x-flip'];\n    > 451 |     \n          |     ^\n      452 |     for (const effect of effects) {\n      453 |       const el = page.locator(`#effects [${effect}]`).first();\n      454 |       await expect(el, `Effect ${effect} should exist`).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:451:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-68cdc-nce-animation-effects-exist-behaviors-retry1\\error-context.md\n\n  56) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:474:3 › Effects Section › special effects exist \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      449 |   test('entrance animation effects exist', async ({ page }) => {\n      450 |     const effects = ['x-fadein', 'x-slidein', 'x-zoomin', 'x-flip'];\n    > 451 |     \n          |     ^\n      452 |     for (const effect of effects) {\n      453 |       const el = page.locator(`#effects [${effect}]`).first();\n      454 |       await expect(el, `Effect ${effect} should exist`).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:451:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-1188e-ction-special-effects-exist-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      449 |   test('entrance animation effects exist', async ({ page }) => {\n      450 |     const effects = ['x-fadein', 'x-slidein', 'x-zoomin', 'x-flip'];\n    > 451 |     \n          |     ^\n      452 |     for (const effect of effects) {\n      453 |       const el = page.locator(`#effects [${effect}]`).first();\n      454 |       await expect(el, `Effect ${effect} should exist`).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:451:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-1188e-ction-special-effects-exist-behaviors-retry1\\error-context.md\n\n  57) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:483:3 › Effects Section › ripple elements exist \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      449 |   test('entrance animation effects exist', async ({ page }) => {\n      450 |     const effects = ['x-fadein', 'x-slidein', 'x-zoomin', 'x-flip'];\n    > 451 |     \n          |     ^\n      452 |     for (const effect of effects) {\n      453 |       const el = page.locator(`#effects [${effect}]`).first();\n      454 |       await expect(el, `Effect ${effect} should exist`).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:451:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-7f13a-ction-ripple-elements-exist-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      449 |   test('entrance animation effects exist', async ({ page }) => {\n      450 |     const effects = ['x-fadein', 'x-slidein', 'x-zoomin', 'x-flip'];\n    > 451 |     \n          |     ^\n      452 |     for (const effect of effects) {\n      453 |       const el = page.locator(`#effects [${effect}]`).first();\n      454 |       await expect(el, `Effect ${effect} should exist`).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:451:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-7f13a-ction-ripple-elements-exist-behaviors-retry1\\error-context.md\n\n  58) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:499:3 › Utilities Section › copy buttons exist \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-6b685--Section-copy-buttons-exist-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-6b685--Section-copy-buttons-exist-behaviors-retry1\\error-context.md\n\n  59) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:504:3 › Utilities Section › share button exists \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-e0749-Section-share-button-exists-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-e0749-Section-share-button-exists-behaviors-retry1\\error-context.md\n\n  60) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:508:3 › Utilities Section › print button exists \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-87beb-Section-print-button-exists-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-87beb-Section-print-button-exists-behaviors-retry1\\error-context.md\n\n  61) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:512:3 › Utilities Section › fullscreen button exists \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-84d5e-on-fullscreen-button-exists-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-84d5e-on-fullscreen-button-exists-behaviors-retry1\\error-context.md\n\n  62) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:516:3 › Utilities Section › clock element exists \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-45ac5-ection-clock-element-exists-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-45ac5-ection-clock-element-exists-behaviors-retry1\\error-context.md\n\n  63) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:520:3 › Utilities Section › countdown element exists \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-e784d-on-countdown-element-exists-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-e784d-on-countdown-element-exists-behaviors-retry1\\error-context.md\n\n  64) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:524:3 › Utilities Section › dark mode toggle exists \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-3f136-ion-dark-mode-toggle-exists-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-3f136-ion-dark-mode-toggle-exists-behaviors-retry1\\error-context.md\n\n  65) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:528:3 › Utilities Section › truncate element exists \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-c0d3b-ion-truncate-element-exists-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      492 |   test('print button exists', async ({ page }) => {\n      493 |     await expect(page.locator('#utilities [x-print]').first()).toBeVisible();\n    > 494 |   });\n          |      ^\n      495 |\n      496 |   test('fullscreen button exists', async ({ page }) => {\n      497 |     await expect(page.locator('#utilities [x-fullscreen]').first()).toBeVisible();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:494:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-c0d3b-ion-truncate-element-exists-behaviors-retry1\\error-context.md\n\n  66) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:543:3 › Code Examples (wb-mdhtml) › every section has at least 3 code examples \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      536 |   });\n      537 |\n    > 538 |   test('page has many code examples total', async ({ page }) => {\n          |        ^\n      539 |     const codeBlocks = page.locator('wb-mdhtml');\n      540 |     const count = await codeBlocks.count();\n      541 |     expect(count).toBeGreaterThan(20);\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:538:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-c8060-as-at-least-3-code-examples-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      536 |   });\n      537 |\n    > 538 |   test('page has many code examples total', async ({ page }) => {\n          |        ^\n      539 |     const codeBlocks = page.locator('wb-mdhtml');\n      540 |     const count = await codeBlocks.count();\n      541 |     expect(count).toBeGreaterThan(20);\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:538:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-c8060-as-at-least-3-code-examples-behaviors-retry1\\error-context.md\n\n  67) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:554:3 › Code Examples (wb-mdhtml) › code examples render with content \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      536 |   });\n      537 |\n    > 538 |   test('page has many code examples total', async ({ page }) => {\n          |        ^\n      539 |     const codeBlocks = page.locator('wb-mdhtml');\n      540 |     const count = await codeBlocks.count();\n      541 |     expect(count).toBeGreaterThan(20);\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:538:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-2c82f-xamples-render-with-content-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      536 |   });\n      537 |\n    > 538 |   test('page has many code examples total', async ({ page }) => {\n          |        ^\n      539 |     const codeBlocks = page.locator('wb-mdhtml');\n      540 |     const count = await codeBlocks.count();\n      541 |     expect(count).toBeGreaterThan(20);\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:538:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-2c82f-xamples-render-with-content-behaviors-retry1\\error-context.md\n\n  68) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:578:3 › Interactive Behaviors › checkbox toggles on click \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      571 |     }\n      572 |   });\n    > 573 |\n          | ^\n      574 |   test('ripple effect triggers on click', async ({ page }) => {\n      575 |     const rippleBtn = page.locator('#buttons [x-ripple]').first();\n      576 |     await rippleBtn.click();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:573:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-c57bc-s-checkbox-toggles-on-click-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      571 |     }\n      572 |   });\n    > 573 |\n          | ^\n      574 |   test('ripple effect triggers on click', async ({ page }) => {\n      575 |     const rippleBtn = page.locator('#buttons [x-ripple]').first();\n      576 |     await rippleBtn.click();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:573:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-c57bc-s-checkbox-toggles-on-click-behaviors-retry1\\error-context.md\n\n  69) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:587:3 › Interactive Behaviors › radio buttons work in group \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      571 |     }\n      572 |   });\n    > 573 |\n          | ^\n      574 |   test('ripple effect triggers on click', async ({ page }) => {\n      575 |     const rippleBtn = page.locator('#buttons [x-ripple]').first();\n      576 |     await rippleBtn.click();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:573:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-df8a8-radio-buttons-work-in-group-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      571 |     }\n      572 |   });\n    > 573 |\n          | ^\n      574 |   test('ripple effect triggers on click', async ({ page }) => {\n      575 |     const rippleBtn = page.locator('#buttons [x-ripple]').first();\n      576 |     await rippleBtn.click();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:573:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-df8a8-radio-buttons-work-in-group-behaviors-retry1\\error-context.md\n\n  70) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:597:3 › Interactive Behaviors › ripple effect triggers on click \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      571 |     }\n      572 |   });\n    > 573 |\n          | ^\n      574 |   test('ripple effect triggers on click', async ({ page }) => {\n      575 |     const rippleBtn = page.locator('#buttons [x-ripple]').first();\n      576 |     await rippleBtn.click();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:573:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-96600-le-effect-triggers-on-click-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      571 |     }\n      572 |   });\n    > 573 |\n          | ^\n      574 |   test('ripple effect triggers on click', async ({ page }) => {\n      575 |     const rippleBtn = page.locator('#buttons [x-ripple]').first();\n      576 |     await rippleBtn.click();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:573:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-96600-le-effect-triggers-on-click-behaviors-retry1\\error-context.md\n\n  71) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:606:3 › Interactive Behaviors › toast shows on button click \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      571 |     }\n      572 |   });\n    > 573 |\n          | ^\n      574 |   test('ripple effect triggers on click', async ({ page }) => {\n      575 |     const rippleBtn = page.locator('#buttons [x-ripple]').first();\n      576 |     await rippleBtn.click();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:573:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-fc0f3-toast-shows-on-button-click-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      571 |     }\n      572 |   });\n    > 573 |\n          | ^\n      574 |   test('ripple effect triggers on click', async ({ page }) => {\n      575 |     const rippleBtn = page.locator('#buttons [x-ripple]').first();\n      576 |     await rippleBtn.click();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:573:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-fc0f3-toast-shows-on-button-click-behaviors-retry1\\error-context.md\n\n  72) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:627:3 › Visual Quality › no text overflows container horizontally \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      620 |     const styles = await sections.first().evaluate(el => {\n      621 |       const s = window.getComputedStyle(el);\n    > 622 |       return {\n          |        ^\n      623 |         paddingTop: parseFloat(s.paddingTop),\n      624 |         paddingBottom: parseFloat(s.paddingBottom)\n      625 |       };\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:622:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-dd791-lows-container-horizontally-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      620 |     const styles = await sections.first().evaluate(el => {\n      621 |       const s = window.getComputedStyle(el);\n    > 622 |       return {\n          |        ^\n      623 |         paddingTop: parseFloat(s.paddingTop),\n      624 |         paddingBottom: parseFloat(s.paddingBottom)\n      625 |       };\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:622:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-dd791-lows-container-horizontally-behaviors-retry1\\error-context.md\n\n  73) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:652:3 › Visual Quality › spinners have animation \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      620 |     const styles = await sections.first().evaluate(el => {\n      621 |       const s = window.getComputedStyle(el);\n    > 622 |       return {\n          |        ^\n      623 |         paddingTop: parseFloat(s.paddingTop),\n      624 |         paddingBottom: parseFloat(s.paddingBottom)\n      625 |       };\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:622:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-813b3-ity-spinners-have-animation-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      620 |     const styles = await sections.first().evaluate(el => {\n      621 |       const s = window.getComputedStyle(el);\n    > 622 |       return {\n          |        ^\n      623 |         paddingTop: parseFloat(s.paddingTop),\n      624 |         paddingBottom: parseFloat(s.paddingBottom)\n      625 |       };\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:622:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-813b3-ity-spinners-have-animation-behaviors-retry1\\error-context.md\n\n  74) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:676:3 › Visual Quality › page is responsive at mobile width \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      620 |     const styles = await sections.first().evaluate(el => {\n      621 |       const s = window.getComputedStyle(el);\n    > 622 |       return {\n          |        ^\n      623 |         paddingTop: parseFloat(s.paddingTop),\n      624 |         paddingBottom: parseFloat(s.paddingBottom)\n      625 |       };\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:622:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-a1bd8--responsive-at-mobile-width-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      620 |     const styles = await sections.first().evaluate(el => {\n      621 |       const s = window.getComputedStyle(el);\n    > 622 |       return {\n          |        ^\n      623 |         paddingTop: parseFloat(s.paddingTop),\n      624 |         paddingBottom: parseFloat(s.paddingBottom)\n      625 |       };\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:622:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-a1bd8--responsive-at-mobile-width-behaviors-retry1\\error-context.md\n\n  75) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:686:3 › Visual Quality › sections have proper spacing \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      620 |     const styles = await sections.first().evaluate(el => {\n      621 |       const s = window.getComputedStyle(el);\n    > 622 |       return {\n          |        ^\n      623 |         paddingTop: parseFloat(s.paddingTop),\n      624 |         paddingBottom: parseFloat(s.paddingBottom)\n      625 |       };\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:622:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-e8d73-ections-have-proper-spacing-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n      620 |     const styles = await sections.first().evaluate(el => {\n      621 |       const s = window.getComputedStyle(el);\n    > 622 |       return {\n          |        ^\n      623 |         paddingTop: parseFloat(s.paddingTop),\n      624 |         paddingBottom: parseFloat(s.paddingBottom)\n      625 |       };\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:622:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-e8d73-ections-have-proper-spacing-behaviors-retry1\\error-context.md\n\n  76) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:714:3 › Accessibility › page has proper heading hierarchy \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:709:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-98f05-as-proper-heading-hierarchy-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:709:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-98f05-as-proper-heading-hierarchy-behaviors-retry1\\error-context.md\n\n  77) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:722:3 › Accessibility › images have alt attributes \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:709:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-7a3e9--images-have-alt-attributes-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:709:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-7a3e9--images-have-alt-attributes-behaviors-retry1\\error-context.md\n\n  78) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:733:3 › Accessibility › form inputs have proper associations \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:709:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-e7a4f-ts-have-proper-associations-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:709:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-e7a4f-ts-have-proper-associations-behaviors-retry1\\error-context.md\n\n  79) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:739:3 › Accessibility › buttons have accessible text \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:709:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-09d89-uttons-have-accessible-text-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:709:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-09d89-uttons-have-accessible-text-behaviors-retry1\\error-context.md\n\n  80) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:764:3 › Behavior Initialization › wb-* custom elements are upgraded \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:759:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-2faae-ustom-elements-are-upgraded-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:759:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-2faae-ustom-elements-are-upgraded-behaviors-retry1\\error-context.md\n\n  81) [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:776:3 › Behavior Initialization › x-* behavior attributes are processed \n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:759:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-1dce5-or-attributes-are-processed-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\behaviors-showcase-definitive.spec.ts:759:8\n\n    Error Context: data\\test-results\\behaviors-behaviors-showca-1dce5-or-attributes-are-processed-behaviors-retry1\\error-context.md\n\n  81 failed\n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:57:3 › Page Structure › page loads without JavaScript errors \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:73:3 › Page Structure › wb-starter initializes correctly \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:78:3 › Page Structure › header section exists with title \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:83:3 › Page Structure › navigation section exists with all 10 section links \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:94:3 › Page Structure › stats section displays correct counts \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:99:3 › Page Structure › all 10 main content sections exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:108:3 › Page Structure › footer section exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:112:3 › Page Structure › page has no horizontal scrollbar \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:130:3 › Buttons Section › button variants exist (primary, secondary, ghost) \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:137:3 › Buttons Section › disabled button exists and is disabled \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:143:3 › Buttons Section › button sizes exist (sm, md, lg) \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:149:3 › Buttons Section › ripple button has x-ripple attribute \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:153:3 › Buttons Section › toast button has proper attributes \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:160:3 › Buttons Section › tooltip button has x-tooltip attribute \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:164:3 › Buttons Section › buttons section has wb-mdhtml code examples \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:180:3 › Inputs Section › basic input types exist (text, email, number) \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:187:3 › Inputs Section › validation variant inputs exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:194:3 › Inputs Section › password input has x-password behavior \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:198:3 › Inputs Section › masked inputs exist with mask attribute \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:203:3 › Inputs Section › textareas exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:208:3 › Inputs Section › inputs section has code examples \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:224:3 › Selection Section › checkboxes exist with various states \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:229:3 › Selection Section › radio buttons exist in a group \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:234:3 › Selection Section › wb-switch components exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:239:3 › Selection Section › select dropdowns exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:244:3 › Selection Section › wb-rating components exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:249:3 › Selection Section › stepper exists with x-stepper \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:253:3 › Selection Section › range input exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:268:3 › Feedback Section › all 4 alert types exist (info, success, warning, error) \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:277:3 › Feedback Section › badge components exist with variants \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:282:3 › Feedback Section › progress bars exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:287:3 › Feedback Section › spinners exist with various colors \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:292:3 › Feedback Section › toast trigger buttons exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:308:3 › Overlays Section › modal trigger exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:312:3 › Overlays Section › drawer triggers exist (left and right) \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:317:3 › Overlays Section › tooltip buttons exist for all positions \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:322:3 › Overlays Section › popover trigger exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:326:3 › Overlays Section › confirm dialog trigger exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:330:3 › Overlays Section › prompt dialog trigger exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:334:3 › Overlays Section › lightbox triggers exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:350:3 › Navigation Section › wb-tabs component exists with panels \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:358:3 › Navigation Section › wb-collapse components exist as accordion sections \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:369:3 › Navigation Section › breadcrumb exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:373:3 › Navigation Section › pagination exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:377:3 › Navigation Section › steps wizard exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:392:3 › Data Section › avatar components exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:397:3 › Data Section › skeleton loaders exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:402:3 › Data Section › timeline exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:408:3 › Data Section › keyboard key elements exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:424:3 › Media Section › enhanced images exist with x-image \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:429:3 › Media Section › gallery exists with images \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:437:3 › Media Section › audio player component exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:441:3 › Media Section › YouTube embed exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:456:3 › Effects Section › attention seeker effects exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:465:3 › Effects Section › entrance animation effects exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:474:3 › Effects Section › special effects exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:483:3 › Effects Section › ripple elements exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:499:3 › Utilities Section › copy buttons exist \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:504:3 › Utilities Section › share button exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:508:3 › Utilities Section › print button exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:512:3 › Utilities Section › fullscreen button exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:516:3 › Utilities Section › clock element exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:520:3 › Utilities Section › countdown element exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:524:3 › Utilities Section › dark mode toggle exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:528:3 › Utilities Section › truncate element exists \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:543:3 › Code Examples (wb-mdhtml) › every section has at least 3 code examples \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:554:3 › Code Examples (wb-mdhtml) › code examples render with content \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:578:3 › Interactive Behaviors › checkbox toggles on click \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:587:3 › Interactive Behaviors › radio buttons work in group \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:597:3 › Interactive Behaviors › ripple effect triggers on click \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:606:3 › Interactive Behaviors › toast shows on button click \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:627:3 › Visual Quality › no text overflows container horizontally \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:652:3 › Visual Quality › spinners have animation \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:676:3 › Visual Quality › page is responsive at mobile width \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:686:3 › Visual Quality › sections have proper spacing \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:714:3 › Accessibility › page has proper heading hierarchy \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:722:3 › Accessibility › images have alt attributes \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:733:3 › Accessibility › form inputs have proper associations \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:739:3 › Accessibility › buttons have accessible text \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:764:3 › Behavior Initialization › wb-* custom elements are upgraded \n    [behaviors] › tests\\behaviors\\behaviors-showcase-definitive.spec.ts:776:3 › Behavior Initialization › x-* behavior attributes are processed \n",
+  "errors": "imeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: prompt dialog trigger exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: modal trigger exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: toast trigger buttons exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: drawer triggers exist (left and right)\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: popover trigger exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: tooltip buttons exist for all positions\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: lightbox triggers exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: confirm dialog trigger exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: prompt dialog trigger exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: wb-collapse components exist as accordion sections\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: wb-tabs component exists with panels\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: breadcrumb exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: pagination exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: avatar components exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: timeline exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: steps wizard exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: skeleton loaders exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: wb-collapse components exist as accordion sections\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: breadcrumb exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: wb-tabs component exists with panels\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: pagination exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: avatar components exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: timeline exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: keyboard key elements exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: steps wizard exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: gallery exists with images\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: enhanced images exist with x-image\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: skeleton loaders exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: audio player component exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: YouTube embed exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: attention seeker effects exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: keyboard key elements exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: entrance animation effects exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: gallery exists with images\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: enhanced images exist with x-image\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: special effects exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: audio player component exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: attention seeker effects exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: YouTube embed exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: ripple elements exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: entrance animation effects exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: copy buttons exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: special effects exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: share button exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: print button exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: clock element exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: fullscreen button exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: ripple elements exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: countdown element exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: copy buttons exist\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: share button exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: dark mode toggle exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: fullscreen button exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: print button exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: clock element exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: truncate element exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: countdown element exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: every section has at least 3 code examples\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: code examples render with content\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: dark mode toggle exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: checkbox toggles on click\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: radio buttons work in group\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: ripple effect triggers on click\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: toast shows on button click\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: truncate element exists\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: code examples render with content\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: every section has at least 3 code examples\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: no text overflows container horizontally\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: checkbox toggles on click\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: radio buttons work in group\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: ripple effect triggers on click\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: spinners have animation\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: toast shows on button click\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: page is responsive at mobile width\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: sections have proper spacing\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: no text overflows container horizontally\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: page has proper heading hierarchy\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: images have alt attributes\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: form inputs have proper associations\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: spinners have animation\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: buttons have accessible text\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: page is responsive at mobile width\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: wb-* custom elements are upgraded\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: sections have proper spacing\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: images have alt attributes\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: page has proper heading hierarchy\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: form inputs have proper associations\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: x-* behavior attributes are processed\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: buttons have accessible text\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: wb-* custom elements are upgraded\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n\n⏱️ FAILED: x-* behavior attributes are processed\n   Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n",
+  "failures": [
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › page loads without JavaScript errors"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › all 10 main content sections exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › stats section displays correct counts"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › page has no horizontal scrollbar"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › navigation section exists with all 10 section links"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › footer section exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › wb-starter initializes correctly"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › header section exists with title"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › all 10 main content sections exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › footer section exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › page has no horizontal scrollbar (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › page loads without JavaScript errors (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › navigation section exists with all 10 section links (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › stats section displays correct counts (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › wb-starter initializes correctly (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Page Structure › header section exists with title (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › disabled button exists and is disabled"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › ripple button has x-ripple attribute"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › button variants exist (primary, secondary, ghost)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › button sizes exist (sm, md, lg)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › toast button has proper attributes"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › tooltip button has x-tooltip attribute"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › basic input types exist (text, email, number)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › buttons section has wb-mdhtml code examples"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › button variants exist (primary, secondary, ghost) (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › disabled button exists and is disabled (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › ripple button has x-ripple attribute (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › button sizes exist (sm, md, lg) (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › toast button has proper attributes (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › tooltip button has x-tooltip attribute (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Buttons Section › buttons section has wb-mdhtml code examples (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › basic input types exist (text, email, number) (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › password input has x-password behavior"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › masked inputs exist with mask attribute"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › validation variant inputs exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › textareas exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › inputs section has code examples"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › checkboxes exist with various states"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › wb-switch components exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › radio buttons exist in a group"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › password input has x-password behavior (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › masked inputs exist with mask attribute (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › validation variant inputs exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › textareas exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Inputs Section › inputs section has code examples (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › checkboxes exist with various states (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › wb-switch components exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › radio buttons exist in a group (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › select dropdowns exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › wb-rating components exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › stepper exists with x-stepper"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › range input exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › all 4 alert types exist (info, success, warning, error)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › badge components exist with variants"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › progress bars exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › spinners exist with various colors"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › wb-rating components exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › select dropdowns exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › stepper exists with x-stepper (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Selection Section › range input exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › all 4 alert types exist (info, success, warning, error) (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › badge components exist with variants (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › spinners exist with various colors (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › progress bars exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › modal trigger exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › toast trigger buttons exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › drawer triggers exist (left and right)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › tooltip buttons exist for all positions"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › popover trigger exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › confirm dialog trigger exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › lightbox triggers exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › prompt dialog trigger exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › modal trigger exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Feedback Section › toast trigger buttons exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › drawer triggers exist (left and right) (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › popover trigger exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › tooltip buttons exist for all positions (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › lightbox triggers exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › confirm dialog trigger exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Overlays Section › prompt dialog trigger exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › wb-collapse components exist as accordion sections"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › wb-tabs component exists with panels"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › breadcrumb exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › pagination exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Data Section › avatar components exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Data Section › timeline exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › steps wizard exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Data Section › skeleton loaders exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › wb-collapse components exist as accordion sections (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › breadcrumb exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › wb-tabs component exists with panels (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › pagination exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Data Section › avatar components exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Data Section › timeline exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Data Section › keyboard key elements exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Navigation Section › steps wizard exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › gallery exists with images"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › enhanced images exist with x-image"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Data Section › skeleton loaders exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › audio player component exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › YouTube embed exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Effects Section › attention seeker effects exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Data Section › keyboard key elements exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Effects Section › entrance animation effects exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › gallery exists with images (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › enhanced images exist with x-image (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Effects Section › special effects exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › audio player component exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Effects Section › attention seeker effects exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Media Section › YouTube embed exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Effects Section › ripple elements exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Effects Section › entrance animation effects exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › copy buttons exist"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Effects Section › special effects exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › share button exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › print button exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › clock element exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › fullscreen button exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Effects Section › ripple elements exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › countdown element exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › copy buttons exist (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › share button exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › dark mode toggle exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › fullscreen button exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › print button exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › clock element exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › truncate element exists"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › countdown element exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Code Examples (wb-mdhtml) › every section has at least 3 code examples"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Code Examples (wb-mdhtml) › code examples render with content"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › dark mode toggle exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Interactive Behaviors › checkbox toggles on click"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Interactive Behaviors › radio buttons work in group"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Interactive Behaviors › ripple effect triggers on click"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Interactive Behaviors › toast shows on button click"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Utilities Section › truncate element exists (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Code Examples (wb-mdhtml) › code examples render with content (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Code Examples (wb-mdhtml) › every section has at least 3 code examples (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › no text overflows container horizontally"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Interactive Behaviors › checkbox toggles on click (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Interactive Behaviors › radio buttons work in group (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Interactive Behaviors › ripple effect triggers on click (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › spinners have animation"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Interactive Behaviors › toast shows on button click (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › page is responsive at mobile width"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › sections have proper spacing"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › no text overflows container horizontally (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Accessibility › page has proper heading hierarchy"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Accessibility › images have alt attributes"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Accessibility › form inputs have proper associations"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › spinners have animation (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Accessibility › buttons have accessible text"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › page is responsive at mobile width (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Behavior Initialization › wb-* custom elements are upgraded"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Visual Quality › sections have proper spacing (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Accessibility › images have alt attributes (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Accessibility › page has proper heading hierarchy (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Accessibility › form inputs have proper associations (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Behavior Initialization › x-* behavior attributes are processed"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Accessibility › buttons have accessible text (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Behavior Initialization › wb-* custom elements are upgraded (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\behaviors-showcase-definitive.spec.ts",
+      "name": "Behavior Initialization › x-* behavior attributes are processed (retry #1)"
+    }
+  ],
+  "completedAt": "2026-02-17T05:19:46.668Z",
+  "duration": "947.77s",
+  "exitCode": 1
+}

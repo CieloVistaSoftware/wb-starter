@@ -18,29 +18,35 @@
     "value": {
       "type": "string",
       "description": "The main statistic value (e.g., 1,234 or $50K)",
-      "required": true
+      "required": true,
+      "default": ""
     },
     "label": {
       "type": "string",
-      "description": "Label describing what the value represents"
+      "description": "Label describing what the value represents",
+      "default": ""
     },
     "icon": {
       "type": "string",
-      "description": "Icon (emoji or icon name)"
+      "description": "Icon (emoji or icon name)",
+      "default": ""
     },
     "trend": {
       "type": "string",
       "description": "Trend direction",
       "enum": [
+        "",
         "up",
         "down",
         "neutral"
       ],
-      "appliesClass": "wb-stats--trend-{{value}}"
+      "appliesClass": "wb-stats--trend-{{value}}",
+      "default": ""
     },
     "trendValue": {
       "type": "string",
-      "description": "Trend amount (e.g., +12%, -5%)"
+      "description": "Trend amount (e.g., +12%, -5%)",
+      "default": ""
     },
     "variant": {
       "type": "string",
@@ -56,7 +62,8 @@
     },
     "color": {
       "type": "string",
-      "description": "Accent color (CSS color value)"
+      "description": "Accent color (CSS color value)",
+      "default": ""
     }
   },
   "$view": [

@@ -38,14 +38,14 @@ export function tabs(element, options = {}) {
 
     // Process Panels
     originalPanels.forEach((panel, i) => {
-      const title = panel.dataset.tabTitle || panel.dataset.tab || `Tab ${i + 1}`;
+      const title = panel.getAttribute('tab-title') || panel.getAttribute('tab') || `Tab ${i + 1}`;
       const isActive = i === 0;
 
       // Create Tab Button
       const button = document.createElement('button');
       button.className = `wb-tabs__tab ${isActive ? 'wb-tabs__tab--active' : ''}`;
       button.setAttribute('role', 'tab');
-      button.dataset.index = i;
+      button.setAttribute('index', i);
       button.setAttribute('aria-selected', isActive);
       button.setAttribute('aria-controls', `panel-${i}`);
       button.id = `tab-${i}`;
@@ -74,7 +74,7 @@ export function tabs(element, options = {}) {
       const panelWrapper = document.createElement('section');
       panelWrapper.className = 'wb-tabs__panel';
       panelWrapper.setAttribute('role', 'tabpanel');
-      panelWrapper.dataset.index = i;
+      panelWrapper.setAttribute('index', i);
       panelWrapper.id = `panel-${i}`;
       panelWrapper.setAttribute('aria-labelledby', `tab-${i}`);
       Object.assign(panelWrapper.style, {
@@ -104,7 +104,7 @@ export function tabs(element, options = {}) {
     const tab = e.target.closest('.wb-tabs__tab');
     if (!tab) return;
 
-    const index = parseInt(tab.dataset.index);
+    const index = parseInt(tab.getAttribute('index'));
 
     // Update tabs
     nav.querySelectorAll('.wb-tabs__tab').forEach((t, i) => {
@@ -130,7 +130,6 @@ export function tabs(element, options = {}) {
 
   nav.addEventListener('click', clickHandler);
 
-  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-tabs');
     nav.removeEventListener('click', clickHandler);

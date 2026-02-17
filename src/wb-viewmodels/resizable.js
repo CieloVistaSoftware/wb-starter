@@ -199,8 +199,6 @@ export function resizable(element, options = {}) {
   };
 
   // Mark as ready
-  element.classList.add('wb-ready');
-
   // Cleanup
   return () => {
     element.classList.remove('wb-resizable', 'wb-resizable--resizing');

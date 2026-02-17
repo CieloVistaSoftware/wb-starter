@@ -1,6 +1,6 @@
 {
   "title": "WB Component Library",
-  "description": "Complete showcase of all WB Framework components, organized by category",
+  "description": "Complete showcase of all WB-Starter components, organized by category",
   "outputDir": "demos/site",
   "generateIndex": true,
   "pages": [

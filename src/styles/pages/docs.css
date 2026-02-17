@@ -1,0 +1,60 @@
+/* docs.css — Page-specific layout styles for docs.html */
+/* Extracted from inline styles per page-fragment compliance rules */
+
+/* Search wrapper */
+.docs-search-wrapper {
+  margin-top: 1.5rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+/* Search input */
+.docs-search-wrapper input[type="search"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-left: 2.5rem;
+  border-radius: 2rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+/* Search icon */
+.docs-search-wrapper .docs-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+}
+
+/* Loading state */
+.docs-loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.docs-loading p {
+  margin-top: 1rem;
+  color: var(--text-muted);
+  }
+
+  /* MOBILE-FIRST: Responsive overrides for docs page */
+  @media (max-width: 600px) {
+    .docs-search-wrapper,
+    .docs-loading {
+      padding: 1rem !important;
+      margin: 0 !important;
+      max-width: 100vw !important;
+      box-sizing: border-box;
+    }
+    .docs-search-wrapper input[type="search"] {
+      font-size: 1rem !important;
+      padding: 0.5rem 0.75rem !important;
+      border-radius: 1rem !important;
+    }
+  }
+}

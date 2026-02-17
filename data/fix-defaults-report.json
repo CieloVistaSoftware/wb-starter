@@ -1,0 +1,1611 @@
+{
+  "timestamp": "2026-02-15T23:18:11.508Z",
+  "totalFiles": 84,
+  "filesModified": 51,
+  "filesSkipped": 33,
+  "totalPropsFixed": 186,
+  "details": [
+    {
+      "file": "alert.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "message",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "article.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "articles.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "audio.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "avatar.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "src",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "alt",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "initials",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "name",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "status",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "badge.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "label",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "behavior.schema.json",
+      "status": "NO_PROPERTIES",
+      "fixes": []
+    },
+    {
+      "file": "behaviors-showcase.schema.json",
+      "status": "NO_PROPERTIES",
+      "fixes": []
+    },
+    {
+      "file": "behaviors.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "name",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "type",
+          "action": "SKIPPED",
+          "reason": "unknown or missing type: \"undefined\""
+        },
+        {
+          "property": "category",
+          "action": "SKIPPED",
+          "reason": "unknown or missing type: \"undefined\""
+        },
+        {
+          "property": "description",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "selector",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "attributes",
+          "action": "ADDED",
+          "type": "object",
+          "default": {}
+        },
+        {
+          "property": "events",
+          "action": "ADDED",
+          "type": "array",
+          "default": []
+        },
+        {
+          "property": "dependencies",
+          "action": "ADDED",
+          "type": "array",
+          "default": []
+        },
+        {
+          "property": "accessibility",
+          "action": "ADDED",
+          "type": "object",
+          "default": {}
+        },
+        {
+          "property": "testCases",
+          "action": "ADDED",
+          "type": "array",
+          "default": []
+        }
+      ]
+    },
+    {
+      "file": "button.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "label",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "icon",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "card.base.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "card.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "cardbutton.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "content",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "primary",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "primaryHref",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "secondary",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "secondaryHref",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "carddraggable.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "content",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardexpandable.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "content",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardfile.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "filename",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "size",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "date",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "href",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardhero.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "background",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "cta",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardhorizontal.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "image",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "subtitle",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardimage.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "src",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "subtitle",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "caption",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "href",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardlink.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "href",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "description",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "icon",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "badge",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardminimizable.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "content",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardnotification.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "message",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "icon",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardoverlay.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "image",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "subtitle",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardportfolio.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "name",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "company",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "location",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "cover",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "avatar",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "bio",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "tagline",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "email",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "phone",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "website",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "linkedin",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "twitter",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "github",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "dribbble",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "skills",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "skillLevels",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "experience",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "education",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "projects",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "certifications",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "languages",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "stats",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "cta",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "ctaHref",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardpricing.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "plan",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "price",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "description",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "features",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardproduct.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "image",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "description",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "price",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "originalPrice",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "badge",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "rating",
+          "action": "ADDED",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "property": "reviews",
+          "action": "ADDED",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "file": "cardprofile.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "bio",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "cover",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardstats.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "value",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "label",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "icon",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "trend",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "trendValue",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "color",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "cardtestimonial.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "quote",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "author",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "role",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "avatar",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "rating",
+          "action": "ADDED",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "file": "cardvideo.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "src",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "poster",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "description",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "checkbox.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "label",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "name",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "value",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "chip.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "label",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "icon",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "codecontrol.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "collapse.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "confetti.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "copy.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "text",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "target",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "darkmode.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "demo.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "details.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "summary",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "name",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "dialog.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "content",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "draggable.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "handle",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "drawer.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "content",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "drawerLayout.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "dropdown.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "fireworks.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "fix-card.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "footer.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "copyright",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "brand",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "links",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "social",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "globe.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "header.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "icon",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "subtitle",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "badge",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "hero.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "variant",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "home-page.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "hero",
+          "action": "ADDED",
+          "type": "object",
+          "default": {}
+        },
+        {
+          "property": "stats",
+          "action": "ADDED",
+          "type": "array",
+          "default": []
+        },
+        {
+          "property": "demo",
+          "action": "ADDED",
+          "type": "object",
+          "default": {}
+        },
+        {
+          "property": "features",
+          "action": "ADDED",
+          "type": "array",
+          "default": []
+        }
+      ]
+    },
+    {
+      "file": "input.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "label",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "placeholder",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "value",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "name",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "helper",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "error",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "icon",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "mdhtml.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "src",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "move.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "navbar.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "brand",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "logo",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "tagline",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "items",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "notes.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "progress.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "label",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "rating.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "resizable.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "ripple.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "scrollalong.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "search-index.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "$generated",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "$version",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "$stats",
+          "action": "ADDED",
+          "type": "object",
+          "default": {}
+        },
+        {
+          "property": "documents",
+          "action": "ADDED",
+          "type": "array",
+          "default": []
+        },
+        {
+          "property": "index",
+          "action": "ADDED",
+          "type": "object",
+          "default": {}
+        }
+      ]
+    },
+    {
+      "file": "search.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "value",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "name",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "select.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "label",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "options",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "value",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "name",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "skeleton.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "slider.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "snow.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "span.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "spinner.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "stagelight.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "sticky.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "threshold",
+          "action": "ADDED",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "file": "switch.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "label",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "name",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "value",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "table.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "data",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "columns",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "tabs.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "textarea.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "label",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "placeholder",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "value",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "name",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "themecontrol.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "timeline.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "$schema",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "items",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "toast.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "message",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "icon",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "action",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "actionHref",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "toggle.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "target",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "tooltip.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "content",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "file": "views.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "$schema",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "version",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "description",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "views",
+          "action": "ADDED",
+          "type": "object",
+          "default": {}
+        }
+      ]
+    },
+    {
+      "file": "wb-control.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "wb-repeater.schema.json",
+      "status": "OK",
+      "fixes": []
+    },
+    {
+      "file": "wizard.schema.json",
+      "status": "FIXED",
+      "fixes": [
+        {
+          "property": "title",
+          "action": "ADDED",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "property": "steps",
+          "action": "ADDED",
+          "type": "array",
+          "default": []
+        },
+        {
+          "property": "test",
+          "action": "SKIPPED",
+          "reason": "unknown or missing type: \"undefined\""
+        }
+      ]
+    }
+  ]
+}

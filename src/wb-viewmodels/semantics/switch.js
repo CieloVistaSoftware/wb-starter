@@ -22,8 +22,6 @@ export function switchInput(element, options = {}) {
   slider.className = 'wb-switch__slider';
   wrapper.appendChild(slider);
 
-  element.classList.add('wb-ready');
-  
   return () => {
     // Cleanup: move element back out and remove wrapper
     if (wrapper.parentNode) {

@@ -92,13 +92,16 @@
   "$methods": {},
   "$cssAPI": {
     "--wb-stagelight-color": {
-      "description": "Main color of the light"
+      "description": "Main color of the light",
+      "default": "inherit"
     },
     "--wb-stagelight-size": {
-      "description": "Size of the light beam or spot"
+      "description": "Size of the light beam or spot",
+      "default": "inherit"
     },
     "--wb-stagelight-intensity": {
-      "description": "Opacity of the light"
+      "description": "Opacity of the light",
+      "default": "inherit"
     }
   },
   "test": {

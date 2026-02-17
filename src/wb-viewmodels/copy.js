@@ -7,13 +7,13 @@ import { createToast } from './feedback.js';
  */
 export function copy(element, options = {}) {
   const config = {
-    text: options.text || element.dataset.copyText,
-    target: options.target || element.dataset.copyTarget,
-    feedback: options.feedback || element.dataset.copyFeedback || 'Copied!',
-    duration: parseInt(options.duration || element.dataset.copyDuration || '2000', 10),
-    toast: options.toast ?? (element.dataset.toast === 'true'),
+    text: options.text || element.getAttribute('copy-text'),
+    target: options.target || element.getAttribute('copy-target'),
+    feedback: options.feedback || element.getAttribute('copy-feedback') || 'Copied!',
+    duration: parseInt(options.duration || element.getAttribute('copy-duration') || '2000', 10),
+    toast: options.toast ?? (element.setAttribute('toast', == 'true'),
     ...options
-  };
+  });
 
   element.classList.add('wb-copy');
   
@@ -100,8 +100,6 @@ export function copy(element, options = {}) {
   element.style.cursor = 'pointer';
 
   // Mark as ready
-  element.classList.add('wb-ready');
-
   // Cleanup
   return () => {
     clearTimeout(timeout);

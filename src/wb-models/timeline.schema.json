@@ -1,44 +1,100 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://wb-starter.dev/schemas/timeline.schema.json",
-  "title": "WB Timeline Schema",
-  "description": "Schema for validating WB Timeline component",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "timeline.schema.json",
+  "title": "Timeline",
+  "description": "Vertical timeline component for displaying sequential events",
   "schemaFor": "timeline",
-  "type": "object",
-  "required": [
-    "items"
-  ],
+  "baseClass": "wb-timeline",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "list"
+  },
   "compliance": {
     "baseClass": "wb-timeline",
     "supportLevel": "stable",
     "accessibility": "high"
   },
   "properties": {
-    "$schema": {
-      "type": "string",
-      "description": "Reference to this schema file"
-    },
     "items": {
       "type": "string",
       "description": "Comma-separated list of timeline items",
-      "minLength": 1
+      "default": ""
     }
   },
-  "examples": [
-    {
-      "items": "Project kickoff,Design phase,Development,Testing,Launch"
-    }
-  ],
   "$view": [
     {
-      "template": "<div class=\"wb-timeline\">\n  <div class=\"wb-timeline__item\" wb-for=\"item in items\" style=\"position:relative;padding-left:1.5rem;padding-bottom:1.5rem;\">\n    <div class=\"wb-timeline__marker\" style=\"position:absolute;left:0;top:0.25rem;width:0.75rem;height:0.75rem;background:var(--primary, #6366f1);border-radius:50%;z-index:1;\"></div>\n    <div class=\"wb-timeline__line\" wb-unless=\"itemLast\" style=\"position:absolute;left:0.3rem;top:1rem;bottom:0;width:2px;background:var(--border-color, #374151);\"></div>\n    <div class=\"wb-timeline__content\" style=\"color:var(--text-primary, #f9fafb);\">\n      {{item}}\n    </div>\n  </div>\n</div>"
+      "name": "item",
+      "tag": "div",
+      "public": true,
+      "description": "Individual timeline entry (repeated for each item)"
+    },
+    {
+      "name": "marker",
+      "tag": "div",
+      "parent": "item",
+      "public": true,
+      "description": "Circular marker dot"
+    },
+    {
+      "name": "line",
+      "tag": "div",
+      "parent": "item",
+      "public": false,
+      "description": "Connecting line between markers"
+    },
+    {
+      "name": "content",
+      "tag": "div",
+      "parent": "item",
+      "public": true,
+      "content": "{{item}}",
+      "description": "Item text content"
     }
   ],
   "$methods": {
-    "timeline": "timeline"
+    "show": {
+      "description": "Shows the timeline",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the timeline",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "update": {
+      "description": "Updates timeline items",
+      "params": ["items"]
+    }
   },
-  "$cssAPI": {},
+  "$cssAPI": {
+    "--wb-timeline-marker-size": {
+      "default": "0.75rem",
+      "description": "Marker dot diameter"
+    },
+    "--wb-timeline-marker-bg": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Marker dot color"
+    },
+    "--wb-timeline-line-color": {
+      "default": "var(--border-color, #374151)",
+      "description": "Connecting line color"
+    },
+    "--wb-timeline-line-width": {
+      "default": "2px",
+      "description": "Connecting line thickness"
+    },
+    "--wb-timeline-gap": {
+      "default": "1.5rem",
+      "description": "Spacing between items"
+    }
+  },
   "test": {
+    "setup": [
+      "<wb-timeline items='Step 1,Step 2,Step 3'></wb-timeline>"
+    ],
     "matrix": {
       "combinations": [
         {
@@ -66,5 +122,11 @@
       "checkClasses": [],
       "checkAttributes": []
     }
+  },
+  "_metadata": {
+    "category": "layout",
+    "icon": "📅",
+    "since": "1.0.0",
+    "status": "stable"
   }
 }

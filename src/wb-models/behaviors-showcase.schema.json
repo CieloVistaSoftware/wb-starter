@@ -10,9 +10,12 @@
     "baseClass": "wb-behaviors-showcase",
     "skipBaseClass": true
   },
+  "properties": {},
   "test": {
     "setup": [],
-    "matrix": {}
+    "matrix": {
+      "combinations": [{}]
+    }
   },
   "pageStructure": {
     "header": {
@@ -205,52 +208,7 @@
     "pageLoadTimeout": 10000,
     "wbInitTimeout": 5000
   },
-  "$view": [
-    {
-      "tag": "header",
-      "id": "header",
-      "class": "showcase-header",
-      "children": [
-        {
-          "tag": "div",
-          "children": [
-            {"tag": "h1", "text": "⚡ WB Behaviors Showcase"},
-            {"tag": "p", "text": "232 behaviors with interactive examples and copy-ready code"}
-          ]
-        },
-        {"tag": "wb-themecontrol"}
-      ]
-    },
-    {
-      "tag": "nav",
-      "id": "nav", 
-      "class": "showcase-nav",
-      "children": [
-        {"tag": "a", "href": "#buttons", "text": "🔘 Buttons"},
-        {"tag": "a", "href": "#inputs", "text": "📝 Inputs"},
-        {"tag": "a", "href": "#selection", "text": "☑️ Selection"},
-        {"tag": "a", "href": "#feedback", "text": "📢 Feedback"},
-        {"tag": "a", "href": "#overlays", "text": "🪟 Overlays"},
-        {"tag": "a", "href": "#navigation", "text": "🧭 Navigation"},
-        {"tag": "a", "href": "#data", "text": "📊 Data"},
-        {"tag": "a", "href": "#media", "text": "🖼️ Media"},
-        {"tag": "a", "href": "#effects", "text": "✨ Effects"},
-        {"tag": "a", "href": "#utilities", "text": "🔧 Utilities"}
-      ]
-    },
-    {
-      "tag": "div",
-      "id": "stats",
-      "class": "showcase-stats",
-      "children": [
-        {"tag": "wb-cardstats", "value": "232", "label": "Total Behaviors", "icon": "⚡"},
-        {"tag": "wb-cardstats", "value": "19", "label": "Form Elements", "icon": "📝"},
-        {"tag": "wb-cardstats", "value": "25", "label": "UI Components", "icon": "🎯"},
-        {"tag": "wb-cardstats", "value": "15", "label": "Effects", "icon": "✨"},
-        {"tag": "wb-cardstats", "value": "12", "label": "Utilities", "icon": "🔧"}
-      ]
-    }
-  ],
+  "$view": [],
   "$methods": {},
   "$cssAPI": {}
 }

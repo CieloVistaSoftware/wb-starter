@@ -2,6 +2,8 @@
  * Collapse Behavior
  * -----------------------------------------------------------------------------
  * Collapsible content sections.
+ * CSS: src/styles/behaviors/collapse.css
+ * Zero inline styles.
  *
  * Custom Tag: <wb-collapse>
  * Helper Attribute: [x-collapse]
@@ -9,9 +11,9 @@
  */
 export function collapse(element, options = {}) {
   const config = {
-    label: options.label || element.dataset.label || 'Toggle',
-    open: options.open ?? element.hasAttribute('data-open'),
-    target: options.target || element.dataset.target,
+    heading: options.heading || element.getAttribute('heading') || 'Toggle',
+    open: options.open ?? element.hasAttribute('expanded') ?? element.hasAttribute('open'),
+    target: options.target || element.getAttribute('target'),
     ...options
   };
 
@@ -21,65 +23,61 @@ export function collapse(element, options = {}) {
   if (config.target) {
     const targetEl = document.querySelector(config.target);
     if (targetEl) {
-      let isTargetOpen = config.open || targetEl.style.display !== 'none';
-      
-      // Initialize target state
-      targetEl.style.display = isTargetOpen ? 'block' : 'none';
-      
+      let isTargetOpen = config.open;
+      targetEl.classList.toggle('wb-collapse--open', isTargetOpen);
+      element.setAttribute('aria-expanded', isTargetOpen);
+
       element.addEventListener('click', () => {
         isTargetOpen = !isTargetOpen;
-        targetEl.style.display = isTargetOpen ? 'block' : 'none';
+        targetEl.classList.toggle('wb-collapse--open', isTargetOpen);
         element.setAttribute('aria-expanded', isTargetOpen);
-        
-        element.dispatchEvent(new CustomEvent('wb:collapse:toggle', { 
-          bubbles: true, 
-          detail: { open: isTargetOpen, target: config.target } 
+        element.dispatchEvent(new CustomEvent('wb:collapse:toggle', {
+          bubbles: true,
+          detail: { open: isTargetOpen, target: config.target }
         }));
       });
-      
+
       return () => element.classList.remove('wb-collapse');
     }
   }
 
   // Default behavior: Wrap content (Accordion style)
   const content = element.innerHTML;
+  element.innerHTML = '';
 
-  element.innerHTML = `
-    <button class="wb-collapse__trigger" style="
-      display:flex;align-items:center;justify-content:space-between;
-      width:100%;padding:0.75rem 1rem;
-      background:var(--bg-secondary,#1f2937);
-      border:1px solid var(--border-color,#374151);
-      border-radius:6px;cursor:pointer;color:inherit;
-      font-weight:500;
-    ">
-      <span>${config.label}</span>
-      <span class="wb-collapse__icon" style="transition:transform 0.2s;">${config.open ? '▲' : '▼'}</span>
-    </button>
-    <div class="wb-collapse__content" style="
-      padding:0.75rem 1rem;
-      border:1px solid var(--border-color,#374151);
-      border-top:none;border-radius:0 0 6px 6px;
-      display:${config.open ? 'block' : 'none'};
-      background:var(--bg-primary,#111827);
-    ">${content}</div>
-  `;
+  const trigger = document.createElement('wb-button');
+  trigger.className = 'wb-collapse__trigger';
+  trigger.setAttribute('aria-expanded', config.open);
 
-  const trigger = element.querySelector('.wb-collapse__trigger');
-  const contentEl = element.querySelector('.wb-collapse__content');
-  const icon = element.querySelector('.wb-collapse__icon');
+  const label = document.createElement('span');
+  label.textContent = config.heading;
+  trigger.appendChild(label);
+
+  const icon = document.createElement('span');
+  icon.className = 'wb-collapse__icon';
+  icon.textContent = '▼';
+  trigger.appendChild(icon);
+
+  const contentEl = document.createElement('div');
+  contentEl.className = 'wb-collapse__content';
+  contentEl.innerHTML = content;
+
+  element.appendChild(trigger);
+  element.appendChild(contentEl);
+
+  if (config.open) {
+    element.classList.add('wb-collapse--open');
+  }
 
   let isOpen = config.open;
 
   trigger.addEventListener('click', () => {
     isOpen = !isOpen;
-    contentEl.style.display = isOpen ? 'block' : 'none';
-    icon.textContent = isOpen ? '▲' : '▼';
-    trigger.style.borderRadius = isOpen ? '6px 6px 0 0' : '6px';
-
-    element.dispatchEvent(new CustomEvent('wb:collapse:toggle', { 
-      bubbles: true, 
-      detail: { open: isOpen } 
+    element.classList.toggle('wb-collapse--open', isOpen);
+    trigger.setAttribute('aria-expanded', isOpen);
+    element.dispatchEvent(new CustomEvent('wb:collapse:toggle', {
+      bubbles: true,
+      detail: { open: isOpen }
     }));
   });
 
@@ -90,8 +88,7 @@ export function collapse(element, options = {}) {
     get isOpen() { return isOpen; }
   };
 
-  element.classList.add('wb-ready');
-  return () => element.classList.remove('wb-collapse');
+  return () => element.classList.remove('wb-collapse', 'wb-collapse--open');
 }
 
 // Accordion is an alias for collapse

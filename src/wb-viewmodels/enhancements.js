@@ -19,7 +19,7 @@
 export function form(element, options = {}) {
   const config = {
     ajax: options.ajax ?? element.hasAttribute('data-ajax'),
-    validate: options.validate ?? element.dataset.validate !== 'false',
+    validate: options.validate ?? element.getAttribute('validate') !== 'false',
     ...options
   };
 
@@ -150,9 +150,9 @@ export function formrow(element, options = {}) {
  */
 export function stepper(element, options = {}) {
   const config = {
-    min: parseFloat(options.min ?? element.dataset.min ?? '-Infinity'),
-    max: parseFloat(options.max ?? element.dataset.max ?? 'Infinity'),
-    step: parseFloat(options.step || element.dataset.step || '1'),
+    min: parseFloat(options.min ?? element.getAttribute('min') ?? '-Infinity'),
+    max: parseFloat(options.max ?? element.getAttribute('max') ?? 'Infinity'),
+    step: parseFloat(options.step || element.getAttribute('step') || '1'),
     ...options
   };
 
@@ -199,7 +199,7 @@ export function search(element, options = {}) {
   const config = {
     expandable: options.expandable ?? element.hasAttribute('data-expandable'),
     instant: options.instant ?? element.hasAttribute('data-instant'),
-    debounce: parseInt(options.debounce || element.dataset.debounce || '300'),
+    debounce: parseInt(options.debounce || element.getAttribute('debounce') || '300'),
     ...options
   };
 
@@ -242,7 +242,7 @@ export function search(element, options = {}) {
  */
 export function password(element, options = {}) {
   const config = {
-    toggle: options.toggle ?? element.dataset.toggle !== 'false',
+    toggle: options.toggle ?? element.getAttribute('toggle') !== 'false',
     strength: options.strength ?? element.hasAttribute('data-strength'),
     ...options
   };
@@ -285,24 +285,7 @@ export function password(element, options = {}) {
       width:2.5rem;
       border:none;
       background:transparent;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:1rem;
-      opacity:0.6;
-      transition:opacity 0.15s;
     `;
-    toggleBtn.textContent = '👁️';
-    toggleBtn.title = 'Show password';
-    
-    toggleBtn.onclick = () => {
-      const isPassword = element.type === 'password';
-      element.type = isPassword ? 'text' : 'password';
-      toggleBtn.textContent = isPassword ? '🙈' : '👁️';
-      toggleBtn.title = isPassword ? 'Hide password' : 'Show password';
-    };
-    
     toggleBtn.addEventListener('mouseenter', () => toggleBtn.style.opacity = '1');
     toggleBtn.addEventListener('mouseleave', () => toggleBtn.style.opacity = '0.6');
     
@@ -342,7 +325,6 @@ export function password(element, options = {}) {
     });
   }
 
-  element.classList.add('wb-ready');
   return () => {
     wrapper.parentNode.insertBefore(element, wrapper);
     wrapper.remove();
@@ -367,8 +349,8 @@ function getPasswordStrength(password) {
  */
 export function masked(element, options = {}) {
   const config = {
-    mask: options.mask || element.dataset.mask || '',
-    placeholder: options.placeholder || element.dataset.maskPlaceholder || '_',
+    mask: options.mask || element.getAttribute('mask') || '',
+    placeholder: options.placeholder || element.getAttribute('mask-placeholder') || '_',
     ...options
   };
 
@@ -452,17 +434,9 @@ export function masked(element, options = {}) {
     element.setSelectionRange(newCursor, newCursor);
   };
 
-  element.addEventListener('input', applyMask);
 
-  element.addEventListener('keydown', (e) => {
-    if (['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'].includes(e.key)) return;
-    if (e.ctrlKey || e.metaKey) return;
-    let mp = 0;
-    for (let i = 0; i < element.selectionStart && i < element.value.length; i++) mp++;
-    while (mp < config.mask.length && !isSlot(config.mask[mp])) mp++;
-    if (mp >= config.mask.length) { e.preventDefault(); return; }
-    if (!matchesSlot(config.mask[mp], e.key)) e.preventDefault();
-  });
+  // Always allow typing, just auto-format on input
+  element.addEventListener('input', applyMask);
 
   element.addEventListener('paste', (e) => {
     e.preventDefault();
@@ -473,7 +447,6 @@ export function masked(element, options = {}) {
 
   if (element.value) applyMask();
 
-  element.classList.add('wb-ready');
   return () => { element.classList.remove('wb-masked'); };
 }
 
@@ -482,8 +455,8 @@ export function masked(element, options = {}) {
  */
 export function counter(element, options = {}) {
   const config = {
-    max: parseInt(options.max || element.dataset.max || element.maxLength || '0'),
-    warning: parseInt(options.warning || element.dataset.warning || '0'),
+    max: parseInt(options.max || element.getAttribute('max') || element.maxLength || '0'),
+    warning: parseInt(options.warning || element.getAttribute('warning') || '0'),
     ...options
   };
 
@@ -516,7 +489,7 @@ export function floatinglabel(element, options = {}) {
 
   const label = document.createElement('label');
   label.className = 'wb-floating-label__label';
-  label.textContent = element.placeholder || element.dataset.label || '';
+  label.textContent = element.placeholder || element.getAttribute('label') || '';
   wrapper.appendChild(label);
 
   element.placeholder = '';
@@ -541,7 +514,7 @@ export function floatinglabel(element, options = {}) {
  */
 export function otp(element, options = {}) {
   const config = {
-    length: parseInt(options.length || element.dataset.length || '6'),
+    length: parseInt(options.length || element.getAttribute('length') || '6'),
     ...options
   };
 
@@ -634,7 +607,7 @@ export function colorpicker(element, options = {}) {
  */
 export function tags(element, options = {}) {
   const config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
     editable: options.editable ?? element.hasAttribute('data-editable'),
     placeholder: options.placeholder || 'Add tag...',
     ...options
@@ -704,7 +677,7 @@ export function tags(element, options = {}) {
  */
 export function autocomplete(element, options = {}) {
   const config = {
-    items: (options.items || element.dataset.items || '').split(','),
+    items: (options.items || element.getAttribute('items') || '').split(','),
     ...options
   };
 
@@ -735,7 +708,7 @@ export function autocomplete(element, options = {}) {
 export function file(element, options = {}) {
   const config = {
     multiple: options.multiple ?? element.hasAttribute('data-multiple'),
-    accept: options.accept || element.dataset.accept || '',
+    accept: options.accept || element.getAttribute('accept') || '',
     ...options
   };
 

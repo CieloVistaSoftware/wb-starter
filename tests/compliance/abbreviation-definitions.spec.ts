@@ -13,7 +13,7 @@ const DOCS_DIR = path.join(ROOT, 'docs');
 const README_FILE = path.join(ROOT, 'README.md');
 
 const KNOWN_ABBREVIATIONS: Record<string, string> = {
-  'WB': 'Web Behaviors', 'HCS': 'Harmonic Color System', 'CSS': 'Cascading Style Sheets',
+  'HCS': 'Harmonic Color System', 'CSS': 'Cascading Style Sheets',
   'HTML': 'HyperText Markup Language', 'JS': 'JavaScript', 'API': 'Application Programming Interface',
   'DOM': 'Document Object Model', 'UI': 'User Interface', 'UX': 'User Experience',
   'ARIA': 'Accessible Rich Internet Applications', 'CDN': 'Content Delivery Network',
@@ -28,9 +28,10 @@ const COMMON_ABBREVIATIONS = new Set([
   'CSS', 'HTML', 'JS', 'API', 'URL', 'HTTP', 'HTTPS', 'JSON', 'ID', 'XML',
   'RGB', 'HSL', 'SVG', 'PNG', 'JPG', 'GIF', 'PDF', 'FAQ', 'TODO', 'FIXME',
   'OK', 'VS', 'E.G', 'I.E', 'ETC', 'AM', 'PM', 'UTC', 'GMT',
+  'WB',  // Part of product name "WB-Starter", no expansion needed
 ]);
 
-const PROJECT_ABBREVIATIONS = new Set(['WB', 'HCS']);
+const PROJECT_ABBREVIATIONS = new Set(['HCS']);
 
 const EXCLUDE_PATTERNS = ['node_modules', '.git', 'dist', 'build', 'coverage', 'test-results', 'CHANGELOG.md', 'LICENSE'];
 

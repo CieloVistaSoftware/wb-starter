@@ -1,20 +1,51 @@
 /**
  * Avatar Behavior Styles
  * -----------------------------------------------------------------------------
- * Extracted from demo.css (Phase 3 migration)
- * Works with src/wb-viewmodels/semantics/avatar.js
+ * Custom element: <wb-avatar>
+ * CSS targets the tag and attributes directly — JS adds no classes.
  * -----------------------------------------------------------------------------
  */
 
-.wb-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--primary);
+wb-avatar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  background: var(--primary, #6366f1);
   color: white;
-  font-weight: bold;
-  font-size: 0.8rem;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  font-size: 0.85rem;
 }
+
+/* Sizes — attribute selectors */
+wb-avatar[size="sm"]  { width: 32px; height: 32px; font-size: 0.7rem; }
+wb-avatar[size="md"]  { width: 40px; height: 40px; font-size: 0.85rem; }
+wb-avatar[size="lg"]  { width: 56px; height: 56px; font-size: 1.1rem; }
+wb-avatar[size="xl"]  { width: 80px; height: 80px; font-size: 1.6rem; }
+
+/* Image child */
+wb-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Status dot — shared base via attribute substring selector */
+wb-avatar span[class*="wb-avatar__status"] {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  height: 25%;
+  border-radius: 50%;
+  border: 2px solid var(--bg-primary, #1f2937);
+}
+
+.wb-avatar__status--online  { background: #22c55e; }
+.wb-avatar__status--offline { background: #6b7280; }
+.wb-avatar__status--busy    { background: #ef4444; }
+.wb-avatar__status--away    { background: #f59e0b; }

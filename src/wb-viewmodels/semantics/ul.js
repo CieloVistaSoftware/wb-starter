@@ -78,8 +78,6 @@ export function ul(element, options = {}) {
     element.style.paddingLeft = '0';
   }
 
-  element.classList.add('wb-ready');
-
   return () => {
     element.classList.remove('wb-ul', `wb-ul--${config.variant}`);
     items.forEach(li => {

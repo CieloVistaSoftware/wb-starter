@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Fieldset Behavior",
+  "type": "object",
+  "description": "Schema for x-fieldset behavior (collapsible fieldset)",
+  "properties": {
+    "collapsible": { "type": "boolean", "description": "Allow fieldset to be collapsible" },
+    "collapsed": { "type": "boolean", "description": "Initial collapsed state" }
+  },
+  "required": [],
+  "wbBehavior": {
+    "name": "fieldset",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Collapsible fieldset for grouping form controls.",
+    "src": "src/wb-viewmodels/fieldset.js"
+  },
+  "test": {
+    "setup": [
+      "<fieldset x-fieldset id='test-fieldset'><legend>Legend</legend><input></fieldset>"
+    ],
+    "permutations": [
+      { "collapsible": true, "collapsed": false },
+      { "collapsible": true, "collapsed": true },
+      { "collapsible": false, "collapsed": false }
+    ],
+    "assertions": [
+      {
+        "description": "Fieldset initializes with wb-fieldset class",
+        "selector": "#test-fieldset",
+        "checks": { "hasClass": "wb-fieldset" }
+      },
+      {
+        "description": "Legend is clickable when collapsible",
+        "selector": "#test-fieldset legend",
+        "action": "click",
+        "checks": { "hasClass": "wb-fieldset__legend--collapsible" },
+        "when": { "collapsible": true }
+      },
+      {
+        "description": "Collapsed state applies wb-fieldset--collapsed class",
+        "selector": "#test-fieldset",
+        "checks": { "hasClass": "wb-fieldset--collapsed" },
+        "when": { "collapsed": true }
+      }
+    ]
+  }
+}

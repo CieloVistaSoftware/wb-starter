@@ -32,12 +32,12 @@
  */
 export function navbar(element, options = {}) {
   const config = {
-    brand: options.brand || element.dataset.brand || '',
-    brandHref: options.brandHref || element.dataset.brandHref || '/',
-    logo: options.logo || element.dataset.logo || '',
-    logoSize: options.logoSize || element.dataset.logoSize || '32',
-    tagline: options.tagline || element.dataset.tagline || '',
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
+    brand: options.brand || element.getAttribute('brand') || '',
+    brandHref: options.brandHref || element.getAttribute('brand-href') || '/',
+    logo: options.logo || element.getAttribute('logo') || '',
+    logoSize: options.logoSize || element.getAttribute('logo-size') || '32',
+    tagline: options.tagline || element.getAttribute('tagline') || '',
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
     sticky: options.sticky ?? element.hasAttribute('data-sticky'),
     ...options
   };
@@ -120,7 +120,7 @@ export function navbar(element, options = {}) {
   const existingChildren = Array.from(element.children).filter(child => {
     // Look for links or elements with
     return child.tagName === 'A' || 
-           child.dataset?.wb === 'link' ||
+           child.getAttribute('wb') === 'link' ||
            child.querySelector?.('a, []');
   });
 
@@ -230,7 +230,6 @@ export function navbar(element, options = {}) {
     }
   }
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-navbar');
 }
 
@@ -241,8 +240,8 @@ export function navbar(element, options = {}) {
 export function sidebar(element, options = {}) {
   // Initial config
   let config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
-    active: options.active || element.dataset.active || '',
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
+    active: options.active || element.getAttribute('active') || '',
     collapsed: options.collapsed ?? element.hasAttribute('data-collapsed'),
     ...options
   };
@@ -310,10 +309,10 @@ export function sidebar(element, options = {}) {
         config.collapsed = element.hasAttribute('data-collapsed');
         shouldRender = true;
       } else if (mutation.attributeName === 'data-items') {
-        config.items = (element.dataset.items || '').split(',').filter(Boolean);
+        config.items = (element.getAttribute('items') || '').split(',').filter(Boolean);
         shouldRender = true;
       } else if (mutation.attributeName === 'data-active') {
-        config.active = element.dataset.active || '';
+        config.active = element.getAttribute('active') || '';
         shouldRender = true;
       }
     }
@@ -324,7 +323,6 @@ export function sidebar(element, options = {}) {
   
   observer.observe(element, { attributes: true, attributeFilter: ['data-collapsed', 'data-items', 'data-active'] });
 
-  element.classList.add('wb-ready');
   return () => {
     observer.disconnect();
     element.classList.remove('wb-sidebar');
@@ -338,7 +336,7 @@ export function sidebar(element, options = {}) {
  */
 export function menu(element, options = {}) {
   const config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
     ...options
   };
 
@@ -390,7 +388,7 @@ export function menu(element, options = {}) {
         detail: { 
           index: idx, 
           label: item.textContent.trim(),
-          value: item.dataset.value || item.textContent.trim()
+          value: item.getAttribute('value') || item.textContent.trim()
         }
       }));
     });
@@ -409,7 +407,6 @@ export function menu(element, options = {}) {
     });
   });
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-menu');
 }
 
@@ -417,86 +414,68 @@ export function menu(element, options = {}) {
  * Pagination - Page navigation from data-pages
  * Custom Tag: <wb-pagination>
  */
+/**
+ * Pagination
+ * CSS: src/styles/behaviors/pagination.css
+ * Uses <span role="button"> to avoid button auto-inject collision.
+ * No wb-ready, no component classes added by JS.
+ */
 export function pagination(element, options = {}) {
-  const config = {
-    pages: parseInt(options.pages || element.dataset.pages || '1'),
-    current: parseInt(options.current || element.dataset.current || '1'),
-    ...options
+  const total = parseInt(options.total || element.getAttribute('total') || '0');
+  const perPage = parseInt(options.perPage || element.getAttribute('per-page') || '10');
+  const pages = parseInt(options.pages || element.getAttribute('pages') || '0') || Math.ceil(total / perPage) || 1;
+  let current = parseInt(options.current || element.getAttribute('current') || '1');
+
+  element.setAttribute('role', 'navigation');
+
+  const createBtn = (text, attrs) => {
+    const span = document.createElement('span');
+    span.setAttribute('role', 'button');
+    for (const [k, v] of Object.entries(attrs)) span.setAttribute(k, v);
+    span.textContent = text;
+    element.appendChild(document.createTextNode('\n  '));
+    element.appendChild(span);
   };
 
-  element.classList.add('wb-pagination');
-  element.setAttribute('role', 'navigation');
-  element.style.display = 'flex';
-  element.style.gap = '0.25rem';
-  element.style.alignItems = 'center';
-
   const render = () => {
-    let html = `
-      <button class="wb-pagination__btn" ${config.current <= 1 ? 'disabled' : ''} data-action="prev" 
-        style="
-          padding: 0.5rem 0.75rem;
-          border: 1px solid var(--border-color, #4b5563);
-          background: var(--bg-tertiary, #374151);
-          border-radius: 4px;
-          cursor: ${config.current <= 1 ? 'not-allowed' : 'pointer'};
-          opacity: ${config.current <= 1 ? '0.5' : '1'};
-          transition: all 0.15s ease;
-          color: inherit;
-        ">‹</button>
-    `;
-    
-    for (let i = 1; i <= config.pages; i++) {
-      const active = i === config.current;
-      html += `
-        <button class="wb-pagination__btn" data-page="${i}" 
-          style="
-            padding: 0.5rem 0.75rem;
-            border: 1px solid ${active ? 'var(--primary, #6366f1)' : 'var(--border-color, #4b5563)'};
-            background: ${active ? 'var(--primary, #6366f1)' : 'var(--bg-tertiary, #374151)'};
-            border-radius: 4px;
-            cursor: pointer;
-            color: ${active ? 'white' : 'inherit'};
-            font-weight: ${active ? '600' : '400'};
-            transition: all 0.15s ease;
-          ">${i}</button>
-      `;
+    element.innerHTML = '';
+
+    const prevAttrs = { action: 'prev', 'aria-label': 'Previous page' };
+    if (current <= 1) { prevAttrs['aria-disabled'] = 'true'; prevAttrs.tabindex = '-1'; }
+    createBtn('\u2039', prevAttrs);
+
+    for (let i = 1; i <= pages; i++) {
+      const attrs = { page: String(i), 'aria-label': `Page ${i}` };
+      if (i === current) attrs['aria-current'] = 'page';
+      createBtn(String(i), attrs);
     }
-    
-    html += `
-      <button class="wb-pagination__btn" ${config.current >= config.pages ? 'disabled' : ''} data-action="next" 
-        style="
-          padding: 0.5rem 0.75rem;
-          border: 1px solid var(--border-color, #4b5563);
-          background: var(--bg-tertiary, #374151);
-          border-radius: 4px;
-          cursor: ${config.current >= config.pages ? 'not-allowed' : 'pointer'};
-          opacity: ${config.current >= config.pages ? '0.5' : '1'};
-          transition: all 0.15s ease;
-          color: inherit;
-        ">›</button>
-    `;
-    
-    element.innerHTML = html;
+
+    const nextAttrs = { action: 'next', 'aria-label': 'Next page' };
+    if (current >= pages) { nextAttrs['aria-disabled'] = 'true'; nextAttrs.tabindex = '-1'; }
+    createBtn('\u203a', nextAttrs);
+
+    element.appendChild(document.createTextNode('\n'));
   };
 
   element.addEventListener('click', (e) => {
-    const btn = e.target.closest('button');
-    if (!btn || btn.disabled) return;
-    
-    if (btn.dataset.action === 'prev') config.current--;
-    else if (btn.dataset.action === 'next') config.current++;
-    else if (btn.dataset.page) config.current = parseInt(btn.dataset.page);
-    
+    const btn = e.target.closest('[role="button"]');
+    if (!btn || btn.getAttribute('aria-disabled') === 'true') return;
+
+    const action = btn.getAttribute('action');
+    const page = btn.getAttribute('page');
+    if (action === 'prev') current--;
+    else if (action === 'next') current++;
+    else if (page) current = parseInt(page);
+
     render();
-    element.dispatchEvent(new CustomEvent('wb:pagination:change', { 
-      bubbles: true, 
-      detail: { page: config.current } 
+    element.dispatchEvent(new CustomEvent('wb:pagination:change', {
+      bubbles: true,
+      detail: { page: current }
     }));
   });
 
   render();
-  element.classList.add('wb-ready');
-  return () => element.classList.remove('wb-pagination');
+  return () => { element.innerHTML = ''; };
 }
 
 /**
@@ -505,8 +484,8 @@ export function pagination(element, options = {}) {
  */
 export function steps(element, options = {}) {
   const config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
-    current: parseInt(options.current || element.dataset.current || '1'),
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
+    current: parseInt(options.current || element.getAttribute('current') || '1'),
     ...options
   };
 
@@ -543,7 +522,6 @@ export function steps(element, options = {}) {
     `;
   }).join('');
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-steps');
 }
 
@@ -553,7 +531,7 @@ export function steps(element, options = {}) {
  */
 export function treeview(element, options = {}) {
   const config = {
-    items: options.items || JSON.parse(element.dataset.items || '[]'),
+    items: options.items || JSON.parse(element.getAttribute('items') || '[]'),
     ...options
   };
 
@@ -603,7 +581,6 @@ export function treeview(element, options = {}) {
     }
   });
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-treeview');
 }
 
@@ -613,7 +590,7 @@ export function treeview(element, options = {}) {
  */
 export function backtotop(element, options = {}) {
   const config = {
-    threshold: parseInt(options.threshold || element.dataset.threshold || '300'),
+    threshold: parseInt(options.threshold || element.getAttribute('threshold') || '300'),
     ...options
   };
 
@@ -633,7 +610,6 @@ export function backtotop(element, options = {}) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-backtotop');
     window.removeEventListener('scroll', updateVisibility);
@@ -647,9 +623,9 @@ export function backtotop(element, options = {}) {
  */
 export function link(element, options = {}) {
   const config = {
-    href: options.href || element.dataset.href || element.getAttribute('href') || '#',
-    text: options.text || element.dataset.text || element.textContent || 'Link',
-    offset: parseInt(options.offset || element.dataset.offset || '0'),
+    href: options.href || element.getAttribute('href') || element.getAttribute('href') || '#',
+    text: options.text || element.getAttribute('text') || element.textContent || 'Link',
+    offset: parseInt(options.offset || element.getAttribute('offset') || '0'),
     ...options
   };
 
@@ -668,7 +644,7 @@ export function link(element, options = {}) {
       element.rel = 'noopener noreferrer';
     }
   } else {
-    element.dataset.href = config.href;
+    element.setAttribute('href', config.href);
   }
   
   if (!element.textContent.trim() || element.textContent === 'Link') {
@@ -769,7 +745,6 @@ export function link(element, options = {}) {
     }
   };
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-link');
 }
 
@@ -779,8 +754,8 @@ export function link(element, options = {}) {
  */
 export function statusbar(element, options = {}) {
   const config = {
-    items: (options.items || element.dataset.items || '').split(',').filter(Boolean),
-    position: options.position || element.dataset.position || 'bottom',
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
+    position: options.position || element.getAttribute('position') || 'bottom',
     ...options
   };
 
@@ -881,7 +856,6 @@ export function statusbar(element, options = {}) {
 
   document.addEventListener('wb:status:message', handleStatusMessage);
 
-  element.classList.add('wb-ready');
   return () => {
     element.classList.remove('wb-statusbar');
     document.removeEventListener('wb:status:message', handleStatusMessage);

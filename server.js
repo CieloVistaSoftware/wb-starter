@@ -367,10 +367,6 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.text({ limit: '10mb' }));
 
 // Special Routes for HTML files in public/
-app.get('/builder.html', (req, res) => {
-  res.sendFile(path.join(rootDir, 'public', 'builder.html'));
-});
-
 app.get('/schema-viewer.html', (req, res) => {
   res.sendFile(path.join(rootDir, 'public', 'schema-viewer.html'));
 });

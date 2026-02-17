@@ -13,9 +13,11 @@
     "variant": {
       "type": "string",
       "enum": [
+        "",
         "default",
         "cosmic"
-      ]
+      ],
+      "default": "default"
     }
   },
   "$view": [],

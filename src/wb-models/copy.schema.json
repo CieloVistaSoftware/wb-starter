@@ -12,11 +12,13 @@
   "properties": {
     "text": {
       "type": "string",
-      "description": "Text to copy"
+      "description": "Text to copy",
+      "default": ""
     },
     "target": {
       "type": "string",
-      "description": "Selector of element to copy from"
+      "description": "Selector of element to copy from",
+      "default": ""
     }
   },
   "$view": [],

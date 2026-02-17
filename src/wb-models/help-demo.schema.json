@@ -1,0 +1,10 @@
+{
+  "$schema": "../wb-models/page.schema.json",
+  "title": "x-help Demo",
+  "description": "Demo page for x-help behavior.",
+  "components": [
+    { "type": "span", "attributes": { "x-help": "" }, "text": "This is help text for a field." },
+    { "type": "span", "attributes": { "x-help": "" }, "text": "Another help message for users." },
+    { "type": "span", "attributes": { "x-help": "" }, "text": "Short help." }
+  ]
+}

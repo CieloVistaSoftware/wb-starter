@@ -50,7 +50,7 @@ const knownWarnings = [
 
 // Pages that redirect/navigate destroying execution context
 const SKIP_DARK_MODE = [
-  'pages/builder.html',                    // Redirects to builder.html
+  
   'pages/themes.html',                     // Heavy JS with page transitions
   'demos/card.html',                       // Redirects during init
   'demos/wb-views-demo.html',              // Missing module import

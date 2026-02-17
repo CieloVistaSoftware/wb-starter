@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/mobile-screenshots.spec.ts",
+  "startedAt": "2026-02-16T05:05:57.116Z",
+  "updatedAt": "2026-02-16T05:06:19.793Z",
+  "command": "npx playwright test --workers=8 tests/compliance/mobile-screenshots.spec.ts",
+  "pid": 7072,
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "total": 5,
+  "currentFile": "tests\\compliance\\mobile-screenshots.spec.ts",
+  "output": "\nRunning 5 tests using 5 workers\n\n  ok 4 [compliance] › tests\\compliance\\mobile-screenshots.spec.ts:18:3 › mobile screenshot: home (3.1s)\n  ok 2 [compliance] › tests\\compliance\\mobile-screenshots.spec.ts:18:3 › mobile screenshot: card-demo (4.9s)\n  ok 5 [compliance] › tests\\compliance\\mobile-screenshots.spec.ts:18:3 › mobile screenshot: ai-permutation (4.2s)\n  ok 3 [compliance] › tests\\compliance\\mobile-screenshots.spec.ts:18:3 › mobile screenshot: docs (5.2s)\n  ok 1 [compliance] › tests\\compliance\\mobile-screenshots.spec.ts:18:3 › mobile screenshot: components (6.6s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 5 tests in 14.2s\n  ✓ Passed:  5\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 5/5 passed\n════════════════════════════════════════════════════════════\n\n\n  5 passed (14.8s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-16T05:06:19.793Z",
+  "duration": "22.68s",
+  "exitCode": 0
+}

@@ -274,8 +274,6 @@ export async function mdhtml(element, options = {}) {
   }
 
   // Mark as ready
-  element.classList.add('wb-ready');
-
   // Expose reload method
   element.wbMdhtml = {
     reload: () => mdhtml(element, options),

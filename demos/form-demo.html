@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Demo</title>
+  <link rel="stylesheet" href="../src/styles/site.css">
+</head>
+<body>
+  <h1>Form Demo</h1>
+  <p>Demonstrates the <code>x-form</code> behavior.</p>
+  <form x-form>
+    <label>Username: <input type="text"></label><br>
+    <label>Password: <input type="password"></label><br>
+    <button type="submit">Submit</button>
+  </form>
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</body>
+</html>

@@ -131,21 +131,29 @@
 
 /* ── Dark theme adjustments ── */
 [data-theme="dark"] .wb-notification--info {
-  background: var(--notification-info-dark-bg);
-  color: var(--notification-info-dark-color);
+  background: rgba(33, 150, 243, 0.15);
+  border-left-color: #42a5f5;
+  color: #90caf9;
 }
 
 [data-theme="dark"] .wb-notification--success {
-  background: var(--notification-success-dark-bg);
-  color: var(--notification-success-dark-color);
+  background: rgba(76, 175, 80, 0.15);
+  border-left-color: #66bb6a;
+  color: #a5d6a7;
 }
 
 [data-theme="dark"] .wb-notification--warning {
-  background: var(--notification-warning-dark-bg);
-  color: var(--notification-warning-dark-color);
+  background: rgba(255, 152, 0, 0.15);
+  border-left-color: #ffa726;
+  color: #ffcc80;
 }
 
 [data-theme="dark"] .wb-notification--error {
-  background: var(--notification-danger-dark-bg);
-  color: var(--notification-danger-dark-color);
+  background: rgba(244, 67, 54, 0.15);
+  border-left-color: #ef5350;
+  color: #ef9a9a;
+}
+
+[data-theme="dark"] .wb-notification__icon {
+  opacity: 0.9;
 }

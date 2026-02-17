@@ -1,17 +1,18 @@
+<link rel="stylesheet" href="../src/styles/pages/docs.css">
+
 <div id="docs-hero" class="page__hero">
   <h1>📖 Documentation</h1>
   <p>Browse all documentation, guides, and research papers.</p>
-  <div style="margin-top: 1.5rem; max-width: 500px; margin-left: auto; margin-right: auto; position: relative;">
-    <input type="search" id="docs-search" placeholder="Search documentation..." 
-           style="width: 100%; padding: 0.75rem 1rem; padding-left: 2.5rem; border-radius: 2rem; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-size: 1rem;">
-    <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); opacity: 0.5;">🔍</span>
+  <div class="docs-search-wrapper">
+    <input type="search" id="docs-search" placeholder="Search documentation...">
+    <span class="docs-search-icon">🔍</span>
   </div>
 </div>
 
 <div id="docs-container" class="page__section">
-  <div id="docs-loading" style="text-align: center; padding: 2rem;">
+  <div id="docs-loading" class="docs-loading">
     <wb-spinner></div>
-    <p style="margin-top: 1rem; color: var(--text-muted);">Loading documentation...</p>
+    <p>Loading documentation...</p>
   </div>
 </div>
 

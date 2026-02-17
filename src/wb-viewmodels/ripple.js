@@ -8,8 +8,8 @@
  */
 export function ripple(element, options = {}) {
   const config = {
-    color: options.color || element.dataset.rippleColor || element.getAttribute('ripple-color') || 'rgba(255, 255, 255, 0.4)',
-    duration: parseInt(options.duration || element.dataset.rippleDuration || element.getAttribute('ripple-duration') || '600', 10),
+    color: options.color || element.getAttribute('ripple-color') || element.getAttribute('ripple-color') || 'rgba(255, 255, 255, 0.4)',
+    duration: parseInt(options.duration || element.getAttribute('ripple-duration') || element.getAttribute('ripple-duration') || '600', 10),
     centered: options.centered ?? (element.hasAttribute('data-ripple-centered') || element.hasAttribute('ripple-centered')),
     ...options
   };
@@ -82,8 +82,6 @@ export function ripple(element, options = {}) {
   element.addEventListener('mousedown', createRipple);
 
   // Mark as ready
-  element.classList.add('wb-ready');
-
   // Cleanup
   return () => {
     element.classList.remove('wb-ripple');

@@ -6,7 +6,7 @@
 export function input(element, options = {}) {
   const config = {
     type: options.type || element.dataset.type || element.type || 'text',
-    variant: options.variant || element.dataset.variant || '',
+    variant: options.variant || element.getAttribute('variant') || element.dataset.variant || '',
     size: options.size || element.dataset.size || 'md',
     clearable: options.clearable ?? element.hasAttribute('data-clearable'),
     prefix: options.prefix || element.dataset.prefix || element.dataset.icon || '',
@@ -52,6 +52,9 @@ export function input(element, options = {}) {
   if (config.variant === 'success') {
     element.style.borderColor = 'var(--success-color, #22c55e)';
     wrapper.classList.add('wb-input--success');
+  } else if (config.variant === 'warning') {
+    element.style.borderColor = 'var(--warning-color, #f59e0b)';
+    wrapper.classList.add('wb-input--warning');
   } else if (config.variant === 'error') {
     element.style.borderColor = 'var(--danger-color, #ef4444)';
     wrapper.classList.add('wb-input--error');
@@ -87,7 +90,6 @@ export function input(element, options = {}) {
     wrapper.appendChild(clear);
   }
 
-  element.classList.add('wb-ready');
   return () => {
     wrapper.parentNode.insertBefore(element, wrapper);
     wrapper.remove();

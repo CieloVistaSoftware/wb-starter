@@ -17,12 +17,14 @@
   "properties": {
     "label": {
       "type": "string",
-      "description": "Button text"
+      "description": "Button text",
+      "default": ""
     },
     "icon": {
       "type": "string",
       "description": "Icon name from built-in library, or any emoji/text",
       "enum": [
+        "",
         "star",
         "check",
         "close",
@@ -43,7 +45,8 @@
         "arrow_left",
         "copy",
         "save"
-      ]
+      ],
+      "default": ""
     },
     "iconPosition": {
       "type": "string",

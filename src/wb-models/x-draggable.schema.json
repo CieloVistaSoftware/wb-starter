@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "x-draggable Attribute",
+  "type": "object",
+  "description": "Schema for x-draggable attribute. Enables drag-and-drop functionality.",
+  "properties": {
+    "x-draggable": {
+      "type": "boolean",
+      "description": "Whether the element is draggable."
+    }
+  },
+  "required": ["x-draggable"]
+}

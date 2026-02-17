@@ -3,18 +3,19 @@
   "$id": "_element.base.schema.json",
   "title": "Base Element Schema",
   "description": "ALL elements inherit from this. Defines universal properties every element has.",
-  
   "type": "object",
   "properties": {
     "id": {
       "type": "string",
       "description": "Unique identifier for the element",
-      "canvasEditable": false
+      "canvasEditable": false,
+      "default": ""
     },
     "className": {
-      "type": "string", 
+      "type": "string",
       "description": "CSS class names",
-      "canvasEditable": false
+      "canvasEditable": false,
+      "default": ""
     },
     "textContent": {
       "type": "string",
@@ -30,36 +31,61 @@
     "title": {
       "type": "string",
       "description": "Tooltip text on hover",
-      "canvasEditable": false
+      "canvasEditable": false,
+      "default": ""
     },
     "lang": {
       "type": "string",
-      "description": "Language of content"
+      "description": "Language of content",
+      "default": ""
     },
     "dir": {
       "type": "string",
-      "enum": ["ltr", "rtl", "auto"],
-      "description": "Text direction"
+      "enum": [
+        "ltr",
+        "rtl",
+        "auto"
+      ],
+      "description": "Text direction",
+      "default": ""
     },
     "tabindex": {
       "type": "integer",
-      "description": "Tab order for keyboard navigation"
+      "description": "Tab order for keyboard navigation",
+      "default": 0
     }
   },
-  
   "universalAttributes": {
     "description": "These are available on ALL HTML elements",
-    "list": ["id", "class", "style", "title", "lang", "dir", "tabindex", "hidden", "data-*"]
+    "list": [
+      "id",
+      "class",
+      "style",
+      "title",
+      "lang",
+      "dir",
+      "tabindex",
+      "hidden",
+      "data-*"
+    ]
   },
-  
   "universalEvents": {
     "description": "Events available on ALL elements",
-    "list": ["click", "dblclick", "mouseenter", "mouseleave", "focus", "blur", "keydown", "keyup"]
+    "list": [
+      "click",
+      "dblclick",
+      "mouseenter",
+      "mouseleave",
+      "focus",
+      "blur",
+      "keydown",
+      "keyup"
+    ]
   },
-  
   "rules": {
     "textContentAlwaysEditable": true,
     "childrenAllowed": true,
     "selfClosing": false
-  }
+  },
+  "schemaType": "base"
 }

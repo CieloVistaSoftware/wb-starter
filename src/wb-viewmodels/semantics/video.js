@@ -37,7 +37,6 @@ export function video(element, options = {}) {
     toggleMute: () => { element.muted = !element.muted; }
   };
 
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-video');
 }
 

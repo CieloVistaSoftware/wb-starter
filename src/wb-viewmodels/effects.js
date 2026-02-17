@@ -16,11 +16,11 @@
  */
 export function animate(element, options = {}) {
   const config = {
-    animation: options.animation || element.dataset.animation || 'fadeIn',
-    duration: options.duration || element.dataset.duration || '0.5s',
-    delay: options.delay || element.dataset.delay || '0s',
-    easing: options.easing || element.dataset.easing || 'ease',
-    trigger: options.trigger || element.dataset.trigger || 'click',
+    animation: options.animation || element.getAttribute('animation') || 'fadeIn',
+    duration: options.duration || element.getAttribute('duration') || '0.5s',
+    delay: options.delay || element.getAttribute('delay') || '0s',
+    easing: options.easing || element.getAttribute('easing') || 'ease',
+    trigger: options.trigger || element.getAttribute('trigger') || 'click',
     ...options
   };
 
@@ -43,7 +43,6 @@ export function animate(element, options = {}) {
   }
 
   element.wbAnimate = { play };
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-animate');
 }
 
@@ -61,7 +60,6 @@ function clickAnim(element, animName, duration = '0.5s') {
     element.onclick = playAnimation;
   }
   element.wbAnim = { play: playAnimation };
-  element.classList.add('wb-ready');
   return () => element.classList.remove(`wb-${animName}`);
 }
 
@@ -81,11 +79,11 @@ export function fadeout(element) { return clickAnim(element, 'fade-out', '0.5s')
  * Helper Attribute: [x-slidein]
  */
 export function slidein(element, options = {}) {
-  const dir = options.direction || element.dataset.direction || 'left';
+  const dir = options.direction || element.getAttribute('direction') || 'left';
   return clickAnim(element, `slide-in-${dir}`, '0.5s');
 }
 export function slideout(element, options = {}) {
-  const dir = options.direction || element.dataset.direction || 'left';
+  const dir = options.direction || element.getAttribute('direction') || 'left';
   return clickAnim(element, `slide-out-${dir}`, '0.5s');
 }
 export function zoomin(element) { return clickAnim(element, 'zoom-in', '0.4s'); }
@@ -111,8 +109,8 @@ export function heartbeat(element) { return clickAnim(element, 'heartbeat', '1.3
  */
 export function confetti(element, options = {}) {
   const config = {
-    count: parseInt(options.count || element.dataset.count || '50'),
-    label: options.label || element.dataset.label || 'Fire Confetti!',
+    count: parseInt(options.count || element.getAttribute('count') || '50'),
+    label: options.label || element.getAttribute('label') || 'Fire Confetti!',
     ...options
   };
   
@@ -211,7 +209,6 @@ export function confetti(element, options = {}) {
   
   element.onclick = fire;
   element.wbConfetti = { fire };
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-confetti-trigger');
 }
 
@@ -221,9 +218,9 @@ export function confetti(element, options = {}) {
  */
 export function typewriter(element, options = {}) {
   const config = {
-    text: options.text || element.dataset.text || element.textContent || 'Hello World!',
-    speed: parseInt(options.speed || element.dataset.speed || '50'),
-    cursor: options.cursor ?? element.dataset.cursor !== 'false',
+    text: options.text || element.getAttribute('text') || element.textContent || 'Hello World!',
+    speed: parseInt(options.speed || element.getAttribute('speed') || '50'),
+    cursor: options.cursor ?? element.getAttribute('cursor') !== 'false',
   };
   
   element.classList.add('wb-typewriter');
@@ -250,7 +247,6 @@ export function typewriter(element, options = {}) {
   }
   
   element.wbTypewriter = { type };
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-typewriter');
 }
 
@@ -259,12 +255,12 @@ export function typewriter(element, options = {}) {
  */
 export function countup(element, options = {}) {
   const config = {
-    start: parseFloat(options.start || element.dataset.from || '0'),
-    end: parseFloat(options.end || element.dataset.to || element.textContent || '100'),
-    duration: parseInt(options.duration || element.dataset.duration || '2000'),
-    prefix: options.prefix || element.dataset.prefix || '',
-    suffix: options.suffix || element.dataset.suffix || '',
-    decimals: parseInt(options.decimals || element.dataset.decimals || '0'),
+    start: parseFloat(options.start || element.getAttribute('from') || '0'),
+    end: parseFloat(options.end || element.getAttribute('to') || element.textContent || '100'),
+    duration: parseInt(options.duration || element.getAttribute('duration') || '2000'),
+    prefix: options.prefix || element.getAttribute('prefix') || '',
+    suffix: options.suffix || element.getAttribute('suffix') || '',
+    decimals: parseInt(options.decimals || element.getAttribute('decimals') || '0'),
   };
   
   element.classList.add('wb-countup');
@@ -295,7 +291,6 @@ export function countup(element, options = {}) {
   observer.observe(element);
   
   element.wbCountup = { count };
-  element.classList.add('wb-ready');
   return () => { observer.disconnect(); element.classList.remove('wb-countup'); };
 }
 
@@ -303,7 +298,7 @@ export function countup(element, options = {}) {
  * Parallax - Scroll-based movement
  */
 export function parallax(element, options = {}) {
-  const speed = parseFloat(options.speed || element.dataset.speed || '0.5');
+  const speed = parseFloat(options.speed || element.getAttribute('speed') || '0.5');
   element.classList.add('wb-parallax');
   
   let ticking = false;
@@ -336,8 +331,8 @@ export function parallax(element, options = {}) {
  */
 export function reveal(element, options = {}) {
   const config = {
-    threshold: parseFloat(options.threshold || element.dataset.threshold || '0.1'),
-    once: options.once ?? element.dataset.once !== 'false',
+    threshold: parseFloat(options.threshold || element.getAttribute('threshold') || '0.1'),
+    once: options.once ?? element.getAttribute('once') !== 'false',
   };
   
   element.classList.add('wb-reveal');
@@ -356,7 +351,6 @@ export function reveal(element, options = {}) {
   }, { threshold: config.threshold });
   
   observer.observe(element);
-  element.classList.add('wb-ready');
   return () => { observer.disconnect(); element.classList.remove('wb-reveal'); };
 }
 
@@ -364,7 +358,7 @@ export function reveal(element, options = {}) {
  * Marquee - Scrolling text
  */
 export function marquee(element, options = {}) {
-  const speed = parseInt(options.speed || element.dataset.speed || '30');
+  const speed = parseInt(options.speed || element.getAttribute('speed') || '30');
   element.classList.add('wb-marquee');
   
   const content = element.innerHTML;
@@ -378,7 +372,6 @@ export function marquee(element, options = {}) {
     element.appendChild(span);
   }
   
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-marquee');
 }
 
@@ -386,7 +379,7 @@ export function marquee(element, options = {}) {
  * Sparkle - Sparkle particles around element
  */
 export function sparkle(element, options = {}) {
-  const count = parseInt(options.count || element.dataset.count || '15');
+  const count = parseInt(options.count || element.getAttribute('count') || '15');
   element.classList.add('wb-sparkle-trigger');
   element.classList.add('wb-sparkle');
   element.style.position = 'relative';
@@ -432,7 +425,6 @@ export function sparkle(element, options = {}) {
   
   element.onclick = fire;
   element.wbSparkle = { fire };
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-sparkle-trigger');
 }
 
@@ -440,13 +432,12 @@ export function sparkle(element, options = {}) {
  * Glow - Pulsing glow effect
  */
 export function glow(element, options = {}) {
-  const color = options.color || element.dataset.color || 'var(--primary, #6366f1)';
+  const color = options.color || element.getAttribute('color') || 'var(--primary, #6366f1)';
   element.classList.add('wb-glow');
   element.style.setProperty('--glow-color', color);
   element.style.animation = 'wb-glow 1.5s ease-in-out infinite';
   element.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}, 0 0 30px ${color}`;
   
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-glow');
 }
 
@@ -454,7 +445,7 @@ export function glow(element, options = {}) {
  * Rainbow - Cycling rainbow text
  */
 export function rainbow(element, options = {}) {
-  const duration = options.duration || element.dataset.duration || '3s';
+  const duration = options.duration || element.getAttribute('duration') || '3s';
   element.classList.add('wb-rainbow');
   
   // Inject rainbow keyframes
@@ -478,7 +469,6 @@ export function rainbow(element, options = {}) {
   element.style.color = 'transparent';
   element.style.animation = `wb-rainbow ${duration} linear infinite`;
   
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-rainbow');
 }
 
@@ -486,7 +476,7 @@ export function rainbow(element, options = {}) {
  * Fireworks - Burst of particles
  */
 export function fireworks(element, options = {}) {
-  const count = parseInt(options.count || element.dataset.count || '30');
+  const count = parseInt(options.count || element.getAttribute('count') || '30');
   element.classList.add('wb-fireworks-trigger');
   element.classList.add('wb-fireworks');
   
@@ -542,7 +532,6 @@ export function fireworks(element, options = {}) {
   
   element.onclick = fire;
   element.wbFireworks = { fire };
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-fireworks-trigger');
 }
 
@@ -550,7 +539,7 @@ export function fireworks(element, options = {}) {
  * Snow - Falling snowflakes
  */
 export function snow(element, options = {}) {
-  const count = parseInt(options.count || element.dataset.count || '30');
+  const count = parseInt(options.count || element.getAttribute('count') || '30');
   element.classList.add('wb-snow-trigger');
   element.classList.add('wb-snow');
   
@@ -599,7 +588,6 @@ export function snow(element, options = {}) {
   
   element.onclick = fire;
   element.wbSnow = { fire };
-  element.classList.add('wb-ready');
   return () => element.classList.remove('wb-snow-trigger');
 }
 
@@ -607,8 +595,8 @@ export function snow(element, options = {}) {
  * Particle - Continuous floating particles
  */
 export function particle(element, options = {}) {
-  const count = parseInt(options.count || element.dataset.count || '20');
-  const color = options.color || element.dataset.color || 'var(--primary, #6366f1)';
+  const count = parseInt(options.count || element.getAttribute('count') || '20');
+  const color = options.color || element.getAttribute('color') || 'var(--primary, #6366f1)';
   element.classList.add('wb-particle');
   element.style.position = 'relative';
   element.style.overflow = 'hidden';
@@ -646,7 +634,6 @@ export function particle(element, options = {}) {
     particles.push(p);
   }
   
-  element.classList.add('wb-ready');
   return () => {
     particles.forEach(p => p.remove());
     element.classList.remove('wb-particle');

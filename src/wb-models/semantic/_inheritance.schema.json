@@ -3,6 +3,7 @@
   "$id": "_inheritance.schema.json",
   "title": "WB Inheritance Rules",
   "description": "Defines what IS-A inheritance means in the WB system. ALL components must follow these rules.",
+  "schemaType": "definition",
   
   "version": "1.0.0",
   

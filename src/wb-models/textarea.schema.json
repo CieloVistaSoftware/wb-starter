@@ -17,19 +17,23 @@
   "properties": {
     "label": {
       "type": "string",
-      "description": "Field label"
+      "description": "Field label",
+      "default": ""
     },
     "placeholder": {
       "type": "string",
-      "description": "Placeholder text"
+      "description": "Placeholder text",
+      "default": ""
     },
     "value": {
       "type": "string",
-      "description": "Text value"
+      "description": "Text value",
+      "default": ""
     },
     "name": {
       "type": "string",
-      "description": "Form field name"
+      "description": "Form field name",
+      "default": ""
     },
     "rows": {
       "type": "number",

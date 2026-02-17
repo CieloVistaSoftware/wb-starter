@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "x-enhancements Attributes",
+  "type": "object",
+  "description": "Schema for x-enhancements attributes (x-form, x-password, x-tags, x-file).",
+  "properties": {
+    "x-form": { "type": "boolean" },
+    "x-password": { "type": "boolean" },
+    "x-tags": { "type": "boolean" },
+    "x-file": { "type": "boolean" }
+  },
+  "anyOf": [
+    { "required": ["x-form"] },
+    { "required": ["x-password"] },
+    { "required": ["x-tags"] },
+    { "required": ["x-file"] }
+  ]
+}

@@ -2,7 +2,7 @@
 # Component Wizard User Guide
 
 ## What is the Component Wizard?
-The Component Wizard is a visual tool for building, configuring, and previewing WB custom elements. It lets you assemble components, adjust their properties, and see live HTML output—no coding required.
+The Component Wizard is a visual tool for building, configuring, and previewing WB-Starter custom elements. It lets you assemble components, adjust their properties, and see live HTML output—no coding required.
 
 **Location:**
 - Open `demos/wizard.html` in your browser (double-click or drag into Chrome/Edge/Firefox)

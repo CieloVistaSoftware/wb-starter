@@ -1,3 +1,38 @@
+# Tiered Test Structure (Playwright Gates)
+
+Your test suite is organized into strict tiers, enforced by Playwright and npm scripts:
+
+**Tier 1: Static Compliance**
+- Location: tests/compliance/
+- Checks schema validity, terminology, CSS, file integrity, and coverage
+- Runs fast, no browser/server required
+- If any fail, all other tiers are blocked
+
+**Tier 2: Base Behavior Tests**
+- Location: tests/behaviors/ui/
+- Tests core rendering and initialization of behaviors (e.g., cards, base elements)
+- Requires browser/server
+- Stops if Tier 1 fails
+
+**Tier 3: Decorated Behaviors**
+- Location: tests/behaviors/, tests/cards/, tests/components/, tests/pages/, tests/semantics/
+- Full component tests, permutations, interactions, events
+- Requires browser/server
+- Stops if Tier 1 or 2 fail
+
+**Tier 4: Functional Tests**
+- Location: tests/behaviors/functional-runner.spec.ts
+- Schema-driven browser tests for user interactions
+
+**Tier 5: Regression Tests**
+- Location: tests/regression/
+- Tests for specific bug fixes
+
+**Integration & Schema Viewer Tiers**
+- Integration: tests/integration/
+- Schema Viewer: tests/schema-viewer.spec.ts
+
+Each tier is enforced by npm scripts and gates, so compliance must pass before behaviors, and so on. See playwright.config.ts for exact gating logic.
 # Web Behaviors (WB) Testing Strategy
 
 ## Core Principle

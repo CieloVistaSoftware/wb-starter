@@ -1,0 +1,59 @@
+{
+  "$schema": "../wb-models/page.schema.json",
+  "title": "Tooltip Button Showcase",
+  "description": "Demo page for <wb-button> with x-tooltip in all positions.",
+  "components": [
+    {
+      "type": "wb-button",
+      "id": "btn-top",
+      "attributes": {
+        "x-tooltip": "Tooltip text",
+        "position": "top",
+        "class": "wb-tooltip-trigger",
+        "aria-describedby": "wb-tooltip-31meeb932",
+        "tabindex": "0",
+        "role": "button"
+      },
+      "text": "Top"
+    },
+    {
+      "type": "wb-button",
+      "id": "btn-bottom",
+      "attributes": {
+        "x-tooltip": "Tooltip text",
+        "position": "bottom",
+        "class": "wb-tooltip-trigger",
+        "aria-describedby": "wb-tooltip-7fdk7lbe4",
+        "tabindex": "0",
+        "role": "button"
+      },
+      "text": "Bottom"
+    },
+    {
+      "type": "wb-button",
+      "id": "btn-left",
+      "attributes": {
+        "x-tooltip": "Tooltip text",
+        "position": "left",
+        "class": "wb-tooltip-trigger",
+        "aria-describedby": "wb-tooltip-h3x4mhv2e",
+        "tabindex": "0",
+        "role": "button"
+      },
+      "text": "Left"
+    },
+    {
+      "type": "wb-button",
+      "id": "btn-right",
+      "attributes": {
+        "x-tooltip": "Tooltip text",
+        "position": "right",
+        "class": "wb-tooltip-trigger",
+        "aria-describedby": "wb-tooltip-4d62ypq51",
+        "tabindex": "0",
+        "role": "button"
+      },
+      "text": "Right"
+    }
+  ]
+}

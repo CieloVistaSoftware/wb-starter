@@ -17,7 +17,8 @@
   "properties": {
     "label": {
       "type": "string",
-      "description": "Badge text content"
+      "description": "Badge text content",
+      "default": ""
     },
     "variant": {
       "type": "string",
@@ -183,7 +184,35 @@
       "<wb-badge size=\"xs\">size=xs</wb-badge>",
       "<wb-badge size=\"sm\">size=sm</wb-badge>",
       "<wb-badge size=\"md\">size=md</wb-badge>",
-      "<wb-badge pill>with pill</wb-badge>"
+      "<wb-badge pill>with pill</wb-badge>",
+      "<wb-badge variant=\"default\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"default\" size=\"sm\">Test</wb-badge>",
+      "<wb-badge variant=\"default\" size=\"md\" pill outline>Test</wb-badge>",
+      "<wb-badge variant=\"default\" size=\"lg\" dot removable>Test</wb-badge>",
+      "<wb-badge variant=\"primary\" size=\"xs\" outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"primary\" size=\"sm\" pill dot>Test</wb-badge>",
+      "<wb-badge variant=\"primary\" size=\"md\" dot removable>Test</wb-badge>",
+      "<wb-badge variant=\"primary\" size=\"lg\" pill outline>Test</wb-badge>",
+      "<wb-badge variant=\"secondary\" size=\"xs\" pill dot>Test</wb-badge>",
+      "<wb-badge variant=\"secondary\" size=\"sm\" outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"secondary\" size=\"md\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"secondary\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"success\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"success\" size=\"sm\">Test</wb-badge>",
+      "<wb-badge variant=\"success\" size=\"md\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"success\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"warning\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"warning\" size=\"sm\">Test</wb-badge>",
+      "<wb-badge variant=\"warning\" size=\"md\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"warning\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"error\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"error\" size=\"sm\">Test</wb-badge>",
+      "<wb-badge variant=\"error\" size=\"md\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"error\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"info\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"info\" size=\"sm\">Test</wb-badge>",
+      "<wb-badge variant=\"info\" size=\"md\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"info\" size=\"lg\" pill dot outline removable>Test</wb-badge>"
     ],
     "matrix": {
       "combinations": [
@@ -220,6 +249,258 @@
           "label": "Outline",
           "variant": "primary",
           "outline": true
+        },
+        {
+          "label": "default-xs-pill-dot-outline-removable",
+          "variant": "default",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "default-sm-plain",
+          "variant": "default",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "default-md-pill-outline",
+          "variant": "default",
+          "size": "md",
+          "pill": true,
+          "dot": false,
+          "outline": true,
+          "removable": false
+        },
+        {
+          "label": "default-lg-dot-removable",
+          "variant": "default",
+          "size": "lg",
+          "pill": false,
+          "dot": true,
+          "outline": false,
+          "removable": true
+        },
+        {
+          "label": "primary-xs-outline-removable",
+          "variant": "primary",
+          "size": "xs",
+          "pill": false,
+          "dot": false,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "primary-sm-pill-dot",
+          "variant": "primary",
+          "size": "sm",
+          "pill": true,
+          "dot": true,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "primary-md-dot-removable",
+          "variant": "primary",
+          "size": "md",
+          "pill": false,
+          "dot": true,
+          "outline": false,
+          "removable": true
+        },
+        {
+          "label": "primary-lg-pill-outline",
+          "variant": "primary",
+          "size": "lg",
+          "pill": true,
+          "dot": false,
+          "outline": true,
+          "removable": false
+        },
+        {
+          "label": "secondary-xs-pill-dot",
+          "variant": "secondary",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "secondary-sm-outline-removable",
+          "variant": "secondary",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "secondary-md-pill-dot-outline-removable",
+          "variant": "secondary",
+          "size": "md",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "secondary-lg-pill-dot-outline-removable",
+          "variant": "secondary",
+          "size": "lg",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "success-xs-pill-dot-outline-removable",
+          "variant": "success",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "success-sm-plain",
+          "variant": "success",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "success-md-pill-dot-outline-removable",
+          "variant": "success",
+          "size": "md",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "success-lg-pill-dot-outline-removable",
+          "variant": "success",
+          "size": "lg",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "warning-xs-pill-dot-outline-removable",
+          "variant": "warning",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "warning-sm-plain",
+          "variant": "warning",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "warning-md-pill-dot-outline-removable",
+          "variant": "warning",
+          "size": "md",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "warning-lg-pill-dot-outline-removable",
+          "variant": "warning",
+          "size": "lg",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "error-xs-pill-dot-outline-removable",
+          "variant": "error",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "error-sm-plain",
+          "variant": "error",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "error-md-pill-dot-outline-removable",
+          "variant": "error",
+          "size": "md",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "error-lg-pill-dot-outline-removable",
+          "variant": "error",
+          "size": "lg",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "info-xs-pill-dot-outline-removable",
+          "variant": "info",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "info-sm-plain",
+          "variant": "info",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "info-md-pill-dot-outline-removable",
+          "variant": "info",
+          "size": "md",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "info-lg-pill-dot-outline-removable",
+          "variant": "info",
+          "size": "lg",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
         }
       ]
     },

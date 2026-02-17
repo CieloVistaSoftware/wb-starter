@@ -4,7 +4,7 @@
 const config = {
   debug: false,
   logLevel: 'info',
-  autoInject: false // Enable implicit behavior injection based on element type
+  autoInject: true // Enable implicit behavior injection based on element type
 };
 
 export function getConfig(key) {

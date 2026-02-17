@@ -46,19 +46,19 @@
       "type": "string",
       "description": "Title text displayed in card header",
       "mapsTo": "header",
-      "default": null
+      "default": ""
     },
     "subtitle": {
       "type": "string",
       "description": "Subtitle text displayed below title",
       "mapsTo": "header",
-      "default": null
+      "default": ""
     },
     "footer": {
       "type": "string",
       "description": "Footer text displayed at bottom of card",
       "mapsTo": "footer",
-      "default": null
+      "default": ""
     },
     "variant": {
       "type": "string",
@@ -90,7 +90,15 @@
     "size": {
       "type": "string",
       "description": "Card size variant controlling max/min width",
-      "enum": ["xs", "sm", "md", "lg", "xl", "full", "auto"],
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "full",
+        "auto"
+      ],
       "default": "auto"
     }
   },

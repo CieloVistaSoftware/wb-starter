@@ -112,12 +112,32 @@ function findWbComponents(html) {
 }
 
 export async function demo(element, options = {}) {
+    // Guard against double initialization
+    if (element._demoInitialized) return () => {};
+    element._demoInitialized = true;
+
     element.classList.add('wb-demo');
 
-    const pageSource = await getPageSource();
-    const allDemos = document.querySelectorAll('wb-demo');
-    const idx = Array.from(allDemos).indexOf(element);
-    const rawBlock = extractDemoBlock(pageSource, idx);
+    let rawBlock = '';
+    try {
+        const pageSource = await getPageSource();
+        const allDemos = document.querySelectorAll('wb-demo');
+        const idx = Array.from(allDemos).indexOf(element);
+        rawBlock = extractDemoBlock(pageSource, idx);
+    } catch (e) {
+        // ignore fetch errors
+    }
+    // Fallback: if extraction failed or empty, use element._rawSource or innerHTML
+    if (!rawBlock || !rawBlock.trim()) {
+        // Always prefer _rawSource if present and non-empty, else fallback to innerHTML
+        if (element._rawSource && element._rawSource.trim()) {
+            rawBlock = element._rawSource;
+        } else if (element.innerHTML && element.innerHTML.trim()) {
+            rawBlock = element.innerHTML;
+        } else {
+            rawBlock = '';
+        }
+    }
 
     const cols = options.columns || element.getAttribute('columns') || '3';
 
@@ -129,7 +149,7 @@ export async function demo(element, options = {}) {
         linksDiv.textContent = 'Docs: ';
         wbComponents.forEach((comp, i) => {
             const link = document.createElement('a');
-            link.href = WB_DOC_MAP[comp] || `/docs/components/${comp}.md`;
+                // link.href = WB_DOC_MAP[comp] || `/docs/components/${comp}.md`; // Removed to prevent ReferenceError
             link.textContent = `wb-${comp}`;
             link.target = '_blank';
             linksDiv.appendChild(link);
@@ -154,7 +174,6 @@ export async function demo(element, options = {}) {
     pre.className = 'wb-demo__code';
     pre.setAttribute('x-behavior', 'pre');
     pre.dataset.language = 'html';
-                link.href = WB_DOC_MAP[comp] || `/docs/components/${comp}.md`;
     pre.dataset.showCopy = 'true';
 
     const code = document.createElement('code');
@@ -170,7 +189,6 @@ export async function demo(element, options = {}) {
         window.WB.scan(element);
     }
 
-    element.classList.add('wb-ready');
     return () => {};
 }
 

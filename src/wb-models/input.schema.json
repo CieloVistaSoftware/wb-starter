@@ -17,19 +17,23 @@
   "properties": {
     "label": {
       "type": "string",
-      "description": "Input label text"
+      "description": "Input label text",
+      "default": ""
     },
     "placeholder": {
       "type": "string",
-      "description": "Placeholder text"
+      "description": "Placeholder text",
+      "default": ""
     },
     "value": {
       "type": "string",
-      "description": "Input value"
+      "description": "Input value",
+      "default": ""
     },
     "name": {
       "type": "string",
-      "description": "Form field name"
+      "description": "Form field name",
+      "default": ""
     },
     "inputType": {
       "type": "string",
@@ -50,11 +54,13 @@
     },
     "helper": {
       "type": "string",
-      "description": "Helper text below input"
+      "description": "Helper text below input",
+      "default": ""
     },
     "error": {
       "type": "string",
-      "description": "Error message (shows error state)"
+      "description": "Error message (shows error state)",
+      "default": ""
     },
     "variant": {
       "type": "string",
@@ -95,7 +101,8 @@
     },
     "icon": {
       "type": "string",
-      "description": "Icon (emoji or icon name)"
+      "description": "Icon (emoji or icon name)",
+      "default": ""
     },
     "iconPosition": {
       "type": "string",

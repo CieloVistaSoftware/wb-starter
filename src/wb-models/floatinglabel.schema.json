@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Floating Label Behavior",
+  "type": "object",
+  "description": "Schema for x-floatinglabel behavior (floating label UI)",
+  "properties": {},
+  "required": [],
+  "wbBehavior": {
+    "name": "floatinglabel",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Transforms placeholder into a floating label.",
+    "src": "src/wb-viewmodels/floatinglabel.js"
+  }
+}

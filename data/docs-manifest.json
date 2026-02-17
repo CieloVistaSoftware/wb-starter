@@ -1,11 +1,10 @@
 {
-  "generated": "2026-02-14T19:29:43.308Z",
-  "totalFiles": 169,
+  "generated": "2026-02-16T05:38:10.839Z",
+  "totalFiles": 161,
   "categories": [
     "_today",
     "architecture",
     "audits",
-    "builder",
     "claude",
     "compliance",
     "components",
@@ -55,54 +54,6 @@
         "path": "docs/BRANCH_PROTECTION.md",
         "title": "Branch protection: require fast Tier‑1 check",
         "name": "BRANCH_PROTECTION",
-        "category": "root"
-      },
-      {
-        "path": "docs/builder-interaction-rules.md",
-        "title": "Builder Interaction Rules",
-        "name": "builder-interaction-rules",
-        "category": "root"
-      },
-      {
-        "path": "docs/builder-onboarding-flow.md",
-        "title": "Page Builder Onboarding Flow",
-        "name": "builder-onboarding-flow",
-        "category": "root"
-      },
-      {
-        "path": "docs/builder-properties.md",
-        "title": "WB Builder Properties Panel",
-        "name": "builder-properties",
-        "category": "root"
-      },
-      {
-        "path": "docs/builder-section-focus.md",
-        "title": "Builder Section Focus System",
-        "name": "builder-section-focus",
-        "category": "root"
-      },
-      {
-        "path": "docs/builder-testing.md",
-        "title": "Builder Component Testing",
-        "name": "builder-testing",
-        "category": "root"
-      },
-      {
-        "path": "docs/builder-workflow.md",
-        "title": "Page Builder Workflow System",
-        "name": "builder-workflow",
-        "category": "root"
-      },
-      {
-        "path": "docs/builder.md",
-        "title": "WB Builder - The Heart of the Framework",
-        "name": "builder",
-        "category": "root"
-      },
-      {
-        "path": "docs/builder.todo.md",
-        "title": "Builder TODO",
-        "name": "builder.todo",
         "category": "root"
       },
       {
@@ -323,7 +274,7 @@
       },
       {
         "path": "docs/testing-strategy.md",
-        "title": "Web Behaviors (WB) Testing Strategy",
+        "title": "Tiered Test Structure (Playwright Gates)",
         "name": "testing-strategy",
         "category": "root"
       },
@@ -410,26 +361,6 @@
         "category": "audits"
       }
     ],
-    "builder": [
-      {
-        "path": "docs/builder/BUILDER-FIXES.md",
-        "title": "BUILDER BROKEN - Critical Fixes Needed",
-        "name": "BUILDER-FIXES",
-        "category": "builder"
-      },
-      {
-        "path": "docs/builder/builder-tree.md",
-        "title": "WB Builder Tree Panel - Comprehensive Schema",
-        "name": "builder-tree",
-        "category": "builder"
-      },
-      {
-        "path": "docs/builder/pages.md",
-        "title": "WB Page Builder - Pages System",
-        "name": "pages",
-        "category": "builder"
-      }
-    ],
     "claude": [
       {
         "path": "docs/claude/PAGE-GENERATION.md",
@@ -444,6 +375,12 @@
         "category": "claude"
       },
       {
+        "path": "docs/claude/SCHEMAS-GUIDE.md",
+        "title": "SCHEMAS — Claude's Guide to Getting It Right",
+        "name": "SCHEMAS-GUIDE",
+        "category": "claude"
+      },
+      {
         "path": "docs/claude/TIER1-LAWS.md",
         "title": "TIER 1 — LAWS (Read Every Session, No Exceptions)",
         "name": "TIER1-LAWS",
@@ -451,7 +388,7 @@
       },
       {
         "path": "docs/claude/TIER2-DOMAIN-GUIDES.md",
-        "title": "TIER 2 — DOMAIN GUIDES (Read When Working In That Area)",
+        "title": "TIER2-DOMAIN-GUIDES",
         "name": "TIER2-DOMAIN-GUIDES",
         "category": "claude"
       },
@@ -1000,6 +937,12 @@
     ],
     "_today": [
       {
+        "path": "docs/_today/021426FIXPLAN.md",
+        "title": "021426FIXPLAN",
+        "name": "021426FIXPLAN",
+        "category": "_today"
+      },
+      {
         "path": "docs/_today/AI-COORDINATION.md",
         "title": "AI Coordination Protocol",
         "name": "AI-COORDINATION",
@@ -1012,15 +955,9 @@
         "category": "_today"
       },
       {
-        "path": "docs/_today/BEHAVIORS-TODO.md",
-        "title": "Behaviors Test Fix TODO",
-        "name": "BEHAVIORS-TODO",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.md",
+        "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
         "title": "CSS Ownership Migration Plan",
-        "name": "CSS-OWNERSHIP-MIGRATION",
+        "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
         "category": "_today"
       },
       {
@@ -1036,20 +973,38 @@
         "category": "_today"
       },
       {
+        "path": "docs/_today/PAGE-REPAIR-PLAN.md",
+        "title": "PAGE REPAIR PLAN — Master Execution Guide",
+        "name": "PAGE-REPAIR-PLAN",
+        "category": "_today"
+      },
+      {
         "path": "docs/_today/QUESTIONS.md",
         "title": "AI Questions",
         "name": "QUESTIONS",
         "category": "_today"
       },
       {
+        "path": "docs/_today/REPAIR-PLAN-021526.md",
+        "title": "REPAIR PLAN — Page & Demo Compliance",
+        "name": "REPAIR-PLAN-021526",
+        "category": "_today"
+      },
+      {
         "path": "docs/_today/TODO.md",
-        "title": "TODO List",
+        "title": "---",
         "name": "TODO",
         "category": "_today"
       }
     ]
   },
   "files": [
+    {
+      "path": "docs/_today/021426FIXPLAN.md",
+      "title": "021426FIXPLAN",
+      "name": "021426FIXPLAN",
+      "category": "_today"
+    },
     {
       "path": "docs/_today/AI-COORDINATION.md",
       "title": "AI Coordination Protocol",
@@ -1063,15 +1018,9 @@
       "category": "_today"
     },
     {
-      "path": "docs/_today/BEHAVIORS-TODO.md",
-      "title": "Behaviors Test Fix TODO",
-      "name": "BEHAVIORS-TODO",
-      "category": "_today"
-    },
-    {
-      "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.md",
+      "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
       "title": "CSS Ownership Migration Plan",
-      "name": "CSS-OWNERSHIP-MIGRATION",
+      "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
       "category": "_today"
     },
     {
@@ -1087,14 +1036,26 @@
       "category": "_today"
     },
     {
+      "path": "docs/_today/PAGE-REPAIR-PLAN.md",
+      "title": "PAGE REPAIR PLAN — Master Execution Guide",
+      "name": "PAGE-REPAIR-PLAN",
+      "category": "_today"
+    },
+    {
       "path": "docs/_today/QUESTIONS.md",
       "title": "AI Questions",
       "name": "QUESTIONS",
       "category": "_today"
     },
     {
+      "path": "docs/_today/REPAIR-PLAN-021526.md",
+      "title": "REPAIR PLAN — Page & Demo Compliance",
+      "name": "REPAIR-PLAN-021526",
+      "category": "_today"
+    },
+    {
       "path": "docs/_today/TODO.md",
-      "title": "TODO List",
+      "title": "---",
       "name": "TODO",
       "category": "_today"
     },
@@ -1183,72 +1144,6 @@
       "category": "root"
     },
     {
-      "path": "docs/builder-interaction-rules.md",
-      "title": "Builder Interaction Rules",
-      "name": "builder-interaction-rules",
-      "category": "root"
-    },
-    {
-      "path": "docs/builder-onboarding-flow.md",
-      "title": "Page Builder Onboarding Flow",
-      "name": "builder-onboarding-flow",
-      "category": "root"
-    },
-    {
-      "path": "docs/builder-properties.md",
-      "title": "WB Builder Properties Panel",
-      "name": "builder-properties",
-      "category": "root"
-    },
-    {
-      "path": "docs/builder-section-focus.md",
-      "title": "Builder Section Focus System",
-      "name": "builder-section-focus",
-      "category": "root"
-    },
-    {
-      "path": "docs/builder-testing.md",
-      "title": "Builder Component Testing",
-      "name": "builder-testing",
-      "category": "root"
-    },
-    {
-      "path": "docs/builder-workflow.md",
-      "title": "Page Builder Workflow System",
-      "name": "builder-workflow",
-      "category": "root"
-    },
-    {
-      "path": "docs/builder.md",
-      "title": "WB Builder - The Heart of the Framework",
-      "name": "builder",
-      "category": "root"
-    },
-    {
-      "path": "docs/builder.todo.md",
-      "title": "Builder TODO",
-      "name": "builder.todo",
-      "category": "root"
-    },
-    {
-      "path": "docs/builder/BUILDER-FIXES.md",
-      "title": "BUILDER BROKEN - Critical Fixes Needed",
-      "name": "BUILDER-FIXES",
-      "category": "builder"
-    },
-    {
-      "path": "docs/builder/builder-tree.md",
-      "title": "WB Builder Tree Panel - Comprehensive Schema",
-      "name": "builder-tree",
-      "category": "builder"
-    },
-    {
-      "path": "docs/builder/pages.md",
-      "title": "WB Page Builder - Pages System",
-      "name": "pages",
-      "category": "builder"
-    },
-    {
       "path": "docs/card.md",
       "title": "Card Component Documentation",
       "name": "card",
@@ -1267,6 +1162,12 @@
       "category": "claude"
     },
     {
+      "path": "docs/claude/SCHEMAS-GUIDE.md",
+      "title": "SCHEMAS — Claude's Guide to Getting It Right",
+      "name": "SCHEMAS-GUIDE",
+      "category": "claude"
+    },
+    {
       "path": "docs/claude/TIER1-LAWS.md",
       "title": "TIER 1 — LAWS (Read Every Session, No Exceptions)",
       "name": "TIER1-LAWS",
@@ -1274,7 +1175,7 @@
     },
     {
       "path": "docs/claude/TIER2-DOMAIN-GUIDES.md",
-      "title": "TIER 2 — DOMAIN GUIDES (Read When Working In That Area)",
+      "title": "TIER2-DOMAIN-GUIDES",
       "name": "TIER2-DOMAIN-GUIDES",
       "category": "claude"
     },
@@ -2024,7 +1925,7 @@
     },
     {
       "path": "docs/testing-strategy.md",
-      "title": "Web Behaviors (WB) Testing Strategy",
+      "title": "Tiered Test Structure (Playwright Gates)",
       "name": "testing-strategy",
       "category": "root"
     },

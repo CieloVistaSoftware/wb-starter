@@ -26,6 +26,7 @@
     "test:firefox": "npx playwright test --project=firefox",
     "test:webkit": "npx playwright test --project=webkit",
     "test:mobile": "npx playwright test --project=mobile-chrome --project=mobile-safari",
+    "test:mobile-validation": "npx playwright test --project=mobile-validation-pixel --project=mobile-validation-iphone",
     "test:browsers": "npx playwright test --project=firefox --project=webkit --project=mobile-chrome --project=mobile-safari",
     "test:all": "npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=base && npx playwright test --project=behaviors && npx playwright test --project=performance",
     "test:integrity": "npx playwright test tests/compliance/project-integrity.spec.ts",

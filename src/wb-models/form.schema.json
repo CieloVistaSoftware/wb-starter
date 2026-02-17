@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Form Behavior",
+  "type": "object",
+  "description": "Schema for x-form behavior (form enhancement)",
+  "properties": {
+    "ajax": { "type": "boolean", "description": "Enable AJAX form submission" },
+    "validate": { "type": "boolean", "description": "Enable validation on submit" }
+  },
+  "required": [],
+  "wbBehavior": {
+    "name": "form",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Enhances forms with AJAX and validation support.",
+    "src": "src/wb-viewmodels/form.js"
+  },
+  "test": {
+    "setup": [
+      "<form x-form id='test-form' action='/api/test' method='POST'><input name='a' value='1'><button type='submit'>Submit</button></form>"
+    ],
+    "permutations": [
+      { "ajax": true, "validate": true },
+      { "ajax": false, "validate": true },
+      { "ajax": true, "validate": false },
+      { "ajax": false, "validate": false }
+    ],
+    "assertions": [
+      {
+        "description": "Form initializes with wb-form class",
+        "selector": "#test-form",
+        "checks": { "hasClass": "wb-form" }
+      },
+      {
+        "description": "AJAX submit dispatches wb:form:submit event",
+        "selector": "#test-form",
+        "action": "submit",
+        "checks": { "event": "wb:form:submit" },
+        "when": { "ajax": true }
+      },
+      {
+        "description": "Form reset works",
+        "selector": "#test-form",
+        "action": "reset",
+        "checks": { "value": "" }
+      }
+    ]
+  }
+}

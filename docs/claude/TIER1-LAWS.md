@@ -1,6 +1,6 @@
 # TIER 1 — LAWS (Read Every Session, No Exceptions)
 
-**These are the rules that have caused the most regressions when violated.**  
+**These are the non-negotiable rules for the WB-Starter project.**  
 **If you break these, you will undo John's work. Period.**
 
 ---
@@ -44,14 +44,7 @@ Before fixing code to pass a test:
 - If the test is wrong, **fix the test**, don't revert the code
 - If unsure, ask John
 
-## 6. Check The Lock Folder Before Editing Any File
-
-- Read `/Lock` folder before touching any file
-- If `LOCKED-{filename}.md` exists → do NOT edit that file
-- Create a lock before editing, delete it when done
-- This prevents multi-AI conflicts that have corrupted files
-
-## 7. One Fix At A Time — Then Test
+## 6. One Fix At A Time — Then Test
 
 Never batch fixes. The cascade pattern:
 1. Fix A → tests pass
@@ -61,7 +54,7 @@ Never batch fixes. The cascade pattern:
 
 Instead: one change → run tests → confirm → next change.
 
-## 8. Don't Guess At Root Causes — Trace Them
+## 7. Don't Guess At Root Causes — Trace Them
 
 If something fails, don't pattern-match to symptoms and apply patches. That's how we fix things 5 times.
 
@@ -70,17 +63,16 @@ If something fails, don't pattern-match to symptoms and apply patches. That's ho
 - Understand WHY before changing anything
 - If you can't determine why, tell John instead of guessing
 
-## 9. Session Start Protocol
+## 8. Session Start Protocol
 
 Every session, before doing anything:
 1. `list_allowed_directories` — confirm MCP access
 2. Read this file (`docs/claude/TIER1-LAWS.md`)
 3. Read `docs/_today/CURRENT-STATUS.md`
-4. Check `/Lock` folder
-5. Use `recent_chats` to read last conversation — continue from where it left off
-6. Never ask John to upload files or explain what he's working on
+4. Use `recent_chats` to read last conversation — continue from where it left off
+5. Never ask John to upload files or explain what he's working on
 
-## 10. No One-Off Styles — Use Existing CSS or Extend It
+## 9. No One-Off Styles — Use Existing CSS or Extend It
 
 **Never create inline styles, new CSS classes, or duplicate existing styles.** This is how `wb-btn` ended up duplicating `wb-button` across two files, and dark mode broke because styles didn't match.
 
@@ -95,7 +87,7 @@ Before writing ANY CSS or class name:
 
 If you're not sure where a style belongs, ask John.
 
-## 11. Pages Are Fragments — The Server Handles the Shell
+## 10. Pages Are Fragments — The Server Handles the Shell
 
 Files in `pages/` are HTML fragments, not full documents.
 
@@ -103,6 +95,51 @@ Files in `pages/` are HTML fragments, not full documents.
 - The server wraps fragments with the site shell, which injects all global CSS and JS
 - Page-specific CSS only: `<link rel="stylesheet" href="../src/styles/pages/{name}.css">`
 - Never put `<script type="module">` with WB.init() — the server handles initialization
+
+## 12. Product Name Is "WB-Starter"
+
+The correct product name is **WB-Starter**. The following terms are **forbidden**:
+- "WB Framework" — wrong
+- "Web Behaviors (WB)" — wrong
+- "WB Behaviors" — wrong
+
+Always use "WB-Starter" when referring to the project by name.
+
+## 13. All Tests Must Be Known to Playwright Config
+
+Every `.spec.ts` file must live in a directory that a Playwright project's `testDir` + `testMatch` covers. If you create a new test file or move one, verify it's picked up:
+
+- `tests/compliance/` → auto-discovered by the `compliance` project (`**/*.spec.ts`)
+- `tests/behaviors/` → covered by `behaviors` project
+- `tests/cards/` → covered by `base` and `behaviors` projects
+- `tests/components/`, `tests/pages/`, `tests/semantics/` → covered by `behaviors` project
+- `tests/regression/` → covered by `regression` project
+- `tests/integration/` → covered by `integration` project
+- `tests/views/` → covered by `views` project
+
+If a test isn't in one of these directories, it won't run. Check `playwright.config.ts` before creating tests in new locations.
+
+## 11. No data- Attributes on wb-* Components
+
+**Never use `data-` attributes on `<wb-*>` custom elements or `x-*` behavior elements.** Use plain attributes instead. This applies to HTML pages, tests, demos, and behavior JS code.
+
+- Never use `data-message`, `data-type`, `data-value`, `data-items`, etc.
+- Use plain attributes: `message`, `variant`, `value`, `items`, etc.
+- Never use `this.dataset` or `element.dataset` in behavior code — use `element.getAttribute()`
+- Never spread dataset properties
+- See `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md` for the full naming spec
+
+```html
+<!-- ❌ WRONG -->
+<wb-alert data-type="warning" data-message="Check input">
+<div x-stepper data-value="5" data-min="0" data-max="10">
+<button x-toast data-message="Saved!" data-type="success">
+
+<!-- ✅ CORRECT -->
+<wb-alert variant="warning" message="Check input">
+<div x-stepper value="5" min="0" max="10">
+<button x-toast message="Saved!" variant="success">
+```
 
 ## 12. Script Output Goes to data/*.json
 
@@ -115,7 +152,6 @@ Files in `pages/` are HTML fragments, not full documents.
 
 ## Known Broken Areas (Don't Touch Without John's Direction)
 
-- **Builder app** — AI regressed it. Builder tests are SKIPPED. Don't touch builder files unless John explicitly asks.
 - **Schema viewer** — Schema dropdown doesn't populate. Known issue, not a priority.
 
 ---
