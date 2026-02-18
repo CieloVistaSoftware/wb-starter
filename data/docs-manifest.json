@@ -1,10 +1,11 @@
 {
-  "generated": "2026-02-16T05:38:10.839Z",
-  "totalFiles": 161,
+  "generated": "2026-02-17T19:00:44.876Z",
+  "totalFiles": 177,
   "categories": [
     "_today",
     "architecture",
     "audits",
+    "behaviors",
     "claude",
     "compliance",
     "components",
@@ -18,12 +19,6 @@
         "path": "docs/ANNOUNCE_TEST_POLICY.md",
         "title": "Release announcement: Local test gating and PR policy",
         "name": "ANNOUNCE_TEST_POLICY",
-        "category": "root"
-      },
-      {
-        "path": "docs/architecture.md",
-        "title": "Project Architecture<br>(AI-Friendly)",
-        "name": "architecture",
         "category": "root"
       },
       {
@@ -81,27 +76,15 @@
         "category": "root"
       },
       {
-        "path": "docs/css-standards.md",
-        "title": "CSS Standards & OOP Architecture",
-        "name": "css-standards",
-        "category": "root"
-      },
-      {
-        "path": "docs/DATA-FILES.md",
-        "title": "Data Files Reference",
-        "name": "DATA-FILES",
-        "category": "root"
-      },
-      {
-        "path": "docs/deploying-wb-starter-to-render.md",
-        "title": "Deploying Web Behaviors (WB) Starter to Render: A Complete Guide",
-        "name": "deploying-wb-starter-to-render",
-        "category": "root"
-      },
-      {
         "path": "docs/escape-hatches.md",
         "title": "wb-starter Escape Hatches",
         "name": "escape-hatches",
+        "category": "root"
+      },
+      {
+        "path": "docs/home-page.md",
+        "title": "Home Page Documentation",
+        "name": "home-page",
         "category": "root"
       },
       {
@@ -162,12 +145,6 @@
         "path": "docs/NOTES-V3-GUIDE.md",
         "title": "Notes Component v3.0 - Updates Summary",
         "name": "NOTES-V3-GUIDE",
-        "category": "root"
-      },
-      {
-        "path": "docs/PAGE-BUILDER-RULES.md",
-        "title": "Web Behaviors (WB) Page Builder - Content Creation Rules",
-        "name": "PAGE-BUILDER-RULES",
         "category": "root"
       },
       {
@@ -285,12 +262,6 @@
         "category": "root"
       },
       {
-        "path": "docs/USER-PAGE-BUILDER-PLAN.md",
-        "title": "User Page Builder Plan",
-        "name": "USER-PAGE-BUILDER-PLAN",
-        "category": "root"
-      },
-      {
         "path": "docs/wb-parts-spec.md",
         "title": "gcan# Web Behaviors (WB) Parts Specification",
         "name": "wb-parts-spec",
@@ -359,6 +330,134 @@
         "title": "X-Attribute Usage Audit",
         "name": "X-USAGE-AUDIT",
         "category": "audits"
+      }
+    ],
+    "behaviors": [
+      {
+        "path": "docs/behaviors/autosize.md",
+        "title": "x-autosize Behavior",
+        "name": "autosize",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/help.md",
+        "title": "x-help Behavior",
+        "name": "help",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/label.md",
+        "title": "x-label Behavior",
+        "name": "label",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/tooltip.md",
+        "title": "x-tooltip Behavior",
+        "name": "tooltip",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-audio.md",
+        "title": "wb-audio",
+        "name": "wb-audio",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-card.md",
+        "title": "wb-card",
+        "name": "wb-card",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-cluster.md",
+        "title": "wb-cluster",
+        "name": "wb-cluster",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-column.md",
+        "title": "wb-column",
+        "name": "wb-column",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-control.md",
+        "title": "wb-control",
+        "name": "wb-control",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-demo.md",
+        "title": "wb-demo",
+        "name": "wb-demo",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-grid.md",
+        "title": "wb-grid",
+        "name": "wb-grid",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-repeater.md",
+        "title": "wb-repeater",
+        "name": "wb-repeater",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-row.md",
+        "title": "wb-row",
+        "name": "wb-row",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-search.md",
+        "title": "wb-search",
+        "name": "wb-search",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-stack.md",
+        "title": "wb-stack",
+        "name": "wb-stack",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/x-behavior.md",
+        "title": "x-behavior",
+        "name": "x-behavior",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/x-collapse.md",
+        "title": "x-collapse",
+        "name": "x-collapse",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/x-copy.md",
+        "title": "x-copy",
+        "name": "x-copy",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/x-draggable.md",
+        "title": "x-draggable",
+        "name": "x-draggable",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/x-effects.md",
+        "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter)",
+        "name": "x-effects",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/x-enhancements.md",
+        "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
+        "name": "x-enhancements",
+        "category": "behaviors"
       }
     ],
     "claude": [
@@ -1066,12 +1165,6 @@
       "category": "root"
     },
     {
-      "path": "docs/architecture.md",
-      "title": "Project Architecture<br>(AI-Friendly)",
-      "name": "architecture",
-      "category": "root"
-    },
-    {
       "path": "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md",
       "title": "x- Prefix Migration — Phase 1: Core Infrastructure",
       "name": "X-PREFIX-MIGRATION-PHASE1",
@@ -1136,6 +1229,132 @@
       "title": "Web Behaviors (WB) Reference",
       "name": "behaviors-reference",
       "category": "root"
+    },
+    {
+      "path": "docs/behaviors/autosize.md",
+      "title": "x-autosize Behavior",
+      "name": "autosize",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/help.md",
+      "title": "x-help Behavior",
+      "name": "help",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/label.md",
+      "title": "x-label Behavior",
+      "name": "label",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/tooltip.md",
+      "title": "x-tooltip Behavior",
+      "name": "tooltip",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-audio.md",
+      "title": "wb-audio",
+      "name": "wb-audio",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-card.md",
+      "title": "wb-card",
+      "name": "wb-card",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-cluster.md",
+      "title": "wb-cluster",
+      "name": "wb-cluster",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-column.md",
+      "title": "wb-column",
+      "name": "wb-column",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-control.md",
+      "title": "wb-control",
+      "name": "wb-control",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-demo.md",
+      "title": "wb-demo",
+      "name": "wb-demo",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-grid.md",
+      "title": "wb-grid",
+      "name": "wb-grid",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-repeater.md",
+      "title": "wb-repeater",
+      "name": "wb-repeater",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-row.md",
+      "title": "wb-row",
+      "name": "wb-row",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-search.md",
+      "title": "wb-search",
+      "name": "wb-search",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-stack.md",
+      "title": "wb-stack",
+      "name": "wb-stack",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/x-behavior.md",
+      "title": "x-behavior",
+      "name": "x-behavior",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/x-collapse.md",
+      "title": "x-collapse",
+      "name": "x-collapse",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/x-copy.md",
+      "title": "x-copy",
+      "name": "x-copy",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/x-draggable.md",
+      "title": "x-draggable",
+      "name": "x-draggable",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/x-effects.md",
+      "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter)",
+      "name": "x-effects",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/x-enhancements.md",
+      "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
+      "name": "x-enhancements",
+      "category": "behaviors"
     },
     {
       "path": "docs/BRANCH_PROTECTION.md",
@@ -1720,24 +1939,6 @@
       "category": "root"
     },
     {
-      "path": "docs/css-standards.md",
-      "title": "CSS Standards & OOP Architecture",
-      "name": "css-standards",
-      "category": "root"
-    },
-    {
-      "path": "docs/DATA-FILES.md",
-      "title": "Data Files Reference",
-      "name": "DATA-FILES",
-      "category": "root"
-    },
-    {
-      "path": "docs/deploying-wb-starter-to-render.md",
-      "title": "Deploying Web Behaviors (WB) Starter to Render: A Complete Guide",
-      "name": "deploying-wb-starter-to-render",
-      "category": "root"
-    },
-    {
       "path": "docs/escape-hatches.md",
       "title": "wb-starter Escape Hatches",
       "name": "escape-hatches",
@@ -1748,6 +1949,12 @@
       "title": "Search Index Generator",
       "name": "search-index",
       "category": "guides"
+    },
+    {
+      "path": "docs/home-page.md",
+      "title": "Home Page Documentation",
+      "name": "home-page",
+      "category": "root"
     },
     {
       "path": "docs/IMPROVEMENTS.md",
@@ -1807,12 +2014,6 @@
       "path": "docs/NOTES-V3-GUIDE.md",
       "title": "Notes Component v3.0 - Updates Summary",
       "name": "NOTES-V3-GUIDE",
-      "category": "root"
-    },
-    {
-      "path": "docs/PAGE-BUILDER-RULES.md",
-      "title": "Web Behaviors (WB) Page Builder - Content Creation Rules",
-      "name": "PAGE-BUILDER-RULES",
       "category": "root"
     },
     {
@@ -1933,12 +2134,6 @@
       "path": "docs/themes.md",
       "title": "Theme System Documentation",
       "name": "themes",
-      "category": "root"
-    },
-    {
-      "path": "docs/USER-PAGE-BUILDER-PLAN.md",
-      "title": "User Page Builder Plan",
-      "name": "USER-PAGE-BUILDER-PLAN",
       "category": "root"
     },
     {

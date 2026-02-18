@@ -4,9 +4,13 @@
   "type": "object",
   "description": "Schema for x-formrow behavior (form row layout)",
   "properties": {
-    "inline": { "type": "boolean", "description": "Display row inline" }
+    "inline": { "type": "boolean", "description": "Display row inline", "default": false }
   },
   "required": [],
+  "schemaFor": "formrow",
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
   "wbBehavior": {
     "name": "formrow",
     "type": "modifier",

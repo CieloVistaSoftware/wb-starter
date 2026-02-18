@@ -158,6 +158,111 @@
           "description": "Audio player behavior"
         },
         {
+          "file": "behaviors/autosize.md",
+          "title": "Autosize Behavior",
+          "description": "Auto-resize textarea behavior"
+        },
+        {
+          "file": "behaviors/help.md",
+          "title": "Help Behavior",
+          "description": "Help text behavior"
+        },
+        {
+          "file": "behaviors/label.md",
+          "title": "Label Behavior",
+          "description": "Label behavior"
+        },
+        {
+          "file": "behaviors/tooltip.md",
+          "title": "Tooltip Behavior",
+          "description": "Tooltip behavior"
+        },
+        {
+          "file": "behaviors/wb-audio.md",
+          "title": "WB Audio",
+          "description": "Audio component behavior"
+        },
+        {
+          "file": "behaviors/wb-card.md",
+          "title": "WB Card",
+          "description": "Card component behavior"
+        },
+        {
+          "file": "behaviors/wb-cluster.md",
+          "title": "WB Cluster",
+          "description": "Cluster layout behavior"
+        },
+        {
+          "file": "behaviors/wb-column.md",
+          "title": "WB Column",
+          "description": "Column layout behavior"
+        },
+        {
+          "file": "behaviors/wb-control.md",
+          "title": "WB Control",
+          "description": "Control behavior"
+        },
+        {
+          "file": "behaviors/wb-demo.md",
+          "title": "WB Demo",
+          "description": "Demo container behavior"
+        },
+        {
+          "file": "behaviors/wb-grid.md",
+          "title": "WB Grid",
+          "description": "Grid layout behavior"
+        },
+        {
+          "file": "behaviors/wb-repeater.md",
+          "title": "WB Repeater",
+          "description": "Repeater behavior"
+        },
+        {
+          "file": "behaviors/wb-row.md",
+          "title": "WB Row",
+          "description": "Row layout behavior"
+        },
+        {
+          "file": "behaviors/wb-search.md",
+          "title": "WB Search",
+          "description": "Search behavior"
+        },
+        {
+          "file": "behaviors/wb-stack.md",
+          "title": "WB Stack",
+          "description": "Stack layout behavior"
+        },
+        {
+          "file": "behaviors/x-behavior.md",
+          "title": "X-Behavior",
+          "description": "Generic behavior attribute"
+        },
+        {
+          "file": "behaviors/x-collapse.md",
+          "title": "X-Collapse",
+          "description": "Collapse behavior"
+        },
+        {
+          "file": "behaviors/x-copy.md",
+          "title": "X-Copy",
+          "description": "Copy to clipboard behavior"
+        },
+        {
+          "file": "behaviors/x-draggable.md",
+          "title": "X-Draggable",
+          "description": "Draggable behavior"
+        },
+        {
+          "file": "behaviors/x-effects.md",
+          "title": "X-Effects",
+          "description": "Animation effects behavior"
+        },
+        {
+          "file": "behaviors/x-enhancements.md",
+          "title": "X-Enhancements",
+          "description": "Form enhancement behaviors"
+        },
+        {
           "file": "properties.md",
           "title": "Properties",
           "description": "Component property reference"

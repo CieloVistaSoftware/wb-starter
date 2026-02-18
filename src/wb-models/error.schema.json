@@ -5,6 +5,10 @@
   "description": "Schema for x-error behavior (error message)",
   "properties": {},
   "required": [],
+  "schemaFor": "error",
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
   "wbBehavior": {
     "name": "error",
     "type": "modifier",

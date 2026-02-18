@@ -44,6 +44,127 @@
 }
 
 /* =============================================================================
+   TRANSPORT BAR — Play button + Marantz display
+   ============================================================================= */
+.wb-audio__transport {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.15) 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Play/Pause Button */
+.wb-audio__play-btn {
+  width: var(--wb-audio-play-size, 48px);
+  height: var(--wb-audio-play-size, 48px);
+  min-width: var(--wb-audio-play-size, 48px);
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.15);
+  background: linear-gradient(145deg, #2a2a3a 0%, #1a1a28 100%);
+  color: var(--primary, #6366f1);
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.wb-audio__play-btn:hover {
+  border-color: var(--primary, #6366f1);
+  box-shadow:
+    0 4px 16px rgba(99,102,241,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+  transform: scale(1.05);
+}
+
+.wb-audio__play-btn:active {
+  transform: scale(0.95);
+}
+
+.wb-audio__play-btn--playing {
+  color: var(--success-color, #22c55e);
+  border-color: rgba(34,197,94,0.3);
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.4),
+    0 0 12px rgba(34,197,94,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* Marantz-style Display */
+.wb-audio__display {
+  flex: 1;
+  min-width: 0;
+  background: var(--wb-audio-display-bg, linear-gradient(180deg, #1a1200 0%, #0d0900 100%));
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(232,160,32,0.15);
+  box-shadow:
+    inset 0 2px 8px rgba(0,0,0,0.8),
+    inset 0 0 20px rgba(0,0,0,0.4),
+    0 1px 0 rgba(255,255,255,0.05);
+  overflow: hidden;
+}
+
+.wb-audio__display-text {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--wb-audio-display-color, #e8a020);
+  text-shadow: var(--wb-audio-display-glow, 0 0 8px rgba(232,160,32,0.4));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.wb-audio__display-time {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.65rem;
+  color: rgba(232,160,32,0.6);
+  text-shadow: 0 0 4px rgba(232,160,32,0.2);
+  margin-top: 0.15rem;
+  letter-spacing: 0.1em;
+}
+
+/* Volume icon in transport */
+.wb-audio__transport-vol {
+  display: flex;
+  align-items: center;
+  padding: 0 0.25rem;
+}
+
+.wb-audio__vol-icon {
+  font-size: 1.25rem;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.wb-audio__vol-icon:hover {
+  opacity: 1;
+}
+
+/* Light theme adjustments for transport */
+[data-theme="light"] .wb-audio__play-btn {
+  background: linear-gradient(145deg, #e0e0e8 0%, #c8c8d8 100%);
+  color: var(--primary);
+  border-color: rgba(0,0,0,0.15);
+}
+
+[data-theme="light"] .wb-audio__display {
+  background: linear-gradient(180deg, #2a2000 0%, #1a1400 100%);
+}
+
+/* =============================================================================
    EQ PANEL - The main controls container
    ============================================================================= */
 .wb-audio__eq {

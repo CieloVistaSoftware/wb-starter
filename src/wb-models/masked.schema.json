@@ -4,10 +4,14 @@
   "type": "object",
   "description": "Schema for x-masked behavior (input masking)",
   "properties": {
-    "mask": { "type": "string", "description": "Input mask pattern (e.g. '999-99-9999')" },
-    "placeholder": { "type": "string", "description": "Mask placeholder character" }
+    "mask": { "type": "string", "description": "Input mask pattern (e.g. '999-99-9999')", "default": "" },
+    "placeholder": { "type": "string", "description": "Mask placeholder character", "default": "" }
   },
   "required": [],
+  "schemaFor": "masked",
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
   "wbBehavior": {
     "name": "masked",
     "type": "modifier",

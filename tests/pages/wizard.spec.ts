@@ -388,19 +388,23 @@ test.describe('Wizard - Preview wb-demo Rendering', () => {
     expect(hasCode).toBe(true);
   });
 
-  test('wb-demo has wb-ready class after rendering', async ({ page }) => {
+  test('wb-demo has wb-demo class and grid after rendering', async ({ page }) => {
     await selectComponent(page, 'Demo');
     await selectComponent(page, 'badge');
     await switchTab(page, 'preview');
     await waitForPreviewIframe(page);
     await waitForWBReady(page);
-    const isReady = await page.evaluate(() => {
+    const result = await page.evaluate(() => {
       const iframe = document.getElementById('fullPreviewFrame') as HTMLIFrameElement;
       const doc = iframe?.contentDocument;
       const demo = doc?.querySelector('wb-demo');
-      return demo?.classList.contains('wb-ready') ?? false;
+      return {
+        hasClass: demo?.classList.contains('wb-demo') ?? false,
+        hasGrid: demo?.querySelector('.wb-demo__grid') !== null,
+      };
     });
-    expect(isReady).toBe(true);
+    expect(result.hasClass).toBe(true);
+    expect(result.hasGrid).toBe(true);
   });
 });
 
@@ -440,21 +444,6 @@ test.describe('Wizard - Preview wb-audio Rendering', () => {
       return wbAudio.querySelector('audio') !== null;
     });
     expect(hasAudioElement).toBe(true);
-  });
-
-  test('wb-audio has wb-ready class after rendering', async ({ page }) => {
-    await selectComponent(page, 'Audio');
-    await switchTab(page, 'preview');
-    await waitForPreviewIframe(page);
-    await waitForWBReady(page);
-
-    const isReady = await page.evaluate(() => {
-      const iframe = document.getElementById('fullPreviewFrame') as HTMLIFrameElement;
-      const doc = iframe?.contentDocument;
-      const wbAudio = doc?.querySelector('wb-audio');
-      return wbAudio?.classList.contains('wb-ready') ?? false;
-    });
-    expect(isReady).toBe(true);
   });
 
   test('wb-audio has wb-audio class after rendering', async ({ page }) => {
@@ -567,19 +556,19 @@ test.describe('Wizard - Preview wb-demo + wb-audio', () => {
     const result = await page.evaluate(() => {
       const iframe = document.getElementById('fullPreviewFrame') as HTMLIFrameElement;
       const doc = iframe?.contentDocument;
-      if (!doc) return { demoReady: false, audioReady: false, audioHasChild: false, hasGrid: false, hasCode: false };
+      if (!doc) return { demoHasClass: false, audioHasClass: false, audioHasChild: false, hasGrid: false, hasCode: false };
       const demo = doc.querySelector('wb-demo');
       const audio = doc.querySelector('wb-audio');
       return {
-        demoReady: demo?.classList.contains('wb-ready') ?? false,
-        audioReady: audio?.classList.contains('wb-ready') ?? false,
+        demoHasClass: demo?.classList.contains('wb-demo') ?? false,
+        audioHasClass: audio?.classList.contains('wb-audio') ?? false,
         audioHasChild: audio ? audio.querySelector('audio') !== null : false,
         hasGrid: demo?.querySelector('.wb-demo__grid') !== null,
         hasCode: demo?.querySelector('.wb-demo__code') !== null,
       };
     });
-    expect(result.demoReady).toBe(true);
-    expect(result.audioReady).toBe(true);
+    expect(result.demoHasClass).toBe(true);
+    expect(result.audioHasClass).toBe(true);
     expect(result.audioHasChild).toBe(true);
     expect(result.hasGrid).toBe(true);
     expect(result.hasCode).toBe(true);

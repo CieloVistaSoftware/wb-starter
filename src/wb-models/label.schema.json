@@ -4,10 +4,14 @@
   "type": "object",
   "description": "Schema for x-label behavior (label enhancements)",
   "properties": {
-    "required": { "type": "boolean", "description": "Mark label as required" },
-    "optional": { "type": "boolean", "description": "Mark label as optional" }
+    "required": { "type": "boolean", "description": "Mark label as required", "default": false },
+    "optional": { "type": "boolean", "description": "Mark label as optional", "default": false }
   },
   "required": [],
+  "schemaFor": "label",
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
   "wbBehavior": {
     "name": "label",
     "type": "modifier",

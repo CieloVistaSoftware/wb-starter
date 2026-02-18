@@ -4,9 +4,13 @@
   "type": "object",
   "description": "Schema for x-autocomplete behavior (autocomplete input)",
   "properties": {
-    "items": { "type": "array", "items": { "type": "string" }, "description": "Autocomplete options" }
+    "items": { "type": "array", "items": { "type": "string" }, "description": "Autocomplete options", "default": [] }
   },
   "required": [],
+  "schemaFor": "autocomplete",
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
   "wbBehavior": {
     "name": "autocomplete",
     "type": "modifier",

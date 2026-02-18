@@ -254,3 +254,4 @@ node scripts/generate-site.mjs src/wb-models/pages/wb-component-library.site.jso
 - ❌ Put camelCase attrs in page schemas — use kebab-case (HTML convention)
 - ❌ Forget to add new component properties to the schema before using them in page schemas
 - ❌ Edit generated files in demos/site/ — they get overwritten on rebuild
+- ❌ Reference `page.schema.json` — it is RETIRED. Page rules are now in `schema.schema.json` (page schemaType) and per-page `$layout` definitions

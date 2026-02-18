@@ -23,14 +23,14 @@
   <!-- Basic Cards -->
   <h3>Basic Cards</h3>
   <wb-demo>
-      <wb-card title="Basic Card" elevated="">
+      <wb-card title="Basic Card" elevated>
         <p>Simple card with title and hover effect.</p>
       </wb-card>
      
-      <wb-card title="With Footer" footer="Card Footer" elevated="">
+      <wb-card title="With Footer" footer="Card Footer" elevated>
         <p>Card with header and footer.</p>
       </wb-card>
-      <wb-card title="Outlined Card" outlined="">
+      <wb-card title="Outlined Card" outlined>
         <p>Card with outline border.</p>
       </wb-card>
     </div>
@@ -57,7 +57,7 @@
   <!-- Video Card -->
   <h3>Video Card</h3>
   <div class="demo-row demo-row--single">
-    <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" title="Video Card" controls=""></wb-cardvideo>
+    <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" title="Video Card" controls></wb-cardvideo>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-cardvideo 
@@ -110,7 +110,7 @@
       <wb-cardpricing plan="Starter" price="$9" period="/mo" features="5 projects,Basic support,1GB storage" cta="Start Free"></wb-cardpricing>
     </div>
     <div class="demo-item">
-      <wb-cardpricing plan="Pro" price="$29" period="/mo" features="Unlimited projects,Priority support,10GB storage" cta="Go Pro" featured=""></wb-cardpricing>
+      <wb-cardpricing plan="Pro" price="$29" period="/mo" features="Unlimited projects,Priority support,10GB storage" cta="Go Pro" featured></wb-cardpricing>
     </div>
     <div class="demo-item">
       <wb-cardpricing plan="Enterprise" price="$99" period="/mo" features="Custom integrations,Dedicated support,Unlimited storage" cta="Contact Us"></wb-cardpricing>
@@ -131,7 +131,7 @@
   <h3>Product Cards</h3>
   <div class="demo-row demo-row--four" id="autogen-components-html-13">
     <wb-cardproduct title="Basic Widget" price="$19.99" image="https://picsum.photos/200/200?r=p1" description="Perfect for beginners"></wb-cardproduct>
-    <wb-cardproduct title="Premium Widget" price="$49.99" original-price="$79.99" image="https://picsum.photos/200/200?r=p2" badge="Sale" description="Most popular" featured=""></wb-cardproduct>
+    <wb-cardproduct title="Premium Widget" price="$49.99" original-price="$79.99" image="https://picsum.photos/200/200?r=p2" badge="Sale" description="Most popular" featured></wb-cardproduct>
     <wb-cardproduct title="Enterprise" price="$149.99" image="https://picsum.photos/200/200?r=p3" description="Full features" badge="Pro"></wb-cardproduct>
     <wb-cardproduct title="Deluxe Widget" price="$79.99" image="https://picsum.photos/200/200?r=p4" description="Premium features" badge="Hot"></wb-cardproduct>
   </div>
@@ -248,7 +248,7 @@
     <wb-badge variant="purple">Premium</wb-badge>
     <wb-badge variant="pink">Featured</wb-badge>
     <wb-badge variant="orange">Hot</wb-badge>
-    <wb-badge variant="teal" pill="">Live</wb-badge>
+    <wb-badge variant="teal" pill>Live</wb-badge>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-badge variant="gray"&gt;Pending&lt;/wb-badge&gt;
@@ -267,10 +267,10 @@
   <h3>Alerts</h3>
   <p style="color: var(--text-secondary); margin-bottom: 1rem;">Click to trigger alert toasts:</p>
   <div class="demo-inline">
-    <button class="wb-btn" style="background: var(--info);" x-toast="" data-message="This is an informational message." data-type="info" data-size="md">ℹ️ Info Alert</button>
-    <button class="wb-btn" style="background: var(--success);" x-toast="" data-message="Operation completed successfully!" data-type="success" data-size="md">✅ Success Alert</button>
-    <button class="wb-btn" style="background: var(--warning); color: #000;" x-toast="" data-message="Please review before continuing." data-type="warning" data-size="md">⚠️ Warning Alert</button>
-    <button class="wb-btn" style="background: var(--error);" x-toast="" data-message="Something went wrong. Please try again." data-type="error" data-size="md">❌ Error Alert</button>
+    <button class="wb-btn" style="background: var(--info);" x-toast data-message="This is an informational message." data-type="info" data-size="md">ℹ️ Info Alert</button>
+    <button class="wb-btn" style="background: var(--success);" x-toast data-message="Operation completed successfully!" data-type="success" data-size="md">✅ Success Alert</button>
+    <button class="wb-btn" style="background: var(--warning); color: #000;" x-toast data-message="Please review before continuing." data-type="warning" data-size="md">⚠️ Warning Alert</button>
+    <button class="wb-btn" style="background: var(--error);" x-toast data-message="Something went wrong. Please try again." data-type="error" data-size="md">❌ Error Alert</button>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;button x-toast data-message="Info message" data-type="info" data-size="md"&gt;Info Alert&lt;/button&gt;
@@ -284,7 +284,7 @@
   <div class="demo-stack" style="max-width: 400px;">
     <wb-progress value="25"></wb-progress>
     <wb-progress value="50"></wb-progress>
-    <wb-progress value="75" striped=""></wb-progress>
+    <wb-progress value="75" striped></wb-progress>
     <wb-progress value="100"></wb-progress>
   </div>
   <div class="code-example">
@@ -376,33 +376,33 @@
       <h4>Drawer</h4>
       <p>Slide-out panel</p>
       <div style="display: flex; gap: 0.5rem;">
-        <button class="wb-btn" x-drawer="" data-title="Left Drawer" data-content="This panel slides in from the left side." data-position="left">← Left</button>
-        <button class="wb-btn" x-drawer="" data-title="Right Drawer" data-content="This panel slides in from the right side." data-position="right">Right →</button>
+        <button class="wb-btn" x-drawer data-title="Left Drawer" data-content="This panel slides in from the left side." data-position="left">← Left</button>
+        <button class="wb-btn" x-drawer data-title="Right Drawer" data-content="This panel slides in from the right side." data-position="right">Right →</button>
       </div>
     </div>
     
     <div class="component-box">
       <h4>Confirm</h4>
       <p>Yes/No confirmation</p>
-      <button class="wb-btn" x-confirm="" data-title="Delete Item?" data-message="This cannot be undone.">Confirm</button>
+      <button class="wb-btn" x-confirm data-title="Delete Item?" data-message="This cannot be undone.">Confirm</button>
     </div>
     
     <div class="component-box">
       <h4>Prompt</h4>
       <p>Input dialog</p>
-      <button class="wb-btn" x-prompt="" data-title="Your Name" data-message="Please enter your name:">Prompt</button>
+      <button class="wb-btn" x-prompt data-title="Your Name" data-message="Please enter your name:">Prompt</button>
     </div>
 
     <div class="component-box">
       <h4>Lightbox</h4>
       <p>Full-screen image viewer</p>
-      <button class="wb-btn" x-lightbox="" data-src="https://picsum.photos/1200/800">View Image</button>
+      <button class="wb-btn" x-lightbox data-src="https://picsum.photos/1200/800">View Image</button>
     </div>
 
     <div class="component-box">
       <h4>Popover</h4>
       <p>Small popup</p>
-      <button class="wb-btn" x-popover="" data-title="Info" data-content="Additional information here.">Show Popover</button>
+      <button class="wb-btn" x-popover data-title="Info" data-content="Additional information here.">Show Popover</button>
     </div>
   </div>
 
@@ -488,21 +488,21 @@
 
   <!-- Breadcrumb -->
   <h3>Breadcrumb</h3>
-  <nav x-breadcrumb="" data-items="Home,Products,Electronics,Smartphones"></nav>
+  <nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones"></nav>
   <div class="code-example">
     <pre><code class="language-html">&lt;nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones"&gt;&lt;/nav&gt;</code></pre>
   </div>
 
   <!-- Pagination -->
   <h3>Pagination</h3>
-  <nav x-pagination="" data-total="100" data-per-page="10" data-current="5"></nav>
+  <nav x-pagination data-total="100" data-per-page="10" data-current="5"></nav>
   <div class="code-example">
     <pre><code class="language-html">&lt;nav x-pagination data-total="100" data-per-page="10" data-current="5"&gt;&lt;/nav&gt;</code></pre>
   </div>
 
   <!-- Steps Wizard -->
   <h3>Steps Wizard</h3>
-  <div x-steps="" data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
+  <div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
   <div class="code-example">
     <pre><code class="language-html">&lt;div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"&gt;&lt;/div&gt;</code></pre>
   </div>
@@ -520,7 +520,7 @@
     <input type="text" placeholder="Basic input">
     <input type="text" placeholder="Success" data-variant="success">
     <input type="text" placeholder="Error" data-variant="error">
-    <input type="password" x-password="" placeholder="Password with toggle">
+    <input type="password" x-password placeholder="Password with toggle">
     <textarea placeholder="Textarea" rows="3"></textarea>
   </div>
   <div class="code-example">
@@ -540,7 +540,7 @@
       <option>Option 2</option>
     </select>
     <label class="checkbox-label"><input type="checkbox"> Checkbox</label>
-    <label class="checkbox-label"><input type="radio" name="radio-demo" checked=""> Radio A</label>
+    <label class="checkbox-label"><input type="radio" name="radio-demo" checked> Radio A</label>
     <label class="checkbox-label"><input type="radio" name="radio-demo"> Radio B</label>
     <wb-switch label="Toggle switch"></wb-switch>
   </div>
@@ -560,7 +560,7 @@
     <input type="range" min="0" max="100" value="50">
     <wb-rating value="3" max="5"></wb-rating>
     <wb-rating value="4" max="5" icon="❤️"></wb-rating>
-    <div x-stepper="" data-value="5" data-min="0" data-max="10"></div>
+    <div x-stepper data-value="5" data-min="0" data-max="10"></div>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;input type="range" min="0" max="100" value="50"&gt;
@@ -589,14 +589,14 @@
 
   <!-- Keyboard Keys -->
   <h3>Keyboard Keys</h3>
-  <p>Press <span x-kbd="">Ctrl</span> + <span x-kbd="">S</span> to save, or <span x-kbd="">⌘</span> + <span x-kbd="">K</span> on Mac.</p>
+  <p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>
   <div class="code-example">
     <pre><code class="language-html">&lt;p&gt;Press &lt;span x-kbd&gt;Ctrl&lt;/span&gt; + &lt;span x-kbd&gt;S&lt;/span&gt; to save.&lt;/p&gt;</code></pre>
   </div>
 
   <!-- JSON Viewer -->
   <h3>JSON Viewer</h3>
-  <div x-json="">{"name": "John", "age": 30, "active": true, "roles": ["admin", "user"]}</div>
+  <div x-json>{"name": "John", "age": 30, "active": true, "roles": ["admin", "user"]}</div>
   <div class="code-example">
     <pre><code class="language-html">&lt;div x-json&gt;{"name": "John", "age": 30, "active": true}&lt;/div&gt;</code></pre>
   </div>
@@ -610,7 +610,7 @@
 
   <!-- Gallery -->
   <h3>Gallery</h3>
-  <div x-gallery="" data-columns="4">
+  <div x-gallery data-columns="4">
     <img src="https://picsum.photos/200/200?r=g1" alt="Gallery 1">
     <img src="https://picsum.photos/200/200?r=g2" alt="Gallery 2">
     <img src="https://picsum.photos/200/200?r=g3" alt="Gallery 3">
@@ -628,7 +628,7 @@
   <!-- YouTube Embed -->
   <h3>YouTube Embed</h3>
   <div style="max-width: 600px;">
-    <div x-youtube="" data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
+    <div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"&gt;&lt;/div&gt;</code></pre>
@@ -670,10 +670,10 @@
   <!-- Copy, Share, Print -->
   <h3>Copy, Share, Print</h3>
   <div class="demo-inline">
-    <button class="wb-btn" x-copy="" data-copy="Text copied!">📋 Copy Text</button>
-    <button class="wb-btn" x-share="" data-share-title="wb-starter" data-share-url="https://example.com">📤 Share</button>
-    <button class="wb-btn" x-print="">🖨️ Print</button>
-    <button class="wb-btn" x-fullscreen="">⛶ Fullscreen</button>
+    <button class="wb-btn" x-copy data-copy="Text copied!">📋 Copy Text</button>
+    <button class="wb-btn" x-share data-share-title="wb-starter" data-share-url="https://example.com">📤 Share</button>
+    <button class="wb-btn" x-print>🖨️ Print</button>
+    <button class="wb-btn" x-fullscreen>⛶ Fullscreen</button>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;button x-copy data-copy="Text to copy"&gt;📋 Copy&lt;/button&gt;
@@ -685,8 +685,8 @@
   <!-- Clock & Countdown -->
   <h3>Clock &amp; Countdown</h3>
   <div class="demo-inline">
-    <div x-clock="" class="time-display"></div>
-    <div x-countdown="" data-to="2026-12-31" class="time-display"></div>
+    <div x-clock class="time-display"></div>
+    <div x-countdown data-to="2026-12-31" class="time-display"></div>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;div x-clock&gt;&lt;/div&gt;
@@ -696,7 +696,7 @@
   <!-- Theme Controls -->
   <h3>Theme Controls</h3>
   <div class="demo-inline">
-    <button class="wb-btn" x-darkmode="">🌙 Toggle Dark Mode</button>
+    <button class="wb-btn" x-darkmode>🌙 Toggle Dark Mode</button>
     <wb-themecontrol></wb-themecontrol>
   </div>
   <div class="code-example">

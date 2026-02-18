@@ -45,6 +45,16 @@
       "description": "Show 15-band equalizer",
       "default": false
     },
+    "showDisplay": {
+      "type": "boolean",
+      "description": "Show Marantz-style URL/track display with scrolling text",
+      "default": true
+    },
+    "showPlayButton": {
+      "type": "boolean",
+      "description": "Show a visible custom play/pause button",
+      "default": true
+    },
     "bass": {
       "type": "number",
       "description": "Bass boost (-12 to 12 dB)",
@@ -58,11 +68,35 @@
   },
   "$view": [
     {
-      "name": "audio",
-      "tag": "audio",
+      "name": "transport",
+      "tag": "div",
       "public": true,
       "required": true,
-      "description": "Native audio element"
+      "description": "Transport bar with play button and Marantz-style display",
+      "children": ["play-button", "display", "volume-knob"]
+    },
+    {
+      "name": "play-button",
+      "tag": "button",
+      "parent": "transport",
+      "public": true,
+      "required": true,
+      "description": "Play/pause toggle button — always visible"
+    },
+    {
+      "name": "display",
+      "tag": "div",
+      "parent": "transport",
+      "public": true,
+      "required": true,
+      "description": "Marantz-style warm amber display showing track URL/name with scrolling marquee"
+    },
+    {
+      "name": "audio",
+      "tag": "audio",
+      "public": false,
+      "required": true,
+      "description": "Hidden native audio element"
     },
     {
       "name": "eq-container",
@@ -168,6 +202,22 @@
     "--wb-audio-eq-slider-fill": {
       "default": "#6366f1",
       "description": "Slider fill color"
+    },
+    "--wb-audio-display-bg": {
+      "default": "linear-gradient(180deg, #1a1200 0%, #0d0900 100%)",
+      "description": "Marantz display background"
+    },
+    "--wb-audio-display-color": {
+      "default": "#e8a020",
+      "description": "Marantz display text color (warm amber)"
+    },
+    "--wb-audio-display-glow": {
+      "default": "0 0 8px rgba(232, 160, 32, 0.4)",
+      "description": "Marantz display text glow"
+    },
+    "--wb-audio-play-size": {
+      "default": "48px",
+      "description": "Play button size"
     }
   },
   "events": {

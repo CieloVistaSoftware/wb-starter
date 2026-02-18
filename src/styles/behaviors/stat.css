@@ -8,15 +8,49 @@
 
 .wb-stat {
   text-align: center;
+  padding: 0.5rem;
 }
 
 .wb-stat__value {
-  font-size: 1.75rem;
-  font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: 800;
   color: var(--primary);
+  line-height: 1.1;
 }
 
 .wb-stat__label {
-  color: var(--text-muted);
-  font-size: 0.8rem;
+  color: var(--text-muted, rgba(255,255,255,0.6));
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: 0.25rem;
+}
+
+/* Gradient value variants */
+.wb-stat--purple .wb-stat__value {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.wb-stat--green .wb-stat__value {
+  background: linear-gradient(135deg, #22c55e, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.wb-stat--orange .wb-stat__value {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.wb-stat--blue .wb-stat__value {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

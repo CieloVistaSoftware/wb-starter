@@ -29,9 +29,14 @@ export function grid(element, options = {}) {
   element.style.gap = config.gap;
   
   if (config.minWidth) {
+    // Explicit min-width: use auto-fit with minmax
     element.style.gridTemplateColumns = `repeat(auto-fit, minmax(${config.minWidth}, 1fr))`;
   } else {
-    element.style.gridTemplateColumns = `repeat(${config.columns}, 1fr)`;
+    // Smart default: auto-fit with sensible min-width based on column count
+    // This is mobile-first — columns collapse naturally on small screens
+    const defaultMins = { '2': '280px', '3': '250px', '4': '200px', '5': '180px', '6': '150px' };
+    const autoMin = defaultMins[config.columns] || '250px';
+    element.style.gridTemplateColumns = `repeat(auto-fit, minmax(min(${autoMin}, 100%), 1fr))`;
   }
 
   return () => element.classList.remove('wb-grid');
@@ -97,9 +102,11 @@ export function container(element, options = {}) {
     element.style.justifyContent = justifyMap[config.justify] || config.justify;
     element.style.gap = config.gap;
   } else {
-    // GRID MODE: Multiple columns
+    // GRID MODE: Multiple columns (mobile-first with auto-fit)
     element.style.display = 'grid';
-    element.style.gridTemplateColumns = `repeat(${config.columns}, 1fr)`;
+    const defaultMins = { 2: '280px', 3: '250px', 4: '200px', 5: '180px', 6: '150px' };
+    const autoMin = defaultMins[config.columns] || '250px';
+    element.style.gridTemplateColumns = `repeat(auto-fit, minmax(min(${autoMin}, 100%), 1fr))`;
     element.style.alignItems = alignMap[config.align] || config.align;
     element.style.justifyContent = justifyMap[config.justify] || config.justify;
     element.style.gap = config.gap;
@@ -113,21 +120,6 @@ export function container(element, options = {}) {
     element.style.maxWidth = config.maxWidth;
     element.style.marginLeft = 'auto';
     element.style.marginRight = 'auto';
-  }
-  
-  // Visual indicator in builder
-  element.style.minHeight = '100px';
-  element.style.border = '2px dashed var(--border-color, #374151)';
-  element.style.borderRadius = '8px';
-  element.style.background = 'var(--bg-secondary, rgba(31, 41, 55, 0.3))';
-  
-  // Show drop hint if empty
-  if (!element.children.length) {
-    element.innerHTML = `<div style="color: var(--text-tertiary, #6b7280); text-align: center; padding: 2rem;">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📦</div>
-      <div>Drop components here</div>
-      <div style="font-size: 0.75rem; opacity: 0.7;">${config.columns > 1 ? config.columns + ' columns' : config.direction}</div>
-    </div>`;
   }
   
   return () => {

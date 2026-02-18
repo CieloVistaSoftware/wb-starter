@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/behaviors/ui/home-page-schema.spec.ts",
+  "startedAt": "2026-02-18T02:37:35.169Z",
+  "updatedAt": "2026-02-18T02:37:41.326Z",
+  "command": "npx playwright test --workers=8 tests/behaviors/ui/home-page-schema.spec.ts",
+  "pid": 33536,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 1,
+  "total": 2,
+  "currentFile": "tests\\behaviors\\ui\\home-page-schema.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  -  1 [behaviors] › tests\\behaviors\\ui\\home-page-schema.spec.ts:6:3 › Home Page Schema — merged into permutation test › placeholder\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 0.0s\n  ✓ Passed:  0\n  ✗ Failed:  0\n  ○ Skipped: 1\n\n  By Project:\n    ✓ behaviors: 0/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 skipped\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-02-18T02:37:41.326Z",
+  "duration": "6.16s",
+  "exitCode": 0
+}

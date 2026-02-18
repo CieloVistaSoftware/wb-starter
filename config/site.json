@@ -25,12 +25,6 @@
       "pageToLoad": "home"
     },
     {
-      "menuItemId": "builder",
-      "menuItemText": "Get Started",
-      "menuItemEmoji": "🚀",
-      "pageToLoad": "builder"
-    },
-    {
       "menuItemId": "components",
       "menuItemText": "Components",
       "menuItemEmoji": "🧩",

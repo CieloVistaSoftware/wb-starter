@@ -4,10 +4,14 @@
   "type": "object",
   "description": "Schema for x-counter behavior (character counter)",
   "properties": {
-    "max": { "type": "integer", "description": "Maximum character count" },
-    "warning": { "type": "integer", "description": "Warning threshold for character count" }
+    "max": { "type": "integer", "description": "Maximum character count", "default": 0 },
+    "warning": { "type": "integer", "description": "Warning threshold for character count", "default": 0 }
   },
   "required": [],
+  "schemaFor": "counter",
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
   "wbBehavior": {
     "name": "counter",
     "type": "modifier",

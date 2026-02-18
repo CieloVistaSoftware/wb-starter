@@ -11,9 +11,9 @@ export function copy(element, options = {}) {
     target: options.target || element.getAttribute('copy-target'),
     feedback: options.feedback || element.getAttribute('copy-feedback') || 'Copied!',
     duration: parseInt(options.duration || element.getAttribute('copy-duration') || '2000', 10),
-    toast: options.toast ?? (element.setAttribute('toast', == 'true'),
+    toast: options.toast ?? element.hasAttribute('toast'),
     ...options
-  });
+  };
 
   element.classList.add('wb-copy');
   

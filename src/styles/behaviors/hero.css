@@ -13,6 +13,11 @@ wb-hero {
   overflow: hidden;
 }
 
+wb-cardhero {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
 /* Apply height from data attribute */
 wb-hero[data-height="100vh"] {
   height: 100vh;

@@ -4,10 +4,14 @@
   "type": "object",
   "description": "Schema for x-fieldset behavior (collapsible fieldset)",
   "properties": {
-    "collapsible": { "type": "boolean", "description": "Allow fieldset to be collapsible" },
-    "collapsed": { "type": "boolean", "description": "Initial collapsed state" }
+    "collapsible": { "type": "boolean", "description": "Allow fieldset to be collapsible", "default": false },
+    "collapsed": { "type": "boolean", "description": "Initial collapsed state", "default": false }
   },
   "required": [],
+  "schemaFor": "fieldset",
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
   "wbBehavior": {
     "name": "fieldset",
     "type": "modifier",

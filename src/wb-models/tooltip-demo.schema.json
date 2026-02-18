@@ -1,5 +1,6 @@
 {
   "$schema": "../wb-models/page.schema.json",
+  "schemaType": "definition",
   "title": "Tooltip Button Showcase",
   "description": "Demo page for <wb-button> with x-tooltip in all positions.",
   "components": [

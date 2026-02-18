@@ -4,10 +4,14 @@
   "type": "object",
   "description": "Schema for x-form behavior (form enhancement)",
   "properties": {
-    "ajax": { "type": "boolean", "description": "Enable AJAX form submission" },
-    "validate": { "type": "boolean", "description": "Enable validation on submit" }
+    "ajax": { "type": "boolean", "description": "Enable AJAX form submission", "default": false },
+    "validate": { "type": "boolean", "description": "Enable validation on submit", "default": false }
   },
   "required": [],
+  "schemaFor": "form",
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
   "wbBehavior": {
     "name": "form",
     "type": "modifier",

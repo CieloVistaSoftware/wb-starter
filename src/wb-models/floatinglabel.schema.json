@@ -5,6 +5,10 @@
   "description": "Schema for x-floatinglabel behavior (floating label UI)",
   "properties": {},
   "required": [],
+  "schemaFor": "floatinglabel",
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
   "wbBehavior": {
     "name": "floatinglabel",
     "type": "modifier",

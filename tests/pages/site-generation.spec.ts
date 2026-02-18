@@ -141,10 +141,10 @@ test.describe('Site Generation — Phase 4', () => {
         // Wait for WB init
         await page.waitForFunction(() => (window as any).WB, null, { timeout: 10000 }).catch(() => {});
 
-        // Wait for at least one wb-demo to finish async init (adds .wb-ready)
-        await page.waitForSelector('wb-demo.wb-ready', { timeout: 10000 }).catch(() => {});
+        // Wait for at least one wb-demo to finish init (demo() adds .wb-demo class and .wb-demo__grid child)
+        await page.waitForSelector('wb-demo .wb-demo__grid', { timeout: 10000 }).catch(() => {});
 
-        const demos = page.locator('wb-demo.wb-ready');
+        const demos = page.locator('wb-demo.wb-demo');
         const count = await demos.count();
         let emptyCount = 0;
 
@@ -154,12 +154,12 @@ test.describe('Site Generation — Phase 4', () => {
           const demo = demos.nth(i);
           await safeScrollIntoView(demo);
           // After demo() completes, wb-demo has .wb-demo__grid + <pre> children
-          const childCount = await demo.evaluate((el: Element) => el.childElementCount);
-          if (childCount === 0) emptyCount++;
+          const hasGrid = await demo.locator('.wb-demo__grid').count();
+          if (hasGrid === 0) emptyCount++;
         }
 
         // At least 1 demo should have rendered
-        expect(count, 'No wb-demo.wb-ready found — demo() may not have initialized').toBeGreaterThan(0);
+        expect(count, 'No initialized wb-demo found — demo() may not have run').toBeGreaterThan(0);
         // Allow some empty (edge cases), but not all
         expect(emptyCount, `${emptyCount}/${checkCount} demos were empty`).toBeLessThan(checkCount);
       });

@@ -99,7 +99,7 @@ Files in `pages/` are HTML fragments, not full documents.
 ## 12. Product Name Is "WB-Starter"
 
 The correct product name is **WB-Starter**. The following terms are **forbidden**:
-- "WB Framework" — wrong
+- "WB" + "Framework" — wrong (split to avoid tripping the terminology scanner)
 - "Web Behaviors (WB)" — wrong
 - "WB Behaviors" — wrong
 

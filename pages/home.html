@@ -1,177 +1,61 @@
-<!-- Home Page Fragment — styles in src/styles/pages/home.css -->
-<link rel="stylesheet" href="../src/styles/pages/home.css">
+<!-- Home Page — generated from home-page.schema.json -->
+<!-- pageRules: noInlineStyles=true, noPageSpecificCSS=true, fragment=true, showcase=false -->
+<!-- $layout: 4 rows, gap=2rem, maxWidth=1200px -->
 
-<!-- HERO -->
-<div class="page__hero">
-  <wb-cardhero variant="cosmic" pretitle="41+ Components"
-    title='Build <span class="wb-gradient-text">stunning UIs</span> with behaviors'
-    subtitle="just HTML — no build step, no framework lock-in" cta="Explore Components"
-    cta-href="/pages/components.html" cta-secondary="Documentation"
-    cta-secondary-href="/pages/docs.html" background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
-  </wb-cardhero>
-  <h1 class="wb-sr-only">WB Starter — Build Stunning UIs with Behaviors</h1>
-</div>
+<h1>Build stunning UIs</h1>
+<wb-cardhero variant="cosmic" pretitle="100 Components" title="Build stunning UIs" subtitle="just HTML — no build step" cta="Explore Components" cta-secondary="Documentation"></wb-cardhero>
 
-<!-- STATS BANNER -->
-<div class="stats-banner" id="stats-banner">
-  <div class="stat-item" id="autogen-home-stat-0">
-    <span class="stat-value" x-counter data-value="100" data-duration="2000">0</span>
-    <span class="stat-label">Behaviors</span>
-  </div>
-  <div class="stat-separator"></div>
-  <div class="stat-item" id="autogen-home-stat-1">
-    <span class="stat-value">Light</span>
-    <span class="stat-label">DOM Architecture</span>
-  </div>
-  <div class="stat-separator"></div>
-  <div class="stat-item" id="autogen-home-stat-2">
-    <span class="stat-value">0s</span>
-    <span class="stat-label">Build Time</span>
-  </div>
-  <div class="stat-separator"></div>
-  <div class="stat-item" id="autogen-home-stat-3">
-    <span class="stat-value">100%</span>
-    <span class="stat-label">Standards Compliant</span>
-  </div>
-</div>
+<h2>By the Numbers</h2>
+<wb-container max-width="900px" padding="2rem">
+  <wb-grid columns="4">
+    <wb-cardstats value="100+" label="Behaviors" icon="🧩"></wb-cardstats>
+    <wb-cardstats value="Light" label="DOM Only" icon="☀️"></wb-cardstats>
+    <wb-cardstats value="&lt;1s" label="Build Time" icon="⚡"></wb-cardstats>
+    <wb-cardstats value="100%" label="Standards" icon="✅"></wb-cardstats>
+  </wb-grid>
+  <div class="wb-divider"></div>
+  <wb-row justify="center" gap="1rem">
+    <button x-ripple>✨ Ripple</button>
+    <button x-tooltip="I appear on hover!">💬 Tooltip</button>
+    <button x-confetti>🎉 Confetti</button>
+    <button x-copy>📋 Copy</button>
+  </wb-row>
+</wb-container>
 
-<!-- LIVE DEMO SECTION -->
-<div class="page__section" id="demo-section">
-  <div class="section-header">
-    <h2 class="section-title">It's Just HTML Attributes</h2>
-    <p class="section-subtitle">Add complex interactive behaviors with simple <code>x-*</code> attributes.</p>
-  </div>
+<h2>Features</h2>
+<p>Everything you need to build modern UIs</p>
+<wb-grid>
+  <wb-card variant="float">
+    <h3>🧩 Component Library</h3>
+    <p>Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation.</p>
+  </wb-card>
+  <wb-card variant="float">
+    <h3>⚡ Behaviors System</h3>
+    <p>Compose interactions like Lego bricks. Add x-fade-in, x-sticky, or x-validate to any element.</p>
+  </wb-card>
+  <wb-card variant="float">
+    <h3>🎨 Theme Engine</h3>
+    <p>23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box.</p>
+  </wb-card>
+  <wb-card variant="float">
+    <h3>📊 Data Viz</h3>
+    <p>Built-in charts, stats cards, and audio visualizations powered by Web Standards.</p>
+  </wb-card>
+  <wb-card variant="float">
+    <h3>♿ Accessible</h3>
+    <p>ARIA attributes and keyboard navigation are baked into every component by default.</p>
+  </wb-card>
+  <wb-card variant="float">
+    <h3>🚀 Performance</h3>
+    <p>Zero-runtime compilation. Browsers are fast now. We let them do their job.</p>
+  </wb-card>
+</wb-grid>
 
-  <div class="interactive-demo">
-    <wb-demo>
-      <wb-card variant="glass" class="preview-canvas" id="home-preview-canvas">
-        <div class="preview-row" id="home-preview-row-1">
-          <wb-button class="wb-btn wb-btn--secondary" x-ripple>Click Me (Ripple)</wb-button>
-          <wb-button class="wb-btn wb-btn--secondary" x-tooltip="Hello! This works without JS config.">Hover Me</wb-button>
-          <wb-button>Open Modal</wb-button>
-        </div>
-        <div class="preview-row">
-          <div class="preview-row" x-draggable>✋ Drag Me Around</div>
-        </div>
-        <div class="preview-row">
-          <wb-button class="wb-btn wb-btn--primary" x-confetti>Celebrate! 🎉</wb-button>
-        </div>
-      </wb-card>
-    </wb-demo>
-
-    <wb-demo>
-      <div class="window-controls">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-      </div>
-      <wb-button x-ripple>Click Me</wb-button>
-      <wb-button x-tooltip="Hello! This works without JS config.">Hover Me</wb-button>
-      <div class="draggable-preview" x-draggable>✋ Drag Me Around</div>
-      <wb-button x-confetti>Celebrate! 🎉</wb-button>
-    </wb-demo>
-  </div>
-</div>
-
-<!-- FEATURE CARDS -->
-<div class="page__section bg-subtle" id="features-section">
-  <div class="section-header">
-    <h2 class="section-title">Everything You Need</h2>
-    <p class="section-subtitle">A complete toolkit for modern web development.</p>
-  </div>
-
-  <div class="features-grid">
-    <wb-demo>
-      <wb-card variant="float">
-        <div class="feature-icon">🧩</div>
-        <h3>Component Library</h3>
-        <p>Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation.</p>
-      </wb-card>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-card variant="float">
-        <div class="feature-icon">⚡</div>
-        <h3>Behaviors System</h3>
-        <p>Compose interactions like Lego bricks. Add <code>x-fade-in</code>, <code>x-sticky</code>, or <code>x-validate</code> to any element.</p>
-      </wb-card>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-card variant="float">
-        <div class="feature-icon">🎨</div>
-        <h3>Theme Engine</h3>
-        <p>23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box.</p>
-      </wb-card>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-card variant="float">
-        <div class="feature-icon">📊</div>
-        <h3>Data Viz</h3>
-        <p>Built-in charts, stats cards, and audio visualizations powered by Web Standards.</p>
-      </wb-card>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-card variant="float">
-        <div class="feature-icon">♿</div>
-        <h3>Accessible</h3>
-        <p>ARIA attributes and keyboard navigation are baked into every component by default.</p>
-      </wb-card>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-card variant="float">
-        <div class="feature-icon">🚀</div>
-        <h3>Performance</h3>
-        <p>Zero-runtime compilation. Browsers are fast now. We let them do their job.</p>
-      </wb-card>
-    </wb-demo>
-  </div>
-</div>
-
-<!-- PREMIUM SHOWCASE -->
-<div class="page__section" id="premium-showcase-section">
-  <div class="section-header">
-    <h2 class="section-title">Premium Components Included</h2>
-    <p class="section-subtitle">Production-ready complex interfaces.</p>
-  </div>
-
-  <div class="premium-showcase-grid">
-    <div class="showcase-box">
-      <div class="showcase-box__header"><span>Audio Visualization</span></div>
-      <wb-demo>
-        <wb-audio
-          src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3"
-          show-eq="true" volume="0.5">
-        </wb-audio>
-      </wb-demo>
-    </div>
-
-    <div class="showcase-box">
-      <div class="showcase-box__header"><span>Smart Notifications</span></div>
-      <div class="showcase-box__content center-content">
-        <div class="notification-list">
-          <notification-card type="info" title="System Update" message="Downloading patch v3.1..."></notification-card>
-          <notification-card type="success" title="Complete" message="Installation finished successfully."></notification-card>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CALL TO ACTION -->
-<div class="cta-section">
-  <div class="cta-content">
-    <h2>Ready to ship faster?</h2>
-    <h2 class="cta-title-sub">Ready to build something</h2>
-    <p>Join the No-Build Revolution today.</p>
-    <div class="cta-actions">
-      <a href="/pages/components.html" class="wb-btn wb-btn--primary wb-btn--lg">Get Started</a>
-      <a href="https://github.com/CieloVistaSoftware/wb-starter" class="wb-btn wb-btn--secondary wb-btn--lg">View on GitHub</a>
-    </div>
-  </div>
-  <div class="cta-bg-1"></div>
-  <div class="cta-bg-2"></div>
-</div>
+<h2>Live Demos</h2>
+<wb-stack>
+  <wb-cardnotification variant="info" title="System Update" message="Downloading patch v3.1..."></wb-cardnotification>
+  <wb-cardnotification variant="success" title="Complete" message="Installation finished successfully."></wb-cardnotification>
+  <wb-cardnotification variant="warning" title="Attention" message="Check your settings."></wb-cardnotification>
+  <wb-cardnotification variant="error" title="Failure" message="Something went wrong."></wb-cardnotification>
+</wb-stack>
+<wb-audio src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" show-eq volume="0.5"></wb-audio>

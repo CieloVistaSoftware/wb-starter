@@ -98,7 +98,8 @@ body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
 wb-grid, wb-flex, wb-stack, wb-cluster, wb-container,
 wb-row, wb-column,
 wb-sidebar, wb-center, wb-cover, wb-masonry, wb-switcher,
-wb-reel, wb-frame, wb-sticky, wb-drawer, wb-icon {
+wb-reel, wb-frame, wb-sticky, wb-drawer, wb-icon,
+wb-audio, wb-cardhero, wb-cardstats, notification-card {
   display: block;
 }
 
@@ -535,6 +536,17 @@ h5, h6 {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-top: 1.5rem;
+}
+
+/* Generated page layout — flex column with gap between rows */
+.page-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.page-layout > section {
+  width: 100%;
 }
 
 /* =============================================================================

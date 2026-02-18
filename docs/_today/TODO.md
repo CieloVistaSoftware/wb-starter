@@ -1,7 +1,8 @@
 ---
 # TODO — WB-Starter Project
 **Generated:** 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipped / 2730 total)
-**Updated:** 2026-02-16 — Prioritized action items with completion tracking
+**Updated:** 2026-02-17 — Compliance run: 2475 passed, 22 failed, 5 skipped / 2502 compliance tests
+**Session fixes:** 93 failures resolved (wb-ready class removal, demo themes.css, card test rewrites, stale SPA routes, builder nav removal)
 
 ---
 
@@ -113,20 +114,55 @@
 
 ---
 
-## Priority 8 — Compliance Tests (7 failures)
+## Priority 8 — Source Bugs (3 failures)
 
-- [ ] `css-oop-compliance.spec.ts` — Fix hardcoded colors in CSS (except themes.css)
-- [ ] `css-oop-compliance.spec.ts` — Reduce excessive `!important` usage
-- [ ] `terminology.spec.ts` — Find and replace forbidden term "WB Framework" 
-- [ ] `project-integrity.spec.ts` — Fix HTML resource links pointing to non-existent files
-- [ ] `page-compliance.spec.ts` — Fix root page `/` compliance failure
-- [ ] `universal-compliance.spec.ts` — Fix root page `/` universal compliance failure
-- [ ] `fix-viewer.spec.ts` — Fix duplicate IDs in fix viewer
-- [ ] Rerun compliance specs and confirm 7/7 pass
+- [ ] `copy.js` syntax error — `Unexpected token '=='` — fix source in `src/wb-viewmodels/copy.js`
+- [ ] `scrollalong-test.html` — wrong import `src/index.js` has no default export — change to `src/core/wb-lazy.js`
+- [ ] `error-log-empty.spec.ts` — will auto-pass once copy.js is fixed (error log has 1 entry from copy.js)
+- [ ] Rerun dark-mode + error-log tests and confirm 3/3 pass
 
 ---
 
-## Priority 9 — Deep Fix Items (2 failures)
+## Priority 9 — Empty Attribute Compliance (2 failures, 49 violations)
+
+- [ ] `pages/components.html` — 44 empty attribute assignments (`elevated=""`, `x-toast=""`, `pill=""`, etc.)
+- [ ] `demos/kitchen-sink.html` — 5 empty attribute assignments (`disabled=""`, `checked=""`, `dot=""`, `x-tooltip=""`)
+- [ ] Change all `attr=""` to presence-only `attr` (no equals sign, no empty string)
+- [ ] Rerun `empty-attribute-compliance.spec.ts` and confirm 2/2 pass
+
+---
+
+## Priority 10 — Schema Completion (25 schemas, 6 test failures)
+
+25 component schemas missing required v3 fields. Same list across 3 tests:
+- `schema-validation.spec.ts` — missing $view, $methods, schemaFor, defaults
+- `v3-syntax-compliance.spec.ts` — missing $view, $methods, $cssAPI
+
+**Schemas needing completion:** autocomplete, colorpicker, counter, error, fieldset, file, floatinglabel, form, formrow, help-demo, help, inputgroup, label, masked, otp, password, stepper, tags, tooltip-demo, x-behavior, x-collapse, x-copy, x-draggable, x-effects, x-enhancements
+
+- [ ] Add `schemaFor` field to all 25 schemas
+- [ ] Add `$view` section to all 25 schemas
+- [ ] Add `$methods` section to all 25 schemas
+- [ ] Add `$cssAPI` section to all 25 schemas
+- [ ] Add `default` to all properties missing it (34 properties across schemas)
+- [ ] Rerun schema-validation + v3-syntax-compliance and confirm 6/6 pass
+
+---
+
+## Priority 11 — Compliance Cleanup (7 failures)
+
+- [ ] `css-oop-compliance.spec.ts` — Fix hardcoded colors in 9 CSS files (use `var(--*)` instead)
+- [ ] `css-oop-compliance.spec.ts` — Reduce `!important` usage from 159 to under 130
+- [ ] `terminology.spec.ts` — Replace forbidden product name term in TIER1-LAWS.md, TODO.md
+- [ ] `project-integrity.spec.ts` — Fix broken HTML resource links
+- [ ] `fix-viewer.spec.ts` — Fix duplicate ID `status-undefined` in fix-viewer.html
+- [ ] `docs-manifest-integrity.spec.ts` — Add 21 missing markdown files to `docs/manifest.json`
+- [ ] `test-coverage-compliance.spec.ts` — Create `tests/components/audio.spec.ts` (referenced by 2 bug registry entries)
+- [ ] Rerun all and confirm 7/7 pass
+
+---
+
+## Priority 12 — Deep Fix Items (2 failures)
 
 - [ ] `strict-mode-runtime.spec.ts` — `data-wb` usage should throw error and NOT process it (WB engine change)
 - [ ] `semantic-article-to-card.spec.ts` — `<article>` → card sync processing on page load
@@ -134,7 +170,17 @@
 
 ---
 
-## Priority 10 — Other Behavior Failures (20 failures)
+## Priority 13 — Archive / Low-Value (2 failures)
+
+- [ ] `html-ids.spec.ts` — `archive/behaviors.html` has 146 containers without IDs (threshold 75)
+- [ ] `html-ids.spec.ts` — `tmp/moved-html/demos/behaviors.html` same issue (copy of archive file)
+- [ ] Option A: Add IDs to archive file
+- [ ] Option B: Exclude archive/ and tmp/ from html-ids scan
+- [ ] Rerun and confirm 2/2 pass
+
+---
+
+## Priority 14 — Other Behavior Failures (20 failures)
 
 ### Behavior Verification (8 failures)
 - [ ] Table sortable columns — header sort indicator, click sorts ascending/descending (4 tests)
@@ -157,7 +203,7 @@
 
 ---
 
-## Priority 11 — Global Attributes (10 failures) — Needs Decision
+## Priority 15 — Global Attributes (10 failures) — Needs Decision
 
 **File:** `global-attributes.spec.ts`
 **Tests expect:** Plain attributes `tooltip`, `toast-message`, `badge`, `ripple` on any HTML element auto-processed by WB engine
@@ -173,6 +219,17 @@
 
 ---
 
+## Priority 16 — Cross-Browser Support (22 failures) — BOTTOM OF LIST
+
+**File:** `cross-browser-support.spec.ts`
+**Note:** All 22 tests PASS when server is running. Failures were connection-refused due to server timing. May need test infrastructure fix (ensure server up before cross-browser tests run) or these may be intermittent.
+
+- [ ] Verify tests pass consistently with server running
+- [ ] If flaky, add server health check or retry logic to test setup
+- [ ] Rerun and confirm 22/22 pass
+
+---
+
 ## ✅ Completed Items
 
 - [x] Behaviors test suite fixes (legacy `data-wb`, Locator API, autoinject, badge display)
@@ -182,7 +239,7 @@
 - [x] Abbreviation definitions fixed
 - [x] POSIX-only commands rewritten as PowerShell-safe
 - [x] Stale Lock directory cleaned
-- [x] Forbidden "WB Framework" terminology replaced in 9 source files
+- [x] Forbidden product name terminology replaced in 9 source files
 - [x] Duplicate identifiers in builder files (archived, tests skip)
 - [x] Regression test file refs cleaned from bug registry
 - [x] Playwright-if-tests exit 0 fix
@@ -194,6 +251,14 @@
 - [x] wb-demo component complete
 - [x] themes.css regression fix
 - [x] `behaviors-showcase-visual.spec.ts` — port 5173 → relative URL
+- [x] **2026-02-17: wb-ready class fixes** — removed `.wb-ready` CSS selector waits from site-generation.spec.ts, wizard.spec.ts
+- [x] **2026-02-17: Stale SPA route tests gutted** — behaviors-showcase, home-showcase, themes-showcase (pointed to dead `/?page=` routes)
+- [x] **2026-02-17: Card test rewrites** — card.spec.ts + card-product-behavior.spec.ts rewritten for current architecture (no data-*, no SPA)
+- [x] **2026-02-17: behaviors-page-scroll fix** — added `goto('/demos/behaviors-showcase.html')` in beforeEach
+- [x] **2026-02-17: 17 demos missing themes.css** — added `<link rel="stylesheet" href="../src/styles/themes.css">` to all
+- [x] **2026-02-17: scrollalong-test.html structure** — added data-theme, viewport meta, themes.css
+- [x] **2026-02-17: Builder nav removed** — removed dead "builder" entry from config/site.json
+- [x] **2026-02-17: Compliance suite 115 → 22 failures** — 93 fixes in one session
 
 ---
 

@@ -25,6 +25,12 @@
       "required": ["title", "description"],
       "requiresBehaviorOrSchemaFor": false,
       "propertyRules": "none — properties section optional"
+    },
+    "page": {
+      "description": "Page-level schema. Defines layout rows, page rules, and content placement. Not a component.",
+      "required": ["title", "description", "pageRules", "$layout"],
+      "requiresBehaviorOrSchemaFor": false,
+      "propertyRules": "type + default on data properties"
     }
   },
 
@@ -46,7 +52,7 @@
 
     "schemaType": {
       "type": "string",
-      "enum": ["component", "base", "definition"],
+      "enum": ["component", "base", "definition", "page"],
       "default": "component",
       "description": "Schema tier. 'component' (default) = full rules. 'base' = abstract/inherited, $view/$methods optional. 'definition' = reference doc, only title+description required."
     },
@@ -160,6 +166,14 @@
         "ariaValueNow": { "type": "string" },
         "ariaLabel": { "type": "string" }
       }
+    },
+
+    "pageRules": {
+      "$ref": "#/$defs/pageRules"
+    },
+
+    "$layout": {
+      "$ref": "#/$defs/pageLayout"
     },
 
     "test": {
@@ -378,6 +392,122 @@
       }
     },
 
+    "pageRules": {
+      "type": "object",
+      "description": "Page-level rules that govern how the page is generated and validated.",
+      "required": ["showcase", "fragment"],
+      "properties": {
+        "showcase": {
+          "type": "boolean",
+          "description": "If true, all sections are wrapped in wb-demo (shows source code). False for production pages."
+        },
+        "fragment": {
+          "type": "boolean",
+          "description": "If true, page is a fragment (no DOCTYPE/html/head/body). Server shell wraps it."
+        },
+        "noInlineStyles": {
+          "type": "boolean",
+          "default": true,
+          "description": "No inline styles allowed on any element."
+        },
+        "noPageSpecificCSS": {
+          "type": "boolean",
+          "default": true,
+          "description": "No page-specific CSS file. All styling comes from component CSS."
+        }
+      }
+    },
+
+    "layoutRow": {
+      "type": "object",
+      "description": "A single row in the page layout. Rows stack vertically. Each row has 1+ columns.",
+      "required": ["columns", "content"],
+      "properties": {
+        "columns": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of columns in this row. Collapses to 1 on mobile (mobile-first)."
+        },
+        "rows": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Fixed row count for grid layouts. Omit for auto (content fills and wraps)."
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["row", "column"],
+          "default": "row",
+          "description": "Fill order. 'row' = left to right then wrap. 'column' = top to bottom then wrap."
+        },
+        "ratio": {
+          "type": "string",
+          "description": "Column width ratio. Examples: '50/50', '70/30', '30/70', '33/33/33', '25/50/25'. Only for 2-3 columns.",
+          "pattern": "^[0-9]+(/[0-9]+){1,2}$"
+        },
+        "width": {
+          "type": "string",
+          "description": "Row width. 'full-bleed' = edge to edge. A CSS value (e.g. '900px', '1200px') = contained with max-width.",
+          "default": "contained"
+        },
+        "align": {
+          "type": "string",
+          "enum": ["top", "center", "bottom", "stretch"],
+          "default": "stretch",
+          "description": "Vertical alignment of items within this row."
+        },
+        "heading": {
+          "type": "string",
+          "description": "Section heading text. Rendered as an h-tag above the row content."
+        },
+        "headingLevel": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6,
+          "default": 2,
+          "description": "HTML heading level (1-6). h1 for page title (hero), h2 for major sections, h3 for subsections."
+        },
+        "subheading": {
+          "type": "string",
+          "description": "Optional description text below the heading."
+        },
+        "gap": {
+          "type": "string",
+          "description": "Override horizontal gap between columns in this row. Defaults to layout-level gap."
+        },
+        "content": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "maxItems": 3,
+          "description": "Section names placed in this row's columns. Must match $view section names."
+        }
+      }
+    },
+
+    "pageLayout": {
+      "type": "object",
+      "description": "Page layout definition. Rows stacked vertically, each row 1-3 columns. Mobile-first: all columns collapse to 1 on small screens.",
+      "required": ["gap", "rows"],
+      "properties": {
+        "gap": {
+          "type": "string",
+          "default": "2rem",
+          "description": "Vertical gap between rows and horizontal gap between columns."
+        },
+        "maxWidth": {
+          "type": "string",
+          "default": "1200px",
+          "description": "Default max-width for contained rows. Individual rows can override."
+        },
+        "rows": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/layoutRow" },
+          "minItems": 1,
+          "description": "Ordered list of layout rows. Each row stacks on top of the next."
+        }
+      }
+    },
+
     "testConfig": {
       "type": "object",
       "description": "Test configuration for the component.",
@@ -443,6 +573,42 @@
               "type": "array",
               "items": { "type": "string" },
               "description": "Attributes to verify exist"
+            },
+            "layout": {
+              "type": "object",
+              "description": "Layout rule assertions for page tests.",
+              "properties": {
+                "noWbDemo": { "type": "boolean" },
+                "noInlineStyles": { "type": "boolean" },
+                "isFragment": { "type": "boolean" },
+                "sectionOrder": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "mobileFirst": {
+              "type": "object",
+              "description": "Mobile-first visual assertions.",
+              "properties": {
+                "breakpoint": { "type": "integer", "description": "Mobile viewport width in px (e.g. 375)" },
+                "noOverflow": { "type": "boolean", "description": "No element wider than viewport" },
+                "gridCollapses": { "type": "boolean", "description": "Grid collapses to single column" },
+                "statsWrap": { "type": "boolean", "description": "Stats row wraps on mobile" },
+                "noHorizontalScroll": { "type": "boolean", "description": "No horizontal scrollbar" }
+              }
+            },
+            "fluent": {
+              "type": "object",
+              "description": "Fluent layout assertions — no visual artifacts.",
+              "properties": {
+                "noDashedBorders": { "type": "boolean" },
+                "noBuilderBackground": { "type": "boolean" },
+                "noForcedMinHeight": { "type": "boolean" },
+                "maxStatHeight": { "type": "integer", "description": "Max pixel height for stat cards" },
+                "minSectionGap": { "type": "integer", "description": "Min px gap between sections (1rem = 16px)" },
+                "maxSectionGap": { "type": "integer", "description": "Max px gap between sections" }
+              }
             }
           }
         }

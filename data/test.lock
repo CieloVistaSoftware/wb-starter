@@ -1,6 +1,0 @@
-{
-  "pid": 42388,
-  "playwrightPid": 43304,
-  "startedAt": "2026-02-17T16:51:34.159Z",
-  "command": "npx playwright test --workers=8"
-}

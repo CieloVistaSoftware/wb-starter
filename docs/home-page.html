@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page Documentation</title>
+  <link rel="stylesheet" href="../src/styles/pages/home.css">
+  <style>
+    body {
+      background: #181c24;
+      color: #e0e6f3;
+      font-family: 'Inter', Arial, sans-serif;
+      padding: 2rem;
+    }
+    h1, h2, h3 {
+      color: #fff;
+    }
+    a {
+      color: #4f8cff;
+    }
+    .doc-section {
+      background: #23273a;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px #0002;
+    }
+    code {
+      background: #222;
+      color: #aaf;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .doc-list {
+      margin-left: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Home Page Documentation</h1>
+
+  <div class="doc-section">
+    <h2>Overview</h2>
+    <p>The home page is the main entry point for the WB-Starter project. It showcases the core features, stats, live demo, and premium components. All content and behaviors are validated against the home-page schema.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>Sections</h2>
+    <ul class="doc-list">
+      <li><strong>Hero:</strong> Uses <code>&lt;wb-cardhero&gt;</code>, variant cosmic, headline, subtitle, CTA, accessible (role="banner")</li>
+      <li><strong>Stats Banner:</strong> Four stat items: Behaviors, DOM Architecture, Build Time, Standards Compliant. No zero values allowed.</li>
+      <li><strong>Live Demo:</strong> Interactive demo using <code>&lt;wb-demo&gt;</code> (ripple, tooltip, draggable, confetti)</li>
+      <li><strong>Feature Cards:</strong> Six cards with icon, title, description. Accessible (role="region")</li>
+      <li><strong>Premium Showcase:</strong> Audio visualization and smart notifications</li>
+      <li><strong>Call to Action:</strong> Get started or view on GitHub</li>
+    </ul>
+  </div>
+
+  <div class="doc-section">
+    <h2>Schema Compliance</h2>
+    <p>Validated by <code>src/wb-models/home-page.schema.json</code>. All required children, styles, and accessibility features enforced.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>Testing</h2>
+    <p>See <code>tests/behaviors/ui/home-page-permutation.spec.ts</code>. Stat values reset and checked dynamically.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>Notes</h2>
+    <ul class="doc-list">
+      <li>No zero values permitted in stats or demo</li>
+      <li>All sections must render and be accessible</li>
+    </ul>
+  </div>
+
+  <hr>
+  <p>For further details, see the schema and test files referenced above.</p>
+</body>
+</html>

@@ -196,6 +196,7 @@ const customElementMappings = [
   { selector: 'wb-globe', behavior: 'globe' },
   { selector: 'wb-stagelight', behavior: 'stagelight' },
   { selector: 'wb-audio', behavior: 'audio' },
+  { selector: 'wb-stat', behavior: 'stat' },
   { selector: 'wb-button', behavior: 'button' },
   { selector: 'wb-dialog', behavior: 'dialog' },
   { selector: 'wb-details', behavior: 'details' },

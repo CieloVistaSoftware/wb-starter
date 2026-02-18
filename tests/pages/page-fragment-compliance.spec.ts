@@ -1,14 +1,21 @@
 /**
  * page-fragment-compliance.spec.ts
  * 
- * Enforces page.schema.json contracts on ALL page fragments in pages/
+ * Enforces fragment rules on ALL page fragments in pages/
+ * 
+ * Rules are defined in schema.schema.json (page schemaType) and
+ * individual page schemas (e.g. home-page.schema.json).
+ * 
+ * RETIRED: page.schema.json — old requiredZones (.page__hero, .page__section)
+ * are no longer required. Pages use $layout rows with headings instead.
+ * 
  * Every page MUST:
  *   1. Be a fragment (no <!DOCTYPE>, <html>, <head>, <body>)
  *   2. Have no <style> blocks
  *   3. Not link to site.css or themes.css
  *   4. Not contain WB.init()
- *   5. Have .page__hero with <h1>
- *   6. Have at least one .page__section with <h2>
+ *   5. Have an <h1> tag (page title — from hero or first row)
+ *   6. Have at least one <h2> tag (section heading — from $layout rows)
  *   7. Have no more than 3 significant inline styles
  */
 import { test, expect } from '@playwright/test';
@@ -62,16 +69,8 @@ for (const file of pageFiles) {
       expect(html).not.toMatch(/WB\.init\s*\(/i);
     });
 
-    test('must have .page__hero zone', () => {
-      expect(html).toContain('page__hero');
-    });
-
     test('must have <h1> tag', () => {
       expect(html).toMatch(/<h1[\s>]/i);
-    });
-
-    test('must have at least one .page__section zone', () => {
-      expect(html).toContain('page__section');
     });
 
     test('must have at least one <h2> tag', () => {
@@ -98,7 +97,7 @@ for (const file of pageFiles) {
 
       // Visual showcase pages get a higher budget
       // hero-variants.html is a catalog of 12 hero styles — inline styles ARE the content
-      const showcaseLimits = {
+      const showcaseLimits: Record<string, number> = {
         'hero-variants.html': 120,
         'themes.html': 50,
         'components.html': 50

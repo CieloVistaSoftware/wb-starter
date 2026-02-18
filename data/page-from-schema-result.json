@@ -1,0 +1,15 @@
+{
+  "schema": "src/wb-models/home-page.schema.json",
+  "output": "pages/home.html",
+  "dryRun": false,
+  "errors": [],
+  "rows": 4,
+  "sections": [
+    "hero",
+    "stats",
+    "features",
+    "notifications",
+    "audio"
+  ],
+  "generatedAt": "2026-02-18T03:17:25.400Z"
+}

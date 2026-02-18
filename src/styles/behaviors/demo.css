@@ -37,17 +37,17 @@ wb-demo > .x-pre-wrapper {
   margin-top: 0.5rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .wb-demo__grid--cols-3,
   .wb-demo__grid--cols-4,
   .wb-demo__grid--cols-5,
   .wb-demo__grid--cols-6 {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 480px) {
-  .wb-demo__grid {
+@media (max-width: 768px) {
+  .wb-demo__grid--cols-2 {
     grid-template-columns: 1fr;
   }
 }

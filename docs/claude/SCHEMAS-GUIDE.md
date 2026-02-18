@@ -33,15 +33,18 @@ Every `.schema.json` file has a `schemaType` field that controls which rules app
 |------|-------------|-----------------|---------------|-------------|----------|
 | **Component** | `"component"` (default) | title, description, properties, $view, $methods, behavior/schemaFor | type + default mandatory on every property | `schema-validation.spec.ts` (full suite) | alert, badge, card variants, button, dialog |
 | **Base** | `"base"` | title, description, properties | type + default mandatory on every property | `schema-validation.spec.ts` (tier checks + property checks) | _base/html-element, _base/sectioning, semantic/*, card.base |
-| **Definition** | `"definition"` | title, description | none — properties section optional | `schema-validation.spec.ts` (tier checks only) | page.schema.json, _inheritance.schema.json, schema.schema.json |
+| **Definition** | `"definition"` | title, description | none — properties section optional | `schema-validation.spec.ts` (tier checks only) | _inheritance.schema.json, schema.schema.json |
+| **Page** | `"page"` | title, description, pageRules, $layout | type + default on data properties | `page-fragment-compliance.spec.ts` + page permutation tests | home-page.schema.json |
 
 **Component** — Real components users interact with. Full rules apply. This is the vast majority of schemas.
 
 **Base** — Abstract schemas inherited by other schemas, never instantiated directly. They define shared properties that flow down to components. `$view`, `$methods`, and `behavior`/`schemaFor` are not required because base schemas aren't registered as components.
 
-**Definition** — Pure reference documents defining rules or contracts. Not components, not inherited. They document structural expectations (page layout rules, inheritance rules, the meta-schema itself).
+**Definition** — Pure reference documents defining rules or contracts. Not components, not inherited. They document structural expectations (inheritance rules, the meta-schema itself).
 
-**When creating a NEW schema, ask:** "Will this be instantiated as a component?" If yes → component. If it exists to be inherited from → base. If it's a reference doc → definition.
+**Page** — Page-level schemas defining layout rows, page rules, and content placement. Not components. They require `pageRules` (showcase, fragment, noInlineStyles) and `$layout` (row-based system with columns, ratios, headings, and gap). The old `page.schema.json` with `requiredZones` (.page__hero, .page__section) is RETIRED — page structure is now defined per-page via `$layout` rows with headings.
+
+**When creating a NEW schema, ask:** "Will this be instantiated as a component?" If yes → component. If it exists to be inherited from → base. If it's a reference doc → definition. If it defines a page layout with rows and sections → page.
 
 ---
 

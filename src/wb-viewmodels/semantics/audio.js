@@ -75,14 +75,9 @@ export function audio(element, options = {}) {
   if (config.loop) audioEl.loop = true;
   audioEl.volume = Math.max(0, Math.min(1, config.volume));
   
+  // Hide native audio element — transport bar replaces it
   if (audioEl.tagName === 'AUDIO') {
-    Object.assign(audioEl.style, {
-      width: '100%',
-      height: '48px',
-      borderRadius: '8px',
-      outline: 'none',
-      marginBottom: '0.5rem'
-    });
+    audioEl.style.display = 'none';
   }
 
   // Web Audio API for EQ
@@ -135,6 +130,9 @@ export function audio(element, options = {}) {
     }
   };
 
+  // Build transport bar (play button + Marantz display) — always visible
+  buildTransportUI(element, audioEl, config);
+
   // Build EQ UI if enabled
   if (config.showEq) {
     buildEqUI(element, audioEl, config, initAudioContext, filters);
@@ -160,6 +158,77 @@ export function audio(element, options = {}) {
     element.classList.remove('wb-audio');
     if (audioContext) audioContext.close();
   };
+}
+
+function buildTransportUI(element, audioEl, config) {
+  const transport = document.createElement('div');
+  transport.className = 'wb-audio__transport';
+
+  // Play/Pause button
+  const playBtn = document.createElement('button');
+  playBtn.className = 'wb-audio__play-btn';
+  playBtn.setAttribute('aria-label', 'Play');
+  playBtn.innerHTML = '&#9654;'; // ▶
+  playBtn.onclick = () => audioEl.paused ? audioEl.play() : audioEl.pause();
+
+  audioEl.addEventListener('play', () => {
+    playBtn.innerHTML = '&#9646;&#9646;'; // ❚❚
+    playBtn.setAttribute('aria-label', 'Pause');
+    playBtn.classList.add('wb-audio__play-btn--playing');
+  });
+  audioEl.addEventListener('pause', () => {
+    playBtn.innerHTML = '&#9654;'; // ▶
+    playBtn.setAttribute('aria-label', 'Play');
+    playBtn.classList.remove('wb-audio__play-btn--playing');
+  });
+
+  transport.appendChild(playBtn);
+
+  // Marantz-style display
+  const display = document.createElement('div');
+  display.className = 'wb-audio__display';
+
+  const displayText = document.createElement('div');
+  displayText.className = 'wb-audio__display-text';
+  const trackName = config.src
+    ? decodeURIComponent(config.src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '))
+    : 'No Track Loaded';
+  displayText.textContent = trackName;
+  display.appendChild(displayText);
+
+  // Time display
+  const timeDisplay = document.createElement('div');
+  timeDisplay.className = 'wb-audio__display-time';
+  timeDisplay.textContent = '0:00 / 0:00';
+  display.appendChild(timeDisplay);
+
+  const formatTime = (s) => {
+    if (!s || isNaN(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  };
+
+  audioEl.addEventListener('timeupdate', () => {
+    timeDisplay.textContent = formatTime(audioEl.currentTime) + ' / ' + formatTime(audioEl.duration);
+  });
+
+  audioEl.addEventListener('loadedmetadata', () => {
+    timeDisplay.textContent = '0:00 / ' + formatTime(audioEl.duration);
+  });
+
+  transport.appendChild(display);
+
+  // Volume knob area
+  const volArea = document.createElement('div');
+  volArea.className = 'wb-audio__transport-vol';
+  const volIcon = document.createElement('span');
+  volIcon.className = 'wb-audio__vol-icon';
+  volIcon.textContent = '\uD83D\uDD0A'; // 🔊
+  volArea.appendChild(volIcon);
+  transport.appendChild(volArea);
+
+  element.appendChild(transport);
 }
 
 function buildEqUI(element, audioEl, config, initAudioContext, filters) {

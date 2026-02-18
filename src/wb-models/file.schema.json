@@ -5,6 +5,10 @@
   "description": "Schema for x-file behavior (file input)",
   "properties": {},
   "required": [],
+  "schemaFor": "file",
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
   "wbBehavior": {
     "name": "file",
     "type": "modifier",

@@ -1,5 +1,6 @@
 {
   "$schema": "../wb-models/page.schema.json",
+  "schemaType": "definition",
   "title": "x-help Demo",
   "description": "Demo page for x-help behavior.",
   "components": [
