@@ -273,7 +273,7 @@
           "description": "Documentation for Card Overview"
         },
         {
-          "file": "components/cards/index.md",
+          "file": "components/cards/cards.index.md",
           "title": "cards Index",
           "description": "Documentation for cards Index"
         },
@@ -298,7 +298,7 @@
           "description": "Documentation for Drawer"
         },
         {
-          "file": "components/feedback/README.md",
+          "file": "components/feedback/feedback.readme.md",
           "title": "feedback Readme",
           "description": "Documentation for feedback Readme"
         },
@@ -308,7 +308,7 @@
           "description": "Feedback component overview"
         },
         {
-          "file": "components/forms/README.md",
+          "file": "components/forms/forms.readme.md",
           "title": "forms Readme",
           "description": "Documentation for forms Readme"
         },
@@ -318,7 +318,7 @@
           "description": "Form component overview"
         },
         {
-          "file": "components/layout/README.md",
+          "file": "components/layout/layout.readme.md",
           "title": "layout Readme",
           "description": "Documentation for layout Readme"
         },
@@ -328,7 +328,7 @@
           "description": "Layout component overview"
         },
         {
-          "file": "components/navigation/README.md",
+          "file": "components/navigation/navigation.readme.md",
           "title": "navigation Readme",
           "description": "Documentation for navigation Readme"
         },
@@ -343,7 +343,7 @@
           "description": "Documentation for components Readme"
         },
         {
-          "file": "components/components.readme.md",
+          "file": "components/README.md",
           "title": "Components README",
           "description": "All components overview"
         },
@@ -379,7 +379,7 @@
           "description": "Theme system and customization"
         },
         {
-          "file": "css-standards.md",
+          "file": "styles.md",
           "title": "CSS Standards",
           "description": "CSS coding standards"
         },
@@ -631,12 +631,12 @@
           "description": "Documentation for Figure"
         },
         {
-          "file": "components/semantic/index.md",
+          "file": "components/semantic/semantic.index.md",
           "title": "semantic Index",
           "description": "Documentation for semantic Index"
         },
         {
-          "file": "components/semantic/README.md",
+          "file": "components/semantic/semantic.readme.md",
           "title": "semantic Readme",
           "description": "Documentation for semantic Readme"
         },
@@ -817,12 +817,12 @@
           "description": "Documentation for Builder-workflow"
         },
         {
-          "file": "architecture/ATTRIBUTE-NAMING-STANDARD.md",
+          "file": "architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
           "title": "ATTRIBUTE-NAMING-STANDARD",
           "description": "Documentation for ATTRIBUTE-NAMING-STANDARD"
         },
         {
-          "file": "architecture/WBPARTS.md",
+          "file": "wb-parts-spec.md",
           "title": "WBPARTS",
           "description": "Documentation for WBPARTS"
         },

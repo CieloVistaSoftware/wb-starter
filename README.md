@@ -1,6 +1,6 @@
-# Web Behaviors (WB) Starter
+# WB-Starter
 
-A modern website starter kit powered by [WB Behaviors](https://github.com/CieloVistaSoftware/wb-behaviors). Config-driven, zero build step, 23 themes included.
+A modern website starter kit. Config-driven, zero build step, 23 themes included.
 
 ## 🚀 Quick Start
 
@@ -38,11 +38,11 @@ wb-starter/
 │   ├── docs.html       # Documentation
 │   ├── about.html      # About page
 │   └── contact.html    # Contact form
-├── styles/
-│   └── site.css        # Site layout styles
 ├── assets/
 │   └── images/         # Your images
 └── src/                # Source code
     ├── core/           # Core engine (wb.js, site-engine.js)
-    └── behaviors/      # Behavior modules
+    ├── wb-models/      # Component schemas (*.schema.json)
+    ├── wb-viewmodels/  # Behavior/logic modules
+    └── styles/         # CSS (behaviors/, pages/, themes)
 ```

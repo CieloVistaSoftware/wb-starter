@@ -1,4 +1,4 @@
-# WB Behaviors v3.0 - AI Developer Guide
+# WB-Starter v3.0 - AI Developer Guide
 
 ## Session Start (DO THIS FIRST)
 

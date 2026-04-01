@@ -1,5 +1,5 @@
 
-# CLAUDE.md - WB Behaviors Project
+# CLAUDE.md - WB-Starter Project
 
 ## Session Start (DO THIS FIRST - NO EXCEPTIONS)
 
