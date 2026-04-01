@@ -91,7 +91,95 @@ export function collapse(element, options = {}) {
   return () => element.classList.remove('wb-collapse', 'wb-collapse--open');
 }
 
-// Accordion is an alias for collapse
-export const accordion = collapse;
+/**
+ * Accordion Behavior
+ * -----------------------------------------------------------------------------
+ * Multi-item collapsible sections. When children carry [data-accordion-title]
+ * or [data-title] each child becomes an independently expandable item.
+ * Falls back to the single-item collapse behavior otherwise.
+ * CSS: src/styles/behaviors/accordion.css + collapse.css
+ * Emits: wb:accordion:ready, wb:accordion:toggle
+ * -----------------------------------------------------------------------------
+ */
+export function accordion(element, options = {}) {
+  try {
+    const items = Array.from(element.children).filter(
+      child => child.hasAttribute('data-accordion-title') || child.hasAttribute('data-title')
+    );
+
+    // No labelled children — fall back to single-item collapse
+    if (items.length === 0) {
+      return collapse(element, options);
+    }
+
+    element.classList.add('wb-accordion');
+
+    items.forEach(item => {
+      const title =
+        item.getAttribute('data-accordion-title') ||
+        item.getAttribute('data-title') ||
+        'Accordion Item';
+      const originalContent = item.innerHTML;
+
+      item.innerHTML = '';
+      item.classList.add('wb-accordion-item');
+
+      const head = document.createElement('div');
+      head.className = 'wb-accordion-head';
+      head.setAttribute('role', 'button');
+      head.setAttribute('tabindex', '0');
+      head.setAttribute('aria-expanded', 'false');
+
+      const headText = document.createElement('span');
+      headText.textContent = title;
+      head.appendChild(headText);
+
+      const icon = document.createElement('span');
+      icon.className = 'wb-collapse__icon';
+      icon.textContent = '▼';
+      head.appendChild(icon);
+
+      const body = document.createElement('div');
+      body.className = 'wb-accordion-body';
+      body.innerHTML = originalContent;
+
+      item.appendChild(head);
+      item.appendChild(body);
+
+      const toggle = () => {
+        try {
+          const isOpen = item.classList.toggle('open');
+          head.setAttribute('aria-expanded', String(isOpen));
+          element.dispatchEvent(new CustomEvent('wb:accordion:toggle', {
+            bubbles: true,
+            detail: { open: isOpen, title }
+          }));
+        } catch (err) {
+          console.error('[wb-accordion] click error', err);
+          element.dataset.wbError = err.message;
+        }
+      };
+
+      head.addEventListener('click', toggle);
+      head.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle();
+        }
+      });
+    });
+
+    element.dataset.wbHydrated = '1';
+    element.dispatchEvent(new CustomEvent('wb:accordion:ready', {
+      bubbles: true,
+      detail: { items: items.length }
+    }));
+
+    return () => element.classList.remove('wb-accordion');
+  } catch (err) {
+    console.error('[wb-accordion] init error', err);
+    element.dataset.wbError = err.message;
+  }
+}
 
 export default collapse;
