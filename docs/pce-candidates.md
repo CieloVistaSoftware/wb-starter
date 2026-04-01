@@ -1,4 +1,4 @@
-# PCE (Pseudo-Custom Elements) - Web Behaviors (WB) v3.0
+# PCE (Pseudo-Custom Elements) - WB-Starter v3.0
 
 > **Version:** 3.0  
 > **Updated:** 2026-01-14

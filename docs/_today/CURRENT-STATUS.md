@@ -1,7 +1,28 @@
 # Current Status - wb-demo Component Complete
-**Updated:** 2026-02-11 23:45
+**Updated:** 2026-04-01
 
-**Last Action:** wb-demo component fully working. themes.css regression fixed (missing background-color on [data-theme]).
+**Last Action:** batch/001-quick-wins — docs terminology fixes, manifest update, npm script additions.
+
+## batch/001-quick-wins — IN PROGRESS
+- Added `check:today-updated` npm script (maps to `scripts/verify-today-mentions.js`)
+- Fixed `docs/manifest.json` — added missing `home-page.md` entry
+- Fixed forbidden terminology ("Web" + " Behaviors (WB)") → "WB-Starter" across 46 docs files
+  - docs/Auto-Injection.md, docs/IMPROVEMENTS.md, docs/INTELLISENSE-TOOLTIPS.md
+  - docs/MVVM-MIGRATION-PLAN.md, docs/MVVM-MIGRATION.md, docs/WB_BEHAVIOR_SYSTEM.md
+  - docs/architecture/WBVIEWS.md, docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md
+  - docs/architecture/standards/SCHEMA-SPECIFICATION.md, docs/behavior-cross-reference.md
+  - docs/behaviors-reference.md, docs/claude/TIER1-LAWS.md, docs/code-examples-standard.md
+  - docs/compliance/iso-42001-alignment.md, docs/components/README.md, docs/components/components.md
+  - docs/components/feedback/feedback.readme.md, docs/components/forms/forms.readme.md
+  - docs/components/layout/layout.readme.md, docs/components/mdhtml.md
+  - docs/components/navigation/navigation.readme.md, docs/components/semantic/*.md (7 files)
+  - docs/components/semantics/dl.md, docs/container-pattern.md, docs/escape-hatches.md
+  - docs/guides/search-index.md, docs/index.md, docs/pce-candidates.md, docs/performance.md
+  - docs/properties.md, docs/property-viewer.md, docs/schema.md, docs/schema.migration.md
+  - docs/semantic-standard.md, docs/standards/V3-STANDARDS.md, docs/styles.md
+  - docs/testing-strategy.md, docs/themes.md, docs/wb-parts-spec.md
+
+
 
 ## wb-demo — COMPLETE
 - Renders children in CSS grid (1-6 columns, default 3)

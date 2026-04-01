@@ -4,7 +4,7 @@
   "categories": [
     {
       "name": "Claude Documentation",
-      "icon": "🤖",
+      "icon": "\ud83e\udd16",
       "docs": [
         {
           "file": "claude/PAGE-GENERATION.md",
@@ -45,7 +45,7 @@
     },
     {
       "name": "Components",
-      "icon": "🧩",
+      "icon": "\ud83e\udde9",
       "docs": [
         {
           "file": "behaviors-reference.md",
@@ -371,7 +371,7 @@
     },
     {
       "name": "Styling",
-      "icon": "🎨",
+      "icon": "\ud83c\udfa8",
       "docs": [
         {
           "file": "themes.md",
@@ -392,7 +392,7 @@
     },
     {
       "name": "Testing",
-      "icon": "🧪",
+      "icon": "\ud83e\uddea",
       "docs": [
         {
           "file": "testing-strategy.md",
@@ -428,7 +428,7 @@
     },
     {
       "name": "Features",
-      "icon": "⚡",
+      "icon": "\u26a1",
       "docs": [
         {
           "file": "Auto-Injection.md",
@@ -469,7 +469,7 @@
     },
     {
       "name": "Planning",
-      "icon": "📋",
+      "icon": "\ud83d\udccb",
       "docs": [
         {
           "file": "IMPROVEMENTS.md",
@@ -545,7 +545,7 @@
     },
     {
       "name": "Research",
-      "icon": "📑",
+      "icon": "\ud83d\udcd1",
       "pages": [
         {
           "page": "schema-first-architecture",
@@ -556,7 +556,7 @@
     },
     {
       "name": "Compliance",
-      "icon": "⚖️",
+      "icon": "\u2696\ufe0f",
       "docs": [
         {
           "file": "compliance/iso-42001-alignment.md",
@@ -577,7 +577,7 @@
     },
     {
       "name": "Effects",
-      "icon": "✨",
+      "icon": "\u2728",
       "docs": [
         {
           "file": "components/effects/confetti.md",
@@ -598,7 +598,7 @@
     },
     {
       "name": "Semantics",
-      "icon": "🏷️",
+      "icon": "\ud83c\udff7\ufe0f",
       "docs": [
         {
           "file": "components/semantic/address.md",
@@ -769,7 +769,7 @@
     },
     {
       "name": "Uncategorized",
-      "icon": "📄",
+      "icon": "\ud83d\udcc4",
       "docs": [
         {
           "file": "DATA-FILES.md",
@@ -1030,6 +1030,11 @@
           "file": "WB_BEHAVIOR_SYSTEM.md",
           "title": "WB Behavior System",
           "description": "Core behavior system documentation"
+        },
+        {
+          "file": "home-page.md",
+          "title": "Home Page",
+          "description": "Home page documentation and component usage"
         }
       ]
     }

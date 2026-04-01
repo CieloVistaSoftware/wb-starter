@@ -1,4 +1,4 @@
-# Web Behaviors (WB) MVVM Migration Plan
+# WB-Starter MVVM Migration Plan
 
 ## Overview
 

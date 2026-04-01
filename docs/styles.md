@@ -66,7 +66,7 @@
 
 > **"One Time, One Place for All Style Rules"**
 
-This document serves as the supreme law for styling in the Web Behaviors (WB) library. It consolidates rules from `css-standards.md` and `themes.md` while establishing strict behavioral integrity guidelines.
+This document serves as the supreme law for styling in the WB-Starter library. It consolidates rules from `css-standards.md` and `themes.md` while establishing strict behavioral integrity guidelines.
 
 ---
 

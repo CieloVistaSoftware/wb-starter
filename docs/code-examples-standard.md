@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document defines formatting standards for code examples in documentation, demos, and HTML files throughout the Web Behaviors (WB) Starter project.
+This document defines formatting standards for code examples in documentation, demos, and HTML files throughout the WB-Starter project.
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "$schema": "./templates.schema.json",
   "version": "1.0.0",
-  "description": "Web Behaviors (WB) Page Templates - Schema shorthand for instant page generation",
+  "description": "WB-Starter Page Templates - Schema shorthand for instant page generation",
   "categories": [
     {
       "id": "landing",

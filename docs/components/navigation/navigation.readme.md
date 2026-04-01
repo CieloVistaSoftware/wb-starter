@@ -2,7 +2,7 @@
 [Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/components/navigation/navigation.readme.md)
 
 ## Overview
-Web Behaviors (WB) provides accessible navigation components using semantic HTML elements. All navigation components follow ARIA standards and support keyboard navigation.
+WB-Starter provides accessible navigation components using semantic HTML elements. All navigation components follow ARIA standards and support keyboard navigation.
 
 ---
 

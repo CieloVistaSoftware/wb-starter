@@ -1,4 +1,4 @@
-# Web Behaviors (WB) Documentation
+# WB-Starter Documentation
 
 > A comprehensive web component library featuring 41+ custom components, Harmonic Color System, and Light DOM architecture.
 

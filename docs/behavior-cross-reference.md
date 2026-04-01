@@ -1,4 +1,4 @@
-# Web Behaviors (WB) Behaviors Cross-Reference
+# WB-Starter Behaviors Cross-Reference
 
 A complete reference of all WB Behaviors with accurate documentation of what each behavior adds.
 

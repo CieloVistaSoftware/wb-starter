@@ -1,4 +1,4 @@
-# Web Behaviors (WB) Reference
+# WB-Starter Reference
 
 This document lists all available behaviors in the WB Starter kit, categorized by function.
 

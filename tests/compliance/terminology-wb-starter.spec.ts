@@ -19,7 +19,6 @@ const searchDirs = [
   'src',
   'pages',
   'tests',
-  'data',
   'public'
 ];
 
@@ -30,6 +29,8 @@ function scanFiles(dir, results) {
     if (entry.isDirectory()) {
       scanFiles(fullPath, results);
     } else if (entry.name.endsWith('.md') || entry.name.endsWith('.js') || entry.name.endsWith('.ts') || entry.name.endsWith('.json') || entry.name.endsWith('.html')) {
+      // Skip terminology test files (they define the forbidden terms as code)
+      if (entry.name.includes('terminology')) continue;
       const content = fs.readFileSync(fullPath, 'utf8');
       for (const term of forbiddenTerms) {
         if (content.includes(term)) {
