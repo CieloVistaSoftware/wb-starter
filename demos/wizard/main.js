@@ -219,20 +219,7 @@ picker.addEventListener('change', function() {
   buildEditors(state.currentSchema);
 
   var html = buildHtmlString(state.currentSchema.tag, state.currentAttrs);
-  if (state.previewStack.length === 0 || state.containerIndex >= 0) {
-    addToPreviewStack(html, state.currentSchema.tag, Object.assign({}, state.currentAttrs));
-  } else {
-    state.containerIndex = -1;
-    state.previewStack = [{
-      html: html,
-      tag: state.currentSchema.tag,
-      attrs: Object.assign({}, state.currentAttrs),
-      children: []
-    }];
-    state.selectedStackIdx = 0;
-    state.selectedChildIdx = -1;
-    if (isContainerTag(state.currentSchema.tag)) state.containerIndex = 0;
-  }
+  addToPreviewStack(html, state.currentSchema.tag, Object.assign({}, state.currentAttrs));
 
   updateContainerModeUI();
   renderStackList();
