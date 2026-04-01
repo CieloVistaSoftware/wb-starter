@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-17T19:00:44.876Z",
+  "generated": "2026-04-01T00:03:30.821Z",
   "totalFiles": 177,
   "categories": [
     "_today",
@@ -22,15 +22,63 @@
         "category": "root"
       },
       {
-        "path": "docs/audio.md",
-        "title": "Audio Component",
-        "name": "audio",
-        "category": "root"
-      },
-      {
         "path": "docs/Auto-Injection.md",
         "title": "Auto Injection (Preview)",
         "name": "Auto-Injection",
+        "category": "root"
+      },
+      {
+        "path": "docs/BRANCH_PROTECTION.md",
+        "title": "Branch protection: require fast Tier‑1 check",
+        "name": "BRANCH_PROTECTION",
+        "category": "root"
+      },
+      {
+        "path": "docs/CommittingFixes.md",
+        "title": "Committing Fixes Workflow",
+        "name": "CommittingFixes",
+        "category": "root"
+      },
+      {
+        "path": "docs/IMPROVEMENTS.md",
+        "title": "Potential Improvements for Web Behaviors (WB)",
+        "name": "IMPROVEMENTS",
+        "category": "root"
+      },
+      {
+        "path": "docs/INTELLISENSE-TOOLTIPS.md",
+        "title": "Intellisense Tooltip Audit Report",
+        "name": "INTELLISENSE-TOOLTIPS",
+        "category": "root"
+      },
+      {
+        "path": "docs/MVVM-MIGRATION-PLAN.md",
+        "title": "Web Behaviors (WB) MVVM Migration Plan",
+        "name": "MVVM-MIGRATION-PLAN",
+        "category": "root"
+      },
+      {
+        "path": "docs/MVVM-MIGRATION.md",
+        "title": "wb-starter v3.0 - MVVM Architecture",
+        "name": "MVVM-MIGRATION",
+        "category": "root"
+      },
+      {
+        "path": "docs/NOTES-V3-GUIDE.md",
+        "title": "Notes Component v3.0 - Updates Summary",
+        "name": "NOTES-V3-GUIDE",
+        "category": "root"
+      },
+      {
+        "path": "docs/WB_BEHAVIOR_SYSTEM.md",
+        "title": "Web Behaviors (WB) Behavior System - Technical Workflow",
+        "name": "WB_BEHAVIOR_SYSTEM",
+        "category": "root"
+      },
+      {
+        "path": "docs/audio.md",
+        "title": "Audio Component",
+        "name": "audio",
         "category": "root"
       },
       {
@@ -46,12 +94,6 @@
         "category": "root"
       },
       {
-        "path": "docs/BRANCH_PROTECTION.md",
-        "title": "Branch protection: require fast Tier‑1 check",
-        "name": "BRANCH_PROTECTION",
-        "category": "root"
-      },
-      {
         "path": "docs/card.md",
         "title": "Card Component Documentation",
         "name": "card",
@@ -61,12 +103,6 @@
         "path": "docs/code-examples-standard.md",
         "title": "Code Examples Standard",
         "name": "code-examples-standard",
-        "category": "root"
-      },
-      {
-        "path": "docs/CommittingFixes.md",
-        "title": "Committing Fixes Workflow",
-        "name": "CommittingFixes",
         "category": "root"
       },
       {
@@ -88,12 +124,6 @@
         "category": "root"
       },
       {
-        "path": "docs/IMPROVEMENTS.md",
-        "title": "Potential Improvements for Web Behaviors (WB)",
-        "name": "IMPROVEMENTS",
-        "category": "root"
-      },
-      {
         "path": "docs/index.md",
         "title": "Web Behaviors (WB) Documentation",
         "name": "index",
@@ -103,12 +133,6 @@
         "path": "docs/inline-editing.md",
         "title": "Double-Click Inline Editing System",
         "name": "inline-editing",
-        "category": "root"
-      },
-      {
-        "path": "docs/INTELLISENSE-TOOLTIPS.md",
-        "title": "Intellisense Tooltip Audit Report",
-        "name": "INTELLISENSE-TOOLTIPS",
         "category": "root"
       },
       {
@@ -127,24 +151,6 @@
         "path": "docs/mcp.md",
         "title": "MCP Runner & Docs Access",
         "name": "mcp",
-        "category": "root"
-      },
-      {
-        "path": "docs/MVVM-MIGRATION-PLAN.md",
-        "title": "Web Behaviors (WB) MVVM Migration Plan",
-        "name": "MVVM-MIGRATION-PLAN",
-        "category": "root"
-      },
-      {
-        "path": "docs/MVVM-MIGRATION.md",
-        "title": "wb-starter v3.0 - MVVM Architecture",
-        "name": "MVVM-MIGRATION",
-        "category": "root"
-      },
-      {
-        "path": "docs/NOTES-V3-GUIDE.md",
-        "title": "Notes Component v3.0 - Updates Summary",
-        "name": "NOTES-V3-GUIDE",
         "category": "root"
       },
       {
@@ -274,19 +280,81 @@
         "category": "root"
       },
       {
-        "path": "docs/WB_BEHAVIOR_SYSTEM.md",
-        "title": "Web Behaviors (WB) Behavior System - Technical Workflow",
-        "name": "WB_BEHAVIOR_SYSTEM",
-        "category": "root"
-      },
-      {
         "path": "docs/wizard.md",
         "title": "wizard",
         "name": "wizard",
         "category": "root"
       }
     ],
+    "_today": [
+      {
+        "path": "docs/_today/021426FIXPLAN.md",
+        "title": "021426FIXPLAN",
+        "name": "021426FIXPLAN",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/AI-COORDINATION.md",
+        "title": "AI Coordination Protocol",
+        "name": "AI-COORDINATION",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/ANSWERS.md",
+        "title": "AI Answers",
+        "name": "ANSWERS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
+        "title": "CSS Ownership Migration Plan",
+        "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/CURRENT-STATUS.md",
+        "title": "Current Status - wb-demo Component Complete",
+        "name": "CURRENT-STATUS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/MERGE-PLAN.md",
+        "title": "Merge Plan - Completed",
+        "name": "MERGE-PLAN",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/PAGE-REPAIR-PLAN.md",
+        "title": "PAGE REPAIR PLAN — Master Execution Guide",
+        "name": "PAGE-REPAIR-PLAN",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/QUESTIONS.md",
+        "title": "AI Questions",
+        "name": "QUESTIONS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/REPAIR-PLAN-021526.md",
+        "title": "REPAIR PLAN — Page & Demo Compliance",
+        "name": "REPAIR-PLAN-021526",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/TODO.md",
+        "title": "---",
+        "name": "TODO",
+        "category": "_today"
+      }
+    ],
     "architecture": [
+      {
+        "path": "docs/architecture/WBVIEWS.md",
+        "title": "wb-views System",
+        "name": "WBVIEWS",
+        "category": "architecture"
+      },
       {
         "path": "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md",
         "title": "x- Prefix Migration — Phase 1: Core Infrastructure",
@@ -315,12 +383,6 @@
         "path": "docs/architecture/standards/SCHEMA-SPECIFICATION.md",
         "title": "Web Behaviors (WB) Schema Specification v3.0",
         "name": "SCHEMA-SPECIFICATION",
-        "category": "architecture"
-      },
-      {
-        "path": "docs/architecture/WBVIEWS.md",
-        "title": "wb-views System",
-        "name": "WBVIEWS",
         "category": "architecture"
       }
     ],
@@ -508,6 +570,18 @@
     ],
     "components": [
       {
+        "path": "docs/components/README.md",
+        "title": "wb-starter v3.0 - Component Library",
+        "name": "README",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/cards/README.md",
+        "title": "wb-starter v3.0 - Cards",
+        "name": "README",
+        "category": "components"
+      },
+      {
         "path": "docs/components/cards/card.md",
         "title": "## Composition for Specialized Functionality",
         "name": "card",
@@ -631,12 +705,6 @@
         "path": "docs/components/cards/cardvideo.md",
         "title": "Card Video - wb-starter v3.0",
         "name": "cardvideo",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/README.md",
-        "title": "wb-starter v3.0 - Cards",
-        "name": "README",
         "category": "components"
       },
       {
@@ -799,12 +867,6 @@
         "path": "docs/components/navigation/navigation.readme.md",
         "title": "Navigation Components Documentation",
         "name": "navigation.readme",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/README.md",
-        "title": "wb-starter v3.0 - Component Library",
-        "name": "README",
         "category": "components"
       },
       {
@@ -1032,68 +1094,6 @@
         "title": "Web Behaviors (WB) v3.0 Standards",
         "name": "V3-STANDARDS",
         "category": "standards"
-      }
-    ],
-    "_today": [
-      {
-        "path": "docs/_today/021426FIXPLAN.md",
-        "title": "021426FIXPLAN",
-        "name": "021426FIXPLAN",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/AI-COORDINATION.md",
-        "title": "AI Coordination Protocol",
-        "name": "AI-COORDINATION",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/ANSWERS.md",
-        "title": "AI Answers",
-        "name": "ANSWERS",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
-        "title": "CSS Ownership Migration Plan",
-        "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "Current Status - wb-demo Component Complete",
-        "name": "CURRENT-STATUS",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/MERGE-PLAN.md",
-        "title": "Merge Plan - Completed",
-        "name": "MERGE-PLAN",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/PAGE-REPAIR-PLAN.md",
-        "title": "PAGE REPAIR PLAN — Master Execution Guide",
-        "name": "PAGE-REPAIR-PLAN",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/QUESTIONS.md",
-        "title": "AI Questions",
-        "name": "QUESTIONS",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/REPAIR-PLAN-021526.md",
-        "title": "REPAIR PLAN — Page & Demo Compliance",
-        "name": "REPAIR-PLAN-021526",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/TODO.md",
-        "title": "---",
-        "name": "TODO",
-        "category": "_today"
       }
     ]
   },
