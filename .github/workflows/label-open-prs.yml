@@ -39,16 +39,21 @@ jobs:
               state: 'open',
               per_page: max
             });
-            return prs.map(p=> ({number: p.number, headSha: p.head.sha, headRef: p.head.ref}));
+            const result = prs
+              .filter(p => p.head && p.head.sha)
+              .map(p => ({number: p.number, headSha: p.head.sha, headRef: p.head.ref}));
+            core.setOutput('result', JSON.stringify(result));
 
       - name: Check and label PRs (limited)
         uses: actions/github-script@v6
         with:
           script: |
-            const prs = JSON.parse(process.env['ACTIONS_STEP_OUTPUT_prs'] || '[]');
+            const raw = '${{ steps.prs.outputs.result }}';
+            const prs = JSON.parse(raw || '[]');
             const maxRun = Math.min(prs.length, 10);
             let labeled = 0;
             for (const pr of prs.slice(0, maxRun)) {
+              if (!pr.headSha) { continue; }
               // Inspect check-runs for the PR head
               const checks = await github.rest.checks.listForRef({
                 owner: context.repo.owner,
@@ -60,8 +65,7 @@ jobs:
               if (tier1) {
                 failed = tier1.conclusion !== 'success';
               } else {
-                // No existing Tier‑1 run — attempt to run Tier‑1 locally by dispatching a check via workflow (conservative)
-                // To avoid running expensive work for many PRs, treat missing as 'needs-check' and label.
+                // No existing Tier‑1 run — treat missing as 'needs-check' and label.
                 failed = true;
               }
 
@@ -85,5 +89,3 @@ jobs:
               }
             }
             return {labeled};
-        env:
-          ACTIONS_STEP_OUTPUT_prs: ${{ toJson(steps.prs.outputs.result) }}
