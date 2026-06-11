@@ -46,14 +46,18 @@ jobs:
 
       - name: Check and label PRs (limited)
         uses: actions/github-script@v6
+        env:
+          PR_LIST: ${{ steps.prs.outputs.result }}
         with:
           script: |
-            const raw = '${{ steps.prs.outputs.result }}';
-            const prs = JSON.parse(raw || '[]');
+            const prs = JSON.parse(process.env.PR_LIST || '[]');
             const maxRun = Math.min(prs.length, 10);
             let labeled = 0;
             for (const pr of prs.slice(0, maxRun)) {
-              if (!pr.headSha) { continue; }
+              if (!pr || !pr.headSha) {
+                core.warning(`Skipping malformed PR entry: ${JSON.stringify(pr)}`);
+                continue;
+              }
               // Inspect check-runs for the PR head
               const checks = await github.rest.checks.listForRef({
                 owner: context.repo.owner,
