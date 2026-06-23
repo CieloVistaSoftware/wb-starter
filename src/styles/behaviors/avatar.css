@@ -45,7 +45,7 @@ wb-avatar span[class*="wb-avatar__status"] {
   border: 2px solid var(--bg-primary, #1f2937);
 }
 
-.wb-avatar__status--online  { background: #22c55e; }
-.wb-avatar__status--offline { background: #6b7280; }
-.wb-avatar__status--busy    { background: #ef4444; }
-.wb-avatar__status--away    { background: #f59e0b; }
+.wb-avatar__status--online  { background: var(--success-color); }
+.wb-avatar__status--offline { background: var(--text-muted); }
+.wb-avatar__status--busy    { background: var(--danger-color); }
+.wb-avatar__status--away    { background: var(--warning-color); }

@@ -13,7 +13,10 @@ import {
 } from '../base';
 
 // Files allowed to have hardcoded colors
-const COLOR_EXCEPTION_FILES = ['themes.css', 'wb-signature.css', 'variables.css', 'demo.css', 'components.css', 'site.css', 'transitions.css', 'wb-grayscale.css', 'wb-grayscale-dark.css', 'hero.css', 'navbar.css', 'wizard.css', 'kitchen-sink.css'];
+// Demo/showcase/test pages that intentionally display raw color values as
+// content (e.g. a hue-spectrum color wheel, permutation test harness) — not
+// product UI subject to theming. Same convention as demo.css/kitchen-sink.css.
+const COLOR_EXCEPTION_FILES = ['themes.css', 'wb-signature.css', 'variables.css', 'demo.css', 'components.css', 'site.css', 'transitions.css', 'wb-grayscale.css', 'wb-grayscale-dark.css', 'hero.css', 'navbar.css', 'wizard.css', 'kitchen-sink.css', 'themes-showcase.css', 'ai-permutation-test.css'];
 
 // Patterns that violate OOP
 const FORBIDDEN_PATTERNS = {

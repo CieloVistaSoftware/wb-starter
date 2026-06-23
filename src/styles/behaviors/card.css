@@ -321,8 +321,8 @@ wb-cardnotification,
   font-weight: 700;
   font-size: 0.9rem;
   font-style: italic;
-  color: #fff;
-  background: var(--text-secondary, #6b7280);
+  color: var(--text-primary);
+  background: var(--text-secondary);
 }
 
 /* Content container */
