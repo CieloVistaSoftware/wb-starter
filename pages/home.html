@@ -8,13 +8,13 @@
 <h2>By the Numbers</h2>
 <wb-container max-width="900px" padding="2rem">
   <wb-grid columns="4">
-    <wb-cardstats value="100+" label="Behaviors" icon="🧩"></wb-cardstats>
-    <wb-cardstats value="Light" label="DOM Only" icon="☀️"></wb-cardstats>
-    <wb-cardstats value="&lt;1s" label="Build Time" icon="⚡"></wb-cardstats>
-    <wb-cardstats value="100%" label="Standards" icon="✅"></wb-cardstats>
+    <wb-cardstats id="autogen-home-stat-0" value="100+" label="Behaviors" icon="🧩"></wb-cardstats>
+    <wb-cardstats id="autogen-home-stat-1" value="Light" label="DOM Only" icon="☀️"></wb-cardstats>
+    <wb-cardstats id="autogen-home-stat-2" value="&lt;1s" label="Build Time" icon="⚡"></wb-cardstats>
+    <wb-cardstats id="autogen-home-stat-3" value="100%" label="Standards" icon="✅"></wb-cardstats>
   </wb-grid>
   <div class="wb-divider"></div>
-  <wb-row justify="center" gap="1rem">
+  <wb-row id="home-preview-row-1" justify="center" gap="1rem">
     <button x-ripple>✨ Ripple</button>
     <button x-tooltip="I appear on hover!">💬 Tooltip</button>
     <button x-confetti>🎉 Confetti</button>
@@ -52,7 +52,7 @@
 </wb-grid>
 
 <h2>Live Demos</h2>
-<wb-stack>
+<wb-stack id="home-preview-canvas">
   <wb-cardnotification variant="info" title="System Update" message="Downloading patch v3.1..."></wb-cardnotification>
   <wb-cardnotification variant="success" title="Complete" message="Installation finished successfully."></wb-cardnotification>
   <wb-cardnotification variant="warning" title="Attention" message="Check your settings."></wb-cardnotification>
