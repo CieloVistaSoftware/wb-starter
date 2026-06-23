@@ -1,3 +1,40 @@
+# 🅿️ PARKING LOT (2026-06-22)
+
+**Task:** Complete + verify the MVVM migration (turned out already ~done on `main`).
+
+**Committed & pushed:** branch `feat/mvvm-migration`, commit `2ee86ff` — pushed to
+`origin`. Open a PR at:
+https://github.com/CieloVistaSoftware/wb-starter/pull/new/feat/mvvm-migration
+
+**Files touched (16):** `.gitignore`; `docs/MVVM-MIGRATION-PLAN.md` (status banner);
+`tests/base.ts` (tier-aware `getComponentSchemas`); `tests/compliance/schema-validation.spec.ts`
++ `tests/compliance/v3-syntax-compliance.spec.ts` (new `behavior`/`page` tiers, x-* setup syntax);
+11 schemas in `src/wb-models/` (otp, password, stepper, x-behavior, x-collapse, x-copy,
+x-draggable, x-effects, x-enhancements → `schemaType:"behavior"`; collapse.target +
+behaviors.src defaults).
+
+**Last action:** Committed, pushed, parked. Deleted untracked `tmp/` tree (now gitignored).
+
+**Result:** compliance failures **21 → 10**. The 10 left are pre-existing / out of scope.
+
+**Next step (pick up here):**
+1. Open the PR (link above).
+2. If driving compliance fully green, tackle the out-of-scope buckets, in rough order:
+   - Broken demo links — dominant: missing `src/styles/components.css` referenced by ~15
+     demo files (`project-integrity`). Decide: restore the file or fix the refs.
+   - `tests/repro_card_semantic.html` is MISSING → `semantic-article-to-card` can't pass
+     (create fixture or retire the test).
+   - `strict-mode-runtime` — `data-wb` strict rejection lives in `src/core/wb.js`; debug there.
+   - `css-oop-compliance` (hardcoded colors), `docs-manifest-integrity`, `html-ids-home`,
+     `fix-viewer` duplicate IDs, `page-compliance` / `universal-compliance` (runtime page render).
+
+**Open questions:** Should `otp`/`password`/`stepper` eventually become real `<wb-*>`
+components, or stay modifiers? (Currently classified as `behavior` tier.) Also: a
+`wip/pre-mvvm-snapshot` branch holds a large pre-existing uncommitted reorg + junk files
+snapshotted off `main` — needs a separate decision on what to keep.
+
+---
+
 # Current Status - wb-demo Component Complete
 **Updated:** 2026-02-11 23:45
 
