@@ -12,9 +12,9 @@
   gap: var(--wb-notification-gap, 0.75rem);
   padding: var(--wb-notification-padding, 1rem);
   border-radius: var(--wb-notification-radius, 8px);
-  border-left: 4px solid var(--border-color, #374151);
-  background: var(--bg-secondary, #1f2937);
-  color: var(--text-primary, #f9fafb);
+  border-left: 4px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
@@ -81,77 +81,56 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* ── INFO (Blue) ── */
+/* Variant colors are derived entirely from the theme system (themes.css).
+   No literal colors here — surfaces use the notification tint vars, accents
+   use the semantic state colors, and icon text uses --text-primary. */
+
+/* ── INFO ── */
 .wb-notification--info {
-  background: var(--wb-notification-info-bg, #e3f2fd);
-  border-left-color: var(--wb-notification-info-border, #2196f3);
-  color: var(--wb-notification-info-color, #1565c0);
+  background: var(--notification-info-dark-bg);
+  border-left-color: var(--info-color);
+  color: var(--notification-info-dark-color);
 }
 
 .wb-notification--info .wb-notification__icon {
-  background: var(--wb-notification-info-border, #2196f3);
-  color: #fff;
+  background: var(--info-color);
+  color: var(--text-primary);
 }
 
-/* ── SUCCESS (Green) ── */
+/* ── SUCCESS ── */
 .wb-notification--success {
-  background: var(--wb-notification-success-bg, #e8f5e9);
-  border-left-color: var(--wb-notification-success-border, #4caf50);
-  color: var(--wb-notification-success-color, #2e7d32);
+  background: var(--notification-success-dark-bg);
+  border-left-color: var(--success-color);
+  color: var(--notification-success-dark-color);
 }
 
 .wb-notification--success .wb-notification__icon {
-  background: var(--wb-notification-success-border, #4caf50);
-  color: #fff;
+  background: var(--success-color);
+  color: var(--text-primary);
 }
 
-/* ── WARNING (Yellow) ── */
+/* ── WARNING ── */
 .wb-notification--warning {
-  background: var(--wb-notification-warning-bg, #fff3e0);
-  border-left-color: var(--wb-notification-warning-border, #ff9800);
-  color: var(--wb-notification-warning-color, #e65100);
+  background: var(--notification-warning-dark-bg);
+  border-left-color: var(--warning-color);
+  color: var(--notification-warning-dark-color);
 }
 
 .wb-notification--warning .wb-notification__icon {
-  background: var(--wb-notification-warning-border, #ff9800);
-  color: #fff;
+  background: var(--warning-color);
+  color: var(--text-primary);
 }
 
-/* ── ERROR (Red) ── */
+/* ── ERROR (danger) ── */
 .wb-notification--error {
-  background: var(--wb-notification-error-bg, #ffebee);
-  border-left-color: var(--wb-notification-error-border, #f44336);
-  color: var(--wb-notification-error-color, #c62828);
+  background: var(--notification-danger-dark-bg);
+  border-left-color: var(--danger-color);
+  color: var(--notification-danger-dark-color);
 }
 
 .wb-notification--error .wb-notification__icon {
-  background: var(--wb-notification-error-border, #f44336);
-  color: #fff;
-}
-
-/* ── Dark theme adjustments ── */
-[data-theme="dark"] .wb-notification--info {
-  background: rgba(33, 150, 243, 0.15);
-  border-left-color: #42a5f5;
-  color: #90caf9;
-}
-
-[data-theme="dark"] .wb-notification--success {
-  background: rgba(76, 175, 80, 0.15);
-  border-left-color: #66bb6a;
-  color: #a5d6a7;
-}
-
-[data-theme="dark"] .wb-notification--warning {
-  background: rgba(255, 152, 0, 0.15);
-  border-left-color: #ffa726;
-  color: #ffcc80;
-}
-
-[data-theme="dark"] .wb-notification--error {
-  background: rgba(244, 67, 54, 0.15);
-  border-left-color: #ef5350;
-  color: #ef9a9a;
+  background: var(--danger-color);
+  color: var(--text-primary);
 }
 
 [data-theme="dark"] .wb-notification__icon {
