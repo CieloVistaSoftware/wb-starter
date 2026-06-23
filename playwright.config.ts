@@ -66,11 +66,16 @@ export default defineConfig({
     trace: 'off',
   },
   
-  // Web server - automatically starts before tests
+  // Web server - automatically starts before tests.
+  // reuseExistingServer must be true even in CI: ci-tests.yml starts the
+  // server itself (node server.js &) before invoking Playwright, so Playwright
+  // must reuse it rather than trying to bind port 3000 a second time (which
+  // fails with "port 3000 is already used"). When no server is running
+  // (e.g. ci-compliance.yml), Playwright still starts one via `command`.
   webServer: {
     command: 'npm start',
     port: 3000,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 10000,
   },
   
