@@ -164,8 +164,9 @@ test.describe('v3.0 Schema Format Compliance', () => {
   // Uses schemaType field — "definition" and "base" schemas don't have $view/$methods/$cssAPI
   function isComponentSchema(file: string, schemasDir: string): boolean {
     const schema = JSON.parse(fs.readFileSync(path.join(schemasDir, file), 'utf-8'));
-    // Skip schemas with schemaType = "definition" or "base" — these are meta/structural
-    if (schema.schemaType === 'definition' || schema.schemaType === 'base') return false;
+    // Skip schemas with schemaType = "definition", "base", or "behavior" —
+    // these are meta/structural or attribute-modifiers, not DOM-building components.
+    if (['definition', 'base', 'behavior'].includes(schema.schemaType)) return false;
     // Skip if it has a .demo field (demo-only schema)
     if (schema.demo) return false;
     return true;

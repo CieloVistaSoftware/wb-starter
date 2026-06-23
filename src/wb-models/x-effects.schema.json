@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "x-effects Attributes",
+  "schemaType": "behavior",
   "type": "object",
   "description": "Schema for x-effects attributes (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter).",
   "properties": {

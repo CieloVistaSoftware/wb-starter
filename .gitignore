@@ -24,8 +24,8 @@ archive/
 
 *.zip
 
-# Local test artifacts (ignore heavy Playwright/CI output)
-tmp/playwright-*
-tmp/run-*-artifacts/
+# Local test artifacts & scratch (ignore the entire tmp/ tree — Playwright/CI
+# output, moved-html duplicates, triage scratch all live here and must not be tracked)
+tmp/
 test-results/
 .playwright-artifacts/

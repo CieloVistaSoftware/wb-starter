@@ -20,7 +20,7 @@ import {
 // HELPERS — Schema Type Resolution
 // ═══════════════════════════════════════════════════════════════════════════
 
-type SchemaType = 'component' | 'base' | 'definition';
+type SchemaType = 'component' | 'base' | 'definition' | 'behavior' | 'page';
 
 /**
  * Get all schema files recursively (including subdirs like semantic/, _base/)
@@ -109,7 +109,7 @@ test.describe('Schema Validation: SchemaType Tiers', () => {
 
   test('schemaType field is valid when present', () => {
     const files = getAllSchemaFiles();
-    const valid = ['component', 'base', 'definition'];
+    const valid = ['component', 'base', 'definition', 'behavior', 'page'];
     const issues: string[] = [];
     for (const file of files) {
       const schema = loadSchemaFull(file);
@@ -123,19 +123,21 @@ test.describe('Schema Validation: SchemaType Tiers', () => {
 
   test('schema tier inventory', () => {
     const files = getAllSchemaFiles();
-    const counts = { component: 0, base: 0, definition: 0 };
+    const counts: Record<string, number> = {};
     for (const file of files) {
       const schema = loadSchemaFull(file);
       if (!schema) continue;
-      counts[getSchemaType(schema)]++;
+      const tier = getSchemaType(schema);
+      counts[tier] = (counts[tier] || 0) + 1;
     }
     console.log(`\n📋 Schema Tier Inventory:`);
-    console.log(`  Component: ${counts.component}`);
-    console.log(`  Base:      ${counts.base}`);
-    console.log(`  Definition: ${counts.definition}`);
-    console.log(`  Total:     ${counts.component + counts.base + counts.definition}\n`);
-    // All files should have a valid tier
-    expect(counts.component + counts.base + counts.definition).toBe(files.length);
+    for (const [tier, count] of Object.entries(counts)) {
+      console.log(`  ${tier}: ${count}`);
+    }
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+    console.log(`  Total:     ${total}\n`);
+    // Every parseable file resolves to a valid tier
+    expect(total).toBe(files.length);
   });
 });
 
@@ -243,8 +245,10 @@ test.describe('Schema Validation: Property Definitions', () => {
       const schema = loadSchemaFull(file);
       if (!schema?.properties) continue;
       const tier = getSchemaType(schema);
-      if (tier === 'definition') continue;
-      
+      // Behaviors/modifiers describe attributes, not stateful component props —
+      // a "default" is not meaningful for them (same exemption as definitions).
+      if (tier === 'definition' || tier === 'behavior') continue;
+
       for (const [propName, propDef] of Object.entries(schema.properties)) {
         if (propName.startsWith('$') || propName.startsWith('_')) continue;
         if (typeof propDef !== 'object' || propDef === null) continue;
@@ -353,8 +357,11 @@ test.describe('Schema Validation: Test Section Completeness', () => {
         } else {
           const hasWbTag = html.includes('<wb-');
           const hasDataWb = html.includes('data-wb=');
-          if (!hasWbTag && !hasDataWb) {
-            issues.push(`${file}: setup[${i}] missing <wb-*> tag or data-wb attribute`);
+          // x-* attributes are the v3 primary syntax for attaching behaviors
+          // to native elements (e.g. <form x-form>, <button x-ripple>).
+          const hasXBehavior = /\sx-[a-z][\w-]*/.test(html);
+          if (!hasWbTag && !hasDataWb && !hasXBehavior) {
+            issues.push(`${file}: setup[${i}] missing <wb-*> tag, data-wb, or x-* behavior attribute`);
           }
         }
       }

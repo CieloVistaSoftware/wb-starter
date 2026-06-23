@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-02-17T19:22:20.571Z",
+  "lastUpdated": "2026-06-23T02:49:49.116Z",
   "count": 1,
   "errors": [
     {
-      "id": 1771356140570,
-      "timestamp": "2026-02-17T19:22:20.570Z",
+      "id": 1782182989116,
+      "timestamp": "2026-06-23T02:49:49.116Z",
       "level": "error",
       "source": "WB:LegacySyntax",
       "module": "wb.js",
@@ -37,7 +37,7 @@
         }
       ],
       "url": "http://localhost:3000/tests/compliance/legacy-syntax-check.html",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
       "interaction": {
         "from": "System",
         "to": "Background Process"
