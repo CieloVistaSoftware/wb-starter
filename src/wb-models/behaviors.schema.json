@@ -78,6 +78,7 @@
     },
     "src": {
       "type": "string",
+      "default": "",
       "description": "Path to the JavaScript file implementing this behavior (e.g. 'src/wb-viewmodels/ripple.js')"
     },
     "type": {

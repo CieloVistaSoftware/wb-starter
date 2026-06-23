@@ -215,8 +215,10 @@ export function loadSchema(filename: string): Schema | null {
 export function getComponentSchemas(): Map<string, Schema> {
   const schemas = new Map<string, Schema>();
   for (const file of getSchemaFiles()) {
-    const schema = loadSchema(file);
-    if (schema?.schemaFor) {
+    const schema = loadSchema(file) as any;
+    // Only true component schemas. Non-component tiers (behavior, page, base,
+    // definition) carry a schemaFor but must not be held to component-grade rules.
+    if (schema?.schemaFor && (!schema.schemaType || schema.schemaType === 'component')) {
       schemas.set(file, schema);
     }
   }

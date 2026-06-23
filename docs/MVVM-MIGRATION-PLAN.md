@@ -1,5 +1,33 @@
 # Web Behaviors (WB) MVVM Migration Plan
 
+> ## ✅ STATUS: COMPLETE (2026-06-22)
+>
+> The phased plan below is **historical**. An audit on 2026-06-22 found the migration
+> already done on `main`:
+> - **Schema Builder** (`src/core/mvvm/schema-builder.js`) ships the full v3.0 `$view` +
+>   `$methods` engine; class-based detection is removed.
+> - **All 97 component schemas** carry `$view`, `$methods`, and `$cssAPI`.
+> - **Tier inventory:** 97 component, 15 base, 9 behavior, 4 definition, 1 page (126 total).
+>
+> **Completion pass (branch `feat/mvvm-migration`):**
+> - Introduced a **`behavior` schema tier** for the 9 attribute/modifier schemas
+>   (`otp`, `password`, `stepper`, `x-behavior`, `x-collapse`, `x-copy`, `x-draggable`,
+>   `x-effects`, `x-enhancements`) — these are modifiers, not DOM-building components, so
+>   they are exempt from the `$view`/`$methods`/`$cssAPI` rule. Valid tiers are now
+>   `component | base | definition | behavior | page`.
+> - Recognized `page` as a valid tier (`home-page.schema.json`).
+> - `getComponentSchemas()` is now tier-aware (component-only).
+> - Setup-example validation accepts the v3 `x-*` attribute syntax (e.g. `<form x-form>`).
+> - Added missing `default`s (`collapse.target`, `behaviors.src`); purged the untracked
+>   `tmp/` tree and fixed the `.gitignore` pattern that never matched it.
+> - Compliance suite: the 10 schema/v3-syntax failures + the `tmp/` `html-ids` failure are
+>   now green (21 → 10 remaining).
+>
+> **Out of scope / still open (pre-existing, unrelated to MVVM):** hardcoded CSS colors,
+> docs-manifest drift, broken demo resource links (`src/styles/components.css`,
+> `cards.html`, …), the `strict-mode-runtime` + `semantic-article-to-card` runtime tests
+> (the latter references a missing fixture `tests/repro_card_semantic.html`).
+
 ## Overview
 
 Migrate all 41+ components to MVVM architecture using schema-driven DOM generation.

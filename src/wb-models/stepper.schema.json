@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Stepper Behavior",
+  "schemaType": "behavior",
   "type": "object",
   "description": "Schema for x-stepper behavior (numeric stepper)",
   "properties": {
