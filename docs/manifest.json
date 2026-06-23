@@ -772,6 +772,11 @@
       "icon": "📄",
       "docs": [
         {
+          "file": "home-page.md",
+          "title": "Home Page",
+          "description": "Documentation for the home page layout"
+        },
+        {
           "file": "DATA-FILES.md",
           "title": "DATA-FILES",
           "description": "Documentation for DATA-FILES"
