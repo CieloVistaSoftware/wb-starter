@@ -28,28 +28,28 @@
 
 /* Gradient value variants */
 .wb-stat--purple .wb-stat__value {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .wb-stat--green .wb-stat__value {
-  background: linear-gradient(135deg, #22c55e, #10b981);
+  background: linear-gradient(135deg, var(--success-color), var(--info-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .wb-stat--orange .wb-stat__value {
-  background: linear-gradient(135deg, #f59e0b, #f97316);
+  background: linear-gradient(135deg, var(--warning-color), var(--danger-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .wb-stat--blue .wb-stat__value {
-  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  background: linear-gradient(135deg, var(--info-color), var(--primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
