@@ -103,6 +103,12 @@ export function collapse(element, options = {}) {
  */
 export function accordion(element, options = {}) {
   try {
+    // Idempotent: if already hydrated, don't rebuild — a second pass would
+    // wipe item innerHTML and reset any open state / rebind handlers.
+    if (element.dataset.wbHydrated === '1') {
+      return () => element.classList.remove('wb-accordion');
+    }
+
     const items = Array.from(element.children).filter(
       child => child.hasAttribute('data-accordion-title') || child.hasAttribute('data-title')
     );
