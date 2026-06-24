@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { safeScrollIntoView } from '../base';
 
 const DEMO_URL = '/demos/card-examples.html';
 
@@ -11,7 +12,7 @@ async function loadPage(page) {
 
 // Helper: scroll into view and wait for lazy init
 async function scrollTo(page, locator) {
-  await locator.scrollIntoViewIfNeeded();
+  await safeScrollIntoView(locator);
   await page.waitForTimeout(1500);
 }
 
