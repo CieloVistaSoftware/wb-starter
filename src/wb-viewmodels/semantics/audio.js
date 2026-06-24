@@ -144,7 +144,7 @@ export function audio(element, options = {}) {
   element.wbAudio = {
     play: () => audioEl.play(),
     pause: () => audioEl.pause(),
-    toggle: () => audioEl.paused ? audioEl.play() : audioEl.pause(),
+    toggle: () => { if (!audioEl.paused) return audioEl.pause(); const p = audioEl.play(); if (p && typeof p.catch === 'function') p.catch(() => {}); return p; },
     setVolume: (v) => { audioEl.volume = Math.max(0, Math.min(1, v)); },
     setBand: (index, gain) => {
       initAudioContext();
@@ -169,7 +169,20 @@ function buildTransportUI(element, audioEl, config) {
   playBtn.className = 'wb-audio__play-btn';
   playBtn.setAttribute('aria-label', 'Play');
   playBtn.innerHTML = '&#9654;'; // ▶
-  playBtn.onclick = () => audioEl.paused ? audioEl.play() : audioEl.pause();
+  playBtn.onclick = () => {
+    if (!audioEl.paused) { audioEl.pause(); return; }
+    // play() returns a promise that rejects if the source can't load
+    // (bad URL / unsupported / CORS). Swallow it so it isn't an unhandled
+    // rejection, and surface a readable message + visual hint instead.
+    const p = audioEl.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch((err) => {
+        console.warn('[wb-audio] playback failed:', err && err.message);
+        playBtn.setAttribute('aria-label', 'Audio source unavailable');
+        playBtn.title = 'Audio source unavailable';
+      });
+    }
+  };
 
   audioEl.addEventListener('play', () => {
     playBtn.innerHTML = '&#9646;&#9646;'; // ❚❚
@@ -301,9 +314,12 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
   const demoBtn = createPresetButton('Demo Track');
   demoBtn.onclick = () => {
     // Set demo audio source and play
-    audioEl.src = 'demos/audio.mp3';
+    audioEl.src = '/demos/sample.wav';
     audioEl.load();
-    audioEl.play();
+    const _p = audioEl.play();
+    if (_p && typeof _p.catch === 'function') {
+      _p.catch((err) => console.warn('[wb-audio] demo playback failed:', err && err.message));
+    }
     // Optionally update UI to show demo is playing
     if (element.querySelector('.wb-audio-nowplaying')) {
       element.querySelector('.wb-audio-nowplaying').textContent = 'Now Playing: Demo Track';
@@ -452,7 +468,20 @@ function createVolumeRow(audioEl, config) {
   const updateIcon = () => {
     playBtn.innerHTML = isPlaying ? '<span style="font-size:1.25rem;">⏸️</span>' : '<span style="font-size:1.25rem;">🔊</span>';
   };
-  playBtn.onclick = () => audioEl.paused ? audioEl.play() : audioEl.pause();
+  playBtn.onclick = () => {
+    if (!audioEl.paused) { audioEl.pause(); return; }
+    // play() returns a promise that rejects if the source can't load
+    // (bad URL / unsupported / CORS). Swallow it so it isn't an unhandled
+    // rejection, and surface a readable message + visual hint instead.
+    const p = audioEl.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch((err) => {
+        console.warn('[wb-audio] playback failed:', err && err.message);
+        playBtn.setAttribute('aria-label', 'Audio source unavailable');
+        playBtn.title = 'Audio source unavailable';
+      });
+    }
+  };
   audioEl.addEventListener('play', () => { isPlaying = true; updateIcon(); });
   audioEl.addEventListener('pause', () => { isPlaying = false; updateIcon(); });
   volumeRow.appendChild(playBtn);

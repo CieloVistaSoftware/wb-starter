@@ -1,3 +1,8 @@
+// Debug logging — silent unless localStorage['wb-debug'] === '1'.
+const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+const _wbClog = console.log.bind(console);
+const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
+
 /**
  * WB Views - HTML Template System
  * ================================
@@ -46,7 +51,7 @@ let initialized = false;
 export function registerView(name, html, meta = {}) {
   viewRegistry.set(name, html.trim());
   viewMeta.set(name, meta);
-  console.log(`[WB Views] ✓ Registered: "${name}" (${html.length} chars)`);
+  dlog(`[WB Views] ✓ Registered: "${name}" (${html.length} chars)`);
 }
 
 /**
@@ -55,7 +60,7 @@ export function registerView(name, html, meta = {}) {
  */
 export function loadViewsFromDOM(root = document) {
   const templates = root.querySelectorAll('template[wb-view]');
-  console.log(`[WB Views] Scanning for templates... found ${templates.length}`);
+  dlog(`[WB Views] Scanning for templates... found ${templates.length}`);
   
   templates.forEach(template => {
     const name = template.getAttribute('wb-view');
@@ -113,7 +118,7 @@ function registerViewAsElement(name) {
   
   // Register the custom element
   customElements.define(tagName, WBViewElement);
-  console.log(`[WB Views] ✓ Registered tag: <${tagName}>`);
+  dlog(`[WB Views] ✓ Registered tag: <${tagName}>`);
 }
 
 /**
@@ -286,7 +291,7 @@ export async function loadViewsFromURL(urls) {
         // Auto-register as custom element tag
         registerViewAsElement(name);
       }
-      console.log(`[WB Views] Loaded views from ${url}`);
+      dlog(`[WB Views] Loaded views from ${url}`);
     } catch (error) {
       console.error(`[WB Views] Failed to load views from ${url}:`, error);
     }
@@ -649,7 +654,7 @@ function processWbView(element) {
   
   const viewName = getViewName(element);
   
-  console.log(`[WB Views] Processing <wb-view>:`, {
+  dlog(`[WB Views] Processing <wb-view>:`, {
     viewName,
     attributes: Array.from(element.attributes).map(a => `${a.name}="${a.value}"`).join(' ')
   });
@@ -806,10 +811,10 @@ function processWbView(element) {
  */
 export function scanViews(root = document.body) {
   const elements = root.querySelectorAll('wb-view');
-  console.log(`[WB Views] Scanning for <wb-view> elements... found ${elements.length}`);
+  dlog(`[WB Views] Scanning for <wb-view> elements... found ${elements.length}`);
   
   elements.forEach((el, i) => {
-    console.log(`[WB Views] Processing element ${i + 1}/${elements.length}`);
+    dlog(`[WB Views] Processing element ${i + 1}/${elements.length}`);
     processWbView(el);
   });
 }
@@ -837,7 +842,7 @@ function startObserver() {
   });
   
   observer.observe(document.body, { childList: true, subtree: true });
-  console.log('[WB Views] MutationObserver started');
+  dlog('[WB Views] MutationObserver started');
 }
 
 // =============================================================================
@@ -849,14 +854,14 @@ function startObserver() {
  */
 export async function initViews(options = {}) {
   if (initialized) {
-    console.log('[WB Views] Already initialized, rescanning...');
+    dlog('[WB Views] Already initialized, rescanning...');
     scanViews(document.body);
     return;
   }
   
-  console.log('[WB Views] ═══════════════════════════════════');
-  console.log('[WB Views] Initializing WB Views System v1.5.0');
-  console.log('[WB Views] ═══════════════════════════════════');
+  dlog('[WB Views] ═══════════════════════════════════');
+  dlog('[WB Views] Initializing WB Views System v1.5.0');
+  dlog('[WB Views] ═══════════════════════════════════');
   
   // Load views from DOM templates
   loadViewsFromDOM(document);
@@ -866,7 +871,7 @@ export async function initViews(options = {}) {
     await loadViewsFromURL(options.registry);
   }
   
-  console.log(`[WB Views] Registry contains ${viewRegistry.size} views:`, [...viewRegistry.keys()]);
+  dlog(`[WB Views] Registry contains ${viewRegistry.size} views:`, [...viewRegistry.keys()]);
   
   // Scan for existing <wb-view> elements
   scanViews(document.body);
@@ -875,9 +880,9 @@ export async function initViews(options = {}) {
   startObserver();
   
   initialized = true;
-  console.log('[WB Views] ═══════════════════════════════════');
-  console.log('[WB Views] Ready!');
-  console.log('[WB Views] ═══════════════════════════════════');
+  dlog('[WB Views] ═══════════════════════════════════');
+  dlog('[WB Views] Ready!');
+  dlog('[WB Views] ═══════════════════════════════════');
 }
 
 // =============================================================================

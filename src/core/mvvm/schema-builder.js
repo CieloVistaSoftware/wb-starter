@@ -46,6 +46,11 @@
 // SCHEMA REGISTRY
 // =============================================================================
 
+// Debug logging — silent unless localStorage['wb-debug'] === '1'.
+const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+const _wbClog = console.log.bind(console);
+const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
+
 /** @type {Map<string, Object>} Schema name → parsed schema */
 const schemaRegistry = new Map();
 
@@ -75,7 +80,7 @@ export async function loadSchemas(basePath = '/src/wb-models') {
     const index = await indexResponse.json();
     const schemaFiles = index.schemas || [];
     
-    console.log(`[Schema Builder] Loading ${schemaFiles.length} schemas...`);
+    dlog(`[Schema Builder] Loading ${schemaFiles.length} schemas...`);
     
     // Load schemas in parallel for speed
     const loadPromises = schemaFiles.map(async (file) => {
@@ -95,7 +100,7 @@ export async function loadSchemas(basePath = '/src/wb-models') {
     const results = await Promise.all(loadPromises);
     const loaded = results.filter(Boolean).length;
     
-    console.log(`[Schema Builder] ✅ Loaded ${loaded}/${schemaFiles.length} schemas`);
+    dlog(`[Schema Builder] ✅ Loaded ${loaded}/${schemaFiles.length} schemas`);
     
   } catch (error) {
     console.error('[Schema Builder] Failed to load schemas:', error);
@@ -116,7 +121,7 @@ export function registerSchema(schema, filename) {
   const tagName = `wb-${name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`;
   tagToSchema.set(tagName, name);
   
-  console.log(`[Schema Builder] Registered: ${name} → <${tagName}>`);
+  dlog(`[Schema Builder] Registered: ${name} → <${tagName}>`);
 }
 
 /**
@@ -601,9 +606,9 @@ export function processElement(element, schemaName = null) {
   }
   
   const name = schemaName || detectSchema(element);
-  console.log(`[Schema Builder] Processing element: ${element.tagName}, detected schema: ${name}`);
+  dlog(`[Schema Builder] Processing element: ${element.tagName}, detected schema: ${name}`);
   if (!name) {
-    console.log(`[Schema Builder] No schema detected for ${element.tagName}`);
+    dlog(`[Schema Builder] No schema detected for ${element.tagName}`);
     return { skipped: true, reason: 'no schema detected' };
   }
   
@@ -613,15 +618,15 @@ export function processElement(element, schemaName = null) {
     return { skipped: true, reason: `schema "${name}" not found` };
   }
   
-  console.log(`[Schema Builder] Processing ${element.tagName} with schema ${name}`);
+  dlog(`[Schema Builder] Processing ${element.tagName} with schema ${name}`);
   
   // Extract data from attributes
   const data = extractData(element, schema);
-  console.log(`[Schema Builder] Extracted data:`, data);
+  dlog(`[Schema Builder] Extracted data:`, data);
   
   // Build DOM structure from $view
   buildStructure(element, schema, data);
-  console.log(`[Schema Builder] After buildStructure, element.innerHTML:`, element.innerHTML);
+  dlog(`[Schema Builder] After buildStructure, element.innerHTML:`, element.innerHTML);
   
   // Mark as processed
   processedElements.add(element);
@@ -806,7 +811,7 @@ export function startObserver() {
   });
   
   observer.observe(document.body, { childList: true, subtree: true });
-  console.log('[Schema Builder] Observer started');
+  dlog('[Schema Builder] Observer started');
 }
 
 // =============================================================================
@@ -814,10 +819,10 @@ export function startObserver() {
 // =============================================================================
 
 export async function init(options = {}) {
-  console.log('[Schema Builder] ═══════════════════════════════════');
-  console.log('[Schema Builder] MVVM Schema Builder v3.0');
-  console.log('[Schema Builder] $view + $methods format');
-  console.log('[Schema Builder] ═══════════════════════════════════');
+  dlog('[Schema Builder] ═══════════════════════════════════');
+  dlog('[Schema Builder] MVVM Schema Builder v3.0');
+  dlog('[Schema Builder] $view + $methods format');
+  dlog('[Schema Builder] ═══════════════════════════════════');
   
   const basePath = options.schemaPath || '/src/wb-models';
   await loadSchemas(basePath);
@@ -825,7 +830,7 @@ export async function init(options = {}) {
   scan(document.body);
   startObserver();
   
-  console.log('[Schema Builder] Ready!');
+  dlog('[Schema Builder] Ready!');
 }
 
 // =============================================================================

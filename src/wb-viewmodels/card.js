@@ -2335,7 +2335,12 @@ export function cardportfolio(element, options = {}) {
   // ==================== HEADER ====================
   const header = document.createElement('header');
   header.className = 'wb-portfolio__header';
-  header.style.cssText = `text-align:center;padding:1.5rem;${config.cover ? 'margin-top:-60px;' : ''}`;
+  // The <header> also inherits the generic .wb-header navbar rule
+  // (display:flex; height:60px; fixed bg + border-bottom + 0.8em font). The
+  // flex squeezed the avatar into a column and the fixed 60px height clipped
+  // the header so its 120px avatar + text overflowed onto the sections below.
+  // Neutralize the whole navbar rule inline → an auto-height centered stack.
+  header.style.cssText = `display:block;height:auto;min-height:0;background:transparent;border-bottom:none;font-size:1rem;text-align:center;padding:1.5rem;${config.cover ? 'margin-top:-60px;' : ''}`;
 
   // Avatar
   if (config.avatar) {
