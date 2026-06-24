@@ -44,7 +44,8 @@
     "ci:docs-safety": "npm run lint:md-powershell && npm run check:stale-locks && npm run check:critical-scripts",
     "pw:maybe": "node scripts/playwright-if-tests.js --",
     "precommit": "npm run check:critical-scripts && npm run lint:md-powershell:staged && npm run check:stale-locks",
-    "scripts:help": "node -e \"const p=require('./package.json');const m=p['scripts-info']||{};Object.entries(m).forEach(([k,v])=>console.log(k.padEnd(30)+' - '+v));\""
+    "scripts:help": "node -e \"const p=require('./package.json');const m=p['scripts-info']||{};Object.entries(m).forEach(([k,v])=>console.log(k.padEnd(30)+' - '+v));\"",
+    "lint": "eslint src scripts tests"
   },
   "scripts-info": {
     "start": "Start site (update docs manifest then run express server)",
@@ -111,9 +112,11 @@
   },
   "customElements": "./data/custom-elements.json",
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "@playwright/test": "1.58.2",
     "acorn": "^8.15.0",
     "acorn-walk": "^8.3.4",
+    "eslint": "^9.39.4",
     "sharp": "^0.34.5"
   }
 }

@@ -39,6 +39,9 @@ const customElementMappings = [
   { selector: 'wb-cardminimizable', behavior: 'cardminimizable' },
   { selector: 'wb-carddraggable', behavior: 'carddraggable' },
   { selector: 'wb-themecontrol', behavior: 'themecontrol' },
+  { selector: 'wb-chip', behavior: 'chip' },
+  { selector: 'wb-inputgroup', behavior: 'inputgroup' },
+  { selector: 'wb-formrow', behavior: 'formrow' },
 
   // Feedback Components
   { selector: 'wb-spinner', behavior: 'spinner' },
