@@ -216,12 +216,17 @@ export class WBFixCard extends WBCard {
       return this.escapeHtml(sig);
     })();
 
-    // Prepare Header Content
+    // Prepare Header Content.
+    // Only emit a status id when errorId is present — otherwise multiple cards
+    // collapse to a duplicate id="status-undefined" (compliance: unique IDs).
+    const errorIdSafe = (fix.errorId != null && String(fix.errorId).length > 0)
+      ? this.escapeHtml(String(fix.errorId))
+      : '';
     const headerContent = `
       <div class="card-header" style="border:none;padding:0;margin:0;">
         <div class="header-top" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
-          <div class="fix-id" style="font-family:monospace;color:var(--text-secondary);background:rgba(0,0,0,0.3);padding:0.2rem 0.4rem;border-radius:4px;">${this.escapeHtml(fix.errorId)}</div>
-          <span id="status-${this.escapeHtml(fix.errorId)}" class="fix-status ${statusClass}" style="padding:0.25rem 0.5rem;border-radius:4px;font-size:0.75rem;font-weight:bold;text-transform:uppercase;">${this.escapeHtml(statusDisplay)}</span>
+          <div class="fix-id" style="font-family:monospace;color:var(--text-secondary);background:rgba(0,0,0,0.3);padding:0.2rem 0.4rem;border-radius:4px;">${errorIdSafe || '—'}</div>
+          <span ${errorIdSafe ? `id="status-${errorIdSafe}"` : ''} class="fix-status ${statusClass}" style="padding:0.25rem 0.5rem;border-radius:4px;font-size:0.75rem;font-weight:bold;text-transform:uppercase;">${this.escapeHtml(statusDisplay)}</span>
         </div>
         <h3 class="fix-title" style="margin:0;font-size:1.1rem;color:var(--text-primary);">${this.escapeHtml(fix.issue || 'Unknown Issue')}</h3>
       </div>
