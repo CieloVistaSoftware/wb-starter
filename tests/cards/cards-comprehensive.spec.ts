@@ -52,7 +52,7 @@ test.describe('Base Cards', () => {
       await createTestPage(page, `
         <wb-card data-title="Test Title" data-subtitle="Test Subtitle">
           <p>Card content</p>
-        </article>
+        </wb-card>
       `);
       
       const card = page.locator('wb-card');
@@ -177,7 +177,7 @@ test.describe('Content Cards', () => {
           data-role="Developer" 
           data-avatar="https://i.pravatar.cc/80?u=1"
           data-bio="Building cool stuff">
-        </article>
+        </wb-cardprofile>
       `);
       
       const card = page.locator('wb-cardprofile');
@@ -202,7 +202,7 @@ test.describe('Content Cards', () => {
         <wb-cardprofile 
           data-name="Jane Smith" 
           data-cover="https://picsum.photos/400/100">
-        </article>
+        </wb-cardprofile>
       `);
       
       const card = page.locator('wb-cardprofile');
@@ -219,7 +219,7 @@ test.describe('Content Cards', () => {
           data-author="Jane Smith" 
           data-role="CEO" 
           data-rating="5">
-        </article>
+        </wb-cardtestimonial>
       `);
       
       const card = page.locator('wb-cardtestimonial');
@@ -246,7 +246,7 @@ test.describe('Media Cards', () => {
           data-src="https://picsum.photos/400/300" 
           data-alt="Test image"
           data-title="Image Title">
-        </article>
+        </wb-cardimage>
       `);
       
       const card = page.locator('wb-cardimage');
@@ -264,7 +264,7 @@ test.describe('Media Cards', () => {
         <wb-cardimage 
           data-src="https://picsum.photos/400/400" 
           data-aspect="1/1">
-        </article>
+        </wb-cardimage>
       `);
       
       const card = page.locator('wb-cardimage');
@@ -281,7 +281,7 @@ test.describe('Media Cards', () => {
         <wb-cardvideo 
           data-src="https://www.w3schools.com/html/mov_bbb.mp4"
           data-title="Video Title">
-        </article>
+        </wb-cardvideo>
       `);
       
       const card = page.locator('wb-cardvideo');
@@ -300,7 +300,7 @@ test.describe('Media Cards', () => {
           data-filename="document.pdf" 
           data-type="pdf" 
           data-size="2.5 MB">
-        </article>
+        </wb-cardfile>
       `);
       
       const card = page.locator('wb-cardfile');
@@ -370,7 +370,7 @@ test.describe('Data Cards', () => {
           data-period="/month"
           data-features="Feature 1,Feature 2,Feature 3"
           data-cta="Get Started">
-        </article>
+        </wb-cardpricing>
       `);
       
       const card = page.locator('wb-cardpricing');
@@ -390,7 +390,7 @@ test.describe('Data Cards', () => {
           data-plan="Pro" 
           data-price="$29" 
           data-featured="true">
-        </article>
+        </wb-cardpricing>
       `);
       
       const card = page.locator('wb-cardpricing');
@@ -414,7 +414,7 @@ test.describe('Data Cards', () => {
           data-price="$99"
           data-rating="4.5"
           data-cta="Add to Cart">
-        </article>
+        </wb-cardproduct>
       `);
       
       const card = page.locator('wb-cardproduct');
@@ -435,7 +435,7 @@ test.describe('Interactive Cards', () => {
         <wb-cardexpandable 
           data-title="Expandable" 
           data-content="<p>Hidden content that can be revealed</p>">
-        </article>
+        </wb-cardexpandable>
       `);
       
       const card = page.locator('wb-cardexpandable');
@@ -464,7 +464,7 @@ test.describe('Interactive Cards', () => {
         <wb-cardexpandable 
           data-title="Pre-expanded" 
           data-expanded="true">
-        </article>
+        </wb-cardexpandable>
       `);
       
       const card = page.locator('wb-cardexpandable');
@@ -478,7 +478,7 @@ test.describe('Interactive Cards', () => {
         <wb-cardminimizable 
           data-title="Minimizable Card"
           data-content="<p>Content that can be minimized</p>">
-        </article>
+        </wb-cardminimizable>
       `);
       
       const card = page.locator('wb-cardminimizable');
@@ -503,7 +503,7 @@ test.describe('Interactive Cards', () => {
             data-title="Drag Me"
             style="position: absolute; top: 50px; left: 50px;">
             Draggable content
-          </article>
+          </wb-carddraggable>
         </div>
       `);
       
@@ -527,7 +527,7 @@ test.describe('Interactive Cards', () => {
           data-subtitle="Overlay subtitle"
           data-image="https://picsum.photos/400/300"
           data-height="300px">
-        </article>
+        </wb-cardoverlay>
       `);
       
       const card = page.locator('wb-cardoverlay');
@@ -555,7 +555,7 @@ test.describe('Notification Cards', () => {
             data-type="${variant}"
             data-title="${variant.charAt(0).toUpperCase() + variant.slice(1)}"
             data-message="This is a ${variant} notification">
-          </article>
+          </wb-cardnotification>
         `);
         
         const card = page.locator('wb-cardnotification');
@@ -572,7 +572,7 @@ test.describe('Notification Cards', () => {
           data-type="info"
           data-message="Dismissible notification"
           data-dismissible="true">
-        </article>
+        </wb-cardnotification>
       `);
       
       const card = page.locator('wb-cardnotification');
@@ -599,7 +599,7 @@ test.describe('Hero Cards', () => {
           data-cta="Get Started"
           data-cta-href="#start"
           data-height="400px">
-        </article>
+        </wb-cardhero>
       `);
       
       const card = page.locator('wb-cardhero');
@@ -615,7 +615,7 @@ test.describe('Hero Cards', () => {
         <wb-cardhero 
           data-title="Left Aligned"
           data-xalign="left">
-        </article>
+        </wb-cardhero>
       `);
       
       const card = page.locator('wb-cardhero');

@@ -1375,15 +1375,16 @@ export function cardproduct(element, options = {}) {
 export function cardnotification(element, options = {}) {
   const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
 
-  // Read variant (primary) with fallback to type (legacy)
-  const variant = options.variant || element.getAttribute('variant')
-    || options.type || element.getAttribute('type') || 'info';
-  const title = options.title || element.getAttribute('title') || '';
-  const message = options.message || element.getAttribute('message') || element.textContent || '';
+  // Read variant (primary) with fallback to type (legacy).
+  // Check dataset (data-*) first to match the framework's attribute convention.
+  const variant = options.variant || element.dataset.variant || element.getAttribute('variant')
+    || options.type || element.dataset.type || element.getAttribute('type') || 'info';
+  const title = options.title || element.dataset.title || element.getAttribute('title') || '';
+  const message = options.message || element.dataset.message || element.getAttribute('message') || element.textContent || '';
   const dismissible = parseBoolean(
-    options.dismissible ?? element.getAttribute('dismissible')
+    options.dismissible ?? element.dataset.dismissible ?? element.getAttribute('dismissible')
   ) !== false;
-  const customIcon = options.icon || element.getAttribute('icon');
+  const customIcon = options.icon || element.dataset.icon || element.getAttribute('icon');
 
   // Default icon letters per variant
   const defaultIcons = { info: 'i', success: 's', warning: 'w', error: 'e' };
