@@ -17,6 +17,9 @@ import { test, expect, Page } from '@playwright/test';
 
 // Helper to create a test page with WB initialized
 async function createTestPage(page: Page, html: string): Promise<void> {
+  // Establish the dev-server origin so the inline `import '/src/core/wb-lazy.js'` resolves
+  // (setContent alone runs at about:blank, where absolute module paths 404 -> WB never loads).
+  await page.goto('/', { waitUntil: 'commit' });
   await page.setContent(`
     <!DOCTYPE html>
     <html lang="en" data-theme="dark">
@@ -169,7 +172,7 @@ test.describe('Content Cards', () => {
   test.describe('cardprofile', () => {
     test('renders with name, role, avatar', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardprofile="" 
+        <wb-cardprofile 
           data-name="John Doe" 
           data-role="Developer" 
           data-avatar="https://i.pravatar.cc/80?u=1"
@@ -196,7 +199,7 @@ test.describe('Content Cards', () => {
     
     test('renders cover image when provided', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardprofile="" 
+        <wb-cardprofile 
           data-name="Jane Smith" 
           data-cover="https://picsum.photos/400/100">
         </article>
@@ -211,7 +214,7 @@ test.describe('Content Cards', () => {
   test.describe('cardtestimonial', () => {
     test('renders with quote, author, rating', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardtestimonial="" 
+        <wb-cardtestimonial 
           data-quote="This product is amazing!" 
           data-author="Jane Smith" 
           data-role="CEO" 
@@ -239,7 +242,7 @@ test.describe('Media Cards', () => {
   test.describe('cardimage', () => {
     test('renders image with correct src and alt', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardimage="" 
+        <wb-cardimage 
           data-src="https://picsum.photos/400/300" 
           data-alt="Test image"
           data-title="Image Title">
@@ -258,7 +261,7 @@ test.describe('Media Cards', () => {
     
     test('respects aspect ratio', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardimage="" 
+        <wb-cardimage 
           data-src="https://picsum.photos/400/400" 
           data-aspect="1/1">
         </article>
@@ -275,7 +278,7 @@ test.describe('Media Cards', () => {
   test.describe('cardvideo', () => {
     test('renders video element with controls', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardvideo="" 
+        <wb-cardvideo 
           data-src="https://www.w3schools.com/html/mov_bbb.mp4"
           data-title="Video Title">
         </article>
@@ -293,7 +296,7 @@ test.describe('Media Cards', () => {
   test.describe('cardfile', () => {
     test('renders file info with icon', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardfile="" 
+        <wb-cardfile 
           data-filename="document.pdf" 
           data-type="pdf" 
           data-size="2.5 MB">
@@ -316,10 +319,10 @@ test.describe('Data Cards', () => {
   test.describe('cardstats', () => {
     test('renders value and label', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardstats="" 
+        <wb-cardstats 
           data-value="1,234" 
           data-label="Total Users">
-        </article>
+        </wb-cardstats>
       `);
       
       const card = page.locator('wb-cardstats');
@@ -331,12 +334,12 @@ test.describe('Data Cards', () => {
     
     test('shows trend indicator', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardstats="" 
+        <wb-cardstats 
           data-value="$50K" 
           data-label="Revenue" 
           data-trend="up" 
           data-trend-value="+12%">
-        </article>
+        </wb-cardstats>
       `);
       
       const card = page.locator('wb-cardstats');
@@ -346,11 +349,11 @@ test.describe('Data Cards', () => {
     
     test('shows icon when provided', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardstats="" 
+        <wb-cardstats 
           data-value="42" 
           data-label="Projects" 
           data-icon="🚀">
-        </article>
+        </wb-cardstats>
       `);
       
       const card = page.locator('wb-cardstats');
@@ -361,7 +364,7 @@ test.describe('Data Cards', () => {
   test.describe('cardpricing', () => {
     test('renders plan, price, and features', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardpricing="" 
+        <wb-cardpricing 
           data-plan="Pro" 
           data-price="$29" 
           data-period="/month"
@@ -383,7 +386,7 @@ test.describe('Data Cards', () => {
     
     test('featured variant has special styling', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardpricing="" 
+        <wb-cardpricing 
           data-plan="Pro" 
           data-price="$29" 
           data-featured="true">
@@ -405,7 +408,7 @@ test.describe('Data Cards', () => {
   test.describe('cardproduct', () => {
     test('renders product with price and CTA', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardproduct="" 
+        <wb-cardproduct 
           data-title="Product Name"
           data-image="https://picsum.photos/200"
           data-price="$99"
@@ -429,7 +432,7 @@ test.describe('Interactive Cards', () => {
   test.describe('cardexpandable', () => {
     test('expands and collapses on button click', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardexpandable="" 
+        <wb-cardexpandable 
           data-title="Expandable" 
           data-content="<p>Hidden content that can be revealed</p>">
         </article>
@@ -458,7 +461,7 @@ test.describe('Interactive Cards', () => {
     
     test('starts expanded when data-expanded="true"', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardexpandable="" 
+        <wb-cardexpandable 
           data-title="Pre-expanded" 
           data-expanded="true">
         </article>
@@ -472,7 +475,7 @@ test.describe('Interactive Cards', () => {
   test.describe('cardminimizable', () => {
     test('minimizes and expands on button click', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardminimizable="" 
+        <wb-cardminimizable 
           data-title="Minimizable Card"
           data-content="<p>Content that can be minimized</p>">
         </article>
@@ -496,7 +499,7 @@ test.describe('Interactive Cards', () => {
     test('has drag handle and can be dragged', async ({ page }) => {
       await createTestPage(page, `
         <div style="position: relative; width: 500px; height: 500px;">
-          <article x-carddraggable="" 
+          <wb-carddraggable 
             data-title="Drag Me"
             style="position: absolute; top: 50px; left: 50px;">
             Draggable content
@@ -519,7 +522,7 @@ test.describe('Interactive Cards', () => {
   test.describe('cardoverlay', () => {
     test('renders with background image and text overlay', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardoverlay="" 
+        <wb-cardoverlay 
           data-title="Overlay Title"
           data-subtitle="Overlay subtitle"
           data-image="https://picsum.photos/400/300"
@@ -548,7 +551,7 @@ test.describe('Notification Cards', () => {
     for (const variant of variants) {
       test(`renders ${variant} variant with correct styling`, async ({ page }) => {
         await createTestPage(page, `
-          <article x-cardnotification="" 
+          <wb-cardnotification 
             data-type="${variant}"
             data-title="${variant.charAt(0).toUpperCase() + variant.slice(1)}"
             data-message="This is a ${variant} notification">
@@ -565,7 +568,7 @@ test.describe('Notification Cards', () => {
     
     test('dismissible notification can be closed', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardnotification="" 
+        <wb-cardnotification 
           data-type="info"
           data-message="Dismissible notification"
           data-dismissible="true">
@@ -590,7 +593,7 @@ test.describe('Hero Cards', () => {
   test.describe('cardhero', () => {
     test('renders with background, title, subtitle, and CTA', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardhero="" 
+        <wb-cardhero 
           data-title="Hero Title"
           data-subtitle="Hero subtitle text"
           data-cta="Get Started"
@@ -609,7 +612,7 @@ test.describe('Hero Cards', () => {
     
     test('xalign positions content correctly', async ({ page }) => {
       await createTestPage(page, `
-        <article x-cardhero="" 
+        <wb-cardhero 
           data-title="Left Aligned"
           data-xalign="left">
         </article>
