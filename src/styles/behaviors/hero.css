@@ -14,6 +14,15 @@ wb-hero {
 }
 
 wb-cardhero {
+  /* Fill the container, NOT the viewport. The previous 100vw + negative-margin
+     full-bleed broke the cardhero out of its grid cell and overlapped
+     neighbouring cards (e.g. the overlay card in the components demo).
+     Opt into edge-to-edge with the .wb-cardhero--fullbleed modifier instead. */
+  width: 100%;
+}
+
+/* Opt-in full-bleed for page-top heroes that should span the viewport. */
+wb-cardhero.wb-cardhero--fullbleed {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
 }
