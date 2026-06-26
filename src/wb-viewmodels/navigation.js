@@ -484,8 +484,8 @@ export function pagination(element, options = {}) {
  */
 export function steps(element, options = {}) {
   const config = {
-    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
-    current: parseInt(options.current || element.getAttribute('current') || '1'),
+    items: (options.items || element.getAttribute('data-items') || element.getAttribute('items') || '').split(',').map(s => s.trim()).filter(Boolean),
+    current: parseInt(options.current || element.getAttribute('data-current') || element.getAttribute('current') || '1'),
     ...options
   };
 

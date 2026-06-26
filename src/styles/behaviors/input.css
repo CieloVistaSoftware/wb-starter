@@ -103,3 +103,11 @@
   cursor: pointer;
   accent-color: var(--primary);
 }
+
+/* Validation variants via raw data-variant attribute (issue #133) */
+input[data-variant="success"],
+textarea[data-variant="success"],
+select[data-variant="success"] { border: 1px solid var(--success-color); }
+input[data-variant="error"],
+textarea[data-variant="error"],
+select[data-variant="error"] { border: 1px solid var(--danger-color); }

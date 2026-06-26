@@ -12,14 +12,14 @@
  */
 export function details(element, options = {}) {
   const config = {
-    open: options.open ?? element.hasAttribute('data-open'),
+    open: options.open ?? (element.hasAttribute('open') || element.hasAttribute('data-open')),
     animated: options.animated ?? element.dataset.animated !== 'false',
     ...options
   };
 
   // If not already a <details>, wrap content
   if (element.tagName !== 'DETAILS') {
-    const summaryText = element.dataset.summary || element.dataset.title || 'Details';
+    const summaryText = element.getAttribute('summary') || element.dataset.summary || element.dataset.title || 'Details';
     const contentHtml = element.innerHTML;
     
     const detailsEl = document.createElement('details');
@@ -67,12 +67,14 @@ export function details(element, options = {}) {
       listStyle: 'none'
     });
     
-    // Custom icon
-    const labelText = summary.textContent;
-    summary.innerHTML = `
-      <span class="wb-details__label">${labelText}</span>
-      <span class="wb-details__icon" style="transition: transform 0.2s;">▼</span>
-    `;
+    // Custom icon (guard against re-wrapping on a second scan — issue #131)
+    if (!summary.querySelector(".wb-details__label")) {
+      const labelText = summary.textContent.trim();
+      summary.innerHTML = `
+        <span class="wb-details__label">${labelText}</span>
+        <span class="wb-details__icon" style="transition: transform 0.2s;">▼</span>
+      `;
+    }
   }
 
   // Content styling

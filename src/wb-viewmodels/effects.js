@@ -79,7 +79,7 @@ export function fadeout(element) { return clickAnim(element, 'fade-out', '0.5s')
  * Helper Attribute: [x-slidein]
  */
 export function slidein(element, options = {}) {
-  const dir = options.direction || element.getAttribute('direction') || 'left';
+  const dir = options.direction || element.getAttribute('data-direction') || element.getAttribute('direction') || 'left';
   return clickAnim(element, `slide-in-${dir}`, '0.5s');
 }
 export function slideout(element, options = {}) {

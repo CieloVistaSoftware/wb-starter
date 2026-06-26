@@ -131,3 +131,22 @@
   ), linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
   background-size: 1rem 1rem, 100% 100%;
 }
+
+/* Striped fill modifier for custom <wb-progress> (issue #127) */
+.wb-progress__bar--striped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+  animation: wb-progress-stripes 1s linear infinite;
+}
+
+/* Custom <wb-progress> must be block to honor height (issue #127) */
+.wb-progress { display: block; width: 100%; }

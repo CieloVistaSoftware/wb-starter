@@ -264,7 +264,7 @@ const WB = {
     // Check if schema exists
     let schema = SchemaBuilder.getSchema(name);
     if (!schema) {
-      console.warn(`[WB] Schema for "${name}" not registered yet — attempting on-demand fetch`);
+      dlog(`[WB] Schema for "${name}" not registered yet — fetching on demand`);
       try {
         // If caller requested blocking behavior (initial scan), await the fetch so processing is deterministic
         const loaded = await SchemaBuilder.loadSchemaFile(`${name}.schema.json`);
