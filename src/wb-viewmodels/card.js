@@ -1375,15 +1375,16 @@ export function cardproduct(element, options = {}) {
 export function cardnotification(element, options = {}) {
   const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
 
-  // Read variant (primary) with fallback to type (legacy)
-  const variant = options.variant || element.getAttribute('variant')
-    || options.type || element.getAttribute('type') || 'info';
-  const title = options.title || element.getAttribute('title') || '';
-  const message = options.message || element.getAttribute('message') || element.textContent || '';
+  // Read variant (primary) with fallback to type (legacy).
+  // Check dataset (data-*) first to match the framework's attribute convention.
+  const variant = options.variant || element.dataset.variant || element.getAttribute('variant')
+    || options.type || element.dataset.type || element.getAttribute('type') || 'info';
+  const title = options.title || element.dataset.title || element.getAttribute('title') || '';
+  const message = options.message || element.dataset.message || element.getAttribute('message') || element.textContent || '';
   const dismissible = parseBoolean(
-    options.dismissible ?? element.getAttribute('dismissible')
+    options.dismissible ?? element.dataset.dismissible ?? element.getAttribute('dismissible')
   ) !== false;
-  const customIcon = options.icon || element.getAttribute('icon');
+  const customIcon = options.icon || element.dataset.icon || element.getAttribute('icon');
 
   // Default icon letters per variant
   const defaultIcons = { info: 'i', success: 's', warning: 'w', error: 'e' };
@@ -2335,7 +2336,12 @@ export function cardportfolio(element, options = {}) {
   // ==================== HEADER ====================
   const header = document.createElement('header');
   header.className = 'wb-portfolio__header';
-  header.style.cssText = `text-align:center;padding:1.5rem;${config.cover ? 'margin-top:-60px;' : ''}`;
+  // The <header> also inherits the generic .wb-header navbar rule
+  // (display:flex; height:60px; fixed bg + border-bottom + 0.8em font). The
+  // flex squeezed the avatar into a column and the fixed 60px height clipped
+  // the header so its 120px avatar + text overflowed onto the sections below.
+  // Neutralize the whole navbar rule inline → an auto-height centered stack.
+  header.style.cssText = `display:block;height:auto;min-height:0;background:transparent;border-bottom:none;font-size:1rem;text-align:center;padding:1.5rem;${config.cover ? 'margin-top:-60px;' : ''}`;
 
   // Avatar
   if (config.avatar) {

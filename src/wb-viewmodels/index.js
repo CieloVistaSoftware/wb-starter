@@ -7,6 +7,11 @@
  * @version 2.1.1 (2025-12-21) - Fixed semantic module paths
  */
 
+// Debug logging — silent unless localStorage['wb-debug'] === '1'.
+const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+const _wbClog = console.log.bind(console);
+const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
+
 // Cache for loaded modules
 const moduleCache = new Map();
 
@@ -203,7 +208,7 @@ async function loadModule(moduleName) {
     .then(module => {
       moduleCache.set(moduleName, module);
       loadingPromises.delete(moduleName);
-      console.log(`[WB] Loaded module: ${moduleName}.js`);
+      dlog(`[WB] Loaded module: ${moduleName}.js`);
       return module;
     })
     .catch(error => {

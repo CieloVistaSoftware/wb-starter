@@ -20,6 +20,14 @@ if (!document.querySelector('link[data-highlight-theme]')) {
   document.head.appendChild(style);
 }
 
+/** Derive a highlight.js language from a `language-xxx` class (markdown/hljs convention). */
+function langFromClass(el) {
+  if (!el || !el.className) return '';
+  const m = String(el.className).match(/\blanguage-([\w-]+)/i);
+  const lang = m && m[1];
+  return lang && lang.toLowerCase() !== 'undefined' ? lang : '';
+}
+
 /**
  * Code - Enhanced <code> element
  * Adds syntax styling, copy button, language badge
@@ -46,8 +54,9 @@ export function code(element, options = {}) {
     }
     
     if (codeElement) {
-       // Pass language if set on pre
-       const lang = options.language || element.dataset.language;
+       // Pass language if set on pre — fall back to a language-xxx class on
+       // the pre or the inner code element (standard markdown/hljs convention).
+       const lang = options.language || element.dataset.language || langFromClass(element) || langFromClass(codeElement);
        // We don't pass other options because pre handles the chrome
        cleanupCode = code(codeElement, { language: lang });
     }
@@ -64,7 +73,7 @@ export function code(element, options = {}) {
   }
 
   const config = {
-    language: options.language || element.dataset.language || '',
+    language: options.language || element.dataset.language || langFromClass(element) || '',
     showCopy: options.showCopy ?? (element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
     variant: options.variant || element.dataset.variant || 'inline',
     scrollable: options.scrollable ?? (element.dataset.scrollable === 'true'),

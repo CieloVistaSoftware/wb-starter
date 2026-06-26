@@ -47,9 +47,9 @@ export function createToast(message, variant = 'info', duration = 3000) {
  * Falls back to variant for backwards compat on non-wb-button elements.
  */
 export function toast(element, options = {}) {
-  const message = options.message || element.getAttribute('message') || 'Notification';
-  const variant = options.variant || element.getAttribute('toast-variant') || element.getAttribute('variant') || 'info';
-  const duration = parseInt(options.duration || element.getAttribute('duration') || '3000');
+  const message = options.message || element.getAttribute('data-message') || element.getAttribute('message') || 'Notification';
+  const variant = options.variant || element.getAttribute('data-type') || element.getAttribute('toast-variant') || element.getAttribute('variant') || 'info';
+  const duration = parseInt(options.duration || element.getAttribute('data-duration') || element.getAttribute('duration') || '3000');
 
   const showToast = () => {
     createToast(message, variant, duration);
@@ -148,6 +148,14 @@ export function spinner(element, options = {}) {
   element.setAttribute('role', 'status');
   element.setAttribute('aria-label', 'Loading');
   element.innerHTML = '';
+
+  const size = options.size || element.getAttribute('data-size') || element.getAttribute('size');
+  const color = options.color || element.getAttribute('data-color') || element.getAttribute('color');
+  const speed = options.speed || element.getAttribute('data-speed') || element.getAttribute('speed');
+  element.classList.add('wb-spinner');
+  if (size) element.classList.add(`wb-spinner--${size}`);
+  if (color) element.classList.add(`wb-spinner--${color}`);
+  if (speed) element.classList.add(`wb-spinner--${speed}`);
 
   const ring = document.createElement('div');
   element.appendChild(ring);
@@ -277,9 +285,16 @@ export function alert(element, options = {}) {
  *   <wb-skeleton lines="3"></wb-skeleton>     \u2014 multiple lines
  */
 export function skeleton(element) {
+  const variant = element.getAttribute('variant') || 'text';
   const lines = parseInt(element.getAttribute('lines') || '1');
+  const width = element.getAttribute('width');
+  const height = element.getAttribute('height');
 
-  if (lines > 1) {
+  element.setAttribute('variant', variant);
+  if (width) element.style.width = width;
+  if (height) element.style.height = height;
+
+  if (variant === 'text' && lines > 1) {
     element.innerHTML = '';
     for (let i = 0; i < lines; i++) {
       element.appendChild(document.createElement('span'));
@@ -319,9 +334,10 @@ export function divider(element, options = {}) {
  * CSS: src/styles/behaviors/breadcrumb.css
  */
 export function breadcrumb(element, options = {}) {
-  const items = (options.items || element.getAttribute('items') || '').split(',').filter(Boolean);
-  const separator = options.separator || element.getAttribute('separator') || '/';
+  const items = (options.items || element.getAttribute('data-items') || element.getAttribute('items') || '').split(',').filter(Boolean);
+  const separator = options.separator || element.getAttribute('data-separator') || element.getAttribute('separator') || '/';
 
+  element.classList.add('wb-breadcrumb');
   element.setAttribute('aria-label', 'Breadcrumb');
 
   if (items.length > 0) {

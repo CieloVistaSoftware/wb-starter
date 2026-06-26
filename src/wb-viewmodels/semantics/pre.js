@@ -29,19 +29,20 @@ export function pre(element, options = {}) {
     maxHeight: options.maxHeight || element.dataset.maxHeight || '',
     wrap: options.wrap ?? (element.hasAttribute('data-wrap') ? element.dataset.wrap !== 'false' : defaultWrap),
     scrollable: scrollable,
-    size: options.size || element.dataset.size || 'xs',
+    size: options.size || element.dataset.size || 'md',
     ...options
   };
 
-  // Size mappings - compact by default
+  // Size mappings - 1rem (md) is the readable default per the font-size
+  // standard; smaller/larger only when data-size is set explicitly.
   const sizeMap = {
-    xs: '0.55rem',
-    sm: '0.6rem',
-    md: '0.65rem',
-    lg: '0.75rem',
-    xl: '0.85rem'
+    xs: '0.875rem',
+    sm: '0.9375rem',
+    md: '1rem',
+    lg: '1.125rem',
+    xl: '1.25rem'
   };
-  const fontSize = sizeMap[config.size] || sizeMap.xs;
+  const fontSize = sizeMap[config.size] || sizeMap.md;
 
   element.classList.add('x-pre');
 

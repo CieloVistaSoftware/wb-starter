@@ -3,6 +3,7 @@
  * Generated from: home-page.schema.json → test.site
  */
 import { test, expect } from '@playwright/test';
+import { safeScrollIntoView } from '../../base';
 
 const HOME_URL = 'http://localhost:3000/pages/home.html';
 
@@ -189,7 +190,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
 
   test('Notifications: renders expected text', async ({ page }) => {
     const stack = page.locator('wb-stack');
-    await stack.scrollIntoViewIfNeeded();
+    await safeScrollIntoView(stack);
     await page.waitForTimeout(2000);
     for (const text of ['System Update', 'Complete', 'Attention', 'Failure']) {
       await expect(stack).toContainText(text, { timeout: 15000 });
@@ -202,7 +203,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
 
   test('Audio: wb-audio renders (minInstances=1)', async ({ page }) => {
     const audio = page.locator('wb-audio');
-    await audio.scrollIntoViewIfNeeded();
+    await safeScrollIntoView(audio);
     await page.waitForTimeout(2000);
     await expect(audio).toHaveCount(1);
     await expect(audio).toHaveClass(/wb-audio/, { timeout: 15000 });
@@ -216,7 +217,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   });
 
   test('Audio: renders audio element and EQ', async ({ page }) => {
-    await page.locator('wb-audio').scrollIntoViewIfNeeded();
+    await safeScrollIntoView(page.locator('wb-audio'));
     await page.waitForTimeout(2000);
     await expect(page.locator('wb-audio audio')).toHaveCount(1, { timeout: 15000 });
   });

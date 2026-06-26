@@ -14,7 +14,6 @@
     "badge.schema.json",
     "behavior.schema.json",
     "behaviors-showcase.schema.json",
-    "builder.schema.json",
     "button.schema.json",
     "card.base.schema.json",
     "card.schema.json",
@@ -238,7 +237,6 @@
     "schemas": [
       "behavior.schema.json",
       "behaviors-showcase.schema.json",
-      "builder.schema.json",
       "card.base.schema.json",
       "demo.schema.json",
       "views.schema.json",

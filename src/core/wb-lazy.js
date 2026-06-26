@@ -38,7 +38,11 @@ const customElementMappings = [
   { selector: 'wb-cardexpandable', behavior: 'cardexpandable' },
   { selector: 'wb-cardminimizable', behavior: 'cardminimizable' },
   { selector: 'wb-carddraggable', behavior: 'carddraggable' },
-  
+  { selector: 'wb-themecontrol', behavior: 'themecontrol' },
+  { selector: 'wb-chip', behavior: 'chip' },
+  { selector: 'wb-inputgroup', behavior: 'inputgroup' },
+  { selector: 'wb-formrow', behavior: 'formrow' },
+
   // Feedback Components
   { selector: 'wb-spinner', behavior: 'spinner' },
   { selector: 'wb-avatar', behavior: 'avatar' },
@@ -146,6 +150,21 @@ const customElementMappings = [
   { selector: '[x-fadein]', behavior: 'fadein' },
   { selector: '[x-shake]', behavior: 'shake' },
   { selector: '[x-confetti]', behavior: 'confetti' },
+  // Entrance / attention-seeker animations + relative time — behaviors exist in
+  // effects.js/helpers and are registered in index.js, but were unmapped (issue #138)
+  { selector: '[x-slidein]', behavior: 'slidein' },
+  { selector: '[x-zoomin]', behavior: 'zoomin' },
+  { selector: '[x-wobble]', behavior: 'wobble' },
+  { selector: '[x-tada]', behavior: 'tada' },
+  { selector: '[x-jello]', behavior: 'jello' },
+  { selector: '[x-heartbeat]', behavior: 'heartbeat' },
+  { selector: '[x-glow]', behavior: 'glow' },
+  { selector: '[x-sparkle]', behavior: 'sparkle' },
+  { selector: '[x-snow]', behavior: 'snow' },
+  { selector: '[x-flip]', behavior: 'flip' },
+  { selector: '[x-flash]', behavior: 'flash' },
+  { selector: '[x-fireworks]', behavior: 'fireworks' },
+  { selector: '[x-relativetime]', behavior: 'relativetime' },
   { selector: '[x-form]', behavior: 'form' },
   { selector: '[x-password]', behavior: 'password' },
   { selector: '[x-tags]', behavior: 'tags' },

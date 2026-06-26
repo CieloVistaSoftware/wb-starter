@@ -8,6 +8,7 @@ import { test, expect, Page } from '@playwright/test';
  */
 
 async function injectCard(page: Page, html: string) {
+  await page.goto('/', { waitUntil: 'commit' }); // establish origin so inline /src import resolves
   await page.setContent(`
     <!DOCTYPE html>
     <html lang="en" data-theme="dark">

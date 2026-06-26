@@ -12,18 +12,26 @@
   font-size: 0.875rem;
   font-weight: 600;
   border-radius: 4px;
-  background: var(--text-secondary, #6b7280);
-  color: white;
+  /* Default = neutral "gray" chip: readable surface + primary text, not a
+     light text-color used as a background (which gave white-on-light). */
+  background: var(--badge-gray-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
   line-height: 1.4;
 }
 
-/* Variants */
-.wb-badge--primary { background: var(--primary); }
-.wb-badge--secondary { background: var(--secondary, #64748b); }
-.wb-badge--success { background: var(--success-color); }
-.wb-badge--warning { background: var(--warning-color); color: black; }
-.wb-badge--error { background: var(--danger-color); }
-.wb-badge--info { background: var(--info-color, #3b82f6); }
+/* Variants — saturated bg carries white text; light (warning) carries dark text */
+.wb-badge--gray      { background: var(--badge-gray-bg);  color: var(--text-primary); }
+.wb-badge--primary   { background: var(--badge-primary);   color: var(--badge-on-color); border-color: transparent; }
+.wb-badge--secondary { background: var(--badge-secondary); color: var(--badge-on-color); border-color: transparent; }
+.wb-badge--success   { background: var(--badge-success);   color: var(--badge-on-color); border-color: transparent; }
+.wb-badge--warning   { background: var(--badge-warning);   color: var(--badge-on-light); border-color: transparent; }
+.wb-badge--error     { background: var(--badge-error);     color: var(--badge-on-color); border-color: transparent; }
+.wb-badge--info      { background: var(--badge-info);      color: var(--badge-on-color); border-color: transparent; }
+.wb-badge--purple    { background: var(--badge-purple);    color: var(--badge-on-color); border-color: transparent; }
+.wb-badge--pink      { background: var(--badge-pink);      color: var(--badge-on-color); border-color: transparent; }
+.wb-badge--teal      { background: var(--badge-teal);      color: var(--badge-on-color); border-color: transparent; }
+.wb-badge--orange    { background: var(--badge-orange);    color: var(--badge-on-color); border-color: transparent; }
 
 /* Sizes */
 .wb-badge--sm { padding: 0.125rem 0.375rem; font-size: 0.75rem; }

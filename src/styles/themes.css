@@ -65,7 +65,24 @@
   --notification-warning-dark-color: hsl(33, 100%, 75%);
   --notification-danger-dark-bg: hsla(4, 90%, 58%, 0.12);
   --notification-danger-dark-color: hsl(0, 74%, 77%);
-  
+
+  /* Badge palette — backgrounds dark enough for white text to meet WCAG AA,
+     decoupled from the lighter semantic colors used by alerts/notifications.
+     on-color = text on saturated badges; on-light = dark text on light badges. */
+  --badge-on-color: hsl(0, 0%, 100%);
+  --badge-on-light: hsl(222, 20%, 12%);
+  --badge-gray-bg:  var(--bg-tertiary);
+  --badge-primary:  var(--primary);
+  --badge-secondary: var(--secondary);
+  --badge-success:  hsl(142, 64%, 26%);
+  --badge-warning:  var(--warning-color);
+  --badge-error:    hsl(0, 66%, 41%);
+  --badge-info:     hsl(217, 72%, 40%);
+  --badge-purple:   hsl(258, 52%, 47%);
+  --badge-pink:     hsl(330, 60%, 40%);
+  --badge-teal:     hsl(174, 72%, 23%);
+  --badge-orange:   hsl(28, 88%, 34%);
+
   /* Rating star color */
   --rating-active-color: hsl(45, 96%, 56%);
 }

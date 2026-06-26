@@ -3,6 +3,12 @@
 if (typeof window !== 'undefined' && typeof window.WB === 'undefined') {
   /** @type {any} */ (window).WB = undefined;
 }
+
+// Debug logging — silent unless localStorage['wb-debug'] === '1'.
+// Keeps the console clean in normal use; warnings/errors are never gated.
+const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+const _wbClog = console.log.bind(console);
+const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
 /**
  * WB - Web Behavior
  * =================
@@ -252,13 +258,13 @@ const WB = {
     
     // Get schema name from tag or x-* attributes
     const name = schemaName || WB._detectSchemaName(element);
-    console.log(`[WB.processSchema] Processing element ${element.tagName}, detected schema: ${name}`);
+    dlog(`[WB.processSchema] Processing element ${element.tagName}, detected schema: ${name}`);
     if (!name) return;
     
     // Check if schema exists
     let schema = SchemaBuilder.getSchema(name);
     if (!schema) {
-      console.warn(`[WB] Schema for "${name}" not registered yet — attempting on-demand fetch`);
+      dlog(`[WB] Schema for "${name}" not registered yet — fetching on demand`);
       try {
         // If caller requested blocking behavior (initial scan), await the fetch so processing is deterministic
         const loaded = await SchemaBuilder.loadSchemaFile(`${name}.schema.json`);
@@ -273,11 +279,11 @@ const WB = {
 
     // Process through schema builder (builds DOM from $view)
     try {
-      console.log(`[WB.processSchema] Calling SchemaBuilder.processElement for ${element.tagName}`);
+      dlog(`[WB.processSchema] Calling SchemaBuilder.processElement for ${element.tagName}`);
       SchemaBuilder.processElement(element, name);
       schemaProcessed.add(element);
       element.setAttribute('x-schema', name);
-      console.log(`[WB.processSchema] Schema processing complete for ${element.tagName}`);
+      dlog(`[WB.processSchema] Schema processing complete for ${element.tagName}`);
     } catch (err) {
       console.error('[WB] processSchema failed for', name, err && err.message);
     }
@@ -312,24 +318,24 @@ const WB = {
    * @returns {Promise<void>}
    */
   async scan(root = document.body) {
-    console.log(`[WB.scan] Starting scan on root:`, root.tagName || 'document.body');
+    dlog(`[WB.scan] Starting scan on root:`, root.tagName || 'document.body');
     const promises = [];
     const behaviorNames = Object.keys(behaviors);
     const knownBehaviors = new Set(behaviorNames);
     const prefix = getConfig('prefix') || 'x'; // Default to x-
     const useSchemas = getConfig('useSchemas');
-    console.log(`[WB.scan] useSchemas =`, useSchemas);
+    dlog(`[WB.scan] useSchemas =`, useSchemas);
 
     // v3.0: Process wb-* custom element tags through schema builder first
     if (useSchemas) {
-      console.log(`[WB.scan] useSchemas is true, scanning for wb-* elements in root:`, root.tagName || 'document.body');
+      dlog(`[WB.scan] useSchemas is true, scanning for wb-* elements in root:`, root.tagName || 'document.body');
       // Collect promises so we can await schema-built elements before continuing
       const schemaPromises = [];
       root.querySelectorAll('*').forEach(el => {
         const htmlEl = /** @type {HTMLElement} */ (el);
         const tag = htmlEl.tagName.toLowerCase();
         if (tag.startsWith('wb-') && tag !== 'wb-view') {
-          console.log(`[WB.scan] Found wb-* element: ${tag} (${htmlEl.id || 'no-id'})`);
+          dlog(`[WB.scan] Found wb-* element: ${tag} (${htmlEl.id || 'no-id'})`);
           // WB.processSchema is async-capable; collect the promise and allow it to load schemas on-demand
           try {
             const p = WB.processSchema(htmlEl, null, /*blocking*/ true);
@@ -342,14 +348,14 @@ const WB = {
 
       // Await processing of schema-built elements to make injection deterministic
       if (schemaPromises.length) {
-        console.log(`[WB.scan] Awaiting ${schemaPromises.length} schema processing promises`);
+        dlog(`[WB.scan] Awaiting ${schemaPromises.length} schema processing promises`);
         await Promise.all(schemaPromises);
-        console.log(`[WB.scan] Schema processing complete`);
+        dlog(`[WB.scan] Schema processing complete`);
       } else {
-        console.log(`[WB.scan] No wb-* elements found to process`);
+        dlog(`[WB.scan] No wb-* elements found to process`);
       }
     } else {
-      console.log(`[WB.scan] useSchemas is false, skipping schema processing`);
+      dlog(`[WB.scan] useSchemas is false, skipping schema processing`);
     }
 
       // 1. Detect Legacy Usage (Strict Mode: Error) 
@@ -407,7 +413,7 @@ const WB = {
 
           if (behaviorName) {
             // Debug log for behavior injection
-            console.log('[WB.scan] Injecting behavior:', behaviorName, 'on', htmlEl, 'with options:', attr.value ? { config: attr.value } : {});
+            dlog('[WB.scan] Injecting behavior:', behaviorName, 'on', htmlEl, 'with options:', attr.value ? { config: attr.value } : {});
             // Pass the attribute value as config if present
             const options = attr.value ? { config: attr.value } : {};
             promises.push(WB.inject(htmlEl, behaviorName, options));
@@ -448,7 +454,7 @@ const WB = {
    * @returns {MutationObserver} The observer instance
    */
   observe(root = document.body) {
-    console.log(`[WB.observe] Starting observer on root:`, root.tagName || 'document.body');
+    dlog(`[WB.observe] Starting observer on root:`, root.tagName || 'document.body');
     // Disconnect existing observer if present to prevent duplicates
     if (WB._observer) {
       WB._observer.disconnect();
@@ -458,7 +464,7 @@ const WB = {
     const knownBehaviors = new Set(behaviorNames);
     const prefix = getConfig('prefix') || 'x'; // Default to x-
     const useSchemas = getConfig('useSchemas');
-    console.log(`[WB.observe] useSchemas =`, useSchemas);
+    dlog(`[WB.observe] useSchemas =`, useSchemas);
     
     // Build attribute filter list
     const attributeFilter = ['x-behavior'];
@@ -468,7 +474,7 @@ const WB = {
     });
 
     const observer = new MutationObserver(mutations => {
-      console.log(`[WB.observe] MutationObserver triggered with ${mutations.length} mutations`);
+      dlog(`[WB.observe] MutationObserver triggered with ${mutations.length} mutations`);
       for (const mutation of mutations) {
         // Handle added nodes
         for (const node of mutation.addedNodes) {
@@ -478,11 +484,11 @@ const WB = {
           // Cast to HTMLElement after type check
           const el = /** @type {HTMLElement} */ (node);
           const tag = el.tagName.toLowerCase();
-          console.log(`[WB.observe] Processing added node: ${tag}`);
+          dlog(`[WB.observe] Processing added node: ${tag}`);
             
           // v3.0: Process wb-* tags through schema builder
           if (useSchemas && tag.startsWith('wb-') && tag !== 'wb-view') {
-            console.log(`[WB.observe] Found wb-* element in mutation: ${tag}`);
+            dlog(`[WB.observe] Found wb-* element in mutation: ${tag}`);
             WB.processSchema(el);
           }
             
@@ -722,21 +728,21 @@ const WB = {
 
     // v3.0: Initialize Schema Builder
     if (useSchemas) {
-      console.log('═══════════════════════════════════════════════════════');
-      console.log('  WB Behaviors v3.0 - MVVM Architecture');
-      console.log('═══════════════════════════════════════════════════════');
-      console.log('[WB.init] useSchemas is true, initializing SchemaBuilder...');
+      dlog('═══════════════════════════════════════════════════════');
+      dlog('  WB Behaviors v3.0 - MVVM Architecture');
+      dlog('═══════════════════════════════════════════════════════');
+      dlog('[WB.init] useSchemas is true, initializing SchemaBuilder...');
       
       try {
         await SchemaBuilder.loadSchemas(schemaPath);
-        console.log(`[WB.init] Schema Builder loaded ${SchemaBuilder.registry.size} schemas`);
-        console.log('[WB.init] Available schemas:', Array.from(SchemaBuilder.registry.keys()));
+        dlog(`[WB.init] Schema Builder loaded ${SchemaBuilder.registry.size} schemas`);
+        dlog('[WB.init] Available schemas:', Array.from(SchemaBuilder.registry.keys()));
       } catch (error) {
         console.warn('[WB.init] Failed to load schemas:', error);
         // Continue without schemas - behaviors still work
       }
     } else {
-      console.log('[WB.init] useSchemas is false, skipping schema initialization');
+      dlog('[WB.init] useSchemas is false, skipping schema initialization');
     }
 
     // Scan existing elements
@@ -763,7 +769,7 @@ const WB = {
       SchemaBuilder.startObserver();
     }
 
-    console.log(`✅ WB (Web Behavior) v${WB.version} initialized`);
+    dlog(`✅ WB (Web Behavior) v${WB.version} initialized`);
     
     pubsub.publish('wb:init', options);
 
