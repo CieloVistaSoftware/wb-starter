@@ -26,16 +26,16 @@ test.describe('Strict Mode Runtime Compliance', () => {
 
     // 2. Check that Modern component processed
     const modernCard = page.locator('#modern-card');
-    await expect(modernCard).toHaveAttribute('data-wb-schema', 'card');
+    await expect(modernCard).toHaveAttribute('x-schema', 'card');
 
     // 3. Check that Legacy component is NOT processed/upgraded
     const legacyCard = page.locator('#legacy-card');
     
     // Should verify it has the error marker
-    await expect(legacyCard).toHaveAttribute('data-wb-error', 'legacy');
+    await expect(legacyCard).toHaveAttribute('x-error', 'legacy');
     
     // Should NOT have the success marker
-    const isLegacyProcessed = await legacyCard.evaluate((el: HTMLElement) => el.dataset.wbSchema);
-    expect(isLegacyProcessed).toBeUndefined();
+    const isLegacyProcessed = await legacyCard.getAttribute('x-schema');
+    expect(isLegacyProcessed).toBeNull();
   });
 });
