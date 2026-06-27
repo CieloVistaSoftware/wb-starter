@@ -57,7 +57,12 @@
     <wb-cardpricing plan="Pro" price="$29/mo" features="Unlimited projects,Priority support,Custom themes"></wb-cardpricing>
   </wb-demo>
 
-  <script type="module" src="../../src/main.js"></script>
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    console.log('WB Component Library cards initialized');
+  </script>
 </body>
 
 </html>

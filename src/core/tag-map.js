@@ -107,6 +107,7 @@ export const nativeMap = {
   'form': 'form',
   'fieldset': 'fieldset',
   'label': 'label',
+  'article': 'card', // semantic <article> -> card (only when autoInject enabled)
 
   // Media
   'img': 'image',
