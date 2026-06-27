@@ -59,6 +59,8 @@
     .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; }
     .wb-mdhtml th { background: var(--bg-secondary); font-weight: 600; }
     
+    /* doc-viewer: force wrap over the code behaviors inline white-space:pre (#147/#150) */
+    .wb-mdhtml pre, .wb-mdhtml pre code, .wb-mdhtml .code-wrapper pre, .wb-mdhtml .code-wrapper code { white-space: pre-wrap !important; overflow-wrap: anywhere !important; word-break: break-word !important; }
     .loading { color: var(--text-muted); font-style: italic; }
     .error { color: var(--danger); padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 6px; border: 1px solid var(--danger); }
   </style>
