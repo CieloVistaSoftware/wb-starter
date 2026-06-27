@@ -64,7 +64,7 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 
 ## Usage Example
 ```html
-<wb-card data-variant="primary" data-hoverable data-clickable>
+<wb-card variant="primary" hoverable clickable>
   <h3>Card Title</h3>
   <p>Card content goes here.</p>
 </wb-card>
@@ -73,9 +73,9 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 > **Developer Tip:** In VS Code, type `<wb-card` to trigger IntelliSense and see available attributes.
 
 **Attribute Definitions:**
-- `data-variant="primary"`: Sets the card variant (e.g., primary, secondary, default). If omitted, `wb-card--default` is used.
-- `data-hoverable`: Adds the `wb-card--hoverable` class for hover effects. Omit or set to `false` to disable.
-- `data-clickable`: Adds the `wb-card--clickable` class for click interaction styling.
+- `variant="primary"`: Sets the card variant (e.g., primary, secondary, default). If omitted, `wb-card--default` is used.
+- `hoverable`: Adds the `wb-card--hoverable` class for hover effects. Omit or set to `false` to disable.
+- `clickable`: Adds the `wb-card--clickable` class for click interaction styling.
 
 ---
 

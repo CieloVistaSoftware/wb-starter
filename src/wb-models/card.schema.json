@@ -159,7 +159,7 @@
       "visual": [
         {
           "name": "Basic Card",
-          "setup": "<article data-wb='card'>Content</article>",
+          "setup": "<wb-card>Content</wb-card>",
           "expect": {
             "visible": true,
             "hasClass": "wb-card"
@@ -167,7 +167,7 @@
         },
         {
           "name": "Card with Header/Footer",
-          "setup": "<article data-wb='card' data-wb-title='Title' data-wb-footer='Footer'>Content</article>",
+          "setup": "<wb-card title='Title' footer='Footer'>Content</wb-card>",
           "expect": {
             "textContains": "Title"
           },
@@ -187,7 +187,7 @@
       "interactions": [
         {
           "name": "Clickable Card",
-          "setup": "<article data-wb='card' data-wb-clickable='true'>Click Me</article>",
+          "setup": "<wb-card clickable>Click Me</wb-card>",
           "action": "click",
           "expect": {
             "event": "click",

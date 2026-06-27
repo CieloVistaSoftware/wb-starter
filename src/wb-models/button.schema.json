@@ -309,7 +309,7 @@
       "buttons": [
         {
           "name": "Basic Click",
-          "setup": "<button data-wb='button'>Click Me</button>",
+          "setup": "<wb-button>Click Me</wb-button>",
           "selector": "element",
           "expect": {
             "textContains": "Click Me",
@@ -318,7 +318,7 @@
         },
         {
           "name": "Variant Classes",
-          "setup": "<button data-wb='button' data-wb-variant='primary'>Primary</button>",
+          "setup": "<wb-button variant='primary'>Primary</wb-button>",
           "selector": "element",
           "expect": {
             "hasClass": "wb-button--primary"
@@ -328,7 +328,7 @@
       "focus": [
         {
           "name": "Focus State",
-          "setup": "<button data-wb='button'>Focus Me</button>",
+          "setup": "<wb-button>Focus Me</wb-button>",
           "action": "click",
           "selector": "element",
           "expect": {
@@ -339,7 +339,7 @@
       "disabled": [
         {
           "name": "Disabled State",
-          "setup": "<button data-wb='button' disabled>Disabled</button>",
+          "setup": "<wb-button disabled>Disabled</wb-button>",
           "action": "click",
           "selector": "element",
           "expect": {
@@ -353,7 +353,7 @@
       "keyboard": [
         {
           "name": "Enter Key",
-          "setup": "<button data-wb='button'>Enter Me</button>",
+          "setup": "<wb-button>Enter Me</wb-button>",
           "key": "Enter",
           "expect": {
             "event": "click"
@@ -361,7 +361,7 @@
         },
         {
           "name": "Space Key",
-          "setup": "<button data-wb='button'>Space Me</button>",
+          "setup": "<wb-button>Space Me</wb-button>",
           "key": "Space",
           "expect": {
             "event": "click"

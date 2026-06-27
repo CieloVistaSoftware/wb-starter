@@ -3,6 +3,17 @@
   "description": "WB Starter documentation and guides",
   "categories": [
     {
+      "name": "Guides",
+      "icon": "📘",
+      "docs": [
+        {
+          "file": "V3-GUIDE.md",
+          "title": "wb-starter v3 — Complete Guide",
+          "description": "How to use wb-starter and how it works internally"
+        }
+      ]
+    },
+    {
       "name": "Claude Documentation",
       "icon": "🤖",
       "docs": [
