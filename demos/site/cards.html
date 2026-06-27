@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🃏 Card Showcase — WB Component Library</title>
+  <meta name="description" content="Card components: basic, image, profile, pricing, and more">
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+</head>
+
+<body>
+  <nav class="wb-site-nav" style="display:flex;gap:0.25rem;padding:0.5rem 1rem;background:var(--bg-tertiary,#1e293b);border-bottom:1px solid var(--border-color,#374151);overflow-x:auto;position:sticky;top:0;z-index:100;">
+    <a href="index.html" style="padding:0.5rem 1rem;color:var(--text-primary,#f9fafb);text-decoration:none;font-weight:700;font-size:1rem;margin-right:1rem;">🧩 WB Library</a>
+      <a href="badges.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🏷️ Badges</a>
+      <a href="progress.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">📊 Progress</a>
+      <a href="notifications.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🔔 Notifications</a>
+      <a href="portfolio.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">👤 Portfolio</a>
+      <a href="cards.html" class="wb-nav__link--active" style="padding:0.5rem 1rem;color:var(--primary,#6366f1);text-decoration:none;font-size:0.9rem;border-bottom:2px solid var(--primary,#6366f1);white-space:nowrap;">🃏 Cards</a>
+      <a href="all-components.html" style="padding:0.5rem 1rem;color:var(--text-secondary,#9ca3af);text-decoration:none;font-size:0.9rem;border-bottom:2px solid transparent;white-space:nowrap;">🧩 All</a>
+  </nav>
+
+  <h1 style="padding:1rem 1.5rem 0;">🃏 Card Showcase</h1>
+  <p style="padding:0 1.5rem;color:var(--text-secondary,#9ca3af);">Containers for grouped content — basic, image, profile, and pricing variants</p>
+
+  <!-- 1. Basic cards -->
+  <h2 style="padding:0 1.5rem;">Basic</h2>
+  <wb-demo columns="3">
+    <wb-card title="Title + Body" elevated>
+      <p>Simple card with a title and body content.</p>
+    </wb-card>
+    <wb-card title="With Footer" footer="Footer actions" elevated>
+      <p>Card that includes a footer region.</p>
+    </wb-card>
+    <wb-card title="Outlined" outlined>
+      <p>Card with an outline border instead of elevation.</p>
+    </wb-card>
+  </wb-demo>
+
+  <!-- 2. Image card -->
+  <h2 style="padding:0 1.5rem;">Image</h2>
+  <wb-demo columns="3">
+    <wb-cardimage src="https://picsum.photos/400/200?r=cards1" title="Image Card" subtitle="Card with an image header"></wb-cardimage>
+    <wb-cardimage src="https://picsum.photos/400/200?r=cards2" title="Another Image" subtitle="With subtitle text"></wb-cardimage>
+  </wb-demo>
+
+  <!-- 3. Profile card -->
+  <h2 style="padding:0 1.5rem;">Profile</h2>
+  <wb-demo columns="3">
+    <wb-cardprofile name="Jane Smith" title="Senior Developer" initials="JS"></wb-cardprofile>
+  </wb-demo>
+
+  <!-- 4. Pricing card -->
+  <h2 style="padding:0 1.5rem;">Pricing</h2>
+  <wb-demo columns="3">
+    <wb-cardpricing plan="Pro" price="$29/mo" features="Unlimited projects,Priority support,Custom themes"></wb-cardpricing>
+  </wb-demo>
+
+  <script type="module" src="../../src/main.js"></script>
+</body>
+
+</html>

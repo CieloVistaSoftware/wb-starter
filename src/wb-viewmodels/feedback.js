@@ -47,6 +47,8 @@ export function createToast(message, variant = 'info', duration = 3000) {
  * Falls back to variant for backwards compat on non-wb-button elements.
  */
 export function toast(element, options = {}) {
+  if (element._wbToastInit) return () => {};
+  element._wbToastInit = true;
   const message = options.message || element.getAttribute('data-message') || element.getAttribute('message') || 'Notification';
   const variant = options.variant || element.getAttribute('data-type') || element.getAttribute('toast-variant') || element.getAttribute('variant') || 'info';
   const duration = parseInt(options.duration || element.getAttribute('data-duration') || element.getAttribute('duration') || '3000');
@@ -60,7 +62,7 @@ export function toast(element, options = {}) {
   };
 
   element.addEventListener('click', showToast);
-  return () => element.removeEventListener('click', showToast);
+  return () => { element.removeEventListener('click', showToast); delete element._wbToastInit; };
 }
 
 /**
