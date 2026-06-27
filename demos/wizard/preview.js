@@ -12,7 +12,7 @@ function buildFullPage(bodyHtml) {
     + '<meta charset="UTF-8">\n'
     + '<link rel="stylesheet" href="' + origin + '/src/styles/themes.css">\n'
     + '<link rel="stylesheet" href="' + origin + '/src/styles/site.css">\n'
-    + '<link rel="stylesheet" href="' + origin + '/src/styles/components.css">\n'
+    + '<link rel="stylesheet" href="' + origin + '/src/styles/site.css">\n'
     + '<style>*,*::before,*::after{box-sizing:border-box;}html,body{margin:0;padding:0;background:#0a0a0a;color:#e5e5e5;font-family:system-ui,sans-serif;}body{padding:2rem;}</style>\n'
     + '</head>\n<body data-theme="dark">\n'
     + bodyHtml + '\n'

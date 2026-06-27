@@ -11,7 +11,7 @@
  */
 export function collapse(element, options = {}) {
   const config = {
-    heading: options.heading || element.getAttribute('heading') || 'Toggle',
+    heading: options.heading || element.getAttribute('heading') || element.getAttribute('title') || 'Toggle',
     open: options.open ?? element.hasAttribute('expanded') ?? element.hasAttribute('open'),
     target: options.target || element.getAttribute('target'),
     ...options
