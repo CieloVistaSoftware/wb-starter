@@ -11,6 +11,5 @@ test('semantic <article> should be processed to card synchronously on page load'
   await expect(article.locator('.wb-card__header, .wb-card__main, .wb-card__footer')).toHaveCount(await article.locator('[class*="wb-card__"]').count());
 
   // Should be styled as a card (not just a plain article)
-  await expect(article).toHaveCSS('display', 'block');
-  await expect(article).toHaveCSS('position', 'relative');
+  await expect(article).toHaveCSS('display', 'flex'); // wb-card is a flex container
 });

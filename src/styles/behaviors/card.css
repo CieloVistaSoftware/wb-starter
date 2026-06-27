@@ -19,6 +19,7 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .wb-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--bg-secondary);
