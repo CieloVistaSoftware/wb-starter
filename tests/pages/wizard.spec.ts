@@ -282,6 +282,65 @@ test.describe('Wizard - Container Nesting', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════════
+// 4b. BUILD TAB - SIBLING INSERTION (BUG FIX: stack nesting)
+// ═══════════════════════════════════════════════════════════════════════════
+
+test.describe('Wizard - Sibling Insertion After Exiting Container', () => {
+  test.beforeEach(async ({ page }) => {
+    await waitForWizardReady(page);
+    // Reset wizard state to ensure clean slate
+    await page.click('#resetWizardBtn');
+    await page.waitForTimeout(200);
+  });
+
+  test('item added after exiting container mode is a sibling, not a child', async ({ page }) => {
+    // Add Demo container — auto-enters container mode
+    await selectComponent(page, 'Demo');
+    const ciEntered = await page.evaluate(() => (window as any).containerIndex);
+    expect(ciEntered).toBe(0);
+
+    // Exit container mode (click the "Exit Container" button in the banner)
+    await page.click('#containerBanner button');
+    await page.waitForTimeout(200);
+
+    const ciExited = await page.evaluate(() => (window as any).containerIndex);
+    expect(ciExited).toBe(-1);
+
+    // Add Audio — must be appended as a sibling of Demo, not inside it
+    await selectComponent(page, 'Audio');
+
+    const stack = await getPreviewStack(page);
+    expect(stack.length).toBe(2);
+    expect(stack[0].tag).toBe('wb-demo');
+    expect(stack[0].children.length).toBe(0);
+    expect(stack[1].tag).toBe('wb-audio');
+  });
+
+  test('multiple siblings accumulate at root when not in container mode', async ({ page }) => {
+    // Add first item (not a container)
+    await selectComponent(page, 'badge');
+    await selectComponent(page, 'Audio');
+
+    const stack = await getPreviewStack(page);
+    // Both items should be at root level as siblings
+    expect(stack.length).toBe(2);
+    expect(stack[0].tag).toBe('wb-badge');
+    expect(stack[1].tag).toBe('wb-audio');
+  });
+
+  test('code sample shows both sibling tags after exit-and-add', async ({ page }) => {
+    await selectComponent(page, 'Demo');
+    await page.click('#containerBanner button');
+    await page.waitForTimeout(200);
+    await selectComponent(page, 'Audio');
+
+    const html = await getCodeSample(page);
+    expect(html).toContain('<wb-demo');
+    expect(html).toContain('<wb-audio');
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
 // 5. PREVIEW TAB - IFRAME RENDERING
 // ═══════════════════════════════════════════════════════════════════════════
 

@@ -40,6 +40,7 @@
     "check:stale-locks": "node scripts/check-stale-locks.js",
     "check:staged-integrity": "node scripts/check-staged-integrity.js",
     "check:critical-scripts": "node scripts/ensure-critical-scripts.js",
+    "check:today-updated": "node scripts/verify-today-mentions.js",
     "cleanup:artifacts": "node scripts/cleanup-artifacts.js",
     "ci:docs-safety": "npm run lint:md-powershell && npm run check:stale-locks && npm run check:critical-scripts",
     "pw:maybe": "node scripts/playwright-if-tests.js --",
