@@ -369,6 +369,29 @@ test.describe('Schema Validation: Test Section Completeness', () => {
     
     expect(issues, `Invalid setup examples:\n${issues.join('\n')}`).toEqual([]);
   });
+
+  // v3 standard is plain attributes; legacy data-wb / data-wb-* in any
+  // setup example (top-level or per-test) is rejected by strict mode (#150).
+  test('setup examples use v3 bare attributes (no legacy data-wb)', () => {
+    const schemas = getComponentSchemas();
+    const offenders: string[] = [];
+    const walk = (node: any, file: string): void => {
+      if (node === null || typeof node !== 'object') return;
+      for (const [key, val] of Object.entries(node)) {
+        if (key === 'setup') {
+          const items = Array.isArray(val) ? val : [val];
+          for (const item of items) {
+            if (typeof item === 'string' && /data-wb[-=]/.test(item)) {
+              offenders.push(`${file}: ${item}`);
+            }
+          }
+        }
+        walk(val, file);
+      }
+    };
+    for (const [file, schema] of schemas) walk(schema, file);
+    expect(offenders, `Legacy data-wb in setup examples (v3 = bare attrs):\n${offenders.join('\n')}`).toEqual([]);
+  });
   
   test('setup examples reference correct behavior', () => {
     const schemas = getComponentSchemas();
