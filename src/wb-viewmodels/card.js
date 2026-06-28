@@ -1554,14 +1554,43 @@ export function cardfile(element, options = {}) {
 
   element.appendChild(info);
 
-  // Download
-  if (config.downloadable && config.href) {
-    const downloadBtn = document.createElement('a');
-    downloadBtn.href = config.href;
-    downloadBtn.download = config.filename || '';
-    downloadBtn.style.cssText = 'font-size:1.5rem;text-decoration:none;';
-    downloadBtn.textContent = '⬇️';
-    element.appendChild(downloadBtn);
+  // Download: the whole card is the click target. Use an explicit href when
+  // provided, otherwise fall back to the filename (file served next to the page).
+  const downloadUrl = config.href || config.filename;
+  if (config.downloadable && downloadUrl) {
+    const dlIcon = document.createElement('span');
+    dlIcon.className = 'wb-card__file-download';
+    dlIcon.style.cssText = 'font-size:1.5rem;line-height:1;';
+    dlIcon.textContent = '⬇️';
+    element.appendChild(dlIcon);
+
+    element.style.cursor = 'pointer';
+    element.setAttribute('role', 'button');
+    element.setAttribute('tabindex', '0');
+    element.setAttribute('aria-label', `Download ${config.filename || 'file'}`);
+
+    const triggerDownload = () => {
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = config.filename || '';
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    };
+    const onClick = () => triggerDownload();
+    const onKey = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerDownload(); }
+    };
+    element.addEventListener('click', onClick);
+    element.addEventListener('keydown', onKey);
+
+    const baseCleanup = base.cleanup;
+    return () => {
+      element.removeEventListener('click', onClick);
+      element.removeEventListener('keydown', onKey);
+      if (typeof baseCleanup === 'function') { baseCleanup(); }
+    };
   }
 
   return base.cleanup;
