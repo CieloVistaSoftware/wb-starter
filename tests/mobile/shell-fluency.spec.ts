@@ -31,15 +31,22 @@ test.describe('Mobile shell fluency (real SPA, not fragments)', () => {
       ).toBeLessThanOrEqual(m.clientWidth + 1);
     });
 
-    test(`sidebar is off-canvas (not in-flow) on mobile: ${pg.name}`, async ({ page }) => {
+    test(`sidebar is off-canvas (hidden, not just fixed) on mobile: ${pg.name}`, async ({ page }) => {
       await page.goto(pg.url);
       const nav = page.locator('.site__nav');
       await nav.waitFor({ state: 'attached', timeout: 15000 });
-      const position = await nav.evaluate((el) => getComputedStyle(el).position);
+      await page.waitForTimeout(700); // let the drawer settle off-screen
+      const box = await nav.evaluate((el) => {
+        const r = el.getBoundingClientRect();
+        return { right: r.right, position: getComputedStyle(el).position };
+      });
+      expect(box.position, `${pg.name}: sidebar must be position:fixed`).toBe('fixed');
+      // The closed drawer must be translated OFF the left edge — not a visible
+      // strip overlapping content (the #165 regression).
       expect(
-        position,
-        `${pg.name}: sidebar must be position:fixed (off-canvas drawer) on phones, not in-flow`
-      ).toBe('fixed');
+        box.right,
+        `${pg.name}: closed sidebar drawer must be off-screen (right<=1), was ${Math.round(box.right)}`
+      ).toBeLessThanOrEqual(1);
     });
   }
 });
