@@ -1,4 +1,4 @@
-# Web Behaviors (WB) - Property System Documentation
+# WB-Starter - Property System Documentation
 
 > **Version:** 1.0.0  
 > **Updated:** December 20, 2024  

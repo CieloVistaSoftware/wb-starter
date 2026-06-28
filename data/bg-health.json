@@ -1,6 +1,6 @@
 {
-  "lastRun": "2026-06-23T16:02:49.593Z",
-  "totalChecks": 88,
+  "lastRun": "2026-06-28T03:06:17.745Z",
+  "totalChecks": 5996,
   "bugs": [
     {
       "id": "bug-regression-tests",
@@ -33,7 +33,7 @@
       "fixCommandId": "cvs.docs.syncCheck",
       "fixLabel": "Run Sync Check",
       "detectedAt": "2026-06-23T02:48:44.764Z",
-      "fixed": false
+      "fixed": true
     },
     {
       "id": "bug-untagged-code",
@@ -52,5 +52,5 @@
       "fixed": false
     }
   ],
-  "checkIndex": 0
+  "checkIndex": 4
 }

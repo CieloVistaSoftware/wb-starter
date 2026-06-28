@@ -1,4 +1,4 @@
-# Web Behaviors (WB) Attribute Naming Standard
+# WB-Starter Attribute Naming Standard
 
 **Version:** 1.1  
 **Created:** 2026-01-03  

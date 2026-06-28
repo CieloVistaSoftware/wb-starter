@@ -33,7 +33,7 @@ Your test suite is organized into strict tiers, enforced by Playwright and npm s
 - Schema Viewer: tests/schema-viewer.spec.ts
 
 Each tier is enforced by npm scripts and gates, so compliance must pass before behaviors, and so on. See playwright.config.ts for exact gating logic.
-# Web Behaviors (WB) Testing Strategy
+# WB-Starter Testing Strategy
 
 ## Core Principle
 **Testing proves wellbeing. NO GAPS ALLOWED.**

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **Property Viewer** refers to the dynamic right-hand panel in the Web Behaviors (WB) Builder interface. Historically separated into distinct tabs, the listener interfaces have been unified into a **Split View** to improve workflow efficiency.
+The **Property Viewer** refers to the dynamic right-hand panel in the WB-Starter Builder interface. Historically separated into distinct tabs, the listener interfaces have been unified into a **Split View** to improve workflow efficiency.
 
 ## Split View UX
 

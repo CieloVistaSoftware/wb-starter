@@ -31,7 +31,7 @@
 
 ## Overview
 
-**wb-views** is the high-level **HTML API**, a feature found in the Web Behaviors (WB) Behaviors Library. It allows for the creation of reusable UI components using only HTML. For example, defining a `<wb-user-card>` once and using it everywhere.
+**wb-views** is the high-level **HTML API**, a feature found in the WB-Starter Behaviors Library. It allows for the creation of reusable UI components using only HTML. For example, defining a `<wb-user-card>` once and using it everywhere.
 
 While **Behaviors** (`x-ripple`, `x-draggable`) allow you to add functionality to *existing* elements, **wb-views** allow you to define *new* elements (`<wb-card>`, `<wb-btn>`) with encapsulated structure, style, and behavior.
 

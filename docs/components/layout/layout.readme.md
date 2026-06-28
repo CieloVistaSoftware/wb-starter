@@ -2,7 +2,7 @@
 [Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/components/layout/layout.readme.md)
 
 ## Overview
-Web Behaviors (WB) provides flexible layout components using CSS Grid and Flexbox. All layout components are responsive and follow semantic HTML standards.
+WB-Starter provides flexible layout components using CSS Grid and Flexbox. All layout components are responsive and follow semantic HTML standards.
 
 ---
 

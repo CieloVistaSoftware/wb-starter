@@ -1,6 +1,6 @@
 # Search Index Generator
 
-Generate a client-side search index for Web Behaviors (WB) Framework sites.
+Generate a client-side search index for WB-Starter Framework sites.
 
 ## Overview
 

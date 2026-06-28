@@ -2,7 +2,7 @@
 [Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/components/forms/forms.readme.md)
 
 ## Overview
-Web Behaviors (WB) provides accessible, styled form controls with validation support. All form components use semantic HTML and follow accessibility standards.
+WB-Starter provides accessible, styled form controls with validation support. All form components use semantic HTML and follow accessibility standards.
 
 ---
 

@@ -1,4 +1,4 @@
-# Schema Standards for Web Behaviors (WB) Components & Pages
+# Schema Standards for WB-Starter Components & Pages
 
 ## Purpose
 This document defines the standard structure and conventions for all JSON schemas used in the WB project.
