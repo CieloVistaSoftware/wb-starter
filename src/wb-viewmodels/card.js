@@ -89,9 +89,9 @@ export function cardBase(element, options = {}) {
     ...options, // Spread first to allow overrides, but specific logic below takes precedence
     behavior: options.behavior || 'card',
     title: options.title || element.dataset.title || element.getAttribute('title') || '',
-    subtitle: options.subtitle || element.dataset.subtitle || '',
+    subtitle: options.subtitle || element.dataset.subtitle || element.getAttribute('subtitle') || '',
     content: options.content || element.dataset.content || element.getAttribute('content') || '',
-    footer: options.footer || element.dataset.footer || '',
+    footer: options.footer || element.dataset.footer || element.getAttribute('footer') || '',
     variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
     badge: options.badge || element.dataset.badge || element.getAttribute('badge') || '',
     clickable: parseBoolean(options.clickable) ?? (element.dataset.clickable === 'true' || (element.hasAttribute('data-clickable') && element.dataset.clickable !== 'false') || element.hasAttribute('clickable')),
