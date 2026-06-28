@@ -314,6 +314,13 @@ export default class WBSite {
   }
 
   async navigateTo(pageId) {
+    // Remember the scroll position of the page we're leaving so returning to it
+    // restores where the user was. The window is the scroll container.
+    if (this.currentPage) {
+      this._scrollMemory = this._scrollMemory || {};
+      this._scrollMemory[this.currentPage] = window.scrollY;
+    }
+
     // Close mobile nav when navigating
     if (window.innerWidth <= 768) {
       this.closeMobileNav();
@@ -380,7 +387,19 @@ export default class WBSite {
     }
     // Optimization: MutationObserver handles injection automatically
     // WB.scan(main);
-    main.scrollTop = 0;
+
+    // Restore scroll: returning to a previously-visited page lands the user where
+    // they left off; a first visit goes to the top. The "1rem down from the top"
+    // gap below the sticky header is layout (.site__main padding-top: 1rem), not a
+    // scroll offset — scrolling down 1rem would tuck content under the sticky
+    // header. Done on the next frame so the page has its height before we scroll.
+    const rememberedY = (this._scrollMemory || {})[pageId];
+    const targetY = rememberedY != null ? rememberedY : 0;
+    requestAnimationFrame(() => {
+      window.scrollTo(0, targetY);
+      // Re-apply once more after lazy content settles so a tall restore isn't clamped.
+      setTimeout(() => window.scrollTo(0, targetY), 60);
+    });
   }
 
   render404(pageId) {
