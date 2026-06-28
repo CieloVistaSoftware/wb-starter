@@ -40,7 +40,7 @@ Use `<article>` when content:
 </article>
 ```
 
-## Web Behaviors (WB) Components Using Article
+## WB-Starter Components Using Article
 
 All card components use the `<article>` semantic element:
 

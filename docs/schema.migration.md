@@ -1,4 +1,4 @@
-# Web Behaviors (WB) Schema Migration Plan
+# WB-Starter Schema Migration Plan
 
 ## Purpose
 This document outlines the step-by-step plan to migrate all WB project schemas to the new modular, standardized structure using the `schemaFor` property and the recommended folder layout.

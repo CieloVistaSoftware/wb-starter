@@ -1,4 +1,4 @@
-# Potential Improvements for Web Behaviors (WB)
+# Potential Improvements for WB-Starter
 
 Based on the project assessment (Dec 2025), here are strategic improvements to consider for future iterations:
 

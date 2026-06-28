@@ -154,7 +154,7 @@ CSS Rules:
 
 **Tooltip Output:**
 ```text
-Web Behaviors (WB) Behavior Schema
+WB-Starter Behavior Schema
 
 Master schema defining all behavior metadata, properties, interactions, accessibility, and test requirements
 ```

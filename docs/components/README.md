@@ -180,7 +180,7 @@ Each component has a JSON schema in `src/wb-models/`:
 
 ## Semantic HTML Foundation
 
-Web Behaviors (WB) components use proper semantic HTML:
+WB-Starter components use proper semantic HTML:
 
 | Element | Used By | Purpose |
 |---------|---------|---------|

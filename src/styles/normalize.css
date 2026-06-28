@@ -2,7 +2,7 @@
  * Modern CSS Normalize
  * ====================
  * Minimal, modern CSS reset for consistent cross-browser styling.
- * Based on modern-normalize with WB Framework additions.
+ * Based on modern-normalize with WB-Starter additions.
  * 
  * @version 1.0.0
  */
@@ -165,7 +165,7 @@ iframe {
 }
 
 /* ============================================
-   WB Framework Additions
+   WB-Starter Additions
    ============================================ */
 
 /* Prevent layout shift from scrollbar */

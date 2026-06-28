@@ -3,7 +3,7 @@
 > **Updated:** 2026-02-13
 
 ## Overview
-`mdhtml` is a Web Behaviors (WB) component that converts Markdown to HTML in the browser. It is used via the `<wb-mdhtml>` custom element and supports both inline markdown and external markdown files.
+`mdhtml` is a WB-Starter component that converts Markdown to HTML in the browser. It is used via the `<wb-mdhtml>` custom element and supports both inline markdown and external markdown files.
 
 ---
 

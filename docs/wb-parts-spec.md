@@ -1,4 +1,4 @@
-gcan# Web Behaviors (WB) Parts Specification
+gcan# WB-Starter Parts Specification
 
 ## Overview
 

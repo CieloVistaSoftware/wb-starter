@@ -1,4 +1,4 @@
-# Web Behaviors (WB) Behavior System - Technical Workflow
+# WB-Starter Behavior System - Technical Workflow
 [Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/WB_BEHAVIOR_SYSTEM.md)
 
 ## Overview

@@ -1,4 +1,4 @@
-# Web Behaviors (WB) v3.0 Standards
+# WB-Starter v3.0 Standards
 
 ## Overview
 

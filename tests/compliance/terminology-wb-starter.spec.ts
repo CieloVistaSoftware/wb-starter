@@ -8,18 +8,21 @@
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 const allowedTerm = 'WB-Starter';
 const forbiddenTerms = [
   'Web Behaviors (WB)',
   'WB Framework'
 ];
+// NB: 'data' is intentionally excluded — it holds generated artifacts (search
+// index, audit dumps) that aren't authored source and would re-introduce the
+// term on regeneration.
 const searchDirs = [
   'docs',
   'src',
   'pages',
   'tests',
-  'data',
   'public'
 ];
 
@@ -29,6 +32,10 @@ function scanFiles(dir, results) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       scanFiles(fullPath, results);
+    } else if (entry.name.includes('terminology')) {
+      // The terminology spec files list the forbidden terms as literals to
+      // search for — skip them so they don't flag themselves.
+      continue;
     } else if (entry.name.endsWith('.md') || entry.name.endsWith('.js') || entry.name.endsWith('.ts') || entry.name.endsWith('.json') || entry.name.endsWith('.html')) {
       const content = fs.readFileSync(fullPath, 'utf8');
       for (const term of forbiddenTerms) {
@@ -42,7 +49,7 @@ function scanFiles(dir, results) {
 
 test('Only WB-Starter is allowed as framework name', () => {
   const violations = [];
-  const baseDir = path.dirname(new URL(import.meta.url).pathname);
+  const baseDir = path.dirname(fileURLToPath(import.meta.url));
   for (const dir of searchDirs) {
     const absDir = path.resolve(baseDir, '../../', dir);
     if (fs.existsSync(absDir)) {

@@ -47,7 +47,7 @@ In `builder.js`, container components are marked with `container: true`. The con
 |-----|-----------|-------------|
 | `n` | Name | Display name in the component palette |
 | `i` | Icon | Emoji or icon for the component |
-| `b` | Behavior | The Web Behaviors (WB) identifier |
+| `b` | Behavior | The WB-Starter identifier |
 | `d` | Data | Default properties object |
 
 ```javascript

@@ -1,4 +1,4 @@
-# Web Behaviors (WB) MVVM Migration Plan
+# WB-Starter MVVM Migration Plan
 
 > ## ✅ STATUS: COMPLETE (2026-06-22)
 >
