@@ -671,6 +671,10 @@ h5, h6 {
   background: rgba(0, 0, 0, 0.5);
   z-index: 98;
   opacity: 0;
+  /* Closed: invisible AND non-interactive, or this full-screen fixed overlay
+     swallows every click on the page content (#171). Only the OPEN (.visible)
+     backdrop captures taps — so tapping it closes the drawer. */
+  pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
@@ -678,9 +682,10 @@ h5, h6 {
   .site__nav-backdrop {
     display: block;
   }
-  
+
   .site__nav-backdrop.visible {
     opacity: 1;
+    pointer-events: auto;
   }
 }
 
