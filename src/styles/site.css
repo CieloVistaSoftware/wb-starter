@@ -353,6 +353,9 @@ body > button[x-copy] {
    ============================================================================= */
 .site__main {
   flex: 1;
+  min-width: 0; /* allow the flex child to shrink below its content's min-content
+                   width; without this, minmax() grids force horizontal overflow
+                   on narrow viewports (#165) */
   padding: 2rem;
   background: var(--bg-color);
   /* Removed overflow-y: auto - body scrolls now so nav can stick */
@@ -687,7 +690,17 @@ h5, h6 {
     padding: 0 1rem;
     height: 56px;
   }
-  
+
+  /* Keep the header right cluster inside the viewport on phones. The marketing
+     "Get Started" CTA is redundant here (hamburger nav + in-page CTAs cover it)
+     and is the widest item, so hide it; tighten the remaining controls. (#165) */
+  .header__right {
+    gap: 0.5rem;
+    min-width: 0;
+  }
+  /* (the marketing CTA is hidden on small phones below — see the #ctaButton
+     rule placed after its base declaration so the cascade actually applies) */
+
   .site__body {
     height: calc(100dvh - 56px);
     height: calc(100vh - 56px);
@@ -924,11 +937,11 @@ h5, h6 {
   background-color: var(--primary);
 }
 
-/* Resizable Nav */
-.site__nav {
-  position: relative; /* For absolute positioning of resizer */
-}
-
+/* Resizable Nav — NOTE: do NOT re-declare .site__nav position here. The base
+   rule already sets position: relative (so the absolute .nav__resizer anchors),
+   and the mobile @media block flips it to position: fixed for the off-canvas
+   drawer. A duplicate position:relative here (after the media query) silently
+   overrode the mobile rule and caused horizontal overflow on phones (#165). */
 .nav__resizer {
   position: absolute;
   top: 0;
@@ -1809,5 +1822,16 @@ h5, h6 {
   #ctaButton {
     padding: 0.6rem 1.2rem;
     font-size: 0.85rem;
+  }
+}
+
+/* Small phones: hide the marketing "Get Started" CTA — it's the widest header
+   item and pushes the header past the viewport (#165). Declared here, AFTER the
+   base #ctaButton rule, so it isn't clobbered by the later base declaration.
+   The hamburger nav + in-page CTAs cover the same action on phones. */
+@media (max-width: 480px) {
+  .navbar-cta,
+  #ctaButton {
+    display: none;
   }
 }
