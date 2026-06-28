@@ -11,9 +11,10 @@ test.describe('External Markdown Code Block Injection', () => {
     // Assuming Playwright's baseURL is set to the root, or we use a relative path
     await page.goto('/articles/resilience-through-separation.html');
 
-    // Wait for the wb-mdhtml component to load
-    // It adds the class 'wb-mdhtml--loaded' when done
-    const mdhtml = page.locator('wb-mdhtml');
+    // Wait for the wb-mdhtml component to load. The page has two <wb-mdhtml>
+    // elements (code + decoupled); target the code one explicitly to avoid a
+    // strict-mode ambiguity. It adds the class 'wb-mdhtml--loaded' when done.
+    const mdhtml = page.locator('wb-mdhtml[src="resilience-through-separation-code.md"]');
     await expect(mdhtml).toHaveClass(/wb-mdhtml--loaded/, { timeout: 10000 });
 
     // Verify content text exists in the DOM
@@ -22,10 +23,10 @@ test.describe('External Markdown Code Block Injection', () => {
 
     // Verify some formatting elements (e.g. Highlight.js classes or standard code blocks)
     // wb-mdhtml uses 'marked' which outputs <pre><code>...</code></pre>
-    const pre = mdhtml.locator('pre');
+    const pre = mdhtml.locator('pre').first();
     await expect(pre).toBeVisible();
 
-    const code = pre.locator('code');
+    const code = pre.locator('code').first();
     await expect(code).toBeVisible();
     
     // Check if it's the expected language

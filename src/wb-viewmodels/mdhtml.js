@@ -104,14 +104,16 @@ export async function mdhtml(element, options = {}) {
         // If it's an HTTP URL, use as-is
         if (fetchPath.startsWith('http://') || fetchPath.startsWith('https://')) {
           // Use as-is
+        } else if (window.location.protocol === 'blob:' || window.location.protocol === 'data:') {
+          // In blob: or data: contexts relative paths can't resolve — pin to the dev origin
+          if (!fetchPath.startsWith('/')) { fetchPath = '/' + fetchPath; }
+          fetchPath = 'http://localhost:3000' + fetchPath;
         } else {
-          if (!fetchPath.startsWith('/')) {
-            fetchPath = '/' + fetchPath;
-          }
-          // In blob: or data: contexts, relative paths won't resolve — use absolute URL
-          if (window.location.protocol === 'blob:' || window.location.protocol === 'data:') {
-            fetchPath = 'http://localhost:3000' + fetchPath;
-          }
+          // Resolve relative to the current page using standard URL semantics so
+          // an article in /articles/ can reference a sibling .md (src="x.md")
+          // without it being forced to site root. Absolute "/docs/x.md" paths are
+          // preserved unchanged. (#159 — article-code)
+          fetchPath = new URL(fetchPath, window.location.href).pathname;
         }
         
         // Log for debugging

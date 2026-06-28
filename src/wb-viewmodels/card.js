@@ -385,8 +385,9 @@ export function cardBase(element, options = {}) {
       // MVVM: Do NOT wipe innerHTML. We enhance what's there.
       // element.innerHTML = '';
       
-      // HEADER - Always show if title or subtitle exists
-      if (showHeader && (config.title || config.subtitle || headerContent || config.badge)) {
+      // HEADER - show if title/subtitle/badge config exists OR a semantic
+      // <header> is already present (enhance it to wb-card__header). (#159)
+      if (showHeader && (header || config.title || config.subtitle || headerContent || config.badge)) {
         if (!header) {
           const headerEl = document.createElement('header');
           headerEl.className = 'wb-card__header';
@@ -489,8 +490,9 @@ export function cardBase(element, options = {}) {
         }
       }
       
-      // FOOTER - Show if footer text exists
-      if (showFooter && (config.footer || footerContent)) {
+      // FOOTER - show if footer config text exists OR a semantic <footer> is
+      // already present (enhance it to wb-card__footer). (#159)
+      if (showFooter && (footer || config.footer || footerContent)) {
         if (!footer) {
           const footerEl = document.createElement('footer');
           footerEl.className = 'wb-card__footer';
