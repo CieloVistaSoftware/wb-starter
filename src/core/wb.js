@@ -430,6 +430,15 @@ const WB = {
           const htmlEl = /** @type {HTMLElement} */ (element);
           // Only skip if explicitly ignored
           if (!htmlEl.hasAttribute('x-ignore')) {
+            // A semantic <article> auto-injects as a card and claims its own
+            // <header>/<footer> (rendered as wb-card__header / wb-card__footer).
+            // Don't let the generic header/footer behaviors hijack a header or
+            // footer that lives inside an <article>/.wb-card — that produced a
+            // racing wb-header instead of wb-card__header. (#159)
+            if ((behavior === 'header' || behavior === 'footer') &&
+                htmlEl.parentElement && htmlEl.parentElement.closest('article, .wb-card')) {
+              return;
+            }
             // We don't check for other attributes here anymore.
             // Auto-inject is additive.
             WB.inject(htmlEl, behavior);
