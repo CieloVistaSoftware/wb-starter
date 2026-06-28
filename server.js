@@ -558,6 +558,18 @@ app.use((req, res, next) => {
     return res.status(404).send(`File not found: ${req.path}`);
   }
 
+  // Explicit .html file requests must point at a real file. Falling back to the
+  // SPA shell (index.html) for a MISSING .html masked broken links — they
+  // returned 200 with the home page instead of 404, so neither users nor tests
+  // could tell the page didn't exist. (#125 follow-up)
+  if (ext === '.html') {
+    const filePath = path.join(rootDir, req.path);
+    if (fs.existsSync(filePath)) {
+      return res.sendFile(filePath);
+    }
+    return res.status(404).send(`File not found: ${req.path}`);
+  }
+
   res.sendFile(path.join(rootDir, 'index.html'));
 });
 

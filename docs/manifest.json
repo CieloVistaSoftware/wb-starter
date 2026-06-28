@@ -284,11 +284,6 @@
           "description": "Documentation for Card Overview"
         },
         {
-          "file": "components/cards/index.md",
-          "title": "cards Index",
-          "description": "Documentation for cards Index"
-        },
-        {
           "file": "components/cards/README.md",
           "title": "cards Readme",
           "description": "Documentation for cards Readme"
@@ -309,19 +304,9 @@
           "description": "Documentation for Drawer"
         },
         {
-          "file": "components/feedback/README.md",
-          "title": "feedback Readme",
-          "description": "Documentation for feedback Readme"
-        },
-        {
           "file": "components/feedback/feedback.readme.md",
           "title": "Feedback Components README",
           "description": "Feedback component overview"
-        },
-        {
-          "file": "components/forms/README.md",
-          "title": "forms Readme",
-          "description": "Documentation for forms Readme"
         },
         {
           "file": "components/forms/forms.readme.md",
@@ -329,19 +314,9 @@
           "description": "Form component overview"
         },
         {
-          "file": "components/layout/README.md",
-          "title": "layout Readme",
-          "description": "Documentation for layout Readme"
-        },
-        {
           "file": "components/layout/layout.readme.md",
           "title": "Layout Components README",
           "description": "Layout component overview"
-        },
-        {
-          "file": "components/navigation/README.md",
-          "title": "navigation Readme",
-          "description": "Documentation for navigation Readme"
         },
         {
           "file": "components/navigation/navigation.readme.md",
@@ -352,11 +327,6 @@
           "file": "components/README.md",
           "title": "components Readme",
           "description": "Documentation for components Readme"
-        },
-        {
-          "file": "components/components.readme.md",
-          "title": "Components README",
-          "description": "All components overview"
         },
         {
           "file": "components/demo/demo.md",
@@ -390,11 +360,6 @@
           "description": "Theme system and customization"
         },
         {
-          "file": "css-standards.md",
-          "title": "CSS Standards",
-          "description": "CSS coding standards"
-        },
-        {
           "file": "code-examples-standard.md",
           "title": "Code Examples Standard",
           "description": "Formatting rules for code examples"
@@ -414,11 +379,6 @@
           "file": "test-schema-standard.md",
           "title": "Schema Testing",
           "description": "Schema-based testing approach"
-        },
-        {
-          "file": "builder-testing.md",
-          "title": "Builder Testing",
-          "description": "Testing the page builder"
         },
         {
           "file": "schemaTestValue.md",
@@ -488,16 +448,6 @@
           "description": "Planned improvements"
         },
         {
-          "file": "USER-PAGE-BUILDER-PLAN.md",
-          "title": "Page Builder Plan",
-          "description": "Builder roadmap"
-        },
-        {
-          "file": "builder.todo.md",
-          "title": "Builder TODO",
-          "description": "Builder task list"
-        },
-        {
           "file": "semantic-audit.md",
           "title": "Semantic Audit",
           "description": "HTML audit results"
@@ -508,41 +458,6 @@
           "description": "Documentation for X USAGE AUDIT"
         },
         {
-          "file": "builder/BUILDER-FIXES.md",
-          "title": "BUILDER FIXES",
-          "description": "Documentation for BUILDER FIXES"
-        },
-        {
-          "file": "builder-interaction-rules.md",
-          "title": "Builder Interaction Rules",
-          "description": "Documentation for Builder Interaction Rules"
-        },
-        {
-          "file": "builder-properties.md",
-          "title": "Builder Properties",
-          "description": "Documentation for Builder Properties"
-        },
-        {
-          "file": "builder-section-focus.md",
-          "title": "Builder Section Focus",
-          "description": "Documentation for Builder Section Focus"
-        },
-        {
-          "file": "builder/builder-tree.md",
-          "title": "Builder Tree",
-          "description": "Documentation for Builder Tree"
-        },
-        {
-          "file": "builder/pages.md",
-          "title": "Builder Pages",
-          "description": "Builder page management"
-        },
-        {
-          "file": "PAGE-BUILDER-RULES.md",
-          "title": "Page Builder Rules",
-          "description": "Content creation rules for WB Page Builder"
-        },
-        {
           "file": "MVVM-MIGRATION-PLAN.md",
           "title": "MVVM MIGRATION PLAN",
           "description": "Documentation for MVVM MIGRATION PLAN"
@@ -551,17 +466,6 @@
           "file": "MVVM-MIGRATION.md",
           "title": "MVVM MIGRATION",
           "description": "Documentation for MVVM MIGRATION"
-        }
-      ]
-    },
-    {
-      "name": "Research",
-      "icon": "📑",
-      "pages": [
-        {
-          "page": "schema-first-architecture",
-          "title": "Schema-First Architecture",
-          "description": "Research paper on AI error elimination"
         }
       ]
     },
@@ -640,16 +544,6 @@
           "file": "components/semantic/figure.md",
           "title": "Figure",
           "description": "Documentation for Figure"
-        },
-        {
-          "file": "components/semantic/index.md",
-          "title": "semantic Index",
-          "description": "Documentation for semantic Index"
-        },
-        {
-          "file": "components/semantic/README.md",
-          "title": "semantic Readme",
-          "description": "Documentation for semantic Readme"
         },
         {
           "file": "components/semantic/time.md",
@@ -788,11 +682,6 @@
           "description": "Documentation for the home page layout"
         },
         {
-          "file": "DATA-FILES.md",
-          "title": "DATA-FILES",
-          "description": "Documentation for DATA-FILES"
-        },
-        {
           "file": "performance.md",
           "title": "Performance",
           "description": "Documentation for Performance"
@@ -816,31 +705,6 @@
           "file": "templates.md",
           "title": "Templates",
           "description": "Documentation for Templates"
-        },
-        {
-          "file": "deploying-wb-starter-to-render.md",
-          "title": "Deploying-wb-starter-to-render",
-          "description": "Documentation for Deploying-wb-starter-to-render"
-        },
-        {
-          "file": "builder-onboarding-flow.md",
-          "title": "Builder-onboarding-flow",
-          "description": "Documentation for Builder-onboarding-flow"
-        },
-        {
-          "file": "builder-workflow.md",
-          "title": "Builder-workflow",
-          "description": "Documentation for Builder-workflow"
-        },
-        {
-          "file": "architecture/ATTRIBUTE-NAMING-STANDARD.md",
-          "title": "ATTRIBUTE-NAMING-STANDARD",
-          "description": "Documentation for ATTRIBUTE-NAMING-STANDARD"
-        },
-        {
-          "file": "architecture/WBPARTS.md",
-          "title": "WBPARTS",
-          "description": "Documentation for WBPARTS"
         },
         {
           "file": "schema-first-architecture.md",
@@ -911,11 +775,6 @@
           "file": "architecture/standards/SCHEMA-SPECIFICATION.md",
           "title": "Schema Specification",
           "description": "Detailed schema specification standard"
-        },
-        {
-          "file": "architecture.md",
-          "title": "Architecture Overview",
-          "description": "High-level architecture documentation"
         },
         {
           "file": "claude/SCHEMAS-GUIDE.md",
