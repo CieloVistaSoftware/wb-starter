@@ -1835,3 +1835,44 @@ h5, h6 {
     display: none;
   }
 }
+
+/* =============================================================================
+   #165 — AUTHORITATIVE MOBILE OFF-CANVAS DRAWER
+   Placed last so it wins the cascade. The shell had duplicate/late .site__nav
+   rules that left the drawer visible (a stray strip) instead of off-screen.
+   ============================================================================= */
+@media (max-width: 768px) {
+  .site__nav {
+    position: fixed !important;
+    top: 56px;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: min(82vw, 300px) !important;
+    max-height: none !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease;
+    z-index: 99;
+  }
+  .site__nav.site__nav--mobile-open {
+    transform: translateX(0) !important;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  }
+  /* The drag-to-resize handle sits on the nav's right edge; when the drawer is
+     off-screen it peeked through at x=0 as a stray strip. Hide it on phones —
+     the drawer isn't resizable there anyway. (#165) */
+  .nav__resizer {
+    display: none !important;
+  }
+}
+
+/* #165 — Hero must not crop its headline on phones. The 400px min-height with
+   vertically-centered content + overflow:hidden cropped the top once the title
+   wrapped to more lines. Let it grow to fit. */
+@media (max-width: 768px) {
+  wb-hero,
+  .wb-hero {
+    min-height: auto;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+}
