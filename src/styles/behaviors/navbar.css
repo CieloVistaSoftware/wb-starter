@@ -273,7 +273,10 @@ wb-navbar [data-brand]::after {
   overflow: visible;
   align-self: flex-start;
   max-height: calc(100vh - 60px);
-  position: relative;
+  /* Do NOT set position here. This file loads AFTER site.css, so an unconditional
+     position:relative would override site.css's mobile @media off-canvas rule
+     (position:fixed) and break the phone drawer — the cause of #165. site.css
+     owns .site__nav position (relative on desktop, fixed off-canvas on mobile). */
 }
 .site__nav--collapsed {
   width: 60px;
