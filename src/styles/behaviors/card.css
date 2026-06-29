@@ -130,6 +130,27 @@
   background: var(--bg-elevated);
 }
 
+/* Float — the most-used card variant in the showcase, but it had NO CSS rule, so
+   "float" cards fell back to the flat base and (with --border-color undefined)
+   read as undemarcated blocks (#180). Give it clear elevation + the hairline
+   border so it always reads as a discrete, floating card. */
+.wb-card--float {
+  box-shadow: var(--shadow-float, 0 2px 4px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.18));
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+.wb-card--float:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-float-hover, 0 4px 8px rgba(0,0,0,0.16), 0 12px 32px rgba(0,0,0,0.24));
+}
+
+/* Cosmic — decorative gradient card used in a couple of demos (was undefined). */
+.wb-card--cosmic {
+  border: 1px solid var(--primary);
+  background: linear-gradient(135deg, var(--bg-secondary), var(--primary-dark));
+  box-shadow: 0 0 24px -6px var(--primary);
+}
+
 /* Hoverable */
 .wb-card--hoverable:hover {
   transform: translateY(-2px);
