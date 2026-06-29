@@ -18,6 +18,7 @@
     "variant": {
       "type": "string",
       "description": "Alert severity/style variant",
+      "aliases": ["type"],
       "enum": [
         "info",
         "success",

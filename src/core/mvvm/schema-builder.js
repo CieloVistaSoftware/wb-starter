@@ -211,6 +211,21 @@ function extractData(element, schema) {
     }
   }
   
+  // Honor property aliases declared in the schema BEFORE defaults are applied,
+  // so an alias attribute beats the default. e.g. the alert schema declares
+  // `variant` with aliases ["type"] so <wb-alert type="success"> works (#176).
+  if (schema.properties) {
+    for (const [propName, propDef] of Object.entries(schema.properties)) {
+      const aliases = propDef && propDef.aliases;
+      if (Array.isArray(aliases) && data[propName] === undefined) {
+        for (const alias of aliases) {
+          const aliasKey = alias.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+          if (data[aliasKey] !== undefined) { data[propName] = data[aliasKey]; break; }
+        }
+      }
+    }
+  }
+
   // Apply defaults from schema
   if (schema.properties) {
     applyDefaults(data, schema.properties);
