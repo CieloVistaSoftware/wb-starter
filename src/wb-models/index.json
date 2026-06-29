@@ -73,6 +73,7 @@
     "snow.schema.json",
     "span.schema.json",
     "spinner.schema.json",
+    "stack.schema.json",
     "stagelight.schema.json",
     "sticky.schema.json",
     "switch.schema.json",

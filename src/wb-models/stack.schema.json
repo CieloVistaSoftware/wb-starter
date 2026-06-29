@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stack.schema.json",
+  "title": "Stack Layout Component",
+  "description": "Vertical stack layout component. Renders children in a column with configurable gap, background color, padding, and border radius.",
+  "schemaFor": "stack",
+  "baseClass": "wb-stack",
+  "compliance": {
+    "baseClass": "wb-stack",
+    "supportLevel": "stable",
+    "accessibility": "low"
+  },
+  "properties": {
+    "gap": {
+      "type": "string",
+      "description": "CSS gap between stacked children. Accepts any valid CSS length value.",
+      "default": "1rem",
+      "example": "0.25rem"
+    },
+    "bg": {
+      "type": "string",
+      "description": "Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables.",
+      "default": "",
+      "example": "#1a2f4e"
+    },
+    "pad": {
+      "type": "string",
+      "description": "CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges).",
+      "default": "",
+      "example": "0 0 0.75rem"
+    },
+    "radius": {
+      "type": "string",
+      "description": "CSS border-radius applied to the stack element. Accepts any valid CSS border-radius value.",
+      "default": "",
+      "example": "8px"
+    }
+  },
+  "usage": {
+    "basic": "<wb-stack>\n  <span>Item one</span>\n  <span>Item two</span>\n</wb-stack>",
+    "card": "<wb-stack gap=\"0.25rem\" bg=\"#1a2f4e\" pad=\"0 0 0.75rem\" radius=\"8px\">\n  <img src=\"photo.jpg\" style=\"width:100%;height:180px;object-fit:cover;border-radius:8px 8px 0 0;display:block\">\n  <span style=\"padding:0.5rem 1rem 0;display:block\">Card Title</span>\n  <span style=\"padding:0 1rem;display:block\">Subtitle text</span>\n</wb-stack>",
+    "notes": [
+      "Images inside a card-style stack should use border-radius:8px 8px 0 0 to match the top corners of the stack.",
+      "When using bg+radius, set pad to bottom-only (e.g. '0 0 0.75rem') so the image bleeds to the top and side edges.",
+      "Apply side padding (1rem) to text spans directly, not to the stack, so images remain edge-to-edge.",
+      "gap defaults to 1rem — always set gap='0.25rem' for card-style layouts with images."
+    ]
+  },
+  "test": {
+    "setup": [
+      "<wb-stack><span>A</span><span>B</span></wb-stack>",
+      "<wb-stack gap=\"0.5rem\"><span>A</span><span>B</span></wb-stack>",
+      "<wb-stack bg=\"#1a2f4e\"><span>A</span><span>B</span></wb-stack>",
+      "<wb-stack pad=\"1rem\"><span>A</span><span>B</span></wb-stack>",
+      "<wb-stack radius=\"8px\"><span>A</span><span>B</span></wb-stack>",
+      "<wb-stack gap=\"0.25rem\" bg=\"#2d4a1e\" pad=\"0 0 0.75rem\" radius=\"8px\"><span>Full card style</span></wb-stack>"
+    ]
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "_metadata": {
+    "category": "layout",
+    "icon": "📦",
+    "viewModel": "src/wb-viewmodels/wb-stack.js"
+  }
+}
