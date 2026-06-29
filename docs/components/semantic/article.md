@@ -91,7 +91,7 @@ All card components use the `<article>` semantic element:
 
 ### WB Card (Data Attributes)
 ```html
-<article data-wb="card" data-wb-title="Card Title">
+<article x-card title="Card Title">
   Content here...
 </article>
 ```

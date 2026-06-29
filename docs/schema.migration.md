@@ -17,7 +17,7 @@ This document outlines the step-by-step plan to migrate all WB project schemas t
 ```
 src/wb-models/
   components/   # One schema per WB component
-  behaviors/    # One schema per x-* or data-wb behavior
+  behaviors/    # One schema per x-* or x-behavior behavior
   pages/        # One schema per page type
   _base/        # Shared/base schemas for inheritance
   registry/     # Registry/category schemas (views, layouts, etc.)

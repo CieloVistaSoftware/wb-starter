@@ -23,17 +23,17 @@ There are 19 distinct card behaviors available. All inherit from the base `card`
 To create a card that acts as a link, use the `<card-link>` custom element:
 
 ```html
-<card-link data-href="/page" data-title="My Page" data-badge="NEW"></card-link>
+<card-link href="/page" title="My Page" badge="NEW"></card-link>
 ```
 
 Supported attributes:
-- `data-href` - Link destination (required)
-- `data-title` - Card title
-- `data-description` - Card description
-- `data-icon` - Icon before title
-- `data-badge` - Badge text
-- `data-badge-variant` - Badge style: `glass` (default) or `gradient`
-- `data-target` - Link target: `_self` (default) or `_blank`
+- `href` - Link destination (required)
+- `title` - Card title
+- `description` - Card description
+- `icon` - Icon before title
+- `badge` - Badge text
+- `badge-variant` - Badge style: `glass` (default) or `gradient`
+- `target` - Link target: `_self` (default) or `_blank`
 
 ---
 

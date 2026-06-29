@@ -42,7 +42,7 @@ function hello() {
 ### Native Code (Enhanced)
 
 ```html
-<code data-wb="code" data-wb-language="Python">
+<code x-code language="Python">
 print("Hello")
 </code>
 ```

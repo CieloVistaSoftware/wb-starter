@@ -50,12 +50,12 @@ These behaviors enhance the element while preserving its identity.
 - Click handler with toast feedback
 
 **Data attributes:**
-- `data-variant` - Button style (primary, secondary, etc.)
-- `data-size` - Button size (xs, sm, md, lg, xl)
-- `data-icon` - Icon character
-- `data-icon-position` - left or right
-- `data-loading` - Show loading spinner
-- `data-disabled` - Disable button
+- `variant` - Button style (primary, secondary, etc.)
+- `size` - Button size (xs, sm, md, lg, xl)
+- `icon` - Icon character
+- `icon-position` - left or right
+- `loading` - Show loading spinner
+- `disabled` - Disable button
 
 **Examples:**
 
@@ -66,36 +66,36 @@ These behaviors enhance the element while preserving its identity.
 <button type="reset">Reset</button>
 
 <!-- All variants -->
-<button data-variant="primary">Primary</button>
-<button data-variant="secondary">Secondary</button>
-<button data-variant="success">Success</button>
-<button data-variant="danger">Danger</button>
-<button data-variant="warning">Warning</button>
-<button data-variant="ghost">Ghost</button>
-<button data-variant="link">Link Style</button>
-<button data-variant="outline">Outline</button>
+<button variant="primary">Primary</button>
+<button variant="secondary">Secondary</button>
+<button variant="success">Success</button>
+<button variant="danger">Danger</button>
+<button variant="warning">Warning</button>
+<button variant="ghost">Ghost</button>
+<button variant="link">Link Style</button>
+<button variant="outline">Outline</button>
 
 <!-- All sizes -->
-<button data-size="xs">Extra Small</button>
-<button data-size="sm">Small</button>
-<button data-size="md">Medium (default)</button>
-<button data-size="lg">Large</button>
-<button data-size="xl">Extra Large</button>
+<button size="xs">Extra Small</button>
+<button size="sm">Small</button>
+<button size="md">Medium (default)</button>
+<button size="lg">Large</button>
+<button size="xl">Extra Large</button>
 
 <!-- With icons -->
-<button data-icon="💾">Save</button>
-<button data-icon="🗑️" data-variant="danger">Delete</button>
-<button data-icon="→" data-icon-position="right">Next</button>
-<button data-icon="←">Back</button>
+<button icon="💾">Save</button>
+<button icon="🗑️" variant="danger">Delete</button>
+<button icon="→" icon-position="right">Next</button>
+<button icon="←">Back</button>
 
 <!-- States -->
-<button data-loading>Saving...</button>
-<button data-disabled>Disabled</button>
-<button data-variant="success" data-icon="✓" data-size="lg">Complete Purchase</button>
+<button loading>Saving...</button>
+<button disabled>Disabled</button>
+<button variant="success" icon="✓" size="lg">Complete Purchase</button>
 
 <!-- Combined -->
-<button data-variant="danger" data-size="sm" data-icon="🗑️">Delete Item</button>
-<button data-variant="success" data-size="lg" data-icon="✓" data-icon-position="right">
+<button variant="danger" size="sm" icon="🗑️">Delete Item</button>
+<button variant="success" size="lg" icon="✓" icon-position="right">
   Confirm Order
 </button>
 ```
@@ -103,9 +103,9 @@ These behaviors enhance the element while preserving its identity.
 **Button Group Example:**
 ```html
 <div style="display: flex; gap: 0.5rem;">
-  <button data-variant="outline">Cancel</button>
-  <button data-variant="primary">Save Draft</button>
-  <button data-variant="success">Publish</button>
+  <button variant="outline">Cancel</button>
+  <button variant="primary">Save Draft</button>
+  <button variant="success">Publish</button>
 </div>
 ```
 
@@ -125,11 +125,11 @@ These behaviors enhance the element while preserving its identity.
 - Clearable button (×)
 
 **Data attributes:**
-- `data-variant` - success or error
-- `data-size` - xs, sm, md, lg, xl
-- `data-clearable` - Add clear button
-- `data-prefix` - Text before input
-- `data-suffix` - Text after input
+- `variant` - success or error
+- `size` - xs, sm, md, lg, xl
+- `clearable` - Add clear button
+- `prefix` - Text before input
+- `suffix` - Text after input
 
 **Examples:**
 
@@ -143,32 +143,32 @@ These behaviors enhance the element while preserving its identity.
 <input type="tel" placeholder="(555) 123-4567">
 
 <!-- All sizes -->
-<input type="text" data-size="xs" placeholder="Extra small">
-<input type="text" data-size="sm" placeholder="Small">
-<input type="text" data-size="md" placeholder="Medium (default)">
-<input type="text" data-size="lg" placeholder="Large">
-<input type="text" data-size="xl" placeholder="Extra large">
+<input type="text" size="xs" placeholder="Extra small">
+<input type="text" size="sm" placeholder="Small">
+<input type="text" size="md" placeholder="Medium (default)">
+<input type="text" size="lg" placeholder="Large">
+<input type="text" size="xl" placeholder="Extra large">
 
 <!-- Validation states -->
-<input type="email" data-variant="success" value="valid@email.com">
-<input type="email" data-variant="error" value="invalid-email">
+<input type="email" variant="success" value="valid@email.com">
+<input type="email" variant="error" value="invalid-email">
 
 <!-- With prefix/suffix -->
-<input type="text" data-prefix="$" placeholder="0.00">
-<input type="text" data-suffix=".00" placeholder="Price">
-<input type="text" data-prefix="https://" placeholder="website.com">
-<input type="text" data-prefix="@" placeholder="username">
-<input type="text" data-suffix="kg" placeholder="Weight">
-<input type="text" data-prefix="$" data-suffix="USD" placeholder="Amount">
+<input type="text" prefix="$" placeholder="0.00">
+<input type="text" suffix=".00" placeholder="Price">
+<input type="text" prefix="https://" placeholder="website.com">
+<input type="text" prefix="@" placeholder="username">
+<input type="text" suffix="kg" placeholder="Weight">
+<input type="text" prefix="$" suffix="USD" placeholder="Amount">
 
 <!-- Clearable -->
-<input type="text" data-clearable placeholder="Type and clear...">
-<input type="search" data-clearable placeholder="Search...">
-<input type="email" data-clearable data-variant="error" placeholder="Fix this email">
+<input type="text" clearable placeholder="Type and clear...">
+<input type="search" clearable placeholder="Search...">
+<input type="email" clearable variant="error" placeholder="Fix this email">
 
 <!-- Combined -->
-<input type="text" data-size="lg" data-prefix="🔍" data-clearable placeholder="Search products...">
-<input type="number" data-prefix="$" data-suffix="/month" data-size="lg" placeholder="99">
+<input type="text" size="lg" prefix="🔍" clearable placeholder="Search products...">
+<input type="number" prefix="$" suffix="/month" size="lg" placeholder="99">
 ```
 
 **Form Field Examples:**
@@ -176,21 +176,21 @@ These behaviors enhance the element while preserving its identity.
 <!-- Login form -->
 <form>
   <label>Email
-    <input type="email" placeholder="you@company.com" data-clearable>
+    <input type="email" placeholder="you@company.com" clearable>
   </label>
   <label>Password
-    <input type="password" placeholder="••••••••" data-size="lg">
+    <input type="password" placeholder="••••••••" size="lg">
   </label>
-  <button data-variant="primary" data-size="lg">Sign In</button>
+  <button variant="primary" size="lg">Sign In</button>
 </form>
 
 <!-- Price input -->
 <label>Product Price
-  <input type="number" data-prefix="$" data-suffix=".00" placeholder="99" data-size="lg">
+  <input type="number" prefix="$" suffix=".00" placeholder="99" size="lg">
 </label>
 
 <!-- Search with icon -->
-<input type="search" data-prefix="🔍" data-clearable data-size="lg" placeholder="Search documentation...">
+<input type="search" prefix="🔍" clearable size="lg" placeholder="Search documentation...">
 ```
 
 ---
@@ -208,8 +208,8 @@ These behaviors enhance the element while preserving its identity.
 - Programmatic API: `element.wbDetails.toggle()`, `.open()`, `.close()`, `.isOpen`
 
 **Data attributes:**
-- `data-open` - Start expanded
-- `data-animated` - Enable/disable animation (default: true)
+- `open` - Start expanded
+- `animated` - Enable/disable animation (default: true)
 
 **Native behavior preserved:** Open/close toggle, summary click, keyboard access, Escape key
 
@@ -223,7 +223,7 @@ These behaviors enhance the element while preserving its identity.
 </details>
 
 <!-- Starts open -->
-<details data-open>
+<details open>
   <summary>Important Notice</summary>
   <p>This section is expanded by default so users see it immediately.</p>
 </details>
@@ -298,7 +298,7 @@ function greet(name) {
 **Accordion Pattern (multiple details):**
 ```html
 <div class="accordion">
-  <details data-open>
+  <details open>
     <summary>Step 1: Create Account</summary>
     <p>Fill out the registration form with your email and password.</p>
   </details>
@@ -348,15 +348,15 @@ function greet(name) {
   <h2>Delete Item?</h2>
   <p>This action cannot be undone. Are you sure?</p>
   <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-    <button data-variant="ghost" onclick="this.closest('dialog').close()">
+    <button variant="ghost" onclick="this.closest('dialog').close()">
       Cancel
     </button>
-    <button data-variant="danger" onclick="deleteItem(); this.closest('dialog').close()">
+    <button variant="danger" onclick="deleteItem(); this.closest('dialog').close()">
       Delete
     </button>
   </div>
 </dialog>
-<button data-variant="danger" onclick="document.getElementById('confirmDelete').showModal()">
+<button variant="danger" onclick="document.getElementById('confirmDelete').showModal()">
   🗑️ Delete
 </button>
 
@@ -373,10 +373,10 @@ function greet(name) {
       <input type="password" required placeholder="••••••••">
     </label>
     <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
-      <button type="button" data-variant="ghost" onclick="this.closest('dialog').close()">
+      <button type="button" variant="ghost" onclick="this.closest('dialog').close()">
         Cancel
       </button>
-      <button type="submit" data-variant="primary">Sign In</button>
+      <button type="submit" variant="primary">Sign In</button>
     </div>
   </form>
 </dialog>
@@ -408,10 +408,10 @@ function greet(name) {
       <input type="checkbox" required> I agree to the terms and conditions
     </label>
     <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
-      <button type="button" data-variant="ghost" onclick="this.closest('dialog').close()">
+      <button type="button" variant="ghost" onclick="this.closest('dialog').close()">
         Decline
       </button>
-      <button type="submit" data-variant="success">Accept</button>
+      <button type="submit" variant="success">Accept</button>
     </div>
   </form>
 </dialog>
@@ -432,7 +432,7 @@ function greet(name) {
       <label><input type="checkbox" checked> Allow search engines</label>
     </fieldset>
     <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
-      <button type="submit" data-variant="primary">Save Settings</button>
+      <button type="submit" variant="primary">Save Settings</button>
     </div>
   </form>
 </dialog>
@@ -452,8 +452,8 @@ function greet(name) {
 - Responsive horizontal scroll wrapper
 
 **Data attributes:**
-- `data-sortable` - Enable/disable sorting
-- `data-striped` - Enable/disable striping
+- `sortable` - Enable/disable sorting
+- `striped` - Enable/disable striping
 
 **Native behavior preserved:** Table structure, thead/tbody/tfoot, caption, accessibility
 
@@ -611,19 +611,19 @@ function greet(name) {
     <tr>
       <td>Design homepage</td>
       <td>Alice</td>
-      <td><span data-wb="badge" data-variant="success">Complete</span></td>
+      <td><span x-badge variant="success">Complete</span></td>
       <td>Jan 15</td>
     </tr>
     <tr>
       <td>Build API</td>
       <td>Bob</td>
-      <td><span data-wb="badge" data-variant="warning">In Progress</span></td>
+      <td><span x-badge variant="warning">In Progress</span></td>
       <td>Jan 20</td>
     </tr>
     <tr>
       <td>Write docs</td>
       <td>Carol</td>
-      <td><span data-wb="badge" data-variant="secondary">Pending</span></td>
+      <td><span x-badge variant="secondary">Pending</span></td>
       <td>Jan 25</td>
     </tr>
   </tbody>
@@ -674,7 +674,7 @@ function greet(name) {
     <textarea name="message" required placeholder="How can we help?" rows="5"></textarea>
   </label>
   
-  <button type="submit" data-variant="primary">Send Message</button>
+  <button type="submit" variant="primary">Send Message</button>
 </form>
 
 <!-- Registration form -->
@@ -723,7 +723,7 @@ function greet(name) {
     Subscribe to newsletter
   </label>
   
-  <button type="submit" data-variant="success" data-size="lg">Create Account</button>
+  <button type="submit" variant="success" size="lg">Create Account</button>
 </form>
 
 <!-- Payment form -->
@@ -733,7 +733,7 @@ function greet(name) {
     <label>
       Card Number
       <input type="text" name="card" required pattern="[0-9]{16}" 
-             placeholder="1234 5678 9012 3456" data-prefix="💳">
+             placeholder="1234 5678 9012 3456" prefix="💳">
     </label>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
       <label>
@@ -749,15 +749,15 @@ function greet(name) {
     </div>
   </fieldset>
   
-  <button type="submit" data-variant="success" data-size="lg" data-icon="🔒">
+  <button type="submit" variant="success" size="lg" icon="🔒">
     Pay $99.00
   </button>
 </form>
 
 <!-- Search form -->
 <form action="/search" method="get" style="display: flex; gap: 0.5rem;">
-  <input type="search" name="q" placeholder="Search..." data-clearable data-size="lg" style="flex: 1;">
-  <button type="submit" data-variant="primary" data-size="lg" data-icon="🔍">Search</button>
+  <input type="search" name="q" placeholder="Search..." clearable size="lg" style="flex: 1;">
+  <button type="submit" variant="primary" size="lg" icon="🔍">Search</button>
 </form>
 
 <!-- Filter form -->
@@ -782,8 +782,8 @@ function greet(name) {
     <label><input type="checkbox" name="rating" value="3"> 3+ Stars</label>
   </fieldset>
   
-  <button type="submit" data-variant="primary">Apply Filters</button>
-  <button type="reset" data-variant="ghost">Clear All</button>
+  <button type="submit" variant="primary">Apply Filters</button>
+  <button type="reset" variant="ghost">Clear All</button>
 </form>
 ```
 
@@ -901,7 +901,7 @@ function greet(name) {
 <textarea placeholder="Enter your message..."></textarea>
 
 <!-- With character limit -->
-<textarea maxlength="500" data-counter placeholder="Write your bio (max 500 characters)..."></textarea>
+<textarea maxlength="500" counter placeholder="Write your bio (max 500 characters)..."></textarea>
 
 <!-- Different sizes -->
 <textarea rows="3" placeholder="Short message..."></textarea>
@@ -913,7 +913,7 @@ function greet(name) {
 <!-- Various use cases -->
 <label>
   Product Description
-  <textarea rows="5" placeholder="Describe your product in detail..." maxlength="1000" data-counter></textarea>
+  <textarea rows="5" placeholder="Describe your product in detail..." maxlength="1000" counter></textarea>
 </label>
 
 <label>
@@ -1329,8 +1329,8 @@ function greet(name) {
 - Styled scrollbar
 
 **Data attributes:**
-- `data-language` - Syntax highlighting language
-- `data-line-numbers` - Show line numbers
+- `language` - Syntax highlighting language
+- `line-numbers` - Show line numbers
 
 **Examples:**
 
@@ -1343,7 +1343,7 @@ function greet(name) {
 </pre>
 
 <!-- With line numbers -->
-<pre data-line-numbers>
+<pre line-numbers>
 const express = require('express');
 const app = express();
 
@@ -1355,7 +1355,7 @@ app.listen(3000);
 </pre>
 
 <!-- JavaScript example -->
-<pre data-language="javascript">
+<pre language="javascript">
 // Fetch data from API
 async function fetchUsers() {
   const response = await fetch('/api/users');
@@ -1365,7 +1365,7 @@ async function fetchUsers() {
 </pre>
 
 <!-- HTML example -->
-<pre data-language="html">
+<pre language="html">
 &lt;article&gt;
   &lt;header&gt;
     &lt;h3&gt;Card Title&lt;/h3&gt;
@@ -1377,7 +1377,7 @@ async function fetchUsers() {
 </pre>
 
 <!-- CSS example -->
-<pre data-language="css">
+<pre language="css">
 .card {
   display: flex;
   flex-direction: column;
@@ -1393,7 +1393,7 @@ async function fetchUsers() {
 </pre>
 
 <!-- JSON example -->
-<pre data-language="json">
+<pre language="json">
 {
   "name": "wb-starter",
   "version": "2.1.0",
@@ -1405,7 +1405,7 @@ async function fetchUsers() {
 </pre>
 
 <!-- Shell commands -->
-<pre data-language="bash">
+<pre language="bash">
 # Install dependencies
 npm install
 
@@ -1450,14 +1450,14 @@ These behaviors transform the element into a component.
 - Variants: default, glass, rack
 
 **Data attributes:**
-- `data-title` - Card title
-- `data-subtitle` - Card subtitle
-- `data-content` - Card body content
-- `data-footer` - Footer text
-- `data-variant` - glass, rack
-- `data-clickable` - Make entire card clickable
-- `data-hoverable` - Enable hover effects (default: true)
-- `data-elevated` - Add elevated shadow
+- `title` - Card title
+- `subtitle` - Card subtitle
+- `content` - Card body content
+- `footer` - Footer text
+- `variant` - glass, rack
+- `clickable` - Make entire card clickable
+- `hoverable` - Enable hover effects (default: true)
+- `elevated` - Add elevated shadow
 
 **Examples:**
 
@@ -1488,12 +1488,12 @@ These behaviors transform the element into a component.
     <p>Our best-selling widget with advanced features.</p>
   </main>
   <footer>
-    <button data-variant="primary">Add to Cart</button>
+    <button variant="primary">Add to Cart</button>
   </footer>
 </article>
 
 <!-- Glass variant -->
-<article data-variant="glass">
+<article variant="glass">
   <header>
     <h3>Glassmorphism Card</h3>
   </header>
@@ -1503,7 +1503,7 @@ These behaviors transform the element into a component.
 </article>
 
 <!-- Elevated card -->
-<article data-elevated>
+<article elevated>
   <header>
     <h3>Elevated Card</h3>
   </header>
@@ -1513,7 +1513,7 @@ These behaviors transform the element into a component.
 </article>
 
 <!-- Clickable card -->
-<article data-clickable>
+<article clickable>
   <header>
     <h3>Click Me!</h3>
   </header>
@@ -1560,7 +1560,7 @@ These behaviors transform the element into a component.
 </article>
 
 <!-- Pricing card -->
-<article data-variant="glass" data-elevated>
+<article variant="glass" elevated>
   <header style="text-align: center;">
     <h3>Pro Plan</h3>
     <p style="font-size: 2.5rem; font-weight: bold;">$29<small>/mo</small></p>
@@ -1574,7 +1574,7 @@ These behaviors transform the element into a component.
     </ul>
   </main>
   <footer>
-    <button data-variant="primary" data-size="lg" style="width: 100%;">Get Started</button>
+    <button variant="primary" size="lg" style="width: 100%;">Get Started</button>
   </footer>
 </article>
 
@@ -1634,9 +1634,9 @@ These behaviors transform the element into a component.
 
 ---
 
-### article[data-href] → cardlink
+### article[href] → cardlink
 **Module:** `card.js`  
-**Element:** `<article data-href="...">` morphs into clickable card
+**Element:** `<article href="...">` morphs into clickable card
 
 **What it adds:**
 - Everything from `card` behavior
@@ -1646,17 +1646,17 @@ These behaviors transform the element into a component.
 - role="link", tabindex="0"
 
 **Data attributes:**
-- `data-href` - URL to navigate to
-- `data-target` - _self or _blank
-- `data-icon` - Icon before title
-- `data-description` - Description text
-- `data-badge` - Badge text
+- `href` - URL to navigate to
+- `target` - _self or _blank
+- `icon` - Icon before title
+- `description` - Description text
+- `badge` - Badge text
 
 **Examples:**
 
 ```html
 <!-- Internal link card -->
-<article data-href="/docs/getting-started">
+<article href="/docs/getting-started">
   <header>
     <h3>📚 Documentation</h3>
   </header>
@@ -1666,7 +1666,7 @@ These behaviors transform the element into a component.
 </article>
 
 <!-- External link card -->
-<article data-href="https://github.com/wb-framework" data-target="_blank">
+<article href="https://github.com/wb-framework" target="_blank">
   <header>
     <h3>🐙 GitHub Repository</h3>
   </header>
@@ -1677,7 +1677,7 @@ These behaviors transform the element into a component.
 
 <!-- Navigation cards -->
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-  <article data-href="/products">
+  <article href="/products">
     <header>
       <span style="font-size: 2rem;">🛍️</span>
       <h3>Products</h3>
@@ -1687,7 +1687,7 @@ These behaviors transform the element into a component.
     </main>
   </article>
   
-  <article data-href="/about">
+  <article href="/about">
     <header>
       <span style="font-size: 2rem;">ℹ️</span>
       <h3>About Us</h3>
@@ -1697,7 +1697,7 @@ These behaviors transform the element into a component.
     </main>
   </article>
   
-  <article data-href="/contact">
+  <article href="/contact">
     <header>
       <span style="font-size: 2rem;">📧</span>
       <h3>Contact</h3>
@@ -1707,7 +1707,7 @@ These behaviors transform the element into a component.
     </main>
   </article>
   
-  <article data-href="/support">
+  <article href="/support">
     <header>
       <span style="font-size: 2rem;">💬</span>
       <h3>Support</h3>
@@ -1719,17 +1719,17 @@ These behaviors transform the element into a component.
 </div>
 
 <!-- Resource links -->
-<article data-href="https://docs.example.com" data-target="_blank">
+<article href="https://docs.example.com" target="_blank">
   <header>
     <h3>API Documentation ↗</h3>
-    <span data-wb="badge" data-variant="primary">New</span>
+    <span x-badge variant="primary">New</span>
   </header>
   <main>
     <p>Complete API reference with examples and best practices.</p>
   </main>
 </article>
 
-<article data-href="https://www.youtube.com/watch?v=..." data-target="_blank">
+<article href="https://www.youtube.com/watch?v=..." target="_blank">
   <figure>
     <img src="video-thumbnail.jpg" alt="Tutorial video">
   </figure>
@@ -1755,13 +1755,13 @@ These behaviors transform the element into a component.
 - Menu area styling (flex, gap, flex-wrap)
 - Link styling with hover opacity transitions
 - Sticky positioning option
-- If `data-items` provided: generates content from data
-- If no data-items: enhances existing `<ul>` and links
+- If `items` provided: generates content from data
+- If no items: enhances existing `<ul>` and links
 
 **Data attributes:**
-- `data-brand` - Brand/logo text
-- `data-items` - Comma-separated nav items
-- `data-sticky` - Enable sticky positioning
+- `brand` - Brand/logo text
+- `items` - Comma-separated nav items
+- `sticky` - Enable sticky positioning
 
 **Examples:**
 
@@ -1791,11 +1791,11 @@ These behaviors transform the element into a component.
 </nav>
 
 <!-- Generated navbar -->
-<nav data-brand="WB Behaviors" data-items="Home, Features, Docs, Pricing, Contact">
+<nav brand="WB Behaviors" items="Home, Features, Docs, Pricing, Contact">
 </nav>
 
 <!-- Sticky navbar -->
-<nav data-brand="MySite" data-items="Home, About, Blog, Contact" data-sticky>
+<nav brand="MySite" items="Home, About, Blog, Contact" sticky>
 </nav>
 
 <!-- Full featured navbar -->
@@ -1813,7 +1813,7 @@ These behaviors transform the element into a component.
   </ul>
   
   <div style="display: flex; align-items: center; gap: 0.5rem;">
-    <button data-variant="ghost" data-size="sm">🔔</button>
+    <button variant="ghost" size="sm">🔔</button>
     <img src="avatar.jpg" alt="Profile" style="width: 32px; height: 32px; border-radius: 50%;">
   </div>
 </nav>
@@ -1830,9 +1830,9 @@ These behaviors transform the element into a component.
   </ul>
   
   <div style="display: flex; gap: 0.5rem;">
-    <input type="search" placeholder="Search..." data-size="sm" style="width: 200px;">
-    <button data-variant="ghost">❤️</button>
-    <button data-variant="ghost">🛒 (3)</button>
+    <input type="search" placeholder="Search..." size="sm" style="width: 200px;">
+    <button variant="ghost">❤️</button>
+    <button variant="ghost">🛒 (3)</button>
   </div>
 </nav>
 
@@ -1852,7 +1852,7 @@ These behaviors transform the element into a component.
   
   <div style="display: flex; gap: 0.5rem;">
     <a href="https://github.com/wb" target="_blank">GitHub</a>
-    <button data-variant="primary" data-size="sm">Get Started</button>
+    <button variant="primary" size="sm">Get Started</button>
   </div>
 </nav>
 ```
@@ -1869,18 +1869,18 @@ These behaviors transform the element into a component.
 - Item styling: padding, border-radius, hover states
 - Active item highlighting
 - Collapsed mode (narrower width)
-- Generates content from `data-items`
+- Generates content from `items`
 
 **Data attributes:**
-- `data-items` - Comma-separated menu items
-- `data-active` - Currently active item
-- `data-collapsed` - Start in collapsed state
+- `items` - Comma-separated menu items
+- `active` - Currently active item
+- `collapsed` - Start in collapsed state
 
 **Examples:**
 
 ```html
 <!-- Basic sidebar -->
-<aside data-items="Dashboard, Projects, Team, Settings" data-active="Dashboard">
+<aside items="Dashboard, Projects, Team, Settings" active="Dashboard">
 </aside>
 
 <!-- Semantic sidebar -->
@@ -2013,7 +2013,7 @@ These behaviors transform the element into a component.
 | Element | Behavior | Module |
 |---------|----------|--------|
 | `<article>` | card | card.js |
-| `<article data-href>` | cardlink | card.js |
+| `<article href>` | cardlink | card.js |
 | `<nav>` | navbar | navigation.js |
 | `<aside>` | sidebar | navigation.js |
 | `<img>` | image | media.js |
@@ -2199,8 +2199,8 @@ if (getConfig('autoInject')) {
 
 <!-- Button row (wb-row is alias for flex) -->
 <wb-row gap="0.5rem" justify="flex-end">
-  <button data-variant="ghost">Cancel</button>
-  <button data-variant="primary">Save</button>
+  <button variant="ghost">Cancel</button>
+  <button variant="primary">Save</button>
 </wb-row>
 ```
 
@@ -2247,7 +2247,7 @@ if (getConfig('autoInject')) {
 
 <!-- Intrinsic centering (based on content width) -->
 <wb-center intrinsic>
-  <button data-variant="primary">Centered Button</button>
+  <button variant="primary">Centered Button</button>
 </wb-center>
 ```
 
@@ -2257,7 +2257,7 @@ if (getConfig('autoInject')) {
 <!-- Full-screen hero with vertical centering -->
 <wb-cover min-height="100vh">
   <header>Logo</header>
-  <div data-principal>
+  <div principal>
     <h1>Main Content</h1>
     <p>This is vertically centered</p>
   </div>
@@ -2353,114 +2353,114 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
 
 <!-- Image card -->
 <card-image
-  data-src="photo.jpg"
-  data-title="Beautiful Sunset"
-  data-alt="Sunset over mountains">
+  src="photo.jpg"
+  title="Beautiful Sunset"
+  alt="Sunset over mountains">
 </card-image>
 
 <!-- Profile card -->
 <card-profile 
-  data-avatar="avatar.jpg"
-  data-name="Jane Doe"
-  data-title="Senior Developer"
-  data-bio="Full-stack developer with 10+ years experience.">
+  avatar="avatar.jpg"
+  name="Jane Doe"
+  title="Senior Developer"
+  bio="Full-stack developer with 10+ years experience.">
 </card-profile>
 
 <!-- Pricing card -->
 <card-pricing
-  data-plan="Pro"
-  data-price="$29"
-  data-period="/month"
-  data-features="Unlimited projects, Priority support, API access"
-  data-cta="Get Started"
-  data-popular="true">
+  plan="Pro"
+  price="$29"
+  period="/month"
+  features="Unlimited projects, Priority support, API access"
+  cta="Get Started"
+  popular="true">
 </card-pricing>
 
 <!-- Product card -->
 <card-product
-  data-image="product.jpg"
-  data-title="Widget Pro"
-  data-price="$99.99"
-  data-rating="4.5"
-  data-reviews="128">
+  image="product.jpg"
+  title="Widget Pro"
+  price="$99.99"
+  rating="4.5"
+  reviews="128">
 </card-product>
 
 <!-- Stats card -->
 <card-stats
-  data-value="2,847"
-  data-label="Active Users"
-  data-change="+12%"
-  data-trend="up">
+  value="2,847"
+  label="Active Users"
+  change="+12%"
+  trend="up">
 </card-stats>
 
 <!-- Testimonial card -->
 <card-testimonial
-  data-quote="This product changed everything!"
-  data-author="John Smith"
-  data-role="CEO, TechCorp"
-  data-avatar="john.jpg">
+  quote="This product changed everything!"
+  author="John Smith"
+  role="CEO, TechCorp"
+  avatar="john.jpg">
 </card-testimonial>
 
 <!-- Hero card -->
 <card-hero
-  data-title="Welcome"
-  data-subtitle="Get started today"
-  data-image="hero-bg.jpg"
-  data-cta="Learn More"
-  data-href="/start">
+  title="Welcome"
+  subtitle="Get started today"
+  image="hero-bg.jpg"
+  cta="Learn More"
+  href="/start">
 </card-hero>
 
 <!-- Video card -->
 <card-video
-  data-src="demo.mp4"
-  data-poster="poster.jpg"
-  data-title="Product Demo">
+  src="demo.mp4"
+  poster="poster.jpg"
+  title="Product Demo">
 </card-video>
 
 <!-- File card -->
 <card-file
-  data-filename="report.pdf"
-  data-size="2.4 MB"
-  data-icon="📄"
-  data-href="/downloads/report.pdf">
+  filename="report.pdf"
+  size="2.4 MB"
+  icon="📄"
+  href="/downloads/report.pdf">
 </card-file>
 
 <!-- Notification card -->
 <card-notification
-  data-type="success"
-  data-title="Payment Received"
-  data-message="Your payment of $99.00 was successful."
-  data-time="2 minutes ago">
+  type="success"
+  title="Payment Received"
+  message="Your payment of $99.00 was successful."
+  time="2 minutes ago">
 </card-notification>
 
 <!-- Portfolio card -->
 <card-portfolio
-  data-image="project.jpg"
-  data-title="E-commerce Redesign"
-  data-category="Web Design"
-  data-href="/portfolio/ecommerce">
+  image="project.jpg"
+  title="E-commerce Redesign"
+  category="Web Design"
+  href="/portfolio/ecommerce">
 </card-portfolio>
 
 <!-- Link card (clickable) -->
 <card-link 
-  data-href="/docs" 
-  data-title="Documentation"
-  data-description="Learn how to use the framework"
-  data-icon="📚">
+  href="/docs" 
+  title="Documentation"
+  description="Learn how to use the framework"
+  icon="📚">
 </card-link>
 
 <!-- Horizontal card -->
 <card-horizontal
-  data-image="thumb.jpg"
-  data-title="Article Title"
-  data-description="Brief description of the article...">
+  image="thumb.jpg"
+  title="Article Title"
+  description="Brief description of the article...">
 </card-horizontal>
 
 <!-- Overlay card -->
 <card-overlay
-  data-image="background.jpg"
-  data-title="Overlay Title"
-  data-subtitle="Text appears over the image">
+  image="background.jpg"
+  title="Overlay Title"
+  subtitle="Text appears over the image">
 </card-overlay>
 ```
 

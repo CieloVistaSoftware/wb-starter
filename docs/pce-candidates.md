@@ -11,21 +11,21 @@ PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of
 
 ### 1. WB Namespace (Recommended)
 ```html
-<wb-cardprofile data-name="Sarah"></wb-cardprofile>
-<wb-cardhero data-title="Welcome"></wb-cardhero>
-<wb-cardstats data-value="1,234"></wb-cardstats>
+<wb-cardprofile name="Sarah"></wb-cardprofile>
+<wb-cardhero title="Welcome"></wb-cardhero>
+<wb-cardstats value="1,234"></wb-cardstats>
 ```
 
 ### 2. Noun-First Aliases (Also Supported)
 ```html
-<profile-card data-name="Sarah"></profile-card>
-<hero-card data-title="Welcome"></hero-card>
-<stats-card data-value="1,234"></stats-card>
+<profile-card name="Sarah"></profile-card>
+<hero-card title="Welcome"></hero-card>
+<stats-card value="1,234"></stats-card>
 ```
 
 ### 3. Behavior Attribute (Traditional)
 ```html
-<div x-behavior="cardprofile" data-name="Sarah"></div>
+<div x-behavior="cardprofile" name="Sarah"></div>
 ```
 
 All three are equivalent and produce the same result.
@@ -224,17 +224,17 @@ npx playwright test tests/behaviors/pce-demo.spec.ts
 
 ### Before (deprecated)
 ```html
-<div data-wb="card" data-title="Hello">Content</div>
+<div x-card title="Hello">Content</div>
 ```
 
 ### After (v3.0)
 ```html
-<wb-card data-title="Hello">Content</wb-card>
+<wb-card title="Hello">Content</wb-card>
 ```
 
 Or with behavior attribute:
 ```html
-<article x-behavior="card" data-title="Hello">Content</article>
+<article x-behavior="card" title="Hello">Content</article>
 ```
 
 ---

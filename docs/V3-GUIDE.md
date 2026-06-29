@@ -15,7 +15,7 @@ There are three ways UI gets enhanced, all by the same runtime:
 | You write | What happens |
 |---|---|
 | **Custom tag** — `<wb-card title="Hi">` | The tag is mapped to a *behavior* that builds the card |
-| **Behavior attribute** — `<button x-toast data-type="success">` | Any element gains a behavior via an `x-*` attribute |
+| **Behavior attribute** — `<button x-toast type="success">` | Any element gains a behavior via an `x-*` attribute |
 | **Plain element** — `<input type="text">` (with `autoInject`) | Native elements are auto-enhanced |
 
 A **behavior** is just a function that receives an element and decorates it.
@@ -48,7 +48,7 @@ A standalone page needs the theme + base styles and one module script:
     <p>It just works.</p>
   </wb-card>
 
-  <button x-toast data-message="Saved!" data-type="success">Save</button>
+  <button x-toast message="Saved!" type="success">Save</button>
 
   <script type="module">
     import WB from '/src/core/wb-lazy.js';
@@ -84,8 +84,8 @@ Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slo
 <wb-badge variant="success" pill>New</wb-badge>
 
 <wb-tabs>
-  <div data-tab-title="Overview"><p>…</p></div>
-  <div data-tab-title="Install"><p>…</p></div>
+  <div tab-title="Overview"><p>…</p></div>
+  <div tab-title="Install"><p>…</p></div>
 </wb-tabs>
 
 <wb-accordion title="What is wb-starter?">
@@ -105,14 +105,14 @@ need a custom tag:
 
 ```html
 <!-- feedback -->
-<button x-toast data-message="Done" data-type="success">Notify</button>
+<button x-toast message="Done" type="success">Notify</button>
 
 <!-- navigation -->
-<nav x-breadcrumb data-items="Home,Products,Phones"></nav>
-<div x-steps data-items="Cart,Shipping,Pay" data-current="2"></div>
+<nav x-breadcrumb items="Home,Products,Phones"></nav>
+<div x-steps items="Cart,Shipping,Pay" current="2"></div>
 
 <!-- effects (entrance / attention) -->
-<button x-slidein data-direction="left">Slide</button>
+<button x-slidein direction="left">Slide</button>
 <button x-bounce>Bounce</button>
 
 <!-- forms -->
@@ -190,10 +190,10 @@ A behavior is a plain function. The contract:
 // src/wb-viewmodels/feedback.js
 export function toast(element, options = {}) {
   const message = options.message
-    || element.getAttribute('data-message')
+    || element.getAttribute('message')
     || element.getAttribute('message') || 'Notification';
   const variant = options.variant
-    || element.getAttribute('data-type') || 'info';
+    || element.getAttribute('type') || 'info';
 
   const show = () => createToast(message, variant);
   element.addEventListener('click', show);
@@ -213,7 +213,7 @@ Components can be **schema-driven**: a `*.schema.json` declares the component's
 **schema builder** (`src/core/mvvm/schema-builder.js`) loads them (listed in
 `src/wb-models/index.json`) and builds the component's DOM before behaviors run.
 This is how a `<wb-card>` knows its header/body/footer structure declaratively.
-Processed elements are marked `x-schema="<name>"`; legacy `data-wb=` usage is
+Processed elements are marked `x-schema="<name>"`; legacy `x-behavior=` usage is
 rejected with a console error in strict mode.
 
 ### File map

@@ -139,7 +139,7 @@ Fetches JSON data from a URL and merges it with attributes.
 ### Reference Data (`use`)
 Uses data from another DOM element or a global variable.
 
-- **From Element**: `use="#data-script"` (reads JSON from script tag)
+- **From Element**: `use="#script"` (reads JSON from script tag)
 - **From Window**: `use="window.appData.user"`
 
 ```html

@@ -110,7 +110,7 @@ This doc explains the core features, usage, and architectural choices behind `wb
 ### Semantic Element
 
 ```html
-<article data-wb="card" data-wb-title="Card Title">
+<article x-card title="Card Title">
   This is the card content.
 </article>
 ```

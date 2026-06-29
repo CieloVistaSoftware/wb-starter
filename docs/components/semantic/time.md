@@ -26,7 +26,7 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 ### 1. Card File (`cardfile`)
 
 ```html
-<article data-wb="cardfile" data-date="Dec 15, 2024">
+<article x-cardfile date="Dec 15, 2024">
   <time datetime="2024-12-15" class="wb-card__file-date">
     Dec 15, 2024
   </time>
@@ -36,7 +36,7 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 ### 2. Card Notification (`cardnotification`)
 
 ```html
-<aside data-wb="cardnotification">
+<aside x-cardnotification>
   <time datetime="2024-12-15T14:30:00Z" class="wb-card__notif-time">
     2 hours ago
   </time>
@@ -46,7 +46,7 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 ### 3. Timeline Component
 
 ```html
-<div data-wb="timeline">
+<div x-timeline>
   <article class="wb-timeline__item">
     <time datetime="2024-01" class="wb-timeline__date">
       January 2024
@@ -62,9 +62,9 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 
 ```html
 <time 
-  data-wb="relativetime" 
+  x-relativetime 
   datetime="2024-12-15T10:30:00Z"
-  data-format="auto">
+  format="auto">
   3 hours ago
 </time>
 ```
@@ -124,7 +124,7 @@ time.wb-timeline__date {
 }
 
 /* Relative time with auto-update */
-time[data-wb="relativetime"] {
+time[x-relativetime] {
   /* Will be updated by JavaScript */
 }
 ```

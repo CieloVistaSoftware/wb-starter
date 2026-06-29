@@ -81,10 +81,10 @@ function handleDrop(e, draggedComponent) {
   const target = e.target;
   
   // Check if dropping into a container
-  const container = target.closest('[data-wb][data-container]');
+  const container = target.closest('[x-behavior][container]');
   
   if (container) {
-    const dropZone = container.querySelector(container.dataset.dropZone || '[data-drop-zone]');
+    const dropZone = container.querySelector(container.dataset.dropZone || '[drop-zone]');
     
     if (dropZone) {
       // Append to container's drop zone
@@ -121,11 +121,11 @@ When dragging over a container:
 ## CSS for Drop Zones
 
 ```css
-[data-container] {
+[container] {
   position: relative;
 }
 
-[data-drop-zone] {
+[drop-zone] {
   min-height: 40px;
 }
 
@@ -144,7 +144,7 @@ When dragging over a container:
 
 When an image is dropped into a container:
 1. Image is **appended** as a child (not replacing content)
-2. Image gets `data-wb="image"` behavior
+2. Image gets `x-image` behavior
 3. Existing content remains intact
 
 ```javascript

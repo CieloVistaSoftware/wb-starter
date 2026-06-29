@@ -24,7 +24,7 @@ behaviors.src defaults).
      demo files (`project-integrity`). Decide: restore the file or fix the refs.
    - `tests/repro_card_semantic.html` is MISSING → `semantic-article-to-card` can't pass
      (create fixture or retire the test).
-   - `strict-mode-runtime` — `data-wb` strict rejection lives in `src/core/wb.js`; debug there.
+   - `strict-mode-runtime` — `x-behavior` strict rejection lives in `src/core/wb.js`; debug there.
    - `css-oop-compliance` (hardcoded colors), `docs-manifest-integrity`, `html-ids-home`,
      `fix-viewer` duplicate IDs, `page-compliance` / `universal-compliance` (runtime page render).
 

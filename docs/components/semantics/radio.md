@@ -13,18 +13,18 @@ The `radio` component modernizes the `<input type="radio">` element. Like the ch
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="radio"` to an `<input type="radio">`.
+Add `x-radio` to an `<input type="radio">`.
 
 ```html
-<input type="radio" name="option" data-wb="radio">
+<input type="radio" name="option" x-radio>
 ```
 
 ### Configuration Options
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `data-label` | String | `''` | Text label to display. |
-| `data-variant` | String | `default` | Color variant. |
-| `data-size` | String | `md` | Size: `sm`, `md`, `lg`. |
+| `label` | String | `''` | Text label to display. |
+| `variant` | String | `default` | Color variant. |
+| `size` | String | `md` | Size: `sm`, `md`, `lg`. |
 
 ## 3. Examples
 
@@ -32,8 +32,8 @@ Add `data-wb="radio"` to an `<input type="radio">`.
 A standard group of options.
 
 ```html
-<input type="radio" name="plan" data-wb="radio" data-label="Free Plan" value="free">
-<input type="radio" name="plan" data-wb="radio" data-label="Pro Plan" value="pro">
+<input type="radio" name="plan" x-radio label="Free Plan" value="free">
+<input type="radio" name="plan" x-radio label="Pro Plan" value="pro">
 ```
 
 ### Example 2: Large Selection
@@ -43,9 +43,9 @@ Larger targets for touch devices.
 <input 
   type="radio" 
   name="size" 
-  data-wb="radio" 
-  data-size="lg" 
-  data-label="Extra Large">
+  x-radio 
+  size="lg" 
+  label="Extra Large">
 ```
 
 ## 4. Why It Works

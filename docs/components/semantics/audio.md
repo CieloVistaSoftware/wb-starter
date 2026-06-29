@@ -37,7 +37,7 @@ Audio player with optional 15-band graphic equalizer.
 ### Native Audio (Enhanced)
 
 ```html
-<audio data-wb="audio" src="music.mp3" controls></audio>
+<audio x-audio src="music.mp3" controls></audio>
 ```
 
 ### With Equalizer

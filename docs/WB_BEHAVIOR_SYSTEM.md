@@ -115,22 +115,22 @@ Use standard semantic HTML elements (Auto-Inject):
 
 ```html
 <!-- Semantic behaviors on native elements -->
-<button data-variant="primary">Click me</button>
-<img data-lazy data-zoomable src="photo.jpg" alt="Photo">
-<form data-ajax data-validate>...</form>
+<button variant="primary">Click me</button>
+<img lazy zoomable src="photo.jpg" alt="Photo">
+<form ajax validate>...</form>
 <video controls autoplay>...</video>
 ```
 
-Or use `data-wb` for explicit behavior injection (Legacy/Override):
+Or use `x-behavior` for explicit behavior injection (Legacy/Override):
 
 ```html
 <!-- Multiple behaviors (space-separated) -->
-<button data-wb="ripple tooltip" data-tooltip="Hello!">Hover</button>
+<button x-ripple x-tooltip tooltip="Hello!">Hover</button>
 ```
 
 **From `src/site-engine.js:95`:**
 ```javascript
-<button class="nav__toggle" data-wb="ripple">☰</button>
+<button class="nav__toggle" x-ripple>☰</button>
 ```
 
 ### 2. WB.init() - Initialization
@@ -155,18 +155,18 @@ WB.init({ debug: false });
 ```
 
 This triggers:
-- **WB.scan()** - Finds all existing `[data-wb]` elements
+- **WB.scan()** - Finds all existing `[x-behavior]` elements
 - **WB.observe()** - Starts MutationObserver for dynamic elements
 
 ### 3. WB.scan() - Discovery
 
-Finds and processes all elements with `data-wb` AND auto-injects behaviors on semantic tags (if enabled):
+Finds and processes all elements with `x-behavior` AND auto-injects behaviors on semantic tags (if enabled):
 
 **From `src/wb.js:112-124`:**
 ```javascript
 scan(root = document.body) {
-  // 1. Find all elements with data-wb attribute
-  const elements = root.querySelectorAll('[data-wb]');
+  // 1. Find all elements with x-behavior attribute
+  const elements = root.querySelectorAll('[x-behavior]');
 
   elements.forEach(element => {
     // Parse behavior list (space-separated)
@@ -183,8 +183,8 @@ scan(root = document.body) {
     autoInjectMappings.forEach(({ selector, behavior }) => {
       const autoElements = root.querySelectorAll(selector);
       autoElements.forEach(element => {
-        // Skip if data-wb is present (already handled) or ignored
-        if (!element.hasAttribute('data-wb') && !element.hasAttribute('data-wb-ignore')) {
+        // Skip if x-behavior is present (already handled) or ignored
+        if (!element.hasAttribute('x-behavior') && !element.hasAttribute('ignore')) {
           WB.inject(element, behavior);
         }
       });
@@ -259,22 +259,22 @@ observe(root = document.body) {
       // Handle added nodes
       for (const node of mutation.addedNodes) {
         if (node.nodeType === Node.ELEMENT_NODE) {
-          // Check if node itself has data-wb
+          // Check if node itself has x-behavior
           if (node.dataset?.wb) {
             const behaviorList = node.dataset.wb.split(/\s+/).filter(Boolean);
             behaviorList.forEach(name => WB.inject(node, name));
           }
           // Check descendants
-          node.querySelectorAll?.('[data-wb]').forEach(el => {
+          node.querySelectorAll?.('[x-behavior]').forEach(el => {
             const behaviorList = el.dataset.wb.split(/\s+/).filter(Boolean);
             behaviorList.forEach(name => WB.inject(el, name));
           });
         }
       }
 
-      // Handle attribute changes on data-wb
-      if (mutation.type === 'attributes' && mutation.attributeName === 'data-wb') {
-        // Re-process when data-wb changes
+      // Handle attribute changes on x-behavior
+      if (mutation.type === 'attributes' && mutation.attributeName === 'x-behavior') {
+        // Re-process when x-behavior changes
       }
     }
   });
@@ -283,7 +283,7 @@ observe(root = document.body) {
     childList: true,
     subtree: true,
     attributes: true,
-    attributeFilter: ['data-wb']
+    attributeFilter: ['x-behavior']
   });
 
   return observer;
@@ -294,7 +294,7 @@ observe(root = document.body) {
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ HTML: <button data-variant="primary">                   │
+│ HTML: <button variant="primary">                   │
 └─────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────┐
@@ -334,11 +334,11 @@ observe(root = document.body) {
 
 ### Overview
 
-The Auto-Injection system allows standard HTML5 semantic elements to automatically receive behaviors without explicit `data-wb` attributes. This feature was introduced to reduce markup verbosity and promote semantic HTML.
+The Auto-Injection system allows standard HTML5 semantic elements to automatically receive behaviors without explicit `x-behavior` attributes. This feature was introduced to reduce markup verbosity and promote semantic HTML.
 
 ### Why It Was Done & Benefits
 
-1.  **Cleaner Markup**: Removes the need to add `data-wb="card"` or `data-wb="navbar"` to every element. Your HTML looks like standard HTML.
+1.  **Cleaner Markup**: Removes the need to add `x-card` or `x-navbar` to every element. Your HTML looks like standard HTML.
 2.  **Semantic Correctness**: Encourages developers to use proper tags like `<article>`, `<nav>`, `<dialog>`, etc., instead of generic `<div>`s.
 3.  **Accessibility**: By targeting semantic elements, we ensure that the underlying markup is accessible by default, even before behaviors enhance it.
 4.  **Portability**: The HTML remains standard and portable. If the JS library is removed, the content structure remains valid and meaningful.
@@ -348,8 +348,8 @@ The Auto-Injection system allows standard HTML5 semantic elements to automatical
 When `WB.init({ autoInject: true })` is called:
 1.  **Mapping**: The system uses a predefined map of selectors to behaviors (e.g., `article` -> `card`, `nav` -> `navbar`).
 2.  **Scanning**: During `WB.scan()`, it queries for these selectors.
-3.  **Precedence**: Explicit `data-wb` attributes **always** take precedence. If an element has `data-wb` (even empty), auto-injection is skipped.
-4.  **Opt-Out**: You can prevent auto-injection on a specific element by adding `data-wb-ignore` or an empty `data-wb=""`.
+3.  **Precedence**: Explicit `x-behavior` attributes **always** take precedence. If an element has `x-behavior` (even empty), auto-injection is skipped.
+4.  **Opt-Out**: You can prevent auto-injection on a specific element by adding `ignore` or an empty ``.
 
 **Example Mapping:**
 ```javascript
@@ -372,10 +372,10 @@ All behavior options can be set via `data-*` attributes:
 ```html
 <button
 
-  data-variant="primary"
-  data-size="lg"
-  data-icon="→"
-  data-loading>
+  variant="primary"
+  size="lg"
+  icon="→"
+  loading>
   Submit
 </button>
 ```
@@ -399,8 +399,8 @@ const config = {
   size: options.size || element.dataset.size || 'md',
   icon: options.icon || element.dataset.icon || '',
   iconPosition: options.iconPosition || element.dataset.iconPosition || 'left',
-  loading: options.loading ?? element.hasAttribute('data-loading'),
-  disabled: options.disabled ?? element.hasAttribute('data-disabled'),
+  loading: options.loading ?? element.hasAttribute('loading'),
+  disabled: options.disabled ?? element.hasAttribute('disabled'),
   ...options  // Explicit options override everything
 };
 ```
@@ -425,8 +425,8 @@ const config = {
 export function img(element, options = {}) {
   // 1. Merge config from options + data attributes
   const config = {
-    lazy: options.lazy ?? element.hasAttribute('data-lazy'),
-    zoomable: options.zoomable ?? element.hasAttribute('data-zoomable'),
+    lazy: options.lazy ?? element.hasAttribute('lazy'),
+    zoomable: options.zoomable ?? element.hasAttribute('zoomable'),
     placeholder: options.placeholder || element.dataset.placeholder || '',
     fallback: options.fallback || element.dataset.fallback || '',
     aspectRatio: options.aspectRatio || element.dataset.aspectRatio || '',
@@ -593,9 +593,9 @@ form.addEventListener('wb:form:success', (e) => {
 Stack multiple behaviors on a single element:
 
 ```html
-<button data-wb="button ripple tooltip"
-        data-variant="primary"
-        data-tooltip="Click me!">
+<button x-button x-ripple x-tooltip
+        variant="primary"
+        tooltip="Click me!">
   Submit
 </button>
 ```
@@ -647,7 +647,7 @@ function myBehavior(element, options = {}) {
 WB.register('mybehavior', myBehavior);
 
 // Now use it in HTML
-// <div data-wb="mybehavior">Content</div>
+// <div x-mybehavior>Content</div>
 ```
 
 **From `src/wb.js:212-218`:**
@@ -735,7 +735,7 @@ export const behaviors = {
 ### Step 3: Use in HTML
 
 ```html
-<div data-wb="mycustom" data-color="red" data-size="lg">
+<div x-mycustom color="red" size="lg">
   Custom content
 </div>
 ```
@@ -839,8 +839,8 @@ if (element.classList.contains("wb-ready")) {
 <form>...</form>
 
 // ❌ Bad - Generic divs everywhere
-<div data-wb="button">Click</div>
-<div data-wb="img">...</div>
+<div x-button>Click</div>
+<div x-img>...</div>
 ```
 
 ### 7. Dispatch Custom Events for Important Actions
@@ -870,7 +870,7 @@ export function ripple(element, options) {
   // Only handles ripple effect
 }
 
-// Use together: data-wb="button ripple"
+// Use together: x-button x-ripple
 
 // ❌ Bad - Does too much
 export function button(element, options) {
@@ -883,7 +883,7 @@ export function button(element, options) {
 ## Key Takeaways
 
 1. **Functional, not Class-based** - Behaviors are functions that enhance native elements
-2. **Progressive Enhancement** - Start with semantic HTML, enhance with `data-wb`
+2. **Progressive Enhancement** - Start with semantic HTML, enhance with `x-behavior`
 3. **No Inheritance** - The browser provides inheritance; we just add features
 4. **Declarative** - Configuration via data attributes
 5. **Composable** - Stack multiple behaviors on one element

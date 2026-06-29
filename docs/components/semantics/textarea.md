@@ -42,7 +42,7 @@ Multi-line text input with autosize and character count.
 ### Native Textarea (Enhanced)
 
 ```html
-<textarea data-wb="textarea" placeholder="Write something..."></textarea>
+<textarea x-textarea placeholder="Write something..."></textarea>
 ```
 
 ### With Label

@@ -38,7 +38,7 @@ Enhanced form with AJAX submission, validation, and auto-save.
 ### Native Form (Enhanced)
 
 ```html
-<form data-wb="form" action="/api/submit">
+<form x-form action="/api/submit">
   <input name="email" required>
   <button type="submit">Send</button>
 </form>

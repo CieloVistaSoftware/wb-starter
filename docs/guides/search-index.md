@@ -160,8 +160,8 @@ const results = search('card component');
 ```html
 <wb-search 
   placeholder="Search docs..." 
-  data-src="/data/search.json"
-  data-limit="10">
+  src="/data/search.json"
+  limit="10">
 </wb-search>
 ```
 

@@ -11,24 +11,24 @@ The Tabs component provides a flexible tabbed interface for organizing content i
 ### Simple Tabs
 ```html
 <wb-tabs>
-  <div data-tab="Tab 1">Content 1</div>
-  <div data-tab="Tab 2">Content 2</div>
-  <div data-tab="Tab 3">Content 3</div>
+  <div tab="Tab 1">Content 1</div>
+  <div tab="Tab 2">Content 2</div>
+  <div tab="Tab 3">Content 3</div>
 </wb-tabs>
 ```
 
 ### Basic Usage
 ```html
 <wb-tabs>
-  <div data-tab="Overview">
+  <div tab="Overview">
     <h3>Overview Content</h3>
     <p>Overview details...</p>
   </div>
-  <div data-tab="Details">
+  <div tab="Details">
     <h3>Details Content</h3>
     <p>More information...</p>
   </div>
-  <div data-tab="Settings">
+  <div tab="Settings">
     <h3>Settings</h3>
     <p>Configuration options...</p>
   </div>
@@ -38,9 +38,9 @@ The Tabs component provides a flexible tabbed interface for organizing content i
 ### With Active Tab
 ```html
 <wb-tabs active-tab="1">
-  <div data-tab="Home">Welcome content</div>
-  <div data-tab="About">About us</div>
-  <div data-tab="Contact">Contact info</div>
+  <div tab="Home">Welcome content</div>
+  <div tab="About">About us</div>
+  <div tab="Contact">Contact info</div>
 </wb-tabs>
 ```
 

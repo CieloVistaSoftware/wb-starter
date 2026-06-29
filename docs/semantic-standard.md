@@ -79,7 +79,7 @@
 
 ```html
 <!-- CORRECT -->
-<article data-wb="card">
+<article x-card>
   <header class="wb-card__header">
     <h3>Title</h3>
   </header>
@@ -92,7 +92,7 @@
 </article>
 
 <!-- WRONG - div soup -->
-<div data-wb="card">
+<div x-card>
   <div class="header">Title</div>
   <div class="body">Content</div>
   <div class="footer">Action</div>
@@ -103,7 +103,7 @@
 
 ```html
 <!-- CORRECT -->
-<dialog data-wb="modal">
+<dialog x-modal>
   <header class="wb-modal__header">
     <h2>Modal Title</h2>
     <button aria-label="Close">×</button>
@@ -118,7 +118,7 @@
 </dialog>
 
 <!-- WRONG -->
-<div data-wb="modal">
+<div x-modal>
   <div class="modal-header">...</div>
   <div class="modal-body">...</div>
 </div>
@@ -128,7 +128,7 @@
 
 ```html
 <!-- CORRECT -->
-<nav data-wb="navbar">
+<nav x-navbar>
   <ul>
     <li><a href="#home">Home</a></li>
     <li><a href="#about">About</a></li>
@@ -136,7 +136,7 @@
 </nav>
 
 <!-- WRONG -->
-<div data-wb="navbar">
+<div x-navbar>
   <div class="nav-item">Home</div>
   <div class="nav-item">About</div>
 </div>
@@ -146,13 +146,13 @@
 
 ```html
 <!-- CORRECT - using native HTML5 -->
-<details data-wb="accordion-item">
+<details x-accordion-item>
   <summary>Section Title</summary>
   <p>Section content</p>
 </details>
 
 <!-- CORRECT - custom (when native doesn't fit) -->
-<section data-wb="accordion-item">
+<section x-accordion-item>
   <header>
     <button aria-expanded="false">Section Title</button>
   </header>
@@ -164,7 +164,7 @@
 
 ```html
 <!-- CORRECT -->
-<section data-wb="tabs">
+<section x-tabs>
   <nav role="tablist">
     <button role="tab" aria-selected="true">Tab 1</button>
     <button role="tab">Tab 2</button>
@@ -178,7 +178,7 @@
 
 ```html
 <!-- CORRECT -->
-<aside data-wb="sidebar">
+<aside x-sidebar>
   <nav>
     <ul>...</ul>
   </nav>
@@ -189,7 +189,7 @@
 
 ```html
 <!-- CORRECT -->
-<article data-wb="cardtestimonial">
+<article x-cardtestimonial>
   <blockquote>
     <p>This product changed my life!</p>
   </blockquote>
@@ -204,7 +204,7 @@
 
 ```html
 <!-- CORRECT -->
-<article data-wb="cardstats">
+<article x-cardstats>
   <header>
     <span class="icon">📈</span>
   </header>
@@ -215,19 +215,19 @@
 </article>
 
 <!-- Progress bar -->
-<progress data-wb="progressbar" value="75" max="100">75%</progress>
+<progress x-progressbar value="75" max="100">75%</progress>
 ```
 
 ### Forms
 
 ```html
 <!-- CORRECT -->
-<form data-wb="form">
+<form x-form>
   <fieldset>
     <legend>Personal Info</legend>
     <label>
       Name
-      <input type="text" data-wb="input" required>
+      <input type="text" x-input required>
     </label>
   </fieldset>
   <footer>
@@ -250,14 +250,14 @@ Only use `<div>` for:
 
 ```html
 <!-- OK - layout wrapper with ID -->
-<div id="grid-layout-1" class="wb-grid" data-wb="grid" data-columns="3">
+<div id="grid-layout-1" class="wb-grid" x-grid columns="3">
   <article id="card-1">...</article>
   <article id="card-2">...</article>
   <article id="card-3">...</article>
 </div>
 
 <!-- OK - styling wrapper with ID -->
-<article id="card-4" data-wb="card">
+<article id="card-4" x-card>
   <header id="card-header-4">
     <div id="header-content-4" class="wb-card__header-content">
       <h3 id="card-title-4">Title</h3>

@@ -40,7 +40,7 @@ cardBase (shared foundation)
 ### Semantic Element + Data Attributes
 
 ```html
-<article data-wb="card" data-wb-title="Card Title">
+<article x-card title="Card Title">
   Card content here
 </article>
 ```

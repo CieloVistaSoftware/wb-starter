@@ -35,7 +35,7 @@ Falling snow animation effect.
 ### Data Attribute
 
 ```html
-<div data-wb="snow" data-wb-count="50"></div>
+<div x-snow count="50"></div>
 ```
 
 ### Background Snow (Auto-Start)

@@ -179,7 +179,7 @@ Level 3: cardbutton.schema.json                ← Specific variants OVERRIDE pa
 |-------|--------------|
 | `baseClass` | When `compliance` section exists — CSS won't work without it |
 | `compliance` | Goal: every component schema should have one |
-| `test.setup` | When `test` section exists — must be valid HTML with `<wb-*>` or `data-wb` |
+| `test.setup` | When `test` section exists — must be valid HTML with `<wb-*>` or `x-behavior` |
 
 ### Base schemas
 
@@ -251,8 +251,8 @@ The schema validation test (`tests/compliance/schema-validation.spec.ts`) runs t
 7. **`compliance` section exists** — progress tracked (goal: all schemas)
 8. **`baseClass` in compliance** — if compliance exists, baseClass must too
 9. **`test` section exists** — progress tracked (goal: all schemas)
-10. **`test.setup` validity** — setup HTML must contain `<wb-*>` or `data-wb=`
-11. **Setup references correct behavior** — `alert.schema.json` setup must use `<wb-alert>` or `data-wb="alert"`
+10. **`test.setup` validity** — setup HTML must contain `<wb-*>` or `x-behavior=`
+11. **Setup references correct behavior** — `alert.schema.json` setup must use `<wb-alert>` or `x-alert`
 12. **Property `type` and `default` fields** — every property needs both (component + base tiers)
 13. **Enum consistency** — if permutations say `ALL_ENUM`, the `enum` array must exist
 14. **Interactions consistency** — clickable elements need `click` actions
@@ -324,7 +324,7 @@ Schema changes can break other tests. After schema edits, also run:
 
 2. **Forgetting card variants inherit from card.base.** Don't duplicate base properties — use `"$inherits": "card.base.schema.json#compliance"`.
 
-3. **Using `data-wb` in setup when component is a `<wb-*>` tag.** If registered as a custom element (`<wb-alert>`), the setup must use that tag. Only use `data-wb="alert"` for behavior-only attachment to arbitrary elements.
+3. **Using `x-behavior` in setup when component is a `<wb-*>` tag.** If registered as a custom element (`<wb-alert>`), the setup must use that tag. Only use `x-alert` for behavior-only attachment to arbitrary elements.
 
 4. **Creating schemas for non-component files.** Files like `views.schema.json` and `behavior.schema.json` are meta-schemas. Don't add `behavior` or `compliance` to these — they should be `"schemaType": "base"` or `"definition"`.
 

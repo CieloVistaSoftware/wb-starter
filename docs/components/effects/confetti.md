@@ -36,7 +36,7 @@ Colorful confetti explosion effect.
 ### Data Attribute
 
 ```html
-<div data-wb="confetti" data-wb-count="50" data-wb-label="Party!"></div>
+<div x-confetti count="50" label="Party!"></div>
 ```
 
 ### Auto-Trigger (No Button)

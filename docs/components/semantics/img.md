@@ -35,7 +35,7 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 ### Native Image (Enhanced)
 
 ```html
-<img data-wb="img" src="photo.jpg" alt="Photo">
+<img x-img src="photo.jpg" alt="Photo">
 ```
 
 ### Lazy Loading

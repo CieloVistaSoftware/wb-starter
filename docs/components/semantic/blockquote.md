@@ -13,7 +13,7 @@ The `<blockquote>` element represents an extended quotation from another source.
 ### Card Testimonial (`cardtestimonial`)
 
 ```html
-<article data-wb="cardtestimonial" data-quote="..." data-author="Jane Smith">
+<article x-cardtestimonial quote="..." author="Jane Smith">
   <blockquote class="wb-card__quote">
     "This product changed my life. Highly recommended!"
   </blockquote>
@@ -48,7 +48,7 @@ The `<cite>` element identifies the source of a quotation:
 ## Example: Full Testimonial Structure
 
 ```html
-<article data-wb="cardtestimonial" class="wb-card wb-card--testimonial">
+<article x-cardtestimonial class="wb-card wb-card--testimonial">
   <figure class="wb-card__avatar">
     <img src="avatar.jpg" alt="Jane Smith">
   </figure>

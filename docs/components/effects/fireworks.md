@@ -36,7 +36,7 @@ Fireworks burst explosion effect.
 ### Data Attribute
 
 ```html
-<div data-wb="fireworks" data-wb-count="30"></div>
+<div x-fireworks count="30"></div>
 ```
 
 ### Auto-Trigger (No Button)

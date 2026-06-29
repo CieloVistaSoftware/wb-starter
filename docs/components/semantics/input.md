@@ -44,7 +44,7 @@ Text input field with label, helper text, and validation states.
 ### Native Input (Enhanced)
 
 ```html
-<input type="text" data-wb="input" placeholder="Search...">
+<input type="text" x-input placeholder="Search...">
 ```
 
 ### With Label and Helper

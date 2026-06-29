@@ -12,10 +12,10 @@ The `ul` component enhances the unordered list to support common UI patterns lik
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="ul"` to a `<ul>` element.
+Add `x-ul` to a `<ul>` element.
 
 ```html
-<ul data-wb="ul">
+<ul x-ul>
   <li>Item 1</li>
   <li>Item 2</li>
 </ul>
@@ -24,9 +24,9 @@ Add `data-wb="ul"` to a `<ul>` element.
 ### Configuration Options
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `data-variant` | String | `default` | Style: `default`, `checklist`, `icon-list`, `none`. |
-| `data-marker` | String | `disc` | CSS list-style-type (e.g., `square`). |
-| `data-gap` | String | `0.5rem` | Spacing between items. |
+| `variant` | String | `default` | Style: `default`, `checklist`, `icon-list`, `none`. |
+| `marker` | String | `disc` | CSS list-style-type (e.g., `square`). |
+| `gap` | String | `0.5rem` | Spacing between items. |
 
 ## 3. Examples
 
@@ -34,9 +34,9 @@ Add `data-wb="ul"` to a `<ul>` element.
 A list of features with checkmarks.
 
 ```html
-<ul data-wb="ul" data-variant="checklist">
-  <li data-checked>Fast Performance</li>
-  <li data-checked>Secure</li>
+<ul x-ul variant="checklist">
+  <li checked>Fast Performance</li>
+  <li checked>Secure</li>
   <li>Offline Mode</li>
 </ul>
 ```
@@ -45,10 +45,10 @@ A list of features with checkmarks.
 Using emojis as bullets.
 
 ```html
-<ul data-wb="ul" data-variant="icon-list">
-  <li data-icon="🚀">Launch</li>
-  <li data-icon="📈">Grow</li>
-  <li data-icon="💰">Profit</li>
+<ul x-ul variant="icon-list">
+  <li icon="🚀">Launch</li>
+  <li icon="📈">Grow</li>
+  <li icon="💰">Profit</li>
 </ul>
 ```
 

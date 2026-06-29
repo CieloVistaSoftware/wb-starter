@@ -27,7 +27,7 @@ Double-clicking on editable elements in the canvas allows direct WYSIWYG editing
 // In builder.js or separate editing module
 function initInlineEditing(canvas) {
   canvas.addEventListener('dblclick', (e) => {
-    const editableEl = e.target.closest('[data-editable]');
+    const editableEl = e.target.closest('[editable]');
     if (!editableEl) return;
     
     const editType = editableEl.dataset.editable;
@@ -97,7 +97,7 @@ function syncToDataAttribute(el) {
   }
   
   // Update the actual data attribute on the element
-  const wbEl = wrapper.querySelector('[data-wb]');
+  const wbEl = wrapper.querySelector('[x-behavior]');
   if (wbEl && key !== 'text') {
     wbEl.dataset[key] = newValue;
   }
@@ -139,7 +139,7 @@ function card(element) {
 
 ### Hover State
 ```css
-[data-editable]:hover {
+[editable]:hover {
   outline: 1px dashed var(--primary);
   outline-offset: 2px;
   cursor: text;
@@ -148,15 +148,15 @@ function card(element) {
 
 ### Editing State
 ```css
-[data-editable].editing {
+[editable].editing {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
   background: rgba(99, 102, 241, 0.05);
   min-height: 1em;
 }
 
-[data-editable].editing:empty::before {
-  content: attr(data-placeholder);
+[editable].editing:empty::before {
+  content: attr(placeholder);
   color: var(--text-muted);
   pointer-events: none;
 }
@@ -263,24 +263,24 @@ function updatePropertyPanel(wrapperId, key, value) {
 
 ```css
 /* Editable element hover hint */
-.dropped [data-editable] {
+.dropped [editable] {
   transition: outline 0.15s ease;
 }
 
-.dropped [data-editable]:hover {
+.dropped [editable]:hover {
   outline: 1px dashed rgba(99, 102, 241, 0.5);
   outline-offset: 2px;
 }
 
 /* Active editing state */
-.dropped [data-editable].editing {
+.dropped [editable].editing {
   outline: 2px solid var(--primary);
   background: rgba(99, 102, 241, 0.08);
   border-radius: 2px;
 }
 
 /* Placeholder for empty editable */
-.dropped [data-editable]:empty::before {
+.dropped [editable]:empty::before {
   content: 'Double-click to edit';
   color: var(--text-muted);
   font-style: italic;

@@ -43,9 +43,9 @@ Modal dialog using native HTML5 dialog element.
 
 ```html
 <button 
-  data-wb="dialog" 
-  data-wb-title="Confirm" 
-  data-wb-content="Are you sure?">
+  x-dialog 
+  title="Confirm" 
+  content="Are you sure?">
   Open Confirmation
 </button>
 ```

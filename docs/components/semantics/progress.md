@@ -38,7 +38,7 @@ Progress bar with determinate and indeterminate states.
 ### Native Progress (Enhanced)
 
 ```html
-<progress data-wb="progress" value="50" max="100"></progress>
+<progress x-progress value="50" max="100"></progress>
 ```
 
 ### With Label and Value

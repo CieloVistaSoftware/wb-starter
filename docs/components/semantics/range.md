@@ -12,19 +12,19 @@ The `range` component improves the `<input type="range">` slider by adding conte
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="range"` to an `<input type="range">`.
+Add `x-range` to an `<input type="range">`.
 
 ```html
-<input type="range" data-wb="range" min="0" max="100">
+<input type="range" x-range min="0" max="100">
 ```
 
 ### Configuration Options
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `data-show-value` | Boolean | `false` | Show current value above slider. |
-| `data-show-labels` | Boolean | `false` | Show min/max labels below slider. |
-| `data-value-prefix` | String | `''` | Prefix for value (e.g., "$"). |
-| `data-value-suffix` | String | `''` | Suffix for value (e.g., "%"). |
+| `show-value` | Boolean | `false` | Show current value above slider. |
+| `show-labels` | Boolean | `false` | Show min/max labels below slider. |
+| `value-prefix` | String | `''` | Prefix for value (e.g., "$"). |
+| `value-suffix` | String | `''` | Suffix for value (e.g., "%"). |
 
 ## 3. Examples
 
@@ -34,9 +34,9 @@ A slider showing the percentage value.
 ```html
 <input 
   type="range" 
-  data-wb="range" 
-  data-show-value="true" 
-  data-value-suffix="%" 
+  x-range 
+  show-value="true" 
+  value-suffix="%" 
   min="0" 
   max="100">
 ```
@@ -47,10 +47,10 @@ A slider with currency formatting and bounds.
 ```html
 <input 
   type="range" 
-  data-wb="range" 
-  data-show-value="true" 
-  data-show-labels="true" 
-  data-value-prefix="$" 
+  x-range 
+  show-value="true" 
+  show-labels="true" 
+  value-prefix="$" 
   min="10" 
   max="1000">
 ```

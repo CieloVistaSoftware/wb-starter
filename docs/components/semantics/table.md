@@ -44,7 +44,7 @@ Interactive data table with sorting and search.
 ### Native Table (Enhanced)
 
 ```html
-<table data-wb="table" data-wb-striped="true">
+<table x-table striped="true">
   <!-- content -->
 </table>
 ```
@@ -99,7 +99,7 @@ Interactive data table with sorting and search.
   <table class="wb-table wb-table--striped wb-table--hover">
     <thead>
       <tr>
-        <th class="wb-table__header" data-sort="asc">
+        <th class="wb-table__header" sort="asc">
           Name <span class="wb-table__sort-icon">▲</span>
         </th>
       </tr>

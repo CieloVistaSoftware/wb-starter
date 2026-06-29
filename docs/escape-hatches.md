@@ -33,13 +33,13 @@ Prevent WB from automatically applying behaviors to elements:
 
 ```html
 <!-- Skip specific element -->
-<pre data-wb-skip>This won't get syntax highlighting</pre>
+<pre skip>This won't get syntax highlighting</pre>
 
 <!-- Ignore auto-injection for this element -->
 <button x-ignore>Not enhanced by WB</button>
 
 <!-- Skip all children -->
-<div data-wb-skip-children>
+<div skip-children>
   <code>Not highlighted</code>
   <button>Not enhanced</button>
 </div>
@@ -52,17 +52,17 @@ Pass options via `data-*` attributes:
 ```html
 <!-- Override mdhtml defaults -->
 <wb-mdhtml 
-  data-size="lg" 
-  data-highlight="false"
-  data-breaks="false">
+  size="lg" 
+  highlight="false"
+  breaks="false">
 </wb-mdhtml>
 
 <!-- Override card variant -->
-<wb-card data-variant="outline" data-size="sm">
+<wb-card variant="outline" size="sm">
 </wb-card>
 
 <!-- Override toast duration -->
-<button x-behavior="toast" data-duration="10000">
+<button x-behavior="toast" duration="10000">
   Show for 10 seconds
 </button>
 ```
