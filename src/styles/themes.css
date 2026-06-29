@@ -43,6 +43,14 @@
   --text-primary: hsl(220, 15%, 95%);
   --text-secondary: hsl(220, 10%, 80%);
   --text-muted: hsl(220, 10%, 60%);
+
+  /* Neutral border tone. Previously referenced by themes.css + dozens of behavior
+     styles (spinner, alert, card, button, code …) but DEFINED NOWHERE, so every
+     `border: …px solid var(--border-color)` shorthand was invalid and silently
+     dropped — invisible spinners (#182), undemarcated cards (#180), missing
+     outlines. Derived from the theme's own text color (a faint hairline) so it
+     adapts to light + dark themes without a hardcoded literal. */
+  --border-color: color-mix(in srgb, var(--text-primary) 22%, transparent);
   
   /* Semantic state colors — used by alert, notification, rating */
   --info-color: hsl(217, 91%, 60%);

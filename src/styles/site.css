@@ -17,6 +17,7 @@
 @import url('./behaviors/stat.css');
 @import url('./behaviors/timeline.css');
 @import url('./behaviors/steps.css');
+@import url('./behaviors/stepper.css');
 @import url('./behaviors/pagination.css');
 @import url('./behaviors/otp.css');
 @import url('./behaviors/tags.css');
@@ -165,10 +166,22 @@ body > button[x-copy] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* effects.css also styles the <wb-spinner> ELEMENT as a ring (legacy); the
+     schema builds an inner <div> ring, so neutralize the element ring here to
+     avoid a double ring once --border-color is defined (#182). */
+  width: auto;
+  height: auto;
+  border: 0;
+  animation: none;
 }
 
 .wb-spinner div {
-  border: 2px solid var(--border-color);
+  /* Explicit longhands instead of the `border` shorthand: if --border-color is
+     ever unset, only the color is lost, not the whole border (which previously
+     made the ring vanish entirely). #182 */
+  border-width: 2px;
+  border-style: solid;
+  border-color: var(--border-color);
   border-top-color: var(--primary);
   border-radius: 50%;
   animation: wb-spin 1.2s linear infinite;
@@ -1881,4 +1894,81 @@ h5, h6 {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
   }
+}
+
+/* =============================================================================
+   BEHAVIORS SHOWCASE — SECTION NAV (#181)
+   pages/behaviors.css is not loaded by the SPA (see #186), so the section-nav
+   pill styling and anchor offset live here in the always-loaded shell stylesheet.
+   Selectors are safe globally: .nav-links is unique to the behaviors page, and
+   scroll-margin on anchored sections is benign everywhere.
+   ============================================================================= */
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+.nav-links a {
+  text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+.nav-links a:hover {
+  background: var(--primary);
+  color: var(--text-primary);
+  border-color: var(--primary);
+}
+/* Clear the 64px sticky header when jumping to a section, otherwise the heading
+   lands hidden behind the header and the link appears not to work. */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+/* =============================================================================
+   BEHAVIORS SHOWCASE — HERO HEADER (#179)
+   The first content element (the ⚡ hero title) rendered ~19px under the 64px
+   sticky header, clipping the emoji and the tops of the letters with no gap.
+   Push the page content clear of the header and give the h1 line-height room
+   for the emoji's ascent. Scoped to the behaviors page.
+   ============================================================================= */
+#mainPage-behaviors {
+  padding-top: 2rem;
+}
+#mainPage-behaviors .page__hero h1,
+#mainPage-behaviors > #header h1 {
+  margin: 0;
+  line-height: 1.45;
+  padding-top: 0.1em;
+}
+
+/* =============================================================================
+   HOME — CLICKABLE FEATURE CARDS (#184)
+   Each Features card links to its subsystem page; the SPA intercepts ?page=.
+   ============================================================================= */
+.feature-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  border-radius: var(--radius-lg, 0.5rem);
+}
+.feature-card-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+/* the descendant wb-card--float already lifts on hover; ensure the whole card
+   reacts to keyboard focus on the anchor too */
+.feature-card-link:focus-visible .wb-card {
+  border-color: var(--primary);
 }

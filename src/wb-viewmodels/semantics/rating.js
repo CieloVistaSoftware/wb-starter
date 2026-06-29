@@ -16,11 +16,20 @@
  */
 
 export function rating(element, options = {}) {
+  // Read PLAIN attributes (v3 standard: value/max/icon/color) as well as the
+  // legacy data-* form. Previously only data-*/options were read, so the
+  // showcase markup `<wb-rating value="3" icon="❤️">` was ignored — stars never
+  // filled on first paint and the custom icon was dropped. (#177)
+  const attr = (name) => element.getAttribute(name);
   const config = {
-    max: parseInt(options.max || element.dataset.max || '5', 10),
-    value: parseInt(options.value || element.dataset.value || '0', 10),
-    readonly: options.readonly ?? (element.dataset.readonly === 'true'),
-    color: options.color || element.dataset.color || '#fbbf24', // gold-400
+    max: parseInt(options.max || attr('max') || element.dataset.max || '5', 10),
+    value: parseInt(options.value || attr('value') || element.dataset.value || '0', 10),
+    readonly: options.readonly ?? (element.hasAttribute('readonly') || element.dataset.readonly === 'true'),
+    icon: options.icon || attr('icon') || element.dataset.icon || '★',
+    // Filled colour: theme's rating colour by default; override via color="…"
+    // (e.g. color="var(--primary)" for blue). Empty colour from the theme too.
+    color: options.color || attr('color') || element.dataset.color || 'var(--rating-active-color, #fbbf24)',
+    emptyColor: options.emptyColor || attr('empty-color') || 'var(--border-color, #e5e7eb)',
     ...options
   };
 
@@ -41,11 +50,11 @@ export function rating(element, options = {}) {
     const star = document.createElement('span');
     star.className = 'wb-rating__star';
     star.dataset.value = i;
-    star.innerHTML = '★'; // Unicode star
+    star.innerHTML = config.icon; // honour custom icon (★ default, ❤️/👍/…)
     star.style.fontSize = '1.5rem';
     star.style.lineHeight = '1';
     star.style.transition = 'color 0.2s ease, transform 0.1s ease';
-    star.style.color = '#e5e7eb'; // gray-200 (empty)
+    star.style.color = config.emptyColor; // empty
     
     if (!config.readonly) {
       // Hover effects
@@ -96,7 +105,7 @@ export function rating(element, options = {}) {
         star.style.color = config.color;
       } else {
         star.classList.remove('wb-rating__star--full');
-        star.style.color = '#e5e7eb';
+        star.style.color = config.emptyColor;
       }
     });
   }
