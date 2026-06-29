@@ -1951,3 +1951,24 @@ section[id] {
   line-height: 1.45;
   padding-top: 0.1em;
 }
+
+/* =============================================================================
+   HOME — CLICKABLE FEATURE CARDS (#184)
+   Each Features card links to its subsystem page; the SPA intercepts ?page=.
+   ============================================================================= */
+.feature-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  border-radius: var(--radius-lg, 0.5rem);
+}
+.feature-card-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+/* the descendant wb-card--float already lifts on hover; ensure the whole card
+   reacts to keyboard focus on the anchor too */
+.feature-card-link:focus-visible .wb-card {
+  border-color: var(--primary);
+}
