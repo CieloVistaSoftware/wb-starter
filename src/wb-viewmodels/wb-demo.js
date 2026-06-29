@@ -27,7 +27,10 @@ export class WBDemo extends HTMLElement {
   }
 
   disconnectedCallback() {
-    if (this._cleanup) {
+    // _cleanup may hold the Promise from an async WB.inject() (truthy but not
+    // callable) — only invoke it when it's actually a function, or every
+    // navigation throws "this._cleanup is not a function". (#174)
+    if (typeof this._cleanup === 'function') {
       this._cleanup();
     }
   }
