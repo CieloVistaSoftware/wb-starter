@@ -66,6 +66,18 @@ export default class WBSite {
             const page = new URLSearchParams(href).get('page');
             history.pushState(null, '', href);
             this.navigateTo(page);
+          } else if (href && href.length > 1 && href.startsWith('#')) {
+            // In-page anchor (e.g. the behaviors-page section nav). Native anchor
+            // scrolling was unreliable in the SPA — lazy-injected components reflow
+            // the page after the jump, leaving the link looking dead (#181). Drive
+            // the scroll explicitly; scroll-margin-top on the target clears the
+            // sticky header.
+            const target = document.querySelector(href);
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              history.replaceState(null, '', href);
+            }
           }
         }
       });
