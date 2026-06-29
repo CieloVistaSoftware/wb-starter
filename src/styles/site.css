@@ -165,10 +165,22 @@ body > button[x-copy] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* effects.css also styles the <wb-spinner> ELEMENT as a ring (legacy); the
+     schema builds an inner <div> ring, so neutralize the element ring here to
+     avoid a double ring once --border-color is defined (#182). */
+  width: auto;
+  height: auto;
+  border: 0;
+  animation: none;
 }
 
 .wb-spinner div {
-  border: 2px solid var(--border-color);
+  /* Explicit longhands instead of the `border` shorthand: if --border-color is
+     ever unset, only the color is lost, not the whole border (which previously
+     made the ring vanish entirely). #182 */
+  border-width: 2px;
+  border-style: solid;
+  border-color: var(--border-color);
   border-top-color: var(--primary);
   border-radius: 50%;
   animation: wb-spin 1.2s linear infinite;
