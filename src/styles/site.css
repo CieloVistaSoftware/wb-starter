@@ -1934,3 +1934,20 @@ h5, h6 {
 section[id] {
   scroll-margin-top: 80px;
 }
+
+/* =============================================================================
+   BEHAVIORS SHOWCASE — HERO HEADER (#179)
+   The first content element (the ⚡ hero title) rendered ~19px under the 64px
+   sticky header, clipping the emoji and the tops of the letters with no gap.
+   Push the page content clear of the header and give the h1 line-height room
+   for the emoji's ascent. Scoped to the behaviors page.
+   ============================================================================= */
+#mainPage-behaviors {
+  padding-top: 2rem;
+}
+#mainPage-behaviors .page__hero h1,
+#mainPage-behaviors > #header h1 {
+  margin: 0;
+  line-height: 1.45;
+  padding-top: 0.1em;
+}
