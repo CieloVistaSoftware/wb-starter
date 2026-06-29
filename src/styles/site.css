@@ -17,6 +17,7 @@
 @import url('./behaviors/stat.css');
 @import url('./behaviors/timeline.css');
 @import url('./behaviors/steps.css');
+@import url('./behaviors/stepper.css');
 @import url('./behaviors/pagination.css');
 @import url('./behaviors/otp.css');
 @import url('./behaviors/tags.css');
