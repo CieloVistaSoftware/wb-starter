@@ -148,3 +148,19 @@ button-tooltip[disabled] {
   cursor: not-allowed;
   pointer-events: none;
 }
+
+/* #173 — the showcase + ~60 usages use the .wb-btn / .wb-btn--* prefix while the
+   rules above use .wb-button. Compound .wb-btn.wb-btn--* selectors (specificity
+   0,2,0) so they beat any plain base .wb-btn rule regardless of load order. */
+.wb-btn.wb-btn--primary   { background-color: var(--primary); color:#fff; border-color: transparent; }
+.wb-btn.wb-btn--primary:hover   { background-color: var(--primary-dark); }
+.wb-btn.wb-btn--secondary { background-color: var(--secondary); color:#fff; border-color: transparent; }
+.wb-btn.wb-btn--secondary:hover { background-color: var(--secondary-dark); }
+.wb-btn.wb-btn--success   { background-color: var(--success-color); color:#fff; border-color: transparent; }
+.wb-btn.wb-btn--danger,
+.wb-btn.wb-btn--error     { background-color: var(--danger-color); color:#fff; border-color: transparent; }
+.wb-btn.wb-btn--warning   { background-color: var(--warning-color); color:#fff; border-color: transparent; }
+.wb-btn.wb-btn--ghost     { background-color: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
+.wb-btn.wb-btn--ghost:hover{ background-color: var(--bg-tertiary); border-color: var(--text-secondary); }
+.wb-btn.wb-btn--link      { background-color: transparent; color: var(--primary); border: none; box-shadow: none; }
+.wb-btn:disabled { opacity: 0.5; cursor: not-allowed; }
