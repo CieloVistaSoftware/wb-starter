@@ -38,7 +38,7 @@ Checkbox input with label and custom styling.
 ### Native Input (Enhanced)
 
 ```html
-<input type="checkbox" data-wb="checkbox" data-wb-label="Subscribe">
+<input type="checkbox" x-checkbox label="Subscribe">
 ```
 
 ### Pre-Checked

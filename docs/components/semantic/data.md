@@ -13,7 +13,7 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 ### 1. Card Stats (`cardstats`)
 
 ```html
-<article data-wb="cardstats" data-value="1234" data-label="Total Users">
+<article x-cardstats value="1234" label="Total Users">
   <data value="1234" class="wb-card__stats-value">
     1,234
   </data>
@@ -27,7 +27,7 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 ### 2. Card Product (`cardproduct`)
 
 ```html
-<article data-wb="cardproduct" data-price="99.99">
+<article x-cardproduct price="99.99">
   <div class="wb-card__pricing">
     <data value="99.99" class="wb-card__price-current">
       $99.99
@@ -42,7 +42,7 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 ### 3. Card Pricing (`cardpricing`)
 
 ```html
-<article data-wb="cardpricing" data-price="29">
+<article x-cardpricing price="29">
   <data value="29" class="wb-card__amount">
     $29
   </data>
@@ -72,7 +72,7 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 
 ```html
 <section class="dashboard-stats" aria-label="Key Metrics">
-  <article data-wb="cardstats" class="wb-card wb-card--stats">
+  <article x-cardstats class="wb-card wb-card--stats">
     <div class="wb-card__stats-icon" aria-hidden="true">👥</div>
     <div class="wb-card__stats-content">
       <data value="15234" class="wb-card__stats-value">
@@ -85,7 +85,7 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
     </div>
   </article>
   
-  <article data-wb="cardstats" class="wb-card wb-card--stats">
+  <article x-cardstats class="wb-card wb-card--stats">
     <div class="wb-card__stats-icon" aria-hidden="true">💰</div>
     <div class="wb-card__stats-content">
       <data value="52340.50" class="wb-card__stats-value">

@@ -13,10 +13,10 @@ The `pre` component upgrades the `<pre>` element to be a full-featured code bloc
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="pre"` to a `<pre>` element.
+Add `x-pre` to a `<pre>` element.
 
 ```html
-<pre data-wb="pre">
+<pre x-pre>
 Line 1
 Line 2
 </pre>
@@ -25,11 +25,11 @@ Line 2
 ### Configuration Options
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `data-language` | String | `''` | Language label (e.g., "JSON"). |
-| `data-show-line-numbers` | Boolean | `false` | Show line numbers gutter. |
-| `data-show-copy` | Boolean | `false` | Show copy button. |
-| `data-wrap` | Boolean | `false` | Enable text wrapping. |
-| `data-max-height` | String | `''` | Max height with scroll (e.g., "300px"). |
+| `language` | String | `''` | Language label (e.g., "JSON"). |
+| `show-line-numbers` | Boolean | `false` | Show line numbers gutter. |
+| `show-copy` | Boolean | `false` | Show copy button. |
+| `wrap` | Boolean | `false` | Enable text wrapping. |
+| `max-height` | String | `''` | Max height with scroll (e.g., "300px"). |
 
 ## 3. Examples
 
@@ -38,10 +38,10 @@ A complete code block with all features enabled.
 
 ```html
 <pre 
-  data-wb="pre" 
-  data-language="JS" 
-  data-show-line-numbers="true" 
-  data-show-copy="true">
+  x-pre 
+  language="JS" 
+  show-line-numbers="true" 
+  show-copy="true">
 const x = 10;
 const y = 20;
 console.log(x + y);
@@ -53,9 +53,9 @@ A scrollable container for long text output.
 
 ```html
 <pre 
-  data-wb="pre" 
-  data-max-height="200px" 
-  data-wrap="true">
+  x-pre 
+  max-height="200px" 
+  wrap="true">
 [INFO] Starting server...
 [INFO] Connected to DB...
 ...

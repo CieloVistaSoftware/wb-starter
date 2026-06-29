@@ -33,7 +33,7 @@ Enhanced accordion/disclosure component with smooth animations.
 ### Native Details (Enhanced)
 
 ```html
-<details data-wb="details">
+<details x-details>
   <summary>Click to expand</summary>
   <p>Content here...</p>
 </details>

@@ -38,7 +38,7 @@ Interactive button with variants, sizes, and optional icon.
 ### Native Button (Enhanced)
 
 ```html
-<button data-wb="button">Click Me</button>
+<button x-button>Click Me</button>
 ```
 
 ### With Icon

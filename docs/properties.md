@@ -25,7 +25,7 @@ The WB Behaviors Property System provides a unified configuration for all compon
    - [Button Properties](#button-properties)
    - [File Properties](#file-properties)
    - [Pricing Properties](#pricing-properties)
-   - [Data Properties](#data-properties)
+   - [Data Properties](#properties)
    - [Contact Properties](#contact-properties)
    - [Feedback Properties](#feedback-properties)
    - [Display Properties](#display-properties)

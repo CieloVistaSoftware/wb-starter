@@ -37,7 +37,7 @@ Toggle switch for boolean settings.
 ### Native Checkbox (Enhanced)
 
 ```html
-<input type="checkbox" data-wb="switch" data-wb-label="Notifications">
+<input type="checkbox" x-switch label="Notifications">
 ```
 
 ### Pre-Checked

@@ -36,7 +36,7 @@ Star rating component for displaying or collecting ratings.
 ### Data Attribute
 
 ```html
-<div data-wb="rating" data-wb-value="4"></div>
+<div x-rating value="4"></div>
 ```
 
 ### Read-Only Display

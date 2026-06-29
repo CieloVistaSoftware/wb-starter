@@ -25,10 +25,10 @@ The `figure` behavior is automatically injected into `<figure>` elements.
 ### Configuration Options
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `data-lightbox` | Boolean | `false` | Enable click-to-expand lightbox. |
-| `data-lazy` | Boolean | `false` | Enable lazy loading for the image. |
-| `data-zoom` | Boolean | `false` | Enable hover zoom effect. |
-| `data-caption-position` | String | `bottom` | Caption style: `bottom`, `overlay`. |
+| `lightbox` | Boolean | `false` | Enable click-to-expand lightbox. |
+| `lazy` | Boolean | `false` | Enable lazy loading for the image. |
+| `zoom` | Boolean | `false` | Enable hover zoom effect. |
+| `caption-position` | String | `bottom` | Caption style: `bottom`, `overlay`. |
 
 ## 3. Examples
 
@@ -37,8 +37,8 @@ An image that zooms on hover and opens in a lightbox.
 
 ```html
 <figure 
-  data-lightbox="true" 
-  data-zoom="true">
+  lightbox="true" 
+  zoom="true">
   <img src="photo.jpg" alt="Photo">
   <figcaption>Click to expand</figcaption>
 </figure>
@@ -49,7 +49,7 @@ A card-like figure with text overlay.
 
 ```html
 <figure 
-  data-caption-position="overlay">
+  caption-position="overlay">
   <img src="card-bg.jpg" alt="Background">
   <figcaption>Title Text</figcaption>
 </figure>

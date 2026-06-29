@@ -221,8 +221,8 @@ All form components support HTML5 validation with custom error messages.
   label="Email"
   type="email"
   required
-  data-error-required="Email is required"
-  data-error-type="Please enter a valid email address">
+  error-required="Email is required"
+  error-type="Please enter a valid email address">
 </wb-input>
 ```
 

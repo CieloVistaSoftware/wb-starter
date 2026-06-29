@@ -45,7 +45,7 @@
 - [ ] Verify `wb-sticky` class applied on init
 - [ ] Verify `is-stuck` class applied on scroll past trigger
 - [ ] Verify `wbSticky.isStuck()`, `.stick()`, `.unstick()` API works
-- [ ] Verify `data-offset` and `data-class` attributes respected
+- [ ] Verify `offset` and `class` attributes respected
 - [ ] Rerun `sticky.spec.ts` and confirm 18/18 pass
 
 ---
@@ -164,7 +164,7 @@
 
 ## Priority 12 — Deep Fix Items (2 failures)
 
-- [ ] `strict-mode-runtime.spec.ts` — `data-wb` usage should throw error and NOT process it (WB engine change)
+- [ ] `strict-mode-runtime.spec.ts` — `x-behavior` usage should throw error and NOT process it (WB engine change)
 - [ ] `semantic-article-to-card.spec.ts` — `<article>` → card sync processing on page load
 - [ ] Rerun both and confirm pass
 
@@ -232,7 +232,7 @@
 
 ## ✅ Completed Items
 
-- [x] Behaviors test suite fixes (legacy `data-wb`, Locator API, autoinject, badge display)
+- [x] Behaviors test suite fixes (legacy `x-behavior`, Locator API, autoinject, badge display)
 - [x] CSS Ownership Migration (Phase 1-5 complete)
 - [x] Page & Demo Repair (newpage.html h2, button-variants-simple.html)
 - [x] Home page stat/preview IDs added

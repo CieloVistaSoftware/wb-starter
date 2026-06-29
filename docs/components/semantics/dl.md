@@ -13,10 +13,10 @@ The `dl` component enhances the standard `<dl>` (Description List) element, whic
 ## 2. User Guide
 
 ### Basic Usage
-Add `data-wb="dl"` to a `<dl>` element.
+Add `x-dl` to a `<dl>` element.
 
 ```html
-<dl data-wb="dl">
+<dl x-dl>
   <dt>Name</dt>
   <dd>John Doe</dd>
 </dl>
@@ -25,10 +25,10 @@ Add `data-wb="dl"` to a `<dl>` element.
 ### Configuration Options
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `data-variant` | String | `vertical` | Layout: `vertical`, `horizontal`. |
-| `data-gap` | String | `0.5rem` | Spacing between items. |
-| `data-bordered` | Boolean | `false` | Add a border around the list. |
-| `data-striped` | Boolean | `false` | Add background stripes (horizontal mode only). |
+| `variant` | String | `vertical` | Layout: `vertical`, `horizontal`. |
+| `gap` | String | `0.5rem` | Spacing between items. |
+| `bordered` | Boolean | `false` | Add a border around the list. |
+| `striped` | Boolean | `false` | Add background stripes (horizontal mode only). |
 
 ## 3. Examples
 
@@ -36,7 +36,7 @@ Add `data-wb="dl"` to a `<dl>` element.
 Perfect for metadata or specs.
 
 ```html
-<dl data-wb="dl" data-variant="horizontal" data-striped="true">
+<dl x-dl variant="horizontal" striped="true">
   <dt>Version</dt> <dd>1.0.0</dd>
   <dt>Author</dt> <dd>WB-Starter Team</dd>
   <dt>License</dt> <dd>MIT</dd>
@@ -47,7 +47,7 @@ Perfect for metadata or specs.
 Good for sidebars or summaries.
 
 ```html
-<dl data-wb="dl" data-bordered="true">
+<dl x-dl bordered="true">
   <dt>Status</dt> <dd>Active</dd>
   <dt>Uptime</dt> <dd>99.9%</dd>
 </dl>

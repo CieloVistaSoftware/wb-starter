@@ -35,7 +35,7 @@ Enhanced HTML5 video player with configurable defaults.
 ### Native Video (Enhanced)
 
 ```html
-<video data-wb="video" src="clip.mp4" controls></video>
+<video x-video src="clip.mp4" controls></video>
 ```
 
 ### With Poster

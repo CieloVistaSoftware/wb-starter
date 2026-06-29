@@ -40,7 +40,7 @@ Architecture v3.0 uses the WBServices pattern with proper HTMLElement inheritanc
 
 Before fixing code to pass a test:
 - Read the test — does it check v3 patterns (`<wb-*>`, `x-*`, Light DOM)?
-- Or does it check v1/v2 patterns (`data-wb`, Shadow DOM, `WBBaseComponent`)?
+- Or does it check v1/v2 patterns (`x-behavior`, Shadow DOM, `WBBaseComponent`)?
 - If the test is wrong, **fix the test**, don't revert the code
 - If unsure, ask John
 
@@ -123,7 +123,7 @@ If a test isn't in one of these directories, it won't run. Check `playwright.con
 
 **Never use `data-` attributes on `<wb-*>` custom elements or `x-*` behavior elements.** Use plain attributes instead. This applies to HTML pages, tests, demos, and behavior JS code.
 
-- Never use `data-message`, `data-type`, `data-value`, `data-items`, etc.
+- Never use `message`, `type`, `value`, `items`, etc.
 - Use plain attributes: `message`, `variant`, `value`, `items`, etc.
 - Never use `this.dataset` or `element.dataset` in behavior code — use `element.getAttribute()`
 - Never spread dataset properties
@@ -131,9 +131,9 @@ If a test isn't in one of these directories, it won't run. Check `playwright.con
 
 ```html
 <!-- ❌ WRONG -->
-<wb-alert data-type="warning" data-message="Check input">
-<div x-stepper data-value="5" data-min="0" data-max="10">
-<button x-toast data-message="Saved!" data-type="success">
+<wb-alert type="warning" message="Check input">
+<div x-stepper value="5" min="0" max="10">
+<button x-toast message="Saved!" type="success">
 
 <!-- ✅ CORRECT -->
 <wb-alert variant="warning" message="Check input">

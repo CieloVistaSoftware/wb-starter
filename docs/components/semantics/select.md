@@ -44,7 +44,7 @@ Enhanced select dropdown with search, clear, and multi-select.
 ### Native Select (Enhanced)
 
 ```html
-<select data-wb="select">
+<select x-select>
   <option value="1">Option 1</option>
   <option value="2">Option 2</option>
   <option value="3">Option 3</option>
@@ -119,8 +119,8 @@ Enhanced select dropdown with search, clear, and multi-select.
   <div class="wb-select__dropdown">
     <input class="wb-select__search" placeholder="Search...">
     <ul class="wb-select__options">
-      <li class="wb-select__option" data-value="1">Option 1</li>
-      <li class="wb-select__option wb-select__option--selected" data-value="2">Option 2</li>
+      <li class="wb-select__option" value="1">Option 1</li>
+      <li class="wb-select__option wb-select__option--selected" value="2">Option 2</li>
     </ul>
   </div>
 </div>

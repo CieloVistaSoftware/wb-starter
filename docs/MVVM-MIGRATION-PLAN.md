@@ -106,7 +106,7 @@ Users provide simple attribute values. The schema defines how those values becom
 | Trigger | Example | Status |
 |---------|---------|--------|
 | Web Component tag | `<wb-card>` | ✅ Keep |
-| Data attribute | `<article data-wb="card">` | ✅ Keep |
+| Data attribute | `<article x-card>` | ✅ Keep |
 | ~~Class name~~ | ~~`<article class="wb-card">`~~ | ❌ Drop (CSS-only) |
 
 ## Schema Sections Explained

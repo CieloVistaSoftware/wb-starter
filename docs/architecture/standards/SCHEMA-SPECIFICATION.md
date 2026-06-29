@@ -748,7 +748,7 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
   "test": {
     "setup": [
       "<wb-alert message=\"Test alert\"></wb-alert>",
-      "<div data-wb=\"alert\" data-message=\"Test\"></div>"
+      "<div x-behavior=\"alert\" message=\"Test\"></div>"
     ],
     "matrix": {
       "combinations": [

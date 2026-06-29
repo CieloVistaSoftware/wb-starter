@@ -6,7 +6,7 @@
 
 | Status | File | Line | Usage | Context |
 |--------|------|------|-------|---------|
-| ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 32 | `x-ripple` | `\| `&lt;button data-wb="ripple"&gt;` \| `&lt;button x-ripple&gt;` \|` |
+| ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 32 | `x-ripple` | `\| `&lt;button x-ripple&gt;` \| `&lt;button x-ripple&gt;` \|` |
 | ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 80 | `x-ripple` | `│  &lt;button x-ripple&gt;                                      │` |
 | ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 81 | `x-tooltip` | `│  &lt;span x-tooltip="Tip text"&gt;                            │` |
 | ✅ Valid | [docs/_today/CURRENT-STATUS.md](docs/_today/CURRENT-STATUS.md) | 82 | `x-animate` | `│  &lt;div x-animate="fadeIn"&gt;                               │` |
@@ -42,7 +42,7 @@
 | 🔴 Invalid (Use Option) | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](docs/architecture/ATTRIBUTE-NAMING-STANDARD.md) | 546 | `x-delay` | `&lt;div x-animate="fade" x-delay="0.3"&gt;  &lt;!-- 0.3 seconds --&gt;` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](docs/architecture/ATTRIBUTE-NAMING-STANDARD.md) | 664 | `x-ripple` | `&lt;button x-ripple x-tooltip="Click me"&gt;` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](docs/architecture/ATTRIBUTE-NAMING-STANDARD.md) | 664 | `x-tooltip` | `&lt;button x-ripple x-tooltip="Click me"&gt;` |
-| ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](docs/architecture/ATTRIBUTE-NAMING-STANDARD.md) | 678 | `x-ripple` | `\| `data-wb="ripple"` (modifier) \| `x-ripple` \|` |
+| ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](docs/architecture/ATTRIBUTE-NAMING-STANDARD.md) | 678 | `x-ripple` | `\| `x-ripple` (modifier) \| `x-ripple` \|` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](docs/architecture/ATTRIBUTE-NAMING-STANDARD.md) | 912 | `x-ripple` | `&lt;button x-ripple x-tooltip="Save your work"&gt;Save&lt;/button&gt;` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](docs/architecture/ATTRIBUTE-NAMING-STANDARD.md) | 912 | `x-tooltip` | `&lt;button x-ripple x-tooltip="Save your work"&gt;Save&lt;/button&gt;` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](docs/architecture/ATTRIBUTE-NAMING-STANDARD.md) | 915 | `x-animate` | `&lt;div x-animate="bounce" x-delay="0.5"&gt;Animated&lt;/div&gt;` |

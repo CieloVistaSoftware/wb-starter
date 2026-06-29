@@ -15,7 +15,7 @@
 - [Quick Start](#quick-start)
 - [Core Concepts](#core-concepts)
 - [Syntax Reference](#syntax-reference)
-- [Data Binding](#data-binding)
+- [Data Binding](#binding)
 - [Behavior Integration](#behavior-integration)
 - [Views Registry](#views-registry)
 - [Built-in Views](#built-in-views)
@@ -877,7 +877,7 @@ Templates can include behavior attributes. After rendering, `WB.scan()` applies 
        x-ripple 
        x-draggable 
        x-tooltip="{{label}}"
-       data-behavior="{{behavior}}">
+       behavior="{{behavior}}">
     <span>{{icon}}</span>
     <span>{{label}}</span>
   </div>

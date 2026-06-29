@@ -9,7 +9,7 @@ Based on the project assessment (Dec 2025), here are strategic improvements to c
 ## 2. Developer Experience (DX)
 - **CLI Tool:** A simple command-line interface (e.g., `npx create-wb-app`) to scaffold new projects, similar to the current "WB Starter" but automated.
 - **VS Code Extension:** A dedicated extension that provides:
-  - Autocomplete for `data-wb` attributes.
+  - Autocomplete for `x-behavior` attributes.
   - Hover documentation for behavior properties.
   - Snippets for common patterns.
 

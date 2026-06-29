@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Auto Injection (Preview)** is a core feature of WB-Starter that automatically enhances standard HTML5 semantic elements with rich functionality. Instead of manually adding `data-wb` attributes to every element, you simply write standard, semantic HTML, and WB "wakes up" the elements at runtime.
+**Auto Injection (Preview)** is a core feature of WB-Starter that automatically enhances standard HTML5 semantic elements with rich functionality. Instead of manually adding `x-behavior` attributes to every element, you simply write standard, semantic HTML, and WB "wakes up" the elements at runtime.
 
 This approach promotes:
 1.  **Cleaner Markup**: No proprietary attributes cluttering your HTML.
@@ -20,7 +20,7 @@ When `WB.init({ autoInject: true })` is called, the library scans the DOM for sp
 **Auto Injection is additive.**
 It applies the default behavior for the element type. You can add *additional* behaviors using explicit attributes (like `x-ripple` or `x-as-card`).
 
-If you want to **prevent** Auto Injection for a specific element, you must use the `data-wb-ignore` attribute.
+If you want to **prevent** Auto Injection for a specific element, you must use the `ignore` attribute.
 
 ```html
 <!-- This <button> gets 'button' behavior (auto) AND 'ripple' behavior (explicit) -->
@@ -31,7 +31,7 @@ If you want to **prevent** Auto Injection for a specific element, you must use t
 <article x-as-hero>...</article>
 
 <!-- This <nav> will NOT become a WB Navbar -->
-<nav data-wb-ignore>...</nav>
+<nav ignore>...</nav>
 ```
 
 ---
@@ -133,11 +133,11 @@ The following HTML elements are automatically mapped to WB behaviors:
 
 ## Opting Out
 
-If you want to use a semantic element *without* the WB behavior, add the `data-wb-ignore` attribute.
+If you want to use a semantic element *without* the WB behavior, add the `ignore` attribute.
 
 ```html
 <!-- This <nav> will NOT become a WB Navbar -->
-<nav data-wb-ignore>
+<nav ignore>
   <a href="#">Just a link</a>
 </nav>
 ```

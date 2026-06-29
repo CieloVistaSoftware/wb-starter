@@ -104,7 +104,7 @@ Defines structural requirements:
     ".wb-card__btn--primary": {
       "description": "Primary action button",
       "required": true,
-      "requiredWhen": "data-primary is set"
+      "requiredWhen": "primary is set"
     }
   },
   
@@ -261,7 +261,7 @@ All custom events the component dispatches:
 ```json
 "test": {
   "setup": [
-    "<div data-wb=\"cardbutton\" data-title=\"Test\" data-primary=\"Save\" data-secondary=\"Cancel\">Content</div>"
+    "<div x-behavior=\"cardbutton\" title=\"Test\" primary=\"Save\" secondary=\"Cancel\">Content</div>"
   ],
   
   "matrix": {
@@ -279,7 +279,7 @@ All custom events the component dispatches:
     "buttons": [
       {
         "name": "primary button click",
-        "setup": "<div data-wb=\"cardbutton\" data-primary=\"Save\"></div>",
+        "setup": "<div x-behavior=\"cardbutton\" primary=\"Save\"></div>",
         "selector": ".wb-card__btn--primary",
         "action": "click",
         "expect": {
@@ -289,7 +289,7 @@ All custom events the component dispatches:
       },
       {
         "name": "secondary button click",
-        "setup": "<div data-wb=\"cardbutton\" data-secondary=\"Cancel\"></div>",
+        "setup": "<div x-behavior=\"cardbutton\" secondary=\"Cancel\"></div>",
         "selector": ".wb-card__btn--secondary",
         "action": "click",
         "expect": {
@@ -301,7 +301,7 @@ All custom events the component dispatches:
     "interactions": [
       {
         "name": "hover effect",
-        "setup": "<div data-wb=\"card\" data-hoverable></div>",
+        "setup": "<div x-behavior=\"card\" hoverable></div>",
         "action": "hover",
         "expect": {
           "style": {
@@ -311,7 +311,7 @@ All custom events the component dispatches:
       },
       {
         "name": "click toggle",
-        "setup": "<div data-wb=\"card\" data-clickable></div>",
+        "setup": "<div x-behavior=\"card\" clickable></div>",
         "action": "click",
         "expect": {
           "class": "wb-card--active",
@@ -323,7 +323,7 @@ All custom events the component dispatches:
     "keyboard": [
       {
         "name": "Enter activates clickable card",
-        "setup": "<div data-wb=\"card\" data-clickable></div>",
+        "setup": "<div x-behavior=\"card\" clickable></div>",
         "key": "Enter",
         "expect": {
           "class": "wb-card--active"
@@ -334,7 +334,7 @@ All custom events the component dispatches:
     "dismiss": [
       {
         "name": "close button removes notification",
-        "setup": "<div data-wb=\"cardnotification\" data-dismissible data-message=\"Test\"></div>",
+        "setup": "<div x-behavior=\"cardnotification\" dismissible message=\"Test\"></div>",
         "selector": ".wb-card__notif-close",
         "action": "click",
         "expect": {
@@ -348,7 +348,7 @@ All custom events the component dispatches:
     "methods": [
       {
         "name": "expand() method",
-        "setup": "<div data-wb=\"cardexpandable\" data-title=\"Test\">Long content here</div>",
+        "setup": "<div x-behavior=\"cardexpandable\" title=\"Test\">Long content here</div>",
         "call": "element.wbCardExpandable.expand()",
         "expect": {
           "class": "wb-card--expanded",
@@ -357,7 +357,7 @@ All custom events the component dispatches:
       },
       {
         "name": "collapse() method",
-        "setup": "<div data-wb=\"cardexpandable\" data-expanded>Content</div>",
+        "setup": "<div x-behavior=\"cardexpandable\" expanded>Content</div>",
         "call": "element.wbCardExpandable.collapse()",
         "expect": {
           "notClass": "wb-card--expanded",
@@ -497,7 +497,7 @@ All custom events the component dispatches:
   
   "test": {
     "setup": [
-      "<div data-wb=\"cardbutton\" data-title=\"Actions\" data-primary=\"Save\" data-secondary=\"Cancel\">Content</div>"
+      "<div x-behavior=\"cardbutton\" title=\"Actions\" primary=\"Save\" secondary=\"Cancel\">Content</div>"
     ],
     
     "matrix": {
@@ -516,7 +516,7 @@ All custom events the component dispatches:
       "buttons": [
         {
           "name": "primary button is clickable",
-          "setup": "<div data-wb=\"cardbutton\" data-primary=\"Save\"></div>",
+          "setup": "<div x-behavior=\"cardbutton\" primary=\"Save\"></div>",
           "selector": ".wb-card__btn--primary",
           "action": "click",
           "expect": {
@@ -526,7 +526,7 @@ All custom events the component dispatches:
         },
         {
           "name": "primary button as link has href",
-          "setup": "<div data-wb=\"cardbutton\" data-primary=\"Go\" data-primary-href=\"/test\"></div>",
+          "setup": "<div x-behavior=\"cardbutton\" primary=\"Go\" primary-href=\"/test\"></div>",
           "selector": ".wb-card__btn--primary",
           "expect": {
             "tagName": "A",
@@ -535,7 +535,7 @@ All custom events the component dispatches:
         },
         {
           "name": "secondary button is clickable",
-          "setup": "<div data-wb=\"cardbutton\" data-secondary=\"Cancel\"></div>",
+          "setup": "<div x-behavior=\"cardbutton\" secondary=\"Cancel\"></div>",
           "selector": ".wb-card__btn--secondary",
           "action": "click",
           "expect": {
@@ -547,7 +547,7 @@ All custom events the component dispatches:
       "visual": [
         {
           "name": "buttons have proper styling",
-          "setup": "<div data-wb=\"cardbutton\" data-primary=\"Save\" data-secondary=\"Cancel\"></div>",
+          "setup": "<div x-behavior=\"cardbutton\" primary=\"Save\" secondary=\"Cancel\"></div>",
           "checks": [
             { "selector": ".wb-card__btn--primary", "style": "backgroundColor", "pattern": "rgb\\(99, 102, 241\\)" },
             { "selector": ".wb-card__btn--secondary", "style": "backgroundColor", "notEmpty": true }

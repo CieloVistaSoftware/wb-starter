@@ -13,7 +13,7 @@ The `<aside>` element represents content that is tangentially related to the con
 ### 1. Card Notification (`cardnotification`)
 
 ```html
-<aside data-wb="cardnotification" data-type="info" data-title="Heads Up">
+<aside x-cardnotification type="info" title="Heads Up">
   <!-- Notification content -->
 </aside>
 ```
@@ -23,7 +23,7 @@ The `<aside>` element represents content that is tangentially related to the con
 ### 2. Alert (`alert`)
 
 ```html
-<aside data-wb="alert" data-type="warning" data-title="Warning">
+<aside x-alert type="warning" title="Warning">
   <!-- Alert message -->
 </aside>
 ```
@@ -43,8 +43,8 @@ The `<aside>` element represents content that is tangentially related to the con
 
 ```html
 <aside 
-  data-wb="cardnotification" 
-  data-type="success"
+  x-cardnotification 
+  type="success"
   role="status"
   aria-live="polite">
   <div class="wb-card__notif-icon">✅</div>
@@ -58,8 +58,8 @@ The `<aside>` element represents content that is tangentially related to the con
 ## CSS Styling
 
 ```css
-aside[data-wb="cardnotification"],
-aside[data-wb="alert"] {
+aside[x-cardnotification],
+aside[x-alert] {
   /* Visually distinct from main content */
   border-left: 4px solid var(--color-info);
   background: var(--bg-secondary);

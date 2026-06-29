@@ -14,7 +14,7 @@ The `<figure>` element represents self-contained content with an optional captio
 ### 1. Card Image (`cardimage`)
 
 ```html
-<article data-wb="cardimage" data-src="image.jpg" data-alt="Description">
+<article x-cardimage src="image.jpg" alt="Description">
   <figure class="wb-card__figure">
     <img src="image.jpg" alt="A beautiful sunset" class="wb-card__image">
     <figcaption class="wb-card__caption">
@@ -30,7 +30,7 @@ The `<figure>` element represents self-contained content with an optional captio
 ### 2. Card Video (`cardvideo`)
 
 ```html
-<article data-wb="cardvideo" data-src="video.mp4">
+<article x-cardvideo src="video.mp4">
   <figure class="wb-card__figure">
     <video controls class="wb-card__video">
       <source src="video.mp4" type="video/mp4">
@@ -45,7 +45,7 @@ The `<figure>` element represents self-contained content with an optional captio
 ### 3. Card File (`cardfile`)
 
 ```html
-<article data-wb="cardfile" data-filename="report.pdf" data-type="pdf">
+<article x-cardfile filename="report.pdf" type="pdf">
   <figure class="wb-card__file-preview">
     <div class="wb-card__file-icon" aria-hidden="true">📄</div>
     <figcaption class="wb-card__filename">
@@ -59,7 +59,7 @@ The `<figure>` element represents self-contained content with an optional captio
 ### 4. Card Product (`cardproduct`)
 
 ```html
-<article data-wb="cardproduct" data-image="product.jpg">
+<article x-cardproduct image="product.jpg">
   <figure class="wb-card__product-image">
     <img src="product.jpg" alt="Product Name">
     <span class="wb-card__badge">Sale</span>

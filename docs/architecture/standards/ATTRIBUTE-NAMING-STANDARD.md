@@ -75,14 +75,14 @@ cta="Click"     →   "tag": "button"    →   <button>Click</button>
 2. [Native Attributes to Reuse](#native-attributes-to-reuse)
 3. [Native Attributes to Avoid](#native-attributes-to-avoid)
 4. [Standard Custom Attributes](#standard-custom-attributes)
-5. [Data Injection](#data-injection)
+5. [Data Injection](#injection)
 6. [Extension Attributes](#extension-attributes)
 7. [Naming Conventions](#naming-conventions)
 8. [Accessibility Attributes](#accessibility-attributes)
 9. [Units and Values](#units-and-values)
 10. [Slots and Content](#slots-and-content)
 11. [CSS Custom Properties](#css-custom-properties)
-12. [Migration from data-wb](#migration-from-data-wb)
+12. [Migration from x-behavior](#migration-from-x-behavior)
 13. [Error Handling](#error-handling)
 14. [IDE Support](#ide-support)
 15. [Quick Reference](#quick-reference)
@@ -205,7 +205,7 @@ These native attributes have meanings that **conflict** with typical component u
 
 <!-- GOOD: Use specific name or data-* -->
 <chart-el points="1,2,3">
-<chart-el data-points='[1,2,3]'>
+<chart-el points='[1,2,3]'>
 ```
 
 ### ❌ `style` - DO NOT USE
@@ -311,16 +311,16 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 ### JSON Arrays
 ```html
 <!-- For arrays needing preservation (commas in values, etc.) -->
-<nav-tabs data-items='["Home","About","Contact Us"]'>
+<nav-tabs items='["Home","About","Contact Us"]'>
 ```
 
 ### Objects
 ```html
 <!-- Single object -->
-<user-card data-user='{"name":"John","role":"Admin"}'>
+<user-card user='{"name":"John","role":"Admin"}'>
 
 <!-- Array of objects -->
-<data-table data-rows='[
+<table rows='[
   {"name":"Alice","email":"alice@example.com"},
   {"name":"Bob","email":"bob@example.com"}
 ]'>
@@ -329,8 +329,8 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 ### External Data
 ```html
 <!-- Load from URL -->
-<data-table data-src="/api/users.json">
-<chart-widget data-src="/api/metrics.json">
+<table src="/api/users.json">
+<chart-widget src="/api/metrics.json">
 ```
 
 ### Embedded JSON (for large data)
@@ -636,18 +636,18 @@ Components should expose CSS custom properties for theming:
 
 ---
 
-## Migration from data-wb
+## Migration from x-behavior
 
 ### Before (Legacy)
 ```html
-<div data-wb="card" data-title="Hello" data-elevated>
+<div x-card title="Hello" elevated>
   Content
 </div>
 
-<div data-wb="alert" data-type="warning" data-message="Caution!">
+<div x-alert type="warning" message="Caution!">
 </div>
 
-<button data-wb="ripple tooltip" data-tooltip="Click me">
+<button x-ripple x-tooltip tooltip="Click me">
   Save
 </button>
 ```
@@ -670,12 +670,12 @@ Components should expose CSS custom properties for theming:
 
 | Old Pattern | New Pattern |
 |-------------|-------------|
-| `data-wb="{behavior}"` | `<{behavior}-el>` or `<{behavior}-{type}>` |
-| `data-title` | `heading` |
-| `data-type` (for variants) | `variant` |
+| `x-{behavior}` | `<{behavior}-el>` or `<{behavior}-{type}>` |
+| `title` | `heading` |
+| `type` (for variants) | `variant` |
 | `data-{prop}` (simple) | `{prop}` (native-style) |
 | `data-{prop}` (JSON) | `data-{prop}` (keep as-is) |
-| `data-wb="ripple"` (modifier) | `x-ripple` |
+| `x-ripple` (modifier) | `x-ripple` |
 
 ---
 
@@ -843,7 +843,7 @@ name         attribute with DIFFERENT meaning?
   muted>
 </video-player>
 
-<image-gallery columns="4" gap="1rem" data-images='[
+<image-gallery columns="4" gap="1rem" images='[
   {"src": "1.jpg", "alt": "Photo 1"},
   {"src": "2.jpg", "alt": "Photo 2"}
 ]'>
@@ -852,17 +852,17 @@ name         attribute with DIFFERENT meaning?
 
 ### Data Display
 ```html
-<data-table 
-  data-columns='["Name","Email","Role"]'
-  data-rows='[
+<table 
+  columns='["Name","Email","Role"]'
+  rows='[
     ["Alice","alice@example.com","Admin"],
     ["Bob","bob@example.com","User"]
   ]'
   sortable
   hoverable>
-</data-table>
+</table>
 
-<timeline-el data-items='[
+<timeline-el items='[
   {"date": "2024-01", "label": "Project Start"},
   {"date": "2024-06", "label": "Beta Launch"}
 ]'>

@@ -2,7 +2,7 @@
 
 ## Overview
 
-WB v3.0 uses **custom elements** (`<wb-*>`) instead of the legacy `data-wb` attribute pattern.
+WB v3.0 uses **custom elements** (`<wb-*>`) instead of the legacy `x-behavior` attribute pattern.
 
 ---
 
@@ -41,7 +41,7 @@ Properties on custom elements use **clean attribute names** - no `data-` or `x-`
 <wb-card title="Hello" variant="glass" hoverable>
 
 <!-- WRONG: Don't use data- prefix -->
-<wb-card data-title="Hello" data-variant="glass">
+<wb-card title="Hello" variant="glass">
 ```
 
 ---
@@ -260,16 +260,16 @@ document.body.appendChild(card);
 
 ### Before (Legacy v2)
 ```html
-<div data-wb="card" data-title="Hello" data-variant="glass">
+<div x-card title="Hello" variant="glass">
   Content here
 </div>
 
-<button data-wb="ripple">Click me</button>
+<button x-ripple>Click me</button>
 
-<div data-wb="cardhero" 
-     data-title="Welcome" 
-     data-align="center"
-     data-background="url(bg.jpg)">
+<div x-cardhero 
+     title="Welcome" 
+     align="center"
+     background="url(bg.jpg)">
 </div>
 ```
 
@@ -316,7 +316,7 @@ document.body.appendChild(card);
 │  title="Hello"          ✓ CORRECT                       │
 │  variant="glass"        ✓ CORRECT                       │
 │  xalign="center"        ✓ CORRECT                       │
-│  data-title="Hello"     ✗ WRONG (legacy)                │
+│  title="Hello"     ✗ WRONG (legacy)                │
 │                                                         │
 │  ALIGNMENT                                              │
 │  ─────────                                              │

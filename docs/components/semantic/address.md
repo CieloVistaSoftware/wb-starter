@@ -13,7 +13,7 @@ The `<address>` element provides contact information for a person, organization,
 ### Card Portfolio (`cardportfolio`)
 
 ```html
-<article data-wb="cardportfolio" data-name="John Doe" data-email="john@example.com">
+<article x-cardportfolio name="John Doe" email="john@example.com">
   <header class="wb-card__header">
     <h3 class="wb-card__portfolio-name">John Doe</h3>
     <p class="wb-card__portfolio-title">Software Developer</p>
@@ -48,7 +48,7 @@ The `<address>` element provides contact information for a person, organization,
 ## Example: Full Portfolio Card
 
 ```html
-<article data-wb="cardportfolio" class="wb-card wb-card--portfolio">
+<article x-cardportfolio class="wb-card wb-card--portfolio">
   <figure class="wb-card__avatar">
     <img src="avatar.jpg" alt="John Doe">
   </figure>
