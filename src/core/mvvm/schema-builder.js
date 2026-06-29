@@ -736,7 +736,13 @@ function detectSchema(element) {
   if (tagName.startsWith('wb-')) {
     const mapped = tagToSchema.get(tagName);
     if (mapped) return mapped;
-    return tagName.replace('wb-', '').replace(/-/g, '');
+    // Only claim a derived name if a schema is actually registered for it.
+    // Many wb-* tags (wb-stack, wb-grid, wb-modal, wb-accordion, …) are owned by
+    // custom elements / behaviors / CSS and have no schema — guessing a name and
+    // then warning "Schema not found" was pure console spam (#174). Return null so
+    // processElement skips silently and leaves the tag to its real owner.
+    const derived = tagName.replace('wb-', '').replace(/-/g, '');
+    return schemaRegistry.has(derived) ? derived : null;
   }
   
   // 2. Data attribute:
