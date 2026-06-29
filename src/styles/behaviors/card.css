@@ -132,7 +132,7 @@
 
 /* Float — the most-used card variant in the showcase, but it had NO CSS rule, so
    "float" cards fell back to the flat base and (with --border-color undefined)
-   read as undemarcated blocks (#180). Give it clear elevation + the hairline
+   read as undemarcated blocks (issue 180). Give it clear elevation + the hairline
    border so it always reads as a discrete, floating card. */
 .wb-card--float {
   box-shadow: var(--shadow-float, 0 2px 4px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.18));

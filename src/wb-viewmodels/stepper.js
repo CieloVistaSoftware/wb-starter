@@ -22,16 +22,25 @@ export function stepper(element, options = {}) {
     ...options,
   };
 
+  // Hover/explainer text (the control is otherwise just − N + with no affordance).
+  const lo = Number.isFinite(config.min) ? config.min : '−∞';
+  const hi = Number.isFinite(config.max) ? config.max : '∞';
+  const hint = `Number stepper — click − or + to change the value (range ${lo}–${hi}, step ${config.step}).`;
+  element.title = hint;
+  element.setAttribute('aria-label', element.getAttribute('aria-label') || hint);
+
   const decBtn = document.createElement('button');
   decBtn.type = 'button';
   decBtn.className = 'wb-stepper__btn wb-stepper__dec';
   decBtn.textContent = '−';
+  decBtn.title = `Decrease by ${config.step}`;
   decBtn.setAttribute('aria-label', 'Decrease');
 
   const incBtn = document.createElement('button');
   incBtn.type = 'button';
   incBtn.className = 'wb-stepper__btn wb-stepper__inc';
   incBtn.textContent = '+';
+  incBtn.title = `Increase by ${config.step}`;
   incBtn.setAttribute('aria-label', 'Increase');
 
   let read, write, cleanup;

@@ -56,6 +56,29 @@ export default class WBSite {
         this.navigateTo(page);
       });
 
+      // Clear-cache-and-reload button (on every page via the shell header).
+      document.addEventListener('click', async (e) => {
+        const reloadBtn = e.target.closest('#hardReloadBtn');
+        if (!reloadBtn) return;
+        e.preventDefault();
+        reloadBtn.textContent = '⏳';
+        try {
+          if (window.caches) {
+            const keys = await caches.keys();
+            await Promise.all(keys.map((k) => caches.delete(k)));
+          }
+          if (navigator.serviceWorker) {
+            const regs = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(regs.map((r) => r.unregister()));
+          }
+        } catch (err) {
+          console.warn('[clear-cache] partial failure:', err && err.message);
+        }
+        // revalidating reload — with the dev server's no-store headers this pulls
+        // fresh CSS/JS; the cleared Cache Storage + unregistered SW handle PWA caches.
+        location.reload();
+      });
+
       // Intercept clicks for SPA navigation
       document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
@@ -176,6 +199,7 @@ export default class WBSite {
               <input type="search" placeholder="Search..." aria-label="Search" class="wb-input-glass" style="padding: 0.4rem 0.8rem; width: 200px;">
             </div>
           ` : ''}
+          <button class="header__refresh-btn" id="hardReloadBtn" x-ripple title="Clear cache & hard reload (force fresh CSS/JS)" aria-label="Clear cache and reload">🔄</button>
           <button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>
           ${headerSettings.displayThemeSwitcher ? '<wb-themecontrol data-show-label="false" id="themeControl"></wb-themecontrol>' : ''}
           <button class="navbar-cta" id="ctaButton" x-ripple title="Get Started">Get Started</button>
