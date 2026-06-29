@@ -211,7 +211,8 @@ body > button[x-copy] {
 
 /* Dialog styles → src/styles/behaviors/dialog.css (migrated Phase 2) */
 
-.header__notes-btn {
+.header__notes-btn,
+.header__refresh-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -226,7 +227,8 @@ body > button[x-copy] {
   transition: all 0.2s;
 }
 
-.header__notes-btn:hover {
+.header__notes-btn:hover,
+.header__refresh-btn:hover {
   background: var(--bg-tertiary);
   color: var(--primary);
 }

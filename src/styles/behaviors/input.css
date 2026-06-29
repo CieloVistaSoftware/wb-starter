@@ -111,3 +111,24 @@ select[data-variant="success"] { border: 1px solid var(--success-color); }
 input[data-variant="error"],
 textarea[data-variant="error"],
 select[data-variant="error"] { border: 1px solid var(--danger-color); }
+
+/* -----------------------------------------------------------------------------
+ * Native form controls — theme-aware defaults (#191)
+ * Plain <input>/<textarea>/<select> in docs/showcases have no .wb-input class
+ * and were falling back to the browser-native white box on dark themes. Theme
+ * them from the active theme so they are dark on dark, light on light. Excludes
+ * range/checkbox/radio/color (they have their own theming via accent-color).
+ * Low specificity so .wb-input and component-specific rules still win.
+ * --------------------------------------------------------------------------- */
+input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]),
+textarea,
+select {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 6px);
+}
+input:not([type="range"]):not([type="checkbox"]):not([type="radio"])::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}

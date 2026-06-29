@@ -101,21 +101,17 @@ export async function tooltip(element, options = {}) {
 
   const config = {
     content,
-    position: ['top', 'bottom', 'left', 'right'].includes(
-      options.position ??
-      element.getAttribute('x-position') ??
-      element.getAttribute('data-tooltip-position') ??
-      element.getAttribute('position') ??
-      element.getAttribute('tooltip-position')
-    )
-      ? (
-        options.position ??
-        element.getAttribute('x-position') ??
-        element.getAttribute('data-tooltip-position') ??
-        element.getAttribute('position') ??
-        element.getAttribute('tooltip-position')
-      )
-      : 'top',
+    position: (() => {
+      // `data-position` is what the showcase markup uses — it was missing here,
+      // so every tooltip fell back to 'top'.
+      const p = options.position
+        ?? element.getAttribute('x-position')
+        ?? element.getAttribute('data-position')
+        ?? element.getAttribute('data-tooltip-position')
+        ?? element.getAttribute('position')
+        ?? element.getAttribute('tooltip-position');
+      return ['top', 'bottom', 'left', 'right'].includes(p) ? p : 'top';
+    })(),
     delay: Math.max(0, parseInt(options.delay ?? element.getAttribute('x-delay') ?? element.getAttribute('tooltip-delay') ?? '200', 10)),
     hideDelay: Math.max(0, parseInt(options.hideDelay ?? element.getAttribute('x-hide-delay') ?? element.getAttribute('tooltip-hide-delay') ?? '100', 10)),
     customClass: options.customClass ?? element.getAttribute('x-custom-class') ?? element.getAttribute('tooltip-class') ?? '',

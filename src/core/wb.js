@@ -46,6 +46,7 @@ import '../wb-viewmodels/wb-stack.js';
 import '../wb-viewmodels/wb-row.js';
 import '../wb-viewmodels/wb-column.js';
 import '../wb-viewmodels/wb-search.js';
+import '../wb-viewmodels/wb-accordion.js';
 import '../wb-viewmodels/wb-demo.js';
 
 import { getConfig, setConfig } from './config.js';
