@@ -132,3 +132,10 @@ input:not([type="range"]):not([type="checkbox"]):not([type="radio"])::placeholde
 textarea::placeholder {
   color: var(--text-muted);
 }
+
+/* Native checkbox/radio: theme-accent the control (was browser default). #201 */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--primary);
+  cursor: pointer;
+}
