@@ -69,7 +69,11 @@ body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
 }
 
 .site {
-  min-height: 100vh;
+  /* Fixed to the viewport + clip overflow so .site__body is the SINGLE scroll
+     container (was min-height:100vh, which let the whole window scroll too — a
+     dual-scroll-container bug that broke the sticky nav and section anchoring). */
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   background: var(--bg-color);
@@ -266,10 +270,14 @@ body > button[x-copy] {
   flex-direction: column;
   transition: width 0.3s ease;
   overflow: visible; /* Changed from hidden to allow resizer handle */
-  /* Sticky sidebar support */
+  /* Sticky sidebar — stay pinned to the viewport as the content scrolls, so the
+     menu is always at the user's current location (was position:relative, which
+     scrolled the nav off-screen). */
   align-self: flex-start;
+  position: sticky;
+  top: 0;
   max-height: calc(100vh - 60px);
-  position: relative;
+  overflow-y: auto;
 }
 
 .site__nav--collapsed {
@@ -1973,4 +1981,38 @@ section[id] {
    reacts to keyboard focus on the anchor too */
 .feature-card-link:focus-visible .wb-card {
   border-color: var(--primary);
+}
+
+/* =============================================================================
+   PAGE SECTION RHYTHM (#186)
+   pages/*.css never loads in the SPA, so the section/heading/section-note
+   spacing lives here in the always-loaded shell stylesheet, scoped to the SPA
+   content container (#main) so it can't touch the shell. Restores the vertical
+   spacing the showcase pages were designed with.
+   ============================================================================= */
+#main section[id] {
+  margin-bottom: 2.5rem;
+  padding-bottom: 0.5rem;
+}
+#main section > h2 {
+  margin: 2.5rem 0 1rem;
+  font-size: 1.5rem;
+}
+#main section > h3 {
+  margin: 1.75rem 0 0.75rem;
+  font-size: 1.125rem;
+}
+#main .section-note {
+  padding: 0.75rem 1rem;
+  margin: 0 0 1.25rem;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  background: var(--bg-secondary);
+  font-size: 0.9rem;
+}
+#main .demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
