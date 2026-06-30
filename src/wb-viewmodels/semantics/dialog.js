@@ -12,9 +12,9 @@
  */
 export function dialog(element, options = {}) {
   const config = {
-    title: options.title || element.getAttribute('title') || element.dataset.dialogTitle || element.dataset.modalTitle || 'Dialog',
-    content: options.content || element.dataset.dialogContent || element.dataset.modalContent || '',
-    size: options.size || element.getAttribute('size') || element.dataset.dialogSize || element.dataset.modalSize || 'md',
+    title: options.title || element.getAttribute('title') || element.getAttribute('modal-title') || element.dataset.dialogTitle || element.dataset.modalTitle || 'Dialog',
+    content: options.content || element.getAttribute('content') || element.getAttribute('modal-content') || element.dataset.dialogContent || element.dataset.modalContent || '',
+    size: options.size || element.getAttribute('size') || element.getAttribute('modal-size') || element.dataset.dialogSize || element.dataset.modalSize || 'md',
     ...options
   };
 
