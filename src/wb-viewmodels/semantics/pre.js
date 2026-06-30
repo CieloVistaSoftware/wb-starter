@@ -19,8 +19,10 @@ export function pre(element, options = {}) {
   const childLanguage = codeChild ? (codeChild.dataset.language || '') : '';
 
   const scrollable = options.scrollable ?? (element.dataset.scrollable === 'true');
-  // If scrollable is false (default), we wrap text. If true, we don't wrap (unless wrap is explicitly forced).
-  const defaultWrap = !scrollable;
+  // Code blocks should read like a code editor: DO NOT wrap by default (wrapping
+  // breaks tokens mid-word, e.g. "wb-btn--" / "sm"). Long lines scroll
+  // horizontally instead. Opt into wrapping explicitly with data-wrap="true". (#199)
+  const defaultWrap = false;
 
   const config = {
     language: options.language || element.dataset.language || childLanguage || '',
@@ -55,10 +57,13 @@ export function pre(element, options = {}) {
     backgroundColor: 'transparent', // Wrapper handles bg
     color: 'var(--text-code, #d4d4d4)',
     border: 'none', // Wrapper handles border
-    overflow: config.scrollable ? 'auto' : 'hidden',
+    // No-wrap code scrolls horizontally (editor style); wrapped code hides overflow.
+    overflowX: config.wrap ? 'hidden' : 'auto',
+    overflowY: config.maxHeight ? 'auto' : 'hidden',
     whiteSpace: config.wrap ? 'pre-wrap' : 'pre',
-    wordBreak: 'break-word', // Always break long words to prevent overflow
-    overflowWrap: 'break-word',
+    // Only break words when wrapping — never mangle tokens in editor (pre) mode.
+    wordBreak: config.wrap ? 'break-word' : 'normal',
+    overflowWrap: config.wrap ? 'break-word' : 'normal',
     margin: '0',
     width: '100%',
     maxWidth: '100%',
