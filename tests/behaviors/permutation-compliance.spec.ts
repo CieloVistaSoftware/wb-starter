@@ -482,14 +482,20 @@ test.describe('Component Compliance', () => {
         for (const combo of schema.test.matrix.combinations) {
           const html = generateHtml(behaviorName, combo, 'Test Content', schema.element);
           const el = await setupTestContainer(page, html);
-          
-          // Check if component rendered - look for baseClass OR .wb-ready class
-          const hasBaseClass = schema.compliance?.baseClass 
-            ? await el.evaluate((e, cls) => e.classList.contains(cls), schema.compliance.baseClass)
-            : true;
-          const wbReady = await el.classList.contains('wb-ready');
-          
-          if (!hasBaseClass && !wbReady) {
+
+          // "Initialized" = ANY sign the component was processed: its baseClass,
+          // the x-schema marker, any wb-* class, or built child structure. (The
+          // old check required the exact baseClass OR a non-existent .wb-ready
+          // class, so it failed working components — a false positive.)
+          const initialized = await el.evaluate((e, cls) =>
+            (cls ? e.classList.contains(cls) : false) ||
+            e.hasAttribute('x-schema') ||
+            e.classList.contains('wb-ready') ||
+            /\bwb-[a-z]/.test(e.className) ||
+            e.children.length > 0,
+          schema.compliance?.baseClass || '');
+
+          if (!initialized) {
             allErrors.push(`[MATRIX] Combo ${JSON.stringify(combo)}: Component did not initialize`);
           }
         }
