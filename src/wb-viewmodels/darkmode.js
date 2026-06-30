@@ -24,18 +24,18 @@ export function darkmode(element, options = {}) {
   }
 
   // Store original theme
-  const originalTheme = targetEl.getAttribute('theme');
+  const originalTheme = targetEl.getAttribute('data-theme');
 
   // Apply dark theme immediately
-  targetEl.setAttribute('theme', config.theme);
+  targetEl.setAttribute('data-theme', config.theme);
   element.classList.add('wb-darkmode');
 
   // If element is a button, make it toggle
   if (element.tagName === 'BUTTON') {
     element.onclick = () => {
-      const current = targetEl.getAttribute('theme');
+      const current = targetEl.getAttribute('data-theme');
       const next = current === 'dark' ? 'light' : 'dark';
-      targetEl.setAttribute('theme', next);
+      targetEl.setAttribute('data-theme', next);
       
       element.dispatchEvent(new CustomEvent('wb:darkmode:toggle', {
         bubbles: true,
@@ -55,9 +55,9 @@ export function darkmode(element, options = {}) {
   return () => {
     element.classList.remove('wb-darkmode');
     if (originalTheme) {
-      targetEl.setAttribute('theme', originalTheme);
+      targetEl.setAttribute('data-theme', originalTheme);
     } else {
-      delete targetEl.getAttribute('theme');
+      delete targetEl.getAttribute('data-theme');
     }
   };
 }
