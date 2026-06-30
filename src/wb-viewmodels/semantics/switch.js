@@ -71,10 +71,22 @@ export function switchInput(element, options = {}) {
   if (!isBareCheckbox) host.addEventListener('keydown', onKey);
   input.addEventListener('change', sync);
 
+  // Optional: <wb-switch theme-control> drives the page theme (data-theme).
+  // ON = dark, OFF = light. Initial state reflects the current theme. (#210)
+  let applyTheme = null;
+  if (!isBareCheckbox && host.hasAttribute('theme-control')) {
+    const root = document.documentElement;
+    input.checked = (root.getAttribute('data-theme') || 'dark') !== 'light';
+    sync();
+    applyTheme = () => root.setAttribute('data-theme', input.checked ? 'dark' : 'light');
+    input.addEventListener('change', applyTheme);
+  }
+
   return () => {
     host.removeEventListener('click', onClick);
     host.removeEventListener('keydown', onKey);
     input.removeEventListener('change', sync);
+    if (applyTheme) input.removeEventListener('change', applyTheme);
   };
 }
 
