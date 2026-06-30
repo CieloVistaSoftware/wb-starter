@@ -229,7 +229,14 @@ function loadSchemas(): Map<string, Schema> {
     const content = fs.readFileSync(path.join(SCHEMA_DIR, file), 'utf-8');
     try {
       const schema = JSON.parse(content) as Schema;
-      // Only load schemas with 'behavior' property (component schemas)
+      // v3 schemas use `schemaFor`; the schema-builder treats it as `behavior`.
+      // The runner used to only honor `behavior`, so ~89% of components (97 of
+      // 109, all using `schemaFor`) were silently SKIPPED and never tested —
+      // which is why functional regressions (switch, alert, card, …) shipped.
+      if (!schema.behavior && (schema as any).schemaFor) {
+        schema.behavior = (schema as any).schemaFor;
+      }
+      // Only load schemas with a behavior/schemaFor (true component schemas).
       if (!schema.behavior) {
         console.log(`Skipping non-component schema: ${file}`);
         continue;
