@@ -1,45 +1,89 @@
 /**
  * Switch Behavior Styles
  * -----------------------------------------------------------------------------
- * Consolidated from components.css + demo.css (Phase 2 migration)
- * Works with src/wb-viewmodels/semantics/switch.js
- * Uses .wb-switch__slider (BEM) as canonical selector
+ * Works with src/wb-viewmodels/semantics/switch.js + switch.schema.json.
+ * The schema builds: <wb-switch class="wb-switch"> input.wb-switch__input +
+ * span.wb-switch__track > span.wb-switch__thumb [+ label spans]. The native
+ * checkbox is visually hidden and drives the :checked state. (#197)
  * -----------------------------------------------------------------------------
  */
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   BASE SWITCH
-   ═══════════════════════════════════════════════════════════════════════════ */
-
 .wb-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+/* visually-hidden native checkbox (state driver) */
+.wb-switch input,
+.wb-switch__input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* track */
+.wb-switch__track {
   position: relative;
-  display: inline-block;
+  flex: none;
   width: 3rem;
   height: 1.5rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  transition: background 0.25s ease, border-color 0.25s ease;
 }
 
-.wb-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+/* knob */
+.wb-switch__thumb {
+  position: absolute;
+  top: 50%;
+  left: 0.2rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  background: white;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.25s ease;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   SLIDER TRACK (BEM - canonical)
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ON state — input is a previous sibling of the track */
+.wb-switch__input:checked ~ .wb-switch__track {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.wb-switch__input:checked ~ .wb-switch__track .wb-switch__thumb {
+  transform: translate(1.45rem, -50%);
+}
+.wb-switch__input:focus-visible ~ .wb-switch__track {
+  box-shadow: 0 0 0 2px var(--primary);
+}
+.wb-switch__input:disabled ~ .wb-switch__track {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
+.wb-switch__label-start,
+.wb-switch__label-end {
+  font-size: 0.9rem;
+}
+
+/* ── Legacy bare <input type=checkbox> + .wb-switch__slider (back-compat) ───── */
 .wb-switch__slider {
   position: absolute;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-color: var(--bg-tertiary);
   transition: 0.4s;
   border-radius: 34px;
 }
-
 .wb-switch__slider:before {
   position: absolute;
   content: "";
@@ -51,61 +95,6 @@
   transition: 0.4s;
   border-radius: 50%;
 }
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   STATES
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-input:checked + .wb-switch__slider {
-  background-color: var(--primary);
-}
-
-input:focus + .wb-switch__slider {
-  box-shadow: 0 0 1px var(--primary);
-}
-
-input:checked + .wb-switch__slider:before {
-  transform: translateX(1.5rem);
-}
-
-input:disabled + .wb-switch__slider {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   LEGACY: demo.css used bare `span` instead of __slider
-   Keep for backward compatibility with any demo pages
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.wb-switch span:not(.wb-switch__slider) {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--bg-tertiary);
-  border-radius: 22px;
-  transition: 0.3s;
-}
-
-.wb-switch span:not(.wb-switch__slider)::before {
-  position: absolute;
-  content: '';
-  height: 16px;
-  width: 16px;
-  left: 3px;
-  bottom: 3px;
-  background: white;
-  border-radius: 50%;
-  transition: 0.3s;
-}
-
-.wb-switch input:checked + span:not(.wb-switch__slider) {
-  background: var(--primary);
-}
-
-.wb-switch input:checked + span:not(.wb-switch__slider)::before {
-  transform: translateX(22px);
-}
+input:checked + .wb-switch__slider { background-color: var(--primary); }
+input:checked + .wb-switch__slider:before { transform: translateX(1.5rem); }
+input:disabled + .wb-switch__slider { opacity: 0.5; cursor: not-allowed; }
