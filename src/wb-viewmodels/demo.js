@@ -141,7 +141,16 @@ export async function demo(element, options = {}) {
 
     const cols = options.columns || element.getAttribute('columns') || '3';
 
-    // Add doc links
+    // Wrap children in a grid FIRST, so the doc links added below stay outside
+    // the grid instead of being swept in as a grid item and floating inline (#211).
+    const grid = document.createElement('div');
+    grid.className = 'wb-demo__grid wb-demo__grid--cols-' + cols;
+    while (element.firstChild) {
+        grid.appendChild(element.firstChild);
+    }
+    element.appendChild(grid);
+
+    // Add doc links below the grid.
     const wbComponents = findWbComponents(rawBlock);
     if (wbComponents.length > 0) {
         const linksDiv = document.createElement('div');
@@ -149,9 +158,13 @@ export async function demo(element, options = {}) {
         linksDiv.textContent = 'Docs: ';
         wbComponents.forEach((comp, i) => {
             const link = document.createElement('a');
-                // link.href = WB_DOC_MAP[comp] || `/docs/components/${comp}.md`; // Removed to prevent ReferenceError
+            // Functional docs link (#218): the previous href referenced an
+            // undefined WB_DOC_MAP and was removed, leaving the anchor hrefless
+            // so clicking did nothing. Route to the SPA docs page + component anchor.
+            link.href = '?page=docs#wb-' + comp;
             link.textContent = `wb-${comp}`;
             link.target = '_blank';
+            link.rel = 'noopener';
             linksDiv.appendChild(link);
             if (i < wbComponents.length - 1) {
                 linksDiv.appendChild(document.createTextNode(', '));
@@ -159,14 +172,6 @@ export async function demo(element, options = {}) {
         });
         element.appendChild(linksDiv);
     }
-
-    // Wrap children in a grid
-    const grid = document.createElement('div');
-    grid.className = 'wb-demo__grid wb-demo__grid--cols-' + cols;
-    while (element.firstChild) {
-        grid.appendChild(element.firstChild);
-    }
-    element.appendChild(grid);
 
     // Create code block directly — textContent prevents browser from
     // parsing raw HTML into real custom elements that get inflated

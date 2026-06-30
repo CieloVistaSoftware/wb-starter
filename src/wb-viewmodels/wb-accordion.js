@@ -1,7 +1,12 @@
 /**
  * WBAccordion Component — DEPRECATED
  * -----------------------------------------------------------------------------
- * Custom Tag: <wb-accordion title="Question">answer content…</wb-accordion>
+ * Custom Tag:
+ *   Single:  <wb-accordion title="Question">answer content…</wb-accordion>
+ *   Multi:   <wb-accordion>
+ *              <div data-accordion-title="Q1">answer 1…</div>
+ *              <div data-accordion-title="Q2">answer 2…</div>
+ *            </wb-accordion>
  *
  * ⚠️ DEPRECATED — prefer the native semantic <details>/<summary> element
  * (see src/wb-viewmodels/semantics/details.js). Retained for back-compat: the
@@ -10,8 +15,9 @@
  *
  * Builds the collapsible structure expected by src/styles/behaviors/accordion.css
  * (.wb-accordion-item / .wb-accordion-head / .wb-accordion-body, toggled by the
- * `.open` class). Previously <wb-accordion> was neither a custom element nor a
- * behavior, so the `title` was ignored and the body never collapsed.
+ * `.open` class). Each [data-accordion-title] child becomes its own item; the
+ * multi-item form previously rendered one empty-titled item that dumped every
+ * answer into a single body (#215).
  * -----------------------------------------------------------------------------
  */
 export class WBAccordion extends HTMLElement {
@@ -24,11 +30,30 @@ export class WBAccordion extends HTMLElement {
       console.warn('[wb-accordion] is deprecated — use the semantic <details>/<summary> element instead.');
     }
 
+    // Multi-item form: one accordion item per [data-accordion-title] child. (#215)
+    const sections = Array.from(this.querySelectorAll('[data-accordion-title]'));
+    if (sections.length > 0) {
+      const items = sections.map((sec, i) =>
+        this._buildItem(
+          sec.getAttribute('data-accordion-title') || '',
+          sec.innerHTML,
+          sec.hasAttribute('open') || (i === 0 && this.hasAttribute('open'))
+        )
+      );
+      this.innerHTML = '';
+      for (const item of items) { this.appendChild(item); }
+      return;
+    }
+
+    // Single form: <wb-accordion title="Q">answer</wb-accordion>
     const title = this.getAttribute('title') || '';
-    const open = this.hasAttribute('open');
     const content = this.innerHTML;
     this.innerHTML = '';
+    this.appendChild(this._buildItem(title, content, this.hasAttribute('open')));
+  }
 
+  /** Build one collapsible item (head + body) with its own toggle wiring. */
+  _buildItem(title, contentHtml, open) {
     const item = document.createElement('div');
     item.className = 'wb-accordion-item' + (open ? ' open' : '');
 
@@ -52,7 +77,7 @@ export class WBAccordion extends HTMLElement {
 
     const body = document.createElement('div');
     body.className = 'wb-accordion-body';
-    body.innerHTML = content;
+    body.innerHTML = contentHtml;
 
     const toggle = () => {
       const isOpen = item.classList.toggle('open');
@@ -71,7 +96,7 @@ export class WBAccordion extends HTMLElement {
 
     item.appendChild(head);
     item.appendChild(body);
-    this.appendChild(item);
+    return item;
   }
 }
 
