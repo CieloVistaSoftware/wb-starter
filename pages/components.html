@@ -376,21 +376,21 @@
       <h4>Drawer</h4>
       <p>Slide-out panel</p>
       <div style="display: flex; gap: 0.5rem;">
-        <button class="wb-btn" x-drawer data-title="Left Drawer" data-content="This panel slides in from the left side." data-position="left">← Left</button>
-        <button class="wb-btn" x-drawer data-title="Right Drawer" data-content="This panel slides in from the right side." data-position="right">Right →</button>
+        <button class="wb-btn" x-drawer drawer-title="Left Drawer" drawer-content="This panel slides in from the left side." position="left">← Left</button>
+        <button class="wb-btn" x-drawer drawer-title="Right Drawer" drawer-content="This panel slides in from the right side." position="right">Right →</button>
       </div>
     </div>
     
     <div class="component-box">
       <h4>Confirm</h4>
       <p>Yes/No confirmation</p>
-      <button class="wb-btn" x-confirm data-title="Delete Item?" data-message="This cannot be undone.">Confirm</button>
+      <button class="wb-btn" x-confirm confirm-title="Delete Item?" confirm-message="This cannot be undone.">Confirm</button>
     </div>
     
     <div class="component-box">
       <h4>Prompt</h4>
       <p>Input dialog</p>
-      <button class="wb-btn" x-prompt data-title="Your Name" data-message="Please enter your name:">Prompt</button>
+      <button class="wb-btn" x-prompt prompt-title="Your Name" prompt-message="Please enter your name:">Prompt</button>
     </div>
 
     <div class="component-box">
@@ -402,28 +402,28 @@
     <div class="component-box">
       <h4>Popover</h4>
       <p>Small popup</p>
-      <button class="wb-btn" x-popover data-title="Info" data-content="Additional information here.">Show Popover</button>
+      <button class="wb-btn" x-popover popover-title="Info" popover-content="Additional information here.">Show Popover</button>
     </div>
   </div>
 
   <div class="code-example">
     <pre><code class="language-html">&lt;!-- Modal --&gt;
-&lt;wb-modal class="wb-btn" data-modal-title="Modal Dialog" data-modal-content="Content here."&gt;Open Modal&lt;/wb-modal&gt;
+&lt;wb-modal class="wb-btn" modal-title="Modal Dialog" modal-content="Content here."&gt;Open Modal&lt;/wb-modal&gt;
 
 &lt;!-- Drawer --&gt;
-&lt;button x-drawer data-title="Left Drawer" data-content="Panel content." data-position="left"&gt;Left&lt;/button&gt;
+&lt;button x-drawer drawer-title="Left Drawer" drawer-content="Panel content." position="left"&gt;Left&lt;/button&gt;
 
 &lt;!-- Confirm --&gt;
-&lt;button x-confirm data-title="Delete Item?" data-message="This cannot be undone."&gt;Confirm&lt;/button&gt;
+&lt;button x-confirm confirm-title="Delete Item?" confirm-message="This cannot be undone."&gt;Confirm&lt;/button&gt;
 
 &lt;!-- Prompt --&gt;
-&lt;button x-prompt data-title="Your Name" data-message="Please enter your name:"&gt;Prompt&lt;/button&gt;
+&lt;button x-prompt prompt-title="Your Name" prompt-message="Please enter your name:"&gt;Prompt&lt;/button&gt;
 
 &lt;!-- Lightbox --&gt;
 &lt;button x-lightbox data-src="https://picsum.photos/1200/800"&gt;View Image&lt;/button&gt;
 
 &lt;!-- Popover --&gt;
-&lt;button x-popover data-title="Info" data-content="Additional information here."&gt;Show Popover&lt;/button&gt;</code></pre>
+&lt;button x-popover popover-title="Info" popover-content="Additional information here."&gt;Show Popover&lt;/button&gt;</code></pre>
   </div>
 </section>
 

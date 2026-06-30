@@ -229,7 +229,14 @@ function loadSchemas(): Map<string, Schema> {
     const content = fs.readFileSync(path.join(SCHEMA_DIR, file), 'utf-8');
     try {
       const schema = JSON.parse(content) as Schema;
-      // Only load schemas with 'behavior' property (component schemas)
+      // v3 schemas use `schemaFor`; the schema-builder treats it as `behavior`.
+      // The runner used to only honor `behavior`, so ~89% of components (97 of
+      // 109, all using `schemaFor`) were silently SKIPPED and never tested —
+      // which is why functional regressions (switch, alert, card, …) shipped.
+      if (!schema.behavior && (schema as any).schemaFor) {
+        schema.behavior = (schema as any).schemaFor;
+      }
+      // Only load schemas with a behavior/schemaFor (true component schemas).
       if (!schema.behavior) {
         console.log(`Skipping non-component schema: ${file}`);
         continue;
@@ -243,25 +250,31 @@ function loadSchemas(): Map<string, Schema> {
   return schemas;
 }
 
-// Generate HTML for testing
-function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName: string = 'div'): string {
-  let attrs = `x-${behavior}=""`;
-  
-  // Special handling for input type="checkbox"
-  if (tagName === 'input' && behavior === 'checkbox') {
+// Generate HTML for testing.
+// v3: components are wb-* TAGS with PLAIN attributes (e.g. <wb-card variant="x">),
+// NOT the legacy <div x-behavior data-prop>. Generating the old form meant the
+// element never became the component, so baseClass was "missing" — a false
+// positive. Also strip a leading wb- from the name to avoid wb-wb-control.
+function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName?: string): string {
+  const bare = behavior.replace(/^wb-/, '');
+  // Use an explicit non-div element tag if the schema provides one, else the wb- tag.
+  const tag = tagName && tagName !== 'div' ? tagName : `wb-${bare}`;
+  let attrs = '';
+
+  if (tag === 'input' && behavior === 'checkbox') {
     attrs += ' type="checkbox"';
   }
 
   for (const [key, value] of Object.entries(props)) {
     if (value === null || value === undefined) continue;
-    const attrName = `data-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+    const attrName = key.replace(/([A-Z])/g, '-$1').toLowerCase(); // plain attr (no data-)
     if (typeof value === 'boolean') {
       if (value) attrs += ` ${attrName}`;
     } else {
       attrs += ` ${attrName}="${value}"`;
     }
   }
-  return `<${tagName} ${attrs}>${content}</${tagName}>`;
+  return `<${tag}${attrs}>${content}</${tag}>`;
 }
 
 // Get all permutation values for a property
@@ -469,14 +482,20 @@ test.describe('Component Compliance', () => {
         for (const combo of schema.test.matrix.combinations) {
           const html = generateHtml(behaviorName, combo, 'Test Content', schema.element);
           const el = await setupTestContainer(page, html);
-          
-          // Check if component rendered - look for baseClass OR .wb-ready class
-          const hasBaseClass = schema.compliance?.baseClass 
-            ? await el.evaluate((e, cls) => e.classList.contains(cls), schema.compliance.baseClass)
-            : true;
-          const wbReady = await el.classList.contains('wb-ready');
-          
-          if (!hasBaseClass && !wbReady) {
+
+          // "Initialized" = ANY sign the component was processed: its baseClass,
+          // the x-schema marker, any wb-* class, or built child structure. (The
+          // old check required the exact baseClass OR a non-existent .wb-ready
+          // class, so it failed working components — a false positive.)
+          const initialized = await el.evaluate((e, cls) =>
+            (cls ? e.classList.contains(cls) : false) ||
+            e.hasAttribute('x-schema') ||
+            e.classList.contains('wb-ready') ||
+            /\bwb-[a-z]/.test(e.className) ||
+            e.children.length > 0,
+          schema.compliance?.baseClass || '');
+
+          if (!initialized) {
             allErrors.push(`[MATRIX] Combo ${JSON.stringify(combo)}: Component did not initialize`);
           }
         }

@@ -43,12 +43,25 @@ const broadcastReload = () => {
 };
 
 // Watch for file changes (Debounced)
+// Top-level dirs whose changes must NEVER trigger a live reload: generated
+// reports, runtime status files, test artifacts, build output. The recursive
+// root watch (watchDir(rootDir)) would otherwise reload on every data/ write —
+// e.g. data/bg-health.json is rewritten every ~30s by the CieloVista Tools
+// extension, causing an endless "Reloading clients..." loop (#221).
+const RELOAD_IGNORE_DIRS = new Set([
+  '.git', 'node_modules', '.vscode',
+  'data', 'test-results', 'playwright-report', '.playwright-artifacts',
+  'coverage', 'dist', 'out',
+]);
 let reloadTimeout;
 const triggerReload = (eventType, filename) => {
   if (!filename) return;
-  // Ignore git, node_modules, and temp files
-  if (filename.includes('.git') || filename.includes('node_modules') || filename.includes('.tmp')) return;
-  
+  // Normalize separators so the checks work identically on Windows + POSIX.
+  const normalized = filename.replace(/\\/g, '/');
+  // Ignore temp files and anything inside a generated/runtime/build directory.
+  if (normalized.includes('.tmp')) return;
+  if (normalized.split('/').some(seg => RELOAD_IGNORE_DIRS.has(seg))) return;
+
   clearTimeout(reloadTimeout);
   reloadTimeout = setTimeout(() => {
     console.log(`[File Changed] ${filename} -> Reloading clients...`);
