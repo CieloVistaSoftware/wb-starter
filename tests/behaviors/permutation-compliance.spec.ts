@@ -250,25 +250,31 @@ function loadSchemas(): Map<string, Schema> {
   return schemas;
 }
 
-// Generate HTML for testing
-function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName: string = 'div'): string {
-  let attrs = `x-${behavior}=""`;
-  
-  // Special handling for input type="checkbox"
-  if (tagName === 'input' && behavior === 'checkbox') {
+// Generate HTML for testing.
+// v3: components are wb-* TAGS with PLAIN attributes (e.g. <wb-card variant="x">),
+// NOT the legacy <div x-behavior data-prop>. Generating the old form meant the
+// element never became the component, so baseClass was "missing" — a false
+// positive. Also strip a leading wb- from the name to avoid wb-wb-control.
+function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName?: string): string {
+  const bare = behavior.replace(/^wb-/, '');
+  // Use an explicit non-div element tag if the schema provides one, else the wb- tag.
+  const tag = tagName && tagName !== 'div' ? tagName : `wb-${bare}`;
+  let attrs = '';
+
+  if (tag === 'input' && behavior === 'checkbox') {
     attrs += ' type="checkbox"';
   }
 
   for (const [key, value] of Object.entries(props)) {
     if (value === null || value === undefined) continue;
-    const attrName = `data-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+    const attrName = key.replace(/([A-Z])/g, '-$1').toLowerCase(); // plain attr (no data-)
     if (typeof value === 'boolean') {
       if (value) attrs += ` ${attrName}`;
     } else {
       attrs += ` ${attrName}="${value}"`;
     }
   }
-  return `<${tagName} ${attrs}>${content}</${tagName}>`;
+  return `<${tag}${attrs}>${content}</${tag}>`;
 }
 
 // Get all permutation values for a property
