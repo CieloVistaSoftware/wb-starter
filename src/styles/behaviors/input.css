@@ -22,6 +22,18 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+/* Theme bare native form controls so <input>/<select>/<textarea> without a
+   .wb-input class aren't rendered browser-white in dark themes (#191). Excludes
+   controls with their own rendering (checkbox/radio/range/color/file/buttons). */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="image"]),
+select,
+textarea {
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 6px);
+}
+
 .wb-input:focus,
 .wb-textarea:focus,
 .wb-select:focus {
