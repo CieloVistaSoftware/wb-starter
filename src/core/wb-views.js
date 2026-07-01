@@ -273,14 +273,17 @@ export async function loadViewsFromURL(urls) {
         if (typeof config === 'string') {
           registerView(name, config);
         } else if (config.url) {
-          // Fetch template from URL
+          // Fetch template from URL — resolved relative to the registry it came
+          // from, so partial paths work under any base (e.g. /wb-starter/ on
+          // GitHub Pages). Absolute '/src/...' 404s on sub-path hosts. (#225)
           try {
-            const tplRes = await fetch(config.url);
+            const tplUrl = new URL(config.url, new URL(url, document.baseURI)).href;
+            const tplRes = await fetch(tplUrl);
             if (tplRes.ok) {
               const html = await tplRes.text();
               registerView(name, html, config);
             } else {
-              console.warn(`[WB Views] Failed to fetch template for "${name}" from ${config.url}`);
+              console.warn(`[WB Views] Failed to fetch template for "${name}" from ${tplUrl}`);
             }
           } catch (e) {
             console.warn(`[WB Views] Error fetching template for "${name}":`, e);

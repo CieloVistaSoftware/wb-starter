@@ -12,7 +12,7 @@
 // Curated list of highlight.js themes (organized by category)
 const CODE_THEMES = [
   // Grayscale / Minimal
-  { id: 'wb-grayscale-dark', name: 'WB Grayscale (Dark)', category: 'Minimal', description: 'High contrast dark grayscale', path: '/src/styles/code-themes/wb-grayscale-dark.css' },
+  { id: 'wb-grayscale-dark', name: 'WB Grayscale (Dark)', category: 'Minimal', description: 'High contrast dark grayscale', path: new URL('../styles/code-themes/wb-grayscale-dark.css', import.meta.url).href },
   { id: 'ascetic', name: 'Ascetic', category: 'Minimal', description: 'Ultra minimal' },
   
   // Dark Themes

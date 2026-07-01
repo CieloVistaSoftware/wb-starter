@@ -64,11 +64,16 @@ const processedElements = new WeakSet();
 // SCHEMA LOADING
 // =============================================================================
 
+// Resolve the wb-models directory relative to THIS module's URL, so schema fetches
+// work under any base path — domain root in local dev, or a project sub-path like
+// /wb-starter/ on GitHub Pages. An absolute '/src/wb-models' 404s on sub-path hosts. (#225)
+const DEFAULT_SCHEMA_BASE = new URL('../../wb-models', import.meta.url).href;
+
 /**
  * Load all schemas from wb-models directory
  * @param {string} basePath - Path to wb-models folder
  */
-export async function loadSchemas(basePath = '/src/wb-models') {
+export async function loadSchemas(basePath = DEFAULT_SCHEMA_BASE) {
   try {
     const indexResponse = await fetch(`${basePath}/index.json`);
     
@@ -128,7 +133,7 @@ export function registerSchema(schema, filename) {
  * Load a single schema file and register it (fallback for runtime/hydration races)
  * Returns true if the schema was fetched & registered, false otherwise.
  */
-export async function loadSchemaFile(filePath, basePath = '/src/wb-models') {
+export async function loadSchemaFile(filePath, basePath = DEFAULT_SCHEMA_BASE) {
   try {
     // Accept both bare filenames (cardhero.schema.json) and schema names (cardhero)
     const filename = filePath.endsWith('.schema.json') ? filePath : `${filePath}.schema.json`;
@@ -845,7 +850,7 @@ export async function init(options = {}) {
   dlog('[Schema Builder] $view + $methods format');
   dlog('[Schema Builder] ═══════════════════════════════════');
   
-  const basePath = options.schemaPath || '/src/wb-models';
+  const basePath = options.schemaPath || DEFAULT_SCHEMA_BASE;
   await loadSchemas(basePath);
   
   scan(document.body);

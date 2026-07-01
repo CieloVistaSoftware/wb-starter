@@ -710,7 +710,9 @@ const WB = {
       autoInject = false, // Default to false unless specified
       prefix = 'x', // Default prefix
       useSchemas = true, // v3.0: Enable schema-based DOM building
-      schemaPath = '/src/wb-models' // Path to schema files
+      // Base-path aware (relative to this module) so schemas load under any base —
+      // domain root locally or /wb-starter/ on GitHub Pages. Absolute 404s there. (#225)
+      schemaPath = new URL('../wb-models', import.meta.url).href // Path to schema files
     } = options;
 
     // Set debug mode

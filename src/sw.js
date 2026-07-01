@@ -5,14 +5,18 @@
 const STATIC_CACHE = 'wb-static-v1';
 const DYNAMIC_CACHE = 'wb-dynamic-v1';
 
+// App root derived from THIS worker's location (sw.js lives at <base>/src/sw.js),
+// so precache URLs resolve under any base — domain root locally or /wb-starter/
+// on GitHub Pages. Absolute '/src/...' 404s the SW install on sub-path hosts. (#225)
+const BASE = new URL('../', self.location).href;
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/src/wb.js',
-  '/src/core/site-engine.js',
-  '/src/styles/themes.css',
-  '/styles/site.css',
-  '/config/site.json'
+  BASE,
+  BASE + 'index.html',
+  BASE + 'src/wb.js',
+  BASE + 'src/core/site-engine.js',
+  BASE + 'src/styles/themes.css',
+  BASE + 'src/styles/site.css',
+  BASE + 'config/site.json'
 ];
 
 self.addEventListener('install', event => {

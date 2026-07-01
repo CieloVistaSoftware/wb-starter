@@ -1,4 +1,4 @@
-import hljs from '/src/lib/highlight.js';
+import hljs from '../../lib/highlight.js';
 import { pre } from './pre.js';
 
 // Inject CSS if not present (codecontrol behavior will override if used)

@@ -2,7 +2,7 @@
  * JSON Viewer - Pretty print JSON
  * Helper Attribute: [x-behavior="json"]
  */
-import hljs from '/src/lib/highlight.js';
+import hljs from '../../lib/highlight.js';
 
 export function json(element, options = {}) {
   const config = {

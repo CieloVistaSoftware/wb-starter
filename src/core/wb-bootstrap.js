@@ -76,7 +76,7 @@ const defaults = {
     scan: true,
     observe: true,
     autoInject: false,
-    registry: '/src/wb-views/partials-registry.json',         // Path to views registry JSON
+    registry: new URL('../wb-views/partials-registry.json', import.meta.url).href,         // Path to views registry JSON
     preload: [],            // Behaviors to preload
     theme: null,            // Theme name
     css: true,              // true = auto-load site.css, string/array = custom paths, false = none

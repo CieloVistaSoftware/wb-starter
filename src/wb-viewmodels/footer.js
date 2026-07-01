@@ -17,7 +17,7 @@ if (!document.getElementById(CSS_ID)) {
   const link = document.createElement('link');
   link.id = CSS_ID;
   link.rel = 'stylesheet';
-  link.href = '/src/styles/behaviors/footer.css';
+  link.href = new URL('../styles/behaviors/footer.css', import.meta.url).href;
   document.head.appendChild(link);
 }
 
