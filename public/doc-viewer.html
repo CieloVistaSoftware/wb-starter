@@ -4,10 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Documentation Viewer</title>
-  <link rel="stylesheet" href="/src/styles/themes.css">
-  <link rel="stylesheet" href="/src/styles/site.css">
-  <link rel="stylesheet" href="/src/styles/transitions.css">
-  <link rel="stylesheet" href="/node_modules/highlight.js/styles/atom-one-dark.css">
+  <!-- Adopt the theme the user picked on the docs listing. The theme system
+       (src/core/theme.js) persists the choice in the shared, same-origin
+       localStorage key 'wb-theme'; read it before paint so the doc opens
+       already themed instead of flashing the default. -->
+  <script>
+    try {
+      var wbTheme = localStorage.getItem('wb-theme');
+      if (wbTheme) document.documentElement.setAttribute('data-theme', wbTheme);
+    } catch (e) { /* storage disabled (private mode) — keep the default theme */ }
+  </script>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/transitions.css">
+  <link rel="stylesheet" href="../node_modules/highlight.js/styles/atom-one-dark.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -94,8 +104,8 @@
   </div>
 
   <script type="module">
-    import { mdhtml } from '/src/wb-viewmodels/mdhtml.js';
-    import hljs from '/src/lib/highlight.js';
+    import { mdhtml } from '../src/wb-viewmodels/mdhtml.js';
+    import hljs from '../src/lib/highlight.js';
     
     // Hide close button if not opened via script/link
     if (!window.opener) {
