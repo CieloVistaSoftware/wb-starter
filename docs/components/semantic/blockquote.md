@@ -67,7 +67,9 @@ The `<cite>` element identifies the source of a quotation:
     <p class="wb-card__author-role">CEO, TechCorp</p>
     <div
       class="wb-card__rating"
-      aria-label="5 out of 5 stars"> ⭐⭐⭐⭐⭐ </div>
+      aria-label="5 out of 5 stars">
+      ⭐⭐⭐⭐⭐
+    </div>
   </footer>
 </article>
 ```

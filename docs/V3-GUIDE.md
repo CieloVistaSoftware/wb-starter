@@ -60,7 +60,9 @@ A standalone page needs the theme + base styles and one module script:
     <button
       x-toast
       message="Saved!"
-      type="success">Save</button>
+      type="success">
+      Save
+    </button>
     <script type="module">
       import WB from '/src/core/wb-lazy.js';
       window.WB = WB;
@@ -96,13 +98,17 @@ Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slo
 </wb-card>
 <wb-spinner
   size="lg"
-  color="success"></wb-spinner>
+  color="success">
+</wb-spinner>
 <wb-progress
   value="75"
-  striped></wb-progress>
+  striped>
+</wb-progress>
 <wb-badge
   variant="success"
-  pill>New</wb-badge>
+  pill>
+  New
+</wb-badge>
 <wb-tabs>
   <div tab-title="Overview">
     <p>…</p>
@@ -131,19 +137,25 @@ need a custom tag:
 <button
   x-toast
   message="Done"
-  type="success">Notify</button>
+  type="success">
+  Notify
+</button>
 <!-- navigation -->
 <nav
   x-breadcrumb
-  items="Home,Products,Phones"></nav>
+  items="Home,Products,Phones">
+</nav>
 <div
   x-steps
   items="Cart,Shipping,Pay"
-  current="2"></div>
+  current="2">
+</div>
 <!-- effects (entrance / attention) -->
 <button
   x-slidein
-  direction="left">Slide</button>
+  direction="left">
+  Slide
+</button>
 <button x-bounce>Bounce</button>
 <!-- forms -->
 <input

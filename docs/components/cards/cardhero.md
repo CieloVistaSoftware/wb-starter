@@ -40,7 +40,8 @@ Inherits all [card properties](./card.md) plus:
   subtitle="just HTML — no build step"
   cta="Explore Components"
   cta-href="#components"
-  variant="cosmic"></wb-cardhero>
+  variant="cosmic">
+</wb-cardhero>
 ```
 
 > Tip: `title` accepts HTML (so `wb-gradient-text` can be used) — you do not need to use slots.

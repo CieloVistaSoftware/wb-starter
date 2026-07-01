@@ -83,10 +83,14 @@ These behaviors enhance the element while preserving its identity.
 <button icon="💾">Save</button>
 <button
   icon="🗑️"
-  variant="danger">Delete</button>
+  variant="danger">
+  Delete
+</button>
 <button
   icon="→"
-  icon-position="right">Next</button>
+  icon-position="right">
+  Next
+</button>
 <button icon="←">Back</button>
 <!-- States -->
 <button loading>Saving...</button>
@@ -94,17 +98,23 @@ These behaviors enhance the element while preserving its identity.
 <button
   variant="success"
   icon="✓"
-  size="lg">Complete Purchase</button>
+  size="lg">
+  Complete Purchase
+</button>
 <!-- Combined -->
 <button
   variant="danger"
   size="sm"
-  icon="🗑️">Delete Item</button>
+  icon="🗑️">
+  Delete Item
+</button>
 <button
   variant="success"
   size="lg"
   icon="✓"
-  icon-position="right"> Confirm Order </button>
+  icon-position="right">
+  Confirm Order
+</button>
 ```
 
 **Button Group Example:**
@@ -263,7 +273,9 @@ These behaviors enhance the element while preserving its identity.
   </label>
   <button
     variant="primary"
-    size="lg">Sign In</button>
+    size="lg">
+    Sign In
+  </button>
 </form>
 <!-- Price input -->
 <label>Product Price
@@ -426,15 +438,21 @@ function greet(name) {
   <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
     <button
       variant="ghost"
-      onclick="this.closest('dialog').close()"> Cancel </button>
+      onclick="this.closest('dialog').close()">
+      Cancel
+    </button>
     <button
       variant="danger"
-      onclick="deleteItem(); this.closest('dialog').close()"> Delete </button>
+      onclick="deleteItem(); this.closest('dialog').close()">
+      Delete
+    </button>
   </div>
 </dialog>
 <button
   variant="danger"
-  onclick="document.getElementById('confirmDelete').showModal()"> 🗑️ Delete </button>
+  onclick="document.getElementById('confirmDelete').showModal()">
+  🗑️ Delete
+</button>
 <!-- Form in dialog -->
 <dialog id="loginDialog">
   <h2>Sign In</h2>
@@ -455,10 +473,14 @@ function greet(name) {
       <button
         type="button"
         variant="ghost"
-        onclick="this.closest('dialog').close()"> Cancel </button>
+        onclick="this.closest('dialog').close()">
+        Cancel
+      </button>
       <button
         type="submit"
-        variant="primary">Sign In</button>
+        variant="primary">
+        Sign In
+      </button>
     </div>
   </form>
 </dialog>
@@ -471,7 +493,9 @@ function greet(name) {
     style="max-width: 90vw; max-height: 80vh;">
   <button
     onclick="this.closest('dialog').close()"
-    style="position: absolute; top: 1rem; right: 1rem;"> ✕ </button>
+    style="position: absolute; top: 1rem; right: 1rem;">
+    ✕
+  </button>
 </dialog>
 <img
   src="thumbnail.jpg"
@@ -492,16 +516,21 @@ function greet(name) {
     <label>
       <input
         type="checkbox"
-        required> I agree to the terms and conditions
+        required>
+        I agree to the terms and conditions
     </label>
     <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
       <button
         type="button"
         variant="ghost"
-        onclick="this.closest('dialog').close()"> Decline </button>
+        onclick="this.closest('dialog').close()">
+        Decline
+      </button>
       <button
         type="submit"
-        variant="success">Accept</button>
+        variant="success">
+        Accept
+      </button>
     </div>
   </form>
 </dialog>
@@ -514,7 +543,8 @@ function greet(name) {
       <label>
         <input
           type="checkbox"
-          checked> Email notifications
+          checked>
+          Email notifications
       </label>
       <label>
         <input type="checkbox"> Push notifications
@@ -522,7 +552,8 @@ function greet(name) {
       <label>
         <input
           type="checkbox"
-          checked> Weekly digest
+          checked>
+          Weekly digest
       </label>
     </fieldset>
     <fieldset>
@@ -533,13 +564,16 @@ function greet(name) {
       <label>
         <input
           type="checkbox"
-          checked> Allow search engines
+          checked>
+          Allow search engines
       </label>
     </fieldset>
     <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
       <button
         type="submit"
-        variant="primary">Save Settings</button>
+        variant="primary">
+        Save Settings
+      </button>
     </div>
   </form>
 </dialog>
@@ -717,7 +751,9 @@ function greet(name) {
       <td>
         <span
           x-badge
-          variant="success">Complete</span>
+          variant="success">
+          Complete
+        </span>
       </td>
       <td>Jan 15</td>
     </tr>
@@ -727,7 +763,9 @@ function greet(name) {
       <td>
         <span
           x-badge
-          variant="warning">In Progress</span>
+          variant="warning">
+          In Progress
+        </span>
       </td>
       <td>Jan 20</td>
     </tr>
@@ -737,7 +775,9 @@ function greet(name) {
       <td>
         <span
           x-badge
-          variant="secondary">Pending</span>
+          variant="secondary">
+          Pending
+        </span>
       </td>
       <td>Jan 25</td>
     </tr>
@@ -794,11 +834,14 @@ function greet(name) {
       name="message"
       required
       placeholder="How can we help?"
-      rows="5"></textarea>
+      rows="5">
+    </textarea>
   </label>
   <button
     type="submit"
-    variant="primary">Send Message</button>
+    variant="primary">
+    Send Message
+  </button>
 </form>
 <!-- Registration form -->
 <form
@@ -851,24 +894,30 @@ function greet(name) {
       <textarea
         name="bio"
         placeholder="Tell us about yourself..."
-        rows="3"></textarea>
+        rows="3">
+      </textarea>
     </label>
   </fieldset>
   <label>
     <input
       type="checkbox"
       name="terms"
-      required> I agree to the <a href="/terms">Terms of Service</a>
+      required>
+      I agree to the <a href="/terms">Terms of Service
+    </a>
   </label>
   <label>
     <input
       type="checkbox"
-      name="newsletter"> Subscribe to newsletter
+      name="newsletter">
+      Subscribe to newsletter
   </label>
   <button
     type="submit"
     variant="success"
-    size="lg">Create Account</button>
+    size="lg">
+    Create Account
+  </button>
 </form>
 <!-- Payment form -->
 <form
@@ -908,7 +957,9 @@ function greet(name) {
     type="submit"
     variant="success"
     size="lg"
-    icon="🔒"> Pay $99.00 </button>
+    icon="🔒">
+    Pay $99.00
+  </button>
 </form>
 <!-- Search form -->
 <form
@@ -926,7 +977,9 @@ function greet(name) {
     type="submit"
     variant="primary"
     size="lg"
-    icon="🔍">Search</button>
+    icon="🔍">
+    Search
+  </button>
 </form>
 <!-- Filter form -->
 <form>
@@ -936,19 +989,22 @@ function greet(name) {
       <input
         type="radio"
         name="price"
-        value="0-50"> $0 - $50
+        value="0-50">
+        $0 - $50
     </label>
     <label>
       <input
         type="radio"
         name="price"
-        value="50-100"> $50 - $100
+        value="50-100">
+        $50 - $100
     </label>
     <label>
       <input
         type="radio"
         name="price"
-        value="100+"> $100+
+        value="100+">
+        $100+
     </label>
   </fieldset>
   <fieldset>
@@ -957,19 +1013,22 @@ function greet(name) {
       <input
         type="checkbox"
         name="cat"
-        value="electronics"> Electronics
+        value="electronics">
+        Electronics
     </label>
     <label>
       <input
         type="checkbox"
         name="cat"
-        value="clothing"> Clothing
+        value="clothing">
+        Clothing
     </label>
     <label>
       <input
         type="checkbox"
         name="cat"
-        value="home"> Home & Garden
+        value="home">
+        Home & Garden
     </label>
   </fieldset>
   <fieldset>
@@ -978,21 +1037,27 @@ function greet(name) {
       <input
         type="checkbox"
         name="rating"
-        value="4"> 4+ Stars
+        value="4">
+        4+ Stars
     </label>
     <label>
       <input
         type="checkbox"
         name="rating"
-        value="3"> 3+ Stars
+        value="3">
+        3+ Stars
     </label>
   </fieldset>
   <button
     type="submit"
-    variant="primary">Apply Filters</button>
+    variant="primary">
+    Apply Filters
+  </button>
   <button
     type="reset"
-    variant="ghost">Clear All</button>
+    variant="ghost">
+    Clear All
+  </button>
 </form>
 ```
 
@@ -1062,7 +1127,9 @@ function greet(name) {
   <option value="pro">Pro - $29/mo</option>
   <option
     value="enterprise"
-    disabled>Enterprise - Contact Us</option>
+    disabled>
+    Enterprise - Contact Us
+  </option>
 </select>
 <!-- Date selectors -->
 <div style="display: flex; gap: 0.5rem;">
@@ -1111,31 +1178,37 @@ function greet(name) {
 <textarea
   maxlength="500"
   counter
-  placeholder="Write your bio (max 500 characters)..."></textarea>
+  placeholder="Write your bio (max 500 characters)...">
+</textarea>
 <!-- Different sizes -->
 <textarea
   rows="3"
-  placeholder="Short message..."></textarea>
+  placeholder="Short message...">
+</textarea>
 <textarea
   rows="10"
-  placeholder="Long description..."></textarea>
+  placeholder="Long description...">
+</textarea>
 <!-- Code input -->
 <textarea
   rows="15"
   style="font-family: monospace;"
-  placeholder="// Paste your code here..."></textarea>
+  placeholder="// Paste your code here...">
+</textarea>
 <!-- Various use cases -->
 <label> Product Description
   <textarea
     rows="5"
     placeholder="Describe your product in detail..."
     maxlength="1000"
-    counter></textarea>
+    counter>
+  </textarea>
 </label>
 <label> Cover Letter
   <textarea
     rows="10"
-    placeholder="Dear Hiring Manager..."></textarea>
+    placeholder="Dear Hiring Manager...">
+  </textarea>
 </label>
 <label> Bug Report
   <textarea
@@ -1143,7 +1216,8 @@ function greet(name) {
     placeholder="Please describe the issue:
 - What happened?
 - What did you expect?
-- Steps to reproduce..."></textarea>
+- Steps to reproduce...">
+  </textarea>
 </label>
 <label> JSON Configuration
   <textarea
@@ -1152,8 +1226,8 @@ function greet(name) {
     placeholder='{
   "name": "my-config",
   "version": "1.0.0"
-}'
-  ></textarea>
+}'>
+  </textarea>
 </label>
 ```
 
@@ -1177,14 +1251,17 @@ function greet(name) {
 <label>
   <input
     type="checkbox"
-    name="subscribe"> Subscribe to newsletter
+    name="subscribe">
+    Subscribe to newsletter
 </label>
 <!-- Terms agreement -->
 <label>
   <input
     type="checkbox"
     name="terms"
-    required> I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>
+    required>
+    I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy
+  </a>
 </label>
 <!-- Checkbox group -->
 <fieldset>
@@ -1193,31 +1270,36 @@ function greet(name) {
     <input
       type="checkbox"
       name="interests"
-      value="tech"> Technology
+      value="tech">
+      Technology
   </label>
   <label>
     <input
       type="checkbox"
       name="interests"
-      value="sports"> Sports
+      value="sports">
+      Sports
   </label>
   <label>
     <input
       type="checkbox"
       name="interests"
-      value="music"> Music
+      value="music">
+      Music
   </label>
   <label>
     <input
       type="checkbox"
       name="interests"
-      value="travel"> Travel
+      value="travel">
+      Travel
   </label>
   <label>
     <input
       type="checkbox"
       name="interests"
-      value="food"> Food & Cooking
+      value="food">
+      Food & Cooking
   </label>
 </fieldset>
 <!-- Settings toggles -->
@@ -1227,23 +1309,27 @@ function greet(name) {
     <input
       type="checkbox"
       name="email_notif"
-      checked> Email notifications
+      checked>
+      Email notifications
   </label>
   <label>
     <input
       type="checkbox"
-      name="push_notif"> Push notifications
+      name="push_notif">
+      Push notifications
   </label>
   <label>
     <input
       type="checkbox"
-      name="sms_notif"> SMS alerts
+      name="sms_notif">
+      SMS alerts
   </label>
   <label>
     <input
       type="checkbox"
       name="weekly"
-      checked> Weekly digest
+      checked>
+      Weekly digest
   </label>
 </fieldset>
 <!-- Feature selection -->
@@ -1254,25 +1340,29 @@ function greet(name) {
       type="checkbox"
       name="features"
       value="analytics"
-      checked> 📊 Analytics Dashboard
+      checked>
+      📊 Analytics Dashboard
   </label>
   <label>
     <input
       type="checkbox"
       name="features"
-      value="api"> 🔌 API Access
+      value="api">
+      🔌 API Access
   </label>
   <label>
     <input
       type="checkbox"
       name="features"
-      value="support"> 💬 Priority Support
+      value="support">
+      💬 Priority Support
   </label>
   <label>
     <input
       type="checkbox"
       name="features"
-      value="export"> 📤 Data Export
+      value="export">
+      📤 Data Export
   </label>
 </fieldset>
 <!-- Indeterminate state (via JS) -->
@@ -1287,17 +1377,20 @@ function greet(name) {
   <label>
     <input
       type="checkbox"
-      class="item"> Item 1
+      class="item">
+      Item 1
   </label>
   <label>
     <input
       type="checkbox"
-      class="item"> Item 2
+      class="item">
+      Item 2
   </label>
   <label>
     <input
       type="checkbox"
-      class="item"> Item 3
+      class="item">
+      Item 3
   </label>
 </div>
 ```
@@ -1325,26 +1418,30 @@ function greet(name) {
     <input
       type="radio"
       name="size"
-      value="s"> Small
+      value="s">
+      Small
   </label>
   <label>
     <input
       type="radio"
       name="size"
       value="m"
-      checked> Medium
+      checked>
+      Medium
   </label>
   <label>
     <input
       type="radio"
       name="size"
-      value="l"> Large
+      value="l">
+      Large
   </label>
   <label>
     <input
       type="radio"
       name="size"
-      value="xl"> Extra Large
+      value="xl">
+      Extra Large
   </label>
 </fieldset>
 <!-- Payment method -->
@@ -1355,25 +1452,29 @@ function greet(name) {
       type="radio"
       name="payment"
       value="card"
-      checked> 💳 Credit/Debit Card
+      checked>
+      💳 Credit/Debit Card
   </label>
   <label>
     <input
       type="radio"
       name="payment"
-      value="paypal"> 🅿️ PayPal
+      value="paypal">
+      🅿️ PayPal
   </label>
   <label>
     <input
       type="radio"
       name="payment"
-      value="bank"> 🏦 Bank Transfer
+      value="bank">
+      🏦 Bank Transfer
   </label>
   <label>
     <input
       type="radio"
       name="payment"
-      value="crypto"> ₿ Cryptocurrency
+      value="crypto">
+      ₿ Cryptocurrency
   </label>
 </fieldset>
 <!-- Shipping options -->
@@ -1383,19 +1484,22 @@ function greet(name) {
     <input
       type="radio"
       name="shipping"
-      value="standard"> 📦 Standard (5-7 days) - Free
+      value="standard">
+      📦 Standard (5-7 days) - Free
   </label>
   <label>
     <input
       type="radio"
       name="shipping"
-      value="express"> 🚚 Express (2-3 days) - $9.99
+      value="express">
+      🚚 Express (2-3 days) - $9.99
   </label>
   <label>
     <input
       type="radio"
       name="shipping"
-      value="overnight"> ✈️ Overnight - $24.99
+      value="overnight">
+      ✈️ Overnight - $24.99
   </label>
 </fieldset>
 <!-- Rating scale -->
@@ -1405,31 +1509,36 @@ function greet(name) {
     <input
       type="radio"
       name="satisfaction"
-      value="1"> 1 - Very Dissatisfied
+      value="1">
+      1 - Very Dissatisfied
   </label>
   <label>
     <input
       type="radio"
       name="satisfaction"
-      value="2"> 2 - Dissatisfied
+      value="2">
+      2 - Dissatisfied
   </label>
   <label>
     <input
       type="radio"
       name="satisfaction"
-      value="3"> 3 - Neutral
+      value="3">
+      3 - Neutral
   </label>
   <label>
     <input
       type="radio"
       name="satisfaction"
-      value="4"> 4 - Satisfied
+      value="4">
+      4 - Satisfied
   </label>
   <label>
     <input
       type="radio"
       name="satisfaction"
-      value="5"> 5 - Very Satisfied
+      value="5">
+      5 - Very Satisfied
   </label>
 </fieldset>
 <!-- Pricing plans -->
@@ -1471,13 +1580,15 @@ function greet(name) {
     <input
       type="radio"
       name="experience"
-      value="yes"> Yes
+      value="yes">
+      Yes
   </label>
   <label>
     <input
       type="radio"
       name="experience"
-      value="no"> No
+      value="no">
+      No
   </label>
 </fieldset>
 <!-- Frequency selection -->
@@ -1487,31 +1598,36 @@ function greet(name) {
     <input
       type="radio"
       name="exercise"
-      value="daily"> Daily
+      value="daily">
+      Daily
   </label>
   <label>
     <input
       type="radio"
       name="exercise"
-      value="weekly"> A few times a week
+      value="weekly">
+      A few times a week
   </label>
   <label>
     <input
       type="radio"
       name="exercise"
-      value="monthly"> A few times a month
+      value="monthly">
+      A few times a month
   </label>
   <label>
     <input
       type="radio"
       name="exercise"
-      value="rarely"> Rarely
+      value="rarely">
+      Rarely
   </label>
   <label>
     <input
       type="radio"
       name="exercise"
-      value="never"> Never
+      value="never">
+      Never
   </label>
 </fieldset>
 ```
@@ -1631,36 +1747,43 @@ function greet(name) {
 <!-- Basic progress -->
 <progress
   value="70"
-  max="100"></progress>
+  max="100">
+</progress>
 <!-- Indeterminate (loading) -->
 <progress></progress>
 <!-- Various completion levels -->
 <label>Not started: <progress
     value="0"
-    max="100"></progress>
+    max="100">
+  </progress>
 </label>
 <label>25% Complete: <progress
     value="25"
-    max="100"></progress>
+    max="100">
+  </progress>
 </label>
 <label>50% Complete: <progress
     value="50"
-    max="100"></progress>
+    max="100">
+  </progress>
 </label>
 <label>75% Complete: <progress
     value="75"
-    max="100"></progress>
+    max="100">
+  </progress>
 </label>
 <label>Complete: <progress
     value="100"
-    max="100"></progress>
+    max="100">
+  </progress>
 </label>
 <!-- File upload progress -->
 <div>
   <p>Uploading document.pdf...</p>
   <progress
     value="45"
-    max="100"></progress>
+    max="100">
+  </progress>
   <span>45%</span>
 </div>
 <!-- Download progress -->
@@ -1668,14 +1791,16 @@ function greet(name) {
   <p>Downloading update (125 MB / 500 MB)</p>
   <progress
     value="125"
-    max="500"></progress>
+    max="500">
+  </progress>
 </div>
 <!-- Step progress -->
 <div>
   <p>Step 2 of 4</p>
   <progress
     value="2"
-    max="4"></progress>
+    max="4">
+  </progress>
 </div>
 <!-- Course progress -->
 <div>
@@ -1683,21 +1808,25 @@ function greet(name) {
   <p>12 of 20 lessons completed</p>
   <progress
     value="12"
-    max="20"></progress>
+    max="20">
+  </progress>
 </div>
 <!-- Multiple progress bars (dashboard) -->
 <div>
   <label>Storage Used (7.5 GB / 10 GB) <progress
       value="75"
-      max="100"></progress>
+      max="100">
+    </progress>
   </label>
   <label>Bandwidth Used (45 GB / 100 GB) <progress
       value="45"
-      max="100"></progress>
+      max="100">
+    </progress>
   </label>
   <label>API Calls (8,500 / 10,000) <progress
       value="85"
-      max="100"></progress>
+      max="100">
+    </progress>
   </label>
 </div>
 ```
@@ -1993,7 +2122,9 @@ These behaviors transform the element into a component.
     <button
       variant="primary"
       size="lg"
-      style="width: 100%;">Get Started</button>
+      style="width: 100%;">
+      Get Started
+    </button>
   </footer>
 </article>
 <!-- Feature card -->
@@ -2148,7 +2279,9 @@ These behaviors transform the element into a component.
     <h3>API Documentation ↗</h3>
     <span
       x-badge
-      variant="primary">New</span>
+      variant="primary">
+      New
+    </span>
   </header>
   <main>
     <p>Complete API reference with examples and best practices.</p>
@@ -2199,7 +2332,9 @@ These behaviors transform the element into a component.
 <nav>
   <a
     href="/"
-    style="font-weight: bold; font-size: 1.25rem;">MyBrand</a>
+    style="font-weight: bold; font-size: 1.25rem;">
+    MyBrand
+  </a>
   <ul>
     <li>
       <a href="/">Home</a>
@@ -2254,7 +2389,9 @@ These behaviors transform the element into a component.
   <div style="display: flex; align-items: center; gap: 1rem;">
     <a
       href="/"
-      style="font-weight: bold;">🚀 AppName</a>
+      style="font-weight: bold;">
+      🚀 AppName
+    </a>
     <span style="font-size: 0.75rem; background: var(--primary); color: white; padding: 0.125rem 0.5rem; border-radius: 4px;">Beta</span>
   </div>
   <ul>
@@ -2274,7 +2411,9 @@ These behaviors transform the element into a component.
   <div style="display: flex; align-items: center; gap: 0.5rem;">
     <button
       variant="ghost"
-      size="sm">🔔</button>
+      size="sm">
+      🔔
+    </button>
     <img
       src="avatar.jpg"
       alt="Profile"
@@ -2331,10 +2470,14 @@ These behaviors transform the element into a component.
   <div style="display: flex; gap: 0.5rem;">
     <a
       href="https://github.com/wb"
-      target="_blank">GitHub</a>
+      target="_blank">
+      GitHub
+    </a>
     <button
       variant="primary"
-      size="sm">Get Started</button>
+      size="sm">
+      Get Started
+    </button>
   </div>
 </nav>
 ```
@@ -2371,7 +2514,9 @@ These behaviors transform the element into a component.
   <nav>
     <a
       href="/dashboard"
-      class="active">📊 Dashboard</a>
+      class="active">
+      📊 Dashboard
+    </a>
     <a href="/projects">📁 Projects</a>
     <a href="/team">👥 Team</a>
     <a href="/analytics">📈 Analytics</a>
@@ -2972,23 +3117,31 @@ These work on ANY element and are always active:
 <span tooltip="Click for more information">ℹ️</span>
 <a
   href="/"
-  tooltip="Go to homepage">Home</a>
+  tooltip="Go to homepage">
+  Home
+</a>
 <!-- Toast message on click -->
 <button toast-message="Copied to clipboard!">📋 Copy</button>
 <button toast-message="Item added to cart">🛒 Add to Cart</button>
 <!-- Ripple effect on any clickable element -->
 <div
   ripple
-  style="padding: 2rem; cursor: pointer;"> Click anywhere for ripple effect </div>
+  style="padding: 2rem; cursor: pointer;">
+  Click anywhere for ripple effect
+</div>
 <a
   href="/"
-  ripple>Ripple Link</a>
+  ripple>
+  Ripple Link
+</a>
 <!-- Badge on any element -->
 <span badge="3">🔔 Notifications</span>
 <button badge="New">✨ Features</button>
 <a
   href="/inbox"
-  badge="99+">📧 Inbox</a>
+  badge="99+">
+  📧 Inbox
+</a>
 ```
 
 ---

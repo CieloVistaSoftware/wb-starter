@@ -70,7 +70,9 @@ Inherits all [card properties](./card.md) plus:
   <main>
     <data
       value="1234"
-      class="wb-card__stats-value">1,234</data>
+      class="wb-card__stats-value">
+      1,234
+    </data>
     <p class="wb-card__stats-label">Total Users</p>
     <p class="wb-card__stats-trend">↑ +12.5%</p>
   </main>

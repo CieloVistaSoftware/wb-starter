@@ -36,7 +36,9 @@ Inherits all [card properties](./card.md) plus:
 <div style="position: relative; width: 500px; height: 400px;">
   <wb-carddraggable
     title="Bounded Card"
-    constrain="parent"> Cannot drag outside parent. </wb-carddraggable>
+    constrain="parent">
+    Cannot drag outside parent.
+  </wb-carddraggable>
 </div>
 ```
 
@@ -45,7 +47,9 @@ Inherits all [card properties](./card.md) plus:
 ```html
 <wb-carddraggable
   title="Horizontal"
-  axis="x"> Only moves left/right. </wb-carddraggable>
+  axis="x">
+  Only moves left/right.
+</wb-carddraggable>
 ```
 
 ### Snap to Grid
@@ -53,7 +57,9 @@ Inherits all [card properties](./card.md) plus:
 ```html
 <wb-carddraggable
   title="Grid Snap"
-  snapToGrid="20"> Snaps to 20px grid. </wb-carddraggable>
+  snapToGrid="20">
+  Snaps to 20px grid.
+</wb-carddraggable>
 ```
 
 ## Events

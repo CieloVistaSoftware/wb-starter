@@ -34,7 +34,9 @@ cardBase (shared foundation)
 ```html
 <wb-card
   title="Card Title"
-  subtitle="Subtitle"> Card content here </wb-card>
+  subtitle="Subtitle">
+  Card content here
+</wb-card>
 ```
 
 ### Semantic Element + Data Attributes
@@ -42,7 +44,9 @@ cardBase (shared foundation)
 ```html
 <article
   x-card
-  title="Card Title"> Card content here </article>
+  title="Card Title">
+  Card content here
+</article>
 ```
 
 ## Base Card Properties (Inherited by All)
@@ -83,14 +87,18 @@ cardBase (shared foundation)
 <wb-card
   title="Elevated Card"
   footer="Last updated: Today"
-  elevated> Card content with elevation shadow. </wb-card>
+  elevated>
+  Card content with elevation shadow.
+</wb-card>
 ```
 
 ### Glass Variant
 ```html
 <wb-card
   title="Glass Card"
-  variant="glass"> Frosted glass effect card. </wb-card>
+  variant="glass">
+  Frosted glass effect card.
+</wb-card>
 ```
 
 ### Image Card

@@ -24,13 +24,19 @@ The `<address>` element provides contact information for a person, organization,
   <address class="wb-card__contact">
     <a
       href="mailto:john@example.com"
-      class="wb-card__portfolio-email"> 📧 john@example.com </a>
+      class="wb-card__portfolio-email">
+      📧 john@example.com
+    </a>
     <a
       href="tel:+15551234"
-      class="wb-card__portfolio-phone"> 📱 +1 555-1234 </a>
+      class="wb-card__portfolio-phone">
+      📱 +1 555-1234
+    </a>
     <a
       href="https://johndoe.com"
-      class="wb-card__portfolio-website"> 🌐 johndoe.com </a>
+      class="wb-card__portfolio-website">
+      🌐 johndoe.com
+    </a>
     <span class="wb-card__portfolio-location"> 📍 San Francisco, CA </span>
   </address>
 </article>

@@ -40,7 +40,8 @@ Audio player with optional 15-band graphic equalizer.
 <audio
   x-audio
   src="music.mp3"
-  controls></audio>
+  controls>
+</audio>
 ```
 
 ### With Equalizer
@@ -48,7 +49,8 @@ Audio player with optional 15-band graphic equalizer.
 ```html
 <wb-audio
   src="music.mp3"
-  showEq></wb-audio>
+  showEq>
+</wb-audio>
 ```
 
 ### Background Audio
@@ -58,7 +60,8 @@ Audio player with optional 15-band graphic equalizer.
   src="ambient.mp3"
   autoplay
   muted
-  loop></wb-audio>
+  loop>
+</wb-audio>
 ```
 
 ### With Bass/Treble Boost
@@ -67,7 +70,8 @@ Audio player with optional 15-band graphic equalizer.
 <wb-audio
   src="track.mp3"
   bass="6"
-  treble="3"></wb-audio>
+  treble="3">
+</wb-audio>
 ```
 
 ## Generated Structure
@@ -77,7 +81,8 @@ Audio player with optional 15-band graphic equalizer.
   <audio
     class="wb-audio__player"
     src="music.mp3"
-    controls></audio>
+    controls>
+  </audio>
   <!-- EQ Panel (when showEq is true) -->
   <div class="wb-audio__eq">
     <div class="wb-audio__eq-sliders">

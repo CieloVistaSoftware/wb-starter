@@ -123,10 +123,14 @@ Use standard semantic HTML elements (Auto-Inject):
   alt="Photo">
 <form
   ajax
-  validate>...</form>
+  validate>
+  ...
+</form>
 <video
   controls
-  autoplay>...</video>
+  autoplay>
+  ...
+</video>
 ```
 
 Or use `x-behavior` for explicit behavior injection (Legacy/Override):
@@ -136,7 +140,9 @@ Or use `x-behavior` for explicit behavior injection (Legacy/Override):
 <button
   x-ripple
   x-tooltip
-  tooltip="Hello!">Hover</button>
+  tooltip="Hello!">
+  Hover
+</button>
 ```
 
 **From `src/site-engine.js:95`:**
@@ -385,7 +391,9 @@ All behavior options can be set via `data-*` attributes:
   variant="primary"
   size="lg"
   icon="→"
-  loading> Submit </button>
+  loading>
+  Submit
+</button>
 ```
 
 This becomes:
@@ -606,7 +614,9 @@ Stack multiple behaviors on a single element:
   x-ripple
   x-tooltip
   variant="primary"
-  tooltip="Click me!"> Submit </button>
+  tooltip="Click me!">
+  Submit
+</button>
 ```
 
 This applies three behaviors:
@@ -747,7 +757,9 @@ export const behaviors = {
 <div
   x-mycustom
   color="red"
-  size="lg"> Custom content </div>
+  size="lg">
+  Custom content
+</div>
 ```
 
 ### Step 4: Create Schema (Optional but Recommended)

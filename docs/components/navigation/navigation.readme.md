@@ -182,17 +182,20 @@ Page navigation with customizable display options.
 <!-- Basic pagination -->
 <wb-pagination
   current="5"
-  total="20"></wb-pagination>
+  total="20">
+</wb-pagination>
 <!-- Compact pagination -->
 <wb-pagination
   current="3"
   total="8"
-  siblings="0"></wb-pagination>
+  siblings="0">
+</wb-pagination>
 <!-- Full pagination -->
 <wb-pagination
   current="10"
   total="50"
-  siblings="2"></wb-pagination>
+  siblings="2">
+</wb-pagination>
 ```
 
 ### Programmatic API
@@ -273,12 +276,14 @@ Simple numbered step indicator.
 <!-- Basic steps -->
 <wb-steps
   total="5"
-  current="3"></wb-steps>
+  current="3">
+</wb-steps>
 <!-- Large steps -->
 <wb-steps
   total="4"
   current="2"
-  size="lg"></wb-steps>
+  size="lg">
+</wb-steps>
 ```
 
 ---
@@ -303,7 +308,9 @@ Smooth scroll anchor link with offset support.
 <!-- With offset for fixed header -->
 <wb-link
   href="#features"
-  offset="80">View Features</wb-link>
+  offset="80">
+  View Features
+</wb-link>
 ```
 
 ---
@@ -329,7 +336,8 @@ Scroll to top button that appears after scrolling.
 <!-- Custom threshold and icon -->
 <wb-backtotop
   threshold="500"
-  icon="⬆️"></wb-backtotop>
+  icon="⬆️">
+</wb-backtotop>
 <!-- Different position -->
 <wb-backtotop position="bottom-left"></wb-backtotop>
 ```

@@ -104,7 +104,9 @@ All card variants inherit from `cardBase` using semantic HTML.
 ```html
 <wb-card
   title="My Card"
-  subtitle="Description"> Card content goes here </wb-card>
+  subtitle="Description">
+  Card content goes here
+</wb-card>
 <wb-search
   placeholder="Search for content..."
   variant="glass"
@@ -118,7 +120,9 @@ All card variants inherit from `cardBase` using semantic HTML.
 <wb-card
   title="My Card"
   elevated
-  clickable> Content here </wb-card>
+  clickable>
+  Content here
+</wb-card>
 <wb-search
   placeholder="Search..."
   debounce="300">

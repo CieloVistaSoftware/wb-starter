@@ -41,7 +41,8 @@ Text input field with label, helper text, and validation states.
 <wb-input
   label="Email"
   inputType="email"
-  placeholder="Enter your email"></wb-input>
+  placeholder="Enter your email">
+</wb-input>
 ```
 
 ### Native Input (Enhanced)
@@ -69,12 +70,14 @@ Text input field with label, helper text, and validation states.
 <wb-input
   label="Search"
   icon="🔍"
-  placeholder="Search..."></wb-input>
+  placeholder="Search...">
+</wb-input>
 <wb-input
   label="Email"
   icon="📧"
   iconPosition="end"
-  inputType="email"></wb-input>
+  inputType="email">
+</wb-input>
 ```
 
 ### Clearable
@@ -83,7 +86,8 @@ Text input field with label, helper text, and validation states.
 <wb-input
   label="Search"
   placeholder="Type to search..."
-  clearable></wb-input>
+  clearable>
+</wb-input>
 ```
 
 ### Validation States
@@ -92,11 +96,13 @@ Text input field with label, helper text, and validation states.
 <wb-input
   label="Valid Field"
   variant="success"
-  value="Correct!"></wb-input>
+  value="Correct!">
+</wb-input>
 <wb-input
   label="Invalid Field"
   variant="error"
-  error="This field is required"></wb-input>
+  error="This field is required">
+</wb-input>
 ```
 
 ### Sizes
@@ -104,13 +110,16 @@ Text input field with label, helper text, and validation states.
 ```html
 <wb-input
   label="Small"
-  size="sm"></wb-input>
+  size="sm">
+</wb-input>
 <wb-input
   label="Medium"
-  size="md"></wb-input>
+  size="md">
+</wb-input>
 <wb-input
   label="Large"
-  size="lg"></wb-input>
+  size="lg">
+</wb-input>
 ```
 
 ### Input Types
@@ -118,16 +127,20 @@ Text input field with label, helper text, and validation states.
 ```html
 <wb-input
   label="Email"
-  inputType="email"></wb-input>
+  inputType="email">
+</wb-input>
 <wb-input
   label="Password"
-  inputType="password"></wb-input>
+  inputType="password">
+</wb-input>
 <wb-input
   label="Number"
-  inputType="number"></wb-input>
+  inputType="number">
+</wb-input>
 <wb-input
   label="Date"
-  inputType="date"></wb-input>
+  inputType="date">
+</wb-input>
 ```
 
 ## Generated Structure

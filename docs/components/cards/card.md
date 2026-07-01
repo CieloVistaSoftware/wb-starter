@@ -104,7 +104,9 @@ This doc explains the core features, usage, and architectural choices behind `wb
 ```html
 <wb-card
   title="Card Title"
-  subtitle="Subtitle text"> This is the card content. </wb-card>
+  subtitle="Subtitle text">
+  This is the card content.
+</wb-card>
 ```
 
 ### Semantic Element
@@ -112,7 +114,9 @@ This doc explains the core features, usage, and architectural choices behind `wb
 ```html
 <article
   x-card
-  title="Card Title"> This is the card content. </article>
+  title="Card Title">
+  This is the card content.
+</article>
 ```
 
 ### With All Options
@@ -124,7 +128,9 @@ This doc explains the core features, usage, and architectural choices behind `wb
   footer="Last updated: Today"
   elevated
   clickable
-  variant="glass"> Main content goes here. </wb-card>
+  variant="glass">
+  Main content goes here.
+</wb-card>
 ```
 
 ## Variants
@@ -138,21 +144,27 @@ This doc explains the core features, usage, and architectural choices behind `wb
 ```html
 <wb-card
   title="Glass Card"
-  variant="glass"> Frosted glass effect with blur. </wb-card>
+  variant="glass">
+  Frosted glass effect with blur.
+</wb-card>
 ```
 
 ### Elevated
 ```html
 <wb-card
   title="Elevated Card"
-  elevated> Card with drop shadow. </wb-card>
+  elevated>
+  Card with drop shadow.
+</wb-card>
 ```
 
 ### Clickable
 ```html
 <wb-card
   title="Click Me"
-  clickable> Click anywhere on this card. </wb-card>
+  clickable>
+  Click anywhere on this card.
+</wb-card>
 ```
 
 ## Generated Structure

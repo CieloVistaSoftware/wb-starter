@@ -32,7 +32,8 @@ Fireworks burst explosion effect.
 ```html
 <wb-fireworks
   count="50"
-  label="Celebrate!"></wb-fireworks>
+  label="Celebrate!">
+</wb-fireworks>
 ```
 
 ### Data Attribute
@@ -40,7 +41,8 @@ Fireworks burst explosion effect.
 ```html
 <div
   x-fireworks
-  count="30"></div>
+  count="30">
+</div>
 ```
 
 ### Auto-Trigger (No Button)
@@ -49,7 +51,8 @@ Fireworks burst explosion effect.
 <wb-fireworks
   count="40"
   showButton="false"
-  delay="1s"></wb-fireworks>
+  delay="1s">
+</wb-fireworks>
 ```
 
 ### Looping Animation
@@ -57,7 +60,8 @@ Fireworks burst explosion effect.
 ```html
 <wb-fireworks
   count="20"
-  repeat></wb-fireworks>
+  repeat>
+</wb-fireworks>
 ```
 
 ## Generated Structure

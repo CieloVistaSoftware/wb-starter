@@ -31,7 +31,8 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 ```html
 <wb-img
   src="photo.jpg"
-  alt="Photo description"></wb-img>
+  alt="Photo description">
+</wb-img>
 ```
 
 ### Native Image (Enhanced)
@@ -49,7 +50,8 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 <wb-img
   src="large-image.jpg"
   lazy
-  alt="Large photo"></wb-img>
+  alt="Large photo">
+</wb-img>
 ```
 
 ### With Aspect Ratio
@@ -68,7 +70,8 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 <wb-img
   src="artwork.jpg"
   zoomable
-  alt="Click to zoom"></wb-img>
+  alt="Click to zoom">
+</wb-img>
 ```
 
 ### With Fallback
@@ -87,11 +90,13 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 <wb-img
   src="photo.jpg"
   fit="contain"
-  alt="Photo"></wb-img>
+  alt="Photo">
+</wb-img>
 <wb-img
   src="photo.jpg"
   fit="cover"
-  alt="Photo"></wb-img>
+  alt="Photo">
+</wb-img>
 ```
 
 ## Generated Structure

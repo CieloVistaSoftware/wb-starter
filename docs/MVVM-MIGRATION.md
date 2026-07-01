@@ -274,7 +274,9 @@ Documents CSS custom properties for theming:
 ```html
 <button
   x-ripple
-  x-tooltip="Click to save"> 💾 Save </button>
+  x-tooltip="Click to save">
+  💾 Save
+</button>
 ```
 
 ### CSS Customization

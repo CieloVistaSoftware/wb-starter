@@ -35,7 +35,9 @@ Enhanced code display with copy button and language badge.
 <wb-code
   variant="block"
   language="JavaScript"
-  showCopy> function hello() { console.log("Hello World"); } </wb-code>
+  showCopy>
+  function hello() { console.log("Hello World"); }
+</wb-code>
 ```
 
 ### Native Code (Enhanced)
@@ -43,7 +45,9 @@ Enhanced code display with copy button and language badge.
 ```html
 <code
   x-code
-  language="Python"> print("Hello") </code>
+  language="Python">
+  print("Hello")
+</code>
 ```
 
 ### With Copy Button
@@ -51,7 +55,9 @@ Enhanced code display with copy button and language badge.
 ```html
 <wb-code
   variant="block"
-  showCopy> npm install wb-framework </wb-code>
+  showCopy>
+  npm install wb-framework
+</wb-code>
 ```
 
 ### Scrollable (Long Lines)
@@ -59,7 +65,9 @@ Enhanced code display with copy button and language badge.
 ```html
 <wb-code
   variant="block"
-  scrollable> const veryLongLine = "This is a very long line of code that will scroll horizontally"; </wb-code>
+  scrollable>
+  const veryLongLine = "This is a very long line of code that will scroll horizontally";
+</wb-code>
 ```
 
 ## Generated Structure

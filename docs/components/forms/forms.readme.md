@@ -32,7 +32,8 @@ Text input field with various types and validation.
 <wb-input
   label="Full Name"
   placeholder="Enter your name"
-  required></wb-input>
+  required>
+</wb-input>
 <!-- Email input with validation -->
 <wb-input
   type="email"
@@ -74,7 +75,8 @@ Multi-line text input with auto-resize capability.
 <wb-textarea
   label="Message"
   placeholder="Enter your message"
-  rows="6"></wb-textarea>
+  rows="6">
+</wb-textarea>
 <!-- Auto-sizing textarea -->
 <wb-textarea
   label="Comments"
@@ -106,15 +108,18 @@ Checkbox input with custom styling and indeterminate state support.
 <!-- Basic checkbox -->
 <wb-checkbox
   label="I agree to the terms"
-  required></wb-checkbox>
+  required>
+</wb-checkbox>
 <!-- Pre-checked checkbox -->
 <wb-checkbox
   label="Subscribe to newsletter"
-  checked></wb-checkbox>
+  checked>
+</wb-checkbox>
 <!-- Indeterminate checkbox -->
 <wb-checkbox
   label="Select all"
-  indeterminate></wb-checkbox>
+  indeterminate>
+</wb-checkbox>
 ```
 
 ---
@@ -142,7 +147,8 @@ Toggle switch component (styled checkbox alternative).
 <wb-switch
   label="Dark mode"
   size="large"
-  checked></wb-switch>
+  checked>
+</wb-switch>
 ```
 
 ---
@@ -208,7 +214,8 @@ Star rating input component.
   max="10"
   half
   value="7.5"
-  readonly></wb-rating>
+  readonly>
+</wb-rating>
 ```
 
 ---
@@ -278,11 +285,13 @@ All form components emit standard events plus WB-specific events:
 <form>
   <wb-input
     label="Name"
-    required></wb-input>
+    required>
+  </wb-input>
   <wb-input
     label="Email"
     type="email"
-    required></wb-input>
+    required>
+  </wb-input>
   <button type="submit">Submit</button>
 </form>
 ```

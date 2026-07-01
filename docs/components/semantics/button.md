@@ -46,11 +46,13 @@ Interactive button with variants, sizes, and optional icon.
 ```html
 <wb-button
   label="Save"
-  icon="💾"></wb-button>
+  icon="💾">
+</wb-button>
 <wb-button
   label="Next"
   icon="→"
-  iconPosition="end"></wb-button>
+  iconPosition="end">
+</wb-button>
 ```
 
 ### Variants
@@ -58,28 +60,36 @@ Interactive button with variants, sizes, and optional icon.
 ```html
 <wb-button
   label="Primary"
-  variant="primary"></wb-button>
+  variant="primary">
+</wb-button>
 <wb-button
   label="Secondary"
-  variant="secondary"></wb-button>
+  variant="secondary">
+</wb-button>
 <wb-button
   label="Success"
-  variant="success"></wb-button>
+  variant="success">
+</wb-button>
 <wb-button
   label="Warning"
-  variant="warning"></wb-button>
+  variant="warning">
+</wb-button>
 <wb-button
   label="Error"
-  variant="error"></wb-button>
+  variant="error">
+</wb-button>
 <wb-button
   label="Ghost"
-  variant="ghost"></wb-button>
+  variant="ghost">
+</wb-button>
 <wb-button
   label="Outline"
-  variant="outline"></wb-button>
+  variant="outline">
+</wb-button>
 <wb-button
   label="Link"
-  variant="link"></wb-button>
+  variant="link">
+</wb-button>
 ```
 
 ### Sizes
@@ -87,19 +97,24 @@ Interactive button with variants, sizes, and optional icon.
 ```html
 <wb-button
   label="XS"
-  size="xs"></wb-button>
+  size="xs">
+</wb-button>
 <wb-button
   label="SM"
-  size="sm"></wb-button>
+  size="sm">
+</wb-button>
 <wb-button
   label="MD"
-  size="md"></wb-button>
+  size="md">
+</wb-button>
 <wb-button
   label="LG"
-  size="lg"></wb-button>
+  size="lg">
+</wb-button>
 <wb-button
   label="XL"
-  size="xl"></wb-button>
+  size="xl">
+</wb-button>
 ```
 
 ### States
@@ -107,13 +122,16 @@ Interactive button with variants, sizes, and optional icon.
 ```html
 <wb-button
   label="Disabled"
-  disabled></wb-button>
+  disabled>
+</wb-button>
 <wb-button
   label="Loading..."
-  loading></wb-button>
+  loading>
+</wb-button>
 <wb-button
   label="Full Width"
-  fullWidth></wb-button>
+  fullWidth>
+</wb-button>
 ```
 
 ## Generated Structure

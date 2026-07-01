@@ -60,7 +60,9 @@ The `<figure>` element represents self-contained content with an optional captio
   <figure class="wb-card__file-preview">
     <div
       class="wb-card__file-icon"
-      aria-hidden="true">📄</div>
+      aria-hidden="true">
+      📄
+    </div>
     <figcaption class="wb-card__filename"> report.pdf <span class="wb-card__file-meta">2.4 MB • PDF</span>
     </figcaption>
   </figure>

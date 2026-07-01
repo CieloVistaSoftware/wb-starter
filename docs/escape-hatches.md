@@ -62,7 +62,9 @@ Pass options via `data-*` attributes:
 <!-- Override toast duration -->
 <button
   x-behavior="toast"
-  duration="10000"> Show for 10 seconds </button>
+  duration="10000">
+  Show for 10 seconds
+</button>
 ```
 
 ## Override Injected CSS

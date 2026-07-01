@@ -198,10 +198,12 @@ Center content both horizontally and vertically.
     <wb-form>
       <wb-input
         label="Email"
-        type="email"></wb-input>
+        type="email">
+      </wb-input>
       <wb-input
         label="Password"
-        type="password"></wb-input>
+        type="password">
+      </wb-input>
       <wb-button type="submit">Sign In</wb-button>
     </wb-form>
   </wb-card>
@@ -302,14 +304,17 @@ Semantic form grouping container.
 <wb-fieldset legend="Personal Information">
   <wb-input
     label="First Name"
-    required></wb-input>
+    required>
+  </wb-input>
   <wb-input
     label="Last Name"
-    required></wb-input>
+    required>
+  </wb-input>
   <wb-input
     label="Email"
     type="email"
-    required></wb-input>
+    required>
+  </wb-input>
 </wb-fieldset>
 <wb-fieldset
   legend="Preferences"
@@ -339,7 +344,8 @@ Horizontal or vertical divider line with optional text.
 <!-- Horizontal divider with text -->
 <wb-divider
   text="OR"
-  spacing="2rem"></wb-divider>
+  spacing="2rem">
+</wb-divider>
 <!-- Vertical divider -->
 <wb-divider direction="vertical"></wb-divider>
 ```
@@ -365,7 +371,8 @@ Flexible spacing element for layout control.
 <!-- Horizontal spacing -->
 <wb-spacer
   size="1rem"
-  direction="horizontal"></wb-spacer>
+  direction="horizontal">
+</wb-spacer>
 ```
 
 ---

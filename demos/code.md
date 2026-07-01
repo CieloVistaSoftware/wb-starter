@@ -97,5 +97,7 @@ console.log(sayHello("Developer"));
 <button
   data-variant="primary"
   data-wb="ripple tooltip"
-  data-tooltip="Click me!"> Interactive Button </button>
+  data-tooltip="Click me!">
+  Interactive Button
+</button>
 ```

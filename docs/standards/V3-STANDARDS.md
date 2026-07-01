@@ -19,7 +19,8 @@ All components use the `wb-` prefix as custom element tags:
 <wb-badge variant="success">New</wb-badge>
 <wb-cardhero
   title="Welcome"
-  xalign="center"></wb-cardhero>
+  xalign="center">
+</wb-cardhero>
 ```
 
 ### Behaviors: `x-behaviorname`
@@ -269,7 +270,9 @@ document.body.appendChild(card);
 <div
   x-card
   title="Hello"
-  variant="glass"> Content here </div>
+  variant="glass">
+  Content here
+</div>
 <button x-ripple>Click me</button>
 <div
   x-cardhero
@@ -283,7 +286,9 @@ document.body.appendChild(card);
 ```html
 <wb-card
   title="Hello"
-  variant="glass"> Content here </wb-card>
+  variant="glass">
+  Content here
+</wb-card>
 <button x-ripple>Click me</button>
 <wb-cardhero
   title="Welcome"

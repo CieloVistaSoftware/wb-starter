@@ -39,7 +39,9 @@ Inherits all [card properties](./card.md) plus:
 ```html
 <wb-cardexpandable
   title="Details"
-  expanded> All content visible by default. </wb-cardexpandable>
+  expanded>
+  All content visible by default.
+</wb-cardexpandable>
 ```
 
 ## Events

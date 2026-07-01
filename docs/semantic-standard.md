@@ -164,13 +164,17 @@
   <nav role="tablist">
     <button
       role="tab"
-      aria-selected="true">Tab 1</button>
+      aria-selected="true">
+      Tab 1
+    </button>
     <button role="tab">Tab 2</button>
   </nav>
   <section role="tabpanel">Panel 1</section>
   <section
     role="tabpanel"
-    hidden>Panel 2</section>
+    hidden>
+    Panel 2
+  </section>
 </section>
 ```
 
@@ -217,7 +221,9 @@
 <progress
   x-progressbar
   value="75"
-  max="100">75%</progress>
+  max="100">
+  75%
+</progress>
 ```
 
 ### Forms

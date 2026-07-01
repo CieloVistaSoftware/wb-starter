@@ -62,11 +62,15 @@ The preferred format uses semantic HTML elements that auto-inject behaviors:
 <!-- Button - uses native <button> element -->
 <button
   variant="primary"
-  size="lg"> Click Me </button>
+  size="lg">
+  Click Me
+</button>
 <!-- Card - uses semantic <article> element -->
 <article
   title="My Card"
-  elevated="true"> Content here </article>
+  elevated="true">
+  Content here
+</article>
 <!-- Input with multiple attributes -->
 <input
   type="text"
@@ -79,7 +83,9 @@ The preferred format uses semantic HTML elements that auto-inject behaviors:
 <a
   href="#home"
   class="nav-link"
-  active="true"> Home </a>
+  active="true">
+  Home
+</a>
 ```
 
 ---
@@ -95,14 +101,18 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 <div
   x-card
   title="My Card"
-  elevated="true"> Content here </div>
+  elevated="true">
+  Content here
+</div>
 <!-- Combining multiple behaviors -->
 <button
   x-button
   x-ripple
   x-toast
   variant="primary"
-  message="Saved!"> Save </button>
+  message="Saved!">
+  Save
+</button>
 <!-- Form element with all attributes -->
 <input
   type="checkbox"
@@ -142,7 +152,9 @@ Each code example should include an explanatory note in xs font:
 ```html
 <p
   class="code-note"
-  style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem;"> ℹ️ Auto-injects via &lt;button&gt;. Explicit: x-button </p>
+  style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem;">
+  ℹ️ Auto-injects via &lt;button&gt;. Explicit: x-button
+</p>
 ```
 
 ### Note Templates by Component Type
@@ -174,7 +186,9 @@ const codeDisplayConfig = {
 ```html
 <button
   variant="primary"
-  size="lg">Click Me</button>
+  size="lg">
+  Click Me
+</button>
 ```
 
 **Note:** Inline format should only be used when:
@@ -200,12 +214,16 @@ const codeDisplayConfig = {
   title="Card Title"
   subtitle="Subtitle"
   elevated="true"
-  clickable="true"> Content goes here </article>
+  clickable="true">
+  Content goes here
+</article>
 <!-- Even style attributes get their own line -->
 <div
   class="demo-box"
   id="main-content"
-  style="padding: 1rem; background: var(--bg-primary);"> Content </div>
+  style="padding: 1rem; background: var(--bg-primary);">
+  Content
+</div>
 <!-- Video with all attributes -->
 <video
   controls

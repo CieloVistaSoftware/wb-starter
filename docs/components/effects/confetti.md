@@ -32,7 +32,8 @@ Colorful confetti explosion effect.
 ```html
 <wb-confetti
   count="100"
-  label="Celebrate!"></wb-confetti>
+  label="Celebrate!">
+</wb-confetti>
 ```
 
 ### Data Attribute
@@ -41,7 +42,8 @@ Colorful confetti explosion effect.
 <div
   x-confetti
   count="50"
-  label="Party!"></div>
+  label="Party!">
+</div>
 ```
 
 ### Auto-Trigger (No Button)
@@ -50,7 +52,8 @@ Colorful confetti explosion effect.
 <wb-confetti
   count="75"
   showButton="false"
-  delay="1s"></wb-confetti>
+  delay="1s">
+</wb-confetti>
 ```
 
 ### Looping Animation
@@ -58,7 +61,8 @@ Colorful confetti explosion effect.
 ```html
 <wb-confetti
   count="30"
-  repeat></wb-confetti>
+  repeat>
+</wb-confetti>
 ```
 
 ## Generated Structure

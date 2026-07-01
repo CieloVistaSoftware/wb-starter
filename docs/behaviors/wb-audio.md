@@ -15,12 +15,14 @@ A premium custom audio player with a 15-band graphic equalizer, Web Audio API su
 <wb-audio
   src="music.mp3"
   show-eq
-  volume="0.8"></wb-audio>
+  volume="0.8">
+</wb-audio>
 <!-- With controls, looping, and podcast -->
 <wb-audio
   src="podcast.mp3"
   controls
-  loop></wb-audio>
+  loop>
+</wb-audio>
 ```
 
 ---
@@ -81,5 +83,6 @@ A premium custom audio player with a 15-band graphic equalizer, Web Audio API su
   loop
   volume="1"
   bass="2"
-  treble="-1"></wb-audio>
+  treble="-1">
+</wb-audio>
 ```

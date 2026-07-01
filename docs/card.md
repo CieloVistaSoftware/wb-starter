@@ -26,7 +26,8 @@ To create a card that acts as a link, use the `<card-link>` custom element:
 <card-link
   href="/page"
   title="My Page"
-  badge="NEW"></card-link>
+  badge="NEW">
+</card-link>
 ```
 
 Supported attributes:

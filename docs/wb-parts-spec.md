@@ -158,7 +158,8 @@ Automatically re-fetches data at a specified interval (in milliseconds).
 ```html
 <stock-ticker
   src="/api/stock"
-  refresh="5000"></stock-ticker>
+  refresh="5000">
+</stock-ticker>
 ```
 
 ---

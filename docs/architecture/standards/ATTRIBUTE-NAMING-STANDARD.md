@@ -104,11 +104,14 @@ WB uses three patterns for applying behaviors:
 <stats-card
   value="1,234"
   label="Users"
-  trend="up"></stats-card>
+  trend="up">
+</stats-card>
 <!-- HAS-A: Extension (verb/modifier) -->
 <button
   x-ripple
-  x-tooltip="Save changes">Save</button>
+  x-tooltip="Save changes">
+  Save
+</button>
 <!-- BECOMES: Morph -->
 <article x-as-card>Plain article becomes styled card</article>
 ```
@@ -546,7 +549,8 @@ Some ARIA attributes are set automatically by behaviors:
       <toast-el duration="5000"> <!-- 5 seconds -->
         <div
           x-animate="fade"
-          x-delay="0.3"> <!-- 0.3 seconds -->
+          x-delay="0.3">
+          <!-- 0.3 seconds -->
 ```
 
 ### Number Formatting
@@ -653,7 +657,9 @@ Components should expose CSS custom properties for theming:
 <div
   x-card
   title="Hello"
-  elevated> Content </div>
+  elevated>
+  Content
+</div>
 <div
   x-alert
   type="warning"
@@ -662,21 +668,27 @@ Components should expose CSS custom properties for theming:
 <button
   x-ripple
   x-tooltip
-  tooltip="Click me"> Save </button>
+  tooltip="Click me">
+  Save
+</button>
 ```
 
 ### After (New Standard)
 ```html
 <basic-card
   heading="Hello"
-  elevated> Content </basic-card>
+  elevated>
+  Content
+</basic-card>
 <alert-box
   variant="warning"
   message="Caution!">
 </alert-box>
 <button
   x-ripple
-  x-tooltip="Click me"> Save </button>
+  x-tooltip="Click me">
+  Save
+</button>
 ```
 
 ### Migration Checklist
@@ -781,7 +793,9 @@ name         attribute with DIFFERENT meaning?
   heading="Welcome"
   subheading="Get started"
   elevated
-  hoverable> Card content here </basic-card>
+  hoverable>
+  Card content here
+</basic-card>
 <price-card
   plan="Pro"
   price="$29"
@@ -831,14 +845,17 @@ name         attribute with DIFFERENT meaning?
 <breadcrumb-nav items="Home,Products,Shoes"></breadcrumb-nav>
 <nav-tabs
   items="Overview,Features,Pricing"
-  active="0"></nav-tabs>
+  active="0">
+</nav-tabs>
 <pagination-el
   total="100"
   per-page="10"
-  current="3"></pagination-el>
+  current="3">
+</pagination-el>
 <steps-el
   items="Cart,Shipping,Payment"
-  current="1"></steps-el>
+  current="1">
+</steps-el>
 ```
 
 ### Forms
@@ -852,15 +869,18 @@ name         attribute with DIFFERENT meaning?
 <rating-el
   value="4"
   max="5"
-  icon="⭐"></rating-el>
+  icon="⭐">
+</rating-el>
 <switch-el
   label="Enable notifications"
-  checked></switch-el>
+  checked>
+</switch-el>
 <range-slider
   min="0"
   max="100"
   value="50"
-  step="5"></range-slider>
+  step="5">
+</range-slider>
 ```
 
 ### Media
@@ -878,8 +898,7 @@ name         attribute with DIFFERENT meaning?
   images='[
   {"src": "1.jpg", "alt": "Photo 1"},
   {"src": "2.jpg", "alt": "Photo 2"}
-]'
->
+]'>
 </image-gallery>
 ```
 
@@ -906,11 +925,15 @@ name         attribute with DIFFERENT meaning?
 <!-- Ripple + Tooltip -->
 <button
   x-ripple
-  x-tooltip="Save your work">Save</button>
+  x-tooltip="Save your work">
+  Save
+</button>
 <!-- Animations -->
 <div
   x-animate="bounce"
-  x-delay="0.5">Animated</div>
+  x-delay="0.5">
+  Animated
+</div>
 <!-- Lazy loading -->
 <img
   src="large.jpg"
@@ -919,7 +942,9 @@ name         attribute with DIFFERENT meaning?
 <!-- Draggable + Resizable -->
 <div
   x-draggable
-  x-resizable>Drag and resize me</div>
+  x-resizable>
+  Drag and resize me
+</div>
 <!-- Morphing -->
 <article x-as-card>Becomes a card</article>
 <ul x-as-timeline>Becomes a timeline</ul>

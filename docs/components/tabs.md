@@ -130,13 +130,17 @@ The component automatically provides:
       role="tab"
       aria-selected="true"
       aria-controls="wb-tabs-panel-0"
-      id="wb-tabs-tab-0"> Tab 1 </button>
+      id="wb-tabs-tab-0">
+      Tab 1
+    </button>
     <button
       class="wb-tabs__tab"
       role="tab"
       aria-selected="false"
       aria-controls="wb-tabs-panel-1"
-      id="wb-tabs-tab-1"> Tab 2 </button>
+      id="wb-tabs-tab-1">
+      Tab 2
+    </button>
   </nav>
   <!-- Tab Panels -->
   <div class="wb-tabs__panels">
@@ -144,13 +148,17 @@ The component automatically provides:
       class="wb-tabs__panel wb-tabs__panel--active"
       role="tabpanel"
       aria-labelledby="wb-tabs-tab-0"
-      id="wb-tabs-panel-0"> Content for Tab 1 </section>
+      id="wb-tabs-panel-0">
+      Content for Tab 1
+    </section>
     <section
       class="wb-tabs__panel"
       role="tabpanel"
       aria-labelledby="wb-tabs-tab-1"
       id="wb-tabs-panel-1"
-      hidden> Content for Tab 2 </section>
+      hidden>
+      Content for Tab 2
+    </section>
   </div>
 </section>
 ```

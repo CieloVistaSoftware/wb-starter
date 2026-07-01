@@ -38,7 +38,8 @@ Multi-line text input with autosize and character count.
 ```html
 <wb-textarea
   label="Message"
-  placeholder="Enter your message..."></wb-textarea>
+  placeholder="Enter your message...">
+</wb-textarea>
 ```
 
 ### Native Textarea (Enhanced)
@@ -46,7 +47,8 @@ Multi-line text input with autosize and character count.
 ```html
 <textarea
   x-textarea
-  placeholder="Write something..."></textarea>
+  placeholder="Write something...">
+</textarea>
 ```
 
 ### With Label
@@ -54,7 +56,8 @@ Multi-line text input with autosize and character count.
 ```html
 <wb-textarea
   label="Description"
-  placeholder="Enter description..."></wb-textarea>
+  placeholder="Enter description...">
+</wb-textarea>
 ```
 
 ### Character Count
@@ -83,10 +86,12 @@ Multi-line text input with autosize and character count.
 ```html
 <wb-textarea
   label="Notes"
-  rows="5"></wb-textarea>
+  rows="5">
+</wb-textarea>
 <wb-textarea
   label="Content"
-  rows="10"></wb-textarea>
+  rows="10">
+</wb-textarea>
 ```
 
 ### Resize Options
@@ -94,13 +99,16 @@ Multi-line text input with autosize and character count.
 ```html
 <wb-textarea
   label="No resize"
-  resize="none"></wb-textarea>
+  resize="none">
+</wb-textarea>
 <wb-textarea
   label="Vertical only"
-  resize="vertical"></wb-textarea>
+  resize="vertical">
+</wb-textarea>
 <wb-textarea
   label="Both directions"
-  resize="both"></wb-textarea>
+  resize="both">
+</wb-textarea>
 ```
 
 ### Validation States
@@ -108,10 +116,12 @@ Multi-line text input with autosize and character count.
 ```html
 <wb-textarea
   label="Valid"
-  variant="success"></wb-textarea>
+  variant="success">
+</wb-textarea>
 <wb-textarea
   label="Error"
-  variant="error"></wb-textarea>
+  variant="error">
+</wb-textarea>
 ```
 
 ### Disabled/Readonly
@@ -119,11 +129,13 @@ Multi-line text input with autosize and character count.
 ```html
 <wb-textarea
   label="Disabled"
-  disabled></wb-textarea>
+  disabled>
+</wb-textarea>
 <wb-textarea
   label="Readonly"
   readonly
-  value="Can't edit this"></wb-textarea>
+  value="Can't edit this">
+</wb-textarea>
 ```
 
 ## Generated Structure
@@ -133,7 +145,8 @@ Multi-line text input with autosize and character count.
   <label class="wb-textarea__label">Label</label>
   <textarea
     class="wb-textarea__field"
-    rows="3"></textarea>
+    rows="3">
+  </textarea>
   <span class="wb-textarea__counter">0 / 200</span>
 </div>
 ```

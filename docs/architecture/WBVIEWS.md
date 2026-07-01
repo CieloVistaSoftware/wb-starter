@@ -66,7 +66,8 @@ Users provide simple attribute values. The template defines how those values bec
 <wb-hero
   title="Explore"
   subtitle="Your journey"
-  cta="Launch"></wb-hero>
+  cta="Launch">
+</wb-hero>
 <!-- ❌ UGLY: User must know internal slots -->
 <wb-hero>
   <h1 slot="title">Explore</h1>
@@ -138,7 +139,8 @@ Since the view name "card" is a single word, the system automatically adds the `
 <!-- You can now use this tag anywhere in your app -->
 <wb-card
   name="Alice"
-  avatar="alice.jpg"></wb-card>
+  avatar="alice.jpg">
+</wb-card>
 ```
 
 **Key Insight:** You don't write a JavaScript class for `UserCard`. You just write HTML. The `wb-views` system handles the Custom Element registration, attribute observation, and rendering lifecycle for you.
@@ -193,13 +195,16 @@ Define the structure once, use it everywhere:
 <!-- Use anywhere with different data -->
 <component-tile
   icon="📝"
-  label="Card"></component-tile>
+  label="Card">
+</component-tile>
 <component-tile
   icon="⚡"
-  label="Hero"></component-tile>
+  label="Hero">
+</component-tile>
 <component-tile
   icon="📦"
-  label="Section"></component-tile>
+  label="Section">
+</component-tile>
 ```
 
 **Change the template once → ALL instances update automatically.**
@@ -235,7 +240,9 @@ Add this to your HTML file or a shared templates file:
     <span class="tile__label">{{label}}</span>
     <span
       class="tile__badge"
-      wb-if="badge">{{badge}}</span>
+      wb-if="badge">
+      {{badge}}
+    </span>
   </div>
 </template>
 <style>
@@ -286,47 +293,59 @@ Add this to your HTML file or a shared templates file:
 <div class="sidebar-components">
   <component-tile
     icon="📝"
-    label="Card"></component-tile>
+    label="Card">
+  </component-tile>
   <component-tile
     icon="⚡"
-    label="Hero"></component-tile>
+    label="Hero">
+  </component-tile>
   <component-tile
     icon="📦"
-    label="Section"></component-tile>
+    label="Section">
+  </component-tile>
   <component-tile
     icon="🔲"
-    label="Grid"></component-tile>
+    label="Grid">
+  </component-tile>
 </div>
 <!-- palette.html -->
 <div class="component-palette">
   <component-tile
     icon="🖼️"
-    label="Image"></component-tile>
+    label="Image">
+  </component-tile>
   <component-tile
     icon="📊"
     label="Stats"
-    badge="New"></component-tile>
+    badge="New">
+  </component-tile>
   <component-tile
     icon="🔘"
-    label="Button"></component-tile>
+    label="Button">
+  </component-tile>
   <component-tile
     icon="🎯"
-    label="Alert"></component-tile>
+    label="Alert">
+  </component-tile>
 </div>
 <!-- toolbar.html -->
 <div class="quick-add-toolbar">
   <component-tile
     icon="📋"
-    label="Form"></component-tile>
+    label="Form">
+  </component-tile>
   <component-tile
     icon="📑"
-    label="Tabs"></component-tile>
+    label="Tabs">
+  </component-tile>
   <component-tile
     icon="📂"
-    label="Accordion"></component-tile>
+    label="Accordion">
+  </component-tile>
   <component-tile
     icon="🪟"
-    label="Modal"></component-tile>
+    label="Modal">
+  </component-tile>
 </div>
 ```
 
@@ -388,16 +407,20 @@ Want to add a drag handle to ALL tiles? Edit the template ONCE:
     <div class="grid">
       <component-tile
         icon="📝"
-        label="Card"></component-tile>
+        label="Card">
+      </component-tile>
       <component-tile
         icon="⚡"
-        label="Hero"></component-tile>
+        label="Hero">
+      </component-tile>
       <component-tile
         icon="📦"
-        label="Section"></component-tile>
+        label="Section">
+      </component-tile>
       <component-tile
         icon="🔲"
-        label="Grid"></component-tile>
+        label="Grid">
+      </component-tile>
     </div>
     <script type="module">
       import {
@@ -475,17 +498,21 @@ const toolbarTiles = tools.map(t => `
     <span class="tile__label">{{label}}</span>
     <span
       class="tile__badge"
-      wb-if="badge">{{badge}}</span>
+      wb-if="badge">
+      {{badge}}
+    </span>
   </div>
 </template>
 <!-- Use ANYWHERE -->
 <component-tile
   icon="📝"
-  label="Card"></component-tile>
+  label="Card">
+</component-tile>
 <component-tile
   icon="⚡"
   label="Hero"
-  badge="New"></component-tile>
+  badge="New">
+</component-tile>
 ```
 
 **Want to add `x-ripple`?** Add it to the template. Done. All tiles have it.
@@ -567,8 +594,9 @@ await initViews({
 ```html
 <wb-view
   {view-name}
-  {attributes}
->{body-content}</wb-view>
+  {attributes}>
+  {body-content}
+</wb-view>
 ```
 
 | Component | Required | Description |
@@ -593,7 +621,9 @@ await initViews({
 <!-- wb-view syntax -->
 <wb-view
   btn
-  variant="primary">Save</wb-view>
+  variant="primary">
+  Save
+</wb-view>
 <!-- OR: Direct custom tag -->
 <wb-btn variant="primary">Save</wb-btn>
 <!-- Both render identical output! -->
@@ -622,18 +652,22 @@ Custom elements require a hyphen in the tag name (Web Components spec). wb-views
 <wb-btn variant="primary">Save</wb-btn>
 <wb-avatar
   initials="JD"
-  size="md"></wb-avatar>
+  size="md">
+</wb-avatar>
 <wb-icon name="star"></wb-icon>
 <!-- Descriptive names stay as-is -->
 <card-tile
   icon="📝"
-  label="Card"></card-tile>
+  label="Card">
+</card-tile>
 <alert-box
   variant="error"
-  message="Oops!"></alert-box>
+  message="Oops!">
+</alert-box>
 <stat-tile
   value="1,234"
-  label="Users"></stat-tile>
+  label="Users">
+</stat-tile>
 ```
 
 **Which syntax to use?**
@@ -742,18 +776,23 @@ registerView('product-badge', `
   <div class="notification">
     <span
       class="icon"
-      wb-if="icon">{{icon}}</span>
+      wb-if="icon">
+      {{icon}}
+    </span>
     <p class="message">{{message}}</p>
     <button
       class="dismiss"
-      wb-if="dismissible">✕</button>
+      wb-if="dismissible">
+      ✕
+    </button>
   </div>
 </template>
 <!-- Usage WITH icon -->
 <notification-card
   icon="⚠️"
   message="Warning!"
-  dismissible></notification-card>
+  dismissible>
+</notification-card>
 <!-- Usage WITHOUT icon -->
 <notification-card message="Update complete"></notification-card>
 ```
@@ -774,17 +813,21 @@ registerView('product-badge', `
     <!-- Show initials UNLESS src exists (Fallback) -->
     <span
       class="initials"
-      wb-unless="src">{{initials}}</span>
+      wb-unless="src">
+      {{initials}}
+    </span>
   </div>
 </template>
 <!-- Usage: Has image -> Shows <img> -->
 <avatar-display
   src="pic.jpg"
-  name="Alice"></avatar-display>
+  name="Alice">
+</avatar-display>
 <!-- Usage: No image -> Shows <span> (Initials) -->
 <avatar-display
   initials="AB"
-  name="Alice"></avatar-display>
+  name="Alice">
+</avatar-display>
 ```
 
 ### Loops: `wb-for`
@@ -797,7 +840,9 @@ Repeats an element for each item in an array. The syntax is `item in collection`
   <ul class="tags">
     <li
       class="tag"
-      wb-for="tag in tags">{{tag}}</li>
+      wb-for="tag in tags">
+      {{tag}}
+    </li>
   </ul>
 </template>
 <!-- Usage -->
@@ -870,7 +915,8 @@ The `{{body}}` placeholder is for **arbitrary/rich content only**. If content ca
 ```html
 <card-tile
   icon="📝"
-  label="Card"></card-tile>
+  label="Card">
+</card-tile>
 ```
 
 ### Boolean Attributes
@@ -879,7 +925,8 @@ The `{{body}}` placeholder is for **arbitrary/rich content only**. If content ca
 <!-- 'featured' is true (present) -->
 <product-card
   name="Widget"
-  featured></product-card>
+  featured>
+</product-card>
 <!-- 'featured' is false (absent) -->
 <product-card name="Gadget"></product-card>
 ```
@@ -921,11 +968,13 @@ If source returns array, multiple instances render:
 <!-- Re-fetch every 5 seconds -->
 <live-stats
   src="/api/stats"
-  refresh="5000"></live-stats>
+  refresh="5000">
+</live-stats>
 <!-- Re-fetch every minute -->
 <server-status
   src="/api/health"
-  refresh="60000"></server-status>
+  refresh="60000">
+</server-status>
 ```
 
 ---
@@ -951,7 +1000,8 @@ Templates can include behavior attributes. After rendering, `WB.scan()` applies 
 <action-button
   label="Save"
   tooltip="Save changes"
-  icon="💾"></action-button>
+  icon="💾">
+</action-button>
 <!-- After WB.scan(): ripple and tooltip are active! -->
 ```
 
@@ -1044,7 +1094,8 @@ Draggable component tile for palettes/sidebars.
   icon="📝"
   label="Card"
   behavior="card"
-  tag="basic-card"></wb-view>
+  tag="basic-card">
+</wb-view>
 ```
 
 ### alert-box
@@ -1057,20 +1108,24 @@ Alert message with variants.
   icon="✅"
   heading="Success!"
   message="Changes saved."
-  dismissible></wb-view>
+  dismissible>
+</wb-view>
 <wb-view
   alert-box
   variant="error"
-  message="Something went wrong."></wb-view>
+  message="Something went wrong.">
+</wb-view>
 <wb-view
   alert-box
   variant="warning"
   icon="⚠️"
-  message="Cannot be undone."></wb-view>
+  message="Cannot be undone.">
+</wb-view>
 <wb-view
   alert-box
   variant="info"
-  message="Press Ctrl+S to save."></wb-view>
+  message="Press Ctrl+S to save.">
+</wb-view>
 ```
 
 ### stat-tile
@@ -1083,14 +1138,16 @@ Statistics display with trend.
   value="1,234"
   label="Active Users"
   trend="up"
-  trend-value="+12%"></wb-view>
+  trend-value="+12%">
+</wb-view>
 <wb-view
   stat-tile
   icon="💰"
   value="$52,000"
   label="Revenue"
   trend="down"
-  trend-value="-3%"></wb-view>
+  trend-value="-3%">
+</wb-view>
 ```
 
 ### nav-link
@@ -1102,13 +1159,15 @@ Navigation link with optional badge.
   href="/dashboard"
   label="Dashboard"
   icon="🏠"
-  active></wb-view>
+  active>
+</wb-view>
 <wb-view
   nav-link
   href="/messages"
   label="Messages"
   icon="💬"
-  badge="5"></wb-view>
+  badge="5">
+</wb-view>
 ```
 
 ### user-avatar
@@ -1120,12 +1179,14 @@ Avatar with status indicator.
   src="/images/alice.jpg"
   name="Alice"
   size="lg"
-  status="online"></wb-view>
+  status="online">
+</wb-view>
 <wb-view
   user-avatar
   name="Bob"
   initials="BS"
-  status="busy"></wb-view>
+  status="busy">
+</wb-view>
 ```
 
 ### price-tag
@@ -1135,12 +1196,14 @@ Price display with optional original.
 <wb-view
   price-tag
   price="$29"
-  period="/mo"></wb-view>
+  period="/mo">
+</wb-view>
 <wb-view
   price-tag
   price="$19"
   original="$29"
-  period="/mo"></wb-view>
+  period="/mo">
+</wb-view>
 ```
 
 ### feature-item
@@ -1151,14 +1214,17 @@ Feature list item.
   <wb-view
     feature-item
     text="Unlimited projects"
-    included></wb-view>
+    included>
+  </wb-view>
   <wb-view
     feature-item
     text="Priority support"
-    included></wb-view>
+    included>
+  </wb-view>
   <wb-view
     feature-item
-    text="Custom integrations"></wb-view>
+    text="Custom integrations">
+  </wb-view>
 </ul>
 ```
 
@@ -1170,16 +1236,19 @@ Styled button.
   button-primary
   label="Save"
   variant="primary"
-  icon="💾"></wb-view>
+  icon="💾">
+</wb-view>
 <wb-view
   button-primary
   label="Cancel"
-  variant="secondary"></wb-view>
+  variant="secondary">
+</wb-view>
 <wb-view
   button-primary
   label="Delete"
   variant="error"
-  icon="🗑️"></wb-view>
+  icon="🗑️">
+</wb-view>
 ```
 
 ### icon-button
@@ -1190,11 +1259,13 @@ Icon-only button.
   icon-button
   icon="⚙️"
   tooltip="Settings"
-  variant="ghost"></wb-view>
+  variant="ghost">
+</wb-view>
 <wb-view
   icon-button
   icon="🔔"
-  tooltip="Notifications"></wb-view>
+  tooltip="Notifications">
+</wb-view>
 ```
 
 ### badge
@@ -1204,15 +1275,18 @@ Small label/tag.
 <wb-view
   badge
   label="New"
-  variant="primary"></wb-view>
+  variant="primary">
+</wb-view>
 <wb-view
   badge
   label="Sale"
-  variant="error"></wb-view>
+  variant="error">
+</wb-view>
 <wb-view
   badge
   label="Beta"
-  variant="warning"></wb-view>
+  variant="warning">
+</wb-view>
 ```
 
 ### empty-state
@@ -1223,7 +1297,8 @@ Placeholder for empty content.
   empty-state
   icon="📭"
   heading="No messages"
-  message="Messages will appear here."></wb-view>
+  message="Messages will appear here.">
+</wb-view>
 ```
 
 ### loading-skeleton
@@ -1233,15 +1308,18 @@ Loading placeholder.
 <wb-view
   loading-skeleton
   variant="heading"
-  width="60%"></wb-view>
+  width="60%">
+</wb-view>
 <wb-view
   loading-skeleton
-  variant="text"></wb-view>
+  variant="text">
+</wb-view>
 <wb-view
   loading-skeleton
   variant="avatar"
   width="48px"
-  height="48px"></wb-view>
+  height="48px">
+</wb-view>
 ```
 
 ---
@@ -1291,7 +1369,8 @@ Then restart VS Code.
     <h3>{{plan}}</h3>
     <price-tag
       price="{{price}}"
-      period="{{period}}"></price-tag>
+      period="{{period}}">
+    </price-tag>
     <ul>{{features}}</ul>
     <button-primary label="{{cta || 'Get Started'}}"></button-primary>
   </article>
@@ -1325,15 +1404,18 @@ WB.scan(container);
     src="/api/stats/users"
     refresh="5000"
     icon="👥"
-    label="Active Users"></stat-tile>
+    label="Active Users">
+  </stat-tile>
   <stat-tile
     src="/api/stats/requests"
     refresh="1000"
     icon="📊"
-    label="Requests/sec"></stat-tile>
+    label="Requests/sec">
+  </stat-tile>
   <alert-box
     src="/api/alerts/latest"
-    refresh="10000"></alert-box>
+    refresh="10000">
+  </alert-box>
 </div>
 ```
 
@@ -1474,7 +1556,9 @@ Let's build a simple **user card** component in each approach:
     <p>{{role}}</p>
     <span
       class="badge"
-      wb-if="verified">✓ Verified</span>
+      wb-if="verified">
+      ✓ Verified
+    </span>
   </div>
 </template>
 <!-- Use: Auto-registered custom element -->
@@ -1482,7 +1566,8 @@ Let's build a simple **user card** component in each approach:
   name="Alice"
   avatar="alice.jpg"
   role="Developer"
-  verified></user-card>
+  verified>
+</user-card>
 ```
 
 **Pros:** Zero build, pure HTML, browser-native, auto custom element registration  
@@ -1530,7 +1615,8 @@ https://enhance.dev
   name="Alice"
   avatar="alice.jpg"
   role="Developer"
-  verified></user-card>
+  verified>
+</user-card>
 ```
 
 **Pros:** SSR, progressive enhancement, scoped styles  
@@ -1552,7 +1638,9 @@ https://www.11ty.dev/docs/languages/webc/
   <p @text="role"></p>
   <span
     class="badge"
-    webc:if="verified">✓ Verified</span>
+    webc:if="verified">
+    ✓ Verified
+  </span>
 </div>
 <style webc:scoped>
   .card {
@@ -1568,7 +1656,8 @@ https://www.11ty.dev/docs/languages/webc/
   name="Alice"
   avatar="alice.jpg"
   role="Developer"
-  verified></user-card>
+  verified>
+</user-card>
 ```
 
 **Pros:** Build-time optimization, scoped CSS, 11ty integration  
@@ -1591,7 +1680,9 @@ https://riot.js.org
     <p>{ props.role }</p>
     <span
       class="badge"
-      if="{ props.verified }">✓ Verified</span>
+      if="{ props.verified }">
+      ✓ Verified
+    </span>
   </div>
   <style>
     .card {
@@ -1661,7 +1752,8 @@ customElements.define('user-card', UserCard);
   name="Alice"
   avatar="alice.jpg"
   role="Developer"
-  verified></user-card>
+  verified>
+</user-card>
 ```
 
 **Pros:** Reactive, Shadow DOM, Google-backed, well-documented  
@@ -1758,7 +1850,9 @@ defineProps(['name', 'avatar', 'role', 'verified'])
     <p x-text="role"></p>
     <span
       class="badge"
-      x-show="verified">✓ Verified</span>
+      x-show="verified">
+      ✓ Verified
+    </span>
   </div>
 </template>
 <!-- Usage: Requires cloning + manual data binding -->

@@ -48,7 +48,8 @@ Toggle switch for boolean settings.
 ```html
 <wb-switch
   label="Enable notifications"
-  checked></wb-switch>
+  checked>
+</wb-switch>
 ```
 
 ### Label Position
@@ -56,10 +57,12 @@ Toggle switch for boolean settings.
 ```html
 <wb-switch
   label="Left label"
-  labelPosition="start"></wb-switch>
+  labelPosition="start">
+</wb-switch>
 <wb-switch
   label="Right label"
-  labelPosition="end"></wb-switch>
+  labelPosition="end">
+</wb-switch>
 ```
 
 ### Sizes
@@ -67,13 +70,16 @@ Toggle switch for boolean settings.
 ```html
 <wb-switch
   label="Small"
-  size="sm"></wb-switch>
+  size="sm">
+</wb-switch>
 <wb-switch
   label="Medium"
-  size="md"></wb-switch>
+  size="md">
+</wb-switch>
 <wb-switch
   label="Large"
-  size="lg"></wb-switch>
+  size="lg">
+</wb-switch>
 ```
 
 ### Variants
@@ -81,13 +87,16 @@ Toggle switch for boolean settings.
 ```html
 <wb-switch
   label="Default"
-  variant="default"></wb-switch>
+  variant="default">
+</wb-switch>
 <wb-switch
   label="Primary"
-  variant="primary"></wb-switch>
+  variant="primary">
+</wb-switch>
 <wb-switch
   label="Success"
-  variant="success"></wb-switch>
+  variant="success">
+</wb-switch>
 ```
 
 ### Disabled
@@ -95,7 +104,8 @@ Toggle switch for boolean settings.
 ```html
 <wb-switch
   label="Unavailable"
-  disabled></wb-switch>
+  disabled>
+</wb-switch>
 ```
 
 ### In Forms

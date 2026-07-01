@@ -33,7 +33,9 @@ Inherits all [card properties](./card.md) plus:
 ```html
 <wb-cardminimizable
   title="Collapsed Widget"
-  minimized> This content is hidden initially. </wb-cardminimizable>
+  minimized>
+  This content is hidden initially.
+</wb-cardminimizable>
 ```
 
 ## Events

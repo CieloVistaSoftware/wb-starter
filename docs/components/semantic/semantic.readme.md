@@ -68,7 +68,9 @@ Tangentially related content and supplementary information using the `<aside>` e
 <wb-aside role="alert">
   <wb-alert
     type="info"
-    title="Important Notice"> This information is supplementary to the main content. </wb-alert>
+    title="Important Notice">
+    This information is supplementary to the main content.
+  </wb-alert>
 </wb-aside>
 ```
 
@@ -223,7 +225,9 @@ Machine-readable date/time using the `<time>` element.
 <!-- Relative time -->
 <wb-time
   datetime="2024-12-10T08:00:00Z"
-  title="December 10, 2024"> 5 days ago </wb-time>
+  title="December 10, 2024">
+  5 days ago
+</wb-time>
 ```
 
 ### Best Practices
@@ -280,12 +284,16 @@ Task completion indicator using the native `<progress>` element.
 <wb-progress
   value="70"
   max="100"
-  label="Uploading file..."> 70% complete </wb-progress>
+  label="Uploading file...">
+  70% complete
+</wb-progress>
 <!-- Task completion -->
 <wb-progress
   value="3"
   max="5"
-  label="Setup progress"> Step 3 of 5 </wb-progress>
+  label="Setup progress">
+  Step 3 of 5
+</wb-progress>
 <!-- Indeterminate progress -->
 <wb-progress label="Loading..."> Please wait... </wb-progress>
 ```
@@ -312,7 +320,9 @@ Interactive dialog box/modal using the `<dialog>` element.
     <h2 id="dialog-title">Confirm Action</h2>
     <wb-button
       variant="ghost"
-      onclick="this.closest('wb-dialog').close()"> ✕ </wb-button>
+      onclick="this.closest('wb-dialog').close()">
+      ✕
+    </wb-button>
   </wb-dialog-header>
   <wb-dialog-body>
     <p>Are you sure you want to delete this item?</p>
@@ -320,10 +330,14 @@ Interactive dialog box/modal using the `<dialog>` element.
   <wb-dialog-footer>
     <wb-button
       variant="outline"
-      onclick="this.closest('wb-dialog').close()"> Cancel </wb-button>
+      onclick="this.closest('wb-dialog').close()">
+      Cancel
+    </wb-button>
     <wb-button
       variant="primary"
-      onclick="confirmDelete()"> Delete </wb-button>
+      onclick="confirmDelete()">
+      Delete
+    </wb-button>
   </wb-dialog-footer>
 </wb-dialog>
 ```

@@ -44,7 +44,9 @@ A structural sidebar container that pushes content or sits alongside it.
 <div
   x-drawerLayout
   position="left"
-  width="300px"> Drawer content... </div>
+  width="300px">
+  Drawer content...
+</div>
 ```
 
 ---
@@ -77,7 +79,9 @@ A modal panel that slides in over page content.
 <button
   x-drawer
   title="Settings"
-  content="<p>Settings content...</p>"> Open Settings </button>
+  content="<p>Settings content...</p>">
+  Open Settings
+</button>
 ```
 
 ### JavaScript API

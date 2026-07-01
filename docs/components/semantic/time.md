@@ -31,7 +31,9 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
   date="Dec 15, 2024">
   <time
     datetime="2024-12-15"
-    class="wb-card__file-date"> Dec 15, 2024 </time>
+    class="wb-card__file-date">
+    Dec 15, 2024
+  </time>
 </article>
 ```
 
@@ -41,7 +43,9 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 <aside x-cardnotification>
   <time
     datetime="2024-12-15T14:30:00Z"
-    class="wb-card__notif-time"> 2 hours ago </time>
+    class="wb-card__notif-time">
+    2 hours ago
+  </time>
 </aside>
 ```
 
@@ -52,7 +56,9 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
   <article class="wb-timeline__item">
     <time
       datetime="2024-01"
-      class="wb-timeline__date"> January 2024 </time>
+      class="wb-timeline__date">
+      January 2024
+    </time>
     <div class="wb-timeline__content">
       <h4>Project Started</h4>
     </div>
@@ -66,7 +72,9 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 <time
   x-relativetime
   datetime="2024-12-15T10:30:00Z"
-  format="auto"> 3 hours ago </time>
+  format="auto">
+  3 hours ago
+</time>
 ```
 
 ## Accessibility Considerations
@@ -87,10 +95,14 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
       <span>By John Doe</span>
       <time
         datetime="2024-12-15T09:00:00Z"
-        class="post-date"> December 15, 2024 </time>
+        class="post-date">
+        December 15, 2024
+      </time>
       <time
         datetime="PT8M"
-        class="post-reading-time"> 8 min read </time>
+        class="post-reading-time">
+        8 min read
+      </time>
     </div>
   </header>
   <footer>

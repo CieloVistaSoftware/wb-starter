@@ -31,7 +31,8 @@ Falling snow animation effect.
 ```html
 <wb-snow
   count="100"
-  label="Snow!"></wb-snow>
+  label="Snow!">
+</wb-snow>
 ```
 
 ### Data Attribute
@@ -39,7 +40,8 @@ Falling snow animation effect.
 ```html
 <div
   x-snow
-  count="50"></div>
+  count="50">
+</div>
 ```
 
 ### Background Snow (Auto-Start)
@@ -48,7 +50,8 @@ Falling snow animation effect.
 <wb-snow
   count="100"
   showButton="false"
-  repeat></wb-snow>
+  repeat>
+</wb-snow>
 ```
 
 ### Single Pass (No Loop)
@@ -56,7 +59,8 @@ Falling snow animation effect.
 ```html
 <wb-snow
   count="50"
-  repeat="false"></wb-snow>
+  repeat="false">
+</wb-snow>
 ```
 
 ## Generated Structure

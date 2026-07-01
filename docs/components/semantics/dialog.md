@@ -44,7 +44,9 @@ Modal dialog using native HTML5 dialog element.
 <button
   x-dialog
   title="Confirm"
-  content="Are you sure?"> Open Confirmation </button>
+  content="Are you sure?">
+  Open Confirmation
+</button>
 ```
 
 ### Sizes
@@ -52,16 +54,24 @@ Modal dialog using native HTML5 dialog element.
 ```html
 <wb-dialog
   title="Small"
-  size="sm">Small dialog</wb-dialog>
+  size="sm">
+  Small dialog
+</wb-dialog>
 <wb-dialog
   title="Medium"
-  size="md">Medium dialog</wb-dialog>
+  size="md">
+  Medium dialog
+</wb-dialog>
 <wb-dialog
   title="Large"
-  size="lg">Large dialog</wb-dialog>
+  size="lg">
+  Large dialog
+</wb-dialog>
 <wb-dialog
   title="Full"
-  size="full">Full dialog</wb-dialog>
+  size="full">
+  Full dialog
+</wb-dialog>
 ```
 
 ### Centered Variant
@@ -69,7 +79,9 @@ Modal dialog using native HTML5 dialog element.
 ```html
 <wb-dialog
   title="Centered"
-  variant="centered"> This dialog is vertically centered. </wb-dialog>
+  variant="centered">
+  This dialog is vertically centered.
+</wb-dialog>
 ```
 
 ### Without Close Button
@@ -77,7 +89,9 @@ Modal dialog using native HTML5 dialog element.
 ```html
 <wb-dialog
   title="Required Action"
-  showClose="false"> You must complete this action. </wb-dialog>
+  showClose="false">
+  You must complete this action.
+</wb-dialog>
 ```
 
 ## Generated Structure

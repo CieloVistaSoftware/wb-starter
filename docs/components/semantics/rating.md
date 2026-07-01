@@ -38,7 +38,8 @@ Star rating component for displaying or collecting ratings.
 ```html
 <div
   x-rating
-  value="4"></div>
+  value="4">
+</div>
 ```
 
 ### Read-Only Display
@@ -47,7 +48,8 @@ Star rating component for displaying or collecting ratings.
 <wb-rating
   value="4.5"
   half
-  readonly></wb-rating>
+  readonly>
+</wb-rating>
 ```
 
 ### Interactive Input
@@ -55,7 +57,8 @@ Star rating component for displaying or collecting ratings.
 ```html
 <wb-rating
   value="0"
-  max="5"></wb-rating>
+  max="5">
+</wb-rating>
 ```
 
 ### Half Stars
@@ -63,7 +66,8 @@ Star rating component for displaying or collecting ratings.
 ```html
 <wb-rating
   value="3.5"
-  half></wb-rating>
+  half>
+</wb-rating>
 ```
 
 ### Custom Max
@@ -71,7 +75,8 @@ Star rating component for displaying or collecting ratings.
 ```html
 <wb-rating
   value="7"
-  max="10"></wb-rating>
+  max="10">
+</wb-rating>
 ```
 
 ### Sizes
@@ -79,13 +84,16 @@ Star rating component for displaying or collecting ratings.
 ```html
 <wb-rating
   value="3"
-  size="sm"></wb-rating>
+  size="sm">
+</wb-rating>
 <wb-rating
   value="3"
-  size="md"></wb-rating>
+  size="md">
+</wb-rating>
 <wb-rating
   value="3"
-  size="lg"></wb-rating>
+  size="lg">
+</wb-rating>
 ```
 
 ### Custom Icons
@@ -93,13 +101,16 @@ Star rating component for displaying or collecting ratings.
 ```html
 <wb-rating
   value="3"
-  icon="❤️"></wb-rating>
+  icon="❤️">
+</wb-rating>
 <wb-rating
   value="4"
-  icon="👍"></wb-rating>
+  icon="👍">
+</wb-rating>
 <wb-rating
   value="2"
-  icon="🔥"></wb-rating>
+  icon="🔥">
+</wb-rating>
 ```
 
 ### Disabled
@@ -107,7 +118,8 @@ Star rating component for displaying or collecting ratings.
 ```html
 <wb-rating
   value="4"
-  disabled></wb-rating>
+  disabled>
+</wb-rating>
 ```
 
 ## Generated Structure

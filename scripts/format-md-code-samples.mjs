@@ -22,20 +22,45 @@ const htmlBeautify = beautify.html;
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 function fmt(code) {
-  let out = htmlBeautify(code, {
+  const beautified = htmlBeautify(code, {
     indent_size: 2,
     wrap_attributes: 'force-expand-multiline', // every attribute on its own line
-    inline: [],                                // treat nothing as inline (comments/tags each own line)
+    inline: [],                                // treat nothing as inline
     preserve_newlines: false,
     indent_inner_html: true,
     end_with_newline: false,
     eol: '\n',
   });
-  // Pull the tag-closing '>' back onto the last attribute line, per the spec.
-  // (\r? guards against CRLF files.)
-  out = out.replace(/"\r?\n\s*>/g, '">');        // attr="v"\n  >  ->  attr="v">
-  out = out.replace(/([\w-])\r?\n\s*>/g, '$1>');  // boolean-attr\n  >  ->  attr>
-  return out.replace(/\s+$/, '');
+  return reflow(beautified).replace(/\s+$/, '');
+}
+
+// force-expand-multiline emits the tag-closing '>' on its OWN line (aligned with
+// '<tag'), sometimes followed by content and/or the closing tag on that same line
+// (`></tag>`, `>New</tag>`). The spec wants the '>' on the last attribute line, and
+// content + closing tag each on their own line. Reflow the '>' lines accordingly.
+function reflow(beautified) {
+  const lines = beautified.split('\n');
+  const out = [];
+  for (const line of lines) {
+    const m = line.match(/^(\s*)>(.*)$/);
+    if (m && out.length) {
+      const indent = m[1];
+      const rest = m[2];
+      out[out.length - 1] += '>'; // attach '>' to the last attribute line
+      const close = rest.match(/^(.*?)(<\/[A-Za-z][\w-]*>)\s*$/);
+      if (close) {
+        const content = close[1].trim();
+        if (content) out.push(indent + '  ' + content); // content on its own indented line
+        out.push(indent + close[2]);                    // closing tag on its own line
+      } else if (rest.trim()) {
+        out.push(indent + '  ' + rest.trim());
+      }
+      // rest empty → block children already follow on their own lines
+      continue;
+    }
+    out.push(line);
+  }
+  return out.join('\n');
 }
 
 const SKIP = new Set(['node_modules', '.git', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out']);

@@ -49,7 +49,8 @@ Checkbox input with label and custom styling.
 ```html
 <wb-checkbox
   label="Remember me"
-  checked></wb-checkbox>
+  checked>
+</wb-checkbox>
 ```
 
 ### Indeterminate State
@@ -57,7 +58,8 @@ Checkbox input with label and custom styling.
 ```html
 <wb-checkbox
   label="Select All"
-  indeterminate></wb-checkbox>
+  indeterminate>
+</wb-checkbox>
 ```
 
 ### Disabled
@@ -65,7 +67,8 @@ Checkbox input with label and custom styling.
 ```html
 <wb-checkbox
   label="Unavailable option"
-  disabled></wb-checkbox>
+  disabled>
+</wb-checkbox>
 ```
 
 ### Sizes
@@ -73,13 +76,16 @@ Checkbox input with label and custom styling.
 ```html
 <wb-checkbox
   label="Small"
-  size="sm"></wb-checkbox>
+  size="sm">
+</wb-checkbox>
 <wb-checkbox
   label="Medium"
-  size="md"></wb-checkbox>
+  size="md">
+</wb-checkbox>
 <wb-checkbox
   label="Large"
-  size="lg"></wb-checkbox>
+  size="lg">
+</wb-checkbox>
 ```
 
 ### In Forms

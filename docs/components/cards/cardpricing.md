@@ -87,7 +87,9 @@ Inherits all [card properties](./card.md) plus:
   <footer class="wb-card__footer">
     <a
       class="wb-card__cta"
-      href="#">Get Started</a>
+      href="#">
+      Get Started
+    </a>
   </footer>
 </article>
 ```

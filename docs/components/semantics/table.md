@@ -89,8 +89,7 @@ Interactive data table with sorting and search.
 ```html
 <wb-table
   headers="ID,Name,Role"
-  rows='[[1,"John","Admin"],[2,"Jane","User"],[3,"Bob","Editor"]]'
->
+  rows='[[1,"John","Admin"],[2,"Jane","User"],[3,"Bob","Editor"]]'>
 </wb-table>
 ```
 
@@ -107,7 +106,9 @@ Interactive data table with sorting and search.
 <wb-table
   striped
   bordered
-  hover>...</wb-table>
+  hover>
+  ...
+</wb-table>
 ```
 
 ## Generated Structure
@@ -125,7 +126,9 @@ Interactive data table with sorting and search.
       <tr>
         <th
           class="wb-table__header"
-          sort="asc"> Name <span class="wb-table__sort-icon">▲</span>
+          sort="asc">
+          Name <span class="wb-table__sort-icon">▲
+        </span>
         </th>
       </tr>
     </thead>

@@ -32,7 +32,9 @@ Inherits all [card properties](./card.md) plus:
   title="Action Card"
   subtitle="Choose an action"
   primary="Submit"
-  secondary="Cancel"> Card content here. </wb-cardbutton>
+  secondary="Cancel">
+  Card content here.
+</wb-cardbutton>
 ```
 
 ### With Links

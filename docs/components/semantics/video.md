@@ -38,7 +38,8 @@ Enhanced HTML5 video player with configurable defaults.
 <video
   x-video
   src="clip.mp4"
-  controls></video>
+  controls>
+</video>
 ```
 
 ### With Poster
@@ -46,7 +47,8 @@ Enhanced HTML5 video player with configurable defaults.
 ```html
 <wb-video
   src="movie.mp4"
-  poster="thumbnail.jpg"></wb-video>
+  poster="thumbnail.jpg">
+</wb-video>
 ```
 
 ### Background Video

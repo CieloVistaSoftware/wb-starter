@@ -40,12 +40,16 @@ We use a strict hierarchy: `Foundation > Themes > Behaviors`.
 <button
   type="button"
   variant="primary"
-  size="lg"> Click Me </button>
+  size="lg">
+  Click Me
+</button>
 <!-- ❌ Wrong -->
 <button
   type="button"
   variant="primary"
-  size="lg">Click Me</button>
+  size="lg">
+  Click Me
+</button>
 ```
 
 **Why?** Readability and "Git-ability." Diffs are cleaner. It forces you to think about every attribute you verify. It makes code easier for both humans and AI agents to parse and maintain.

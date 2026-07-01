@@ -37,8 +37,7 @@ Enhanced select dropdown with search, clear, and multi-select.
 ```html
 <wb-select
   label="Country"
-  options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'
->
+  options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
 </wb-select>
 ```
 
@@ -58,8 +57,7 @@ Enhanced select dropdown with search, clear, and multi-select.
 <wb-select
   label="Choose a language"
   placeholder="Select language..."
-  options='[{"value":"en","label":"English"},{"value":"es","label":"Spanish"},{"value":"fr","label":"French"}]'
->
+  options='[{"value":"en","label":"English"},{"value":"es","label":"Spanish"},{"value":"fr","label":"French"}]'>
 </wb-select>
 ```
 
@@ -69,8 +67,7 @@ Enhanced select dropdown with search, clear, and multi-select.
 <wb-select
   label="Country"
   searchable
-  options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"},{"value":"ca","label":"Canada"}]'
->
+  options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"},{"value":"ca","label":"Canada"}]'>
 </wb-select>
 ```
 
@@ -80,8 +77,7 @@ Enhanced select dropdown with search, clear, and multi-select.
 <wb-select
   label="Priority"
   clearable
-  options='[{"value":"low","label":"Low"},{"value":"medium","label":"Medium"},{"value":"high","label":"High"}]'
->
+  options='[{"value":"low","label":"Low"},{"value":"medium","label":"Medium"},{"value":"high","label":"High"}]'>
 </wb-select>
 ```
 
@@ -91,8 +87,7 @@ Enhanced select dropdown with search, clear, and multi-select.
 <wb-select
   label="Tags"
   multiple
-  options='[{"value":"bug","label":"Bug"},{"value":"feature","label":"Feature"},{"value":"docs","label":"Documentation"}]'
->
+  options='[{"value":"bug","label":"Bug"},{"value":"feature","label":"Feature"},{"value":"docs","label":"Documentation"}]'>
 </wb-select>
 ```
 
@@ -102,18 +97,18 @@ Enhanced select dropdown with search, clear, and multi-select.
 <wb-select
   label="Small"
   size="sm"
-  options='[...]'
-></wb-select>
+  options='[...]'>
+</wb-select>
 <wb-select
   label="Medium"
   size="md"
-  options='[...]'
-></wb-select>
+  options='[...]'>
+</wb-select>
 <wb-select
   label="Large"
   size="lg"
-  options='[...]'
-></wb-select>
+  options='[...]'>
+</wb-select>
 ```
 
 ### Validation States
@@ -122,13 +117,13 @@ Enhanced select dropdown with search, clear, and multi-select.
 <wb-select
   label="Valid"
   variant="success"
-  options='[...]'
-></wb-select>
+  options='[...]'>
+</wb-select>
 <wb-select
   label="Error"
   variant="error"
-  options='[...]'
-></wb-select>
+  options='[...]'>
+</wb-select>
 ```
 
 ## Generated Structure
@@ -148,10 +143,14 @@ Enhanced select dropdown with search, clear, and multi-select.
     <ul class="wb-select__options">
       <li
         class="wb-select__option"
-        value="1">Option 1</li>
+        value="1">
+        Option 1
+      </li>
       <li
         class="wb-select__option wb-select__option--selected"
-        value="2">Option 2</li>
+        value="2">
+        Option 2
+      </li>
     </ul>
   </div>
 </div>

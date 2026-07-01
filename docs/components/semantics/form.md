@@ -33,10 +33,12 @@ Enhanced form with AJAX submission, validation, and auto-save.
   <wb-input
     name="email"
     label="Email"
-    required></wb-input>
+    required>
+  </wb-input>
   <wb-button
     label="Submit"
-    type="submit"></wb-button>
+    type="submit">
+  </wb-button>
 </wb-form>
 ```
 
@@ -63,14 +65,17 @@ Enhanced form with AJAX submission, validation, and auto-save.
     name="email"
     label="Email"
     inputType="email"
-    required></wb-input>
+    required>
+  </wb-input>
   <wb-textarea
     name="message"
     label="Message"
-    required></wb-textarea>
+    required>
+  </wb-textarea>
   <wb-button
     label="Send Message"
-    type="submit"></wb-button>
+    type="submit">
+  </wb-button>
 </wb-form>
 ```
 
@@ -83,13 +88,16 @@ Enhanced form with AJAX submission, validation, and auto-save.
   id="application-form">
   <wb-input
     name="name"
-    label="Full Name"></wb-input>
+    label="Full Name">
+  </wb-input>
   <wb-textarea
     name="bio"
-    label="Biography"></wb-textarea>
+    label="Biography">
+  </wb-textarea>
   <wb-button
     label="Submit"
-    type="submit"></wb-button>
+    type="submit">
+  </wb-button>
 </wb-form>
 ```
 
@@ -103,10 +111,12 @@ Enhanced form with AJAX submission, validation, and auto-save.
   <wb-input
     name="email"
     label="Email"
-    inputType="email"></wb-input>
+    inputType="email">
+  </wb-input>
   <wb-button
     label="Subscribe"
-    type="submit"></wb-button>
+    type="submit">
+  </wb-button>
 </wb-form>
 ```
 
