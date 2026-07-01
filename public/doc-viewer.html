@@ -113,12 +113,23 @@
       if (closeBtn) closeBtn.style.display = 'none';
     }
 
+    // Site root computed from THIS page's own location
+    // (…/public/doc-viewer.html → …/) so doc paths resolve correctly under any
+    // base — local '/' or the GitHub Pages sub-path '/wb-starter/'. (#226)
+    const SITE_ROOT = new URL('../', window.location.href);
+
     const params = new URLSearchParams(window.location.search);
-    let file = params.get('file') || '/docs/index.md';
-    // If file is not an absolute path, prefix with /docs/
-    if (file && !file.startsWith('/') && !file.startsWith('docs/')) {
-      file = '/docs/' + file.replace(/^\/?/, '');
+    let file = params.get('file') || 'docs/index.md';
+    // Normalize to a site-root-relative path: drop any leading slash (legacy
+    // links passed '/docs/x.md', which 404s at the domain root under a sub-path
+    // base) and default bare filenames into docs/.
+    if (!/^https?:/i.test(file)) {
+      file = file.replace(/^\/+/, '');
+      if (!/^docs\//.test(file)) file = 'docs/' + file;
     }
+    // Full, base-aware URL for the fetch — bypasses mdhtml's domain-root
+    // resolution so it works whether served at '/' or '/wb-starter/'.
+    const fileUrl = /^https?:/i.test(file) ? file : new URL(file, SITE_ROOT).href;
     
     // Helper to resolve relative paths
     function resolveRelativePath(base, relative) {
@@ -222,7 +233,7 @@
     
     if (file) {
       const content = document.getElementById('content');
-      content.dataset.src = file;
+      content.dataset.src = fileUrl;
       // Disable sanitization to allow embedded HTML/Scripts in documentation
       content.dataset.sanitize = "false";
       
