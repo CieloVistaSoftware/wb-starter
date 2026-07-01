@@ -11,8 +11,8 @@ This document defines formatting standards for code examples in documentation, d
 ### Rule 1: ALL HTML attributes MUST start on their own line - NO EXCEPTIONS
 
 When writing HTML code examples, **every attribute** must be placed on its own line with proper indentation (2 spaces from the tag). This applies to:
-- `data-*` attributes
-- `id`, `class`, `style` attributes  
+- Component config attributes (`title`, `variant`, `size`, `value`, …) — plain v3 attributes, **never** `data-*` (deprecated)
+- `id`, `class`, `style` attributes
 - `type`, `name`, `value` attributes
 - Event handlers (`onclick`, etc.)
 - **ALL other attributes**
