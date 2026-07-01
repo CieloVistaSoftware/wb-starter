@@ -139,7 +139,7 @@
     <pre><code class="language-html">&lt;wb-cardproduct 
   title="Premium Widget" 
   price="$49.99" 
-  data-original-price="$79.99" 
+  original-price="$79.99" 
   image="https://picsum.photos/200/200" 
   badge="Sale" 
   description="Most popular" 
@@ -516,16 +516,16 @@
 
   <!-- Pagination -->
   <h3>Pagination</h3>
-  <nav x-pagination data-total="100" data-per-page="10" data-current="5"></nav>
+  <nav x-pagination total="100" per-page="10" current="5"></nav>
   <div class="code-example">
-    <pre><code class="language-html">&lt;nav x-pagination data-total="100" data-per-page="10" data-current="5"&gt;&lt;/nav&gt;</code></pre>
+    <pre><code class="language-html">&lt;nav x-pagination total="100" per-page="10" current="5"&gt;&lt;/nav&gt;</code></pre>
   </div>
 
   <!-- Steps Wizard -->
   <h3>Steps Wizard</h3>
-  <div x-steps items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
+  <div x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;div x-steps items="Cart,Shipping,Payment,Confirm" data-current="2"&gt;&lt;/div&gt;</code></pre>
+    <pre><code class="language-html">&lt;div x-steps items="Cart,Shipping,Payment,Confirm" current="2"&gt;&lt;/div&gt;</code></pre>
   </div>
 </section>
 
@@ -649,10 +649,10 @@
   <!-- YouTube Embed -->
   <h3>YouTube Embed</h3>
   <div style="max-width: 600px;">
-    <div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
+    <div x-youtube video-id="dQw4w9WgXcQ" aspect-ratio="16:9"></div>
   </div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"&gt;&lt;/div&gt;</code></pre>
+    <pre><code class="language-html">&lt;div x-youtube video-id="dQw4w9WgXcQ" aspect-ratio="16:9"&gt;&lt;/div&gt;</code></pre>
   </div>
 
   <!-- Audio Player -->
@@ -661,8 +661,8 @@
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-audio 
   src="audio.mp3" 
-  data-show-eq="true" 
-  data-volume="0.7"&gt;
+  show-eq="true" 
+  volume="0.7"&gt;
 &lt;/wb-audio&gt;</code></pre>
   </div>
 </section>
@@ -692,13 +692,13 @@
   <h3>Copy, Share, Print</h3>
   <div class="demo-inline">
     <button class="wb-btn" x-copy copy-text="Text copied!">📋 Copy Text</button>
-    <button class="wb-btn" x-share share-title="wb-starter" data-share-url="https://example.com">📤 Share</button>
+    <button class="wb-btn" x-share share-title="wb-starter" share-url="https://example.com">📤 Share</button>
     <button class="wb-btn" x-print>🖨️ Print</button>
     <button class="wb-btn" x-fullscreen>⛶ Fullscreen</button>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;button x-copy copy-text="Text to copy"&gt;📋 Copy&lt;/button&gt;
-&lt;button x-share share-title="Title" data-share-url="https://..."&gt;📤 Share&lt;/button&gt;
+&lt;button x-share share-title="Title" share-url="https://..."&gt;📤 Share&lt;/button&gt;
 &lt;button x-print&gt;🖨️ Print&lt;/button&gt;
 &lt;button x-fullscreen&gt;⛶ Fullscreen&lt;/button&gt;</code></pre>
   </div>
@@ -707,11 +707,11 @@
   <h3>Clock &amp; Countdown</h3>
   <div class="demo-inline">
     <div x-clock class="time-display"></div>
-    <div x-countdown data-to="2026-12-31" class="time-display"></div>
+    <div x-countdown date="2026-12-31" class="time-display"></div>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;div x-clock&gt;&lt;/div&gt;
-&lt;div x-countdown data-to="2026-12-31"&gt;&lt;/div&gt;</code></pre>
+&lt;div x-countdown date="2026-12-31"&gt;&lt;/div&gt;</code></pre>
   </div>
 
   <!-- Theme Controls -->

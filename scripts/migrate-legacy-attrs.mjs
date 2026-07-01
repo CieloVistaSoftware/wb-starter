@@ -32,6 +32,16 @@ const MAP = {
   'data-mask': 'mask',          // x-masked (masked.js reads mask||data-mask)
   'data-copy': 'copy-text',     // x-copy (copy.js:10)
   'data-share-title': 'share-title', // x-share (helpers.js:140)
+  'data-share-url': 'share-url', // x-share (helpers.js:142)
+  'data-total': 'total',        // x-pagination (navigation.js:424)
+  'data-per-page': 'per-page',  // x-pagination (navigation.js:425)
+  'data-current': 'current',    // x-pagination (navigation.js:427), x-steps (navigation.js:488)
+  'data-to': 'date',            // x-countdown reads `date` (helpers.js:501), NOT `to`
+  'data-ratio': 'aspect-ratio', // x-youtube (media.js:25)
+  'data-video-id': 'video-id',  // x-youtube (media.js:889)
+  'data-original-price': 'original-price', // wb-cardproduct (live demo uses original-price)
+  'data-show-eq': 'show-eq',    // wb-audio (live demo uses show-eq)
+  'data-volume': 'volume',      // wb-audio (live demo uses volume)
 };
 
 const files = process.argv.slice(2);
