@@ -69,20 +69,33 @@ export async function mdhtml(element, options = {}) {
     // Load marked library
     const marked = await loadMarked();
     
-    // Custom renderer to add heading IDs
+    // Custom renderer to add heading IDs. marked v5+ calls heading(token) with a
+    // single token object {depth, text, tokens}; older marked called
+    // heading(text, level). Reading `level` off the v5+ call yields undefined —
+    // which produced `<hundefined>` tags. Support both signatures.
     const renderer = new marked.Renderer();
-    renderer.heading = function(text, level) {
-      // Generate slug from text (handle objects from marked v5+)
-      const textContent = typeof text === 'object' ? text.text : text;
-      const slug = textContent
+    renderer.heading = function(arg, level) {
+      let depth, html, plain;
+      if (arg && typeof arg === 'object') {
+        // marked v5+ token object
+        depth = arg.depth;
+        html = this.parser ? this.parser.parseInline(arg.tokens) : arg.text;
+        plain = arg.text;
+      } else {
+        // legacy (text, level)
+        depth = level;
+        html = arg;
+        plain = arg;
+      }
+      const slug = String(plain)
         .toLowerCase()
         .replace(/<[^>]*>/g, '')           // Remove HTML tags
         .replace(/[^\w\s-]/g, '')          // Remove special chars except hyphens
         .replace(/\s+/g, '-')              // Replace spaces with hyphens
         .replace(/-+/g, '-')               // Collapse multiple hyphens
         .replace(/^-|-$/g, '');            // Trim hyphens from ends
-      
-      return `<h${level} id="${slug}">${textContent}</h${level}>\n`;
+
+      return `<h${depth} id="${slug}">${html}</h${depth}>\n`;
     };
     
     // Configure marked
