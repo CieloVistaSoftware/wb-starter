@@ -288,10 +288,10 @@
     <wb-progress value="100"></wb-progress>
   </div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;wb-progress data-value="25"&gt;&lt;/wb-progress&gt;
-&lt;wb-progress data-value="50"&gt;&lt;/wb-progress&gt;
-&lt;wb-progress data-value="75" data-striped&gt;&lt;/wb-progress&gt;
-&lt;wb-progress data-value="100"&gt;&lt;/wb-progress&gt;</code></pre>
+    <pre><code class="language-html">&lt;wb-progress value="25"&gt;&lt;/wb-progress&gt;
+&lt;wb-progress value="50"&gt;&lt;/wb-progress&gt;
+&lt;wb-progress value="75" data-striped&gt;&lt;/wb-progress&gt;
+&lt;wb-progress value="100"&gt;&lt;/wb-progress&gt;</code></pre>
   </div>
 
   <!-- Spinners -->
@@ -319,11 +319,11 @@
     </div>
   </div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;wb-spinner data-size="xs" data-color="primary"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner data-size="sm" data-color="success"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner data-size="md" data-color="warning"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner data-size="lg" data-color="error"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner data-size="xl" data-color="info"&gt;&lt;/wb-spinner&gt;</code></pre>
+    <pre><code class="language-html">&lt;wb-spinner size="xs" color="primary"&gt;&lt;/wb-spinner&gt;
+&lt;wb-spinner size="sm" color="success"&gt;&lt;/wb-spinner&gt;
+&lt;wb-spinner size="md" color="warning"&gt;&lt;/wb-spinner&gt;
+&lt;wb-spinner size="lg" color="error"&gt;&lt;/wb-spinner&gt;
+&lt;wb-spinner size="xl" color="info"&gt;&lt;/wb-spinner&gt;</code></pre>
   </div>
 
   <!-- Avatars -->
@@ -396,7 +396,7 @@
     <div class="component-box">
       <h4>Lightbox</h4>
       <p>Full-screen image viewer</p>
-      <button class="wb-btn" x-lightbox data-src="https://picsum.photos/1200/800">View Image</button>
+      <button class="wb-btn" x-lightbox src="https://picsum.photos/1200/800">View Image</button>
     </div>
 
     <div class="component-box">
@@ -420,7 +420,7 @@
 &lt;button x-prompt prompt-title="Your Name" prompt-message="Please enter your name:"&gt;Prompt&lt;/button&gt;
 
 &lt;!-- Lightbox --&gt;
-&lt;button x-lightbox data-src="https://picsum.photos/1200/800"&gt;View Image&lt;/button&gt;
+&lt;button x-lightbox src="https://picsum.photos/1200/800"&gt;View Image&lt;/button&gt;
 
 &lt;!-- Popover --&gt;
 &lt;button x-popover popover-title="Info" popover-content="Additional information here."&gt;Show Popover&lt;/button&gt;</code></pre>
@@ -509,9 +509,9 @@
 
   <!-- Breadcrumb -->
   <h3>Breadcrumb</h3>
-  <nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones"></nav>
+  <nav x-breadcrumb items="Home,Products,Electronics,Smartphones"></nav>
   <div class="code-example">
-    <pre><code class="language-html">&lt;nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones"&gt;&lt;/nav&gt;</code></pre>
+    <pre><code class="language-html">&lt;nav x-breadcrumb items="Home,Products,Electronics,Smartphones"&gt;&lt;/nav&gt;</code></pre>
   </div>
 
   <!-- Pagination -->
@@ -523,9 +523,9 @@
 
   <!-- Steps Wizard -->
   <h3>Steps Wizard</h3>
-  <div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
+  <div x-steps items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"&gt;&lt;/div&gt;</code></pre>
+    <pre><code class="language-html">&lt;div x-steps items="Cart,Shipping,Payment,Confirm" data-current="2"&gt;&lt;/div&gt;</code></pre>
   </div>
 </section>
 
@@ -581,13 +581,13 @@
     <input type="range" min="0" max="100" value="50">
     <wb-rating value="3" max="5"></wb-rating>
     <wb-rating value="4" max="5" icon="❤️"></wb-rating>
-    <div x-stepper data-value="5" data-min="0" data-max="10"></div>
+    <div x-stepper value="5" min="0" max="10"></div>
   </div>
   <div class="code-example">
     <pre><code class="language-html">&lt;input type="range" min="0" max="100" value="50"&gt;
 &lt;wb-rating value="3" max="5"&gt;&lt;/wb-rating&gt;
 &lt;wb-rating value="4" max="5" icon="❤️"&gt;&lt;/wb-rating&gt;
-&lt;div x-stepper data-value="5" data-min="0" data-max="10"&gt;&lt;/div&gt;</code></pre>
+&lt;div x-stepper value="5" min="0" max="10"&gt;&lt;/div&gt;</code></pre>
   </div>
 </section>
 
@@ -631,14 +631,14 @@
 
   <!-- Gallery -->
   <h3>Gallery</h3>
-  <div x-gallery data-columns="4">
+  <div x-gallery columns="4">
     <img src="https://picsum.photos/200/200?r=g1" alt="Gallery 1">
     <img src="https://picsum.photos/200/200?r=g2" alt="Gallery 2">
     <img src="https://picsum.photos/200/200?r=g3" alt="Gallery 3">
     <img src="https://picsum.photos/200/200?r=g4" alt="Gallery 4">
   </div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;div x-gallery data-columns="4"&gt;
+    <pre><code class="language-html">&lt;div x-gallery columns="4"&gt;
   &lt;img src="image1.jpg" alt="Gallery 1"&gt;
   &lt;img src="image2.jpg" alt="Gallery 2"&gt;
   &lt;img src="image3.jpg" alt="Gallery 3"&gt;
@@ -660,7 +660,7 @@
   <wb-audio src="/demos/sample.wav" show-eq="true" volume="0.7"></wb-audio>
   <div class="code-example">
     <pre><code class="language-html">&lt;wb-audio 
-  data-src="audio.mp3" 
+  src="audio.mp3" 
   data-show-eq="true" 
   data-volume="0.7"&gt;
 &lt;/wb-audio&gt;</code></pre>
@@ -691,14 +691,14 @@
   <!-- Copy, Share, Print -->
   <h3>Copy, Share, Print</h3>
   <div class="demo-inline">
-    <button class="wb-btn" x-copy data-copy="Text copied!">📋 Copy Text</button>
-    <button class="wb-btn" x-share data-share-title="wb-starter" data-share-url="https://example.com">📤 Share</button>
+    <button class="wb-btn" x-copy copy-text="Text copied!">📋 Copy Text</button>
+    <button class="wb-btn" x-share share-title="wb-starter" data-share-url="https://example.com">📤 Share</button>
     <button class="wb-btn" x-print>🖨️ Print</button>
     <button class="wb-btn" x-fullscreen>⛶ Fullscreen</button>
   </div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;button x-copy data-copy="Text to copy"&gt;📋 Copy&lt;/button&gt;
-&lt;button x-share data-share-title="Title" data-share-url="https://..."&gt;📤 Share&lt;/button&gt;
+    <pre><code class="language-html">&lt;button x-copy copy-text="Text to copy"&gt;📋 Copy&lt;/button&gt;
+&lt;button x-share share-title="Title" data-share-url="https://..."&gt;📤 Share&lt;/button&gt;
 &lt;button x-print&gt;🖨️ Print&lt;/button&gt;
 &lt;button x-fullscreen&gt;⛶ Fullscreen&lt;/button&gt;</code></pre>
   </div>
