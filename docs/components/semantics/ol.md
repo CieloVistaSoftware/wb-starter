@@ -36,7 +36,9 @@ Add `x-ol` to an `<ol>` element.
 Perfect for "How-to" instructions.
 
 ```html
-<ol x-ol variant="stepped">
+<ol
+  x-ol
+  variant="stepped">
   <li>Create Account</li>
   <li>Verify Email</li>
   <li>Setup Profile</li>
@@ -47,10 +49,18 @@ Perfect for "How-to" instructions.
 Visualizing a history or log.
 
 ```html
-<ol x-ol variant="timeline">
-  <li><strong>2020:</strong> Project Started</li>
-  <li><strong>2021:</strong> First Release</li>
-  <li><strong>2022:</strong> Major Update</li>
+<ol
+  x-ol
+  variant="timeline">
+  <li>
+    <strong>2020:</strong> Project Started
+  </li>
+  <li>
+    <strong>2021:</strong> First Release
+  </li>
+  <li>
+    <strong>2022:</strong> Major Update
+  </li>
 </ol>
 ```
 

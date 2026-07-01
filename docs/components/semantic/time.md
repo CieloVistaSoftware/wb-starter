@@ -26,10 +26,12 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 ### 1. Card File (`cardfile`)
 
 ```html
-<article x-cardfile date="Dec 15, 2024">
-  <time datetime="2024-12-15" class="wb-card__file-date">
-    Dec 15, 2024
-  </time>
+<article
+  x-cardfile
+  date="Dec 15, 2024">
+  <time
+    datetime="2024-12-15"
+    class="wb-card__file-date"> Dec 15, 2024 </time>
 </article>
 ```
 
@@ -37,9 +39,9 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 
 ```html
 <aside x-cardnotification>
-  <time datetime="2024-12-15T14:30:00Z" class="wb-card__notif-time">
-    2 hours ago
-  </time>
+  <time
+    datetime="2024-12-15T14:30:00Z"
+    class="wb-card__notif-time"> 2 hours ago </time>
 </aside>
 ```
 
@@ -48,9 +50,9 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 ```html
 <div x-timeline>
   <article class="wb-timeline__item">
-    <time datetime="2024-01" class="wb-timeline__date">
-      January 2024
-    </time>
+    <time
+      datetime="2024-01"
+      class="wb-timeline__date"> January 2024 </time>
     <div class="wb-timeline__content">
       <h4>Project Started</h4>
     </div>
@@ -61,12 +63,10 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 ### 4. Relative Time Component (`relativetime`)
 
 ```html
-<time 
-  x-relativetime 
+<time
+  x-relativetime
   datetime="2024-12-15T10:30:00Z"
-  format="auto">
-  3 hours ago
-</time>
+  format="auto"> 3 hours ago </time>
 ```
 
 ## Accessibility Considerations
@@ -85,21 +85,16 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
     <h1>Understanding Semantic HTML</h1>
     <div class="post-meta">
       <span>By John Doe</span>
-      <time datetime="2024-12-15T09:00:00Z" class="post-date">
-        December 15, 2024
-      </time>
-      <time datetime="PT8M" class="post-reading-time">
-        8 min read
-      </time>
+      <time
+        datetime="2024-12-15T09:00:00Z"
+        class="post-date"> December 15, 2024 </time>
+      <time
+        datetime="PT8M"
+        class="post-reading-time"> 8 min read </time>
     </div>
   </header>
-  
   <footer>
-    <p>
-      Last updated: 
-      <time datetime="2024-12-18T14:30:00Z">
-        December 18, 2024 at 2:30 PM
-      </time>
+    <p> Last updated: <time datetime="2024-12-18T14:30:00Z"> December 18, 2024 at 2:30 PM </time>
     </p>
   </footer>
 </article>

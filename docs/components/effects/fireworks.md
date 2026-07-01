@@ -30,25 +30,34 @@ Fireworks burst explosion effect.
 ### Custom Element
 
 ```html
-<wb-fireworks count="50" label="Celebrate!"></wb-fireworks>
+<wb-fireworks
+  count="50"
+  label="Celebrate!"></wb-fireworks>
 ```
 
 ### Data Attribute
 
 ```html
-<div x-fireworks count="30"></div>
+<div
+  x-fireworks
+  count="30"></div>
 ```
 
 ### Auto-Trigger (No Button)
 
 ```html
-<wb-fireworks count="40" showButton="false" delay="1s"></wb-fireworks>
+<wb-fireworks
+  count="40"
+  showButton="false"
+  delay="1s"></wb-fireworks>
 ```
 
 ### Looping Animation
 
 ```html
-<wb-fireworks count="20" repeat></wb-fireworks>
+<wb-fireworks
+  count="20"
+  repeat></wb-fireworks>
 ```
 
 ## Generated Structure
@@ -57,7 +66,6 @@ Fireworks burst explosion effect.
 <div class="wb-fireworks">
   <!-- Button (when showButton is true) -->
   <button class="wb-fireworks__button">Fireworks!</button>
-  
   <!-- Particle container -->
   <div class="wb-fireworks__container">
     <!-- Particles are dynamically created -->

@@ -13,10 +13,11 @@ The `<blockquote>` element represents an extended quotation from another source.
 ### Card Testimonial (`cardtestimonial`)
 
 ```html
-<article x-cardtestimonial quote="..." author="Jane Smith">
-  <blockquote class="wb-card__quote">
-    "This product changed my life. Highly recommended!"
-  </blockquote>
+<article
+  x-cardtestimonial
+  quote="..."
+  author="Jane Smith">
+  <blockquote class="wb-card__quote"> "This product changed my life. Highly recommended!" </blockquote>
   <footer class="wb-card__quote-footer">
     <cite class="wb-card__author">Jane Smith</cite>
     <span class="wb-card__author-role">CEO, TechCorp</span>
@@ -48,22 +49,25 @@ The `<cite>` element identifies the source of a quotation:
 ## Example: Full Testimonial Structure
 
 ```html
-<article x-cardtestimonial class="wb-card wb-card--testimonial">
+<article
+  x-cardtestimonial
+  class="wb-card wb-card--testimonial">
   <figure class="wb-card__avatar">
-    <img src="avatar.jpg" alt="Jane Smith">
+    <img
+      src="avatar.jpg"
+      alt="Jane Smith">
   </figure>
-  
-  <blockquote class="wb-card__quote" cite="https://example.com/review">
-    <p>"This product changed my life. The support team is incredible 
-    and the features are exactly what I needed."</p>
+  <blockquote
+    class="wb-card__quote"
+    cite="https://example.com/review">
+    <p>"This product changed my life. The support team is incredible and the features are exactly what I needed."</p>
   </blockquote>
-  
   <footer class="wb-card__quote-footer">
     <cite class="wb-card__author">Jane Smith</cite>
     <p class="wb-card__author-role">CEO, TechCorp</p>
-    <div class="wb-card__rating" aria-label="5 out of 5 stars">
-      ⭐⭐⭐⭐⭐
-    </div>
+    <div
+      class="wb-card__rating"
+      aria-label="5 out of 5 stars"> ⭐⭐⭐⭐⭐ </div>
   </footer>
 </article>
 ```

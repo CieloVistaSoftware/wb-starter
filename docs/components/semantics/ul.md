@@ -34,7 +34,9 @@ Add `x-ul` to a `<ul>` element.
 A list of features with checkmarks.
 
 ```html
-<ul x-ul variant="checklist">
+<ul
+  x-ul
+  variant="checklist">
   <li checked>Fast Performance</li>
   <li checked>Secure</li>
   <li>Offline Mode</li>
@@ -45,7 +47,9 @@ A list of features with checkmarks.
 Using emojis as bullets.
 
 ```html
-<ul x-ul variant="icon-list">
+<ul
+  x-ul
+  variant="icon-list">
   <li icon="🚀">Launch</li>
   <li icon="📈">Grow</li>
   <li icon="💰">Profit</li>

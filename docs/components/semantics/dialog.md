@@ -30,49 +30,54 @@ Modal dialog using native HTML5 dialog element.
 ### Custom Element
 
 ```html
-<wb-dialog title="Welcome" id="my-dialog">
+<wb-dialog
+  title="Welcome"
+  id="my-dialog">
   <p>Dialog content goes here.</p>
 </wb-dialog>
-
-<button onclick="document.getElementById('my-dialog').open()">
-  Open Dialog
-</button>
+<button onclick="document.getElementById('my-dialog').open()"> Open Dialog </button>
 ```
 
 ### Trigger Button
 
 ```html
-<button 
-  x-dialog 
-  title="Confirm" 
-  content="Are you sure?">
-  Open Confirmation
-</button>
+<button
+  x-dialog
+  title="Confirm"
+  content="Are you sure?"> Open Confirmation </button>
 ```
 
 ### Sizes
 
 ```html
-<wb-dialog title="Small" size="sm">Small dialog</wb-dialog>
-<wb-dialog title="Medium" size="md">Medium dialog</wb-dialog>
-<wb-dialog title="Large" size="lg">Large dialog</wb-dialog>
-<wb-dialog title="Full" size="full">Full dialog</wb-dialog>
+<wb-dialog
+  title="Small"
+  size="sm">Small dialog</wb-dialog>
+<wb-dialog
+  title="Medium"
+  size="md">Medium dialog</wb-dialog>
+<wb-dialog
+  title="Large"
+  size="lg">Large dialog</wb-dialog>
+<wb-dialog
+  title="Full"
+  size="full">Full dialog</wb-dialog>
 ```
 
 ### Centered Variant
 
 ```html
-<wb-dialog title="Centered" variant="centered">
-  This dialog is vertically centered.
-</wb-dialog>
+<wb-dialog
+  title="Centered"
+  variant="centered"> This dialog is vertically centered. </wb-dialog>
 ```
 
 ### Without Close Button
 
 ```html
-<wb-dialog title="Required Action" showClose="false">
-  You must complete this action.
-</wb-dialog>
+<wb-dialog
+  title="Required Action"
+  showClose="false"> You must complete this action. </wb-dialog>
 ```
 
 ## Generated Structure
@@ -84,12 +89,8 @@ Modal dialog using native HTML5 dialog element.
       <h2 class="wb-dialog__title">Title</h2>
       <button class="wb-dialog__close">×</button>
     </header>
-    <main class="wb-dialog__body">
-      Content here
-    </main>
-    <footer class="wb-dialog__footer">
-      Footer content
-    </footer>
+    <main class="wb-dialog__body"> Content here </main>
+    <footer class="wb-dialog__footer"> Footer content </footer>
   </div>
 </dialog>
 ```

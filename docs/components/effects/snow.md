@@ -29,25 +29,34 @@ Falling snow animation effect.
 ### Custom Element
 
 ```html
-<wb-snow count="100" label="Snow!"></wb-snow>
+<wb-snow
+  count="100"
+  label="Snow!"></wb-snow>
 ```
 
 ### Data Attribute
 
 ```html
-<div x-snow count="50"></div>
+<div
+  x-snow
+  count="50"></div>
 ```
 
 ### Background Snow (Auto-Start)
 
 ```html
-<wb-snow count="100" showButton="false" repeat></wb-snow>
+<wb-snow
+  count="100"
+  showButton="false"
+  repeat></wb-snow>
 ```
 
 ### Single Pass (No Loop)
 
 ```html
-<wb-snow count="50" repeat="false"></wb-snow>
+<wb-snow
+  count="50"
+  repeat="false"></wb-snow>
 ```
 
 ## Generated Structure
@@ -56,7 +65,6 @@ Falling snow animation effect.
 <div class="wb-snow">
   <!-- Button (when showButton is true) -->
   <button class="wb-snow__button">Let it Snow!</button>
-  
   <!-- Snowflake container -->
   <div class="wb-snow__container">
     <!-- Snowflakes are dynamically created -->

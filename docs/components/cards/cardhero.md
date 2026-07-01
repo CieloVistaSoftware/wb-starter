@@ -50,7 +50,7 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Hero
 
 ```html
-<wb-cardhero 
+<wb-cardhero
   title="Welcome to Our Site"
   subtitle="Build something amazing"
   background="/images/hero-bg.jpg">
@@ -60,7 +60,7 @@ Inherits all [card properties](./card.md) plus:
 ### With CTAs
 
 ```html
-<wb-cardhero 
+<wb-cardhero
   title="Get Started Today"
   subtitle="Join thousands of happy users"
   cta="Sign Up Free"
@@ -73,7 +73,7 @@ Inherits all [card properties](./card.md) plus:
 ### Left Aligned
 
 ```html
-<wb-cardhero 
+<wb-cardhero
   title="Left Aligned Hero"
   xalign="left"
   height="500px">
@@ -83,7 +83,7 @@ Inherits all [card properties](./card.md) plus:
 ### With Gradient Background
 
 ```html
-<wb-cardhero 
+<wb-cardhero
   title="Gradient Hero"
   background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
 </wb-cardhero>
@@ -94,7 +94,8 @@ Inherits all [card properties](./card.md) plus:
 ```html
 <wb-cardhero background="/images/hero.jpg">
   <h1 slot="title">Rich <em>HTML</em> Title</h1>
-  <p slot="subtitle">Subtitle with <strong>formatting</strong></p>
+  <p slot="subtitle">Subtitle with <strong>formatting</strong>
+  </p>
 </wb-cardhero>
 ```
 

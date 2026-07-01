@@ -30,7 +30,9 @@ A structural sidebar container that pushes content or sits alongside it.
 ### Usage
 
 ```html
-<wb-drawer-layout position="left" width="300px">
+<wb-drawer-layout
+  position="left"
+  width="300px">
   <h3>Sidebar</h3>
   <nav>Navigation content...</nav>
 </wb-drawer-layout>
@@ -39,9 +41,10 @@ A structural sidebar container that pushes content or sits alongside it.
 ### With Data Attributes
 
 ```html
-<div x-drawerLayout position="left" width="300px">
-  Drawer content...
-</div>
+<div
+  x-drawerLayout
+  position="left"
+  width="300px"> Drawer content... </div>
 ```
 
 ---
@@ -71,11 +74,10 @@ A modal panel that slides in over page content.
 ### Usage
 
 ```html
-<button x-drawer 
-        title="Settings" 
-        content="<p>Settings content...</p>">
-  Open Settings
-</button>
+<button
+  x-drawer
+  title="Settings"
+  content="<p>Settings content...</p>"> Open Settings </button>
 ```
 
 ### JavaScript API

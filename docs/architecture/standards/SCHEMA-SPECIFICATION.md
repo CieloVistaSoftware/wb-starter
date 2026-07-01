@@ -205,8 +205,10 @@ Users provide simple attribute values. The schema defines how those values becom
 
 ```html
 <!-- ✅ CLEAN: User just sets values -->
-<wb-hero title="Explore" subtitle="Your journey" cta="Launch"></wb-hero>
-
+<wb-hero
+  title="Explore"
+  subtitle="Your journey"
+  cta="Launch"></wb-hero>
 <!-- ❌ UGLY: User must know internal slots -->
 <wb-hero>
   <h1 slot="title">Explore</h1>
@@ -581,12 +583,10 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
 **Rendered:**
 ```html
 <wb-card>
-  <header class="wb-card__header">        <!-- Public: stable -->
+  <header class="wb-card__header"> <!-- Public: stable -->
     <h3 class="wb-card__title">Hello</h3> <!-- Public: stable -->
   </header>
-  <div class="wb-card__-layout">          <!-- Private: may change -->
-    ...
-  </div>
+  <div class="wb-card__-layout"> <!-- Private: may change --> ... </div>
 </wb-card>
 ```
 

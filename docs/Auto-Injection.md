@@ -25,11 +25,9 @@ If you want to **prevent** Auto Injection for a specific element, you must use t
 ```html
 <!-- This <button> gets 'button' behavior (auto) AND 'ripple' behavior (explicit) -->
 <button x-ripple>Click Me</button>
-
 <!-- This <article> gets 'card' behavior (auto) AND 'hero' behavior (explicit) -->
 <!-- Note: Be careful combining morphing behaviors! -->
 <article x-as-hero>...</article>
-
 <!-- This <nav> will NOT become a WB Navbar -->
 <nav ignore>...</nav>
 ```
@@ -81,7 +79,9 @@ The following HTML elements are automatically mapped to WB behaviors:
 **Explicit (Shorthand):**
 ```html
 <article x-as-card>
-  <header><h3>Title</h3></header>
+  <header>
+    <h3>Title</h3>
+  </header>
   <main>Content</main>
 </article>
 ```
@@ -89,7 +89,9 @@ The following HTML elements are automatically mapped to WB behaviors:
 **Implicit (Auto Injection):**
 ```html
 <article>
-  <header><h3>Title</h3></header>
+  <header>
+    <h3>Title</h3>
+  </header>
   <main>Content</main>
 </article>
 ```
@@ -106,8 +108,12 @@ The following HTML elements are automatically mapped to WB behaviors:
 ```html
 <nav>
   <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#">About</a></li>
+    <li>
+      <a href="#">Home</a>
+    </li>
+    <li>
+      <a href="#">About</a>
+    </li>
   </ul>
 </nav>
 ```

@@ -28,19 +28,17 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Button Card
 
 ```html
-<wb-cardbutton 
+<wb-cardbutton
   title="Action Card"
   subtitle="Choose an action"
   primary="Submit"
-  secondary="Cancel">
-  Card content here.
-</wb-cardbutton>
+  secondary="Cancel"> Card content here. </wb-cardbutton>
 ```
 
 ### With Links
 
 ```html
-<wb-cardbutton 
+<wb-cardbutton
   title="Learn More"
   primary="View Details"
   primaryHref="/details"

@@ -37,50 +37,73 @@ Toggle switch for boolean settings.
 ### Native Checkbox (Enhanced)
 
 ```html
-<input type="checkbox" x-switch label="Notifications">
+<input
+  type="checkbox"
+  x-switch
+  label="Notifications">
 ```
 
 ### Pre-Checked
 
 ```html
-<wb-switch label="Enable notifications" checked></wb-switch>
+<wb-switch
+  label="Enable notifications"
+  checked></wb-switch>
 ```
 
 ### Label Position
 
 ```html
-<wb-switch label="Left label" labelPosition="start"></wb-switch>
-<wb-switch label="Right label" labelPosition="end"></wb-switch>
+<wb-switch
+  label="Left label"
+  labelPosition="start"></wb-switch>
+<wb-switch
+  label="Right label"
+  labelPosition="end"></wb-switch>
 ```
 
 ### Sizes
 
 ```html
-<wb-switch label="Small" size="sm"></wb-switch>
-<wb-switch label="Medium" size="md"></wb-switch>
-<wb-switch label="Large" size="lg"></wb-switch>
+<wb-switch
+  label="Small"
+  size="sm"></wb-switch>
+<wb-switch
+  label="Medium"
+  size="md"></wb-switch>
+<wb-switch
+  label="Large"
+  size="lg"></wb-switch>
 ```
 
 ### Variants
 
 ```html
-<wb-switch label="Default" variant="default"></wb-switch>
-<wb-switch label="Primary" variant="primary"></wb-switch>
-<wb-switch label="Success" variant="success"></wb-switch>
+<wb-switch
+  label="Default"
+  variant="default"></wb-switch>
+<wb-switch
+  label="Primary"
+  variant="primary"></wb-switch>
+<wb-switch
+  label="Success"
+  variant="success"></wb-switch>
 ```
 
 ### Disabled
 
 ```html
-<wb-switch label="Unavailable" disabled></wb-switch>
+<wb-switch
+  label="Unavailable"
+  disabled></wb-switch>
 ```
 
 ### In Forms
 
 ```html
-<wb-switch 
-  label="Subscribe to newsletter" 
-  name="subscribe" 
+<wb-switch
+  label="Subscribe to newsletter"
+  name="subscribe"
   value="yes">
 </wb-switch>
 ```
@@ -90,7 +113,9 @@ Toggle switch for boolean settings.
 ```html
 <div class="wb-switch">
   <span class="wb-switch__label">Dark mode</span>
-  <input type="checkbox" class="wb-switch__input">
+  <input
+    type="checkbox"
+    class="wb-switch__input">
   <span class="wb-switch__track">
     <span class="wb-switch__thumb"></span>
   </span>

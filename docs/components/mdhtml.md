@@ -11,10 +11,7 @@
 
 ### 1. Inline Markdown
 ```html
-<wb-mdhtml>
-  # Hello World
-  This is **bold** and *italic*.
-</wb-mdhtml>
+<wb-mdhtml> # Hello World This is **bold** and *italic*. </wb-mdhtml>
 ```
 
 ### 2. Load Markdown from File
@@ -52,12 +49,12 @@
 
 ## Example: Full Options
 ```html
-<wb-mdhtml 
-  src="/docs/guide.md" 
-  sanitize="true" 
-  breaks="true" 
-  gfm="true" 
-  header-ids="true" 
+<wb-mdhtml
+  src="/docs/guide.md"
+  sanitize="true"
+  breaks="true"
+  gfm="true"
+  header-ids="true"
   size="md">
 </wb-mdhtml>
 ```

@@ -60,35 +60,26 @@ The preferred format uses semantic HTML elements that auto-inject behaviors:
 
 ```html
 <!-- Button - uses native <button> element -->
-<button 
+<button
   variant="primary"
-  size="lg">
-  Click Me
-</button>
-
+  size="lg"> Click Me </button>
 <!-- Card - uses semantic <article> element -->
-<article 
+<article
   title="My Card"
-  elevated="true">
-  Content here
-</article>
-
+  elevated="true"> Content here </article>
 <!-- Input with multiple attributes -->
-<input 
+<input
   type="text"
   id="email"
   name="email"
   placeholder="Enter email"
   validation="email"
   required="true">
-
 <!-- Link with all attributes on new lines -->
-<a 
+<a
   href="#home"
   class="nav-link"
-  active="true">
-  Home
-</a>
+  active="true"> Home </a>
 ```
 
 ---
@@ -101,23 +92,19 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 
 ```html
 <!-- Explicit behavior injection -->
-<div 
+<div
   x-card
   title="My Card"
-  elevated="true">
-  Content here
-</div>
-
+  elevated="true"> Content here </div>
 <!-- Combining multiple behaviors -->
-<button 
-  x-button x-ripple x-toast
+<button
+  x-button
+  x-ripple
+  x-toast
   variant="primary"
-  message="Saved!">
-  Save
-</button>
-
+  message="Saved!"> Save </button>
 <!-- Form element with all attributes -->
-<input 
+<input
   type="checkbox"
   id="agree"
   name="terms"
@@ -153,9 +140,9 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 Each code example should include an explanatory note in xs font:
 
 ```html
-<p class="code-note" style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem;">
-  ℹ️ Auto-injects via &lt;button&gt;. Explicit: x-button
-</p>
+<p
+  class="code-note"
+  style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem;"> ℹ️ Auto-injects via &lt;button&gt;. Explicit: x-button </p>
 ```
 
 ### Note Templates by Component Type
@@ -185,7 +172,9 @@ const codeDisplayConfig = {
 ### Inline Format Example
 
 ```html
-<button variant="primary" size="lg">Click Me</button>
+<button
+  variant="primary"
+  size="lg">Click Me</button>
 ```
 
 **Note:** Inline format should only be used when:
@@ -206,25 +195,19 @@ const codeDisplayConfig = {
 ### Indentation Example
 
 ```html
-<article 
+<article
   x-card
   title="Card Title"
   subtitle="Subtitle"
   elevated="true"
-  clickable="true">
-  Content goes here
-</article>
-
+  clickable="true"> Content goes here </article>
 <!-- Even style attributes get their own line -->
-<div 
+<div
   class="demo-box"
   id="main-content"
-  style="padding: 1rem; background: var(--bg-primary);">
-  Content
-</div>
-
+  style="padding: 1rem; background: var(--bg-primary);"> Content </div>
 <!-- Video with all attributes -->
-<video 
+<video
   controls
   width="300"
   src="video.mp4"

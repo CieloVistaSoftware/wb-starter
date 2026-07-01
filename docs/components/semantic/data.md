@@ -13,26 +13,33 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 ### 1. Card Stats (`cardstats`)
 
 ```html
-<article x-cardstats value="1234" label="Total Users">
-  <data value="1234" class="wb-card__stats-value">
-    1,234
-  </data>
+<article
+  x-cardstats
+  value="1234"
+  label="Total Users">
+  <data
+    value="1234"
+    class="wb-card__stats-value"> 1,234 </data>
   <span class="wb-card__stats-label">Total Users</span>
-  <data value="0.12" class="wb-card__stats-trend wb-card__stats-trend--up">
-    +12%
-  </data>
+  <data
+    value="0.12"
+    class="wb-card__stats-trend wb-card__stats-trend--up"> +12% </data>
 </article>
 ```
 
 ### 2. Card Product (`cardproduct`)
 
 ```html
-<article x-cardproduct price="99.99">
+<article
+  x-cardproduct
+  price="99.99">
   <div class="wb-card__pricing">
-    <data value="99.99" class="wb-card__price-current">
-      $99.99
-    </data>
-    <data value="129.99" class="wb-card__price-original">
+    <data
+      value="99.99"
+      class="wb-card__price-current"> $99.99 </data>
+    <data
+      value="129.99"
+      class="wb-card__price-original">
       <s>$129.99</s>
     </data>
   </div>
@@ -42,10 +49,12 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 ### 3. Card Pricing (`cardpricing`)
 
 ```html
-<article x-cardpricing price="29">
-  <data value="29" class="wb-card__amount">
-    $29
-  </data>
+<article
+  x-cardpricing
+  price="29">
+  <data
+    value="29"
+    class="wb-card__amount"> $29 </data>
   <span class="wb-card__period">/month</span>
 </article>
 ```
@@ -71,30 +80,39 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 ## Example: Dashboard Stats
 
 ```html
-<section class="dashboard-stats" aria-label="Key Metrics">
-  <article x-cardstats class="wb-card wb-card--stats">
-    <div class="wb-card__stats-icon" aria-hidden="true">👥</div>
+<section
+  class="dashboard-stats"
+  aria-label="Key Metrics">
+  <article
+    x-cardstats
+    class="wb-card wb-card--stats">
+    <div
+      class="wb-card__stats-icon"
+      aria-hidden="true">👥</div>
     <div class="wb-card__stats-content">
-      <data value="15234" class="wb-card__stats-value">
-        15,234
-      </data>
+      <data
+        value="15234"
+        class="wb-card__stats-value"> 15,234 </data>
       <span class="wb-card__stats-label">Active Users</span>
-      <data value="0.08" class="wb-card__stats-trend wb-card__stats-trend--up">
-        ↑ 8%
-      </data>
+      <data
+        value="0.08"
+        class="wb-card__stats-trend wb-card__stats-trend--up"> ↑ 8% </data>
     </div>
   </article>
-  
-  <article x-cardstats class="wb-card wb-card--stats">
-    <div class="wb-card__stats-icon" aria-hidden="true">💰</div>
+  <article
+    x-cardstats
+    class="wb-card wb-card--stats">
+    <div
+      class="wb-card__stats-icon"
+      aria-hidden="true">💰</div>
     <div class="wb-card__stats-content">
-      <data value="52340.50" class="wb-card__stats-value">
-        $52,340.50
-      </data>
+      <data
+        value="52340.50"
+        class="wb-card__stats-value"> $52,340.50 </data>
       <span class="wb-card__stats-label">Revenue</span>
-      <data value="-0.03" class="wb-card__stats-trend wb-card__stats-trend--down">
-        ↓ 3%
-      </data>
+      <data
+        value="-0.03"
+        class="wb-card__stats-trend wb-card__stats-trend--down"> ↓ 3% </data>
     </div>
   </article>
 </section>

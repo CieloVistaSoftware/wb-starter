@@ -64,7 +64,6 @@ These behaviors enhance the element while preserving its identity.
 <button>Default Primary</button>
 <button type="submit">Submit Form</button>
 <button type="reset">Reset</button>
-
 <!-- All variants -->
 <button variant="primary">Primary</button>
 <button variant="secondary">Secondary</button>
@@ -74,30 +73,38 @@ These behaviors enhance the element while preserving its identity.
 <button variant="ghost">Ghost</button>
 <button variant="link">Link Style</button>
 <button variant="outline">Outline</button>
-
 <!-- All sizes -->
 <button size="xs">Extra Small</button>
 <button size="sm">Small</button>
 <button size="md">Medium (default)</button>
 <button size="lg">Large</button>
 <button size="xl">Extra Large</button>
-
 <!-- With icons -->
 <button icon="💾">Save</button>
-<button icon="🗑️" variant="danger">Delete</button>
-<button icon="→" icon-position="right">Next</button>
+<button
+  icon="🗑️"
+  variant="danger">Delete</button>
+<button
+  icon="→"
+  icon-position="right">Next</button>
 <button icon="←">Back</button>
-
 <!-- States -->
 <button loading>Saving...</button>
 <button disabled>Disabled</button>
-<button variant="success" icon="✓" size="lg">Complete Purchase</button>
-
+<button
+  variant="success"
+  icon="✓"
+  size="lg">Complete Purchase</button>
 <!-- Combined -->
-<button variant="danger" size="sm" icon="🗑️">Delete Item</button>
-<button variant="success" size="lg" icon="✓" icon-position="right">
-  Confirm Order
-</button>
+<button
+  variant="danger"
+  size="sm"
+  icon="🗑️">Delete Item</button>
+<button
+  variant="success"
+  size="lg"
+  icon="✓"
+  icon-position="right"> Confirm Order </button>
 ```
 
 **Button Group Example:**
@@ -135,40 +142,107 @@ These behaviors enhance the element while preserving its identity.
 
 ```html
 <!-- Basic inputs - auto-styled -->
-<input type="text" placeholder="Your name">
-<input type="email" placeholder="email@example.com">
-<input type="password" placeholder="Password">
-<input type="search" placeholder="Search...">
-<input type="url" placeholder="https://...">
-<input type="tel" placeholder="(555) 123-4567">
-
+<input
+  type="text"
+  placeholder="Your name">
+<input
+  type="email"
+  placeholder="email@example.com">
+<input
+  type="password"
+  placeholder="Password">
+<input
+  type="search"
+  placeholder="Search...">
+<input
+  type="url"
+  placeholder="https://...">
+<input
+  type="tel"
+  placeholder="(555) 123-4567">
 <!-- All sizes -->
-<input type="text" size="xs" placeholder="Extra small">
-<input type="text" size="sm" placeholder="Small">
-<input type="text" size="md" placeholder="Medium (default)">
-<input type="text" size="lg" placeholder="Large">
-<input type="text" size="xl" placeholder="Extra large">
-
+<input
+  type="text"
+  size="xs"
+  placeholder="Extra small">
+<input
+  type="text"
+  size="sm"
+  placeholder="Small">
+<input
+  type="text"
+  size="md"
+  placeholder="Medium (default)">
+<input
+  type="text"
+  size="lg"
+  placeholder="Large">
+<input
+  type="text"
+  size="xl"
+  placeholder="Extra large">
 <!-- Validation states -->
-<input type="email" variant="success" value="valid@email.com">
-<input type="email" variant="error" value="invalid-email">
-
+<input
+  type="email"
+  variant="success"
+  value="valid@email.com">
+<input
+  type="email"
+  variant="error"
+  value="invalid-email">
 <!-- With prefix/suffix -->
-<input type="text" prefix="$" placeholder="0.00">
-<input type="text" suffix=".00" placeholder="Price">
-<input type="text" prefix="https://" placeholder="website.com">
-<input type="text" prefix="@" placeholder="username">
-<input type="text" suffix="kg" placeholder="Weight">
-<input type="text" prefix="$" suffix="USD" placeholder="Amount">
-
+<input
+  type="text"
+  prefix="$"
+  placeholder="0.00">
+<input
+  type="text"
+  suffix=".00"
+  placeholder="Price">
+<input
+  type="text"
+  prefix="https://"
+  placeholder="website.com">
+<input
+  type="text"
+  prefix="@"
+  placeholder="username">
+<input
+  type="text"
+  suffix="kg"
+  placeholder="Weight">
+<input
+  type="text"
+  prefix="$"
+  suffix="USD"
+  placeholder="Amount">
 <!-- Clearable -->
-<input type="text" clearable placeholder="Type and clear...">
-<input type="search" clearable placeholder="Search...">
-<input type="email" clearable variant="error" placeholder="Fix this email">
-
+<input
+  type="text"
+  clearable
+  placeholder="Type and clear...">
+<input
+  type="search"
+  clearable
+  placeholder="Search...">
+<input
+  type="email"
+  clearable
+  variant="error"
+  placeholder="Fix this email">
 <!-- Combined -->
-<input type="text" size="lg" prefix="🔍" clearable placeholder="Search products...">
-<input type="number" prefix="$" suffix="/month" size="lg" placeholder="99">
+<input
+  type="text"
+  size="lg"
+  prefix="🔍"
+  clearable
+  placeholder="Search products...">
+<input
+  type="number"
+  prefix="$"
+  suffix="/month"
+  size="lg"
+  placeholder="99">
 ```
 
 **Form Field Examples:**
@@ -176,21 +250,37 @@ These behaviors enhance the element while preserving its identity.
 <!-- Login form -->
 <form>
   <label>Email
-    <input type="email" placeholder="you@company.com" clearable>
+    <input
+      type="email"
+      placeholder="you@company.com"
+      clearable>
   </label>
   <label>Password
-    <input type="password" placeholder="••••••••" size="lg">
+    <input
+      type="password"
+      placeholder="••••••••"
+      size="lg">
   </label>
-  <button variant="primary" size="lg">Sign In</button>
+  <button
+    variant="primary"
+    size="lg">Sign In</button>
 </form>
-
 <!-- Price input -->
 <label>Product Price
-  <input type="number" prefix="$" suffix=".00" placeholder="99" size="lg">
+  <input
+    type="number"
+    prefix="$"
+    suffix=".00"
+    placeholder="99"
+    size="lg">
 </label>
-
 <!-- Search with icon -->
-<input type="search" prefix="🔍" clearable size="lg" placeholder="Search documentation...">
+<input
+  type="search"
+  prefix="🔍"
+  clearable
+  size="lg"
+  placeholder="Search documentation...">
 ```
 
 ---
@@ -221,29 +311,24 @@ These behaviors enhance the element while preserving its identity.
   <summary>What is WB Behaviors?</summary>
   <p>WB Behaviors is a behavior-based UI library that enhances semantic HTML.</p>
 </details>
-
 <!-- Starts open -->
 <details open>
   <summary>Important Notice</summary>
   <p>This section is expanded by default so users see it immediately.</p>
 </details>
-
 <!-- FAQ section -->
 <details>
   <summary>How do I install WB Behaviors?</summary>
   <p>Run <code>npm install wb-starter</code> in your project directory.</p>
 </details>
-
 <details>
   <summary>Does it work with React?</summary>
   <p>Yes! WB behaviors can be applied to any HTML element, including those rendered by React.</p>
 </details>
-
 <details>
   <summary>Is it accessible?</summary>
   <p>Absolutely. WB uses native HTML elements and adds ARIA attributes where needed.</p>
 </details>
-
 <!-- Nested details -->
 <details>
   <summary>Product Categories</summary>
@@ -264,7 +349,6 @@ These behaviors enhance the element while preserving its identity.
     </ul>
   </details>
 </details>
-
 <!-- With rich content -->
 <details>
   <summary>View Code Example</summary>
@@ -274,7 +358,6 @@ function greet(name) {
 }
   </code></pre>
 </details>
-
 <!-- Settings panel -->
 <details>
   <summary>Advanced Settings</summary>
@@ -284,9 +367,7 @@ function greet(name) {
   <label>
     <input type="checkbox"> Dark mode
   </label>
-  <label>
-    Theme
-    <select>
+  <label> Theme <select>
       <option>Default</option>
       <option>Ocean</option>
       <option>Forest</option>
@@ -302,12 +383,10 @@ function greet(name) {
     <summary>Step 1: Create Account</summary>
     <p>Fill out the registration form with your email and password.</p>
   </details>
-  
   <details>
     <summary>Step 2: Verify Email</summary>
     <p>Check your inbox and click the verification link.</p>
   </details>
-  
   <details>
     <summary>Step 3: Complete Profile</summary>
     <p>Add your name, photo, and preferences.</p>
@@ -339,62 +418,66 @@ function greet(name) {
   <p>Thanks for visiting our site.</p>
   <button onclick="this.closest('dialog').close()">Got it</button>
 </dialog>
-<button onclick="document.getElementById('basicModal').showModal()">
-  Show Welcome
-</button>
-
+<button onclick="document.getElementById('basicModal').showModal()"> Show Welcome </button>
 <!-- Confirmation dialog -->
 <dialog id="confirmDelete">
   <h2>Delete Item?</h2>
   <p>This action cannot be undone. Are you sure?</p>
   <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-    <button variant="ghost" onclick="this.closest('dialog').close()">
-      Cancel
-    </button>
-    <button variant="danger" onclick="deleteItem(); this.closest('dialog').close()">
-      Delete
-    </button>
+    <button
+      variant="ghost"
+      onclick="this.closest('dialog').close()"> Cancel </button>
+    <button
+      variant="danger"
+      onclick="deleteItem(); this.closest('dialog').close()"> Delete </button>
   </div>
 </dialog>
-<button variant="danger" onclick="document.getElementById('confirmDelete').showModal()">
-  🗑️ Delete
-</button>
-
+<button
+  variant="danger"
+  onclick="document.getElementById('confirmDelete').showModal()"> 🗑️ Delete </button>
 <!-- Form in dialog -->
 <dialog id="loginDialog">
   <h2>Sign In</h2>
   <form method="dialog">
-    <label>
-      Email
-      <input type="email" required placeholder="you@example.com">
+    <label> Email
+      <input
+        type="email"
+        required
+        placeholder="you@example.com">
     </label>
-    <label>
-      Password
-      <input type="password" required placeholder="••••••••">
+    <label> Password
+      <input
+        type="password"
+        required
+        placeholder="••••••••">
     </label>
     <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
-      <button type="button" variant="ghost" onclick="this.closest('dialog').close()">
-        Cancel
-      </button>
-      <button type="submit" variant="primary">Sign In</button>
+      <button
+        type="button"
+        variant="ghost"
+        onclick="this.closest('dialog').close()"> Cancel </button>
+      <button
+        type="submit"
+        variant="primary">Sign In</button>
     </div>
   </form>
 </dialog>
-<button onclick="document.getElementById('loginDialog').showModal()">
-  Sign In
-</button>
-
+<button onclick="document.getElementById('loginDialog').showModal()"> Sign In </button>
 <!-- Image lightbox dialog -->
 <dialog id="imageDialog">
-  <img src="large-photo.jpg" alt="Full size photo" style="max-width: 90vw; max-height: 80vh;">
-  <button onclick="this.closest('dialog').close()" style="position: absolute; top: 1rem; right: 1rem;">
-    ✕
-  </button>
+  <img
+    src="large-photo.jpg"
+    alt="Full size photo"
+    style="max-width: 90vw; max-height: 80vh;">
+  <button
+    onclick="this.closest('dialog').close()"
+    style="position: absolute; top: 1rem; right: 1rem;"> ✕ </button>
 </dialog>
-<img src="thumbnail.jpg" alt="Click to enlarge" 
-     onclick="document.getElementById('imageDialog').showModal()" 
-     style="cursor: pointer;">
-
+<img
+  src="thumbnail.jpg"
+  alt="Click to enlarge"
+  onclick="document.getElementById('imageDialog').showModal()"
+  style="cursor: pointer;">
 <!-- Terms and conditions -->
 <dialog id="termsDialog">
   <h2>Terms of Service</h2>
@@ -403,36 +486,60 @@ function greet(name) {
     <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
     <!-- More content -->
   </div>
-  <form method="dialog" style="margin-top: 1rem;">
+  <form
+    method="dialog"
+    style="margin-top: 1rem;">
     <label>
-      <input type="checkbox" required> I agree to the terms and conditions
+      <input
+        type="checkbox"
+        required> I agree to the terms and conditions
     </label>
     <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
-      <button type="button" variant="ghost" onclick="this.closest('dialog').close()">
-        Decline
-      </button>
-      <button type="submit" variant="success">Accept</button>
+      <button
+        type="button"
+        variant="ghost"
+        onclick="this.closest('dialog').close()"> Decline </button>
+      <button
+        type="submit"
+        variant="success">Accept</button>
     </div>
   </form>
 </dialog>
-
 <!-- Settings dialog -->
 <dialog id="settingsDialog">
   <h2>Settings</h2>
   <form method="dialog">
     <fieldset>
       <legend>Notifications</legend>
-      <label><input type="checkbox" checked> Email notifications</label>
-      <label><input type="checkbox"> Push notifications</label>
-      <label><input type="checkbox" checked> Weekly digest</label>
+      <label>
+        <input
+          type="checkbox"
+          checked> Email notifications
+      </label>
+      <label>
+        <input type="checkbox"> Push notifications
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked> Weekly digest
+      </label>
     </fieldset>
     <fieldset>
       <legend>Privacy</legend>
-      <label><input type="checkbox"> Show online status</label>
-      <label><input type="checkbox" checked> Allow search engines</label>
+      <label>
+        <input type="checkbox"> Show online status
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked> Allow search engines
+      </label>
     </fieldset>
     <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
-      <button type="submit" variant="primary">Save Settings</button>
+      <button
+        type="submit"
+        variant="primary">Save Settings</button>
     </div>
   </form>
 </dialog>
@@ -487,7 +594,6 @@ function greet(name) {
     </tr>
   </tbody>
 </table>
-
 <!-- With caption -->
 <table>
   <caption>Q4 2025 Sales Report</caption>
@@ -518,7 +624,6 @@ function greet(name) {
     </tr>
   </tfoot>
 </table>
-
 <!-- Pricing table -->
 <table>
   <thead>
@@ -556,7 +661,6 @@ function greet(name) {
     </tr>
   </tbody>
 </table>
-
 <!-- Schedule/calendar table -->
 <table>
   <thead>
@@ -596,7 +700,6 @@ function greet(name) {
     </tr>
   </tbody>
 </table>
-
 <!-- Status table with badges -->
 <table>
   <thead>
@@ -611,19 +714,31 @@ function greet(name) {
     <tr>
       <td>Design homepage</td>
       <td>Alice</td>
-      <td><span x-badge variant="success">Complete</span></td>
+      <td>
+        <span
+          x-badge
+          variant="success">Complete</span>
+      </td>
       <td>Jan 15</td>
     </tr>
     <tr>
       <td>Build API</td>
       <td>Bob</td>
-      <td><span x-badge variant="warning">In Progress</span></td>
+      <td>
+        <span
+          x-badge
+          variant="warning">In Progress</span>
+      </td>
       <td>Jan 20</td>
     </tr>
     <tr>
       <td>Write docs</td>
       <td>Carol</td>
-      <td><span x-badge variant="secondary">Pending</span></td>
+      <td>
+        <span
+          x-badge
+          variant="secondary">Pending</span>
+      </td>
       <td>Jan 25</td>
     </tr>
   </tbody>
@@ -648,142 +763,236 @@ function greet(name) {
 
 ```html
 <!-- Contact form -->
-<form action="/contact" method="post">
-  <label>
-    Name
-    <input type="text" name="name" required placeholder="Your full name">
+<form
+  action="/contact"
+  method="post">
+  <label> Name
+    <input
+      type="text"
+      name="name"
+      required
+      placeholder="Your full name">
   </label>
-  
-  <label>
-    Email
-    <input type="email" name="email" required placeholder="you@example.com">
+  <label> Email
+    <input
+      type="email"
+      name="email"
+      required
+      placeholder="you@example.com">
   </label>
-  
-  <label>
-    Subject
-    <select name="subject" required>
+  <label> Subject <select
+      name="subject"
+      required>
       <option value="">Choose a topic...</option>
       <option value="sales">Sales inquiry</option>
       <option value="support">Technical support</option>
       <option value="feedback">Feedback</option>
     </select>
   </label>
-  
-  <label>
-    Message
-    <textarea name="message" required placeholder="How can we help?" rows="5"></textarea>
+  <label> Message
+    <textarea
+      name="message"
+      required
+      placeholder="How can we help?"
+      rows="5"></textarea>
   </label>
-  
-  <button type="submit" variant="primary">Send Message</button>
+  <button
+    type="submit"
+    variant="primary">Send Message</button>
 </form>
-
 <!-- Registration form -->
-<form action="/register" method="post">
+<form
+  action="/register"
+  method="post">
   <fieldset>
     <legend>Account Information</legend>
-    <label>
-      Username
-      <input type="text" name="username" required minlength="3" maxlength="20" 
-             pattern="[a-zA-Z0-9_]+" placeholder="Choose a username">
+    <label> Username
+      <input
+        type="text"
+        name="username"
+        required
+        minlength="3"
+        maxlength="20"
+        pattern="[a-zA-Z0-9_]+"
+        placeholder="Choose a username">
     </label>
-    <label>
-      Email
-      <input type="email" name="email" required placeholder="you@example.com">
+    <label> Email
+      <input
+        type="email"
+        name="email"
+        required
+        placeholder="you@example.com">
     </label>
-    <label>
-      Password
-      <input type="password" name="password" required minlength="8" 
-             placeholder="At least 8 characters">
+    <label> Password
+      <input
+        type="password"
+        name="password"
+        required
+        minlength="8"
+        placeholder="At least 8 characters">
     </label>
-    <label>
-      Confirm Password
-      <input type="password" name="confirm" required placeholder="Repeat password">
+    <label> Confirm Password
+      <input
+        type="password"
+        name="confirm"
+        required
+        placeholder="Repeat password">
     </label>
   </fieldset>
-  
   <fieldset>
     <legend>Profile</legend>
-    <label>
-      Full Name
-      <input type="text" name="fullname" placeholder="Optional">
+    <label> Full Name
+      <input
+        type="text"
+        name="fullname"
+        placeholder="Optional">
     </label>
-    <label>
-      Bio
-      <textarea name="bio" placeholder="Tell us about yourself..." rows="3"></textarea>
+    <label> Bio
+      <textarea
+        name="bio"
+        placeholder="Tell us about yourself..."
+        rows="3"></textarea>
     </label>
   </fieldset>
-  
   <label>
-    <input type="checkbox" name="terms" required>
-    I agree to the <a href="/terms">Terms of Service</a>
+    <input
+      type="checkbox"
+      name="terms"
+      required> I agree to the <a href="/terms">Terms of Service</a>
   </label>
-  
   <label>
-    <input type="checkbox" name="newsletter">
-    Subscribe to newsletter
+    <input
+      type="checkbox"
+      name="newsletter"> Subscribe to newsletter
   </label>
-  
-  <button type="submit" variant="success" size="lg">Create Account</button>
+  <button
+    type="submit"
+    variant="success"
+    size="lg">Create Account</button>
 </form>
-
 <!-- Payment form -->
-<form action="/checkout" method="post">
+<form
+  action="/checkout"
+  method="post">
   <fieldset>
     <legend>Payment Details</legend>
-    <label>
-      Card Number
-      <input type="text" name="card" required pattern="[0-9]{16}" 
-             placeholder="1234 5678 9012 3456" prefix="💳">
+    <label> Card Number
+      <input
+        type="text"
+        name="card"
+        required
+        pattern="[0-9]{16}"
+        placeholder="1234 5678 9012 3456"
+        prefix="💳">
     </label>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-      <label>
-        Expiry
-        <input type="text" name="expiry" required pattern="[0-9]{2}/[0-9]{2}" 
-               placeholder="MM/YY">
+      <label> Expiry
+        <input
+          type="text"
+          name="expiry"
+          required
+          pattern="[0-9]{2}/[0-9]{2}"
+          placeholder="MM/YY">
       </label>
-      <label>
-        CVV
-        <input type="text" name="cvv" required pattern="[0-9]{3,4}" 
-               placeholder="123">
+      <label> CVV
+        <input
+          type="text"
+          name="cvv"
+          required
+          pattern="[0-9]{3,4}"
+          placeholder="123">
       </label>
     </div>
   </fieldset>
-  
-  <button type="submit" variant="success" size="lg" icon="🔒">
-    Pay $99.00
-  </button>
+  <button
+    type="submit"
+    variant="success"
+    size="lg"
+    icon="🔒"> Pay $99.00 </button>
 </form>
-
 <!-- Search form -->
-<form action="/search" method="get" style="display: flex; gap: 0.5rem;">
-  <input type="search" name="q" placeholder="Search..." clearable size="lg" style="flex: 1;">
-  <button type="submit" variant="primary" size="lg" icon="🔍">Search</button>
+<form
+  action="/search"
+  method="get"
+  style="display: flex; gap: 0.5rem;">
+  <input
+    type="search"
+    name="q"
+    placeholder="Search..."
+    clearable
+    size="lg"
+    style="flex: 1;">
+  <button
+    type="submit"
+    variant="primary"
+    size="lg"
+    icon="🔍">Search</button>
 </form>
-
 <!-- Filter form -->
 <form>
   <fieldset>
     <legend>Price Range</legend>
-    <label><input type="radio" name="price" value="0-50"> $0 - $50</label>
-    <label><input type="radio" name="price" value="50-100"> $50 - $100</label>
-    <label><input type="radio" name="price" value="100+"> $100+</label>
+    <label>
+      <input
+        type="radio"
+        name="price"
+        value="0-50"> $0 - $50
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="price"
+        value="50-100"> $50 - $100
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="price"
+        value="100+"> $100+
+    </label>
   </fieldset>
-  
   <fieldset>
     <legend>Categories</legend>
-    <label><input type="checkbox" name="cat" value="electronics"> Electronics</label>
-    <label><input type="checkbox" name="cat" value="clothing"> Clothing</label>
-    <label><input type="checkbox" name="cat" value="home"> Home & Garden</label>
+    <label>
+      <input
+        type="checkbox"
+        name="cat"
+        value="electronics"> Electronics
+    </label>
+    <label>
+      <input
+        type="checkbox"
+        name="cat"
+        value="clothing"> Clothing
+    </label>
+    <label>
+      <input
+        type="checkbox"
+        name="cat"
+        value="home"> Home & Garden
+    </label>
   </fieldset>
-  
   <fieldset>
     <legend>Rating</legend>
-    <label><input type="checkbox" name="rating" value="4"> 4+ Stars</label>
-    <label><input type="checkbox" name="rating" value="3"> 3+ Stars</label>
+    <label>
+      <input
+        type="checkbox"
+        name="rating"
+        value="4"> 4+ Stars
+    </label>
+    <label>
+      <input
+        type="checkbox"
+        name="rating"
+        value="3"> 3+ Stars
+    </label>
   </fieldset>
-  
-  <button type="submit" variant="primary">Apply Filters</button>
-  <button type="reset" variant="ghost">Clear All</button>
+  <button
+    type="submit"
+    variant="primary">Apply Filters</button>
+  <button
+    type="reset"
+    variant="ghost">Clear All</button>
 </form>
 ```
 
@@ -810,7 +1019,6 @@ function greet(name) {
   <option value="2">Option 2</option>
   <option value="3">Option 3</option>
 </select>
-
 <!-- With optgroups -->
 <select>
   <option value="">Select a car...</option>
@@ -824,7 +1032,6 @@ function greet(name) {
     <option value="bmw">BMW</option>
   </optgroup>
 </select>
-
 <!-- Country selector -->
 <select name="country">
   <option value="">Select country...</option>
@@ -836,9 +1043,10 @@ function greet(name) {
   <option value="fr">🇫🇷 France</option>
   <option value="jp">🇯🇵 Japan</option>
 </select>
-
 <!-- Multiple selection -->
-<select multiple size="5">
+<select
+  multiple
+  size="5">
   <option value="html">HTML</option>
   <option value="css">CSS</option>
   <option value="js">JavaScript</option>
@@ -847,15 +1055,15 @@ function greet(name) {
   <option value="vue">Vue</option>
   <option value="angular">Angular</option>
 </select>
-
 <!-- With disabled options -->
 <select>
   <option value="">Choose a plan...</option>
   <option value="free">Free - $0/mo</option>
   <option value="pro">Pro - $29/mo</option>
-  <option value="enterprise" disabled>Enterprise - Contact Us</option>
+  <option
+    value="enterprise"
+    disabled>Enterprise - Contact Us</option>
 </select>
-
 <!-- Date selectors -->
 <div style="display: flex; gap: 0.5rem;">
   <select name="month">
@@ -899,42 +1107,53 @@ function greet(name) {
 ```html
 <!-- Basic textarea -->
 <textarea placeholder="Enter your message..."></textarea>
-
 <!-- With character limit -->
-<textarea maxlength="500" counter placeholder="Write your bio (max 500 characters)..."></textarea>
-
+<textarea
+  maxlength="500"
+  counter
+  placeholder="Write your bio (max 500 characters)..."></textarea>
 <!-- Different sizes -->
-<textarea rows="3" placeholder="Short message..."></textarea>
-<textarea rows="10" placeholder="Long description..."></textarea>
-
+<textarea
+  rows="3"
+  placeholder="Short message..."></textarea>
+<textarea
+  rows="10"
+  placeholder="Long description..."></textarea>
 <!-- Code input -->
-<textarea rows="15" style="font-family: monospace;" placeholder="// Paste your code here..."></textarea>
-
+<textarea
+  rows="15"
+  style="font-family: monospace;"
+  placeholder="// Paste your code here..."></textarea>
 <!-- Various use cases -->
-<label>
-  Product Description
-  <textarea rows="5" placeholder="Describe your product in detail..." maxlength="1000" counter></textarea>
+<label> Product Description
+  <textarea
+    rows="5"
+    placeholder="Describe your product in detail..."
+    maxlength="1000"
+    counter></textarea>
 </label>
-
-<label>
-  Cover Letter
-  <textarea rows="10" placeholder="Dear Hiring Manager..."></textarea>
+<label> Cover Letter
+  <textarea
+    rows="10"
+    placeholder="Dear Hiring Manager..."></textarea>
 </label>
-
-<label>
-  Bug Report
-  <textarea rows="8" placeholder="Please describe the issue:
+<label> Bug Report
+  <textarea
+    rows="8"
+    placeholder="Please describe the issue:
 - What happened?
 - What did you expect?
 - Steps to reproduce..."></textarea>
 </label>
-
-<label>
-  JSON Configuration
-  <textarea rows="12" style="font-family: monospace;" placeholder='{
+<label> JSON Configuration
+  <textarea
+    rows="12"
+    style="font-family: monospace;"
+    placeholder='{
   "name": "my-config",
   "version": "1.0.0"
-}'></textarea>
+}'
+  ></textarea>
 </label>
 ```
 
@@ -956,65 +1175,130 @@ function greet(name) {
 ```html
 <!-- Single checkbox -->
 <label>
-  <input type="checkbox" name="subscribe">
-  Subscribe to newsletter
+  <input
+    type="checkbox"
+    name="subscribe"> Subscribe to newsletter
 </label>
-
 <!-- Terms agreement -->
 <label>
-  <input type="checkbox" name="terms" required>
-  I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>
+  <input
+    type="checkbox"
+    name="terms"
+    required> I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>
 </label>
-
 <!-- Checkbox group -->
 <fieldset>
   <legend>Select your interests:</legend>
-  <label><input type="checkbox" name="interests" value="tech"> Technology</label>
-  <label><input type="checkbox" name="interests" value="sports"> Sports</label>
-  <label><input type="checkbox" name="interests" value="music"> Music</label>
-  <label><input type="checkbox" name="interests" value="travel"> Travel</label>
-  <label><input type="checkbox" name="interests" value="food"> Food & Cooking</label>
+  <label>
+    <input
+      type="checkbox"
+      name="interests"
+      value="tech"> Technology
+  </label>
+  <label>
+    <input
+      type="checkbox"
+      name="interests"
+      value="sports"> Sports
+  </label>
+  <label>
+    <input
+      type="checkbox"
+      name="interests"
+      value="music"> Music
+  </label>
+  <label>
+    <input
+      type="checkbox"
+      name="interests"
+      value="travel"> Travel
+  </label>
+  <label>
+    <input
+      type="checkbox"
+      name="interests"
+      value="food"> Food & Cooking
+  </label>
 </fieldset>
-
 <!-- Settings toggles -->
 <fieldset>
   <legend>Notification Settings</legend>
-  <label><input type="checkbox" name="email_notif" checked> Email notifications</label>
-  <label><input type="checkbox" name="push_notif"> Push notifications</label>
-  <label><input type="checkbox" name="sms_notif"> SMS alerts</label>
-  <label><input type="checkbox" name="weekly" checked> Weekly digest</label>
+  <label>
+    <input
+      type="checkbox"
+      name="email_notif"
+      checked> Email notifications
+  </label>
+  <label>
+    <input
+      type="checkbox"
+      name="push_notif"> Push notifications
+  </label>
+  <label>
+    <input
+      type="checkbox"
+      name="sms_notif"> SMS alerts
+  </label>
+  <label>
+    <input
+      type="checkbox"
+      name="weekly"
+      checked> Weekly digest
+  </label>
 </fieldset>
-
 <!-- Feature selection -->
 <fieldset>
   <legend>Select Features</legend>
   <label>
-    <input type="checkbox" name="features" value="analytics" checked>
-    📊 Analytics Dashboard
+    <input
+      type="checkbox"
+      name="features"
+      value="analytics"
+      checked> 📊 Analytics Dashboard
   </label>
   <label>
-    <input type="checkbox" name="features" value="api">
-    🔌 API Access
+    <input
+      type="checkbox"
+      name="features"
+      value="api"> 🔌 API Access
   </label>
   <label>
-    <input type="checkbox" name="features" value="support">
-    💬 Priority Support
+    <input
+      type="checkbox"
+      name="features"
+      value="support"> 💬 Priority Support
   </label>
   <label>
-    <input type="checkbox" name="features" value="export">
-    📤 Data Export
+    <input
+      type="checkbox"
+      name="features"
+      value="export"> 📤 Data Export
   </label>
 </fieldset>
-
 <!-- Indeterminate state (via JS) -->
 <label>
-  <input type="checkbox" id="selectAll" onchange="toggleAll(this)">
+  <input
+    type="checkbox"
+    id="selectAll"
+    onchange="toggleAll(this)">
   <strong>Select All</strong>
 </label>
 <div style="padding-left: 1.5rem;">
-  <label><input type="checkbox" class="item"> Item 1</label>
-  <label><input type="checkbox" class="item"> Item 2</label>
-  <label><input type="checkbox" class="item"> Item 3</label>
+  <label>
+    <input
+      type="checkbox"
+      class="item"> Item 1
+  </label>
+  <label>
+    <input
+      type="checkbox"
+      class="item"> Item 2
+  </label>
+  <label>
+    <input
+      type="checkbox"
+      class="item"> Item 3
+  </label>
 </div>
 ```
 
@@ -1037,95 +1321,198 @@ function greet(name) {
 <!-- Basic radio group -->
 <fieldset>
   <legend>Choose a size:</legend>
-  <label><input type="radio" name="size" value="s"> Small</label>
-  <label><input type="radio" name="size" value="m" checked> Medium</label>
-  <label><input type="radio" name="size" value="l"> Large</label>
-  <label><input type="radio" name="size" value="xl"> Extra Large</label>
+  <label>
+    <input
+      type="radio"
+      name="size"
+      value="s"> Small
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="size"
+      value="m"
+      checked> Medium
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="size"
+      value="l"> Large
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="size"
+      value="xl"> Extra Large
+  </label>
 </fieldset>
-
 <!-- Payment method -->
 <fieldset>
   <legend>Payment Method</legend>
   <label>
-    <input type="radio" name="payment" value="card" checked>
-    💳 Credit/Debit Card
+    <input
+      type="radio"
+      name="payment"
+      value="card"
+      checked> 💳 Credit/Debit Card
   </label>
   <label>
-    <input type="radio" name="payment" value="paypal">
-    🅿️ PayPal
+    <input
+      type="radio"
+      name="payment"
+      value="paypal"> 🅿️ PayPal
   </label>
   <label>
-    <input type="radio" name="payment" value="bank">
-    🏦 Bank Transfer
+    <input
+      type="radio"
+      name="payment"
+      value="bank"> 🏦 Bank Transfer
   </label>
   <label>
-    <input type="radio" name="payment" value="crypto">
-    ₿ Cryptocurrency
+    <input
+      type="radio"
+      name="payment"
+      value="crypto"> ₿ Cryptocurrency
   </label>
 </fieldset>
-
 <!-- Shipping options -->
 <fieldset>
   <legend>Shipping Speed</legend>
   <label>
-    <input type="radio" name="shipping" value="standard">
-    📦 Standard (5-7 days) - Free
+    <input
+      type="radio"
+      name="shipping"
+      value="standard"> 📦 Standard (5-7 days) - Free
   </label>
   <label>
-    <input type="radio" name="shipping" value="express">
-    🚚 Express (2-3 days) - $9.99
+    <input
+      type="radio"
+      name="shipping"
+      value="express"> 🚚 Express (2-3 days) - $9.99
   </label>
   <label>
-    <input type="radio" name="shipping" value="overnight">
-    ✈️ Overnight - $24.99
+    <input
+      type="radio"
+      name="shipping"
+      value="overnight"> ✈️ Overnight - $24.99
   </label>
 </fieldset>
-
 <!-- Rating scale -->
 <fieldset>
   <legend>How satisfied are you?</legend>
-  <label><input type="radio" name="satisfaction" value="1"> 1 - Very Dissatisfied</label>
-  <label><input type="radio" name="satisfaction" value="2"> 2 - Dissatisfied</label>
-  <label><input type="radio" name="satisfaction" value="3"> 3 - Neutral</label>
-  <label><input type="radio" name="satisfaction" value="4"> 4 - Satisfied</label>
-  <label><input type="radio" name="satisfaction" value="5"> 5 - Very Satisfied</label>
+  <label>
+    <input
+      type="radio"
+      name="satisfaction"
+      value="1"> 1 - Very Dissatisfied
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="satisfaction"
+      value="2"> 2 - Dissatisfied
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="satisfaction"
+      value="3"> 3 - Neutral
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="satisfaction"
+      value="4"> 4 - Satisfied
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="satisfaction"
+      value="5"> 5 - Very Satisfied
+  </label>
 </fieldset>
-
 <!-- Pricing plans -->
 <fieldset>
   <legend>Choose Your Plan</legend>
   <label style="display: block; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 0.5rem;">
-    <input type="radio" name="plan" value="free">
+    <input
+      type="radio"
+      name="plan"
+      value="free">
     <strong>Free</strong> - $0/month
-    <br><small>Basic features for individuals</small>
+    <br>
+    <small>Basic features for individuals</small>
   </label>
   <label style="display: block; padding: 1rem; border: 2px solid var(--primary); border-radius: 8px; margin-bottom: 0.5rem;">
-    <input type="radio" name="plan" value="pro" checked>
+    <input
+      type="radio"
+      name="plan"
+      value="pro"
+      checked>
     <strong>Pro</strong> - $29/month ⭐ Popular
-    <br><small>Advanced features for professionals</small>
+    <br>
+    <small>Advanced features for professionals</small>
   </label>
   <label style="display: block; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px;">
-    <input type="radio" name="plan" value="team">
+    <input
+      type="radio"
+      name="plan"
+      value="team">
     <strong>Team</strong> - $99/month
-    <br><small>Collaboration features for teams</small>
+    <br>
+    <small>Collaboration features for teams</small>
   </label>
 </fieldset>
-
 <!-- Yes/No questions -->
 <fieldset>
   <legend>Do you have prior experience?</legend>
-  <label><input type="radio" name="experience" value="yes"> Yes</label>
-  <label><input type="radio" name="experience" value="no"> No</label>
+  <label>
+    <input
+      type="radio"
+      name="experience"
+      value="yes"> Yes
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="experience"
+      value="no"> No
+  </label>
 </fieldset>
-
 <!-- Frequency selection -->
 <fieldset>
   <legend>How often do you exercise?</legend>
-  <label><input type="radio" name="exercise" value="daily"> Daily</label>
-  <label><input type="radio" name="exercise" value="weekly"> A few times a week</label>
-  <label><input type="radio" name="exercise" value="monthly"> A few times a month</label>
-  <label><input type="radio" name="exercise" value="rarely"> Rarely</label>
-  <label><input type="radio" name="exercise" value="never"> Never</label>
+  <label>
+    <input
+      type="radio"
+      name="exercise"
+      value="daily"> Daily
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="exercise"
+      value="weekly"> A few times a week
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="exercise"
+      value="monthly"> A few times a month
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="exercise"
+      value="rarely"> Rarely
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="exercise"
+      value="never"> Never
+  </label>
 </fieldset>
 ```
 
@@ -1147,59 +1534,80 @@ function greet(name) {
 
 ```html
 <!-- Basic range -->
-<label>
-  Volume
-  <input type="range" min="0" max="100" value="50">
+<label> Volume
+  <input
+    type="range"
+    min="0"
+    max="100"
+    value="50">
 </label>
-
 <!-- With output display -->
-<label>
-  Brightness: <output id="brightnessValue">75</output>%
-  <input type="range" min="0" max="100" value="75" 
-         oninput="document.getElementById('brightnessValue').textContent = this.value">
+<label> Brightness: <output id="brightnessValue">75</output>%
+  <input
+    type="range"
+    min="0"
+    max="100"
+    value="75"
+    oninput="document.getElementById('brightnessValue').textContent = this.value">
 </label>
-
 <!-- Price range -->
-<label>
-  Max Price: $<output id="priceValue">500</output>
-  <input type="range" min="0" max="1000" step="50" value="500"
-         oninput="document.getElementById('priceValue').textContent = this.value">
+<label> Max Price: $<output id="priceValue">500</output>
+  <input
+    type="range"
+    min="0"
+    max="1000"
+    step="50"
+    value="500"
+    oninput="document.getElementById('priceValue').textContent = this.value">
 </label>
-
 <!-- Rating slider -->
-<label>
-  Rating: <output id="ratingValue">3</output> / 5
-  <input type="range" min="1" max="5" step="1" value="3"
-         oninput="document.getElementById('ratingValue').textContent = this.value">
+<label> Rating: <output id="ratingValue">3</output> / 5
+  <input
+    type="range"
+    min="1"
+    max="5"
+    step="1"
+    value="3"
+    oninput="document.getElementById('ratingValue').textContent = this.value">
 </label>
-
 <!-- Temperature control -->
-<label>
-  Temperature: <output id="tempValue">72</output>°F
-  <input type="range" min="60" max="85" value="72"
-         oninput="document.getElementById('tempValue').textContent = this.value">
+<label> Temperature: <output id="tempValue">72</output>°F
+  <input
+    type="range"
+    min="60"
+    max="85"
+    value="72"
+    oninput="document.getElementById('tempValue').textContent = this.value">
 </label>
-
 <!-- Opacity slider -->
-<label>
-  Opacity: <output id="opacityValue">100</output>%
-  <input type="range" min="0" max="100" value="100"
-         oninput="document.getElementById('opacityValue').textContent = this.value">
+<label> Opacity: <output id="opacityValue">100</output>%
+  <input
+    type="range"
+    min="0"
+    max="100"
+    value="100"
+    oninput="document.getElementById('opacityValue').textContent = this.value">
 </label>
-
 <!-- Zoom control -->
 <label style="display: flex; align-items: center; gap: 0.5rem;">
   <span>🔍-</span>
-  <input type="range" min="50" max="200" value="100" style="flex: 1;">
+  <input
+    type="range"
+    min="50"
+    max="200"
+    value="100"
+    style="flex: 1;">
   <span>🔍+</span>
 </label>
-
 <!-- Color hue picker -->
-<label>
-  Hue: <output id="hueValue">180</output>°
-  <input type="range" min="0" max="360" value="180"
-         oninput="document.getElementById('hueValue').textContent = this.value"
-         style="background: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);">
+<label> Hue: <output id="hueValue">180</output>°
+  <input
+    type="range"
+    min="0"
+    max="360"
+    value="180"
+    oninput="document.getElementById('hueValue').textContent = this.value"
+    style="background: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);">
 </label>
 ```
 
@@ -1221,54 +1629,75 @@ function greet(name) {
 
 ```html
 <!-- Basic progress -->
-<progress value="70" max="100"></progress>
-
+<progress
+  value="70"
+  max="100"></progress>
 <!-- Indeterminate (loading) -->
 <progress></progress>
-
 <!-- Various completion levels -->
-<label>Not started: <progress value="0" max="100"></progress></label>
-<label>25% Complete: <progress value="25" max="100"></progress></label>
-<label>50% Complete: <progress value="50" max="100"></progress></label>
-<label>75% Complete: <progress value="75" max="100"></progress></label>
-<label>Complete: <progress value="100" max="100"></progress></label>
-
+<label>Not started: <progress
+    value="0"
+    max="100"></progress>
+</label>
+<label>25% Complete: <progress
+    value="25"
+    max="100"></progress>
+</label>
+<label>50% Complete: <progress
+    value="50"
+    max="100"></progress>
+</label>
+<label>75% Complete: <progress
+    value="75"
+    max="100"></progress>
+</label>
+<label>Complete: <progress
+    value="100"
+    max="100"></progress>
+</label>
 <!-- File upload progress -->
 <div>
   <p>Uploading document.pdf...</p>
-  <progress value="45" max="100"></progress>
+  <progress
+    value="45"
+    max="100"></progress>
   <span>45%</span>
 </div>
-
 <!-- Download progress -->
 <div>
   <p>Downloading update (125 MB / 500 MB)</p>
-  <progress value="125" max="500"></progress>
+  <progress
+    value="125"
+    max="500"></progress>
 </div>
-
 <!-- Step progress -->
 <div>
   <p>Step 2 of 4</p>
-  <progress value="2" max="4"></progress>
+  <progress
+    value="2"
+    max="4"></progress>
 </div>
-
 <!-- Course progress -->
 <div>
   <h3>JavaScript Fundamentals</h3>
   <p>12 of 20 lessons completed</p>
-  <progress value="12" max="20"></progress>
+  <progress
+    value="12"
+    max="20"></progress>
 </div>
-
 <!-- Multiple progress bars (dashboard) -->
 <div>
-  <label>Storage Used (7.5 GB / 10 GB)
-    <progress value="75" max="100"></progress>
+  <label>Storage Used (7.5 GB / 10 GB) <progress
+      value="75"
+      max="100"></progress>
   </label>
-  <label>Bandwidth Used (45 GB / 100 GB)
-    <progress value="45" max="100"></progress>
+  <label>Bandwidth Used (45 GB / 100 GB) <progress
+      value="45"
+      max="100"></progress>
   </label>
-  <label>API Calls (8,500 / 10,000)
-    <progress value="85" max="100"></progress>
+  <label>API Calls (8,500 / 10,000) <progress
+      value="85"
+      max="100"></progress>
   </label>
 </div>
 ```
@@ -1291,27 +1720,18 @@ function greet(name) {
 ```html
 <!-- Inline code in text -->
 <p>Use the <code>console.log()</code> function to debug your code.</p>
-
 <p>The <code>Array.map()</code> method creates a new array.</p>
-
 <p>Set <code>display: flex</code> on the container.</p>
-
 <p>Run <code>npm install</code> to install dependencies.</p>
-
 <p>The <code>async/await</code> syntax makes asynchronous code easier to read.</p>
-
 <!-- Variable names -->
 <p>Store the result in <code>userData</code> variable.</p>
-
 <!-- File paths -->
 <p>Configuration is in <code>/config/site.json</code>.</p>
-
 <!-- Commands -->
 <p>Press <code>Ctrl+C</code> to copy.</p>
-
 <!-- Multiple inline codes -->
 <p>Compare <code>==</code> (loose equality) vs <code>===</code> (strict equality).</p>
-
 <p>Use <code>let</code> for variables that change, <code>const</code> for constants.</p>
 ```
 
@@ -1341,7 +1761,6 @@ function greet(name) {
   return `Hello, ${name}!`;
 }
 </pre>
-
 <!-- With line numbers -->
 <pre line-numbers>
 const express = require('express');
@@ -1353,7 +1772,6 @@ app.get('/', (req, res) => {
 
 app.listen(3000);
 </pre>
-
 <!-- JavaScript example -->
 <pre language="javascript">
 // Fetch data from API
@@ -1363,7 +1781,6 @@ async function fetchUsers() {
   return users;
 }
 </pre>
-
 <!-- HTML example -->
 <pre language="html">
 &lt;article&gt;
@@ -1375,7 +1792,6 @@ async function fetchUsers() {
   &lt;/main&gt;
 &lt;/article&gt;
 </pre>
-
 <!-- CSS example -->
 <pre language="css">
 .card {
@@ -1391,7 +1807,6 @@ async function fetchUsers() {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 </pre>
-
 <!-- JSON example -->
 <pre language="json">
 {
@@ -1403,7 +1818,6 @@ async function fetchUsers() {
   }
 }
 </pre>
-
 <!-- Shell commands -->
 <pre language="bash">
 # Install dependencies
@@ -1415,7 +1829,6 @@ npm run dev
 # Build for production
 npm run build
 </pre>
-
 <!-- Terminal output -->
 <pre>
 $ npm test
@@ -1474,11 +1887,12 @@ These behaviors transform the element into a component.
     <a href="/docs/start">Read more →</a>
   </footer>
 </article>
-
 <!-- Card with image -->
 <article>
   <figure>
-    <img src="product.jpg" alt="Product photo">
+    <img
+      src="product.jpg"
+      alt="Product photo">
   </figure>
   <header>
     <h3>Premium Widget</h3>
@@ -1491,7 +1905,6 @@ These behaviors transform the element into a component.
     <button variant="primary">Add to Cart</button>
   </footer>
 </article>
-
 <!-- Glass variant -->
 <article variant="glass">
   <header>
@@ -1501,7 +1914,6 @@ These behaviors transform the element into a component.
     <p>Beautiful frosted glass effect with blur backdrop.</p>
   </main>
 </article>
-
 <!-- Elevated card -->
 <article elevated>
   <header>
@@ -1511,7 +1923,6 @@ These behaviors transform the element into a component.
     <p>This card has a stronger shadow for emphasis.</p>
   </main>
 </article>
-
 <!-- Clickable card -->
 <article clickable>
   <header>
@@ -1521,11 +1932,13 @@ These behaviors transform the element into a component.
     <p>This entire card is clickable and interactive.</p>
   </main>
 </article>
-
 <!-- Profile card -->
 <article>
   <figure style="text-align: center; padding: 2rem;">
-    <img src="avatar.jpg" alt="User avatar" style="width: 80px; height: 80px; border-radius: 50%;">
+    <img
+      src="avatar.jpg"
+      alt="User avatar"
+      style="width: 80px; height: 80px; border-radius: 50%;">
   </figure>
   <header style="text-align: center;">
     <h3>Jane Smith</h3>
@@ -1540,11 +1953,12 @@ These behaviors transform the element into a component.
     <a href="#">LinkedIn</a>
   </footer>
 </article>
-
 <!-- Blog post card -->
 <article>
   <figure>
-    <img src="blog-hero.jpg" alt="Blog post hero image">
+    <img
+      src="blog-hero.jpg"
+      alt="Blog post hero image">
   </figure>
   <header>
     <span>Tutorial • 5 min read</span>
@@ -1558,12 +1972,14 @@ These behaviors transform the element into a component.
     <span>By John Doe</span>
   </footer>
 </article>
-
 <!-- Pricing card -->
-<article variant="glass" elevated>
+<article
+  variant="glass"
+  elevated>
   <header style="text-align: center;">
     <h3>Pro Plan</h3>
-    <p style="font-size: 2.5rem; font-weight: bold;">$29<small>/mo</small></p>
+    <p style="font-size: 2.5rem; font-weight: bold;">$29<small>/mo</small>
+    </p>
   </header>
   <main>
     <ul>
@@ -1574,10 +1990,12 @@ These behaviors transform the element into a component.
     </ul>
   </main>
   <footer>
-    <button variant="primary" size="lg" style="width: 100%;">Get Started</button>
+    <button
+      variant="primary"
+      size="lg"
+      style="width: 100%;">Get Started</button>
   </footer>
 </article>
-
 <!-- Feature card -->
 <article>
   <header>
@@ -1588,7 +2006,6 @@ These behaviors transform the element into a component.
     <p>Optimized for performance with lazy loading and minimal JavaScript overhead.</p>
   </main>
 </article>
-
 <!-- Notification/Alert card -->
 <article style="border-left: 4px solid var(--success);">
   <header>
@@ -1601,7 +2018,6 @@ These behaviors transform the element into a component.
     <a href="/orders/12345">View Order Details</a>
   </footer>
 </article>
-
 <!-- Stat card -->
 <article>
   <main style="text-align: center; padding: 2rem;">
@@ -1616,18 +2032,28 @@ These behaviors transform the element into a component.
 ```html
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
   <article>
-    <header><h3>Card 1</h3></header>
-    <main><p>First card content.</p></main>
+    <header>
+      <h3>Card 1</h3>
+    </header>
+    <main>
+      <p>First card content.</p>
+    </main>
   </article>
-  
   <article>
-    <header><h3>Card 2</h3></header>
-    <main><p>Second card content.</p></main>
+    <header>
+      <h3>Card 2</h3>
+    </header>
+    <main>
+      <p>Second card content.</p>
+    </main>
   </article>
-  
   <article>
-    <header><h3>Card 3</h3></header>
-    <main><p>Third card content.</p></main>
+    <header>
+      <h3>Card 3</h3>
+    </header>
+    <main>
+      <p>Third card content.</p>
+    </main>
   </article>
 </div>
 ```
@@ -1664,9 +2090,10 @@ These behaviors transform the element into a component.
     <p>Complete guide to using WB Behaviors.</p>
   </main>
 </article>
-
 <!-- External link card -->
-<article href="https://github.com/wb-framework" target="_blank">
+<article
+  href="https://github.com/wb-framework"
+  target="_blank">
   <header>
     <h3>🐙 GitHub Repository</h3>
   </header>
@@ -1674,7 +2101,6 @@ These behaviors transform the element into a component.
     <p>View source code, report issues, and contribute.</p>
   </main>
 </article>
-
 <!-- Navigation cards -->
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
   <article href="/products">
@@ -1686,7 +2112,6 @@ These behaviors transform the element into a component.
       <p>Browse our catalog</p>
     </main>
   </article>
-  
   <article href="/about">
     <header>
       <span style="font-size: 2rem;">ℹ️</span>
@@ -1696,7 +2121,6 @@ These behaviors transform the element into a component.
       <p>Learn our story</p>
     </main>
   </article>
-  
   <article href="/contact">
     <header>
       <span style="font-size: 2rem;">📧</span>
@@ -1706,7 +2130,6 @@ These behaviors transform the element into a component.
       <p>Get in touch</p>
     </main>
   </article>
-  
   <article href="/support">
     <header>
       <span style="font-size: 2rem;">💬</span>
@@ -1717,21 +2140,27 @@ These behaviors transform the element into a component.
     </main>
   </article>
 </div>
-
 <!-- Resource links -->
-<article href="https://docs.example.com" target="_blank">
+<article
+  href="https://docs.example.com"
+  target="_blank">
   <header>
     <h3>API Documentation ↗</h3>
-    <span x-badge variant="primary">New</span>
+    <span
+      x-badge
+      variant="primary">New</span>
   </header>
   <main>
     <p>Complete API reference with examples and best practices.</p>
   </main>
 </article>
-
-<article href="https://www.youtube.com/watch?v=..." target="_blank">
+<article
+  href="https://www.youtube.com/watch?v=..."
+  target="_blank">
   <figure>
-    <img src="video-thumbnail.jpg" alt="Tutorial video">
+    <img
+      src="video-thumbnail.jpg"
+      alt="Tutorial video">
   </figure>
   <header>
     <h3>Video Tutorial ↗</h3>
@@ -1768,91 +2197,144 @@ These behaviors transform the element into a component.
 ```html
 <!-- Basic semantic navbar -->
 <nav>
-  <a href="/" style="font-weight: bold; font-size: 1.25rem;">MyBrand</a>
+  <a
+    href="/"
+    style="font-weight: bold; font-size: 1.25rem;">MyBrand</a>
   <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/services">Services</a></li>
-    <li><a href="/contact">Contact</a></li>
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/about">About</a>
+    </li>
+    <li>
+      <a href="/services">Services</a>
+    </li>
+    <li>
+      <a href="/contact">Contact</a>
+    </li>
   </ul>
 </nav>
-
 <!-- With logo image -->
 <nav>
   <a href="/">
-    <img src="logo.svg" alt="Company Logo" height="32">
+    <img
+      src="logo.svg"
+      alt="Company Logo"
+      height="32">
   </a>
   <ul>
-    <li><a href="/products">Products</a></li>
-    <li><a href="/pricing">Pricing</a></li>
-    <li><a href="/docs">Docs</a></li>
-    <li><a href="/login">Login</a></li>
+    <li>
+      <a href="/products">Products</a>
+    </li>
+    <li>
+      <a href="/pricing">Pricing</a>
+    </li>
+    <li>
+      <a href="/docs">Docs</a>
+    </li>
+    <li>
+      <a href="/login">Login</a>
+    </li>
   </ul>
 </nav>
-
 <!-- Generated navbar -->
-<nav brand="WB Behaviors" items="Home, Features, Docs, Pricing, Contact">
+<nav
+  brand="WB Behaviors"
+  items="Home, Features, Docs, Pricing, Contact">
 </nav>
-
 <!-- Sticky navbar -->
-<nav brand="MySite" items="Home, About, Blog, Contact" sticky>
+<nav
+  brand="MySite"
+  items="Home, About, Blog, Contact"
+  sticky>
 </nav>
-
 <!-- Full featured navbar -->
 <nav>
   <div style="display: flex; align-items: center; gap: 1rem;">
-    <a href="/" style="font-weight: bold;">🚀 AppName</a>
+    <a
+      href="/"
+      style="font-weight: bold;">🚀 AppName</a>
     <span style="font-size: 0.75rem; background: var(--primary); color: white; padding: 0.125rem 0.5rem; border-radius: 4px;">Beta</span>
   </div>
-  
   <ul>
-    <li><a href="/dashboard">Dashboard</a></li>
-    <li><a href="/projects">Projects</a></li>
-    <li><a href="/team">Team</a></li>
-    <li><a href="/settings">Settings</a></li>
+    <li>
+      <a href="/dashboard">Dashboard</a>
+    </li>
+    <li>
+      <a href="/projects">Projects</a>
+    </li>
+    <li>
+      <a href="/team">Team</a>
+    </li>
+    <li>
+      <a href="/settings">Settings</a>
+    </li>
   </ul>
-  
   <div style="display: flex; align-items: center; gap: 0.5rem;">
-    <button variant="ghost" size="sm">🔔</button>
-    <img src="avatar.jpg" alt="Profile" style="width: 32px; height: 32px; border-radius: 50%;">
+    <button
+      variant="ghost"
+      size="sm">🔔</button>
+    <img
+      src="avatar.jpg"
+      alt="Profile"
+      style="width: 32px; height: 32px; border-radius: 50%;">
   </div>
 </nav>
-
 <!-- E-commerce navbar -->
 <nav>
   <a href="/">ShopName</a>
-  
   <ul>
-    <li><a href="/new">New Arrivals</a></li>
-    <li><a href="/women">Women</a></li>
-    <li><a href="/men">Men</a></li>
-    <li><a href="/sale">Sale 🔥</a></li>
+    <li>
+      <a href="/new">New Arrivals</a>
+    </li>
+    <li>
+      <a href="/women">Women</a>
+    </li>
+    <li>
+      <a href="/men">Men</a>
+    </li>
+    <li>
+      <a href="/sale">Sale 🔥</a>
+    </li>
   </ul>
-  
   <div style="display: flex; gap: 0.5rem;">
-    <input type="search" placeholder="Search..." size="sm" style="width: 200px;">
+    <input
+      type="search"
+      placeholder="Search..."
+      size="sm"
+      style="width: 200px;">
     <button variant="ghost">❤️</button>
     <button variant="ghost">🛒 (3)</button>
   </div>
 </nav>
-
 <!-- Documentation navbar -->
 <nav>
   <a href="/">
     <strong>WB Docs</strong>
     <span style="opacity: 0.7; font-size: 0.875rem; margin-left: 0.5rem;">v2.1.0</span>
   </a>
-  
   <ul>
-    <li><a href="/guides">Guides</a></li>
-    <li><a href="/api">API Reference</a></li>
-    <li><a href="/examples">Examples</a></li>
-    <li><a href="/changelog">Changelog</a></li>
+    <li>
+      <a href="/guides">Guides</a>
+    </li>
+    <li>
+      <a href="/api">API Reference</a>
+    </li>
+    <li>
+      <a href="/examples">Examples</a>
+    </li>
+    <li>
+      <a href="/changelog">Changelog</a>
+    </li>
   </ul>
-  
   <div style="display: flex; gap: 0.5rem;">
-    <a href="https://github.com/wb" target="_blank">GitHub</a>
-    <button variant="primary" size="sm">Get Started</button>
+    <a
+      href="https://github.com/wb"
+      target="_blank">GitHub</a>
+    <button
+      variant="primary"
+      size="sm">Get Started</button>
   </div>
 </nav>
 ```
@@ -1880,20 +2362,22 @@ These behaviors transform the element into a component.
 
 ```html
 <!-- Basic sidebar -->
-<aside items="Dashboard, Projects, Team, Settings" active="Dashboard">
+<aside
+  items="Dashboard, Projects, Team, Settings"
+  active="Dashboard">
 </aside>
-
 <!-- Semantic sidebar -->
 <aside>
   <nav>
-    <a href="/dashboard" class="active">📊 Dashboard</a>
+    <a
+      href="/dashboard"
+      class="active">📊 Dashboard</a>
     <a href="/projects">📁 Projects</a>
     <a href="/team">👥 Team</a>
     <a href="/analytics">📈 Analytics</a>
     <a href="/settings">⚙️ Settings</a>
   </nav>
 </aside>
-
 <!-- Sidebar with sections -->
 <aside>
   <nav>
@@ -1901,19 +2385,16 @@ These behaviors transform the element into a component.
     <a href="/dashboard">Dashboard</a>
     <a href="/inbox">Inbox</a>
     <a href="/calendar">Calendar</a>
-    
     <strong style="display: block; padding: 0.5rem; margin-top: 1rem; opacity: 0.7; font-size: 0.75rem;">PROJECTS</strong>
     <a href="/projects/alpha">Project Alpha</a>
     <a href="/projects/beta">Project Beta</a>
     <a href="/projects/new">+ New Project</a>
-    
     <strong style="display: block; padding: 0.5rem; margin-top: 1rem; opacity: 0.7; font-size: 0.75rem;">SETTINGS</strong>
     <a href="/profile">Profile</a>
     <a href="/preferences">Preferences</a>
     <a href="/logout">Log out</a>
   </nav>
 </aside>
-
 <!-- Documentation sidebar -->
 <aside>
   <nav>
@@ -1921,24 +2402,20 @@ These behaviors transform the element into a component.
     <a href="/docs/intro">Introduction</a>
     <a href="/docs/install">Installation</a>
     <a href="/docs/quickstart">Quick Start</a>
-    
     <strong style="margin-top: 1rem; display: block;">Core Concepts</strong>
     <a href="/docs/behaviors">Behaviors</a>
     <a href="/docs/auto-inject">Auto Injection</a>
     <a href="/docs/themes">Theming</a>
-    
     <strong style="margin-top: 1rem; display: block;">Components</strong>
     <a href="/docs/buttons">Buttons</a>
     <a href="/docs/forms">Forms</a>
     <a href="/docs/cards">Cards</a>
     <a href="/docs/dialogs">Dialogs</a>
-    
     <strong style="margin-top: 1rem; display: block;">Advanced</strong>
     <a href="/docs/custom">Custom Behaviors</a>
     <a href="/docs/api">JavaScript API</a>
   </nav>
 </aside>
-
 <!-- Admin sidebar with icons -->
 <aside>
   <div style="padding: 1rem; border-bottom: 1px solid var(--border-color);">
@@ -1969,7 +2446,6 @@ These behaviors transform the element into a component.
       <a href="/settings">Settings</a>
     </nav>
   </aside>
-  
   <main style="flex: 1; padding: 2rem;">
     <h1>Dashboard</h1>
     <p>Main content goes here.</p>
@@ -2173,14 +2649,17 @@ if (getConfig('autoInject')) {
 
 ```html
 <!-- Basic 3-column grid -->
-<wb-grid columns="3" gap="1rem">
+<wb-grid
+  columns="3"
+  gap="1rem">
   <div>Column 1</div>
   <div>Column 2</div>
   <div>Column 3</div>
 </wb-grid>
-
 <!-- Responsive grid with min-width -->
-<wb-grid min-width="250px" gap="2rem">
+<wb-grid
+  min-width="250px"
+  gap="2rem">
   <article>Card 1</article>
   <article>Card 2</article>
   <article>Card 3</article>
@@ -2192,13 +2671,16 @@ if (getConfig('autoInject')) {
 
 ```html
 <!-- Horizontal layout -->
-<wb-flex gap="1rem" justify="space-between">
+<wb-flex
+  gap="1rem"
+  justify="space-between">
   <div>Left</div>
   <div>Right</div>
 </wb-flex>
-
 <!-- Button row (wb-row is alias for flex) -->
-<wb-row gap="0.5rem" justify="flex-end">
+<wb-row
+  gap="0.5rem"
+  justify="flex-end">
   <button variant="ghost">Cancel</button>
   <button variant="primary">Save</button>
 </wb-row>
@@ -2209,11 +2691,14 @@ if (getConfig('autoInject')) {
 ```html
 <!-- Vertical stack -->
 <wb-stack gap="1rem">
-  <input type="text" placeholder="Name">
-  <input type="email" placeholder="Email">
+  <input
+    type="text"
+    placeholder="Name">
+  <input
+    type="email"
+    placeholder="Email">
   <button>Submit</button>
 </wb-stack>
-
 <!-- wb-column is alias for stack -->
 <wb-column gap="1rem">
   <h3>Title</h3>
@@ -2225,13 +2710,16 @@ if (getConfig('autoInject')) {
 
 ```html
 <!-- Centered content with max-width -->
-<wb-container max-width="800px" padding="2rem">
+<wb-container
+  max-width="800px"
+  padding="2rem">
   <h1>Article Title</h1>
   <p>Content goes here...</p>
 </wb-container>
-
 <!-- Multi-column grid mode -->
-<wb-container columns="2" gap="2rem">
+<wb-container
+  columns="2"
+  gap="2rem">
   <div>Left column</div>
   <div>Right column</div>
 </wb-container>
@@ -2244,7 +2732,6 @@ if (getConfig('autoInject')) {
 <wb-center max-width="600px">
   <h1>Centered Heading</h1>
 </wb-center>
-
 <!-- Intrinsic centering (based on content width) -->
 <wb-center intrinsic>
   <button variant="primary">Centered Button</button>
@@ -2269,7 +2756,10 @@ if (getConfig('autoInject')) {
 
 ```html
 <!-- Two-column layout with sidebar -->
-<wb-sidebar side="left" side-width="250px" gap="2rem">
+<wb-sidebar
+  side="left"
+  side-width="250px"
+  gap="2rem">
   <aside>
     <nav>Sidebar navigation</nav>
   </aside>
@@ -2283,11 +2773,21 @@ if (getConfig('autoInject')) {
 
 ```html
 <!-- Pinterest-style masonry -->
-<wb-masonry columns="3" gap="1rem">
-  <img src="tall.jpg" alt="">
-  <img src="wide.jpg" alt="">
-  <img src="square.jpg" alt="">
-  <img src="tall2.jpg" alt="">
+<wb-masonry
+  columns="3"
+  gap="1rem">
+  <img
+    src="tall.jpg"
+    alt="">
+  <img
+    src="wide.jpg"
+    alt="">
+  <img
+    src="square.jpg"
+    alt="">
+  <img
+    src="tall2.jpg"
+    alt="">
 </wb-masonry>
 ```
 
@@ -2295,7 +2795,9 @@ if (getConfig('autoInject')) {
 
 ```html
 <!-- Horizontal scroll carousel -->
-<wb-reel item-width="300px" gap="1rem">
+<wb-reel
+  item-width="300px"
+  gap="1rem">
   <article>Card 1</article>
   <article>Card 2</article>
   <article>Card 3</article>
@@ -2310,10 +2812,11 @@ if (getConfig('autoInject')) {
 <wb-frame ratio="16/9">
   <iframe src="https://youtube.com/embed/..."></iframe>
 </wb-frame>
-
 <!-- Square avatar frame -->
 <wb-frame ratio="1/1">
-  <img src="avatar.jpg" alt="User">
+  <img
+    src="avatar.jpg"
+    alt="User">
 </wb-frame>
 ```
 
@@ -2321,7 +2824,9 @@ if (getConfig('autoInject')) {
 
 ```html
 <!-- Sticky header -->
-<wb-sticky top="0" z-index="100">
+<wb-sticky
+  top="0"
+  z-index="100">
   <header>This stays at top when scrolling</header>
 </wb-sticky>
 ```
@@ -2330,7 +2835,12 @@ if (getConfig('autoInject')) {
 
 ```html
 <!-- Collapsible sidebar drawer -->
-<wb-drawer position="left" width="250px" resizable save-state id="mainNav">
+<wb-drawer
+  position="left"
+  width="250px"
+  resizable
+  save-state
+  id="mainNav">
   <nav>
     <a href="/">Home</a>
     <a href="/about">About</a>
@@ -2350,22 +2860,19 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   <h3>Card Title</h3>
   <p>Card content goes here.</p>
 </card-basic>
-
 <!-- Image card -->
 <card-image
   src="photo.jpg"
   title="Beautiful Sunset"
   alt="Sunset over mountains">
 </card-image>
-
 <!-- Profile card -->
-<card-profile 
+<card-profile
   avatar="avatar.jpg"
   name="Jane Doe"
   title="Senior Developer"
   bio="Full-stack developer with 10+ years experience.">
 </card-profile>
-
 <!-- Pricing card -->
 <card-pricing
   plan="Pro"
@@ -2375,7 +2882,6 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   cta="Get Started"
   popular="true">
 </card-pricing>
-
 <!-- Product card -->
 <card-product
   image="product.jpg"
@@ -2384,7 +2890,6 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   rating="4.5"
   reviews="128">
 </card-product>
-
 <!-- Stats card -->
 <card-stats
   value="2,847"
@@ -2392,7 +2897,6 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   change="+12%"
   trend="up">
 </card-stats>
-
 <!-- Testimonial card -->
 <card-testimonial
   quote="This product changed everything!"
@@ -2400,7 +2904,6 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   role="CEO, TechCorp"
   avatar="john.jpg">
 </card-testimonial>
-
 <!-- Hero card -->
 <card-hero
   title="Welcome"
@@ -2409,14 +2912,12 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   cta="Learn More"
   href="/start">
 </card-hero>
-
 <!-- Video card -->
 <card-video
   src="demo.mp4"
   poster="poster.jpg"
   title="Product Demo">
 </card-video>
-
 <!-- File card -->
 <card-file
   filename="report.pdf"
@@ -2424,7 +2925,6 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   icon="📄"
   href="/downloads/report.pdf">
 </card-file>
-
 <!-- Notification card -->
 <card-notification
   type="success"
@@ -2432,7 +2932,6 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   message="Your payment of $99.00 was successful."
   time="2 minutes ago">
 </card-notification>
-
 <!-- Portfolio card -->
 <card-portfolio
   image="project.jpg"
@@ -2440,22 +2939,19 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   category="Web Design"
   href="/portfolio/ecommerce">
 </card-portfolio>
-
 <!-- Link card (clickable) -->
-<card-link 
-  href="/docs" 
+<card-link
+  href="/docs"
   title="Documentation"
   description="Learn how to use the framework"
   icon="📚">
 </card-link>
-
 <!-- Horizontal card -->
 <card-horizontal
   image="thumb.jpg"
   title="Article Title"
   description="Brief description of the article...">
 </card-horizontal>
-
 <!-- Overlay card -->
 <card-overlay
   image="background.jpg"
@@ -2474,22 +2970,25 @@ These work on ANY element and are always active:
 <!-- Tooltip on any element -->
 <button tooltip="Save your work">💾 Save</button>
 <span tooltip="Click for more information">ℹ️</span>
-<a href="/" tooltip="Go to homepage">Home</a>
-
+<a
+  href="/"
+  tooltip="Go to homepage">Home</a>
 <!-- Toast message on click -->
 <button toast-message="Copied to clipboard!">📋 Copy</button>
 <button toast-message="Item added to cart">🛒 Add to Cart</button>
-
 <!-- Ripple effect on any clickable element -->
-<div ripple style="padding: 2rem; cursor: pointer;">
-  Click anywhere for ripple effect
-</div>
-<a href="/" ripple>Ripple Link</a>
-
+<div
+  ripple
+  style="padding: 2rem; cursor: pointer;"> Click anywhere for ripple effect </div>
+<a
+  href="/"
+  ripple>Ripple Link</a>
 <!-- Badge on any element -->
 <span badge="3">🔔 Notifications</span>
 <button badge="New">✨ Features</button>
-<a href="/inbox" badge="99+">📧 Inbox</a>
+<a
+  href="/inbox"
+  badge="99+">📧 Inbox</a>
 ```
 
 ---

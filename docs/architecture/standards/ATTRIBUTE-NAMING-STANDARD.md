@@ -18,12 +18,11 @@ Users provide simple attribute values. The schema defines how those values becom
 
 ```html
 <!-- ✅ CLEAN: User just sets values -->
-<wb-hero 
-  title="Explore the Universe" 
-  subtitle="Your journey begins" 
+<wb-hero
+  title="Explore the Universe"
+  subtitle="Your journey begins"
   cta="Launch Mission">
 </wb-hero>
-
 <!-- ❌ UGLY: User must know internal structure -->
 <wb-hero variant="cosmic">
   <h1 slot="title">Explore the Universe</h1>
@@ -102,11 +101,14 @@ WB uses three patterns for applying behaviors:
 
 ```html
 <!-- IS-A: Custom element (noun) -->
-<stats-card value="1,234" label="Users" trend="up"></stats-card>
-
+<stats-card
+  value="1,234"
+  label="Users"
+  trend="up"></stats-card>
 <!-- HAS-A: Extension (verb/modifier) -->
-<button x-ripple x-tooltip="Save changes">Save</button>
-
+<button
+  x-ripple
+  x-tooltip="Save changes">Save</button>
 <!-- BECOMES: Morph -->
 <article x-as-card>Plain article becomes styled card</article>
 ```
@@ -169,10 +171,9 @@ These native attributes have meanings that **conflict** with typical component u
 ```html
 <!-- BAD: Creates browser tooltip, not a heading -->
 <price-card title="Pro Plan">
-
-<!-- GOOD: Use 'heading' or component-specific name -->
-<price-card heading="Pro Plan">
-<price-card plan="Pro">
+  <!-- GOOD: Use 'heading' or component-specific name -->
+  <price-card heading="Pro Plan">
+    <price-card plan="Pro">
 ```
 
 **Why:** Native `title` creates a browser tooltip on hover. Using it for heading text causes unintended tooltips.
@@ -181,9 +182,8 @@ These native attributes have meanings that **conflict** with typical component u
 ```html
 <!-- BAD: Collides with input/button type -->
 <alert-box type="warning">
-
-<!-- GOOD: Use 'variant' for styling variants -->
-<alert-box variant="warning">
+  <!-- GOOD: Use 'variant' for styling variants -->
+  <alert-box variant="warning">
 ```
 
 **Why:** Native `type` has specific meaning on `<input>`, `<button>`, `<script>`, `<style>`. Using it for variants causes confusion.
@@ -192,38 +192,34 @@ These native attributes have meanings that **conflict** with typical component u
 ```html
 <!-- BAD: Conflicts with meta content, CSS content -->
 <card-el content="Body text">
-
-<!-- GOOD: Use slot or specific name -->
-<card-el>Body text</card-el>
-<card-el description="Body text">
+  <!-- GOOD: Use slot or specific name -->
+  <card-el>Body text</card-el>
+  <card-el description="Body text">
 ```
 
 ### ❌ `data` - AVOID as attribute name
 ```html
 <!-- BAD: Too generic, conflicts with data-* pattern -->
 <chart-el data="[1,2,3]">
-
-<!-- GOOD: Use specific name or data-* -->
-<chart-el points="1,2,3">
-<chart-el points='[1,2,3]'>
+  <!-- GOOD: Use specific name or data-* -->
+  <chart-el points="1,2,3">
+    <chart-el points='[1,2,3]'>
 ```
 
 ### ❌ `style` - DO NOT USE
 ```html
 <!-- BAD: Conflicts with inline styles -->
 <card-el style="minimal">
-
-<!-- GOOD: Use 'variant' -->
-<card-el variant="minimal">
+  <!-- GOOD: Use 'variant' -->
+  <card-el variant="minimal">
 ```
 
 ### ❌ `class` - DO NOT USE
 ```html
 <!-- BAD: Conflicts with CSS classes -->
 <notification-el class="warning">
-
-<!-- GOOD: Use 'variant' -->
-<notification-el variant="warning">
+  <!-- GOOD: Use 'variant' -->
+  <notification-el variant="warning">
 ```
 
 ---
@@ -304,8 +300,8 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 ```html
 <!-- For simple string lists, CSV is fine -->
 <nav-tabs items="Home,About,Contact">
-<breadcrumb-nav items="Home,Products,Shoes">
-<tag-list items="JavaScript,HTML,CSS">
+  <breadcrumb-nav items="Home,Products,Shoes">
+    <tag-list items="JavaScript,HTML,CSS">
 ```
 
 ### JSON Arrays
@@ -318,9 +314,8 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 ```html
 <!-- Single object -->
 <user-card user='{"name":"John","role":"Admin"}'>
-
-<!-- Array of objects -->
-<table rows='[
+  <!-- Array of objects -->
+  <table rows='[
   {"name":"Alice","email":"alice@example.com"},
   {"name":"Bob","email":"bob@example.com"}
 ]'>
@@ -330,7 +325,7 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 ```html
 <!-- Load from URL -->
 <table src="/api/users.json">
-<chart-widget src="/api/metrics.json">
+  <chart-widget src="/api/metrics.json">
 ```
 
 ### Embedded JSON (for large data)
@@ -339,8 +334,12 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
   <script type="application/json">
     {
       "columns": ["Name", "Email"],
-      "pagination": {"perPage": 10},
-      "filters": {...}
+      "pagination": {
+        "perPage": 10
+      },
+      "filters": {
+        ...
+      }
     }
   </script>
 </complex-widget>
@@ -362,16 +361,16 @@ Extensions use `x-` prefix with optional value:
 ### Configured Extensions
 ```html
 <button x-tooltip="Save changes">
-<div x-animate="bounce">
-<div x-delay="0.5">
-<img x-placeholder="blur">
+  <div x-animate="bounce">
+    <div x-delay="0.5">
+      <img x-placeholder="blur">
 ```
 
 ### Morphing (x-as-)
 ```html
 <article x-as-card>
-<ul x-as-timeline>
-<blockquote x-as-testimonial>
+  <ul x-as-timeline>
+    <blockquote x-as-testimonial>
 ```
 
 ---
@@ -388,10 +387,13 @@ Extensions use `x-` prefix with optional value:
 
 ```html
 <!-- ✅ CORRECT -->
-<stats-card trend-value="+5%" per-page="10">
-
-<!-- ❌ WRONG -->
-<stats-card trendValue="+5%" perPage="10">
+<stats-card
+  trend-value="+5%"
+  per-page="10">
+  <!-- ❌ WRONG -->
+  <stats-card
+    trendValue="+5%"
+    perPage="10">
 ```
 
 ### Pluralization Rules
@@ -404,13 +406,11 @@ Extensions use `x-` prefix with optional value:
 
 ```html
 <!-- Count = singular noun -->
-<grid-layout columns="4">              <!-- Number of columns -->
-
-<!-- List = plural noun -->
-<nav-tabs items="Home,About,Contact">  <!-- Multiple items -->
-
-<!-- Single = singular noun -->
-<detail-row column="name">             <!-- Single column reference -->
+<grid-layout columns="4"> <!-- Number of columns -->
+  <!-- List = plural noun -->
+  <nav-tabs items="Home,About,Contact"> <!-- Multiple items -->
+    <!-- Single = singular noun -->
+    <detail-row column="name"> <!-- Single column reference -->
 ```
 
 ### Boolean Attributes
@@ -419,19 +419,16 @@ Boolean attributes follow HTML5 convention - **presence = true, absence = false*
 
 ```html
 <!-- ✅ CORRECT: Boolean present = true -->
-<price-card featured>           <!-- featured = true -->
-<alert-box dismissible>         <!-- dismissible = true -->
-<button disabled>               <!-- disabled = true -->
-
-<!-- ✅ CORRECT: Absent = false -->
-<price-card>                    <!-- featured = false (default) -->
-
-<!-- ⚠️ ALLOWED but verbose -->
-<price-card featured="true">    <!-- Works, but unnecessary -->
-<price-card featured="">        <!-- Also works -->
-
-<!-- ❌ WRONG: No "false" value -->
-<price-card featured="false">   <!-- Don't do this, just omit -->
+<price-card featured> <!-- featured = true -->
+  <alert-box dismissible> <!-- dismissible = true -->
+    <button disabled> <!-- disabled = true -->
+      <!-- ✅ CORRECT: Absent = false -->
+      <price-card> <!-- featured = false (default) -->
+        <!-- ⚠️ ALLOWED but verbose -->
+        <price-card featured="true"> <!-- Works, but unnecessary -->
+          <price-card featured=""> <!-- Also works -->
+            <!-- ❌ WRONG: No "false" value -->
+            <price-card featured="false"> <!-- Don't do this, just omit -->
 ```
 
 ### Enum Values
@@ -480,12 +477,11 @@ up, down, flat, neutral
 ARIA attributes should pass through unchanged:
 
 ```html
-<modal-el 
+<modal-el
   aria-label="Settings dialog"
   aria-describedby="modal-desc"
   role="dialog">
 </modal-el>
-
 <nav-tabs aria-label="Main navigation">
 </nav-tabs>
 ```
@@ -507,14 +503,14 @@ Some ARIA attributes are set automatically by behaviors:
 ```html
 <!-- Use 'label' for visible label text -->
 <switch-el label="Enable notifications">
-
-<!-- Use 'aria-label' for screen-reader-only label -->
-<icon-button aria-label="Close" icon="✕">
-
-<!-- Use 'aria-labelledby' to reference another element -->
-<section aria-labelledby="section-title">
-  <h2 id="section-title">Features</h2>
-</section>
+  <!-- Use 'aria-label' for screen-reader-only label -->
+  <icon-button
+    aria-label="Close"
+    icon="✕">
+    <!-- Use 'aria-labelledby' to reference another element -->
+    <section aria-labelledby="section-title">
+      <h2 id="section-title">Features</h2>
+    </section>
 ```
 
 ---
@@ -535,15 +531,22 @@ Some ARIA attributes are set automatically by behaviors:
 
 ```html
 <!-- Units included -->
-<grid-layout gap="1.5rem" min-width="280px">
-
-<!-- Unitless -->
-<pagination-el total="100" per-page="10" current="3">
-<progress-bar value="75" max="100">
-
-<!-- Time: milliseconds for JS, seconds for CSS -->
-<toast-el duration="5000">        <!-- 5 seconds -->
-<div x-animate="fade" x-delay="0.3">  <!-- 0.3 seconds -->
+<grid-layout
+  gap="1.5rem"
+  min-width="280px">
+  <!-- Unitless -->
+  <pagination-el
+    total="100"
+    per-page="10"
+    current="3">
+    <progress-bar
+      value="75"
+      max="100">
+      <!-- Time: milliseconds for JS, seconds for CSS -->
+      <toast-el duration="5000"> <!-- 5 seconds -->
+        <div
+          x-animate="fade"
+          x-delay="0.3"> <!-- 0.3 seconds -->
 ```
 
 ### Number Formatting
@@ -552,12 +555,20 @@ Display values can include formatting - they're strings, not numbers:
 
 ```html
 <!-- Display value (string) - can have formatting -->
-<stats-card value="$1,234.56" label="Revenue">
-<stats-card value="99.9%" label="Uptime">
-
-<!-- Numeric value (number) - no formatting -->
-<progress-bar value="75" max="100">
-<stepper-el value="5" min="0" max="10">
+<stats-card
+  value="$1,234.56"
+  label="Revenue">
+  <stats-card
+    value="99.9%"
+    label="Uptime">
+    <!-- Numeric value (number) - no formatting -->
+    <progress-bar
+      value="75"
+      max="100">
+      <stepper-el
+        value="5"
+        min="0"
+        max="10">
 ```
 
 ---
@@ -572,7 +583,6 @@ Element children become the default slot:
 <basic-card heading="Title">
   <p>This paragraph goes in the default slot (main content)</p>
 </basic-card>
-
 <alert-box variant="warning">
   <strong>Warning:</strong> This is the alert content.
 </alert-box>
@@ -584,7 +594,9 @@ Use `slot` attribute for named slots:
 
 ```html
 <complex-card>
-  <img slot="image" src="photo.jpg">
+  <img
+    slot="image"
+    src="photo.jpg">
   <h3 slot="header">Card Title</h3>
   <p>Default slot content</p>
   <button slot="footer">Action</button>
@@ -629,9 +641,7 @@ Components should expose CSS custom properties for theming:
 ### Override via Style Attribute
 
 ```html
-<basic-card style="--card-padding: 2rem; --card-radius: 16px;">
-  Custom styled card
-</basic-card>
+<basic-card style="--card-padding: 2rem; --card-radius: 16px;"> Custom styled card </basic-card>
 ```
 
 ---
@@ -640,30 +650,33 @@ Components should expose CSS custom properties for theming:
 
 ### Before (Legacy)
 ```html
-<div x-card title="Hello" elevated>
-  Content
+<div
+  x-card
+  title="Hello"
+  elevated> Content </div>
+<div
+  x-alert
+  type="warning"
+  message="Caution!">
 </div>
-
-<div x-alert type="warning" message="Caution!">
-</div>
-
-<button x-ripple x-tooltip tooltip="Click me">
-  Save
-</button>
+<button
+  x-ripple
+  x-tooltip
+  tooltip="Click me"> Save </button>
 ```
 
 ### After (New Standard)
 ```html
-<basic-card heading="Hello" elevated>
-  Content
-</basic-card>
-
-<alert-box variant="warning" message="Caution!">
+<basic-card
+  heading="Hello"
+  elevated> Content </basic-card>
+<alert-box
+  variant="warning"
+  message="Caution!">
 </alert-box>
-
-<button x-ripple x-tooltip="Click me">
-  Save
-</button>
+<button
+  x-ripple
+  x-tooltip="Click me"> Save </button>
 ```
 
 ### Migration Checklist
@@ -764,29 +777,28 @@ name         attribute with DIFFERENT meaning?
 
 ### Cards
 ```html
-<basic-card heading="Welcome" subheading="Get started" elevated hoverable>
-  Card content here
-</basic-card>
-
-<price-card 
-  plan="Pro" 
-  price="$29" 
-  period="/mo" 
+<basic-card
+  heading="Welcome"
+  subheading="Get started"
+  elevated
+  hoverable> Card content here </basic-card>
+<price-card
+  plan="Pro"
+  price="$29"
+  period="/mo"
   featured
   cta="Get Started">
 </price-card>
-
-<stats-card 
-  value="1,234" 
-  label="Users" 
-  icon="👥" 
-  trend="up" 
+<stats-card
+  value="1,234"
+  label="Users"
+  icon="👥"
+  trend="up"
   trend-value="+12%">
 </stats-card>
-
-<card-image 
-  src="photo.jpg" 
-  alt="Description" 
+<card-image
+  src="photo.jpg"
+  alt="Description"
   heading="Photo Title"
   loading="lazy">
 </card-image>
@@ -794,65 +806,86 @@ name         attribute with DIFFERENT meaning?
 
 ### Feedback
 ```html
-<alert-box variant="warning" heading="Caution" message="Check your input" dismissible>
+<alert-box
+  variant="warning"
+  heading="Caution"
+  message="Check your input"
+  dismissible>
 </alert-box>
-
 <badge-el variant="success">Active</badge-el>
-
-<avatar-el src="user.jpg" alt="John Doe" size="lg" status="online">
+<avatar-el
+  src="user.jpg"
+  alt="John Doe"
+  size="lg"
+  status="online">
 </avatar-el>
-
-<toast-el variant="success" message="Saved successfully!" duration="3000">
+<toast-el
+  variant="success"
+  message="Saved successfully!"
+  duration="3000">
 </toast-el>
 ```
 
 ### Navigation
 ```html
 <breadcrumb-nav items="Home,Products,Shoes"></breadcrumb-nav>
-
-<nav-tabs items="Overview,Features,Pricing" active="0"></nav-tabs>
-
-<pagination-el total="100" per-page="10" current="3"></pagination-el>
-
-<steps-el items="Cart,Shipping,Payment" current="1"></steps-el>
+<nav-tabs
+  items="Overview,Features,Pricing"
+  active="0"></nav-tabs>
+<pagination-el
+  total="100"
+  per-page="10"
+  current="3"></pagination-el>
+<steps-el
+  items="Cart,Shipping,Payment"
+  current="1"></steps-el>
 ```
 
 ### Forms
 ```html
-<text-field 
-  placeholder="Enter your name" 
-  required 
+<text-field
+  placeholder="Enter your name"
+  required
   maxlength="100"
   pattern="[A-Za-z ]+">
 </text-field>
-
-<rating-el value="4" max="5" icon="⭐"></rating-el>
-
-<switch-el label="Enable notifications" checked></switch-el>
-
-<range-slider min="0" max="100" value="50" step="5"></range-slider>
+<rating-el
+  value="4"
+  max="5"
+  icon="⭐"></rating-el>
+<switch-el
+  label="Enable notifications"
+  checked></switch-el>
+<range-slider
+  min="0"
+  max="100"
+  value="50"
+  step="5"></range-slider>
 ```
 
 ### Media
 ```html
-<video-player 
-  src="movie.mp4" 
-  poster="preview.jpg" 
-  controls 
-  autoplay 
+<video-player
+  src="movie.mp4"
+  poster="preview.jpg"
+  controls
+  autoplay
   muted>
 </video-player>
-
-<image-gallery columns="4" gap="1rem" images='[
+<image-gallery
+  columns="4"
+  gap="1rem"
+  images='[
   {"src": "1.jpg", "alt": "Photo 1"},
   {"src": "2.jpg", "alt": "Photo 2"}
-]'>
+]'
+>
 </image-gallery>
 ```
 
 ### Data Display
 ```html
-<table 
+<table
   columns='["Name","Email","Role"]'
   rows='[
     ["Alice","alice@example.com","Admin"],
@@ -861,7 +894,6 @@ name         attribute with DIFFERENT meaning?
   sortable
   hoverable>
 </table>
-
 <timeline-el items='[
   {"date": "2024-01", "label": "Project Start"},
   {"date": "2024-06", "label": "Beta Launch"}
@@ -872,17 +904,22 @@ name         attribute with DIFFERENT meaning?
 ### Extensions
 ```html
 <!-- Ripple + Tooltip -->
-<button x-ripple x-tooltip="Save your work">Save</button>
-
+<button
+  x-ripple
+  x-tooltip="Save your work">Save</button>
 <!-- Animations -->
-<div x-animate="bounce" x-delay="0.5">Animated</div>
-
+<div
+  x-animate="bounce"
+  x-delay="0.5">Animated</div>
 <!-- Lazy loading -->
-<img src="large.jpg" x-lazy x-placeholder="blur">
-
+<img
+  src="large.jpg"
+  x-lazy
+  x-placeholder="blur">
 <!-- Draggable + Resizable -->
-<div x-draggable x-resizable>Drag and resize me</div>
-
+<div
+  x-draggable
+  x-resizable>Drag and resize me</div>
 <!-- Morphing -->
 <article x-as-card>Becomes a card</article>
 <ul x-as-timeline>Becomes a timeline</ul>
@@ -905,12 +942,12 @@ When adding new components or attributes:
 
 ```html
 <!-- ❌ NEVER DO THIS -->
-<card-el title="Heading">        <!-- Use heading -->
-<alert-el type="warning">        <!-- Use variant -->
-<widget-el content="...">        <!-- Use slot or specific attr -->
-<widget-el style="minimal">      <!-- Use variant -->
-<widget-el class="special">      <!-- Use variant or boolean -->
-<widget-el data="[...]">         <!-- Use data-* pattern -->
+<card-el title="Heading"> <!-- Use heading -->
+  <alert-el type="warning"> <!-- Use variant -->
+    <widget-el content="..."> <!-- Use slot or specific attr -->
+      <widget-el style="minimal"> <!-- Use variant -->
+        <widget-el class="special"> <!-- Use variant or boolean -->
+          <widget-el data="[...]"> <!-- Use data-* pattern -->
 ```
 
 ---

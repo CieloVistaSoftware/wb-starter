@@ -17,7 +17,9 @@ The `figure` behavior is automatically injected into `<figure>` elements.
 
 ```html
 <figure>
-  <img src="image.jpg" alt="View">
+  <img
+    src="image.jpg"
+    alt="View">
   <figcaption>A beautiful view</figcaption>
 </figure>
 ```
@@ -36,10 +38,12 @@ The `figure` behavior is automatically injected into `<figure>` elements.
 An image that zooms on hover and opens in a lightbox.
 
 ```html
-<figure 
-  lightbox="true" 
+<figure
+  lightbox="true"
   zoom="true">
-  <img src="photo.jpg" alt="Photo">
+  <img
+    src="photo.jpg"
+    alt="Photo">
   <figcaption>Click to expand</figcaption>
 </figure>
 ```
@@ -48,9 +52,10 @@ An image that zooms on hover and opens in a lightbox.
 A card-like figure with text overlay.
 
 ```html
-<figure 
-  caption-position="overlay">
-  <img src="card-bg.jpg" alt="Background">
+<figure caption-position="overlay">
+  <img
+    src="card-bg.jpg"
+    alt="Background">
   <figcaption>Title Text</figcaption>
 </figure>
 ```

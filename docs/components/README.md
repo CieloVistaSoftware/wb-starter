@@ -102,22 +102,26 @@ All card variants inherit from `cardBase` using semantic HTML.
 ### Custom Element (Recommended)
 
 ```html
-<wb-card title="My Card" subtitle="Description">
-  Card content goes here
-</wb-card>
-
-<wb-search placeholder="Search for content..." variant="glass" size="large">
+<wb-card
+  title="My Card"
+  subtitle="Description"> Card content goes here </wb-card>
+<wb-search
+  placeholder="Search for content..."
+  variant="glass"
+  size="large">
 </wb-search>
 ```
 
 ### Attribute-Based (Shortest)
 
 ```html
-<wb-card title="My Card" elevated clickable>
-  Content here
-</wb-card>
-
-<wb-search placeholder="Search..." debounce="300">
+<wb-card
+  title="My Card"
+  elevated
+  clickable> Content here </wb-card>
+<wb-search
+  placeholder="Search..."
+  debounce="300">
   <!-- Search results will appear here -->
 </wb-search>
 ```

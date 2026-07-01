@@ -19,14 +19,18 @@ Themes are defined in `src/styles/themes.css`. This file contains:
 Set the `data-theme` attribute on the `<html>` or `<body>` tag:
 
 ```html
-<html lang="en" data-theme="dark">
+<html
+  lang="en"
+  data-theme="dark">
 ```
 
 ### Nested Themes
 You can apply a different theme to any section of the page by adding `data-theme` to a container:
 
 ```html
-<div class="section" data-theme="forest">
+<div
+  class="section"
+  data-theme="forest">
   <!-- Everything inside here uses Forest theme variables -->
   <button class="wb-button wb-button--primary">Forest Button</button>
 </div>

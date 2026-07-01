@@ -15,7 +15,11 @@ The `range` component improves the `<input type="range">` slider by adding conte
 Add `x-range` to an `<input type="range">`.
 
 ```html
-<input type="range" x-range min="0" max="100">
+<input
+  type="range"
+  x-range
+  min="0"
+  max="100">
 ```
 
 ### Configuration Options
@@ -32,12 +36,12 @@ Add `x-range` to an `<input type="range">`.
 A slider showing the percentage value.
 
 ```html
-<input 
-  type="range" 
-  x-range 
-  show-value="true" 
-  value-suffix="%" 
-  min="0" 
+<input
+  type="range"
+  x-range
+  show-value="true"
+  value-suffix="%"
+  min="0"
   max="100">
 ```
 
@@ -45,13 +49,13 @@ A slider showing the percentage value.
 A slider with currency formatting and bounds.
 
 ```html
-<input 
-  type="range" 
-  x-range 
-  show-value="true" 
-  show-labels="true" 
-  value-prefix="$" 
-  min="10" 
+<input
+  type="range"
+  x-range
+  show-value="true"
+  show-labels="true"
+  value-prefix="$"
+  min="10"
   max="1000">
 ```
 

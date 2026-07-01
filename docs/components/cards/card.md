@@ -102,61 +102,57 @@ This doc explains the core features, usage, and architectural choices behind `wb
 ### Custom Element (Recommended)
 
 ```html
-<wb-card title="Card Title" subtitle="Subtitle text">
-  This is the card content.
-</wb-card>
+<wb-card
+  title="Card Title"
+  subtitle="Subtitle text"> This is the card content. </wb-card>
 ```
 
 ### Semantic Element
 
 ```html
-<article x-card title="Card Title">
-  This is the card content.
-</article>
+<article
+  x-card
+  title="Card Title"> This is the card content. </article>
 ```
 
 ### With All Options
 
 ```html
-<wb-card 
-  title="Featured Card" 
+<wb-card
+  title="Featured Card"
   subtitle="A brief description"
   footer="Last updated: Today"
   elevated
   clickable
-  variant="glass">
-  Main content goes here.
-</wb-card>
+  variant="glass"> Main content goes here. </wb-card>
 ```
 
 ## Variants
 
 ### Default
 ```html
-<wb-card title="Default Card">
-  Standard card styling.
-</wb-card>
+<wb-card title="Default Card"> Standard card styling. </wb-card>
 ```
 
 ### Glass
 ```html
-<wb-card title="Glass Card" variant="glass">
-  Frosted glass effect with blur.
-</wb-card>
+<wb-card
+  title="Glass Card"
+  variant="glass"> Frosted glass effect with blur. </wb-card>
 ```
 
 ### Elevated
 ```html
-<wb-card title="Elevated Card" elevated>
-  Card with drop shadow.
-</wb-card>
+<wb-card
+  title="Elevated Card"
+  elevated> Card with drop shadow. </wb-card>
 ```
 
 ### Clickable
 ```html
-<wb-card title="Click Me" clickable>
-  Click anywhere on this card.
-</wb-card>
+<wb-card
+  title="Click Me"
+  clickable> Click anywhere on this card. </wb-card>
 ```
 
 ## Generated Structure
@@ -173,16 +169,10 @@ The card generates this semantic HTML:
     </div>
     <span class="wb-card__badge">Badge</span>
   </header>
-  
   <!-- Main (always present) -->
-  <main class="wb-card__main">
-    User content here...
-  </main>
-  
+  <main class="wb-card__main"> User content here... </main>
   <!-- Footer (when footer set) -->
-  <footer class="wb-card__footer">
-    Footer text
-  </footer>
+  <footer class="wb-card__footer"> Footer text </footer>
 </article>
 ```
 

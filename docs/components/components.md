@@ -205,22 +205,26 @@ All card variants inherit from `cardBase` using semantic HTML.
 ### Custom Element (Recommended)
 
 ```html
-<wb-card title="My Card" subtitle="Description">
-  Card content goes here
-</wb-card>
-
-<wb-search placeholder="Search for content..." variant="glass" size="large">
+<wb-card
+  title="My Card"
+  subtitle="Description"> Card content goes here </wb-card>
+<wb-search
+  placeholder="Search for content..."
+  variant="glass"
+  size="large">
 </wb-search>
 ```
 
 ### Attribute-Based (Shortest)
 
 ```html
-<wb-card title="My Card" elevated clickable>
-  Content here
-</wb-card>
-
-<wb-search placeholder="Search..." debounce="300">
+<wb-card
+  title="My Card"
+  elevated
+  clickable> Content here </wb-card>
+<wb-search
+  placeholder="Search..."
+  debounce="300">
   <!-- Search results will appear here -->
 </wb-search>
 ```
@@ -236,9 +240,9 @@ This section explains, with code samples, how WB components are created and init
 Write your component in HTML using the <wb-*> tag:
 
 ```html
-<wb-card title="Welcome" subtitle="This is a card.">
-  Card content goes here.
-</wb-card>
+<wb-card
+  title="Welcome"
+  subtitle="This is a card."> Card content goes here. </wb-card>
 ```
 
 ### 2. Include the Bootstrap Script
@@ -246,7 +250,9 @@ Write your component in HTML using the <wb-*> tag:
 Add the WB bootstrap loader to your HTML (usually in <head> or before </body>):
 
 ```html
-<script type="module" src="../src/core/wb-bootstrap.js"></script>
+<script
+  type="module"
+  src="../src/core/wb-bootstrap.js"></script>
 ```
 
 ### 3. Bootstrap Scans and Registers Components
@@ -261,9 +267,10 @@ When the page loads, wb-bootstrap.js calls the WB.init({ scan: true }) function,
 You can enhance any element (including <wb-*> components) with x-* behaviors:
 
 ```html
-<wb-card x-ripple x-tooltip="Card info" title="With Behaviors">
-  Card with ripple and tooltip.
-</wb-card>
+<wb-card
+  x-ripple
+  x-tooltip="Card info"
+  title="With Behaviors"> Card with ripple and tooltip. </wb-card>
 ```
 
 The scanner finds all x-* attributes and injects the corresponding behavior logic from the behaviors registry.
@@ -279,14 +286,21 @@ After initialization, all <wb-*> tags are fully functional custom elements, and 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>WB Component Example</title>
-  <script type="module" src="../src/core/wb-bootstrap.js"></script>
-</head>
-<body>
-  <wb-card x-ripple title="Demo Card">Hello, world!</wb-card>
-</body>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>WB Component Example</title>
+    <script
+      type="module"
+      src="../src/core/wb-bootstrap.js"></script>
+  </head>
+
+  <body>
+    <wb-card
+      x-ripple
+      title="Demo Card">Hello, world!</wb-card>
+  </body>
+
 </html>
 ```
 

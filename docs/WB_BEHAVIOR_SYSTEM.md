@@ -116,16 +116,27 @@ Use standard semantic HTML elements (Auto-Inject):
 ```html
 <!-- Semantic behaviors on native elements -->
 <button variant="primary">Click me</button>
-<img lazy zoomable src="photo.jpg" alt="Photo">
-<form ajax validate>...</form>
-<video controls autoplay>...</video>
+<img
+  lazy
+  zoomable
+  src="photo.jpg"
+  alt="Photo">
+<form
+  ajax
+  validate>...</form>
+<video
+  controls
+  autoplay>...</video>
 ```
 
 Or use `x-behavior` for explicit behavior injection (Legacy/Override):
 
 ```html
 <!-- Multiple behaviors (space-separated) -->
-<button x-ripple x-tooltip tooltip="Hello!">Hover</button>
+<button
+  x-ripple
+  x-tooltip
+  tooltip="Hello!">Hover</button>
 ```
 
 **From `src/site-engine.js:95`:**
@@ -371,13 +382,10 @@ All behavior options can be set via `data-*` attributes:
 
 ```html
 <button
-
   variant="primary"
   size="lg"
   icon="→"
-  loading>
-  Submit
-</button>
+  loading> Submit </button>
 ```
 
 This becomes:
@@ -593,11 +601,12 @@ form.addEventListener('wb:form:success', (e) => {
 Stack multiple behaviors on a single element:
 
 ```html
-<button x-button x-ripple x-tooltip
-        variant="primary"
-        tooltip="Click me!">
-  Submit
-</button>
+<button
+  x-button
+  x-ripple
+  x-tooltip
+  variant="primary"
+  tooltip="Click me!"> Submit </button>
 ```
 
 This applies three behaviors:
@@ -735,9 +744,10 @@ export const behaviors = {
 ### Step 3: Use in HTML
 
 ```html
-<div x-mycustom color="red" size="lg">
-  Custom content
-</div>
+<div
+  x-mycustom
+  color="red"
+  size="lg"> Custom content </div>
 ```
 
 ### Step 4: Create Schema (Optional but Recommended)

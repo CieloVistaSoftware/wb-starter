@@ -43,8 +43,10 @@ Users provide simple attribute values. The schema defines how those values becom
 
 ```html
 <!-- ✅ CLEAN: User just sets values -->
-<wb-hero title="Explore" subtitle="Your journey" cta="Launch"></wb-hero>
-
+<wb-hero
+  title="Explore"
+  subtitle="Your journey"
+  cta="Launch"></wb-hero>
 <!-- ❌ UGLY: User must know internal slots -->
 <wb-hero>
   <h1 slot="title">Explore</h1>

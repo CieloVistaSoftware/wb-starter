@@ -34,10 +34,8 @@ Prevent WB from automatically applying behaviors to elements:
 ```html
 <!-- Skip specific element -->
 <pre skip>This won't get syntax highlighting</pre>
-
 <!-- Ignore auto-injection for this element -->
 <button x-ignore>Not enhanced by WB</button>
-
 <!-- Skip all children -->
 <div skip-children>
   <code>Not highlighted</code>
@@ -51,20 +49,20 @@ Pass options via `data-*` attributes:
 
 ```html
 <!-- Override mdhtml defaults -->
-<wb-mdhtml 
-  size="lg" 
+<wb-mdhtml
+  size="lg"
   highlight="false"
   breaks="false">
 </wb-mdhtml>
-
 <!-- Override card variant -->
-<wb-card variant="outline" size="sm">
+<wb-card
+  variant="outline"
+  size="sm">
 </wb-card>
-
 <!-- Override toast duration -->
-<button x-behavior="toast" duration="10000">
-  Show for 10 seconds
-</button>
+<button
+  x-behavior="toast"
+  duration="10000"> Show for 10 seconds </button>
 ```
 
 ## Override Injected CSS
@@ -108,7 +106,6 @@ Just don't use WB attributes/tags:
   <h3>Title</h3>
   <p>Content</p>
 </div>
-
 <!-- vs WB-enhanced -->
 <wb-card>
   <h3>Title</h3>

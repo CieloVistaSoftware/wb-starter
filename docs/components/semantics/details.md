@@ -42,7 +42,9 @@ Enhanced accordion/disclosure component with smooth animations.
 ### Open by Default
 
 ```html
-<wb-details summary="Expanded Section" open>
+<wb-details
+  summary="Expanded Section"
+  open>
   <p>This section starts open.</p>
 </wb-details>
 ```
@@ -58,7 +60,9 @@ Enhanced accordion/disclosure component with smooth animations.
 ### Without Animation
 
 ```html
-<wb-details summary="Quick Toggle" animated="false">
+<wb-details
+  summary="Quick Toggle"
+  animated="false">
   <p>No animation on open/close.</p>
 </wb-details>
 ```

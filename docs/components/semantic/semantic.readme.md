@@ -24,7 +24,6 @@ Self-contained, independently distributable content using the `<article>` elemen
     <time datetime="2024-12-15">December 15, 2024</time>
   </footer>
 </wb-article>
-
 <!-- Card as article -->
 <wb-card variant="article">
   <wb-card-header>
@@ -57,16 +56,19 @@ Tangentially related content and supplementary information using the `<aside>` e
 <wb-aside>
   <h3>Related Links</h3>
   <ul>
-    <li><a href="#link1">Related Article 1</a></li>
-    <li><a href="#link2">Related Article 2</a></li>
+    <li>
+      <a href="#link1">Related Article 1</a>
+    </li>
+    <li>
+      <a href="#link2">Related Article 2</a>
+    </li>
   </ul>
 </wb-aside>
-
 <!-- Notification aside -->
 <wb-aside role="alert">
-  <wb-alert type="info" title="Important Notice">
-    This information is supplementary to the main content.
-  </wb-alert>
+  <wb-alert
+    type="info"
+    title="Important Notice"> This information is supplementary to the main content. </wb-alert>
 </wb-aside>
 ```
 
@@ -88,10 +90,11 @@ Self-contained media with optional caption using `<figure>` and `<figcaption>` e
 ```html
 <!-- Image with caption -->
 <wb-figure>
-  <img src="diagram.png" alt="Process flow diagram">
+  <img
+    src="diagram.png"
+    alt="Process flow diagram">
   <wb-figcaption>Figure 1: Overview of the process flow</wb-figcaption>
 </wb-figure>
-
 <!-- Code block figure -->
 <wb-figure>
   <pre><code>// Example code
@@ -120,17 +123,19 @@ Contact information for the author or organization using the `<address>` element
 ```html
 <!-- Author contact info -->
 <wb-address>
-  <strong>John Doe</strong><br>
-  <a href="mailto:john@example.com">john@example.com</a><br>
-  <a href="tel:+1234567890">(123) 456-7890</a><br>
-  San Francisco, CA
+  <strong>John Doe</strong>
+  <br>
+  <a href="mailto:john@example.com">john@example.com</a>
+  <br>
+  <a href="tel:+1234567890">(123) 456-7890</a>
+  <br> San Francisco, CA
 </wb-address>
-
 <!-- Organization contact -->
 <wb-address>
-  <strong>Acme Corporation</strong><br>
-  123 Business St<br>
-  Business City, ST 12345<br>
+  <strong>Acme Corporation</strong>
+  <br> 123 Business St
+  <br> Business City, ST 12345
+  <br>
   <a href="mailto:info@acme.com">info@acme.com</a>
 </wb-address>
 ```
@@ -158,7 +163,6 @@ Extended quotations with attribution using `<blockquote>` and `<cite>` elements.
     <wb-cite>— Sarah Johnson, CTO at TechCorp</wb-cite>
   </footer>
 </wb-blockquote>
-
 <!-- Quote with source -->
 <wb-blockquote>
   <p>"The best way to predict the future is to create it."</p>
@@ -185,19 +189,15 @@ Machine-readable value linked to human-readable content using the `<data>` eleme
 
 ```html
 <!-- Statistics -->
-<wb-data value="1234567">1.2M</wb-data> users
-
-<!-- Metrics -->
+<wb-data value="1234567">1.2M</wb-data> users <!-- Metrics -->
 <div class="stats">
-  <wb-data value="95">95%</wb-data> uptime
-  <wb-data value="1500000">$1.5M</wb-data> revenue
-  <wb-data value="50000">50K</wb-data> downloads
+  <wb-data value="95">95%</wb-data> uptime <wb-data value="1500000">$1.5M</wb-data> revenue <wb-data value="50000">50K</wb-data> downloads
 </div>
-
 <!-- Progress data -->
-<wb-progress value="75" max="100">
-  <wb-data value="75">75%</wb-data> complete
-</wb-progress>
+<wb-progress
+  value="75"
+  max="100">
+  <wb-data value="75">75%</wb-data> complete </wb-progress>
 ```
 
 ### Accessibility Features
@@ -217,19 +217,13 @@ Machine-readable date/time using the `<time>` element.
 
 ```html
 <!-- Publication date -->
-<wb-time datetime="2024-12-15T10:30:00Z">
-  Published December 15, 2024
-</wb-time>
-
+<wb-time datetime="2024-12-15T10:30:00Z"> Published December 15, 2024 </wb-time>
 <!-- Event date -->
-<wb-time datetime="2024-06-15T19:00:00">
-  June 15, 2024 at 7:00 PM
-</wb-time>
-
+<wb-time datetime="2024-06-15T19:00:00"> June 15, 2024 at 7:00 PM </wb-time>
 <!-- Relative time -->
-<wb-time datetime="2024-12-10T08:00:00Z" title="December 10, 2024">
-  5 days ago
-</wb-time>
+<wb-time
+  datetime="2024-12-10T08:00:00Z"
+  title="December 10, 2024"> 5 days ago </wb-time>
 ```
 
 ### Best Practices
@@ -256,7 +250,6 @@ Navigation links section using the `<nav>` element.
     <wb-menu-item href="/contact">Contact</wb-menu-item>
   </wb-menu>
 </wb-nav>
-
 <!-- Breadcrumb navigation -->
 <wb-nav aria-label="Breadcrumb">
   <wb-breadcrumb>
@@ -284,19 +277,17 @@ Task completion indicator using the native `<progress>` element.
 
 ```html
 <!-- File upload progress -->
-<wb-progress value="70" max="100" label="Uploading file...">
-  70% complete
-</wb-progress>
-
+<wb-progress
+  value="70"
+  max="100"
+  label="Uploading file..."> 70% complete </wb-progress>
 <!-- Task completion -->
-<wb-progress value="3" max="5" label="Setup progress">
-  Step 3 of 5
-</wb-progress>
-
+<wb-progress
+  value="3"
+  max="5"
+  label="Setup progress"> Step 3 of 5 </wb-progress>
 <!-- Indeterminate progress -->
-<wb-progress label="Loading...">
-  Please wait...
-</wb-progress>
+<wb-progress label="Loading..."> Please wait... </wb-progress>
 ```
 
 ### Accessibility Features
@@ -319,20 +310,20 @@ Interactive dialog box/modal using the `<dialog>` element.
 <wb-dialog aria-labelledby="dialog-title">
   <wb-dialog-header>
     <h2 id="dialog-title">Confirm Action</h2>
-    <wb-button variant="ghost" onclick="this.closest('wb-dialog').close()">
-      ✕
-    </wb-button>
+    <wb-button
+      variant="ghost"
+      onclick="this.closest('wb-dialog').close()"> ✕ </wb-button>
   </wb-dialog-header>
   <wb-dialog-body>
     <p>Are you sure you want to delete this item?</p>
   </wb-dialog-body>
   <wb-dialog-footer>
-    <wb-button variant="outline" onclick="this.closest('wb-dialog').close()">
-      Cancel
-    </wb-button>
-    <wb-button variant="primary" onclick="confirmDelete()">
-      Delete
-    </wb-button>
+    <wb-button
+      variant="outline"
+      onclick="this.closest('wb-dialog').close()"> Cancel </wb-button>
+    <wb-button
+      variant="primary"
+      onclick="confirmDelete()"> Delete </wb-button>
   </wb-dialog-footer>
 </wb-dialog>
 ```

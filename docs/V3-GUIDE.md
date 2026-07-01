@@ -37,25 +37,39 @@ A standalone page needs the theme + base styles and one module script:
 
 ```html
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="/src/styles/themes.css">
-  <link rel="stylesheet" href="/src/styles/site.css">
-</head>
-<body>
-  <wb-card title="Hello" variant="elevated">
-    <p>It just works.</p>
-  </wb-card>
+<html
+  lang="en"
+  data-theme="dark">
 
-  <button x-toast message="Saved!" type="success">Save</button>
+  <head>
+    <meta charset="UTF-8">
+    <link
+      rel="stylesheet"
+      href="/src/styles/themes.css">
+    <link
+      rel="stylesheet"
+      href="/src/styles/site.css">
+  </head>
 
-  <script type="module">
-    import WB from '/src/core/wb-lazy.js';
-    window.WB = WB;
-    await WB.init({ autoInject: true });
-  </script>
-</body>
+  <body>
+    <wb-card
+      title="Hello"
+      variant="elevated">
+      <p>It just works.</p>
+    </wb-card>
+    <button
+      x-toast
+      message="Saved!"
+      type="success">Save</button>
+    <script type="module">
+      import WB from '/src/core/wb-lazy.js';
+      window.WB = WB;
+      await WB.init({
+        autoInject: true
+      });
+    </script>
+  </body>
+
 </html>
 ```
 
@@ -75,19 +89,28 @@ A standalone page needs the theme + base styles and one module script:
 Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slotted as content.
 
 ```html
-<wb-card title="Pro" variant="glass">
+<wb-card
+  title="Pro"
+  variant="glass">
   <p>Card body.</p>
 </wb-card>
-
-<wb-spinner size="lg" color="success"></wb-spinner>
-<wb-progress value="75" striped></wb-progress>
-<wb-badge variant="success" pill>New</wb-badge>
-
+<wb-spinner
+  size="lg"
+  color="success"></wb-spinner>
+<wb-progress
+  value="75"
+  striped></wb-progress>
+<wb-badge
+  variant="success"
+  pill>New</wb-badge>
 <wb-tabs>
-  <div tab-title="Overview"><p>…</p></div>
-  <div tab-title="Install"><p>…</p></div>
+  <div tab-title="Overview">
+    <p>…</p>
+  </div>
+  <div tab-title="Install">
+    <p>…</p>
+  </div>
 </wb-tabs>
-
 <wb-accordion title="What is wb-starter?">
   <p>A zero-build component library.</p>
 </wb-accordion>
@@ -105,18 +128,28 @@ need a custom tag:
 
 ```html
 <!-- feedback -->
-<button x-toast message="Done" type="success">Notify</button>
-
+<button
+  x-toast
+  message="Done"
+  type="success">Notify</button>
 <!-- navigation -->
-<nav x-breadcrumb items="Home,Products,Phones"></nav>
-<div x-steps items="Cart,Shipping,Pay" current="2"></div>
-
+<nav
+  x-breadcrumb
+  items="Home,Products,Phones"></nav>
+<div
+  x-steps
+  items="Cart,Shipping,Pay"
+  current="2"></div>
 <!-- effects (entrance / attention) -->
-<button x-slidein direction="left">Slide</button>
+<button
+  x-slidein
+  direction="left">Slide</button>
 <button x-bounce>Bounce</button>
-
 <!-- forms -->
-<input type="password" x-password placeholder="Password with toggle">
+<input
+  type="password"
+  x-password
+  placeholder="Password with toggle">
 ```
 
 The full attribute → behavior map is in `src/core/wb-lazy.js`
@@ -141,7 +174,7 @@ Themes are pure CSS variables in `src/styles/themes.css`, selected by the
 `data-theme` attribute on `<html>`:
 
 ```html
-<html data-theme="dark">   <!-- or "light", "golden", "neon-dreams", … -->
+<html data-theme="dark"> <!-- or "light", "golden", "neon-dreams", … -->
 ```
 
 Switch at runtime with the `Theme` API (`src/core/theme.js`) or drop in a

@@ -131,14 +131,31 @@ If a test isn't in one of these directories, it won't run. Check `playwright.con
 
 ```html
 <!-- ❌ WRONG -->
-<wb-alert type="warning" message="Check input">
-<div x-stepper value="5" min="0" max="10">
-<button x-toast message="Saved!" type="success">
-
-<!-- ✅ CORRECT -->
-<wb-alert variant="warning" message="Check input">
-<div x-stepper value="5" min="0" max="10">
-<button x-toast message="Saved!" variant="success">
+<wb-alert
+  type="warning"
+  message="Check input">
+  <div
+    x-stepper
+    value="5"
+    min="0"
+    max="10">
+    <button
+      x-toast
+      message="Saved!"
+      type="success">
+      <!-- ✅ CORRECT -->
+      <wb-alert
+        variant="warning"
+        message="Check input">
+        <div
+          x-stepper
+          value="5"
+          min="0"
+          max="10">
+          <button
+            x-toast
+            message="Saved!"
+            variant="success">
 ```
 
 ## 12. Script Output Goes to data/*.json

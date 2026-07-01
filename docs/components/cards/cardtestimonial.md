@@ -29,7 +29,7 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Testimonial
 
 ```html
-<wb-cardtestimonial 
+<wb-cardtestimonial
   quote="This product changed my life!"
   author="Jane Doe"
   role="CEO, TechCorp">
@@ -39,7 +39,7 @@ Inherits all [card properties](./card.md) plus:
 ### With Avatar and Rating
 
 ```html
-<wb-cardtestimonial 
+<wb-cardtestimonial
   quote="Absolutely incredible experience. Would recommend to everyone."
   author="John Smith"
   role="Product Manager"
@@ -56,7 +56,9 @@ Inherits all [card properties](./card.md) plus:
   <blockquote class="wb-card__quote">Quote text...</blockquote>
   <div class="wb-card__rating">★★★★★</div>
   <footer class="wb-card__footer">
-    <img class="wb-card__avatar" src="...">
+    <img
+      class="wb-card__avatar"
+      src="...">
     <div>
       <cite class="wb-card__author">Author Name</cite>
       <span class="wb-card__author-role">Role</span>

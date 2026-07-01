@@ -5,7 +5,9 @@ The List component (`semantics/list.js`) is a utility behavior that populates a 
 ## Usage
 
 ```html
-<ul is="wb-list" items="Item 1, Item 2, Item 3"></ul>
+<ul
+  is="wb-list"
+  items="Item 1, Item 2, Item 3"></ul>
 ```
 
 ## Attributes

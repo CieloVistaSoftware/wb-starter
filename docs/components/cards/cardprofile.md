@@ -29,7 +29,7 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Profile
 
 ```html
-<wb-cardprofile 
+<wb-cardprofile
   name="John Doe"
   role="Software Engineer"
   avatar="/images/avatar.jpg">
@@ -39,7 +39,7 @@ Inherits all [card properties](./card.md) plus:
 ### With Bio and Cover
 
 ```html
-<wb-cardprofile 
+<wb-cardprofile
   name="Jane Smith"
   role="Product Designer"
   avatar="/images/jane.jpg"
@@ -52,10 +52,15 @@ Inherits all [card properties](./card.md) plus:
 
 ```html
 <article class="wb-card wb-card--profile">
-  <figure class="wb-card__figure wb-card__cover" style="background-image: url(...)">
+  <figure
+    class="wb-card__figure wb-card__cover"
+    style="background-image: url(...)">
   </figure>
   <header class="wb-card__profile-content">
-    <img class="wb-card__avatar" src="..." alt="...">
+    <img
+      class="wb-card__avatar"
+      src="..."
+      alt="...">
     <h3 class="wb-card__title wb-card__name">Name</h3>
     <p class="wb-card__subtitle wb-card__role">Role</p>
     <p class="wb-card__bio">Bio text...</p>

@@ -35,23 +35,28 @@ Enhanced HTML5 video player with configurable defaults.
 ### Native Video (Enhanced)
 
 ```html
-<video x-video src="clip.mp4" controls></video>
+<video
+  x-video
+  src="clip.mp4"
+  controls></video>
 ```
 
 ### With Poster
 
 ```html
-<wb-video src="movie.mp4" poster="thumbnail.jpg"></wb-video>
+<wb-video
+  src="movie.mp4"
+  poster="thumbnail.jpg"></wb-video>
 ```
 
 ### Background Video
 
 ```html
-<wb-video 
-  src="background.mp4" 
-  autoplay 
-  muted 
-  loop 
+<wb-video
+  src="background.mp4"
+  autoplay
+  muted
+  loop
   controls="false">
 </wb-video>
 ```
@@ -60,7 +65,7 @@ Enhanced HTML5 video player with configurable defaults.
 
 ```html
 <div class="wb-video">
-  <video 
+  <video
     class="wb-video__player"
     src="movie.mp4"
     poster="thumb.jpg"
@@ -133,6 +138,10 @@ The native video element provides built-in accessibility:
 
 ```html
 <wb-video src="movie.mp4">
-  <track kind="captions" src="captions.vtt" srclang="en" label="English">
+  <track
+    kind="captions"
+    src="captions.vtt"
+    srclang="en"
+    label="English">
 </wb-video>
 ```

@@ -29,7 +29,7 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Stats Card
 
 ```html
-<wb-cardstats 
+<wb-cardstats
   value="1,234"
   label="Total Users"
   icon="👥">
@@ -39,7 +39,7 @@ Inherits all [card properties](./card.md) plus:
 ### With Trend
 
 ```html
-<wb-cardstats 
+<wb-cardstats
   value="$45,678"
   label="Revenue"
   icon="💰"
@@ -51,7 +51,7 @@ Inherits all [card properties](./card.md) plus:
 ### Negative Trend
 
 ```html
-<wb-cardstats 
+<wb-cardstats
   value="23"
   label="Open Issues"
   icon="🐛"
@@ -68,7 +68,9 @@ Inherits all [card properties](./card.md) plus:
     <span class="wb-card__icon">👥</span>
   </header>
   <main>
-    <data value="1234" class="wb-card__stats-value">1,234</data>
+    <data
+      value="1234"
+      class="wb-card__stats-value">1,234</data>
     <p class="wb-card__stats-label">Total Users</p>
     <p class="wb-card__stats-trend">↑ +12.5%</p>
   </main>

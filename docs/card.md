@@ -23,7 +23,10 @@ There are 19 distinct card behaviors available. All inherit from the base `card`
 To create a card that acts as a link, use the `<card-link>` custom element:
 
 ```html
-<card-link href="/page" title="My Page" badge="NEW"></card-link>
+<card-link
+  href="/page"
+  title="My Page"
+  badge="NEW"></card-link>
 ```
 
 Supported attributes:
@@ -64,7 +67,10 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 
 ## Usage Example
 ```html
-<wb-card variant="primary" hoverable clickable>
+<wb-card
+  variant="primary"
+  hoverable
+  clickable>
   <h3>Card Title</h3>
   <p>Card content goes here.</p>
 </wb-card>

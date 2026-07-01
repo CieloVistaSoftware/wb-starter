@@ -28,7 +28,7 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Overlay
 
 ```html
-<wb-cardoverlay 
+<wb-cardoverlay
   title="Featured Story"
   subtitle="Read more about this"
   image="/images/background.jpg">
@@ -38,7 +38,7 @@ Inherits all [card properties](./card.md) plus:
 ### Top Position
 
 ```html
-<wb-cardoverlay 
+<wb-cardoverlay
   title="Top Overlay"
   image="/images/bg.jpg"
   position="top">
@@ -48,7 +48,7 @@ Inherits all [card properties](./card.md) plus:
 ### Center Position
 
 ```html
-<wb-cardoverlay 
+<wb-cardoverlay
   title="Centered"
   subtitle="Text in the middle"
   image="/images/bg.jpg"
@@ -59,7 +59,7 @@ Inherits all [card properties](./card.md) plus:
 ### No Gradient
 
 ```html
-<wb-cardoverlay 
+<wb-cardoverlay
   title="No Gradient"
   image="/images/light-bg.jpg"
   gradient="false">
@@ -69,7 +69,7 @@ Inherits all [card properties](./card.md) plus:
 ### Custom Height
 
 ```html
-<wb-cardoverlay 
+<wb-cardoverlay
   title="Tall Card"
   image="/images/bg.jpg"
   height="500px">

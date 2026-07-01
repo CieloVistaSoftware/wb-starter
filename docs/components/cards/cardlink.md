@@ -30,7 +30,7 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Link Card
 
 ```html
-<wb-cardlink 
+<wb-cardlink
   title="Documentation"
   href="/docs"
   icon="📚">
@@ -40,7 +40,7 @@ Inherits all [card properties](./card.md) plus:
 ### External Link
 
 ```html
-<wb-cardlink 
+<wb-cardlink
   title="GitHub"
   description="View source code"
   href="https://github.com/example"
@@ -52,7 +52,7 @@ Inherits all [card properties](./card.md) plus:
 ### With Badge
 
 ```html
-<wb-cardlink 
+<wb-cardlink
   title="New Feature"
   description="Check out our latest update"
   href="/features"

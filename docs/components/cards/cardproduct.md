@@ -32,7 +32,7 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Product
 
 ```html
-<wb-cardproduct 
+<wb-cardproduct
   title="Wireless Headphones"
   image="/images/headphones.jpg"
   price="$99.99">
@@ -42,7 +42,7 @@ Inherits all [card properties](./card.md) plus:
 ### With Sale Price
 
 ```html
-<wb-cardproduct 
+<wb-cardproduct
   title="Premium Headphones"
   image="/images/headphones.jpg"
   price="$79.99"
@@ -54,7 +54,7 @@ Inherits all [card properties](./card.md) plus:
 ### With Rating
 
 ```html
-<wb-cardproduct 
+<wb-cardproduct
   title="Bluetooth Speaker"
   image="/images/speaker.jpg"
   price="$49.99"

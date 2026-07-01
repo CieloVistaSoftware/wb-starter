@@ -29,27 +29,35 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 ### Custom Element
 
 ```html
-<wb-img src="photo.jpg" alt="Photo description"></wb-img>
+<wb-img
+  src="photo.jpg"
+  alt="Photo description"></wb-img>
 ```
 
 ### Native Image (Enhanced)
 
 ```html
-<img x-img src="photo.jpg" alt="Photo">
+<img
+  x-img
+  src="photo.jpg"
+  alt="Photo">
 ```
 
 ### Lazy Loading
 
 ```html
-<wb-img src="large-image.jpg" lazy alt="Large photo"></wb-img>
+<wb-img
+  src="large-image.jpg"
+  lazy
+  alt="Large photo"></wb-img>
 ```
 
 ### With Aspect Ratio
 
 ```html
-<wb-img 
-  src="banner.jpg" 
-  aspectRatio="16/9" 
+<wb-img
+  src="banner.jpg"
+  aspectRatio="16/9"
   alt="Banner">
 </wb-img>
 ```
@@ -57,14 +65,17 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 ### Zoomable
 
 ```html
-<wb-img src="artwork.jpg" zoomable alt="Click to zoom"></wb-img>
+<wb-img
+  src="artwork.jpg"
+  zoomable
+  alt="Click to zoom"></wb-img>
 ```
 
 ### With Fallback
 
 ```html
-<wb-img 
-  src="user-avatar.jpg" 
+<wb-img
+  src="user-avatar.jpg"
   fallback="/assets/default-avatar.png"
   alt="User avatar">
 </wb-img>
@@ -73,15 +84,23 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 ### Object Fit
 
 ```html
-<wb-img src="photo.jpg" fit="contain" alt="Photo"></wb-img>
-<wb-img src="photo.jpg" fit="cover" alt="Photo"></wb-img>
+<wb-img
+  src="photo.jpg"
+  fit="contain"
+  alt="Photo"></wb-img>
+<wb-img
+  src="photo.jpg"
+  fit="cover"
+  alt="Photo"></wb-img>
 ```
 
 ## Generated Structure
 
 ```html
-<div class="wb-img" style="aspect-ratio: 16/9">
-  <img 
+<div
+  class="wb-img"
+  style="aspect-ratio: 16/9">
+  <img
     class="wb-img__image"
     src="photo.jpg"
     alt="Description"

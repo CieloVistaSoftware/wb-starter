@@ -17,7 +17,9 @@ All components use the `wb-` prefix as custom element tags:
 <wb-card title="Hello">Content</wb-card>
 <wb-modal id="my-modal">...</wb-modal>
 <wb-badge variant="success">New</wb-badge>
-<wb-cardhero title="Welcome" xalign="center"></wb-cardhero>
+<wb-cardhero
+  title="Welcome"
+  xalign="center"></wb-cardhero>
 ```
 
 ### Behaviors: `x-behaviorname`
@@ -38,10 +40,14 @@ Properties on custom elements use **clean attribute names** - no `data-` or `x-`
 
 ```html
 <!-- CORRECT: Clean property names -->
-<wb-card title="Hello" variant="glass" hoverable>
-
-<!-- WRONG: Don't use data- prefix -->
-<wb-card title="Hello" variant="glass">
+<wb-card
+  title="Hello"
+  variant="glass"
+  hoverable>
+  <!-- WRONG: Don't use data- prefix -->
+  <wb-card
+    title="Hello"
+    variant="glass">
 ```
 
 ---
@@ -260,29 +266,27 @@ document.body.appendChild(card);
 
 ### Before (Legacy v2)
 ```html
-<div x-card title="Hello" variant="glass">
-  Content here
-</div>
-
+<div
+  x-card
+  title="Hello"
+  variant="glass"> Content here </div>
 <button x-ripple>Click me</button>
-
-<div x-cardhero 
-     title="Welcome" 
-     align="center"
-     background="url(bg.jpg)">
+<div
+  x-cardhero
+  title="Welcome"
+  align="center"
+  background="url(bg.jpg)">
 </div>
 ```
 
 ### After (v3.0)
 ```html
-<wb-card title="Hello" variant="glass">
-  Content here
-</wb-card>
-
+<wb-card
+  title="Hello"
+  variant="glass"> Content here </wb-card>
 <button x-ripple>Click me</button>
-
-<wb-cardhero 
-  title="Welcome" 
+<wb-cardhero
+  title="Welcome"
   xalign="center"
   background="url(bg.jpg)">
 </wb-cardhero>

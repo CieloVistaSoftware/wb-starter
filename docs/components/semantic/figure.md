@@ -14,12 +14,16 @@ The `<figure>` element represents self-contained content with an optional captio
 ### 1. Card Image (`cardimage`)
 
 ```html
-<article x-cardimage src="image.jpg" alt="Description">
+<article
+  x-cardimage
+  src="image.jpg"
+  alt="Description">
   <figure class="wb-card__figure">
-    <img src="image.jpg" alt="A beautiful sunset" class="wb-card__image">
-    <figcaption class="wb-card__caption">
-      Sunset over the Pacific Ocean
-    </figcaption>
+    <img
+      src="image.jpg"
+      alt="A beautiful sunset"
+      class="wb-card__image">
+    <figcaption class="wb-card__caption"> Sunset over the Pacific Ocean </figcaption>
   </figure>
   <div class="wb-card__content">
     <h3 class="wb-card__title">Card Title</h3>
@@ -30,14 +34,18 @@ The `<figure>` element represents self-contained content with an optional captio
 ### 2. Card Video (`cardvideo`)
 
 ```html
-<article x-cardvideo src="video.mp4">
+<article
+  x-cardvideo
+  src="video.mp4">
   <figure class="wb-card__figure">
-    <video controls class="wb-card__video">
-      <source src="video.mp4" type="video/mp4">
+    <video
+      controls
+      class="wb-card__video">
+      <source
+        src="video.mp4"
+        type="video/mp4">
     </video>
-    <figcaption class="wb-card__caption">
-      Product Demo Video
-    </figcaption>
+    <figcaption class="wb-card__caption"> Product Demo Video </figcaption>
   </figure>
 </article>
 ```
@@ -45,12 +53,15 @@ The `<figure>` element represents self-contained content with an optional captio
 ### 3. Card File (`cardfile`)
 
 ```html
-<article x-cardfile filename="report.pdf" type="pdf">
+<article
+  x-cardfile
+  filename="report.pdf"
+  type="pdf">
   <figure class="wb-card__file-preview">
-    <div class="wb-card__file-icon" aria-hidden="true">📄</div>
-    <figcaption class="wb-card__filename">
-      report.pdf
-      <span class="wb-card__file-meta">2.4 MB • PDF</span>
+    <div
+      class="wb-card__file-icon"
+      aria-hidden="true">📄</div>
+    <figcaption class="wb-card__filename"> report.pdf <span class="wb-card__file-meta">2.4 MB • PDF</span>
     </figcaption>
   </figure>
 </article>
@@ -59,9 +70,13 @@ The `<figure>` element represents self-contained content with an optional captio
 ### 4. Card Product (`cardproduct`)
 
 ```html
-<article x-cardproduct image="product.jpg">
+<article
+  x-cardproduct
+  image="product.jpg">
   <figure class="wb-card__product-image">
-    <img src="product.jpg" alt="Product Name">
+    <img
+      src="product.jpg"
+      alt="Product Name">
     <span class="wb-card__badge">Sale</span>
   </figure>
   <div class="wb-card__product-info">
@@ -82,17 +97,23 @@ The `<figure>` element represents self-contained content with an optional captio
 ## Example: Image Gallery with Figures
 
 ```html
-<div class="gallery" role="group" aria-label="Photo Gallery">
+<div
+  class="gallery"
+  role="group"
+  aria-label="Photo Gallery">
   <figure class="wb-card__figure">
-    <img src="photo1.jpg" alt="Mountain landscape at sunrise">
+    <img
+      src="photo1.jpg"
+      alt="Mountain landscape at sunrise">
     <figcaption>
       <strong>Alpine Sunrise</strong>
       <span>Rocky Mountains, Colorado</span>
     </figcaption>
   </figure>
-  
   <figure class="wb-card__figure">
-    <img src="photo2.jpg" alt="Ocean waves crashing on rocks">
+    <img
+      src="photo2.jpg"
+      alt="Ocean waves crashing on rocks">
     <figcaption>
       <strong>Pacific Coast</strong>
       <span>Big Sur, California</span>

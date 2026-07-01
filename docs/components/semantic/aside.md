@@ -13,7 +13,10 @@ The `<aside>` element represents content that is tangentially related to the con
 ### 1. Card Notification (`cardnotification`)
 
 ```html
-<aside x-cardnotification type="info" title="Heads Up">
+<aside
+  x-cardnotification
+  type="info"
+  title="Heads Up">
   <!-- Notification content -->
 </aside>
 ```
@@ -23,7 +26,10 @@ The `<aside>` element represents content that is tangentially related to the con
 ### 2. Alert (`alert`)
 
 ```html
-<aside x-alert type="warning" title="Warning">
+<aside
+  x-alert
+  type="warning"
+  title="Warning">
   <!-- Alert message -->
 </aside>
 ```
@@ -42,8 +48,8 @@ The `<aside>` element represents content that is tangentially related to the con
 ## Example: Notification with ARIA
 
 ```html
-<aside 
-  x-cardnotification 
+<aside
+  x-cardnotification
   type="success"
   role="status"
   aria-live="polite">

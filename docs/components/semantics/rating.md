@@ -36,59 +36,89 @@ Star rating component for displaying or collecting ratings.
 ### Data Attribute
 
 ```html
-<div x-rating value="4"></div>
+<div
+  x-rating
+  value="4"></div>
 ```
 
 ### Read-Only Display
 
 ```html
-<wb-rating value="4.5" half readonly></wb-rating>
+<wb-rating
+  value="4.5"
+  half
+  readonly></wb-rating>
 ```
 
 ### Interactive Input
 
 ```html
-<wb-rating value="0" max="5"></wb-rating>
+<wb-rating
+  value="0"
+  max="5"></wb-rating>
 ```
 
 ### Half Stars
 
 ```html
-<wb-rating value="3.5" half></wb-rating>
+<wb-rating
+  value="3.5"
+  half></wb-rating>
 ```
 
 ### Custom Max
 
 ```html
-<wb-rating value="7" max="10"></wb-rating>
+<wb-rating
+  value="7"
+  max="10"></wb-rating>
 ```
 
 ### Sizes
 
 ```html
-<wb-rating value="3" size="sm"></wb-rating>
-<wb-rating value="3" size="md"></wb-rating>
-<wb-rating value="3" size="lg"></wb-rating>
+<wb-rating
+  value="3"
+  size="sm"></wb-rating>
+<wb-rating
+  value="3"
+  size="md"></wb-rating>
+<wb-rating
+  value="3"
+  size="lg"></wb-rating>
 ```
 
 ### Custom Icons
 
 ```html
-<wb-rating value="3" icon="❤️"></wb-rating>
-<wb-rating value="4" icon="👍"></wb-rating>
-<wb-rating value="2" icon="🔥"></wb-rating>
+<wb-rating
+  value="3"
+  icon="❤️"></wb-rating>
+<wb-rating
+  value="4"
+  icon="👍"></wb-rating>
+<wb-rating
+  value="2"
+  icon="🔥"></wb-rating>
 ```
 
 ### Disabled
 
 ```html
-<wb-rating value="4" disabled></wb-rating>
+<wb-rating
+  value="4"
+  disabled></wb-rating>
 ```
 
 ## Generated Structure
 
 ```html
-<div class="wb-rating" role="slider" aria-valuemin="0" aria-valuemax="5" aria-valuenow="3">
+<div
+  class="wb-rating"
+  role="slider"
+  aria-valuemin="0"
+  aria-valuemax="5"
+  aria-valuenow="3">
   <span class="wb-rating__star wb-rating__star--filled">★</span>
   <span class="wb-rating__star wb-rating__star--filled">★</span>
   <span class="wb-rating__star wb-rating__star--filled">★</span>

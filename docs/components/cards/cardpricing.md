@@ -32,7 +32,7 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Pricing Card
 
 ```html
-<wb-cardpricing 
+<wb-cardpricing
   plan="Starter"
   price="$9"
   period="/month"
@@ -44,7 +44,7 @@ Inherits all [card properties](./card.md) plus:
 ### Featured Plan
 
 ```html
-<wb-cardpricing 
+<wb-cardpricing
   plan="Professional"
   price="$29"
   period="/month"
@@ -57,7 +57,7 @@ Inherits all [card properties](./card.md) plus:
 ### Annual Pricing
 
 ```html
-<wb-cardpricing 
+<wb-cardpricing
   plan="Enterprise"
   price="$299"
   period="/year"
@@ -85,7 +85,9 @@ Inherits all [card properties](./card.md) plus:
     </ul>
   </main>
   <footer class="wb-card__footer">
-    <a class="wb-card__cta" href="#">Get Started</a>
+    <a
+      class="wb-card__cta"
+      href="#">Get Started</a>
   </footer>
 </article>
 ```

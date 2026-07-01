@@ -25,20 +25,15 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Minimizable
 
 ```html
-<wb-cardminimizable 
-  title="Dashboard Widget">
-  Widget content here.
-</wb-cardminimizable>
+<wb-cardminimizable title="Dashboard Widget"> Widget content here. </wb-cardminimizable>
 ```
 
 ### Initially Minimized
 
 ```html
-<wb-cardminimizable 
+<wb-cardminimizable
   title="Collapsed Widget"
-  minimized>
-  This content is hidden initially.
-</wb-cardminimizable>
+  minimized> This content is hidden initially. </wb-cardminimizable>
 ```
 
 ## Events

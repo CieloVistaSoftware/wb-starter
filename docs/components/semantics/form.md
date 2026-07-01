@@ -30,16 +30,25 @@ Enhanced form with AJAX submission, validation, and auto-save.
 
 ```html
 <wb-form action="/api/submit">
-  <wb-input name="email" label="Email" required></wb-input>
-  <wb-button label="Submit" type="submit"></wb-button>
+  <wb-input
+    name="email"
+    label="Email"
+    required></wb-input>
+  <wb-button
+    label="Submit"
+    type="submit"></wb-button>
 </wb-form>
 ```
 
 ### Native Form (Enhanced)
 
 ```html
-<form x-form action="/api/submit">
-  <input name="email" required>
+<form
+  x-form
+  action="/api/submit">
+  <input
+    name="email"
+    required>
   <button type="submit">Send</button>
 </form>
 ```
@@ -47,43 +56,69 @@ Enhanced form with AJAX submission, validation, and auto-save.
 ### AJAX Submission
 
 ```html
-<wb-form action="/api/contact" ajax>
-  <wb-input name="email" label="Email" inputType="email" required></wb-input>
-  <wb-textarea name="message" label="Message" required></wb-textarea>
-  <wb-button label="Send Message" type="submit"></wb-button>
+<wb-form
+  action="/api/contact"
+  ajax>
+  <wb-input
+    name="email"
+    label="Email"
+    inputType="email"
+    required></wb-input>
+  <wb-textarea
+    name="message"
+    label="Message"
+    required></wb-textarea>
+  <wb-button
+    label="Send Message"
+    type="submit"></wb-button>
 </wb-form>
 ```
 
 ### With Auto-Save
 
 ```html
-<wb-form action="/api/application" autoSave id="application-form">
-  <wb-input name="name" label="Full Name"></wb-input>
-  <wb-textarea name="bio" label="Biography"></wb-textarea>
-  <wb-button label="Submit" type="submit"></wb-button>
+<wb-form
+  action="/api/application"
+  autoSave
+  id="application-form">
+  <wb-input
+    name="name"
+    label="Full Name"></wb-input>
+  <wb-textarea
+    name="bio"
+    label="Biography"></wb-textarea>
+  <wb-button
+    label="Submit"
+    type="submit"></wb-button>
 </wb-form>
 ```
 
 ### Custom Success Message
 
 ```html
-<wb-form 
-  action="/api/newsletter" 
-  ajax 
+<wb-form
+  action="/api/newsletter"
+  ajax
   successMessage="Thanks for subscribing!">
-  <wb-input name="email" label="Email" inputType="email"></wb-input>
-  <wb-button label="Subscribe" type="submit"></wb-button>
+  <wb-input
+    name="email"
+    label="Email"
+    inputType="email"></wb-input>
+  <wb-button
+    label="Subscribe"
+    type="submit"></wb-button>
 </wb-form>
 ```
 
 ## Generated Structure
 
 ```html
-<form class="wb-form" action="/api/submit" method="POST">
+<form
+  class="wb-form"
+  action="/api/submit"
+  method="POST">
   <!-- Form fields -->
-  <div class="wb-form__message wb-form__message--success">
-    Success!
-  </div>
+  <div class="wb-form__message wb-form__message--success"> Success! </div>
 </form>
 ```
 

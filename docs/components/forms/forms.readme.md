@@ -29,8 +29,10 @@ Text input field with various types and validation.
 
 ```html
 <!-- Basic text input -->
-<wb-input label="Full Name" placeholder="Enter your name" required></wb-input>
-
+<wb-input
+  label="Full Name"
+  placeholder="Enter your name"
+  required></wb-input>
 <!-- Email input with validation -->
 <wb-input
   type="email"
@@ -38,7 +40,6 @@ Text input field with various types and validation.
   placeholder="you@example.com"
   required>
 </wb-input>
-
 <!-- Password input -->
 <wb-input
   type="password"
@@ -70,8 +71,10 @@ Multi-line text input with auto-resize capability.
 
 ```html
 <!-- Basic textarea -->
-<wb-textarea label="Message" placeholder="Enter your message" rows="6"></wb-textarea>
-
+<wb-textarea
+  label="Message"
+  placeholder="Enter your message"
+  rows="6"></wb-textarea>
 <!-- Auto-sizing textarea -->
 <wb-textarea
   label="Comments"
@@ -101,13 +104,17 @@ Checkbox input with custom styling and indeterminate state support.
 
 ```html
 <!-- Basic checkbox -->
-<wb-checkbox label="I agree to the terms" required></wb-checkbox>
-
+<wb-checkbox
+  label="I agree to the terms"
+  required></wb-checkbox>
 <!-- Pre-checked checkbox -->
-<wb-checkbox label="Subscribe to newsletter" checked></wb-checkbox>
-
+<wb-checkbox
+  label="Subscribe to newsletter"
+  checked></wb-checkbox>
 <!-- Indeterminate checkbox -->
-<wb-checkbox label="Select all" indeterminate></wb-checkbox>
+<wb-checkbox
+  label="Select all"
+  indeterminate></wb-checkbox>
 ```
 
 ---
@@ -131,9 +138,11 @@ Toggle switch component (styled checkbox alternative).
 ```html
 <!-- Basic switch -->
 <wb-switch label="Enable notifications"></wb-switch>
-
 <!-- Large switch -->
-<wb-switch label="Dark mode" size="large" checked></wb-switch>
+<wb-switch
+  label="Dark mode"
+  size="large"
+  checked></wb-switch>
 ```
 
 ---
@@ -162,9 +171,11 @@ Dropdown select with search and multi-select support.
   <option value="ca">Canada</option>
   <option value="uk">United Kingdom</option>
 </wb-select>
-
 <!-- Multi-select -->
-<wb-select label="Skills" multiple searchable>
+<wb-select
+  label="Skills"
+  multiple
+  searchable>
   <option value="js">JavaScript</option>
   <option value="py">Python</option>
   <option value="java">Java</option>
@@ -192,9 +203,12 @@ Star rating input component.
 ```html
 <!-- Basic rating -->
 <wb-rating label="Rate this product"></wb-rating>
-
 <!-- Half-star rating -->
-<wb-rating max="10" half value="7.5" readonly></wb-rating>
+<wb-rating
+  max="10"
+  half
+  value="7.5"
+  readonly></wb-rating>
 ```
 
 ---
@@ -262,8 +276,13 @@ All form components emit standard events plus WB-specific events:
 
 ```html
 <form>
-  <wb-input label="Name" required></wb-input>
-  <wb-input label="Email" type="email" required></wb-input>
+  <wb-input
+    label="Name"
+    required></wb-input>
+  <wb-input
+    label="Email"
+    type="email"
+    required></wb-input>
   <button type="submit">Submit</button>
 </form>
 ```

@@ -51,21 +51,27 @@ All card components support these base attributes:
 
 ### Basic Card
 ```html
-<wb-card title="Card Title" subtitle="Card subtitle">
+<wb-card
+  title="Card Title"
+  subtitle="Card subtitle">
   <p>Card content goes here.</p>
 </wb-card>
 ```
 
 ### Elevated Card
 ```html
-<wb-card title="Elevated Card" elevated>
+<wb-card
+  title="Elevated Card"
+  elevated>
   <p>This card has shadow elevation.</p>
 </wb-card>
 ```
 
 ### Clickable Card
 ```html
-<wb-card title="Clickable Card" clickable>
+<wb-card
+  title="Clickable Card"
+  clickable>
   <p>This card responds to clicks.</p>
 </wb-card>
 ```

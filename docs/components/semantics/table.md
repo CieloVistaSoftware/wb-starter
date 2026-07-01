@@ -30,13 +30,27 @@ Interactive data table with sorting and search.
 ### Custom Element
 
 ```html
-<wb-table striped hover>
+<wb-table
+  striped
+  hover>
   <thead>
-    <tr><th>Name</th><th>Age</th><th>Role</th></tr>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Role</th>
+    </tr>
   </thead>
   <tbody>
-    <tr><td>Alice</td><td>30</td><td>Developer</td></tr>
-    <tr><td>Bob</td><td>25</td><td>Designer</td></tr>
+    <tr>
+      <td>Alice</td>
+      <td>30</td>
+      <td>Developer</td>
+    </tr>
+    <tr>
+      <td>Bob</td>
+      <td>25</td>
+      <td>Designer</td>
+    </tr>
   </tbody>
 </wb-table>
 ```
@@ -44,7 +58,9 @@ Interactive data table with sorting and search.
 ### Native Table (Enhanced)
 
 ```html
-<table x-table striped="true">
+<table
+  x-table
+  striped="true">
   <!-- content -->
 </table>
 ```
@@ -52,9 +68,15 @@ Interactive data table with sorting and search.
 ### With Search
 
 ```html
-<wb-table searchable striped>
+<wb-table
+  searchable
+  striped>
   <thead>
-    <tr><th>Product</th><th>Price</th><th>Stock</th></tr>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Stock</th>
+    </tr>
   </thead>
   <tbody>
     <!-- rows -->
@@ -65,9 +87,10 @@ Interactive data table with sorting and search.
 ### From JSON Data
 
 ```html
-<wb-table 
+<wb-table
   headers="ID,Name,Role"
-  rows='[[1,"John","Admin"],[2,"Jane","User"],[3,"Bob","Editor"]]'>
+  rows='[[1,"John","Admin"],[2,"Jane","User"],[3,"Bob","Editor"]]'
+>
 </wb-table>
 ```
 
@@ -76,15 +99,15 @@ Interactive data table with sorting and search.
 ```html
 <!-- Striped -->
 <wb-table striped>...</wb-table>
-
 <!-- Bordered -->
 <wb-table bordered>...</wb-table>
-
 <!-- Compact -->
 <wb-table compact>...</wb-table>
-
 <!-- Combined -->
-<wb-table striped bordered hover>...</wb-table>
+<wb-table
+  striped
+  bordered
+  hover>...</wb-table>
 ```
 
 ## Generated Structure
@@ -93,19 +116,23 @@ Interactive data table with sorting and search.
 <div class="wb-table-container">
   <!-- Search (when searchable) -->
   <div class="wb-table__search">
-    <input type="search" placeholder="Search...">
+    <input
+      type="search"
+      placeholder="Search...">
   </div>
-  
   <table class="wb-table wb-table--striped wb-table--hover">
     <thead>
       <tr>
-        <th class="wb-table__header" sort="asc">
-          Name <span class="wb-table__sort-icon">▲</span>
+        <th
+          class="wb-table__header"
+          sort="asc"> Name <span class="wb-table__sort-icon">▲</span>
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr><td>Alice</td></tr>
+      <tr>
+        <td>Alice</td>
+      </tr>
     </tbody>
   </table>
 </div>

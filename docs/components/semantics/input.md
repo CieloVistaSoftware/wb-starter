@@ -38,20 +38,26 @@ Text input field with label, helper text, and validation states.
 ### Custom Element
 
 ```html
-<wb-input label="Email" inputType="email" placeholder="Enter your email"></wb-input>
+<wb-input
+  label="Email"
+  inputType="email"
+  placeholder="Enter your email"></wb-input>
 ```
 
 ### Native Input (Enhanced)
 
 ```html
-<input type="text" x-input placeholder="Search...">
+<input
+  type="text"
+  x-input
+  placeholder="Search...">
 ```
 
 ### With Label and Helper
 
 ```html
-<wb-input 
-  label="Username" 
+<wb-input
+  label="Username"
   placeholder="Enter username"
   helper="Must be 3-20 characters">
 </wb-input>
@@ -60,53 +66,81 @@ Text input field with label, helper text, and validation states.
 ### With Icon
 
 ```html
-<wb-input label="Search" icon="🔍" placeholder="Search..."></wb-input>
-
-<wb-input label="Email" icon="📧" iconPosition="end" inputType="email"></wb-input>
+<wb-input
+  label="Search"
+  icon="🔍"
+  placeholder="Search..."></wb-input>
+<wb-input
+  label="Email"
+  icon="📧"
+  iconPosition="end"
+  inputType="email"></wb-input>
 ```
 
 ### Clearable
 
 ```html
-<wb-input label="Search" placeholder="Type to search..." clearable></wb-input>
+<wb-input
+  label="Search"
+  placeholder="Type to search..."
+  clearable></wb-input>
 ```
 
 ### Validation States
 
 ```html
-<wb-input label="Valid Field" variant="success" value="Correct!"></wb-input>
-
-<wb-input label="Invalid Field" variant="error" error="This field is required"></wb-input>
+<wb-input
+  label="Valid Field"
+  variant="success"
+  value="Correct!"></wb-input>
+<wb-input
+  label="Invalid Field"
+  variant="error"
+  error="This field is required"></wb-input>
 ```
 
 ### Sizes
 
 ```html
-<wb-input label="Small" size="sm"></wb-input>
-<wb-input label="Medium" size="md"></wb-input>
-<wb-input label="Large" size="lg"></wb-input>
+<wb-input
+  label="Small"
+  size="sm"></wb-input>
+<wb-input
+  label="Medium"
+  size="md"></wb-input>
+<wb-input
+  label="Large"
+  size="lg"></wb-input>
 ```
 
 ### Input Types
 
 ```html
-<wb-input label="Email" inputType="email"></wb-input>
-<wb-input label="Password" inputType="password"></wb-input>
-<wb-input label="Number" inputType="number"></wb-input>
-<wb-input label="Date" inputType="date"></wb-input>
+<wb-input
+  label="Email"
+  inputType="email"></wb-input>
+<wb-input
+  label="Password"
+  inputType="password"></wb-input>
+<wb-input
+  label="Number"
+  inputType="number"></wb-input>
+<wb-input
+  label="Date"
+  inputType="date"></wb-input>
 ```
 
 ## Generated Structure
 
 ```html
 <div class="wb-input">
-  <label class="wb-input__label">
-    Label
-    <span class="wb-input__required">*</span>
+  <label class="wb-input__label"> Label <span class="wb-input__required">*</span>
   </label>
   <div class="wb-input__wrapper">
     <span class="wb-input__icon">🔍</span>
-    <input type="text" class="wb-input__field">
+    <input
+      type="text"
+      class="wb-input__field">
     <button class="wb-input__clear">✕</button>
   </div>
   <span class="wb-input__helper">Helper text</span>

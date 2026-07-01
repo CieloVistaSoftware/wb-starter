@@ -36,26 +36,32 @@ Multi-line text input with autosize and character count.
 ### Custom Element
 
 ```html
-<wb-textarea label="Message" placeholder="Enter your message..."></wb-textarea>
+<wb-textarea
+  label="Message"
+  placeholder="Enter your message..."></wb-textarea>
 ```
 
 ### Native Textarea (Enhanced)
 
 ```html
-<textarea x-textarea placeholder="Write something..."></textarea>
+<textarea
+  x-textarea
+  placeholder="Write something..."></textarea>
 ```
 
 ### With Label
 
 ```html
-<wb-textarea label="Description" placeholder="Enter description..."></wb-textarea>
+<wb-textarea
+  label="Description"
+  placeholder="Enter description..."></wb-textarea>
 ```
 
 ### Character Count
 
 ```html
-<wb-textarea 
-  label="Bio" 
+<wb-textarea
+  label="Bio"
   placeholder="Tell us about yourself..."
   maxLength="200"
   showCount>
@@ -65,8 +71,8 @@ Multi-line text input with autosize and character count.
 ### Autosize
 
 ```html
-<wb-textarea 
-  label="Comment" 
+<wb-textarea
+  label="Comment"
   placeholder="Write a comment..."
   autosize>
 </wb-textarea>
@@ -75,30 +81,49 @@ Multi-line text input with autosize and character count.
 ### Custom Rows
 
 ```html
-<wb-textarea label="Notes" rows="5"></wb-textarea>
-<wb-textarea label="Content" rows="10"></wb-textarea>
+<wb-textarea
+  label="Notes"
+  rows="5"></wb-textarea>
+<wb-textarea
+  label="Content"
+  rows="10"></wb-textarea>
 ```
 
 ### Resize Options
 
 ```html
-<wb-textarea label="No resize" resize="none"></wb-textarea>
-<wb-textarea label="Vertical only" resize="vertical"></wb-textarea>
-<wb-textarea label="Both directions" resize="both"></wb-textarea>
+<wb-textarea
+  label="No resize"
+  resize="none"></wb-textarea>
+<wb-textarea
+  label="Vertical only"
+  resize="vertical"></wb-textarea>
+<wb-textarea
+  label="Both directions"
+  resize="both"></wb-textarea>
 ```
 
 ### Validation States
 
 ```html
-<wb-textarea label="Valid" variant="success"></wb-textarea>
-<wb-textarea label="Error" variant="error"></wb-textarea>
+<wb-textarea
+  label="Valid"
+  variant="success"></wb-textarea>
+<wb-textarea
+  label="Error"
+  variant="error"></wb-textarea>
 ```
 
 ### Disabled/Readonly
 
 ```html
-<wb-textarea label="Disabled" disabled></wb-textarea>
-<wb-textarea label="Readonly" readonly value="Can't edit this"></wb-textarea>
+<wb-textarea
+  label="Disabled"
+  disabled></wb-textarea>
+<wb-textarea
+  label="Readonly"
+  readonly
+  value="Can't edit this"></wb-textarea>
 ```
 
 ## Generated Structure
@@ -106,7 +131,9 @@ Multi-line text input with autosize and character count.
 ```html
 <div class="wb-textarea">
   <label class="wb-textarea__label">Label</label>
-  <textarea class="wb-textarea__field" rows="3"></textarea>
+  <textarea
+    class="wb-textarea__field"
+    rows="3"></textarea>
   <span class="wb-textarea__counter">0 / 200</span>
 </div>
 ```

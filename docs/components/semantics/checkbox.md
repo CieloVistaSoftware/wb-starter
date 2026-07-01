@@ -38,41 +38,56 @@ Checkbox input with label and custom styling.
 ### Native Input (Enhanced)
 
 ```html
-<input type="checkbox" x-checkbox label="Subscribe">
+<input
+  type="checkbox"
+  x-checkbox
+  label="Subscribe">
 ```
 
 ### Pre-Checked
 
 ```html
-<wb-checkbox label="Remember me" checked></wb-checkbox>
+<wb-checkbox
+  label="Remember me"
+  checked></wb-checkbox>
 ```
 
 ### Indeterminate State
 
 ```html
-<wb-checkbox label="Select All" indeterminate></wb-checkbox>
+<wb-checkbox
+  label="Select All"
+  indeterminate></wb-checkbox>
 ```
 
 ### Disabled
 
 ```html
-<wb-checkbox label="Unavailable option" disabled></wb-checkbox>
+<wb-checkbox
+  label="Unavailable option"
+  disabled></wb-checkbox>
 ```
 
 ### Sizes
 
 ```html
-<wb-checkbox label="Small" size="sm"></wb-checkbox>
-<wb-checkbox label="Medium" size="md"></wb-checkbox>
-<wb-checkbox label="Large" size="lg"></wb-checkbox>
+<wb-checkbox
+  label="Small"
+  size="sm"></wb-checkbox>
+<wb-checkbox
+  label="Medium"
+  size="md"></wb-checkbox>
+<wb-checkbox
+  label="Large"
+  size="lg"></wb-checkbox>
 ```
 
 ### In Forms
 
 ```html
-<wb-checkbox 
-  label="Subscribe to newsletter" 
-  name="subscribe" 
+<wb-checkbox
+  label="Subscribe to newsletter"
+  name="subscribe"
   value="yes"
   required>
 </wb-checkbox>
@@ -82,7 +97,9 @@ Checkbox input with label and custom styling.
 
 ```html
 <div class="wb-checkbox">
-  <input type="checkbox" class="wb-checkbox__input">
+  <input
+    type="checkbox"
+    class="wb-checkbox__input">
   <span class="wb-checkbox__box">
     <span class="wb-checkbox__check"></span>
   </span>

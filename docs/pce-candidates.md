@@ -25,7 +25,9 @@ PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of
 
 ### 3. Behavior Attribute (Traditional)
 ```html
-<div x-behavior="cardprofile" name="Sarah"></div>
+<div
+  x-behavior="cardprofile"
+  name="Sarah"></div>
 ```
 
 All three are equivalent and produce the same result.
@@ -224,7 +226,9 @@ npx playwright test tests/behaviors/pce-demo.spec.ts
 
 ### Before (deprecated)
 ```html
-<div x-card title="Hello">Content</div>
+<div
+  x-card
+  title="Hello">Content</div>
 ```
 
 ### After (v3.0)
@@ -234,7 +238,9 @@ npx playwright test tests/behaviors/pce-demo.spec.ts
 
 Or with behavior attribute:
 ```html
-<article x-behavior="card" title="Hello">Content</article>
+<article
+  x-behavior="card"
+  title="Hello">Content</article>
 ```
 
 ---

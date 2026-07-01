@@ -27,41 +27,39 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Horizontal Card
 
 ```html
-<wb-cardhorizontal 
+<wb-cardhorizontal
   title="Feature Title"
   subtitle="Feature description"
-  image="/images/feature.jpg">
-  Detailed content here.
-</wb-cardhorizontal>
+  image="/images/feature.jpg"> Detailed content here. </wb-cardhorizontal>
 ```
 
 ### Image on Right
 
 ```html
-<wb-cardhorizontal 
+<wb-cardhorizontal
   title="Right Image"
   image="/images/feature.jpg"
-  imagePosition="right">
-  Content appears on the left.
-</wb-cardhorizontal>
+  imagePosition="right"> Content appears on the left. </wb-cardhorizontal>
 ```
 
 ### Custom Image Width
 
 ```html
-<wb-cardhorizontal 
+<wb-cardhorizontal
   title="Large Image"
   image="/images/wide.jpg"
-  imageWidth="60%">
-  Narrower content area.
-</wb-cardhorizontal>
+  imageWidth="60%"> Narrower content area. </wb-cardhorizontal>
 ```
 
 ## Generated Structure
 
 ```html
-<article class="wb-card wb-card-horizontal" style="flex-direction: row">
-  <figure class="wb-card__figure" style="width: 40%">
+<article
+  class="wb-card wb-card-horizontal"
+  style="flex-direction: row">
+  <figure
+    class="wb-card__figure"
+    style="width: 40%">
     <img src="...">
   </figure>
   <div class="wb-card__horizontal-content">

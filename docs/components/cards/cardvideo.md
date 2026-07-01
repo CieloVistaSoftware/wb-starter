@@ -30,8 +30,8 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Video Card
 
 ```html
-<wb-cardvideo 
-  src="/videos/demo.mp4" 
+<wb-cardvideo
+  src="/videos/demo.mp4"
   poster="/images/poster.jpg"
   title="Demo Video"
   controls>
@@ -41,7 +41,7 @@ Inherits all [card properties](./card.md) plus:
 ### Autoplay (Muted)
 
 ```html
-<wb-cardvideo 
+<wb-cardvideo
   src="/videos/background.mp4"
   autoplay
   muted
@@ -55,8 +55,14 @@ Inherits all [card properties](./card.md) plus:
 Videos without captions will display a warning indicator. Add `<track>` elements for captions:
 
 ```html
-<wb-cardvideo src="/video.mp4" title="Accessible Video">
-  <track kind="captions" src="/captions.vtt" srclang="en" label="English">
+<wb-cardvideo
+  src="/video.mp4"
+  title="Accessible Video">
+  <track
+    kind="captions"
+    src="/captions.vtt"
+    srclang="en"
+    label="English">
 </wb-cardvideo>
 ```
 

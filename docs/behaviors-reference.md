@@ -27,7 +27,6 @@ Enhances an element without changing its fundamental structure.
 ```html
 <!-- Add ripple effect to a button -->
 <button x-ripple>Click Me</button>
-
 <!-- Add tooltip -->
 <div x-tooltip="Hello World">Hover Me</div>
 ```
@@ -46,7 +45,9 @@ Transforms an element into a complex component. The `-as-` infix is required for
 ```html
 <!-- Explicitly morph an article into a card -->
 <article x-as-card>
-  <header><h3>Title</h3></header>
+  <header>
+    <h3>Title</h3>
+  </header>
   <main>Content</main>
 </article>
 ```
@@ -77,10 +78,8 @@ To enable, set `"autoInject": true` in your `config/site.json` or pass it to `WB
 
 ```html
 <!-- When autoInject is enabled: -->
-
 <!-- Decorating: dialog gets backdrop and animations -->
 <dialog>...</dialog>
-
 <!-- Decorating: img gets lazy loading and lightbox -->
 <img src="...">
 ```
@@ -93,9 +92,8 @@ For layouts and specific components, you can use custom `<wb-*>` tags. This prov
 <wb-grid columns="3">
   <article>...</article>
 </wb-grid>
-
 <!-- Semantic Aliases -->
-<wb-row>...</wb-row>    <!-- Horizontal Flex -->
+<wb-row>...</wb-row> <!-- Horizontal Flex -->
 <wb-column>...</wb-column> <!-- Vertical Stack -->
 ```
 

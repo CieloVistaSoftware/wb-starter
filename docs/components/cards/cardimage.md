@@ -29,18 +29,16 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Image Card
 
 ```html
-<wb-cardimage 
-  src="/images/hero.jpg" 
+<wb-cardimage
+  src="/images/hero.jpg"
   alt="Hero image"
-  title="Featured Image">
-  Optional content below the image.
-</wb-cardimage>
+  title="Featured Image"> Optional content below the image. </wb-cardimage>
 ```
 
 ### With Custom Aspect Ratio
 
 ```html
-<wb-cardimage 
+<wb-cardimage
   src="/images/square.jpg"
   alt="Square image"
   aspect="1/1"
@@ -51,20 +49,23 @@ Inherits all [card properties](./card.md) plus:
 ### Image at Bottom
 
 ```html
-<wb-cardimage 
+<wb-cardimage
   src="/images/footer.jpg"
   position="bottom"
-  title="Image Below Content">
-  Content appears above the image.
-</wb-cardimage>
+  title="Image Below Content"> Content appears above the image. </wb-cardimage>
 ```
 
 ## Generated Structure
 
 ```html
 <article class="wb-card wb-card-image">
-  <figure class="wb-card__figure" style="aspect-ratio: 16/9">
-    <img src="..." alt="..." loading="lazy">
+  <figure
+    class="wb-card__figure"
+    style="aspect-ratio: 16/9">
+    <img
+      src="..."
+      alt="..."
+      loading="lazy">
   </figure>
   <header class="wb-card__header">
     <h3 class="wb-card__title">Title</h3>

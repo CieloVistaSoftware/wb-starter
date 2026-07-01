@@ -26,7 +26,7 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Expandable
 
 ```html
-<wb-cardexpandable 
+<wb-cardexpandable
   title="Read More"
   maxHeight="80px">
   <p>This is a long content that will be truncated when collapsed...</p>
@@ -37,11 +37,9 @@ Inherits all [card properties](./card.md) plus:
 ### Initially Expanded
 
 ```html
-<wb-cardexpandable 
+<wb-cardexpandable
   title="Details"
-  expanded>
-  All content visible by default.
-</wb-cardexpandable>
+  expanded> All content visible by default. </wb-cardexpandable>
 ```
 
 ## Events

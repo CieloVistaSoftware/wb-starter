@@ -15,9 +15,7 @@
 ```html
 <section class="hero">
   <div class="features">
-    <div class="feature-grid">
-      ...
-    </div>
+    <div class="feature-grid"> ... </div>
   </div>
 </section>
 ```
@@ -25,9 +23,7 @@
 **Example (Incorrect):**
 ```html
 <section class="wb-hero">
-  <div class="wb-demo-feature">
-    ...
-  </div>
+  <div class="wb-demo-feature"> ... </div>
 </section>
 ```
 
@@ -38,9 +34,7 @@
 ```html
 <section class="hero">
   <div class="features">
-    <div class="feature-grid">
-      ...
-    </div>
+    <div class="feature-grid"> ... </div>
   </div>
 </section>
 ```
@@ -49,9 +43,7 @@
 ```html
 <section class="home-hero">
   <div class="page__features">
-    <div class="feature-grid--dark">
-      ...
-    </div>
+    <div class="feature-grid--dark"> ... </div>
   </div>
 </section>
 ```

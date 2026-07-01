@@ -25,9 +25,10 @@ Flexible container with max-width and padding for content centering.
 <wb-container size="lg">
   <p>Main content goes here</p>
 </wb-container>
-
 <!-- Full-width container -->
-<wb-container size="full" padding="2rem">
+<wb-container
+  size="full"
+  padding="2rem">
   <div>Full width content</div>
 </wb-container>
 ```
@@ -63,14 +64,19 @@ CSS Grid layout with responsive columns and flexible item placement.
 
 ```html
 <!-- Basic 3-column grid -->
-<wb-grid cols="3" gap="1.5rem">
+<wb-grid
+  cols="3"
+  gap="1.5rem">
   <div>Column 1</div>
   <div>Column 2</div>
   <div>Column 3</div>
 </wb-grid>
-
 <!-- Responsive grid -->
-<wb-grid cols="4" cols-md="2" cols-sm="1" gap="1rem">
+<wb-grid
+  cols="4"
+  cols-md="2"
+  cols-sm="1"
+  gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
   <div>Item 3</div>
@@ -115,14 +121,17 @@ Flexbox layout container for flexible item arrangement.
 
 ```html
 <!-- Horizontal flex with space between -->
-<wb-flex justify="between" align="center">
+<wb-flex
+  justify="between"
+  align="center">
   <div>Left item</div>
   <div>Center item</div>
   <div>Right item</div>
 </wb-flex>
-
 <!-- Vertical flex stack -->
-<wb-flex direction="column" gap="1.5rem">
+<wb-flex
+  direction="column"
+  gap="1.5rem">
   <header>Header</header>
   <main>Main content</main>
   <footer>Footer</footer>
@@ -182,14 +191,17 @@ Center content both horizontally and vertically.
 <wb-center>
   <div>Centered content</div>
 </wb-center>
-
 <!-- Centered card -->
 <wb-center max-width="400px">
   <wb-card>
     <h2>Login</h2>
     <wb-form>
-      <wb-input label="Email" type="email"></wb-input>
-      <wb-input label="Password" type="password"></wb-input>
+      <wb-input
+        label="Email"
+        type="email"></wb-input>
+      <wb-input
+        label="Password"
+        type="password"></wb-input>
       <wb-button type="submit">Sign In</wb-button>
     </wb-form>
   </wb-card>
@@ -219,9 +231,15 @@ Two-column layout with sidebar and main content area.
   <aside>
     <nav>
       <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li>
+          <a href="#home">Home</a>
+        </li>
+        <li>
+          <a href="#about">About</a>
+        </li>
+        <li>
+          <a href="#contact">Contact</a>
+        </li>
       </ul>
     </nav>
   </aside>
@@ -251,7 +269,9 @@ Semantic sidebar container with optional collapse functionality.
 
 ```html
 <!-- Collapsible sidebar -->
-<wb-sidebar width="280px" collapsible>
+<wb-sidebar
+  width="280px"
+  collapsible>
   <nav>
     <wb-stack gap="0.5rem">
       <a href="#dashboard">Dashboard</a>
@@ -280,12 +300,20 @@ Semantic form grouping container.
 ```html
 <!-- Form section grouping -->
 <wb-fieldset legend="Personal Information">
-  <wb-input label="First Name" required></wb-input>
-  <wb-input label="Last Name" required></wb-input>
-  <wb-input label="Email" type="email" required></wb-input>
+  <wb-input
+    label="First Name"
+    required></wb-input>
+  <wb-input
+    label="Last Name"
+    required></wb-input>
+  <wb-input
+    label="Email"
+    type="email"
+    required></wb-input>
 </wb-fieldset>
-
-<wb-fieldset legend="Preferences" disabled>
+<wb-fieldset
+  legend="Preferences"
+  disabled>
   <wb-checkbox label="Subscribe to newsletter"></wb-checkbox>
   <wb-checkbox label="Receive updates"></wb-checkbox>
 </wb-fieldset>
@@ -309,8 +337,9 @@ Horizontal or vertical divider line with optional text.
 
 ```html
 <!-- Horizontal divider with text -->
-<wb-divider text="OR" spacing="2rem"></wb-divider>
-
+<wb-divider
+  text="OR"
+  spacing="2rem"></wb-divider>
 <!-- Vertical divider -->
 <wb-divider direction="vertical"></wb-divider>
 ```
@@ -333,9 +362,10 @@ Flexible spacing element for layout control.
 ```html
 <!-- Vertical spacing -->
 <wb-spacer size="2rem"></wb-spacer>
-
 <!-- Horizontal spacing -->
-<wb-spacer size="1rem" direction="horizontal"></wb-spacer>
+<wb-spacer
+  size="1rem"
+  direction="horizontal"></wb-spacer>
 ```
 
 ---
@@ -352,7 +382,11 @@ All layout components support responsive attributes:
 
 ```html
 <!-- Responsive grid example -->
-<wb-grid cols="4" cols-md="2" cols-sm="1" gap="1rem">
+<wb-grid
+  cols="4"
+  cols-md="2"
+  cols-sm="1"
+  gap="1rem">
   <div>Responsive item</div>
   <div>Responsive item</div>
   <div>Responsive item</div>

@@ -38,45 +38,75 @@ Progress bar with determinate and indeterminate states.
 ### Native Progress (Enhanced)
 
 ```html
-<progress x-progress value="50" max="100"></progress>
+<progress
+  x-progress
+  value="50"
+  max="100"></progress>
 ```
 
 ### With Label and Value
 
 ```html
-<wb-progress value="75" label="Downloading..." showValue></wb-progress>
+<wb-progress
+  value="75"
+  label="Downloading..."
+  showValue></wb-progress>
 ```
 
 ### Variants
 
 ```html
-<wb-progress value="50" variant="primary"></wb-progress>
-<wb-progress value="50" variant="success"></wb-progress>
-<wb-progress value="50" variant="warning"></wb-progress>
-<wb-progress value="50" variant="error"></wb-progress>
-<wb-progress value="50" variant="info"></wb-progress>
+<wb-progress
+  value="50"
+  variant="primary"></wb-progress>
+<wb-progress
+  value="50"
+  variant="success"></wb-progress>
+<wb-progress
+  value="50"
+  variant="warning"></wb-progress>
+<wb-progress
+  value="50"
+  variant="error"></wb-progress>
+<wb-progress
+  value="50"
+  variant="info"></wb-progress>
 ```
 
 ### Sizes
 
 ```html
-<wb-progress value="50" size="xs"></wb-progress>
-<wb-progress value="50" size="sm"></wb-progress>
-<wb-progress value="50" size="md"></wb-progress>
-<wb-progress value="50" size="lg"></wb-progress>
-<wb-progress value="50" size="xl"></wb-progress>
+<wb-progress
+  value="50"
+  size="xs"></wb-progress>
+<wb-progress
+  value="50"
+  size="sm"></wb-progress>
+<wb-progress
+  value="50"
+  size="md"></wb-progress>
+<wb-progress
+  value="50"
+  size="lg"></wb-progress>
+<wb-progress
+  value="50"
+  size="xl"></wb-progress>
 ```
 
 ### Striped
 
 ```html
-<wb-progress value="60" striped></wb-progress>
+<wb-progress
+  value="60"
+  striped></wb-progress>
 ```
 
 ### Indeterminate
 
 ```html
-<wb-progress indeterminate label="Loading..."></wb-progress>
+<wb-progress
+  indeterminate
+  label="Loading..."></wb-progress>
 ```
 
 ## Generated Structure
@@ -88,7 +118,9 @@ Progress bar with determinate and indeterminate states.
     <span class="wb-progress__value">75%</span>
   </div>
   <div class="wb-progress__track">
-    <div class="wb-progress__bar" style="width: 75%"></div>
+    <div
+      class="wb-progress__bar"
+      style="width: 75%"></div>
   </div>
 </div>
 ```

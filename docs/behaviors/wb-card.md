@@ -195,7 +195,16 @@ The WB Card System includes a wide range of card types, each with its own tag an
 
 ## Sample System: Full Feature Example
 ```html
-<wb-card title="Glass Card" subtitle="With Badge" badge="NEW" variant="glass" clickable hoverable elevated size="md" footer="Footer text here.">
+<wb-card
+  title="Glass Card"
+  subtitle="With Badge"
+  badge="NEW"
+  variant="glass"
+  clickable
+  hoverable
+  elevated
+  size="md"
+  footer="Footer text here.">
   <p>All features enabled.</p>
 </wb-card>
 ```

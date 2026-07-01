@@ -39,21 +39,22 @@ We pruned the `.vscode/html-custom-data.json` file. Instead of listing every spe
 
 **Before (Div Soup):**
 ```html
-<div x-cardpricing 
-     plan="Pro" 
-     price="$29" 
-     period="/mo" 
-     features="Feature 1, Feature 2">
+<div
+  x-cardpricing
+  plan="Pro"
+  price="$29"
+  period="/mo"
+  features="Feature 1, Feature 2">
 </div>
 ```
 
 **After (Custom Tag):**
 ```html
-<price-card 
-     plan="Pro" 
-     price="$29" 
-     period="/mo" 
-     features="Feature 1, Feature 2">
+<price-card
+  plan="Pro"
+  price="$29"
+  period="/mo"
+  features="Feature 1, Feature 2">
 </price-card>
 ```
 

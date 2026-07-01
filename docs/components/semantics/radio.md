@@ -16,7 +16,10 @@ The `radio` component modernizes the `<input type="radio">` element. Like the ch
 Add `x-radio` to an `<input type="radio">`.
 
 ```html
-<input type="radio" name="option" x-radio>
+<input
+  type="radio"
+  name="option"
+  x-radio>
 ```
 
 ### Configuration Options
@@ -32,19 +35,29 @@ Add `x-radio` to an `<input type="radio">`.
 A standard group of options.
 
 ```html
-<input type="radio" name="plan" x-radio label="Free Plan" value="free">
-<input type="radio" name="plan" x-radio label="Pro Plan" value="pro">
+<input
+  type="radio"
+  name="plan"
+  x-radio
+  label="Free Plan"
+  value="free">
+<input
+  type="radio"
+  name="plan"
+  x-radio
+  label="Pro Plan"
+  value="pro">
 ```
 
 ### Example 2: Large Selection
 Larger targets for touch devices.
 
 ```html
-<input 
-  type="radio" 
-  name="size" 
-  x-radio 
-  size="lg" 
+<input
+  type="radio"
+  name="size"
+  x-radio
+  size="lg"
   label="Extra Large">
 ```
 

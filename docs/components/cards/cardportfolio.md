@@ -37,7 +37,7 @@ Inherits all [card properties](./card.md) plus:
 ### Basic Portfolio
 
 ```html
-<wb-cardportfolio 
+<wb-cardportfolio
   name="John Doe"
   title="Senior Developer"
   company="TechCorp"
@@ -48,7 +48,7 @@ Inherits all [card properties](./card.md) plus:
 ### Full Profile
 
 ```html
-<wb-cardportfolio 
+<wb-cardportfolio
   name="Jane Smith"
   title="Product Designer"
   company="DesignCo"
@@ -68,7 +68,7 @@ Inherits all [card properties](./card.md) plus:
 ### Minimal Contact
 
 ```html
-<wb-cardportfolio 
+<wb-cardportfolio
   name="Alex Johnson"
   email="alex@example.com"
   phone="+1 555-987-6543">

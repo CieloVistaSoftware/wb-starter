@@ -20,7 +20,9 @@ Parts are defined using the standard HTML `<template>` element with the `wb-part
 ```html
 <template wb-part="user-card">
   <div class="card">
-    <img src="{{avatar}}" alt="{{name}}">
+    <img
+      src="{{avatar}}"
+      alt="{{name}}">
     <h3>{{name}}</h3>
     <p>{{role || 'Member'}}</p>
   </div>
@@ -41,9 +43,9 @@ Once defined, parts can be instantiated in two ways:
 The system automatically registers a custom element for every part.
 
 ```html
-<user-card 
-  name="Alice" 
-  avatar="alice.jpg" 
+<user-card
+  name="Alice"
+  avatar="alice.jpg"
   role="Admin">
 </user-card>
 ```
@@ -52,8 +54,9 @@ The system automatically registers a custom element for every part.
 Use the generic `<wb-part>` element with the part name as a boolean attribute.
 
 ```html
-<wb-part user-card 
-  name="Bob" 
+<wb-part
+  user-card
+  name="Bob"
   avatar="bob.jpg">
 </wb-part>
 ```
@@ -98,25 +101,28 @@ Use the standard HTML `<slot>` element to project inner content passed to the co
 <template wb-part="alert">
   <div class="alert">
     <strong>{{title}}</strong>
-    <div class="content"><slot></slot></div>
+    <div class="content">
+      <slot></slot>
+    </div>
   </div>
 </template>
 ```
 
 **Usage:**
 ```html
-<wb-alert title="Warning">
-  This is the <em>body</em> content.
-</wb-alert>
+<wb-alert title="Warning"> This is the <em>body</em> content. </wb-alert>
 ```
 
 You can also use named slots:
 ```html
 <template wb-part="card">
-  <header><slot name="header"></slot></header>
-  <main><slot></slot></main>
+  <header>
+    <slot name="header"></slot>
+  </header>
+  <main>
+    <slot></slot>
+  </main>
 </template>
-
 <wb-card>
   <h1 slot="header">My Title</h1>
   <p>Body content</p>
@@ -150,7 +156,9 @@ Uses data from another DOM element or a global variable.
 Automatically re-fetches data at a specified interval (in milliseconds).
 
 ```html
-<stock-ticker src="/api/stock" refresh="5000"></stock-ticker>
+<stock-ticker
+  src="/api/stock"
+  refresh="5000"></stock-ticker>
 ```
 
 ---

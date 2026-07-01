@@ -36,10 +36,16 @@ Add `x-dl` to a `<dl>` element.
 Perfect for metadata or specs.
 
 ```html
-<dl x-dl variant="horizontal" striped="true">
-  <dt>Version</dt> <dd>1.0.0</dd>
-  <dt>Author</dt> <dd>WB-Starter Team</dd>
-  <dt>License</dt> <dd>MIT</dd>
+<dl
+  x-dl
+  variant="horizontal"
+  striped="true">
+  <dt>Version</dt>
+  <dd>1.0.0</dd>
+  <dt>Author</dt>
+  <dd>WB-Starter Team</dd>
+  <dt>License</dt>
+  <dd>MIT</dd>
 </dl>
 ```
 
@@ -47,9 +53,13 @@ Perfect for metadata or specs.
 Good for sidebars or summaries.
 
 ```html
-<dl x-dl bordered="true">
-  <dt>Status</dt> <dd>Active</dd>
-  <dt>Uptime</dt> <dd>99.9%</dd>
+<dl
+  x-dl
+  bordered="true">
+  <dt>Status</dt>
+  <dd>Active</dd>
+  <dt>Uptime</dt>
+  <dd>99.9%</dd>
 </dl>
 ```
 

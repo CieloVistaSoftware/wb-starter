@@ -37,10 +37,10 @@ Line 2
 A complete code block with all features enabled.
 
 ```html
-<pre 
-  x-pre 
-  language="JS" 
-  show-line-numbers="true" 
+<pre
+  x-pre
+  language="JS"
+  show-line-numbers="true"
   show-copy="true">
 const x = 10;
 const y = 20;
@@ -52,9 +52,9 @@ console.log(x + y);
 A scrollable container for long text output.
 
 ```html
-<pre 
-  x-pre 
-  max-height="200px" 
+<pre
+  x-pre
+  max-height="200px"
   wrap="true">
 [INFO] Starting server...
 [INFO] Connected to DB...

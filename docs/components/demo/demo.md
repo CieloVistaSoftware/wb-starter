@@ -11,13 +11,19 @@ That's it.
 
 ```html
 <wb-demo columns="3">
-  <wb-card title="Elevated Card" elevated>
+  <wb-card
+    title="Elevated Card"
+    elevated>
     <p>This card has elevation shadow.</p>
   </wb-card>
-  <wb-card title="Clickable Card" clickable>
+  <wb-card
+    title="Clickable Card"
+    clickable>
     <p>Click me! I'm interactive.</p>
   </wb-card>
-  <wb-card title="With Footer" footer="Last updated: Today">
+  <wb-card
+    title="With Footer"
+    footer="Last updated: Today">
     <p>This card has a footer section.</p>
   </wb-card>
 </wb-demo>

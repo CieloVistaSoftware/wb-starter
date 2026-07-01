@@ -84,16 +84,16 @@ All card components use the `<article>` semantic element:
 
 ### WB Card (Custom Element)
 ```html
-<wb-card title="Card Title" subtitle="Subtitle">
-  Main content goes here...
-</wb-card>
+<wb-card
+  title="Card Title"
+  subtitle="Subtitle"> Main content goes here... </wb-card>
 ```
 
 ### WB Card (Data Attributes)
 ```html
-<article x-card title="Card Title">
-  Content here...
-</article>
+<article
+  x-card
+  title="Card Title"> Content here... </article>
 ```
 
 ## Inheritance Chain

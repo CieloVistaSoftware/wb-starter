@@ -60,9 +60,10 @@ WB v3.0 uses **Light DOM exclusively**. No Shadow DOM.
 ```html
 <!-- User writes this -->
 <wb-card title="Hello">Content</wb-card>
-
 <!-- DOM becomes (Light DOM) -->
-<wb-card title="Hello" class="wb-card">
+<wb-card
+  title="Hello"
+  class="wb-card">
   <header class="wb-card__header">
     <h3 class="wb-card__title">Hello</h3>
   </header>
@@ -112,10 +113,12 @@ Every component is defined by a JSON schema that serves as the single source of 
 
 ```html
 <!-- ✅ CLEAN: User sets attributes -->
-<wb-card title="Hello" subtitle="World" elevated>
+<wb-card
+  title="Hello"
+  subtitle="World"
+  elevated>
   <p>Content here</p>
 </wb-card>
-
 <!-- ❌ DON'T: Force users to know internals -->
 <wb-card>
   <h3 slot="title">Hello</h3>
@@ -248,7 +251,9 @@ Documents CSS custom properties for theming:
 ### Basic Component
 
 ```html
-<wb-card title="Hello World" elevated>
+<wb-card
+  title="Hello World"
+  elevated>
   <p>Card content goes here.</p>
 </wb-card>
 ```
@@ -256,7 +261,10 @@ Documents CSS custom properties for theming:
 ### With Behaviors
 
 ```html
-<wb-card title="Interactive Card" x-draggable x-ripple>
+<wb-card
+  title="Interactive Card"
+  x-draggable
+  x-ripple>
   <p>This card is draggable with ripple effect.</p>
 </wb-card>
 ```
@@ -264,9 +272,9 @@ Documents CSS custom properties for theming:
 ### Behavior Only (No Component)
 
 ```html
-<button x-ripple x-tooltip="Click to save">
-  💾 Save
-</button>
+<button
+  x-ripple
+  x-tooltip="Click to save"> 💾 Save </button>
 ```
 
 ### CSS Customization

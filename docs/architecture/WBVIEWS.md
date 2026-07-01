@@ -63,8 +63,10 @@ Users provide simple attribute values. The template defines how those values bec
 
 ```html
 <!-- ✅ CLEAN: User just sets values -->
-<wb-hero title="Explore" subtitle="Your journey" cta="Launch"></wb-hero>
-
+<wb-hero
+  title="Explore"
+  subtitle="Your journey"
+  cta="Launch"></wb-hero>
 <!-- ❌ UGLY: User must know internal slots -->
 <wb-hero>
   <h1 slot="title">Explore</h1>
@@ -134,7 +136,9 @@ Since the view name "card" is a single word, the system automatically adds the `
 ```html
 <!-- 2. The System Automatically Creates a Custom Element -->
 <!-- You can now use this tag anywhere in your app -->
-<wb-card name="Alice" avatar="alice.jpg"></wb-card>
+<wb-card
+  name="Alice"
+  avatar="alice.jpg"></wb-card>
 ```
 
 **Key Insight:** You don't write a JavaScript class for `UserCard`. You just write HTML. The `wb-views` system handles the Custom Element registration, attribute observation, and rendering lifecycle for you.
@@ -179,16 +183,23 @@ Define the structure once, use it everywhere:
 ```html
 <!-- ✅ GOOD: Define structure ONE TIME -->
 <template wb-view="component-tile">
-  <div class="tile" draggable="true">
+  <div
+    class="tile"
+    draggable="true">
     <span class="tile__icon">{{icon}}</span>
     <span class="tile__label">{{label}}</span>
   </div>
 </template>
-
 <!-- Use anywhere with different data -->
-<component-tile icon="📝" label="Card"></component-tile>
-<component-tile icon="⚡" label="Hero"></component-tile>
-<component-tile icon="📦" label="Section"></component-tile>
+<component-tile
+  icon="📝"
+  label="Card"></component-tile>
+<component-tile
+  icon="⚡"
+  label="Hero"></component-tile>
+<component-tile
+  icon="📦"
+  label="Section"></component-tile>
 ```
 
 **Change the template once → ALL instances update automatically.**
@@ -215,16 +226,18 @@ Add this to your HTML file or a shared templates file:
 ```html
 <!-- templates/common-views.html -->
 <template wb-view="component-tile">
-  <div class="tile" 
-       draggable="true" 
-       x-ripple 
-       x-tooltip="{{tooltip || label}}">
+  <div
+    class="tile"
+    draggable="true"
+    x-ripple
+    x-tooltip="{{tooltip || label}}">
     <span class="tile__icon">{{icon}}</span>
     <span class="tile__label">{{label}}</span>
-    <span class="tile__badge" wb-if="badge">{{badge}}</span>
+    <span
+      class="tile__badge"
+      wb-if="badge">{{badge}}</span>
   </div>
 </template>
-
 <style>
   .tile {
     display: flex;
@@ -238,12 +251,21 @@ Add this to your HTML file or a shared templates file:
     cursor: grab;
     transition: all 0.15s ease;
   }
+
   .tile:hover {
     border-color: var(--primary, #6366f1);
     transform: translateY(-2px);
   }
-  .tile__icon { font-size: 1.5rem; }
-  .tile__label { font-size: 0.75rem; font-weight: 600; }
+
+  .tile__icon {
+    font-size: 1.5rem;
+  }
+
+  .tile__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
   .tile__badge {
     position: absolute;
     top: -4px;
@@ -262,26 +284,49 @@ Add this to your HTML file or a shared templates file:
 ```html
 <!-- sidebar.html -->
 <div class="sidebar-components">
-  <component-tile icon="📝" label="Card"></component-tile>
-  <component-tile icon="⚡" label="Hero"></component-tile>
-  <component-tile icon="📦" label="Section"></component-tile>
-  <component-tile icon="🔲" label="Grid"></component-tile>
+  <component-tile
+    icon="📝"
+    label="Card"></component-tile>
+  <component-tile
+    icon="⚡"
+    label="Hero"></component-tile>
+  <component-tile
+    icon="📦"
+    label="Section"></component-tile>
+  <component-tile
+    icon="🔲"
+    label="Grid"></component-tile>
 </div>
-
 <!-- palette.html -->
 <div class="component-palette">
-  <component-tile icon="🖼️" label="Image"></component-tile>
-  <component-tile icon="📊" label="Stats" badge="New"></component-tile>
-  <component-tile icon="🔘" label="Button"></component-tile>
-  <component-tile icon="🎯" label="Alert"></component-tile>
+  <component-tile
+    icon="🖼️"
+    label="Image"></component-tile>
+  <component-tile
+    icon="📊"
+    label="Stats"
+    badge="New"></component-tile>
+  <component-tile
+    icon="🔘"
+    label="Button"></component-tile>
+  <component-tile
+    icon="🎯"
+    label="Alert"></component-tile>
 </div>
-
 <!-- toolbar.html -->
 <div class="quick-add-toolbar">
-  <component-tile icon="📋" label="Form"></component-tile>
-  <component-tile icon="📑" label="Tabs"></component-tile>
-  <component-tile icon="📂" label="Accordion"></component-tile>
-  <component-tile icon="🪟" label="Modal"></component-tile>
+  <component-tile
+    icon="📋"
+    label="Form"></component-tile>
+  <component-tile
+    icon="📑"
+    label="Tabs"></component-tile>
+  <component-tile
+    icon="📂"
+    label="Accordion"></component-tile>
+  <component-tile
+    icon="🪟"
+    label="Modal"></component-tile>
 </div>
 ```
 
@@ -292,16 +337,23 @@ Want to add a drag handle to ALL tiles? Edit the template ONCE:
 ```html
 <!-- BEFORE: No drag handle -->
 <template wb-view="component-tile">
-  <div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip || label}}">
+  <div
+    class="tile"
+    draggable="true"
+    x-ripple
+    x-tooltip="{{tooltip || label}}">
     <span class="tile__icon">{{icon}}</span>
     <span class="tile__label">{{label}}</span>
   </div>
 </template>
-
 <!-- AFTER: Added drag handle - ALL 12 tiles now have it! -->
 <template wb-view="component-tile">
-  <div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip || label}}">
-    <span class="tile__drag-handle">⋮⋮</span>  <!-- NEW! -->
+  <div
+    class="tile"
+    draggable="true"
+    x-ripple
+    x-tooltip="{{tooltip || label}}">
+    <span class="tile__drag-handle">⋮⋮</span> <!-- NEW! -->
     <span class="tile__icon">{{icon}}</span>
     <span class="tile__label">{{label}}</span>
   </div>
@@ -315,37 +367,50 @@ Want to add a drag handle to ALL tiles? Edit the template ONCE:
 ```html
 <!DOCTYPE html>
 <html>
-<head>
-  <title>wb-views Demo</title>
-</head>
-<body>
-  <!-- Include templates -->
-  <template wb-view="component-tile">
-    <div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip || label}}">
-      <span class="tile__icon">{{icon}}</span>
-      <span class="tile__label">{{label}}</span>
+
+  <head>
+    <title>wb-views Demo</title>
+  </head>
+
+  <body>
+    <!-- Include templates -->
+    <template wb-view="component-tile">
+      <div
+        class="tile"
+        draggable="true"
+        x-ripple
+        x-tooltip="{{tooltip || label}}">
+        <span class="tile__icon">{{icon}}</span>
+        <span class="tile__label">{{label}}</span>
+      </div>
+    </template>
+    <!-- Use the views -->
+    <div class="grid">
+      <component-tile
+        icon="📝"
+        label="Card"></component-tile>
+      <component-tile
+        icon="⚡"
+        label="Hero"></component-tile>
+      <component-tile
+        icon="📦"
+        label="Section"></component-tile>
+      <component-tile
+        icon="🔲"
+        label="Grid"></component-tile>
     </div>
-  </template>
+    <script type="module">
+      import {
+        initViews
+      } from './src/core/wb-views.js';
+      import WB from './src/core/wb.js';
+      // Initialize views system
+      await initViews();
+      // Behaviors (x-ripple, x-tooltip) are auto-applied by WB.scan()
+      WB.init();
+    </script>
+  </body>
 
-  <!-- Use the views -->
-  <div class="grid">
-    <component-tile icon="📝" label="Card"></component-tile>
-    <component-tile icon="⚡" label="Hero"></component-tile>
-    <component-tile icon="📦" label="Section"></component-tile>
-    <component-tile icon="🔲" label="Grid"></component-tile>
-  </div>
-
-  <script type="module">
-    import { initViews } from './src/core/wb-views.js';
-    import WB from './src/core/wb.js';
-
-    // Initialize views system
-    await initViews();
-
-    // Behaviors (x-ripple, x-tooltip) are auto-applied by WB.scan()
-    WB.init();
-  </script>
-</body>
 </html>
 ```
 
@@ -399,19 +464,28 @@ const toolbarTiles = tools.map(t => `
 
 ```html
 <!-- ✅ GOOD: Change in ONE place -->
-
 <!-- Define ONCE -->
 <template wb-view="component-tile">
-  <div class="tile" draggable="true" x-ripple x-tooltip="{{label}}">
+  <div
+    class="tile"
+    draggable="true"
+    x-ripple
+    x-tooltip="{{label}}">
     <span class="tile__icon">{{icon}}</span>
     <span class="tile__label">{{label}}</span>
-    <span class="tile__badge" wb-if="badge">{{badge}}</span>
+    <span
+      class="tile__badge"
+      wb-if="badge">{{badge}}</span>
   </div>
 </template>
-
 <!-- Use ANYWHERE -->
-<component-tile icon="📝" label="Card"></component-tile>
-<component-tile icon="⚡" label="Hero" badge="New"></component-tile>
+<component-tile
+  icon="📝"
+  label="Card"></component-tile>
+<component-tile
+  icon="⚡"
+  label="Hero"
+  badge="New"></component-tile>
 ```
 
 **Want to add `x-ripple`?** Add it to the template. Done. All tiles have it.
@@ -447,10 +521,10 @@ Once defined, you can use the view anywhere. The attributes you provide map dire
   message="..." : Maps to {{message}}
   author="..." : Maps to {{author}}
 -->
-<greeting-card 
-         title="Welcome!" 
-         message="Thanks for joining us today." 
-         author="The Team">
+<greeting-card
+  title="Welcome!"
+  message="Thanks for joining us today."
+  author="The Team">
 </greeting-card>
 ```
 
@@ -491,7 +565,10 @@ await initViews({
 ### The `<wb-view>` Element
 
 ```html
-<wb-view {view-name} {attributes}>{body-content}</wb-view>
+<wb-view
+  {view-name}
+  {attributes}
+>{body-content}</wb-view>
 ```
 
 | Component | Required | Description |
@@ -507,17 +584,18 @@ await initViews({
 ```html
 <!-- 1. Define the view ONCE -->
 <template wb-view="btn">
-  <button class="btn btn--{{variant}}">{{body}}</button>
+  <button class="btn btn--{{variant}}">
+
+    {{body}}
+  </button>
 </template>
-
 <!-- 2. Now use it EITHER way: -->
-
 <!-- wb-view syntax -->
-<wb-view btn variant="primary">Save</wb-view>
-
+<wb-view
+  btn
+  variant="primary">Save</wb-view>
 <!-- OR: Direct custom tag -->
 <wb-btn variant="primary">Save</wb-btn>
-
 <!-- Both render identical output! -->
 <button class="btn btn--primary">Save</button>
 ```
@@ -542,13 +620,20 @@ Custom elements require a hyphen in the tag name (Web Components spec). wb-views
 ```html
 <!-- Short names get wb- prefix -->
 <wb-btn variant="primary">Save</wb-btn>
-<wb-avatar initials="JD" size="md"></wb-avatar>
+<wb-avatar
+  initials="JD"
+  size="md"></wb-avatar>
 <wb-icon name="star"></wb-icon>
-
 <!-- Descriptive names stay as-is -->
-<card-tile icon="📝" label="Card"></card-tile>
-<alert-box variant="error" message="Oops!"></alert-box>
-<stat-tile value="1,234" label="Users"></stat-tile>
+<card-tile
+  icon="📝"
+  label="Card"></card-tile>
+<alert-box
+  variant="error"
+  message="Oops!"></alert-box>
+<stat-tile
+  value="1,234"
+  label="Users"></stat-tile>
 ```
 
 **Which syntax to use?**
@@ -602,10 +687,8 @@ registerView('product-badge', `
 <template wb-view="user-greeting">
   <p>Hello, {{name}}!</p>
 </template>
-
 <!-- Usage -->
 <user-greeting name="Alice"></user-greeting>
-
 <!-- Output -->
 <p>Hello, Alice!</p>
 ```
@@ -617,10 +700,8 @@ registerView('product-badge', `
 <template wb-view="user-greeting">
   <p>Hello, {{name || "Guest"}}!</p>
 </template>
-
 <!-- Usage (no name) -->
 <user-greeting></user-greeting>
-
 <!-- Output -->
 <p>Hello, Guest!</p>
 ```
@@ -635,7 +716,6 @@ registerView('product-badge', `
     <span class="email">{{user.email}}</span>
   </div>
 </template>
-
 <!-- Usage -->
 <user-profile user='{"name":"Alice","email":"alice@example.com"}'></user-profile>
 ```
@@ -649,7 +729,6 @@ registerView('product-badge', `
     {{active ? 'Online' : 'Offline'}}
   </span>
 </template>
-
 <!-- Usage -->
 <status-indicator active></status-indicator>
 <status-indicator></status-indicator>
@@ -661,15 +740,20 @@ registerView('product-badge', `
 <!-- Template -->
 <template wb-view="notification-card">
   <div class="notification">
-    <span class="icon" wb-if="icon">{{icon}}</span>
+    <span
+      class="icon"
+      wb-if="icon">{{icon}}</span>
     <p class="message">{{message}}</p>
-    <button class="dismiss" wb-if="dismissible">✕</button>
+    <button
+      class="dismiss"
+      wb-if="dismissible">✕</button>
   </div>
 </template>
-
 <!-- Usage WITH icon -->
-<notification-card icon="⚠️" message="Warning!" dismissible></notification-card>
-
+<notification-card
+  icon="⚠️"
+  message="Warning!"
+  dismissible></notification-card>
 <!-- Usage WITHOUT icon -->
 <notification-card message="Update complete"></notification-card>
 ```
@@ -683,18 +767,24 @@ registerView('product-badge', `
 <template wb-view="avatar-display">
   <div class="avatar">
     <!-- Show image IF src exists -->
-    <img src="{{src}}" alt="{{name}}" wb-if="src">
-    
+    <img
+      src="{{src}}"
+      alt="{{name}}"
+      wb-if="src">
     <!-- Show initials UNLESS src exists (Fallback) -->
-    <span class="initials" wb-unless="src">{{initials}}</span>
+    <span
+      class="initials"
+      wb-unless="src">{{initials}}</span>
   </div>
 </template>
-
 <!-- Usage: Has image -> Shows <img> -->
-<avatar-display src="pic.jpg" name="Alice"></avatar-display>
-
+<avatar-display
+  src="pic.jpg"
+  name="Alice"></avatar-display>
 <!-- Usage: No image -> Shows <span> (Initials) -->
-<avatar-display initials="AB" name="Alice"></avatar-display>
+<avatar-display
+  initials="AB"
+  name="Alice"></avatar-display>
 ```
 
 ### Loops: `wb-for`
@@ -705,13 +795,13 @@ Repeats an element for each item in an array. The syntax is `item in collection`
 <!-- Template -->
 <template wb-view="tag-list">
   <ul class="tags">
-    <li class="tag" wb-for="tag in tags">{{tag}}</li>
+    <li
+      class="tag"
+      wb-for="tag in tags">{{tag}}</li>
   </ul>
 </template>
-
 <!-- Usage -->
 <tag-list tags='["JavaScript","TypeScript","HTML"]'></tag-list>
-
 <!-- Output -->
 <ul class="tags">
   <li class="tag">JavaScript</li>
@@ -732,7 +822,9 @@ Repeats an element for each item in an array. The syntax is `item in collection`
 ```html
 <template wb-view="numbered-list">
   <ol>
-    <li wb-for="item in items" class="{{itemFirst ? 'first' : ''}}">
+    <li
+      wb-for="item in items"
+      class="{{itemFirst ? 'first' : ''}}">
       {{itemIndex}}. {{item}}
     </li>
   </ol>
@@ -747,21 +839,23 @@ The `{{body}}` placeholder is for **arbitrary/rich content only**. If content ca
 <!-- Template -->
 <template wb-view="modal-dialog">
   <dialog class="modal">
-    <header><h2>{{heading}}</h2></header>
-    <main>{{body}}</main>
+    <header>
+      <h2>{{heading}}</h2>
+    </header>
+    <main>
+
+      {{body}}
+    </main>
   </dialog>
 </template>
-
 <!-- ✅ CORRECT: heading is simple text (attribute), body is rich content (slot) -->
 <modal-dialog heading="Confirm Delete">
   <p>Are you sure?</p>
   <p class="warning">This <strong>cannot</strong> be undone.</p>
 </modal-dialog>
-
 <!-- ❌ WRONG: Don't use slots for simple text -->
 <modal-dialog>
-  <h2 slot="heading">Confirm Delete</h2>  <!-- Should be attribute! -->
-  ...
+  <h2 slot="heading">Confirm Delete</h2> <!-- Should be attribute! --> ...
 </modal-dialog>
 ```
 
@@ -774,15 +868,18 @@ The `{{body}}` placeholder is for **arbitrary/rich content only**. If content ca
 ### Static Attributes
 
 ```html
-<card-tile icon="📝" label="Card"></card-tile>
+<card-tile
+  icon="📝"
+  label="Card"></card-tile>
 ```
 
 ### Boolean Attributes
 
 ```html
 <!-- 'featured' is true (present) -->
-<product-card name="Widget" featured></product-card>
-
+<product-card
+  name="Widget"
+  featured></product-card>
 <!-- 'featured' is false (absent) -->
 <product-card name="Gadget"></product-card>
 ```
@@ -791,7 +888,6 @@ The `{{body}}` placeholder is for **arbitrary/rich content only**. If content ca
 
 ```html
 <user-card user='{"name":"Alice","role":"Admin"}'></user-card>
-
 <tag-cloud tags='["JavaScript","TypeScript","React"]'></tag-cloud>
 ```
 
@@ -800,7 +896,6 @@ The `{{body}}` placeholder is for **arbitrary/rich content only**. If content ca
 ```html
 <!-- Fetch single object -->
 <user-profile src="/api/user/123"></user-profile>
-
 <!-- Fetch array → renders multiple -->
 <team-member src="/api/team"></team-member>
 ```
@@ -824,10 +919,13 @@ If source returns array, multiple instances render:
 
 ```html
 <!-- Re-fetch every 5 seconds -->
-<live-stats src="/api/stats" refresh="5000"></live-stats>
-
+<live-stats
+  src="/api/stats"
+  refresh="5000"></live-stats>
 <!-- Re-fetch every minute -->
-<server-status src="/api/health" refresh="60000"></server-status>
+<server-status
+  src="/api/health"
+  refresh="60000"></server-status>
 ```
 
 ---
@@ -841,17 +939,19 @@ Templates can include behavior attributes. After rendering, `WB.scan()` applies 
 ```html
 <!-- Template with behaviors -->
 <template wb-view="action-button">
-  <button class="btn btn--{{variant || 'primary'}}" 
-          x-ripple 
-          x-tooltip="{{tooltip}}">
+  <button
+    class="btn btn--{{variant || 'primary'}}"
+    x-ripple
+    x-tooltip="{{tooltip}}">
     <span wb-if="icon">{{icon}}</span>
     {{label}}
   </button>
 </template>
-
 <!-- Usage -->
-<action-button label="Save" tooltip="Save changes" icon="💾"></action-button>
-
+<action-button
+  label="Save"
+  tooltip="Save changes"
+  icon="💾"></action-button>
 <!-- After WB.scan(): ripple and tooltip are active! -->
 ```
 
@@ -859,7 +959,10 @@ Templates can include behavior attributes. After rendering, `WB.scan()` applies 
 
 ```html
 <template wb-view="pricing-tier">
-  <section x-as-card elevated hoverable>
+  <section
+    x-as-card
+    elevated
+    hoverable>
     <h3>{{plan}}</h3>
     <div class="price">{{price}}</div>
     <ul wb-for="feature in features">
@@ -873,11 +976,12 @@ Templates can include behavior attributes. After rendering, `WB.scan()` applies 
 
 ```html
 <template wb-view="draggable-tile">
-  <div class="tile" 
-       x-ripple 
-       x-draggable 
-       x-tooltip="{{label}}"
-       behavior="{{behavior}}">
+  <div
+    class="tile"
+    x-ripple
+    x-draggable
+    x-tooltip="{{label}}"
+    behavior="{{behavior}}">
     <span>{{icon}}</span>
     <span>{{label}}</span>
   </div>
@@ -935,59 +1039,108 @@ Location: `src/wb-views/views-registry.json`
 Draggable component tile for palettes/sidebars.
 
 ```html
-<wb-view card-tile icon="📝" label="Card" behavior="card" tag="basic-card"></wb-view>
+<wb-view
+  card-tile
+  icon="📝"
+  label="Card"
+  behavior="card"
+  tag="basic-card"></wb-view>
 ```
 
 ### alert-box
 Alert message with variants.
 
 ```html
-<wb-view alert-box variant="success" icon="✅" heading="Success!" 
-         message="Changes saved." dismissible></wb-view>
-
-<wb-view alert-box variant="error" message="Something went wrong."></wb-view>
-
-<wb-view alert-box variant="warning" icon="⚠️" message="Cannot be undone."></wb-view>
-
-<wb-view alert-box variant="info" message="Press Ctrl+S to save."></wb-view>
+<wb-view
+  alert-box
+  variant="success"
+  icon="✅"
+  heading="Success!"
+  message="Changes saved."
+  dismissible></wb-view>
+<wb-view
+  alert-box
+  variant="error"
+  message="Something went wrong."></wb-view>
+<wb-view
+  alert-box
+  variant="warning"
+  icon="⚠️"
+  message="Cannot be undone."></wb-view>
+<wb-view
+  alert-box
+  variant="info"
+  message="Press Ctrl+S to save."></wb-view>
 ```
 
 ### stat-tile
 Statistics display with trend.
 
 ```html
-<wb-view stat-tile icon="👥" value="1,234" label="Active Users" 
-         trend="up" trend-value="+12%"></wb-view>
-
-<wb-view stat-tile icon="💰" value="$52,000" label="Revenue" 
-         trend="down" trend-value="-3%"></wb-view>
+<wb-view
+  stat-tile
+  icon="👥"
+  value="1,234"
+  label="Active Users"
+  trend="up"
+  trend-value="+12%"></wb-view>
+<wb-view
+  stat-tile
+  icon="💰"
+  value="$52,000"
+  label="Revenue"
+  trend="down"
+  trend-value="-3%"></wb-view>
 ```
 
 ### nav-link
 Navigation link with optional badge.
 
 ```html
-<wb-view nav-link href="/dashboard" label="Dashboard" icon="🏠" active></wb-view>
-
-<wb-view nav-link href="/messages" label="Messages" icon="💬" badge="5"></wb-view>
+<wb-view
+  nav-link
+  href="/dashboard"
+  label="Dashboard"
+  icon="🏠"
+  active></wb-view>
+<wb-view
+  nav-link
+  href="/messages"
+  label="Messages"
+  icon="💬"
+  badge="5"></wb-view>
 ```
 
 ### user-avatar
 Avatar with status indicator.
 
 ```html
-<wb-view user-avatar src="/images/alice.jpg" name="Alice" size="lg" status="online"></wb-view>
-
-<wb-view user-avatar name="Bob" initials="BS" status="busy"></wb-view>
+<wb-view
+  user-avatar
+  src="/images/alice.jpg"
+  name="Alice"
+  size="lg"
+  status="online"></wb-view>
+<wb-view
+  user-avatar
+  name="Bob"
+  initials="BS"
+  status="busy"></wb-view>
 ```
 
 ### price-tag
 Price display with optional original.
 
 ```html
-<wb-view price-tag price="$29" period="/mo"></wb-view>
-
-<wb-view price-tag price="$19" original="$29" period="/mo"></wb-view>
+<wb-view
+  price-tag
+  price="$29"
+  period="/mo"></wb-view>
+<wb-view
+  price-tag
+  price="$19"
+  original="$29"
+  period="/mo"></wb-view>
 ```
 
 ### feature-item
@@ -995,9 +1148,17 @@ Feature list item.
 
 ```html
 <ul class="features">
-  <wb-view feature-item text="Unlimited projects" included></wb-view>
-  <wb-view feature-item text="Priority support" included></wb-view>
-  <wb-view feature-item text="Custom integrations"></wb-view>
+  <wb-view
+    feature-item
+    text="Unlimited projects"
+    included></wb-view>
+  <wb-view
+    feature-item
+    text="Priority support"
+    included></wb-view>
+  <wb-view
+    feature-item
+    text="Custom integrations"></wb-view>
 </ul>
 ```
 
@@ -1005,43 +1166,82 @@ Feature list item.
 Styled button.
 
 ```html
-<wb-view button-primary label="Save" variant="primary" icon="💾"></wb-view>
-<wb-view button-primary label="Cancel" variant="secondary"></wb-view>
-<wb-view button-primary label="Delete" variant="error" icon="🗑️"></wb-view>
+<wb-view
+  button-primary
+  label="Save"
+  variant="primary"
+  icon="💾"></wb-view>
+<wb-view
+  button-primary
+  label="Cancel"
+  variant="secondary"></wb-view>
+<wb-view
+  button-primary
+  label="Delete"
+  variant="error"
+  icon="🗑️"></wb-view>
 ```
 
 ### icon-button
 Icon-only button.
 
 ```html
-<wb-view icon-button icon="⚙️" tooltip="Settings" variant="ghost"></wb-view>
-<wb-view icon-button icon="🔔" tooltip="Notifications"></wb-view>
+<wb-view
+  icon-button
+  icon="⚙️"
+  tooltip="Settings"
+  variant="ghost"></wb-view>
+<wb-view
+  icon-button
+  icon="🔔"
+  tooltip="Notifications"></wb-view>
 ```
 
 ### badge
 Small label/tag.
 
 ```html
-<wb-view badge label="New" variant="primary"></wb-view>
-<wb-view badge label="Sale" variant="error"></wb-view>
-<wb-view badge label="Beta" variant="warning"></wb-view>
+<wb-view
+  badge
+  label="New"
+  variant="primary"></wb-view>
+<wb-view
+  badge
+  label="Sale"
+  variant="error"></wb-view>
+<wb-view
+  badge
+  label="Beta"
+  variant="warning"></wb-view>
 ```
 
 ### empty-state
 Placeholder for empty content.
 
 ```html
-<wb-view empty-state icon="📭" heading="No messages" 
-         message="Messages will appear here."></wb-view>
+<wb-view
+  empty-state
+  icon="📭"
+  heading="No messages"
+  message="Messages will appear here."></wb-view>
 ```
 
 ### loading-skeleton
 Loading placeholder.
 
 ```html
-<wb-view loading-skeleton variant="heading" width="60%"></wb-view>
-<wb-view loading-skeleton variant="text"></wb-view>
-<wb-view loading-skeleton variant="avatar" width="48px" height="48px"></wb-view>
+<wb-view
+  loading-skeleton
+  variant="heading"
+  width="60%"></wb-view>
+<wb-view
+  loading-skeleton
+  variant="text"></wb-view>
+<wb-view
+  loading-skeleton
+  variant="avatar"
+  width="48px"
+  height="48px"></wb-view>
 ```
 
 ---
@@ -1084,9 +1284,14 @@ Then restart VS Code.
 
 ```html
 <template wb-view="pricing-card">
-  <article class="pricing-card" x-as-card elevated>
+  <article
+    class="pricing-card"
+    x-as-card
+    elevated>
     <h3>{{plan}}</h3>
-    <price-tag price="{{price}}" period="{{period}}"></price-tag>
+    <price-tag
+      price="{{price}}"
+      period="{{period}}"></price-tag>
     <ul>{{features}}</ul>
     <button-primary label="{{cta || 'Get Started'}}"></button-primary>
   </article>
@@ -1116,13 +1321,19 @@ WB.scan(container);
 
 ```html
 <div class="dashboard">
-  <stat-tile src="/api/stats/users" refresh="5000" 
-           icon="👥" label="Active Users"></stat-tile>
-  
-  <stat-tile src="/api/stats/requests" refresh="1000" 
-           icon="📊" label="Requests/sec"></stat-tile>
-  
-  <alert-box src="/api/alerts/latest" refresh="10000"></alert-box>
+  <stat-tile
+    src="/api/stats/users"
+    refresh="5000"
+    icon="👥"
+    label="Active Users"></stat-tile>
+  <stat-tile
+    src="/api/stats/requests"
+    refresh="1000"
+    icon="📊"
+    label="Requests/sec"></stat-tile>
+  <alert-box
+    src="/api/alerts/latest"
+    refresh="10000"></alert-box>
 </div>
 ```
 
@@ -1226,7 +1437,10 @@ function renderTiles(items) {
 
 ```html
 <template wb-view="sidebar-tile">
-  <div class="tile" draggable="true" x-ripple>
+  <div
+    class="tile"
+    draggable="true"
+    x-ripple>
     <span>{{icon}}</span>
     <span>{{label}}</span>
   </div>
@@ -1253,15 +1467,22 @@ Let's build a simple **user card** component in each approach:
 <!-- Define: Pure HTML, works in browser -->
 <template wb-view="user-card">
   <div class="card">
-    <img src="{{avatar}}" alt="{{name}}">
+    <img
+      src="{{avatar}}"
+      alt="{{name}}">
     <h3>{{name}}</h3>
     <p>{{role}}</p>
-    <span class="badge" wb-if="verified">✓ Verified</span>
+    <span
+      class="badge"
+      wb-if="verified">✓ Verified</span>
   </div>
 </template>
-
 <!-- Use: Auto-registered custom element -->
-<user-card name="Alice" avatar="alice.jpg" role="Developer" verified></user-card>
+<user-card
+  name="Alice"
+  avatar="alice.jpg"
+  role="Developer"
+  verified></user-card>
 ```
 
 **Pros:** Zero build, pure HTML, browser-native, auto custom element registration  
@@ -1277,19 +1498,27 @@ https://enhance.dev
 <!-- elements/user-card.html -->
 <template>
   <style>
-    .card { border: 1px solid #ccc; padding: 1rem; }
+    .card {
+      border: 1px solid #ccc;
+      padding: 1rem;
+    }
   </style>
   <div class="card">
-    <img src="${attrs.avatar}" alt="${attrs.name}">
+    <img
+      src="${attrs.avatar}"
+      alt="${attrs.name}">
     <h3>${attrs.name}</h3>
-    <p>${attrs.role}</p>
-    ${attrs.verified ? '<span class="badge">✓ Verified</span>' : ''}
+    <p>${attrs.role}</p> ${attrs.verified ? '<span class="badge">✓ Verified</span>' : ''}
   </div>
 </template>
-
 <script type="module">
-  export default function UserCard({ html, state }) {
-    const { attrs } = state
+  export default function UserCard({
+    html,
+    state
+  }) {
+    const {
+      attrs
+    } = state
     return html`...`
   }
 </script>
@@ -1297,7 +1526,11 @@ https://enhance.dev
 
 ```html
 <!-- Usage -->
-<user-card name="Alice" avatar="alice.jpg" role="Developer" verified></user-card>
+<user-card
+  name="Alice"
+  avatar="alice.jpg"
+  role="Developer"
+  verified></user-card>
 ```
 
 **Pros:** SSR, progressive enhancement, scoped styles  
@@ -1312,20 +1545,30 @@ https://www.11ty.dev/docs/languages/webc/
 ```html
 <!-- _components/user-card.webc -->
 <div class="card">
-  <img :src="avatar" :alt="name">
+  <img
+    :src="avatar"
+    :alt="name">
   <h3 @text="name"></h3>
   <p @text="role"></p>
-  <span class="badge" webc:if="verified">✓ Verified</span>
+  <span
+    class="badge"
+    webc:if="verified">✓ Verified</span>
 </div>
-
 <style webc:scoped>
-  .card { border: 1px solid #ccc; padding: 1rem; }
+  .card {
+    border: 1px solid #ccc;
+    padding: 1rem;
+  }
 </style>
 ```
 
 ```html
 <!-- Usage in .webc file -->
-<user-card name="Alice" avatar="alice.jpg" role="Developer" verified></user-card>
+<user-card
+  name="Alice"
+  avatar="alice.jpg"
+  role="Developer"
+  verified></user-card>
 ```
 
 **Pros:** Build-time optimization, scoped CSS, 11ty integration  
@@ -1341,14 +1584,20 @@ https://riot.js.org
 <!-- user-card.riot -->
 <user-card>
   <div class="card">
-    <img src="{ props.avatar }" alt="{ props.name }">
+    <img
+      src="{ props.avatar }"
+      alt="{ props.name }">
     <h3>{ props.name }</h3>
     <p>{ props.role }</p>
-    <span class="badge" if="{ props.verified }">✓ Verified</span>
+    <span
+      class="badge"
+      if="{ props.verified }">✓ Verified</span>
   </div>
-
   <style>
-    .card { border: 1px solid #ccc; padding: 1rem; }
+    .card {
+      border: 1px solid #ccc;
+      padding: 1rem;
+    }
   </style>
 </user-card>
 ```
@@ -1408,7 +1657,11 @@ customElements.define('user-card', UserCard);
 
 ```html
 <!-- Usage -->
-<user-card name="Alice" avatar="alice.jpg" role="Developer" verified></user-card>
+<user-card
+  name="Alice"
+  avatar="alice.jpg"
+  role="Developer"
+  verified></user-card>
 ```
 
 **Pros:** Reactive, Shadow DOM, Google-backed, well-documented  
@@ -1495,23 +1748,28 @@ defineProps(['name', 'avatar', 'role', 'verified'])
 ```html
 <!-- Define: Reusable via x-data -->
 <template id="user-card-template">
-  <div class="card" x-data="{ name: '', avatar: '', role: '', verified: false }">
-    <img :src="avatar" :alt="name">
+  <div
+    class="card"
+    x-data="{ name: '', avatar: '', role: '', verified: false }">
+    <img
+      :src="avatar"
+      :alt="name">
     <h3 x-text="name"></h3>
     <p x-text="role"></p>
-    <span class="badge" x-show="verified">✓ Verified</span>
+    <span
+      class="badge"
+      x-show="verified">✓ Verified</span>
   </div>
 </template>
-
 <!-- Usage: Requires cloning + manual data binding -->
 <script>
-function createUserCard(props) {
-  const template = document.getElementById('user-card-template');
-  const clone = template.content.cloneNode(true);
-  const el = clone.querySelector('.card');
-  el._x_dataStack = [props];
-  return clone;
-}
+  function createUserCard(props) {
+    const template = document.getElementById('user-card-template');
+    const clone = template.content.cloneNode(true);
+    const el = clone.querySelector('.card');
+    el._x_dataStack = [props];
+    return clone;
+  }
 </script>
 ```
 

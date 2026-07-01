@@ -16,8 +16,12 @@ Views are defined using standard HTML `<template>` tags with the `wb-view` attri
 ```html
 <template wb-view="my-component">
   <div class="my-component">
-    <h2><slot name="title">{{title}}</slot></h2>
-    <div><slot></slot></div>
+    <h2>
+      <slot name="title">{{title}}</slot>
+    </h2>
+    <div>
+      <slot></slot>
+    </div>
   </div>
 </template>
 ```
@@ -26,9 +30,7 @@ Views are defined using standard HTML `<template>` tags with the `wb-view` attri
 Once defined (or loaded from registry), views can be used as standard HTML tags:
 
 ```html
-<my-component title="Hello World">
-  This is the body content.
-</my-component>
+<my-component title="Hello World"> This is the body content. </my-component>
 ```
 
 ### 3. Template Syntax

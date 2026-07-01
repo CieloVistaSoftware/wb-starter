@@ -30,7 +30,7 @@ Inherits all [card properties](./card.md) plus:
 ### Basic File Card
 
 ```html
-<wb-cardfile 
+<wb-cardfile
   filename="Annual Report.pdf"
   type="pdf"
   size="2.5 MB">
@@ -40,7 +40,7 @@ Inherits all [card properties](./card.md) plus:
 ### Downloadable File
 
 ```html
-<wb-cardfile 
+<wb-cardfile
   filename="Project Assets.zip"
   type="zip"
   size="15.3 MB"
@@ -53,7 +53,7 @@ Inherits all [card properties](./card.md) plus:
 ### Image File
 
 ```html
-<wb-cardfile 
+<wb-cardfile
   filename="hero-banner.jpg"
   type="image"
   size="850 KB"

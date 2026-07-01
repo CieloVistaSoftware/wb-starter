@@ -28,13 +28,13 @@ Tabbed content interface with keyboard navigation and ARIA support.
   <wb-tab label="About">Learn more about us</wb-tab>
   <wb-tab label="Contact">Get in touch</wb-tab>
 </wb-tabs>
-
 <!-- Pills variant -->
-<wb-tabs variant="pills" active="1">
+<wb-tabs
+  variant="pills"
+  active="1">
   <wb-tab label="Tab 1">Content 1</wb-tab>
   <wb-tab label="Tab 2">Content 2</wb-tab>
 </wb-tabs>
-
 <!-- Vertical tabs -->
 <wb-tabs vertical>
   <wb-tab label="Section A">Section A content</wb-tab>
@@ -82,7 +82,6 @@ Collapsible content sections with smooth animations.
     <p>Content for section 2</p>
   </wb-accordion-item>
 </wb-accordion>
-
 <!-- Multiple sections open -->
 <wb-accordion multiple>
   <wb-accordion-item label="FAQ 1">Answer 1</wb-accordion-item>
@@ -113,7 +112,6 @@ Navigation breadcrumb trail with semantic markup.
   <wb-breadcrumb-item href="/products">Products</wb-breadcrumb-item>
   <wb-breadcrumb-item>Current Page</wb-breadcrumb-item>
 </wb-breadcrumb>
-
 <!-- With custom separator -->
 <wb-breadcrumb separator=">">
   <wb-breadcrumb-item href="/">Home</wb-breadcrumb-item>
@@ -152,7 +150,6 @@ Navigation menu with optional submenus.
     </wb-menu>
   </wb-menu-item>
 </wb-menu>
-
 <!-- Vertical menu -->
 <wb-menu variant="vertical">
   <wb-menu-item href="#dashboard">Dashboard</wb-menu-item>
@@ -183,13 +180,19 @@ Page navigation with customizable display options.
 
 ```html
 <!-- Basic pagination -->
-<wb-pagination current="5" total="20"></wb-pagination>
-
+<wb-pagination
+  current="5"
+  total="20"></wb-pagination>
 <!-- Compact pagination -->
-<wb-pagination current="3" total="8" siblings="0"></wb-pagination>
-
+<wb-pagination
+  current="3"
+  total="8"
+  siblings="0"></wb-pagination>
 <!-- Full pagination -->
-<wb-pagination current="10" total="50" siblings="2"></wb-pagination>
+<wb-pagination
+  current="10"
+  total="50"
+  siblings="2"></wb-pagination>
 ```
 
 ### Programmatic API
@@ -232,9 +235,10 @@ Multi-step progress indicator for wizards and processes.
   <wb-step label="Review & Submit"></wb-step>
   <wb-step label="Complete"></wb-step>
 </wb-stepper>
-
 <!-- Vertical stepper -->
-<wb-stepper variant="vertical" current="3">
+<wb-stepper
+  variant="vertical"
+  current="3">
   <wb-step label="Step 1">Step 1 content</wb-step>
   <wb-step label="Step 2">Step 2 content</wb-step>
   <wb-step label="Step 3">Step 3 content</wb-step>
@@ -267,10 +271,14 @@ Simple numbered step indicator.
 
 ```html
 <!-- Basic steps -->
-<wb-steps total="5" current="3"></wb-steps>
-
+<wb-steps
+  total="5"
+  current="3"></wb-steps>
 <!-- Large steps -->
-<wb-steps total="4" current="2" size="lg"></wb-steps>
+<wb-steps
+  total="4"
+  current="2"
+  size="lg"></wb-steps>
 ```
 
 ---
@@ -292,9 +300,10 @@ Smooth scroll anchor link with offset support.
 ```html
 <!-- Basic anchor link -->
 <wb-link href="#section-2">Jump to Section 2</wb-link>
-
 <!-- With offset for fixed header -->
-<wb-link href="#features" offset="80">View Features</wb-link>
+<wb-link
+  href="#features"
+  offset="80">View Features</wb-link>
 ```
 
 ---
@@ -317,10 +326,10 @@ Scroll to top button that appears after scrolling.
 ```html
 <!-- Basic back to top -->
 <wb-backtotop></wb-backtotop>
-
 <!-- Custom threshold and icon -->
-<wb-backtotop threshold="500" icon="⬆️"></wb-backtotop>
-
+<wb-backtotop
+  threshold="500"
+  icon="⬆️"></wb-backtotop>
 <!-- Different position -->
 <wb-backtotop position="bottom-left"></wb-backtotop>
 ```

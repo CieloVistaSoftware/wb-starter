@@ -39,7 +39,7 @@ The behavior does **not** rebuild the DOM when the schema has already processed 
 ### Info Notification
 
 ```html
-<wb-cardnotification 
+<wb-cardnotification
   variant="info"
   title="Information"
   message="This is an informational message.">
@@ -49,7 +49,7 @@ The behavior does **not** rebuild the DOM when the schema has already processed 
 ### Success Notification
 
 ```html
-<wb-cardnotification 
+<wb-cardnotification
   variant="success"
   title="Success!"
   message="Your changes have been saved.">
@@ -59,7 +59,7 @@ The behavior does **not** rebuild the DOM when the schema has already processed 
 ### Warning Notification
 
 ```html
-<wb-cardnotification 
+<wb-cardnotification
   variant="warning"
   title="Warning"
   message="Please review your input.">
@@ -69,7 +69,7 @@ The behavior does **not** rebuild the DOM when the schema has already processed 
 ### Error Notification
 
 ```html
-<wb-cardnotification 
+<wb-cardnotification
   variant="error"
   title="Error"
   message="Something went wrong. Please try again.">
@@ -79,7 +79,7 @@ The behavior does **not** rebuild the DOM when the schema has already processed 
 ### Non-Dismissible
 
 ```html
-<wb-cardnotification 
+<wb-cardnotification
   variant="info"
   message="This notification cannot be dismissed."
   dismissible="false">

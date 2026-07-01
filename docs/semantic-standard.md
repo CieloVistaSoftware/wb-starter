@@ -83,14 +83,11 @@
   <header class="wb-card__header">
     <h3>Title</h3>
   </header>
-  <main class="wb-card__main">
-    Content goes here
-  </main>
+  <main class="wb-card__main"> Content goes here </main>
   <footer class="wb-card__footer">
     <button>Action</button>
   </footer>
 </article>
-
 <!-- WRONG - div soup -->
 <div x-card>
   <div class="header">Title</div>
@@ -108,15 +105,12 @@
     <h2>Modal Title</h2>
     <button aria-label="Close">×</button>
   </header>
-  <main class="wb-modal__main">
-    Modal content
-  </main>
+  <main class="wb-modal__main"> Modal content </main>
   <footer class="wb-modal__footer">
     <button>Cancel</button>
     <button>Confirm</button>
   </footer>
 </dialog>
-
 <!-- WRONG -->
 <div x-modal>
   <div class="modal-header">...</div>
@@ -130,11 +124,14 @@
 <!-- CORRECT -->
 <nav x-navbar>
   <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
+    <li>
+      <a href="#home">Home</a>
+    </li>
+    <li>
+      <a href="#about">About</a>
+    </li>
   </ul>
 </nav>
-
 <!-- WRONG -->
 <div x-navbar>
   <div class="nav-item">Home</div>
@@ -150,7 +147,6 @@
   <summary>Section Title</summary>
   <p>Section content</p>
 </details>
-
 <!-- CORRECT - custom (when native doesn't fit) -->
 <section x-accordion-item>
   <header>
@@ -166,11 +162,15 @@
 <!-- CORRECT -->
 <section x-tabs>
   <nav role="tablist">
-    <button role="tab" aria-selected="true">Tab 1</button>
+    <button
+      role="tab"
+      aria-selected="true">Tab 1</button>
     <button role="tab">Tab 2</button>
   </nav>
   <section role="tabpanel">Panel 1</section>
-  <section role="tabpanel" hidden>Panel 2</section>
+  <section
+    role="tabpanel"
+    hidden>Panel 2</section>
 </section>
 ```
 
@@ -213,9 +213,11 @@
     <p>Total Users</p>
   </main>
 </article>
-
 <!-- Progress bar -->
-<progress x-progressbar value="75" max="100">75%</progress>
+<progress
+  x-progressbar
+  value="75"
+  max="100">75%</progress>
 ```
 
 ### Forms
@@ -225,9 +227,11 @@
 <form x-form>
   <fieldset>
     <legend>Personal Info</legend>
-    <label>
-      Name
-      <input type="text" x-input required>
+    <label> Name
+      <input
+        type="text"
+        x-input
+        required>
     </label>
   </fieldset>
   <footer>
@@ -250,20 +254,29 @@ Only use `<div>` for:
 
 ```html
 <!-- OK - layout wrapper with ID -->
-<div id="grid-layout-1" class="wb-grid" x-grid columns="3">
+<div
+  id="grid-layout-1"
+  class="wb-grid"
+  x-grid
+  columns="3">
   <article id="card-1">...</article>
   <article id="card-2">...</article>
   <article id="card-3">...</article>
 </div>
-
 <!-- OK - styling wrapper with ID -->
-<article id="card-4" x-card>
+<article
+  id="card-4"
+  x-card>
   <header id="card-header-4">
-    <div id="header-content-4" class="wb-card__header-content">
+    <div
+      id="header-content-4"
+      class="wb-card__header-content">
       <h3 id="card-title-4">Title</h3>
       <p id="card-subtitle-4">Subtitle</p>
     </div>
-    <div id="header-actions-4" class="wb-card__header-actions">
+    <div
+      id="header-actions-4"
+      class="wb-card__header-actions">
       <button id="btn-action-4">...</button>
     </div>
   </header>

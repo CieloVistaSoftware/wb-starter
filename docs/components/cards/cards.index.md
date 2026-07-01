@@ -32,17 +32,17 @@ cardBase (shared foundation)
 ### Custom Element (Recommended)
 
 ```html
-<wb-card title="Card Title" subtitle="Subtitle">
-  Card content here
-</wb-card>
+<wb-card
+  title="Card Title"
+  subtitle="Subtitle"> Card content here </wb-card>
 ```
 
 ### Semantic Element + Data Attributes
 
 ```html
-<article x-card title="Card Title">
-  Card content here
-</article>
+<article
+  x-card
+  title="Card Title"> Card content here </article>
 ```
 
 ## Base Card Properties (Inherited by All)
@@ -75,38 +75,37 @@ cardBase (shared foundation)
 
 ### Basic Card
 ```html
-<wb-card title="Hello World">
-  This is a simple card with content.
-</wb-card>
+<wb-card title="Hello World"> This is a simple card with content. </wb-card>
 ```
 
 ### Elevated Card with Footer
 ```html
-<wb-card title="Elevated Card" footer="Last updated: Today" elevated>
-  Card content with elevation shadow.
-</wb-card>
+<wb-card
+  title="Elevated Card"
+  footer="Last updated: Today"
+  elevated> Card content with elevation shadow. </wb-card>
 ```
 
 ### Glass Variant
 ```html
-<wb-card title="Glass Card" variant="glass">
-  Frosted glass effect card.
-</wb-card>
+<wb-card
+  title="Glass Card"
+  variant="glass"> Frosted glass effect card. </wb-card>
 ```
 
 ### Image Card
 ```html
-<wb-cardimage 
-  src="/images/hero.jpg" 
+<wb-cardimage
+  src="/images/hero.jpg"
   alt="Hero image"
-  title="Featured Image" 
+  title="Featured Image"
   subtitle="Image description">
 </wb-cardimage>
 ```
 
 ### Profile Card
 ```html
-<wb-cardprofile 
+<wb-cardprofile
   name="John Doe"
   role="Software Engineer"
   avatar="/images/avatar.jpg"
@@ -116,7 +115,7 @@ cardBase (shared foundation)
 
 ### Pricing Card
 ```html
-<wb-cardpricing 
+<wb-cardpricing
   plan="Pro Plan"
   price="$29"
   period="/month"

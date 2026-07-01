@@ -30,25 +30,35 @@ Colorful confetti explosion effect.
 ### Custom Element
 
 ```html
-<wb-confetti count="100" label="Celebrate!"></wb-confetti>
+<wb-confetti
+  count="100"
+  label="Celebrate!"></wb-confetti>
 ```
 
 ### Data Attribute
 
 ```html
-<div x-confetti count="50" label="Party!"></div>
+<div
+  x-confetti
+  count="50"
+  label="Party!"></div>
 ```
 
 ### Auto-Trigger (No Button)
 
 ```html
-<wb-confetti count="75" showButton="false" delay="1s"></wb-confetti>
+<wb-confetti
+  count="75"
+  showButton="false"
+  delay="1s"></wb-confetti>
 ```
 
 ### Looping Animation
 
 ```html
-<wb-confetti count="30" repeat></wb-confetti>
+<wb-confetti
+  count="30"
+  repeat></wb-confetti>
 ```
 
 ## Generated Structure
@@ -57,7 +67,6 @@ Colorful confetti explosion effect.
 <div class="wb-confetti">
   <!-- Button (when showButton is true) -->
   <button class="wb-confetti__button">Fire Confetti!</button>
-  
   <!-- Particle container -->
   <div class="wb-confetti__container">
     <!-- Particles are dynamically created -->
