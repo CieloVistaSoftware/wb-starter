@@ -267,16 +267,16 @@
   <h3>Alerts</h3>
   <p style="color: var(--text-secondary); margin-bottom: 1rem;">Click to trigger alert toasts:</p>
   <div class="demo-inline">
-    <button class="wb-btn" style="background: var(--info);" x-toast data-message="This is an informational message." data-type="info" data-size="md">ℹ️ Info Alert</button>
-    <button class="wb-btn" style="background: var(--success);" x-toast data-message="Operation completed successfully!" data-type="success" data-size="md">✅ Success Alert</button>
-    <button class="wb-btn" style="background: var(--warning); color: #000;" x-toast data-message="Please review before continuing." data-type="warning" data-size="md">⚠️ Warning Alert</button>
-    <button class="wb-btn" style="background: var(--error);" x-toast data-message="Something went wrong. Please try again." data-type="error" data-size="md">❌ Error Alert</button>
+    <button class="wb-btn" style="background: var(--info);" x-toast message="This is an informational message." variant="info">ℹ️ Info Alert</button>
+    <button class="wb-btn" style="background: var(--success);" x-toast message="Operation completed successfully!" variant="success">✅ Success Alert</button>
+    <button class="wb-btn" style="background: var(--warning);" x-toast message="Please review before continuing." variant="warning">⚠️ Warning Alert</button>
+    <button class="wb-btn" style="background: var(--error);" x-toast message="Something went wrong. Please try again." variant="error">❌ Error Alert</button>
   </div>
   <div class="code-example">
-    <pre><code class="language-html">&lt;button x-toast data-message="Info message" data-type="info" data-size="md"&gt;Info Alert&lt;/button&gt;
-&lt;button x-toast data-message="Success!" data-type="success" data-size="md"&gt;Success Alert&lt;/button&gt;
-&lt;button x-toast data-message="Warning!" data-type="warning" data-size="md"&gt;Warning Alert&lt;/button&gt;
-&lt;button x-toast data-message="Error!" data-type="error" data-size="md"&gt;Error Alert&lt;/button&gt;</code></pre>
+    <pre><code class="language-html">&lt;button x-toast message="Info message" variant="info"&gt;Info Alert&lt;/button&gt;
+&lt;button x-toast message="Success!" variant="success"&gt;Success Alert&lt;/button&gt;
+&lt;button x-toast message="Warning!" variant="warning"&gt;Warning Alert&lt;/button&gt;
+&lt;button x-toast message="Error!" variant="error"&gt;Error Alert&lt;/button&gt;</code></pre>
   </div>
 
   <!-- Progress Bars -->
