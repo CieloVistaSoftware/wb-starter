@@ -176,7 +176,7 @@ export function cardBase(element, options = {}) {
   if (config.elevated) {
     element.classList.add('wb-card--elevated');
     element.style.boxShadow = 'var(--shadow-elevated, 0 4px 12px rgba(0,0,0,0.15))';
-    element.style.background = 'var(--bg-elevated, #334155)'; // LIGHTER than base
+    element.style.background = 'var(--bg-elevated, var(--bg-secondary))'; // LIGHTER than base; theme-aware (#198)
   }
   
   // Hoverable

@@ -45,7 +45,11 @@ test.describe('CSS OOP Compliance', () => {
       if (filename === 'audio.css') continue;
       if (file.includes('tmp') || file.includes('.playwright-artifacts')) continue;
 
-      const content = readFile(file);
+      // Blank out /* ... */ block comments (keep length + newlines so indices and
+      // line numbers stay valid) before scanning. Otherwise issue references like
+      // "(#180)" inside a multi-line comment are misread as the hex color #180 —
+      // the false-positive on card.css reported in #190.
+      const content = readFile(file).replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
       const colorRegex = /#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(/gi;
       const hardcodedColors: string[] = [];
       let match;
