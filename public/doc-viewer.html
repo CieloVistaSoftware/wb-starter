@@ -217,9 +217,19 @@
       content.dataset.sanitize = "false";
       
       // Initialize mdhtml
-      mdhtml(content, { size: 'md' }).catch(err => {
-        content.innerHTML = `<div class="error">Failed to load documentation: ${err.message}</div>`;
-      });
+      mdhtml(content, { size: 'md' })
+        .then(() => {
+          // Title the tab after the document itself, not the static
+          // "Documentation Viewer": prefer the rendered H1, fall back to the
+          // .md filename.
+          const h1 = content.querySelector('h1');
+          const fromFile = decodeURIComponent(file).split('/').pop().replace(/\.md$/i, '');
+          const docName = (h1 && h1.textContent.trim()) || fromFile;
+          if (docName) { document.title = docName; }
+        })
+        .catch(err => {
+          content.innerHTML = `<div class="error">Failed to load documentation: ${err.message}</div>`;
+        });
     } else {
       document.getElementById('content').innerHTML = '<div class="error">No file specified.</div>';
     }

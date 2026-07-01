@@ -15,14 +15,13 @@ test.describe('Strict Mode Runtime Compliance', () => {
     // Wait for initialization
     await page.waitForFunction(() => (window as any).WB);
     
-    // Give it a moment for logs to appear
-    await page.waitForTimeout(500);
-
-    // 1. Check for Console Error
+    // 1. Check for Console Error — poll until the runtime logs the legacy-syntax
+    // error instead of a fixed 500ms wait that races the logging and flakes.
     // Should match "Legacy syntax data-wb="card" detected..."
-    const legacyErrorMatch = errorLogs.find(log => log.includes('Legacy syntax') && log.includes('data-wb="card"'));
-
-    expect(legacyErrorMatch, 'Should log error for legacy syntax').toBeTruthy();
+    await expect.poll(
+      () => errorLogs.find(log => log.includes('Legacy syntax') && log.includes('data-wb="card"')),
+      { message: 'Should log error for legacy syntax', timeout: 5000 }
+    ).toBeTruthy();
 
     // 2. Check that Modern component processed
     const modernCard = page.locator('#modern-card');
