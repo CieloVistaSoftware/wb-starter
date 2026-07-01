@@ -1,5 +1,5 @@
 # Feedback Components Documentation
-[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/components/feedback/feedback.readme.md)
+[Edit this file](./feedback.readme.md)
 
 ## Overview
 WB-Starter provides components for user feedback, notifications, and loading states. All feedback components are accessible and follow semantic HTML standards.

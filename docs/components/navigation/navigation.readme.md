@@ -1,5 +1,5 @@
 # Navigation Components Documentation
-[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/components/navigation/navigation.readme.md)
+[Edit this file](./navigation.readme.md)
 
 ## Overview
 WB-Starter provides accessible navigation components using semantic HTML elements. All navigation components follow ARIA standards and support keyboard navigation.

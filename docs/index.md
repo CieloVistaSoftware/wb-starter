@@ -8,7 +8,7 @@
 
 | Resource | Description |
 |----------|-------------|
-| [Architecture](./architecture.md) | Core framework architecture and patterns |
+| Architecture | Core framework architecture and patterns |
 | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards |
 | [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work |
 | [TODO](./_today/TODO.md) | Upcoming tasks |
@@ -17,13 +17,13 @@
 
 ## Architecture & Standards
 
-- [Architecture Overview](./architecture.md)
-- [Schema Specification](./architecture/SCHEMA-SPECIFICATION.md)
-- [Attribute Naming Standard](./architecture/ATTRIBUTE-NAMING-STANDARD.md)
+- Architecture Overview
+- [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md)
+- [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md)
 - [WBViews](./architecture/WBVIEWS.md)
-- [Proposed Custom Elements](./architecture/proposed-custom-elements.md)
+- [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md)
 - [Schema-First Architecture](./schema-first-architecture.md)
-- [CSS Standards](./css-standards.md)
+- CSS Standards
 - [Semantic Standard](./semantic-standard.md)
 - [Container Pattern](./container-pattern.md)
 - [Code Examples Standard](./code-examples-standard.md)

@@ -1,5 +1,5 @@
 # Semantic HTML Components Documentation
-[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/components/semantic/semantic.readme.md)
+[Edit this file](./semantic.readme.md)
 
 ## Overview
 WB-Starter components use proper semantic HTML elements to ensure accessibility, SEO, and meaningful document structure. All components follow semantic HTML standards and include appropriate ARIA attributes.

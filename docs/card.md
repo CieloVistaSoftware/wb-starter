@@ -1,5 +1,5 @@
 # Card Component Documentation
-[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/card.md)
+[Edit this file](./card.md)
 
 ## Overview
 The Card component is a flexible UI container for displaying grouped content. It is the foundation for **19 specialized variants**, ranging from simple content containers to complex interactive elements like draggable cards, product displays, and portfolios.

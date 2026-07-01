@@ -1,5 +1,5 @@
 # Layout Components Documentation
-[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/components/layout/layout.readme.md)
+[Edit this file](./layout.readme.md)
 
 ## Overview
 WB-Starter provides flexible layout components using CSS Grid and Flexbox. All layout components are responsive and follow semantic HTML standards.

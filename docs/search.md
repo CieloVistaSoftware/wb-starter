@@ -1,5 +1,5 @@
 # Search Component Documentation
-[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/search.md)
+[Edit this file](./search.md)
 
 ## Overview
 The Search component provides a complete search interface with debounced input, keyboard navigation, and interactive result handling. It combines the `x-search` behavior with a custom element wrapper for enhanced functionality and styling.

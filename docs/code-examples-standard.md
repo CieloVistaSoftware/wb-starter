@@ -272,7 +272,7 @@ This standard is checked by:
 
 ## Related Standards
 
-- [CSS Standards](./css-standards.md) - CSS architecture and layering
+- CSS Standards - CSS architecture and layering
 - [Semantic Standard](./semantic-standard.md) - HTML semantic structure
 - [Auto-Injection](./Auto-Injection.md) - Auto-inject behavior system
 - [Test Schema Standard](./test-schema-standard.md) - Component schema testing

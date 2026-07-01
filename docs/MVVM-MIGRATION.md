@@ -347,10 +347,10 @@ console.log(card.classList.contains("wb-ready")); // Lists applied behaviors
 
 ## Resources
 
-- [Builder Documentation](/docs/builder.md) - The heart of wb-starter
-- [Behaviors Reference](/docs/behaviors-reference.md) - All 170+ behaviors
-- [Theme System](/docs/themes.md) - 23 themes and customization
-- [Testing Strategy](/docs/testing-strategy.md) - How to test components
+- Builder Documentation - The heart of wb-starter
+- [Behaviors Reference](./behaviors-reference.md) - All 170+ behaviors
+- [Theme System](./themes.md) - 23 themes and customization
+- [Testing Strategy](./testing-strategy.md) - How to test components
 
 ## Changelog
 

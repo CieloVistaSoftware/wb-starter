@@ -1,5 +1,5 @@
 # Schema-First MVVM Architecture
-[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/schema-first-architecture.md)
+[Edit this file](./schema-first-architecture.md)
 
 ## Overview
 **Schema-First MVVM** is our architectural pattern where the **View (HTML)** and **ViewModel (JS)** together serve as the source of truth for the component. We adopt a strict **Model-View-ViewModel (MVVM)** separation to ensure scalability, maintainability, and a clear separation of concerns.

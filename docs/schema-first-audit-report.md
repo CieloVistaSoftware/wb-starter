@@ -1,5 +1,5 @@
 # Schema-First Architecture Audit Report
-[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/schema-first-audit-report.md)
+[Edit this file](./schema-first-audit-report.md)
 
 This report identifies components that need to be refactored to comply with the **Schema-First Architecture**.
 The goal is to ensure that JavaScript behaviors act as **Enhancers** (hydrating existing DOM) rather than **Builders** (overwriting DOM).

@@ -77,7 +77,7 @@ This document serves as the supreme law for styling in the WB-Starter library. I
 
 ### 1. Object-Oriented CSS (OOCSS)
 *   **Principle:** Styles are layered, inherited, and never duplicated.
-*   **Reference:** See [CSS Standards](css-standards.md) for the detailed architectural layers.
+*   **Reference:** See CSS Standards for the detailed architectural layers.
 *   **Rule:** Never import CSS in content pages (`pages/*.html`). They inherit everything from `index.html`.
 
 ### 2. The Theme System

@@ -1,5 +1,5 @@
 # Cards Components Documentation
-[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/components/cards/cards.readme.md)
+[Edit this file](./cards.readme.md)
 
 ## Overview
 The Cards component library provides 19 specialized card variants for displaying content in organized, visually appealing containers. All card components inherit from the base card behavior and use semantic HTML.

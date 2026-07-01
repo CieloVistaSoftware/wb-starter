@@ -1,5 +1,5 @@
 # WB-Starter Behavior System - Technical Workflow
-[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/WB_BEHAVIOR_SYSTEM.md)
+[Edit this file](./WB_BEHAVIOR_SYSTEM.md)
 
 ## Overview
 

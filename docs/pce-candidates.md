@@ -252,7 +252,7 @@ Or with behavior attribute:
 
 ## Related Documentation
 
-- [WB Architecture](/docs/architecture/wb_internals.md)
-- [Attribute Naming Standard](/docs/architecture/ATTRIBUTE-NAMING-STANDARD.md)
-- [Escape Hatches](/docs/escape-hatches.md)
+- WB Architecture
+- [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md)
+- [Escape Hatches](./escape-hatches.md)
 - [Custom Elements Manifest](/data/custom-elements.json)

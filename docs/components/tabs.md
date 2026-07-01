@@ -1,5 +1,5 @@
 # Tabs Component Documentation
-[Edit this file](vscode://file/c:/Users/jwpmi/Downloads/AI/wb-starter/docs/components/tabs.md)
+[Edit this file](./tabs.md)
 
 ## Overview
 The Tabs component provides a flexible tabbed interface for organizing content into switchable panels. It uses semantic HTML with proper accessibility features and keyboard navigation.

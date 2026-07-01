@@ -237,7 +237,7 @@ Apply animations to elements.
 | `pulse` | any | - | Pulse effect |
 | `flip` | any | - | Flip effect |
 | [`confetti`](components/effects/confetti.md) | any | - | Confetti explosion |
-| [`sparkle`](components/effects/sparkle.md) | any | - | Sparkle effect |
+| `sparkle` | any | - | Sparkle effect |
 | `glow` | any | - | Glow effect |
 | `rainbow` | any | - | Rainbow text/bg |
 | `typewriter` | any | - | Typewriter text effect |
