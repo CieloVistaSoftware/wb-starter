@@ -313,8 +313,10 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
   // Demo Track button
   const demoBtn = createPresetButton('Demo Track');
   demoBtn.onclick = () => {
-    // Set demo audio source and play
-    audioEl.src = '/demos/sample.wav';
+    // Set demo audio source and play. Base-aware so it resolves under any base
+    // (local '/' or the GitHub Pages sub-path '/wb-starter/') instead of 404ing
+    // at the domain root.
+    audioEl.src = new URL('../../../demos/sample.wav', import.meta.url).href;
     audioEl.load();
     const _p = audioEl.play();
     if (_p && typeof _p.catch === 'function') {

@@ -109,13 +109,17 @@ test.describe('Project Integrity', () => {
           continue;
         }
         
-        let targetPath = linkPath.startsWith('/')
-          ? path.join(ROOT, linkPath)
-          : path.join(path.dirname(file), linkPath);
-        
-        targetPath = targetPath.split('?')[0].split('#')[0];
-        
-        if (!fileExists(targetPath)) {
+        // Resolve against BOTH the file's own dir and the site root. Pages under
+        // pages/ are injected into the SPA shell (base = site root), so a link
+        // like "demos/sample.wav" resolves from root at runtime, not from
+        // pages/. Standalone pages (public/, demos/) resolve from their own dir.
+        // A file that exists under either base is valid.
+        const clean = linkPath.split('?')[0].split('#')[0];
+        const candidates = clean.startsWith('/')
+          ? [path.join(ROOT, clean)]
+          : [path.join(path.dirname(file), clean), path.join(ROOT, clean)];
+
+        if (!candidates.some((c) => fileExists(c))) {
           issues.add(`${relativePath(file)}: links to missing file '${linkPath}'`);
         }
       }

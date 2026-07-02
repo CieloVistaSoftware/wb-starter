@@ -19,7 +19,7 @@ import * as path from 'path';
 const ROOT = process.cwd();
 const SKIP_DIRS = new Set(['node_modules', '.git', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out', 'tests']);
 // Absolute paths to these top-level resource dirs break under a sub-path base.
-const OFFENDER = /['"`](\/(?:src|assets|wb-models|wb-views|styles|lib)\/[^'"`]*)['"`]/g;
+const OFFENDER = /['"`](\/(?:src|assets|wb-models|wb-views|styles|lib|demos|images|media|audio|video|fonts|icons)\/[^'"`]*)['"`]/g;
 
 function walk(dir: string, exts: string[], out: string[]): void {
   let entries: fs.Dirent[];
