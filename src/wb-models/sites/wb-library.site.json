@@ -10,8 +10,7 @@
       "theme": "dark",
       "stylesheets": [
         "../src/styles/themes.css",
-        "../src/styles/site.css",
-        "../src/styles/components.css"
+        "../src/styles/site.css"
       ],
       "scripts": [{
         "type": "module",
