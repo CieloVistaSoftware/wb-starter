@@ -13,11 +13,11 @@
     <div id="container"></div>
 
     <script>
-        // Generate 100 cards
+        // Generate 100 cards to stress the schema/behavior pipeline.
         const container = document.getElementById('container');
         let html = '';
         for (let i = 0; i < 100; i++) {
-            html += `<wb-card title="Card ${i}"Content ${i}</article>`;
+            html += `<wb-card title="Card ${i}">Content ${i}</wb-card>`;
         }
         container.innerHTML = html;
     </script>
