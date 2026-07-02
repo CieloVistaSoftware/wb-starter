@@ -80,7 +80,7 @@ export function table(element, options = {}) {
         
         // Sort Rows
         const dataRows = Array.from(tbody.querySelectorAll('tr'));
-        rows.sort((a, b) => {
+        dataRows.sort((a, b) => {
           const aVal = a.children[colIndex].textContent.trim();
           const bVal = b.children[colIndex].textContent.trim();
           
@@ -93,7 +93,7 @@ export function table(element, options = {}) {
           return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
         });
         
-        rows.forEach(row => tbody.appendChild(row));
+        dataRows.forEach(row => tbody.appendChild(row));
       };
       
       // Right-click copy
@@ -111,11 +111,11 @@ export function table(element, options = {}) {
   // Selectable Logic
   if (config.selectable) {
     const tableRows = tableEl.querySelectorAll('tbody tr');
-    rows.forEach((tr, index) => {
+    tableRows.forEach((tr, index) => {
       tr.style.cursor = 'pointer';
       tr.onclick = (e) => {
         if (e.target.closest('a, button, input')) return;
-        rows.forEach(r => r.classList.remove('active'));
+        tableRows.forEach(r => r.classList.remove('active'));
         tr.classList.add('active');
         element.dispatchEvent(new CustomEvent('wb:table:select', {
           detail: { row: tr, index },
