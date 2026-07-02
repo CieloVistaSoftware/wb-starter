@@ -75,13 +75,13 @@
   <p>Features: Sortable columns (click header), Copyable cells (click cell), Searchable, Striped rows.</p>
   <div class="demo-section">
     <table
-      data-sortable="true"
-      data-searchable="true"
-      data-striped="true"
-      data-hover="true"
-      data-copyable="true"
-      data-pagination="true"
-      data-page-size="5">
+      sortable="true"
+      searchable="true"
+      striped="true"
+      hover="true"
+      copyable="true"
+      pagination="true"
+      page-size="5">
       <thead>
         <tr>
           <th>ID</th>
@@ -112,17 +112,17 @@
   <div class="demo-section">
     <div class="demo-grid">
       <details
-        data-accordion="group1">
+        accordion="group1">
         <summary>Detail Item 1</summary>
         <p>This is the content for item 1. It closes when another item in the group opens.</p>
       </details>
       <details
-        data-accordion="group1">
+        accordion="group1">
         <summary>Detail Item 2</summary>
         <p>This is the content for item 2. It closes when another item in the group opens.</p>
       </details>
       <details
-        data-accordion="group1">
+        accordion="group1">
         <summary>Detail Item 3</summary>
         <p>This is the content for item 3. It closes when another item in the group opens.</p>
       </details>
@@ -139,8 +139,8 @@
     
     <dialog
       id="demo-dialog"
-      data-close-on-backdrop="true"
-      data-animation="fade">
+      close-on-backdrop="true"
+      animation="fade">
       <form method="dialog">
         <h3>Confirmation</h3>
         <p>This is a native dialog enhanced with animations and backdrop click handling.</p>

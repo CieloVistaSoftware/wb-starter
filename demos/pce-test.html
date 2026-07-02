@@ -97,15 +97,15 @@
         <div class="syntax-comparison">
             <div>
                 <h4>✅ WB Namespace (Recommended)</h4>
-                <code>&lt;wb-cardprofile data-name="Sarah"&gt;</code>
+                <code>&lt;wb-cardprofile name="Sarah"&gt;</code>
             </div>
             <div>
                 <h4>✅ Noun-First (Also Supported)</h4>
-                <code>&lt;profile-card data-name="Sarah"&gt;</code>
+                <code>&lt;profile-card name="Sarah"&gt;</code>
             </div>
         </div>
         
-        <p style="font-size: 0.9rem; color: var(--text-muted);">Both are equivalent to: <code>&lt;div x-behavior="cardprofile" data-name="Sarah"&gt;</code></p>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">Both are equivalent to: <code>&lt;div x-behavior="cardprofile" name="Sarah"&gt;</code></p>
 
         <h3>WB v3.0 Architecture</h3>
         <ul style="margin-left: 1.5rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
@@ -163,11 +163,11 @@ const customElementMappings = [
         
         <profile-card 
             id="profile-card-1"
-            data-name="John Connor" 
-            data-role="Future Leader" 
-            data-bio="The future is not set." 
-            data-avatar="https://i.pravatar.cc/150?img=3"
-            data-cover="https://picsum.photos/400/100?r=2">
+            name="John Connor" 
+            role="Future Leader" 
+            bio="The future is not set." 
+            avatar="https://i.pravatar.cc/150?img=3"
+            cover="https://picsum.photos/400/100?r=2">
         </profile-card>
     </div>
 
@@ -343,9 +343,9 @@ const customElementMappings = [
     <div class="grid">
         <button id="btn-tooltip-1" class="wb-btn" 
             x-behavior="tooltip toast"
-            data-tooltip="I am a tooltip" 
-            data-tooltip-position="top" 
-            data-toast-message="Button clicked!">
+            tooltip="I am a tooltip" 
+            tooltip-position="top" 
+            toast-message="Button clicked!">
             Hover & Click Me (x-behavior)
         </button>
 
@@ -355,7 +355,7 @@ const customElementMappings = [
 
         <span id="span-tooltip-1" 
             x-behavior="tooltip"
-            data-tooltip="Tooltips work on any element" 
+            tooltip="Tooltips work on any element" 
             style="padding: 1rem; background: var(--bg-secondary); border-radius: 4px; display: inline-block; cursor: help;">
             Hover Me (Span with tooltip)
         </span>
