@@ -32,9 +32,11 @@ Inherits all [card properties](./card.md) plus:
 | `ctaSecondaryHref` | string | `"#"` | Secondary CTA URL |
 
 ### Attribute-only example
-```html
+
+Rendered live below, with its source underneath (a ```` ```demo ```` fence):
+
+```demo
 <wb-cardhero
-  background="/images/hero.jpg"
   pretitle="100 Components"
   title='Build <span class="wb-gradient-text">stunning UIs</span>'
   subtitle="just HTML — no build step"

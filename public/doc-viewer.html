@@ -70,6 +70,10 @@
     .wb-mdhtml table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; display: block; overflow-x: auto; max-width: 100%; }
     .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; overflow-wrap: anywhere; word-break: break-word; }
     .wb-mdhtml th { background: var(--bg-secondary); font-weight: 600; }
+    /* #228: a ```demo fence renders as a live example (top) + its source (below). */
+    .wb-mdhtml .wb-demo { border: 1px solid var(--border-color); border-radius: 8px; margin: 0 0 1.5rem; overflow: hidden; }
+    .wb-mdhtml .wb-demo__live { padding: 1.25rem; background: var(--bg-primary); }
+    .wb-mdhtml .wb-demo__source { margin: 0 !important; border: 0; border-top: 1px solid var(--border-color); border-radius: 0; }
     
     /* doc-viewer: force wrap over the code behaviors inline white-space:pre (#147/#150) */
     .wb-mdhtml pre, .wb-mdhtml pre code, .wb-mdhtml .code-wrapper pre, .wb-mdhtml .code-wrapper code { white-space: pre-wrap !important; overflow-wrap: anywhere !important; word-break: break-word !important; }
@@ -234,7 +238,40 @@
     });
 
     // Scroll to hash after load and apply highlighting
-    document.addEventListener('wb:mdhtml:loaded', () => {
+    document.addEventListener('wb:mdhtml:loaded', async () => {
+      // #228: turn ```demo fences into a LIVE example + its source, so docs show
+      // the rendered component instead of only code. The framework is loaded
+      // lazily — ONLY when a doc actually contains a demo — so normal docs pay
+      // nothing and a framework failure can't break plain doc rendering.
+      const docEl = document.getElementById('content');
+      const demoCodes = docEl ? docEl.querySelectorAll('pre > code.language-demo') : [];
+      if (demoCodes.length) {
+        demoCodes.forEach((codeEl) => {
+          const source = codeEl.textContent;
+          const wrap = document.createElement('div');
+          wrap.className = 'wb-demo';
+          const live = document.createElement('div');
+          live.className = 'wb-demo__live';
+          live.innerHTML = source;            // rendered live; WB.scan upgrades it
+          const pre = document.createElement('pre');
+          pre.className = 'wb-demo__source';
+          const codeOut = document.createElement('code');
+          codeOut.className = 'language-html';
+          codeOut.textContent = source;       // shown as escaped source
+          pre.appendChild(codeOut);
+          wrap.append(live, pre);
+          codeEl.closest('pre').replaceWith(wrap);
+        });
+        try {
+          const mod = await import('../src/core/wb.js');
+          const WB = mod.default || mod.WB;
+          await WB.init({ scan: false, observe: false });
+          await WB.scan(docEl);
+        } catch (e) {
+          console.warn('[doc-viewer] live demo render failed:', e);
+        }
+      }
+
       // Apply syntax highlighting
       document.querySelectorAll('pre code').forEach((block) => {
         // If no language class is present, force plaintext to prevent auto-detection
