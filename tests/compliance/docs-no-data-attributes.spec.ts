@@ -34,7 +34,9 @@ test('docs use plain v3 attributes, not data-* (audit)', () => {
   for (const file of mdFiles(DOCS_DIR)) {
     const text = fs.readFileSync(file, 'utf8');
     const found = new Set<string>();
-    for (const m of text.matchAll(/\bdata-[a-z][a-z0-9-]*/g)) {
+    // Only real attribute USAGE (data-x=…), not prose mentions or filenames like
+    // "demos-no-legacy-data-attrs.spec.ts". Consistent with the demos gate.
+    for (const m of text.matchAll(/\bdata-[a-z][a-z0-9-]*(?==)/g)) {
       const attr = m[0];
       if (!ALLOW.has(attr)) found.add(attr);
     }

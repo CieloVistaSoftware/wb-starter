@@ -104,7 +104,7 @@ cardBase (shared foundation)
 ### Image Card
 ```html
 <wb-cardimage
-  src="/images/hero.jpg"
+  src="images/hero.jpg"
   alt="Hero image"
   title="Featured Image"
   subtitle="Image description">

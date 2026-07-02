@@ -1176,7 +1176,7 @@ Avatar with status indicator.
 ```html
 <wb-view
   user-avatar
-  src="/images/alice.jpg"
+  src="images/alice.jpg"
   name="Alice"
   size="lg"
   status="online">

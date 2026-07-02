@@ -1,32 +1,42 @@
-# 🅿️ PARKING LOT (2026-06-22)
+# 🅿️ PARKING LOT (2026-07-02)
 
-**Task:** Complete + verify the MVVM migration (turned out already ~done on `main`).
+**Task:** Doc-viewer reliability sweep + demo code-generation correctness (data-* purge).
 
-**Committed & pushed:** branch `feat/mvvm-migration`, commit `2ee86ff` — pushed to
-`origin`. Open a PR at:
-https://github.com/CieloVistaSoftware/wb-starter/pull/new/feat/mvvm-migration
+**Committed & pushed to `main` today (all green at commit time):**
+- `52dde37` doc-viewer adopts persisted theme + base-aware CSS/module paths
+- `1ab5f2b` #226 base-aware doc-viewer nav + `no-absolute-nav-links` gate
+- `e8c1e09` mdhtml renders real `<h1>`–`<h6>`, not `<hundefined>` (marked v5+ token API)
+- `996a382` repaired 142 dead doc-to-doc links + `doc-viewer-links` functional gate
+- `54626ce` removed dead `components.css` ref (404 every page) + `schema-asset-refs-exist` gate
+- `78e6f9d` doc-viewer theme-persistence regression test
+- `935f298` fix `table.js` `rows is not defined` crash (used `rows`, declared `dataRows`/`tableRows`)
+- `9a157ea` base-aware media paths (sample.wav 404) + `no-absolute-asset-paths` gate + `project-integrity` dual-base resolution
+- Filed **wb-starter#228** (docs show code but no live render; use `<wb-demo>`).
 
-**Files touched (16):** `.gitignore`; `docs/MVVM-MIGRATION-PLAN.md` (status banner);
-`tests/base.ts` (tier-aware `getComponentSchemas`); `tests/compliance/schema-validation.spec.ts`
-+ `tests/compliance/v3-syntax-compliance.spec.ts` (new `behavior`/`page` tiers, x-* setup syntax);
-11 schemas in `src/wb-models/` (otp, password, stepper, x-behavior, x-collapse, x-copy,
-x-draggable, x-effects, x-enhancements → `schemaType:"behavior"`; collapse.target +
-behaviors.src defaults).
+**IN PROGRESS — NOT committed (working tree):**
+- `tests/compliance/demos-no-legacy-data-attrs.spec.ts` — NEW gate: demos must use plain
+  v3 attrs, not `data-*` config (`data-theme` allowed; `legacy-syntax-check.html` excluded).
+  **Currently RED: 18 demo files fail** (do NOT commit red to main / CI).
+- `demos/intellisense-check.html` shows as modified (incidental — verify/discard).
 
-**Last action:** Committed, pushed, parked. Deleted untracked `tmp/` tree (now gitignored).
-
-**Result:** compliance failures **21 → 10**. The 10 left are pre-existing / out of scope.
+**Last action:** identified the fix scope — ~65 unique `data-*` config attrs across demos, map =
+"drop `data-` prefix". Edge cases checked: `data-wb` only in excluded `legacy-syntax-check.html`;
+the data- prefixed `class` config on `demos/toggle-demo.html:13` (x-toggle — becomes a plain
+`class` attr, so watch for collision with an existing class on the element).
 
 **Next step (pick up here):**
-1. Open the PR (link above).
-2. If driving compliance fully green, tackle the out-of-scope buckets, in rough order:
-   - Broken demo links — dominant: missing `src/styles/components.css` referenced by ~15
-     demo files (`project-integrity`). Decide: restore the file or fix the refs.
-   - `tests/repro_card_semantic.html` is MISSING → `semantic-article-to-card` can't pass
-     (create fixture or retire the test).
-   - `strict-mode-runtime` — `x-behavior` strict rejection lives in `src/core/wb.js`; debug there.
-   - `css-oop-compliance` (hardcoded colors), `docs-manifest-integrity`, `html-ids-home`,
-     `fix-viewer` duplicate IDs, `page-compliance` / `universal-compliance` (runtime page render).
+1. Write a careful codemod `scripts/migrate-demo-data-attrs.mjs`: `data-<name>=` → `<name>=` for
+   all config names, KEEP `data-theme`, and handle `data-class` collision (merge, don't duplicate).
+   Run on demos → re-run `demos-no-legacy-data-attrs` to GREEN.
+2. **Make the flaky dark-mode test deterministic** — `tests/repro_flood.html renders in dark mode
+   without errors` failed under 8-worker load, passed in isolation. Per John: **flaky is NOT
+   acceptable** — find the root cause (console race / shared state), fix it. Do not dismiss.
+3. Run FULL compliance (must be green, not green-in-isolation) → commit demo test + fixes.
+4. Consider fixing the `<wb-demo>` markdown live-render gap (#228) and authoring the 6 unlinked
+   missing docs (css-standards.md, architecture.md, builder.md, config/site.md,
+   architecture/wb_internals.md, components/effects/sparkle.md).
+
+**Open questions:** none blocking. `.claude/launch.json` untracked (from preview attempts) — ignore.
 
 **Open questions:** Should `otp`/`password`/`stepper` eventually become real `<wb-*>`
 components, or stay modifiers? (Currently classified as `behavior` tier.) Also: a

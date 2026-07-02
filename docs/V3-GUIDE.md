@@ -45,10 +45,10 @@ A standalone page needs the theme + base styles and one module script:
     <meta charset="UTF-8">
     <link
       rel="stylesheet"
-      href="/src/styles/themes.css">
+      href="src/styles/themes.css">
     <link
       rel="stylesheet"
-      href="/src/styles/site.css">
+      href="src/styles/site.css">
   </head>
 
   <body>

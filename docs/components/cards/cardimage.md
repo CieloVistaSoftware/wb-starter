@@ -30,7 +30,7 @@ Inherits all [card properties](./card.md) plus:
 
 ```html
 <wb-cardimage
-  src="/images/hero.jpg"
+  src="images/hero.jpg"
   alt="Hero image"
   title="Featured Image">
   Optional content below the image.
@@ -41,7 +41,7 @@ Inherits all [card properties](./card.md) plus:
 
 ```html
 <wb-cardimage
-  src="/images/square.jpg"
+  src="images/square.jpg"
   alt="Square image"
   aspect="1/1"
   title="Square Image Card">
@@ -52,7 +52,7 @@ Inherits all [card properties](./card.md) plus:
 
 ```html
 <wb-cardimage
-  src="/images/footer.jpg"
+  src="images/footer.jpg"
   position="bottom"
   title="Image Below Content">
   Content appears above the image.

@@ -155,6 +155,29 @@
       return stack.join('/');
     }
 
+    // Rebase relative resource links against the DOC's real served location.
+    // A doc rendered from docs/behaviors/x.md links to a demo as
+    // "../../demos/x.html" — correct relative to the doc on disk, but the browser
+    // would otherwise resolve it against THIS page (…/public/doc-viewer.html) and
+    // walk past the site root to the domain root (→ 404). Resolve non-.md links
+    // and media against docs/<dir>/ so they land at SITE_ROOT/demos/x.html etc.
+    // (.md links are left for the click interceptor's ?file= handling.)
+    function rebaseDocResources() {
+      const docBaseDir = new URL('.', new URL(file, SITE_ROOT));
+      const content = document.getElementById('content');
+      content.querySelectorAll('a[href]').forEach((a) => {
+        const href = a.getAttribute('href');
+        if (!href || href.startsWith('#') || /^[a-z][a-z0-9+.-]*:/i.test(href)) return; // anchors / scheme (http:, mailto:)
+        if (/\.md(#.*)?$/i.test(href)) return; // .md → handled by the click interceptor
+        a.href = new URL(href, docBaseDir).href;
+      });
+      content.querySelectorAll('img[src], source[src], video[src], audio[src]').forEach((el) => {
+        const src = el.getAttribute('src');
+        if (!src || src.startsWith('data:') || /^[a-z][a-z0-9+.-]*:/i.test(src)) return;
+        el.src = new URL(src, docBaseDir).href;
+      });
+    }
+
     // Link Interceptor for Markdown navigation
     document.addEventListener('click', (e) => {
       const link = e.target.closest('a');
@@ -240,6 +263,10 @@
       // Initialize mdhtml
       mdhtml(content, { size: 'md' })
         .then(() => {
+          // Fix relative links/media so they resolve against the doc's location,
+          // not this viewer page (prevents ../../demos/x.html → domain-root 404).
+          rebaseDocResources();
+
           // Title the tab after the document itself, not the static
           // "Documentation Viewer": prefer the rendered H1, fall back to the
           // .md filename.

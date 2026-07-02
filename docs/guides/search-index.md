@@ -233,4 +233,4 @@ Add to `package.json`:
 
 - [Search Component](../search.md) - UI component for search
 - Site Configuration - Full config reference
-- [Schema Reference](/src/wb-models/search-index.schema.json) - JSON Schema
+- [Schema Reference](../../src/wb-models/search-index.schema.json) - JSON Schema
