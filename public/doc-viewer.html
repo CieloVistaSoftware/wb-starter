@@ -65,8 +65,10 @@
     .wb-mdhtml .code-wrapper { max-width: 100%; overflow-x: hidden; }
     .wb-mdhtml .code-wrapper pre { max-width: 100%; }
     .wb-mdhtml blockquote { border-left: 4px solid var(--primary); margin: 0 0 1.5rem 0; padding-left: 1rem; color: var(--text-muted); font-style: italic; }
-    .wb-mdhtml table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
-    .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; }
+    /* Wide markdown tables must stay inside the 900px body: scroll horizontally
+       instead of spilling past the right edge, and wrap long cell content. */
+    .wb-mdhtml table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; display: block; overflow-x: auto; max-width: 100%; }
+    .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; overflow-wrap: anywhere; word-break: break-word; }
     .wb-mdhtml th { background: var(--bg-secondary); font-weight: 600; }
     
     /* doc-viewer: force wrap over the code behaviors inline white-space:pre (#147/#150) */
