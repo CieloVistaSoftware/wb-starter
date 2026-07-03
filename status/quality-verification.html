@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quality &amp; Verification — CieloVista Status</title>
+  <style>
+    :root {
+      --bg: #0d1117; --panel: #161b22; --panel-2: #1c2330; --border: #2a3340;
+      --text: #e6edf3; --muted: #8b98a8; --accent: #8b5cf6; --accent-2: #a371f7;
+      --ok: #3fb950;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    a.back { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+    a.back:hover { color: var(--text); }
+    header.page { margin: 1rem 0 1.5rem; }
+    .eyebrow { color: var(--accent-2); font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; font-size: 0.78rem; }
+    h1 { font-size: 2.1rem; margin: 0.35rem 0 0.5rem; line-height: 1.15; }
+    .kicker { font-size: 1.05rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem; margin: 2rem 0; }
+    .stat { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.25rem; }
+    .stat__num { font-size: 2rem; font-weight: 800; line-height: 1; color: var(--accent-2); }
+    .stat__lbl { color: var(--muted); font-size: 0.85rem; margin-top: 0.4rem; }
+    .stat__num.ok { color: var(--ok); }
+    h2 { margin: 2.5rem 0 0.75rem; font-size: 1.3rem; }
+    .pipe { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; }
+    .step { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem; }
+    .step h3 { margin: 0 0 0.25rem; font-size: 0.98rem; }
+    .step p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+    .step .n { color: var(--accent-2); font-weight: 700; font-size: 0.8rem; }
+    section.why { background: linear-gradient(180deg, var(--panel-2), var(--panel));
+      border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 10px;
+      padding: 1.75rem; margin: 2.5rem 0; }
+    section.why h2 { margin-top: 0; }
+    section.why ul { margin: 0.75rem 0 0; padding-left: 1.2rem; }
+    section.why li { margin-bottom: 0.85rem; }
+    section.why li strong { color: var(--accent-2); }
+    footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--border);
+      padding-top: 1.25rem; margin-top: 3rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="index.html">&larr; All status reports</a>
+
+    <header class="page">
+      <div class="eyebrow">Quality &amp; Verification</div>
+      <h1>How we keep AI-speed safe</h1>
+    </header>
+
+    <p class="kicker">AI writes fast. The discipline that makes that safe is automated verification &mdash; thousands of checks that run on every change, so nothing ships on trust alone. Here's the current state.</p>
+
+    <div class="grid">
+      <div class="stat"><div class="stat__num ok">3,340+</div><div class="stat__lbl">Automated compliance checks passing</div></div>
+      <div class="stat"><div class="stat__num ok">100%</div><div class="stat__lbl">Test-pass rate required to ship</div></div>
+      <div class="stat"><div class="stat__num">39</div><div class="stat__lbl">Demos smoke-tested in a real browser</div></div>
+      <div class="stat"><div class="stat__num">137</div><div class="stat__lbl">Extension regression tests</div></div>
+    </div>
+
+    <h2>The verification pipeline</h2>
+    <div class="pipe">
+      <div class="step"><div class="n">1 · Compliance</div><h3>Standards</h3><p>Syntax, theming (no hardcoded colors), accessibility, and structure &mdash; thousands of checks.</p></div>
+      <div class="step"><div class="n">2 · Regression</div><h3>No backsliding</h3><p>Every past fix keeps a test. A change that reintroduces a bug fails here.</p></div>
+      <div class="step"><div class="n">3 · Smoke</div><h3>Real browser</h3><p>Every demo/page is loaded in a browser and checked for JS errors, broken links, and empty renders.</p></div>
+      <div class="step"><div class="n">4 · Visual</div><h3>It actually renders</h3><p>Computed styles and screenshots verify the change looks right, not just that it compiles.</p></div>
+    </div>
+
+    <section class="why">
+      <h2>Why this matters to you</h2>
+      <p>The value isn't just that we move quickly &mdash; it's that speed is <strong>governed</strong>. Concretely:</p>
+      <ul>
+        <li><strong>Red &rarr; green, always.</strong> A fix isn't accepted until a test that <em>failed first</em> now passes. The proof of the bug ships with the fix.</li>
+        <li><strong>Nothing ships red.</strong> A change with any failing check does not deploy. The 100% pass bar is a gate, not a goal.</li>
+        <li><strong>The guardrails grow.</strong> Every issue found becomes a permanent test, so the same class of problem can't return silently.</li>
+        <li><strong>Deploy &ne; commit.</strong> Code committed is verified and built before it reaches you &mdash; and re-checked live after it's deployed.</li>
+      </ul>
+      <p style="margin-bottom:0;">You get AI velocity with an engineering safety net underneath it.</p>
+    </section>
+
+    <footer>
+      CieloVista Software &middot; Quality &amp; Verification status &middot;
+      Figures reflect the automated suites gating this project.
+    </footer>
+  </div>
+</body>
+</html>
