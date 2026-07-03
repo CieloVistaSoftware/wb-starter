@@ -35,28 +35,33 @@ button-tooltip[disabled] {
   pointer-events: none;
 }
 
-/* Sizes */
-.wb-button--xs {
+/* Sizes
+ * Doubled selector (.wb-button.wb-button--sm) raises specificity to 0,2,0 so
+ * these win over the plain `.wb-button` base rule that button.js injects into
+ * <head> at runtime. That injected rule has equal (0,1,0) specificity but comes
+ * LATER in source order, so a single-class `.wb-button--sm` was being overridden
+ * and every button collapsed to the same md padding/font-size. (#button-sizes) */
+.wb-button.wb-button--xs {
   padding: 0.125rem 0.5rem;
   font-size: 0.75rem;
 }
 
-.wb-button--sm {
+.wb-button.wb-button--sm {
   padding: 0.25rem 0.75rem;
   font-size: 0.875rem;
 }
 
-.wb-button--md {
+.wb-button.wb-button--md {
   padding: 0.5rem 1rem;
   font-size: 1rem;
 }
 
-.wb-button--lg {
+.wb-button.wb-button--lg {
   padding: 0.75rem 1.5rem;
   font-size: 1.125rem;
 }
 
-.wb-button--xl {
+.wb-button.wb-button--xl {
   padding: 1rem 2rem;
   font-size: 1.25rem;
 }

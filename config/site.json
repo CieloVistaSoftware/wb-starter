@@ -37,6 +37,12 @@
       "pageToLoad": "behaviors"
     },
     {
+      "menuItemId": "demos",
+      "menuItemText": "Demos",
+      "menuItemEmoji": "🎮",
+      "pageToLoad": "demos"
+    },
+    {
       "menuItemId": "themes",
       "menuItemText": "Themes",
       "menuItemEmoji": "🎨",
