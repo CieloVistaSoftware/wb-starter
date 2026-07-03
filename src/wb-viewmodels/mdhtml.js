@@ -165,8 +165,15 @@ export async function mdhtml(element, options = {}) {
         return () => {};
       }
     } else {
-      // Use inline content
-      markdown = element.innerHTML;
+      // Use inline content. Code samples are frequently written HTML-escaped
+      // (&lt;form&gt;) so the browser doesn't parse them as real elements. innerHTML
+      // returns them still escaped, which marked would escape AGAIN — displaying
+      // literal "&lt;form&gt;". Decode entities once via a textarea (whose content
+      // model is raw text): escaped samples become the intended tags, and raw
+      // samples that contain no entities pass through unchanged.
+      const decoder = document.createElement('textarea');
+      decoder.innerHTML = element.innerHTML;
+      markdown = decoder.value;
     }
 
     // Parse markdown to HTML
