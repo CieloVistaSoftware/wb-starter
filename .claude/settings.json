@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/check-menu-links.mjs",
+            "if": "Bash(git push*)",
+            "timeout": 120,
+            "statusMessage": "Checking menu links on deployed site…"
+          }
+        ]
+      }
+    ]
+  }
+}
