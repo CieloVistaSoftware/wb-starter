@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Variants (wb-* tags) — WB Demo</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    WB.init();
+  </script>
+</head>
+<body>
+  <h1>WB Button Variants — Tag Syntax</h1>
+  <p>The same buttons as the class-based demo, written entirely with <code>&lt;wb-button&gt;</code> custom-element tags — no <code>class="wb-button ..."</code> anywhere. Styling comes from <code>wb-button[variant]</code> / <code>wb-button[size]</code> attribute selectors.</p>
+
+  <h2>Basic Button Variants</h2>
+  <wb-demo>
+    <wb-button variant="primary">Primary Button</wb-button>
+    <wb-button variant="secondary">Secondary Button</wb-button>
+    <wb-button variant="ghost">Ghost Button</wb-button>
+  </wb-demo>
+
+  <h2>Button Variants with Sizes</h2>
+  <wb-demo>
+    <wb-button variant="primary" size="sm">Small Primary</wb-button>
+    <wb-button variant="primary" size="md">Medium Primary</wb-button>
+    <wb-button variant="primary" size="lg">Large Primary</wb-button>
+    <br><br>
+    <wb-button variant="secondary" size="sm">Small Secondary</wb-button>
+    <wb-button variant="secondary" size="md">Medium Secondary</wb-button>
+    <wb-button variant="secondary" size="lg">Large Secondary</wb-button>
+    <br><br>
+    <wb-button variant="ghost" size="sm">Small Ghost</wb-button>
+    <wb-button variant="ghost" size="md">Medium Ghost</wb-button>
+    <wb-button variant="ghost" size="lg">Large Ghost</wb-button>
+  </wb-demo>
+
+  <h2>All Sizes (xs → xl)</h2>
+  <wb-demo>
+    <wb-button variant="primary" size="xs">XS</wb-button>
+    <wb-button variant="primary" size="sm">SM</wb-button>
+    <wb-button variant="primary" size="md">MD</wb-button>
+    <wb-button variant="primary" size="lg">LG</wb-button>
+    <wb-button variant="primary" size="xl">XL</wb-button>
+  </wb-demo>
+
+  <h2>Button Variants with States</h2>
+  <wb-demo>
+    <wb-button variant="primary">Primary</wb-button>
+    <wb-button variant="primary" disabled>Primary Disabled</wb-button>
+    <wb-button variant="secondary">Secondary</wb-button>
+    <wb-button variant="secondary" disabled>Secondary Disabled</wb-button>
+    <wb-button variant="success">Success</wb-button>
+    <wb-button variant="success" disabled>Success Disabled</wb-button>
+    <wb-button variant="danger">Danger</wb-button>
+    <wb-button variant="danger" disabled>Danger Disabled</wb-button>
+    <wb-button variant="warning">Warning</wb-button>
+    <wb-button variant="warning" disabled>Warning Disabled</wb-button>
+    <wb-button variant="info">Info</wb-button>
+    <wb-button variant="info" disabled>Info Disabled</wb-button>
+    <wb-button variant="ghost">Ghost</wb-button>
+    <wb-button variant="ghost" disabled>Ghost Disabled</wb-button>
+    <wb-button variant="link">Link</wb-button>
+    <wb-button variant="link" disabled>Link Disabled</wb-button>
+  </wb-demo>
+
+  <h2>Button Variants with Behaviors</h2>
+  <wb-demo>
+    <wb-button variant="primary" x-ripple>Primary with Ripple</wb-button>
+    <wb-button variant="secondary" x-toast message="Secondary clicked!" type="info">Secondary with Toast</wb-button>
+    <wb-button variant="ghost" x-tooltip="This is a ghost button" position="top">Ghost with Tooltip</wb-button>
+  </wb-demo>
+</body>
+</html>
