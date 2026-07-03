@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Composition (wb-button + x-* behaviors) — WB Demo</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    WB.init();
+  </script>
+  <style>
+    .wb-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+    @media (max-width: 720px) { .wb-compare { grid-template-columns: 1fr; } }
+    .wb-compare > div { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+    .wb-compare__head { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem;
+      background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); }
+    .wb-compare--class .wb-compare__head { color: var(--text-secondary); }
+    .wb-compare--tag .wb-compare__head { color: var(--success-color); }
+    .wb-compare pre { margin: 0; padding: 0.75rem; overflow-x: auto; font-size: 0.8rem;
+      white-space: pre-wrap; word-break: break-word; }
+    .wb-note { color: var(--text-secondary); font-size: 0.9rem; }
+    .wb-row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin: 0.75rem 0; }
+    .wb-behavior-tag { display: inline-block; padding: 0.1rem 0.45rem; border-radius: 999px;
+      font-size: 0.75rem; font-family: monospace; background: var(--bg-secondary);
+      color: var(--primary); border: 1px solid var(--border-color); }
+  </style>
+</head>
+<body>
+  <h1>WB Button — Composition with <code>x-*</code> behaviors</h1>
+  <p class="wb-note">Same <code>&lt;wb-button&gt;</code> tags as before, now with <code>x-*</code> attributes layered on. Behaviors <strong>compose</strong>: each <code>x-</code> attribute adds one capability to the element — stack as many as you want, in any order, with no wrapper components and no JavaScript.</p>
+
+  <h2>1 · Start with a plain button</h2>
+  <wb-demo>
+    <wb-button variant="primary">Save</wb-button>
+  </wb-demo>
+
+  <h2>2 · Add one behavior at a time</h2>
+  <wb-demo>
+    <wb-button variant="primary" x-ripple>Ripple</wb-button>
+    <wb-button variant="secondary" x-tooltip="Helpful hint" position="top">Tooltip</wb-button>
+    <wb-button variant="success" x-toast message="Saved!" type="success">Toast on click</wb-button>
+    <wb-button variant="info" x-copy copy-text="Copied from a wb-button!">Copy to clipboard</wb-button>
+    <wb-button variant="warning" x-wobble>Wobble</wb-button>
+    <wb-button variant="ghost" x-tada>Tada</wb-button>
+  </wb-demo>
+  <div class="wb-row">
+    <span class="wb-behavior-tag">x-ripple</span>
+    <span class="wb-behavior-tag">x-tooltip</span>
+    <span class="wb-behavior-tag">x-toast</span>
+    <span class="wb-behavior-tag">x-copy</span>
+    <span class="wb-behavior-tag">x-wobble</span>
+    <span class="wb-behavior-tag">x-tada</span>
+  </div>
+
+  <h2>3 · Compose several behaviors on one button</h2>
+  <p class="wb-note">Stack multiple <code>x-</code> attributes — they layer, they don't conflict:</p>
+  <wb-demo>
+    <wb-button variant="primary" x-ripple x-tooltip="Ripple + tooltip + toast" position="top" x-toast message="Saved!" type="success">Save (ripple + tooltip + toast)</wb-button>
+    <wb-button variant="danger" x-ripple x-wobble x-toast message="Deleted" type="error">Delete (ripple + wobble + toast)</wb-button>
+    <wb-button variant="info" x-copy copy-text="npm i wb-starter" x-tooltip="Click to copy the install command" position="bottom" x-ripple>Copy install cmd</wb-button>
+  </wb-demo>
+
+  <h2>The point — composition, not configuration</h2>
+  <div class="wb-compare">
+    <div class="wb-compare--class">
+      <div class="wb-compare__head">Base button</div>
+      <pre>&lt;wb-button variant="primary"&gt;Save&lt;/wb-button&gt;</pre>
+    </div>
+    <div class="wb-compare--tag">
+      <div class="wb-compare__head">Same button, three behaviors composed</div>
+      <pre>&lt;wb-button variant="primary"
+  x-ripple
+  x-tooltip="Ripple + tooltip + toast" position="top"
+  x-toast message="Saved!" type="success"&gt;
+  Save
+&lt;/wb-button&gt;</pre>
+    </div>
+  </div>
+  <p class="wb-note">No <code>&lt;RippleButton&gt;</code>, <code>&lt;TooltipButton&gt;</code>, or prop-drilling — just additive attributes. Any behavior works on any element, so the same <code>x-ripple</code> / <code>x-tooltip</code> you put on a button also works on a card, an image, or a <code>&lt;div&gt;</code>.</p>
+</body>
+</html>

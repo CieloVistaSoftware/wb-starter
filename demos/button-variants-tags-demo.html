@@ -10,10 +10,45 @@
     import WB from '../src/core/wb-lazy.js';
     WB.init();
   </script>
+  <style>
+    .wb-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+    @media (max-width: 720px) { .wb-compare { grid-template-columns: 1fr; } }
+    .wb-compare > div { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+    .wb-compare__head { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem;
+      background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); }
+    .wb-compare--class .wb-compare__head { color: var(--text-secondary); }
+    .wb-compare--tag .wb-compare__head { color: var(--success-color); }
+    .wb-compare pre { margin: 0; padding: 0.75rem; overflow-x: auto; font-size: 0.8rem;
+      white-space: pre-wrap; word-break: break-word; }
+    .wb-savings { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
+    .wb-savings__stat { flex: 1; min-width: 170px; padding: 1rem; border-radius: 8px;
+      background: var(--bg-secondary); border-left: 4px solid var(--success-color); }
+    .wb-savings__num { font-size: 1.75rem; font-weight: 700; color: var(--success-color); }
+    .wb-savings__lbl { font-size: 0.85rem; color: var(--text-secondary); }
+  </style>
 </head>
 <body>
   <h1>WB Button Variants — Tag Syntax</h1>
   <p>The same buttons as the class-based demo, written entirely with <code>&lt;wb-button&gt;</code> custom-element tags — no <code>class="wb-button ..."</code> anywhere. Styling comes from <code>wb-button[variant]</code> / <code>wb-button[size]</code> attribute selectors.</p>
+
+  <h2>💾 The Savings — why <code>&lt;wb-button&gt;</code> beats classes</h2>
+  <p>The same button, both ways:</p>
+  <div class="wb-compare">
+    <div class="wb-compare--class">
+      <div class="wb-compare__head">Class syntax &middot; 81 chars</div>
+      <pre>&lt;button class="wb-button wb-button--primary wb-button--lg"&gt;Large Primary&lt;/button&gt;</pre>
+    </div>
+    <div class="wb-compare--tag">
+      <div class="wb-compare__head">Tag syntax &middot; 64 chars</div>
+      <pre>&lt;wb-button variant="primary" size="lg"&gt;Large Primary&lt;/wb-button&gt;</pre>
+    </div>
+  </div>
+  <div class="wb-savings">
+    <div class="wb-savings__stat"><div class="wb-savings__num">21%</div><div class="wb-savings__lbl">less markup per button (81 &rarr; 64 chars)</div></div>
+    <div class="wb-savings__stat"><div class="wb-savings__num">22%</div><div class="wb-savings__lbl">smaller across a 9-button block (711 &rarr; 558 bytes)</div></div>
+    <div class="wb-savings__stat"><div class="wb-savings__num">0</div><div class="wb-savings__lbl">repeated <code>wb-button--</code> prefixes to type</div></div>
+  </div>
+  <p style="color: var(--text-secondary); font-size: 0.9rem;">No <code>wb-button</code> base class to remember, and no <code>wb-button--</code> prefix on every modifier — variant and size are just attributes.</p>
 
   <h2>Basic Button Variants</h2>
   <wb-demo>
@@ -21,6 +56,20 @@
     <wb-button variant="secondary">Secondary Button</wb-button>
     <wb-button variant="ghost">Ghost Button</wb-button>
   </wb-demo>
+  <div class="wb-compare">
+    <div class="wb-compare--class">
+      <div class="wb-compare__head">Before &mdash; class syntax &middot; 206 bytes</div>
+      <pre>&lt;button class="wb-button wb-button--primary"&gt;Primary Button&lt;/button&gt;
+&lt;button class="wb-button wb-button--secondary"&gt;Secondary Button&lt;/button&gt;
+&lt;button class="wb-button wb-button--ghost"&gt;Ghost Button&lt;/button&gt;</pre>
+    </div>
+    <div class="wb-compare--tag">
+      <div class="wb-compare__head">After &mdash; wb-* tags &middot; 167 bytes (19% smaller)</div>
+      <pre>&lt;wb-button variant="primary"&gt;Primary Button&lt;/wb-button&gt;
+&lt;wb-button variant="secondary"&gt;Secondary Button&lt;/wb-button&gt;
+&lt;wb-button variant="ghost"&gt;Ghost Button&lt;/wb-button&gt;</pre>
+    </div>
+  </div>
 
   <h2>Button Variants with Sizes</h2>
   <wb-demo>
@@ -36,6 +85,22 @@
     <wb-button variant="ghost" size="md">Medium Ghost</wb-button>
     <wb-button variant="ghost" size="lg">Large Ghost</wb-button>
   </wb-demo>
+  <div class="wb-compare">
+    <div class="wb-compare--class">
+      <div class="wb-compare__head">Before &mdash; class syntax &middot; 740 bytes (all 9)</div>
+      <pre>&lt;button class="wb-button wb-button--primary wb-button--sm"&gt;Small Primary&lt;/button&gt;
+&lt;button class="wb-button wb-button--primary wb-button--md"&gt;Medium Primary&lt;/button&gt;
+&lt;button class="wb-button wb-button--primary wb-button--lg"&gt;Large Primary&lt;/button&gt;
+<span style="opacity:.6">&hellip; &times;3 variants</span></pre>
+    </div>
+    <div class="wb-compare--tag">
+      <div class="wb-compare__head">After &mdash; wb-* tags &middot; 587 bytes (21% smaller)</div>
+      <pre>&lt;wb-button variant="primary" size="sm"&gt;Small Primary&lt;/wb-button&gt;
+&lt;wb-button variant="primary" size="md"&gt;Medium Primary&lt;/wb-button&gt;
+&lt;wb-button variant="primary" size="lg"&gt;Large Primary&lt;/wb-button&gt;
+<span style="opacity:.6">&hellip; &times;3 variants</span></pre>
+    </div>
+  </div>
 
   <h2>All Sizes (xs → xl)</h2>
   <wb-demo>
