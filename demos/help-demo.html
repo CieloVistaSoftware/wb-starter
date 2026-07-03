@@ -34,7 +34,7 @@
     // In-browser schema validation (Ajv)
     import Ajv from 'https://cdn.jsdelivr.net/npm/ajv@8.12.0/+esm';
     const schemaUrl = '../src/wb-models/help-demo.schema.json';
-    const ajv = new Ajv();
+    const ajv = new Ajv({ strict: false });
     fetch(schemaUrl).then(r => r.json()).then(schema => {
       const data = {
         components: [
