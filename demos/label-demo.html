@@ -21,7 +21,7 @@
     window.WB = WB;
     await WB.init({ autoInject: true });
     // In-browser schema validation (Ajv)
-    import Ajv from 'https://cdn.jsdelivr.net/npm/ajv@8.12.0/dist/ajv.min.js';
+    import Ajv from 'https://cdn.jsdelivr.net/npm/ajv@8.12.0/+esm';
     const schemaUrl = '../src/wb-models/label.schema.json';
     const ajv = new Ajv();
     fetch(schemaUrl).then(r => r.json()).then(schema => {
@@ -29,12 +29,20 @@
         required: false,
         optional: false
       };
-      const valid = ajv.validate(schema, data);
+      let msg;
+      try {
+        const valid = ajv.validate(schema, data);
+        msg = valid ? 'Schema validation: PASS' : 'Schema validation: FAIL\n' + JSON.stringify(ajv.errors, null, 2);
+      } catch (e) {
+        // Schema may $ref other schema files that aren't registered in-browser.
+        // Degrade gracefully instead of throwing an uncaught error that breaks the page.
+        msg = 'Schema validation skipped (unresolved $ref): ' + e.message;
+      }
       const out = document.createElement('pre');
       out.style.background = '#222';
       out.style.color = '#fff';
       out.style.padding = '0.5em';
-      out.textContent = valid ? 'Schema validation: PASS' : 'Schema validation: FAIL\n' + JSON.stringify(ajv.errors, null, 2);
+      out.textContent = msg;
       document.body.appendChild(out);
     });
   </script>
