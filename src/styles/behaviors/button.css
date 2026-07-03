@@ -66,72 +66,77 @@ button-tooltip[disabled] {
   font-size: 1.25rem;
 }
 
-/* Variants */
-.wb-button--primary {
+/* Variants
+ * Doubled selector (.wb-button.wb-button--primary → specificity 0,2,0) so these
+ * variant colors win over the plain `.wb-button` base rule button.js injects into
+ * <head> at runtime (which sets background: var(--bg-secondary) at 0,1,0, later in
+ * source order). Without this, success/danger/warning collapsed to the neutral
+ * background — no color difference. Same reason as the sizes above. (#button-variant-colors) */
+.wb-button.wb-button--primary {
   background-color: var(--primary);
   color: var(--text-on-accent);
   border-color: transparent;
 }
-.wb-button--primary:hover {
+.wb-button.wb-button--primary:hover {
   background-color: var(--primary-dark);
 }
 
-.wb-button--secondary {
+.wb-button.wb-button--secondary {
   background-color: var(--secondary);
   color: var(--text-on-accent);
   border-color: transparent;
 }
-.wb-button--secondary:hover {
+.wb-button.wb-button--secondary:hover {
   background-color: var(--secondary-dark);
 }
 
-.wb-button--success {
+.wb-button.wb-button--success {
   background-color: var(--success-color);
   color: var(--text-on-accent);
   border-color: transparent;
 }
-.wb-button--success:hover {
+.wb-button.wb-button--success:hover {
   filter: brightness(0.9);
 }
 
-.wb-button--danger,
-.wb-button--error {
+.wb-button.wb-button--danger,
+.wb-button.wb-button--error {
   background-color: var(--danger-color);
   color: var(--text-on-accent);
   border-color: transparent;
 }
-.wb-button--danger:hover,
-.wb-button--error:hover {
+.wb-button.wb-button--danger:hover,
+.wb-button.wb-button--error:hover {
   filter: brightness(0.9);
 }
 
-.wb-button--warning {
+.wb-button.wb-button--warning {
   background-color: var(--warning-color);
   color: var(--text-on-accent);
   border-color: transparent;
 }
-.wb-button--warning:hover {
+.wb-button.wb-button--warning:hover {
   filter: brightness(0.9);
 }
 
-.wb-button--ghost {
+.wb-button.wb-button--ghost {
   background-color: transparent;
   color: var(--text-primary);
   border-color: var(--border-color);
 }
-.wb-button--ghost:hover {
+.wb-button.wb-button--ghost:hover {
   background-color: var(--bg-tertiary);
   border-color: var(--text-secondary);
 }
 
-.wb-button--link {
+.wb-button.wb-button--link {
   background-color: transparent;
   color: var(--primary);
   padding: 0;
   border: none;
   box-shadow: none;
 }
-.wb-button--link:hover {
+.wb-button.wb-button--link:hover {
   text-decoration: underline;
 }
 
