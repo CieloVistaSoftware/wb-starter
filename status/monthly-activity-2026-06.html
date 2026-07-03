@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Development Activity — June 2026 · CieloVista Status</title>
+  <style>
+    :root {
+      --bg: #0d1117; --panel: #161b22; --panel-2: #1c2330; --border: #2a3340;
+      --text: #e6edf3; --muted: #8b98a8; --accent: #8b5cf6; --accent-2: #a371f7;
+      --add: #3fb950; --del: #f85149;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    a.back { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+    a.back:hover { color: var(--text); }
+    header.page { margin: 1rem 0 2rem; }
+    .eyebrow { color: var(--accent-2); font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; font-size: 0.78rem; }
+    h1 { font-size: 2.1rem; margin: 0.35rem 0 0.5rem; line-height: 1.15; }
+    .period { color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem; margin: 2rem 0; }
+    .stat { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.25rem; }
+    .stat__num { font-size: 2rem; font-weight: 800; line-height: 1; }
+    .stat__lbl { color: var(--muted); font-size: 0.85rem; margin-top: 0.4rem; }
+    .stat--accent .stat__num { color: var(--accent-2); }
+    .churn { background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.5rem; margin: 2rem 0; }
+    .churn h2 { margin: 0 0 0.25rem; font-size: 1.15rem; }
+    .churn__sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.1rem; }
+    .bar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; margin: 0.75rem 0 0.5rem; }
+    .bar__add { background: var(--add); }
+    .bar__del { background: var(--del); }
+    .bar__legend { display: flex; justify-content: space-between; font-size: 0.9rem; }
+    .add { color: var(--add); font-weight: 700; } .del { color: var(--del); font-weight: 700; }
+    .net { text-align: center; margin-top: 0.75rem; color: var(--muted); font-size: 0.9rem; }
+    .net strong { color: var(--text); }
+    section.why { background: linear-gradient(180deg, var(--panel-2), var(--panel));
+      border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 10px;
+      padding: 1.75rem; margin: 2.5rem 0; }
+    section.why h2 { margin-top: 0; }
+    section.why ul { margin: 0.75rem 0 0; padding-left: 1.2rem; }
+    section.why li { margin-bottom: 0.85rem; }
+    section.why li strong { color: var(--accent-2); }
+    .kicker { font-size: 1.05rem; }
+    footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--border);
+      padding-top: 1.25rem; margin-top: 3rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="index.html">&larr; All status reports</a>
+
+    <header class="page">
+      <div class="eyebrow">Development Activity</div>
+      <h1>One month of change</h1>
+      <div class="period">June 3 &ndash; July 3, 2026 &middot; <code>main</code> branch</div>
+    </header>
+
+    <p class="kicker">In a single month, AI-assisted development moved this codebase at a pace that would traditionally take a team a quarter or more. That velocity is a feature &mdash; and exactly why every change is reviewed.</p>
+
+    <div class="grid">
+      <div class="stat stat--accent"><div class="stat__num">40</div><div class="stat__lbl">Pull requests merged</div></div>
+      <div class="stat stat--accent"><div class="stat__num">103</div><div class="stat__lbl">Issues closed</div></div>
+      <div class="stat"><div class="stat__num">106</div><div class="stat__lbl">Commits to main</div></div>
+      <div class="stat"><div class="stat__num">386</div><div class="stat__lbl">Files changed</div></div>
+      <div class="stat"><div class="stat__num">3</div><div class="stat__lbl">Authors</div></div>
+      <div class="stat"><div class="stat__num">10</div><div class="stat__lbl">New issues</div></div>
+    </div>
+
+    <div class="churn">
+      <h2>Lines of code changed</h2>
+      <div class="churn__sub">Additions vs. deletions across 386 files</div>
+      <div class="bar">
+        <div class="bar__add" style="flex: 13883"></div>
+        <div class="bar__del" style="flex: 48370"></div>
+      </div>
+      <div class="bar__legend">
+        <span class="add">+13,883 added</span>
+        <span class="del">&minus;48,370 deleted</span>
+      </div>
+      <div class="net">Net: <strong>&minus;34,487 lines</strong> &mdash; more code was <em>removed</em> than added. Consolidation and cleanup, not just growth.</div>
+    </div>
+
+    <section class="why">
+      <h2>Why this requires scrutiny</h2>
+      <p>Speed at this scale changes the nature of review. When an AI can delete 48,000 lines and reshape 386 files in a month, the risk isn't slow progress &mdash; it's <em>fast, confident, wrong</em> progress that looks finished. So every change here goes through deliberate human scrutiny:</p>
+      <ul>
+        <li><strong>Volume outruns intuition.</strong> No one eyeballs 62,000 changed lines. Automated tests, compliance gates, and regression suites run on every change so nothing ships on trust alone.</li>
+        <li><strong>Deletion is the dangerous edit.</strong> Removing code is where working behavior silently disappears. Large deletions get the closest look &mdash; what was it doing, and is it truly redundant?</li>
+        <li><strong>Confident &ne; correct.</strong> AI produces plausible, well-formatted output that can still be subtly wrong. Findings are verified against real behavior, not just accepted because they compile.</li>
+        <li><strong>Every fix names its test.</strong> A change isn't "done" until a failing-first test proves the bug existed and now passes &mdash; the record of scrutiny, not just the fix.</li>
+        <li><strong>Deployment is separate from writing.</strong> Code committed is not code shipped; changes are built, verified, and only then deployed to customers.</li>
+      </ul>
+      <p style="margin-bottom:0;">The takeaway for you: this velocity is real, and it is <strong>governed</strong>. You get the speed of AI with the discipline of engineering review layered on top.</p>
+    </section>
+
+    <footer>
+      CieloVista Software &middot; Status report generated for the June 2026 period &middot;
+      Source: repository activity on <code>main</code>.
+    </footer>
+  </div>
+</body>
+</html>

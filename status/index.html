@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CieloVista Status</title>
+  <style>
+    :root {
+      --bg: #0d1117; --panel: #161b22; --border: #2a3340;
+      --text: #e6edf3; --muted: #8b98a8; --accent: #8b5cf6; --accent-2: #a371f7;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+    .eyebrow { color: var(--accent-2); font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; font-size: 0.78rem; }
+    h1 { font-size: 2.2rem; margin: 0.35rem 0 0.5rem; }
+    .lead { color: var(--muted); max-width: 60ch; }
+    .reports { display: grid; gap: 1rem; margin: 2.5rem 0 0; }
+    a.card { display: block; text-decoration: none; color: inherit; background: var(--panel);
+      border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem 1.5rem;
+      transition: border-color 0.15s ease, transform 0.15s ease; }
+    a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .card__tag { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--accent-2); background: rgba(139,92,246,0.12);
+      border: 1px solid var(--border); border-radius: 999px; padding: 0.15rem 0.6rem; margin-bottom: 0.6rem; }
+    .card h2 { margin: 0 0 0.3rem; font-size: 1.2rem; }
+    .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .card__meta { margin-top: 0.75rem; color: var(--muted); font-size: 0.82rem; }
+    .arrow { color: var(--accent-2); }
+    footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--border);
+      padding-top: 1.25rem; margin-top: 3rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">CieloVista Software</div>
+    <h1>Status</h1>
+    <p class="lead">Transparent, up-to-date reports on how our software is built, changed, and governed. Pick a report below.</p>
+
+    <div class="reports">
+      <a class="card" href="monthly-activity-2026-06.html">
+        <span class="card__tag">Development Activity</span>
+        <h2>One month of change &mdash; and why AI requires scrutiny <span class="arrow">&rarr;</span></h2>
+        <p>40 merged PRs, 103 issues closed, 62,000+ lines changed in a single month &mdash; and the review discipline that keeps that velocity safe.</p>
+        <div class="card__meta">Period: June 3 &ndash; July 3, 2026</div>
+      </a>
+      <!-- Add new status pages as more <a class="card"> entries here. -->
+    </div>
+
+    <footer>CieloVista Software &middot; Status</footer>
+  </div>
+</body>
+</html>
