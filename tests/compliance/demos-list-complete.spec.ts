@@ -55,3 +55,22 @@ test.describe('Demos page lists every demo (#229)', () => {
     expect(absolute, `Demos page links must be root-relative (they 404 under /wb-starter/):\n  ${absolute.join('\n  ')}`).toEqual([]);
   });
 });
+
+test.describe('Demos menu is reachable from the shell nav (#229)', () => {
+  const site = JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
+  const nav: Array<{ menuItemText?: string; pageToLoad?: string; menuItemId?: string }> =
+    site.navigationMenu ?? [];
+
+  test('navigationMenu contains a Demos item that loads the demos page', () => {
+    const demosItem = nav.find((n) => n.pageToLoad === 'demos');
+    expect(
+      demosItem,
+      'config/site.json navigationMenu has no item with pageToLoad "demos" — the Demos page is unreachable from the nav (site-engine redirects unknown pages to home).'
+    ).toBeTruthy();
+    expect(demosItem?.menuItemText, 'Demos nav item should be labelled "Demos"').toBe('Demos');
+  });
+
+  test('the demos page the nav links to exists', () => {
+    expect(fs.existsSync(PAGE), 'pages/demos.html (loaded by ?page=demos) must exist').toBe(true);
+  });
+});
