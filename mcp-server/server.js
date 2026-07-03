@@ -230,7 +230,7 @@ if (healthPort) {
     });
 
     healthServer.listen(healthPort, '127.0.0.1', () => {
-      console.log(`[mcp-server] health endpoint available at http://127.0.0.1:${healthPort}/health`);
+      console.error(`[mcp-server] health endpoint available at http://127.0.0.1:${healthPort}/health`);
     });
 
     healthServer.on('error', (err) => {
