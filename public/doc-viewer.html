@@ -17,7 +17,20 @@
   <link rel="stylesheet" href="../src/styles/themes.css">
   <link rel="stylesheet" href="../src/styles/site.css">
   <link rel="stylesheet" href="../src/styles/transitions.css">
-  <link rel="stylesheet" href="../src/lib/highlight-atom-one-dark.css">
+  <style>
+    /* Syntax highlighting driven by the theme system — no vendored CSS file.
+       highlight.js adds .hljs-* token classes; we color them with theme variables
+       so code follows the current theme (Ocean, Neon Dreams, …). */
+    .hljs { color: var(--text-primary); background: transparent; }
+    .hljs-comment, .hljs-quote, .hljs-meta { color: var(--text-muted, #8b98a8); font-style: italic; }
+    .hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-section, .hljs-doctag { color: var(--primary, #a371f7); }
+    .hljs-string, .hljs-attr, .hljs-addition, .hljs-regexp .hljs-string { color: var(--success-color, #3fb950); }
+    .hljs-number, .hljs-regexp, .hljs-deletion, .hljs-bullet { color: var(--warning-color, #f0883e); }
+    .hljs-title, .hljs-name, .hljs-type, .hljs-built_in, .hljs-selector-id, .hljs-selector-class { color: var(--info-color, #58a6ff); }
+    .hljs-attribute, .hljs-variable, .hljs-template-variable, .hljs-symbol, .hljs-link { color: var(--danger-color, #f85149); }
+    .hljs-emphasis { font-style: italic; }
+    .hljs-strong { font-weight: 700; }
+  </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">

@@ -44,10 +44,6 @@ test.describe('CSS OOP Compliance', () => {
       if (COLOR_EXCEPTION_FILES.includes(filename)) continue;
       if (filename === 'audio.css') continue;
       if (file.includes('tmp') || file.includes('.playwright-artifacts')) continue;
-      // Vendored third-party CSS (e.g. highlight.js syntax themes in src/lib/)
-      // legitimately ships raw colors — it's not our themeable UI, and was exempt
-      // by living in node_modules before we vendored it in for GitHub Pages.
-      if (file.replace(/\\/g, '/').includes('/src/lib/')) continue;
 
       // Blank out /* ... */ block comments (keep length + newlines so indices and
       // line numbers stay valid) before scanning. Otherwise issue references like
