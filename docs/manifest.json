@@ -51,6 +51,11 @@
           "file": "standards/V3-STANDARDS.md",
           "title": "V3 STANDARDS",
           "description": "Documentation for V3 STANDARDS"
+        },
+        {
+          "file": "AI.md",
+          "title": "Why AI-Generated Answers Are So Often Off",
+          "description": "Why AI sounds smart yet is often subtly or confidently wrong — it predicts tokens, it does not know facts — and why AI output needs human scrutiny."
         }
       ]
     },
