@@ -34,16 +34,17 @@ function manifestDocs(): DocEntry[] {
 }
 
 // Resolve a rendered link href (relative to the doc's own directory) to a
-// docs-root-relative path, mirroring the browser's URL resolution. Returns null
-// for external / anchor-only links.
+// SITE-root-relative path, mirroring the browser's URL resolution. Returns null
+// for external / anchor-only links. Doc-to-doc links usually land under docs/,
+// but the viewer's path-linkifier can also link non-docs repo files (data/…),
+// so we keep the full path rather than assuming a docs/ prefix.
 function resolveDocLink(docFile: string, href: string): string | null {
   const h = href.trim();
   if (!h || h.startsWith('#') || /^(https?:|mailto:|tel:)/i.test(h)) return null;
   if (!/\.md(#.*)?$/i.test(h)) return null; // only doc-to-doc links
   const base = new URL('http://x/docs/' + docFile.replace(/^\/+/, ''));
   const resolved = new URL(h.replace(/#.*$/, ''), base);
-  const rel = resolved.pathname.replace(/^\/docs\//, '');
-  return rel;
+  return resolved.pathname.replace(/^\/+/, ''); // e.g. 'docs/standards/x.md' or 'data/x.md'
 }
 
 const docs = manifestDocs();
@@ -86,7 +87,7 @@ test.describe('doc-viewer renders no dead links (#226)', () => {
 
       const broken: string[] = [];
       for (const rel of targets) {
-        const res = await req.get(`/docs/${rel}`);
+        const res = await req.get(`/${rel}`);
         if (res.status() >= 400) broken.push(`${rel} → HTTP ${res.status()}`);
       }
       await req.dispose();

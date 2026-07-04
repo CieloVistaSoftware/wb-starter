@@ -142,10 +142,12 @@
     let file = params.get('file') || 'docs/index.md';
     // Normalize to a site-root-relative path: drop any leading slash (legacy
     // links passed '/docs/x.md', which 404s at the domain root under a sub-path
-    // base) and default bare filenames into docs/.
+    // base) and default bare filenames into docs/. A path that already carries a
+    // directory (docs/…, data/…, mcp-server/…) is left as-is so non-docs repo
+    // files stay reachable — only slash-less legacy names get the docs/ prefix.
     if (!/^https?:/i.test(file)) {
       file = file.replace(/^\/+/, '');
-      if (!/^docs\//.test(file)) file = 'docs/' + file;
+      if (!file.includes('/')) file = 'docs/' + file;
     }
     // Full, base-aware URL for the fetch — bypasses mdhtml's domain-root
     // resolution so it works whether served at '/' or '/wb-starter/'.
@@ -195,6 +197,49 @@
         const src = el.getAttribute('src');
         if (!src || src.startsWith('data:') || /^[a-z][a-z0-9+.-]*:/i.test(src)) return;
         el.src = new URL(src, docBaseDir).href;
+      });
+    }
+
+    // Auto-link path references so docs that mention files as `inline code` or
+    // **bold** — like the tier/index docs whose tables list dozens of paths —
+    // become navigable without hand-authoring [text](path) in every doc. Any
+    // <code>/<strong>/<b> whose entire text is a repo path ending .md/.html is
+    // wrapped in an <a> with a href RELATIVE to THIS doc, so the .md click
+    // interceptor and rebaseDocResources resolve it exactly like a normal
+    // markdown link. Only targets that actually resolve (GET 200) are linked —
+    // a missing/stale reference stays plain text, so we never ship a dead link.
+    const LINKABLE_PATH = /^((?:docs|demos|data|src|scripts|tests|packages|mcp-server|vscode|\.github)\/[\w./-]+\.(?:md|html))$/;
+    function docRelHref(rootRelTarget) {
+      const from = file.replace(/[^/]*$/, '').split('/').filter(Boolean); // this doc's dir parts
+      const to = rootRelTarget.split('/').filter(Boolean);
+      let i = 0;
+      while (i < from.length && i < to.length && from[i] === to[i]) i++;
+      const up = from.slice(i).map(() => '..');
+      return [...up, ...to.slice(i)].join('/') || rootRelTarget;
+    }
+    async function linkifyDocPaths() {
+      const content = document.getElementById('content');
+      const candidates = [];
+      content.querySelectorAll('code:not(pre code), strong, b').forEach((el) => {
+        if (el.closest('a') || el.querySelector('a')) return; // already a link
+        const m = el.textContent.trim().match(LINKABLE_PATH);
+        if (m) candidates.push({ el, target: m[1] });
+      });
+      if (!candidates.length) return;
+      // Verify existence once per unique target — GET (not HEAD: this server
+      // answers HEAD 200 even for missing files, but GET 404s them correctly).
+      const exists = new Map();
+      await Promise.all([...new Set(candidates.map((c) => c.target))].map(async (t) => {
+        try { exists.set(t, (await fetch(new URL(t, SITE_ROOT).href, { method: 'GET' })).ok); }
+        catch { exists.set(t, false); }
+      }));
+      candidates.forEach(({ el, target }) => {
+        if (!exists.get(target)) return; // missing → leave as plain text
+        const a = document.createElement('a');
+        a.setAttribute('href', docRelHref(target));
+        a.className = 'wb-doc-pathlink';
+        el.replaceWith(a);
+        a.appendChild(el); // keep the code/bold styling inside the link
       });
     }
 
@@ -315,9 +360,12 @@
       
       // Initialize mdhtml
       mdhtml(content, { size: 'md' })
-        .then(() => {
-          // Fix relative links/media so they resolve against the doc's location,
-          // not this viewer page (prevents ../../demos/x.html → domain-root 404).
+        .then(async () => {
+          // Turn `code`/**bold** path mentions into real links (existing targets
+          // only), THEN fix relative links/media so they resolve against the
+          // doc's location, not this viewer page (prevents ../../demos/x.html →
+          // domain-root 404). Linkify first so the new .html anchors get rebased.
+          await linkifyDocPaths();
           rebaseDocResources();
 
           // Title the tab after the document itself, not the static
