@@ -75,7 +75,7 @@
     .wb-mdhtml a { color: var(--primary-light); text-decoration: underline; }
     .wb-mdhtml pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 0 0 1.5rem 0; border: 1px solid var(--border-color); line-height: 1.2; max-width: 100%; }
     .wb-mdhtml pre code { background: none; padding: 0; color: var(--text-primary); font-weight: normal !important; font-size: 0.85rem; font-family: Consolas, 'Courier New', monospace; white-space: pre; font-variant-ligatures: none; tab-size: 4; letter-spacing: 0; }
-    .wb-mdhtml .code-wrapper { max-width: 100%; overflow-x: auto; }
+    .wb-mdhtml .code-wrapper { max-width: 100%; overflow-x: hidden; }
     .wb-mdhtml .code-wrapper pre { max-width: 100%; }
     .wb-mdhtml blockquote { border-left: 4px solid var(--primary); margin: 0 0 1.5rem 0; padding-left: 1rem; color: var(--text-muted); font-style: italic; }
     /* Live <wb-demo> embedded in a doc renders its own grid + source panel; give
@@ -86,9 +86,10 @@
     .wb-mdhtml table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; display: block; overflow-x: auto; max-width: 100%; }
     .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; overflow-wrap: anywhere; word-break: break-word; }
     .wb-mdhtml th { background: var(--bg-secondary); font-weight: 600; }
-    /* doc-viewer: editor-style code — preserve formatting, scroll horizontally, no mid-line wrap (#195, reverses #147/#150) */
-    .wb-mdhtml pre, .wb-mdhtml .code-wrapper pre { white-space: pre !important; overflow-x: auto !important; overflow-wrap: normal !important; word-break: normal !important; }
-    .wb-mdhtml pre code, .wb-mdhtml .code-wrapper code { white-space: pre !important; overflow-wrap: normal !important; word-break: normal !important; }
+    /* Standard §6 (#248): code WRAPS — never a horizontal scrollbar. Line breaks are
+       preserved (pre-wrap); over-long lines/tokens wrap instead of scrolling. */
+    .wb-mdhtml pre, .wb-mdhtml .code-wrapper pre { white-space: pre-wrap !important; overflow-x: hidden !important; overflow-wrap: anywhere !important; word-break: normal !important; }
+    .wb-mdhtml pre code, .wb-mdhtml .code-wrapper code { white-space: pre-wrap !important; overflow-wrap: anywhere !important; word-break: normal !important; }
     .loading { color: var(--text-muted); font-style: italic; }
     .error { color: var(--danger); padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 6px; border: 1px solid var(--danger); }
   </style>

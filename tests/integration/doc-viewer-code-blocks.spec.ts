@@ -1,29 +1,26 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * REGRESSION (#195): doc-viewer code blocks must render like an editor —
- * white-space: pre with horizontal scroll — NOT wrapped mid-line.
- *
- * The doc-viewer previously forced `white-space: pre-wrap !important` on code
- * (from #147/#150), so long lines wrapped mid-token and lost their formatting.
- * Editor-style preserves formatting and scrolls horizontally instead.
+ * Standard §6 (#248): doc-viewer code blocks WRAP — they never show a horizontal
+ * scrollbar. This supersedes the earlier #195 "editor-style horizontal scroll"
+ * decision; the project standard is now "no horizontal scrollbars on code", so
+ * long lines wrap. Line breaks are still preserved (pre-wrap), so multi-line code
+ * stays multi-line (guarded separately by doc-viewer-code-multiline.spec.ts).
  */
-test('doc-viewer code blocks are editor-style (white-space: pre + horizontal scroll) (#195)', async ({ page }) => {
+test('doc-viewer code blocks wrap — no horizontal scrollbar (§6, supersedes #195)', async ({ page }) => {
   await page.goto('/public/doc-viewer.html?file=docs/V3-GUIDE.md', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !!document.querySelector('#content pre code'), { timeout: 20000 });
 
   const r = await page.evaluate(() => {
-    const code = document.querySelector('#content pre code') as HTMLElement;
-    const pre = code.closest('pre') as HTMLElement;
+    const pres = Array.from(document.querySelectorAll('#content pre')) as HTMLElement[];
     return {
-      codeWS: getComputedStyle(code).whiteSpace,
-      preWS: getComputedStyle(pre).whiteSpace,
-      preOverflowX: getComputedStyle(pre).overflowX,
+      count: pres.length,
+      allWrap: pres.every((p) => getComputedStyle(p).whiteSpace === 'pre-wrap'),
+      scrollers: pres.filter((p) => p.scrollWidth > p.clientWidth + 2).length,
     };
   });
 
-  // white-space: pre (or pre-line variants collapse to "pre" here) — never pre-wrap.
-  expect(r.codeWS, 'code must be white-space:pre, not wrapped').toBe('pre');
-  expect(r.preWS, 'pre must be white-space:pre').toBe('pre');
-  expect(['auto', 'scroll'], `pre must scroll horizontally (got overflow-x:${r.preOverflowX})`).toContain(r.preOverflowX);
+  expect(r.count, 'expected code blocks in the doc').toBeGreaterThan(0);
+  expect(r.allWrap, 'code blocks must wrap (white-space: pre-wrap)').toBe(true);
+  expect(r.scrollers, 'no doc-viewer code block may horizontally scroll').toBe(0);
 });
