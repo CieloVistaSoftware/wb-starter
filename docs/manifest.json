@@ -53,6 +53,11 @@
           "description": "Documentation for V3 STANDARDS"
         },
         {
+          "file": "standards/DEMOS-AND-DOCS-STANDARDS.md",
+          "title": "Demos & Documentation Standards",
+          "description": "Rules for how every demo and .md doc shows components and code: wb-demo, one code sample per rendered element, vertical + highlighted code, no horizontal scrollbars, themed Markdown, composition over inheritance, mobile-first."
+        },
+        {
           "file": "AI.md",
           "title": "Why AI-Generated Answers Are So Often Off",
           "description": "Why AI sounds smart yet is often subtly or confidently wrong — it predicts tokens, it does not know facts — and why AI output needs human scrutiny."

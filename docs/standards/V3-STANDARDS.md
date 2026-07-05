@@ -4,6 +4,11 @@
 
 WB v3.0 uses **custom elements** (`<wb-*>`) instead of the legacy `x-behavior` attribute pattern.
 
+> **See also:** [Demos & Documentation Standards](./DEMOS-AND-DOCS-STANDARDS.md) — the rules
+> for how EVERY demo and `.md` doc shows components and code (`<wb-demo>`, one code sample
+> per rendered element, vertical + highlighted code, no horizontal scrollbars, themed
+> Markdown, composition over inheritance, mobile-first).
+
 ---
 
 ## Naming Conventions
