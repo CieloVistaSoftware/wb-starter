@@ -76,7 +76,7 @@
   },
 
   "footerSettings": {
-    "footerCopyrightText": "© 2025 Your Company. All rights reserved.",
+    "footerCopyrightText": "© 2025 Cielo Vista Software. All rights reserved.",
     "displaySocialMediaLinks": true
   },
 
@@ -110,10 +110,10 @@
   ],
 
   "companyInfo": {
-    "businessName": "Acme Co",
-    "businessTagline": "Building the future",
-    "businessDescription": "We provide innovative solutions for modern businesses, combining cutting-edge technology with exceptional service.",
-    "valueProposition": "Industry expertise, customer-focused approach, cutting-edge technology, 24/7 support, transparent communication"
+    "businessName": "Cielo Vista Software",
+    "businessTagline": "Zero-build web components",
+    "businessDescription": "Cielo Vista Software builds wb-starter, a zero-build, schema-first web-component framework. Compose UIs from wb-* tags and x-* behaviors in plain HTML — no bundler, no build step, no lock-in.",
+    "valueProposition": "Zero build, composition over inheritance, Light DOM, schema-first, fully themeable"
   },
 
   "contactInfo": {
