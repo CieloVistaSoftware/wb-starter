@@ -23,211 +23,139 @@
   <!-- Basic Cards -->
   <h3>Basic Cards</h3>
   <wb-demo>
-      <wb-card title="Title + Body" elevated>
-        <p>Simple card with title and hover effect.</p>
-      </wb-card>
-     
-      <wb-card title="With Footer" footer="Card Footer" elevated>
-        <p>Card with header and footer.</p>
-      </wb-card>
-      <wb-card title="Outlined Card" outlined>
-        <p>Card with outline border.</p>
-      </wb-card>
-    </div>
-  </div>
+    <wb-card title="Title + Body" elevated>
+      <p>Simple card with title and hover effect.</p>
+    </wb-card>
+  </wb-demo>
+  <wb-demo>
+    <wb-card title="With Footer" footer="Card Footer" elevated>
+      <p>Card with header and footer.</p>
+    </wb-card>
+  </wb-demo>
+  <wb-demo>
+    <wb-card title="Outlined Card" outlined>
+      <p>Card with outline border.</p>
+    </wb-card>
   </wb-demo>
   <!-- Image Cards -->
   <h3>Image Cards</h3>
-  <div class="demo-row" id="autogen-components-html-9">
-    <div class="demo-item">
-      <wb-cardimage src="https://picsum.photos/400/200?r=img1" title="Image Card" subtitle="Card with image header"></wb-cardimage>
-    </div>
-    <div class="demo-item">
-      <wb-cardimage src="https://picsum.photos/400/200?r=img2" title="Another Image" subtitle="With subtitle text"></wb-cardimage>
-    </div>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-cardimage 
-  src="https://picsum.photos/400/200" 
-  title="Image Card" 
-  subtitle="Card with image header"&gt;
-&lt;/wb-cardimage&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <wb-cardimage src="https://picsum.photos/400/200?r=img1" title="Image Card" subtitle="Card with image header"></wb-cardimage>
+  </wb-demo>
+  <wb-demo>
+    <wb-cardimage src="https://picsum.photos/400/200?r=img2" title="Another Image" subtitle="With subtitle text"></wb-cardimage>
+  </wb-demo>
 
   <!-- Video Card -->
   <h3>Video Card</h3>
-  <div class="demo-row demo-row--single">
+  <wb-demo>
     <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" title="Video Card" controls></wb-cardvideo>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-cardvideo 
-  src="https://www.w3schools.com/html/mov_bbb.mp4" 
-  title="Video Card" 
-  controls&gt;
-&lt;/wb-cardvideo&gt;</code></pre>
-  </div>
+  </wb-demo>
 
-  <!-- Overlay & Hero Cards -->
+  <!-- Overlay & Hero Cards — one <wb-demo> per element (live control + its own source) -->
   <h3>Overlay &amp; Hero Cards</h3>
-  <div class="demo-row" id="autogen-components-html-10">
-    <div class="demo-item">
-      <wb-cardoverlay image="https://picsum.photos/400/300?r=ov1" title="Overlay Card" subtitle="Text overlays the image"></wb-cardoverlay>
-    </div>
-    <div class="demo-item" style="grid-column: span 2;">
-      <wb-cardhero title="Hero Card" subtitle="Featured content with background" background="https://picsum.photos/800/400?r=hero"></wb-cardhero>
-    </div>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-cardoverlay 
-  image="https://picsum.photos/400/300" 
-  title="Overlay Card" 
-  subtitle="Text overlays the image"&gt;
-&lt;/wb-cardoverlay&gt;
-
-&lt;wb-cardhero 
-  title="Hero Card" 
-  subtitle="Featured content" 
-  background="https://picsum.photos/800/400"&gt;
-&lt;/wb-cardhero&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <wb-cardoverlay image="https://picsum.photos/400/300?r=ov1" title="Overlay Card" subtitle="Text overlays the image"></wb-cardoverlay>
+  </wb-demo>
+  <wb-demo>
+    <wb-cardhero title="Hero Card" subtitle="Featured content with background" background="https://picsum.photos/800/400?r=hero"></wb-cardhero>
+  </wb-demo>
 
   <!-- Stats Cards -->
   <h3>Stats Cards</h3>
-  <div class="demo-row demo-row--four" id="autogen-components-html-11">
+  <wb-demo>
     <wb-cardlink title="S&amp;P 500" href="#" description="4,891.23 (+1.2%)" icon="📈"></wb-cardlink>
+  </wb-demo>
+  <wb-demo>
     <wb-cardlink title="Dow Jones" href="#" description="38,654.12 (+0.8%)" icon="🏦"></wb-cardlink>
+  </wb-demo>
+  <wb-demo>
     <wb-cardlink title="NASDAQ" href="#" description="15,432.56 (-0.3%)" icon="💻"></wb-cardlink>
+  </wb-demo>
+  <wb-demo>
     <wb-cardlink title="Gold" href="#" description="$2,045.30 (+2.1%)" icon="🥇"></wb-cardlink>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-cardlink title="S&amp;P 500" href="#" description="4,891.23 (+1.2%)" icon="📈"&gt;&lt;/wb-cardlink&gt;</code></pre>
-  </div>
+  </wb-demo>
 
-  <!-- Pricing Cards -->
+  <!-- Pricing Cards — one <wb-demo> per tier (live control + its own source) -->
   <h3>Pricing Cards</h3>
-  <div class="demo-row" id="autogen-components-html-12">
-    <div class="demo-item">
-      <wb-cardpricing plan="Starter" price="$9" period="/mo" features="5 projects,Basic support,1GB storage" cta="Start Free"></wb-cardpricing>
-    </div>
-    <div class="demo-item">
-      <wb-cardpricing plan="Pro" price="$29" period="/mo" features="Unlimited projects,Priority support,10GB storage" cta="Go Pro" featured></wb-cardpricing>
-    </div>
-    <div class="demo-item">
-      <wb-cardpricing plan="Enterprise" price="$99" period="/mo" features="Custom integrations,Dedicated support,Unlimited storage" cta="Contact Us"></wb-cardpricing>
-    </div>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-cardpricing 
-  plan="Pro" 
-  price="$29" 
-  period="/mo" 
-  features="Unlimited projects,Priority support,10GB storage" 
-  cta="Go Pro" 
-  featured&gt;
-&lt;/wb-cardpricing&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <wb-cardpricing plan="Starter" price="$9" period="/mo" features="5 projects,Basic support,1GB storage" cta="Start Free"></wb-cardpricing>
+  </wb-demo>
+  <wb-demo>
+    <wb-cardpricing plan="Pro" price="$29" period="/mo" features="Unlimited projects,Priority support,10GB storage" cta="Go Pro" featured></wb-cardpricing>
+  </wb-demo>
+  <wb-demo>
+    <wb-cardpricing plan="Enterprise" price="$99" period="/mo" features="Custom integrations,Dedicated support,Unlimited storage" cta="Contact Us"></wb-cardpricing>
+  </wb-demo>
 
   <!-- Product Cards -->
   <h3>Product Cards</h3>
-  <div class="demo-row demo-row--four" id="autogen-components-html-13">
+  <wb-demo>
     <wb-cardproduct title="Basic Widget" price="$19.99" image="https://picsum.photos/200/200?r=p1" description="Perfect for beginners"></wb-cardproduct>
+  </wb-demo>
+  <wb-demo>
     <wb-cardproduct title="Premium Widget" price="$49.99" original-price="$79.99" image="https://picsum.photos/200/200?r=p2" badge="Sale" description="Most popular" featured></wb-cardproduct>
+  </wb-demo>
+  <wb-demo>
     <wb-cardproduct title="Enterprise" price="$149.99" image="https://picsum.photos/200/200?r=p3" description="Full features" badge="Pro"></wb-cardproduct>
+  </wb-demo>
+  <wb-demo>
     <wb-cardproduct title="Deluxe Widget" price="$79.99" image="https://picsum.photos/200/200?r=p4" description="Premium features" badge="Hot"></wb-cardproduct>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-cardproduct 
-  title="Premium Widget" 
-  price="$49.99" 
-  original-price="$79.99" 
-  image="https://picsum.photos/200/200" 
-  badge="Sale" 
-  description="Most popular" 
-  featured&gt;
-&lt;/wb-cardproduct&gt;</code></pre>
-  </div>
+  </wb-demo>
 
-  <!-- Testimonial Cards -->
+  <!-- Testimonial Cards — one <wb-demo> per element -->
   <h3>Testimonial Cards</h3>
-  <div class="demo-row" id="autogen-components-html-14">
-    <div class="demo-item">
-      <wb-cardtestimonial quote="The wb-starter framework has completely transformed our development process." author="Jane Smith" role="CEO, TechCorp" rating="5" avatar="https://i.pravatar.cc/150?img=5"></wb-cardtestimonial>
-    </div>
-    <div class="demo-item">
-      <wb-cardtestimonial quote="Building complex UIs is now incredibly simple." author="Michael Chen" role="CTO, StartupXYZ" rating="5" avatar="https://i.pravatar.cc/150?img=11"></wb-cardtestimonial>
-    </div>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-cardtestimonial 
-  quote="The wb-starter has completely transformed our development process." 
-  author="Jane Smith" 
-  role="CEO, TechCorp" 
-  rating="5" 
-  avatar="https://i.pravatar.cc/150?img=5"&gt;
-&lt;/wb-cardtestimonial&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <wb-cardtestimonial quote="The wb-starter framework has completely transformed our development process." author="Jane Smith" role="CEO, TechCorp" rating="5" avatar="https://i.pravatar.cc/150?img=5"></wb-cardtestimonial>
+  </wb-demo>
+  <wb-demo>
+    <wb-cardtestimonial quote="Building complex UIs is now incredibly simple." author="Michael Chen" role="CTO, StartupXYZ" rating="5" avatar="https://i.pravatar.cc/150?img=11"></wb-cardtestimonial>
+  </wb-demo>
 
-  <!-- Notification Cards -->
+  <!-- Notification Cards — one <wb-demo> per element -->
   <h3>Notification Cards</h3>
-  <div class="demo-stack" style="max-width: 500px;">
+  <wb-demo>
     <wb-cardnotification size="md" type="info" title="Info" message="You have a new update available"></wb-cardnotification>
+  </wb-demo>
+  <wb-demo>
     <wb-cardnotification size="md" type="success" title="Success" message="Your changes have been saved"></wb-cardnotification>
+  </wb-demo>
+  <wb-demo>
     <wb-cardnotification size="md" type="warning" title="Warning" message="Your subscription expires soon"></wb-cardnotification>
+  </wb-demo>
+  <wb-demo>
     <wb-cardnotification size="md" type="error" title="Error" message="Failed to connect to server"></wb-cardnotification>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-cardnotification size="md" type="info" title="Info" message="You have a new update available"&gt;&lt;/wb-cardnotification&gt;
-&lt;wb-cardnotification size="md" type="success" title="Success" message="Your changes have been saved"&gt;&lt;/wb-cardnotification&gt;
-&lt;wb-cardnotification size="md" type="warning" title="Warning" message="Your subscription expires soon"&gt;&lt;/wb-cardnotification&gt;
-&lt;wb-cardnotification size="md" type="error" title="Error" message="Failed to connect to server"&gt;&lt;/wb-cardnotification&gt;</code></pre>
-  </div>
+  </wb-demo>
 
-  <!-- File Cards -->
+  <!-- File Cards — one <wb-demo> per element -->
   <h3>File Cards</h3>
-  <div class="demo-stack">
+  <wb-demo>
     <wb-cardfile filename="report.pdf" size="2.4 MB" type="pdf" href="/files/report.pdf"></wb-cardfile>
+  </wb-demo>
+  <wb-demo>
     <wb-cardfile filename="presentation.doc" size="1.2 MB" type="doc" href="/files/presentation.doc"></wb-cardfile>
+  </wb-demo>
+  <wb-demo>
     <wb-cardfile filename="photo.jpg" size="856 KB" type="image" href="/files/photo.jpg"></wb-cardfile>
+  </wb-demo>
+  <wb-demo>
     <wb-cardfile filename="archive.zip" size="15.7 MB" type="zip" href="/files/archive.zip"></wb-cardfile>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-cardfile filename="report.pdf" size="2.4 MB" type="pdf"&gt;&lt;/wb-cardfile&gt;</code></pre>
-  </div>
+  </wb-demo>
 
-  <!-- Link & Horizontal Cards -->
+  <!-- Link & Horizontal Cards — one <wb-demo> per element -->
   <h3>Link &amp; Horizontal Cards</h3>
-  <div class="demo-row" id="autogen-components-html-15">
-    <div class="demo-item">
-      <wb-cardlink title="External Link" href="https://example.com" description="Click to visit"></wb-cardlink>
-    </div>
-    <div class="demo-item">
-      <wb-cardhorizontal title="Horizontal Card" image="https://picsum.photos/150/150?r=h1" subtitle="Image on the side"></wb-cardhorizontal>
-    </div>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-cardlink title="External Link" href="https://example.com" description="Click to visit"&gt;&lt;/wb-cardlink&gt;
-&lt;wb-cardhorizontal title="Horizontal Card" image="https://picsum.photos/150/150" subtitle="Image on the side"&gt;&lt;/wb-cardhorizontal&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <wb-cardlink title="External Link" href="https://example.com" description="Click to visit"></wb-cardlink>
+  </wb-demo>
+  <wb-demo>
+    <wb-cardhorizontal title="Horizontal Card" image="https://picsum.photos/150/150?r=h1" subtitle="Image on the side"></wb-cardhorizontal>
+  </wb-demo>
 
   <!-- Portfolio Card -->
   <h3>Portfolio Card</h3>
-  <div class="demo-row demo-row--single">
-    <wb-cardportfolio name="Jane Smith" title="Senior Developer" company="Tech Corp" email="jane@techcorp.com" phone="+1-555-0123" location="San Francisco, CA" bio="Full-stack developer with 10+ years experience." avatar="https://i.pravatar.cc/150?img=5" github="https://github.com/janesmith">
-    </wb-cardportfolio>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-cardportfolio 
-  name="Jane Smith" 
-  title="Senior Developer" 
-  company="Tech Corp" 
-  email="jane@techcorp.com" 
-  phone="+1-555-0123" 
-  location="San Francisco, CA"
-  bio="Full-stack developer with 10+ years experience."
-  avatar="https://i.pravatar.cc/150?img=5"
-  github="https://github.com/janesmith"&gt;
-&lt;/wb-cardportfolio&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <wb-cardportfolio name="Jane Smith" title="Senior Developer" company="Tech Corp" email="jane@techcorp.com" phone="+1-555-0123" location="San Francisco, CA" bio="Full-stack developer with 10+ years experience." avatar="https://i.pravatar.cc/150?img=5" github="https://github.com/janesmith"></wb-cardportfolio>
+  </wb-demo>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
