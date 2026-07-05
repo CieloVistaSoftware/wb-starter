@@ -9,12 +9,12 @@ Draggable/moveable card with mouse drag support.
 | Custom Tag | `<wb-carddraggable>` |
 | Behavior | `carddraggable` |
 | Semantic | `<article>` |
-| Base Class | `wb-card wb-card-draggable wb-card--draggable` |
-| Inherits | card |
+| CSS Classes | `wb-card wb-card-draggable wb-card--draggable` |
+| Composes | `card` behavior + `draggable` |
 
 ## Properties
 
-Inherits all [card properties](./card.md) plus:
+Includes all [card properties](./card.md), plus:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
@@ -25,6 +25,12 @@ Inherits all [card properties](./card.md) plus:
 ## Usage
 
 ### Basic Draggable
+
+Rendered live below — drag it with your mouse. The source is shown underneath:
+
+<wb-demo>
+<wb-carddraggable title="Drag Me">Drag this card around.</wb-carddraggable>
+</wb-demo>
 
 ```html
 <wb-carddraggable title="Drag Me"> Drag this card around. </wb-carddraggable>

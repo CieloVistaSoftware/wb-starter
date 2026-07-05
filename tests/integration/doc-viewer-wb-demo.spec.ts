@@ -13,6 +13,8 @@ const CASES: Case[] = [
   { file: 'docs/behaviors/wb-demo.md', liveSelector: 'wb-button', label: 'wb-demo behavior doc' },
   { file: 'docs/components/cards/cardhero.md', liveSelector: 'wb-cardhero', label: 'cardhero component doc' },
   { file: 'docs/components/cards/card.md', liveSelector: 'wb-card', label: 'card component doc' },
+  { file: 'docs/behaviors/wb-column.md', liveSelector: 'wb-column', label: 'wb-column behavior doc' },
+  { file: 'docs/components/cards/carddraggable.md', liveSelector: 'wb-carddraggable', label: 'carddraggable component doc' },
 ];
 
 test.describe('raw <wb-demo> in Markdown renders live control + source', () => {
@@ -31,10 +33,16 @@ test.describe('raw <wb-demo> in Markdown renders live control + source', () => {
       await expect(demo.locator('.wb-demo__code, pre').first()).toBeVisible();
 
       // The live control actually rendered (upgraded custom element, not inert markup).
+      // Poll rather than read once — some components (e.g. carddraggable) upgrade a
+      // beat later, which made a one-shot childCount read flaky.
       const live = demo.locator(`.wb-demo__grid ${c.liveSelector}`).first();
       await expect(live).toBeVisible();
-      const childCount = await live.evaluate((el) => el.children.length);
-      expect(childCount, `${c.liveSelector} should have rendered internal DOM`).toBeGreaterThan(0);
+      await expect
+        .poll(() => live.evaluate((el) => el.children.length), {
+          message: `${c.liveSelector} should render internal DOM (upgraded)`,
+          timeout: 10000,
+        })
+        .toBeGreaterThan(0);
 
       expect(errs, `no page errors while rendering ${c.file}`).toEqual([]);
     });
