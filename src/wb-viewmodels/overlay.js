@@ -107,7 +107,7 @@ export function popover(element, options = {}) {
 
 function positionPopover(trigger, popover, position) {
   const rect = trigger.getBoundingClientRect();
-  const popRect = popover.getBoundingClientRect();
+  let popRect = popover.getBoundingClientRect();
   
   let top, left;
   switch (position) {
@@ -129,6 +129,21 @@ function positionPopover(trigger, popover, position) {
       break;
   }
   
+  // Standard §15: a popover must never overflow its bounds. It is position:fixed,
+  // so clamp top/left to the viewport (with an 8px margin) — a trigger near an edge
+  // used to push the popover off-screen / past its card. Also cap its width so a
+  // long popover can't be wider than the viewport.
+  const margin = 8;
+  const vw = document.documentElement.clientWidth;
+  const vh = document.documentElement.clientHeight;
+  const maxW = vw - margin * 2;
+  if (popRect.width > maxW) {
+    popover.style.maxWidth = `${maxW}px`;
+    popRect = popover.getBoundingClientRect();
+  }
+  left = Math.max(margin, Math.min(left, vw - popRect.width - margin));
+  top = Math.max(margin, Math.min(top, vh - popRect.height - margin));
+
   popover.style.position = 'fixed';
   popover.style.top = `${top}px`;
   popover.style.left = `${left}px`;
