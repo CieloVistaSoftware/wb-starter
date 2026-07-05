@@ -8,19 +8,42 @@
   <link rel="stylesheet" href="../src/styles/site.css">
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
+    import hljs from '../src/lib/highlight.js';
     WB.init();
+    // Highlight the hand-written comparison code blocks directly (colored via the
+    // theme variables above) — same approach as the doc-viewer, no CDN theme.
+    const highlightCompare = () => document.querySelectorAll('.wb-compare code').forEach((b) => {
+      try { if (!b.dataset.highlighted) hljs.highlightElement(b); } catch (e) { /* leave as plain text */ }
+    });
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', highlightCompare);
+    else highlightCompare();
   </script>
   <style>
-    .wb-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
-    @media (max-width: 720px) { .wb-compare { grid-template-columns: 1fr; } }
+    /* Vertical-first: readable single column with generous vertical rhythm. */
+    body { max-width: 820px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; line-height: 1.6; }
+    h1 { margin: 0 0 1rem; }
+    h2 { margin: 2.5rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+
+    /* Code comparisons stack VERTICALLY (before above, after below). */
+    .wb-compare { display: flex; flex-direction: column; gap: 1.5rem; margin: 1.5rem 0; }
     .wb-compare > div { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
-    .wb-compare__head { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem;
+    .wb-compare__head { padding: 1rem; font-weight: 600; font-size: 0.9rem;
       background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); }
     .wb-compare--class .wb-compare__head { color: var(--text-secondary); }
     .wb-compare--tag .wb-compare__head { color: var(--success-color); }
-    .wb-compare pre { margin: 0; padding: 0.75rem; overflow-x: auto; font-size: 0.8rem;
-      white-space: pre-wrap; word-break: break-word; }
-    .wb-savings { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
+    /* Real code formatting: preserve line breaks, scroll instead of wrapping. */
+    .wb-compare pre { margin: 0; padding: 1rem; overflow-x: auto; font-size: 0.9rem;
+      line-height: 1.6; white-space: pre; background: var(--bg-primary);
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; }
+    /* Syntax colors driven by theme variables (no vendored/CDN highlight theme). */
+    .wb-compare .hljs { color: var(--text-primary); background: transparent; }
+    .wb-compare .hljs-comment { color: var(--text-muted); font-style: italic; }
+    .wb-compare .hljs-name, .wb-compare .hljs-title, .wb-compare .hljs-selector-tag { color: var(--info-color); }
+    .wb-compare .hljs-attr, .wb-compare .hljs-attribute { color: var(--warning-color); }
+    .wb-compare .hljs-string { color: var(--success-color); }
+    .wb-compare .hljs-tag, .wb-compare .hljs-keyword { color: var(--text-secondary); }
+
+    .wb-savings { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0; }
     .wb-savings__stat { flex: 1; min-width: 170px; padding: 1rem; border-radius: 8px;
       background: var(--bg-secondary); border-left: 4px solid var(--success-color); }
     .wb-savings__num { font-size: 1.75rem; font-weight: 700; color: var(--success-color); }
@@ -36,11 +59,11 @@
   <div class="wb-compare">
     <div class="wb-compare--class">
       <div class="wb-compare__head">Class syntax &middot; 81 chars</div>
-      <pre>&lt;button class="wb-button wb-button--primary wb-button--lg"&gt;Large Primary&lt;/button&gt;</pre>
+      <pre><code class="language-html">&lt;button class="wb-button wb-button--primary wb-button--lg"&gt;Large Primary&lt;/button&gt;</code></pre>
     </div>
     <div class="wb-compare--tag">
       <div class="wb-compare__head">Tag syntax &middot; 64 chars</div>
-      <pre>&lt;wb-button variant="primary" size="lg"&gt;Large Primary&lt;/wb-button&gt;</pre>
+      <pre><code class="language-html">&lt;wb-button variant="primary" size="lg"&gt;Large Primary&lt;/wb-button&gt;</code></pre>
     </div>
   </div>
   <div class="wb-savings">
@@ -59,15 +82,15 @@
   <div class="wb-compare">
     <div class="wb-compare--class">
       <div class="wb-compare__head">Before &mdash; class syntax &middot; 206 bytes</div>
-      <pre>&lt;button class="wb-button wb-button--primary"&gt;Primary Button&lt;/button&gt;
+      <pre><code class="language-html">&lt;button class="wb-button wb-button--primary"&gt;Primary Button&lt;/button&gt;
 &lt;button class="wb-button wb-button--secondary"&gt;Secondary Button&lt;/button&gt;
-&lt;button class="wb-button wb-button--ghost"&gt;Ghost Button&lt;/button&gt;</pre>
+&lt;button class="wb-button wb-button--ghost"&gt;Ghost Button&lt;/button&gt;</code></pre>
     </div>
     <div class="wb-compare--tag">
       <div class="wb-compare__head">After &mdash; wb-* tags &middot; 167 bytes (19% smaller)</div>
-      <pre>&lt;wb-button variant="primary"&gt;Primary Button&lt;/wb-button&gt;
+      <pre><code class="language-html">&lt;wb-button variant="primary"&gt;Primary Button&lt;/wb-button&gt;
 &lt;wb-button variant="secondary"&gt;Secondary Button&lt;/wb-button&gt;
-&lt;wb-button variant="ghost"&gt;Ghost Button&lt;/wb-button&gt;</pre>
+&lt;wb-button variant="ghost"&gt;Ghost Button&lt;/wb-button&gt;</code></pre>
     </div>
   </div>
 
@@ -88,16 +111,16 @@
   <div class="wb-compare">
     <div class="wb-compare--class">
       <div class="wb-compare__head">Before &mdash; class syntax &middot; 740 bytes (all 9)</div>
-      <pre>&lt;button class="wb-button wb-button--primary wb-button--sm"&gt;Small Primary&lt;/button&gt;
+      <pre><code class="language-html">&lt;button class="wb-button wb-button--primary wb-button--sm"&gt;Small Primary&lt;/button&gt;
 &lt;button class="wb-button wb-button--primary wb-button--md"&gt;Medium Primary&lt;/button&gt;
-&lt;button class="wb-button wb-button--primary wb-button--lg"&gt;Large Primary&lt;/button&gt;
+&lt;button class="wb-button wb-button--primary wb-button--lg"&gt;Large Primary&lt;/button&gt;</code>
 <span style="opacity:.6">&hellip; &times;3 variants</span></pre>
     </div>
     <div class="wb-compare--tag">
       <div class="wb-compare__head">After &mdash; wb-* tags &middot; 587 bytes (21% smaller)</div>
-      <pre>&lt;wb-button variant="primary" size="sm"&gt;Small Primary&lt;/wb-button&gt;
+      <pre><code class="language-html">&lt;wb-button variant="primary" size="sm"&gt;Small Primary&lt;/wb-button&gt;
 &lt;wb-button variant="primary" size="md"&gt;Medium Primary&lt;/wb-button&gt;
-&lt;wb-button variant="primary" size="lg"&gt;Large Primary&lt;/wb-button&gt;
+&lt;wb-button variant="primary" size="lg"&gt;Large Primary&lt;/wb-button&gt;</code>
 <span style="opacity:.6">&hellip; &times;3 variants</span></pre>
     </div>
   </div>
