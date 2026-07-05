@@ -78,16 +78,14 @@
     .wb-mdhtml .code-wrapper { max-width: 100%; overflow-x: auto; }
     .wb-mdhtml .code-wrapper pre { max-width: 100%; }
     .wb-mdhtml blockquote { border-left: 4px solid var(--primary); margin: 0 0 1.5rem 0; padding-left: 1rem; color: var(--text-muted); font-style: italic; }
+    /* Live <wb-demo> embedded in a doc renders its own grid + source panel; give
+       it breathing room within the article. */
+    .wb-mdhtml wb-demo { display: block; margin: 0 0 1.5rem 0; }
     /* Wide markdown tables must stay inside the 900px body: scroll horizontally
        instead of spilling past the right edge, and wrap long cell content. */
     .wb-mdhtml table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; display: block; overflow-x: auto; max-width: 100%; }
     .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; overflow-wrap: anywhere; word-break: break-word; }
     .wb-mdhtml th { background: var(--bg-secondary); font-weight: 600; }
-    /* #228: a ```demo fence renders as a live example (top) + its source (below). */
-    .wb-mdhtml .wb-demo { border: 1px solid var(--border-color); border-radius: 8px; margin: 0 0 1.5rem; overflow: hidden; }
-    .wb-mdhtml .wb-demo__live { padding: 1.25rem; background: var(--bg-primary); }
-    .wb-mdhtml .wb-demo__source { margin: 0 !important; border: 0; border-top: 1px solid var(--border-color); border-radius: 0; }
-    
     /* doc-viewer: editor-style code — preserve formatting, scroll horizontally, no mid-line wrap (#195, reverses #147/#150) */
     .wb-mdhtml pre, .wb-mdhtml .code-wrapper pre { white-space: pre !important; overflow-x: auto !important; overflow-wrap: normal !important; word-break: normal !important; }
     .wb-mdhtml pre code, .wb-mdhtml .code-wrapper code { white-space: pre !important; overflow-wrap: normal !important; word-break: normal !important; }
@@ -297,37 +295,33 @@
     });
 
     // Scroll to hash after load and apply highlighting
+    // True if the rendered doc embeds live WB content: any <wb-*> custom element
+    // or x-* behavior attribute. Lets authors drop a <wb-demo>…</wb-demo> (or any
+    // <wb-button variant="…">, x-ripple, …) straight into a .md and have it render.
+    function docHasWbContent(root) {
+      if (!root) return false;
+      for (const el of root.querySelectorAll('*')) {
+        if (el.tagName.toLowerCase().startsWith('wb-')) return true;
+        for (const attr of el.attributes) if (attr.name.toLowerCase().startsWith('x-')) return true;
+      }
+      return false;
+    }
+
     document.addEventListener('wb:mdhtml:loaded', async () => {
-      // #228: turn ```demo fences into a LIVE example + its source, so docs show
-      // the rendered component instead of only code. The framework is loaded
-      // lazily — ONLY when a doc actually contains a demo — so normal docs pay
+      // Render live WB content embedded in the doc: authors drop a
+      // <wb-demo>…</wb-demo> (which shows the live control AND its source) — or any
+      // <wb-*> / x-* markup — straight into the .md and it renders. WB is loaded
+      // lazily, ONLY when a doc actually contains live content, so plain docs pay
       // nothing and a framework failure can't break plain doc rendering.
       const docEl = document.getElementById('content');
-      const demoCodes = docEl ? docEl.querySelectorAll('pre > code.language-demo') : [];
-      if (demoCodes.length) {
-        demoCodes.forEach((codeEl) => {
-          const source = codeEl.textContent;
-          const wrap = document.createElement('div');
-          wrap.className = 'wb-demo';
-          const live = document.createElement('div');
-          live.className = 'wb-demo__live';
-          live.innerHTML = source;            // rendered live; WB.scan upgrades it
-          const pre = document.createElement('pre');
-          pre.className = 'wb-demo__source';
-          const codeOut = document.createElement('code');
-          codeOut.className = 'language-html';
-          codeOut.textContent = source;       // shown as escaped source
-          pre.appendChild(codeOut);
-          wrap.append(live, pre);
-          codeEl.closest('pre').replaceWith(wrap);
-        });
+      if (docHasWbContent(docEl)) {
         try {
           const mod = await import('../src/core/wb.js');
           const WB = mod.default || mod.WB;
           await WB.init({ scan: false, observe: false });
           await WB.scan(docEl);
         } catch (e) {
-          console.warn('[doc-viewer] live demo render failed:', e);
+          console.warn('[doc-viewer] live component render failed:', e);
         }
       }
 

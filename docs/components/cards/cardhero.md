@@ -33,9 +33,9 @@ Inherits all [card properties](./card.md) plus:
 
 ### Attribute-only example
 
-Rendered live below, with its source underneath (a ```` ```demo ```` fence):
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
-```demo
+<wb-demo>
 <wb-cardhero
   pretitle="100 Components"
   title='Build <span class="wb-gradient-text">stunning UIs</span>'
@@ -44,7 +44,7 @@ Rendered live below, with its source underneath (a ```` ```demo ```` fence):
   cta-href="#components"
   variant="cosmic">
 </wb-cardhero>
-```
+</wb-demo>
 
 > Tip: `title` accepts HTML (so `wb-gradient-text` can be used) — you do not need to use slots.
 
