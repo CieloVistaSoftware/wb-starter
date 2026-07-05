@@ -48,8 +48,8 @@
     .wb-compare--tag .wb-compare__head { color: var(--success-color); }
     /* Real code formatting: preserve whitespace, scroll horizontally instead of
        wrapping/breaking mid-token. */
-    .wb-compare pre { margin: 0; padding: 1rem; overflow-x: auto; font-size: 0.9rem;
-      line-height: 1.6; white-space: pre; background: var(--bg-primary);
+    .wb-compare pre { margin: 0; padding: 1rem; overflow-x: hidden; font-size: 0.9rem;
+      line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--bg-primary);
       font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; }
     /* Syntax colors driven by theme variables (no vendored/CDN highlight theme). */
     .wb-compare .hljs { color: var(--text-primary); background: transparent; }

@@ -31,7 +31,10 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
     // A copy button on every block.
     expect(await page.locator('pre[language] .code-copy-btn').count()).toBe(n);
 
-    // Vertical formatting: line breaks preserved (white-space: pre, not wrapped).
-    expect(await pres.first().evaluate((el) => getComputedStyle(el).whiteSpace)).toBe('pre');
+    // Standard §6: code wraps — no horizontal scrollbar on any block.
+    const scrollers = await page.$$eval('pre[language]', (els) =>
+      els.filter((el) => el.scrollWidth > el.clientWidth + 2).length
+    );
+    expect(scrollers, 'no pre[language] block may horizontally scroll').toBe(0);
   });
 });

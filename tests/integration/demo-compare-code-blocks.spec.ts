@@ -38,10 +38,12 @@ test.describe('button demos: comparison code is vertical + highlighted', () => {
         'code should be tokenized into colored spans'
       ).toBeGreaterThan(2);
 
-      // Vertical formatting: line breaks preserved (white-space: pre, not wrap).
-      expect(
-        await page.locator('.wb-compare pre').first().evaluate((el) => getComputedStyle(el).whiteSpace)
-      ).toBe('pre');
+      // Vertical formatting + Standard §6: line breaks preserved AND it wraps —
+      // no horizontal scrollbar on any comparison code block.
+      const scrollers = await page.$$eval('.wb-compare pre', (els) =>
+        els.filter((el) => el.scrollWidth > el.clientWidth + 2).length
+      );
+      expect(scrollers, 'no comparison code block may horizontally scroll').toBe(0);
     });
   }
 });
