@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import compression from 'compression';
 import { WebSocketServer } from 'ws';
-import { exec } from 'child_process';
+import { exec, execSync } from 'child_process';
 import { marked } from 'marked';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -16,6 +16,36 @@ const WS_PORT = 3001;
 
 // Define project root (current directory)
 const rootDir = __dirname;
+
+// === ALWAYS BIND OUR PORTS ===
+// Starting/restarting the dev server must ALWAYS come up on port 3000 — there is
+// no acceptable "port 3000 in use" failure. Kill any stale process squatting on
+// the dev ports BEFORE we bind anything (runs for `npm start` and the preview,
+// both of which launch this file).
+function freePort(p) {
+  try {
+    if (process.platform === 'win32') {
+      const out = execSync(`netstat -ano | findstr ":${p} "`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+      const pids = [...new Set(
+        out.split(/\r?\n/).filter((l) => l.includes('LISTENING'))
+          .map((l) => l.trim().split(/\s+/).pop())
+          .filter((pid) => /^\d+$/.test(pid) && pid !== '0' && Number(pid) !== process.pid)
+      )];
+      for (const pid of pids) {
+        try { execSync(`taskkill /PID ${pid} /F`, { stdio: 'ignore' }); console.log(`[port] freed :${p} (killed stale PID ${pid})`); } catch { /* already gone */ }
+      }
+    } else {
+      const out = execSync(`lsof -ti tcp:${p} || true`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+      for (const pid of out.split(/\s+/).filter(Boolean)) {
+        if (Number(pid) !== process.pid) {
+          try { execSync(`kill -9 ${pid}`, { stdio: 'ignore' }); console.log(`[port] freed :${p} (killed stale PID ${pid})`); } catch { /* already gone */ }
+        }
+      }
+    }
+  } catch { /* nothing was listening on the port — fine */ }
+}
+freePort(port);
+freePort(WS_PORT);
 
 // === LIVE RELOAD SYSTEM ===
 let wss;
