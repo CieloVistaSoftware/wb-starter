@@ -602,4 +602,16 @@ app.listen(port, () => {
   } else {
     console.log(`Collab Server disabled. To enable: set ENABLE_COLLAB=true`);
   }
+
+  // Open the site in the default browser on `npm start`. Skipped in CI and when
+  // WB_NO_OPEN=1 (set by Playwright's webServer) so tests never pop a browser.
+  if (!process.env.CI && process.env.WB_NO_OPEN !== '1') {
+    const url = `http://localhost:${port}`;
+    const cmd = process.platform === 'win32' ? `start "" "${url}"`
+      : process.platform === 'darwin' ? `open "${url}"`
+      : `xdg-open "${url}"`;
+    exec(cmd, (err) => {
+      if (err) console.log(`Open your browser at ${url} (auto-open failed: ${err.message})`);
+    });
+  }
 });

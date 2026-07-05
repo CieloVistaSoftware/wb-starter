@@ -77,6 +77,8 @@ export default defineConfig({
     port: 3000,
     reuseExistingServer: true,
     timeout: 10000,
+    // Never pop a browser when Playwright starts the dev server for tests.
+    env: { WB_NO_OPEN: '1' },
   },
   
   projects: [
