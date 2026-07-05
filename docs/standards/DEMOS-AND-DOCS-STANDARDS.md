@@ -40,6 +40,9 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 
 - One tag per line; each child element indented under its parent. Preserve the source
   line breaks (never collapse a multi-line block onto one line).
+- A **multi-attribute element** renders **each attribute on its own line** — never a
+  single long horizontal line. A `<wb-demo>` whose rendered source is one long line
+  (forcing a horizontal scroll) violates this. (Tracked project-wide; see #254.)
 
 ## 6. Code examples never show a horizontal scrollbar
 
@@ -91,6 +94,13 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 - If a section mentions or points at another document, it must render a **clickable link**
   to that doc (via the doc-viewer's path-linking or an explicit Markdown link). A section
   that names a doc but gives no way to open it is a defect.
+
+## 15. Overlays and popups stay within bounds
+
+- A popover, tooltip, dropdown, menu, or any floating layer must **not overflow** its
+  parent element or the viewport. It must reposition/flip or clamp to stay fully visible.
+  A popup that spills outside its parent's bounds is a defect. (Tracked project-wide; see
+  #252 — parent-overflow detection test.)
 
 ---
 
