@@ -298,44 +298,18 @@ app.use((req, res, next) => {
   }
 
   try {
-    const mdContent = fs.readFileSync(fullPath, 'utf8');
-    const html = marked(mdContent);
-    // The doc-viewer fetch()es this route and injects the fragment into its own
-    // themed page. But a DIRECT browser navigation to /docs/x.md got the same bare
-    // fragment — unstyled, ignoring the theme. Detect a top-level navigation
-    // (Sec-Fetch-Dest: document) and wrap it in a themed page so raw .md URLs match
-    // the app theme; keep returning the raw fragment for fetch()/other consumers.
+    // The server never formats markdown itself — mdhtml (the doc-viewer) does all
+    // of it. A DIRECT browser navigation to /docs/x.md (Sec-Fetch-Dest: document)
+    // is redirected to the doc-viewer, which renders it themed, highlighted,
+    // path-linked, with live <wb-demo>s. Everything else (the doc-viewer's
+    // fetch(), tooling, curl) gets the RAW MARKDOWN. Server-side pre-rendering
+    // caused a double-parse — mdhtml re-rendered the HTML and collapsed multi-line
+    // code blocks (the V3-GUIDE quick-start bug).
     if ((req.get('sec-fetch-dest') || '') === 'document') {
-      const title = req.path.split('/').pop().replace(/\.md$/i, '');
-      return res.type('html').send(`<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${title}</title>
-<link rel="stylesheet" href="/src/styles/themes.css">
-<style>
-  body { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 5rem;
-    background: var(--bg-color, #0d1117); color: var(--text-primary, #e6edf3);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.7; }
-  h1, h2, h3 { color: var(--text-primary, #e6edf3); line-height: 1.25; margin-top: 2rem; }
-  h1 { border-bottom: 1px solid var(--border-color, #2a3340); padding-bottom: 0.4rem; }
-  a { color: var(--primary, #a371f7); }
-  code { background: var(--bg-secondary, #161b22); padding: 0.15rem 0.4rem; border-radius: 4px;
-    font-family: ui-monospace, SFMono-Regular, monospace; font-size: 0.9em; }
-  pre { background: var(--bg-secondary, #161b22); padding: 1rem; border-radius: 8px;
-    border: 1px solid var(--border-color, #2a3340); white-space: pre-wrap; overflow-wrap: anywhere; }
-  pre code { background: none; padding: 0; }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
-  th, td { border: 1px solid var(--border-color, #2a3340); padding: 0.5rem 0.75rem; text-align: left; }
-  blockquote { border-left: 3px solid var(--primary, #a371f7); margin: 1rem 0; padding: 0.25rem 1rem;
-    color: var(--text-secondary, #8b98a8); }
-</style>
-</head>
-<body>${html}</body>
-</html>`);
+      const rel = req.path.replace(/^\/+/, '');
+      return res.redirect(302, '/public/doc-viewer.html?file=' + encodeURIComponent(rel));
     }
-    res.type('text/html').send(html);
+    res.type('text/markdown; charset=utf-8').send(fs.readFileSync(fullPath, 'utf8'));
   } catch (err) {
     console.error(`[Docs] Error converting ${req.path}:`, err);
     return res.status(500).send(`<div class="error-container">
