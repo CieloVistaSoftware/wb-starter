@@ -36,69 +36,59 @@ function extractDemoBlock(source, idx) {
     let match;
     let i = 0;
     while ((match = regex.exec(source)) !== null) {
-        if (i === idx) return formatHtml(match[1]);
+        if (i === idx) return match[1]; // formatHtml is applied once at render time
         i++;
     }
     return '';
 }
 
+// Pretty-print a demo's source so every example is VERTICAL (Standard §5):
+// each element on its own line, its children indented, and a multi-attribute
+// element gets ONE ATTRIBUTE PER LINE — never a single long horizontal line.
+// Parses via a <template> (robust for nested/void elements) and re-serializes.
 function formatHtml(raw) {
-    // Split into lines, drop blank leading/trailing
-    const lines = raw.replace(/\r\n/g, '\n').split('\n');
-
-    // Trim blank lines top and bottom
-    while (lines.length && !lines[0].trim()) lines.shift();
-    while (lines.length && !lines[lines.length - 1].trim()) lines.pop();
-    if (!lines.length) return '';
-
-    // Find minimum indent (ignoring blank lines)
-    let minIndent = Infinity;
-    for (const line of lines) {
-        if (!line.trim()) continue;
-        const indent = line.match(/^(\s*)/)[1].length;
-        if (indent < minIndent) minIndent = indent;
+    const src = String(raw == null ? '' : raw).trim();
+    if (!src) return '';
+    const VOID = new Set(['br','hr','img','input','meta','link','area','base','col','embed','source','track','wbr']);
+    const INDENT = '  ';
+    let tpl;
+    try {
+        tpl = document.createElement('template');
+        tpl.innerHTML = src;
+    } catch (e) {
+        return src; // never break the demo over a formatting failure
     }
-
-    // Strip common indent, re-indent with 2 spaces per level
-    const stripped = lines.map(line => {
-        if (!line.trim()) return '';
-        return line.slice(minIndent);
-    });
-
-    // Auto-indent based on tags
-    const result = [];
-    let depth = 0;
-    const indent = '  ';
-    const voidTags = new Set(['br','hr','img','input','meta','link','area','base','col','embed','source','track','wbr']);
-
-    for (const line of stripped) {
-        const trimmed = line.trim();
-        if (!trimmed) continue;
-
-        // Closing tag first — dedent before writing
-        const closingOnly = /^<\/[^>]+>/.test(trimmed) && !/<[^/][^>]*>/.test(trimmed);
-        if (closingOnly) depth = Math.max(0, depth - 1);
-
-        result.push(indent.repeat(depth) + trimmed);
-
-        // Self-closing, void, or closing-only — no indent change
-        const selfClosing = /\/>\s*$/.test(trimmed);
-        if (selfClosing || closingOnly) continue;
-
-        // Check for opening tags (increase depth)
-        const opens = trimmed.match(/<([a-z][a-z0-9-]*)/gi) || [];
-        const closes = trimmed.match(/<\/[a-z][a-z0-9-]*/gi) || [];
-
-        let delta = 0;
-        for (const o of opens) {
-            const tag = o.slice(1).toLowerCase();
-            if (!voidTags.has(tag)) delta++;
-        }
-        delta -= closes.length;
-        depth = Math.max(0, depth + delta);
-    }
-
-    return result.join('\n');
+    const attrStr = (a) => (a.value === '' ? a.name : `${a.name}="${a.value}"`);
+    const out = [];
+    const walk = (parent, depth) => {
+        const pad = INDENT.repeat(depth);
+        parent.childNodes.forEach((node) => {
+            if (node.nodeType === 3) { // text
+                const t = node.textContent.replace(/\s+/g, ' ').trim();
+                if (t) out.push(pad + t);
+                return;
+            }
+            if (node.nodeType !== 1) return; // elements only
+            const tag = node.tagName.toLowerCase();
+            const attrs = Array.from(node.attributes);
+            const isVoid = VOID.has(tag);
+            if (attrs.length > 1) {
+                out.push(`${pad}<${tag}`);
+                attrs.forEach((a, i) => {
+                    const last = i === attrs.length - 1;
+                    out.push(`${pad}${INDENT}${attrStr(a)}${last ? (isVoid ? ' />' : '>') : ''}`);
+                });
+            } else {
+                const a = attrs.length ? ' ' + attrStr(attrs[0]) : '';
+                out.push(`${pad}<${tag}${a}${isVoid ? ' />' : '>'}`);
+            }
+            if (isVoid) return;
+            walk(node, depth + 1);
+            out.push(`${pad}</${tag}>`);
+        });
+    };
+    walk(tpl.content, 0);
+    return out.join('\n');
 }
 
 function findWbComponents(html) {
@@ -180,12 +170,14 @@ export async function demo(element, options = {}) {
     pre.setAttribute('x-behavior', 'pre');
     pre.dataset.language = 'html';
     pre.dataset.showCopy = 'true';
+    pre.dataset.wrap = 'true'; // Standard §6: wrap, never a horizontal scrollbar
 
     const code = document.createElement('code');
     code.className = 'language-html';
     code.setAttribute('x-behavior', 'code');
     code.dataset.language = 'html';
-    code.textContent = rawBlock;
+    // Standard §5: source is pretty-printed VERTICAL (one attribute per line).
+    code.textContent = formatHtml(rawBlock);
     pre.appendChild(code);
     element.appendChild(pre);
 
