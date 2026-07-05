@@ -135,7 +135,7 @@ All components use CSS variables for theming:
 ## Component Categories
 
 ### Cards (19 variants)
-All card variants inherit from `cardBase` using semantic HTML.
+All card variants are independent components that share structure via semantic HTML and composition (no base class).
 
 | Component | Custom Tag | Description | Doc Link |
 |-----------|------------|-------------|---------|

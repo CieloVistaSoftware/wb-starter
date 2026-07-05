@@ -32,7 +32,7 @@ The wb-starter provides 41+ components using **Light DOM architecture** and the 
 ## Component Categories
 
 ### Cards (19 variants)
-All card variants inherit from `cardBase` using semantic HTML.
+All card variants are independent components that share structure via semantic HTML and composition (no base class).
 
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|

@@ -80,7 +80,7 @@ All card components support these base attributes:
 
 ## Architecture
 
-All card variants inherit from the base `card` behavior and extend functionality for specific use cases:
+All card variants share the `card` behavior and compose additional functionality for specific use cases:
 
 - **Base Structure**: Uses semantic `<article>` elements
 - **Styling**: CSS custom properties for theming

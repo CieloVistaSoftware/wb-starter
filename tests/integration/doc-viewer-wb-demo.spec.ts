@@ -12,6 +12,7 @@ type Case = { file: string; liveSelector: string; label: string };
 const CASES: Case[] = [
   { file: 'docs/behaviors/wb-demo.md', liveSelector: 'wb-button', label: 'wb-demo behavior doc' },
   { file: 'docs/components/cards/cardhero.md', liveSelector: 'wb-cardhero', label: 'cardhero component doc' },
+  { file: 'docs/components/cards/card.md', liveSelector: 'wb-card', label: 'card component doc' },
 ];
 
 test.describe('raw <wb-demo> in Markdown renders live control + source', () => {
