@@ -15,6 +15,7 @@ const CASES: Case[] = [
   { file: 'docs/components/cards/card.md', liveSelector: 'wb-card', label: 'card component doc' },
   { file: 'docs/behaviors/wb-column.md', liveSelector: 'wb-column', label: 'wb-column behavior doc' },
   { file: 'docs/components/cards/carddraggable.md', liveSelector: 'wb-carddraggable', label: 'carddraggable component doc' },
+  { file: 'docs/components/components.md', liveSelector: 'wb-button', label: 'components composition doc' },
 ];
 
 test.describe('raw <wb-demo> in Markdown renders live control + source', () => {

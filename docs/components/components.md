@@ -3,15 +3,45 @@
 
 ## Overview
 
-The wb-starter provides 41+ components using **Light DOM architecture** and the **WBServices** pattern. All components use proper HTMLElement inheritance and ES Modules.
+The wb-starter provides 41+ components built on **composition**: Light-DOM custom
+elements (`<wb-*>`) whose capabilities come from small, stackable `x-*` behaviors
+rather than a class hierarchy. No build step, no Shadow DOM, no framework lock-in.
 
 ### Key Principles
 
-1. **Custom Elements**: All components use `<wb-*>` tags
-2. **Light DOM Only**: No Shadow DOM - styles cascade naturally
-3. **HTMLElement Inheritance**: Proper class-based architecture
-4. **ES Modules Only**: No CommonJS (require/module.exports)
+1. **Composition over inheritance**: capabilities come from stacking `x-*` behaviors on any element — not from subclassing a base component
+2. **Custom Elements**: components are plain `<wb-*>` tags
+3. **Light DOM Only**: no Shadow DOM — styles cascade, and everything stays inspectable and themeable
+4. **ES Modules Only**: no CommonJS (require/module.exports)
 5. **Schema-Driven**: JSON schemas define component properties
+
+## Why composition is a better design
+
+Traditional component libraries lean on **inheritance**: a base `Component` class,
+subclasses for every variant, and wrapper components (`<RippleButton>`,
+`<TooltipButton>`) to combine features. That model is rigid — features can't be mixed
+freely, and every new combination needs a new class.
+
+wb-starter uses **composition** instead. A component is a plain `<wb-*>` element, and
+you add capabilities by stacking `x-*` behaviors:
+
+<wb-demo>
+<wb-button variant="primary" x-ripple x-tooltip="Saved to your account" x-toast message="Saved!" type="success">Save</wb-button>
+</wb-demo>
+
+Each `x-` attribute adds one capability. They **compose** — stack as many as you want,
+in any order, with no wrapper components and no JavaScript. And because behaviors
+attach to *any* element, the same `x-ripple` / `x-tooltip` works on a button, a card,
+an image, or a plain `<div>`.
+
+**Why it's a fantastic design:**
+
+- **No build step** — open an HTML file and it works. No bundler, no compile.
+- **Mix and match** — any behavior on any element; no combinatorial explosion of variant classes.
+- **No lock-in** — components are standard custom elements; nothing ties you to a framework.
+- **Light DOM** — no Shadow DOM, so styles cascade, dev-tools show real elements, and everything is themeable (20+ themes, zero hardcoded colors).
+- **Schema-first** — components are described in data, so tooling and AI can generate and validate them deterministically.
+- **Testable & portable** — behaviors are pure functions over an element; components behave like standard DOM nodes.
 
 ## Architecture (v3.0)
 [WBServices](../wbservices.md)

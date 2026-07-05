@@ -56,6 +56,39 @@ This doc explains the core features, usage, and architectural choices behind `wb
 | Category | Cards |
 | Schema | `src/wb-models/card.schema.json` |
 
+## Card anatomy
+
+A `<wb-card>` renders into these named parts. Here it is live, then the structure with
+every element labeled:
+
+<wb-demo>
+<wb-card title="Title + Body" elevated>
+  <p>Simple card with title and hover effect.</p>
+</wb-card>
+</wb-demo>
+
+```text
+<wb-card>                          ← this is the CARD  (the root, an <article>)
+  <header class="wb-card__header"> ← this is the HEADER
+    <h3 class="wb-card__title">    ← this is the TITLE   (from the `title` attribute)
+    <div class="wb-card__subtitle">← this is the SUBTITLE (optional)
+    <span class="wb-card__badge">  ← this is the BADGE    (optional)
+  <main class="wb-card__main">     ← this is MAIN — the BODY, where YOUR content goes
+    <p>…</p>
+  <footer class="wb-card__footer"> ← this is the FOOTER   (optional)
+</wb-card>
+```
+
+| Part | Element / class | What it is |
+|------|-----------------|-----------|
+| **Card** | `<wb-card>` → `<article>` | The root component |
+| **Header** | `<header class="wb-card__header">` | Holds the title, subtitle, and badge |
+| **Title** | `<h3 class="wb-card__title">` | The card heading — from the `title` attribute |
+| **Subtitle** | `.wb-card__subtitle` | Secondary heading — from `subtitle` (optional) |
+| **Badge** | `.wb-card__badge` | Small status pill (optional) |
+| **Main / Body** | `<main class="wb-card__main">` | **Your content** — everything you put between the tags |
+| **Footer** | `<footer class="wb-card__footer">` | Footer text / actions — from `footer` (optional) |
+
 ## Properties
 
 | Property | Type | Default | Description |
