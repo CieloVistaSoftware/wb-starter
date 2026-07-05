@@ -14,7 +14,32 @@
     .badge-react { background: #61dafb; color: #000; }
     .badge-vue { background: #42b883; color: #fff; }
     .badge-svelte { background: #ff3e00; color: #fff; }
-    code { background: rgba(0,0,0,0.3); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; }
+    /* inline code only — block code (pre) is styled separately below */
+    :not(pre) > code { background: rgba(0,0,0,0.3); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; }
+
+    /* Block code examples: vertical (one line per line, no wrap → scroll), with
+       room for the language label + copy button. */
+    pre[language] { position: relative; margin: 1rem 0 0; padding: 2.5rem 1rem 1rem;
+      background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px;
+      overflow-x: auto; white-space: pre; line-height: 1.6; font-size: 0.9rem;
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; }
+    pre[language] code { background: none; padding: 0; font: inherit; }
+    pre[language]::before { content: attr(language); position: absolute; top: 0.55rem; left: 1rem;
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+    .code-copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.25rem 0.6rem;
+      font-size: 0.75rem; background: var(--bg-secondary); color: var(--text-secondary);
+      border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; }
+    .code-copy-btn:hover { color: var(--text-primary); border-color: var(--primary); }
+
+    /* Syntax colors driven by theme variables. Scoped under pre[language] so they
+       outrank any highlight theme WB injects at runtime (no CDN palette). */
+    pre[language] code.hljs { color: var(--text-primary); background: transparent; }
+    pre[language] .hljs-comment, pre[language] .hljs-quote { color: var(--text-muted); font-style: italic; }
+    pre[language] .hljs-keyword, pre[language] .hljs-selector-tag, pre[language] .hljs-literal { color: var(--primary); }
+    pre[language] .hljs-string, pre[language] .hljs-attr { color: var(--success-color); }
+    pre[language] .hljs-number, pre[language] .hljs-built_in { color: var(--warning-color); }
+    pre[language] .hljs-title, pre[language] .hljs-name, pre[language] .hljs-type, pre[language] .hljs-tag { color: var(--info-color); }
+    pre[language] .hljs-attribute, pre[language] .hljs-variable, pre[language] .hljs-template-variable, pre[language] .hljs-symbol { color: var(--danger-color); }
   </style>
 </head>
 <body>
@@ -361,16 +386,41 @@ function Counter() {
 
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
-    
-    // Initialize WB
-    // Note: For frameworks that dynamically add DOM, you might need to re-scan 
-    // or use a MutationObserver. WB's autoInject handles many cases, but 
-    // explicit scanning is robust for demos.
+    import hljs from '../src/lib/highlight.js';
+
+    // Initialize WB (autoInject/MutationObserver handles the React/Vue mounts).
     WB.init({ autoInject: true });
 
-    // Optional: Re-scan periodically or on specific events if the framework 
-    // completely replaces the DOM after WB has already initialized.
-    // For this demo, autoInject (MutationObserver) should handle the React/Vue mounts.
+    // Honor the `language="…"` / `copy="true"` shorthand on <pre> directly: WB's
+    // code behavior doesn't activate on these hand-written blocks, so highlight
+    // them with the local highlighter (theme-variable colors above) and add a
+    // real copy button. (#241)
+    function enhanceCodeBlocks() {
+      document.querySelectorAll('pre[language]').forEach((pre) => {
+        const code = pre.querySelector('code');
+        if (code && !code.dataset.highlighted) {
+          const lang = pre.getAttribute('language');
+          if (lang) code.classList.add('language-' + lang);
+          try { hljs.highlightElement(code); } catch (e) { /* leave as plain text */ }
+        }
+        if (pre.hasAttribute('copy') && !pre.querySelector('.code-copy-btn')) {
+          const btn = document.createElement('button');
+          btn.className = 'code-copy-btn';
+          btn.type = 'button';
+          btn.textContent = 'Copy';
+          btn.addEventListener('click', async () => {
+            try {
+              await navigator.clipboard.writeText((code || pre).textContent);
+              btn.textContent = 'Copied!';
+              setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+            } catch (e) { btn.textContent = 'Failed'; }
+          });
+          pre.appendChild(btn);
+        }
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', enhanceCodeBlocks);
+    else enhanceCodeBlocks();
   </script>
 </body>
 </html>
