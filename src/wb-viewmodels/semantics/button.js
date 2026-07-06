@@ -170,8 +170,18 @@ export function button(element, options = {}) {
 
   element.classList.add('wb-button');
 
+  // A native <button size="…" variant="…"> must actually apply the styling. Only
+  // the `.wb-button--*` classes are styled (the size/variant ATTRIBUTE alone does
+  // nothing on a native <button> — the attribute-selector CSS targets <wb-button>).
+  // Map size/variant attributes to their modifier classes so both work.
+  const applied = [];
+  const size = element.getAttribute('size');
+  if (size) { const c = `wb-button--${size}`; element.classList.add(c); applied.push(c); }
+  const variant = element.getAttribute('variant');
+  if (variant) { const c = `wb-button--${variant}`; element.classList.add(c); applied.push(c); }
+
   return () => {
-    element.classList.remove('wb-button');
+    element.classList.remove('wb-button', ...applied);
   };
 }
 

@@ -103,34 +103,33 @@ export function dialog(element, options = {}) {
     });
   };
 
-  // If element is <wb-modal>, it is a declarative definition
   if (element.tagName === 'WB-MODAL') {
-    element.style.display = 'none'; // Hide template content
-    
-    // Parse slots or children
-    // If user provided <span slot="title">...</span> use it
-    const slots = {};
-    const titleSlot = element.querySelector('[slot="title"]');
-    if (titleSlot) {
-      slots.title = titleSlot.textContent; // Titles are usually text in header
-    } else {
-      slots.title = config.title; // fallback to attribute
+    // TRIGGER mode: <wb-modal modal-title="…" modal-content="…">Open Modal</wb-modal>
+    // is a visible button — its text is the label and clicking it opens a dialog
+    // built from the attributes. (Previously wb-modal was always hidden with only a
+    // showModal() method and no click handler, so "Open Modal" did nothing. #251)
+    if (element.hasAttribute('modal-content') || element.hasAttribute('modal-title')) {
+      element.classList.add('wb-modal-trigger', 'wb-dialog-trigger');
+      element.style.cursor = 'pointer';
+      const open = () => createAndShowDialog(config.title, config.content, config.size);
+      element.showModal = open;
+      element.addEventListener('click', open);
+      return () => element.removeEventListener('click', open);
     }
 
-    // Determine content
-    // Clone children that are NOT the title slot
+    // DEFINITION mode: no trigger attributes — the children are the modal content,
+    // the element is hidden, and a caller invokes element.showModal().
+    element.style.display = 'none';
+    const slots = {};
+    const titleSlot = element.querySelector('[slot="title"]');
+    slots.title = titleSlot ? titleSlot.textContent : config.title;
     const contentContainer = document.createElement('div');
     Array.from(element.childNodes).forEach(node => {
       if (node.nodeType === 1 && node.getAttribute('slot') === 'title') return;
       contentContainer.appendChild(node.cloneNode(true));
     });
     const slotsContent = contentContainer.innerHTML;
-
-    // Attach showModal method to the element
-    element.showModal = () => {
-       createAndShowDialog(slots.title, slotsContent, config.size);
-    };
-
+    element.showModal = () => createAndShowDialog(slots.title, slotsContent, config.size);
     return;
   }
 
