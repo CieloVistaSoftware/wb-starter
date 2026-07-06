@@ -23,13 +23,15 @@
       border-bottom: 1px solid var(--border-color); }
     .pg-hint { color: var(--text-muted); font-size: 0.8rem; font-weight: 400; }
 
-    #pg-input { width: 100%; min-height: 460px; resize: vertical; border: 0; box-sizing: border-box;
-      background: var(--bg-primary); color: var(--text-primary); padding: 1rem;
-      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.9rem;
-      line-height: 1.6; tab-size: 2; white-space: pre; }
+    /* !important: WB's textarea/autosize behavior sets an inline min-height:3rem +
+       rows on any textarea; force the playground editor tall regardless. */
+    #pg-input { width: 100%; min-height: 70vh !important; height: 70vh !important; resize: vertical;
+      border: 0; box-sizing: border-box; background: var(--bg-primary); color: var(--text-primary);
+      padding: 1rem; font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      font-size: 0.9rem; line-height: 1.6; tab-size: 2; white-space: pre; }
     #pg-input:focus { outline: none; }
 
-    #pg-preview { padding: 1.25rem; min-height: 460px; background: var(--bg-primary); }
+    #pg-preview { padding: 1.25rem; min-height: 70vh; background: var(--bg-primary); }
     /* The preview is arbitrary pasted HTML — let long content wrap, never overflow. */
     #pg-preview, #pg-preview * { max-width: 100%; overflow-wrap: anywhere; }
 
@@ -49,9 +51,13 @@
     <div class="pg-panel">
       <div class="pg-panel__head">
         <span>HTML</span>
-        <button id="pg-render" class="pg-btn" type="button">Render ▶</button>
+        <span style="display:flex; gap:0.5rem;">
+          <button id="pg-clear" class="pg-btn" type="button"
+            style="background:var(--bg-tertiary); color:var(--text-primary);">Clear</button>
+          <button id="pg-render" class="pg-btn" type="button">Render ▶</button>
+        </span>
       </div>
-      <textarea id="pg-input" spellcheck="false" aria-label="HTML input"></textarea>
+      <textarea id="pg-input" x-ignore spellcheck="false" aria-label="HTML input"></textarea>
     </div>
     <div class="pg-panel">
       <div class="pg-panel__head"><span>Preview</span><span class="pg-hint">live</span></div>
@@ -118,12 +124,18 @@
 
     input.value = SAMPLE;
 
+    // Init WB WITHOUT global autoInject so it never enhances the playground's own
+    // UI (the input textarea was being autosized/shrunk). We only ever scan the
+    // preview subtree, so pasted <wb-*>/native elements still upgrade there.
+    let wbReady;
+    const ensureWB = () => (wbReady = wbReady || WB.init({ autoInject: false }));
+
     async function render() {
       errorBox.hidden = true;
       errorBox.textContent = '';
       preview.innerHTML = input.value;
       try {
-        await WB.init({ autoInject: true });
+        await ensureWB();
         await WB.scan(preview);
       } catch (e) {
         errorBox.hidden = false;
@@ -132,6 +144,12 @@
     }
 
     document.getElementById('pg-render').addEventListener('click', render);
+    document.getElementById('pg-clear').addEventListener('click', () => {
+      input.value = '';
+      preview.innerHTML = '';
+      errorBox.hidden = true;
+      input.focus();
+    });
     let debounce;
     input.addEventListener('input', () => { clearTimeout(debounce); debounce = setTimeout(render, 400); });
 
