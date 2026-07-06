@@ -118,6 +118,13 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   individual `<input>`/control into its own demo. This is the intended exception to §2
   ("one code sample per rendered element") — for a group, the group IS the element.
 
+## 18. Many controls go in a `<wb-container>`
+
+- When a demo displays **many controls or items together** (a set of related controls,
+  a list of examples), wrap them in a `<wb-container>` so they get consistent, contained
+  layout instead of loose free-floating markup. Reach for `<wb-container>` whenever you'd
+  otherwise show a large ungrouped block of controls.
+
 ---
 
 ## Enforcement & references

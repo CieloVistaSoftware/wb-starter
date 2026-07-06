@@ -454,28 +454,23 @@ export function cardBase(element, options = {}) {
         }
       }
       
-      // MAIN - Always show
+      // MAIN — render ONLY authored content. Never inject placeholder text: a card
+      // with no body (e.g. an image card) must show nothing there, not phantom
+      // "Lorem ipsum" that isn't in the source. (#202)
       if (showMain) {
-        if (!main) {
+        const mainText = mainContent || config.content;
+        if (!main && mainText) {
           const mainEl = document.createElement('main');
           mainEl.className = 'wb-card__main';
           mainEl.style.cssText = STYLE_MAIN;
-          
-          const mainText = mainContent || config.content;
-          if (mainText) {
-            mainEl.innerHTML = mainText;
-          } else {
-            // Placeholder for empty main
-            mainEl.innerHTML = '<p class="wb-card__content" style="margin:0;color:var(--text-secondary,#9ca3af);font-style:italic;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>';
-          }
-          
+          mainEl.innerHTML = mainText;
           main = mainEl;
           if (footer) {
             element.insertBefore(mainEl, footer);
           } else {
             element.appendChild(mainEl);
           }
-        } else {
+        } else if (main) {
           // Enhance existing main
           main.classList.add('wb-card__main');
           main.style.padding = main.style.padding || '1rem';
