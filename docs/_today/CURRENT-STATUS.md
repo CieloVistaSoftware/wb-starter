@@ -1,3 +1,36 @@
+# 🅿️ PARKING LOT (2026-07-05)
+
+**Task:** Standards-driven QA sweep — demo/doc rules codified + backlog burn-down.
+
+**Standard:** `docs/standards/DEMOS-AND-DOCS-STANDARDS.md` — **19 rules**, applies to ALL demos + .md docs. Process: John flags → file issue + update standard + cite § → on close, log test + §.
+
+**Landed today (all pushed to main, gate green, integration 196/196):**
+- `e2aa005` md double-parse root cause: server serves RAW md; nav redirects to doc-viewer (mdhtml is THE formatter)
+- `596c856` integration project wired into npm test + CI (John: "run that regression test from now on")
+- `9783d5b` #254 CLOSED wb-demo source vertical (one attr/line, DOM pretty-printer in demo.js)
+- `003ec3a`+`0479c50` #248 CLOSED code never h-scrolls (wraps) — wb-demo, demo blocks, doc-viewer (supersedes #195)
+- `224105e` #252 CLOSED popover clamps to viewport (overlay.js positionPopover)
+- `079ea2e` #202 partial: cards never inject phantom "Lorem ipsum"
+- `f0a0154` wb-demo code left-aligned (§5); descriptive card content; inheritance-test excludes rule-defining docs
+- `a92377e`+`097410d`+`0ca59d3` **demos/playground.html** NEW — paste HTML → live render; auto-height editor; Clear
+- `4faf87f` native button variant works (§19 effect test); wb-modal trigger mode (partial)
+- `d283f60` components.html Cards → one <wb-demo> per card (1:1)
+- `e364c47` server always frees port 3000 before binding (freePort)
+
+**KNOWN FAILING / IN FLIGHT (tracked on issues, not in tree):**
+- **#202 double title/footer** — ROOT CAUSE pinned on issue: schema $view renders `.card__*` AND card.js builds `.wb-card__*` (buildStructure ignores skipStructure) and runs 2×. Needs owner decision ($view vs behavior). Spawned card session is on it.
+- **#258 native button size dead** — class applied but font-size overridden (xs..xl all 16px). Effect test written, lives on issue.
+- **#251 wb-modal SPA click doesn't open** — trigger mode landed; wiring under investigation; repro test on issue.
+- **data-* purge (#224/#223)** — improved detector (catch boolean data-*) found ~30 offender demos; REVERTED to keep gate green. Needs codemod pass (see old plan below).
+
+**Open issues filed this sweep:** #246 selects/wb-demo, #247 showcase nav mobile-first, #249 spacing test §13, #250 V3-GUIDE doc links §14, #253 demos search, #255 ATTRIBUTE-NAMING legacy, #256 dynamic-injection code sync, #257 audio players dead, #259 mark color dead, #260 nested js fence.
+
+**Next step:** #258 (button size override — inspect what beats .wb-button--xs font-size), then #251 wiring, then data-* codemod, then components.html Feedback/Overlays → wb-demo.
+
+---
+
+# (previous lot, 2026-07-02, kept for the data-* codemod plan)
+
 # 🅿️ PARKING LOT (2026-07-02)
 
 **Task:** Doc-viewer reliability sweep + demo code-generation correctness (data-* purge).
