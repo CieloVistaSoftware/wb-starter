@@ -200,6 +200,7 @@ export default class WBSite {
             </div>
           ` : ''}
           <button class="header__refresh-btn" id="hardReloadBtn" x-ripple title="Clear cache & hard reload (force fresh CSS/JS)" aria-label="Clear cache and reload">🔄</button>
+          <a class="header__playground-btn" id="playgroundLink" href="demos/playground.html" target="_blank" rel="noopener" x-ripple title="Playground — paste HTML, see it render live" aria-label="Open the Playground">🧪</a>
           <button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>
           ${headerSettings.displayThemeSwitcher ? '<wb-themecontrol data-show-label="false" id="themeControl"></wb-themecontrol>' : ''}
           <button class="navbar-cta" id="ctaButton" x-ripple title="Get Started">Get Started</button>

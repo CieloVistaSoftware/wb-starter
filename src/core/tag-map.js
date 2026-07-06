@@ -30,6 +30,7 @@ export const elementMap = {
   'wb-cardhorizontal': 'cardhorizontal',
   'wb-cardimage': 'cardimage',
   'wb-cardlink': 'cardlink',
+  'wb-card-link': 'cardlink',
   'wb-cardminimizable': 'cardminimizable',
   'wb-cardnotification': 'cardnotification',
   'wb-cardoverlay': 'cardoverlay',

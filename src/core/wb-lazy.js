@@ -32,6 +32,7 @@ const customElementMappings = [
   { selector: 'wb-cardnotification', behavior: 'cardnotification' },
   { selector: 'wb-cardportfolio', behavior: 'cardportfolio' },
   { selector: 'wb-cardlink', behavior: 'cardlink' },
+  { selector: 'wb-card-link', behavior: 'cardlink' },
   { selector: 'wb-cardhorizontal', behavior: 'cardhorizontal' },
   { selector: 'wb-cardoverlay', behavior: 'cardoverlay' },
   { selector: 'wb-cardbutton', behavior: 'cardbutton' },

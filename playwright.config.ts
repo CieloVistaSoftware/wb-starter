@@ -174,6 +174,11 @@ export default defineConfig({
       name: 'integration',
       testDir: './tests/integration',
       testMatch: '**/*.spec.ts',
+      // The components page hydrates 38 wb-demos (page-source fetch + WB.scan +
+      // hljs each); under a full parallel run browsers are CPU-starved and the
+      // default 30s timeout flakes. 60s absorbs the contention — the underlying
+      // hydration latency is tracked as a performance issue.
+      timeout: 60000,
     },
     
     // ═══════════════════════════════════════════════════════════════

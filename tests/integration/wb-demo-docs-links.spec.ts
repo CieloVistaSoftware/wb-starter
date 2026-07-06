@@ -11,8 +11,13 @@ import { test, expect, request as pwRequest } from '@playwright/test';
  * a doc rendered in the doc-viewer).
  */
 async function collectDocsLinks(page: import('@playwright/test').Page) {
+  // Cold-start under a parallel run: wb.js + the docs manifest fetch can take a
+  // while before the async links fill in — wait for demo upgrade first, then links.
   await expect
-    .poll(() => page.locator('.wb-demo__links a').count(), { timeout: 20000 })
+    .poll(() => page.locator('wb-demo .wb-demo__grid').count(), { timeout: 30000 })
+    .toBeGreaterThan(0);
+  await expect
+    .poll(() => page.locator('.wb-demo__links a').count(), { timeout: 30000 })
     .toBeGreaterThan(0);
   return page.$$eval('.wb-demo__links a', (as) => as.map((a) => a.getAttribute('href') || ''));
 }

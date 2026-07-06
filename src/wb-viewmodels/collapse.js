@@ -94,8 +94,9 @@ export function collapse(element, options = {}) {
 /**
  * Accordion Behavior
  * -----------------------------------------------------------------------------
- * Multi-item collapsible sections. When children carry [data-accordion-title]
- * or [data-title] each child becomes an independently expandable item.
+ * Multi-item collapsible sections. When children carry [accordion-title]
+ * (v3 canonical; [data-accordion-title]/[data-title] accepted for back-compat)
+ * each child becomes an independently expandable item.
  * Falls back to the single-item collapse behavior otherwise.
  * CSS: src/styles/behaviors/accordion.css + collapse.css
  * Emits: wb:accordion:ready, wb:accordion:toggle
@@ -103,14 +104,24 @@ export function collapse(element, options = {}) {
  */
 export function accordion(element, options = {}) {
   try {
+    // <wb-accordion> is built by its custom element (wb-accordion.js). Never
+    // hydrate it a second time here — the double pass found no titled children
+    // (already rebuilt) and fell back to collapse(), adding empty extra heads
+    // and racing the custom element's toggle wiring.
+    if (element.tagName === 'WB-ACCORDION') {
+      return () => {};
+    }
+
     // Idempotent: if already hydrated, don't rebuild — a second pass would
     // wipe item innerHTML and reset any open state / rebind handlers.
     if (element.dataset.wbHydrated === '1') {
       return () => element.classList.remove('wb-accordion');
     }
 
+    // v3: plain `accordion-title` is canonical; data-* accepted for back-compat.
     const items = Array.from(element.children).filter(
-      child => child.hasAttribute('data-accordion-title') || child.hasAttribute('data-title')
+      child => child.hasAttribute('accordion-title') ||
+        child.hasAttribute('data-accordion-title') || child.hasAttribute('data-title')
     );
 
     // No labelled children — fall back to single-item collapse
@@ -122,6 +133,7 @@ export function accordion(element, options = {}) {
 
     items.forEach(item => {
       const title =
+        item.getAttribute('accordion-title') ||
         item.getAttribute('data-accordion-title') ||
         item.getAttribute('data-title') ||
         'Accordion Item';

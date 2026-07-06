@@ -216,6 +216,7 @@ body > button[x-copy] {
 /* Dialog styles → src/styles/behaviors/dialog.css (migrated Phase 2) */
 
 .header__notes-btn,
+.header__playground-btn,
 .header__refresh-btn {
   display: flex;
   align-items: center;
@@ -229,9 +230,11 @@ body > button[x-copy] {
   cursor: pointer;
   font-size: 1.2rem;
   transition: all 0.2s;
+  text-decoration: none;
 }
 
 .header__notes-btn:hover,
+.header__playground-btn:hover,
 .header__refresh-btn:hover {
   background: var(--bg-tertiary);
   color: var(--primary);

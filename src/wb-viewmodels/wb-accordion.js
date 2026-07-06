@@ -30,12 +30,13 @@ export class WBAccordion extends HTMLElement {
       console.warn('[wb-accordion] is deprecated — use the semantic <details>/<summary> element instead.');
     }
 
-    // Multi-item form: one accordion item per [data-accordion-title] child. (#215)
-    const sections = Array.from(this.querySelectorAll('[data-accordion-title]'));
+    // Multi-item form: one accordion item per titled child. v3 canonical is the
+    // PLAIN [accordion-title]; [data-accordion-title] accepted for back-compat. (#215)
+    const sections = Array.from(this.querySelectorAll('[accordion-title], [data-accordion-title]'));
     if (sections.length > 0) {
       const items = sections.map((sec, i) =>
         this._buildItem(
-          sec.getAttribute('data-accordion-title') || '',
+          sec.getAttribute('accordion-title') || sec.getAttribute('data-accordion-title') || '',
           sec.innerHTML,
           sec.hasAttribute('open') || (i === 0 && this.hasAttribute('open'))
         )

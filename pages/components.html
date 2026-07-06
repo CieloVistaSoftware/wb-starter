@@ -395,45 +395,39 @@
 &lt;/wb-tabs&gt;</code></pre>
   </div>
 
-  <!-- Accordion -->
+  <!-- Accordion — the whole group is ONE demo (§17) -->
   <h3>Accordion</h3>
-  <wb-accordion>
-    <div data-accordion-title="What is wb-starter?">
-      <p>wb-starter is a zero-build web component library that provides modern, accessible UI components using native web standards.</p>
-    </div>
-    <div data-accordion-title="How do I install it?">
-      <p>No installation needed! Just include the script tag in your HTML and start using the components immediately.</p>
-    </div>
-    <div data-accordion-title="Is it production ready?">
-      <p>Yes! Fully tested and enterprise hardened with comprehensive accessibility support.</p>
-    </div>
-  </wb-accordion>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-accordion&gt;
-  &lt;div data-accordion-title="Question?"&gt;
-    &lt;p&gt;Answer content here...&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/wb-accordion&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <wb-accordion>
+      <div accordion-title="What is wb-starter?">
+        <p>wb-starter is a zero-build web component library that provides modern, accessible UI components using native web standards.</p>
+      </div>
+      <div accordion-title="How do I install it?">
+        <p>No installation needed! Just include the script tag in your HTML and start using the components immediately.</p>
+      </div>
+      <div accordion-title="Is it production ready?">
+        <p>Yes! Fully tested and enterprise hardened with comprehensive accessibility support.</p>
+      </div>
+    </wb-accordion>
+  </wb-demo>
 
-  <!-- Details/Accordion -->
+  <!-- Details/Accordion — one <wb-demo> per element -->
   <h3>Details / Accordion</h3>
-  <div class="demo-stack">
+  <wb-demo>
     <wb-details summary="What is wb-starter?">
       <p>wb-starter is a zero-build web component library that provides modern, accessible UI components using native web standards.</p>
     </wb-details>
+  </wb-demo>
+  <wb-demo>
     <wb-details summary="How do I install it?">
       <p>No installation needed! Just include the script tag in your HTML and start using the components immediately.</p>
     </wb-details>
+  </wb-demo>
+  <wb-demo>
     <wb-details summary="Is it production ready?">
       <p>Yes! Fully tested and enterprise hardened with comprehensive accessibility support.</p>
     </wb-details>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-details summary="Question?"&gt;
-  &lt;p&gt;Answer content here...&lt;/p&gt;
-&lt;/wb-details&gt;</code></pre>
-  </div>
+  </wb-demo>
 
   <!-- Breadcrumb -->
   <h3>Breadcrumb</h3>
