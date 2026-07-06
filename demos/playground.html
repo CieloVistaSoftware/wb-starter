@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playground — WB</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <style>
+    body { max-width: 1200px; margin: 0 auto; padding: 1.5rem; background: var(--bg-color);
+      color: var(--text-primary); line-height: 1.6; }
+    h1 { margin: 0 0 0.25rem; }
+    .pg-sub { color: var(--text-secondary); margin: 0 0 1.5rem; }
+
+    /* Mobile-first: stack; two columns on wider screens. */
+    .pg-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
+    @media (min-width: 860px) { .pg-grid { grid-template-columns: 1fr 1fr; } }
+
+    .pg-panel { border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden;
+      background: var(--bg-secondary); display: flex; flex-direction: column; }
+    .pg-panel__head { display: flex; align-items: center; justify-content: space-between;
+      padding: 0.6rem 1rem; font-weight: 600; font-size: 0.9rem;
+      border-bottom: 1px solid var(--border-color); }
+    .pg-hint { color: var(--text-muted); font-size: 0.8rem; font-weight: 400; }
+
+    #pg-input { width: 100%; min-height: 460px; resize: vertical; border: 0; box-sizing: border-box;
+      background: var(--bg-primary); color: var(--text-primary); padding: 1rem;
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.9rem;
+      line-height: 1.6; tab-size: 2; white-space: pre; }
+    #pg-input:focus { outline: none; }
+
+    #pg-preview { padding: 1.25rem; min-height: 460px; background: var(--bg-primary); }
+    /* The preview is arbitrary pasted HTML — let long content wrap, never overflow. */
+    #pg-preview, #pg-preview * { max-width: 100%; overflow-wrap: anywhere; }
+
+    .pg-btn { padding: 0.4rem 0.9rem; border-radius: 6px; border: 1px solid var(--border-color);
+      background: var(--primary); color: var(--text-on-accent, #fff); cursor: pointer;
+      font-size: 0.85rem; }
+    .pg-btn:hover { filter: brightness(1.08); }
+    .pg-error { color: var(--danger-color, #f85149); font-size: 0.85rem; padding: 0.5rem 1rem; }
+  </style>
+</head>
+<body>
+  <h1>🧪 Playground</h1>
+  <p class="pg-sub">Paste any HTML on the left — see it rendered live on the right. <code>&lt;wb-*&gt;</code>
+    components and <code>x-*</code> behaviors are upgraded automatically.</p>
+
+  <div class="pg-grid">
+    <div class="pg-panel">
+      <div class="pg-panel__head">
+        <span>HTML</span>
+        <button id="pg-render" class="pg-btn" type="button">Render ▶</button>
+      </div>
+      <textarea id="pg-input" spellcheck="false" aria-label="HTML input"></textarea>
+    </div>
+    <div class="pg-panel">
+      <div class="pg-panel__head"><span>Preview</span><span class="pg-hint">live</span></div>
+      <div id="pg-error" class="pg-error" hidden></div>
+      <div id="pg-preview"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+
+    const input = document.getElementById('pg-input');
+    const preview = document.getElementById('pg-preview');
+    const errorBox = document.getElementById('pg-error');
+
+    // A starter example so the page is useful immediately.
+    const SAMPLE = [
+      '<form>',
+      '  <label>',
+      '    Full Name',
+      '    <input type="text" placeholder="John Doe" required>',
+      '  </label>',
+      '',
+      '  <label>',
+      '    Email Address',
+      '    <input type="email" placeholder="john@example.com" required>',
+      '  </label>',
+      '',
+      '  <label>',
+      '    Department',
+      '    <select>',
+      '      <option>Engineering</option>',
+      '      <option>Design</option>',
+      '      <option>Marketing</option>',
+      '      <option>Sales</option>',
+      '    </select>',
+      '  </label>',
+      '',
+      '  <label>',
+      '    Bio',
+      '    <textarea rows="3" placeholder="Tell us about yourself..."><' + '/textarea>',
+      '  </label>',
+      '',
+      '  <label>',
+      '    Experience Level',
+      '    <input type="range" min="0" max="10" value="5">',
+      '  </label>',
+      '',
+      '  <fieldset>',
+      '    <legend>Preferences</legend>',
+      '    <label><input type="checkbox" checked> Remote</label>',
+      '    <label><input type="checkbox"> Relocation</label>',
+      '  </fieldset>',
+      '',
+      '  <fieldset>',
+      '    <legend>Contract Type</legend>',
+      '    <label><input type="radio" name="contract" checked> Full-time</label>',
+      '    <label><input type="radio" name="contract"> Contractor</label>',
+      '  </fieldset>',
+      '',
+      '  <button type="submit" style="width: 100%;">Submit Application</button>',
+      '</form>',
+    ].join('\n');
+
+    input.value = SAMPLE;
+
+    async function render() {
+      errorBox.hidden = true;
+      errorBox.textContent = '';
+      preview.innerHTML = input.value;
+      try {
+        await WB.init({ autoInject: true });
+        await WB.scan(preview);
+      } catch (e) {
+        errorBox.hidden = false;
+        errorBox.textContent = 'Render error: ' + (e && e.message ? e.message : e);
+      }
+    }
+
+    document.getElementById('pg-render').addEventListener('click', render);
+    let debounce;
+    input.addEventListener('input', () => { clearTimeout(debounce); debounce = setTimeout(render, 400); });
+
+    render();
+  </script>
+</body>
+</html>
