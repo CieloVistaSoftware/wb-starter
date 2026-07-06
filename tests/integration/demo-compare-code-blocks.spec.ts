@@ -39,11 +39,29 @@ test.describe('button demos: comparison code is vertical + highlighted', () => {
       ).toBeGreaterThan(2);
 
       // Vertical formatting + Standard §6: line breaks preserved AND it wraps —
-      // no horizontal scrollbar on any comparison code block.
-      const scrollers = await page.$$eval('.wb-compare pre', (els) =>
-        els.filter((el) => el.scrollWidth > el.clientWidth + 2).length
+      // no horizontal scrollbar on any comparison code block. Self-diagnosing:
+      // the failure message names the offending block, its widths, and computed
+      // styles (Linux CI fonts/metrics differ from local Windows — #271).
+      const offenders = await page.$$eval('.wb-compare pre', (els) =>
+        els
+          .map((el, i) => {
+            const cs = getComputedStyle(el);
+            return {
+              i,
+              scrollWidth: el.scrollWidth,
+              clientWidth: el.clientWidth,
+              whiteSpace: cs.whiteSpace,
+              overflowWrap: cs.overflowWrap,
+              fontFamily: cs.fontFamily.slice(0, 40),
+              sample: (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 70),
+            };
+          })
+          .filter((x) => x.scrollWidth > x.clientWidth + 2)
       );
-      expect(scrollers, 'no comparison code block may horizontally scroll').toBe(0);
+      expect(
+        offenders,
+        `comparison code blocks that horizontally scroll:\n${JSON.stringify(offenders, null, 2)}`
+      ).toEqual([]);
     });
   }
 });
