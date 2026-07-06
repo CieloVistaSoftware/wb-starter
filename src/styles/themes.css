@@ -109,6 +109,11 @@
    ============================================================================= */
 [data-theme="dark"],
 :root {
+  /* THE single configuration setting for Markdown font size. Every .md rendering
+     surface (mdhtml, doc-viewer) derives its text size from this — 1rem so docs
+     are readable on mobile. Change it here, everything follows. */
+  --md-font-size: 1rem;
+
   /* Foundation */
   --hue-primary: 240;
   --saturation-primary: 70;

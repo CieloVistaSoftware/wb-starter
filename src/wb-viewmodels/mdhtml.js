@@ -260,16 +260,11 @@ export async function mdhtml(element, options = {}) {
         window.WB.scan(element);
     }
 
-    // Apply size via CSS font-size on container (cascades to all children)
-    // Always apply for consistent sizing
-    const sizeMap = {
-      xs: '0.55rem',
-      sm: '0.6rem',
-      md: '0.65rem',
-      lg: '0.75rem',
-      xl: '0.85rem'
-    };
-    element.style.fontSize = sizeMap[config.size] || sizeMap.xs;
+    // Markdown font size comes from ONE configuration setting: --md-font-size
+    // (themes.css, 1rem). The old size map (0.55–0.85rem) made every .md doc too
+    // small to read on mobile; the legacy size option is ignored on purpose so
+    // there is a single knob.
+    element.style.fontSize = 'var(--md-font-size, 1rem)';
     
     // Ensure no overflow
     element.style.maxWidth = '100%';

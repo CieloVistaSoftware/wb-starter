@@ -63,18 +63,19 @@
       border-color: var(--primary);
     }
     
-    /* Markdown Styles */
-    .wb-mdhtml { line-height: 1.6; }
+    /* Markdown Styles — text size comes from the single --md-font-size setting
+       (themes.css, 1rem) so docs are readable on mobile. */
+    .wb-mdhtml { line-height: 1.6; font-size: var(--md-font-size, 1rem); }
     .wb-mdhtml h1 { font-size: 2rem; margin-bottom: 1.5rem; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
     .wb-mdhtml h2 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--text-primary); }
     .wb-mdhtml h3 { font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
     .wb-mdhtml p { margin-bottom: 1rem; color: var(--text-secondary); }
     .wb-mdhtml ul, .wb-mdhtml ol { margin-bottom: 1rem; padding-left: 1.5rem; color: var(--text-secondary); }
     .wb-mdhtml li { margin-bottom: 0.5rem; }
-    .wb-mdhtml code { background: var(--bg-tertiary); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.9em; color: var(--text-primary); font-weight: 600; }
+    .wb-mdhtml code { background: var(--bg-tertiary); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: var(--md-font-size, 1rem); color: var(--text-primary); font-weight: 600; }
     .wb-mdhtml a { color: var(--primary-light); text-decoration: underline; }
     .wb-mdhtml pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 0 0 1.5rem 0; border: 1px solid var(--border-color); line-height: 1.2; max-width: 100%; }
-    .wb-mdhtml pre code { background: none; padding: 0; color: var(--text-primary); font-weight: normal !important; font-size: 0.85rem; font-family: Consolas, 'Courier New', monospace; white-space: pre; font-variant-ligatures: none; tab-size: 4; letter-spacing: 0; }
+    .wb-mdhtml pre code { background: none; padding: 0; color: var(--text-primary); font-weight: normal !important; font-size: var(--md-font-size, 1rem); font-family: Consolas, 'Courier New', monospace; white-space: pre; font-variant-ligatures: none; tab-size: 4; letter-spacing: 0; }
     .wb-mdhtml .code-wrapper { max-width: 100%; overflow-x: hidden; }
     .wb-mdhtml .code-wrapper pre { max-width: 100%; }
     .wb-mdhtml blockquote { border-left: 4px solid var(--primary); margin: 0 0 1.5rem 0; padding-left: 1rem; color: var(--text-muted); font-style: italic; }
