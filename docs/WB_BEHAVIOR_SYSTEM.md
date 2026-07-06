@@ -22,23 +22,10 @@ The **WB (Web Behavior)** system is a functional, progressive enhancement librar
 
 ## Core Concept: Functional Enhancement
 
-### NOT Class Inheritance
-
-WB behaviors do **NOT** use traditional OOP inheritance like Web Components:
-
-```javascript
-// ❌ NOT THIS (Web Components)
-class MyButton extends HTMLButtonElement {
-  constructor() {
-    super();
-  }
-}
-customElements.define('my-button', MyButton, { extends: 'button' });
-```
-
 ### Functional Behavior Pattern
 
-Instead, WB uses **functional enhancement**:
+WB behaviors are **pure functions that enhance an element in place** — composition,
+never a class hierarchy or customized built-in:
 
 ```javascript
 // ✅ THIS (WB Behaviors)
@@ -59,7 +46,7 @@ export function button(element, options = {}) {
 - Takes a native HTML element as first parameter
 - Enhances the element in place
 - Returns a cleanup function
-- No classes, no `extends`, no custom elements
+- No classes, no inheritance — a behavior composes onto any element
 
 ---
 

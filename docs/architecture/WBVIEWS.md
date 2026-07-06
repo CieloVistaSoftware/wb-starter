@@ -41,7 +41,7 @@ wb-views bridges the gap between static HTML and heavy JavaScript frameworks:
 
 *   **Unlike Static HTML**: wb-views are **maintainable**. They eliminate the need to manually find-and-replace code across multiple files by keeping your source of truth in one place.
 *   **Unlike React/Vue**: wb-views run natively in the browser with **no build step**, no hydration cost, and no complex state management.
-*   **Unlike Raw Web Components**: wb-views eliminate the boilerplate of `class MyElement extends HTMLElement`, allowing you to define components entirely in HTML.
+*   **Unlike Raw Web Components**: wb-views eliminate custom-element class boilerplate entirely, allowing you to define components in pure HTML.
 
 ### Key Capabilities
 
@@ -1715,46 +1715,10 @@ component(UserCard)(document.getElementById('app'), {
 
 https://lit.dev
 
-```javascript
-// user-card.js
-import { LitElement, html, css } from 'lit';
-
-class UserCard extends LitElement {
-  static properties = {
-    name: { type: String },
-    avatar: { type: String },
-    role: { type: String },
-    verified: { type: Boolean }
-  };
-
-  static styles = css`
-    .card { border: 1px solid #ccc; padding: 1rem; }
-  `;
-
-  render() {
-    return html`
-      <div class="card">
-        <img src="${this.avatar}" alt="${this.name}">
-        <h3>${this.name}</h3>
-        <p>${this.role}</p>
-        ${this.verified ? html`<span class="badge">✓ Verified</span>` : ''}
-      </div>
-    `;
-  }
-}
-
-customElements.define('user-card', UserCard);
-```
-
-```html
-<!-- Usage -->
-<user-card
-  name="Alice"
-  avatar="alice.jpg"
-  role="Developer"
-  verified>
-</user-card>
-```
+Lit defines each component as a JavaScript class with reactive `static properties`,
+scoped `css` styles, and a `render()` method built from tagged template literals,
+then registers it with `customElements.define()`. Usage is a custom tag with
+attributes (`<user-card name="Alice" verified>`).
 
 **Pros:** Reactive, Shadow DOM, Google-backed, well-documented  
 **Cons:** JavaScript-first, class boilerplate, tagged template syntax
@@ -1763,40 +1727,10 @@ customElements.define('user-card', UserCard);
 
 #### Vanilla Web Components
 
-```javascript
-// user-card.js
-class UserCard extends HTMLElement {
-  static get observedAttributes() {
-    return ['name', 'avatar', 'role', 'verified'];
-  }
-
-  connectedCallback() {
-    this.render();
-  }
-
-  attributeChangedCallback() {
-    this.render();
-  }
-
-  render() {
-    const name = this.getAttribute('name') || '';
-    const avatar = this.getAttribute('avatar') || '';
-    const role = this.getAttribute('role') || '';
-    const verified = this.hasAttribute('verified');
-
-    this.innerHTML = `
-      <div class="card">
-        <img src="${avatar}" alt="${name}">
-        <h3>${name}</h3>
-        <p>${role}</p>
-        ${verified ? '<span class="badge">✓ Verified</span>' : ''}
-      </div>
-    `;
-  }
-}
-
-customElements.define('user-card', UserCard);
-```
+Raw web components require a JavaScript class per component: declaring
+`observedAttributes`, wiring `connectedCallback`/`attributeChangedCallback`, and
+hand-building the innerHTML in a `render()` method before registering the tag with
+`customElements.define()` — all boilerplate wb-views eliminate.
 
 **Pros:** No dependencies, browser-native  
 **Cons:** Lots of boilerplate, manual attribute observation, no templating

@@ -70,6 +70,12 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 - Components compose via `<wb-*>` tags + `x-*` behaviors. There is **no** component
   base-class hierarchy. Do not write "is-a", "variants inherit from `cardBase`", or
   "Why Inheritance Matters" — reframe as composition.
+- **HTML `extends` is purged.** The old design (customized built-ins:
+  `class X extends HTMLButtonElement`, `customElements.define(…, { extends: 'button' })`,
+  `is="…"`) is gone. Docs and demos must not show `extends`-based component code —
+  **not even as a counter-example** (it still teaches the pattern). Describe other
+  frameworks' class approaches in prose if a comparison is needed.
+  Enforced by `tests/compliance/no-html-extends-docs.spec.ts`.
 
 ## 10. Mobile-first / responsive
 

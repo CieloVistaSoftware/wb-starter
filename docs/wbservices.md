@@ -38,12 +38,10 @@ WBServices is the central service registry and initialization pattern for all co
 
 ```js
 import { WBServices } from '../core/wb-services.js';
+import { card } from '../wb-viewmodels/card.js';
 
-class WbCard extends HTMLElement {
-  // ...component logic...
-}
-
-WBServices.register('wb-card', WbCard);
+// Register the card behavior — a pure function that enhances the element.
+WBServices.register('wb-card', card);
 ```
 
 ## Example: Registering a Service
