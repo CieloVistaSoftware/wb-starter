@@ -43,6 +43,10 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 - A **multi-attribute element** renders **each attribute on its own line** — never a
   single long horizontal line. A `<wb-demo>` whose rendered source is one long line
   (forcing a horizontal scroll) violates this. (Tracked project-wide; see #254.)
+- **Short-tag exception:** an element whose whole tag is short (roughly **under 25
+  characters**, e.g. `<wb-badge label="New">`) stays on ONE line — one element per
+  line. Don't split short tags pointlessly. There is **no "inline format" override**
+  beyond this; vertical is the only format.
 
 ## 6. Code examples never show a horizontal scrollbar
 
@@ -124,6 +128,17 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   a list of examples), wrap them in a `<wb-container>` so they get consistent, contained
   layout instead of loose free-floating markup. Reach for `<wb-container>` whenever you'd
   otherwise show a large ungrouped block of controls.
+
+## 19. Every declared attribute must be tested to actually WORK
+
+- If markup declares a configuration attribute (`size`, `variant`, `elevated`,
+  `clearable`, `autosize`, …), there must be a test that asserts the attribute produces
+  its **real effect** — not merely that the element renders or a class was added.
+- Tests are **effect-based**, not presence-based: e.g. `<button size="xs">` and
+  `<button size="xl">` must have **different computed sizes**; `variant="primary"` vs
+  `variant="danger"` must differ visibly. A demo that shows `size="xs"` while the button
+  renders at default size is a defect the test must catch. Cover BOTH the custom element
+  (`<wb-button>`) and the native element (`<button>`) paths.
 
 ---
 

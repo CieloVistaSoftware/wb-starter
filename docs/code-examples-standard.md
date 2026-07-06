@@ -169,32 +169,29 @@ Each code example should include an explanatory note in xs font:
 
 ---
 
-## Inline Format (Optional Override)
+## Vertical Format Is the ONLY Format
 
-For compact documentation or specific use cases, inline format can be enabled:
+There is **no inline override**. Code examples are always vertical — a multi-attribute
+element renders each attribute on its own line (see
+[Demos & Documentation Standards](./standards/DEMOS-AND-DOCS-STANDARDS.md) §5).
 
-### Configuration to Enable Inline
-
-```javascript
-const codeDisplayConfig = {
-  format: 'inline'  // Switch to inline format
-};
-```
-
-### Inline Format Example
+**The one exception — short elements:** an element whose entire tag is short
+(roughly **under 25 characters**, e.g. `<wb-badge label="New">`) may stay on a single
+line, one element per line. Never split a short tag pointlessly, and never cram a long
+multi-attribute tag onto one line.
 
 ```html
+<!-- Short tags: one element per line -->
+<wb-badge label="New"></wb-badge>
+<wb-badge label="Done" variant="success"></wb-badge>
+
+<!-- Long tags: one attribute per line -->
 <button
   variant="primary"
   size="lg">
   Click Me
 </button>
 ```
-
-**Note:** Inline format should only be used when:
-- Space is extremely limited
-- Showing single-attribute elements
-- Explicitly requested by configuration
 
 ---
 

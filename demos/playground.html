@@ -23,11 +23,13 @@
       border-bottom: 1px solid var(--border-color); }
     .pg-hint { color: var(--text-muted); font-size: 0.8rem; font-weight: 400; }
 
-    /* !important: WB's textarea/autosize behavior sets an inline min-height:3rem +
-       rows on any textarea; force the playground editor tall regardless. */
-    #pg-input { width: 100%; min-height: 70vh !important; height: 70vh !important; resize: vertical;
-      border: 0; box-sizing: border-box; background: var(--bg-primary); color: var(--text-primary);
-      padding: 1rem; font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    /* Height is AUTOMATIC — the editor grows to fit the markup (JS sets an inline
+       height from scrollHeight) up to a max, then scrolls. !important floors the
+       min so WB's textarea behavior (inline min-height:3rem) can't collapse it. */
+    #pg-input { width: 100%; min-height: 10rem !important; max-height: 80vh; overflow-y: auto;
+      resize: vertical; border: 0; box-sizing: border-box; background: var(--bg-primary);
+      color: var(--text-primary); padding: 1rem;
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
       font-size: 0.9rem; line-height: 1.6; tab-size: 2; white-space: pre; }
     #pg-input:focus { outline: none; }
 
@@ -124,6 +126,14 @@
 
     input.value = SAMPLE;
 
+    // Auto-height: as tall as the markup needs, up to max-height (then scroll).
+    // Inline style with 'important' so WB's textarea enhancement can't override it.
+    function fitEditor() {
+      input.style.setProperty('height', 'auto', 'important');
+      const max = Math.round(window.innerHeight * 0.8);
+      input.style.setProperty('height', Math.min(input.scrollHeight + 2, max) + 'px', 'important');
+    }
+
     // Init WB WITHOUT global autoInject so it never enhances the playground's own
     // UI (the input textarea was being autosized/shrunk). We only ever scan the
     // preview subtree, so pasted <wb-*>/native elements still upgrade there.
@@ -148,12 +158,20 @@
       input.value = '';
       preview.innerHTML = '';
       errorBox.hidden = true;
+      fitEditor();
       input.focus();
     });
     let debounce;
-    input.addEventListener('input', () => { clearTimeout(debounce); debounce = setTimeout(render, 400); });
+    input.addEventListener('input', () => {
+      fitEditor();
+      clearTimeout(debounce); debounce = setTimeout(render, 400);
+    });
+    window.addEventListener('resize', fitEditor);
 
+    fitEditor();
     render();
+    // WB's initial pass may re-shrink the textarea after load — re-fit once settled.
+    setTimeout(fitEditor, 600);
   </script>
 </body>
 </html>
