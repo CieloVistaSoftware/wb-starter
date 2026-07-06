@@ -150,6 +150,14 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   renders at default size is a defect the test must catch. Cover BOTH the custom element
   (`<wb-button>`) and the native element (`<button>`) paths.
 
+## 21. Watch CI after every push — local-green is not done
+
+- A push is **not done** until the GitHub Actions run for it is **green**. After every
+  push, check the run (`gh run list` / `gh run watch`); a red CI is treated exactly like
+  a red local gate — investigate immediately, file the issue, fix.
+- Beware environment differences (Linux CI vs local Windows): fonts, scrollbar metrics,
+  and paths make browser assertions behave differently — a test must pass on **both**.
+
 ## 20. Boolean `x-*` attributes are written BARE — never `=""`
 
 - A valueless behavior attribute is written `x-ripple`, **never** `x-ripple=""`. The
