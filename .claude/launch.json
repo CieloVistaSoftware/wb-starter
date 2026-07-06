@@ -4,8 +4,11 @@
     {
       "name": "wb-starter",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["server.js"],
-      "port": 3000
+      "runtimeArgs": [
+        "server.js"
+      ],
+      "port": 3000,
+      "autoPort": false
     }
   ]
 }
