@@ -102,6 +102,22 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   A popup that spills outside its parent's bounds is a defect. (Tracked project-wide; see
   #252 — parent-overflow detection test.)
 
+## 16. Every demo shows a working demo AND its code
+
+- The `demos/` folder exists so users can **see how it's done in HTML**. Therefore
+  **every file in `demos/`** must present BOTH a **working live demo** AND the **source
+  code** that produced it — never one without the other. `<wb-demo>` is the ideal tool
+  (it renders the live control and shows its source in one tag). A demo page with a live
+  example but no code — or code with no live example — is a defect.
+
+## 17. Grouped controls are ONE demo (exception to §2)
+
+- Some controls belong to a **single logical group** — e.g. radio buttons that share a
+  `name`, or a set of related checkboxes. For a group, the **whole group** is the unit:
+  put the entire group in **one** `<wb-demo>` with one code sample. Do NOT split each
+  individual `<input>`/control into its own demo. This is the intended exception to §2
+  ("one code sample per rendered element") — for a group, the group IS the element.
+
 ---
 
 ## Enforcement & references
