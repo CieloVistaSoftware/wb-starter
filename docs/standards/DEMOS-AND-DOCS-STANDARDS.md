@@ -119,6 +119,10 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   code** that produced it — never one without the other. `<wb-demo>` is the ideal tool
   (it renders the live control and shows its source in one tag). A demo page with a live
   example but no code — or code with no live example — is a defect.
+- **Every canonical demo includes a MIXED-BEHAVIORS example**: `x-*` attributes composed
+  onto the element — including onto `<wb-*>` tags (wb-tags take x-attributes too). This
+  shows developers how to add function to markup already in place. All of it inside
+  `<wb-demo>`.
 
 ## 17. Grouped controls are ONE demo (exception to §2)
 

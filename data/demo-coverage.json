@@ -1,0 +1,889 @@
+{
+  "generated": "demo-coverage",
+  "totals": {
+    "tags": 73,
+    "behaviors": 66,
+    "demoFiles": 48
+  },
+  "missing": [
+    "wb-article",
+    "wb-articles",
+    "wb-carddraggable",
+    "wb-card-link",
+    "wb-chip",
+    "wb-codecontrol",
+    "wb-confetti",
+    "wb-copy",
+    "wb-darkmode",
+    "wb-demo",
+    "wb-dialog",
+    "wb-draggable",
+    "wb-dropdown",
+    "wb-fireworks",
+    "wb-globe",
+    "wb-hero",
+    "wb-move",
+    "wb-navbar",
+    "wb-notes",
+    "wb-resizable",
+    "wb-ripple",
+    "wb-scrollalong",
+    "wb-search",
+    "wb-slider",
+    "wb-snow",
+    "wb-span",
+    "wb-sticky",
+    "wb-table",
+    "wb-toast",
+    "wb-toggle",
+    "wb-tooltip",
+    "wb-timeline",
+    "x-typewriter",
+    "x-tags",
+    "x-file",
+    "x-counter",
+    "x-autocomplete",
+    "x-otp",
+    "x-floatinglabel",
+    "x-masonry",
+    "x-dropdown",
+    "x-drawer-layout"
+  ],
+  "bareOnly": [
+    "wb-audio",
+    "wb-avatar",
+    "wb-collapse",
+    "wb-drawer",
+    "wb-footer",
+    "wb-header",
+    "wb-mdhtml",
+    "wb-rating",
+    "wb-skeleton",
+    "wb-stagelight",
+    "wb-tabs",
+    "wb-themecontrol",
+    "x-breadcrumb",
+    "x-notify",
+    "x-bounce",
+    "x-pulse",
+    "x-rainbow",
+    "x-draggable",
+    "x-collapse",
+    "x-fadein",
+    "x-shake",
+    "x-confetti",
+    "x-slidein",
+    "x-zoomin",
+    "x-jello",
+    "x-heartbeat",
+    "x-glow",
+    "x-sparkle",
+    "x-snow",
+    "x-flip",
+    "x-flash",
+    "x-fireworks",
+    "x-relativetime",
+    "x-form",
+    "x-password",
+    "x-masked",
+    "x-stepper",
+    "x-colorpicker",
+    "x-search",
+    "x-clock",
+    "x-countdown",
+    "x-youtube",
+    "x-pagination",
+    "x-steps",
+    "x-timeline",
+    "x-kbd",
+    "x-gallery",
+    "x-image",
+    "x-popover",
+    "x-confirm",
+    "x-prompt",
+    "x-lightbox",
+    "x-share",
+    "x-print",
+    "x-fullscreen",
+    "x-darkmode",
+    "x-truncate",
+    "x-sticky",
+    "x-scrollalong",
+    "x-toggle",
+    "x-autosize",
+    "x-behavior"
+  ],
+  "dupes": {
+    "wb-badge": [
+      "demos/badge-showcase.html",
+      "demos/kitchen-sink.html",
+      "demos/multi-component-demo-generated.html",
+      "demos/behaviors-showcase.html",
+      "demos/charity-food.html",
+      "demos/pce-test.html"
+    ],
+    "wb-button": [
+      "demos/button-composition-demo.html",
+      "demos/button-variants-tags-demo.html",
+      "demos/kitchen-sink.html",
+      "demos/behaviors-showcase.html",
+      "demos/charity-food.html",
+      "demos/tooltip-demo.html",
+      "demos/wb-views-demo.html"
+    ],
+    "wb-card": [
+      "demos/card-examples.html",
+      "demos/kitchen-sink.html",
+      "demos/charity-food.html",
+      "demos/pce-test.html",
+      "demos/wb-views-demo.html"
+    ],
+    "wb-mdhtml": [
+      "demos/autoinject.html",
+      "demos/behaviors-showcase.html",
+      "demos/code.html",
+      "demos/mdhtml-pre-debug.html",
+      "demos/registry-browser.html",
+      "demos/wb-views-demo.html"
+    ],
+    "wb-progress": [
+      "demos/kitchen-sink.html",
+      "demos/multi-component-demo-generated.html",
+      "demos/progress-showcase.html",
+      "demos/behaviors-showcase.html",
+      "demos/charity-food.html",
+      "demos/pce-test.html",
+      "demos/semantics-structure.html"
+    ],
+    "wb-themecontrol": [
+      "demos/autoinject.html",
+      "demos/behaviors-showcase.html",
+      "demos/semantics-forms.html",
+      "demos/semantics-media.html",
+      "demos/semantics-structure.html",
+      "demos/semantics-theme.html"
+    ],
+    "x-toast": [
+      "demos/button-composition-demo.html",
+      "demos/button-variants-demo.html",
+      "demos/button-variants-tags-demo.html",
+      "demos/behaviors-showcase.html",
+      "demos/button-variants-simple.html",
+      "demos/feedback-demo.html"
+    ],
+    "x-tooltip": [
+      "demos/button-composition-demo.html",
+      "demos/button-variants-demo.html",
+      "demos/button-variants-tags-demo.html",
+      "demos/kitchen-sink.html",
+      "demos/behaviors-showcase.html",
+      "demos/button-variants-simple.html",
+      "demos/frameworks.html",
+      "demos/tooltip-demo.html"
+    ],
+    "x-ripple": [
+      "demos/button-composition-demo.html",
+      "demos/button-variants-demo.html",
+      "demos/button-variants-tags-demo.html",
+      "demos/behaviors-showcase.html",
+      "demos/button-variants-simple.html",
+      "demos/frameworks.html",
+      "demos/ripple-demo.html"
+    ]
+  },
+  "coverage": {
+    "wb-mdhtml": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/autoinject.html",
+        "demos/behaviors-showcase.html",
+        "demos/code.html",
+        "demos/mdhtml-pre-debug.html",
+        "demos/registry-browser.html",
+        "demos/wb-views-demo.html"
+      ]
+    },
+    "wb-themecontrol": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/autoinject.html",
+        "demos/behaviors-showcase.html",
+        "demos/semantics-forms.html",
+        "demos/semantics-media.html",
+        "demos/semantics-structure.html",
+        "demos/semantics-theme.html"
+      ]
+    },
+    "x-autosize": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/autosize-demo.html"
+      ]
+    },
+    "wb-badge": {
+      "inWbDemo": [
+        "demos/badge-showcase.html",
+        "demos/kitchen-sink.html",
+        "demos/multi-component-demo-generated.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/charity-food.html",
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-alert": {
+      "inWbDemo": [
+        "demos/kitchen-sink.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-audio": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/semantics-media.html",
+        "demos/wizard.html"
+      ]
+    },
+    "wb-avatar": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/pce-test.html",
+        "demos/wb-views-demo.html"
+      ]
+    },
+    "wb-button": {
+      "inWbDemo": [
+        "demos/button-composition-demo.html",
+        "demos/button-variants-tags-demo.html",
+        "demos/kitchen-sink.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/charity-food.html",
+        "demos/tooltip-demo.html",
+        "demos/wb-views-demo.html"
+      ]
+    },
+    "wb-cardstats": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-collapse": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "wb-drawer": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "wb-progress": {
+      "inWbDemo": [
+        "demos/kitchen-sink.html",
+        "demos/multi-component-demo-generated.html",
+        "demos/progress-showcase.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/charity-food.html",
+        "demos/pce-test.html",
+        "demos/semantics-structure.html"
+      ]
+    },
+    "wb-rating": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/pce-test.html",
+        "demos/semantics-forms.html"
+      ]
+    },
+    "wb-skeleton": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "wb-spinner": {
+      "inWbDemo": [
+        "demos/kitchen-sink.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-switch": {
+      "inWbDemo": [
+        "demos/kitchen-sink.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/semantics-forms.html"
+      ]
+    },
+    "wb-tabs": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/intellisense-check.html",
+        "demos/tabs-demo.html"
+      ]
+    },
+    "x-breadcrumb": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-toast": {
+      "inWbDemo": [
+        "demos/button-composition-demo.html",
+        "demos/button-variants-demo.html",
+        "demos/button-variants-tags-demo.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/button-variants-simple.html",
+        "demos/feedback-demo.html"
+      ]
+    },
+    "x-bounce": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-pulse": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-rainbow": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-tooltip": {
+      "inWbDemo": [
+        "demos/button-composition-demo.html",
+        "demos/button-variants-demo.html",
+        "demos/button-variants-tags-demo.html",
+        "demos/kitchen-sink.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/button-variants-simple.html",
+        "demos/frameworks.html",
+        "demos/tooltip-demo.html"
+      ]
+    },
+    "x-ripple": {
+      "inWbDemo": [
+        "demos/button-composition-demo.html",
+        "demos/button-variants-demo.html",
+        "demos/button-variants-tags-demo.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/button-variants-simple.html",
+        "demos/frameworks.html",
+        "demos/ripple-demo.html"
+      ]
+    },
+    "x-copy": {
+      "inWbDemo": [
+        "demos/button-composition-demo.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/copy-demo.html"
+      ]
+    },
+    "x-fadein": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-shake": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-confetti": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-slidein": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-zoomin": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-wobble": {
+      "inWbDemo": [
+        "demos/button-composition-demo.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-tada": {
+      "inWbDemo": [
+        "demos/button-composition-demo.html"
+      ],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-jello": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-heartbeat": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-glow": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-sparkle": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-snow": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-flip": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-flash": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-fireworks": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-relativetime": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-password": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-masked": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-stepper": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-colorpicker": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-search": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-clock": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-countdown": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-youtube": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-pagination": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-steps": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-timeline": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-kbd": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-gallery": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-image": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/semantics-media.html"
+      ]
+    },
+    "x-popover": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-confirm": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-prompt": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-lightbox": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-share": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-print": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-fullscreen": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "x-darkmode": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html",
+        "demos/semantics-theme.html"
+      ]
+    },
+    "x-truncate": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/behaviors-showcase.html"
+      ]
+    },
+    "wb-card": {
+      "inWbDemo": [
+        "demos/card-examples.html",
+        "demos/kitchen-sink.html"
+      ],
+      "bare": [
+        "demos/charity-food.html",
+        "demos/pce-test.html",
+        "demos/wb-views-demo.html"
+      ]
+    },
+    "wb-cardbutton": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": []
+    },
+    "wb-cardexpandable": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": []
+    },
+    "wb-cardfile": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": [
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-cardhero": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": [
+        "demos/charity-food.html",
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-cardhorizontal": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": [
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-cardimage": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": [
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-cardlink": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": [
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-cardminimizable": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": []
+    },
+    "wb-cardnotification": {
+      "inWbDemo": [
+        "demos/card-examples.html",
+        "demos/multi-component-demo-generated.html"
+      ],
+      "bare": [
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-cardoverlay": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": [
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-cardportfolio": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": [
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-cardpricing": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": []
+    },
+    "wb-cardproduct": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": []
+    },
+    "wb-cardprofile": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": [
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-cardtestimonial": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": [
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-cardvideo": {
+      "inWbDemo": [
+        "demos/card-examples.html"
+      ],
+      "bare": [
+        "demos/pce-test.html"
+      ]
+    },
+    "wb-footer": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/charity-food.html"
+      ]
+    },
+    "wb-header": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/charity-food.html",
+        "demos/kitchen-sink.html"
+      ]
+    },
+    "x-collapse": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/collapse-demo.html"
+      ]
+    },
+    "x-draggable": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/draggable-demo.html"
+      ]
+    },
+    "x-notify": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/feedback-demo.html"
+      ]
+    },
+    "x-form": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/form-demo.html",
+        "demos/semantics-forms.html"
+      ]
+    },
+    "wb-checkbox": {
+      "inWbDemo": [
+        "demos/kitchen-sink.html"
+      ],
+      "bare": []
+    },
+    "wb-details": {
+      "inWbDemo": [
+        "demos/kitchen-sink.html"
+      ],
+      "bare": []
+    },
+    "wb-input": {
+      "inWbDemo": [
+        "demos/kitchen-sink.html"
+      ],
+      "bare": []
+    },
+    "wb-select": {
+      "inWbDemo": [
+        "demos/kitchen-sink.html"
+      ],
+      "bare": []
+    },
+    "wb-textarea": {
+      "inWbDemo": [
+        "demos/kitchen-sink.html"
+      ],
+      "bare": []
+    },
+    "x-behavior": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/pce-test.html"
+      ]
+    },
+    "x-scrollalong": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/scrollalong-test.html"
+      ]
+    },
+    "wb-stagelight": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/stage-light.html"
+      ]
+    },
+    "x-sticky": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/sticky-demo.html"
+      ]
+    },
+    "x-toggle": {
+      "inWbDemo": [],
+      "bare": [
+        "demos/toggle-demo.html"
+      ]
+    }
+  }
+}
