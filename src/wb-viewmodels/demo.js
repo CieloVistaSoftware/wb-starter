@@ -140,23 +140,25 @@ export async function demo(element, options = {}) {
     element.classList.add('wb-demo');
 
     let rawBlock = '';
-    try {
-        const pageSource = await getPageSource();
-        const allDemos = document.querySelectorAll('wb-demo');
-        const idx = Array.from(allDemos).indexOf(element);
-        rawBlock = extractDemoBlock(pageSource, idx);
-    } catch (e) {
-        // ignore fetch errors
-    }
-    // Fallback: if extraction failed or empty, use element._rawSource or innerHTML
-    if (!rawBlock || !rawBlock.trim()) {
-        // Always prefer _rawSource if present and non-empty, else fallback to innerHTML
-        if (element._rawSource && element._rawSource.trim()) {
-            rawBlock = element._rawSource;
-        } else if (element.innerHTML && element.innerHTML.trim()) {
-            rawBlock = element.innerHTML;
-        } else {
-            rawBlock = '';
+    // Source priority: _rawSource FIRST. It's captured at connectedCallback,
+    // before children upgrade — the pristine authored markup, correct on every
+    // surface. Page-source extraction is only a fallback: its regex also matches
+    // literal "<wb-demo>…</wb-demo>" TEXT in the host page's comments/scripts —
+    // on the doc-viewer (whose own code mentions wb-demo) it captured a chunk of
+    // the viewer's CSS/JS as the "source" (the garbage panels; #242/#262 CI).
+    if (element._rawSource && element._rawSource.trim()) {
+        rawBlock = element._rawSource;
+    } else {
+        try {
+            const pageSource = await getPageSource();
+            const allDemos = document.querySelectorAll('wb-demo');
+            const idx = Array.from(allDemos).indexOf(element);
+            rawBlock = extractDemoBlock(pageSource, idx);
+        } catch (e) {
+            // ignore fetch errors
+        }
+        if (!rawBlock || !rawBlock.trim()) {
+            rawBlock = (element.innerHTML && element.innerHTML.trim()) ? element.innerHTML : '';
         }
     }
 
@@ -178,15 +180,16 @@ export async function demo(element, options = {}) {
     // docs/manifest.json. Components with no doc get NO link — never a dead link.
     const wbComponents = findWbComponents(rawBlock);
     if (wbComponents.length > 0) {
-        const linksDiv = document.createElement('div');
-        linksDiv.className = 'wb-demo__links';
-        element.appendChild(linksDiv);
-        loadDocsManifest().then((manifest) => {
-            const root = siteRoot();
-            const linked = wbComponents
-                .map((comp) => ({ comp, file: findDocFile(manifest, comp) }))
-                .filter((x) => x.file);
-            if (!linked.length) { linksDiv.remove(); return; }
+        // Deterministic: await the (cached) manifest and build the links inline —
+        // a floating .then() left empty divs when init raced page load.
+        const manifest = await loadDocsManifest().catch(() => null);
+        const root = siteRoot();
+        const linked = wbComponents
+            .map((comp) => ({ comp, file: findDocFile(manifest, comp) }))
+            .filter((x) => x.file);
+        if (linked.length) {
+            const linksDiv = document.createElement('div');
+            linksDiv.className = 'wb-demo__links';
             linksDiv.textContent = 'Docs: ';
             linked.forEach(({ comp, file }, i) => {
                 const link = document.createElement('a');
@@ -199,7 +202,8 @@ export async function demo(element, options = {}) {
                     linksDiv.appendChild(document.createTextNode(', '));
                 }
             });
-        });
+            element.appendChild(linksDiv);
+        }
     }
 
     // Create code block directly — textContent prevents browser from
