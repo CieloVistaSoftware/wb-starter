@@ -42,4 +42,21 @@ test.describe('wb-demo source is vertical + never horizontally scrolls (#254, #2
     );
     expect(txt.split('\n').length, 'source should be multi-line (vertical)').toBeGreaterThan(4);
   });
+
+  test('§20 — rendered source never shows a worthless x-*="" (#261)', async ({ page }) => {
+    await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+    await expect
+      .poll(() => page.locator('wb-demo pre code').count(), { timeout: 20000 })
+      .toBeGreaterThan(5);
+
+    // Boolean attributes serialize as x-foo="" via innerHTML; the pretty-printer
+    // must emit them BARE in every displayed code panel.
+    const offenders = await page.$$eval('wb-demo pre code', (els) =>
+      els
+        .map((el, i) => ({ i, hit: ((el.textContent || '').match(/x-[a-z][a-z0-9-]*=""/g) || []) }))
+        .filter((x) => x.hit.length)
+        .map((x) => `panel ${x.i}: ${[...new Set(x.hit)].join(', ')}`)
+    );
+    expect(offenders, `code panels showing x-*="":\n${offenders.join('\n')}`).toEqual([]);
+  });
 });

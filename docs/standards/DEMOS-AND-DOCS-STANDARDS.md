@@ -140,6 +140,15 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   renders at default size is a defect the test must catch. Cover BOTH the custom element
   (`<wb-button>`) and the native element (`<button>`) paths.
 
+## 20. Boolean `x-*` attributes are written BARE — never `=""`
+
+- A valueless behavior attribute is written `x-ripple`, **never** `x-ripple=""`. The
+  `=""` adds no value, lengthens the markup, and teaches users to type a useless string.
+  Applies to all source HTML and all code samples (the `<wb-demo>` pretty-printer
+  already emits bare names for empty values). Enforced by
+  `tests/compliance/no-empty-x-attr-values.spec.ts`; fix with
+  `node scripts/remove-empty-x-attr-values.mjs`.
+
 ---
 
 ## Enforcement & references
