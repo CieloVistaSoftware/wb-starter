@@ -91,6 +91,37 @@ function formatHtml(raw) {
     return out.join('\n');
 }
 
+// Site root that works from '/', '/demos/x.html', '/pages/x.html',
+// '/public/doc-viewer.html' — locally or under a GitHub Pages sub-path.
+function siteRoot() {
+    return location.pathname.replace(/(?:public|demos|pages|articles)\/.*$/, '');
+}
+
+// docs/manifest.json, fetched once and shared by every wb-demo on the page.
+let _docsManifestPromise = null;
+function loadDocsManifest() {
+    if (!_docsManifestPromise) {
+        _docsManifestPromise = fetch(siteRoot() + 'docs/manifest.json')
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null);
+    }
+    return _docsManifestPromise;
+}
+
+// Find the doc file (relative to docs/) for a component name, by basename match:
+// 'card' → …/card.md, 'column' → …/wb-column.md. Returns null when no doc exists.
+function findDocFile(manifest, comp) {
+    if (!manifest || !Array.isArray(manifest.categories)) return null;
+    const names = [`${comp}.md`, `wb-${comp}.md`];
+    for (const cat of manifest.categories) {
+        for (const d of cat.docs || []) {
+            const base = String(d.file || '').split('/').pop().toLowerCase();
+            if (names.includes(base)) return d.file;
+        }
+    }
+    return null;
+}
+
 function findWbComponents(html) {
     const regex = /<wb-([a-z0-9-]+)/gi;
     const matches = [];
@@ -140,27 +171,35 @@ export async function demo(element, options = {}) {
     }
     element.appendChild(grid);
 
-    // Add doc links below the grid.
+    // Add doc links below the grid. (#262: the old '?page=docs#wb-…' hrefs were
+    // dead on EVERY surface — page-relative, so inside the doc-viewer they hit
+    // doc-viewer.html?page=docs, and pages/docs.html has no #wb-* anchors anyway.)
+    // Link each component to its REAL doc opened in the doc-viewer, resolved from
+    // docs/manifest.json. Components with no doc get NO link — never a dead link.
     const wbComponents = findWbComponents(rawBlock);
     if (wbComponents.length > 0) {
         const linksDiv = document.createElement('div');
         linksDiv.className = 'wb-demo__links';
-        linksDiv.textContent = 'Docs: ';
-        wbComponents.forEach((comp, i) => {
-            const link = document.createElement('a');
-            // Functional docs link (#218): the previous href referenced an
-            // undefined WB_DOC_MAP and was removed, leaving the anchor hrefless
-            // so clicking did nothing. Route to the SPA docs page + component anchor.
-            link.href = '?page=docs#wb-' + comp;
-            link.textContent = `wb-${comp}`;
-            link.target = '_blank';
-            link.rel = 'noopener';
-            linksDiv.appendChild(link);
-            if (i < wbComponents.length - 1) {
-                linksDiv.appendChild(document.createTextNode(', '));
-            }
-        });
         element.appendChild(linksDiv);
+        loadDocsManifest().then((manifest) => {
+            const root = siteRoot();
+            const linked = wbComponents
+                .map((comp) => ({ comp, file: findDocFile(manifest, comp) }))
+                .filter((x) => x.file);
+            if (!linked.length) { linksDiv.remove(); return; }
+            linksDiv.textContent = 'Docs: ';
+            linked.forEach(({ comp, file }, i) => {
+                const link = document.createElement('a');
+                link.href = root + 'public/doc-viewer.html?file=' + encodeURIComponent('docs/' + file);
+                link.textContent = `wb-${comp}`;
+                link.target = '_blank';
+                link.rel = 'noopener';
+                linksDiv.appendChild(link);
+                if (i < linked.length - 1) {
+                    linksDiv.appendChild(document.createTextNode(', '));
+                }
+            });
+        });
     }
 
     // Create code block directly — textContent prevents browser from
