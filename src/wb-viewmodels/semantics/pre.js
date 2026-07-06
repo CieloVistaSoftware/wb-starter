@@ -29,7 +29,10 @@ export function pre(element, options = {}) {
     showLineNumbers: options.showLineNumbers ?? (element.hasAttribute('data-show-line-numbers') || element.hasAttribute('data-line-numbers')),
     showCopy: options.showCopy ?? (element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
     maxHeight: options.maxHeight || element.dataset.maxHeight || '',
-    wrap: options.wrap ?? (element.hasAttribute('data-wrap') ? element.dataset.wrap !== 'false' : defaultWrap),
+    // v3: plain `wrap` attribute is canonical; data-wrap accepted for back-compat.
+    wrap: options.wrap ?? (element.hasAttribute('wrap')
+      ? element.getAttribute('wrap') !== 'false'
+      : (element.hasAttribute('data-wrap') ? element.dataset.wrap !== 'false' : defaultWrap)),
     scrollable: scrollable,
     size: options.size || element.dataset.size || 'md',
     ...options

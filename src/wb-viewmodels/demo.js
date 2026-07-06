@@ -209,7 +209,7 @@ export async function demo(element, options = {}) {
     pre.setAttribute('x-behavior', 'pre');
     pre.dataset.language = 'html';
     pre.dataset.showCopy = 'true';
-    pre.dataset.wrap = 'true'; // Standard §6: wrap, never a horizontal scrollbar
+    pre.setAttribute('wrap', 'true'); // Standard §6: wrap, never a horizontal scrollbar (plain v3 attr)
 
     const code = document.createElement('code');
     code.className = 'language-html';
