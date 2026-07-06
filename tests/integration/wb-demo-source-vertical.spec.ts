@@ -18,11 +18,13 @@ test.describe('wb-demo source is vertical + never horizontally scrolls (#254, #2
         .map((el, i) => ({
           i,
           hScroll: el.scrollWidth > el.clientWidth + 2,
+          centered: getComputedStyle(el).textAlign === 'center',
           whiteSpace: getComputedStyle(el).whiteSpace,
         }))
-        .filter((x) => x.hScroll)
+        // §5: code is left-aligned, never centered; §6: never horizontally scrolls.
+        .filter((x) => x.hScroll || x.centered)
     );
-    expect(offenders, `wb-demo source panels that horizontally scroll:\n${JSON.stringify(offenders, null, 2)}`).toEqual([]);
+    expect(offenders, `wb-demo source panels that scroll or are center-aligned:\n${JSON.stringify(offenders, null, 2)}`).toEqual([]);
   });
 
   test('§5 — a multi-attribute element renders one attribute per line', async ({ page }) => {

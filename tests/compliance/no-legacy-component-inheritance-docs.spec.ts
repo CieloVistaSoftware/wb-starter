@@ -57,8 +57,13 @@ test.describe('docs must not teach legacy component inheritance', () => {
     // Schema inheritance ($inherits / *.schema.json / the "lowest schema wins"
     // hierarchy) is a legitimate, unrelated concept — never a component-class tell.
     const SCHEMA_LINE = /\$inherits|schema\.json|\.schema\b|schema\s+inheritance/i;
+    // The standards docs DEFINE the anti-pattern — they legitimately quote the
+    // forbidden phrases ("Why Inheritance Matters", "is-a", …) in order to forbid
+    // them. Don't flag the rule-defining docs against their own rule.
+    const RULE_DEFINING = /standards\/(DEMOS-AND-DOCS-STANDARDS|V3-STANDARDS)\.md$/;
     const offenders: string[] = [];
     for (const rel of mdFiles()) {
+      if (RULE_DEFINING.test(rel.replace(/\\/g, '/'))) continue;
       const lines = fs.readFileSync(path.join(ROOT, rel), 'utf8').split(/\r?\n/);
       for (let i = 0; i < lines.length; i++) {
         if (SCHEMA_LINE.test(lines[i])) continue;
