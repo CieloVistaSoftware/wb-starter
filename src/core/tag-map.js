@@ -13,6 +13,9 @@
 // Source: Each filename in src/wb-models/ without extension and .schema
 
 export const elementMap = {
+  // Layout — wb-column is a vertical stack (behavior, not a class that extends
+  // HTMLElement; v3). The <wb-column> custom element was removed.
+  'wb-column': 'stack',
   // Components
   'wb-alert': 'alert',
   'wb-article': 'article',

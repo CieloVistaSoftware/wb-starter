@@ -44,7 +44,8 @@ import '../wb-viewmodels/wb-grid.js';
 import '../wb-viewmodels/wb-cluster.js';
 import '../wb-viewmodels/wb-stack.js';
 import '../wb-viewmodels/wb-row.js';
-import '../wb-viewmodels/wb-column.js';
+// wb-column is a BEHAVIOR (stack), not a class that `extends HTMLElement` (v3).
+// Mapped wb-column → stack in tag-map.js / wb-lazy.js.
 import '../wb-viewmodels/wb-search.js';
 import '../wb-viewmodels/wb-accordion.js';
 import '../wb-viewmodels/wb-demo.js';

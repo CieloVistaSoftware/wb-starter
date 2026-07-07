@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Accordion fixture</title>
+  <link rel="stylesheet" href="/src/styles/themes.css">
+  <link rel="stylesheet" href="/src/styles/behaviors/accordion.css">
+</head>
+<body>
+  <!-- Authored in static HTML so all children are parsed BEFORE WB defines the
+       wb-accordion element (the custom element builds on connect from its
+       accordion-title children). Plain v3 attribute, not data-*. -->
+  <wb-accordion id="acc">
+    <div accordion-title="What is wb-starter?"><p>A zero-build web component library.</p></div>
+    <div accordion-title="How do I install it?"><p>No install — include the script.</p></div>
+    <div accordion-title="Is it production ready?"><p>Yes.</p></div>
+  </wb-accordion>
+
+  <script type="module">
+    import WB from '/src/core/wb.js';
+    window.__wbDone = false;
+    WB.init({ autoInject: true }).then(() => WB.scan(document.body)).then(() => { window.__wbDone = true; });
+  </script>
+</body>
+</html>

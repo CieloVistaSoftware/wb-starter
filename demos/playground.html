@@ -68,6 +68,17 @@
     </div>
   </div>
 
+  <!-- Appears when a previewed <form> is submitted: what an endpoint would receive. -->
+  <div class="pg-panel" id="pg-endpoint" hidden style="margin-top: 1.5rem;">
+    <div class="pg-panel__head">
+      <span>📮 Endpoint sees</span>
+      <span class="pg-hint" id="pg-endpoint-meta"></span>
+    </div>
+    <div id="pg-endpoint-body" style="padding: 1rem; background: var(--bg-primary);
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.85rem;
+      line-height: 1.6; overflow-x: auto;"></div>
+  </div>
+
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
 
@@ -80,17 +91,17 @@
       '<form>',
       '  <label>',
       '    Full Name',
-      '    <input type="text" placeholder="John Doe" required>',
+      '    <input type="text" name="fullName" placeholder="John Doe" required>',
       '  </label>',
       '',
       '  <label>',
       '    Email Address',
-      '    <input type="email" placeholder="john@example.com" required>',
+      '    <input type="email" name="email" placeholder="john@example.com" required>',
       '  </label>',
       '',
       '  <label>',
       '    Department',
-      '    <select>',
+      '    <select name="department">',
       '      <option>Engineering</option>',
       '      <option>Design</option>',
       '      <option>Marketing</option>',
@@ -100,18 +111,18 @@
       '',
       '  <label>',
       '    Bio',
-      '    <textarea rows="3" placeholder="Tell us about yourself..."><' + '/textarea>',
+      '    <textarea name="bio" rows="3" placeholder="Tell us about yourself..."><' + '/textarea>',
       '  </label>',
       '',
       '  <label>',
       '    Experience Level',
-      '    <input type="range" min="0" max="10" value="5">',
+      '    <input type="range" name="experience" min="0" max="10" value="5">',
       '  </label>',
       '',
       '  <fieldset>',
       '    <legend>Preferences</legend>',
-      '    <label><input type="checkbox" checked> Remote</label>',
-      '    <label><input type="checkbox"> Relocation</label>',
+      '    <label><input type="checkbox" name="remote" checked> Remote</label>',
+      '    <label><input type="checkbox" name="relocation"> Relocation</label>',
       '  </fieldset>',
       '',
       '  <fieldset>',
@@ -153,8 +164,46 @@
       }
     }
 
+    // When a previewed <form> is submitted, DON'T navigate — show exactly what an
+    // endpoint would receive (method, action, fields, urlencoded body, JSON).
+    const endpointPanel = document.getElementById('pg-endpoint');
+    const endpointBody = document.getElementById('pg-endpoint-body');
+    const endpointMeta = document.getElementById('pg-endpoint-meta');
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    preview.addEventListener('submit', (e) => {
+      const form = e.target.closest && e.target.closest('form');
+      if (!form) return;
+      e.preventDefault();
+      const method = (form.getAttribute('method') || 'GET').toUpperCase();
+      const action = form.getAttribute('action') || '(none — posts to same URL)';
+      const enctype = form.getAttribute('enctype') || 'application/x-www-form-urlencoded';
+
+      const entries = [...new FormData(form).entries()];
+      const obj = {};
+      for (const [k, v] of entries) obj[k] = (k in obj) ? [].concat(obj[k], v) : v;
+      const body = new URLSearchParams(entries.map(([k, v]) => [k, typeof v === 'string' ? v : v.name])).toString();
+      const unnamed = form.querySelectorAll(
+        'input:not([name]):not([type=submit]):not([type=button]):not([type=reset]), select:not([name]), textarea:not([name])'
+      ).length;
+
+      endpointMeta.textContent = `${method} ${action}`;
+      endpointBody.innerHTML =
+        `<div style="color:var(--text-secondary)"># ${esc(method)} ${esc(action)} · ${esc(enctype)}</div>` +
+        (entries.length
+          ? `<div style="margin:0.75rem 0"><strong>Fields</strong><br>` +
+              entries.map(([k, v]) => `&nbsp;&nbsp;${esc(k)} = <span style="color:var(--success-color)">${esc(typeof v === 'string' ? v : '(file) ' + v.name)}</span>`).join('<br>') +
+            `</div><div style="margin:0.75rem 0"><strong>Request body</strong><br>&nbsp;&nbsp;${esc(body)}</div>` +
+            `<div><strong>As JSON</strong><pre style="margin:0.25rem 0 0;white-space:pre-wrap">${esc(JSON.stringify(obj, null, 2))}</pre></div>`
+          : `<div style="color:var(--warning-color)">No named fields — a browser only submits controls that have a <code>name</code> attribute.</div>`) +
+        (unnamed ? `<div style="color:var(--warning-color);margin-top:0.5rem">⚠ ${unnamed} control(s) without <code>name</code> were omitted.</div>` : '');
+      endpointPanel.hidden = false;
+      endpointPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
     document.getElementById('pg-render').addEventListener('click', render);
     document.getElementById('pg-clear').addEventListener('click', () => {
+      endpointPanel.hidden = true;
       input.value = '';
       preview.innerHTML = '';
       errorBox.hidden = true;

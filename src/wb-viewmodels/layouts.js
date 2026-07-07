@@ -135,6 +135,11 @@ export function container(element, options = {}) {
 export function stack(element, options = {}) {
   const config = {
     gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
+    // Parity with the retired <wb-column> custom element (v3: behavior, not a
+    // class that `extends HTMLElement`). These are optional.
+    justify: options.justify || element.getAttribute('justify') || '',
+    align: options.align || element.getAttribute('align') || '',
+    wrap: options.wrap || element.getAttribute('wrap') || '',
     ...options
   };
 
@@ -142,6 +147,9 @@ export function stack(element, options = {}) {
   element.style.display = 'flex';
   element.style.flexDirection = 'column';
   element.style.gap = config.gap;
+  if (config.justify) element.style.justifyContent = config.justify;
+  if (config.align) element.style.alignItems = config.align;
+  if (config.wrap) element.style.flexWrap = config.wrap;
 
   return () => element.classList.remove('wb-stack');
 }
