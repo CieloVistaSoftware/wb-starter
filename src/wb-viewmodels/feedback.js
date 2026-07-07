@@ -73,21 +73,42 @@ export function toast(element, options = {}) {
 export function badge(element, options = {}) {
   const variant = (options.variant || element.getAttribute('variant') || element.getAttribute('badge') || 'default')
     .replace(/\s+/g, '-').toLowerCase();
+  const label = options.label ?? element.getAttribute('label');
+  const size = options.size || element.getAttribute('size');
   const pill = options.pill ?? element.hasAttribute('pill');
   const dot = options.dot ?? element.hasAttribute('dot');
   const outline = options.outline ?? element.hasAttribute('outline');
+  const removable = options.removable ?? element.hasAttribute('removable');
 
-  if (dot) element.textContent = '';
-
-  // Badge is a custom element — no classes needed if CSS targets wb-badge[variant="x"]
-  // But badge can also be applied via [badge] attribute on any element, so we need classes
   element.classList.add('wb-badge', `wb-badge--${variant}`);
+  if (size && ['xs', 'sm', 'md', 'lg'].includes(size)) element.classList.add(`wb-badge--${size}`);
   if (pill) element.classList.add('wb-badge--pill');
   if (dot) element.classList.add('wb-badge--dot');
   if (outline) element.classList.add('wb-badge--outline');
 
+  if (dot) {
+    element.textContent = ''; // a dot badge has no text
+  } else {
+    // Render the `label` attribute as the badge text — but only if the author
+    // didn't already put content inside the tag (children win over label).
+    if (label != null && label !== '' && !element.textContent.trim()) {
+      element.textContent = label;
+    }
+    // removable → append a × button that removes the badge.
+    if (removable && !element.querySelector('.wb-badge__remove')) {
+      element.classList.add('wb-badge--removable');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'wb-badge__remove';
+      btn.setAttribute('aria-label', 'Remove');
+      btn.textContent = '×';
+      btn.addEventListener('click', (e) => { e.stopPropagation(); element.remove(); });
+      element.appendChild(btn);
+    }
+  }
+
   return () => {
-    element.classList.remove('wb-badge', `wb-badge--${variant}`, 'wb-badge--pill', 'wb-badge--dot', 'wb-badge--outline');
+    element.classList.remove('wb-badge', `wb-badge--${variant}`, 'wb-badge--pill', 'wb-badge--dot', 'wb-badge--outline', 'wb-badge--removable');
   };
 }
 
