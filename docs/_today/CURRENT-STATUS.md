@@ -1,3 +1,29 @@
+# 🅿️ PARKING LOT (2026-07-07)
+
+**Task:** Rapid QA sweep — badge/card/hero/data-*/slots + playground; the big win was finally killing the #202 card duplicate-title.
+
+**Landed & pushed to main today (each verified):**
+- `4d3d091`+`f62de14` **#202 CLOSED for real** — card renders title/footer ONCE. Root cause: 3 legacy MVVM `.card__*` renderers (schema $view, views-registry "card" template, partial) competed with card.js `.wb-card__*` and nested → 4× title, ONLY on schema-processed pages (x-schema="card"). Fix: $view→[], views-registry card→passthrough, card.js unwraps legacy .card. **Always-run regression** in `tests/integration/card-no-duplicate-content.spec.ts` asserts on the SCHEMA page (the gap that let it recur). Verified maxTitleRepeat 1, [1,1,1], 0 legacy titles.
+- `82326cc` badge label/size/removable work + fit-content (§19 test)
+- `4539508` **data-* purge** 236→14 (plain v3, no dual-read; triggers→x-, config→plain; range/input/table read plain only); demos-no-legacy-data-attrs now catches BOOLEAN data-*
+- `1c2bf16` cardhero rebuilt (theme-driven gradient, no literals; +--overlay-dark/light-hsl tokens)
+- `a92377e`…`77d6adb` playground: paste→render, endpoint view, theme control, click→jump-to-source, Format, Copy, fluent toolbar, 50 cards/20 heroes/50 badges dropdown, hero CTAs→docs
+- Audits committed: `scripts/audit-hardcoded-colors.mjs` (1244 literals, report), `scripts/audit-data-attrs.mjs`, `scripts/audit-slots.mjs` (244 slot refs + retirement plan), `scripts/demo-coverage.mjs` (42 tags with NO demo)
+- `0b940c0` slot audit; §16–§21 added to DEMOS-AND-DOCS-STANDARDS
+
+**CI:** f62de14 IN PROGRESS at park time — prior red was the badge hsl() literal (fixed → var(--bg-tertiary)) + pre-existing behaviors quarantines (#277 auto-injection-compliance rewritten, #290 autoinject.spec stale IDs). WATCH it (`gh run watch`) — confirm green.
+
+**Next step (pick up here):**
+1. Confirm f62de14 CI is green; if red, read the failure (likely another pre-existing behaviors stale test) and quarantine+file.
+2. **#292** right-click-copy in playground doesn't grab markup — fix (prefer element.outerHTML; #291 x-copybutton could power it).
+3. **Retire slots** (docs/_today/slot-audit.md) — schema-builder.js/wb-views.js machinery; this is the same system behind #202. Then gate with a no-slots test.
+4. **Issue triage** — ~55 open (#202–#292). Close what's fixed (variants, wrap, popover, cardhero, playground, data-*, badge), dedupe (#259↔#284), set priorities.
+5. Backlog: #282 card size, #283 card tooltip/hoverable, #268 demos redo, #285 pre.js inline-style bloat, #291 x-copybutton, #281 wb-grid, #286 x-* table, #272 shell tags.
+
+**Open questions:** x-label intent (#287 — explicit markup vs styled control). Card size (#282) — what should "size" mean for a card.
+
+---
+
 # 🅿️ PARKING LOT (2026-07-05)
 
 **Task:** Standards-driven QA sweep — demo/doc rules codified + backlog burn-down.
