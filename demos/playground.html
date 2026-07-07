@@ -351,7 +351,7 @@
     }
     setSortModes(EXAMPLE_SORT_MODES.form); // initial content is the sample form
 
-    document.getElementById('pg-sort').addEventListener('change', (e) => {
+    document.getElementById('pg-sort').addEventListener('change', async (e) => {
       const mode = e.target.value;
       e.target.value = ''; // reset to placeholder
       if (!mode) return;
@@ -363,7 +363,10 @@
       input.value = chunks.join('\n');
       endpointPanel.hidden = true;
       fitEditor();
-      render();
+      await render();
+      // A re-sorted preview should always start scrolled to its top.
+      preview.scrollTop = 0;
+      preview.closest('.pg-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     preview.addEventListener('click', (e) => {
