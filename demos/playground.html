@@ -81,7 +81,6 @@
           <button id="pg-format" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);"
             title="Format vertically (one attribute per line)">⭹ Format</button>
-          <button id="pg-render" class="pg-btn" type="button">Render ▶</button>
           <button id="pg-copy" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);" title="Copy the HTML (or right-click a preview element)">📋 Copy</button>
         </span>
@@ -527,7 +526,6 @@
       preview.closest('.pg-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    document.getElementById('pg-render').addEventListener('click', render);
     const copyBtn = document.getElementById('pg-copy');
     copyBtn.addEventListener('click', async () => {
       try {
