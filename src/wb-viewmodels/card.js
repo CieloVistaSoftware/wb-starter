@@ -136,8 +136,12 @@ export function cardBase(element, options = {}) {
     display: 'flex',
     flexDirection: 'column',
     contain: 'layout paint', // Performance optimization
-    overflowWrap: 'anywhere', // Ensure text wraps
-    wordBreak: 'break-word'   // Ensure text wraps
+    // break-word (not anywhere/break-word together) only breaks a word as a
+    // last resort when it can't fit a line alone — `word-break: break-word`
+    // forces the same over-eager mid-word breaking as `anywhere` even when
+    // the whole word would fit by wrapping normally (e.g. a hero title
+    // splitting "configure" into "configur" + "e").
+    overflowWrap: 'break-word'
   };
 
   // Glass variant overrides

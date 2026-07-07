@@ -48,8 +48,12 @@
        don't sit flush on top of each other. */
     #pg-preview > * + * { margin-top: 1rem; }
     #pg-preview > wb-card, #pg-preview > [class*="wb-card"] { display: block; }
-    /* The preview is arbitrary pasted HTML — let long content wrap, never overflow. */
-    #pg-preview, #pg-preview * { max-width: 100%; overflow-wrap: anywhere; }
+    /* The preview is arbitrary pasted HTML — let long content wrap, never overflow.
+       `anywhere` (not `break-word`) is wrong here: it lets the browser break a
+       word mid-character even when the whole word would fit on the next line
+       (e.g. a hero title wrapping "config" + "ure" instead of just moving
+       "configure" down) — `break-word` only breaks as a last resort. */
+    #pg-preview, #pg-preview * { max-width: 100%; overflow-wrap: break-word; }
 
     .pg-btn { padding: 0.4rem 0.9rem; border-radius: 6px; border: 1px solid var(--border-color);
       background: var(--primary); color: var(--text-on-accent, #fff); cursor: pointer;
@@ -91,7 +95,7 @@
       <div class="pg-panel__head">
         <span class="pg-panel__label">Preview</span>
         <span class="pg-toolbar">
-          <wb-themecontrol id="pg-themecontrol" data-show-label="false"></wb-themecontrol>
+          <wb-themecontrol id="pg-themecontrol" show-label="false"></wb-themecontrol>
           <select id="pg-sort" class="pg-btn" title="Sort the previewed elements"
             style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
             <option value="">↕ Sort by…</option>

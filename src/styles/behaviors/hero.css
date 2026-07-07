@@ -19,6 +19,12 @@ wb-cardhero {
      neighbouring cards (e.g. the overlay card in the components demo).
      Opt into edge-to-edge with the .wb-cardhero--fullbleed modifier instead. */
   width: 100%;
+  /* Title/subtitle size off the hero's OWN width (cqi), not the viewport
+     (vw) — a hero embedded in a narrow column (2-up grid, sidebar) is far
+     narrower than the viewport, and vw-sized text ignores that entirely,
+     forcing genuine mid-word breaks because the font is simply too big for
+     the box it's actually in. */
+  container-type: inline-size;
   position: relative;
   display: flex;
   align-items: center;
@@ -99,14 +105,14 @@ wb-cardhero .wb-card__hero-title {
   margin: 0;
   font-weight: 800;
   line-height: 1.05;
-  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-size: clamp(2rem, 6cqi, 3.5rem);
   letter-spacing: -0.01em;
   text-shadow: 0 2px 14px hsl(var(--overlay-dark-hsl) / 0.35);
 }
 
 wb-cardhero .wb-card__hero-subtitle {
   margin: 0.75rem 0 0;
-  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-size: clamp(1rem, 2.5cqi, 1.35rem);
   line-height: 1.5;
   opacity: 0.94;
   text-shadow: 0 1px 8px hsl(var(--overlay-dark-hsl) / 0.3);

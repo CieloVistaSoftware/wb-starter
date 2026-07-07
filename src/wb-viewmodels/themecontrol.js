@@ -38,10 +38,10 @@ const THEMES = [
 
 export function themecontrol(element, options = {}) {
   const config = {
-    target: options.target || element.dataset.target || 'html',
-    default: options.default || element.dataset.default || 'dark',
-    showLabel: options.showLabel ?? (element.dataset.showLabel !== 'false'),
-    persist: options.persist ?? (element.dataset.persist !== 'false'),
+    target: options.target || element.getAttribute('target') || 'html',
+    default: options.default || element.getAttribute('default') || 'dark',
+    showLabel: options.showLabel ?? (element.getAttribute('show-label') !== 'false'),
+    persist: options.persist ?? (element.getAttribute('persist') !== 'false'),
     ...options
   };
 
