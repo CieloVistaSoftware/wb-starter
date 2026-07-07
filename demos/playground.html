@@ -267,13 +267,21 @@
       if (!node) return;
       const idx = Array.prototype.indexOf.call(preview.children, node);
       if (idx < 0) return;
-      const offset = topLevelElementOffset(input.value, idx);
-      if (offset < 0) return;
-      const line = input.value.slice(0, offset).split('\n').length - 1;
+      const start = topLevelElementOffset(input.value, idx);
+      if (start < 0) return;
+      const nextStart = topLevelElementOffset(input.value, idx + 1);
+      const end = (nextStart < 0 ? input.value.length : nextStart);
+      const markup = input.value.slice(start, end).replace(/\s+$/, '');
+      const line = input.value.slice(0, start).split('\n').length - 1;
       const lineHeight = parseFloat(getComputedStyle(input).lineHeight) || 20;
+      // Jump to + SELECT the element's markup, and copy it automatically.
       input.focus();
-      input.setSelectionRange(offset, offset);
+      input.setSelectionRange(start, start + markup.length);
       input.scrollTop = Math.max(0, line * lineHeight - 8);
+      navigator.clipboard.writeText(markup).then(() => {
+        const cb = document.getElementById('pg-copy');
+        if (cb) { const o = cb.textContent; cb.textContent = '✓ Copied'; setTimeout(() => { cb.textContent = o; }, 1200); }
+      }).catch(() => {});
     });
 
     // Right-click a preview element → copy its SOURCE markup to the clipboard.
