@@ -80,10 +80,6 @@
             <option value="heroes">20 card heroes</option>
             <option value="badges">50 badges</option>
           </select>
-          <select id="pg-sort" class="pg-btn" title="Sort the previewed elements"
-            style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
-            <option value="">↕ Sort by…</option>
-          </select>
           <button id="pg-format" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);"
             title="Format vertically (one attribute per line)">⭹ Format</button>
@@ -95,7 +91,16 @@
       <textarea id="pg-input" x-ignore spellcheck="false" aria-label="HTML input"></textarea>
     </div>
     <div class="pg-panel">
-      <div class="pg-panel__head"><span>Preview</span><span class="pg-hint">live</span></div>
+      <div class="pg-panel__head">
+        <span class="pg-panel__label">Preview</span>
+        <span class="pg-toolbar">
+          <select id="pg-sort" class="pg-btn" title="Sort the previewed elements"
+            style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
+            <option value="">↕ Sort by…</option>
+          </select>
+          <span class="pg-hint">live</span>
+        </span>
+      </div>
       <div id="pg-error" class="pg-error" hidden></div>
       <div id="pg-preview"></div>
     </div>
@@ -516,7 +521,7 @@
       return out.join('\n');
     }
 
-    document.getElementById('pg-examples').addEventListener('change', (e) => {
+    document.getElementById('pg-examples').addEventListener('change', async (e) => {
       const which = e.target.value;
       if (!which) return;
       if (which === 'form') input.value = SAMPLE;
@@ -527,7 +532,11 @@
       e.target.value = ''; // reset to placeholder
       endpointPanel.hidden = true;
       fitEditor();
-      render();
+      await render();
+      // A freshly loaded example should always start scrolled to its top,
+      // whether the preview pane itself had scrolled or the whole page had.
+      preview.scrollTop = 0;
+      preview.closest('.pg-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     document.getElementById('pg-render').addEventListener('click', render);
