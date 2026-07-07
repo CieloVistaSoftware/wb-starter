@@ -49,6 +49,10 @@ test.describe('Fix Viewer Compliance', () => {
       });
 
       await page.goto('/public/fix-viewer.html');
+      // Wait for the mocked fixes to fetch + render before any assertion — under
+      // full-suite load the cards weren't painted yet, so assertions raced and
+      // flaked (passed in isolation, failed under load).
+      await page.waitForSelector('.fix-card', { timeout: 15000 });
     });
 
     test('should load and display fixes', async ({ page }) => {

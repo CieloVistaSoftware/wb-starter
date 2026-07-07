@@ -46,7 +46,7 @@ function extractDemoBlock(source, idx) {
 // each element on its own line, its children indented, and a multi-attribute
 // element gets ONE ATTRIBUTE PER LINE — never a single long horizontal line.
 // Parses via a <template> (robust for nested/void elements) and re-serializes.
-function formatHtml(raw) {
+export function formatHtml(raw) {
     const src = String(raw == null ? '' : raw).trim();
     if (!src) return '';
     const VOID = new Set(['br','hr','img','input','meta','link','area','base','col','embed','source','track','wbr']);

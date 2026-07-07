@@ -55,7 +55,28 @@
   background: var(--bg-tertiary);
   font-size: 0.875rem;
   color: var(--text-secondary);
+  text-align: left; /* match the header + body — never centered */
 }
+
+/* Semantic variants — a left accent bar in the variant's theme color so the card
+   visibly reads as success/danger/etc. (variant="success" added .wb-card--success
+   but nothing styled it). Colors come from the theme — no literals.
+   Doubled selector (.wb-card.wb-card--success → 0,2,0) so it outranks the
+   single-class .wb-card--hoverable / .wb-card--auto border rules. */
+/* !important: the .wb-card--hoverable/--auto rules reset `border` (shorthand)
+   after these, so the semantic accent must be marked to always win. */
+.wb-card.wb-card--success { border-left: 4px solid var(--success-color) !important; }
+.wb-card.wb-card--danger  { border-left: 4px solid var(--danger-color) !important; }
+.wb-card.wb-card--warning { border-left: 4px solid var(--warning-color) !important; }
+.wb-card.wb-card--info    { border-left: 4px solid var(--info-color) !important; }
+.wb-card.wb-card--primary { border-left: 4px solid var(--primary) !important; }
+/* Tint the title to match, so the variant reads at a glance. !important because
+   the title carries an inline color (STYLE_TITLE in card.js). */
+.wb-card.wb-card--success .wb-card__title { color: var(--success-color) !important; }
+.wb-card.wb-card--danger  .wb-card__title { color: var(--danger-color) !important; }
+.wb-card.wb-card--warning .wb-card__title { color: var(--warning-color) !important; }
+.wb-card.wb-card--info    .wb-card__title { color: var(--info-color) !important; }
+.wb-card.wb-card--primary .wb-card__title { color: var(--primary) !important; }
 
 /* Cards WITHOUT header/main/footer need padding on the card itself */
 .wb-card:not(:has(.wb-card__header)):not(:has(.wb-card__main)) {

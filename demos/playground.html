@@ -56,7 +56,15 @@
         <span style="display:flex; gap:0.5rem;">
           <button id="pg-clear" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);">Clear</button>
+          <button id="pg-cards" class="pg-btn" type="button"
+            style="background:var(--bg-tertiary); color:var(--text-primary);"
+            title="Load 50 card variations">🎴 50 Cards</button>
+          <button id="pg-format" class="pg-btn" type="button"
+            style="background:var(--bg-tertiary); color:var(--text-primary);"
+            title="Format vertically (one attribute per line)">⭹ Format</button>
           <button id="pg-render" class="pg-btn" type="button">Render ▶</button>
+          <button id="pg-copy" class="pg-btn" type="button"
+            style="background:var(--bg-tertiary); color:var(--text-primary);" title="Copy the HTML">📋 Copy</button>
         </span>
       </div>
       <textarea id="pg-input" x-ignore spellcheck="false" aria-label="HTML input"></textarea>
@@ -81,6 +89,7 @@
 
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
+    import { formatHtml } from '../src/wb-viewmodels/demo.js';
 
     const input = document.getElementById('pg-input');
     const preview = document.getElementById('pg-preview');
@@ -201,7 +210,44 @@
       endpointPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
 
+    // Format the buffer to our vertical rules (§5): one attribute per line for
+    // multi-attribute tags, short tags on one line. Re-renders after.
+    function formatInput() {
+      const formatted = formatHtml(input.value);
+      if (formatted) {
+        input.value = formatted;
+        fitEditor();
+        render();
+      }
+    }
+    document.getElementById('pg-format').addEventListener('click', formatInput);
+
+    // Load 50 varied card types so all variants/sizes/states can be seen at once.
+    document.getElementById('pg-cards').addEventListener('click', () => {
+      const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
+      const S = ['xs', 'sm', 'md', 'lg', 'xl'];
+      const EXTRA = ['', ' elevated', ' hoverable', ' footer="Footer"', ' subtitle="Subtitle"', ' badge="New"'];
+      const out = [];
+      for (let i = 0; i < 50; i++) {
+        const v = V[i % V.length], s = S[i % S.length], extra = EXTRA[i % EXTRA.length];
+        out.push(`<wb-card title="#${i + 1} ${v}/${s}" variant="${v}" size="${s}"${extra}>Body ${i + 1}</wb-card>`);
+      }
+      input.value = out.join('\n');
+      endpointPanel.hidden = true;
+      fitEditor();
+      render();
+    });
+
     document.getElementById('pg-render').addEventListener('click', render);
+    const copyBtn = document.getElementById('pg-copy');
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(input.value);
+        const orig = copyBtn.textContent;
+        copyBtn.textContent = '✓ Copied';
+        setTimeout(() => { copyBtn.textContent = orig; }, 1500);
+      } catch (e) { /* clipboard blocked — no-op */ }
+    });
     document.getElementById('pg-clear').addEventListener('click', () => {
       endpointPanel.hidden = true;
       input.value = '';
