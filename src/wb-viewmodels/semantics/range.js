@@ -9,11 +9,12 @@ export function range(element, options = {}) {
     return () => {};
   }
 
+  // v3: plain attributes only — no legacy data-* fallback.
   const config = {
-    showValue: options.showValue ?? element.hasAttribute('data-show-value'),
-    showLabels: options.showLabels ?? element.hasAttribute('data-show-labels'),
-    valuePrefix: options.valuePrefix || element.dataset.valuePrefix || '',
-    valueSuffix: options.valueSuffix || element.dataset.valueSuffix || '',
+    showValue: options.showValue ?? element.hasAttribute('show-value'),
+    showLabels: options.showLabels ?? element.hasAttribute('show-labels'),
+    valuePrefix: options.valuePrefix || element.getAttribute('value-prefix') || '',
+    valueSuffix: options.valueSuffix || element.getAttribute('value-suffix') || '',
     ...options
   };
 

@@ -420,9 +420,9 @@
           const prop = props[key];
           if (prop.default !== undefined && prop.default !== null) {
             if (typeof prop.default === 'boolean') {
-              if (prop.default) exampleHTML += ` data-wb-${key}`;
+              if (prop.default) exampleHTML += ` wb-${key}`;
             } else if (typeof prop.default !== 'object') {
-              exampleHTML += ` data-wb-${key}="${prop.default}"`;
+              exampleHTML += ` wb-${key}="${prop.default}"`;
             }
           }
         });

@@ -39,11 +39,12 @@ function demoFiles(): string[] {
   return out;
 }
 
-// data-* attribute names actually used as attributes (name followed by = or />
-// or whitespace-then-close). Matches real markup, not prose.
+// Any data-* config token — valued (data-variant="…") OR boolean (data-autosize).
+// The old `(?==)` guard missed boolean attributes, which is how demos kept
+// slipping through. data-theme is the only allowed framework hook.
 function offenders(content: string): string[] {
   const found: string[] = [];
-  for (const m of content.matchAll(/\bdata-([a-z][a-z0-9-]*)(?==)/gi)) {
+  for (const m of content.matchAll(/\bdata-([a-z][a-z0-9-]*)/gi)) {
     const name = ('data-' + m[1]).toLowerCase();
     if (!ALLOWED.has(name)) found.push(name);
   }

@@ -95,9 +95,9 @@
             'x-ripple': '',
             'x-tooltip': '',
             'x-toast': '',
-            'data-tooltip': 'I am a React button!',
-            'data-message': `Count is now ${count + 1}`,
-            'data-type': 'info',
+            'x-tooltip': 'I am a React button!',
+            'message': `Count is now ${count + 1}`,
+            'type': 'info',
             onClick: () => setCount(c => c + 1)
           }, 'Increment + WB Magic ✨')
         ]);
@@ -131,9 +131,9 @@ function ReactApp() {
       'x-ripple': '',
       'x-tooltip': '',
       'x-toast': '',
-      'data-tooltip': 'I am a React button!',
-      'data-message': `Count is now ${count + 1}`,
-      'data-type': 'info',
+      'x-tooltip': 'I am a React button!',
+      'message': `Count is now ${count + 1}`,
+      'type': 'info',
       onClick: () => setCount(c => c + 1)
     }, 'Increment + WB Magic ✨')
   ]);
@@ -282,7 +282,7 @@ import WB from 'wb-behaviors';
     &lt;button 
       class="wb-btn-gradient"
       x-ripple x-tooltip
-      [attr.data-tooltip]="'Count: ' + count"
+      [attr.x-tooltip]="'Count: ' + count"
       (click)="increment()"&gt;
       Angular Button
     &lt;/button&gt;

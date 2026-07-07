@@ -49,9 +49,9 @@
     <h3>Button with Behaviors</h3>
     <wb-demo>
       <button class="wb-btn wb-btn--primary" x-ripple>With Ripple</button>
-      <button class="wb-btn wb-btn--primary" x-toast data-message="Action completed!" data-type="success">With
+      <button class="wb-btn wb-btn--primary" x-toast message="Action completed!" type="success">With
         Toast</button>
-      <button class="wb-btn wb-btn--primary" x-tooltip="Helpful hint!" data-position="top">With Tooltip</button>
+      <button class="wb-btn wb-btn--primary" x-tooltip="Helpful hint!" position="top">With Tooltip</button>
     </wb-demo>
   </section>
 
@@ -81,15 +81,15 @@
 
     <h3>Masked Inputs</h3>
     <div class="demo-grid-3">
-      <input x-masked data-mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
-      <input x-masked data-mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
-      <input x-masked data-mask="9999 9999 9999 9999" placeholder="Credit Card">
+      <input x-masked mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
+      <input x-masked mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
+      <input x-masked mask="9999 9999 9999 9999" placeholder="Credit Card">
       </wb-demo>
 
       <h3>Textarea</h3>
       <div class="demo-grid-2">
         <textarea placeholder="Standard textarea" rows="3"></textarea>
-        <textarea data-autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>
+        <textarea x-autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>
       </div>
   </section>
 
@@ -148,7 +148,7 @@
 
     <h3>Stepper & Range</h3>
     <wb-demo>
-      <div x-stepper data-value="5" data-min="0" data-max="10"></div>
+      <div x-stepper value="5" min="0" max="10"></div>
       <input type="range" min="0" max="100" value="50">
     </wb-demo>
   </section>
@@ -223,10 +223,10 @@
 
     <h3>Toast Notifications</h3>
     <wb-demo>
-      <button class="wb-btn wb-btn--primary" x-toast data-message="Info message" data-type="info">Info Toast</button>
-      <button class="wb-btn wb-btn--primary" x-toast data-message="Success!" data-type="success">Success Toast</button>
-      <button class="wb-btn wb-btn--primary" x-toast data-message="Warning!" data-type="warning">Warning Toast</button>
-      <button class="wb-btn wb-btn--primary" x-toast data-message="Error!" data-type="error">Error Toast</button>
+      <button class="wb-btn wb-btn--primary" x-toast message="Info message" type="info">Info Toast</button>
+      <button class="wb-btn wb-btn--primary" x-toast message="Success!" type="success">Success Toast</button>
+      <button class="wb-btn wb-btn--primary" x-toast message="Warning!" type="warning">Warning Toast</button>
+      <button class="wb-btn wb-btn--primary" x-toast message="Error!" type="error">Error Toast</button>
     </wb-demo>
   </section>
 
@@ -256,10 +256,10 @@
 
     <h3>Tooltips</h3>
     <wb-demo>
-      <button class="wb-btn wb-btn--secondary" x-tooltip="Top tooltip" data-position="top">Top</button>
-      <button class="wb-btn wb-btn--secondary" x-tooltip="Bottom tooltip" data-position="bottom">Bottom</button>
-      <button class="wb-btn wb-btn--secondary" x-tooltip="Left tooltip" data-position="left">Left</button>
-      <button class="wb-btn wb-btn--secondary" x-tooltip="Right tooltip" data-position="right">Right</button>
+      <button class="wb-btn wb-btn--secondary" x-tooltip="Top tooltip" position="top">Top</button>
+      <button class="wb-btn wb-btn--secondary" x-tooltip="Bottom tooltip" position="bottom">Bottom</button>
+      <button class="wb-btn wb-btn--secondary" x-tooltip="Left tooltip" position="left">Left</button>
+      <button class="wb-btn wb-btn--secondary" x-tooltip="Right tooltip" position="right">Right</button>
     </wb-demo>
 
     <h3>Popover</h3>
@@ -298,14 +298,14 @@
     <h3>Tabs</h3>
     <wb-demo>
       <wb-tabs>
-        <div data-tab-title="Overview">
+        <div tab-title="Overview">
           <p>This is the overview tab content. Tabs organize content into separate views with keyboard navigation.</p>
         </div>
-        <div data-tab-title="Features">
+        <div tab-title="Features">
           <p>Features include smooth transitions, responsive design, and full accessibility compliance.</p>
         </div>
-        <div data-tab-title="Usage">
-          <p>Simply wrap your content in a wb-tabs element with data-tab-title on each panel.</p>
+        <div tab-title="Usage">
+          <p>Simply wrap your content in a wb-tabs element with tab-title on each panel.</p>
         </div>
       </wb-tabs>
     </wb-demo>
@@ -326,17 +326,17 @@
 
     <h3>Breadcrumb</h3>
     <wb-demo>
-      <nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones"></nav>
+      <nav x-breadcrumb items="Home,Products,Electronics,Smartphones"></nav>
     </wb-demo>
 
     <h3>Pagination</h3>
     <wb-demo>
-      <nav x-pagination data-total="100" data-per-page="10" data-current="5"></nav>
+      <nav x-pagination total="100" per-page="10" current="5"></nav>
     </wb-demo>
 
     <h3>Steps Wizard</h3>
     <wb-demo>
-      <div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
+      <div x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div>
     </wb-demo>
   </section>
 
@@ -367,8 +367,8 @@
 
     <h3>Timeline</h3>
     <wb-demo>
-      <div x-timeline data-items="Project kickoff,Design phase,Development,Testing,Launch"></div>
-      <div x-timeline data-items="Project Phases Design,Development,Testing,Launch"></div>
+      <div x-timeline items="Project kickoff,Design phase,Development,Testing,Launch"></div>
+      <div x-timeline items="Project Phases Design,Development,Testing,Launch"></div>
     </wb-demo>
 
     <h3>Keyboard Keys</h3>
@@ -390,13 +390,13 @@
 
     <h3>Enhanced Images</h3>
     <wb-demo>
-      <img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" data-lazy class="demo-image">
-      <img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" data-zoomable class="demo-image">
+      <img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" lazy class="demo-image">
+      <img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" zoomable class="demo-image">
     </wb-demo>
 
     <h3>Gallery</h3>
     <wb-demo>
-      <div x-gallery data-columns="4">
+      <div x-gallery columns="4">
         <img src="https://picsum.photos/200/200?r=gal1" alt="Gallery 1">
         <img src="https://picsum.photos/200/200?r=gal2" alt="Gallery 2">
         <img src="https://picsum.photos/200/200?r=gal3" alt="Gallery 3">
@@ -413,7 +413,7 @@
 
     <h3>YouTube Embed</h3>
     <div class="demo-full youtube-container">
-      <div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
+      <div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div>
     </div>
   </section>
 
@@ -442,9 +442,9 @@
     <h3>Entrance Animations</h3>
     <wb-demo>
       <button class="effect-demo" x-fadein>Fadein</button>
-      <button class="effect-demo" x-slidein data-direction="left">Slidein Left</button>
-      <button class="effect-demo" x-slidein data-direction="right">Slidein Right</button>
-      <button class="effect-demo" x-slidein data-direction="up">Slidein Up</button>
+      <button class="effect-demo" x-slidein direction="left">Slidein Left</button>
+      <button class="effect-demo" x-slidein direction="right">Slidein Right</button>
+      <button class="effect-demo" x-slidein direction="up">Slidein Up</button>
       <button class="effect-demo" x-zoomin>Zoomin</button>
       <button class="effect-demo" x-flip>Flip</button>
     </wb-demo>
@@ -473,25 +473,25 @@
     </div>
 
     <wb-demo title="Copy functionality">
-      <button class="wb-btn wb-btn--primary" x-copy data-copy="Text copied to clipboard!">📋 Copy Text</button>
-      <button class="wb-btn wb-btn--primary" x-copy data-copy="npm install wb-framework">📋 Copy Command</button>
+      <button class="wb-btn wb-btn--primary" x-copy x-copy="Text copied to clipboard!">📋 Copy Text</button>
+      <button class="wb-btn wb-btn--primary" x-copy x-copy="npm install wb-framework">📋 Copy Command</button>
     </wb-demo>
 
     <h3>Share, Print & Fullscreen</h3>
     <wb-demo>
-      <button class="wb-btn wb-btn--secondary" x-share data-share-title="wb-starter"
-        data-share-url="https://example.com">📤 Share</button>
-      <button class="wb-btn wb-btn--secondary" x-print data-share-title="wb-starter"
-        data-share-url="https://example.com">🖨️ Print</button>
-      <button class="wb-btn wb-btn--secondary" x-fullscreen data-share-title="wb-starter"
-        data-share-url="https://example.com">⛶ Fullscreen</button>
+      <button class="wb-btn wb-btn--secondary" x-share share-title="wb-starter"
+        share-url="https://example.com">📤 Share</button>
+      <button class="wb-btn wb-btn--secondary" x-print share-title="wb-starter"
+        share-url="https://example.com">🖨️ Print</button>
+      <button class="wb-btn wb-btn--secondary" x-fullscreen share-title="wb-starter"
+        share-url="https://example.com">⛶ Fullscreen</button>
     </wb-demo>
 
     <h3>Clock & Countdown</h3>
     <wb-demo>
       <div x-clock class="time-display"></div>
-      <div x-countdown data-to="2027-12-31" class="time-display"></div>
-      <span x-relativetime data-date="2025-01-01" class="time-display">Jan 1, 2025</span>
+      <div x-countdown to="2027-12-31" class="time-display"></div>
+      <span x-relativetime date="2025-01-01" class="time-display">Jan 1, 2025</span>
     </wb-demo>
 
     <h3>Dark Mode Toggle</h3>
@@ -502,7 +502,7 @@
 
     <h3>Text Truncate</h3>
     <wb-demo>
-      <p x-truncate data-lines="2" class="truncate-box">
+      <p x-truncate lines="2" class="truncate-box">
         This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur
         adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </p>

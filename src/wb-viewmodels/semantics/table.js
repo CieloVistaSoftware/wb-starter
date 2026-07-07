@@ -9,12 +9,12 @@ export function table(element, options = {}) {
   const config = {
     striped: options.striped ?? element.hasAttribute('data-striped'),
     hover: options.hover ?? (element.dataset.hover !== 'false'),
-    bordered: options.bordered ?? element.hasAttribute('data-bordered'),
-    compact: options.compact ?? element.hasAttribute('data-compact'),
-    sortable: options.sortable ?? (element.dataset.sortable !== 'false'),
-    searchable: options.searchable ?? element.hasAttribute('data-searchable'),
-    copyable: options.copyable ?? element.hasAttribute('data-copyable'),
-    selectable: options.selectable ?? element.hasAttribute('data-selectable'),
+    bordered: options.bordered ?? element.hasAttribute('bordered'),
+    compact: options.compact ?? element.hasAttribute('compact'),
+    sortable: options.sortable ?? (element.getAttribute('sortable') !== 'false'),
+    searchable: options.searchable ?? element.hasAttribute('searchable'),
+    copyable: options.copyable ?? element.hasAttribute('copyable'),
+    selectable: options.selectable ?? element.hasAttribute('selectable'),
     ...options
   };
 

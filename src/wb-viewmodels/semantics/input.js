@@ -8,7 +8,7 @@ export function input(element, options = {}) {
     type: options.type || element.dataset.type || element.type || 'text',
     variant: options.variant || element.getAttribute('variant') || element.dataset.variant || '',
     size: options.size || element.dataset.size || 'md',
-    clearable: options.clearable ?? element.hasAttribute('data-clearable'),
+    clearable: options.clearable ?? element.hasAttribute('clearable'),
     prefix: options.prefix || element.dataset.prefix || element.dataset.icon || '',
     suffix: options.suffix || element.dataset.suffix || '',
     ...options

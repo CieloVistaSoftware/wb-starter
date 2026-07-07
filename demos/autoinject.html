@@ -503,9 +503,9 @@
       <h4 id="autoinject-h4-132">Value Added:</h4>
       <ul id="autoinject-ul-133">
         <li id="autoinject-li-134"><strong id="autoinject-strong-135">Theming:</strong> Applies site theme colors to the dropdown trigger.</li>
-        <li id="autoinject-li-136"><strong id="autoinject-strong-137">Clearable:</strong> Adds a clear button (x) if <code id="autoinject-code-138">data-clearable</code> is present.</li>
-        <li id="autoinject-li-139"><strong id="autoinject-strong-140">Searchable:</strong> Adds search capabilities if <code id="autoinject-code-141">data-searchable</code> is present.</li>
-        <li id="autoinject-li-variants"><strong id="autoinject-strong-variants">Variants:</strong> Supports <code id="autoinject-code-variants">data-variant</code> (success, error) and <code id="autoinject-code-sizes">data-size</code> (sm, lg).</li>
+        <li id="autoinject-li-136"><strong id="autoinject-strong-137">Clearable:</strong> Adds a clear button (x) if <code id="autoinject-code-138">clearable</code> is present.</li>
+        <li id="autoinject-li-139"><strong id="autoinject-strong-140">Searchable:</strong> Adds search capabilities if <code id="autoinject-code-141">searchable</code> is present.</li>
+        <li id="autoinject-li-variants"><strong id="autoinject-strong-variants">Variants:</strong> Supports <code id="autoinject-code-variants">variant</code> (success, error) and <code id="autoinject-code-sizes">size</code> (sm, lg).</li>
       </ul>
     </div>
 
@@ -545,7 +545,7 @@
         <h3 id="autoinject-h3-154">Clearable Select</h3>
         <div id="autoinject-div-155" class="form-group">
           <label id="autoinject-label-156">Choose a topping (Clearable):</label>
-          <select id="autoinject-select-157" data-clearable style="width: 100%">
+          <select id="autoinject-select-157" clearable style="width: 100%">
             <option id="autoinject-option-158" value="">Select...</option>
             <option id="autoinject-option-159">Chocolate</option>
             <option id="autoinject-option-160">Sprinkles</option>
@@ -579,7 +579,7 @@
 &lt;/select&gt;
 
 &lt;!-- Clearable --&gt;
-&lt;select data-clearable&gt;
+&lt;select clearable&gt;
   &lt;option value=""&gt;Select...&lt;/option&gt;
   &lt;option&gt;Chocolate&lt;/option&gt;
 &lt;/select&gt;
@@ -607,8 +607,8 @@
     <div id="autoinject-div-165" class="value-prop">
       <h4 id="autoinject-h4-166">Value Added:</h4>
       <ul id="autoinject-ul-167">
-        <li id="autoinject-li-168"><strong id="autoinject-strong-169">Auto-resize:</strong> Automatically expands height as you type (if <code id="autoinject-code-170">data-autosize</code>).</li>
-        <li id="autoinject-li-171"><strong id="autoinject-strong-172">Character Count:</strong> Shows current/max characters (if <code id="autoinject-code-173">data-show-count</code>).</li>
+        <li id="autoinject-li-168"><strong id="autoinject-strong-169">Auto-resize:</strong> Automatically expands height as you type (if <code id="autoinject-code-170">x-autosize</code>).</li>
+        <li id="autoinject-li-171"><strong id="autoinject-strong-172">Character Count:</strong> Shows current/max characters (if <code id="autoinject-code-173">show-count</code>).</li>
         <li id="autoinject-li-174"><strong id="autoinject-strong-175">Styling:</strong> Consistent border, background, and focus states.</li>
       </ul>
     </div>
@@ -626,8 +626,8 @@
         <div id="autoinject-div-184" class="form-group">
           <label id="autoinject-label-185">Feedback (Autosize + Counter):</label>
           <textarea id="autoinject-textarea-186" 
-            data-autosize 
-            data-show-count 
+            x-autosize 
+            show-count 
             max-length="100" 
             placeholder="Type to see auto-resize..." 
             rows="2" 
@@ -644,8 +644,8 @@
 
 &lt;!-- Enhanced --&gt;
 &lt;textarea 
-  data-autosize 
-  data-show-count 
+  x-autosize 
+  show-count 
   max-length="100"&gt;
 &lt;/textarea&gt;
 ```
@@ -659,8 +659,8 @@
     <div id="autoinject-div-190" class="value-prop">
       <h4 id="autoinject-h4-191">Value Added:</h4>
       <ul id="autoinject-ul-192">
-        <li id="autoinject-li-193"><strong id="autoinject-strong-194">Value Display:</strong> Shows the current numeric value (if <code id="autoinject-code-195">data-show-value</code>).</li>
-        <li id="autoinject-li-196"><strong id="autoinject-strong-197">Min/Max Labels:</strong> Displays start and end values (if <code id="autoinject-code-198">data-show-labels</code>).</li>
+        <li id="autoinject-li-193"><strong id="autoinject-strong-194">Value Display:</strong> Shows the current numeric value (if <code id="autoinject-code-195">show-value</code>).</li>
+        <li id="autoinject-li-196"><strong id="autoinject-strong-197">Min/Max Labels:</strong> Displays start and end values (if <code id="autoinject-code-198">show-labels</code>).</li>
         <li id="autoinject-li-199"><strong id="autoinject-strong-200">Styling:</strong> Custom track and thumb styling.</li>
       </ul>
     </div>
@@ -677,8 +677,8 @@
         min="0" 
         max="100" 
         value="75" 
-        data-show-value 
-        data-show-labels 
+        show-value 
+        show-labels 
         value-suffix="%" 
         style="width: 100%">
     </div>
@@ -687,7 +687,7 @@
       <label id="autoinject-label-hue">Color Hue (Custom Style):</label>
       <div id="autoinject-div-hue-row" style="display: flex; align-items: center; gap: 1rem;">
         <input id="autoinject-input-hue" type="range" min="0" max="360" value="0" 
-          data-show-value 
+          show-value 
           value-suffix="°"
           style="width: 33vw; height: 10px; border-radius: 5px; appearance: none; background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);"
           oninput="const color = `hsl(${this.value}, 100%, 50%)`; document.getElementById('hue-swatch').style.backgroundColor = color; document.getElementById('hue-value').textContent = color;">
@@ -705,14 +705,14 @@
 &lt;!-- Enhanced --&gt;
 &lt;input type="range" 
   min="0" max="100" 
-  data-show-value 
-  data-show-labels 
+  show-value 
+  show-labels 
   value-suffix="%"&gt;
 
 &lt;!-- Hue Slider with Swatch --&gt;
 &lt;div style="display: flex; gap: 1rem"&gt;
   &lt;input type="range" min="0" max="360" 
-    data-show-value value-suffix="°"
+    show-value value-suffix="°"
     style="background: linear-gradient(...)"
     oninput="this.nextElementSibling.style.background = `hsl(${this.value}, 100%, 50%)`"&gt;
   &lt;div style="width: 30px; height: 30px; background: red"&gt;&lt;/div&gt;
@@ -729,7 +729,7 @@
       <h4 id="autoinject-h4-211">Value Added:</h4>
       <ul id="autoinject-ul-212">
         <li id="autoinject-li-213"><strong id="autoinject-strong-214">Styling:</strong> Applies consistent theme-aware styling automatically.</li>
-        <li id="autoinject-li-215"><strong id="autoinject-strong-216">Variants:</strong> Supports variants via <code id="autoinject-code-217">data-variant</code> (primary, secondary, danger, etc.).</li>
+        <li id="autoinject-li-215"><strong id="autoinject-strong-216">Variants:</strong> Supports variants via <code id="autoinject-code-217">variant</code> (primary, secondary, danger, etc.).</li>
         <li id="autoinject-li-218"><strong id="autoinject-strong-219">Loading State:</strong> Built-in loading spinner support.</li>
         <li id="autoinject-li-feedback"><strong id="autoinject-strong-feedback">Feedback:</strong> Click any button to see a color-matched toast notification.</li>
       </ul>
@@ -1129,37 +1129,37 @@ document.getElementById('interactive-card').addEventListener('click', () =&gt; {
           </thead>
           <tbody id="autoinject-tbody-decorators">
             <tr id="autoinject-tr-dec1" style="border-bottom: 1px solid var(--border-color);">
-              <td id="autoinject-td-dec1a" style="padding: 0.75rem;"><code id="autoinject-code-dec1">data-title</code></td>
+              <td id="autoinject-td-dec1a" style="padding: 0.75rem;"><code id="autoinject-code-dec1">title</code></td>
               <td id="autoinject-td-dec1b" style="padding: 0.75rem;">Sets the card header title</td>
               <td id="autoinject-td-dec1c" style="padding: 0.75rem;"><code id="autoinject-code-dec1ex">title="My Card"</code></td>
             </tr>
             <tr id="autoinject-tr-dec2" style="border-bottom: 1px solid var(--border-color);">
-              <td id="autoinject-td-dec2a" style="padding: 0.75rem;"><code id="autoinject-code-dec2">data-subtitle</code></td>
+              <td id="autoinject-td-dec2a" style="padding: 0.75rem;"><code id="autoinject-code-dec2">subtitle</code></td>
               <td id="autoinject-td-dec2b" style="padding: 0.75rem;">Sets the card header subtitle</td>
               <td id="autoinject-td-dec2c" style="padding: 0.75rem;"><code id="autoinject-code-dec2ex">subtitle="Details"</code></td>
             </tr>
             <tr id="autoinject-tr-dec3" style="border-bottom: 1px solid var(--border-color);">
-              <td id="autoinject-td-dec3a" style="padding: 0.75rem;"><code id="autoinject-code-dec3">data-clickable</code></td>
+              <td id="autoinject-td-dec3a" style="padding: 0.75rem;"><code id="autoinject-code-dec3">clickable</code></td>
               <td id="autoinject-td-dec3b" style="padding: 0.75rem;">Enables click interactions</td>
               <td id="autoinject-td-dec3c" style="padding: 0.75rem;"><code id="autoinject-code-dec3ex">clickable="true"</code></td>
             </tr>
             <tr id="autoinject-tr-dec4" style="border-bottom: 1px solid var(--border-color);">
-              <td id="autoinject-td-dec4a" style="padding: 0.75rem;"><code id="autoinject-code-dec4">data-hoverable</code></td>
+              <td id="autoinject-td-dec4a" style="padding: 0.75rem;"><code id="autoinject-code-dec4">hoverable</code></td>
               <td id="autoinject-td-dec4b" style="padding: 0.75rem;">Enables hover elevation effects</td>
               <td id="autoinject-td-dec4c" style="padding: 0.75rem;"><code id="autoinject-code-dec4ex">hoverable="true"</code></td>
             </tr>
             <tr id="autoinject-tr-dec5" style="border-bottom: 1px solid var(--border-color);">
-              <td id="autoinject-td-dec5a" style="padding: 0.75rem;"><code id="autoinject-code-dec5">data-variant</code></td>
+              <td id="autoinject-td-dec5a" style="padding: 0.75rem;"><code id="autoinject-code-dec5">variant</code></td>
               <td id="autoinject-td-dec5b" style="padding: 0.75rem;">Applies a visual theme variant</td>
               <td id="autoinject-td-dec5c" style="padding: 0.75rem;"><code id="autoinject-code-dec5ex">variant="primary"</code></td>
             </tr>
             <tr id="autoinject-tr-dec6" style="border-bottom: 1px solid var(--border-color);">
-              <td id="autoinject-td-dec6a" style="padding: 0.75rem;"><code id="autoinject-code-dec6">data-tooltip</code></td>
+              <td id="autoinject-td-dec6a" style="padding: 0.75rem;"><code id="autoinject-code-dec6">x-tooltip</code></td>
               <td id="autoinject-td-dec6b" style="padding: 0.75rem;">Adds a tooltip (Implicit Behavior)</td>
               <td id="autoinject-td-dec6c" style="padding: 0.75rem;"><code id="autoinject-code-dec6ex">tooltip="Info"</code></td>
             </tr>
             <tr id="autoinject-tr-dec7">
-              <td id="autoinject-td-dec7a" style="padding: 0.75rem;"><code id="autoinject-code-dec7">data-elevated</code></td>
+              <td id="autoinject-td-dec7a" style="padding: 0.75rem;"><code id="autoinject-code-dec7">elevated</code></td>
               <td id="autoinject-td-dec7b" style="padding: 0.75rem;">Adds permanent shadow elevation</td>
               <td id="autoinject-td-dec7c" style="padding: 0.75rem;"><code id="autoinject-code-dec7ex">elevated="true"</code></td>
             </tr>

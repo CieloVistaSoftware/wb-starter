@@ -72,11 +72,11 @@
       background: var(--text-muted);
       color: var(--bg);
     }
-    .state-badge[data-state="running"] { background: var(--blue); color: #fff; animation: pulse 1.5s ease infinite; }
-    .state-badge[data-state="passed"] { background: var(--green); color: #000; }
-    .state-badge[data-state="failed"] { background: var(--red); color: #fff; }
-    .state-badge[data-state="stopped"] { background: var(--yellow); color: #000; }
-    .state-badge[data-state="error"] { background: var(--red); color: #fff; }
+    .state-badge[state="running"] { background: var(--blue); color: #fff; animation: pulse 1.5s ease infinite; }
+    .state-badge[state="passed"] { background: var(--green); color: #000; }
+    .state-badge[state="failed"] { background: var(--red); color: #fff; }
+    .state-badge[state="stopped"] { background: var(--yellow); color: #000; }
+    .state-badge[state="error"] { background: var(--red); color: #fff; }
 
     @keyframes pulse {
       0%, 100% { opacity: 1; }
@@ -385,7 +385,7 @@
   <div class="header">
     <div class="header-left">
       <span class="logo">⬡ WB Tests</span>
-      <span class="state-badge" id="stateBadge" data-state="idle">IDLE</span>
+      <span class="state-badge" id="stateBadge" state="idle">IDLE</span>
       <span class="current-file" id="currentFile" style="display:none"></span>
     </div>
     <div class="header-right">
@@ -436,10 +436,10 @@
 
   <!-- TABS -->
   <div class="tabs">
-    <div class="tab active" data-tab="failures" onclick="switchTab('failures')">
+    <div class="tab active" tab="failures" onclick="switchTab('failures')">
       Failures <span class="count" id="failuresCount">0</span>
     </div>
-    <div class="tab" data-tab="results" onclick="switchTab('results')">
+    <div class="tab" tab="results" onclick="switchTab('results')">
       All Results <span class="count" id="resultsCount">0</span>
     </div>
   </div>
@@ -448,10 +448,10 @@
   <div class="filter-bar" id="filterBar" style="display:none">
     <input type="text" class="filter-input" id="filterInput" placeholder="Filter by file or test name..." oninput="applyFilters()">
     <div class="filter-chips">
-      <button class="chip active" data-filter="all" onclick="toggleStatusFilter('all')">All</button>
-      <button class="chip" data-filter="passed" onclick="toggleStatusFilter('passed')">Passed</button>
-      <button class="chip" data-filter="failed" onclick="toggleStatusFilter('failed')">Failed</button>
-      <button class="chip" data-filter="skipped" onclick="toggleStatusFilter('skipped')">Skipped</button>
+      <button class="chip active" filter="all" onclick="toggleStatusFilter('all')">All</button>
+      <button class="chip" filter="passed" onclick="toggleStatusFilter('passed')">Passed</button>
+      <button class="chip" filter="failed" onclick="toggleStatusFilter('failed')">Failed</button>
+      <button class="chip" filter="skipped" onclick="toggleStatusFilter('skipped')">Skipped</button>
     </div>
   </div>
 

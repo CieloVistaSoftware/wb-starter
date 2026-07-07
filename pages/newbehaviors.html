@@ -70,8 +70,8 @@
     <h3>Button with Behaviors</h3>
     <wb-demo title="Interactive Buttons" tag="Behavior">
       <button class="wb-btn wb-btn--primary" x-ripple>With Ripple</button>
-      <button class="wb-btn wb-btn--primary" x-toast data-message="Action completed!" data-type="success">With Toast</button>
-      <button class="wb-btn wb-btn--primary" x-tooltip data-content="Helpful hint!" data-position="top">With Tooltip</button>
+      <button class="wb-btn wb-btn--primary" x-toast message="Action completed!" type="success">With Toast</button>
+      <button class="wb-btn wb-btn--primary" x-tooltip content="Helpful hint!" position="top">With Tooltip</button>
     </wb-demo>
   </section>
 
@@ -96,9 +96,9 @@
     <h3>Validation Variants</h3>
     <wb-demo title="Input Validation States" tag="Form">
       <div class="demo-grid-3">
-        <input type="text" placeholder="Success state" data-variant="success">
-        <input type="text" placeholder="Warning state" data-variant="warning">
-        <input type="text" placeholder="Error state" data-variant="error">
+        <input type="text" placeholder="Success state" variant="success">
+        <input type="text" placeholder="Warning state" variant="warning">
+        <input type="text" placeholder="Error state" variant="error">
       </div>
     </wb-demo>
 
@@ -114,9 +114,9 @@
     <h3>Masked Inputs</h3>
     <wb-demo title="Input Masking" tag="Form">
       <div class="demo-grid-3">
-        <input x-masked data-mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
-        <input x-masked data-mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
-        <input x-masked data-mask="9999 9999 9999 9999" placeholder="Credit Card">
+        <input x-masked mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
+        <input x-masked mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
+        <input x-masked mask="9999 9999 9999 9999" placeholder="Credit Card">
       </div>
     </wb-demo>
 
@@ -124,7 +124,7 @@
     <wb-demo title="Auto-sizing Textarea" tag="Form">
       <div class="demo-grid-2">
         <textarea placeholder="Standard textarea" rows="3"></textarea>
-        <textarea data-autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>
+        <textarea x-autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>
       </div>
     </wb-demo>
   </section>
@@ -194,7 +194,7 @@
     <h3>Stepper & Range</h3>
     <wb-demo title="Numeric Controls" tag="Form">
       <div class="demo-grid-2">
-        <div x-stepper data-value="5" data-min="0" data-max="10"></div>
+        <div x-stepper value="5" min="0" max="10"></div>
         <input type="range" min="0" max="100" value="50">
       </div>
     </wb-demo>
@@ -268,10 +268,10 @@
     <h3>Toast Notifications</h3>
     <wb-demo title="Toast Messages" tag="UI">
       <div class="demo-row">
-        <button class="wb-btn wb-btn--primary" x-toast data-message="Info message" data-type="info">Info Toast</button>
-        <button class="wb-btn wb-btn--primary" x-toast data-message="Success!" data-type="success">Success Toast</button>
-        <button class="wb-btn wb-btn--primary" x-toast data-message="Warning!" data-type="warning">Warning Toast</button>
-        <button class="wb-btn wb-btn--primary" x-toast data-message="Error!" data-type="error">Error Toast</button>
+        <button class="wb-btn wb-btn--primary" x-toast message="Info message" type="info">Info Toast</button>
+        <button class="wb-btn wb-btn--primary" x-toast message="Success!" type="success">Success Toast</button>
+        <button class="wb-btn wb-btn--primary" x-toast message="Warning!" type="warning">Warning Toast</button>
+        <button class="wb-btn wb-btn--primary" x-toast message="Error!" type="error">Error Toast</button>
       </div>
     </wb-demo>
   </section>
@@ -303,10 +303,10 @@
     <h3>Tooltips</h3>
     <wb-demo title="Tooltip Positions" tag="Overlay">
       <div class="demo-row">
-        <button class="wb-btn wb-btn--secondary" x-tooltip data-content="Top tooltip" data-position="top">Top</button>
-        <button class="wb-btn wb-btn--secondary" x-tooltip data-content="Bottom tooltip" data-position="bottom">Bottom</button>
-        <button class="wb-btn wb-btn--secondary" x-tooltip data-content="Left tooltip" data-position="left">Left</button>
-        <button class="wb-btn wb-btn--secondary" x-tooltip data-content="Right tooltip" data-position="right">Right</button>
+        <button class="wb-btn wb-btn--secondary" x-tooltip content="Top tooltip" position="top">Top</button>
+        <button class="wb-btn wb-btn--secondary" x-tooltip content="Bottom tooltip" position="bottom">Bottom</button>
+        <button class="wb-btn wb-btn--secondary" x-tooltip content="Left tooltip" position="left">Left</button>
+        <button class="wb-btn wb-btn--secondary" x-tooltip content="Right tooltip" position="right">Right</button>
       </div>
     </wb-demo>
 
@@ -347,14 +347,14 @@
     <wb-demo title="Tabbed Content" tag="Navigation">
       <div class="demo-full">
         <wb-tabs>
-          <div data-tab-title="Overview">
+          <div tab-title="Overview">
             <p>This is the overview tab content. Tabs organize content into separate views with keyboard navigation.</p>
           </div>
-          <div data-tab-title="Features">
+          <div tab-title="Features">
             <p>Features include smooth transitions, responsive design, and full accessibility compliance.</p>
           </div>
-          <div data-tab-title="Usage">
-            <p>Simply wrap your content in a wb-tabs element with data-tab-title on each panel.</p>
+          <div tab-title="Usage">
+            <p>Simply wrap your content in a wb-tabs element with tab-title on each panel.</p>
           </div>
         </wb-tabs>
       </div>
@@ -364,13 +364,13 @@
     <wb-demo title="Collapsible Sections" tag="Navigation">
       <div class="demo-full">
         <wb-accordion>
-          <div data-accordion-title="What is wb-starter?">
+          <div accordion-title="What is wb-starter?">
             <p>wb-starter is a zero-build web component library with behaviors and themes.</p>
           </div>
-          <div data-accordion-title="How do I install it?">
+          <div accordion-title="How do I install it?">
             <p>No installation needed! Just include the script and start using components immediately.</p>
           </div>
-          <div data-accordion-title="Is it production ready?">
+          <div accordion-title="Is it production ready?">
             <p>Yes! wb-starter is schema-driven, fully tested, and enterprise hardened.</p>
           </div>
         </wb-accordion>
@@ -380,21 +380,21 @@
     <h3>Breadcrumb</h3>
     <wb-demo title="Navigation Breadcrumbs" tag="Navigation">
       <div class="demo-full">
-        <nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones"></nav>
+        <nav x-breadcrumb items="Home,Products,Electronics,Smartphones"></nav>
       </div>
     </wb-demo>
 
     <h3>Pagination</h3>
     <wb-demo title="Page Navigation" tag="Navigation">
       <div class="demo-full">
-        <nav x-pagination data-total="100" data-per-page="10" data-current="5"></nav>
+        <nav x-pagination total="100" per-page="10" current="5"></nav>
       </div>
     </wb-demo>
 
     <h3>Steps Wizard</h3>
     <wb-demo title="Multi-step Process" tag="Navigation">
       <div class="demo-full">
-        <div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
+        <div x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div>
       </div>
     </wb-demo>
   </section>
@@ -431,7 +431,7 @@
     <h3>Timeline</h3>
     <wb-demo title="Event Timeline" tag="Data">
       <div class="demo-full">
-        <div x-timeline data-items="Project kickoff,Design phase,Development,Testing,Launch"></div>
+        <div x-timeline items="Project kickoff,Design phase,Development,Testing,Launch"></div>
       </div>
     </wb-demo>
 
@@ -455,15 +455,15 @@
     <h3>Enhanced Images</h3>
     <wb-demo title="Image Enhancements" tag="Media">
       <div class="demo-row">
-        <img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" data-lazy class="demo-image">
-        <img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" data-zoomable class="demo-image">
+        <img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" lazy class="demo-image">
+        <img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" zoomable class="demo-image">
       </div>
     </wb-demo>
 
     <h3>Gallery</h3>
     <wb-demo title="Image Gallery" tag="Media">
       <div class="demo-full">
-        <div x-gallery data-columns="4">
+        <div x-gallery columns="4">
           <img src="https://picsum.photos/200/200?r=gal1" alt="Gallery 1">
           <img src="https://picsum.photos/200/200?r=gal2" alt="Gallery 2">
           <img src="https://picsum.photos/200/200?r=gal3" alt="Gallery 3">
@@ -482,7 +482,7 @@
     <h3>YouTube Embed</h3>
     <wb-demo title="Video Embedding" tag="Media">
       <div class="demo-full youtube-container">
-        <div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
+        <div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div>
       </div>
     </wb-demo>
   </section>
@@ -514,9 +514,9 @@
     <wb-demo title="Entrance Effects" tag="Animation">
       <div class="demo-row">
         <button class="effect-demo" x-fadein>Fade In</button>
-        <button class="effect-demo" x-slidein data-direction="left">Slide Left</button>
-        <button class="effect-demo" x-slidein data-direction="right">Slide Right</button>
-        <button class="effect-demo" x-slidein data-direction="up">Slide Up</button>
+        <button class="effect-demo" x-slidein direction="left">Slide Left</button>
+        <button class="effect-demo" x-slidein direction="right">Slide Right</button>
+        <button class="effect-demo" x-slidein direction="up">Slide Up</button>
         <button class="effect-demo" x-zoomin>Zoom In</button>
         <button class="effect-demo" x-flip>Flip</button>
       </div>
@@ -555,15 +555,15 @@
     <h3>Copy to Clipboard</h3>
     <wb-demo title="Clipboard Operations" tag="Utility">
       <div class="demo-row">
-        <button class="wb-btn wb-btn--primary" x-copy data-copy="Text copied to clipboard!">📋 Copy Text</button>
-        <button class="wb-btn wb-btn--primary" x-copy data-copy="npm install wb-framework">📋 Copy Command</button>
+        <button class="wb-btn wb-btn--primary" x-copy x-copy="Text copied to clipboard!">📋 Copy Text</button>
+        <button class="wb-btn wb-btn--primary" x-copy x-copy="npm install wb-framework">📋 Copy Command</button>
       </div>
     </wb-demo>
 
     <h3>Share, Print & Fullscreen</h3>
     <wb-demo title="Browser Actions" tag="Utility">
       <div class="demo-row">
-        <button class="wb-btn wb-btn--secondary" x-share data-share-title="wb-starter" data-share-url="https://example.com">📤 Share</button>
+        <button class="wb-btn wb-btn--secondary" x-share share-title="wb-starter" share-url="https://example.com">📤 Share</button>
         <button class="wb-btn wb-btn--secondary" x-print>🖨️ Print</button>
         <button class="wb-btn wb-btn--secondary" x-fullscreen>⛶ Fullscreen</button>
       </div>
@@ -573,8 +573,8 @@
     <wb-demo title="Time Displays" tag="Utility">
       <div class="demo-row">
         <div x-clock class="time-display"></div>
-        <div x-countdown data-to="2027-12-31" class="time-display"></div>
-        <span x-relativetime data-date="2025-01-01" class="time-display">Jan 1, 2025</span>
+        <div x-countdown to="2027-12-31" class="time-display"></div>
+        <span x-relativetime date="2025-01-01" class="time-display">Jan 1, 2025</span>
       </div>
     </wb-demo>
 
@@ -588,7 +588,7 @@
 
     <h3>Text Truncate</h3>
     <wb-demo title="Text Utilities" tag="Utility">
-      <p x-truncate data-lines="2" class="truncate-box">
+      <p x-truncate lines="2" class="truncate-box">
         This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </p>
     </wb-demo>
