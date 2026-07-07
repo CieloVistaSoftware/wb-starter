@@ -68,8 +68,6 @@
       <div class="pg-panel__head">
         <span class="pg-panel__label">HTML</span>
         <span class="pg-toolbar">
-          <select id="pg-theme" class="pg-btn" title="Preview theme"
-            style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;"></select>
           <button id="pg-clear" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);">Clear</button>
           <select id="pg-examples" class="pg-btn" title="Load an example set"
@@ -94,6 +92,7 @@
       <div class="pg-panel__head">
         <span class="pg-panel__label">Preview</span>
         <span class="pg-toolbar">
+          <wb-themecontrol id="pg-themecontrol" data-show-label="false"></wb-themecontrol>
           <select id="pg-sort" class="pg-btn" title="Sort the previewed elements"
             style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
             <option value="">↕ Sort by…</option>
@@ -415,29 +414,10 @@
       }).catch(() => {});
     });
 
-    // Theme control — populate from every [data-theme="…"] rule in the loaded
-    // stylesheets and switch the whole page (incl. preview) live.
-    (function initThemeControl() {
-      const themeSel = document.getElementById('pg-theme');
-      const themes = new Set();
-      for (const sheet of document.styleSheets) {
-        let rules;
-        try { rules = sheet.cssRules; } catch { continue; }
-        for (const r of rules) {
-          for (const m of String(r.selectorText || '').matchAll(/\[data-theme="([\w-]+)"\]/g)) themes.add(m[1]);
-        }
-      }
-      const current = document.documentElement.dataset.theme || 'dark';
-      themeSel.innerHTML = '';
-      [...themes].sort().forEach((t) => {
-        const o = document.createElement('option');
-        o.value = t; o.textContent = '🎨 ' + t;
-        if (t === current) o.selected = true;
-        themeSel.appendChild(o);
-      });
-      if (!themes.size) { themeSel.hidden = true; return; }
-      themeSel.addEventListener('change', () => { document.documentElement.dataset.theme = themeSel.value; });
-    })();
+    // Theme control — the real <wb-themecontrol> component (never a one-off
+    // hand-rolled select). It lives outside #pg-preview, so it isn't wiped by
+    // render()'s innerHTML swap; scan it once, here, on load.
+    ensureWB().then(() => WB.scan(document.getElementById('pg-themecontrol')));
 
     // ── Example sets (loaded from the Examples dropdown) ──────────────────────
     const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
@@ -491,7 +471,12 @@
       const out = [];
       for (let i = 0; i < 20; i++) {
         const [pre, title, sub, cta, cta2] = heroes[i % heroes.length];
-        const bg = bgs[i % bgs.length];
+        // Offset the bg index by how many times we've already looped through
+        // heroes, so a repeated title always shows a DIFFERENT background
+        // (bgs.length === heroes.length, so without this offset every repeat
+        // of the same title would land on the exact same bg every time).
+        const round = Math.floor(i / heroes.length);
+        const bg = bgs[(i + round) % bgs.length];
         const attrs = [
           `pretitle="${pre} #${i + 1}"`,
           `title="${title}"`,
@@ -561,6 +546,23 @@
       fitEditor();
       input.focus();
     });
+    // Enter should behave like a code editor: carry the current line's
+    // indentation onto the new line, and indent one level deeper when the
+    // line so far hasn't closed its tag yet (e.g. `<wb-cardhero` opening a
+    // multi-line attribute list — this project's own §5 markup style).
+    input.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      const val = input.value;
+      const pos = input.selectionStart;
+      const lineStart = val.lastIndexOf('\n', pos - 1) + 1;
+      const beforeCursor = val.slice(lineStart, pos);
+      let indent = (beforeCursor.match(/^[ \t]*/) || [''])[0];
+      const trimmed = beforeCursor.trim();
+      if (trimmed && !trimmed.endsWith('>')) indent += '  ';
+      e.preventDefault();
+      document.execCommand('insertText', false, '\n' + indent);
+    });
+
     let debounce;
     input.addEventListener('input', () => {
       fitEditor();
