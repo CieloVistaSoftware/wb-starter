@@ -60,6 +60,13 @@
      replacing hardcoded white literals in button.css (#190). */
   --text-on-accent: hsl(0, 0%, 100%);
 
+  /* Overlay base hues — compose with a per-use alpha, e.g.
+     `hsl(var(--overlay-dark-hsl) / 0.35)`. The COLOR is themed here; the opacity
+     is chosen at the call site. Replaces rgba(0,0,0,α)/rgba(255,255,255,α)
+     scrim/glass/shadow literals (hardcoded-color audit). */
+  --overlay-dark-hsl: 0 0% 0%;    /* scrims, shadows */
+  --overlay-light-hsl: 0 0% 100%; /* glass, sheen, hovers */
+
   /* Semantic state colors — used by alert, notification, rating */
   --info-color: hsl(217, 91%, 60%);
   --success-color: hsl(142, 71%, 45%);

@@ -19,6 +19,135 @@ wb-cardhero {
      neighbouring cards (e.g. the overlay card in the components demo).
      Opt into edge-to-edge with the .wb-cardhero--fullbleed modifier instead. */
   width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: var(--radius-lg, 0.75rem);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Default background — a rich, animated gradient built from THEME hues (no
+   literals): a diagonal brand gradient with two radial glows in adjacent hues. */
+wb-cardhero:not([background]) {
+  background-image:
+    radial-gradient(130% 130% at 0% 0%, hsl(var(--hue-primary, 240) 85% 58% / 0.85), transparent 55%),
+    radial-gradient(130% 130% at 100% 100%, hsl(calc(var(--hue-primary, 240) + 55) 85% 52% / 0.85), transparent 55%),
+    linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+/* Animated diagonal sheen sweeping across the hero. */
+wb-cardhero::before {
+  content: '';
+  position: absolute;
+  inset: -60%;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 42%, hsl(var(--overlay-light-hsl) / 0.10) 50%, transparent 58%);
+  animation: wb-cardhero-sheen 7s linear infinite;
+}
+@keyframes wb-cardhero-sheen { from { transform: translateX(-30%); } to { transform: translateX(30%); } }
+@media (prefers-reduced-motion: reduce) { wb-cardhero::before { animation: none; } }
+
+/* Legibility scrim (top-to-bottom, darker at the base). */
+wb-cardhero .wb-card__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(180deg, hsl(var(--overlay-dark-hsl) / 0.20), hsl(var(--overlay-dark-hsl) / 0.55));
+}
+
+/* Content column — centered, breathable, animates in. */
+wb-cardhero .wb-card__hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.35rem;
+  max-width: 46rem;
+  padding: clamp(2rem, 5vw, 4rem);
+  color: var(--text-on-accent, #fff);
+  animation: wb-cardhero-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes wb-cardhero-in { from { opacity: 0; transform: translateY(1rem); } }
+@media (prefers-reduced-motion: reduce) { wb-cardhero .wb-card__hero-content { animation: none; } }
+
+wb-cardhero.wb-card--xalign-left  .wb-card__hero-content { align-items: flex-start; text-align: left; margin-right: auto; }
+wb-cardhero.wb-card--xalign-right .wb-card__hero-content { align-items: flex-end;   text-align: right; margin-left: auto; }
+
+/* Eyebrow / pretitle — a frosted pill. */
+wb-cardhero .wb-card__hero-pretitle {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  background: hsl(var(--overlay-light-hsl) / 0.16);
+  backdrop-filter: blur(6px);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Title — big, tight, with depth. */
+wb-cardhero .wb-card__hero-title {
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.05;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 14px hsl(var(--overlay-dark-hsl) / 0.35);
+}
+
+wb-cardhero .wb-card__hero-subtitle {
+  margin: 0.75rem 0 0;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  line-height: 1.5;
+  opacity: 0.94;
+  text-shadow: 0 1px 8px hsl(var(--overlay-dark-hsl) / 0.3);
+}
+
+/* CTA group + buttons. */
+wb-cardhero .wb-card__cta-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: inherit;
+  margin-top: 1.75rem;
+}
+wb-cardhero .wb-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.75rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+wb-cardhero .wb-hero-cta--primary {
+  background: var(--text-on-accent, #fff);
+  color: var(--primary);
+  box-shadow: 0 12px 30px hsl(var(--overlay-dark-hsl) / 0.35);
+}
+wb-cardhero .wb-hero-cta--primary:hover { transform: translateY(-2px); box-shadow: 0 18px 42px hsl(var(--overlay-dark-hsl) / 0.45); }
+wb-cardhero .wb-hero-cta--secondary {
+  background: hsl(var(--overlay-light-hsl) / 0.14);
+  color: var(--text-on-accent, #fff);
+  border: 1.5px solid hsl(var(--overlay-light-hsl) / 0.4);
+  backdrop-filter: blur(8px);
+}
+wb-cardhero .wb-hero-cta--secondary:hover { background: hsl(var(--overlay-light-hsl) / 0.26); transform: translateY(-2px); }
+
+@media (max-width: 640px) {
+  wb-cardhero .wb-card__cta-group { flex-direction: column; align-items: stretch; width: 100%; }
+  wb-cardhero .wb-hero-cta { width: 100%; }
 }
 
 /* Opt-in full-bleed for page-top heroes that should span the viewport. */

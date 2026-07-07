@@ -754,6 +754,12 @@ export function cardhero(element, options = {}) {
 
   const base = cardBase(element, { ...config, behavior: 'cardhero', hoverable: false });
   element.classList.add('wb-hero');
+  // cardBase applies the default card surface (inline background:var(--bg-secondary)
+  // + border). A hero owns its own full-bleed background, so clear those inline
+  // props and let hero.css provide the rich default gradient (or the user's bg).
+  element.style.removeProperty('background');
+  element.style.removeProperty('background-color');
+  element.style.removeProperty('border');
 
   // CHECK FOR SLOTS/CHILDREN BEFORE CLEARING
   // ----------------------------------------
@@ -777,93 +783,71 @@ export function cardhero(element, options = {}) {
 
   element.innerHTML = '';
   element.style.minHeight = config.height;
-  element.style.position = 'relative';
-  element.style.justifyContent = 'center';
-  element.style.alignItems = config.xalign === 'left' ? 'flex-start' : config.xalign === 'right' ? 'flex-end' : 'center';
-  element.style.textAlign = config.xalign;
   element.classList.add(`wb-card--xalign-${config.xalign}`);
-  
-  if (config.background) {
-    if (config.background.includes('gradient') || config.background.startsWith('var(')) {
-      element.style.backgroundImage = config.background;
-    } else {
-      element.style.backgroundImage = `url(${config.background})`;
-    }
-  } else {
-    element.style.backgroundImage = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-  }
-  
-  element.style.backgroundSize = 'cover';
-  element.style.backgroundPosition = 'center';
 
-  // Overlay
+  // Background: a user-provided image/gradient is applied inline; the default
+  // rich theme gradient + all colors live in hero.css (wb-cardhero…), so there
+  // are NO hardcoded colors here.
+  if (config.background) {
+    element.style.backgroundImage =
+      (config.background.includes('gradient') || config.background.startsWith('var('))
+        ? config.background
+        : `url(${config.background})`;
+    element.style.backgroundSize = 'cover';
+    element.style.backgroundPosition = 'center';
+  }
+
+  // Legibility scrim + content are styled by classes in hero.css.
   if (config.overlay) {
     const overlayEl = document.createElement('div');
     overlayEl.className = 'wb-card__overlay';
-    overlayEl.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,0.5);';
     element.appendChild(overlayEl);
   }
 
-  // Content
   const content = document.createElement('div');
   content.className = 'wb-card__hero-content';
-  content.style.cssText = 'position:relative;z-index:1;padding:2rem;color:white;';
 
-  // 1. Pretitle (Slot or Attribute)
+  // Pretitle (eyebrow). All visual styling lives in hero.css.
   if (slots.pretitle) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'wb-card__hero-pretitle';
-    wrapper.style.marginBottom = '1.5rem';
-    // If it's a block element, append directly. If not, wrap.
-    wrapper.appendChild(slots.pretitle);
-    content.appendChild(wrapper);
+    slots.pretitle.classList.add('wb-card__hero-pretitle');
+    content.appendChild(slots.pretitle);
   } else if (base.config.pretitle) {
     const preEl = document.createElement('div');
     preEl.className = 'wb-card__hero-pretitle';
-    preEl.style.marginBottom = '1.5rem';
     preEl.innerHTML = base.config.pretitle;
     content.appendChild(preEl);
   }
 
-  // 2. Title (Slot or Attribute)
+  // Title.
   if (slots.title) {
-     // Ensure classes are added to provided slot element if needed, or wrap it
-     slots.title.classList.add('wb-card__title', 'wb-card__hero-title');
-     if (!slots.title.style.fontSize) slots.title.style.fontSize = '2.5rem';
-     if (!slots.title.style.marginBottom) slots.title.style.margin = '0';
-     slots.title.style.textShadow = '0 2px 4px rgba(0,0,0,0.3)';
-     content.appendChild(slots.title);
+    slots.title.classList.add('wb-card__title', 'wb-card__hero-title');
+    content.appendChild(slots.title);
   } else if (base.config.title) {
     const titleEl = document.createElement('h3');
     titleEl.className = 'wb-card__title wb-card__hero-title';
-    titleEl.style.cssText = 'margin:0;font-size:2.5rem;font-weight:700;text-shadow:0 2px 4px rgba(0,0,0,0.3);';
     titleEl.innerHTML = base.config.title;
     content.appendChild(titleEl);
   }
 
-  // 3. Subtitle (Slot or Attribute)
+  // Subtitle.
   if (slots.subtitle) {
     slots.subtitle.classList.add('wb-card__subtitle', 'wb-card__hero-subtitle');
-    slots.subtitle.style.textShadow = '0 1px 2px rgba(0,0,0,0.3)';
     content.appendChild(slots.subtitle);
   } else if (base.config.subtitle) {
     const subtitleEl = document.createElement('p');
     subtitleEl.className = 'wb-card__subtitle wb-card__hero-subtitle';
-    subtitleEl.style.cssText = 'margin:0.75rem 0 0;font-size:1.25rem;opacity:0.9;text-shadow:0 1px 2px rgba(0,0,0,0.3);';
     subtitleEl.innerHTML = base.config.subtitle;
     content.appendChild(subtitleEl);
   }
 
+  // CTAs — hero-specific button classes (styled in hero.css, theme colors).
   if (base.config.cta || base.config.ctaSecondary) {
     const ctaGroup = document.createElement('div');
     ctaGroup.className = 'wb-card__cta-group';
-    ctaGroup.style.cssText = 'margin-top:1.5rem;display:flex;gap:1rem;justify-content:center;';
-    if (config.xalign === 'left') ctaGroup.style.justifyContent = 'flex-start';
-    if (config.xalign === 'right') ctaGroup.style.justifyContent = 'flex-end';
 
     if (base.config.cta) {
       const btn = document.createElement('a');
-      btn.className = 'wb-btn wb-btn--primary wb-btn--lg';
+      btn.className = 'wb-hero-cta wb-hero-cta--primary';
       btn.href = base.config.ctaHref || '#';
       btn.textContent = base.config.cta;
       ctaGroup.appendChild(btn);
@@ -871,7 +855,7 @@ export function cardhero(element, options = {}) {
 
     if (base.config.ctaSecondary) {
       const btn = document.createElement('a');
-      btn.className = 'wb-btn wb-btn--outline-light wb-btn--lg';
+      btn.className = 'wb-hero-cta wb-hero-cta--secondary';
       btn.href = base.config.ctaSecondaryHref || '#';
       btn.textContent = base.config.ctaSecondary;
       ctaGroup.appendChild(btn);

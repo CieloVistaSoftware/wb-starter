@@ -60,9 +60,13 @@
         <span style="display:flex; gap:0.5rem;">
           <button id="pg-clear" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);">Clear</button>
-          <button id="pg-cards" class="pg-btn" type="button"
-            style="background:var(--bg-tertiary); color:var(--text-primary);"
-            title="Load 50 card variations">🎴 50 Cards</button>
+          <select id="pg-examples" class="pg-btn" title="Load an example set"
+            style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
+            <option value="">🎴 Examples…</option>
+            <option value="form">Sample form</option>
+            <option value="cards">50 cards</option>
+            <option value="heroes">20 card heroes</option>
+          </select>
           <button id="pg-format" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);"
             title="Format vertically (one attribute per line)">⭹ Format</button>
@@ -226,13 +230,12 @@
     }
     document.getElementById('pg-format').addEventListener('click', formatInput);
 
-    // Load 50 varied card types so all variants/sizes/states/shapes can be seen.
-    document.getElementById('pg-cards').addEventListener('click', () => {
-      const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
-      const S = ['xs', 'sm', 'md', 'lg', 'xl'];
-      const LOREM = 'A short description that spans a line or two so wrapping and spacing are visible.';
-      // Rotating templates give real variety: footer, subtitle+badge, elevated,
-      // hoverable+tooltip, image card, pricing, profile, plain, long body.
+    // ── Example sets (loaded from the Examples dropdown) ──────────────────────
+    const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
+    const S = ['xs', 'sm', 'md', 'lg', 'xl'];
+    const LOREM = 'A short description that spans a line or two so wrapping and spacing are visible.';
+
+    function fiftyCards() {
       const T = [
         (i, v, s) => `<wb-card title="#${i} ${v} · ${s}" variant="${v}" size="${s}" footer="Footer ${i}">Body ${i}</wb-card>`,
         (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}" subtitle="With subtitle + badge" badge="New">${LOREM}</wb-card>`,
@@ -244,11 +247,54 @@
         (i, v, s) => `<wb-cardprofile title="Person #${i}" subtitle="Role ${s}" variant="${v}">${LOREM}</wb-cardprofile>`,
       ];
       const out = [];
-      for (let i = 0; i < 50; i++) {
-        const v = V[i % V.length], s = S[i % S.length];
-        out.push(T[i % T.length](i + 1, v, s));
+      for (let i = 0; i < 50; i++) out.push(T[i % T.length](i + 1, V[i % V.length], S[i % S.length]));
+      return out.join('\n');
+    }
+
+    function twentyHeroes() {
+      const heroes = [
+        ['Launch', 'Build faster with wb-starter', 'Schema-first, zero-build web components.', 'Get Started', 'View Docs'],
+        ['New', 'Compose, don\'t configure', 'Stack x-* behaviors on any element.', 'Try it', 'Learn more'],
+        ['v3', 'Themeable to the core', 'Every color flows from one theme system.', 'Explore themes', null],
+        ['Open Source', 'Own your components', 'Light DOM, no shadow boundaries.', 'Star on GitHub', 'Read the guide'],
+        ['Fast', 'No build step. Ever.', 'Drop a script tag and go.', 'Get Started', null],
+        ['Accessible', 'Semantics by default', 'Native elements, enhanced.', 'See a11y', 'Docs'],
+      ];
+      const bgs = [
+        null, null,
+        'linear-gradient(135deg, var(--success-color), var(--info-color))',
+        'linear-gradient(135deg, var(--danger-color), var(--warning-color))',
+        'https://picsum.photos/seed/hero/1200/500',
+        'linear-gradient(135deg, var(--primary), var(--secondary))',
+      ];
+      const heights = ['320px', '380px', '440px'];
+      const aligns = ['center', 'left', 'right'];
+      const out = [];
+      for (let i = 0; i < 20; i++) {
+        const [pre, title, sub, cta, cta2] = heroes[i % heroes.length];
+        const bg = bgs[i % bgs.length];
+        const attrs = [
+          `pretitle="${pre} #${i + 1}"`,
+          `title="${title}"`,
+          `subtitle="${sub}"`,
+          `height="${heights[i % heights.length]}"`,
+          `xalign="${aligns[i % aligns.length]}"`,
+          cta ? `cta="${cta}"` : '',
+          cta2 ? `cta-secondary="${cta2}"` : '',
+          bg ? `background="${bg}"` : '',
+        ].filter(Boolean);
+        out.push(`<wb-cardhero\n  ${attrs.join('\n  ')}>\n</wb-cardhero>`);
       }
-      input.value = out.join('\n');
+      return out.join('\n');
+    }
+
+    document.getElementById('pg-examples').addEventListener('change', (e) => {
+      const which = e.target.value;
+      if (!which) return;
+      if (which === 'form') input.value = SAMPLE;
+      else if (which === 'cards') input.value = fiftyCards();
+      else if (which === 'heroes') input.value = twentyHeroes();
+      e.target.value = ''; // reset to placeholder
       endpointPanel.hidden = true;
       fitEditor();
       render();
