@@ -62,8 +62,8 @@
     },
 
     "card": {
-      "description": "Container with header and body",
-      "template": "<div class=\"card\">\n  <div class=\"card__header\" wb-if=\"title\">\n    <div class=\"card__header-content\">\n      <span class=\"card__title\">{{title}}</span>\n      <span class=\"card__subtitle\" wb-if=\"subtitle\">{{subtitle}}</span>\n    </div>\n    <span class=\"card__badge\" wb-if=\"badge\">{{badge}}</span>\n  </div>\n  <div class=\"card__body\"><slot></slot></div>\n</div>",
+      "description": "Container with header and body. #202: the card BEHAVIOR (src/wb-viewmodels/card.js) is the SOLE renderer of the card DOM (.wb-card__*). This legacy MVVM template ALSO built a competing .card__* structure → duplicate title/footer. Neutralized to a passthrough so card.js owns the DOM.",
+      "template": "<slot></slot>",
       "attributes": {
         "title": { "type": "string" },
         "subtitle": { "type": "string" },

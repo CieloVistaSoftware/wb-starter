@@ -529,6 +529,18 @@ export function cardBase(element, options = {}) {
  * Custom Tag: <wb-card>
  */
 export function card(element, options = {}) {
+  // #202: a legacy MVVM template (schema $view / views-registry / partial) may
+  // have ALREADY wrapped our content in a competing `.card` structure
+  // (.card__header/.card__title/.card__body). card.js is the SOLE renderer of the
+  // card (.wb-card__*), so unwrap that legacy chrome — keep only its body content
+  // — before we build. Title/subtitle/footer come from attributes; the body is the
+  // real slotted content. This is what produced 2–4× duplicate title/footer.
+  const legacyCard = element.querySelector(':scope > .card, :scope > article.card, :scope > div.card');
+  if (legacyCard) {
+    const legacyBody = legacyCard.querySelector('.card__body, .card__main');
+    element.innerHTML = legacyBody ? legacyBody.innerHTML : '';
+  }
+
   // FIX: Un-wrap auto-generated main if it contains semantic elements
   // This happens because SchemaBuilder wraps ALL content in the 'main' part defined in schema
   const autoMain = element.querySelector(':scope > .wb-card__main');
