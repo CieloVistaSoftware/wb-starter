@@ -2035,32 +2035,51 @@ img { max-width: 100%; height: auto; }
   /* Fluent nav: an ALWAYS-VISIBLE horizontal, swipeable bar at the TOP of the
      content — NOT a fixed off-canvas side drawer. No hamburger, no backdrop. */
   .site__body { flex-direction: column; }
+
+  /* Header stacks/wraps instead of overflowing off the right edge — must size to
+     its content (base sets a fixed 64px height as a flex item). */
+  .site__header {
+    flex-wrap: wrap;
+    height: auto !important;
+    min-height: 60px;
+    flex: 0 0 auto !important;
+    row-gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+  .header__left, .header__right { flex-wrap: wrap; row-gap: 0.5rem; }
+
+  /* Fluent nav: an in-flow VERTICAL stacked menu at the top of the content —
+     NOT a horizontal bar and NOT an off-canvas side drawer. Hidden by default,
+     the ☰ toggle reveals it in place (display-toggle — no max-height fight). */
   .site__nav {
     position: static !important;
     transform: none !important;
-    flex: 0 0 auto !important;   /* size to the row of items, don't collapse */
+    flex: 0 0 auto !important;
     width: 100% !important;
     height: auto !important;
-    min-height: fit-content;
     max-height: none !important;
     top: auto;
     bottom: auto;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: visible;
+    display: none;   /* collapsed by default on phones */
     box-shadow: none !important;
     border-right: none;
     border-bottom: 1px solid var(--border-color);
   }
-  /* Items flow left-to-right in a single scrollable row. */
+  .site__nav.site__nav--mobile-open,
+  .site__nav.site__nav--collapsed.site__nav--mobile-open {
+    display: block !important;
+    transform: none !important;
+  }
+  /* Items stack VERTICALLY, full width. */
   .site__nav .nav__items {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    flex-direction: column;
     gap: 0.25rem;
-    padding: 0.4rem 0.6rem;
+    padding: 0.5rem;
   }
-  .site__nav .nav__item { flex: 0 0 auto; width: auto !important; white-space: nowrap; }
-  /* An in-flow bar needs no drawer chrome. */
+  .site__nav .nav__item { width: 100% !important; }
+  /* In-flow menu needs no drawer chrome. */
   .site__nav-backdrop { display: none !important; }
   .nav__resizer { display: none !important; }
 }
