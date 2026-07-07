@@ -1,0 +1,323 @@
+{
+  "total": 244,
+  "byCat": {
+    "prose / comment / other": 140,
+    "JS .slot / data.slot / slotContent / slots": 9,
+    "[slot] / [slot=] selector": 3,
+    "<slot> element": 52,
+    "slot=\"…\" attribute": 38,
+    "data-slot": 2
+  },
+  "byFile": {
+    "src/core/features.js": {
+      "total": 1,
+      "cats": {
+        "prose / comment / other": 1
+      }
+    },
+    "src/core/mvvm/schema-builder.js": {
+      "total": 24,
+      "cats": {
+        "prose / comment / other": 14,
+        "JS .slot / data.slot / slotContent / slots": 9,
+        "[slot] / [slot=] selector": 1
+      }
+    },
+    "src/core/mvvm-test.html": {
+      "total": 3,
+      "cats": {
+        "prose / comment / other": 3
+      }
+    },
+    "src/core/wb-views.js": {
+      "total": 19,
+      "cats": {
+        "prose / comment / other": 14,
+        "<slot> element": 1,
+        "slot=\"…\" attribute": 3,
+        "[slot] / [slot=] selector": 1
+      }
+    },
+    "src/core/wb.js": {
+      "total": 1,
+      "cats": {
+        "prose / comment / other": 1
+      }
+    },
+    "src/wb-models/article.schema.json": {
+      "total": 1,
+      "cats": {
+        "prose / comment / other": 1
+      }
+    },
+    "src/wb-models/articles.schema.json": {
+      "total": 1,
+      "cats": {
+        "prose / comment / other": 1
+      }
+    },
+    "src/wb-models/button.schema.json": {
+      "total": 2,
+      "cats": {
+        "prose / comment / other": 2
+      }
+    },
+    "src/wb-models/card.schema.json": {
+      "total": 1,
+      "cats": {
+        "prose / comment / other": 1
+      }
+    },
+    "src/wb-models/cardbutton.schema.json": {
+      "total": 1,
+      "cats": {
+        "<slot> element": 1
+      }
+    },
+    "src/wb-models/carddraggable.schema.json": {
+      "total": 1,
+      "cats": {
+        "<slot> element": 1
+      }
+    },
+    "src/wb-models/cardexpandable.schema.json": {
+      "total": 1,
+      "cats": {
+        "<slot> element": 1
+      }
+    },
+    "src/wb-models/cardhero.schema.json": {
+      "total": 1,
+      "cats": {
+        "prose / comment / other": 1
+      }
+    },
+    "src/wb-models/cardhorizontal.schema.json": {
+      "total": 2,
+      "cats": {
+        "<slot> element": 1,
+        "prose / comment / other": 1
+      }
+    },
+    "src/wb-models/cardimage.schema.json": {
+      "total": 2,
+      "cats": {
+        "<slot> element": 1,
+        "prose / comment / other": 1
+      }
+    },
+    "src/wb-models/cardminimizable.schema.json": {
+      "total": 1,
+      "cats": {
+        "<slot> element": 1
+      }
+    },
+    "src/wb-models/cardoverlay.schema.json": {
+      "total": 2,
+      "cats": {
+        "<slot> element": 1,
+        "prose / comment / other": 1
+      }
+    },
+    "src/wb-models/dialog.schema.json": {
+      "total": 1,
+      "cats": {
+        "<slot> element": 1
+      }
+    },
+    "src/wb-models/drawer.schema.json": {
+      "total": 1,
+      "cats": {
+        "<slot> element": 1
+      }
+    },
+    "src/wb-models/dropdown.schema.json": {
+      "total": 2,
+      "cats": {
+        "prose / comment / other": 2
+      }
+    },
+    "src/wb-models/header.schema.json": {
+      "total": 1,
+      "cats": {
+        "prose / comment / other": 1
+      }
+    },
+    "src/wb-models/views.schema.json": {
+      "total": 1,
+      "cats": {
+        "<slot> element": 1
+      }
+    },
+    "src/wb-viewmodels/card.js": {
+      "total": 23,
+      "cats": {
+        "prose / comment / other": 18,
+        "slot=\"…\" attribute": 3,
+        "data-slot": 2
+      }
+    },
+    "src/wb-viewmodels/enhancements.js": {
+      "total": 9,
+      "cats": {
+        "prose / comment / other": 9
+      }
+    },
+    "src/wb-viewmodels/masked.js": {
+      "total": 9,
+      "cats": {
+        "prose / comment / other": 9
+      }
+    },
+    "src/wb-viewmodels/semantics/dialog.js": {
+      "total": 6,
+      "cats": {
+        "prose / comment / other": 5,
+        "slot=\"…\" attribute": 1
+      }
+    },
+    "src/wb-views/partials/card.html": {
+      "total": 1,
+      "cats": {
+        "<slot> element": 1
+      }
+    },
+    "src/wb-views/partials/ui-demo.html": {
+      "total": 1,
+      "cats": {
+        "<slot> element": 1
+      }
+    },
+    "src/wb-views/views-registry.json": {
+      "total": 16,
+      "cats": {
+        "<slot> element": 16
+      }
+    },
+    "demos/charity-food.html": {
+      "total": 4,
+      "cats": {
+        "slot=\"…\" attribute": 4
+      }
+    },
+    "demos/kitchen-sink.html": {
+      "total": 3,
+      "cats": {
+        "slot=\"…\" attribute": 3
+      }
+    },
+    "demos/layout-test.html": {
+      "total": 2,
+      "cats": {
+        "slot=\"…\" attribute": 2
+      }
+    },
+    "demos/wb-views-demo.html": {
+      "total": 21,
+      "cats": {
+        "<slot> element": 15,
+        "prose / comment / other": 6
+      }
+    },
+    "demos/wb-views-demo.md": {
+      "total": 4,
+      "cats": {
+        "<slot> element": 4
+      }
+    },
+    "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md": {
+      "total": 20,
+      "cats": {
+        "prose / comment / other": 14,
+        "slot=\"…\" attribute": 6
+      }
+    },
+    "docs/architecture/standards/SCHEMA-SPECIFICATION.md": {
+      "total": 3,
+      "cats": {
+        "prose / comment / other": 1,
+        "slot=\"…\" attribute": 2
+      }
+    },
+    "docs/architecture/WBVIEWS.md": {
+      "total": 9,
+      "cats": {
+        "prose / comment / other": 5,
+        "slot=\"…\" attribute": 4
+      }
+    },
+    "docs/behavior-cross-reference.md": {
+      "total": 1,
+      "cats": {
+        "prose / comment / other": 1
+      }
+    },
+    "docs/behaviors/wb-card.md": {
+      "total": 7,
+      "cats": {
+        "prose / comment / other": 7
+      }
+    },
+    "docs/components/cards/cardhero.md": {
+      "total": 5,
+      "cats": {
+        "prose / comment / other": 3,
+        "slot=\"…\" attribute": 2
+      }
+    },
+    "docs/components/navigation/navigation.readme.md": {
+      "total": 2,
+      "cats": {
+        "slot=\"…\" attribute": 2
+      }
+    },
+    "docs/MVVM-MIGRATION-PLAN.md": {
+      "total": 7,
+      "cats": {
+        "prose / comment / other": 5,
+        "slot=\"…\" attribute": 2
+      }
+    },
+    "docs/MVVM-MIGRATION.md": {
+      "total": 5,
+      "cats": {
+        "prose / comment / other": 3,
+        "slot=\"…\" attribute": 2
+      }
+    },
+    "docs/V3-GUIDE.md": {
+      "total": 1,
+      "cats": {
+        "prose / comment / other": 1
+      }
+    },
+    "docs/wb-parts-spec.md": {
+      "total": 7,
+      "cats": {
+        "prose / comment / other": 2,
+        "<slot> element": 4,
+        "slot=\"…\" attribute": 1
+      }
+    },
+    "tests/compliance/cardhero-attrs.spec.ts": {
+      "total": 3,
+      "cats": {
+        "prose / comment / other": 2,
+        "[slot] / [slot=] selector": 1
+      }
+    },
+    "tests/pages/header.spec.ts": {
+      "total": 2,
+      "cats": {
+        "prose / comment / other": 1,
+        "slot=\"…\" attribute": 1
+      }
+    },
+    "tests/views/views.spec.ts": {
+      "total": 3,
+      "cats": {
+        "prose / comment / other": 3
+      }
+    }
+  }
+}
