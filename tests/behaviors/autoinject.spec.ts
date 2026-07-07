@@ -14,7 +14,12 @@ test.describe('Auto-Inject Demo', () => {
      await expect(status).toHaveText(/WB Initialized/i);
   });
 
-  test.describe('Form Elements', () => {
+  // #290: this block is pre-existing broken — stale element IDs (input-97 /
+  // select-147 / article-345 don't exist in the current autoinject.html) and it
+  // tests a .wb-checkbox WRAPPER the checkbox behavior doesn't create by design.
+  // Quarantined until rewritten against a lightweight fixture with robust
+  // selectors + the real contract. Do NOT delete — see #290.
+  test.describe.fixme('Form Elements', () => {
     test('Checkboxes are wrapped/enhanced', async ({ page }) => {
       const checkbox = page.locator('#autoinject-input-97');
       const parent = checkbox.locator('xpath=..');
