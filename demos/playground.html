@@ -230,6 +230,39 @@
     }
     document.getElementById('pg-format').addEventListener('click', formatInput);
 
+    // Click an element in the Preview → scroll the source editor to that element's
+    // opening tag (and select it). Top-level preview children map 1:1, in order,
+    // to the top-level elements in the source.
+    const VOID_TAGS = new Set(['br', 'hr', 'img', 'input', 'meta', 'link', 'area', 'base', 'col', 'embed', 'source', 'track', 'wbr']);
+    function topLevelElementOffset(src, targetIdx) {
+      const re = /<(\/?)([a-zA-Z][\w-]*)([^>]*?)(\/?)>/g;
+      let depth = 0, count = -1, m;
+      while ((m = re.exec(src)) !== null) {
+        const closing = m[1] === '/';
+        const selfClose = m[4] === '/' || VOID_TAGS.has(m[2].toLowerCase());
+        if (closing) { depth = Math.max(0, depth - 1); continue; }
+        if (depth === 0) { count++; if (count === targetIdx) return m.index; }
+        if (!selfClose) depth++;
+      }
+      return -1;
+    }
+    preview.addEventListener('click', (e) => {
+      const anchor = e.target.closest && e.target.closest('a[href^="#"]');
+      if (anchor) e.preventDefault(); // don't let demo CTA links jump the page
+      let node = e.target;
+      while (node && node.parentElement !== preview) node = node.parentElement;
+      if (!node) return;
+      const idx = Array.prototype.indexOf.call(preview.children, node);
+      if (idx < 0) return;
+      const offset = topLevelElementOffset(input.value, idx);
+      if (offset < 0) return;
+      const line = input.value.slice(0, offset).split('\n').length - 1;
+      const lineHeight = parseFloat(getComputedStyle(input).lineHeight) || 20;
+      input.focus();
+      input.setSelectionRange(offset, offset);
+      input.scrollTop = Math.max(0, line * lineHeight - 8);
+    });
+
     // ── Example sets (loaded from the Examples dropdown) ──────────────────────
     const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
     const S = ['xs', 'sm', 'md', 'lg', 'xl'];
