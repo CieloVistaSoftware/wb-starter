@@ -34,6 +34,10 @@
     #pg-input:focus { outline: none; }
 
     #pg-preview { padding: 1.25rem; min-height: 70vh; background: var(--bg-primary); }
+    /* Space stacked top-level previewed elements (e.g. the 50 cards) so they
+       don't sit flush on top of each other. */
+    #pg-preview > * + * { margin-top: 1rem; }
+    #pg-preview > wb-card, #pg-preview > [class*="wb-card"] { display: block; }
     /* The preview is arbitrary pasted HTML — let long content wrap, never overflow. */
     #pg-preview, #pg-preview * { max-width: 100%; overflow-wrap: anywhere; }
 
@@ -222,15 +226,27 @@
     }
     document.getElementById('pg-format').addEventListener('click', formatInput);
 
-    // Load 50 varied card types so all variants/sizes/states can be seen at once.
+    // Load 50 varied card types so all variants/sizes/states/shapes can be seen.
     document.getElementById('pg-cards').addEventListener('click', () => {
       const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
       const S = ['xs', 'sm', 'md', 'lg', 'xl'];
-      const EXTRA = ['', ' elevated', ' hoverable', ' footer="Footer"', ' subtitle="Subtitle"', ' badge="New"'];
+      const LOREM = 'A short description that spans a line or two so wrapping and spacing are visible.';
+      // Rotating templates give real variety: footer, subtitle+badge, elevated,
+      // hoverable+tooltip, image card, pricing, profile, plain, long body.
+      const T = [
+        (i, v, s) => `<wb-card title="#${i} ${v} · ${s}" variant="${v}" size="${s}" footer="Footer ${i}">Body ${i}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}" subtitle="With subtitle + badge" badge="New">${LOREM}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} elevated" variant="${v}" elevated footer="Elevated">Body ${i}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} hoverable" variant="${v}" hoverable tooltip="Hover text for #${i}">Hover me — ${LOREM}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}">Title + body only, no footer. ${i}</wb-card>`,
+        (i, v, s) => `<wb-cardimage title="#${i} image card" subtitle="cardimage" src="https://picsum.photos/seed/${i}/320/120">Image card body ${i}</wb-cardimage>`,
+        (i, v, s) => `<wb-cardpricing title="Plan #${i}" price="$${i}9" variant="${v}">Feature A · Feature B · Feature C</wb-cardpricing>`,
+        (i, v, s) => `<wb-cardprofile title="Person #${i}" subtitle="Role ${s}" variant="${v}">${LOREM}</wb-cardprofile>`,
+      ];
       const out = [];
       for (let i = 0; i < 50; i++) {
-        const v = V[i % V.length], s = S[i % S.length], extra = EXTRA[i % EXTRA.length];
-        out.push(`<wb-card title="#${i + 1} ${v}/${s}" variant="${v}" size="${s}"${extra}>Body ${i + 1}</wb-card>`);
+        const v = V[i % V.length], s = S[i % S.length];
+        out.push(T[i % T.length](i + 1, v, s));
       }
       input.value = out.join('\n');
       endpointPanel.hidden = true;
