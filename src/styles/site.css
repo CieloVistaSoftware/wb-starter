@@ -2019,3 +2019,48 @@ section[id] {
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE READABILITY + FLUENT NAV (#293)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Responsive images everywhere — scale to the column, never overflow. */
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 640px) {
+  /* Bump the base ~12.5% so EVERY rem-based size (body text, code, the
+     --md-font-size docs, padding, gaps) reads comfortably on phones. One lever. */
+  html { font-size: 112.5%; }
+
+  /* Fluent nav: an ALWAYS-VISIBLE horizontal, swipeable bar at the TOP of the
+     content — NOT a fixed off-canvas side drawer. No hamburger, no backdrop. */
+  .site__body { flex-direction: column; }
+  .site__nav {
+    position: static !important;
+    transform: none !important;
+    flex: 0 0 auto !important;   /* size to the row of items, don't collapse */
+    width: 100% !important;
+    height: auto !important;
+    min-height: fit-content;
+    max-height: none !important;
+    top: auto;
+    bottom: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-shadow: none !important;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  /* Items flow left-to-right in a single scrollable row. */
+  .site__nav .nav__items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+    padding: 0.4rem 0.6rem;
+  }
+  .site__nav .nav__item { flex: 0 0 auto; width: auto !important; white-space: nowrap; }
+  /* An in-flow bar needs no drawer chrome. */
+  .site__nav-backdrop { display: none !important; }
+  .nav__resizer { display: none !important; }
+}

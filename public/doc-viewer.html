@@ -107,7 +107,11 @@
       var KEY = 'wb-doc-font-scale';
       function clamp(v) { return Math.max(0.7, Math.min(2.0, v)); }
       function apply(scale) { document.documentElement.style.fontSize = (scale * 100) + '%'; }
-      var scale = clamp(parseFloat(localStorage.getItem(KEY) || '1') || 1);
+      // On phones default to a larger scale so docs read at ~18px (#293). This
+      // inline root font-size is what the A-/A+ control adjusts; the CSS mobile
+      // bump can't reach it because inline wins, so we default it here.
+      var mobileDefault = (window.matchMedia && window.matchMedia('(max-width: 640px)').matches) ? 1.125 : 1;
+      var scale = clamp(parseFloat(localStorage.getItem(KEY) || String(mobileDefault)) || mobileDefault);
       apply(scale);
       function set(s) { scale = clamp(s); localStorage.setItem(KEY, String(scale)); apply(scale); }
       document.addEventListener('click', function (e) {
