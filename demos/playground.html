@@ -80,6 +80,18 @@
             <option value="heroes">20 card heroes</option>
             <option value="badges">50 badges</option>
           </select>
+          <select id="pg-sort" class="pg-btn" title="Sort the previewed elements"
+            style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
+            <option value="">↕ Sort by…</option>
+            <option value="variant">Variant</option>
+            <option value="size">Size</option>
+            <option value="title">Title (A→Z)</option>
+            <option value="tag">Tag name</option>
+            <option value="pill">Pill first</option>
+            <option value="outline">Outline first</option>
+            <option value="removable">Removable first</option>
+            <option value="elevated">Elevated first</option>
+          </select>
           <button id="pg-format" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);"
             title="Format vertically (one attribute per line)">⭹ Format</button>
@@ -259,6 +271,74 @@
       }
       return -1;
     }
+
+    // Split the source into its top-level elements (same tag-walk as
+    // topLevelElementOffset, but returns the full markup chunk for each one).
+    function splitTopLevelChunks(src) {
+      const re = /<(\/?)([a-zA-Z][\w-]*)([^>]*?)(\/?)>/g;
+      let depth = 0, curStart = -1, m;
+      const bounds = [];
+      while ((m = re.exec(src)) !== null) {
+        const closing = m[1] === '/';
+        const selfClose = m[4] === '/' || VOID_TAGS.has(m[2].toLowerCase());
+        if (closing) {
+          depth = Math.max(0, depth - 1);
+          if (depth === 0 && curStart >= 0) { bounds.push({ start: curStart, end: re.lastIndex }); curStart = -1; }
+          continue;
+        }
+        if (depth === 0) {
+          curStart = m.index;
+          if (selfClose) { bounds.push({ start: m.index, end: re.lastIndex }); curStart = -1; }
+        }
+        if (!selfClose) depth++;
+      }
+      return bounds.map((b) => src.slice(b.start, b.end));
+    }
+
+    // Parse an element chunk's opening tag: tag name + attribute map (bare
+    // boolean attrs like `pill` map to '').
+    function parseOpenTag(chunk) {
+      const m = /^<([a-zA-Z][\w-]*)([^>]*)>/.exec(chunk);
+      if (!m) return { tag: '', attrs: {} };
+      const attrs = {};
+      const attrRe = /([a-zA-Z][\w-]*)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`\/]+)))?/g;
+      let am;
+      while ((am = attrRe.exec(m[2])) !== null) {
+        attrs[am[1].toLowerCase()] = am[2] !== undefined ? am[2] : am[3] !== undefined ? am[3] : am[4] !== undefined ? am[4] : '';
+      }
+      return { tag: m[1].toLowerCase(), attrs };
+    }
+
+    // Sort key for a chunk under a given mode — used by the "Sort by…" dropdown.
+    const SIZE_ORDER = ['xs', 'sm', 'md', 'lg', 'xl'];
+    function sortKey(chunk, mode) {
+      const { tag, attrs } = parseOpenTag(chunk);
+      switch (mode) {
+        case 'variant': return attrs.variant ?? '￿';
+        case 'size': { const i = SIZE_ORDER.indexOf(attrs.size); return i < 0 ? SIZE_ORDER.length : i; }
+        case 'title': return (attrs.title || '').toLowerCase();
+        case 'tag': return tag;
+        case 'pill': case 'outline': case 'removable': case 'elevated':
+          return (mode in attrs) ? 0 : 1;
+        default: return 0;
+      }
+    }
+
+    document.getElementById('pg-sort').addEventListener('change', (e) => {
+      const mode = e.target.value;
+      e.target.value = ''; // reset to placeholder
+      if (!mode) return;
+      const chunks = splitTopLevelChunks(input.value);
+      chunks.sort((a, b) => {
+        const ka = sortKey(a, mode), kb = sortKey(b, mode);
+        return ka < kb ? -1 : ka > kb ? 1 : 0;
+      });
+      input.value = chunks.join('\n');
+      endpointPanel.hidden = true;
+      fitEditor();
+      render();
+    });
+
     preview.addEventListener('click', (e) => {
       const anchor = e.target.closest && e.target.closest('a[href^="#"]');
       if (anchor) e.preventDefault(); // don't let demo CTA links jump the page
