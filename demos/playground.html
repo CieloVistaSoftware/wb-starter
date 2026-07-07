@@ -83,14 +83,6 @@
           <select id="pg-sort" class="pg-btn" title="Sort the previewed elements"
             style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
             <option value="">↕ Sort by…</option>
-            <option value="variant">Variant</option>
-            <option value="size">Size</option>
-            <option value="title">Title (A→Z)</option>
-            <option value="tag">Tag name</option>
-            <option value="pill">Pill first</option>
-            <option value="outline">Outline first</option>
-            <option value="removable">Removable first</option>
-            <option value="elevated">Elevated first</option>
           </select>
           <button id="pg-format" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);"
@@ -316,13 +308,43 @@
       switch (mode) {
         case 'variant': return attrs.variant ?? '￿';
         case 'size': { const i = SIZE_ORDER.indexOf(attrs.size); return i < 0 ? SIZE_ORDER.length : i; }
-        case 'title': return (attrs.title || '').toLowerCase();
+        case 'title': return (attrs.title || attrs.label || '').toLowerCase();
         case 'tag': return tag;
         case 'pill': case 'outline': case 'removable': case 'elevated':
           return (mode in attrs) ? 0 : 1;
         default: return 0;
       }
     }
+
+    // Every sort mode the dropdown can offer, and which attribute each example
+    // set actually carries — so "Sort by…" only ever lists modes that apply to
+    // what's currently loaded (badges get pill/outline/removable, cards get
+    // variant/size/elevated, heroes only have a title to sort by, and the
+    // sample form is a single element — nothing to sort).
+    const SORT_MODES = [
+      { value: 'variant', label: 'Variant' },
+      { value: 'size', label: 'Size' },
+      { value: 'title', label: 'Title (A→Z)' },
+      { value: 'tag', label: 'Tag name' },
+      { value: 'pill', label: 'Pill first' },
+      { value: 'outline', label: 'Outline first' },
+      { value: 'removable', label: 'Removable first' },
+      { value: 'elevated', label: 'Elevated first' },
+    ];
+    const EXAMPLE_SORT_MODES = {
+      form: [],
+      cards: ['variant', 'size', 'title', 'tag', 'elevated'],
+      heroes: ['title', 'tag'],
+      badges: ['variant', 'size', 'title', 'tag', 'pill', 'outline', 'removable'],
+    };
+    const sortSelect = document.getElementById('pg-sort');
+    function setSortModes(modes) {
+      sortSelect.innerHTML = '<option value="">↕ Sort by…</option>' +
+        SORT_MODES.filter((m) => modes.includes(m.value))
+          .map((m) => `<option value="${m.value}">${m.label}</option>`).join('');
+      sortSelect.disabled = modes.length === 0;
+    }
+    setSortModes(EXAMPLE_SORT_MODES.form); // initial content is the sample form
 
     document.getElementById('pg-sort').addEventListener('change', (e) => {
       const mode = e.target.value;
@@ -501,6 +523,7 @@
       else if (which === 'cards') input.value = fiftyCards();
       else if (which === 'heroes') input.value = twentyHeroes();
       else if (which === 'badges') input.value = fiftyBadges();
+      setSortModes(EXAMPLE_SORT_MODES[which] || []);
       e.target.value = ''; // reset to placeholder
       endpointPanel.hidden = true;
       fitEditor();
@@ -522,6 +545,7 @@
       input.value = '';
       preview.innerHTML = '';
       errorBox.hidden = true;
+      setSortModes([]);
       fitEditor();
       input.focus();
     });
