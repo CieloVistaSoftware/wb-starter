@@ -78,6 +78,7 @@
             <option value="form">Sample form</option>
             <option value="cards">50 cards</option>
             <option value="heroes">20 card heroes</option>
+            <option value="badges">50 badges</option>
           </select>
           <button id="pg-format" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);"
@@ -359,6 +360,16 @@
       ];
       const heights = ['320px', '380px', '440px'];
       const aligns = ['center', 'left', 'right'];
+      // Each CTA links to the doc it's talking about (opens in the doc-viewer).
+      const DV = (file) => '../public/doc-viewer.html?file=' + encodeURIComponent(file);
+      const CTA_HREF = {
+        'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': DV('docs/V3-GUIDE.md'),
+        'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'),
+        'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors/wb-behaviors.md'),
+        'Explore themes': DV('docs/behaviors/wb-themecontrol.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
+        'Star on GitHub': 'https://github.com/CieloVistaSoftware/wb-starter',
+      };
+      const href = (c) => CTA_HREF[c] || DV('docs/V3-GUIDE.md');
       const out = [];
       for (let i = 0; i < 20; i++) {
         const [pre, title, sub, cta, cta2] = heroes[i % heroes.length];
@@ -370,11 +381,28 @@
           `height="${heights[i % heights.length]}"`,
           `xalign="${aligns[i % aligns.length]}"`,
           cta ? `cta="${cta}"` : '',
+          cta ? `cta-href="${href(cta)}"` : '',
           cta2 ? `cta-secondary="${cta2}"` : '',
+          cta2 ? `cta-secondary-href="${href(cta2)}"` : '',
           bg ? `background="${bg}"` : '',
         ].filter(Boolean);
         out.push(`<wb-cardhero\n  ${attrs.join('\n  ')}>\n</wb-cardhero>`);
       }
+      return out.join('\n');
+    }
+
+    function fiftyBadges() {
+      const V = ['default', 'primary', 'secondary', 'success', 'warning', 'error', 'info', 'purple', 'pink', 'teal', 'orange'];
+      const S = ['xs', 'sm', 'md', 'lg'];
+      const MOD = ['', ' pill', ' outline', ' removable', ' pill removable'];
+      const out = [];
+      for (let i = 0; i < 50; i++) {
+        const v = V[i % V.length], s = S[i % S.length], m = MOD[i % MOD.length];
+        out.push(`<wb-badge label="#${i + 1} ${v}" variant="${v}" size="${s}"${m}></wb-badge>`);
+      }
+      // a couple of dot badges at the end
+      out.push('<wb-badge variant="success" dot></wb-badge>');
+      out.push('<wb-badge variant="error" dot></wb-badge>');
       return out.join('\n');
     }
 
@@ -384,6 +412,7 @@
       if (which === 'form') input.value = SAMPLE;
       else if (which === 'cards') input.value = fiftyCards();
       else if (which === 'heroes') input.value = twentyHeroes();
+      else if (which === 'badges') input.value = fiftyBadges();
       e.target.value = ''; // reset to placeholder
       endpointPanel.hidden = true;
       fitEditor();
