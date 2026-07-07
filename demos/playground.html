@@ -18,9 +18,19 @@
 
     .pg-panel { border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden;
       background: var(--bg-secondary); display: flex; flex-direction: column; }
+    /* Mobile-first fluent toolbar: wraps instead of overflowing; the button row
+       grows and wraps as space allows. */
     .pg-panel__head { display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.5rem;
       padding: 0.6rem 1rem; font-weight: 600; font-size: 0.9rem;
       border-bottom: 1px solid var(--border-color); }
+    .pg-panel__label { flex: 0 0 auto; }
+    .pg-toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; flex: 1 1 auto; justify-content: flex-end; }
+    .pg-toolbar .pg-btn { flex: 0 1 auto; }
+    @media (max-width: 560px) {
+      .pg-toolbar { justify-content: flex-start; }
+      .pg-toolbar .pg-btn { flex: 1 1 calc(50% - 0.5rem); } /* two-up on phones */
+    }
     .pg-hint { color: var(--text-muted); font-size: 0.8rem; font-weight: 400; }
 
     /* Height is AUTOMATIC — the editor grows to fit the markup (JS sets an inline
@@ -56,8 +66,10 @@
   <div class="pg-grid">
     <div class="pg-panel">
       <div class="pg-panel__head">
-        <span>HTML</span>
-        <span style="display:flex; gap:0.5rem;">
+        <span class="pg-panel__label">HTML</span>
+        <span class="pg-toolbar">
+          <select id="pg-theme" class="pg-btn" title="Preview theme"
+            style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;"></select>
           <button id="pg-clear" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);">Clear</button>
           <select id="pg-examples" class="pg-btn" title="Load an example set"
@@ -72,7 +84,7 @@
             title="Format vertically (one attribute per line)">⭹ Format</button>
           <button id="pg-render" class="pg-btn" type="button">Render ▶</button>
           <button id="pg-copy" class="pg-btn" type="button"
-            style="background:var(--bg-tertiary); color:var(--text-primary);" title="Copy the HTML">📋 Copy</button>
+            style="background:var(--bg-tertiary); color:var(--text-primary);" title="Copy the HTML (or right-click a preview element)">📋 Copy</button>
         </span>
       </div>
       <textarea id="pg-input" x-ignore spellcheck="false" aria-label="HTML input"></textarea>
@@ -262,6 +274,51 @@
       input.setSelectionRange(offset, offset);
       input.scrollTop = Math.max(0, line * lineHeight - 8);
     });
+
+    // Right-click a preview element → copy its SOURCE markup to the clipboard.
+    preview.addEventListener('contextmenu', (e) => {
+      let node = e.target;
+      while (node && node.parentElement !== preview) node = node.parentElement;
+      if (!node) return;
+      const idx = Array.prototype.indexOf.call(preview.children, node);
+      if (idx < 0) return;
+      const start = topLevelElementOffset(input.value, idx);
+      if (start < 0) return;
+      const nextStart = topLevelElementOffset(input.value, idx + 1);
+      const end = nextStart < 0 ? input.value.length : nextStart;
+      const markup = input.value.slice(start, end).trim();
+      e.preventDefault();
+      navigator.clipboard.writeText(markup).then(() => {
+        const cb = document.getElementById('pg-copy');
+        const orig = cb.textContent;
+        cb.textContent = '✓ Element copied';
+        setTimeout(() => { cb.textContent = orig; }, 1500);
+      }).catch(() => {});
+    });
+
+    // Theme control — populate from every [data-theme="…"] rule in the loaded
+    // stylesheets and switch the whole page (incl. preview) live.
+    (function initThemeControl() {
+      const themeSel = document.getElementById('pg-theme');
+      const themes = new Set();
+      for (const sheet of document.styleSheets) {
+        let rules;
+        try { rules = sheet.cssRules; } catch { continue; }
+        for (const r of rules) {
+          for (const m of String(r.selectorText || '').matchAll(/\[data-theme="([\w-]+)"\]/g)) themes.add(m[1]);
+        }
+      }
+      const current = document.documentElement.dataset.theme || 'dark';
+      themeSel.innerHTML = '';
+      [...themes].sort().forEach((t) => {
+        const o = document.createElement('option');
+        o.value = t; o.textContent = '🎨 ' + t;
+        if (t === current) o.selected = true;
+        themeSel.appendChild(o);
+      });
+      if (!themes.size) { themeSel.hidden = true; return; }
+      themeSel.addEventListener('change', () => { document.documentElement.dataset.theme = themeSel.value; });
+    })();
 
     // ── Example sets (loaded from the Examples dropdown) ──────────────────────
     const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
