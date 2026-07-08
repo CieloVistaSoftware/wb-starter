@@ -281,7 +281,7 @@ export function alert(element, options = {}) {
   const titleEl = document.createElement('div');
   titleEl.className = 'wb-alert__title';
   titleEl.textContent = titleText;
-  const msgEl = document.createElement('p');
+  const msgEl = document.createElement('div');
   msgEl.className = 'wb-alert__message';
   msgEl.textContent = content;
   contentEl.appendChild(titleEl);

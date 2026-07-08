@@ -16,7 +16,7 @@ export function empty(element, options = {}) {
   element.innerHTML = `
     <div class="wb-empty__icon">${config.icon}</div>
     <h3 class="wb-empty__message">${config.message}</h3>
-    ${config.description ? `<p class="wb-empty__description">${config.description}</p>` : ''}
+    ${config.description ? `<div class="wb-empty__description">${config.description}</div>` : ''}
   `;
 
   // Styles

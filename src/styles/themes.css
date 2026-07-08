@@ -67,6 +67,16 @@
   --overlay-dark-hsl: 0 0% 0%;    /* scrims, shadows */
   --overlay-light-hsl: 0 0% 100%; /* glass, sheen, hovers */
 
+  /* Pre-composed glass tokens (card.css .wb-card--glass, #232) — css-oop-
+     compliance only exempts hsl()/rgba() composition in shadow contexts or
+     exception-listed files, so the alpha is baked in here rather than
+     composed at the call site as a bare var() reference. */
+  --card-glass-bg: hsl(0 0% 100% / 0.08);
+  --card-glass-bg-hover: hsl(0 0% 100% / 0.12);
+  --card-glass-border: hsl(0 0% 100% / 0.16);
+  --card-glass-border-hover: hsl(0 0% 100% / 0.24);
+  --card-glass-sheen: hsl(0 0% 100% / 0.14);
+
   /* Semantic state colors — used by alert, notification, rating */
   --info-color: hsl(217, 91%, 60%);
   --success-color: hsl(142, 71%, 45%);
@@ -120,6 +130,25 @@
      surface (mdhtml, doc-viewer) derives its text size from this — 1rem so docs
      are readable on mobile. Change it here, everything follows. */
   --md-font-size: 1rem;
+
+  /* Spacing + type scale — several pages (behaviors-showcase.html,
+     pages/behaviors.css, components.css) already reference these by name
+     (some with a matching fallback, e.g. `var(--space-lg, 1.5rem)`), but the
+     tokens themselves were never actually defined here, so every rule using
+     them without a fallback silently computed to nothing (no spacing at all). */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
 
   /* Foundation */
   --hue-primary: 240;

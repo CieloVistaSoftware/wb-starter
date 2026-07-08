@@ -3,7 +3,7 @@
 
 <div id="components-hero" class="page__hero">
   <h1>🧩 Components Library</h1>
-  <p>wb-starter v3.0 • Interactive demos with copy-ready code</p>
+  <div>wb-starter v3.0 • Interactive demos with copy-ready code</div>
   <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
     <a href="?page=builder" class="wb-btn">🚀 Get Started</a>
     <a href="?page=behaviors" variant="secondary">⚡ Behaviors</a>
@@ -23,18 +23,20 @@
   <!-- Basic Cards -->
   <h3>Basic Cards</h3>
   <wb-demo>
-    <wb-card title="Title + Body" elevated>
-      <p>Simple card with title and hover effect.</p>
+    <wb-card
+      title="This is the title"
+      elevated>
+      This is the body
     </wb-card>
   </wb-demo>
   <wb-demo>
     <wb-card title="This is the title" footer="This is the footer" elevated>
-      <p>this is an embedded paragraph</p>
+      <div>this is an embedded paragraph</div>
     </wb-card>
   </wb-demo>
   <wb-demo>
     <wb-card title="Outlined Card" outlined>
-      <p>Card with outline border.</p>
+      <div>Card with outline border.</div>
     </wb-card>
   </wb-demo>
   <!-- Image Cards -->
@@ -193,7 +195,7 @@
 
   <!-- Alerts (as Toasts) -->
   <h3>Alerts</h3>
-  <p style="color: var(--text-secondary); margin-bottom: 1rem;">Click to trigger alert toasts:</p>
+  <div style="color: var(--text-secondary); margin-bottom: 1rem;">Click to trigger alert toasts:</div>
   <div class="demo-inline">
     <button class="wb-btn" style="background: var(--info);" x-toast message="This is an informational message." variant="info">ℹ️ Info Alert</button>
     <button class="wb-btn" style="background: var(--success);" x-toast message="Operation completed successfully!" variant="success">✅ Success Alert</button>
@@ -296,13 +298,13 @@
   <div class="demo-row" id="autogen-components-html-16">
     <div class="component-box">
       <h4>Modal</h4>
-      <p>Centered dialog with backdrop</p>
+      <div>Centered dialog with backdrop</div>
       <wb-modal class="wb-btn" modal-title="Modal Dialog" modal-content="This is modal content. Press ESC or click outside to close.">Open Modal</wb-modal>
     </div>
     
     <div class="component-box">
       <h4>Drawer</h4>
-      <p>Slide-out panel</p>
+      <div>Slide-out panel</div>
       <div style="display: flex; gap: 0.5rem;">
         <button class="wb-btn" x-drawer drawer-title="Left Drawer" drawer-content="This panel slides in from the left side." position="left">← Left</button>
         <button class="wb-btn" x-drawer drawer-title="Right Drawer" drawer-content="This panel slides in from the right side." position="right">Right →</button>
@@ -311,25 +313,25 @@
     
     <div class="component-box">
       <h4>Confirm</h4>
-      <p>Yes/No confirmation</p>
+      <div>Yes/No confirmation</div>
       <button class="wb-btn" x-confirm confirm-title="Delete Item?" confirm-message="This cannot be undone.">Confirm</button>
     </div>
     
     <div class="component-box">
       <h4>Prompt</h4>
-      <p>Input dialog</p>
+      <div>Input dialog</div>
       <button class="wb-btn" x-prompt prompt-title="Your Name" prompt-message="Please enter your name:">Prompt</button>
     </div>
 
     <div class="component-box">
       <h4>Lightbox</h4>
-      <p>Full-screen image viewer</p>
+      <div>Full-screen image viewer</div>
       <button class="wb-btn" x-lightbox src="https://picsum.photos/1200/800">View Image</button>
     </div>
 
     <div class="component-box">
       <h4>Popover</h4>
-      <p>Small popup</p>
+      <div>Small popup</div>
       <button class="wb-btn" x-popover popover-title="Info" popover-content="Additional information here.">Show Popover</button>
     </div>
   </div>
@@ -366,7 +368,7 @@
   <wb-tabs>
     <div tab-title="Overview">
       <h4>Project Overview</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
     </div>
     <div tab-title="Features">
       <h4>Key Features</h4>
@@ -378,7 +380,7 @@
     </div>
     <div tab-title="Installation">
       <h4>Getting Started</h4>
-      <p>Aenean lacinia bibendum nulla sed consectetur. Just include the script and start building.</p>
+      <div>Aenean lacinia bibendum nulla sed consectetur. Just include the script and start building.</div>
     </div>
   </wb-tabs>
   <div class="code-example">
@@ -400,13 +402,13 @@
   <wb-demo>
     <wb-accordion>
       <div accordion-title="What is wb-starter?">
-        <p>wb-starter is a zero-build web component library that provides modern, accessible UI components using native web standards.</p>
+        <div>wb-starter is a zero-build web component library that provides modern, accessible UI components using native web standards.</div>
       </div>
       <div accordion-title="How do I install it?">
-        <p>No installation needed! Just include the script tag in your HTML and start using the components immediately.</p>
+        <div>No installation needed! Just include the script tag in your HTML and start using the components immediately.</div>
       </div>
       <div accordion-title="Is it production ready?">
-        <p>Yes! Fully tested and enterprise hardened with comprehensive accessibility support.</p>
+        <div>Yes! Fully tested and enterprise hardened with comprehensive accessibility support.</div>
       </div>
     </wb-accordion>
   </wb-demo>
@@ -415,17 +417,17 @@
   <h3>Details / Accordion</h3>
   <wb-demo>
     <wb-details summary="What is wb-starter?">
-      <p>wb-starter is a zero-build web component library that provides modern, accessible UI components using native web standards.</p>
+      <div>wb-starter is a zero-build web component library that provides modern, accessible UI components using native web standards.</div>
     </wb-details>
   </wb-demo>
   <wb-demo>
     <wb-details summary="How do I install it?">
-      <p>No installation needed! Just include the script tag in your HTML and start using the components immediately.</p>
+      <div>No installation needed! Just include the script tag in your HTML and start using the components immediately.</div>
     </wb-details>
   </wb-demo>
   <wb-demo>
     <wb-details summary="Is it production ready?">
-      <p>Yes! Fully tested and enterprise hardened with comprehensive accessibility support.</p>
+      <div>Yes! Fully tested and enterprise hardened with comprehensive accessibility support.</div>
     </wb-details>
   </wb-demo>
 
@@ -482,9 +484,9 @@
       <option>Option 1</option>
       <option>Option 2</option>
     </select>
-    <label class="checkbox-label"><input type="checkbox"> Checkbox</label>
-    <label class="checkbox-label"><input type="radio" name="radio-demo" checked> Radio A</label>
-    <label class="checkbox-label"><input type="radio" name="radio-demo"> Radio B</label>
+    <label class="selection-label"><input type="checkbox"> Checkbox</label>
+    <label class="selection-label"><input type="radio" name="radio-demo" checked> Radio A</label>
+    <label class="selection-label"><input type="radio" name="radio-demo"> Radio B</label>
     <wb-switch label="Toggle switch"></wb-switch>
   </div>
   <div class="code-example">
@@ -532,7 +534,7 @@
 
   <!-- Keyboard Keys -->
   <h3>Keyboard Keys</h3>
-  <p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>
+  <div>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</div>
   <div class="code-example">
     <pre><code class="language-html">&lt;p&gt;Press &lt;span x-kbd&gt;Ctrl&lt;/span&gt; + &lt;span x-kbd&gt;S&lt;/span&gt; to save.&lt;/p&gt;</code></pre>
   </div>
@@ -650,13 +652,13 @@
 
 <!-- FOOTER -->
 <footer class="page-footer">
-  <p><strong>wb-starter v3.0</strong> • 170+ Behaviors • 23 Themes</p>
-  <p>
+  <div><strong>wb-starter v3.0</strong> • 170+ Behaviors • 23 Themes</div>
+  <div>
     <a href="?page=builder">Get Started</a> • 
     <a href="?page=behaviors">Behaviors</a> • 
     <a href="?page=themes">Themes</a> • 
     <a href="?page=docs">Docs</a>
-  </p>
+  </div>
 </footer>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════

@@ -141,6 +141,42 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   GLASS VARIANT (#232) — theme-driven glassmorphism + shimmer, no literals.
+   Uses the pre-composed --card-glass-* tokens (themes.css) as plain var()
+   references — card.css isn't on the css-oop-compliance exception list, so
+   composing hsl(var(--x)/alpha) directly here (like hero.css does) would
+   trip the hardcoded-color check; baking the alpha into the token avoids that.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-card--glass {
+  position: relative;
+  background: var(--card-glass-bg);
+  border: 1px solid var(--card-glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.wb-card--glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 42%, var(--card-glass-sheen) 50%, transparent 58%);
+  animation: wb-card-glass-shimmer 6s linear infinite;
+}
+@keyframes wb-card-glass-shimmer { from { transform: translateX(-30%); } to { transform: translateX(30%); } }
+@media (prefers-reduced-motion: reduce) { .wb-card--glass::before { animation: none; } }
+
+.wb-card--glass:hover {
+  background: var(--card-glass-bg-hover);
+  border-color: var(--card-glass-border-hover);
+}
+
+/* Keep header/main/footer above the shimmer overlay. */
+.wb-card--glass > * { position: relative; z-index: 1; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
    MODIFIERS
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -202,13 +238,10 @@
    VARIANTS
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Glass */
-.wb-card--glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
+/* Glass — see the theme-driven .wb-card--glass rule + shimmer earlier in this
+   file (SIZE VARIANTS section, #232). This duplicate (hardcoded rgba, no
+   shimmer) used to silently win by source order over card.js's inline
+   override, which is why "glassy" never actually rendered. */
 
 /* Rack */
 .wb-card--rack {

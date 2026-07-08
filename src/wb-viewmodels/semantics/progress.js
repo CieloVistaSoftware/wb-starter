@@ -7,14 +7,19 @@ export function progress(element, options = {}) {
   // Custom <wb-progress> tag is not a native <progress>, so ::-webkit-progress-value
   // never paints a fill. Render an explicit fill child instead. (issue #127)
   if (element.tagName === 'WB-PROGRESS') {
-    const value = parseFloat(options.value ?? element.dataset.value ?? element.getAttribute('value') ?? 0);
-    const max = parseFloat(options.max ?? element.dataset.max ?? element.getAttribute('max') ?? 100);
-    const variant = options.variant || element.dataset.variant || 'primary';
-    const size = options.size || element.dataset.size || 'md';
-    const striped = options.striped ?? (element.hasAttribute('data-striped') || element.hasAttribute('striped'));
+    const value = parseFloat(options.value ?? element.getAttribute('value') ?? 0);
+    const max = parseFloat(options.max ?? element.getAttribute('max') ?? 100);
+    const variant = options.variant || element.getAttribute('variant') || 'primary';
+    const size = options.size || element.getAttribute('size') || 'md';
+    const striped = options.striped ?? element.hasAttribute('striped');
     const pct = Math.max(0, Math.min(100, (value / max) * 100));
+    // The % label is built in by default (#280) — no external .progress-label
+    // span needed. `label="…"` overrides the text; `show-label="false"` hides it.
+    const showLabel = options.showLabel ?? (element.getAttribute('show-label') !== 'false');
+    const labelText = options.label ?? element.getAttribute('label') ?? `${Math.round(pct)}%`;
 
     element.classList.add('wb-progress', `wb-progress--${size}`, `wb-progress--${variant}`);
+    if (showLabel) element.classList.add('wb-progress--labeled');
     element.setAttribute('role', 'progressbar');
     element.setAttribute('aria-valuenow', String(value));
     element.setAttribute('aria-valuemin', '0');
@@ -26,9 +31,16 @@ export function progress(element, options = {}) {
     bar.style.width = `${pct}%`;
     element.appendChild(bar);
 
+    if (showLabel) {
+      const label = document.createElement('span');
+      label.className = 'wb-progress__label';
+      label.textContent = labelText;
+      element.appendChild(label);
+    }
+
     return () => {
       element.innerHTML = '';
-      element.classList.remove('wb-progress', `wb-progress--${size}`, `wb-progress--${variant}`);
+      element.classList.remove('wb-progress', `wb-progress--${size}`, `wb-progress--${variant}`, 'wb-progress--labeled');
     };
   }
 

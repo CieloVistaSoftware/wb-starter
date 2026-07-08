@@ -53,7 +53,12 @@
        word mid-character even when the whole word would fit on the next line
        (e.g. a hero title wrapping "config" + "ure" instead of just moving
        "configure" down) — `break-word` only breaks as a last resort. */
-    #pg-preview, #pg-preview * { max-width: 100%; overflow-wrap: break-word; }
+    /* :where() keeps this selector's specificity at ZERO despite the #id, so it
+       never outranks a real component class like .wb-card--xs's own max-width —
+       otherwise this safety net silently defeats legitimate size styling and
+       misrepresents real behavior to anyone testing sizes in the playground. */
+    #pg-preview { max-width: 100%; overflow-wrap: break-word; }
+    :where(#pg-preview) * { max-width: 100%; overflow-wrap: break-word; }
 
     .pg-btn { padding: 0.4rem 0.9rem; border-radius: 6px; border: 1px solid var(--border-color);
       background: var(--primary); color: var(--text-on-accent, #fff); cursor: pointer;

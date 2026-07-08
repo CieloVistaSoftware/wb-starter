@@ -489,7 +489,7 @@ export function confirm(element, options = {}) {
     overlay.innerHTML = `
       <div style="${DIALOG_STYLES}">
         <h3 style="margin:0 0 0.5rem;font-size:1.1rem;color:var(--primary,#6366f1);">${config.title}</h3>
-        <p style="margin:0 0 1.5rem;color:var(--text-secondary);">${config.message}</p>
+        <div style="margin:0 0 1.5rem;color:var(--text-secondary);">${config.message}</div>
         <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
           <button class="cancel" style="padding:0.5rem 1rem;border:1px solid var(--border-color);background:var(--bg-tertiary);color:var(--text-primary);border-radius:6px;cursor:pointer;">${config.cancelText}</button>
           <button class="ok" style="padding:0.5rem 1rem;border:none;background:var(--primary,#6366f1);color:white;border-radius:6px;cursor:pointer;">${config.confirmText}</button>
@@ -537,7 +537,7 @@ export function prompt(element, options = {}) {
     overlay.innerHTML = `
       <div style="${DIALOG_STYLES}">
         <h3 style="margin:0 0 0.5rem;font-size:1.1rem;color:var(--primary,#6366f1);">${config.title}</h3>
-        ${config.message ? `<p style="margin:0 0 1rem;color:var(--text-secondary);">${config.message}</p>` : ''}
+        ${config.message ? `<div style="margin:0 0 1rem;color:var(--text-secondary);">${config.message}</div>` : ''}
         <input type="text" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);background:var(--bg-tertiary);color:var(--text-primary);border-radius:6px;margin-bottom:1rem;box-sizing:border-box;" placeholder="${config.placeholder}" value="${config.defaultValue}">
         <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
           <button class="cancel" style="padding:0.5rem 1rem;border:1px solid var(--border-color);background:var(--bg-tertiary);color:var(--text-primary);border-radius:6px;cursor:pointer;">Cancel</button>

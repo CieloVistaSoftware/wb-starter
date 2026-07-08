@@ -85,7 +85,11 @@
     /* Wide markdown tables must stay inside the 900px body: scroll horizontally
        instead of spilling past the right edge, and wrap long cell content. */
     .wb-mdhtml table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; display: block; overflow-x: auto; max-width: 100%; }
-    .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; overflow-wrap: anywhere; word-break: break-word; }
+    /* word-break: normal (not break-word) — break-word forces mid-word breaks even
+       on short tokens ("label" -> "labe l") that would fit fine; overflow-wrap:
+       anywhere remains as the last-resort fallback for a genuinely long unbreakable
+       string (e.g. a URL) that can't fit on its own line (#278). */
+    .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; overflow-wrap: anywhere; word-break: normal; }
     .wb-mdhtml th { background: var(--bg-secondary); font-weight: 600; }
     /* Standard §6 (#248): code WRAPS — never a horizontal scrollbar. Line breaks are
        preserved (pre-wrap); over-long lines/tokens wrap instead of scrolling. */

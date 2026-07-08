@@ -144,13 +144,10 @@ export function cardBase(element, options = {}) {
     overflowWrap: 'break-word'
   };
 
-  // Glass variant overrides
-  if (config.variant === 'glass') {
-    baseStyles.background = 'rgba(255, 255, 255, 0.05)';
-    baseStyles.backdropFilter = 'blur(10px)';
-    baseStyles.webkitBackdropFilter = 'blur(10px)';
-    baseStyles.border = '1px solid rgba(255, 255, 255, 0.1)';
-  }
+  // Glass variant (#232): styling lives in card.css .wb-card--glass
+  // (theme-driven overlay tokens + shimmer) — the `wb-card--glass` class
+  // gets added below alongside every other variant class, no inline override
+  // needed here.
 
   // Rack variant overrides
   if (config.variant === 'rack') {
@@ -170,9 +167,9 @@ export function cardBase(element, options = {}) {
     element.classList.add(`wb-card--${config.variant}`);
   }
   
-  // Size class
-  // Only add valid size classes (e.g., 'sm', 'md', 'lg')
-  if (config.size && ['sm','md','lg','xl'].includes(config.size)) {
+  // Size class (max/min-width scale, card.css) — 'xs' was missing from the
+  // allowlist so <wb-card size="xs"> silently did nothing (#282).
+  if (config.size && ['xs','sm','md','lg','xl','full'].includes(config.size)) {
     element.classList.add(`wb-card--${config.size}`);
   }
   
@@ -299,7 +296,7 @@ export function cardBase(element, options = {}) {
       }
       
       if (config.subtitle) {
-        const subtitleEl = document.createElement('p');
+        const subtitleEl = document.createElement('div');
         subtitleEl.className = 'wb-card__subtitle';
         subtitleEl.style.cssText = STYLE_SUBTITLE;
         subtitleEl.textContent = config.subtitle;
@@ -410,7 +407,7 @@ export function cardBase(element, options = {}) {
           }
           
           if (config.subtitle) {
-            const subtitleElem = document.createElement('p');
+            const subtitleElem = document.createElement('div');
             subtitleElem.className = 'wb-card__subtitle';
             subtitleElem.style.cssText = STYLE_SUBTITLE;
             subtitleElem.textContent = config.subtitle;
@@ -850,7 +847,7 @@ export function cardhero(element, options = {}) {
     slots.subtitle.classList.add('wb-card__subtitle', 'wb-card__hero-subtitle');
     content.appendChild(slots.subtitle);
   } else if (base.config.subtitle) {
-    const subtitleEl = document.createElement('p');
+    const subtitleEl = document.createElement('div');
     subtitleEl.className = 'wb-card__subtitle wb-card__hero-subtitle';
     subtitleEl.innerHTML = base.config.subtitle;
     content.appendChild(subtitleEl);
@@ -932,7 +929,7 @@ export function cardprofile(element, options = {}) {
   }
 
   if (config.role) {
-    const roleEl = document.createElement('p');
+    const roleEl = document.createElement('div');
     roleEl.className = 'wb-card__subtitle wb-card__role';
     roleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--primary,#6366f1);font-size:0.9rem;';
     roleEl.textContent = config.role;
@@ -940,7 +937,7 @@ export function cardprofile(element, options = {}) {
   }
 
   if (config.bio) {
-    const bioEl = document.createElement('p');
+    const bioEl = document.createElement('div');
     bioEl.className = 'wb-card__bio';
     bioEl.style.cssText = 'margin:1rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.875rem;line-height:1.5;';
     bioEl.textContent = config.bio;
@@ -1116,7 +1113,7 @@ export function cardstats(element, options = {}) {
   }
 
   if (config.label) {
-    const labelEl = document.createElement('p');
+    const labelEl = document.createElement('div');
     labelEl.className = 'wb-card__stats-label';
     labelEl.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin:0.25rem 0 0 0;';
     labelEl.textContent = config.label;
@@ -1124,7 +1121,7 @@ export function cardstats(element, options = {}) {
   }
 
   if (config.trend && config.trendValue) {
-    const trendEl = document.createElement('p');
+    const trendEl = document.createElement('div');
     trendEl.className = 'wb-card__stats-trend';
     const trendColor = config.trend === 'up' ? 'var(--success, #22c55e)' : config.trend === 'down' ? 'var(--error, #ef4444)' : 'var(--text-secondary, #6b7280)';
     const trendIcon = config.trend === 'up' ? '↑' : config.trend === 'down' ? '↓' : '→';
@@ -1284,7 +1281,7 @@ export function cardproduct(element, options = {}) {
   }
 
   if (base.config.subtitle) {
-    const descEl = document.createElement('p');
+    const descEl = document.createElement('div');
     descEl.className = 'wb-card__subtitle wb-card__product-desc';
     descEl.style.cssText = 'margin:0.25rem 0 0;font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
     descEl.textContent = base.config.subtitle;
@@ -1466,7 +1463,7 @@ export function cardnotification(element, options = {}) {
   }
 
   if (message) {
-    const msgEl = document.createElement('p');
+    const msgEl = document.createElement('div');
     msgEl.className = 'wb-notification__message';
     msgEl.textContent = message;
     content.appendChild(msgEl);
@@ -1540,7 +1537,7 @@ export function cardfile(element, options = {}) {
   if (config.date) meta.push(config.date);
 
   if (meta.length) {
-    const metaEl = document.createElement('p');
+    const metaEl = document.createElement('div');
     metaEl.className = 'wb-card__file-meta';
     metaEl.style.cssText = 'margin:0.25rem 0 0;font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
     metaEl.textContent = meta.join(' • ');
@@ -1650,7 +1647,7 @@ export function cardlink(element, options = {}) {
   // Description (subtitle or description)
   const desc = config.description || base.config.subtitle;
   if (desc) {
-    const descEl = document.createElement('p');
+    const descEl = document.createElement('div');
     descEl.className = 'wb-card__description';
     descEl.style.cssText = 'margin:0.5rem 0 0;font-size:0.875rem;color:var(--text-secondary,#9ca3af);line-height:1.5;';
     descEl.textContent = desc;
@@ -1747,7 +1744,7 @@ export function cardhorizontal(element, options = {}) {
   }
 
   if (base.config.subtitle) {
-    const subtitleEl = document.createElement('p');
+    const subtitleEl = document.createElement('div');
     subtitleEl.className = 'wb-card__subtitle';
     subtitleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--text-secondary,#9ca3af);';
     subtitleEl.textContent = base.config.subtitle;
@@ -1823,7 +1820,7 @@ export function cardoverlay(element, options = {}) {
   }
 
   if (base.config.subtitle) {
-    const subtitleEl = document.createElement('p');
+    const subtitleEl = document.createElement('div');
     subtitleEl.className = 'wb-card__subtitle wb-card__overlay-subtitle';
     subtitleEl.style.cssText = 'margin:0.5rem 0 0;opacity:0.9;text-shadow:0 1px 2px rgba(0,0,0,0.5);';
     subtitleEl.textContent = base.config.subtitle;
@@ -1862,7 +1859,7 @@ export function cardexpandable(element, options = {}) {
   const contentWrap = document.createElement('main');
   contentWrap.className = 'wb-card__expandable-content';
   contentWrap.style.cssText = `padding:1rem;overflow:hidden;transition:max-height 0.3s ease;max-height:${config.expanded ? '1000px' : config.maxHeight};`;
-  contentWrap.innerHTML = base.config.content || rawContent || '<p style="margin:0;color:var(--text-secondary);">Add content here...</p>';
+  contentWrap.innerHTML = base.config.content || rawContent || '<div style="margin:0;color:var(--text-secondary);">Add content here...</div>';
   // Generate ID for aria-controls
   const contentId = 'expandable-content-' + Math.random().toString(36).substr(2, 9);
   contentWrap.id = contentId;
@@ -1976,7 +1973,7 @@ export function cardminimizable(element, options = {}) {
   }
 
   if (base.config.subtitle) {
-    const subtitleEl = document.createElement('p');
+    const subtitleEl = document.createElement('div');
     subtitleEl.className = 'wb-card__subtitle';
     subtitleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.85rem;';
     subtitleEl.textContent = base.config.subtitle;
@@ -1998,7 +1995,7 @@ export function cardminimizable(element, options = {}) {
   const content = document.createElement('main');
   content.className = 'wb-card__minimizable-content';
   content.style.cssText = `padding:1rem;overflow:hidden;transition:all 0.3s ease;${config.minimized ? 'max-height:0;padding:0 1rem;opacity:0;' : ''}`;
-  content.innerHTML = base.config.content || rawContent || '<p style="margin:0;color:var(--text-secondary);">Add content here...</p>';
+  content.innerHTML = base.config.content || rawContent || '<div style="margin:0;color:var(--text-secondary);">Add content here...</div>';
   element.appendChild(content);
 
   // Toggle
@@ -2405,13 +2402,13 @@ export function cardportfolio(element, options = {}) {
 
   // Title & Company
   if (config.title) {
-    const titleEl = document.createElement('p');
+    const titleEl = document.createElement('div');
     titleEl.className = 'wb-portfolio__title';
     titleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--primary,#6366f1);font-weight:600;font-size:1.1rem;';
     titleEl.textContent = config.title + (config.company ? ` at ${config.company}` : '');
     header.appendChild(titleEl);
   } else if (config.company) {
-    const companyEl = document.createElement('p');
+    const companyEl = document.createElement('div');
     companyEl.className = 'wb-portfolio__company';
     companyEl.style.cssText = 'margin:0.25rem 0 0;color:var(--text-secondary,#9ca3af);';
     companyEl.textContent = config.company;
@@ -2420,7 +2417,7 @@ export function cardportfolio(element, options = {}) {
 
   // Location
   if (config.location) {
-    const locEl = document.createElement('p');
+    const locEl = document.createElement('div');
     locEl.className = 'wb-portfolio__location';
     locEl.style.cssText = 'margin:0.5rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.9rem;';
     locEl.textContent = `📍 ${config.location}`;
@@ -2429,7 +2426,7 @@ export function cardportfolio(element, options = {}) {
 
   // Tagline
   if (config.tagline) {
-    const tagEl = document.createElement('p');
+    const tagEl = document.createElement('div');
     tagEl.className = 'wb-portfolio__tagline';
     tagEl.style.cssText = 'margin:0.75rem 0 0;color:var(--text-secondary,#9ca3af);font-style:italic;font-size:0.95rem;';
     tagEl.textContent = `"${config.tagline}"`;
@@ -2449,7 +2446,7 @@ export function cardportfolio(element, options = {}) {
     bioSection.className = 'wb-portfolio__bio';
     bioSection.style.cssText = 'margin-bottom:1.5rem;';
     
-    const bioText = document.createElement('p');
+    const bioText = document.createElement('div');
     bioText.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);font-size:0.95rem;line-height:1.7;';
     bioText.textContent = config.bio;
     bioSection.appendChild(bioText);
@@ -2575,7 +2572,7 @@ export function cardportfolio(element, options = {}) {
       }
       
       if (exp.description) {
-        const expDesc = document.createElement('p');
+        const expDesc = document.createElement('div');
         expDesc.style.cssText = 'margin:0.5rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.9rem;line-height:1.5;';
         expDesc.textContent = exp.description;
         expItem.appendChild(expDesc);
