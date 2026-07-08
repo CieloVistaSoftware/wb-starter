@@ -209,7 +209,12 @@
       preview.innerHTML = input.value;
       try {
         await ensureWB();
-        await WB.scan(preview);
+        // Eager: pasted/generated examples should work the instant they
+        // appear. WB's default viewport-lazy loading (IntersectionObserver)
+        // is right for a long real content page, but wrong here — a user
+        // can click a control before it's ever scrolled near enough to
+        // enhance, and nothing happens, which reads as broken.
+        await WB.scan(preview, { eager: true });
       } catch (e) {
         errorBox.hidden = false;
         errorBox.textContent = 'Render error: ' + (e && e.message ? e.message : e);
@@ -433,7 +438,7 @@
     // Theme control — the real <wb-themecontrol> component (never a one-off
     // hand-rolled select). It lives outside #pg-preview, so it isn't wiped by
     // render()'s innerHTML swap; scan it once, here, on load.
-    ensureWB().then(() => WB.scan(document.getElementById('pg-themecontrol')));
+    ensureWB().then(() => WB.scan(document.getElementById('pg-themecontrol'), { eager: true }));
 
     // ── Example sets (loaded from the Examples dropdown) ──────────────────────
     const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];

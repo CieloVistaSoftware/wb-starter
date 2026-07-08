@@ -190,6 +190,15 @@ const customElementMappings = [
   { selector: '[x-popover]', behavior: 'popover' },
   { selector: '[x-confirm]', behavior: 'confirm' },
   { selector: '[x-prompt]', behavior: 'prompt' },
+  // drawer() (overlay.js) — a slide-out panel + backdrop triggered by a plain
+  // click — had NO auto-inject selector at all. [x-drawer-layout] (below,
+  // pre-existing) maps to a DIFFERENT behavior (drawerLayout, a page-shell
+  // layout primitive) — easy to conflate, but not the same thing. Without
+  // this line, every `<button x-drawer drawer-title="…">` in the project
+  // (demos/autoinject.html's "Left/Right Drawer" buttons included) rendered
+  // as an inert, unenhanced button — confirmed via direct WB.inject() call
+  // that the behavior itself works fine once actually invoked.
+  { selector: '[x-drawer]', behavior: 'drawer' },
   { selector: '[x-lightbox]', behavior: 'lightbox' },
   { selector: '[x-share]', behavior: 'share' },
   { selector: '[x-print]', behavior: 'print' },
@@ -513,13 +522,21 @@ const WB = {
    * Uses batching for better performance
    * @param {HTMLElement} root - Root element to scan (default: document.body)
    */
-  async scan(root = document.body) {
+  // `eager: true` skips the viewport-based IntersectionObserver deferral
+  // entirely — every matched element is injected (and awaited) immediately
+  // instead of waiting for it to scroll near the viewport. The lazy default
+  // is a real perf win on long content pages, but it's the wrong tradeoff
+  // for a surface where the user expects pasted/generated content to work
+  // the instant it appears (e.g. demos/playground.html) — a user can click
+  // a control before it's ever scrolled close enough to enhance, and see
+  // nothing happen, which reads as broken rather than "not lazy-loaded yet".
+  async scan(root = document.body, { eager = false } = {}) {
     const elements = root.querySelectorAll('[x-behavior]');
     const injections = [];
 
     elements.forEach(element => {
       const behaviorList = element.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
-      const isEager = element.hasAttribute('x-eager');
+      const isEager = eager || element.hasAttribute('x-eager');
 
       behaviorList.forEach(name => {
         if (isEager) {
@@ -534,7 +551,11 @@ const WB = {
     customElementMappings.forEach(({ selector, behavior }) => {
       const customElements = root.querySelectorAll(selector);
       customElements.forEach(element => {
-        WB.lazyInject(element, behavior);
+        if (eager) {
+          injections.push(WB.inject(element, behavior));
+        } else {
+          WB.lazyInject(element, behavior);
+        }
       });
     });
 
@@ -545,13 +566,17 @@ const WB = {
         autoElements.forEach(element => {
           // Skip if x-behavior is present (already handled)
           if (!element.hasAttribute('x-behavior')) {
-            WB.lazyInject(element, behavior);
+            if (eager) {
+              injections.push(WB.inject(element, behavior));
+            } else {
+              WB.lazyInject(element, behavior);
+            }
           }
         });
       });
     }
 
-    // Wait for all injections (only eager ones)
+    // Wait for all injections (eager mode + any x-eager elements)
     await Promise.all(injections);
     
     if (getConfig('debug')) {
