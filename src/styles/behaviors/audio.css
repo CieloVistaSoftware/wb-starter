@@ -126,6 +126,23 @@
   text-transform: uppercase;
 }
 
+/* Track picker (playlist attribute) — a real <select> made to look like the
+   plain LCD text it replaces, with just enough of a native affordance
+   (appearance:auto) that it still reads as a dropdown. */
+.wb-audio__track-picker {
+  appearance: auto;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+}
+.wb-audio__track-picker option {
+  background: #1a1200;
+  color: #e8a020;
+  text-transform: none;
+}
+
 .wb-audio__display-time {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 0.65rem;

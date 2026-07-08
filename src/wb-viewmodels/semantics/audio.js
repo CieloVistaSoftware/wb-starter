@@ -35,6 +35,17 @@ export function audio(element, options = {}) {
     loop: options.loop ?? (element.hasAttribute('loop') || element.hasAttribute('data-loop')),
     volume: parseFloat(options.volume || attr('volume') || '0.8'),
     showEq: options.showEq ?? (element.hasAttribute('show-eq') || element.hasAttribute('data-show-eq') || attr('show-eq') === 'true' || element.dataset.showEq === 'true'),
+    // Optional track picker: playlist="url1|Title 1,url2|Title 2,..." (same
+    // comma-separated-values convention as x-breadcrumb/x-timeline's `items`).
+    // Falls back to the current single static track-name display when absent.
+    playlist: (() => {
+      const raw = options.playlist || attr('playlist');
+      if (!raw) return null;
+      return raw.split(',').map((entry) => {
+        const [src, title] = entry.split('|');
+        return { src: src.trim(), title: (title || src).trim() };
+      }).filter((t) => t.src);
+    })(),
     ...options
   };
 
@@ -209,13 +220,38 @@ function buildTransportUI(element, audioEl, config) {
   const display = document.createElement('div');
   display.className = 'wb-audio__display';
 
-  const displayText = document.createElement('div');
-  displayText.className = 'wb-audio__display-text';
-  const trackName = config.src
-    ? decodeURIComponent(config.src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '))
+  const trackNameFromSrc = (src) => src
+    ? decodeURIComponent(src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '))
     : 'No Track Loaded';
-  displayText.textContent = trackName;
-  display.appendChild(displayText);
+
+  if (config.playlist && config.playlist.length) {
+    // Track picker: a real <select>, styled to sit in the display like the
+    // static text it replaces. Switching tracks loads the new src; playback
+    // state (playing vs paused) carries over.
+    const picker = document.createElement('select');
+    picker.className = 'wb-audio__display-text wb-audio__track-picker';
+    config.playlist.forEach((track, i) => {
+      const opt = document.createElement('option');
+      opt.value = String(i);
+      opt.textContent = track.title;
+      picker.appendChild(opt);
+    });
+    const currentIndex = config.playlist.findIndex((t) => t.src === config.src);
+    picker.value = String(currentIndex >= 0 ? currentIndex : 0);
+    picker.addEventListener('change', () => {
+      const track = config.playlist[Number(picker.value)];
+      const wasPlaying = !audioEl.paused;
+      audioEl.src = track.src;
+      audioEl.load();
+      if (wasPlaying) audioEl.play().catch(() => {});
+    });
+    display.appendChild(picker);
+  } else {
+    const displayText = document.createElement('div');
+    displayText.className = 'wb-audio__display-text';
+    displayText.textContent = trackNameFromSrc(config.src);
+    display.appendChild(displayText);
+  }
 
   // Time display
   const timeDisplay = document.createElement('div');

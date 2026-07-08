@@ -56,3 +56,20 @@ test('Studio EQ Player: a preset applies its gain curve to the real filters (#23
 
   expect(gains, 'Bass Boost preset must set real filter gains, not a dead array').toEqual([8, 7, 6, 4, 2]);
 });
+
+test('Studio EQ Player: playlist attribute renders a track picker with all tracks (#233 follow-up)', async ({ page }) => {
+  await page.goto('/demos/semantics-media.html', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => !!document.querySelector('.wb-audio__track-picker'), { timeout: 20000 });
+
+  const result = await page.evaluate(() => {
+    const picker = document.querySelector('.wb-audio__track-picker') as HTMLSelectElement;
+    const before = picker.value;
+    picker.value = '5';
+    picker.dispatchEvent(new Event('change', { bubbles: true }));
+    const audioEl = document.querySelector('wb-audio audio') as HTMLAudioElement;
+    return { optionCount: picker.options.length, before, after: audioEl.src };
+  });
+
+  expect(result.optionCount, 'playlist="…" (18 tracks) should render 18 options').toBe(18);
+  expect(result.after, 'selecting a different track must load its src').toContain('SoundHelix-Song-5.mp3');
+});
