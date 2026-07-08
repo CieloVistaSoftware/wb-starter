@@ -967,6 +967,22 @@ export function youtube(element, options = {}) {
   iframe.allowFullscreen = true;
   iframe.style.cssText = 'width:100%;height:100%;border:none;';
 
+  // The embedded player never broadcasts infoDelivery/onStateChange messages
+  // until it's received a "listening" handshake from the parent — enablejsapi=1
+  // alone isn't enough. The player's internal app also isn't necessarily ready
+  // the instant the outer iframe's `load` fires, so resend a few times over ~3s
+  // rather than once (a single early attempt can land before it's listening).
+  const sendListening = () => {
+    try { iframe.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: config.id }), '*'); } catch {}
+  };
+  iframe.addEventListener('load', () => {
+    let attempts = 0;
+    const timer = setInterval(() => {
+      sendListening();
+      if (++attempts >= 6) clearInterval(timer);
+    }, 500);
+  });
+
   element.innerHTML = '';
   element.appendChild(iframe);
   ensureSingleYouTubePlayback();
