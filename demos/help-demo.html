@@ -6,41 +6,98 @@
   <title>x-help Demo</title>
   <link rel="stylesheet" href="../src/styles/themes.css">
   <link rel="stylesheet" href="../src/styles/site.css">
+  <style>
+    body { max-width: 900px; margin: 0 auto; padding: 1.5rem; background: var(--bg-color); color: var(--text-primary); }
+    .field { margin: 0 0 1.5rem; display: flex; flex-direction: column; gap: 0.35rem; max-width: 360px; }
+    .field label { font-weight: 600; }
+    .field input { padding: 0.5rem 0.6rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); }
+    .setting-row { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 1.5rem; }
+  </style>
 </head>
 <body>
   <h1>x-help Demo</h1>
+
+  <h2>When to use it</h2>
   <p>
-    Demonstrates the <code>x-help</code> behavior.<br>
-    <strong>Note:</strong> <code>x-help</code> displays help text inline, always visible, and does <strong>not</strong> show on hover. For hover-based help, use <code>x-tooltip</code> instead.<br>
-    <strong>Value:</strong> <code>x-help</code> is functionally the same as a <code>&lt;span&gt;</code> except it adds consistent styling and accessibility (like <code>role="note"</code> and a help class). If you don't need those, use a regular element instead.<br>
+    <code>x-help</code> is for hint text that a user should see <strong>without having to hover or interact</strong> —
+    the kind of short instruction that sits permanently under a form field or next to a setting
+    ("must be 8+ characters", "this can't be changed later"). If the explanation should only appear
+    on hover/focus instead of taking up space all the time, use <code>x-tooltip</code> — the two behaviors
+    are deliberately kept separate rather than one trying to do both jobs.
+  </p>
+
+  <h2>How to use it</h2>
+  <p>
+    Add the <code>x-help</code> attribute to any element (a <code>&lt;span&gt;</code>, a <code>&lt;div&gt;</code>, whatever fits
+    your layout) whose text content is the help message. It adds consistent styling and accessibility
+    (<code>role="note"</code> plus a <code>wb-help</code> class) — nothing else. If you don't need that
+    consistency, a plain element works fine too; <code>x-help</code> exists so every hint in the project
+    looks and reads the same way instead of each page inventing its own.
+  </p>
+  <p>
     <strong>Schema:</strong> <a href="../src/wb-models/help.schema.json" target="_blank">help.schema.json</a> |
     <strong>Demo Schema:</strong> <a href="../src/wb-models/help-demo.schema.json" target="_blank">help-demo.schema.json</a> |
     <strong>Test:</strong> <a href="../tests/behaviors/help.spec.ts" target="_blank">help.spec.ts</a> |
     <strong>Doc:</strong> <a href="../docs/behaviors/help.md" target="_blank">help.md</a>
   </p>
-  <div>
-    <span x-help>This is help text for a field.</span>
-  </div>
-  <div>
-    <span x-help>Another help message for users.</span>
-  </div>
-  <div>
-    <span x-help>Short help.</span>
-  </div>
+
+  <h2>Under a form field</h2>
+  <p>The most common use — a permanent hint below the input, not just on hover/focus.</p>
+  <wb-demo>
+    <div class="field">
+      <label for="hd-email">Email address</label>
+      <input id="hd-email" type="email" placeholder="you@example.com">
+      <span x-help>We'll never share your email with anyone else.</span>
+    </div>
+  </wb-demo>
+
+  <h2>Next to a setting</h2>
+  <p>Explaining what a toggle or checkbox actually does, inline, right next to it.</p>
+  <wb-demo>
+    <div class="setting-row">
+      <input id="hd-notify" type="checkbox" checked>
+      <label for="hd-notify">Email notifications</label>
+      <span x-help>You can turn these off any time in Settings.</span>
+    </div>
+  </wb-demo>
+
+  <h2>Longer, multi-sentence help</h2>
+  <p><code>x-help</code> isn't limited to a short fragment — it's still just text content, so it wraps normally.</p>
+  <wb-demo>
+    <div class="field">
+      <label for="hd-password">Password</label>
+      <input id="hd-password" type="password" placeholder="••••••••">
+      <span x-help>Must be at least 8 characters, with one number and one symbol. We check this as you type — the field turns green once it qualifies.</span>
+    </div>
+  </wb-demo>
+
+  <h2>x-help vs x-tooltip, side by side</h2>
+  <p>Same underlying message, two different visibility models — pick based on whether the hint should always be visible or only on demand.</p>
+  <wb-demo>
+    <div class="field">
+      <label>Always visible (x-help)</label>
+      <span x-help>Your API key is only shown once — save it somewhere safe.</span>
+    </div>
+    <div class="field">
+      <label>On hover only (x-tooltip)</label>
+      <button x-tooltip="Your API key is only shown once — save it somewhere safe.">Hover me ⓘ</button>
+    </div>
+  </wb-demo>
+
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
     window.WB = WB;
     await WB.init({ autoInject: true });
-    // In-browser schema validation (Ajv)
+    // In-browser schema validation (Ajv) — representative sample, not every demo above.
     import Ajv from 'https://cdn.jsdelivr.net/npm/ajv@8.12.0/+esm';
     const schemaUrl = '../src/wb-models/help-demo.schema.json';
     const ajv = new Ajv({ strict: false });
     fetch(schemaUrl).then(r => r.json()).then(schema => {
       const data = {
         components: [
-          { type: 'span', attributes: { xHelp: '' }, text: 'This is help text for a field.' },
-          { type: 'span', attributes: { xHelp: '' }, text: 'Another help message for users.' },
-          { type: 'span', attributes: { xHelp: '' }, text: 'Short help.' }
+          { type: 'span', attributes: { xHelp: '' }, text: "We'll never share your email with anyone else." },
+          { type: 'span', attributes: { xHelp: '' }, text: 'You can turn these off any time in Settings.' },
+          { type: 'span', attributes: { xHelp: '' }, text: 'Must be at least 8 characters, with one number and one symbol. We check this as you type — the field turns green once it qualifies.' }
         ]
       };
       let msg;
