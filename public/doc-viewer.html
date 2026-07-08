@@ -63,38 +63,13 @@
       border-color: var(--primary);
     }
     
-    /* Markdown Styles — text size comes from the single --md-font-size setting
-       (themes.css, 1rem) so docs are readable on mobile. */
-    .wb-mdhtml { line-height: 1.6; font-size: var(--md-font-size, 1rem); }
-    .wb-mdhtml h1 { font-size: 2rem; margin-bottom: 1.5rem; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
-    .wb-mdhtml h2 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--text-primary); }
-    .wb-mdhtml h3 { font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
-    .wb-mdhtml p { margin-bottom: 1rem; color: var(--text-secondary); }
-    .wb-mdhtml ul, .wb-mdhtml ol { margin-bottom: 1rem; padding-left: 1.5rem; color: var(--text-secondary); }
-    .wb-mdhtml li { margin-bottom: 0.5rem; }
-    .wb-mdhtml code { background: var(--bg-tertiary); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: var(--md-font-size, 1rem); color: var(--text-primary); font-weight: 600; }
-    .wb-mdhtml a { color: var(--primary-light); text-decoration: underline; }
-    .wb-mdhtml pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 0 0 1.5rem 0; border: 1px solid var(--border-color); line-height: 1.2; max-width: 100%; }
-    .wb-mdhtml pre code { background: none; padding: 0; color: var(--text-primary); font-weight: normal !important; font-size: var(--md-font-size, 1rem); font-family: Consolas, 'Courier New', monospace; white-space: pre; font-variant-ligatures: none; tab-size: 4; letter-spacing: 0; }
-    .wb-mdhtml .code-wrapper { max-width: 100%; overflow-x: hidden; }
-    .wb-mdhtml .code-wrapper pre { max-width: 100%; }
-    .wb-mdhtml blockquote { border-left: 4px solid var(--primary); margin: 0 0 1.5rem 0; padding-left: 1rem; color: var(--text-muted); font-style: italic; }
-    /* Live <wb-demo> embedded in a doc renders its own grid + source panel; give
-       it breathing room within the article. */
-    .wb-mdhtml wb-demo { display: block; margin: 0 0 1.5rem 0; }
-    /* Wide markdown tables must stay inside the 900px body: scroll horizontally
-       instead of spilling past the right edge, and wrap long cell content. */
-    .wb-mdhtml table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; display: block; overflow-x: auto; max-width: 100%; }
-    /* word-break: normal (not break-word) — break-word forces mid-word breaks even
-       on short tokens ("label" -> "labe l") that would fit fine; overflow-wrap:
-       anywhere remains as the last-resort fallback for a genuinely long unbreakable
-       string (e.g. a URL) that can't fit on its own line (#278). */
-    .wb-mdhtml th, .wb-mdhtml td { padding: 0.75rem; border: 1px solid var(--border-color); text-align: left; overflow-wrap: anywhere; word-break: normal; }
-    .wb-mdhtml th { background: var(--bg-secondary); font-weight: 600; }
-    /* Standard §6 (#248): code WRAPS — never a horizontal scrollbar. Line breaks are
-       preserved (pre-wrap); over-long lines/tokens wrap instead of scrolling. */
-    .wb-mdhtml pre, .wb-mdhtml .code-wrapper pre { white-space: pre-wrap !important; overflow-x: hidden !important; overflow-wrap: anywhere !important; word-break: normal !important; }
-    .wb-mdhtml pre code, .wb-mdhtml .code-wrapper code { white-space: pre-wrap !important; overflow-wrap: anywhere !important; word-break: normal !important; }
+    /* All .wb-mdhtml markdown-rendering styles (headings, code, tables, wrap
+       behavior, --md-font-size) now live SOLELY in
+       src/styles/behaviors/mdhtml.css (loaded via site.css) — this used to
+       duplicate those rules with its own slightly different values, which is
+       exactly how the table/code font-size and code-wrap-vs-scroll bugs
+       silently drifted: a fix applied here never reached any other page
+       using <wb-mdhtml>. Fix markdown rendering in mdhtml.css from now on. */
     .loading { color: var(--text-muted); font-style: italic; }
     .error { color: var(--danger); padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 6px; border: 1px solid var(--danger); }
   </style>

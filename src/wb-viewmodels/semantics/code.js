@@ -77,19 +77,25 @@ export function code(element, options = {}) {
     showCopy: options.showCopy ?? (element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
     variant: options.variant || element.dataset.variant || 'inline',
     scrollable: options.scrollable ?? (element.dataset.scrollable === 'true'),
-    size: options.size || element.dataset.size || 'xs',
+    // No `size` given -> normal (matches surrounding text, 1em) — every plain
+    // <code> project-wide (table cells, inline mentions in prose, etc.) was
+    // defaulting to 'xs' (0.55em, an INLINE style that beats any CSS fix),
+    // rendering at little more than half the size of the text around it.
+    // xs/sm/md/lg/xl remain available as an explicit opt-in for genuinely
+    // compact code (e.g. a badge-like inline mention).
+    size: options.size || element.getAttribute('size') || null,
     ...options
   };
 
-  // Size mappings - compact by default
   const sizeMap = {
     xs: '0.55em',
     sm: '0.6em',
     md: '0.65em',
     lg: '0.75em',
-    xl: '0.85em'
+    xl: '0.85em',
+    normal: '1em'
   };
-  const fontSize = sizeMap[config.size] || sizeMap.xs;
+  const fontSize = sizeMap[config.size] || sizeMap.normal;
 
   element.classList.add('x-code');
 

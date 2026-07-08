@@ -11,6 +11,11 @@
   padding: 0.75rem;
   border-radius: 6px;
   font-family: monospace;
-  font-size: 0.8rem;
+  /* Was a hardcoded 0.8rem — every native <code> gets this class via
+     auto-injection, including short inline snippets sitting next to normal
+     body text (e.g. a table cell's `title="My Card"` example), where it
+     read noticeably smaller than its surroundings. 1em matches the
+     surrounding text size, same as normalize.css's own code/kbd/samp rule. */
+  font-size: 1em;
   overflow-x: auto;
 }

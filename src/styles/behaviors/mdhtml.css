@@ -3,26 +3,40 @@
  * -----------------------------------------------------------------------------
  * Extracted from demo.css (Phase 3 migration)
  * Works with src/wb-viewmodels/semantics/mdhtml.js
+ *
+ * THIS IS THE SINGLE SOURCE for .wb-mdhtml styling — every page that renders
+ * markdown (doc-viewer.html, autoinject.html, any other page using
+ * <wb-mdhtml>) loads this file via site.css. A duplicate/legacy copy of
+ * these rules previously lived inline in doc-viewer.html's own <style>
+ * block, fixed there (word-break/font-size/wrap fixes, #278/§6) but never
+ * propagated here — so every OTHER page kept the old broken behavior while
+ * doc-viewer.html alone looked fixed. That duplicate block has been removed;
+ * fix markdown rendering here, and it applies everywhere at once.
  * -----------------------------------------------------------------------------
  */
 
+.wb-mdhtml {
+  line-height: 1.6;
+  font-size: var(--md-font-size, 1rem);
+}
+
 .wb-mdhtml h1 {
-  font-size: 1.75rem;
-  margin: 0 0 1rem;
-  color: var(--primary);
-  border-bottom: 2px solid var(--border-color);
+  font-size: 2rem;
+  margin: 0 0 1.5rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 0.5rem;
 }
 
 .wb-mdhtml h2 {
-  font-size: 1.25rem;
-  margin: 1.5rem 0 0.75rem;
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
   color: var(--text-primary);
 }
 
 .wb-mdhtml h3 {
-  font-size: 1rem;
-  margin: 1rem 0 0.5rem;
+  font-size: 1.25rem;
+  margin: 1.5rem 0 0.75rem;
 }
 
 .wb-mdhtml p {
@@ -34,27 +48,54 @@
   background: var(--bg-tertiary);
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
-  font-size: 0.85rem;
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  /* Matches surrounding body text (was a hardcoded 0.85rem — shrank inline
+     code any time it sat next to normal text, e.g. a table's Example column). */
+  font-size: var(--md-font-size, 1rem);
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
+/* Standard §6 (#248): code WRAPS — never a horizontal scrollbar. Was
+   overflow-x:auto (scroll) here — only doc-viewer.html's own inline
+   duplicate had ever been fixed to wrap; every other page using
+   <wb-mdhtml> (e.g. autoinject.html) kept code blocks scrolling/overflowing
+   their container. */
 .wb-mdhtml pre {
   background: var(--bg-tertiary);
   padding: 1rem;
   border-radius: 8px;
-  overflow-x: auto;
   margin: 1rem 0;
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .wb-mdhtml pre code {
   background: none;
   padding: 0;
+  font-weight: normal;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
+/* Wide tables scroll horizontally rather than spilling past the page edge —
+   distinct from code blocks, which must WRAP instead (§6) since a table's
+   column structure can't rewrap the way a line of text can. */
 .wb-mdhtml table {
   width: 100%;
   border-collapse: collapse;
   margin: 1rem 0;
-  font-size: 0.9rem;
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+  /* Was a hardcoded 0.9rem — ignored the project's single --md-font-size
+     lever (themes.css) and read noticeably smaller than surrounding body
+     text. Table text should match body text size, not shrink on its own. */
+  font-size: var(--md-font-size, 1rem);
 }
 
 .wb-mdhtml th,
@@ -62,6 +103,8 @@
   padding: 0.5rem;
   text-align: left;
   border: 1px solid var(--border-color);
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .wb-mdhtml th {
@@ -76,6 +119,34 @@
 
 .wb-mdhtml li {
   margin: 0.25rem 0;
+}
+
+.wb-mdhtml a {
+  color: var(--primary-light);
+  text-decoration: underline;
+}
+
+.wb-mdhtml blockquote {
+  border-left: 4px solid var(--primary);
+  margin: 0 0 1.5rem 0;
+  padding-left: 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* A live <wb-demo> embedded in a doc renders its own grid + source panel —
+   give it breathing room within the surrounding article text. */
+.wb-mdhtml wb-demo {
+  display: block;
+  margin: 0 0 1.5rem 0;
+}
+
+.wb-mdhtml .code-wrapper {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+.wb-mdhtml .code-wrapper pre {
+  max-width: 100%;
 }
 
 .wb-mdhtml--loading {
