@@ -389,9 +389,30 @@
       preview.closest('.pg-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
+    // An element that's actually interactive (a button/input/behavior
+    // trigger meant to DO something on click — ripple, confirm, toast,
+    // drawer, a form control the user is typing into, …) should just work
+    // normally. Jump-to-source is for INSPECTING a static example (a card,
+    // a badge, a hero) — stealing focus/scroll to the HTML textarea on
+    // every click made every interactive x-* example (the "50 x-*
+    // behaviors" set especially) reset the user's place in the editor the
+    // instant they tried to actually use one. An x-* ATTRIBUTE name (not a
+    // substring class match, which would false-positive on plenty of
+    // unrelated classes) is the reliable signal for "this is a behavior".
+    function isInteractive(el) {
+      let node = el;
+      while (node && node !== preview) {
+        if (node.matches?.('button, input, textarea, select, a')) return true;
+        if (node.getAttributeNames?.().some((n) => n.startsWith('x-'))) return true;
+        node = node.parentElement;
+      }
+      return false;
+    }
+
     preview.addEventListener('click', (e) => {
       const anchor = e.target.closest && e.target.closest('a[href^="#"]');
       if (anchor) e.preventDefault(); // don't let demo CTA links jump the page
+      if (isInteractive(e.target)) return;
       let node = e.target;
       while (node && node.parentElement !== preview) node = node.parentElement;
       if (!node) return;
