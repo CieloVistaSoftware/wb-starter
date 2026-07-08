@@ -33,7 +33,9 @@ const FORBIDDEN_OVERLAY_ATTRS = [
   'data-modal-content',
 ];
 
-const ROOT  = path.resolve(__dirname, '..', '..');
+// process.cwd() (not __dirname, unavailable in ESM) — matches tests/base.ts's
+// own PATHS convention; Playwright always runs from the project root.
+const ROOT  = process.cwd();
 const PAGES = ['pages/components.html', 'pages/behaviors.html', 'pages/newbehaviors.html'];
 
 // Extract opening tags of overlay triggers (wb-modal, or any element carrying an
