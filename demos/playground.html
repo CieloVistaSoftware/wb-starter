@@ -86,6 +86,7 @@
             <option value="cards">50 cards</option>
             <option value="heroes">20 card heroes</option>
             <option value="badges">50 badges</option>
+            <option value="youtube">20 YouTube URL formats</option>
           </select>
           <button id="pg-format" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);"
@@ -517,6 +518,40 @@
       return out.join('\n');
     }
 
+    // Real-world YouTube URL shapes (from a public URL-format reference list)
+    // stress-testing x-youtube's url= parser: www/no-www/mobile domains,
+    // query params in either order, hash timestamps, /watch/ID (no query),
+    // /v/ID, youtu.be short links (with/without extra params), /embed/ID,
+    // youtube-nocookie.com, /e/ID, /shorts/ID, /live/ID — plus one
+    // intentionally-unparseable oembed API URL (not a real video page) to
+    // show the "couldn't parse" warning path fails gracefully, not silently.
+    function twentyYouTubeFormats() {
+      const urls = [
+        'http://www.youtube.com/watch?v=-wtIMTCHWuI',
+        'https://m.youtube.com/watch?v=lalOy8Mbfdc',
+        'https://youtube.com/watch?v=yZv2daTWRZU&feature=em-uploademail',
+        'http://www.youtube.com/watch?v=0zM3nApSvMg#t=0m10s',
+        'https://www.youtube.com/watch?feature=player_embedded&v=dQw4w9WgXcQ',
+        'https://www.youtube.com/watch?app=desktop&v=dQw4w9WgXcQ',
+        'https://www.youtube.com/watch/-wtIMTCHWuI',
+        'https://www.youtube.com/watch/-wtIMTCHWuI?app=desktop',
+        'http://www.youtube.com/v/dQw4w9WgXcQ',
+        'https://www.youtube.com/v/0zM3nApSvMg?fs=1&hl=en_US&rel=0',
+        'http://youtu.be/-wtIMTCHWuI',
+        'https://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_player',
+        'https://youtu.be/oTJRivZTMLs?list=PLToa5JuFMsXTNkrLJbRlB--76IAOjRM9b',
+        'https://youtu.be/M9bq_alk-sw?si=B_RZg_I-lLaa7UU-',
+        'https://www.youtube.com/embed/lalOy8Mbfdc',
+        'https://www.youtube.com/embed/nas1rJpm7wY?rel=0',
+        'https://www.youtube-nocookie.com/embed/lalOy8Mbfdc?rel=0',
+        'https://www.youtube.com/e/dQw4w9WgXcQ',
+        'https://www.youtube.com/shorts/j9rZxAF3C0I',
+        'https://www.youtube.com/live/8hBmepWUJoc',
+        'http://www.youtube.com/oembed?url=http%3A//www.youtube.com/watch?v%3D-wtIMTCHWuI&format=json',
+      ];
+      return urls.map((u) => `<div x-youtube url="${u}"></div>`).join('\n');
+    }
+
     document.getElementById('pg-examples').addEventListener('change', async (e) => {
       const which = e.target.value;
       if (!which) return;
@@ -524,6 +559,7 @@
       else if (which === 'cards') input.value = fiftyCards();
       else if (which === 'heroes') input.value = twentyHeroes();
       else if (which === 'badges') input.value = fiftyBadges();
+      else if (which === 'youtube') input.value = twentyYouTubeFormats();
       setSortModes(EXAMPLE_SORT_MODES[which] || []);
       e.target.value = ''; // reset to placeholder
       endpointPanel.hidden = true;

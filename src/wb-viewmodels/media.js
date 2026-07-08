@@ -881,21 +881,44 @@ function injectAudioStyles() {
 }
 
 /**
+ * Extract an 11-char YouTube video ID from any real-world URL shape:
+ * watch?v=ID (any domain/query position), youtu.be/ID, /embed/ID,
+ * youtube-nocookie.com/embed/ID, /v/ID, /e/ID, /shorts/ID, /live/ID, and the
+ * query-less /watch/ID path form. Returns null if nothing matches (e.g. the
+ * oembed/attribution_link redirect-wrapper formats, which aren't real video
+ * pages and aren't worth parsing).
+ */
+function extractYouTubeId(url) {
+  const patterns = [
+    /[?&]v=([\w-]{11})/,
+    /youtu\.be\/([\w-]{11})/,
+    /\/(?:embed|v|e|shorts|live)\/([\w-]{11})/,
+    /\/watch\/([\w-]{11})/
+  ];
+  for (const re of patterns) {
+    const m = url.match(re);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+/**
  * Custom Tag: <wb-youtube>
  * YouTube - YouTube embed
  */
 export function youtube(element, options = {}) {
+  const url = options.url || element.getAttribute('url');
   const config = {
-    id: options.id || element.getAttribute('video-id'),
-    autoplay: options.autoplay ?? element.hasAttribute('data-autoplay'),
-    muted: options.muted ?? element.hasAttribute('data-muted'),
-    loop: options.loop ?? element.hasAttribute('data-loop'),
+    id: options.id || element.getAttribute('video-id') || (url ? extractYouTubeId(url) : null),
+    autoplay: options.autoplay ?? element.hasAttribute('autoplay'),
+    muted: options.muted ?? element.hasAttribute('muted'),
+    loop: options.loop ?? element.hasAttribute('loop'),
     controls: options.controls ?? (element.getAttribute('controls') !== 'false'),
     ...options
   };
 
   if (!config.id) {
-    console.warn('[WB YouTube] No video ID provided');
+    console.warn('[WB YouTube] No video ID provided' + (url ? ` (couldn't parse url="${url}")` : ''));
     return;
   }
 
