@@ -187,8 +187,8 @@
   border: 1px solid var(--border-color);
 }
 
-/* Form Elements */
-.checkbox-label {
+/* Form Elements — shared by checkbox AND radio labels (no checkbox-specific styling). */
+.selection-label {
   display: flex;
   align-items: center;
   gap: 0.5rem;

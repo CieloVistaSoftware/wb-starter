@@ -38,6 +38,7 @@
 @import url('./behaviors/audio.css');
 @import url('./behaviors/demo.css');
 @import url('./behaviors/notification.css');
+@import url('./behaviors/inline.css');
 @import url('./behaviors/button.css');
 @import url('./behaviors/input.css');
 @import url('./behaviors/themecontrol.css');
@@ -2032,8 +2033,8 @@ img { max-width: 100%; height: auto; }
      --md-font-size docs, padding, gaps) reads comfortably on phones. One lever. */
   html { font-size: 112.5%; }
 
-  /* Fluent nav: an ALWAYS-VISIBLE horizontal, swipeable bar at the TOP of the
-     content — NOT a fixed off-canvas side drawer. No hamburger, no backdrop. */
+  /* Stack header/nav/main vertically — the fluent nav below flows in that
+     column, at the top of main, instead of beside it as a side drawer. */
   .site__body { flex-direction: column; }
 
   /* Header stacks/wraps instead of overflowing off the right edge — must size to

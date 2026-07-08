@@ -417,17 +417,17 @@ function generateSelectionDemos(behaviors) {
 
   if (behaviors.some(b => b.name.includes('checkbox'))) {
     html += '    <h3>Checkboxes</h3>\n    <div class="demo-row">\n';
-    html += '      <label class="checkbox-label"><input type="checkbox"> Unchecked</label>\n';
-    html += '      <label class="checkbox-label"><input type="checkbox" checked> Checked</label>\n';
-    html += '      <label class="checkbox-label"><input type="checkbox" disabled> Disabled</label>\n';
+    html += '      <label class="selection-label"><input type="checkbox"> Unchecked</label>\n';
+    html += '      <label class="selection-label"><input type="checkbox" checked> Checked</label>\n';
+    html += '      <label class="selection-label"><input type="checkbox" disabled> Disabled</label>\n';
     html += '    </div>\n\n';
   }
 
   if (behaviors.some(b => b.name.includes('radio'))) {
     html += '    <h3>Radio Buttons</h3>\n    <div class="demo-row">\n';
-    html += '      <label class="checkbox-label"><input type="radio" name="demo-radio" checked> Option A</label>\n';
-    html += '      <label class="checkbox-label"><input type="radio" name="demo-radio"> Option B</label>\n';
-    html += '      <label class="checkbox-label"><input type="radio" name="demo-radio"> Option C</label>\n';
+    html += '      <label class="selection-label"><input type="radio" name="demo-radio" checked> Option A</label>\n';
+    html += '      <label class="selection-label"><input type="radio" name="demo-radio"> Option B</label>\n';
+    html += '      <label class="selection-label"><input type="radio" name="demo-radio"> Option C</label>\n';
     html += '    </div>\n\n';
   }
 
