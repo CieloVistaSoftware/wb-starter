@@ -81,7 +81,7 @@ cta="Click"     →   "tag": "button"    →   <button>Click</button>
 9. [Units and Values](#units-and-values)
 10. [Slots and Content](#slots-and-content)
 11. [CSS Custom Properties](#css-custom-properties)
-12. [Migration from x-behavior](#migration-from-x-behavior)
+12. [Migration from Legacy Syntax](#migration-from-legacy-syntax)
 13. [Error Handling](#error-handling)
 14. [IDE Support](#ide-support)
 15. [Quick Reference](#quick-reference)
@@ -95,17 +95,17 @@ WB uses three patterns for applying behaviors:
 
 | Pattern | Meaning | Use Case | Example |
 |---------|---------|----------|---------|
-| `<component-name>` | **IS-A** | Standalone components | `<price-card>` |
+| `<wb-{name}>` | **IS-A** | Standalone components | `<wb-cardpricing>` |
 | `x-behavior` | **HAS-A** | Extensions (adds capability) | `x-ripple` |
 | `x-as-component` | **BECOMES** | Morphing (transforms element) | `x-as-card` |
 
 ```html
 <!-- IS-A: Custom element (noun) -->
-<stats-card
+<wb-cardstats
   value="1,234"
   label="Users"
   trend="up">
-</stats-card>
+</wb-cardstats>
 <!-- HAS-A: Extension (verb/modifier) -->
 <button
   x-ripple
@@ -125,44 +125,44 @@ These native HTML attributes should be used **with the same meaning** on custom 
 ### Resource Attributes
 | Attribute | Native Element | Meaning | Use On |
 |-----------|---------------|---------|--------|
-| `src` | `<img>`, `<video>`, `<audio>` | Resource URL | `<card-image>`, `<avatar-el>`, `<video-player>` |
-| `href` | `<a>`, `<link>` | Link destination | `<card-link>`, `<nav-item>` |
-| `alt` | `<img>` | Alternative text | `<card-image>`, `<avatar-el>` |
-| `poster` | `<video>` | Preview image | `<video-player>` |
+| `src` | `<img>`, `<video>`, `<audio>` | Resource URL | `<wb-cardimage>`, `<wb-avatar>`, `<video>` |
+| `href` | `<a>`, `<link>` | Link destination | `<wb-cardlink>`, `<a>` |
+| `alt` | `<img>` | Alternative text | `<wb-cardimage>`, `<wb-avatar>` |
+| `poster` | `<video>` | Preview image | `<video>` |
 
 ### Form Attributes
 | Attribute | Native Element | Meaning | Use On |
 |-----------|---------------|---------|--------|
-| `placeholder` | `<input>`, `<textarea>` | Hint text | `<search-input>`, `<text-field>` |
+| `placeholder` | `<input>`, `<textarea>` | Hint text | `<wb-search>`, `<input>` |
 | `disabled` | Form elements | Disabled state | Any interactive component |
-| `readonly` | `<input>`, `<textarea>` | Read-only state | `<text-field>` |
+| `readonly` | `<input>`, `<textarea>` | Read-only state | `<input>` |
 | `required` | Form elements | Required field | Form components |
 | `name` | Form elements | Form field name | Form components |
-| `value` | Form elements | Current value | `<rating-el>`, `<range-slider>` |
-| `checked` | `<input type="checkbox/radio">` | Checked state | `<checkbox-el>`, `<switch-el>` |
-| `min` | `<input type="number/range">` | Minimum value | `<stepper-el>`, `<range-slider>` |
-| `max` | `<input type="number/range">` | Maximum value | `<stepper-el>`, `<range-slider>` |
-| `step` | `<input type="number/range">` | Step increment | `<stepper-el>`, `<range-slider>` |
-| `pattern` | `<input>` | Validation pattern | `<text-field>` |
-| `maxlength` | `<input>`, `<textarea>` | Max characters | `<text-field>` |
-| `autocomplete` | `<input>` | Autocomplete hint | `<text-field>` |
+| `value` | Form elements | Current value | `<wb-rating>`, `<wb-slider>` |
+| `checked` | `<input type="checkbox/radio">` | Checked state | `<input type="checkbox">`, `<wb-switch>` |
+| `min` | `<input type="number/range">` | Minimum value | `<input x-stepper>`, `<wb-slider>` |
+| `max` | `<input type="number/range">` | Maximum value | `<input x-stepper>`, `<wb-slider>` |
+| `step` | `<input type="number/range">` | Step increment | `<input x-stepper>`, `<wb-slider>` |
+| `pattern` | `<input>` | Validation pattern | `<input>` |
+| `maxlength` | `<input>`, `<textarea>` | Max characters | `<input>`, `<textarea>` |
+| `autocomplete` | `<input>` | Autocomplete hint | `<input>` |
 
 ### Boolean Attributes
 | Attribute | Native Element | Meaning | Use On |
 |-----------|---------------|---------|--------|
 | `hidden` | Global | Hide element | Any component |
-| `open` | `<details>`, `<dialog>` | Open state | `<collapse-el>`, `<modal-el>` |
-| `autoplay` | `<video>`, `<audio>` | Auto-start | `<video-player>`, `<audio-player>` |
-| `loop` | `<video>`, `<audio>` | Loop playback | `<video-player>`, `<audio-player>` |
-| `muted` | `<video>`, `<audio>` | Muted state | `<video-player>`, `<audio-player>` |
-| `controls` | `<video>`, `<audio>` | Show controls | `<video-player>`, `<audio-player>` |
+| `open` | `<details>`, `<dialog>` | Open state | `<wb-collapse>`, `<wb-modal>` |
+| `autoplay` | `<video>`, `<audio>` | Auto-start | `<video>`, `<audio>` |
+| `loop` | `<video>`, `<audio>` | Loop playback | `<video>`, `<audio>` |
+| `muted` | `<video>`, `<audio>` | Muted state | `<video>`, `<audio>` |
+| `controls` | `<video>`, `<audio>` | Show controls | `<video>`, `<audio>` |
 
 ### Layout Attributes
 | Attribute | Native Element | Meaning | Use On |
 |-----------|---------------|---------|--------|
 | `width` | Various | Element width | Media components |
 | `height` | Various | Element height | Media components |
-| `loading` | `<img>`, `<iframe>` | Loading strategy | `<card-image>` |
+| `loading` | `<img>`, `<iframe>` | Loading strategy | `<wb-cardimage>` |
 
 ---
 
@@ -171,12 +171,18 @@ These native HTML attributes should be used **with the same meaning** on custom 
 These native attributes have meanings that **conflict** with typical component usage:
 
 ### ❌ `title` - DO NOT USE for headings
+
+> Note: `<wb-card>`'s own real schema currently uses `title` for its heading text
+> (see `src/wb-models/card.schema.json`) — this rule describes the intended
+> convention, not every shipped component. Tracked under #222 (docs-wide
+> attribute-naming audit).
+
 ```html
 <!-- BAD: Creates browser tooltip, not a heading -->
-<price-card title="Pro Plan">
+<wb-cardpricing title="Pro Plan">
   <!-- GOOD: Use 'heading' or component-specific name -->
-  <price-card heading="Pro Plan">
-    <price-card plan="Pro">
+  <wb-cardpricing heading="Pro Plan">
+    <wb-cardpricing plan="Pro">
 ```
 
 **Why:** Native `title` creates a browser tooltip on hover. Using it for heading text causes unintended tooltips.
@@ -184,9 +190,9 @@ These native attributes have meanings that **conflict** with typical component u
 ### ❌ `type` - DO NOT USE for variants
 ```html
 <!-- BAD: Collides with input/button type -->
-<alert-box type="warning">
+<wb-alert type="warning">
   <!-- GOOD: Use 'variant' for styling variants -->
-  <alert-box variant="warning">
+  <wb-alert variant="warning">
 ```
 
 **Why:** Native `type` has specific meaning on `<input>`, `<button>`, `<script>`, `<style>`. Using it for variants causes confusion.
@@ -194,35 +200,35 @@ These native attributes have meanings that **conflict** with typical component u
 ### ❌ `content` - AVOID
 ```html
 <!-- BAD: Conflicts with meta content, CSS content -->
-<card-el content="Body text">
+<wb-card content="Body text">
   <!-- GOOD: Use slot or specific name -->
-  <card-el>Body text</card-el>
-  <card-el description="Body text">
+  <wb-card>Body text</wb-card>
+  <wb-card description="Body text">
 ```
 
 ### ❌ `data` - AVOID as attribute name
 ```html
 <!-- BAD: Too generic, conflicts with data-* pattern -->
-<chart-el data="[1,2,3]">
+<wb-chart data="[1,2,3]">
   <!-- GOOD: Use specific name or data-* -->
-  <chart-el points="1,2,3">
-    <chart-el points='[1,2,3]'>
+  <wb-chart points="1,2,3">
+    <wb-chart points='[1,2,3]'>
 ```
 
 ### ❌ `style` - DO NOT USE
 ```html
 <!-- BAD: Conflicts with inline styles -->
-<card-el style="minimal">
+<wb-card style="minimal">
   <!-- GOOD: Use 'variant' -->
-  <card-el variant="minimal">
+  <wb-card variant="minimal">
 ```
 
 ### ❌ `class` - DO NOT USE
 ```html
 <!-- BAD: Conflicts with CSS classes -->
-<notification-el class="warning">
+<wb-cardnotification class="warning">
   <!-- GOOD: Use 'variant' -->
-  <notification-el variant="warning">
+  <wb-cardnotification variant="warning">
 ```
 
 ---
@@ -302,21 +308,21 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 ### Simple Arrays (CSV)
 ```html
 <!-- For simple string lists, CSV is fine -->
-<nav-tabs items="Home,About,Contact">
-  <breadcrumb-nav items="Home,Products,Shoes">
-    <tag-list items="JavaScript,HTML,CSS">
+<wb-tabs items="Home,About,Contact">
+  <nav x-breadcrumb items="Home,Products,Shoes">
+    <input x-tags items="JavaScript,HTML,CSS">
 ```
 
 ### JSON Arrays
 ```html
 <!-- For arrays needing preservation (commas in values, etc.) -->
-<nav-tabs items='["Home","About","Contact Us"]'>
+<wb-tabs items='["Home","About","Contact Us"]'>
 ```
 
 ### Objects
 ```html
 <!-- Single object -->
-<user-card user='{"name":"John","role":"Admin"}'>
+<wb-cardprofile user='{"name":"John","role":"Admin"}'>
   <!-- Array of objects -->
   <table rows='[
   {"name":"Alice","email":"alice@example.com"},
@@ -328,12 +334,12 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 ```html
 <!-- Load from URL -->
 <table src="/api/users.json">
-  <chart-widget src="/api/metrics.json">
+  <wb-chart src="/api/metrics.json">
 ```
 
 ### Embedded JSON (for large data)
 ```html
-<complex-widget>
+<wb-table>
   <script type="application/json">
     {
       "columns": ["Name", "Email"],
@@ -345,7 +351,7 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
       }
     }
   </script>
-</complex-widget>
+</wb-table>
 ```
 
 ---
@@ -390,11 +396,11 @@ Extensions use `x-` prefix with optional value:
 
 ```html
 <!-- ✅ CORRECT -->
-<stats-card
+<wb-cardstats
   trend-value="+5%"
   per-page="10">
   <!-- ❌ WRONG -->
-  <stats-card
+  <wb-cardstats
     trendValue="+5%"
     perPage="10">
 ```
@@ -409,11 +415,11 @@ Extensions use `x-` prefix with optional value:
 
 ```html
 <!-- Count = singular noun -->
-<grid-layout columns="4"> <!-- Number of columns -->
+<wb-grid columns="4"> <!-- Number of columns -->
   <!-- List = plural noun -->
-  <nav-tabs items="Home,About,Contact"> <!-- Multiple items -->
+  <wb-tabs items="Home,About,Contact"> <!-- Multiple items -->
     <!-- Single = singular noun -->
-    <detail-row column="name"> <!-- Single column reference -->
+    <wb-table column="name"> <!-- Single column reference -->
 ```
 
 ### Boolean Attributes
@@ -422,16 +428,16 @@ Boolean attributes follow HTML5 convention - **presence = true, absence = false*
 
 ```html
 <!-- ✅ CORRECT: Boolean present = true -->
-<price-card featured> <!-- featured = true -->
-  <alert-box dismissible> <!-- dismissible = true -->
+<wb-cardpricing featured> <!-- featured = true -->
+  <wb-alert dismissible> <!-- dismissible = true -->
     <button disabled> <!-- disabled = true -->
       <!-- ✅ CORRECT: Absent = false -->
-      <price-card> <!-- featured = false (default) -->
+      <wb-cardpricing> <!-- featured = false (default) -->
         <!-- ⚠️ ALLOWED but verbose -->
-        <price-card featured="true"> <!-- Works, but unnecessary -->
-          <price-card featured=""> <!-- Also works -->
+        <wb-cardpricing featured="true"> <!-- Works, but unnecessary -->
+          <wb-cardpricing featured=""> <!-- Also works -->
             <!-- ❌ WRONG: No "false" value -->
-            <price-card featured="false"> <!-- Don't do this, just omit -->
+            <wb-cardpricing featured="false"> <!-- Don't do this, just omit -->
 ```
 
 ### Enum Values
@@ -480,13 +486,13 @@ up, down, flat, neutral
 ARIA attributes should pass through unchanged:
 
 ```html
-<modal-el
+<wb-modal
   aria-label="Settings dialog"
   aria-describedby="modal-desc"
   role="dialog">
-</modal-el>
-<nav-tabs aria-label="Main navigation">
-</nav-tabs>
+</wb-modal>
+<wb-tabs aria-label="Main navigation">
+</wb-tabs>
 ```
 
 ### Component-Managed ARIA
@@ -495,19 +501,19 @@ Some ARIA attributes are set automatically by behaviors:
 
 | Component | Auto-Set ARIA |
 |-----------|---------------|
-| `<alert-box>` | `role="alert"` |
-| `<modal-el>` | `role="dialog"`, `aria-modal="true"` |
-| `<nav-tabs>` | `role="tablist"`, `role="tab"`, `role="tabpanel"` |
-| `<progress-bar>` | `role="progressbar"`, `aria-valuenow` |
-| `<switch-el>` | `role="switch"`, `aria-checked` |
+| `<wb-alert>` | `role="alert"` |
+| `<wb-modal>` | `role="dialog"`, `aria-modal="true"` |
+| `<wb-tabs>` | `role="tablist"`, `role="tab"`, `role="tabpanel"` |
+| `<wb-progress>` | `role="progressbar"`, `aria-valuenow` |
+| `<wb-switch>` | `role="switch"`, `aria-checked` |
 
 ### Label Attributes
 
 ```html
 <!-- Use 'label' for visible label text -->
-<switch-el label="Enable notifications">
+<wb-switch label="Enable notifications">
   <!-- Use 'aria-label' for screen-reader-only label -->
-  <icon-button
+  <wb-button
     aria-label="Close"
     icon="✕">
     <!-- Use 'aria-labelledby' to reference another element -->
@@ -534,19 +540,20 @@ Some ARIA attributes are set automatically by behaviors:
 
 ```html
 <!-- Units included -->
-<grid-layout
+<wb-grid
   gap="1.5rem"
   min-width="280px">
   <!-- Unitless -->
-  <pagination-el
+  <nav
+    x-pagination
     total="100"
     per-page="10"
     current="3">
-    <progress-bar
+    <wb-progress
       value="75"
       max="100">
       <!-- Time: milliseconds for JS, seconds for CSS -->
-      <toast-el duration="5000"> <!-- 5 seconds -->
+      <wb-toast duration="5000"> <!-- 5 seconds -->
         <div
           x-animate="fade"
           x-delay="0.3">
@@ -559,17 +566,18 @@ Display values can include formatting - they're strings, not numbers:
 
 ```html
 <!-- Display value (string) - can have formatting -->
-<stats-card
+<wb-cardstats
   value="$1,234.56"
   label="Revenue">
-  <stats-card
+  <wb-cardstats
     value="99.9%"
     label="Uptime">
     <!-- Numeric value (number) - no formatting -->
-    <progress-bar
+    <wb-progress
       value="75"
       max="100">
-      <stepper-el
+      <input
+        x-stepper
         value="5"
         min="0"
         max="10">
@@ -584,12 +592,12 @@ Display values can include formatting - they're strings, not numbers:
 Element children become the default slot:
 
 ```html
-<basic-card heading="Title">
+<wb-card heading="Title">
   <p>This paragraph goes in the default slot (main content)</p>
-</basic-card>
-<alert-box variant="warning">
+</wb-card>
+<wb-alert variant="warning">
   <strong>Warning:</strong> This is the alert content.
-</alert-box>
+</wb-alert>
 ```
 
 ### Named Slots
@@ -597,14 +605,14 @@ Element children become the default slot:
 Use `slot` attribute for named slots:
 
 ```html
-<complex-card>
+<wb-card>
   <img
     slot="image"
     src="photo.jpg">
   <h3 slot="header">Card Title</h3>
   <p>Default slot content</p>
   <button slot="footer">Action</button>
-</complex-card>
+</wb-card>
 ```
 
 ### Slot Naming Convention
@@ -645,48 +653,45 @@ Components should expose CSS custom properties for theming:
 ### Override via Style Attribute
 
 ```html
-<basic-card style="--card-padding: 2rem; --card-radius: 16px;"> Custom styled card </basic-card>
+<wb-card style="--card-padding: 2rem; --card-radius: 16px;"> Custom styled card </wb-card>
 ```
 
 ---
 
-## Migration from x-behavior
+## Migration from Legacy Syntax
 
-### Before (Legacy)
+### Before (Legacy — explicit `x-behavior="…"` + `data-*` config)
 ```html
 <div
-  x-card
+  x-behavior="card"
+  data-title="Hello"
+  elevated>
+  Content
+</div>
+<div
+  x-behavior="alert"
+  data-type="warning"
+  data-message="Caution!">
+</div>
+```
+
+### After (v3 — current standard)
+```html
+<wb-card
   title="Hello"
   elevated>
   Content
-</div>
-<div
-  x-alert
-  type="warning"
-  message="Caution!">
-</div>
-<button
-  x-ripple
-  x-tooltip
-  tooltip="Click me">
-  Save
-</button>
-```
-
-### After (New Standard)
-```html
-<basic-card
-  heading="Hello"
-  elevated>
-  Content
-</basic-card>
-<alert-box
+</wb-card>
+<wb-alert
   variant="warning"
   message="Caution!">
-</alert-box>
-<button
-  x-ripple
-  x-tooltip="Click me">
+</wb-alert>
+```
+
+Modifier behaviors (HAS-A, applied to any element) didn't change — they were
+already the direct `x-{name}` form, not `x-behavior="{name}"`:
+```html
+<button x-ripple x-tooltip="Click me">
   Save
 </button>
 ```
@@ -695,12 +700,10 @@ Components should expose CSS custom properties for theming:
 
 | Old Pattern | New Pattern |
 |-------------|-------------|
-| `x-{behavior}` | `<{behavior}-el>` or `<{behavior}-{type}>` |
-| `title` | `heading` |
+| `x-behavior="{name}"` | `<wb-{name}>` custom element tag |
+| `data-{prop}` (behavior config) | `{prop}` (plain attribute) |
 | `type` (for variants) | `variant` |
-| `data-{prop}` (simple) | `{prop}` (native-style) |
-| `data-{prop}` (JSON) | `data-{prop}` (keep as-is) |
-| `x-ripple` (modifier) | `x-ripple` |
+| `x-{modifier}` (e.g. `x-ripple`) | unchanged — always was the direct attribute form |
 
 ---
 
@@ -789,117 +792,119 @@ name         attribute with DIFFERENT meaning?
 
 ### Cards
 ```html
-<basic-card
+<wb-card
   heading="Welcome"
   subheading="Get started"
   elevated
   hoverable>
   Card content here
-</basic-card>
-<price-card
+</wb-card>
+<wb-cardpricing
   plan="Pro"
   price="$29"
   period="/mo"
   featured
   cta="Get Started">
-</price-card>
-<stats-card
+</wb-cardpricing>
+<wb-cardstats
   value="1,234"
   label="Users"
   icon="👥"
   trend="up"
   trend-value="+12%">
-</stats-card>
-<card-image
+</wb-cardstats>
+<wb-cardimage
   src="photo.jpg"
   alt="Description"
   heading="Photo Title"
   loading="lazy">
-</card-image>
+</wb-cardimage>
 ```
 
 ### Feedback
 ```html
-<alert-box
+<wb-alert
   variant="warning"
   heading="Caution"
   message="Check your input"
   dismissible>
-</alert-box>
-<badge-el variant="success">Active</badge-el>
-<avatar-el
+</wb-alert>
+<wb-badge variant="success">Active</wb-badge>
+<wb-avatar
   src="user.jpg"
   alt="John Doe"
   size="lg"
   status="online">
-</avatar-el>
-<toast-el
+</wb-avatar>
+<wb-toast
   variant="success"
   message="Saved successfully!"
   duration="3000">
-</toast-el>
+</wb-toast>
 ```
 
 ### Navigation
 ```html
-<breadcrumb-nav items="Home,Products,Shoes"></breadcrumb-nav>
-<nav-tabs
+<nav x-breadcrumb items="Home,Products,Shoes"></nav>
+<wb-tabs
   items="Overview,Features,Pricing"
   active="0">
-</nav-tabs>
-<pagination-el
+</wb-tabs>
+<nav
+  x-pagination
   total="100"
   per-page="10"
   current="3">
-</pagination-el>
-<steps-el
+</nav>
+<div
+  x-steps
   items="Cart,Shipping,Payment"
   current="1">
-</steps-el>
+</div>
 ```
 
 ### Forms
 ```html
-<text-field
+<input
   placeholder="Enter your name"
   required
   maxlength="100"
   pattern="[A-Za-z ]+">
-</text-field>
-<rating-el
+<wb-rating
   value="4"
   max="5"
   icon="⭐">
-</rating-el>
-<switch-el
+</wb-rating>
+<wb-switch
   label="Enable notifications"
   checked>
-</switch-el>
-<range-slider
+</wb-switch>
+<wb-slider
   min="0"
   max="100"
   value="50"
   step="5">
-</range-slider>
+</wb-slider>
 ```
 
 ### Media
 ```html
-<video-player
+<video
   src="movie.mp4"
   poster="preview.jpg"
   controls
   autoplay
   muted>
-</video-player>
-<image-gallery
+</video>
+<div
+  x-gallery
   columns="4"
   gap="1rem"
   images='[
   {"src": "1.jpg", "alt": "Photo 1"},
   {"src": "2.jpg", "alt": "Photo 2"}
 ]'>
-</image-gallery>
+</div>
 ```
 
 ### Data Display
@@ -913,11 +918,11 @@ name         attribute with DIFFERENT meaning?
   sortable
   hoverable>
 </table>
-<timeline-el items='[
+<wb-timeline items='[
   {"date": "2024-01", "label": "Project Start"},
   {"date": "2024-06", "label": "Beta Launch"}
 ]'>
-</timeline-el>
+</wb-timeline>
 ```
 
 ### Extensions
@@ -967,12 +972,12 @@ When adding new components or attributes:
 
 ```html
 <!-- ❌ NEVER DO THIS -->
-<card-el title="Heading"> <!-- Use heading -->
-  <alert-el type="warning"> <!-- Use variant -->
-    <widget-el content="..."> <!-- Use slot or specific attr -->
-      <widget-el style="minimal"> <!-- Use variant -->
-        <widget-el class="special"> <!-- Use variant or boolean -->
-          <widget-el data="[...]"> <!-- Use data-* pattern -->
+<wb-card title="Heading"> <!-- Use heading -->
+  <wb-alert type="warning"> <!-- Use variant -->
+    <wb-card content="..."> <!-- Use slot or specific attr -->
+      <wb-card style="minimal"> <!-- Use variant -->
+        <wb-card class="special"> <!-- Use variant or boolean -->
+          <wb-card data="[...]"> <!-- Use data-* pattern -->
 ```
 
 ---
