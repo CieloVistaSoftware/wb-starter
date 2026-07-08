@@ -89,6 +89,7 @@
             <option value="cards">50 cards</option>
             <option value="heroes">20 card heroes</option>
             <option value="signature-heroes">20 signature heroes</option>
+            <option value="xbehaviors">50 x-* behaviors</option>
             <option value="badges">50 badges</option>
             <option value="youtube">20 YouTube URL formats</option>
           </select>
@@ -353,6 +354,7 @@
       cards: ['variant', 'size', 'title', 'tag', 'elevated'],
       heroes: ['title', 'tag'],
       'signature-heroes': ['title', 'tag'],
+      xbehaviors: ['tag'],
       badges: ['variant', 'size', 'title', 'tag', 'pill', 'outline', 'removable'],
     };
     const sortSelect = document.getElementById('pg-sort');
@@ -571,6 +573,77 @@
       return out.join('\n');
     }
 
+    // 50 x-* behavior examples + attribute combinations. Every attribute name
+    // below is verified against the actual behavior source (src/wb-viewmodels/
+    // *.js) and confirmed wired to a real [x-*] selector in wb-lazy.js — not
+    // guessed from the attribute's "obvious" name. A few behaviors that exist
+    // as functions but aren't wired to an auto-inject [x-*] selector
+    // (x-parallax, x-countup, x-reveal, x-marquee, x-rotate, x-swing,
+    // x-rubberband) are intentionally left out rather than shown not-working.
+    function fiftyXBehaviors() {
+      return [
+        // Attention/animation effects (button — most of these are click-triggered)
+        '<button x-ripple>Ripple</button>',
+        '<button x-glow color="var(--success-color)">Glow</button>',
+        '<button x-pulse>Click to Pulse</button>',
+        '<button x-shake>Click to Shake</button>',
+        '<button x-bounce>Click to Bounce</button>',
+        '<button x-flash>Click to Flash</button>',
+        '<button x-tada>Click for Tada</button>',
+        '<button x-wobble>Click to Wobble</button>',
+        '<button x-jello>Click for Jello</button>',
+        '<button x-heartbeat>Click for Heartbeat</button>',
+        '<button x-flip>Click to Flip</button>',
+        '<div x-fadein>Fades in as it scrolls into view</div>',
+        '<div x-slidein>Slides in as it scrolls into view</div>',
+        '<div x-zoomin>Zooms in as it scrolls into view</div>',
+        '<h3 x-typewriter text="Typed out letter by letter" speed="40"></h3>',
+        '<div x-rainbow duration="3s">Cycles through rainbow colors</div>',
+        '<button x-confetti count="80" label="🎉 Celebrate"></button>',
+        '<button x-sparkle count="20">Sparkle Button</button>',
+        '<button x-fireworks count="40">Fireworks</button>',
+        '<button x-snow count="40">Let it Snow</button>',
+
+        // Overlays (all self-contained triggers — no separate target element needed)
+        '<button x-confirm confirm-title="Delete item?" confirm-message="This cannot be undone.">Delete</button>',
+        '<button x-prompt prompt-title="Your name" prompt-message="What should we call you?">Ask</button>',
+        '<button x-popover popover-title="Info" popover-content="Extra detail shown on click." position="top">Popover</button>',
+        '<button x-drawer drawer-title="Settings" drawer-content="Drawer content goes here." position="right">Open Drawer</button>',
+        '<img x-lightbox width="200" src="https://picsum.photos/seed/xb/800/500" alt="Click to enlarge">',
+        '<button x-tooltip="Shown on hover, not on click" position="top">Hover me</button>',
+
+        // Feedback
+        '<button x-toast message="Saved successfully!" variant="success">Show Toast</button>',
+        '<button x-notify message="Heads up — something happened." duration="4000">Notify</button>',
+
+        // Utilities
+        '<button x-copy copy-text="npm install wb-starter">Copy Install Command</button>',
+        '<button x-share share-title="wb-starter" share-text="Zero-build web components" share-url="https://cielovistasoftware.github.io/wb-starter/">Share</button>',
+        '<button x-print label="🖨️ Print this page"></button>',
+        '<button x-fullscreen label="⛶ Go Fullscreen"></button>',
+        '<p x-truncate lines="1">This paragraph is much longer than the space allows and gets truncated to a single line with an ellipsis at the end so the layout never breaks.</p>',
+        '<button x-toggle toggle-class="active" toggle-self="true">Toggle My Own "active" Class</button>',
+        '<button x-darkmode target="html" theme="light">Force Light Mode</button>',
+        '<button x-dropdown items="Edit,Duplicate,Archive,Delete" label="Actions"></button>',
+        '<div x-countdown date="2027-01-01T00:00:00" format="auto"></div>',
+        '<div x-clock variant="digital" format="24" show-seconds="true"></div>',
+        '<span x-relativetime datetime="2026-01-01T00:00:00"></span>',
+        '<nav x-breadcrumb items="Home,Docs,Behaviors"></nav>',
+        '<input x-search placeholder="Search…">',
+        '<textarea x-autosize placeholder="Grows as you type…" rows="2"></textarea>',
+        '<input x-colorpicker value="#6366f1">',
+        '<input x-tags placeholder="Type and press Enter to add a tag">',
+        '<input x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Start typing a fruit…">',
+
+        // Combinations — multiple x-* attributes stacked on one element
+        '<button x-ripple x-tooltip="Ripples on click, tooltip on hover">Ripple + Tooltip</button>',
+        '<button x-ripple x-toast message="Ripple fired the toast too" variant="info">Ripple + Toast</button>',
+        '<div x-fadein x-glow color="var(--primary)">Fades in, then glows</div>',
+        '<button x-confetti x-tooltip="Click for confetti" count="60" label="🎊 Party"></button>',
+        '<button x-ripple x-confirm confirm-title="Really?" confirm-message="Ripple + confirm together.">Ripple + Confirm</button>',
+      ].join('\n');
+    }
+
     function fiftyBadges() {
       const V = ['default', 'primary', 'secondary', 'success', 'warning', 'error', 'info', 'purple', 'pink', 'teal', 'orange'];
       const S = ['xs', 'sm', 'md', 'lg'];
@@ -630,6 +703,7 @@
       else if (which === 'cards') input.value = fiftyCards();
       else if (which === 'heroes') input.value = twentyHeroes();
       else if (which === 'signature-heroes') input.value = twentySignatureHeroes();
+      else if (which === 'xbehaviors') input.value = fiftyXBehaviors();
       else if (which === 'badges') input.value = fiftyBadges();
       else if (which === 'youtube') input.value = twentyYouTubeFormats();
       setSortModes(EXAMPLE_SORT_MODES[which] || []);
