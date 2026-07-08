@@ -12,7 +12,10 @@ test('autosize modifier adjusts textarea and marks element', async ({ page }) =>
     if ((window as any).WB?.scan) (window as any).WB.scan(c);
   });
 
-  await page.waitForFunction(() => document.querySelector('#as-1 textarea')?.dataset.wbAutosize === '1', null, { timeout: 2000 });
+  // autosize.js marks the element with a plain x-autosize-init attribute
+  // (v3 convention), not a data-* attribute — the old data-wb-autosize
+  // assertion predates that naming and no longer matches reality.
+  await page.waitForFunction(() => document.querySelector('#as-1 textarea')?.getAttribute('x-autosize-init') === '1', null, { timeout: 2000 });
   const ta = page.locator('#as-1 textarea');
-  expect(await ta.getAttribute('data-wb-autosize')).toBe('1');
+  expect(await ta.getAttribute('x-autosize-init')).toBe('1');
 });
