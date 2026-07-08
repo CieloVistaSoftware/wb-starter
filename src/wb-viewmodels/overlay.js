@@ -63,11 +63,22 @@ export function popover(element, options = {}) {
   // its (unpositioned) ancestor computed, landing it on top of unrelated
   // nearby content — e.g. covering the very next sibling's click target.
   let popoverEl = null;
+  const popoverId = `wb-popover-${Math.random().toString(36).slice(2, 9)}`;
+
+  // #209: a popover opening/closing was invisible to assistive tech — no
+  // role, no announcement, no link between trigger and content. aria-haspopup
+  // is static (always true, describes what clicking DOES); aria-expanded
+  // reflects live open/closed state; aria-controls links trigger -> panel.
+  element.setAttribute('aria-haspopup', 'dialog');
+  element.setAttribute('aria-expanded', 'false');
 
   const show = () => {
     if (popoverEl) return;
     popoverEl = document.createElement('div');
     popoverEl.className = `wb-popover wb-popover--${config.position}`;
+    popoverEl.id = popoverId;
+    popoverEl.setAttribute('role', 'dialog');
+    popoverEl.setAttribute('aria-label', config.title || config.content);
     popoverEl.style.cssText = `
       position: fixed;
       background: var(--bg-primary, #1f2937);
@@ -86,12 +97,16 @@ export function popover(element, options = {}) {
     `;
     document.body.appendChild(popoverEl);
     positionPopover(element, popoverEl, config.position);
+    element.setAttribute('aria-expanded', 'true');
+    element.setAttribute('aria-controls', popoverId);
   };
 
   const hide = () => {
     if (popoverEl) {
       popoverEl.remove();
       popoverEl = null;
+      element.setAttribute('aria-expanded', 'false');
+      element.removeAttribute('aria-controls');
     }
   };
 
@@ -107,7 +122,12 @@ export function popover(element, options = {}) {
 
   element.wbPopover = { show, hide, toggle: () => popoverEl ? hide() : show() };
 
-  return () => { hide(); element.classList.remove('wb-popover-trigger'); };
+  return () => {
+    hide();
+    element.classList.remove('wb-popover-trigger');
+    element.removeAttribute('aria-haspopup');
+    element.removeAttribute('aria-expanded');
+  };
 }
 
 function positionPopover(trigger, popover, position) {
