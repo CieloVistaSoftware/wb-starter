@@ -326,5 +326,5 @@ That's the whole loop — no build, no registration boilerplate beyond those map
 - Behaviors reference: `docs/behaviors-reference.md`.
 - The `?page=behaviors` showcase exercises every behavior with copy-ready markup.
 
-> Note: `NOTES-V3-GUIDE.md` is **release notes for the Notes drawer component's
+> Note: `docs/NOTES-V3-GUIDE.md` is **release notes for the Notes drawer component's
 > TODO feature** — not this framework guide. (It's mislabeled.)
