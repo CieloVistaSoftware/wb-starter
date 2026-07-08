@@ -56,7 +56,12 @@ export function popover(element, options = {}) {
   };
 
   element.classList.add('wb-popover-trigger');
-  element.classList.add('wb-popover');
+  // NOT '.wb-popover' — that class is popover.css's styling for the
+  // dynamically-created CONTENT PANEL (position:absolute; z-index:1000),
+  // reused here by name collision on the TRIGGER too. That yanked the
+  // trigger out of normal document flow onto whatever absolute position
+  // its (unpositioned) ancestor computed, landing it on top of unrelated
+  // nearby content — e.g. covering the very next sibling's click target.
   let popoverEl = null;
 
   const show = () => {
