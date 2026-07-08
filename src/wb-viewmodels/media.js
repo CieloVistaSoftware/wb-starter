@@ -906,7 +906,10 @@ function extractYouTubeId(url) {
 // player starts, every other player on the page is paused. Registered once
 // (module-level), using the YouTube iframe postMessage API (requires
 // enablejsapi=1 on each embed's src) rather than one listener per instance.
+// Also tracks whichever player is currently playing so pressing Home can
+// jump straight to it instead of just scrolling to the page top.
 let ytSingletonListenerAttached = false;
+let currentPlayingYouTubeEl = null;
 function ensureSingleYouTubePlayback() {
   if (ytSingletonListenerAttached) return;
   ytSingletonListenerAttached = true;
@@ -917,8 +920,21 @@ function ensureSingleYouTubePlayback() {
     document.querySelectorAll('.wb-youtube iframe').forEach((frame) => {
       if (frame.contentWindow !== e.source) {
         frame.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: '' }), '*');
+      } else {
+        currentPlayingYouTubeEl = frame.closest('.wb-youtube');
       }
     });
+  });
+
+  // Home jumps to the currently-playing video instead of just the page top —
+  // but never inside a text field, where Home should move the caret as usual.
+  window.addEventListener('keydown', (e) => {
+    if (e.key !== 'Home') return;
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    if (!currentPlayingYouTubeEl || !currentPlayingYouTubeEl.isConnected) return;
+    e.preventDefault();
+    currentPlayingYouTubeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 }
 
