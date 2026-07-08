@@ -902,6 +902,26 @@ function extractYouTubeId(url) {
   return null;
 }
 
+// Only one <wb-youtube>/<wb-youtube>-behavior video plays at a time: when any
+// player starts, every other player on the page is paused. Registered once
+// (module-level), using the YouTube iframe postMessage API (requires
+// enablejsapi=1 on each embed's src) rather than one listener per instance.
+let ytSingletonListenerAttached = false;
+function ensureSingleYouTubePlayback() {
+  if (ytSingletonListenerAttached) return;
+  ytSingletonListenerAttached = true;
+  window.addEventListener('message', (e) => {
+    let data;
+    try { data = JSON.parse(e.data); } catch { return; }
+    if (data.event !== 'infoDelivery' || !data.info || data.info.playerState !== 1) return; // 1 = playing
+    document.querySelectorAll('.wb-youtube iframe').forEach((frame) => {
+      if (frame.contentWindow !== e.source) {
+        frame.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: '' }), '*');
+      }
+    });
+  });
+}
+
 /**
  * Custom Tag: <wb-youtube>
  * YouTube - YouTube embed
@@ -935,7 +955,8 @@ export function youtube(element, options = {}) {
     loop: config.loop ? '1' : '0',
     controls: config.controls ? '1' : '0',
     rel: '0',
-    modestbranding: '1'
+    modestbranding: '1',
+    enablejsapi: '1'
   });
 
   if (config.loop) params.set('playlist', config.id);
@@ -948,6 +969,7 @@ export function youtube(element, options = {}) {
 
   element.innerHTML = '';
   element.appendChild(iframe);
+  ensureSingleYouTubePlayback();
 
   return () => element.classList.remove('wb-youtube');
 }

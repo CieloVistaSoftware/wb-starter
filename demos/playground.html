@@ -525,6 +525,9 @@
     // youtube-nocookie.com, /e/ID, /shorts/ID, /live/ID — plus one
     // intentionally-unparseable oembed API URL (not a real video page) to
     // show the "couldn't parse" warning path fails gracefully, not silently.
+    // Each of the 20 format shapes is paired with a DIFFERENT real video ID —
+    // the source list only has ~10 underlying videos reused across formats,
+    // which looked like the same handful of videos repeated 6× over.
     function twentyYouTubeFormats() {
       const urls = [
         'http://www.youtube.com/watch?v=-wtIMTCHWuI',
@@ -532,19 +535,19 @@
         'https://youtube.com/watch?v=yZv2daTWRZU&feature=em-uploademail',
         'http://www.youtube.com/watch?v=0zM3nApSvMg#t=0m10s',
         'https://www.youtube.com/watch?feature=player_embedded&v=dQw4w9WgXcQ',
-        'https://www.youtube.com/watch?app=desktop&v=dQw4w9WgXcQ',
-        'https://www.youtube.com/watch/-wtIMTCHWuI',
-        'https://www.youtube.com/watch/-wtIMTCHWuI?app=desktop',
-        'http://www.youtube.com/v/dQw4w9WgXcQ',
-        'https://www.youtube.com/v/0zM3nApSvMg?fs=1&hl=en_US&rel=0',
-        'http://youtu.be/-wtIMTCHWuI',
-        'https://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_player',
+        'https://www.youtube.com/watch?app=desktop&v=9bZkp7q19f0',
+        'https://www.youtube.com/watch/kJQP7kiw5Fk',
+        'https://www.youtube.com/watch/JGwWNGJdvx8?app=desktop',
+        'http://www.youtube.com/v/fJ9rUzIMcZQ',
+        'https://www.youtube.com/v/OPf0YbXqDm0?fs=1&hl=en_US&rel=0',
+        'http://youtu.be/YQHsXMglC9A',
+        'https://youtu.be/RgKAFK5djSk?feature=youtube_gdata_player',
         'https://youtu.be/oTJRivZTMLs?list=PLToa5JuFMsXTNkrLJbRlB--76IAOjRM9b',
         'https://youtu.be/M9bq_alk-sw?si=B_RZg_I-lLaa7UU-',
-        'https://www.youtube.com/embed/lalOy8Mbfdc',
         'https://www.youtube.com/embed/nas1rJpm7wY?rel=0',
-        'https://www.youtube-nocookie.com/embed/lalOy8Mbfdc?rel=0',
-        'https://www.youtube.com/e/dQw4w9WgXcQ',
+        'https://www.youtube.com/embed/CevxZvSJLk8',
+        'https://www.youtube-nocookie.com/embed/hT_nvWreIhg?rel=0',
+        'https://www.youtube.com/e/60ItHLz5WEA',
         'https://www.youtube.com/shorts/j9rZxAF3C0I',
         'https://www.youtube.com/live/8hBmepWUJoc',
         'http://www.youtube.com/oembed?url=http%3A//www.youtube.com/watch?v%3D-wtIMTCHWuI&format=json',
