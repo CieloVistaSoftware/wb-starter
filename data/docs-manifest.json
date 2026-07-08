@@ -1,6 +1,6 @@
 {
-  "generated": "2026-06-23T02:43:54.748Z",
-  "totalFiles": 177,
+  "generated": "2026-07-07T20:40:04.374Z",
+  "totalFiles": 184,
   "categories": [
     "_today",
     "architecture",
@@ -15,6 +15,12 @@
   ],
   "byCategory": {
     "root": [
+      {
+        "path": "docs/AI.md",
+        "title": "AI",
+        "name": "AI",
+        "category": "root"
+      },
       {
         "path": "docs/ANNOUNCE_TEST_POLICY.md",
         "title": "Release announcement: Local test gating and PR policy",
@@ -35,13 +41,13 @@
       },
       {
         "path": "docs/behavior-cross-reference.md",
-        "title": "Web Behaviors (WB) Behaviors Cross-Reference",
+        "title": "WB-Starter Behaviors Cross-Reference",
         "name": "behavior-cross-reference",
         "category": "root"
       },
       {
         "path": "docs/behaviors-reference.md",
-        "title": "Web Behaviors (WB) Reference",
+        "title": "WB-Starter Reference",
         "name": "behaviors-reference",
         "category": "root"
       },
@@ -89,13 +95,13 @@
       },
       {
         "path": "docs/IMPROVEMENTS.md",
-        "title": "Potential Improvements for Web Behaviors (WB)",
+        "title": "Potential Improvements for WB-Starter",
         "name": "IMPROVEMENTS",
         "category": "root"
       },
       {
         "path": "docs/index.md",
-        "title": "Web Behaviors (WB) Documentation",
+        "title": "WB-Starter Documentation",
         "name": "index",
         "category": "root"
       },
@@ -131,7 +137,7 @@
       },
       {
         "path": "docs/MVVM-MIGRATION-PLAN.md",
-        "title": "Web Behaviors (WB) MVVM Migration Plan",
+        "title": "WB-Starter MVVM Migration Plan",
         "name": "MVVM-MIGRATION-PLAN",
         "category": "root"
       },
@@ -149,7 +155,7 @@
       },
       {
         "path": "docs/pce-candidates.md",
-        "title": "PCE (Pseudo-Custom Elements) - Web Behaviors (WB) v3.0",
+        "title": "PCE (Pseudo-Custom Elements) - WB-Starter v3.0",
         "name": "pce-candidates",
         "category": "root"
       },
@@ -167,7 +173,7 @@
       },
       {
         "path": "docs/properties.md",
-        "title": "Web Behaviors (WB) - Property System Documentation",
+        "title": "WB-Starter - Property System Documentation",
         "name": "properties",
         "category": "root"
       },
@@ -191,13 +197,13 @@
       },
       {
         "path": "docs/schema.md",
-        "title": "Schema Standards for Web Behaviors (WB) Components & Pages",
+        "title": "Schema Standards for WB-Starter Components & Pages",
         "name": "schema",
         "category": "root"
       },
       {
         "path": "docs/schema.migration.md",
-        "title": "Web Behaviors (WB) Schema Migration Plan",
+        "title": "WB-Starter Schema Migration Plan",
         "name": "schema.migration",
         "category": "root"
       },
@@ -262,8 +268,14 @@
         "category": "root"
       },
       {
+        "path": "docs/V3-GUIDE.md",
+        "title": "wb-starter v3 — Complete Guide",
+        "name": "V3-GUIDE",
+        "category": "root"
+      },
+      {
         "path": "docs/wb-parts-spec.md",
-        "title": "gcan# Web Behaviors (WB) Parts Specification",
+        "title": "gcan# WB-Starter Parts Specification",
         "name": "wb-parts-spec",
         "category": "root"
       },
@@ -275,7 +287,7 @@
       },
       {
         "path": "docs/WB_BEHAVIOR_SYSTEM.md",
-        "title": "Web Behaviors (WB) Behavior System - Technical Workflow",
+        "title": "WB-Starter Behavior System - Technical Workflow",
         "name": "WB_BEHAVIOR_SYSTEM",
         "category": "root"
       },
@@ -301,7 +313,7 @@
       },
       {
         "path": "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
-        "title": "Web Behaviors (WB) Attribute Naming Standard",
+        "title": "WB-Starter Attribute Naming Standard",
         "name": "ATTRIBUTE-NAMING-STANDARD",
         "category": "architecture"
       },
@@ -313,7 +325,7 @@
       },
       {
         "path": "docs/architecture/standards/SCHEMA-SPECIFICATION.md",
-        "title": "Web Behaviors (WB) Schema Specification v3.0",
+        "title": "WB-Starter Schema Specification v3.0",
         "name": "SCHEMA-SPECIFICATION",
         "category": "architecture"
       },
@@ -509,7 +521,7 @@
     "components": [
       {
         "path": "docs/components/cards/card.md",
-        "title": "## Composition for Specialized Functionality",
+        "title": "Card Component Overview",
         "name": "card",
         "category": "components"
       },
@@ -1028,8 +1040,14 @@
     ],
     "standards": [
       {
+        "path": "docs/standards/DEMOS-AND-DOCS-STANDARDS.md",
+        "title": "Demos & Documentation Standards",
+        "name": "DEMOS-AND-DOCS-STANDARDS",
+        "category": "standards"
+      },
+      {
         "path": "docs/standards/V3-STANDARDS.md",
-        "title": "Web Behaviors (WB) v3.0 Standards",
+        "title": "WB-Starter v3.0 Standards",
         "name": "V3-STANDARDS",
         "category": "standards"
       }
@@ -1061,8 +1079,20 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "Current Status - wb-demo Component Complete",
+        "title": "🅿️ PARKING LOT (2026-07-07)",
         "name": "CURRENT-STATUS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/hardcoded-colors-audit.md",
+        "title": "Hardcoded-Color Audit & Recommendations",
+        "name": "hardcoded-colors-audit",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/inheritance-usage-report.md",
+        "title": "\"inheritance\" usage report — `.md` files",
+        "name": "inheritance-usage-report",
         "category": "_today"
       },
       {
@@ -1087,6 +1117,18 @@
         "path": "docs/_today/REPAIR-PLAN-021526.md",
         "title": "REPAIR PLAN — Page & Demo Compliance",
         "name": "REPAIR-PLAN-021526",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/ROOT-CAUSE-md-double-parse.md",
+        "title": "Root cause: doc-viewer collapsed multi-line code blocks (markdown double-parse)",
+        "name": "ROOT-CAUSE-md-double-parse",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/slot-audit.md",
+        "title": "\"slot\" Audit & Retirement Plan",
+        "name": "slot-audit",
         "category": "_today"
       },
       {
@@ -1124,8 +1166,20 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "Current Status - wb-demo Component Complete",
+      "title": "🅿️ PARKING LOT (2026-07-07)",
       "name": "CURRENT-STATUS",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/hardcoded-colors-audit.md",
+      "title": "Hardcoded-Color Audit & Recommendations",
+      "name": "hardcoded-colors-audit",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/inheritance-usage-report.md",
+      "title": "\"inheritance\" usage report — `.md` files",
+      "name": "inheritance-usage-report",
       "category": "_today"
     },
     {
@@ -1153,10 +1207,28 @@
       "category": "_today"
     },
     {
+      "path": "docs/_today/ROOT-CAUSE-md-double-parse.md",
+      "title": "Root cause: doc-viewer collapsed multi-line code blocks (markdown double-parse)",
+      "name": "ROOT-CAUSE-md-double-parse",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/slot-audit.md",
+      "title": "\"slot\" Audit & Retirement Plan",
+      "name": "slot-audit",
+      "category": "_today"
+    },
+    {
       "path": "docs/_today/TODO.md",
       "title": "---",
       "name": "TODO",
       "category": "_today"
+    },
+    {
+      "path": "docs/AI.md",
+      "title": "AI",
+      "name": "AI",
+      "category": "root"
     },
     {
       "path": "docs/ANNOUNCE_TEST_POLICY.md",
@@ -1178,7 +1250,7 @@
     },
     {
       "path": "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
-      "title": "Web Behaviors (WB) Attribute Naming Standard",
+      "title": "WB-Starter Attribute Naming Standard",
       "name": "ATTRIBUTE-NAMING-STANDARD",
       "category": "architecture"
     },
@@ -1190,7 +1262,7 @@
     },
     {
       "path": "docs/architecture/standards/SCHEMA-SPECIFICATION.md",
-      "title": "Web Behaviors (WB) Schema Specification v3.0",
+      "title": "WB-Starter Schema Specification v3.0",
       "name": "SCHEMA-SPECIFICATION",
       "category": "architecture"
     },
@@ -1220,13 +1292,13 @@
     },
     {
       "path": "docs/behavior-cross-reference.md",
-      "title": "Web Behaviors (WB) Behaviors Cross-Reference",
+      "title": "WB-Starter Behaviors Cross-Reference",
       "name": "behavior-cross-reference",
       "category": "root"
     },
     {
       "path": "docs/behaviors-reference.md",
-      "title": "Web Behaviors (WB) Reference",
+      "title": "WB-Starter Reference",
       "name": "behaviors-reference",
       "category": "root"
     },
@@ -1424,7 +1496,7 @@
     },
     {
       "path": "docs/components/cards/card.md",
-      "title": "## Composition for Specialized Functionality",
+      "title": "Card Component Overview",
       "name": "card",
       "category": "components"
     },
@@ -1958,13 +2030,13 @@
     },
     {
       "path": "docs/IMPROVEMENTS.md",
-      "title": "Potential Improvements for Web Behaviors (WB)",
+      "title": "Potential Improvements for WB-Starter",
       "name": "IMPROVEMENTS",
       "category": "root"
     },
     {
       "path": "docs/index.md",
-      "title": "Web Behaviors (WB) Documentation",
+      "title": "WB-Starter Documentation",
       "name": "index",
       "category": "root"
     },
@@ -2000,7 +2072,7 @@
     },
     {
       "path": "docs/MVVM-MIGRATION-PLAN.md",
-      "title": "Web Behaviors (WB) MVVM Migration Plan",
+      "title": "WB-Starter MVVM Migration Plan",
       "name": "MVVM-MIGRATION-PLAN",
       "category": "root"
     },
@@ -2018,7 +2090,7 @@
     },
     {
       "path": "docs/pce-candidates.md",
-      "title": "PCE (Pseudo-Custom Elements) - Web Behaviors (WB) v3.0",
+      "title": "PCE (Pseudo-Custom Elements) - WB-Starter v3.0",
       "name": "pce-candidates",
       "category": "root"
     },
@@ -2036,7 +2108,7 @@
     },
     {
       "path": "docs/properties.md",
-      "title": "Web Behaviors (WB) - Property System Documentation",
+      "title": "WB-Starter - Property System Documentation",
       "name": "properties",
       "category": "root"
     },
@@ -2060,13 +2132,13 @@
     },
     {
       "path": "docs/schema.md",
-      "title": "Schema Standards for Web Behaviors (WB) Components & Pages",
+      "title": "Schema Standards for WB-Starter Components & Pages",
       "name": "schema",
       "category": "root"
     },
     {
       "path": "docs/schema.migration.md",
-      "title": "Web Behaviors (WB) Schema Migration Plan",
+      "title": "WB-Starter Schema Migration Plan",
       "name": "schema.migration",
       "category": "root"
     },
@@ -2095,8 +2167,14 @@
       "category": "root"
     },
     {
+      "path": "docs/standards/DEMOS-AND-DOCS-STANDARDS.md",
+      "title": "Demos & Documentation Standards",
+      "name": "DEMOS-AND-DOCS-STANDARDS",
+      "category": "standards"
+    },
+    {
       "path": "docs/standards/V3-STANDARDS.md",
-      "title": "Web Behaviors (WB) v3.0 Standards",
+      "title": "WB-Starter v3.0 Standards",
       "name": "V3-STANDARDS",
       "category": "standards"
     },
@@ -2137,14 +2215,20 @@
       "category": "root"
     },
     {
+      "path": "docs/V3-GUIDE.md",
+      "title": "wb-starter v3 — Complete Guide",
+      "name": "V3-GUIDE",
+      "category": "root"
+    },
+    {
       "path": "docs/WB_BEHAVIOR_SYSTEM.md",
-      "title": "Web Behaviors (WB) Behavior System - Technical Workflow",
+      "title": "WB-Starter Behavior System - Technical Workflow",
       "name": "WB_BEHAVIOR_SYSTEM",
       "category": "root"
     },
     {
       "path": "docs/wb-parts-spec.md",
-      "title": "gcan# Web Behaviors (WB) Parts Specification",
+      "title": "gcan# WB-Starter Parts Specification",
       "name": "wb-parts-spec",
       "category": "root"
     },

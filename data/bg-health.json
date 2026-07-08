@@ -1,6 +1,6 @@
 {
-  "lastRun": "2026-06-28T03:06:17.745Z",
-  "totalChecks": 5996,
+  "lastRun": "2026-07-08T18:10:27.920Z",
+  "totalChecks": 15230,
   "bugs": [
     {
       "id": "bug-regression-tests",
@@ -38,11 +38,12 @@
     {
       "id": "bug-untagged-code",
       "checkId": "chk-untagged-code-blocks",
-      "title": "1 untagged fenced code block(s) across all docs",
-      "detail": "Code blocks without language tags will not get syntax highlighting. Showing 1 example location(s).",
+      "title": "2 untagged fenced code block(s); first at C:\\Users\\jwpmi\\Downloads\\VSCode\\projects\\cielovista-tools\\docs\\priority-sync-integration.md:19",
+      "detail": "Code blocks without language tags will not get syntax highlighting. Showing 2 example location(s).",
       "recommendation": "Replace bare fences with tagged fences such as ```ts, ```js, ```powershell, ```json, or ```bash so docs render with the right syntax highlighting.",
       "evidence": [
-        "C:\\Users\\jwpmi\\Downloads\\pico-dataset\\docs\\rag.md:25"
+        "C:\\Users\\jwpmi\\Downloads\\VSCode\\projects\\cielovista-tools\\docs\\priority-sync-integration.md:19",
+        "C:\\Users\\jwpmi\\Downloads\\VSCode\\projects\\cielovista-tools\\src\\shared\\error-log-utils.README.md:101"
       ],
       "priority": "low",
       "category": "Documentation",
@@ -52,5 +53,5 @@
       "fixed": false
     }
   ],
-  "checkIndex": 4
+  "checkIndex": 6
 }

@@ -1,132 +1,9 @@
 {
-  "total": 236,
+  "total": 14,
   "files": {
-    "demos/autoinject.html": {
-      "data-clearable": 3,
-      "data-searchable": 1,
-      "data-variant": 3,
-      "data-size": 1,
-      "data-autosize": 3,
-      "data-show-count": 3,
-      "data-show-value": 5,
-      "data-show-labels": 3,
-      "data-title": 1,
-      "data-subtitle": 1,
-      "data-clickable": 1,
-      "data-hoverable": 1,
-      "data-tooltip": 1,
-      "data-elevated": 1
-    },
-    "demos/behaviors-showcase.html": {
-      "data-tab-title": 1
-    },
     "demos/code.md": {
       "data-variant": 1,
       "data-tooltip": 1
-    },
-    "demos/frameworks.html": {
-      "data-tooltip": 3,
-      "data-message": 2,
-      "data-type": 2
-    },
-    "demos/kitchen-sink.html": {
-      "data-highlight-theme": 1
-    },
-    "pages/ai-permutation-test.html": {
-      "data-tab": 4
-    },
-    "pages/behaviors.html": {
-      "data-message": 5,
-      "data-type": 5,
-      "data-position": 5,
-      "data-mask": 3,
-      "data-autosize": 1,
-      "data-value": 1,
-      "data-min": 1,
-      "data-max": 1,
-      "data-tab-title": 4,
-      "data-items": 4,
-      "data-total": 1,
-      "data-per-page": 1,
-      "data-current": 2,
-      "data-lazy": 1,
-      "data-zoomable": 1,
-      "data-columns": 1,
-      "data-id": 1,
-      "data-ratio": 1,
-      "data-direction": 3,
-      "data-copy": 2,
-      "data-share-title": 3,
-      "data-share-url": 3,
-      "data-to": 1,
-      "data-date": 1,
-      "data-lines": 1
-    },
-    "pages/components.html": {
-      "data-pill": 1,
-      "data-striped": 1,
-      "data-tab-title": 6,
-      "data-variant": 4
-    },
-    "pages/contact.html": {
-      "data-options": 1,
-      "data-autosize": 1
-    },
-    "pages/features.html": {
-      "data-value": 4,
-      "data-label": 4,
-      "data-icon": 4,
-      "data-trend": 1,
-      "data-title": 14
-    },
-    "pages/newbehaviors.html": {
-      "data-message": 5,
-      "data-type": 5,
-      "data-content": 5,
-      "data-position": 5,
-      "data-variant": 3,
-      "data-mask": 3,
-      "data-autosize": 1,
-      "data-value": 1,
-      "data-min": 1,
-      "data-max": 1,
-      "data-tab-title": 4,
-      "data-accordion-title": 3,
-      "data-items": 3,
-      "data-total": 1,
-      "data-per-page": 1,
-      "data-current": 2,
-      "data-lazy": 1,
-      "data-zoomable": 1,
-      "data-columns": 1,
-      "data-id": 1,
-      "data-ratio": 1,
-      "data-direction": 3,
-      "data-copy": 2,
-      "data-share-title": 1,
-      "data-share-url": 1,
-      "data-to": 1,
-      "data-date": 1,
-      "data-lines": 1
-    },
-    "public/papers/schema-architecture.html": {
-      "data-variant": 3,
-      "data-size": 2,
-      "data-type": 1,
-      "data-message": 1
-    },
-    "public/papers/schema-first-architecture.html": {
-      "data-variant": 3,
-      "data-message": 2,
-      "data-type": 2
-    },
-    "public/schema-viewer.html": {
-      "data-wb-": 2
-    },
-    "public/test-dashboard.html": {
-      "data-state": 6,
-      "data-tab": 2,
-      "data-filter": 4
     },
     "docs/claude/TIER2-DOMAIN-GUIDES.md": {
       "data-files": 1
@@ -146,60 +23,12 @@
     }
   },
   "attrs": {
-    "data-clearable": 3,
-    "data-searchable": 1,
-    "data-variant": 17,
-    "data-size": 3,
-    "data-autosize": 6,
-    "data-show-count": 3,
-    "data-show-value": 5,
-    "data-show-labels": 3,
-    "data-title": 15,
-    "data-subtitle": 1,
-    "data-clickable": 1,
-    "data-hoverable": 1,
-    "data-tooltip": 5,
-    "data-elevated": 1,
-    "data-tab-title": 15,
-    "data-message": 15,
-    "data-type": 15,
-    "data-highlight-theme": 1,
-    "data-tab": 6,
-    "data-position": 10,
-    "data-mask": 6,
-    "data-value": 6,
-    "data-min": 2,
-    "data-max": 2,
-    "data-items": 7,
-    "data-total": 2,
-    "data-per-page": 2,
-    "data-current": 4,
-    "data-lazy": 2,
-    "data-zoomable": 2,
-    "data-columns": 2,
-    "data-id": 2,
-    "data-ratio": 2,
-    "data-direction": 6,
-    "data-copy": 4,
-    "data-share-title": 4,
-    "data-share-url": 4,
-    "data-to": 2,
-    "data-date": 2,
-    "data-lines": 2,
-    "data-pill": 1,
-    "data-striped": 1,
-    "data-options": 1,
-    "data-label": 4,
-    "data-icon": 8,
-    "data-trend": 1,
-    "data-content": 5,
-    "data-accordion-title": 3,
-    "data-wb-": 2,
-    "data-state": 6,
-    "data-filter": 4,
+    "data-variant": 1,
+    "data-tooltip": 1,
     "data-files": 1,
     "data-attrs": 3,
     "data-class": 1,
+    "data-icon": 4,
     "data-col": 1,
     "data-index": 2
   }

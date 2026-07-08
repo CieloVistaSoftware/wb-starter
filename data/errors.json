@@ -1,38 +1,38 @@
 {
-  "lastUpdated": "2026-06-28T02:31:14.852Z",
+  "lastUpdated": "2026-07-08T18:29:34.910Z",
   "count": 1,
   "errors": [
     {
-      "id": 1782613874852,
-      "timestamp": "2026-06-28T02:31:14.852Z",
+      "id": 1783535374909,
+      "timestamp": "2026-07-08T18:29:34.909Z",
       "level": "error",
       "source": "WB:LegacySyntax",
       "module": "wb.js",
-      "line": 370,
+      "line": 372,
       "column": 41,
       "function": "(anonymous)",
       "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
-      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:370:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:362:42)\n    at async Object.init (http://localhost:3000/src/core/wb.js:763:9)",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:372:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:364:42)\n    at async Object.init (http://localhost:3000/src/core/wb.js:767:9)",
       "frames": [
         {
           "function": "(anonymous)",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 370,
+          "line": 372,
           "column": 41
         },
         {
           "function": "Object.scan",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 362,
+          "line": 364,
           "column": 42
         },
         {
           "function": "Object.init",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 763,
+          "line": 767,
           "column": 9
         }
       ],
