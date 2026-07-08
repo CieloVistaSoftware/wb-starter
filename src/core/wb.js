@@ -257,7 +257,20 @@ const WB = {
    */
   async processSchema(element, schemaName = null, blocking = false) {
     if (schemaProcessed.has(element)) return;
-    
+
+    // <wb-modal modal-title="…" modal-content="…">Open Modal</wb-modal> is
+    // TRIGGER mode (dialog.js) — a plain clickable element whose own text IS
+    // the label; dialog.js deliberately leaves it untouched (just adds a
+    // class + click listener). The dialog schema's $view unconditionally
+    // rebuilds children into backdrop/container/header — meant for the
+    // actual dialog box, not this trigger — which silently wiped the
+    // trigger's own label text before dialog.js ever got a chance to run.
+    // Confirmed live: exactly this pattern on pages/behaviors.html's
+    // "Open Modal" trigger (#305 investigation).
+    if (element.tagName === 'WB-MODAL' && (element.hasAttribute('modal-title') || element.hasAttribute('modal-content'))) {
+      return;
+    }
+
     // Get schema name from tag or x-* attributes
     const name = schemaName || WB._detectSchemaName(element);
     dlog(`[WB.processSchema] Processing element ${element.tagName}, detected schema: ${name}`);
@@ -360,7 +373,30 @@ const WB = {
       dlog(`[WB.scan] useSchemas is false, skipping schema processing`);
     }
 
-      // 1. Detect Legacy Usage (Strict Mode: Error) 
+    // #305: wb-* custom tags that have a REAL behavior but deliberately NO
+    // schema (schema-builder.js's own detectSchema() explicitly excludes
+    // wb-modal/wb-stack/wb-grid/wb-accordion/etc — "owned by custom elements
+    // / behaviors / CSS", #174) never got their behavior invoked at all: the
+    // schema-processing loop above is the ONLY wb-* handling scan() has, and
+    // it silently no-ops for these tags (correctly skipping the schema
+    // rebuild, but with nothing to invoke the real behavior in its place).
+    // tag-map.js's getElementBehavior() is the source of truth for "does
+    // this wb-* tag have a real behavior" — use it directly. Safe to run
+    // unconditionally for every wb-* tag: WB.inject()'s own idempotency
+    // guards (applied/pending sets) make this a no-op for tags a schema
+    // already enhanced via schema.behavior.
+    root.querySelectorAll('*').forEach(el => {
+      const htmlEl = /** @type {HTMLElement} */ (el);
+      const tag = htmlEl.tagName.toLowerCase();
+      if (tag.startsWith('wb-') && tag !== 'wb-view') {
+        const behaviorName = getElementBehavior(tag);
+        if (behaviorName && behaviors[behaviorName]) {
+          promises.push(WB.inject(htmlEl, behaviorName));
+        }
+      }
+    });
+
+      // 1. Detect Legacy Usage (Strict Mode: Error)
       root.querySelectorAll('[data-wb]').forEach(element => {
         if (!(element instanceof HTMLElement)) return; // Ensure element is an HTMLElement
         const val = element.dataset.wb || '';
