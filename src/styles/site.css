@@ -1765,32 +1765,11 @@ h5, h6 {
   100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
 
-/* =============================================================================
-   CODE CAPTIONS (MDHTML)
-   ============================================================================= */
-.code-wrapper {
-  width: fit-content;
-  min-width: 50%;
-  margin: 0 auto 1.5rem auto;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-
-.code-wrapper pre {
-  margin: 0 !important;
-  width: 100%;
-  min-width: 100%;
-}
-
-.code-caption {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--text-muted);
-  margin-top: 0.25rem;
-  align-self: flex-end;
-  opacity: 0.6;
-}
+/* CODE CAPTIONS (MDHTML) — moved to src/styles/behaviors/mdhtml.css
+   (.wb-mdhtml .code-wrapper / .code-caption), the single canonical source.
+   This unscoped duplicate centered every code block horizontally
+   (width:fit-content + margin:0 auto), unlike the flush-left surrounding
+   prose — see mdhtml.css's own comment for the full story. */
 
 /* =============================================================================
    PREMIUM CTA BUTTON - HEADER VERSION

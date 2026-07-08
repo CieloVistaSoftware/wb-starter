@@ -141,12 +141,33 @@
   margin: 0 0 1.5rem 0;
 }
 
+/* Single canonical source for .code-wrapper — src/styles/site.css and the
+   orphaned src/styles/code-captions.css (never actually <link>ed anywhere,
+   confirmed dead) both had their OWN unscoped `.code-wrapper` rule with
+   `width: fit-content; min-width: 50%; margin: 0 auto` — CENTERING every
+   code block horizontally instead of leaving it flush with the surrounding
+   prose (headings/paragraphs never had this centering). Consolidated here;
+   site.css's copy removed, code-captions.css deleted outright. */
 .wb-mdhtml .code-wrapper {
   max-width: 100%;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0 0 1.5rem 0;
 }
 .wb-mdhtml .code-wrapper pre {
   max-width: 100%;
+  margin: 0 !important;
+  width: 100%;
+}
+.wb-mdhtml .code-caption {
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  align-self: flex-end;
+  opacity: 0.6;
 }
 
 .wb-mdhtml--loading {
