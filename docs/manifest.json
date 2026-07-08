@@ -254,6 +254,11 @@
           "description": "Stack layout behavior"
         },
         {
+          "file": "behaviors/wb-themecontrol.md",
+          "title": "WB Theme Control",
+          "description": "Theme picker dropdown — applies and persists a data-theme choice"
+        },
+        {
           "file": "behaviors/x-behavior.md",
           "title": "X-Behavior",
           "description": "Generic behavior attribute"

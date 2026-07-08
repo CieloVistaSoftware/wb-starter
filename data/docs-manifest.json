@@ -1,6 +1,6 @@
 {
-  "generated": "2026-07-07T20:40:04.374Z",
-  "totalFiles": 184,
+  "generated": "2026-07-08T20:11:36.563Z",
+  "totalFiles": 185,
   "categories": [
     "_today",
     "architecture",
@@ -433,6 +433,12 @@
         "path": "docs/behaviors/wb-stack.md",
         "title": "wb-stack",
         "name": "wb-stack",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/wb-themecontrol.md",
+        "title": "wb-themecontrol",
+        "name": "wb-themecontrol",
         "category": "behaviors"
       },
       {
@@ -1390,6 +1396,12 @@
       "path": "docs/behaviors/wb-stack.md",
       "title": "wb-stack",
       "name": "wb-stack",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/wb-themecontrol.md",
+      "title": "wb-themecontrol",
+      "name": "wb-themecontrol",
       "category": "behaviors"
     },
     {

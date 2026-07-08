@@ -25,6 +25,36 @@ Code examples should prefer the **auto-inject format** using semantic HTML eleme
 
 Each code example should include an xs-font note explaining alternative syntax options.
 
+### Rule 4: Every renderable code example MUST use `<wb-demo>` — no static, un-rendered code fences
+
+A code example that shows real `wb-*`/`x-*` markup must be a LIVE `<wb-demo>` block, not
+a plain ` ```html ` fenced code block that only shows text. `<wb-demo>` renders the markup
+for real AND auto-generates the formatted code sample (with copy button) from it — one
+source of truth, always in sync, never a hand-typed sample that silently drifts from what
+actually renders.
+
+```html
+<!-- ❌ WRONG — static, never rendered, can drift from reality -->
+
+```html
+<wb-card title="Hello" variant="elevated">
+  <p>It just works.</p>
+</wb-card>
+```
+
+<!-- ✅ CORRECT — live, rendered, code sample auto-generated from the real markup -->
+<wb-demo>
+<wb-card title="Hello" variant="elevated">
+  <p>It just works.</p>
+</wb-card>
+</wb-demo>
+```
+
+The only exception: a block illustrating something that genuinely isn't renderable in
+isolation — a CSS-only snippet, a JS-only snippet, an accessibility attribute reference
+table, or intentionally-invalid markup demonstrating what NOT to do. Those stay as plain
+fenced code. If the block shows a real component/behavior usage, it must be `<wb-demo>`.
+
 ---
 
 ## Configuration Options
