@@ -759,8 +759,10 @@ export function cardhero(element, options = {}) {
     height: options.height || element.dataset.height || element.getAttribute('height') || '400px',
     cta: options.cta || element.dataset.cta || element.getAttribute('cta'),
     ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href'),
+    ctaTooltip: options.ctaTooltip || element.dataset.ctaTooltip || element.getAttribute('cta-tooltip'),
     ctaSecondary: options.ctaSecondary || element.dataset.ctaSecondary || element.getAttribute('cta-secondary'),
     ctaSecondaryHref: options.ctaSecondaryHref || element.dataset.ctaSecondaryHref || element.getAttribute('cta-secondary-href'),
+    ctaSecondaryTooltip: options.ctaSecondaryTooltip || element.dataset.ctaSecondaryTooltip || element.getAttribute('cta-secondary-tooltip'),
     pretitle: options.pretitle || element.dataset.pretitle || element.getAttribute('pretitle'),
     ...options
   };
@@ -863,6 +865,10 @@ export function cardhero(element, options = {}) {
       btn.className = 'wb-hero-cta wb-hero-cta--primary';
       btn.href = base.config.ctaHref || '#';
       btn.textContent = base.config.cta;
+      // Set BEFORE appending — the MutationObserver-driven auto-injection
+      // (wb-lazy.js) picks up new [x-tooltip] elements as they're inserted,
+      // so this is enough for the real tooltip behavior to attach on its own.
+      if (base.config.ctaTooltip) btn.setAttribute('x-tooltip', base.config.ctaTooltip);
       ctaGroup.appendChild(btn);
     }
 
@@ -871,6 +877,7 @@ export function cardhero(element, options = {}) {
       btn.className = 'wb-hero-cta wb-hero-cta--secondary';
       btn.href = base.config.ctaSecondaryHref || '#';
       btn.textContent = base.config.ctaSecondary;
+      if (base.config.ctaSecondaryTooltip) btn.setAttribute('x-tooltip', base.config.ctaSecondaryTooltip);
       ctaGroup.appendChild(btn);
     }
     content.appendChild(ctaGroup);

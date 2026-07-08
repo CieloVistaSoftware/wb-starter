@@ -48,6 +48,9 @@
        don't sit flush on top of each other. */
     #pg-preview > * + * { margin-top: 1rem; }
     #pg-preview > wb-card, #pg-preview > [class*="wb-card"] { display: block; }
+    /* Signature hero example set: hero + its companion wb-modal trigger,
+       grouped as one visual unit with a small gap between them. */
+    .pg-signature-hero { display: flex; flex-direction: column; gap: 0.75rem; }
     /* The preview is arbitrary pasted HTML — let long content wrap, never overflow.
        `anywhere` (not `break-word`) is wrong here: it lets the browser break a
        word mid-character even when the whole word would fit on the next line
@@ -85,6 +88,7 @@
             <option value="form">Sample form</option>
             <option value="cards">50 cards</option>
             <option value="heroes">20 card heroes</option>
+            <option value="signature-heroes">20 signature heroes</option>
             <option value="badges">50 badges</option>
             <option value="youtube">20 YouTube URL formats</option>
           </select>
@@ -348,6 +352,7 @@
       form: [],
       cards: ['variant', 'size', 'title', 'tag', 'elevated'],
       heroes: ['title', 'tag'],
+      'signature-heroes': ['title', 'tag'],
       badges: ['variant', 'size', 'title', 'tag', 'pill', 'outline', 'removable'],
     };
     const sortSelect = document.getElementById('pg-sort');
@@ -473,7 +478,7 @@
         'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': DV('docs/V3-GUIDE.md'),
         'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'),
         'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors/wb-behaviors.md'),
-        'Explore themes': DV('docs/behaviors/wb-themecontrol.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
+        'Explore themes': DV('docs/themes.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
         'Star on GitHub': 'https://github.com/CieloVistaSoftware/wb-starter',
       };
       const href = (c) => CTA_HREF[c] || DV('docs/V3-GUIDE.md');
@@ -499,6 +504,69 @@
           bg ? `background="${bg}"` : '',
         ].filter(Boolean);
         out.push(`<wb-cardhero\n  ${attrs.join('\n  ')}>\n</wb-cardhero>`);
+      }
+      return out.join('\n');
+    }
+
+    // "Signature hero" style: a wb-cardhero (pretitle/title/subtitle/CTAs,
+    // x-fadein scroll-reveal, a tooltip on its primary CTA) paired with a real
+    // <wb-modal> trigger as its companion "live demo" beneath it. Built from
+    // a user-submitted template that also referenced x-parallax, a
+    // <wb-codepreview> tag, and Vue-style x-on:change directives — none of
+    // which exist in this codebase (verified against tag-map.js/wb-lazy.js);
+    // this version keeps only what's real: wb-cardhero's own attrs, x-fadein
+    // (wired in wb-lazy.js), x-tooltip (tooltip.js reads it directly, added
+    // to cardhero.js as an opt-in cta-tooltip/cta-secondary-tooltip attr),
+    // and wb-modal's actual self-contained trigger API (modal-title/
+    // modal-content on the trigger itself — not a separate <wb-modal id=…>
+    // referenced by a button).
+    function twentySignatureHeroes() {
+      const heroes = [
+        ['Zero Build.', 'Infinite Possibility.', 'The web framework that doesn’t need a framework.', 'Native elements. Schema-first behaviors. One script tag.'],
+        ['No Bundler.', 'No JSX. No Waiting.', 'Ship the way the browser already understands.', 'Drop a script tag and start composing components.'],
+        ['Light DOM.', 'Always.', 'Never fight a shadow boundary again.', 'Your CSS and devtools reach every component, always.'],
+        ['Schema First.', 'Behavior Second.', 'Describe the shape. Let behaviors do the rest.', 'One runtime scans the DOM and upgrades what it finds.'],
+        ['Compose,', 'Don’t Configure.', 'Stack x-* behaviors on any native element.', 'Small, focused functions — not a class to subclass.'],
+        ['Themeable', 'To The Core.', 'Every color flows from one variable system.', '25+ built-in themes, or define your own in minutes.'],
+      ];
+      const bgs = [
+        'linear-gradient(135deg, var(--primary), var(--secondary))',
+        'linear-gradient(135deg, var(--success-color), var(--info-color))',
+        'linear-gradient(135deg, var(--danger-color), var(--warning-color))',
+        'linear-gradient(135deg, var(--primary), var(--info-color))',
+      ];
+      const heights = ['420px', '480px', '520px'];
+      const aligns = ['left', 'center'];
+      const DV = (file) => '../public/doc-viewer.html?file=' + encodeURIComponent(file);
+      const out = [];
+      for (let i = 0; i < 20; i++) {
+        const [pre, title, sub, tip] = heroes[i % heroes.length];
+        const round = Math.floor(i / heroes.length);
+        const bg = bgs[(i + round) % bgs.length];
+        const attrs = [
+          `pretitle="${pre} #${i + 1}"`,
+          `title="${title}"`,
+          `subtitle="${sub}"`,
+          `height="${heights[i % heights.length]}"`,
+          `xalign="${aligns[i % aligns.length]}"`,
+          `cta="Try the Playground"`,
+          `cta-href="playground.html"`,
+          `cta-tooltip="${tip}"`,
+          `cta-secondary="Read the Guide"`,
+          `cta-secondary-href="${DV('docs/V3-GUIDE.md')}"`,
+          `background="${bg}"`,
+          `x-fadein`,
+        ];
+        out.push(
+          `<div class="pg-signature-hero">\n` +
+          `  <wb-cardhero\n    ${attrs.join('\n    ')}>\n  </wb-cardhero>\n` +
+          `  <wb-modal\n` +
+          `    modal-title="${title}"\n` +
+          `    modal-content="${sub}">\n` +
+          `    See it in action\n` +
+          `  </wb-modal>\n` +
+          `</div>`
+        );
       }
       return out.join('\n');
     }
@@ -561,6 +629,7 @@
       if (which === 'form') input.value = SAMPLE;
       else if (which === 'cards') input.value = fiftyCards();
       else if (which === 'heroes') input.value = twentyHeroes();
+      else if (which === 'signature-heroes') input.value = twentySignatureHeroes();
       else if (which === 'badges') input.value = fiftyBadges();
       else if (which === 'youtube') input.value = twentyYouTubeFormats();
       setSortModes(EXAMPLE_SORT_MODES[which] || []);
