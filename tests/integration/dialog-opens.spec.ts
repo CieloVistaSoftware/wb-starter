@@ -15,7 +15,27 @@ test.describe('dialog triggers open a dialog on click (§19)', () => {
     await expect(page.locator('#demo-dialog')).toHaveJSProperty('open', true);
   });
 
-  // NOTE: the <wb-modal> "Open Modal" click test lives in #251 — trigger-mode was
-  // added to dialog.js but the SPA click still doesn't open (behavior wiring under
-  // investigation). The test will be added here when #251's fix is verified.
+  // #251 recurrence: dialog.js's TRIGGER mode (modal-title/modal-content) only
+  // ever runs if WB actually invokes the `dialog` behavior on the element —
+  // tag-map.js never mapped `wb-modal` to it, so the fix silently never fired.
+  // <wb-demo> fetches+renders its live example asynchronously (#269), so the
+  // trigger can be visible in the DOM before WB has actually scanned/enhanced
+  // it — wait for `showModal` to exist (the behavior has run), not just for
+  // visibility, before clicking.
+  test('behaviors page <wb-modal> "Open Modal" trigger opens a dialog', async ({ page }) => {
+    // The behaviors page's <wb-demo> hydration is a documented slow/flaky path
+    // under parallel test load (#269) — give this one extra headroom rather
+    // than let an unrelated perf issue mask the actual assertion.
+    test.setTimeout(90000);
+    // domcontentloaded fires before the SPA's own client-side page fetch (which
+    // loads pages/behaviors.html and its <wb-demo> blocks) has even started.
+    await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
+    await page.waitForFunction(() => {
+      const el = [...document.querySelectorAll('wb-modal')].find((e) => e.textContent?.includes('Open Modal'));
+      return el && typeof el.showModal === 'function';
+    }, { timeout: 60000 });
+    const trigger = page.locator('wb-modal', { hasText: 'Open Modal' }).first();
+    await trigger.click();
+    await expect(page.locator('dialog[open]')).toHaveCount(1);
+  });
 });

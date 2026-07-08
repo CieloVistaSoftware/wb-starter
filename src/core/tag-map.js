@@ -54,6 +54,11 @@ export const elementMap = {
   'wb-demo': 'demo',
   'wb-details': 'details',
   'wb-dialog': 'dialog',
+  // dialog.js's TRIGGER mode (modal-title/modal-content) was written for this
+  // exact tag but never mapped here, so WB never invoked it — the "Open Modal"
+  // click did nothing regardless of how many times dialog.js itself was fixed
+  // (#251, recurred).
+  'wb-modal': 'dialog',
   'wb-draggable': 'draggable',
   'wb-drawer': 'drawer',
   'wb-drawerLayout': 'drawerLayout',
