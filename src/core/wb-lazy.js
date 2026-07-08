@@ -415,7 +415,16 @@ const WB = {
     try {
       // Load behavior on demand
       const behaviorFn = await getBehavior(behaviorName);
-      
+
+      // The element can be removed from the DOM (page nav swaps innerHTML,
+      // a demo re-renders, etc.) while this import was in flight — most
+      // behaviors assume `element.parentNode` is non-null (they wrap the
+      // element via `parentNode.insertBefore`), so applying to a detached
+      // element throws deep inside the behavior instead of failing cleanly.
+      if (!element.isConnected) {
+        return null;
+      }
+
       // Apply behavior
       const cleanup = behaviorFn(element, options);
 
