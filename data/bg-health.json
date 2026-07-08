@@ -1,6 +1,6 @@
 {
-  "lastRun": "2026-07-08T18:10:27.920Z",
-  "totalChecks": 15230,
+  "lastRun": "2026-07-08T21:11:31.157Z",
+  "totalChecks": 15474,
   "bugs": [
     {
       "id": "bug-regression-tests",
@@ -21,7 +21,7 @@
       "category": "Quality",
       "recommendation": "Run node scripts/run-regression-tests.js and fix the failing tests.",
       "detectedAt": "2026-06-23T02:48:37.339Z",
-      "fixed": false
+      "fixed": true
     },
     {
       "id": "bug-claude-md",
@@ -53,5 +53,5 @@
       "fixed": false
     }
   ],
-  "checkIndex": 6
+  "checkIndex": 2
 }
