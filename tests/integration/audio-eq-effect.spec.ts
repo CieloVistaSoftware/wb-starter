@@ -71,5 +71,48 @@ test('Studio EQ Player: playlist attribute renders a track picker with all track
   });
 
   expect(result.optionCount, 'playlist="…" (18 tracks) should render 18 options').toBe(18);
-  expect(result.after, 'selecting a different track must load its src').toContain('SoundHelix-Song-5.mp3');
+  expect(result.after, 'selecting a different track must load its src').toContain('05_Ghosts_I.mp3');
+});
+
+/**
+ * This is the check that should have caught the original problem: the first
+ * playlist shipped with 17 SoundHelix tracks that returned 200 (existed) but
+ * sent NO Access-Control-Allow-Origin header — and the EQ player sets
+ * crossOrigin="anonymous" on its <audio> (required for the Web Audio routing),
+ * so the browser silently refused every one of them: readyState stuck at 0,
+ * duration "0:00", nothing ever played. A URL existing is not the same as a
+ * track being loadable in THIS specific crossOrigin-anonymous context —
+ * assert every playlist entry actually reaches loadedmetadata.
+ */
+test('Studio EQ Player: every playlist track actually loads (catches CORS-silent failures)', async ({ page }) => {
+  await page.goto('/demos/semantics-media.html', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => !!document.querySelector('.wb-audio__track-picker'), { timeout: 20000 });
+
+  const results = await page.evaluate(async () => {
+    const picker = document.querySelector('.wb-audio__track-picker') as HTMLSelectElement;
+    const audioEl = document.querySelector('wb-audio audio') as HTMLAudioElement;
+    const out: { title: string; loaded: boolean; duration: number }[] = [];
+
+    for (let i = 0; i < picker.options.length; i++) {
+      picker.value = String(i);
+      picker.dispatchEvent(new Event('change', { bubbles: true }));
+      const loaded = await new Promise<boolean>((resolve) => {
+        const onLoaded = () => { cleanup(); resolve(true); };
+        const onError = () => { cleanup(); resolve(false); };
+        const timer = setTimeout(() => { cleanup(); resolve(false); }, 8000);
+        const cleanup = () => {
+          clearTimeout(timer);
+          audioEl.removeEventListener('loadedmetadata', onLoaded);
+          audioEl.removeEventListener('error', onError);
+        };
+        audioEl.addEventListener('loadedmetadata', onLoaded, { once: true });
+        audioEl.addEventListener('error', onError, { once: true });
+      });
+      out.push({ title: picker.options[i].textContent || '', loaded, duration: audioEl.duration || 0 });
+    }
+    return out;
+  });
+
+  const failed = results.filter((r) => !r.loaded || !(r.duration > 0));
+  expect(failed, `these playlist tracks never loaded (CORS or 404):\n${JSON.stringify(failed, null, 2)}`).toEqual([]);
 });

@@ -85,9 +85,15 @@ export function audio(element, options = {}) {
   if (config.autoplay) audioEl.autoplay = true;
   if (config.loop) audioEl.loop = true;
   audioEl.volume = Math.max(0, Math.min(1, config.volume));
-  
-  // Hide native audio element — transport bar replaces it
-  if (audioEl.tagName === 'AUDIO') {
+
+  // Only replace with the custom Marantz transport when the author actually
+  // asked for the enhanced UI: the <wb-audio> custom tag (which has nothing
+  // native to fall back to), or show-eq (which needs the custom UI to expose
+  // the slider controls). A plain native <audio controls> with neither of
+  // those was getting unconditionally hidden and replaced here, silently
+  // discarding its native controls for demos that wanted to show them.
+  const needsCustomUI = element.tagName !== 'AUDIO' || config.showEq;
+  if (needsCustomUI && audioEl.tagName === 'AUDIO') {
     audioEl.style.display = 'none';
   }
 
@@ -149,8 +155,12 @@ export function audio(element, options = {}) {
     }
   };
 
-  // Build transport bar (play button + Marantz display) — always visible
-  buildTransportUI(element, audioEl, config);
+  // Build transport bar (play button + Marantz display) — only for the
+  // custom-UI case (see needsCustomUI above); a plain native <audio controls>
+  // keeps its own native controls untouched.
+  if (needsCustomUI) {
+    buildTransportUI(element, audioEl, config);
+  }
 
   // Build EQ UI if enabled
   if (config.showEq) {
@@ -342,36 +352,12 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
     'Vocal': [-2,-1,0,2,4,5,5,4,3,2,1,0,-1,-2,-2]
   };
 
-  // Zero button
-  const zeroBtn = createPresetButton('Zero All');
-  zeroBtn.onclick = () => {
-    sliders.forEach((sl, i) => {
-      sl.value = 0;
-      updateSliderVisual(sl, 0, sliderVisuals[i]?.activeTrack, sliderVisuals[i]?.dbDisplay);
-    });
-    initAudioContext();
-    filters.forEach(f => { if (f) f.gain.value = 0; });
-  };
-  buttonRow.appendChild(zeroBtn);
-
-  // Demo Track button
-  const demoBtn = createPresetButton('Demo Track');
-  demoBtn.onclick = () => {
-    // Set demo audio source and play. Base-aware so it resolves under any base
-    // (local '/' or the GitHub Pages sub-path '/wb-starter/') instead of 404ing
-    // at the domain root.
-    audioEl.src = new URL('../../../demos/sample.wav', import.meta.url).href;
-    audioEl.load();
-    const _p = audioEl.play();
-    if (_p && typeof _p.catch === 'function') {
-      _p.catch((err) => console.warn('[wb-audio] demo playback failed:', err && err.message));
-    }
-    // Optionally update UI to show demo is playing
-    if (element.querySelector('.wb-audio-nowplaying')) {
-      element.querySelector('.wb-audio-nowplaying').textContent = 'Now Playing: Demo Track';
-    }
-  };
-  buttonRow.appendChild(demoBtn);
+  // 'Zero All' removed — identical to the 'Flat' preset below (all-zero gains),
+  // just a redundant second button for the same action.
+  // 'Demo Track' removed — swapped in demos/sample.wav regardless of the
+  // author's chosen src, and that file has had its own load reliability
+  // issues; a preset button silently changing the loaded track is also
+  // surprising UX.
 
   Object.entries(presetData).forEach(([name, values]) => {
     const btn = createPresetButton(name);
