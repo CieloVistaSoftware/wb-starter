@@ -76,12 +76,25 @@
 </head>
 <body id="doc-viewer-body">
   <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:2rem;flex-wrap:wrap;">
-    <a id="close-button" href="javascript:window.close()" class="back-link" style="margin-bottom:0;">✕ Close</a>
+    <!-- #243: docs open target="_blank" from ?page=docs — a real user-navigated
+         tab, not one opened via window.open(). Browsers silently block
+         window.close() on tabs like that (it only works on script-opened
+         windows), so the old "✕ Close" button did nothing and there was no
+         way back except browser-back/re-navigating. A real href to the Docs
+         index works regardless of how the tab got here. -->
+    <a id="back-to-docs" href="#" class="back-link" style="margin-bottom:0;">← Back to Docs</a>
     <button id="text-smaller" class="back-link" style="margin-bottom:0;cursor:pointer;" title="Smaller text" aria-label="Decrease text size">A−</button>
     <button id="text-larger" class="back-link" style="margin-bottom:0;cursor:pointer;" title="Larger text" aria-label="Increase text size">A+</button>
     <button id="text-reset" class="back-link" style="margin-bottom:0;cursor:pointer;" title="Reset text size" aria-label="Reset text size">Reset</button>
   </div>
   <script>
+    (function () {
+      // Site root works from '/', '/public/doc-viewer.html', or under a
+      // GitHub Pages sub-path (/wb-starter/public/doc-viewer.html) — same
+      // pattern used elsewhere in this project (e.g. src/wb-viewmodels/demo.js).
+      const siteRoot = location.pathname.replace(/public\/.*$/, '');
+      document.getElementById('back-to-docs').href = siteRoot + '?page=docs';
+    })();
     (function () {
       var KEY = 'wb-doc-font-scale';
       function clamp(v) { return Math.max(0.7, Math.min(2.0, v)); }
