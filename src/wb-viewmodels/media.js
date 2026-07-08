@@ -934,7 +934,7 @@ function ensureSingleYouTubePlayback() {
     if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
     if (!currentPlayingYouTubeEl || !currentPlayingYouTubeEl.isConnected) return;
     e.preventDefault();
-    currentPlayingYouTubeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    currentPlayingYouTubeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 }
 
