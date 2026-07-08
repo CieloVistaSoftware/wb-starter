@@ -258,13 +258,11 @@ wb-badge[variant="success"] {
       </wb-card>
     </div>
     <div class="test-box">
-      <h3>data-wb Attribute</h3>
-      <wb-card title="Hello World"
-        <p>This content goes in the main slot.</p>
-      </article>
+      <h3>Generated DOM</h3>
+      <pre id="dom-output-1">Loading...</pre>
     </div>
   </div>
-  
+
   <!-- ============================================ -->
   <h2>3. Card with Title + Subtitle</h2>
   <!-- ============================================ -->
@@ -292,13 +290,11 @@ wb-badge[variant="success"] {
       </wb-card>
     </div>
     <div class="test-box">
-      <h3>data-wb Attribute</h3>
-      <wb-card title="With Footer" footer="Footer text here"
-        <p>This card has a footer section.</p>
-      </article>
+      <h3>Generated DOM</h3>
+      <pre id="dom-output-3">Loading...</pre>
     </div>
   </div>
-  
+
   <!-- ============================================ -->
   <h2>5. Full Card (Title + Subtitle + Footer + Elevated)</h2>
   <!-- ============================================ -->
@@ -411,11 +407,15 @@ element.toggle()</pre>
       
       // Show generated DOM for examples
       setTimeout(() => {
+        const card1 = document.querySelectorAll('wb-card')[0];
         const card2 = document.querySelectorAll('wb-card')[1];
+        const card3 = document.querySelectorAll('wb-card')[2];
         const card5 = document.querySelectorAll('wb-card')[3];
         const card6 = document.querySelectorAll('wb-card')[4];
-        
+
+        if (card1) document.getElementById('dom-output-1').textContent = formatDom(card1);
         if (card2) document.getElementById('dom-output-2').textContent = formatDom(card2);
+        if (card3) document.getElementById('dom-output-3').textContent = formatDom(card3);
         if (card5) document.getElementById('dom-output-5').textContent = formatDom(card5);
         if (card6) document.getElementById('dom-output-6').textContent = formatDom(card6);
       }, 100);
