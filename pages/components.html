@@ -4,14 +4,17 @@
 <div id="components-hero" class="page__hero">
   <h1>🧩 Components Library</h1>
   <div>wb-starter v3.0 • Interactive demos with copy-ready code</div>
-  <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-    <a href="?page=builder" class="wb-btn">🚀 Get Started</a>
-    <a href="?page=behaviors" variant="secondary">⚡ Behaviors</a>
-    <a href="?page=themes" variant="ghost">🎨 Themes</a>
-  </div>
-
-<div class="page__section">
-
+  <p style="max-width: 640px; margin: 1rem auto 0;">
+    Every component below is built by <strong>composition, not inheritance</strong> —
+    small behavior functions (<code>x-*</code> attributes, like <code>x-toast</code>
+    or <code>x-ripple</code>) stack onto plain HTML elements at runtime, each adding
+    one focused piece of behavior. There's no base class to extend and no component
+    to subclass — you get exactly the behavior you ask for by combining attributes
+    on ordinary tags. And it all lives in <strong>Light DOM</strong> — no Shadow
+    DOM, no encapsulation boundary — so your theme's CSS, your own selectors, and
+    the browser's devtools reach straight into every component exactly the way
+    they reach into plain HTML.
+  </p>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -31,12 +34,12 @@
   </wb-demo>
   <wb-demo>
     <wb-card title="This is the title" footer="This is the footer" elevated>
-      <div>this is an embedded paragraph</div>
+      this is an embedded paragraph
     </wb-card>
   </wb-demo>
   <wb-demo>
     <wb-card title="Outlined Card" outlined>
-      <div>Card with outline border.</div>
+      Card with outline border.
     </wb-card>
   </wb-demo>
   <!-- Image Cards -->

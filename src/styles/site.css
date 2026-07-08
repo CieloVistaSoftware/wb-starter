@@ -72,8 +72,14 @@ body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
 .site {
   /* Fixed to the viewport + clip overflow so .site__body is the SINGLE scroll
      container (was min-height:100vh, which let the whole window scroll too — a
-     dual-scroll-container bug that broke the sticky nav and section anchoring). */
+     dual-scroll-container bug that broke the sticky nav and section anchoring).
+     100dvh (dynamic viewport height) is the fallback-safe upgrade to 100vh:
+     100vh is fixed to the LARGEST possible viewport, which on real browsers
+     (not devtools emulation) can be taller than what's actually visible once
+     browser chrome/toolbars are accounted for — the difference shows up as
+     dead space the footer can't reach. Unsupported browsers just keep 100vh. */
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -93,9 +99,15 @@ body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
 
 .site__body {
   display: flex;
+  /* flex: 1 (flex-basis: 0%) is what actually sizes this — it grows to fill
+     whatever space header + footer don't use, so it self-corrects if either
+     one's height ever changes. A literal `height: calc(100vh - 60px)` used to
+     sit here too: harmless today only because flex-basis:0% overrides it for
+     sizing, but it quietly went stale the moment the header grew from 60px to
+     64px (see .site__header below) — dead, misleading code, removed. */
   flex: 1;
   overflow-y: auto;
-  height: calc(100vh - 60px); /* Fixed height enables scrolling */
+  overflow-x: hidden;
 }
 
 /* =============================================================================
@@ -125,6 +137,7 @@ wb-drawer.wb-drawer-layout {
   justify-content: space-between;
   padding: 0 1.5rem;
   height: 64px; /* Increased height slightly for better breathing room */
+  flex-shrink: 0; /* Never let flex squeeze the header to make room elsewhere */
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
   z-index: 1000; /* Increased z-index to stay above other content */
@@ -420,6 +433,7 @@ body > button[x-copy] {
   background: var(--bg-primary);
   border-top: 1px solid var(--border-color);
   padding: 1.5rem 2rem;
+  flex-shrink: 0; /* Never let flex squeeze the footer to make room elsewhere */
 }
 
 .footer__content {
