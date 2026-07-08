@@ -103,15 +103,23 @@ export function audio(element, options = {}) {
       audioContext = new AudioContext();
       sourceNode = audioContext.createMediaElementSource(audioEl);
       
-      filters = EQ_BANDS.map(band => {
+      // Mutate the SAME array in place (never reassign `filters`) — buildEqUI
+      // (below) was already handed this exact array object as a parameter,
+      // before it had any elements. Reassigning `filters = [...]` here would
+      // only repoint the outer variable; buildEqUI's slider handlers close
+      // over the ORIGINAL (then-empty) array reference and would keep writing
+      // into a dead array forever, silently doing nothing to real playback
+      // (#233 — sliders visually moved but had zero audible effect).
+      filters.length = 0;
+      EQ_BANDS.forEach(band => {
         const filter = audioContext.createBiquadFilter();
         filter.type = 'peaking';
         filter.frequency.value = band.freq;
         filter.Q.value = 1.4;
         filter.gain.value = 0;
-        return filter;
+        filters.push(filter);
       });
-      
+
       gainNode = audioContext.createGain();
       gainNode.gain.value = 1;
       
