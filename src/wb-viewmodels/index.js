@@ -316,6 +316,18 @@ export const behaviors = new Proxy({}, {
           return () => {};
         }
 
+        // The element can be removed from the DOM (page nav swaps innerHTML,
+        // a demo/playground re-render, etc.) while the above `await
+        // getBehavior()` was in flight — most behaviors assume
+        // `element.parentNode` is non-null (they wrap the element via
+        // `parentNode.insertBefore`), so applying to a detached element
+        // throws deep inside the behavior instead of failing cleanly. Same
+        // race, same fix, as wb-lazy.js's `inject()` (#297) — this is a
+        // SEPARATE lazy-load choke point, not the same code path.
+        if (element && !element.isConnected) {
+          return () => {};
+        }
+
         // Call the behavior inside a try/catch and handle Promise rejections
         try {
           const result = fn(element, options);
