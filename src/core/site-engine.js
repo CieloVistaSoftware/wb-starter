@@ -204,7 +204,6 @@ export default class WBSite {
           <button class="header__refresh-btn" id="hardReloadBtn" x-ripple title="Clear cache & hard reload (force fresh CSS/JS)" aria-label="Clear cache and reload">🔄</button>
           <a class="header__playground-btn" id="playgroundLink" href="demos/playground.html" target="_blank" rel="noopener" x-ripple title="Playground — paste HTML, see it render live" aria-label="Open the Playground">🧪</a>
           <button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>
-          ${headerSettings.displayThemeSwitcher ? '<wb-themecontrol show-label="false" id="themeControl"></wb-themecontrol>' : ''}
         </div>
       </header>
     `;
@@ -325,11 +324,11 @@ export default class WBSite {
   }
 
   renderFooter() {
-    const { footerSettings, socialMediaLinks, additionalFooterLinks } = this.config;
-    const socialLinks = footerSettings.displaySocialMediaLinks ? socialMediaLinks.map(s => 
+    const { footerSettings, socialMediaLinks, additionalFooterLinks, headerSettings } = this.config;
+    const socialLinks = footerSettings.displaySocialMediaLinks ? socialMediaLinks.map(s =>
       `<a href="${s.profileUrl}" class="footer__social-link" target="_blank" title="${s.platform}" id="footerSocialLink-${s.platform}">${s.icon}</a>`
     ).join('') : '';
-    const footerLinks = additionalFooterLinks?.map(l => 
+    const footerLinks = additionalFooterLinks?.map(l =>
       `<a href="?page=${l.pageToLoad}" class="footer__link" id="footerLink-${l.pageToLoad}">${l.linkText}</a>`
     ).join(' · ') || '';
     return `
@@ -341,6 +340,7 @@ export default class WBSite {
           </div>
           <div class="footer__right" id="footerRight">
             ${socialLinks ? `<div class="footer__social" id="footerSocial">${socialLinks}</div>` : ''}
+            ${headerSettings.displayThemeSwitcher ? '<wb-themecontrol show-label="false" id="themeControl"></wb-themecontrol>' : ''}
           </div>
         </div>
       </footer>
@@ -465,6 +465,12 @@ export default class WBSite {
       nav?.classList.toggle('site__nav--mobile-open', this.mobileNavOpen);
       backdrop?.classList.toggle('visible', this.mobileNavOpen);
       document.body.classList.toggle('wb-scroll-lock', this.mobileNavOpen);
+      // Opening while scrolled down the page would expand the in-flow fluent
+      // nav (#293) above the current viewport, out of sight — bring it into
+      // view so the menu is actually visible the moment it opens.
+      if (this.mobileNavOpen && nav) {
+        nav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     } else {
       // Desktop: toggle collapsed (icon-only) mode
       this.navCollapsed = !this.navCollapsed;
