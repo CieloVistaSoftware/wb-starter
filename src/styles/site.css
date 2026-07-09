@@ -2113,12 +2113,20 @@ img { max-width: 100%; height: auto; }
      row — compact it for a narrow column. .footer__left's own 1.5rem gap
      (copyright <-> links) was untouched by the first pass and, once those
      two wrap to separate lines on a narrow screen, that gap applies as
-     row-gap too — the single biggest remaining contributor to the height. */
-  .site__footer {
-    padding: 0.75rem 1rem;
+     row-gap too — the single biggest remaining contributor to the height.
+     The <footer> element also carries a "wb-footer" class (added at
+     runtime by the same tag-name-collision mechanism found earlier on the
+     shell's own <header> — a reusable behavior's class landing on native
+     <header>/<footer> tags it was never meant to touch). behaviors/footer.css
+     has its OWN (max-width:768px) padding rule for .wb-footer that wins
+     equal-specificity ties by injection order, silently reintroducing the
+     desktop padding this override is trying to remove. Compound selector
+     to beat it outright rather than depend on cascade order. */
+  .site__footer.wb-footer {
+    padding: 0.5rem 1rem;
   }
   .footer__content {
-    gap: 0.35rem;
+    gap: 0.2rem;
   }
   .footer__left {
     gap: 0.35rem;
@@ -2128,8 +2136,8 @@ img { max-width: 100%; height: auto; }
     gap: 0.5rem;
   }
   .footer__social-link {
-    width: 28px;
-    height: 28px;
-    font-size: 0.95rem;
+    width: 22px;
+    height: 22px;
+    font-size: 0.8rem;
   }
 }
