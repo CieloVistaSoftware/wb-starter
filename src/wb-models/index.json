@@ -13,7 +13,6 @@
     "avatar.schema.json",
     "badge.schema.json",
     "behavior.schema.json",
-    "behaviors-showcase.schema.json",
     "button.schema.json",
     "card.base.schema.json",
     "card.schema.json",
@@ -237,7 +236,6 @@
     "description": "Meta/system schemas (not components)",
     "schemas": [
       "behavior.schema.json",
-      "behaviors-showcase.schema.json",
       "card.base.schema.json",
       "demo.schema.json",
       "views.schema.json",

@@ -18,13 +18,17 @@ const _window = window;
 
 import WB from './core/wb.js';
 import WBSiteClass from './core/site-engine.js';
+import { VERSION } from './core/version.js';
 
 /**
  * Initialize the wb-starter application
  * @returns {Promise<void>}
  */
 async function init() {
-  console.log('🚀 wb-starter starting...');
+  // Commit + build time on the very first line — the console log itself is
+  // the fastest way to confirm which deploy you're actually looking at,
+  // without digging through the header or network tab.
+  console.log(`🚀 wb-starter starting... v${VERSION.version} (${VERSION.commit}, built ${VERSION.builtAt})`);
 
   try {
     // Expose WB globally
