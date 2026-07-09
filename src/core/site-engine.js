@@ -75,9 +75,16 @@ export default class WBSite {
         } catch (err) {
           console.warn('[clear-cache] partial failure:', err && err.message);
         }
-        // revalidating reload — with the dev server's no-store headers this pulls
-        // fresh CSS/JS; the cleared Cache Storage + unregistered SW handle PWA caches.
-        location.reload();
+        // A plain location.reload() only bypasses Cache Storage/the service
+        // worker (both cleared above) — it does NOT bypass the browser's own
+        // ordinary HTTP disk cache. GitHub Pages serves every response with
+        // Cache-Control: max-age=600, so within that 10-minute window a
+        // reload can still be served entirely from local disk cache without
+        // ever reaching the network, regardless of what was just cleared.
+        // Force a genuinely new URL so there is nothing to serve from cache.
+        location.href = location.pathname + location.search
+          + (location.search ? '&' : '?') + '_cb=' + Date.now()
+          + location.hash;
       });
 
       // Intercept clicks for SPA navigation
