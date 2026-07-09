@@ -18,6 +18,7 @@
  * -----------------------------------------------------------------------------
  */
 import { logError } from '../core/error-logger.js';
+import { getPageSource, extractTagBlock } from './page-source-cache.js';
 
 // Check if marked is available, if not load it
 let markedLoaded = false;
@@ -165,14 +166,37 @@ export async function mdhtml(element, options = {}) {
         return () => {};
       }
     } else {
-      // Use inline content. Code samples are frequently written HTML-escaped
-      // (&lt;form&gt;) so the browser doesn't parse them as real elements. innerHTML
-      // returns them still escaped, which marked would escape AGAIN — displaying
-      // literal "&lt;form&gt;". Decode entities once via a textarea (whose content
-      // model is raw text): escaped samples become the intended tags, and raw
-      // samples that contain no entities pass through unchanged.
+      // Use inline content. `<wb-mdhtml>` isn't a real custom element (no
+      // connectedCallback to capture pristine markup before upgrade, unlike
+      // <wb-demo> — see wb-demo.js), so its raw content sits in the DOM as
+      // real, live, browser-parsed elements from initial page load until
+      // THIS async behavior runs. When that content includes an example like
+      // `<div x-gallery columns="4">`, WB's own async scan can independently
+      // find and enhance that (still real, still connected) div FIRST,
+      // mutating it (adding classes, inline styles, normalizing boolean
+      // attrs to `x-gallery=""`) before we ever read element.innerHTML here
+      // — corrupting the "source" shown to the reader. Fetching the page's
+      // own pristine source over the network sidesteps the race (always the
+      // as-authored text, unaffected by any DOM mutation since parse time).
+      let raw = null;
+      try {
+        const allMdHtml = document.querySelectorAll('wb-mdhtml');
+        const idx = Array.from(allMdHtml).indexOf(element);
+        const pageSource = await getPageSource();
+        const block = extractTagBlock(pageSource, 'wb-mdhtml', idx);
+        if (block && block.trim()) raw = block;
+      } catch (e) {
+        // ignore — fall through to the live-DOM read below
+      }
+      if (raw == null) raw = element.innerHTML;
+
+      // Code samples are frequently written HTML-escaped (&lt;form&gt;) so the
+      // browser doesn't parse them as real elements. Decode entities once via
+      // a textarea (whose content model is raw text): escaped samples become
+      // the intended tags, and raw samples that contain no entities pass
+      // through unchanged.
       const decoder = document.createElement('textarea');
-      decoder.innerHTML = element.innerHTML;
+      decoder.innerHTML = raw;
       markdown = decoder.value;
     }
 

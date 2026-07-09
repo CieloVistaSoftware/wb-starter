@@ -24,6 +24,23 @@
   transition: width 0.3s;
 }
 
+/* Variant colors for the custom <wb-progress> tag's fill div. progress.js
+   (semantics/progress.js) applies wb-progress--{variant} to the host for
+   every variant in the schema's enum (default/primary/success/warning/error/
+   info), but no rule ever mapped that class to the .wb-progress__bar's
+   color — every variant silently rendered as the default primary blue.
+   Custom-property names match progress.schema.json's documented
+   --wb-progress-{variant}-bg contract; values point at the theme's real
+   color tokens (the schema's own fallbacks reference --success/--warning/
+   --error/--info, which don't exist in themes.css — only the *-color
+   suffixed tokens do). */
+.wb-progress--default .wb-progress__bar,
+.wb-progress--primary .wb-progress__bar { background: var(--wb-progress-primary-bg, var(--primary)); }
+.wb-progress--success .wb-progress__bar { background: var(--wb-progress-success-bg, var(--success-color)); }
+.wb-progress--warning .wb-progress__bar { background: var(--wb-progress-warning-bg, var(--warning-color)); }
+.wb-progress--error .wb-progress__bar { background: var(--wb-progress-error-bg, var(--danger-color)); }
+.wb-progress--info .wb-progress__bar { background: var(--wb-progress-info-bg, var(--info-color)); }
+
 /* Built-in % label (#280) — bump height so the text has room; the label
    overlays the bar, centered, with a shadow so it stays legible over either
    the filled or unfilled portion. */

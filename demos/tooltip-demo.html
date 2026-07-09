@@ -15,12 +15,12 @@
     <strong>Test:</strong> <a href="../tests/behaviors/tooltip-demo.spec.ts" target="_blank">tooltip-demo.spec.ts</a> |
     <strong>Doc:</strong> <a href="../docs/behaviors/tooltip.md" target="_blank">tooltip.md</a>
   </p>
-  <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
-    <wb-button id="btn-top" x-tooltip="Tooltip text" position="top" class="wb-tooltip-trigger" aria-describedby="wb-tooltip-31meeb932" tabindex="0" role="button">Top</wb-button>
-    <wb-button id="btn-bottom" x-tooltip="Tooltip text" position="bottom" class="wb-tooltip-trigger" aria-describedby="wb-tooltip-7fdk7lbe4" tabindex="0" role="button">Bottom</wb-button>
-    <wb-button id="btn-left" x-tooltip="Tooltip text" position="left" class="wb-tooltip-trigger" aria-describedby="wb-tooltip-h3x4mhv2e" tabindex="0" role="button">Left</wb-button>
-    <wb-button id="btn-right" x-tooltip="Tooltip text" position="right" class="wb-tooltip-trigger" aria-describedby="wb-tooltip-4d62ypq51" tabindex="0" role="button">Right</wb-button>
-  </div>
+  <wb-demo columns="4">
+    <wb-button id="btn-top" x-tooltip="Tooltip text" position="top">Top</wb-button>
+    <wb-button id="btn-bottom" x-tooltip="Tooltip text" position="bottom">Bottom</wb-button>
+    <wb-button id="btn-left" x-tooltip="Tooltip text" position="left">Left</wb-button>
+    <wb-button id="btn-right" x-tooltip="Tooltip text" position="right">Right</wb-button>
+  </wb-demo>
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
     window.WB = WB;

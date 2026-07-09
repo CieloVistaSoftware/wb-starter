@@ -1,0 +1,32 @@
+/**
+ * Label Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Works with src/wb-viewmodels/label.js
+ * -----------------------------------------------------------------------------
+ */
+
+/* Groups a generated <label> with its control as one atomic inline unit —
+   without this, a bare pair of siblings can wrap between the label and the
+   control in a flowing layout, stranding the label alone on its own line. */
+.wb-label-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wb-label {
+  display: inline-block;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+}
+
+.wb-label--required::after {
+  content: ' *';
+  color: var(--danger-color);
+}
+
+.wb-label--optional::after {
+  content: ' (optional)';
+  color: var(--text-tertiary);
+  font-weight: normal;
+}

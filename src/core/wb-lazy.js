@@ -178,6 +178,7 @@ const customElementMappings = [
   { selector: '[x-colorpicker]', behavior: 'colorpicker' },
   { selector: '[x-search]', behavior: 'search' },
   { selector: '[x-floatinglabel]', behavior: 'floatinglabel' },
+  { selector: '[x-label]', behavior: 'label' }, // x-label="text" on any form control (input, select, ...) — see src/wb-viewmodels/label.js
   { selector: '[x-clock]', behavior: 'clock' },
   { selector: '[x-countdown]', behavior: 'countdown' },
   { selector: '[x-youtube]', behavior: 'youtube' },

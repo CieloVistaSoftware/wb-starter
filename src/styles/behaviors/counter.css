@@ -1,0 +1,22 @@
+/**
+ * Counter Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Works with src/wb-viewmodels/counter.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-counter {
+  display: inline-block;
+  margin-left: 1rem;
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+.wb-counter--warning {
+  color: var(--warning-color);
+}
+
+.wb-counter--error {
+  color: var(--danger-color);
+}

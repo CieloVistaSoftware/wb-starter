@@ -18,9 +18,12 @@
 @import url('./behaviors/timeline.css');
 @import url('./behaviors/steps.css');
 @import url('./behaviors/stepper.css');
+@import url('./behaviors/label.css');
+@import url('./behaviors/counter.css');
 @import url('./behaviors/pagination.css');
 @import url('./behaviors/otp.css');
 @import url('./behaviors/tags.css');
+@import url('./behaviors/autocomplete.css');
 @import url('./behaviors/gallery.css');
 @import url('./behaviors/dropdown.css');
 @import url('./behaviors/accordion.css');

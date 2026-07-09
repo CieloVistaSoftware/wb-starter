@@ -1,4 +1,5 @@
 import { WB_DOC_MAP } from './demo-docmap.js';
+import { getPageSource, extractTagBlock } from './page-source-cache.js';
 /**
  * Demo Container Behavior
  * -----------------------------------------------------------------------------
@@ -17,30 +18,6 @@ import { WB_DOC_MAP } from './demo-docmap.js';
  * Zero inline styles.
  * -----------------------------------------------------------------------------
  */
-
-let _pageSource = null;
-let _pageSourcePromise = null;
-
-function getPageSource() {
-    if (_pageSource) return Promise.resolve(_pageSource);
-    if (_pageSourcePromise) return _pageSourcePromise;
-    _pageSourcePromise = fetch(location.href).then(r => r.text()).then(text => {
-        _pageSource = text;
-        return text;
-    });
-    return _pageSourcePromise;
-}
-
-function extractDemoBlock(source, idx) {
-    const regex = /<wb-demo[^>]*>([\s\S]*?)<\/wb-demo>/gi;
-    let match;
-    let i = 0;
-    while ((match = regex.exec(source)) !== null) {
-        if (i === idx) return match[1]; // formatHtml is applied once at render time
-        i++;
-    }
-    return '';
-}
 
 // Pretty-print a demo's source so every example is VERTICAL (Standard §5):
 // each element on its own line, its children indented, and a multi-attribute
@@ -153,7 +130,7 @@ export async function demo(element, options = {}) {
             const pageSource = await getPageSource();
             const allDemos = document.querySelectorAll('wb-demo');
             const idx = Array.from(allDemos).indexOf(element);
-            rawBlock = extractDemoBlock(pageSource, idx);
+            rawBlock = extractTagBlock(pageSource, 'wb-demo', idx);
         } catch (e) {
             // ignore fetch errors
         }

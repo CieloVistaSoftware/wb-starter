@@ -36,3 +36,10 @@
   color: var(--text-primary);
   font-size: 0.8rem;
 }
+
+/* .wb-tags__list wraps the tag <span> pills — display:contents makes the
+   wrapper invisible to layout, so the pills flow inline with the input as
+   flex items of .wb-tags directly, same as before this wrapper existed. */
+.wb-tags__list {
+  display: contents;
+}

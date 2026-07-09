@@ -5,6 +5,14 @@ export function counter(element, options = {}) {
     warning: parseInt(options.warning || element.getAttribute('warning') || '0'),
     ...options
   };
+  // The counter previously only DISPLAYED "len/max" without stopping the
+  // user from typing past it. Enforce it via the native maxLength — the
+  // browser itself then refuses further input once the limit is reached,
+  // same as any other maxlength-bound field.
+  const previousMaxLength = element.maxLength;
+  if (config.max && (previousMaxLength < 0 || previousMaxLength > config.max)) {
+    element.maxLength = config.max;
+  }
   const counter = document.createElement('span');
   counter.className = 'wb-counter';
   element.parentNode.insertBefore(counter, element.nextSibling);
@@ -17,5 +25,8 @@ export function counter(element, options = {}) {
   };
   element.addEventListener('input', update);
   update();
-  return () => counter.remove();
+  return () => {
+    counter.remove();
+    if (config.max && element.maxLength === config.max) element.maxLength = previousMaxLength;
+  };
 }

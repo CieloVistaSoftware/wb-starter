@@ -90,6 +90,7 @@
             <option value="heroes">20 card heroes</option>
             <option value="signature-heroes">20 signature heroes</option>
             <option value="xbehaviors">50 x-* behaviors</option>
+            <option value="inputs">20 inputs with x-behaviors</option>
             <option value="badges">50 badges</option>
             <option value="youtube">20 YouTube URL formats</option>
           </select>
@@ -670,6 +671,40 @@
       ].join('\n');
     }
 
+    // 20 real form-control examples, each with a different x-* behavior (or a
+    // real combination of two). Every attribute is verified against the
+    // actual behavior source (src/wb-viewmodels/*.js) and confirmed wired to
+    // a real [x-*] selector in wb-lazy.js. x-colorpicker, x-otp, and x-file
+    // build their OWN internal <input>(s) as children — a real <input> is a
+    // void element and can't have children, so those three go on a <div>
+    // instead (matching x-file's precedent), never on a bare <input>.
+    function twentyInputs() {
+      return [
+        '<input x-counter max="50" placeholder="Type here — counts up to 50">',
+        '<input x-search placeholder="Search…">',
+        '<div x-colorpicker value="#6366f1"></div>',
+        '<input x-tags placeholder="Type and press Enter to add a tag">',
+        '<input x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Start typing a fruit…">',
+        '<input x-password type="password" placeholder="Password with show/hide toggle">',
+        '<input x-masked mask="(999) 999-9999" placeholder="Phone number">',
+        '<input x-stepper value="5" min="0" max="10">',
+        '<div x-otp length="6"></div>',
+        '<input x-floatinglabel label="Email address" type="email">',
+        '<input x-label="Full name" placeholder="Jane Doe">',
+        '<input x-label="Email" required type="email" placeholder="you@example.com">',
+        '<input x-tooltip="This field is required" placeholder="Hover for hint">',
+        '<input x-ripple placeholder="Ripples on click (works on any element, not just buttons)">',
+
+        // Combinations — x-label paired with another input behavior
+        '<input x-label="Search" x-search placeholder="Type to search…">',
+        '<input x-label="Tags" x-tags placeholder="Press Enter to add">',
+        '<input x-counter max="100" x-label="Bio" placeholder="Tell us about yourself">',
+        '<input x-label="Password" x-password type="password" placeholder="Enter password">',
+        '<input x-label="Phone" x-masked mask="999-999-9999" placeholder="000-000-0000">',
+        '<input x-masked mask="AA-9999" x-label="License plate" label-position="right" placeholder="XX-0000">',
+      ].join('\n');
+    }
+
     function fiftyBadges() {
       const V = ['default', 'primary', 'secondary', 'success', 'warning', 'error', 'info', 'purple', 'pink', 'teal', 'orange'];
       const S = ['xs', 'sm', 'md', 'lg'];
@@ -730,6 +765,7 @@
       else if (which === 'heroes') input.value = twentyHeroes();
       else if (which === 'signature-heroes') input.value = twentySignatureHeroes();
       else if (which === 'xbehaviors') input.value = fiftyXBehaviors();
+      else if (which === 'inputs') input.value = twentyInputs();
       else if (which === 'badges') input.value = fiftyBadges();
       else if (which === 'youtube') input.value = twentyYouTubeFormats();
       setSortModes(EXAMPLE_SORT_MODES[which] || []);

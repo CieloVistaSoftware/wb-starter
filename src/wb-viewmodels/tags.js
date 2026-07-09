@@ -1,13 +1,27 @@
 // Standalone tags behavior extracted from enhancements.js
+//
+// `x-tags` goes on a REAL <input> — it's a void element and can't have
+// children, so (unlike the old version of this file) we never append a new
+// <input> into it. Instead, wrap the real input in a container (same
+// approach as search.js) and add the tag list as a sibling.
 export function tags(element, options = {}) {
-  element.classList.add('wb-tags');
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.className = 'wb-tags__input';
-  element.appendChild(input);
+  const isInput = element.tagName === 'INPUT';
+  const wrapper = document.createElement('div');
+  wrapper.className = 'wb-tags';
+  element.parentNode.insertBefore(wrapper, element);
+  wrapper.appendChild(element);
+
+  const input = isInput ? element : document.createElement('input');
+  if (!isInput) {
+    input.type = 'text';
+    wrapper.appendChild(input);
+  }
+  input.classList.add('wb-tags__input');
+
   const tagList = document.createElement('div');
   tagList.className = 'wb-tags__list';
-  element.appendChild(tagList);
+  wrapper.appendChild(tagList);
+
   function addTag(tag) {
     if (!tag) return;
     const tagEl = document.createElement('span');
@@ -27,8 +41,13 @@ export function tags(element, options = {}) {
     }
   });
   return () => {
-    element.classList.remove('wb-tags');
-    input.remove();
+    wrapper.classList.remove('wb-tags');
+    input.classList.remove('wb-tags__input');
+    if (wrapper.parentNode) {
+      wrapper.parentNode.insertBefore(element, wrapper);
+      wrapper.remove();
+    }
     tagList.remove();
+    if (!isInput) input.remove();
   };
 }

@@ -14,8 +14,23 @@
     <strong>Test:</strong> <a href="../tests/behaviors/label.spec.ts" target="_blank">label.spec.ts</a> |
     <strong>Doc:</strong> <a href="../docs/behaviors/label.md" target="_blank">label.md</a>
   </p>
-  <label x-label for="input1">Label for input:</label>
-  <input id="input1" type="text">
+  <wb-demo>
+    <input
+      x-label="Label for input:"
+      id="input1"
+      type="text">
+  </wb-demo>
+
+  <h2>label-position="right" (RTL layouts)</h2>
+  <p>For Hebrew, Arabic, and other RTL layouts where the label conventionally sits on the right.</p>
+  <wb-demo>
+    <input
+      x-label="שם מלא"
+      label-position="right"
+      dir="rtl"
+      id="input2"
+      type="text">
+  </wb-demo>
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
     window.WB = WB;
