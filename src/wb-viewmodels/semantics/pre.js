@@ -326,42 +326,62 @@ export function pre(element, options = {}) {
       // sits above the padding, misaligned with where the first code line
       // actually paints.
       const containerTop = element.getBoundingClientRect().top;
+
+      // Collect every text node up front so a failed measurement can fall
+      // forward into a later one (see measureFrom below).
       const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT);
-      let node;
-      let lineIndex = 0;
-      const firstTextNode = walker.nextNode();
-      if (firstTextNode && lineNumEls[0]) {
-        const startRange = document.createRange();
-        startRange.setStart(firstTextNode, 0);
-        startRange.setEnd(firstTextNode, 0);
-        const startRect = startRange.getClientRects()[0];
-        if (startRect) {
-          lineNumEls[0].style.top = (startRect.top - containerTop) + 'px';
+      const textNodes = [];
+      let n;
+      while ((n = walker.nextNode())) textNodes.push(n);
+
+      // Syntax-highlighted code interleaves plain text with <span> wrappers
+      // (hljs-tag, hljs-attr, etc.), so a line's ending "\n" is very often
+      // the LAST character of its text node, immediately followed by a new
+      // span starting the next token. A COLLAPSED range positioned at that
+      // exact end-of-node boundary unreliably returns an empty
+      // getClientRects() in that case — there's no character left in THIS
+      // node to anchor to — silently leaving that line's number never
+      // positioned (it then defaults to piling up near the top of the
+      // gutter, on top of line 1 — reported live as "the topmost number
+      // seems to be overwritten"). Use a 1-character (non-collapsed) range
+      // when the node has one available at this offset; when it doesn't,
+      // fall forward to the start of the next text node instead, which is
+      // guaranteed to have real content to measure against.
+      const measureFrom = (nodeIndex, offset) => {
+        while (nodeIndex < textNodes.length) {
+          const node = textNodes[nodeIndex];
+          const len = node.nodeValue.length;
+          if (offset < len) {
+            const range = document.createRange();
+            range.setStart(node, offset);
+            range.setEnd(node, offset + 1);
+            const rect = range.getClientRects()[0];
+            if (rect) return rect;
+          }
+          nodeIndex++;
+          offset = 0;
         }
+        return null;
+      };
+
+      if (textNodes[0] && lineNumEls[0]) {
+        const rect = measureFrom(0, 0);
+        if (rect) lineNumEls[0].style.top = (rect.top - containerTop) + 'px';
       }
-      node = firstTextNode;
-      while (node) {
-        const text = node.nodeValue;
+
+      let lineIndex = 0;
+      for (let i = 0; i < textNodes.length; i++) {
+        const text = textNodes[i].nodeValue;
         let searchFrom = 0;
         let nlAt;
         while ((nlAt = text.indexOf('\n', searchFrom)) !== -1) {
           lineIndex++;
           if (lineIndex < lineNumEls.length) {
-            const range = document.createRange();
-            // Position at the first character AFTER this newline, if there is
-            // one in this same text node; otherwise at the newline itself
-            // (still the correct start-of-line row).
-            const offset = Math.min(nlAt + 1, text.length);
-            range.setStart(node, offset);
-            range.setEnd(node, offset);
-            const rect = range.getClientRects()[0];
-            if (rect) {
-              lineNumEls[lineIndex].style.top = (rect.top - containerTop) + 'px';
-            }
+            const rect = measureFrom(i, nlAt + 1);
+            if (rect) lineNumEls[lineIndex].style.top = (rect.top - containerTop) + 'px';
           }
           searchFrom = nlAt + 1;
         }
-        node = walker.nextNode();
       }
     };
     requestAnimationFrame(() => requestAnimationFrame(measureAndPosition));
