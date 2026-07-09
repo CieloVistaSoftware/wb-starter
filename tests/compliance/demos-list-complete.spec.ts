@@ -20,7 +20,10 @@ const SKIP = /(^|[-.])(debug|test|test-harness|harness|check|scratch)([-.]|$)/i;
 
 function expectedDemos(): string[] {
   return fs.readdirSync(DEMOS_DIR)
-    .filter((n) => n.endsWith('.html') && !SKIP.test(n.replace(/\.html$/i, '')))
+    // index.html (#237) is the directory's own plain listing page, not a demo —
+    // it's excluded from this same generator's scan (scripts/generate-demos-list.mjs)
+    // and doesn't belong on the SPA's separate pages/demos.html menu page either.
+    .filter((n) => n.endsWith('.html') && n !== 'index.html' && !SKIP.test(n.replace(/\.html$/i, '')))
     .sort();
 }
 

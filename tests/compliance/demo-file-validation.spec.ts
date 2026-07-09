@@ -45,7 +45,10 @@ function loadDemoFiles(): { name: string; relPath: string; html: string }[] {
 }
 
 const demoFiles = loadDemoFiles();
-const fullDemos = demoFiles.filter(d => /<!doctype\s+html>/i.test(d.html));
+// index.html (#237) is the demos/ directory's own plain listing page — deliberately
+// self-contained with no site.css/WB dependency (see demos-directory-index.spec.ts),
+// not a component "demo" subject to the demo file contract.
+const fullDemos = demoFiles.filter(d => d.name !== 'index.html' && /<!doctype\s+html>/i.test(d.html));
 const partialDemos = demoFiles.filter(d => !/<!doctype\s+html>/i.test(d.html));
 
 

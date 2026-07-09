@@ -660,18 +660,18 @@ Components should expose CSS custom properties for theming:
 
 ## Migration from Legacy Syntax
 
-### Before (Legacy — explicit `x-behavior="…"` + `data-*` config)
+### Before (Legacy — explicit `x-behavior="…"` on a plain element)
 ```html
 <div
   x-behavior="card"
-  data-title="Hello"
+  title="Hello"
   elevated>
   Content
 </div>
 <div
   x-behavior="alert"
-  data-type="warning"
-  data-message="Caution!">
+  type="warning"
+  message="Caution!">
 </div>
 ```
 
