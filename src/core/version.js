@@ -4,6 +4,6 @@
  */
 export const VERSION = {
   "version": "3.0.0",
-  "commit": "c24fc29",
-  "builtAt": "2026-07-09T22:34:24.711Z"
+  "commit": "2ed4b8e",
+  "builtAt": "2026-07-09T22:39:50.635Z"
 };

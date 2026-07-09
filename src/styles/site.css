@@ -2044,15 +2044,19 @@ img { max-width: 100%; height: auto; }
   }
   .header__left, .header__right { flex-wrap: wrap; row-gap: 0.5rem; }
 
-  /* header__right's reload/playground/notes buttons are developer tools, not
+  /* header__right's playground/notes buttons are developer tools, not
      needed by a phone visitor — drop them so hamburger + logo (with the
      version inline in its text) fit on a single row without wrapping.
+     .header__refresh-btn ("Clear cache & hard reload") stays — after
+     repeated real reports of stale content persisting across reloads on
+     phones, a manual escape hatch that force-clears Cache Storage and
+     unregisters the service worker needs to actually be reachable on
+     mobile, not just desktop.
      Scoped under .site__header: src/styles/behaviors/header.css (an
      unrelated <wb-header> component) reuses these exact class names with an
      unconditional display:flex and is injected into <head> at runtime after
      site.css, so an unscoped same-specificity selector here loses the
      cascade regardless of this media query matching. */
-  .site__header .header__refresh-btn,
   .site__header .header__playground-btn,
   .site__header .header__notes-btn {
     display: none;
