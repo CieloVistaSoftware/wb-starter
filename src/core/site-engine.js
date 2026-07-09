@@ -151,11 +151,26 @@ export default class WBSite {
     if (toggleBtn) {
       toggleBtn.onclick = () => this.toggleNav();
     }
-    
+
     // Backdrop click closes mobile nav
     const backdrop = app.querySelector('.site__nav-backdrop');
     if (backdrop) {
       backdrop.onclick = () => this.closeMobileNav();
+    }
+
+    // Defensive: the fluent mobile nav (#293) relies on a CSS media-query
+    // default of display:none, with .site__nav--mobile-open (!important)
+    // overriding it on open. Reported live on at least one phone: the nav
+    // renders fully expanded on first paint despite that class never being
+    // added — a cascade/engine discrepancy that couldn't be reproduced in
+    // headless Chromium testing at the same viewport. Enforce the closed
+    // state explicitly via inline style so first paint is correct
+    // regardless of which stylesheet rule the browser actually resolves;
+    // toggleNav()'s !important open-state rule still overrides this cleanly
+    // when the user taps the hamburger.
+    const nav = app.querySelector('.site__nav');
+    if (nav && window.innerWidth <= 640 && !this.mobileNavOpen) {
+      nav.style.display = 'none';
     }
     const notesToggleBtn = app.querySelector('#notesToggle');
     if (notesToggleBtn) {
