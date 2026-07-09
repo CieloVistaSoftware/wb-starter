@@ -165,6 +165,31 @@ If a test isn't in one of these directories, it won't run. Check `playwright.con
 - Status tracking: ONE file only → `docs/_today/CURRENT-STATUS.md`
 - Never create duplicate status files
 
+## 14. Reusable Components Never Hardcode `id` — Generate It, or Don't Use One
+
+**A hardcoded `id` inside a behavior/component function collides the moment
+that component appears twice in the same DOM.** Found live in `dialog.js`:
+`title.id = 'wb-dialog-title'` was set on every dialog instance, so two
+dialogs open (or even just present) in the same DOM meant `aria-labelledby`
+pointed screen readers at whichever title happened to be first — silently
+wrong for every instance after the first.
+
+- Never write `el.id = 'fixed-string'` inside a function that creates a
+  per-instance element (a component's own title, body, generated content).
+- If you need an `id` for `aria-*` linkage, generate a unique one per call:
+  `` `wb-dialog-title-${Math.random().toString(36).slice(2, 9)}` `` — this
+  pattern is already established in `card.js`, `tooltip.js`, `overlay.js`,
+  `enhancements.js`. Reuse it, don't reinvent it.
+- If you don't need `id` for ARIA/anchor linking, don't add one — use a
+  class or scope a `querySelector` to the component's own root element
+  instead.
+- **Exception:** a hardcoded id IS correct for genuine page-level
+  singletons — e.g. `style.id = 'wb-ripple-styles'` guards "only inject
+  this stylesheet once," which is the intended behavior even if the
+  component using it appears many times. The test: could this element
+  legitimately exist more than once in the DOM at the same time? If yes,
+  the id must be generated, not hardcoded.
+
 ---
 
 ## Known Broken Areas (Don't Touch Without John's Direction)

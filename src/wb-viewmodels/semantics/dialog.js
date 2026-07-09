@@ -23,9 +23,13 @@ export function dialog(element, options = {}) {
     // Create semantic <dialog> element
     const dialogEl = document.createElement('dialog');
     dialogEl.className = 'wb-dialog';
-    dialogEl.setAttribute('aria-labelledby', 'wb-dialog-title');
+    // Unique per instance — a hardcoded id here would collide the moment two
+    // dialogs exist in the DOM at once, leaving aria-labelledby pointing at
+    // whichever dialog's title happens to come first for every OTHER instance.
+    const titleId = `wb-dialog-title-${Math.random().toString(36).slice(2, 9)}`;
+    dialogEl.setAttribute('aria-labelledby', titleId);
     dialogEl.setAttribute('aria-modal', 'true');
-    
+
     const sizes = { sm: '320px', md: '480px', lg: '640px', xl: '800px' };
     dialogEl.style.maxWidth = sizes[sizeVal] || sizes.md;
     dialogEl.style.width = '90%';
@@ -33,9 +37,9 @@ export function dialog(element, options = {}) {
     // HEADER (<header>)
     const header = document.createElement('header');
     header.className = 'wb-dialog__header';
-    
+
     const title = document.createElement('h2');
-    title.id = 'wb-dialog-title';
+    title.id = titleId;
     title.className = 'wb-dialog__title';
     title.textContent = titleText;
     header.appendChild(title);
