@@ -806,12 +806,6 @@ h5, h6 {
     display: none;
   }
 
-  /* Version badge is a nice-to-have; drop it before anything load-bearing
-     on the cramped mobile header */
-  .header__version {
-    display: none;
-  }
-  
   .footer__left {
     flex-direction: column;
     gap: 0.5rem;
@@ -2064,6 +2058,22 @@ img { max-width: 100%; height: auto; }
     padding: 0.5rem 0.75rem;
   }
   .header__left, .header__right { flex-wrap: wrap; row-gap: 0.5rem; }
+
+  /* header__left (hamburger + logo + version badge) and header__right
+     (reload/playground/notes/theme) together don't fit one row under ~400px,
+     forcing a 3-row header before any page content. The reload/playground/
+     notes buttons are developer tools, not needed by a phone visitor — drop
+     them so hamburger + logo + theme switcher fit on a single row.
+     Scoped under .site__header: src/styles/behaviors/header.css (an
+     unrelated <wb-header> component) reuses these exact class names with an
+     unconditional display:flex and is injected into <head> at runtime after
+     site.css, so an unscoped same-specificity selector here loses the
+     cascade regardless of this media query matching. */
+  .site__header .header__refresh-btn,
+  .site__header .header__playground-btn,
+  .site__header .header__notes-btn {
+    display: none;
+  }
 
   /* Fluent nav: an in-flow VERTICAL stacked menu at the top of the content —
      NOT a horizontal bar and NOT an off-canvas side drawer. Hidden by default,
