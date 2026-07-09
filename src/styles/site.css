@@ -46,11 +46,6 @@
 @import url('./behaviors/input.css');
 @import url('./behaviors/themecontrol.css');
 
-body {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
 /**
  * WB Starter - Site Layout Styles
  * Works with themes.css from wb-behaviors
@@ -2099,16 +2094,27 @@ img { max-width: 100%; height: auto; }
   .nav__resizer { display: none !important; }
 
   /* Footer was 3 stacked blocks (copyright, links, social icons) each
-     carrying the desktop 1.5rem/2rem padding meant for a single wide row —
-     compact it for a narrow column. */
+     carrying the desktop 1.5rem/2rem padding/gap meant for a single wide
+     row — compact it for a narrow column. .footer__left's own 1.5rem gap
+     (copyright <-> links) was untouched by the first pass and, once those
+     two wrap to separate lines on a narrow screen, that gap applies as
+     row-gap too — the single biggest remaining contributor to the height. */
   .site__footer {
-    padding: 1rem;
+    padding: 0.75rem 1rem;
   }
   .footer__content {
+    gap: 0.35rem;
+  }
+  .footer__left {
+    gap: 0.35rem;
+    font-size: 0.8rem;
+  }
+  .footer__social {
     gap: 0.5rem;
   }
   .footer__social-link {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
+    font-size: 0.95rem;
   }
 }

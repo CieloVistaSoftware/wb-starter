@@ -160,18 +160,30 @@ export default class WBSite {
 
     // Defensive: the fluent mobile nav (#293) relies on a CSS media-query
     // default of display:none, with .site__nav--mobile-open (!important)
-    // overriding it on open. Reported live on at least one phone: the nav
-    // renders fully expanded on first paint despite that class never being
-    // added — a cascade/engine discrepancy that couldn't be reproduced in
-    // headless Chromium testing at the same viewport. Enforce the closed
-    // state explicitly via inline style so first paint is correct
-    // regardless of which stylesheet rule the browser actually resolves;
-    // toggleNav()'s !important open-state rule still overrides this cleanly
-    // when the user taps the hamburger.
-    const nav = app.querySelector('.site__nav');
-    if (nav && window.innerWidth <= 640 && !this.mobileNavOpen) {
-      nav.style.display = 'none';
-    }
+    // overriding it on open. Reported live, repeatedly, on a real phone: the
+    // nav renders fully expanded on first paint despite that class never
+    // being added — but manually resizing the viewport afterward fixes it
+    // immediately. That pattern means the browser's OWN initial viewport/
+    // media-query evaluation is wrong at first paint and only self-corrects
+    // once a real resize/reflow occurs (a known mobile-browser quirk: some
+    // engines lay out the first frame at a default desktop-width viewport
+    // before finishing <meta name="viewport"> processing). A single
+    // window.innerWidth check at render() time inherits that same wrong
+    // reading. Self-correct automatically instead of waiting for the user
+    // to manually resize:
+    const enforceMobileNavDefault = () => {
+      const navEl = document.getElementById('siteNav');
+      if (navEl && window.innerWidth <= 640 && !this.mobileNavOpen) {
+        navEl.style.display = 'none';
+      } else if (navEl && !this.mobileNavOpen) {
+        navEl.style.display = '';
+      }
+    };
+    enforceMobileNavDefault();
+    // Viewport metrics settle within a frame or two — re-check after paint
+    // rather than requiring the user to trigger an actual resize event.
+    requestAnimationFrame(() => requestAnimationFrame(enforceMobileNavDefault));
+    window.addEventListener('resize', enforceMobileNavDefault);
     const notesToggleBtn = app.querySelector('#notesToggle');
     if (notesToggleBtn) {
       notesToggleBtn.onclick = () => {
