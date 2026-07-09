@@ -187,13 +187,12 @@ export default class WBSite {
     // Clean header layout with proper semantics and spacing
     return `
       <header class="site__header ${headerSettings.keepHeaderAtTop ? 'site__header--sticky' : ''}" id="siteHeader">
-        <div class="header__left" id="headerLeft" style="gap: 1.5rem;">
+        <div class="header__left" id="headerLeft">
           <button class="nav__toggle" x-ripple title="Toggle Navigation" id="navToggle" aria-label="Toggle Navigation">☰</button>
-          <a href="?page=home" class="header__logo" id="headerLogo" style="gap: 0.75rem;">
+          <a href="?page=home" class="header__logo" id="headerLogo" style="gap: 0.75rem;" title="Build ${VERSION.commit} · ${VERSION.builtAt}">
             ${branding.headerLogoImage ? `<span class="header__logo-icon" id="headerLogoIcon">${branding.headerLogoImage}</span>` : ''}
-            <span class="header__logo-text" id="headerLogoText">${branding.companyName}</span>
+            <span class="header__logo-text" id="headerLogoText">${branding.companyName} <span class="header__version" id="headerVersion">v${VERSION.version}</span></span>
           </a>
-          <span class="header__version" id="headerVersion" title="Build ${VERSION.commit} · ${VERSION.builtAt}">v${VERSION.version}</span>
         </div>
         <div class="header__right" id="headerRight" style="gap: 1rem;">
           ${headerSettings.displaySearchBar ? `
@@ -324,7 +323,7 @@ export default class WBSite {
   }
 
   renderFooter() {
-    const { footerSettings, socialMediaLinks, additionalFooterLinks, headerSettings } = this.config;
+    const { footerSettings, socialMediaLinks, additionalFooterLinks } = this.config;
     const socialLinks = footerSettings.displaySocialMediaLinks ? socialMediaLinks.map(s =>
       `<a href="${s.profileUrl}" class="footer__social-link" target="_blank" title="${s.platform}" id="footerSocialLink-${s.platform}">${s.icon}</a>`
     ).join('') : '';
@@ -340,7 +339,6 @@ export default class WBSite {
           </div>
           <div class="footer__right" id="footerRight">
             ${socialLinks ? `<div class="footer__social" id="footerSocial">${socialLinks}</div>` : ''}
-            ${headerSettings.displayThemeSwitcher ? '<wb-themecontrol show-label="false" id="themeControl"></wb-themecontrol>' : ''}
           </div>
         </div>
       </footer>

@@ -278,17 +278,11 @@ body > button[x-copy] {
 }
 
 .header__version {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.2rem 0.55rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
+  margin-left: 0.35rem;
+  font-size: 0.7em;
+  font-weight: 500;
+  color: var(--text-muted);
   white-space: nowrap;
-  cursor: default;
 }
 
 /* =============================================================================
@@ -801,13 +795,9 @@ h5, h6 {
     justify-content: center;
   }
   
-  /* Hide logo text on small phones */
-  .header__logo-text {
-    display: none;
-  }
-
   .footer__left {
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 0.5rem;
   }
 }
@@ -2059,11 +2049,9 @@ img { max-width: 100%; height: auto; }
   }
   .header__left, .header__right { flex-wrap: wrap; row-gap: 0.5rem; }
 
-  /* header__left (hamburger + logo + version badge) and header__right
-     (reload/playground/notes/theme) together don't fit one row under ~400px,
-     forcing a 3-row header before any page content. The reload/playground/
-     notes buttons are developer tools, not needed by a phone visitor — drop
-     them so hamburger + logo + theme switcher fit on a single row.
+  /* header__right's reload/playground/notes buttons are developer tools, not
+     needed by a phone visitor — drop them so hamburger + logo (with the
+     version inline in its text) fit on a single row without wrapping.
      Scoped under .site__header: src/styles/behaviors/header.css (an
      unrelated <wb-header> component) reuses these exact class names with an
      unconditional display:flex and is injected into <head> at runtime after
@@ -2109,4 +2097,18 @@ img { max-width: 100%; height: auto; }
   /* In-flow menu needs no drawer chrome. */
   .site__nav-backdrop { display: none !important; }
   .nav__resizer { display: none !important; }
+
+  /* Footer was 3 stacked blocks (copyright, links, social icons) each
+     carrying the desktop 1.5rem/2rem padding meant for a single wide row —
+     compact it for a narrow column. */
+  .site__footer {
+    padding: 1rem;
+  }
+  .footer__content {
+    gap: 0.5rem;
+  }
+  .footer__social-link {
+    width: 32px;
+    height: 32px;
+  }
 }
