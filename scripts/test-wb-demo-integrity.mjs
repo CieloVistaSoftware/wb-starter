@@ -40,10 +40,14 @@ function getAllHtmlFiles(dir) {
   return out;
 }
 
-function scanFile(filePath) {
-  const raw = fs.readFileSync(filePath, 'utf8');
-  const html = stripComments(raw);
-  const relativePath = path.relative(PROJECT_DIR, filePath);
+/**
+ * Pure function, no filesystem access — scans an HTML string for <wb-demo>
+ * markup issues. Exported so tests/compliance/wb-demo-integrity.spec.ts can
+ * exercise it directly against example fixtures, independent of which real
+ * files currently exist on disk.
+ */
+export function scanHtml(rawHtml) {
+  const html = stripComments(rawHtml);
   const issues = [];
 
   const opens = (html.match(OPEN_RE) || []).length;
@@ -57,7 +61,13 @@ function scanFile(filePath) {
     issues.push(`${emptyMatches.length} empty <wb-demo></wb-demo> block(s) — renders as a blank box`);
   }
 
-  return { relativePath, issues };
+  return issues;
+}
+
+function scanFile(filePath) {
+  const raw = fs.readFileSync(filePath, 'utf8');
+  const relativePath = path.relative(PROJECT_DIR, filePath);
+  return { relativePath, issues: scanHtml(raw) };
 }
 
 function main() {
@@ -82,4 +92,13 @@ function main() {
   process.exit(1);
 }
 
-main();
+// Only run the CLI scan (and its process.exit calls) when this file is
+// executed directly — not when tests/compliance/wb-demo-integrity.spec.ts
+// imports scanHtml() for fixture-based assertions. Resolve both sides to
+// real filesystem paths before comparing — raw import.meta.url vs
+// process.argv[1] string comparison silently mismatches on Windows
+// (drive-letter casing, backslash vs forward-slash).
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+if (isMain) {
+  main();
+}
