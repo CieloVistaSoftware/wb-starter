@@ -48,17 +48,44 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+  // Range requests (audio/video seeking, e.g. sample.wav) get a 206 Partial
+  // Content response, which the Cache API explicitly refuses to store —
+  // cache.put() rejects with "Partial response (status code 206) is
+  // unsupported". Never attempt to cache these; just pass them straight
+  // through to the network.
+  if (event.request.headers.has('range')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
 
   // Network-first: always try the network so a refresh gets current code.
   // Only fall back to the cached copy when the network fetch itself fails
   // (offline) — the cache is never allowed to shadow a live response.
   event.respondWith(
     fetch(event.request).then(response => {
-      if (response.ok) {
+      if (response.ok && response.status !== 206) {
         const clone = response.clone();
-        caches.open(CACHE_VERSION).then(cache => cache.put(event.request, clone));
+        caches.open(CACHE_VERSION)
+          .then(cache => cache.put(event.request, clone))
+          // A failed cache write must never break the response the page
+          // actually gets — swallow it, the network response below still
+          // returns fine either way.
+          .catch(() => {});
       }
       return response;
-    }).catch(() => caches.match(event.request).then(cached => cached || caches.match(BASE + 'index.html')))
+    }).catch(() =>
+      caches.match(event.request)
+        .then(cached => cached || caches.match(BASE + 'index.html'))
+        // Both the exact URL and the index.html fallback can miss (e.g. a
+        // fresh install with nothing precached yet, or a base-path
+        // mismatch) — respondWith() throws "Failed to convert value to
+        // 'Response'" on undefined and takes the whole fetch down with it.
+        // Always resolve to a real Response, even offline with no cache.
+        .then(cached => cached || new Response('Offline and not cached', {
+          status: 503,
+          statusText: 'Service Unavailable',
+          headers: { 'Content-Type': 'text/plain' }
+        }))
+    )
   );
 });
