@@ -2,6 +2,10 @@
 # WB Starter Pre-commit Hook
 # Runs project-integrity tests before allowing commit
 
+echo "🏷  Stamping version..."
+node scripts/stamp-version.js
+git add src/core/version.js
+
 echo "🔍 Running pre-commit checks..."
 
 # Run project integrity tests

@@ -2,6 +2,7 @@
 // Contains WBSite class and site logic
 import WB from './wb.js';  // v3.0: Use main wb.js with schema support
 import { initViews } from './wb-views.js';
+import { VERSION } from './version.js';
 
 export default class WBSite {
   constructor() {
@@ -192,6 +193,7 @@ export default class WBSite {
             ${branding.headerLogoImage ? `<span class="header__logo-icon" id="headerLogoIcon">${branding.headerLogoImage}</span>` : ''}
             <span class="header__logo-text" id="headerLogoText">${branding.companyName}</span>
           </a>
+          <span class="header__version" id="headerVersion" title="Build ${VERSION.commit} · ${VERSION.builtAt}">v${VERSION.version}</span>
         </div>
         <div class="header__right" id="headerRight" style="gap: 1rem;">
           ${headerSettings.displaySearchBar ? `

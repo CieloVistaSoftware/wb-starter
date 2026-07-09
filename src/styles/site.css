@@ -277,6 +277,20 @@ body > button[x-copy] {
   color: var(--primary);
 }
 
+.header__version {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  white-space: nowrap;
+  cursor: default;
+}
+
 /* =============================================================================
    NAVIGATION
    ============================================================================= */
@@ -789,6 +803,12 @@ h5, h6 {
   
   /* Hide logo text on small phones */
   .header__logo-text {
+    display: none;
+  }
+
+  /* Version badge is a nice-to-have; drop it before anything load-bearing
+     on the cramped mobile header */
+  .header__version {
     display: none;
   }
   
