@@ -77,3 +77,15 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
+
+// Network-first service worker — required so the installed/standalone PWA
+// (manifest.json sets display:standalone) actually checks for fresh code on
+// each load instead of relying solely on the OS webview's own cache
+// heuristics, which can hold stale assets far longer than a browser tab.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register(new URL('../sw.js', import.meta.url), { scope: '../' })
+      .catch((err) => console.warn('[sw] registration failed:', err && err.message));
+  });
+}
