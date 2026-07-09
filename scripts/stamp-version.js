@@ -1,7 +1,9 @@
 /**
- * Regenerates src/core/version.js so the header's version badge always
- * reflects what's actually committed — package.json's version, the current
- * commit's short SHA, and a build timestamp. Run automatically by the
+ * Regenerates src/core/version.js AND cache-busts every local <link>/<script>
+ * reference in the HTML entry points, so a deploy is never at the mercy of
+ * the CDN, a browser's disk cache, an old service worker, or a carrier's
+ * transparent proxy — a changed query string is a URL nothing has cached
+ * yet, so there is nothing to serve stale. Run automatically by the
  * pre-commit hook; never hand-edit src/core/version.js.
  */
 import { execSync } from 'child_process';
@@ -32,3 +34,24 @@ export const VERSION = ${JSON.stringify({ version: pkg.version, commit, builtAt 
 
 writeFileSync(path.join(root, 'src', 'core', 'version.js'), out);
 console.log(`[stamp-version] v${pkg.version} (${commit}) @ ${builtAt}`);
+
+// Cache-bust local resource references (src/… and config/…) in every HTML
+// entry point. Leaves external URLs (fonts, CDNs) and already-anchored hash
+// links alone — only same-origin src/config paths get a ?v= stamp.
+const ENTRY_HTML = ['index.html', 'project-index.html'];
+const ATTR_RE = /((?:href|src)=")((?:\.\/)?(?:src|config)\/[^"?]+)(?:\?[^"]*)?(")/g;
+
+for (const file of ENTRY_HTML) {
+  const filePath = path.join(root, file);
+  let html;
+  try {
+    html = readFileSync(filePath, 'utf8');
+  } catch {
+    continue; // entry point doesn't exist in this checkout
+  }
+  const stamped = html.replace(ATTR_RE, (_match, pre, url, post) => `${pre}${url}?v=${commit}${post}`);
+  if (stamped !== html) {
+    writeFileSync(filePath, stamped);
+    console.log(`[stamp-version] cache-busted ${file}`);
+  }
+}
