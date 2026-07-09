@@ -57,9 +57,9 @@ export default class WBSite {
         this.navigateTo(page);
       });
 
-      // Clear-cache-and-reload button (on every page via the shell header).
+      // Clear-cache-and-reload link (the version number, in the shell header).
       document.addEventListener('click', async (e) => {
-        const reloadBtn = e.target.closest('#hardReloadBtn');
+        const reloadBtn = e.target.closest('#headerVersion');
         if (!reloadBtn) return;
         e.preventDefault();
         reloadBtn.textContent = '⏳';
@@ -223,10 +223,11 @@ export default class WBSite {
       <header class="site__header ${headerSettings.keepHeaderAtTop ? 'site__header--sticky' : ''}" id="siteHeader">
         <div class="header__left" id="headerLeft">
           <button class="nav__toggle" x-ripple title="Toggle Navigation" id="navToggle" aria-label="Toggle Navigation">☰</button>
-          <a href="?page=home" class="header__logo" id="headerLogo" style="gap: 0.75rem;" title="Build ${VERSION.commit} · ${VERSION.builtAt}">
+          <a href="?page=home" class="header__logo" id="headerLogo" style="gap: 0.75rem;">
             ${branding.headerLogoImage ? `<span class="header__logo-icon" id="headerLogoIcon">${branding.headerLogoImage}</span>` : ''}
-            <span class="header__logo-text" id="headerLogoText">${branding.companyName} <span class="header__version" id="headerVersion">v${VERSION.version}</span></span>
+            <span class="header__logo-text" id="headerLogoText">${branding.companyName}</span>
           </a>
+          <a href="#" class="header__version" id="headerVersion" x-ripple title="Build ${VERSION.commit} · ${VERSION.builtAt} — tap to clear cache and reload">v${VERSION.version}</a>
         </div>
         <div class="header__right" id="headerRight" style="gap: 1rem;">
           ${headerSettings.displaySearchBar ? `
@@ -234,7 +235,6 @@ export default class WBSite {
               <input type="search" placeholder="Search..." aria-label="Search" class="wb-input-glass" style="padding: 0.4rem 0.8rem; width: 200px;">
             </div>
           ` : ''}
-          <button class="header__refresh-btn" id="hardReloadBtn" x-ripple title="Clear cache & hard reload (force fresh CSS/JS)" aria-label="Clear cache and reload">🔄</button>
           <a class="header__playground-btn" id="playgroundLink" href="demos/playground.html" target="_blank" rel="noopener" x-ripple title="Playground — paste HTML, see it render live" aria-label="Open the Playground">🧪</a>
           <button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>
         </div>

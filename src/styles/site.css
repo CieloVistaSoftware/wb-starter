@@ -228,8 +228,7 @@ body > button[x-copy] {
 /* Dialog styles → src/styles/behaviors/dialog.css (migrated Phase 2) */
 
 .header__notes-btn,
-.header__playground-btn,
-.header__refresh-btn {
+.header__playground-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -246,8 +245,7 @@ body > button[x-copy] {
 }
 
 .header__notes-btn:hover,
-.header__playground-btn:hover,
-.header__refresh-btn:hover {
+.header__playground-btn:hover {
   background: var(--bg-tertiary);
   color: var(--primary);
 }
@@ -278,6 +276,13 @@ body > button[x-copy] {
   font-weight: 500;
   color: var(--text-muted);
   white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.header__version:hover {
+  color: var(--primary);
+  text-decoration: underline;
 }
 
 /* =============================================================================
@@ -683,11 +688,10 @@ h5, h6 {
   h2 { font-size: 1.5rem; }
   h3 { font-size: 1.1rem; }
   
-  .footer__content {
-    flex-direction: column;
-    text-align: center;
-  }
-  
+  /* Footer content stays a row (base default) instead of forcing every
+     piece onto its own stacked line — copyright+links sit left, social
+     icons sit right, wrapping only if they genuinely don't fit together. */
+
   /* Ensure header buttons are touch-friendly */
   .nav__toggle,
   .header__notes-btn {
@@ -794,6 +798,16 @@ h5, h6 {
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.5rem;
+    /* flex:1 1 auto wasn't enough — with flex-basis:auto, the OUTER
+       .footer__content row's wrap decision still uses footer__left's
+       UNWRAPPED text width (its max-content size) even though min-width:0
+       lets it shrink afterward. flex-basis:0 starts it at zero and lets
+       flex-grow fill the row, so the wrap decision no longer depends on
+       how wide the copyright text would be on a single line — footer__right
+       (the social icons) can now sit on the same row instead of being
+       pushed to its own line beneath two rows of wrapped text. */
+    flex: 1 1 0;
+    min-width: 0;
   }
 }
 
@@ -2045,13 +2059,10 @@ img { max-width: 100%; height: auto; }
   .header__left, .header__right { flex-wrap: wrap; row-gap: 0.5rem; }
 
   /* header__right's playground/notes buttons are developer tools, not
-     needed by a phone visitor — drop them so hamburger + logo (with the
-     version inline in its text) fit on a single row without wrapping.
-     .header__refresh-btn ("Clear cache & hard reload") stays — after
-     repeated real reports of stale content persisting across reloads on
-     phones, a manual escape hatch that force-clears Cache Storage and
-     unregisters the service worker needs to actually be reachable on
-     mobile, not just desktop.
+     needed by a phone visitor — drop them so hamburger + logo + the
+     version link fit on a single row without wrapping. The clear-cache
+     reload action lives on the version number itself now (tap it), so
+     there's no separate button left that needs to stay visible here.
      Scoped under .site__header: src/styles/behaviors/header.css (an
      unrelated <wb-header> component) reuses these exact class names with an
      unconditional display:flex and is injected into <head> at runtime after
