@@ -14,7 +14,7 @@ const OBSERVER_ERROR_RE = /observer is not defined|ResizeObserver is not defined
 
 test.describe('Runtime: no undefined-observer ReferenceError', () => {
   test('demos and showcase pages should not throw observer ReferenceError', async ({ page }) => {
-    const pages = ['/demos/wb-views-demo.html', '/demos/pce-test.html', '/demos/behaviors-showcase.html'];
+    const pages = ['/demos/wb-views-demo.html', '/demos/pce-test.html', '/?page=behaviors'];
     for (const p of pages) {
       const consoleErrors: string[] = [];
       page.on('console', msg => {

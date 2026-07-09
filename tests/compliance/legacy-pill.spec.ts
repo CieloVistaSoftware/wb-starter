@@ -7,8 +7,8 @@ test.describe('Legacy Pill Migration', () => {
       if (msg.type() === 'error') errorLogs.push(msg.text());
     });
 
-    // Check root page and the behaviors demo (where badges live)
-    for (const url of ['/', '/demos/behaviors-showcase.html']) {
+    // Check root page and the behaviors page (where badges live)
+    for (const url of ['/', '/?page=behaviors']) {
       await page.goto(url);
       await page.waitForFunction(() => (window as any).WB);
       await page.waitForTimeout(300);
