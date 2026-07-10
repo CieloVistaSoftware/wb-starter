@@ -100,17 +100,31 @@ export function pre(element, options = {}) {
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
 
+  // Header controls (copy button, language badge, toggle) are positioned
+  // right-to-left with a guaranteed >=1rem gap between any two of them —
+  // hardcoded rem offsets (the previous approach) don't account for the
+  // language badge's actual rendered width, which varies with the label
+  // text ("HTML" vs "JavaScript" vs "TypeScript"). Reported live: the
+  // toggle button's edge was overlapping the badge by ~10px, not just
+  // "too close." Each control is measured after being appended and the
+  // NEXT control (further left) is positioned from its real width, not a
+  // guess.
+  const rootFontSizePx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+  const GAP_PX = rootFontSizePx; // 1rem minimum gap between any two controls
+  const EDGE_OFFSET_PX = 0.25 * rootFontSizePx;
+  let nextControlRightPx = EDGE_OFFSET_PX;
+
   // Add copy button
   if (config.showCopy) {
     copyButton = document.createElement('button');
     copyButton.className = 'x-pre__copy';
     copyButton.textContent = '📋';
     copyButton.title = 'Copy code';
-    
+
     copyButton.style.cssText = `
       position: absolute;
       top: 0.25rem;
-      right: 0.25rem;
+      right: ${nextControlRightPx}px;
       background: var(--bg-secondary, #1f2937);
       border: 1px solid var(--border-color, #374151);
       color: var(--text-secondary, #9ca3af);
@@ -147,6 +161,7 @@ export function pre(element, options = {}) {
     });
 
     wrapper.appendChild(copyButton);
+    nextControlRightPx += copyButton.getBoundingClientRect().width + GAP_PX;
   }
 
   // Add language badge
@@ -171,14 +186,11 @@ export function pre(element, options = {}) {
     languageBadge = document.createElement('span');
     languageBadge.className = 'x-pre__language';
     languageBadge.textContent = displayText;
-    
-    // Position to the left of copy button if it exists
-    const rightPos = config.showCopy ? '3rem' : '0.5rem';
 
     languageBadge.style.cssText = `
       position: absolute;
       top: 0.25rem;
-      right: ${rightPos};
+      right: ${nextControlRightPx}px;
       background: transparent;
       color: var(--text-tertiary, #9ca3af);
       padding: 0.25rem 0.5rem;
@@ -191,17 +203,9 @@ export function pre(element, options = {}) {
       pointer-events: none;
       opacity: 0.5;
     `;
-    
-    // If copy button exists, we might overlap.
-    // Let's move copy button to the left of the badge?
-    // Or make the badge disappear when hovering?
-    // Or put the badge at the bottom right?
-    // "javascript tag must be inside he elememt 1rem from the edge"
-    // I'll put it top-right.
-    // I'll move the copy button to be slightly offset or only show on hover (which I did).
-    // When copy button shows, it might cover the badge. That's acceptable.
-    
+
     wrapper.appendChild(languageBadge);
+    nextControlRightPx += languageBadge.getBoundingClientRect().width + GAP_PX;
   }
 
   // Show/hide toggle — collapses the code content down to just the header
@@ -212,8 +216,6 @@ export function pre(element, options = {}) {
   // own height — without it, hiding <pre> would collapse wrapper to 0px and
   // clip the very controls needed to re-expand it.
   let collapsed = false;
-  const usedSlots = (config.showCopy ? 1 : 0) + (config.language ? 1 : 0);
-  const toggleRight = usedSlots === 0 ? 0.5 : usedSlots === 1 ? 3 : 5.5;
 
   const toggleButton = document.createElement('button');
   toggleButton.className = 'x-pre__toggle';
@@ -222,7 +224,7 @@ export function pre(element, options = {}) {
   toggleButton.style.cssText = `
     position: absolute;
     top: 0.25rem;
-    right: ${toggleRight}rem;
+    right: ${nextControlRightPx}px;
     background: var(--bg-secondary, #1f2937);
     border: 1px solid var(--border-color, #374151);
     color: var(--text-secondary, #9ca3af);
