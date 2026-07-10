@@ -14,14 +14,9 @@ export function ripple(element, options = {}) {
     ...options
   };
 
+  // .wb-ripple in effects.css supplies position:relative + overflow:hidden —
+  // no need to set them inline here.
   element.classList.add('wb-ripple');
-  
-  // Ensure element has relative positioning
-  const computedStyle = window.getComputedStyle(element);
-  if (computedStyle.position === 'static') {
-    element.style.position = 'relative';
-  }
-  element.style.overflow = 'hidden';
 
   const createRipple = (e) => {
     const rect = element.getBoundingClientRect();

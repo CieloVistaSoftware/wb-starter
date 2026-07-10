@@ -236,6 +236,14 @@ MARQUEE & RIPPLE
   to { transform: scale(4); opacity: 0; }
 }
 
+/* Ripple-enabled elements need relative positioning + clipping so the
+   ripple circle stays contained — set here, not inline via JS, so
+   ripple.js doesn't have to write style.position/style.overflow itself. */
+.wb-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
 /* =============================================================================
    ANIMATION UTILITY CLASSES
    ============================================================================= */
