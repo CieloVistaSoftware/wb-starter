@@ -363,17 +363,18 @@
     <h3>Accordion</h3>
     <wb-demo title="Collapsible Sections" tag="Navigation">
       <div class="demo-full">
-        <wb-accordion>
-          <div accordion-title="What is wb-starter?">
-            <p>wb-starter is a zero-build web component library with behaviors and themes.</p>
-          </div>
-          <div accordion-title="How do I install it?">
-            <p>No installation needed! Just include the script and start using components immediately.</p>
-          </div>
-          <div accordion-title="Is it production ready?">
-            <p>Yes! wb-starter is schema-driven, fully tested, and enterprise hardened.</p>
-          </div>
-        </wb-accordion>
+        <details>
+          <summary>What is wb-starter?</summary>
+          <p>wb-starter is a zero-build web component library with behaviors and themes.</p>
+        </details>
+        <details>
+          <summary>How do I install it?</summary>
+          <p>No installation needed! Just include the script and start using components immediately.</p>
+        </details>
+        <details>
+          <summary>Is it production ready?</summary>
+          <p>Yes! wb-starter is schema-driven, fully tested, and enterprise hardened.</p>
+        </details>
       </div>
     </wb-demo>
 

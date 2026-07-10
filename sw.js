@@ -21,7 +21,7 @@ const BASE = new URL('./', self.location).href;
 const STATIC_ASSETS = [
   BASE,
   BASE + 'index.html',
-  BASE + 'src/wb.js',
+  BASE + 'src/core/wb.js',
   BASE + 'src/core/site-engine.js',
   BASE + 'src/styles/themes.css',
   BASE + 'src/styles/site.css',

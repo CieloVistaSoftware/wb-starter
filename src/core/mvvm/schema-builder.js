@@ -133,22 +133,42 @@ export function registerSchema(schema, filename) {
  * Load a single schema file and register it (fallback for runtime/hydration races)
  * Returns true if the schema was fetched & registered, false otherwise.
  */
+// A page with several instances of the same component (e.g. multiple
+// <wb-card>-family tags on one page) each independently discover, on scan,
+// that the shared schema isn't registered yet and race to fetch it — none
+// of them see it as registered until their own fetch resolves. Observed
+// live: card.schema.json fetched 6x, cardstats.schema.json 4x, on a single
+// home-page load. Memoizing the in-flight promise per filename means every
+// concurrent caller awaits the SAME fetch instead of starting their own.
+const inFlightSchemaFetches = new Map();
+
 export async function loadSchemaFile(filePath, basePath = DEFAULT_SCHEMA_BASE) {
-  try {
-    // Accept both bare filenames (cardhero.schema.json) and schema names (cardhero)
-    const filename = filePath.endsWith('.schema.json') ? filePath : `${filePath}.schema.json`;
-    const resp = await fetch(`${basePath}/${filename}`);
-    if (!resp.ok) {
-      console.warn(`[Schema Builder] loadSchemaFile: ${filename} not found (status ${resp.status})`);
+  // Accept both bare filenames (cardhero.schema.json) and schema names (cardhero)
+  const filename = filePath.endsWith('.schema.json') ? filePath : `${filePath}.schema.json`;
+
+  const existing = inFlightSchemaFetches.get(filename);
+  if (existing) return existing;
+
+  const promise = (async () => {
+    try {
+      const resp = await fetch(`${basePath}/${filename}`);
+      if (!resp.ok) {
+        console.warn(`[Schema Builder] loadSchemaFile: ${filename} not found (status ${resp.status})`);
+        return false;
+      }
+      const schema = await resp.json();
+      registerSchema(schema, filename);
+      return true;
+    } catch (err) {
+      console.warn('[Schema Builder] loadSchemaFile failed:', err && err.message);
       return false;
+    } finally {
+      inFlightSchemaFetches.delete(filename);
     }
-    const schema = await resp.json();
-    registerSchema(schema, filename);
-    return true;
-  } catch (err) {
-    console.warn('[Schema Builder] loadSchemaFile failed:', err && err.message);
-    return false;
-  }
+  })();
+
+  inFlightSchemaFetches.set(filename, promise);
+  return promise;
 }
 
 /**
@@ -749,11 +769,28 @@ function bindSchemaMethodsToElement(element, schema, data) {
  * 
  * Note: Class detection was removed - classes are for CSS only
  */
+// wb-* tags whose content is built and owned by their own custom-element
+// class (connectedCallback), never by schema $view — even though some of
+// these DO have a real, registered schema.json (e.g. demo.schema.json,
+// kept for the doc catalog / test fixtures, not for driving buildStructure()).
+// buildStructure()'s empty-$view fallback re-parses a captured HTML-string
+// snapshot of the element's current children to "restore" them — safe for
+// pure markup, but destructive for anything with JS-attached behavior state
+// (e.g. wb-demo's pre.js toggle listener): the re-parsed copy LOOKS
+// identical (classes/styles are textual) but was never actually processed,
+// and pre.js's own idempotency guard (checking classList) then skips it,
+// leaving a listener-less look-alike in place of the real, working element.
+// Confirmed live: wb-demo's "view source" toggle silently stopped
+// responding to clicks whenever WB.scan()'s schema loop raced
+// WBDemo.connectedCallback() (root-caused via the #312 investigation).
+const SCHEMA_EXCLUDED_TAGS = new Set(['wb-demo']);
+
 function detectSchema(element) {
   const tagName = element.tagName.toLowerCase();
-  
+
   // 1. Web component tag: wb-card>
   if (tagName.startsWith('wb-')) {
+    if (SCHEMA_EXCLUDED_TAGS.has(tagName)) return null;
     const mapped = tagToSchema.get(tagName);
     if (mapped) return mapped;
     // Only claim a derived name if a schema is actually registered for it.

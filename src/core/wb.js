@@ -126,6 +126,16 @@ const applied = new WeakMap();
 const pending = new WeakMap();
 // Track schema-processed elements
 const schemaProcessed = new WeakSet();
+// Track elements currently mid-processSchema() (#312 follow-up): scan()'s
+// schema loop, observe()'s MutationObserver, and schema-builder's own
+// internal WB.inject() call can all independently reach processSchema() for
+// the SAME element while its schema's first-ever fetch is still in flight —
+// schemaProcessed is only set AFTER that fetch resolves, so none of the
+// concurrent callers see it in time. Previously masked by the old bulk
+// loadSchemas() call, which pre-warmed every schema into the registry
+// before scan() ever ran, so this fetch was never actually in flight during
+// scan(). Claiming synchronously (before the first await) closes the race.
+const schemaPending = new WeakSet();
 
 /**
  * WB - Web Behavior Core
@@ -271,36 +281,62 @@ const WB = {
       return;
     }
 
+    // <wb-demo> owns its content via WBDemo.connectedCallback() (demo.js),
+    // which builds behavior-enhanced DOM directly (pre.js wraps its "view
+    // source" panel with a real click listener). demo.schema.json exists
+    // (for the doc catalog / test fixtures) but its empty $view makes
+    // buildStructure() fall back to capturing element.innerHTML as a string
+    // and re-parsing it back in — that reparse produces a listener-less
+    // look-alike, and pre.js's own idempotency guard (classList-based) then
+    // skips ever wrapping the real, visible node. Whichever of
+    // connectedCallback() / this schema pass ran second silently won,
+    // orphaning the other's work. Confirmed live: the code-block collapse
+    // toggle silently stopped responding to clicks (#312 investigation).
+    if (element.tagName === 'WB-DEMO') {
+      return;
+    }
+
     // Get schema name from tag or x-* attributes
     const name = schemaName || WB._detectSchemaName(element);
     dlog(`[WB.processSchema] Processing element ${element.tagName}, detected schema: ${name}`);
     if (!name) return;
-    
-    // Check if schema exists
-    let schema = SchemaBuilder.getSchema(name);
-    if (!schema) {
-      dlog(`[WB] Schema for "${name}" not registered yet — fetching on demand`);
-      try {
-        // If caller requested blocking behavior (initial scan), await the fetch so processing is deterministic
-        const loaded = await SchemaBuilder.loadSchemaFile(`${name}.schema.json`);
-        if (!loaded) return;
-        schema = SchemaBuilder.getSchema(name);
-        if (!schema) return;
-      } catch (err) {
-        console.warn('[WB] on-demand schema fetch failed:', err && err.message);
-        return;
-      }
-    }
 
-    // Process through schema builder (builds DOM from $view)
+    // Claim this element before the first await — a concurrent caller
+    // (scan()'s loop, observe()'s MutationObserver, schema-builder's own
+    // WB.inject() call) racing in during the schema fetch below must bail
+    // here instead of independently fetching/processing the same element.
+    if (schemaPending.has(element)) return;
+    schemaPending.add(element);
+
     try {
-      dlog(`[WB.processSchema] Calling SchemaBuilder.processElement for ${element.tagName}`);
-      SchemaBuilder.processElement(element, name);
-      schemaProcessed.add(element);
-      element.setAttribute('x-schema', name);
-      dlog(`[WB.processSchema] Schema processing complete for ${element.tagName}`);
-    } catch (err) {
-      console.error('[WB] processSchema failed for', name, err && err.message);
+      // Check if schema exists
+      let schema = SchemaBuilder.getSchema(name);
+      if (!schema) {
+        dlog(`[WB] Schema for "${name}" not registered yet — fetching on demand`);
+        try {
+          // If caller requested blocking behavior (initial scan), await the fetch so processing is deterministic
+          const loaded = await SchemaBuilder.loadSchemaFile(`${name}.schema.json`);
+          if (!loaded) return;
+          schema = SchemaBuilder.getSchema(name);
+          if (!schema) return;
+        } catch (err) {
+          console.warn('[WB] on-demand schema fetch failed:', err && err.message);
+          return;
+        }
+      }
+
+      // Process through schema builder (builds DOM from $view)
+      try {
+        dlog(`[WB.processSchema] Calling SchemaBuilder.processElement for ${element.tagName}`);
+        SchemaBuilder.processElement(element, name);
+        schemaProcessed.add(element);
+        element.setAttribute('x-schema', name);
+        dlog(`[WB.processSchema] Schema processing complete for ${element.tagName}`);
+      } catch (err) {
+        console.error('[WB] processSchema failed for', name, err && err.message);
+      }
+    } finally {
+      schemaPending.delete(element);
     }
   },
   
@@ -775,21 +811,16 @@ const WB = {
       Theme.set(theme);
     }
 
-    // v3.0: Initialize Schema Builder
+    // v3.0: Schema Builder is on-demand only (#312) — WB.scan(), just below,
+    // walks the DOM for actual wb-* tags and fetches each one's schema via
+    // processSchema() -> loadSchemaFile() as it's encountered. Bulk-fetching
+    // every schema in index.json here (as this used to do) duplicated that
+    // work and cost 81 network requests on a page that uses ~9 tags.
     if (useSchemas) {
       dlog('═══════════════════════════════════════════════════════');
       dlog('  WB Behaviors v3.0 - MVVM Architecture');
       dlog('═══════════════════════════════════════════════════════');
-      dlog('[WB.init] useSchemas is true, initializing SchemaBuilder...');
-      
-      try {
-        await SchemaBuilder.loadSchemas(schemaPath);
-        dlog(`[WB.init] Schema Builder loaded ${SchemaBuilder.registry.size} schemas`);
-        dlog('[WB.init] Available schemas:', Array.from(SchemaBuilder.registry.keys()));
-      } catch (error) {
-        console.warn('[WB.init] Failed to load schemas:', error);
-        // Continue without schemas - behaviors still work
-      }
+      dlog('[WB.init] useSchemas is true — schemas load on-demand via WB.scan()');
     } else {
       dlog('[WB.init] useSchemas is false, skipping schema initialization');
     }
