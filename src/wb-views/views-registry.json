@@ -133,7 +133,7 @@
 
     "file-toolbar": {
       "description": "Specialized toolbar for file actions",
-      "template": "<wb-toolbar>\n  <wb-button wb-for=\"item in items\" icon=\"{{item.icon}}\" variant=\"ghost\" label=\"{{item.label}}\"></wb-button>\n</wb-toolbar>",
+      "template": "<wb-toolbar>\n  <wb-button wb-for=\"item in items\" icon=\"{{item.icon}}\" variant=\"ghost\">{{item.label}}</wb-button>\n</wb-toolbar>",
       "attributes": {
         "items": { "type": "array", "required": true }
       }
