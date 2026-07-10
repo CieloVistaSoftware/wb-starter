@@ -50,58 +50,8 @@
       "default": false
     }
   },
-  "$view": [
-    {
-      "name": "container",
-      "tag": "div",
-      "public": false,
-      "required": true,
-      "description": "Internal flex layout container"
-    },
-    {
-      "name": "icon",
-      "tag": "span",
-      "parent": "container",
-      "public": true,
-      "content": "{{icon}}",
-      "createdWhen": "icon",
-      "description": "Alert icon"
-    },
-    {
-      "name": "content",
-      "tag": "div",
-      "parent": "container",
-      "public": true,
-      "required": true,
-      "description": "Content wrapper for title and message"
-    },
-    {
-      "name": "title",
-      "tag": "strong",
-      "parent": "content",
-      "public": true,
-      "content": "{{title}}",
-      "createdWhen": "title",
-      "description": "Alert title/heading"
-    },
-    {
-      "name": "message",
-      "tag": "p",
-      "parent": "content",
-      "public": true,
-      "content": "{{message}}",
-      "description": "Alert message text"
-    },
-    {
-      "name": "close",
-      "tag": "button",
-      "parent": "container",
-      "public": true,
-      "content": "✕",
-      "createdWhen": "dismissible",
-      "description": "Close/dismiss button"
-    }
-  ],
+  "_view_note": "The alert BEHAVIOR (src/wb-viewmodels/feedback.js, alert()) is the SOLE renderer of <wb-alert> — it builds icon/content/dismiss-button and wires the dismiss click handler directly. This $view used to build a COMPETING native <button> dismiss element via buildStructure(), asynchronously (schema processing resolves before the behavior's dynamic import settles) racing feedback.js's own synchronous build+listener-attach — whichever ran second silently won, and the schema's button had no click handler at all. Confirmed live: the dismiss (✕) button did nothing on click ~90% of the time. Emptied, same fix already applied to 'card' (#202) and the views-registry 'button' template.",
+  "$view": [],
   "$methods": {
     "show": {
       "description": "Shows the alert",

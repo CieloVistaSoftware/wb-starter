@@ -110,47 +110,8 @@
       "appliesClass": "wb-button--icon-only"
     }
   },
-  "$view": [
-    {
-      "name": "icon-start",
-      "tag": "span",
-      "public": true,
-      "content": "{{icon}}",
-      "createdWhen": "icon AND iconPosition == 'start'",
-      "description": "Icon before label"
-    },
-    {
-      "name": "label",
-      "tag": "span",
-      "public": true,
-      "content": "{{label}}",
-      "createdWhen": "label",
-      "description": "Button text from attribute"
-    },
-    {
-      "name": "label",
-      "tag": "span",
-      "public": true,
-      "content": "{{slot}}",
-      "createdWhen": "slot AND NOT label",
-      "description": "Button text from content"
-    },
-    {
-      "name": "icon-end",
-      "tag": "span",
-      "public": true,
-      "content": "{{icon}}",
-      "createdWhen": "icon AND iconPosition == 'end'",
-      "description": "Icon after label"
-    },
-    {
-      "name": "spinner",
-      "tag": "span",
-      "public": false,
-      "createdWhen": "loading",
-      "description": "Loading spinner"
-    }
-  ],
+  "_view_note": "The button BEHAVIOR (src/wb-viewmodels/semantics/button.js) is the SOLE renderer of <wb-button> — its own comment: 'CSS targets the tag and attributes directly. No inner <button> created. No classes added.' This $view rebuilt content via buildStructure() (element.innerHTML = '' then rebuild from $view/slot) whenever schema processing reached a <wb-button> — including ones created and populated by OTHER behaviors at runtime (e.g. feedback.js's alert() dismiss button, plain textContent = '×'), silently replacing that content with a span-wrapped version and contributing to the alert dismiss-button bug (see alert.schema.json). Emptied, same fix already applied to 'card' (#202) and 'alert'.",
+  "$view": [],
   "$methods": {
     "enable": {
       "description": "Enables the button",

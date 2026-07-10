@@ -44,8 +44,8 @@
     },
 
     "button": {
-      "description": "Primary action button",
-      "template": "<button class=\"btn btn--{{variant || 'primary'}} btn--{{size || 'md'}}\" x-ripple {{disabled ? 'disabled' : ''}}>\n  <span class=\"btn__icon\" wb-if=\"icon\">{{icon}}</span>\n  <span class=\"btn__label\"><slot>{{label}}</slot></span>\n</button>",
+      "description": "Primary action button. The button BEHAVIOR (src/wb-viewmodels/semantics/button.js) is the SOLE renderer of <wb-button> — it deliberately does no DOM restructuring (CSS targets the tag/attributes directly) and adds tabindex/role for accessibility. This legacy MVVM template rebuilt a competing native <button class=\"btn ...\"> on a SETTIMEOUT(0) DEFER, asynchronously replacing whatever the SYNCHRONOUS caller had already built and wired up (e.g. feedback.js's alert() dismiss button) — any click listener attached before that timeout fired was silently discarded. Neutralized to a passthrough so button.js owns the DOM, same fix already applied to 'card' (#202).",
+      "template": "<slot></slot>",
       "attributes": {
         "label": { "type": "string", "required": true },
         "variant": { "type": "string", "enum": ["primary", "secondary", "success", "warning", "error", "ghost", "outline"], "default": "primary" },

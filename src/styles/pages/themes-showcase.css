@@ -16,7 +16,11 @@
 
 .page__hero p {
   color: var(--text-secondary);
-  margin: 0;
+  /* NOT margin: 0 — site.css's .page__hero p sets max-width:600px +
+     margin:0 auto to center the paragraph's own box within the wider
+     hero; overriding to margin:0 here (this file loads after site.css)
+     kept the box's max-width but dropped the auto-centering, leaving it
+     flush-left while the <h1> above it stayed centered. */
 }
 
 .themes-stats {

@@ -8,6 +8,8 @@
  * state via `.wb-switch__input:checked ~ .wb-switch__track`. Also supports the
  * legacy form where the element IS a bare <input type=checkbox>. (#197)
  */
+import { createToast } from '../feedback.js';
+
 export function switchInput(element, options = {}) {
   const host = element;
   const isBareCheckbox = host.tagName === 'INPUT' && host.type === 'checkbox';
@@ -82,11 +84,27 @@ export function switchInput(element, options = {}) {
     input.addEventListener('change', applyTheme);
   }
 
+  // Optional: <wb-switch notify-control> demonstrates what the switch
+  // actually does — toggling it ON fires a real toast, OFF is silent.
+  // A demo switch labeled "Notifications" that just flips visually with
+  // no observable effect doesn't show what it does (docs/standards/
+  // DEMOS-AND-DOCS-STANDARDS.md — demo switches must invoke their effect).
+  let notifyOnChange = null;
+  if (!isBareCheckbox && host.hasAttribute('notify-control')) {
+    notifyOnChange = () => {
+      if (input.checked) {
+        createToast(host.getAttribute('label') ? `${host.getAttribute('label')} enabled` : 'Notifications enabled', 'success');
+      }
+    };
+    input.addEventListener('change', notifyOnChange);
+  }
+
   return () => {
     host.removeEventListener('click', onClick);
     host.removeEventListener('keydown', onKey);
     input.removeEventListener('change', sync);
     if (applyTheme) input.removeEventListener('change', applyTheme);
+    if (notifyOnChange) input.removeEventListener('change', notifyOnChange);
   };
 }
 

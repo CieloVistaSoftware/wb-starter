@@ -322,18 +322,30 @@ function buildStructure(element, schema, data) {
   
   // Apply variant/modifier classes from data
   applyVariantClasses(element, schema, data);
-  
+
+  // Empty $view means the component's BEHAVIOR owns all DOM content, not
+  // the schema (card #202, demo, alert, button). NEVER touch innerHTML in
+  // that case. This used to always wipe element.innerHTML then restore it
+  // from data.slot (element.innerHTML captured as a string BEFORE the
+  // wipe) — a serialize/clear/reparse round-trip that silently destroys
+  // any live state the behavior already attached (event listeners, etc.)
+  // whenever this runs AFTER the behavior has built its real DOM. That
+  // race is real: WB.observe()'s MutationObserver independently calls
+  // processSchema() on reparented elements (e.g. demo.js moving existing
+  // children into its grid), and when the schema isn't cached yet its
+  // on-demand fetch can resolve well after the behavior already ran —
+  // confirmed live as feedback.js's alert() dismiss button silently
+  // losing its click listener (~90% of loads).
+  if (schema.$view && schema.$view.length === 0) {
+    return;
+  }
+
   // Clear existing content (we saved it as slot)
   element.innerHTML = '';
-  
+
   // Build from $view (MVVM format)
   if (schema.$view) {
     buildFromView(element, schema, data);
-    // If $view is empty, restore original slot content
-    // This is common for components that process their content (like mdhtml)
-    if (schema.$view.length === 0 && data.slot) {
-      element.innerHTML = data.slot;
-    }
     return;
   }
   

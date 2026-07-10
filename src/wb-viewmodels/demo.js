@@ -201,9 +201,23 @@ export async function demo(element, options = {}) {
     pre.appendChild(code);
     element.appendChild(pre);
 
-    // Syntax highlight
+    // Syntax highlight the "view source" panel just created above — scoped to
+    // `pre` specifically, NOT `element` (the whole wb-demo, including its
+    // grid of MOVED, pre-existing children like wb-alert/wb-card/etc.).
+    // Scanning the whole element used to be harmless because every demo()
+    // call came from the global WB.scan(main) pass itself, so there was
+    // only ever one scan in flight. Building eagerly now (#312 follow-up)
+    // means demo() can run synchronously in connectedCallback, OUTSIDE
+    // that global scan — scanning `element` here then raced the separate,
+    // concurrent WB.scan(main) call over the SAME grid children, both
+    // independently discovering e.g. <wb-alert> and injecting its behavior.
+    // WB.inject()'s own guards prevented the behavior from running twice,
+    // but not reliably enough: confirmed live, the alert's dismiss button
+    // ended up listener-less ~90% of the time. The grid's children are
+    // already covered by the global scan; only the new pre/code panel
+    // needs one here.
     if (window.WB) {
-        window.WB.scan(element);
+        window.WB.scan(pre);
     }
 
     return () => {};

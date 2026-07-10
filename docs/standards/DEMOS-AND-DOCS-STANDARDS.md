@@ -167,6 +167,15 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   `tests/compliance/no-empty-x-attr-values.spec.ts`; fix with
   `node scripts/remove-empty-x-attr-values.mjs`.
 
+## 22. A demo switch that represents a real capability must invoke it
+
+- When a switch demo's label names an actual effect (e.g. "Notifications", "Dark Mode"),
+  turning it ON must **actually demonstrate that effect** — not just flip visually with no
+  observable result. A "Notifications" toggle that does nothing on activation doesn't show
+  what it does. Use `<wb-switch notify-control>` to fire a real toast when switched ON
+  (see `src/wb-viewmodels/semantics/switch.js`); `theme-control` is the existing precedent
+  for the same idea applied to the "Dark Mode" switch.
+
 ---
 
 ## Enforcement & references
@@ -179,6 +188,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 | 5, 8 (no double-parse) | `tests/integration/doc-viewer-code-multiline.spec.ts`; `docs/_today/ROOT-CAUSE-md-double-parse.md` |
 | 9 (composition) | `tests/compliance/no-legacy-component-inheritance-docs.spec.ts` |
 | 11 (colors) | `tests/compliance/css-oop-compliance.spec.ts` |
+| 22 (switch invokes effect) | `tests/behaviors/notify-control-switch.spec.ts` |
 
 Open work to bring existing surfaces to this standard: #246 (behaviors-showcase selects),
 #247 (behaviors-showcase mobile nav), #248 (no horizontal scrollbars), and the remaining
