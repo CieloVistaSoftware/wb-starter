@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { execSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -97,31 +97,49 @@ if (testsToRun.length === 0) {
 
 console.log(`\nRunning ${testsToRun.length} test files...`);
 
-// 4. Run Playwright
-const REPORT_FILE = path.join(ROOT, '.test-results-temp.json');
-const cmd = `npx playwright test ${testsToRun.join(' ')} --reporter=json --workers=8`;
+// 4. Run Playwright, batched to stay well under OS command-line limits.
+// Previously this joined every changed file path into one shell string
+// (`npx playwright test <files> ...`) and ran it via execSync — with
+// enough changed files (e.g. 284 on a checkout with a stale cache) that
+// line exceeded Windows' ~8191-char cmd.exe limit, so execSync threw
+// before Playwright ever started, and (since the process never produced
+// stdout) the catch block's else branch swallowed the real error behind
+// "Test execution failed without output." (#315). spawnSync with an argv
+// array avoids shell command-line parsing entirely, and batching keeps
+// each invocation small regardless of platform.
+const BATCH_SIZE = 40;
+// Invoke Playwright's CLI directly via `node` rather than the `npx`/`npx.cmd`
+// shim — avoids needing shell:true on Windows (which Node's own deprecation
+// warning flags: unescaped array args concatenated into a shell command line
+// is a real injection risk in general, even though these particular args are
+// just repo-internal file paths). `node <script>` is a real executable, so
+// spawnSync can invoke it directly with an argv array, no shell involved.
+const playwrightCli = path.join(ROOT, 'node_modules', '@playwright', 'test', 'cli.js');
 
 console.log('Executing Playwright...');
 
-try {
-  const env = { ...process.env, PLAYWRIGHT_JSON_OUTPUT_NAME: REPORT_FILE };
-  
-  const output = execSync(cmd, { 
-    cwd: ROOT, 
-    env: env,
-    encoding: 'utf-8', 
-    stdio: 'pipe',
-    maxBuffer: 1024 * 1024 * 10 
+for (let i = 0; i < testsToRun.length; i += BATCH_SIZE) {
+  const batch = testsToRun.slice(i, i + BATCH_SIZE);
+  const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+  const totalBatches = Math.ceil(testsToRun.length / BATCH_SIZE);
+  const batchReportFile = path.join(ROOT, `.test-results-temp-${i}.json`);
+
+  console.log(`  Batch ${batchNum}/${totalBatches}: ${batch.length} files`);
+
+  const result = spawnSync(process.execPath, [playwrightCli, 'test', ...batch, '--reporter=json', '--workers=8'], {
+    cwd: ROOT,
+    env: { ...process.env, PLAYWRIGHT_JSON_OUTPUT_NAME: batchReportFile },
+    encoding: 'utf-8',
+    maxBuffer: 1024 * 1024 * 10,
   });
-  
-  processResults(output, REPORT_FILE);
-  
-} catch (e) {
-  if (e.stdout) {
-    processResults(e.stdout.toString(), REPORT_FILE);
-  } else {
-    console.error('Test execution failed without output.');
+
+  if (result.error) {
+    console.error(`Batch ${batchNum} failed to launch:`, result.error.message);
+    continue;
   }
+
+  processResults(result.stdout || '', batchReportFile);
+  try { fs.unlinkSync(batchReportFile); } catch { /* already cleaned up or never written */ }
 }
 
 function processResults(stdout, reportFile) {
