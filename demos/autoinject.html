@@ -916,8 +916,14 @@ function hello() {
     </div>
     <div id="autoinject-div-typo-code" style="margin-top: 1rem;">
       <h4 id="autoinject-h4-typo-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
+      <!-- #260: the outer fence must use MORE backticks than any fence
+           nested inside it (CommonMark rule) — a 3-backtick outer fence
+           closes at the FIRST 3-backtick line it finds, which was the
+           inner ```javascript block's own closing fence, truncating this
+           block and leaving `</div>` + the real closing ``` as orphaned
+           trailing text outside the rendered code block. -->
       <wb-mdhtml id="autoinject-mdhtml-typo">
-```html
+````html
 &lt;!-- Keyboard Keys --&gt;
 &lt;p&gt;Press &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt; to copy.&lt;/p&gt;
 
@@ -928,7 +934,7 @@ function hello() {
 &lt;p&gt;Don't forget to &lt;mark&gt;highlight important text&lt;/mark&gt;.&lt;/p&gt;
 
 &lt;!-- Custom Color Highlights --&gt;
-&lt;p&gt;You can also use &lt;mark color="blue"&gt;custom colors&lt;/mark&gt; 
+&lt;p&gt;You can also use &lt;mark color="blue"&gt;custom colors&lt;/mark&gt;
    or &lt;mark color="#ff00ff"&gt;hex codes&lt;/mark&gt;.&lt;/p&gt;
 
 &lt;!-- Code Block --&gt;
@@ -939,7 +945,7 @@ function hello() {
   }
   ```
 &lt;/div&gt;
-```
+````
       </wb-mdhtml>
     </div>
   </section>
