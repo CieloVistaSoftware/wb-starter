@@ -13,7 +13,7 @@ let lastInteraction = { from: 'System', to: 'Idle', timestamp: 0 };
 if (typeof document !== 'undefined') {
   document.addEventListener('click', (e) => {
     try {
-      const target = e.target.closest('button, a, input, select, textarea, summary, [onclick], ');
+      const target = e.target.closest('button, a, input, select, textarea, summary, [onclick]');
       if (target) {
         // Determine "From" (Element name/text)
         let from = target.tagName.toLowerCase();

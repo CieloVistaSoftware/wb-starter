@@ -1265,7 +1265,7 @@ document.body.appendChild(div);
       // Ignore if clicking on the toast itself or its container
       if (e.target.closest('.wb-toast-container')) return;
 
-      const target = e.target.closest('button, a, input, select, textarea, summary, ');
+      const target = e.target.closest('button, a, input, select, textarea, summary');
       
       if (target) {
         // Determine "From" (Element name/text)
@@ -1310,6 +1310,7 @@ document.body.appendChild(div);
 
     // Dynamic injection demo
     let dynamicCounter = 0;
+    const dynamicMarkupLog = [];
     document.getElementById('add-btn').addEventListener('click', () => {
       dynamicCounter++;
       const container = document.getElementById('dynamic-area');
@@ -1319,11 +1320,24 @@ document.body.appendChild(div);
       div.style.animation = 'fadeIn 0.5s ease';
       div.innerHTML = `
         <label id="autoinject-dynamic-label-${dynamicCounter}">
-          <input id="autoinject-dynamic-input-${dynamicCounter}" type="checkbox"> 
+          <input id="autoinject-dynamic-input-${dynamicCounter}" type="checkbox">
           New Checkbox #${dynamicCounter}
         </label>
       `;
       container.appendChild(div);
+
+      // #256: the Code panel must reflect the live DOM, not stay a static
+      // snippet — append each addition's real markup and re-highlight.
+      dynamicMarkupLog.push(
+        `<label>\n  <input type="checkbox">\n  New Checkbox #${dynamicCounter}\n</label>`
+      );
+      const codeEl = document.querySelector('#autoinject-mdhtml-dynamic code');
+      if (codeEl) {
+        codeEl.className = codeEl.className.replace(/language-\w+/, 'language-html');
+        codeEl.textContent = dynamicMarkupLog.join('\n\n');
+        delete codeEl.dataset.highlighted;
+        if (window.hljs) { window.hljs.highlightElement(codeEl); }
+      }
     });
 
     // Form submission handler
