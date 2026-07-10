@@ -16,14 +16,19 @@ async function waitForWizardReady(page: Page) {
 }
 
 async function selectComponent(page: Page, name: string) {
-  // Find the option whose text contains the name (case-insensitive)
+  // Prefer an exact match on the option text before its "(wb-...)" suffix —
+  // a loose substring match picked "Button Card (wb-cardbutton)" over the
+  // real "Button (wb-button)" for selectComponent(page, 'Button') (#320),
+  // since "Button Card" also contains "button" and came first in DOM order.
+  // Fall back to substring for callers that rely on it (e.g. 'badge', 'Demo').
   const value = await page.evaluate((n) => {
     const picker = document.getElementById('componentPicker') as HTMLSelectElement;
     const lower = n.toLowerCase();
-    for (const opt of Array.from(picker.options)) {
-      if (opt.text.toLowerCase().includes(lower)) return opt.value;
-    }
-    return '';
+    const options = Array.from(picker.options);
+    const exact = options.find((opt) => opt.text.toLowerCase().replace(/\s*\(.*\)\s*$/, '') === lower);
+    if (exact) return exact.value;
+    const partial = options.find((opt) => opt.text.toLowerCase().includes(lower));
+    return partial ? partial.value : '';
   }, name);
   if (!value) throw new Error(`No option found matching "${name}"`);
   await page.selectOption('#componentPicker', value);
