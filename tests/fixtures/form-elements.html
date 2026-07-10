@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Form elements auto-inject fixture</title>
+  <link rel="stylesheet" href="/src/styles/themes.css">
+</head>
+<body>
+  <!-- #290: lightweight, robustly-selectable fixture for the auto-inject
+       Form Elements block — replaces the heavy 38-demo autoinject.html
+       target, whose element IDs drift every time that page's content
+       changes. -->
+  <label><input type="checkbox" id="fixture-checkbox"> A checkbox</label>
+
+  <select id="fixture-select">
+    <option value="a">A</option>
+    <option value="b">B</option>
+  </select>
+
+  <article id="fixture-article">An article, auto-injected as a card.</article>
+
+  <script type="module">
+    import WB from '/src/core/wb.js';
+    window.__wbDone = false;
+    WB.init({ autoInject: true }).then(() => WB.scan(document.body)).then(() => { window.__wbDone = true; });
+  </script>
+</body>
+</html>
