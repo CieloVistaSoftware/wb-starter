@@ -117,7 +117,10 @@ test.describe('Card Behavior (integration)', () => {
   test('should render subtitle when subtitle attribute present', async ({ page }) => {
     await injectCard(page, '<wb-card title="Title" subtitle="Sub">Content</wb-card>');
     const card = page.locator('#test-container wb-card');
-    const subtitle = card.locator('header p');
+    // card.js renders subtitle as <div class="wb-card__subtitle"> inside
+    // <header> (src/wb-viewmodels/card.js createHeader()), not a <p> —
+    // the old selector never matched anything (#317).
+    const subtitle = card.locator('header .wb-card__subtitle');
     await expect(subtitle).toContainText('Sub');
   });
 
