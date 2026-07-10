@@ -88,8 +88,15 @@ if (document.readyState === 'loading') {
 // heuristics, which can hold stale assets far longer than a browser tab.
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
+    // Derive both the script URL and its scope from wherever main.js
+    // actually loaded from, rather than hardcoding a path — correct on
+    // both local dev (served from origin root) and GitHub Pages (served
+    // under /wb-starter/) without an environment check. (#316, #318)
+    const swUrl = new URL('../sw.js', import.meta.url);
     navigator.serviceWorker
-      .register(new URL('../sw.js', import.meta.url), { scope: '../' })
-      .catch((err) => console.warn('[sw] registration failed:', err && err.message));
+      .register(swUrl, { scope: new URL('.', swUrl).href })
+      .catch((err) =>
+        console.warn("[sw] registration failed:", err && err.message),
+      );
   });
 }
