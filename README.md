@@ -2,6 +2,9 @@
 
 A modern website starter kit powered by [WB Behaviors](https://github.com/CieloVistaSoftware/wb-behaviors). Config-driven, zero build step, 23 themes included.
 
+## Try it out
+[Try it out here](https://cielovistasoftware.github.io/wb-starter/]
+
 ## 🚀 Quick Start
 
 1. Clone this repo
