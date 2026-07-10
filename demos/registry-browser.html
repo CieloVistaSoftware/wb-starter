@@ -9,20 +9,27 @@
   <link rel="stylesheet" href="wb-views-demo.css">
   <style>
     /* Registry Browser Specific Styles */
+    /* border-radius + overflow live on the WRAPPER, not the table itself —
+       overflow:hidden directly on the table silently clipped the Template
+       Source column's content instead of letting it reflow (#263). */
+    .registry-table-wrapper {
+      margin-top: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
     .registry-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1rem;
       background: var(--bg-secondary);
-      border-radius: 8px;
-      overflow: hidden;
     }
-    .registry-table th, 
+    .registry-table th,
     .registry-table td {
       padding: 1rem;
       text-align: left;
       border-bottom: 1px solid var(--border-color);
       vertical-align: top;
+      position: relative;
     }
     .registry-table th {
       background: var(--bg-tertiary);
@@ -33,6 +40,38 @@
       color: var(--text-muted);
     }
     .registry-table tr:last-child td { border-bottom: none; }
+
+    /* Below 700px a 3-column table can't stay readable — stack each row
+       into a labeled card instead of clipping or scrolling horizontally
+       (Standard §6: never a horizontal scrollbar). */
+    @media (max-width: 700px) {
+      .registry-table thead { display: none; }
+      .registry-table, .registry-table tbody, .registry-table tr, .registry-table td {
+        display: block;
+        width: 100%;
+      }
+      .registry-table tr {
+        margin-bottom: 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .registry-table td {
+        border-bottom: 1px solid var(--border-color);
+      }
+      .registry-table tr:last-child { margin-bottom: 0; }
+      .registry-table td:last-child { border-bottom: none; }
+      .registry-table td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+        margin-bottom: 0.4rem;
+      }
+    }
     
     .view-name {
       font-family: 'Fira Code', monospace;
@@ -85,6 +124,21 @@
       <p>Live documentation of all registered views in <code>src/wb-views/views-registry.json</code>.</p>
     </div>
 
+    <div class="demo-section">
+      <div class="section-content">
+        <h2>What is a registered view?</h2>
+        <p>A <strong>view</strong> is a reusable HTML template registered once under a name — <code>badge</code>, <code>alert-box</code>, <code>file-toolbar</code> — and then usable anywhere as its own custom tag. Change the template in one place and every instance on the page updates. Templates support <code>{{attribute}}</code> interpolation and <code>wb-for</code>/<code>wb-if</code> for lists and conditionals.</p>
+        <p>Single-word names get a <code>wb-</code> prefix as a tag (<code>badge</code> → <code>&lt;wb-badge&gt;</code>); hyphenated names are used as-is (<code>alert-box</code> → <code>&lt;alert-box&gt;</code>). Each view's real tag name is shown under its name in the table below.</p>
+
+        <h3>How to use a registered view</h3>
+        <p>Pick any view from the table below (its tag name is shown under the view name), then use it as a normal HTML element with its listed attributes:</p>
+
+        <wb-demo id="usage-example">
+          <wb-badge label="New" variant="primary"></wb-badge>
+        </wb-demo>
+      </div>
+    </div>
+
     <div id="registry-container" class="demo-section">
       <div class="section-content">
         <p>Loading registry...</p>
@@ -94,9 +148,17 @@
 
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
+    import { initViews } from '../src/core/wb-views.js';
 
     // Initialize WB
     WB.init({ scan: false }); // We'll scan manually after content load
+
+    // #263: this page never called initViews() — the wb-views template
+    // system that actually registers custom tags (<badge>, <alert-box>,
+    // etc.) from the registry was never initialized, so the "how to use"
+    // live example below couldn't have worked even with correct markup.
+    await initViews({ registry: '../src/wb-views/views-registry.json' });
+    await WB.scan(document.getElementById('usage-example'));
 
     async function loadRegistry() {
       const container = document.getElementById('registry-container');
@@ -116,6 +178,7 @@
             <h2>Registered Views</h2>
             <span class="badge">${sortedKeys.length} items</span>
           </div>
+          <div class="registry-table-wrapper">
           <table class="registry-table">
             <thead>
               <tr>
@@ -143,17 +206,17 @@
 
           html += `
             <tr>
-              <td>
+              <td data-label="View Name">
                 <div class="view-name">${key}</div>
                 <div style="margin-top:0.5rem; font-size: 0.75rem; color: var(--text-muted);">
                    &lt;${key.includes('-') ? key : 'wb-' + key}&gt;
                 </div>
               </td>
-              <td>
+              <td data-label="Description &amp; Attributes">
                 <div class="view-desc">${view.description || 'No description provided.'}</div>
                 ${attributesHtml}
               </td>
-              <td style="min-width: 400px; max-width: 600px;">
+              <td data-label="Template Source">
                 <wb-mdhtml>
 \`\`\`html
 ${view.template.replace(/`/g, '\\`')}
@@ -163,8 +226,8 @@ ${view.template.replace(/`/g, '\\`')}
             </tr>
           `;
         });
-        
-        html += `</tbody></table>`;
+
+        html += `</tbody></table></div>`;
         container.innerHTML = html;
         
         // Scan for new behaviors
