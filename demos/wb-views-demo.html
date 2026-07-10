@@ -121,7 +121,7 @@
     <!-- File Toolbar -->
     <template wb-view="file-toolbar">
       <wb-toolbar>
-        <wb-button wb-for="item in items" icon="{{item.icon}}" variant="ghost" label="{{item.label}}"></wb-button>
+        <wb-button wb-for="item in items" icon="{{item.icon}}" variant="ghost">{{item.label}}</wb-button>
       </wb-toolbar>
     </template>
 
@@ -162,11 +162,11 @@
     <demo-section title="🔘 Buttons" badge="variants + icons">
         <example-block label="Standard Buttons (wb-button)">
             <div class="inline-row">
-              <wb-button label="Primary"></wb-button>
-              <wb-button variant="secondary" label="Secondary"></wb-button>
-              <wb-button variant="success" label="Success"></wb-button>
-              <wb-button icon="💾" label="Save"></wb-button>
-              <wb-button icon="🗑️" variant="error" label="Delete"></wb-button>
+              <wb-button>Primary</wb-button>
+              <wb-button variant="secondary">Secondary</wb-button>
+              <wb-button variant="success">Success</wb-button>
+              <wb-button icon="💾">Save</wb-button>
+              <wb-button icon="🗑️" variant="error">Delete</wb-button>
             </div>
         </example-block>
     </demo-section>
@@ -466,9 +466,9 @@
 
         <example-block label="Button Group (Container View)">
             <button-group>
-              <wb-button label="Left"></wb-button>
-              <wb-button label="Center"></wb-button>
-              <wb-button label="Right"></wb-button>
+              <wb-button>Left</wb-button>
+              <wb-button>Center</wb-button>
+              <wb-button>Right</wb-button>
             </button-group>
         </example-block>
 
@@ -476,8 +476,8 @@
             <wb-card title="User Settings" subtitle="Manage your preferences">
               <p style="margin-bottom: 1rem; color: var(--text-muted);">Update your account settings and preferences below.</p>
               <div class="inline-row">
-                <wb-button label="Save Changes"></wb-button>
-                <wb-button variant="secondary" label="Cancel"></wb-button>
+                <wb-button>Save Changes</wb-button>
+                <wb-button variant="secondary">Cancel</wb-button>
               </div>
             </wb-card>
         </example-block>

@@ -17,7 +17,6 @@ Interactive button with variants, sizes, and optional icon.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `label` | string | `""` | Button text |
 | `icon` | string | `""` | Icon (emoji or icon name) |
 | `iconPosition` | string | `"start"` | Icon position: `start`, `end` |
 | `variant` | string | `"primary"` | Visual style: `primary`, `secondary`, `success`, `warning`, `error`, `ghost`, `outline`, `link` |
@@ -27,12 +26,14 @@ Interactive button with variants, sizes, and optional icon.
 | `fullWidth` | boolean | `false` | Full width button |
 | `iconOnly` | boolean | `false` | Icon-only button (square) |
 
+Button text is set via the element's content (children), not an attribute.
+
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-button label="Click Me"></wb-button>
+<wb-button>Click Me</wb-button>
 ```
 
 ### Native Button (Enhanced)
