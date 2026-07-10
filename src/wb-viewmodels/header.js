@@ -11,15 +11,11 @@
  * -----------------------------------------------------------------------------
  */
 
-// Auto-load CSS
-const CSS_ID = 'wb-header-css';
-if (!document.getElementById(CSS_ID)) {
-  const link = document.createElement('link');
-  link.id = CSS_ID;
-  link.rel = 'stylesheet';
-  link.href = new URL('../styles/behaviors/header.css', import.meta.url).href;
-  document.head.appendChild(link);
-}
+// behaviors/header.css is already loaded unconditionally on every page via
+// site.css's own @import — this used to also inject a duplicate <link> for
+// it here, fetching the same file a second time on every load (#312
+// follow-up, confirmed via HAR: header.css was the only behavior CSS file
+// fetched twice per page load).
 
 export function header(element) {
   // Add base class

@@ -54,7 +54,17 @@ self.addEventListener('fetch', event => {
   // unsupported". Never attempt to cache these; just pass them straight
   // through to the network.
   if (event.request.headers.has('range')) {
-    event.respondWith(fetch(event.request));
+    // <audio>/<video> elements commonly issue a small probe range request
+    // (e.g. bytes=0-1) that gets superseded and aborted the instant a real
+    // range request follows — that abort rejects this fetch. Uncaught, it
+    // surfaced as "Uncaught (in promise) TypeError: Failed to fetch" on
+    // every playback, even though the actual (non-aborted) range request
+    // the player cares about succeeds fine. Swallow it same as the other
+    // network-first paths below: never let a rejected fetch escape
+    // respondWith() as an unhandled rejection.
+    event.respondWith(
+      fetch(event.request).catch(() => new Response(null, { status: 499, statusText: 'Client Closed Request' }))
+    );
     return;
   }
 

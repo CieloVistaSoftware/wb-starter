@@ -424,7 +424,16 @@ const WB = {
     root.querySelectorAll('*').forEach(el => {
       const htmlEl = /** @type {HTMLElement} */ (el);
       const tag = htmlEl.tagName.toLowerCase();
-      if (tag.startsWith('wb-') && tag !== 'wb-view') {
+      // wb-demo is excluded here too: WBDemo's own connectedCallback (#312)
+      // lazily defers the 'demo' behavior via IntersectionObserver so
+      // off-screen demo blocks don't all build eagerly on page load. This
+      // unconditional injection loop would otherwise call WB.inject(el,
+      // 'demo') for every wb-demo the instant scan() runs — WB.inject()'s
+      // own "already applied" guard only fires for calls that went THROUGH
+      // WB.inject() (this path bypasses that, since connectedCallback calls
+      // demo() directly), so this loop would win the race against the lazy
+      // observer for literally every block, defeating the deferral entirely.
+      if (tag.startsWith('wb-') && tag !== 'wb-view' && tag !== 'wb-demo') {
         const behaviorName = getElementBehavior(tag);
         if (behaviorName && behaviors[behaviorName]) {
           promises.push(WB.inject(htmlEl, behaviorName));

@@ -13,6 +13,35 @@ import { test, expect } from '@playwright/test';
 
 const WIDTHS = [375, 768, 1280];
 
+test.describe('#312 follow-up — header/footer CSS is not fetched twice', () => {
+  test('behaviors/header.css and behaviors/footer.css are each requested at most once per page load', async ({ page }) => {
+    // header.js/footer.js used to inject their own <link> for these files on
+    // top of site.css's own unconditional @import of both — fetching each
+    // one twice on every single page load. Confirmed via HAR: these were the
+    // only two behavior CSS files (of 46) that duplicated.
+    const cssRequests: string[] = [];
+    page.on('request', (req) => {
+      const url = req.url();
+      if (url.endsWith('/styles/behaviors/header.css') || url.endsWith('/styles/behaviors/footer.css')) {
+        cssRequests.push(url);
+      }
+    });
+
+    await page.goto('http://localhost:3000/');
+    await page.waitForSelector('#siteHeader', { timeout: 20000 });
+    await page.waitForTimeout(500);
+
+    const counts = new Map<string, number>();
+    for (const url of cssRequests) counts.set(url, (counts.get(url) || 0) + 1);
+    const duplicated = [...counts.entries()].filter(([, count]) => count > 1);
+
+    expect(
+      duplicated,
+      `header.css/footer.css should each load once, but found duplicates: ${duplicated.map(([u, c]) => `${u} (${c}x)`).join(', ')}`
+    ).toEqual([]);
+  });
+});
+
 test.describe('#275 — header/footer span the full viewport width', () => {
   for (const width of WIDTHS) {
     test(`header and footer width === clientWidth at ${width}px`, async ({ page }) => {
