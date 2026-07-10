@@ -20,7 +20,7 @@ async function clickNav(page: Page, id: string) {
   // so dispatch the link's own click — it still fires the SPA's navigation
   // handler exactly as a user tap would.
   await page.evaluate((p) => {
-    const link = document.querySelector(`.nav__item[data-page="${p}"]`) as HTMLElement;
+    const link = document.querySelector(`.nav__item[href="?page=${p}"]`) as HTMLElement;
     if (!link) throw new Error('nav link not found: ' + p);
     link.click();
   }, id);

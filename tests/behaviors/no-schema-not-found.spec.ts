@@ -35,7 +35,7 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     // navigate away and back — this is what tripped wb-demo's disconnectedCallback (#174/#175)
     await page.evaluate(() => {
-      const home = document.querySelector('.nav__item[data-page="home"]') as HTMLElement;
+      const home = document.querySelector('.nav__item[href="?page=home"]') as HTMLElement;
       home?.click();
     });
     await page.waitForTimeout(800);

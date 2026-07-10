@@ -272,12 +272,10 @@ export default class WBSite {
       }
       
       return `
-      <a href="${href}" 
-         class="nav__item" 
-         ${!isExternal && item.menuItemId ? `data-page="${item.menuItemId}"` : ''} 
-         ${target ? `target="${target}"` : ''} 
-         x-ripple 
-         id="navItem-${item.menuItemId || item.menuItemText || Math.random().toString(36).substr(2, 9)}">
+      <a href="${href}"
+         class="nav__item"
+         ${target ? `target="${target}"` : ''}
+         x-ripple>
         <span class="nav__icon">${item.menuItemEmoji || ''}</span>
         <span class="nav__label">${item.menuItemText || item.menuItemId}</span>
       </a>
@@ -482,7 +480,9 @@ export default class WBSite {
 
   updateActiveNav() {
     document.querySelectorAll('.nav__item').forEach(item => {
-      item.classList.toggle('nav__item--active', item.dataset.page === this.currentPage);
+      const href = item.getAttribute('href') || '';
+      const page = href.startsWith('?page=') ? new URLSearchParams(href).get('page') : null;
+      item.classList.toggle('nav__item--active', page === this.currentPage);
     });
   }
 
