@@ -53,6 +53,16 @@ function getLazyObserver() {
   return lazyObserver;
 }
 
+// A docs page typically has just 1-5 <wb-demo> blocks, and deep enough into
+// the page's own prose that the FIRST one can already sit well past a normal
+// viewport height + rootMargin (confirmed live: 1361px down on a cardhero
+// doc page, past 900px viewport + 400px margin) — laziness buys nothing
+// there (nobody's deferring 44 blocks) but breaks "the demo is just there,"
+// which readers and tests both expect. Build the first few unconditionally;
+// only defer beyond that, where a real many-block page (behaviors.html,
+// components.html) actually benefits.
+const EAGER_BUILD_COUNT = 5;
+
 export class WBDemo extends HTMLElement {
   constructor() {
     super();
@@ -66,7 +76,24 @@ export class WBDemo extends HTMLElement {
     // upgraded and mutated their own markup.
     this._rawSource = this.innerHTML;
 
-    getLazyObserver().observe(this);
+    // Custom elements upgrade in document order as the parser encounters
+    // them, synchronously — by the time THIS connectedCallback runs, every
+    // earlier <wb-demo> on the page is already connected and shows up here
+    // (demo.js's own source-extraction logic relies on this same ordering
+    // guarantee).
+    const connectedSoFar = document.querySelectorAll('wb-demo');
+    const myIndex = Array.prototype.indexOf.call(connectedSoFar, this);
+
+    if (myIndex < EAGER_BUILD_COUNT) {
+      this._cleanup = demo(this, {
+        title: this.getAttribute('title'),
+        tag: this.getAttribute('tag'),
+        columns: this.getAttribute('columns'),
+        contentClass: this.getAttribute('content-class')
+      });
+    } else {
+      getLazyObserver().observe(this);
+    }
   }
 
   disconnectedCallback() {

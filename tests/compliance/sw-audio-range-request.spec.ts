@@ -34,7 +34,14 @@ test.describe('service worker: audio range requests do not throw unhandled rejec
 
     const audio = page.locator('audio').first();
     await expect(audio).toBeAttached();
-    await audio.evaluate((el: HTMLAudioElement) => el.play().catch(() => {}));
+    // Fire play() without awaiting its promise — CI runners with no real
+    // audio device can leave that promise permanently unsettled (neither
+    // resolving nor rejecting), which previously hung this whole test at
+    // Playwright's evaluate() timeout. The test only needs the range
+    // request itself to fire, not for playback to actually start.
+    await audio.evaluate((el: HTMLAudioElement) => {
+      el.play().catch(() => {});
+    });
     await page.waitForTimeout(1500);
 
     const swErrors = consoleErrors.filter((e) => e.includes('sw.js') || e.includes('Failed to fetch'));

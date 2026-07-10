@@ -22,7 +22,8 @@ import { test, expect } from '@playwright/test';
  *      "close to right" but in the same uniform sequence as lines 2+.
  */
 test('pre.js line-number gutter: line 1 accounts for padding-top, all lines evenly spaced (#298)', async ({ page }) => {
-  await page.goto('/demos/behaviors-showcase.html', { waitUntil: 'networkidle' });
+  // demos/behaviors-showcase.html was retired in favor of the SPA route.
+  await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
 
   // pre.js positions the gutter async (double-rAF, plus a ResizeObserver that
   // can re-fire). Wait until two consecutive animation frames report the same
