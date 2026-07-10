@@ -525,7 +525,7 @@
         <h3 id="autoinject-h3-select-variants" style="margin-top: 1.5rem;">Static Theme Variants</h3>
         <div id="autoinject-div-select-success" class="form-group">
           <label id="autoinject-label-select-success">Success (Static Green Border)</label>
-          <select id="autoinject-select-success" variant="success" style="width: 100%; border-color: var(--success-color); background-color: rgba(34, 197, 94, 0.1);">
+          <select id="autoinject-select-success" variant="success" style="width: 100%; border-color: var(--success-color); background-color: var(--alert-success-bg);">
             <option id="autoinject-option-s-valid">✓ Valid Option</option>
             <option id="autoinject-option-s-approved">✓ Approved</option>
             <option id="autoinject-option-s-complete">✓ Complete</option>
@@ -533,7 +533,7 @@
         </div>
         <div id="autoinject-div-select-error" class="form-group">
           <label id="autoinject-label-select-error">Error (Static Red Border)</label>
-          <select id="autoinject-select-error" variant="error" style="width: 100%; border-color: var(--danger-color); background-color: rgba(239, 68, 68, 0.1);">
+          <select id="autoinject-select-error" variant="error" style="width: 100%; border-color: var(--danger-color); background-color: var(--alert-danger-bg);">
             <option id="autoinject-option-e-invalid">✗ Invalid Option</option>
             <option id="autoinject-option-e-rejected">✗ Rejected</option>
             <option id="autoinject-option-e-failed">✗ Failed</option>
@@ -584,11 +584,17 @@
 &lt;/select&gt;
 
 &lt;!-- Static Theme Variants (visible without selection) --&gt;
-&lt;select variant="success" style="border-color: var(--success-color); background-color: rgba(34, 197, 94, 0.1);"&gt;
+&lt;select
+  variant="success"
+  style="border-color: var(--success-color); background-color: var(--alert-success-bg);"
+&gt;
   &lt;option&gt;✓ Valid Option&lt;/option&gt;
 &lt;/select&gt;
 
-&lt;select variant="error" style="border-color: var(--danger-color); background-color: rgba(239, 68, 68, 0.1);"&gt;
+&lt;select
+  variant="error"
+  style="border-color: var(--danger-color); background-color: var(--alert-danger-bg);"
+&gt;
   &lt;option&gt;✗ Invalid Option&lt;/option&gt;
 &lt;/select&gt;
 
