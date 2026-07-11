@@ -222,6 +222,7 @@ const customElementMappings = [
   { selector: 'wb-darkmode', behavior: 'darkmode' },
   { selector: 'wb-dropdown', behavior: 'dropdown' },
   { selector: 'wb-footer', behavior: 'footer' },
+  { selector: 'wb-form', behavior: 'form' },
   { selector: 'wb-header', behavior: 'header' },
   { selector: 'wb-globe', behavior: 'globe' },
   { selector: 'wb-stagelight', behavior: 'stagelight' },

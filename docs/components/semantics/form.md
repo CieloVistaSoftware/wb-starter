@@ -44,9 +44,12 @@ Enhanced form with AJAX submission, validation, and auto-save.
 
 ### Native Form (Enhanced)
 
+`x-form` alone (no `ajax`) only adds the `.wb-form` class and a `wbForm` JS API (`getData()`/`reset()`/`submit()`) — the form still submits natively (full page navigation). Add `ajax` for the actual AJAX-submission enhancement.
+
 ```html
 <form
   x-form
+  ajax
   action="/api/submit">
   <input
     name="email"

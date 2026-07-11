@@ -65,6 +65,7 @@ export const elementMap = {
   'wb-dropdown': 'dropdown',
   'wb-fireworks': 'fireworks',
   'wb-footer': 'footer',
+  'wb-form': 'form',
   'wb-globe': 'globe',
   'wb-header': 'header',
   'wb-hero': 'hero',
