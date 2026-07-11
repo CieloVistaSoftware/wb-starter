@@ -98,7 +98,7 @@ function toKebab(str) {
 // ─── $generate: Auto-create section from component schema ───
 
 function generateSection(directive) {
-  const { component, source = 'matrix', heading, columns = 3, baseAttrs = {} } = directive;
+  const { component, source = 'matrix', heading, columns = 3, baseAttrs = {}, limit } = directive;
   const schema = findComponentSchema(component);
   const tag = `wb-${schema.schemaFor || component.replace(/^wb-/, '')}`;
   const props = schema.properties || {};
@@ -150,11 +150,17 @@ function generateSection(directive) {
     demos.push({ tag, attrs: { ...baseAttrs } });
   }
 
+  // Component test matrices grow over time as coverage is added — without a
+  // cap, a page generated against an 8-combination matrix today silently
+  // balloons to dozens of demos once the matrix grows, even though nothing
+  // about the page itself changed.
+  const finalDemos = typeof limit === 'number' ? demos.slice(0, limit) : demos;
+
   return {
     heading: heading || `${schema.schemaFor || component} — ${source}`,
     tag,
     columns,
-    demos
+    demos: finalDemos
   };
 }
 

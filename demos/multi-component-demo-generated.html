@@ -7,105 +7,185 @@
   <title>🧩 Multi-Component Demo</title>
   <link rel="stylesheet" href="../src/styles/themes.css">
   <link rel="stylesheet" href="../src/styles/site.css">
+  <style>
+    body {
+      padding: 2rem;
+      background: var(--bg-color);
+      color: var(--text-primary);
+      font-family: system-ui, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.5rem;
+    }
+    h1 { margin: 0; border: none; padding: 0; }
+    h2 {
+      margin: 3rem 0 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+    .demo-section {
+      background: var(--bg-secondary);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+    }
+  </style>
 
 </head>
 
 <body>
-  <h1>🧩 Multi-Component Demo</h1>
+  <header>
+    <h1>🧩 Multi-Component Demo</h1>
+    <wb-themecontrol></wb-themecontrol>
+  </header>
   <p>Composed from multiple sources using $extends, $generate, $ref, and $include</p>
 
   <!-- 1. Badges — From Matrix -->
   <h2>Badges — From Matrix</h2>
-  <wb-demo columns="4">
-    <wb-badge label="New">
-    </wb-badge>
-    <wb-badge label="Done" variant="success">
-    </wb-badge>
-    <wb-badge label="Warning" variant="warning">
-    </wb-badge>
-    <wb-badge label="Error" variant="error">
-    </wb-badge>
-    <wb-badge label="5" variant="primary" pill>
-    </wb-badge>
-    <wb-badge label="Badge" variant="success" dot>
-    </wb-badge>
-    <wb-badge label="Tag" variant="info" removable>
-    </wb-badge>
-    <wb-badge label="Outline" variant="primary" outline>
-    </wb-badge>
-  </wb-demo>
+  <div class="demo-section">
+    <wb-demo columns="4">
+      <wb-badge label="New">
+      </wb-badge>
+      <wb-badge label="Done" variant="success">
+      </wb-badge>
+      <wb-badge label="Warning" variant="warning">
+      </wb-badge>
+      <wb-badge label="Error" variant="error">
+      </wb-badge>
+      <wb-badge label="5" variant="primary" pill>
+      </wb-badge>
+      <wb-badge label="Badge" variant="success" dot>
+      </wb-badge>
+      <wb-badge label="Tag" variant="info" removable>
+      </wb-badge>
+      <wb-badge label="Outline" variant="primary" outline>
+      </wb-badge>
+    </wb-demo>
+  </div>
 
   <!-- 2. Notifications — Matrix Combos -->
   <h2>Notifications — Matrix Combos</h2>
-  <wb-demo columns="3">
-    <wb-cardnotification message="Info message">
-    </wb-cardnotification>
-    <wb-cardnotification message="Done!" variant="success" title="Success">
-    </wb-cardnotification>
-    <wb-cardnotification message="Warning!" variant="warning">
-    </wb-cardnotification>
-    <wb-cardnotification message="Error!" variant="error">
-    </wb-cardnotification>
-    <wb-cardnotification message="Info" variant="info" title="Notice" icon="🔔">
-    </wb-cardnotification>
-  </wb-demo>
+  <div class="demo-section">
+    <wb-demo columns="3">
+      <wb-cardnotification message="Info message">
+      </wb-cardnotification>
+      <wb-cardnotification message="Done!" variant="success" title="Success">
+      </wb-cardnotification>
+      <wb-cardnotification message="Warning!" variant="warning">
+      </wb-cardnotification>
+      <wb-cardnotification message="Error!" variant="error">
+      </wb-cardnotification>
+      <wb-cardnotification message="Info" variant="info" title="Notice" icon="🔔">
+      </wb-cardnotification>
+    </wb-demo>
+  </div>
 
   <!-- 3. Progress — All Enum Variants -->
   <h2>Progress — All Enum Variants</h2>
-  <wb-demo columns="3">
-    <wb-progress variant="default">
-    </wb-progress>
-    <wb-progress variant="primary">
-    </wb-progress>
-    <wb-progress variant="success">
-    </wb-progress>
-    <wb-progress variant="warning">
-    </wb-progress>
-    <wb-progress variant="error">
-    </wb-progress>
-    <wb-progress variant="info">
-    </wb-progress>
-    <wb-progress size="xs">
-    </wb-progress>
-    <wb-progress size="sm">
-    </wb-progress>
-    <wb-progress size="md">
-    </wb-progress>
-    <wb-progress size="lg">
-    </wb-progress>
-    <wb-progress size="xl">
-    </wb-progress>
-  </wb-demo>
+  <div class="demo-section">
+    <wb-demo columns="3">
+      <wb-progress variant="default">
+      </wb-progress>
+      <wb-progress variant="primary">
+      </wb-progress>
+      <wb-progress variant="success">
+      </wb-progress>
+      <wb-progress variant="warning">
+      </wb-progress>
+      <wb-progress variant="error">
+      </wb-progress>
+      <wb-progress variant="info">
+      </wb-progress>
+      <wb-progress size="xs">
+      </wb-progress>
+      <wb-progress size="sm">
+      </wb-progress>
+      <wb-progress size="md">
+      </wb-progress>
+      <wb-progress size="lg">
+      </wb-progress>
+      <wb-progress size="xl">
+      </wb-progress>
+    </wb-demo>
+  </div>
 
-  <!-- 4. badge — Combinations -->
-  <h2>badge — Combinations</h2>
-  <wb-demo columns="3">
-    <wb-badge label="New">
-    </wb-badge>
-    <wb-badge label="Done" variant="success">
-    </wb-badge>
-    <wb-badge label="Warning" variant="warning">
-    </wb-badge>
-    <wb-badge label="Error" variant="error">
-    </wb-badge>
-    <wb-badge label="5" variant="primary" pill>
-    </wb-badge>
-    <wb-badge variant="success" dot>
-    </wb-badge>
-    <wb-badge label="Tag" variant="info" removable>
-    </wb-badge>
-    <wb-badge label="Outline" variant="primary" outline>
-    </wb-badge>
-  </wb-demo>
+  <!-- 4. availability variants -->
+  <h2>availability variants</h2>
+  <div class="demo-section">
+    <wb-demo columns="2">
+      <wb-cardportfolio availability="available" name="Sample name">
+      </wb-cardportfolio>
+      <wb-cardportfolio availability="busy" name="Sample name">
+      </wb-cardportfolio>
+      <wb-cardportfolio availability="not-available" name="Sample name">
+      </wb-cardportfolio>
+      <wb-cardportfolio availability="open-to-opportunities" name="Sample name">
+      </wb-cardportfolio>
+    </wb-demo>
+  </div>
 
-  <!-- 5. Custom Hand-Authored Section -->
+  <!-- 5. variant variants -->
+  <h2>variant variants</h2>
+  <div class="demo-section">
+    <wb-demo columns="2">
+      <wb-cardportfolio variant="default" name="Sample name">
+      </wb-cardportfolio>
+      <wb-cardportfolio variant="compact" name="Sample name">
+      </wb-cardportfolio>
+      <wb-cardportfolio variant="horizontal" name="Sample name">
+      </wb-cardportfolio>
+      <wb-cardportfolio variant="full" name="Sample name">
+      </wb-cardportfolio>
+    </wb-demo>
+  </div>
+
+  <!-- 6. size variants -->
+  <h2>size variants</h2>
+  <div class="demo-section">
+    <wb-demo columns="3">
+      <wb-cardportfolio size="sm" name="Sample name">
+      </wb-cardportfolio>
+      <wb-cardportfolio size="md" name="Sample name">
+      </wb-cardportfolio>
+      <wb-cardportfolio size="lg" name="Sample name">
+      </wb-cardportfolio>
+      <wb-cardportfolio size="xl" name="Sample name">
+      </wb-cardportfolio>
+      <wb-cardportfolio size="full" name="Sample name">
+      </wb-cardportfolio>
+      <wb-cardportfolio size="auto" name="Sample name">
+      </wb-cardportfolio>
+    </wb-demo>
+  </div>
+
+  <!-- 7. cardportfolio — Defaults -->
+  <h2>cardportfolio — Defaults</h2>
+  <div class="demo-section">
+    <wb-demo columns="1">
+      <wb-cardportfolio name="Sample name" availability="available" variant="default" size="auto">
+      </wb-cardportfolio>
+    </wb-demo>
+  </div>
+
+  <!-- 8. Custom Hand-Authored Section -->
   <h2>Custom Hand-Authored Section</h2>
-  <wb-demo columns="2">
-    <wb-badge label="Hand-crafted" variant="primary" pill>
-    </wb-badge>
-    <wb-badge label="Also custom" variant="success" size="lg">
-    </wb-badge>
-  </wb-demo>
+  <div class="demo-section">
+    <wb-demo columns="2">
+      <wb-badge label="Hand-crafted" variant="primary" pill>
+      </wb-badge>
+      <wb-badge label="Also custom" variant="success" size="lg">
+      </wb-badge>
+    </wb-demo>
+  </div>
 
   <!-- Load wb-starter -->
   <script type="module">

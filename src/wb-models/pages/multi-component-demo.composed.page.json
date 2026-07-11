@@ -15,7 +15,8 @@
       "$generate": {
         "component": "badge",
         "source": "matrix",
-        "baseAttrs": { "label": "Badge" }
+        "baseAttrs": { "label": "Badge" },
+        "limit": 8
       },
       "heading": "Badges — From Matrix",
       "columns": 4
@@ -36,7 +37,7 @@
       "heading": "Progress — All Enum Variants"
     },
     {
-      "$ref": "badge-showcase#0"
+      "$include": "cardportfolio-showcase"
     },
     {
       "heading": "Custom Hand-Authored Section",

@@ -112,6 +112,41 @@ if (schema.page?.stylesheets) {
   }
 }
 
+// Chrome shared by every hand-authored demo page (header/h2/demo-section) —
+// generated pages previously shipped with none of it and looked bare next
+// to the rest of demos/*.html.
+lines.push('  <style>');
+lines.push('    body {');
+lines.push('      padding: 2rem;');
+lines.push('      background: var(--bg-color);');
+lines.push('      color: var(--text-primary);');
+lines.push('      font-family: system-ui, sans-serif;');
+lines.push('      max-width: 1200px;');
+lines.push('      margin: 0 auto;');
+lines.push('    }');
+lines.push('    header {');
+lines.push('      display: flex;');
+lines.push('      justify-content: space-between;');
+lines.push('      align-items: center;');
+lines.push('      margin-bottom: 2rem;');
+lines.push('      border-bottom: 2px solid var(--primary);');
+lines.push('      padding-bottom: 0.5rem;');
+lines.push('    }');
+lines.push('    h1 { margin: 0; border: none; padding: 0; }');
+lines.push('    h2 {');
+lines.push('      margin: 3rem 0 1.5rem;');
+lines.push('      padding-bottom: 0.5rem;');
+lines.push('      border-bottom: 1px solid var(--border-color);');
+lines.push('      color: var(--text-secondary);');
+lines.push('    }');
+lines.push('    .demo-section {');
+lines.push('      background: var(--bg-secondary);');
+lines.push('      padding: 2rem;');
+lines.push('      border-radius: 12px;');
+lines.push('      border: 1px solid var(--border-color);');
+lines.push('      margin-bottom: 2rem;');
+lines.push('    }');
+lines.push('  </style>');
 lines.push('');
 lines.push('</head>');
 lines.push('');
@@ -122,7 +157,10 @@ lines.push('<body>');
 // Page header
 if (schema.header) {
   const h = schema.header;
-  lines.push(`  <${h.tag || 'h1'}>${h.content}</${h.tag || 'h1'}>`);
+  lines.push('  <header>');
+  lines.push(`    <${h.tag || 'h1'}>${h.content}</${h.tag || 'h1'}>`);
+  lines.push('    <wb-themecontrol></wb-themecontrol>');
+  lines.push('  </header>');
   if (h.subtitle) {
     lines.push(`  <${h.subtitle.tag || 'p'}>${h.subtitle.content}</${h.subtitle.tag || 'p'}>`);
   }
@@ -134,24 +172,26 @@ if (schema.sections) {
   for (let i = 0; i < schema.sections.length; i++) {
     const section = schema.sections[i];
     const sectionNum = i + 1;
-    
+
     lines.push(`  <!-- ${sectionNum}. ${section.heading} -->`);
     lines.push(`  <h2>${section.heading}</h2>`);
-    lines.push(`  <wb-demo columns="${section.columns || 3}">`);
+    lines.push('  <div class="demo-section">');
+    lines.push(`    <wb-demo columns="${section.columns || 3}">`);
 
     for (const demo of section.demos) {
       const attrs = attrString(demo.attrs);
       if (demo.children) {
-        lines.push(`    <${demo.tag}${attrs}>`);
-        lines.push(`      ${demo.children}`);
-        lines.push(`    </${demo.tag}>`);
+        lines.push(`      <${demo.tag}${attrs}>`);
+        lines.push(`        ${demo.children}`);
+        lines.push(`      </${demo.tag}>`);
       } else {
-        lines.push(`    <${demo.tag}${attrs}>`);
-        lines.push(`    </${demo.tag}>`);
+        lines.push(`      <${demo.tag}${attrs}>`);
+        lines.push(`      </${demo.tag}>`);
       }
     }
 
-    lines.push('  </wb-demo>');
+    lines.push('    </wb-demo>');
+    lines.push('  </div>');
     lines.push('');
   }
 }

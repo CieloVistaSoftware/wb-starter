@@ -212,66 +212,136 @@
       ]
     },
     {
-      "heading": "badge — Combinations",
-      "tag": "wb-badge",
+      "heading": "availability variants",
+      "tag": "wb-cardportfolio",
+      "columns": 2,
+      "demos": [
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "availability": "available",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "availability": "busy",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "availability": "not-available",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "availability": "open-to-opportunities",
+            "name": "Sample name"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "variant variants",
+      "tag": "wb-cardportfolio",
+      "columns": 2,
+      "demos": [
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "variant": "default",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "variant": "compact",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "variant": "horizontal",
+            "name": "Sample name"
+          }
+        },
+        {
+          "tag": "wb-cardportfolio",
+          "attrs": {
+            "variant": "full",
+            "name": "Sample name"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "size variants",
+      "tag": "wb-cardportfolio",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-badge",
+          "tag": "wb-cardportfolio",
           "attrs": {
-            "label": "New"
+            "size": "sm",
+            "name": "Sample name"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "wb-cardportfolio",
           "attrs": {
-            "label": "Done",
-            "variant": "success"
+            "size": "md",
+            "name": "Sample name"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "wb-cardportfolio",
           "attrs": {
-            "label": "Warning",
-            "variant": "warning"
+            "size": "lg",
+            "name": "Sample name"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "wb-cardportfolio",
           "attrs": {
-            "label": "Error",
-            "variant": "error"
+            "size": "xl",
+            "name": "Sample name"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "wb-cardportfolio",
           "attrs": {
-            "label": "5",
-            "variant": "primary",
-            "pill": true
+            "size": "full",
+            "name": "Sample name"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "wb-cardportfolio",
           "attrs": {
-            "variant": "success",
-            "dot": true
+            "size": "auto",
+            "name": "Sample name"
           }
-        },
+        }
+      ]
+    },
+    {
+      "heading": "cardportfolio — Defaults",
+      "tag": "wb-cardportfolio",
+      "columns": 1,
+      "demos": [
         {
-          "tag": "wb-badge",
+          "tag": "wb-cardportfolio",
           "attrs": {
-            "label": "Tag",
-            "variant": "info",
-            "removable": true
-          }
-        },
-        {
-          "tag": "wb-badge",
-          "attrs": {
-            "label": "Outline",
-            "variant": "primary",
-            "outline": true
+            "name": "Sample name",
+            "availability": "available",
+            "variant": "default",
+            "size": "auto"
           }
         }
       ]
@@ -302,11 +372,11 @@
   ],
   "_composed": {
     "source": "src/wb-models/pages/multi-component-demo.composed.page.json",
-    "composedAt": "2026-02-12T02:51:02.095Z",
+    "composedAt": "2026-07-11T03:38:30.474Z",
     "stats": {
       "extendsResolved": true,
-      "refsResolved": 1,
-      "includesResolved": 0,
+      "refsResolved": 0,
+      "includesResolved": 1,
       "generated": 3
     }
   }
