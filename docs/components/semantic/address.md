@@ -12,35 +12,21 @@ The `<address>` element provides contact information for a person, organization,
 
 ### Card Portfolio (`cardportfolio`)
 
-```html
+`x-cardportfolio` builds its own `<address>` block from `email`/`phone`/`website`
+attributes — it does not read hand-authored `<address>` markup as content
+(the element's children are replaced, not merged).
+
+<wb-demo>
 <article
   x-cardportfolio
   name="John Doe"
-  email="john@example.com">
-  <header class="wb-card__header">
-    <h3 class="wb-card__portfolio-name">John Doe</h3>
-    <p class="wb-card__portfolio-title">Software Developer</p>
-  </header>
-  <address class="wb-card__contact">
-    <a
-      href="mailto:john@example.com"
-      class="wb-card__portfolio-email">
-      📧 john@example.com
-    </a>
-    <a
-      href="tel:+15551234"
-      class="wb-card__portfolio-phone">
-      📱 +1 555-1234
-    </a>
-    <a
-      href="https://johndoe.com"
-      class="wb-card__portfolio-website">
-      🌐 johndoe.com
-    </a>
-    <span class="wb-card__portfolio-location"> 📍 San Francisco, CA </span>
-  </address>
+  title="Software Developer"
+  location="San Francisco, CA"
+  email="john@example.com"
+  phone="+15551234"
+  website="johndoe.com">
 </article>
-```
+</wb-demo>
 
 ## Accessibility Considerations
 
@@ -53,45 +39,24 @@ The `<address>` element provides contact information for a person, organization,
 
 ## Example: Full Portfolio Card
 
-```html
+Social links (`linkedin`, `twitter`, `github`, `dribbble`) render in a separate
+`<nav>` below the `<address>`, not inside it — LinkedIn/GitHub are profile
+links, not contact channels, so they're not semantically part of the address.
+
+<wb-demo>
 <article
   x-cardportfolio
-  class="wb-card wb-card--portfolio">
-  <figure class="wb-card__avatar">
-    <img
-      src="avatar.jpg"
-      alt="John Doe">
-  </figure>
-  <header class="wb-card__header">
-    <h3 class="wb-card__portfolio-name">John Doe</h3>
-    <p class="wb-card__portfolio-title">Senior Software Developer</p>
-    <p class="wb-card__portfolio-company">Acme Inc</p>
-  </header>
-  <p class="wb-card__portfolio-bio"> Passionate about creating great software and mentoring junior developers. </p>
-  <address class="wb-card__contact">
-    <a
-      href="mailto:john@acme.com"
-      aria-label="Email John">
-      <span aria-hidden="true">📧</span> john@acme.com
-    </a>
-    <a
-      href="tel:+15551234567"
-      aria-label="Call John">
-      <span aria-hidden="true">📱</span> +1 (555) 123-4567
-    </a>
-    <a
-      href="https://linkedin.com/in/johndoe"
-      aria-label="John's LinkedIn">
-      <span aria-hidden="true">💼</span> LinkedIn
-    </a>
-    <a
-      href="https://github.com/johndoe"
-      aria-label="John's GitHub">
-      <span aria-hidden="true">💻</span> GitHub
-    </a>
-  </address>
+  name="John Doe"
+  title="Senior Software Developer"
+  company="Acme Inc"
+  avatar="avatar.jpg"
+  bio="Passionate about creating great software and mentoring junior developers."
+  email="john@acme.com"
+  phone="+15551234567"
+  linkedin="https://linkedin.com/in/johndoe"
+  github="https://github.com/johndoe">
 </article>
-```
+</wb-demo>
 
 ## CSS Styling
 

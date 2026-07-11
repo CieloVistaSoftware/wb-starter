@@ -12,60 +12,48 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 
 ### 1. Card Stats (`cardstats`)
 
-```html
+`x-cardstats` builds its own `<data>` element from the `value` attribute —
+hand-authored children are replaced, not merged. The trend line uses `trend`
+(`up`/`down`) plus `trend-value` for the display text.
+
+<wb-demo>
 <article
   x-cardstats
   value="1234"
-  label="Total Users">
-  <data
-    value="1234"
-    class="wb-card__stats-value">
-    1,234
-  </data>
-  <span class="wb-card__stats-label">Total Users</span>
-  <data
-    value="0.12"
-    class="wb-card__stats-trend wb-card__stats-trend--up">
-    +12%
-  </data>
+  label="Total Users"
+  trend="up"
+  trend-value="+12%">
 </article>
-```
+</wb-demo>
 
 ### 2. Card Product (`cardproduct`)
 
-```html
+**Note:** `cardproduct` displays price as a plain `<span class="wb-card__price-current">`,
+not a `<data>` element — its `price`/`original-price` attributes are strings
+shown verbatim, not machine-readable values.
+
+<wb-demo>
 <article
   x-cardproduct
-  price="99.99">
-  <div class="wb-card__pricing">
-    <data
-      value="99.99"
-      class="wb-card__price-current">
-      $99.99
-    </data>
-    <data
-      value="129.99"
-      class="wb-card__price-original">
-      <s>$129.99</s>
-    </data>
-  </div>
+  price="$99.99"
+  original-price="$129.99"
+  description="Wireless headphones">
 </article>
-```
+</wb-demo>
 
 ### 3. Card Pricing (`cardpricing`)
 
-```html
+**Note:** like `cardproduct`, `cardpricing` renders `price` as a plain
+`<span class="wb-card__amount">`, not a `<data>` element.
+
+<wb-demo>
 <article
   x-cardpricing
-  price="29">
-  <data
-    value="29"
-    class="wb-card__amount">
-    $29
-  </data>
-  <span class="wb-card__period">/month</span>
+  plan="Starter"
+  price="$29"
+  period="/month">
 </article>
-```
+</wb-demo>
 
 ## `value` Attribute Formats
 
@@ -87,56 +75,28 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 
 ## Example: Dashboard Stats
 
-```html
+<wb-demo>
 <section
   class="dashboard-stats"
   aria-label="Key Metrics">
   <article
     x-cardstats
-    class="wb-card wb-card--stats">
-    <div
-      class="wb-card__stats-icon"
-      aria-hidden="true">
-      👥
-    </div>
-    <div class="wb-card__stats-content">
-      <data
-        value="15234"
-        class="wb-card__stats-value">
-        15,234
-      </data>
-      <span class="wb-card__stats-label">Active Users</span>
-      <data
-        value="0.08"
-        class="wb-card__stats-trend wb-card__stats-trend--up">
-        ↑ 8%
-      </data>
-    </div>
+    icon="👥"
+    value="15234"
+    label="Active Users"
+    trend="up"
+    trend-value="8%">
   </article>
   <article
     x-cardstats
-    class="wb-card wb-card--stats">
-    <div
-      class="wb-card__stats-icon"
-      aria-hidden="true">
-      💰
-    </div>
-    <div class="wb-card__stats-content">
-      <data
-        value="52340.50"
-        class="wb-card__stats-value">
-        $52,340.50
-      </data>
-      <span class="wb-card__stats-label">Revenue</span>
-      <data
-        value="-0.03"
-        class="wb-card__stats-trend wb-card__stats-trend--down">
-        ↓ 3%
-      </data>
-    </div>
+    icon="💰"
+    value="$52,340.50"
+    label="Revenue"
+    trend="down"
+    trend-value="3%">
   </article>
 </section>
-```
+</wb-demo>
 
 ## CSS Styling
 

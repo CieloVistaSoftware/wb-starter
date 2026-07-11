@@ -12,29 +12,29 @@ The `<blockquote>` element represents an extended quotation from another source.
 
 ### Card Testimonial (`cardtestimonial`)
 
-```html
+`x-cardtestimonial` builds its own `<blockquote>`/`<cite>`/`<footer>` from the
+`quote`/`author`/`role` attributes — hand-authored children are replaced, not
+merged.
+
+<wb-demo>
 <article
   x-cardtestimonial
-  quote="..."
-  author="Jane Smith">
-  <blockquote class="wb-card__quote"> "This product changed my life. Highly recommended!" </blockquote>
-  <footer class="wb-card__quote-footer">
-    <cite class="wb-card__author">Jane Smith</cite>
-    <span class="wb-card__author-role">CEO, TechCorp</span>
-  </footer>
+  quote="This product changed my life. Highly recommended!"
+  author="Jane Smith"
+  role="CEO, TechCorp">
 </article>
-```
+</wb-demo>
 
 ## Companion Element: `<cite>`
 
 The `<cite>` element identifies the source of a quotation:
 
-```html
+<wb-demo>
 <blockquote>
   <p>Design is not just what it looks like. Design is how it works.</p>
 </blockquote>
 <cite>Steve Jobs</cite>
-```
+</wb-demo>
 
 **Note:** `<cite>` should contain the *title of a work* or *name of a person*, not the quotation itself.
 
@@ -48,31 +48,16 @@ The `<cite>` element identifies the source of a quotation:
 
 ## Example: Full Testimonial Structure
 
-```html
+<wb-demo>
 <article
   x-cardtestimonial
-  class="wb-card wb-card--testimonial">
-  <figure class="wb-card__avatar">
-    <img
-      src="avatar.jpg"
-      alt="Jane Smith">
-  </figure>
-  <blockquote
-    class="wb-card__quote"
-    cite="https://example.com/review">
-    <p>"This product changed my life. The support team is incredible and the features are exactly what I needed."</p>
-  </blockquote>
-  <footer class="wb-card__quote-footer">
-    <cite class="wb-card__author">Jane Smith</cite>
-    <p class="wb-card__author-role">CEO, TechCorp</p>
-    <div
-      class="wb-card__rating"
-      aria-label="5 out of 5 stars">
-      ⭐⭐⭐⭐⭐
-    </div>
-  </footer>
+  quote="This product changed my life. The support team is incredible and the features are exactly what I needed."
+  author="Jane Smith"
+  role="CEO, TechCorp"
+  avatar="avatar.jpg"
+  rating="5">
 </article>
-```
+</wb-demo>
 
 ## CSS Styling
 

@@ -1077,7 +1077,7 @@ export function cardstats(element, options = {}) {
     label: options.label || element.dataset.label || element.getAttribute('label'),
     icon: options.icon || element.dataset.icon || element.getAttribute('icon'),
     trend: options.trend || element.dataset.trend || element.getAttribute('trend'),
-    trendValue: options.trendValue || element.dataset.trendValue || element.getAttribute('data-trend-value'),
+    trendValue: options.trendValue || element.getAttribute('trend-value') || element.dataset.trendValue,
     ...options
   };
 
@@ -1238,7 +1238,7 @@ export function cardproduct(element, options = {}) {
   const config = {
     image: options.image || element.dataset.image || element.getAttribute('image'),
     price: options.price || element.dataset.price || element.getAttribute('price'),
-    originalPrice: options.originalPrice || element.dataset.originalPrice || element.getAttribute('data-original-price'), // Special case
+    originalPrice: options.originalPrice || element.getAttribute('original-price') || element.dataset.originalPrice,
     badge: options.badge || element.dataset.badge || element.getAttribute('badge'),
     rating: options.rating || element.dataset.rating || element.getAttribute('rating'),
     reviews: options.reviews || element.dataset.reviews || element.getAttribute('reviews'),

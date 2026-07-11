@@ -25,33 +25,41 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 
 ### 1. Card File (`cardfile`)
 
-```html
+`x-cardfile` builds its own metadata line from the `date`/`size` attributes.
+**Note:** it renders `date` as plain text inside `.wb-card__file-meta`, not a
+real `<time>` element.
+
+<wb-demo>
 <article
   x-cardfile
+  filename="report.pdf"
+  type="pdf"
   date="Dec 15, 2024">
-  <time
-    datetime="2024-12-15"
-    class="wb-card__file-date">
-    Dec 15, 2024
-  </time>
 </article>
-```
+</wb-demo>
 
 ### 2. Card Notification (`cardnotification`)
 
+**Not achievable as a live demo:** `cardnotification`'s real attribute API
+(`variant`/`title`/`message`/`dismissible`) has no date/time field, and
+hand-authored children like the `<time>` below are discarded — the behavior
+rebuilds its content from attributes only (see [`aside.md`](./aside.md)).
+Shown here as illustrative markup only; it will render without a timestamp.
+
 ```html
-<aside x-cardnotification>
-  <time
-    datetime="2024-12-15T14:30:00Z"
-    class="wb-card__notif-time">
-    2 hours ago
-  </time>
+<aside x-cardnotification title="Update" message="New comment on your post">
+  <!-- cardnotification has no time/date attribute — this <time> is dropped -->
+  <time datetime="2024-12-15T14:30:00Z">2 hours ago</time>
 </aside>
 ```
 
 ### 3. Timeline Component
 
-```html
+`x-timeline` only adds a `wb-timeline` class hook — it doesn't rebuild
+children, so hand-authored markup (including real `<time>` elements) renders
+as-is.
+
+<wb-demo>
 <div x-timeline>
   <article class="wb-timeline__item">
     <time
@@ -64,18 +72,21 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
     </div>
   </article>
 </div>
-```
+</wb-demo>
 
 ### 4. Relative Time Component (`relativetime`)
 
-```html
+`x-relativetime` computes its own live "time ago" text from `datetime` (or
+`date`) on load and refreshes it periodically — the element's own content is
+replaced, so the text below is illustrative only; the real rendered demo
+recomputes it live.
+
+<wb-demo>
 <time
   x-relativetime
-  datetime="2024-12-15T10:30:00Z"
-  format="auto">
-  3 hours ago
+  datetime="2026-07-08T10:30:00Z">
 </time>
-```
+</wb-demo>
 
 ## Accessibility Considerations
 
@@ -87,7 +98,7 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 
 ## Example: Blog Post Metadata
 
-```html
+<wb-demo>
 <article class="blog-post">
   <header>
     <h1>Understanding Semantic HTML</h1>
@@ -110,7 +121,7 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
     </p>
   </footer>
 </article>
-```
+</wb-demo>
 
 ## CSS Styling
 

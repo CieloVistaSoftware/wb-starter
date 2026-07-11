@@ -13,79 +13,63 @@ The `<figure>` element represents self-contained content with an optional captio
 
 ### 1. Card Image (`cardimage`)
 
-```html
+`x-cardimage` builds its own `<figure><img></figure>` from `src`/`alt` —
+hand-authored children are replaced, not merged. **Note:** it does not
+support a caption; there's no `<figcaption>` in the rendered output. Use
+`title`/`subtitle` (rendered in the card header) for a label instead.
+
+<wb-demo>
 <article
   x-cardimage
-  src="image.jpg"
-  alt="Description">
-  <figure class="wb-card__figure">
-    <img
-      src="image.jpg"
-      alt="A beautiful sunset"
-      class="wb-card__image">
-    <figcaption class="wb-card__caption"> Sunset over the Pacific Ocean </figcaption>
-  </figure>
-  <div class="wb-card__content">
-    <h3 class="wb-card__title">Card Title</h3>
-  </div>
+  src="https://picsum.photos/seed/sunset/400/225"
+  alt="Sunset over the Pacific Ocean"
+  title="Card Title">
 </article>
-```
+</wb-demo>
 
 ### 2. Card Video (`cardvideo`)
 
-```html
+Same pattern as `cardimage`: `x-cardvideo` builds its own `<figure><video></figure>`
+from `src`/`poster`. **Note:** no `<figcaption>` support here either.
+
+<wb-demo>
 <article
   x-cardvideo
-  src="video.mp4">
-  <figure class="wb-card__figure">
-    <video
-      controls
-      class="wb-card__video">
-      <source
-        src="video.mp4"
-        type="video/mp4">
-    </video>
-    <figcaption class="wb-card__caption"> Product Demo Video </figcaption>
-  </figure>
+  src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+  title="Product Demo Video">
 </article>
-```
+</wb-demo>
 
 ### 3. Card File (`cardfile`)
 
-```html
+**Note:** `cardfile` does not use `<figure>`/`<figcaption>` at all — it
+renders a plain icon `<span>` + `<h3 class="wb-card__filename">` instead.
+Listed here only because it's the closest analog to a file-preview figure;
+included for completeness, not as a `<figure>` usage example.
+
+<wb-demo>
 <article
   x-cardfile
   filename="report.pdf"
-  type="pdf">
-  <figure class="wb-card__file-preview">
-    <div
-      class="wb-card__file-icon"
-      aria-hidden="true">
-      📄
-    </div>
-    <figcaption class="wb-card__filename"> report.pdf <span class="wb-card__file-meta">2.4 MB • PDF</span>
-    </figcaption>
-  </figure>
+  type="pdf"
+  size="2.4 MB">
 </article>
-```
+</wb-demo>
 
 ### 4. Card Product (`cardproduct`)
 
-```html
+`x-cardproduct` builds its own `<figure><img></figure>` from `image`.
+**Note:** it reads a `badge` attribute but never renders it — currently dead
+config, not a supported feature.
+
+<wb-demo>
 <article
   x-cardproduct
-  image="product.jpg">
-  <figure class="wb-card__product-image">
-    <img
-      src="product.jpg"
-      alt="Product Name">
-    <span class="wb-card__badge">Sale</span>
-  </figure>
-  <div class="wb-card__product-info">
-    <!-- Product details -->
-  </div>
+  image="https://picsum.photos/seed/product/400/267"
+  title="Product Name"
+  price="$49.99">
 </article>
-```
+</wb-demo>
 
 ## Accessibility Considerations
 
@@ -98,14 +82,14 @@ The `<figure>` element represents self-contained content with an optional captio
 
 ## Example: Image Gallery with Figures
 
-```html
+<wb-demo>
 <div
   class="gallery"
   role="group"
   aria-label="Photo Gallery">
   <figure class="wb-card__figure">
     <img
-      src="photo1.jpg"
+      src="https://picsum.photos/seed/alpine/300/200"
       alt="Mountain landscape at sunrise">
     <figcaption>
       <strong>Alpine Sunrise</strong>
@@ -114,7 +98,7 @@ The `<figure>` element represents self-contained content with an optional captio
   </figure>
   <figure class="wb-card__figure">
     <img
-      src="photo2.jpg"
+      src="https://picsum.photos/seed/coast/300/200"
       alt="Ocean waves crashing on rocks">
     <figcaption>
       <strong>Pacific Coast</strong>
@@ -122,7 +106,7 @@ The `<figure>` element represents self-contained content with an optional captio
     </figcaption>
   </figure>
 </div>
-```
+</wb-demo>
 
 ## CSS Styling
 

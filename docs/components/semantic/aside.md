@@ -12,27 +12,27 @@ The `<aside>` element represents content that is tangentially related to the con
 
 ### 1. Card Notification (`cardnotification`)
 
-```html
+<wb-demo>
 <aside
   x-cardnotification
   type="info"
-  title="Heads Up">
-  <!-- Notification content -->
+  title="Heads Up"
+  message="A new version is available.">
 </aside>
-```
+</wb-demo>
 
 **Why `<aside>`?** Notifications are supplementary information that doesn't affect the main page content.
 
 ### 2. Alert (`alert`)
 
-```html
+<wb-demo>
 <aside
   x-alert
-  type="warning"
-  title="Warning">
-  <!-- Alert message -->
+  variant="warning"
+  title="Warning"
+  message="Your session will expire soon.">
 </aside>
-```
+</wb-demo>
 
 **Why `<aside>`?** Alerts are tangential messages that inform but don't constitute main content.
 
@@ -47,19 +47,16 @@ The `<aside>` element represents content that is tangentially related to the con
 
 ## Example: Notification with ARIA
 
-```html
+<wb-demo>
 <aside
   x-cardnotification
   type="success"
+  title="Success"
+  message="Your changes were saved."
   role="status"
   aria-live="polite">
-  <div class="wb-card__notif-icon">✅</div>
-  <div class="wb-card__notif-content">
-    <h4 class="wb-card__notif-title">Success</h4>
-    <p class="wb-card__notif-message">Your changes were saved.</p>
-  </div>
 </aside>
-```
+</wb-demo>
 
 ## CSS Styling
 

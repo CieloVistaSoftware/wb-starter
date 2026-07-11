@@ -68,7 +68,7 @@ All card components use the `<article>` semantic element:
 ## Usage Examples
 
 ### Standard Semantic Article
-```html
+<wb-demo>
 <article>
   <header>
     <h2>Article Title</h2>
@@ -80,25 +80,25 @@ All card components use the `<article>` semantic element:
     <time datetime="2024-12-18">December 18, 2024</time>
   </footer>
 </article>
-```
+</wb-demo>
 
 ### WB Card (Custom Element)
-```html
+<wb-demo>
 <wb-card
   title="Card Title"
   subtitle="Subtitle">
   Main content goes here...
 </wb-card>
-```
+</wb-demo>
 
 ### WB Card (Data Attributes)
-```html
+<wb-demo>
 <article
   x-card
   title="Card Title">
   Content here...
 </article>
-```
+</wb-demo>
 
 ## Inheritance Chain
 
