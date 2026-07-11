@@ -3,7 +3,7 @@
 <head id="semanticsforms-head-2">
   <meta id="semanticsforms-meta-3" charset="UTF-8">
   <meta id="semanticsforms-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="semanticsforms-title-5">Semantic Forms Demo</title>
+  <title id="semanticsforms-title-5">Semantics Forms — WB Demo</title>
   <link id="semanticsforms-link-6" rel="stylesheet" href="../src/styles/themes.css">
   <link id="semanticsforms-link-7" rel="stylesheet" href="../src/styles/site.css">
   <style id="semanticsforms-style-8">
@@ -61,7 +61,6 @@
       color: var(--primary);
     }
   </style>
-  <title>Semantics Forms — WB Demo</title>
 </head>
 <body id="semanticsforms-body-9">
   <header id="semanticsforms-header-10">
@@ -73,24 +72,27 @@
   <!-- BUTTONS -->
   <h2 id="semanticsforms-h2-15">Button <code id="semanticsforms-code-16">&lt;button&gt;</code></h2>
   <div id="semanticsforms-div-17" class="demo-section">
-    <div id="semanticsforms-div-18" class="demo-row">
-      <button id="semanticsforms-button-19" variant="primary">Primary</button>
-      <button id="semanticsforms-button-20" variant="secondary">Secondary</button>
-      <button id="semanticsforms-button-21" variant="success">Success</button>
-      <button id="semanticsforms-button-22" variant="danger">Danger</button>
-      <button id="semanticsforms-button-23" variant="warning">Warning</button>
-      <button id="semanticsforms-button-24" variant="ghost">Ghost</button>
-    </div>
-    <div id="semanticsforms-div-25" class="demo-row">
-      <button id="semanticsforms-button-26" variant="primary" size="sm">Small</button>
-      <button id="semanticsforms-button-27" variant="primary" size="md">Medium</button>
-      <button id="semanticsforms-button-28" variant="primary" size="lg">Large</button>
-    </div>
-    <div id="semanticsforms-div-29" class="demo-row">
-      <button id="semanticsforms-button-30" variant="primary" loading="true">Loading</button>
-      <button id="semanticsforms-button-31" variant="secondary" icon="💾">Save</button>
-      <button id="semanticsforms-button-32" variant="danger" icon="🗑️" icon-position="right">Delete</button>
-    </div>
+    <wb-demo>
+      <button variant="primary">Primary</button>
+      <button variant="secondary">Secondary</button>
+      <button variant="success">Success</button>
+      <button variant="danger">Danger</button>
+      <button variant="warning">Warning</button>
+      <button variant="ghost">Ghost</button>
+    </wb-demo>
+
+    <wb-demo>
+      <button variant="primary" size="sm">Small</button>
+      <button variant="primary" size="md">Medium</button>
+      <button variant="primary" size="lg">Large</button>
+    </wb-demo>
+
+    <p>The <code>loading</code>/<code>icon</code>/<code>icon-position</code> attributes only work on the <code>&lt;wb-button&gt;</code> custom tag — a native <code>&lt;button&gt;</code> only maps <code>size</code>/<code>variant</code> to styling classes.</p>
+    <wb-demo>
+      <wb-button variant="primary" loading>Loading</wb-button>
+      <wb-button variant="secondary" icon="💾">Save</wb-button>
+      <wb-button variant="danger" icon="🗑️" icon-position="right">Delete</wb-button>
+    </wb-demo>
   </div>
 
   <!-- INPUTS -->
@@ -99,21 +101,45 @@
     <div id="semanticsforms-div-36" class="demo-grid">
       <div id="semanticsforms-div-37">
         <label id="semanticsforms-label-38">Standard Input</label>
-        <input id="semanticsforms-input-39" type="text" placeholder="Type something...">
+        <wb-demo>
+          <input type="text" placeholder="Type something...">
+        </wb-demo>
       </div>
       <div id="semanticsforms-div-40">
-        <label id="semanticsforms-label-41">With Prefix/Suffix</label>
-        <input id="semanticsforms-input-42" type="text" prefix="👤" suffix="@gmail.com" placeholder="Username">
+        <label id="semanticsforms-label-41">With Prefix/Suffix — needs <code>x-behavior="input"</code>; there's no native auto-inject mapping for plain <code>&lt;input&gt;</code></label>
+        <wb-demo>
+          <input
+            type="text"
+            x-behavior="input"
+            prefix="👤"
+            suffix="@gmail.com"
+            placeholder="Username">
+        </wb-demo>
       </div>
       <div id="semanticsforms-div-43">
         <label id="semanticsforms-label-44">Clearable</label>
-        <input id="semanticsforms-input-45" type="text" clearable="true" placeholder="Search...">
+        <wb-demo>
+          <input
+            type="text"
+            x-behavior="input"
+            clearable
+            placeholder="Search...">
+        </wb-demo>
       </div>
       <div id="semanticsforms-div-46">
         <label id="semanticsforms-label-47">Validation States</label>
-        <input id="semanticsforms-input-48" type="text" variant="success" value="Valid Input">
-        <div id="semanticsforms-div-49" style="height: 1rem"></div>
-        <input id="semanticsforms-input-50" type="text" variant="error" value="Invalid Input">
+        <wb-demo>
+          <input
+            type="text"
+            x-behavior="input"
+            variant="success"
+            value="Valid Input">
+          <input
+            type="text"
+            x-behavior="input"
+            variant="error"
+            value="Invalid Input">
+        </wb-demo>
       </div>
     </div>
   </div>
@@ -124,11 +150,18 @@
     <div id="semanticsforms-div-54" class="demo-grid">
       <div id="semanticsforms-div-55">
         <label id="semanticsforms-label-56">Auto-sizing</label>
-        <textarea id="semanticsforms-textarea-57" autosize="true" placeholder="Type to expand..."></textarea>
+        <wb-demo>
+          <textarea autosize placeholder="Type to expand..."></textarea>
+        </wb-demo>
       </div>
       <div id="semanticsforms-div-58">
         <label id="semanticsforms-label-59">Character Count (Max 100)</label>
-        <textarea id="semanticsforms-textarea-60" show-count="true" max-length="100" placeholder="Limited bio..."></textarea>
+        <wb-demo>
+          <textarea
+            show-count
+            max-length="100"
+            placeholder="Limited bio..."></textarea>
+        </wb-demo>
       </div>
     </div>
   </div>
@@ -136,36 +169,53 @@
   <!-- CHECKBOX & RADIO -->
   <h2 id="semanticsforms-h2-61">Checkbox & Radio</h2>
   <div id="semanticsforms-div-62" class="demo-section">
-    <div id="semanticsforms-div-63" class="demo-row">
-      <input id="semanticsforms-input-64" type="checkbox" label="Accept Terms">
-      <input id="semanticsforms-input-65" type="checkbox" label="Subscribe" checked>
-      <input id="semanticsforms-input-66" type="checkbox" label="Indeterminate" indeterminate="true">
-    </div>
-    <div id="semanticsforms-div-67" class="demo-row">
-      <input id="semanticsforms-input-68" type="radio" name="plan" label="Free Plan" value="free">
-      <input id="semanticsforms-input-69" type="radio" name="plan" label="Pro Plan" value="pro" checked>
-      <input id="semanticsforms-input-70" type="radio" name="plan" label="Enterprise" value="ent">
-    </div>
+    <p>checkbox has no <code>label</code> attribute of its own — wrap it in a real <code>&lt;label&gt;</code>.</p>
+    <wb-demo>
+      <label><input type="checkbox"> Accept Terms</label>
+      <label><input type="checkbox" checked> Subscribe</label>
+      <label><input type="checkbox" indeterminate> Indeterminate</label>
+    </wb-demo>
+
+    <wb-demo>
+      <input
+        type="radio"
+        name="plan"
+        value="free"
+        label="Free Plan">
+      <input
+        type="radio"
+        name="plan"
+        value="pro"
+        checked
+        label="Pro Plan">
+      <input
+        type="radio"
+        name="plan"
+        value="ent"
+        label="Enterprise">
+    </wb-demo>
   </div>
 
   <!-- SWITCH -->
   <h2 id="semanticsforms-h2-71">Switch</h2>
   <div id="semanticsforms-div-72" class="demo-section">
-    <div id="semanticsforms-div-73" class="demo-row">
-      <wb-switch id="semanticsforms-input-74" type="checkbox" label="Notifications"></wb-switch>
-      <wb-switch id="semanticsforms-input-75" type="checkbox" label="Dark Mode" checked></wb-switch>
-      <wb-switch id="semanticsforms-input-76" type="checkbox" label="Disabled" disabled></wb-switch>
-    </div>
+    <p><strong>Known gap (#322):</strong> <code>&lt;wb-switch&gt;</code> needs its schema built before it can render — that never happens on this page's runtime (<code>wb-lazy.js</code>, used by every standalone demo page), so it won't render here yet. This markup is the correct API; it works today on the main site (<code>?page=behaviors</code>).</p>
+    <wb-demo>
+      <wb-switch label="Notifications"></wb-switch>
+      <wb-switch label="Dark Mode" checked></wb-switch>
+      <wb-switch label="Disabled" disabled></wb-switch>
+    </wb-demo>
   </div>
 
   <!-- RATING -->
   <h2 id="semanticsforms-h2-77">Rating</h2>
   <div id="semanticsforms-div-78" class="demo-section">
-    <div id="semanticsforms-div-79" class="demo-row">
-      <wb-rating id="semanticsforms-div-80" value="3" max="5"></wb-rating>
-      <wb-rating id="semanticsforms-div-81" value="4.5" max="5" precision="0.5" color="gold"></wb-rating>
-      <wb-rating id="semanticsforms-div-82" value="2" max="10" icon="heart"></wb-rating>
-    </div>
+    <p><code>icon</code> takes a literal emoji character, not a keyword — <code>icon="heart"</code> renders the literal text "heart", not ❤️. <code>precision</code> isn't a real attribute (not read anywhere in rating.js).</p>
+    <wb-demo>
+      <wb-rating value="3" max="5"></wb-rating>
+      <wb-rating value="4.5" max="5" color="gold"></wb-rating>
+      <wb-rating value="2" max="10" icon="❤️"></wb-rating>
+    </wb-demo>
   </div>
 
   <!-- SELECT -->
@@ -174,21 +224,23 @@
     <div id="semanticsforms-div-86" class="demo-grid">
       <div id="semanticsforms-div-87">
         <label id="semanticsforms-label-88">Standard Select</label>
-        <select id="semanticsforms-select-89">
-          <option id="semanticsforms-option-90">Option 1</option>
-          <option id="semanticsforms-option-91">Option 2</option>
-          <option id="semanticsforms-option-92">Option 3</option>
-        </select>
+        <wb-demo>
+          <select>
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+          </select>
+        </wb-demo>
       </div>
       <div id="semanticsforms-div-93">
-        <label id="semanticsforms-label-94">Searchable (Visual)</label>
-        <select id="semanticsforms-select-95" searchable="true">
-          <option id="semanticsforms-option-96">Apple</option>
-          <option id="semanticsforms-option-97">Banana</option>
-          <option id="semanticsforms-option-98">Cherry</option>
-          <option id="semanticsforms-option-99">Date</option>
-          <option id="semanticsforms-option-100">Elderberry</option>
-        </select>
+        <label id="semanticsforms-label-94">Searchable — <code>x-autocomplete</code>, not a <code>searchable</code> attribute on <code>&lt;select&gt;</code> (which doesn't exist)</label>
+        <wb-demo>
+          <input
+            type="text"
+            x-autocomplete
+            items="Apple,Banana,Cherry,Date,Elderberry"
+            placeholder="Search fruit...">
+        </wb-demo>
       </div>
     </div>
   </div>
@@ -199,11 +251,27 @@
     <div id="semanticsforms-div-104" class="demo-grid">
       <div id="semanticsforms-div-105">
         <label id="semanticsforms-label-106">With Value Display</label>
-        <input id="semanticsforms-input-107" type="range" show-value="true" min="0" max="100" value="50">
+        <wb-demo>
+          <input
+            type="range"
+            show-value
+            min="0"
+            max="100"
+            value="50">
+        </wb-demo>
       </div>
       <div id="semanticsforms-div-108">
         <label id="semanticsforms-label-109">With Labels & Suffix</label>
-        <input id="semanticsforms-input-110" type="range" show-value="true" show-labels="true" value-suffix="%" min="0" max="100" value="75">
+        <wb-demo>
+          <input
+            type="range"
+            show-value
+            show-labels
+            value-suffix="%"
+            min="0"
+            max="100"
+            value="75">
+        </wb-demo>
       </div>
     </div>
   </div>
@@ -211,14 +279,17 @@
   <!-- FORM -->
   <h2 id="semanticsforms-h2-111">Form <code id="semanticsforms-code-112">&lt;form&gt;</code></h2>
   <div id="semanticsforms-div-113" class="demo-section">
-    <form id="semanticsforms-form-114" x-form ajax="true" action="#" onsubmit="return false;">
-      <div id="semanticsforms-div-115" style="display: grid; gap: 1rem; max-width: 400px;">
-        <input id="semanticsforms-input-116" name="name" placeholder="Name" required>
-        <input id="semanticsforms-input-117" type="email" name="email" placeholder="Email" required>
-        <textarea id="semanticsforms-textarea-118" name="message" placeholder="Message" required></textarea>
-        <button id="semanticsforms-button-119" type="submit" variant="primary" loading-text="Sending...">Send Message</button>
-      </div>
-    </form>
+    <p><code>x-form</code> has no <code>loading-text</code> option (that only exists in an unregistered alternate implementation).</p>
+    <wb-demo>
+      <form x-form ajax action="#">
+        <div style="display: grid; gap: 1rem; max-width: 400px;">
+          <input name="name" placeholder="Name" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <textarea name="message" placeholder="Message" required></textarea>
+          <button type="submit" variant="primary">Send Message</button>
+        </div>
+      </form>
+    </wb-demo>
   </div>
 
   <!-- Load WB -->

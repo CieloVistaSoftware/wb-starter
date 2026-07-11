@@ -1,7 +1,7 @@
 // Standalone form behavior extracted from enhancements.js
 export function form(element, options = {}) {
   const config = {
-    ajax: options.ajax ?? element.hasAttribute('data-ajax'),
+    ajax: options.ajax ?? (element.hasAttribute('ajax') || element.hasAttribute('data-ajax')),
     validate: options.validate ?? element.getAttribute('validate') !== 'false',
     ...options
   };

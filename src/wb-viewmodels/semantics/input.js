@@ -9,8 +9,8 @@ export function input(element, options = {}) {
     variant: options.variant || element.getAttribute('variant') || element.dataset.variant || '',
     size: options.size || element.dataset.size || 'md',
     clearable: options.clearable ?? element.hasAttribute('clearable'),
-    prefix: options.prefix || element.dataset.prefix || element.dataset.icon || '',
-    suffix: options.suffix || element.dataset.suffix || '',
+    prefix: options.prefix || element.getAttribute('prefix') || element.dataset.prefix || element.dataset.icon || '',
+    suffix: options.suffix || element.getAttribute('suffix') || element.dataset.suffix || '',
     ...options
   };
 

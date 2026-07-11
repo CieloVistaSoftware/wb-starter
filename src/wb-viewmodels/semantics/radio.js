@@ -51,9 +51,9 @@ export function radio(element, options = {}) {
   injectStyles();
 
   const config = {
-    label: options.label || element.dataset.label || '',
-    variant: options.variant || element.dataset.variant || '',
-    size: options.size || element.dataset.size || 'md',
+    label: options.label || element.getAttribute('label') || element.dataset.label || '',
+    variant: options.variant || element.getAttribute('variant') || element.dataset.variant || '',
+    size: options.size || element.getAttribute('size') || element.dataset.size || 'md',
     ...options
   };
 
