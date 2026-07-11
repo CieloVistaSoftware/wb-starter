@@ -1,4 +1,17 @@
 import { defineConfig, devices } from '@playwright/test';
+import { readFileSync } from 'fs';
+
+// tests/compliance/ has grown to 79 files (~2 min for a full run) — running
+// the whole thing on every iteration wastes time when only one area is
+// being worked on. Split into topic-based sub-projects (compliance-css,
+// compliance-docs, etc.) so `npx playwright test --project=compliance-css`
+// runs just that slice. The full `compliance` project (all 79 files,
+// unchanged) stays as the pre-push gate — see package.json's
+// test:compliance script. Categories live in a single JSON file so the
+// project list and the file-to-category mapping can't drift apart.
+const complianceCategories: Record<string, string[]> = JSON.parse(
+  readFileSync('./scripts/tools/compliance-categories.json', 'utf-8')
+);
 
 /**
  * TIERED TEST EXECUTION WITH STOP GATES
@@ -93,7 +106,22 @@ export default defineConfig({
       testMatch: '**/*.spec.ts',
       retries: 0,  // Static tests - no point retrying
     },
-    
+
+    // ═══════════════════════════════════════════════════════════════
+    // COMPLIANCE SUB-PROJECTS — same 79 files as `compliance` above,
+    // split by topic for fast iteration. Run e.g.:
+    //   npx playwright test --project=compliance-css
+    // Full `compliance` (all categories) is the pre-push-to-.io gate —
+    // don't reach for it while iterating on one area.
+    // ═══════════════════════════════════════════════════════════════
+    ...Object.entries(complianceCategories).map(([category, files]) => ({
+      name: `compliance-${category}`,
+      testDir: './tests/compliance',
+      testMatch: files,
+      retries: 0,
+    })),
+
+
     // ═══════════════════════════════════════════════════════════════
     // VIEWS: WB Views System Tests
     // Tests the custom element factory system
