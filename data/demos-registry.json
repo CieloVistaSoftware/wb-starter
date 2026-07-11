@@ -1,0 +1,81 @@
+{
+  "_meta": {
+    "description": "Registry for #268 (demos/ consolidation). Categorizes every top-level demos/*.html file so the coverage gate (tests/compliance/demos-registry-coverage.spec.ts) can flag orphans/new duplicates. See docs/_today/demos-redo-plan-268.md for the reasoning behind each category.",
+    "scope": "demos/*.html (top-level only) — demos/site/**/*.html not yet audited, tracked as a follow-up in the plan doc",
+    "updated": "2026-07-11"
+  },
+  "canonical": {
+    "description": "One canonical demo per topic — the file a coverage gate should point users to.",
+    "entries": {
+      "card-examples.html": { "covers": ["wb-card", "wb-cardbutton", "wb-cardexpandable", "wb-cardfile", "wb-cardhero", "wb-cardhorizontal", "wb-cardimage", "wb-cardlink", "wb-cardminimizable", "wb-cardnotification", "wb-cardoverlay", "wb-cardportfolio", "wb-cardpricing", "wb-cardproduct", "wb-cardprofile", "wb-cardstats", "wb-cardtestimonial", "wb-cardvideo"] },
+      "button-variants-tags-demo.html": { "covers": ["wb-button variants"] },
+      "button-composition-demo.html": { "covers": ["wb-button + x-* behavior composition"] },
+      "badge-showcase.html": { "covers": ["wb-badge"] },
+      "progress-showcase.html": { "covers": ["wb-progress"] },
+      "tabs-demo.html": { "covers": ["wb-tabs"] },
+      "tooltip-demo.html": { "covers": ["x-tooltip"] },
+      "stage-light.html": { "covers": ["wb-stagelight"] },
+      "wb-views-demo.html": { "covers": ["wb-view", "wb-views system"] },
+      "registry-browser.html": { "covers": ["wb-views registry browser"] },
+      "help-demo.html": { "covers": ["help/tooltip pattern"] },
+      "label-demo.html": { "covers": ["label pattern"] },
+      "autosize-demo.html": { "covers": ["x-autosize"] },
+      "collapse-demo.html": { "covers": ["x-collapse"] },
+      "copy-demo.html": { "covers": ["x-copy"] },
+      "draggable-demo.html": { "covers": ["x-draggable"] },
+      "feedback-demo.html": { "covers": ["feedback pattern"] },
+      "fieldset-demo.html": { "covers": ["fieldset pattern"] },
+      "form-demo.html": { "covers": ["form pattern"] },
+      "progressbar-demo.html": { "covers": ["progressbar pattern"] },
+      "resizable-demo.html": { "covers": ["x-resizable"] },
+      "ripple-demo.html": { "covers": ["x-ripple"] },
+      "sticky-demo.html": { "covers": ["x-sticky"] },
+      "toggle-demo.html": { "covers": ["toggle pattern"] },
+      "layout-test.html": { "covers": ["wb-cluster", "wb-container", "wb-grid", "wb-sidebar", "wb-stack", "wb-switcher"] },
+      "intellisense-check.html": { "covers": ["wb-container", "wb-tab", "wb-tabs (intellisense)"] },
+      "semantics-forms.html": { "covers": ["semantic form elements"] },
+      "semantics-media.html": { "covers": ["semantic media elements", "wb-audio"] },
+      "semantics-structure.html": { "covers": ["semantic structure elements"] },
+      "semantics-theme.html": { "covers": ["wb-themecontrol"] },
+      "code.html": { "covers": ["wb-mdhtml basic usage"] }
+    }
+  },
+  "duplicates_to_retire": {
+    "description": "Confirmed overlapping with a canonical entry above — retire once the migration PR lands. NOT deleted yet (plan phase only).",
+    "entries": {
+      "pce-test.html": { "duplicateOf": "card-examples.html" },
+      "button-variants-demo.html": { "duplicateOf": "button-variants-tags-demo.html" },
+      "button-variants-simple.html": { "duplicateOf": "button-variants-tags-demo.html" }
+    }
+  },
+  "needs_diff_before_deciding": {
+    "description": "Both function as broad smoke-test pages — real content diff needed before choosing which survives (see plan doc).",
+    "entries": {
+      "kitchen-sink.html": {},
+      "autoinject.html": {}
+    }
+  },
+  "narrative_allowlist": {
+    "description": "Hand-written narrative/interactive-tool pages, explicitly out of scope for the generator per #268's own proposal.",
+    "entries": {
+      "frameworks.html": {},
+      "playground.html": {},
+      "schema-first-architecture.html": {},
+      "wizard.html": {},
+      "charity-food.html": {},
+      "multi-component-demo-generated.html": {},
+      "kitchen-sink.html": {},
+      "index.html": {}
+    }
+  },
+  "debug_allowlist": {
+    "description": "Testing infrastructure used by this project's own Playwright specs — not user-facing documentation.",
+    "entries": {
+      "test-harness.html": {},
+      "pre-debug.html": {},
+      "mdhtml-pre-debug.html": {},
+      "legacy-syntax-check.html": {},
+      "scrollalong-test.html": {}
+    }
+  }
+}
