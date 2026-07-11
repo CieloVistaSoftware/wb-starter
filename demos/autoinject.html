@@ -270,12 +270,18 @@
 &lt;form&gt;
   &lt;label&gt;
     Full Name
-    &lt;input type="text" placeholder="John Doe" required&gt;
+    &lt;input
+      type="text"
+      placeholder="John Doe"
+      required&gt;
   &lt;/label&gt;
-  
+
   &lt;label&gt;
     Email Address
-    &lt;input type="email" placeholder="john@example.com" required&gt;
+    &lt;input
+      type="email"
+      placeholder="john@example.com"
+      required&gt;
   &lt;/label&gt;
 
   &lt;label&gt;
@@ -290,27 +296,53 @@
 
   &lt;label&gt;
     Bio
-    &lt;textarea rows="3" placeholder="Tell us about yourself..."&gt;&lt;/textarea&gt;
+    &lt;textarea
+      rows="3"
+      placeholder="Tell us about yourself..."&gt;&lt;/textarea&gt;
   &lt;/label&gt;
 
   &lt;label&gt;
     Experience Level
-    &lt;input type="range" min="0" max="10" value="5"&gt;
+    &lt;input
+      type="range"
+      min="0"
+      max="10"
+      value="5"&gt;
   &lt;/label&gt;
 
   &lt;fieldset&gt;
     &lt;legend&gt;Preferences&lt;/legend&gt;
-    &lt;label&gt;&lt;input type="checkbox" checked&gt; Remote&lt;/label&gt;
+    &lt;label&gt;
+      &lt;input
+        type="checkbox"
+        checked&gt;
+      Remote
+    &lt;/label&gt;
     &lt;label&gt;&lt;input type="checkbox"&gt; Relocation&lt;/label&gt;
   &lt;/fieldset&gt;
 
   &lt;fieldset&gt;
     &lt;legend&gt;Contract Type&lt;/legend&gt;
-    &lt;label&gt;&lt;input type="radio" name="contract" checked&gt; Full-time&lt;/label&gt;
-    &lt;label&gt;&lt;input type="radio" name="contract"&gt; Contractor&lt;/label&gt;
+    &lt;label&gt;
+      &lt;input
+        type="radio"
+        name="contract"
+        checked&gt;
+      Full-time
+    &lt;/label&gt;
+    &lt;label&gt;
+      &lt;input
+        type="radio"
+        name="contract"&gt;
+      Contractor
+    &lt;/label&gt;
   &lt;/fieldset&gt;
 
-  &lt;button type="submit" style="width: 100%;"&gt;Submit Application&lt;/button&gt;
+  &lt;button
+    type="submit"
+    style="width: 100%;"&gt;
+    Submit Application
+  &lt;/button&gt;
 &lt;/form&gt;
 ```
         </wb-mdhtml>
@@ -436,22 +468,87 @@
 ```html
 &lt;!-- Standard --&gt;
 &lt;label&gt;&lt;input type="checkbox"&gt; Standard Checkbox&lt;/label&gt;
-&lt;label&gt;&lt;input type="checkbox" checked&gt; Checked&lt;/label&gt;
-&lt;label&gt;&lt;input type="checkbox" disabled&gt; Disabled&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    checked&gt;
+  Checked
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    disabled&gt;
+  Disabled
+&lt;/label&gt;
 
 &lt;!-- Variants --&gt;
-&lt;label&gt;&lt;input type="checkbox" variant="primary" checked&gt; Primary&lt;/label&gt;
-&lt;label&gt;&lt;input type="checkbox" variant="success" checked&gt; Success&lt;/label&gt;
-&lt;label&gt;&lt;input type="checkbox" variant="warning" checked&gt; Warning&lt;/label&gt;
-&lt;label&gt;&lt;input type="checkbox" variant="danger" checked&gt; Danger&lt;/label&gt;
-&lt;label&gt;&lt;input type="checkbox" variant="info" checked&gt; Info&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    variant="primary"
+    checked&gt;
+  Primary
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    variant="success"
+    checked&gt;
+  Success
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    variant="warning"
+    checked&gt;
+  Warning
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    variant="danger"
+    checked&gt;
+  Danger
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    variant="info"
+    checked&gt;
+  Info
+&lt;/label&gt;
 
 &lt;!-- Sizes --&gt;
-&lt;label&gt;&lt;input type="checkbox" size="xs"&gt; Extra Small&lt;/label&gt;
-&lt;label&gt;&lt;input type="checkbox" size="sm"&gt; Small&lt;/label&gt;
-&lt;label&gt;&lt;input type="checkbox" size="md"&gt; Medium&lt;/label&gt;
-&lt;label&gt;&lt;input type="checkbox" size="lg"&gt; Large&lt;/label&gt;
-&lt;label&gt;&lt;input type="checkbox" size="xl"&gt; Extra Large&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    size="xs"&gt;
+  Extra Small
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    size="sm"&gt;
+  Small
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    size="md"&gt;
+  Medium
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    size="lg"&gt;
+  Large
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="checkbox"
+    size="xl"&gt;
+  Extra Large
+&lt;/label&gt;
 ```
       </wb-mdhtml>
     </div>
@@ -487,9 +584,28 @@
       <h4 id="autoinject-h4-radio-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
       <wb-mdhtml id="autoinject-mdhtml-radio">
 ```html
-&lt;label&gt;&lt;input type="radio" name="grp" value="1"&gt; Option 1&lt;/label&gt;
-&lt;label&gt;&lt;input type="radio" name="grp" value="2" checked&gt; Option 2&lt;/label&gt;
-&lt;label&gt;&lt;input type="radio" name="grp" value="3"&gt; Option 3&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="radio"
+    name="grp"
+    value="1"&gt;
+  Option 1
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="radio"
+    name="grp"
+    value="2"
+    checked&gt;
+  Option 2
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input
+    type="radio"
+    name="grp"
+    value="3"&gt;
+  Option 3
+&lt;/label&gt;
 ```
       </wb-mdhtml>
     </div>
@@ -705,19 +821,28 @@
       <wb-mdhtml id="autoinject-mdhtml-range">
 ```html
 &lt;!-- Standard --&gt;
-&lt;input type="range" min="0" max="100"&gt;
+&lt;input
+  type="range"
+  min="0"
+  max="100"&gt;
 
 &lt;!-- Enhanced --&gt;
-&lt;input type="range" 
-  min="0" max="100" 
-  show-value 
-  show-labels 
+&lt;input
+  type="range"
+  min="0"
+  max="100"
+  show-value
+  show-labels
   value-suffix="%"&gt;
 
 &lt;!-- Hue Slider with Swatch --&gt;
 &lt;div style="display: flex; gap: 1rem"&gt;
-  &lt;input type="range" min="0" max="360" 
-    show-value value-suffix="°"
+  &lt;input
+    type="range"
+    min="0"
+    max="360"
+    show-value
+    value-suffix="°"
     style="background: linear-gradient(...)"
     oninput="this.nextElementSibling.style.background = `hsl(${this.value}, 100%, 50%)`"&gt;
   &lt;div style="width: 30px; height: 30px; background: red"&gt;&lt;/div&gt;
@@ -859,28 +984,49 @@
       <wb-mdhtml id="autoinject-mdhtml-media">
 ```html
 &lt;!-- Image (Lazy loaded by default) --&gt;
-&lt;img src="image.jpg" alt="Description"&gt;
+&lt;img
+  src="image.jpg"
+  alt="Description"&gt;
 
 &lt;!-- Video --&gt;
 &lt;video controls&gt;
-  &lt;source src="movie.mp4" type="video/mp4"&gt;
+  &lt;source
+    src="movie.mp4"
+    type="video/mp4"&gt;
 &lt;/video&gt;
 
 &lt;!-- Audio with Theme Colors --&gt;
 &lt;audio controls&gt;
-  &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+  &lt;source
+    src="audio.mp3"
+    type="audio/mpeg"&gt;
 &lt;/audio&gt;
 
-&lt;audio controls variant="success" style="accent-color: var(--success-color);"&gt;
-  &lt;source src="success.mp3" type="audio/mpeg"&gt;
+&lt;audio
+  controls
+  variant="success"
+  style="accent-color: var(--success-color);"&gt;
+  &lt;source
+    src="success.mp3"
+    type="audio/mpeg"&gt;
 &lt;/audio&gt;
 
-&lt;audio controls variant="warning" style="accent-color: var(--warning-color);"&gt;
-  &lt;source src="warning.mp3" type="audio/mpeg"&gt;
+&lt;audio
+  controls
+  variant="warning"
+  style="accent-color: var(--warning-color);"&gt;
+  &lt;source
+    src="warning.mp3"
+    type="audio/mpeg"&gt;
 &lt;/audio&gt;
 
-&lt;audio controls variant="danger" style="accent-color: var(--danger-color);"&gt;
-  &lt;source src="danger.mp3" type="audio/mpeg"&gt;
+&lt;audio
+  controls
+  variant="danger"
+  style="accent-color: var(--danger-color);"&gt;
+  &lt;source
+    src="danger.mp3"
+    type="audio/mpeg"&gt;
 &lt;/audio&gt;
 ```
       </wb-mdhtml>
@@ -1041,7 +1187,9 @@ function hello() {
 &lt;/details&gt;
 
 &lt;!-- Progress --&gt;
-&lt;progress value="70" max="100"&gt;&lt;/progress&gt;
+&lt;progress
+  value="70"
+  max="100"&gt;&lt;/progress&gt;
 
 &lt;!-- Table with Multi-Select --&gt;
 &lt;table selectable="multi"&gt;
@@ -1101,7 +1249,9 @@ function hello() {
       <wb-mdhtml id="autoinject-mdhtml-card">
 ```html
 &lt;!-- Basic Card --&gt;
-&lt;article title="Title" subtitle="Subtitle"&gt;
+&lt;article
+  title="Title"
+  subtitle="Subtitle"&gt;
   &lt;p&gt;Content...&lt;/p&gt;
 &lt;/article&gt;
 
