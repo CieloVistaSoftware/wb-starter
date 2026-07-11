@@ -92,12 +92,11 @@ console.log(sayHello("Developer"));
 
 ### HTML
 
-```html
-<!-- HTML example (Auto-Inject + Extras) -->
+<wb-demo>
 <button
-  data-variant="primary"
-  data-wb="ripple tooltip"
-  data-tooltip="Click me!">
+  variant="primary"
+  x-ripple
+  x-tooltip="Click me!">
   Interactive Button
 </button>
-```
+</wb-demo>
