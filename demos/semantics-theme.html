@@ -3,13 +3,13 @@
 <head id="semanticstheme-head-2">
   <meta id="semanticstheme-meta-3" charset="UTF-8">
   <meta id="semanticstheme-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="semanticstheme-title-5">Theme & Dark Mode Demo</title>
+  <title id="semanticstheme-title-5">Semantics Theme — WB Demo</title>
   <link id="semanticstheme-link-6" rel="stylesheet" href="../src/styles/themes.css">
   <link id="semanticstheme-link-7" rel="stylesheet" href="../src/styles/site.css">
   <style id="semanticstheme-style-8">
-    body { 
-      padding: 2rem; 
-      background: var(--bg-color); 
+    body {
+      padding: 2rem;
+      background: var(--bg-color);
       color: var(--text-primary);
       font-family: system-ui, sans-serif;
       max-width: 1200px;
@@ -25,8 +25,8 @@
       padding-bottom: 0.5rem;
     }
     h1 { margin: 0; border: none; padding: 0; }
-    h2 { 
-      margin: 3rem 0 1.5rem; 
+    h2 {
+      margin: 3rem 0 1.5rem;
       padding-bottom: 0.5rem;
       border-bottom: 1px solid var(--border-color);
       color: var(--text-secondary);
@@ -47,62 +47,87 @@
       margin-bottom: 1rem;
     }
   </style>
-  <title>Semantics Theme — WB Demo</title>
 </head>
 <body id="semanticstheme-body-9">
   <header id="semanticstheme-header-10">
-    <h1 id="semanticstheme-h1-11">🎨 Theme & Dark Mode</h1>
-    <wb-themecontrol id="semanticstheme-div-12"></div>
+    <h1 id="semanticstheme-h1-11">🎨 Theme &amp; Dark Mode</h1>
+    <wb-themecontrol id="semanticstheme-themecontrol-12"></wb-themecontrol>
   </header>
   <p id="semanticstheme-p-13">Behaviors for managing themes and dark mode.</p>
 
   <!-- THEME CONTROL -->
-  <h2 id="semanticstheme-h2-14">Theme Control <code id="semanticstheme-code-15"></code></h2>
+  <h2 id="semanticstheme-h2-14">Theme Control <code id="semanticstheme-code-15">wb-themecontrol</code></h2>
   <div id="semanticstheme-div-16" class="demo-section">
     <p id="semanticstheme-p-17">A dropdown to switch the global theme. Persists selection to localStorage.</p>
-    <wb-themecontrol id="semanticstheme-div-18" show-label="true"></div>
+    <wb-demo>
+      <wb-themecontrol></wb-themecontrol>
+    </wb-demo>
   </div>
 
   <!-- DARK MODE ENFORCER -->
   <h2 id="semanticstheme-h2-19">Forced Theme <code id="semanticstheme-code-20">x-darkmode</code></h2>
   <div id="semanticstheme-div-21" class="demo-section">
-    <p id="semanticstheme-p-22">These sections have forced themes regardless of the global setting.</p>
-    
-    <div id="semanticstheme-div-23" class="card" x-darkmode target="self" data-theme="dark">
-      <h3 id="semanticstheme-h3-24">Forced Dark Mode</h3>
-      <p id="semanticstheme-p-25">This card will always be dark.</p>
-      <button id="semanticstheme-button-26" variant="primary">Primary Button</button>
-    </div>
+    <p id="semanticstheme-p-22">These sections have forced themes regardless of the global setting. <code>target="self"</code> scopes the theme to the element itself; <code>theme="…"</code> sets which theme (not <code>data-theme</code>, which <code>x-darkmode</code> doesn't read).</p>
 
-    <div id="semanticstheme-div-27" class="card" x-darkmode target="self" data-theme="light">
-      <h3 id="semanticstheme-h3-28">Forced Light Mode</h3>
-      <p id="semanticstheme-p-29">This card will always be light.</p>
-      <button id="semanticstheme-button-30" variant="primary">Primary Button</button>
-    </div>
+    <wb-demo>
+      <div
+        class="card"
+        x-darkmode
+        target="self"
+        theme="dark">
+        <h3>Forced Dark Mode</h3>
+        <p>This card will always be dark.</p>
+        <button variant="primary">Primary Button</button>
+      </div>
+    </wb-demo>
 
-    <div id="semanticstheme-div-31" class="card" x-darkmode target="self" data-theme="cyberpunk">
-      <h3 id="semanticstheme-h3-32">Forced Cyberpunk</h3>
-      <p id="semanticstheme-p-33">This card will always be cyberpunk.</p>
-      <button id="semanticstheme-button-34" variant="primary">Primary Button</button>
-    </div>
+    <wb-demo>
+      <div
+        class="card"
+        x-darkmode
+        target="self"
+        theme="light">
+        <h3>Forced Light Mode</h3>
+        <p>This card will always be light.</p>
+        <button variant="primary">Primary Button</button>
+      </div>
+    </wb-demo>
+
+    <wb-demo>
+      <div
+        class="card"
+        x-darkmode
+        target="self"
+        theme="cyberpunk">
+        <h3>Forced Cyberpunk</h3>
+        <p>This card will always be cyberpunk.</p>
+        <button variant="primary">Primary Button</button>
+      </div>
+    </wb-demo>
   </div>
 
   <!-- NESTED THEMES -->
   <h2 id="semanticstheme-h2-35">Nested Themes</h2>
-  <div id="semanticstheme-div-36" class="demo-section" data-theme="forest">
-    <h3 id="semanticstheme-h3-37">Forest Theme Container</h3>
-    <p id="semanticstheme-p-38">This container uses <code id="semanticstheme-code-39">data-theme="forest"</code> directly in HTML.</p>
-    
-    <div id="semanticstheme-div-40" class="card">
-      <h4 id="semanticstheme-h4-41">Inherited Forest Card</h4>
-      <button id="semanticstheme-button-42" variant="primary">Forest Button</button>
-    </div>
+  <div id="semanticstheme-div-36" class="demo-section">
+    <p>Themes cascade through <code>data-theme</code> on any container — no behavior needed, just the plain HTML attribute the theme system itself keys off of. A nested container can override its ancestor's theme.</p>
 
-    <div id="semanticstheme-div-43" class="card" data-theme="sunset">
-      <h4 id="semanticstheme-h4-44">Nested Sunset Card</h4>
-      <p id="semanticstheme-p-45">Overriding parent theme with <code id="semanticstheme-code-46">data-theme="sunset"</code>.</p>
-      <button id="semanticstheme-button-47" variant="primary">Sunset Button</button>
-    </div>
+    <wb-demo>
+      <div data-theme="forest">
+        <h3>Forest Theme Container</h3>
+        <p>This container uses <code>data-theme="forest"</code> directly in HTML.</p>
+
+        <div class="card">
+          <h4>Inherited Forest Card</h4>
+          <button variant="primary">Forest Button</button>
+        </div>
+
+        <div class="card" data-theme="sunset">
+          <h4>Nested Sunset Card</h4>
+          <p>Overriding parent theme with <code>data-theme="sunset"</code>.</p>
+          <button variant="primary">Sunset Button</button>
+        </div>
+      </div>
+    </wb-demo>
   </div>
 
   <!-- Load WB -->

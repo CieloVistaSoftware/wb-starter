@@ -13,10 +13,13 @@ export function darkmode(element, options = {}) {
     ...options
   };
 
-  // Get target element (default: html root)
-  const targetEl = config.target === 'html' 
-    ? document.documentElement 
-    : document.querySelector(config.target);
+  // Get target element (default: html root; 'self' scopes to this element,
+  // e.g. forcing one card to a theme regardless of the global setting)
+  const targetEl = config.target === 'html'
+    ? document.documentElement
+    : config.target === 'self'
+      ? element
+      : document.querySelector(config.target);
 
   if (!targetEl) {
     console.warn('[WB] Darkmode: Target not found');
