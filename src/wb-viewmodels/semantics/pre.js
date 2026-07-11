@@ -29,8 +29,8 @@ export function pre(element, options = {}) {
     // v3 default: ON, matching an actual code editor (VS Code shows line
     // numbers by default) — explicit show-line-numbers="false" opts out.
     showLineNumbers: options.showLineNumbers ?? (element.getAttribute('show-line-numbers') !== 'false'),
-    showCopy: options.showCopy ?? (element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
-    maxHeight: options.maxHeight || element.dataset.maxHeight || '',
+    showCopy: options.showCopy ?? (element.hasAttribute('show-copy') || element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
+    maxHeight: options.maxHeight || element.getAttribute('max-height') || element.dataset.maxHeight || '',
     // v3: plain `wrap` attribute is canonical; data-wrap accepted for back-compat.
     wrap: options.wrap ?? (element.hasAttribute('wrap')
       ? element.getAttribute('wrap') !== 'false'
@@ -40,42 +40,18 @@ export function pre(element, options = {}) {
     ...options
   };
 
-  // Size mappings - 1rem (md) is the readable default per the font-size
-  // standard; smaller/larger only when data-size is set explicitly.
-  const sizeMap = {
-    xs: '0.875rem',
-    sm: '0.9375rem',
-    md: '1rem',
-    lg: '1.125rem',
-    xl: '1.25rem'
-  };
-  const fontSize = sizeMap[config.size] || sizeMap.md;
+  // Size classes carry font-size (src/styles/behaviors/pre.css) — 'md' (1rem)
+  // is the readable default per the font-size standard.
+  const validSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+  const size = validSizes.includes(config.size) ? config.size : 'md';
 
-  element.classList.add('x-pre');
-
-  // Base styling - ensure no overflow
-  Object.assign(element.style, {
-    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-    fontSize: fontSize,
-    padding: (config.showCopy || config.language) ? '1.5rem 0.75rem 0.75rem 0.75rem' : '0.75rem',
-    borderRadius: '0', // Wrapper handles radius
-    backgroundColor: 'transparent', // Wrapper handles bg
-    color: 'var(--text-code, #d4d4d4)',
-    border: 'none', // Wrapper handles border
-    // No-wrap code scrolls horizontally (editor style); wrapped code hides overflow.
-    overflowX: config.wrap ? 'hidden' : 'auto',
-    overflowY: config.maxHeight ? 'auto' : 'hidden',
-    whiteSpace: config.wrap ? 'pre-wrap' : 'pre',
-    // Only break words when wrapping — never mangle tokens in editor (pre) mode.
-    wordBreak: config.wrap ? 'break-word' : 'normal',
-    overflowWrap: config.wrap ? 'break-word' : 'normal',
-    margin: '0',
-    width: '100%',
-    maxWidth: '100%',
-    boxSizing: 'border-box'
-  });
-
+  element.classList.add('x-pre', `x-pre--${size}`);
+  if (config.showCopy || config.language) element.classList.add('x-pre--has-header');
+  if (config.wrap) element.classList.add('x-pre--wrap');
   if (config.maxHeight) {
+    element.classList.add('x-pre--has-max-height');
+    // The value itself (e.g. "400px") is arbitrary user input — genuinely
+    // per-instance, can't be a class.
     element.style.maxHeight = config.maxHeight;
   }
 
@@ -87,15 +63,6 @@ export function pre(element, options = {}) {
   // Always wrap to provide the container look
   wrapper = document.createElement('div');
   wrapper.className = 'x-pre-wrapper';
-  wrapper.style.cssText = `
-    position: relative;
-    display: block;
-    background-color: var(--bg-code, #1e1e1e);
-    border: 1px solid var(--border-color, #374151);
-    border-radius: var(--radius-md, 6px);
-    margin-bottom: 1rem;
-    overflow: hidden; /* Ensure rounded corners clip content */
-  `;
 
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
@@ -121,32 +88,10 @@ export function pre(element, options = {}) {
     copyButton.textContent = '📋';
     copyButton.title = 'Copy code';
 
-    copyButton.style.cssText = `
-      position: absolute;
-      top: 0.25rem;
-      right: ${nextControlRightPx}px;
-      background: var(--bg-secondary, #1f2937);
-      border: 1px solid var(--border-color, #374151);
-      color: var(--text-secondary, #9ca3af);
-      padding: 0.1rem 0.3rem;
-      border-radius: var(--radius-sm, 3px);
-      cursor: pointer;
-      font-size: 0.6rem;
-      line-height: 1;
-      transition: all 0.2s ease;
-      z-index: 10;
-      opacity: 0.6;
-    `;
-
-    copyButton.addEventListener('mouseenter', () => {
-      copyButton.style.backgroundColor = 'var(--bg-tertiary, #374151)';
-      copyButton.style.opacity = '1';
-    });
-
-    copyButton.addEventListener('mouseleave', () => {
-      copyButton.style.backgroundColor = 'var(--bg-secondary, #1f2937)';
-      copyButton.style.opacity = '0.7';
-    });
+    // right offset is genuinely per-instance — depends on which OTHER
+    // controls are present and their real rendered widths (see comment
+    // above); hover state is handled by .x-pre__copy:hover in pre.css now.
+    copyButton.style.right = `${nextControlRightPx}px`;
 
     copyButton.addEventListener('click', async () => {
       try {
@@ -187,22 +132,8 @@ export function pre(element, options = {}) {
     languageBadge.className = 'x-pre__language';
     languageBadge.textContent = displayText;
 
-    languageBadge.style.cssText = `
-      position: absolute;
-      top: 0.25rem;
-      right: ${nextControlRightPx}px;
-      background: transparent;
-      color: var(--text-tertiary, #9ca3af);
-      padding: 0.25rem 0.5rem;
-      border-radius: var(--radius-sm, 4px);
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-family: system-ui, -apple-system, sans-serif;
-      z-index: 9;
-      pointer-events: none;
-      opacity: 0.5;
-    `;
+    // right offset is genuinely per-instance (see copy button comment above).
+    languageBadge.style.right = `${nextControlRightPx}px`;
 
     wrapper.appendChild(languageBadge);
     nextControlRightPx += languageBadge.getBoundingClientRect().width + GAP_PX;
@@ -221,20 +152,9 @@ export function pre(element, options = {}) {
   toggleButton.className = 'x-pre__toggle';
   toggleButton.textContent = '⏷';
   toggleButton.title = 'Hide code';
-  toggleButton.style.cssText = `
-    position: absolute;
-    top: 0.25rem;
-    right: ${nextControlRightPx}px;
-    background: var(--bg-secondary, #1f2937);
-    border: 1px solid var(--border-color, #374151);
-    color: var(--text-secondary, #9ca3af);
-    padding: 0.1rem 0.35rem;
-    border-radius: var(--radius-sm, 3px);
-    cursor: pointer;
-    font-size: 0.7rem;
-    line-height: 1;
-    z-index: 11;
-  `;
+  // right offset is genuinely per-instance (see copy button comment above).
+  // min-height for the collapsed state lives on .x-pre-wrapper in pre.css.
+  toggleButton.style.right = `${nextControlRightPx}px`;
   toggleButton.addEventListener('click', () => {
     collapsed = !collapsed;
     element.style.display = collapsed ? 'none' : '';
@@ -243,10 +163,11 @@ export function pre(element, options = {}) {
     toggleButton.title = collapsed ? 'Show code' : 'Hide code';
   });
   wrapper.appendChild(toggleButton);
-  wrapper.style.minHeight = '2.5rem';
 
   // Add line numbers
   if (config.showLineNumbers) {
+    // padding-left + line-height for the gutter live on .x-pre--has-line-numbers.
+    element.classList.add('x-pre--has-line-numbers');
     // Fix: Remove leading newline from code content if present to ensure line numbers align
     // This handles the common case of <pre><code>\n...</code></pre>
     if (codeChild && codeChild.firstChild && codeChild.firstChild.nodeType === 3) {
@@ -263,33 +184,16 @@ export function pre(element, options = {}) {
     // Remove last empty line if it exists (common in pre)
     if (lines[lines.length - 1] === '') lines.pop();
 
-    const topPadding = (config.showCopy || config.language) ? '2rem' : '1rem';
-
     lineNumbersEl = document.createElement('div');
-    lineNumbersEl.className = 'x-pre__line-numbers';
-    lineNumbersEl.style.cssText = `
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      padding-top: ${topPadding};
-      background: var(--bg-secondary, rgba(0,0,0,0.2));
-      color: var(--text-tertiary, #6b7280);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      /* Must match the code's OWN font-size (not a hardcoded value) — with
-         line-height as a unitless multiplier, two different font-sizes at
-         the same 1.5 ratio produce different actual pixel line-heights, so
-         line numbers drift out of alignment with their code lines. */
-      font-size: ${fontSize};
-      line-height: 1.5; /* Must match code line-height */
-      text-align: right;
-      user-select: none;
-      border-right: 1px solid var(--border-color, #374151);
-      width: 2rem;
-      min-width: 2rem;
-      box-sizing: border-box;
-      z-index: 1;
-    `;
+    // Must track the pre's own size class (x-pre--${size}) so font-size
+    // matches — a mismatched font-size at the same 1.5 line-height ratio
+    // produces different actual pixel line-heights, drifting the numbers
+    // out of alignment with their code lines. has-header mirrors .x-pre's
+    // own header padding for the same reason.
+    lineNumbersEl.className = `x-pre__line-numbers x-pre__line-numbers--${size}`;
+    if (config.showCopy || config.language) {
+      lineNumbersEl.classList.add('x-pre__line-numbers--has-header');
+    }
 
     // Each number is individually positioned (not stacked via flex/uniform
     // row height) because when code WRAPS (§6 — wrap, never h-scroll), one
@@ -298,21 +202,17 @@ export function pre(element, options = {}) {
     // stacked list of numbers has no way to know a given line grew, so every
     // number after the first wrapped line drifts out of sync with its actual
     // code line. Each number's real position is measured directly against
-    // the rendered text instead.
+    // the rendered text instead — position/right come from the
+    // `.x-pre__line-numbers > div` rule in pre.css, only `top` (below) is
+    // genuinely per-instance.
     const lineNumEls = lines.map((_, index) => {
       const lineNum = document.createElement('div');
       lineNum.textContent = index + 1;
-      lineNum.style.position = 'absolute';
-      lineNum.style.right = '0.25rem';
       lineNumbersEl.appendChild(lineNum);
       return lineNum;
     });
 
     wrapper.insertBefore(lineNumbersEl, element);
-    element.style.paddingLeft = '2.5rem'; // 2rem width + 0.5rem padding
-
-    // Ensure line height matches
-    element.style.lineHeight = '1.5';
 
     // Measure each logical line's actual rendered top (relative to the code
     // element) and position its number to match. Deferred via double-rAF so
