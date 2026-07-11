@@ -44,17 +44,24 @@ wb-demo > .x-pre-wrapper {
   margin-top: 0.5rem;
 }
 
+/* Step down gradually (4/5/6 -> 2 -> 1) instead of jumping straight from
+   4+ columns to a single column at the same 1024px breakpoint every other
+   tier used — that looked cramped/needlessly tall on real tablet-width
+   screens, which can comfortably fit 2 columns. */
 @media (max-width: 1024px) {
+  .wb-demo__grid--cols-4,
+  .wb-demo__grid--cols-5,
+  .wb-demo__grid--cols-6 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .wb-demo__grid--cols-2,
   .wb-demo__grid--cols-3,
   .wb-demo__grid--cols-4,
   .wb-demo__grid--cols-5,
   .wb-demo__grid--cols-6 {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .wb-demo__grid--cols-2 {
     grid-template-columns: 1fr;
   }
 }
