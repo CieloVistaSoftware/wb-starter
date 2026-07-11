@@ -19,15 +19,22 @@
 export function grid(element, options = {}) {
   const config = {
     columns: options.columns || element.dataset.columns || element.getAttribute('columns') || '3',
+    rows: options.rows || element.dataset.rows || element.getAttribute('rows') || '',
     gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
     minWidth: options.minWidth || element.dataset.minWidth || element.getAttribute('min-width') || '',
+    align: options.align || element.getAttribute('align') || '',
+    justify: options.justify || element.getAttribute('justify') || '',
+    center: options.center ?? element.hasAttribute('center'),
+    background: options.background || element.getAttribute('background') || '',
+    altRows: options.altRows ?? element.hasAttribute('alt-rows'),
+    headers: options.headers || element.getAttribute('headers') || '',
     ...options
   };
 
   element.classList.add('wb-grid');
   element.style.display = 'grid';
   element.style.gap = config.gap;
-  
+
   if (config.minWidth) {
     // Explicit min-width: use auto-fit with minmax
     element.style.gridTemplateColumns = `repeat(auto-fit, minmax(${config.minWidth}, 1fr))`;
@@ -39,7 +46,40 @@ export function grid(element, options = {}) {
     element.style.gridTemplateColumns = `repeat(auto-fit, minmax(min(${autoMin}, 100%), 1fr))`;
   }
 
-  return () => element.classList.remove('wb-grid');
+  if (config.rows) {
+    element.style.gridTemplateRows = `repeat(${config.rows}, auto)`;
+  }
+
+  // `center` is a shorthand for aligning + centering item content in one step.
+  const alignItems = config.center ? 'center' : config.align;
+  const justifyItems = config.center ? 'center' : config.justify;
+  if (alignItems) element.style.alignItems = alignItems;
+  if (justifyItems) element.style.justifyItems = justifyItems;
+  if (config.center) element.style.textAlign = 'center';
+
+  if (config.background) {
+    element.style.background = config.background;
+  }
+
+  if (config.altRows) {
+    element.classList.add('wb-grid--alt-rows');
+  }
+
+  // Guard against re-wrapping on a second scan (re-running the behavior on an
+  // already-processed element would otherwise duplicate the header cells).
+  if (config.headers && !element.querySelector(':scope > .wb-grid__header')) {
+    const headerNames = config.headers.split(',').map((h) => h.trim()).filter(Boolean);
+    const frag = document.createDocumentFragment();
+    headerNames.forEach((name) => {
+      const cell = document.createElement('div');
+      cell.className = 'wb-grid__header';
+      cell.textContent = name;
+      frag.appendChild(cell);
+    });
+    element.insertBefore(frag, element.firstChild);
+  }
+
+  return () => element.classList.remove('wb-grid', 'wb-grid--alt-rows');
 }
 
 /**

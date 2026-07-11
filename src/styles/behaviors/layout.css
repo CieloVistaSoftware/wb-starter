@@ -13,6 +13,18 @@ wb-drawer.wb-drawer-layout {
   visibility: visible;
 }
 
+/* wb-grid: alt-rows zebra striping (#281) — themed, no literal colors */
+.wb-grid--alt-rows > *:nth-child(even) {
+  background: var(--bg-secondary);
+}
+
+.wb-grid__header {
+  font-weight: 600;
+  padding: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
 .site {
   min-height: 100vh;
   display: flex;
