@@ -1,3 +1,23 @@
+# 🅿️ PARKING LOT (2026-07-11)
+
+**Task:** Standards redo of `semantics-theme.html`/`semantics-forms.html` (prior turn) → John asked "we should fix wb-form" → fixed `<wb-form>` (had ZERO behavior mapping anywhere, completely inert) → redid `demos/multi-component-demo-generated.html` to standards. **PUSHED — 3e05bc8..8e905dc on origin/main, confirmed live on https://cielovistasoftware.github.io/wb-starter/ (Pages status: "built").**
+
+**Landed & pushed (all verified):**
+- `75605dc` `.wb-demo__grid--cols-4/5/6` jumped straight from N columns to 1 at the same 1024px breakpoint as everything else — added a graduated 2-tier step (`src/styles/behaviors/demo.css`).
+- `54c13d9` **`<wb-form>` fix** — unlike every other `wb-*` tag, it had no entry in `tag-map.js`'s `elementMap` NOR `wb-lazy.js`'s `customElementMappings` — `WB.scan()` never touched it, on any page. Fixed both maps + rewrote `form.js` to detect `tagName === 'WB-FORM'` and replace it with a real `<form>` (same wrap-in-real-element pattern as `details.js`), since FormData/`.action`/`.reset()` need a genuine `HTMLFormElement`. New test `tests/behaviors/wb-form-custom-tag.spec.ts` (tag replacement, ajax submit event, `wbForm.getData()` API — all passing). Also fixed `form.md`'s "Native Form (Enhanced)" example (showed `x-form` with no `ajax` and called it "Enhanced" with no visible effect).
+- `8e905dc` **multi-component-demo redo** — the page's "Badges — From Matrix" and "badge — Combinations" sections were near-duplicate content because `$ref: badge-showcase#0` happened to pull a section overlapping the `$generate:matrix` section above it; `$ref` was never actually exercised as a distinct mechanism despite the page's own subtitle promising `$extends/$generate/$ref/$include`. Swapped it for `$include: cardportfolio-showcase` (genuinely new content, demonstrates the missing 4th mechanism). Also found `badge.schema.json`'s test matrix grew 8→36 combos since Feb — regenerating fresh silently exploded the badge section into auto-labeled cartesian-product noise (`"primary-md-dot-removable"` etc.); added `limit` support to `$generate` in `compose-page.mjs` (`scripts/compose-page.mjs`) so a page can pin a curated sample size independent of matrix growth — restored `limit: 8`. Also gave `generate-page.mjs`'s template the same header/theme-toggle/demo-section chrome every hand-authored demo page already uses (it previously shipped completely unstyled). Verified live: 41/41 elements enhance, no console errors.
+
+**Full compliance suite, run 3x today (once per commit):** consistently 3503 passed / 3 (local) or 2 (CI — `css-oop-compliance`'s `wb-overlay-ext` hardcoded-color check doesn't run in CI, only locally against an untracked `src/wb-overlay-ext/` dir) failed. **Confirmed pre-existing and unrelated** via `git stash` before each commit — same failures reproduce identically with this session's changes removed: `demos-no-legacy-data-attrs.spec.ts` on `registry-browser.html` (`data-label`) and `wizard.html` (`data-tab`). CI run 29138644625/29138644628 both red on exactly these 2, nothing else — confirmed via `gh run view --log-failed`.
+
+**Next step (pick up here):**
+1. Fix the 2 pre-existing `data-*` violations blocking a fully-green CI: `demos/registry-browser.html` (`data-label`) and `demos/wizard.html` (`data-tab`) — same bare-attribute-fallback pattern used repeatedly this session (add `getAttribute` fallback to whatever behavior reads these, then convert the demo markup to the bare form).
+2. `docs/components/semantics/form.md` still has 3 sections (AJAX Submission, With Auto-Save, Custom Success Message) describing fictional `<wb-form>` properties/methods/events that don't exist in the real `form.js` (`autoSave`, `loadingText`, `successMessage`, `validate()`, `setData()`, `clearAutoSave()`, `.wb-form--loading/success/error`, `wb:form:validate`) — needs a full rewrite to match reality now that `<wb-form>` actually works.
+3. Resume the broader demos/*.html standards-redo queue (2 done: `semantics-theme.html`, `semantics-forms.html`; 1 generated page done: `multi-component-demo-generated.html`) — same audit-every-attribute-against-source pattern, high hit rate so far (~1 real bug per page).
+
+**Open questions:** none blocking.
+
+---
+
 # 🅿️ PARKING LOT (2026-07-10)
 
 **Task:** Issue burn-down + HAR-driven perf/correctness sweep. **NOTHING PUSHED — local is 8 commits ahead of origin/main.** Push before starting next session's work, or explicitly decide not to.
