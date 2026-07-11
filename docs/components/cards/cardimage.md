@@ -28,36 +28,36 @@ Inherits all [card properties](./card.md) plus:
 
 ### Basic Image Card
 
-```html
+<wb-demo>
 <wb-cardimage
-  src="images/hero.jpg"
+  src="https://picsum.photos/seed/hero/400/225"
   alt="Hero image"
-  title="Featured Image">
-  Optional content below the image.
+  title="Featured Image"
+  content="Optional content below the image.">
 </wb-cardimage>
-```
+</wb-demo>
 
 ### With Custom Aspect Ratio
 
-```html
+<wb-demo>
 <wb-cardimage
-  src="images/square.jpg"
+  src="https://picsum.photos/seed/square/300/300"
   alt="Square image"
   aspect="1/1"
   title="Square Image Card">
 </wb-cardimage>
-```
+</wb-demo>
 
 ### Image at Bottom
 
-```html
+<wb-demo>
 <wb-cardimage
-  src="images/footer.jpg"
+  src="https://picsum.photos/seed/footer/400/225"
   position="bottom"
-  title="Image Below Content">
-  Content appears above the image.
+  title="Image Below Content"
+  content="Content appears above the image.">
 </wb-cardimage>
-```
+</wb-demo>
 
 ## Generated Structure
 

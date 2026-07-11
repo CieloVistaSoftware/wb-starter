@@ -90,7 +90,7 @@ A standalone page needs the theme + base styles and one module script:
 
 Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slotted as content.
 
-```html
+<wb-demo>
 <wb-card
   title="Pro"
   variant="glass">
@@ -120,7 +120,7 @@ Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slo
 <wb-accordion title="What is wb-starter?">
   <p>A zero-build component library.</p>
 </wb-accordion>
-```
+</wb-demo>
 
 Card variants come from the schema (`default`, `glass`, `elevated`, `float`, …).
 Each component's exact attributes live in its schema at `src/wb-models/<name>.schema.json`.
@@ -132,7 +132,7 @@ Each component's exact attributes live in its schema at `src/wb-models/<name>.sc
 Attach a behavior to **any** element with an `x-<name>` attribute. These don't
 need a custom tag:
 
-```html
+<wb-demo>
 <!-- feedback -->
 <button
   x-toast
@@ -162,7 +162,7 @@ need a custom tag:
   type="password"
   x-password
   placeholder="Password with toggle">
-```
+</wb-demo>
 
 The full attribute → behavior map is in `src/core/wb-lazy.js`
 (`customElementMappings`). Every behavior name resolves to a module via

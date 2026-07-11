@@ -31,23 +31,23 @@ cardBase (shared foundation)
 
 ### Custom Element (Recommended)
 
-```html
+<wb-demo>
 <wb-card
   title="Card Title"
   subtitle="Subtitle">
   Card content here
 </wb-card>
-```
+</wb-demo>
 
 ### Semantic Element + Data Attributes
 
-```html
+<wb-demo>
 <article
   x-card
   title="Card Title">
   Card content here
 </article>
-```
+</wb-demo>
 
 ## Base Card Properties (Inherited by All)
 
@@ -78,51 +78,51 @@ cardBase (shared foundation)
 ## Quick Examples
 
 ### Basic Card
-```html
+<wb-demo>
 <wb-card title="Hello World"> This is a simple card with content. </wb-card>
-```
+</wb-demo>
 
 ### Elevated Card with Footer
-```html
+<wb-demo>
 <wb-card
   title="Elevated Card"
   footer="Last updated: Today"
   elevated>
   Card content with elevation shadow.
 </wb-card>
-```
+</wb-demo>
 
 ### Glass Variant
-```html
+<wb-demo>
 <wb-card
   title="Glass Card"
   variant="glass">
   Frosted glass effect card.
 </wb-card>
-```
+</wb-demo>
 
 ### Image Card
-```html
+<wb-demo>
 <wb-cardimage
-  src="images/hero.jpg"
+  src="https://picsum.photos/seed/cardsindex/400/225"
   alt="Hero image"
   title="Featured Image"
   subtitle="Image description">
 </wb-cardimage>
-```
+</wb-demo>
 
 ### Profile Card
-```html
+<wb-demo>
 <wb-cardprofile
   name="John Doe"
   role="Software Engineer"
-  avatar="/images/avatar.jpg"
+  avatar="https://picsum.photos/seed/johndoe/100/100"
   bio="Building great software.">
 </wb-cardprofile>
-```
+</wb-demo>
 
 ### Pricing Card
-```html
+<wb-demo>
 <wb-cardpricing
   plan="Pro Plan"
   price="$29"
@@ -130,7 +130,7 @@ cardBase (shared foundation)
   features="Unlimited projects, Priority support, API access"
   cta="Get Started">
 </wb-cardpricing>
-```
+</wb-demo>
 
 ## File Structure
 

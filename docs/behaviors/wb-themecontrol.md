@@ -6,9 +6,9 @@ choice across page loads (via `localStorage`) unless disabled.
 
 - **Type:** Component (custom tag)
 - **Usage:**
-  ```html
+  <wb-demo>
   <wb-themecontrol></wb-themecontrol>
-  ```
+  </wb-demo>
 - **Attributes:**
   - `target` — CSS selector (or `"html"`, the default) for the element `data-theme` is applied to.
   - `default` — theme to apply if none is persisted yet. Default: `"dark"`.
