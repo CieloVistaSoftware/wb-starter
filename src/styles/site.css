@@ -295,7 +295,17 @@ body > button[x-copy] {
   padding-right: 0;
   background: var(--bg-primary);
   border-right: 1px solid var(--border-color);
-  display: flex;
+  /* Hidden is the unconditional default — see the min-width reveal rule
+     (769px breakpoint) + the unconditional .site__nav--mobile-open rule at the end of
+     this file for why. Some real mobile browsers lay out the very first
+     paint frame at a stale desktop-width viewport before <meta viewport>
+     finishes processing, so a max-width media query can silently fail to
+     match on that frame — if the base rule were display:flex, that frame
+     would show the full sidebar over the phone's content instead of the
+     collapsed nav (reported live, repeatedly: site-engine.js's
+     enforceMobileNavDefault JS workaround was a losing battle against the
+     same timing race). Defaulting hidden makes the failure mode safe. */
+  display: none;
   flex-direction: column;
   transition: width 0.3s ease;
   overflow: visible; /* Changed from hidden to allow resizer handle */
@@ -2141,4 +2151,24 @@ img { max-width: 100%; height: auto; }
     height: 22px;
     font-size: 0.8rem;
   }
+}
+
+/* =============================================================================
+   #293 regression — .site__nav's base rule now defaults to display:none
+   (see that rule's comment). Restore the sidebar for genuine tablet/desktop
+   widths. The 769px breakpoint deliberately avoids the existing 768px
+   max-width blocks above — no overlap, no cascade-order ambiguity.
+   ============================================================================= */
+@media (min-width: 769px) {
+  .site__nav {
+    display: flex;
+  }
+}
+
+/* Unconditional (no media query) and last in the file — the toggled-open
+   state must win at every breakpoint regardless of which max-width block
+   above matched, without depending on each of them separately remembering
+   to restore display alongside their own transform/position rules. */
+.site__nav.site__nav--mobile-open {
+  display: flex !important;
 }
