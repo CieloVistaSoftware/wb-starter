@@ -1617,8 +1617,6 @@ export function cardlink(element, options = {}) {
   element.style.cursor = 'pointer';
   element.style.position = 'relative';
   element.style.padding = '1.25rem';
-  element.setAttribute('role', 'link');
-  element.setAttribute('tabindex', '0');
 
   // Header row with icon and external indicator
   const headerRow = document.createElement('div');
@@ -1682,25 +1680,32 @@ export function cardlink(element, options = {}) {
 
   element.appendChild(headerRow);
 
-  // Click handler
-  const clickHandler = (e) => {
-    e.preventDefault();
-    if (config.href && config.href !== '#') {
-      window.open(config.href, config.target);
+  // A REAL anchor, stretched to cover the whole card (position:relative set
+  // above), instead of a JS window.open() on click. window.open() triggered
+  // from a plain element's click handler isn't a native link tap — some
+  // mobile browsers (confirmed: Samsung Internet) open it in a
+  // desktop-viewport window context that ignores the target page's own
+  // <meta viewport>, regardless of what that page declares. A real <a
+  // target="_blank"> is standard link navigation the browser handles
+  // exactly like any other tap — plus native accessibility (screen readers
+  // announce it as a link; right-click "open in new tab" works; middle-click
+  // opens in a background tab) that a div + role="link" only approximates.
+  let stretchedLink = null;
+  if (config.href && config.href !== '#') {
+    stretchedLink = document.createElement('a');
+    stretchedLink.href = config.href;
+    if (config.target === '_blank') {
+      stretchedLink.target = '_blank';
+      stretchedLink.rel = 'noopener';
     }
-  };
-
-  element.addEventListener('click', clickHandler);
-  element.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      clickHandler(e);
-    }
-  });
+    stretchedLink.setAttribute('aria-label', base.config.title || config.href);
+    stretchedLink.style.cssText = 'position:absolute;inset:0;';
+    element.appendChild(stretchedLink);
+  }
 
   return () => {
     base.cleanup();
-    element.removeEventListener('click', clickHandler);
+    if (stretchedLink) stretchedLink.remove();
   };
 }
 
