@@ -216,21 +216,6 @@ function injectProgressStyles() {
     .wb-progress--danger::-webkit-progress-value { background: var(--danger, #ef4444); }
     .wb-progress--info::-webkit-progress-value { background: var(--info, #3b82f6); }
     
-    .wb-progress--animated::-webkit-progress-value {
-      background-image: linear-gradient(
-        45deg,
-        rgba(255,255,255,0.15) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255,255,255,0.15) 50%,
-        rgba(255,255,255,0.15) 75%,
-        transparent 75%,
-        transparent
-      );
-      background-size: 1rem 1rem;
-      animation: wb-progress-stripes 1s linear infinite;
-    }
-    
     .wb-progress--indeterminate::-webkit-progress-value {
       background: linear-gradient(90deg, transparent, var(--primary, #6366f1), transparent);
       animation: wb-progress-indeterminate 1.5s ease-in-out infinite;
