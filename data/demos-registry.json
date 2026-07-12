@@ -45,13 +45,6 @@
       "pce-test.html": { "duplicateOf": "card-examples.html" }
     }
   },
-  "needs_diff_before_deciding": {
-    "description": "Both function as broad smoke-test pages — real content diff needed before choosing which survives (see plan doc).",
-    "entries": {
-      "kitchen-sink.html": {},
-      "autoinject.html": {}
-    }
-  },
   "narrative_allowlist": {
     "description": "Hand-written narrative/interactive-tool pages, explicitly out of scope for the generator per #268's own proposal.",
     "entries": {
@@ -61,7 +54,7 @@
       "wizard.html": {},
       "charity-food.html": {},
       "multi-component-demo-generated.html": {},
-      "kitchen-sink.html": {},
+      "autoinject.html": {},
       "index.html": {}
     }
   },

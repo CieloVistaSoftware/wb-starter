@@ -7,8 +7,8 @@ import { createToast } from '../feedback.js';
  */
 export function table(element, options = {}) {
   const config = {
-    striped: options.striped ?? element.hasAttribute('data-striped'),
-    hover: options.hover ?? (element.dataset.hover !== 'false'),
+    striped: options.striped ?? (element.hasAttribute('striped') || element.hasAttribute('data-striped')),
+    hover: options.hover ?? (element.getAttribute('hover') !== 'false'),
     bordered: options.bordered ?? element.hasAttribute('bordered'),
     compact: options.compact ?? element.hasAttribute('compact'),
     sortable: options.sortable ?? (element.getAttribute('sortable') !== 'false'),

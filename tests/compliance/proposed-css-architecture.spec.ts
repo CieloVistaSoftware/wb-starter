@@ -40,21 +40,4 @@ test.describe('Proposed CSS Architecture', () => {
     }
   });
 
-  test.skip('kitchen-sink.html should load modular CSS', async ({ page }) => {
-    await page.goto('demos/kitchen-sink.html');
-    
-    // Check if the new CSS files are loaded
-    // This assumes the HTML is updated to link them
-    const stylesheets = await page.evaluate(() => {
-      return Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
-        .map(link => (link as HTMLLinkElement).href);
-    });
-
-    const hasButtons = stylesheets.some(s => s.includes('buttons.css'));
-    const hasInputs = stylesheets.some(s => s.includes('inputs.css'));
-
-    expect(hasButtons, 'Should load buttons.css').toBe(true);
-    expect(hasInputs, 'Should load inputs.css').toBe(true);
-  });
-
 });

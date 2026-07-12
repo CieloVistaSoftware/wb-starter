@@ -57,13 +57,25 @@ a real §1 violation on their own. `data/demos-registry.json` updated to
 match: `buttons.html` is now the sole canonical entry.
 
 ### The two "everything on one page" pages
-`kitchen-sink.html` (434 lines, ~18 tags) and `autoinject.html` (1523 lines — by far the
-largest file in `demos/`) both function as broad smoke-test pages. Per the issue's own
-proposal #3 ("keep ONE everything-on-one-page smoke page (generated), delete the
-rest") — these need a closer content diff before deciding which survives; not done in
-this pass given the size of `autoinject.html`. **Flagged for the next phase, not
-decided here** — this is exactly the kind of call that benefits from being made
-alongside the actual migration work, not abstractly ahead of it.
+
+**Decided (2026-07-12):** kept `autoinject.html`, retired `kitchen-sink.html` per direct
+request ("remove this and integrate any missing things in the other files"). Audited all
+68 of kitchen-sink.html's mini-examples: most were already covered elsewhere (buttons →
+`buttons.html`, forms → `semantics-forms.html`, cards → `card-examples.html`, etc.) or
+were themselves broken/fake placeholders not worth migrating (`Dialog Trigger`/
+`Toast Trigger` had no `x-dialog`/`x-toast` attribute at all — inert; the fake
+button-styled `Tabs`/`Pagination` are strictly inferior to the real `tabs-demo.html`/
+real pagination elsewhere). Genuinely unique content (blockquote, `<dl>`, `<address>`,
+`<hr>`, `<time>`, MathML, `<sup>`/`<sub>`, `<del>`/`<ins>`, `<abbr>`, `.wb-link`) migrated
+into `semantics-structure.html`, which also needed its own from-scratch rewrite
+regardless — it had zero `<wb-demo>` usage, multiple malformed tags (missing `>`,
+mismatched open/close pairs on invented `<wb-ul>`/`<wb-ol>`/`<wb-dl>`/`<wb-pre>`/
+`<wb-code>` tags that were never real registered custom elements), and several
+fictional attributes (`table`'s `pagination`/`page-size`, `dialog`'s `close-on-backdrop`/
+`animation`, `details`' `accordion` grouping — none read anywhere in the real behavior
+source). Along the way found and fixed a real bug matching the fictional-attribute
+theme: `table.js`'s `striped`/`hover` only read `data-striped`/checked `dataset.hover`,
+missing the bare-attribute fallback every demo actually uses.
 
 ## Legitimate non-duplicate pages (keep, out of scope for generation)
 

@@ -14,13 +14,15 @@
  * the behavior's module file, removing the element while that fetch is
  * in-flight, and asserting no page error is thrown.
  *
- * Must run against a page that actually boots via wb-bootstrap.js (imports
- * WB from core/wb-lazy.js — the dynamic-import, lazy-loading implementation).
- * The main site (site-engine.js) imports WB from core/wb.js instead — a
- * separate, eager implementation with no per-call dynamic import, so
- * WB.inject() there resolves in ~1ms regardless of network delay and never
- * exercises this race. demos/kitchen-sink.html is a live page that uses
- * wb-bootstrap.js.
+ * Must run against a page that actually boots via wb-lazy.js (the
+ * dynamic-import, lazy-loading implementation). The main site
+ * (site-engine.js) imports WB from core/wb.js instead — a separate, eager
+ * implementation with no per-call dynamic import, so WB.inject() there
+ * resolves in ~1ms regardless of network delay and never exercises this
+ * race. Every demos/*.html page imports wb-lazy.js directly; this test
+ * only needs window.WB.inject to exist and doesn't touch any of the
+ * page's actual content, so any of them works (demos/kitchen-sink.html,
+ * the original target, was deleted as part of the demos/ consolidation).
  */
 import { test, expect } from '@playwright/test';
 
@@ -42,7 +44,7 @@ test('WB.inject() does not crash when its element is removed mid-import', async 
     await route.continue();
   });
 
-  await page.goto(BASE + '/demos/kitchen-sink.html', { waitUntil: 'domcontentloaded' });
+  await page.goto(BASE + '/demos/buttons.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !!(window as any).WB?.inject, { timeout: 20000 });
 
   const result = await page.evaluate(async () => {
