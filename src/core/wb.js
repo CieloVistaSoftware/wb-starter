@@ -9,6 +9,53 @@ if (typeof window !== 'undefined' && typeof window.WB === 'undefined') {
 const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
 const _wbClog = console.log.bind(console);
 const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
+// The tracing-state announcement itself lives in main.js (2nd console line,
+// right after the version banner) so it appears in one predictable place
+// regardless of which core module a page happens to load.
+
+// Fetch/load tracing for <img>/<video>/<audio> — to find WHY a specific
+// image or video never rendered rather than guessing. 'load'/'error' don't
+// bubble, so a single capture-phase listener on document is the only way to
+// catch every media element's outcome without instrumenting each one
+// individually. Also directly surfaces the browser's own silent
+// interventions (e.g. "Images loaded lazily and replaced with
+// placeholders" — a real Chrome/Edge behavior, not a WB bug) by logging
+// naturalWidth/naturalHeight at load time: 0x0 on a 'load' event (not an
+// 'error' event) means the browser itself served a placeholder.
+function traceMediaLoads() {
+  if (typeof document === 'undefined') return;
+  const start = new WeakMap();
+  document.addEventListener('load', (ev) => {
+    const el = ev.target;
+    if (!(el instanceof HTMLImageElement) && !(el instanceof HTMLVideoElement) && !(el instanceof HTMLAudioElement)) return;
+    const t0 = start.get(el);
+    const ms = t0 ? Math.round(performance.now() - t0) : null;
+    if (el instanceof HTMLImageElement && el.naturalWidth === 0) {
+      _wbClog(`[WB:trace] IMG loaded with 0x0 natural size (likely browser intervention, not a real error) src=${el.src} ${ms != null ? ms + 'ms' : ''}`, el);
+    } else {
+      dlog(`[WB:trace] ${el.tagName} loaded ok src=${el.currentSrc || el.src} ${ms != null ? ms + 'ms' : ''}`);
+    }
+  }, true);
+  document.addEventListener('error', (ev) => {
+    const el = ev.target;
+    if (!(el instanceof HTMLImageElement) && !(el instanceof HTMLVideoElement) && !(el instanceof HTMLAudioElement)) return;
+    const t0 = start.get(el);
+    const ms = t0 ? Math.round(performance.now() - t0) : null;
+    _wbClog(`[WB:trace] ${el.tagName} FAILED to load src=${el.src} ${ms != null ? ms + 'ms' : ''}`, el);
+  }, true);
+  // Record start time as soon as each media element gets a src, so load/error above can report elapsed time.
+  new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      for (const node of m.addedNodes) {
+        if (node.nodeType !== 1) continue;
+        node.querySelectorAll?.('img[src],video[src],audio[src]').forEach(el => { if (!start.has(el)) start.set(el, performance.now()); });
+        if (node.matches?.('img[src],video[src],audio[src]') && !start.has(node)) start.set(node, performance.now());
+      }
+    }
+  }).observe(document.documentElement, { childList: true, subtree: true });
+  document.querySelectorAll('img[src],video[src],audio[src]').forEach(el => start.set(el, performance.now()));
+  _wbClog('[WB:trace] media load tracing active — every <img>/<video>/<audio> load/error will be logged');
+}
 /**
  * WB - Web Behavior
  * =================
@@ -843,6 +890,11 @@ const WB = {
       setConfig('debug', true);
       setConfig('logLevel', 'debug');
     }
+
+    // Media load/error tracing — gated on the same localStorage['wb-debug']
+    // flag as dlog(), not the `debug` init option, so it's on whenever
+    // someone has already turned on tracing to investigate something.
+    if (WB_DEBUG) traceMediaLoads();
 
     // Set autoInject — unconditional: config.js's module-level default was
     // `true`, and this previously only ever set it to `true` (never `false`),

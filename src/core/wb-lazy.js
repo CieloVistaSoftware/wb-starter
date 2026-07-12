@@ -13,6 +13,16 @@ import { Events } from './events.js';
 import { Theme } from './theme.js';
 import { getConfig, setConfig } from './config.js';
 
+// Debug logging — silent unless localStorage['wb-debug'] === '1'. Same
+// mechanism as wb.js, added here for parity (this runtime previously had no
+// localStorage-based trace flag at all, only the separate WB.init({debug})
+// config option).
+const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+const dlog = (...args) => { if (WB_DEBUG) console.log(...args); };
+// Always announce the tracing state — first thing in the console, every
+// load, regardless of whether it's on or off.
+console.log(`[WB-lazy] debug tracing: ${WB_DEBUG ? 'ON' : 'OFF'} (localStorage['wb-debug'] === '1' to enable)`);
+
 // Auto-injection mappings
 const customElementMappings = [
   // Card custom tags - BOTH wb-* AND card-* namespaces for flexibility

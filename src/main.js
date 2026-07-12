@@ -29,6 +29,12 @@ async function init() {
   // the fastest way to confirm which deploy you're actually looking at,
   // without digging through the header or network tab.
   console.log(`🚀 wb-starter starting... v${VERSION.version} (${VERSION.commit}, built ${VERSION.builtAt})`);
+  // Debug it via tracing, not guessing: always show whether [WB.scan]/
+  // [WB.observe] trace output is active, right on the 2nd console line, so
+  // it's never a guessing game whether logging is on before you go looking
+  // for trace output that isn't there.
+  const wbDebugOn = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+  console.log(`[WB] debug tracing: ${wbDebugOn ? 'ON' : 'OFF'} — localStorage.setItem('wb-debug','1') + reload to enable`);
 
   try {
     // Expose WB globally
