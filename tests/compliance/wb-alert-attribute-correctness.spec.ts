@@ -25,12 +25,9 @@ import { fileURLToPath } from 'url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const SKIP_DIRS = new Set(['node_modules', '.git', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out']);
 
-// Files where `type=` on <wb-alert> is intentional (a documented BAD example)
-// or the file is a confirmed duplicate already slated for retirement (#268)
-// — not worth fixing content that's about to be deleted.
+// Files where `type=` on <wb-alert> is intentional (a documented BAD example).
 const ALLOWLIST = new Set([
   'docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md',
-  'demos/pce-test.html',
 ]);
 
 function walk(dir: string, out: string[]): void {

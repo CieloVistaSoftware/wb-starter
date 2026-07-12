@@ -112,19 +112,22 @@ format-upgrade case.
 
 ## Recommended next steps (in order)
 
-1. Build `data/demos-registry.json` — maps every `wb-*` tag / `x-*` behavior name to
-   its designated canonical demo file (this doc's decisions above, extended to the
-   remaining ~100 behaviors not yet audited in this pass).
-2. Add a coverage gate (compliance test): every entry in the registry must resolve to
-   a real file; every `demos/*.html` file must either be in the registry, on the
-   dev/debug allow-list, or on the narrative-page allow-list — no orphans.
-3. Retire `pce-test.html`, `button-variants-demo.html`, `button-variants-simple.html`
-   per the confirmed duplicates above (delete + registry update, one PR).
-2. Diff `kitchen-sink.html` vs `autoinject.html` properly before deciding.
-5. Extend `auto-showcase.mjs` to cover schema-less `x-*` behaviors, then generate
-   showcases for the 12 tiny stub pages listed above, retiring the hand-written
-   versions once the generated ones pass the coverage gate.
+1. ~~Build `data/demos-registry.json`~~ — done. Maps every `wb-*` tag / `x-*` behavior
+   name to its designated canonical demo file.
+2. ~~Add a coverage gate (compliance test)~~ — done:
+   `tests/compliance/demos-registry-coverage.spec.ts`.
+3. ~~Retire `pce-test.html`, `button-variants-demo.html`, `button-variants-simple.html`~~
+   — done. `button-variants-*` merged into `demos/buttons.html` (2026-07-11).
+   `pce-test.html` deleted (2026-07-12): removed the file, its dedicated
+   `tests/behaviors/pce-demo.spec.ts` (only tested the now-deleted page's
+   legacy `data-*`-attribute markup), its `project-index.html` link card, its
+   `duplicates_to_retire` registry entry, and its allowlist mentions in
+   `no-observer-referror.spec.ts`/`wb-alert-attribute-correctness.spec.ts`
+   (repointed the former to `card-examples.html`, its replacement).
+4. ~~Diff `kitchen-sink.html` vs `autoinject.html` properly before deciding~~ — done
+   (2026-07-12): kept `autoinject.html`, retired `kitchen-sink.html`.
+5. **Still open:** extend `auto-showcase.mjs` to cover schema-less `x-*` behaviors,
+   then generate showcases for the 12 tiny stub pages listed above, retiring the
+   hand-written versions once the generated ones pass the coverage gate.
 
-Steps 1-2 (registry + gate) are the concrete, immediately-actionable pieces — see
-`data/demos-registry.json` and `tests/compliance/demos-registry-coverage.spec.ts`,
-added alongside this plan.
+Steps 1-4 are done. Step 5 is the only remaining piece of #268.

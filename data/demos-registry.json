@@ -41,9 +41,7 @@
   },
   "duplicates_to_retire": {
     "description": "Confirmed overlapping with a canonical entry above — retire once the migration PR lands. NOT deleted yet (plan phase only).",
-    "entries": {
-      "pce-test.html": { "duplicateOf": "card-examples.html" }
-    }
+    "entries": {}
   },
   "narrative_allowlist": {
     "description": "Hand-written narrative/interactive-tool pages, explicitly out of scope for the generator per #268's own proposal.",
