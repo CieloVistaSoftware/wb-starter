@@ -1,11 +1,18 @@
+<link rel="stylesheet" href="src/styles/pages/demos.css">
+
 <div id="demos-hero" class="page__hero">
   <h1>🎮 Demos</h1>
   <p>Explore standalone demos and examples.</p>
+  <div class="grid-search-wrapper">
+    <input type="search" id="demos-search" placeholder="Search demos...">
+    <span class="grid-search-icon">🔍</span>
+  </div>
 </div>
 
 <div class="page__section">
   <h2>Content</h2>
 
+  <p id="demos-empty" hidden>No demos match your search.</p>
 
 <!-- Cards below are generated from the demos/ folder by
      scripts/generate-demos-list.mjs — edit that script, not this list. -->
@@ -14,10 +21,7 @@
   <wb-card-link title="Autoinject" href="demos/autoinject.html" target="_blank" icon="🎮"></wb-card-link>
   <wb-card-link title="Autosize Demo" href="demos/autosize-demo.html" target="_blank" icon="🎮"></wb-card-link>
   <wb-card-link title="🏷️ Badge Showcase" href="demos/badge-showcase.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Button Composition (wb-button + x-* behaviors)" href="demos/button-composition-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Button Variants Demo" href="demos/button-variants-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="WB Button Variants (Simple)" href="demos/button-variants-simple.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Button Variants (wb-* tags)" href="demos/button-variants-tags-demo.html" target="_blank" icon="🎮"></wb-card-link>
+  <wb-card-link title="Buttons" href="demos/buttons.html" target="_blank" icon="🎮"></wb-card-link>
   <wb-card-link title="🃏 Card Examples" href="demos/card-examples.html" target="_blank" icon="🎮"></wb-card-link>
   <wb-card-link title="Uganda Community Food Bank" href="demos/charity-food.html" target="_blank" icon="🎮"></wb-card-link>
   <wb-card-link title="Code" href="demos/code.html" target="_blank" icon="🎮"></wb-card-link>
@@ -54,3 +58,26 @@
 </div>
 
 </div>
+
+<script>
+  (function filterDemos() {
+    const input = document.getElementById('demos-search');
+    const grid = document.getElementById('demos-grid');
+    const empty = document.getElementById('demos-empty');
+    if (!input || !grid) return;
+
+    const cards = Array.from(grid.querySelectorAll('wb-card-link'));
+
+    input.addEventListener('input', () => {
+      const query = input.value.trim().toLowerCase();
+      let visibleCount = 0;
+      cards.forEach((card) => {
+        const title = (card.getAttribute('title') || '').toLowerCase();
+        const matches = !query || title.includes(query);
+        card.hidden = !matches;
+        if (matches) visibleCount++;
+      });
+      empty.hidden = visibleCount > 0;
+    });
+  })();
+</script>
