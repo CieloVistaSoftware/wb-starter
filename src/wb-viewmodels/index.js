@@ -91,10 +91,15 @@ const behaviorModules = {
   // Diff (lightweight shim) — ensure registry consistency with data/behavior-inventory.json
   diff: 'semantics/diff',
   
-  // Media (10) → media.js
-  image: 'media', gallery: 'media', video: 'media', audio: 'semantics/audio',
-  youtube: 'media', vimeo: 'media', embed: 'media', figure: 'media',
-  carousel: 'media', ratio: 'media',
+  // Media — each in its own semantics/*.js file (media.js grab-bag retired)
+  image: 'semantics/img', gallery: 'semantics/gallery', video: 'semantics/video',
+  audio: 'semantics/audio', youtube: 'semantics/youtube', vimeo: 'semantics/vimeo',
+  figure: 'semantics/figure', ratio: 'semantics/ratio',
+  // embed/carousel deliberately NOT carried over — media.js never had a real
+  // export for either (confirmed: no `export function embed`/`carousel`
+  // anywhere in it), and neither is used anywhere in demos/ or pages/. Dead
+  // registry entries pointing at a real-but-non-matching module; removed
+  // rather than left dangling once media.js itself is deleted.
   
   // Overlays (8) → overlay.js
   popover: 'overlay', drawer: 'overlay', lightbox: 'overlay', offcanvas: 'overlay',

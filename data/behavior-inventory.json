@@ -57,7 +57,6 @@
       "audio",
       "youtube",
       "vimeo",
-      "embed",
       "figure",
       "ratio",
       "icon",
@@ -110,8 +109,7 @@
       "imposter",
       "accordion",
       "tabs",
-      "gallery",
-      "carousel"
+      "gallery"
     ],
     "modifier": [
       "animate",

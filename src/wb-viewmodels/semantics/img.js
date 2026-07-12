@@ -1,15 +1,23 @@
 /**
  * Image - Enhanced <img> element
  * Adds lazy loading, zoom/lightbox, fallback, aspect ratio
- * Helper Attribute: [x-behavior="img"]
+ * Helper Attribute: [x-image]
+ *
+ * Migrated from the old media.js grab-bag file (image()) to match this
+ * project's one-file-per-semantic-element convention (audio.js, table.js,
+ * progress.js, ...). A parallel, never-wired-up version of this file
+ * already existed with a nicer openLightbox (Escape-to-close, alt text)
+ * but the same missing-bare-attribute-fallback bug media.js's version
+ * had before this session's fix — merged the two: media.js's correct
+ * config reads + aspect-ratio support, this file's better lightbox.
  */
 export function img(element, options = {}) {
   const config = {
-    lazy: options.lazy ?? element.hasAttribute('data-lazy'),
-    zoomable: options.zoomable ?? element.hasAttribute('data-zoomable'),
-    placeholder: options.placeholder || element.dataset.placeholder || '',
-    fallback: options.fallback || element.dataset.fallback || '',
-    aspectRatio: options.aspectRatio || element.dataset.aspectRatio || '',
+    lazy: options.lazy ?? (element.hasAttribute('lazy') || element.hasAttribute('data-lazy')),
+    zoomable: options.zoomable ?? (element.hasAttribute('zoomable') || element.hasAttribute('data-zoomable')),
+    placeholder: options.placeholder || element.getAttribute('placeholder') || '',
+    fallback: options.fallback || element.getAttribute('fallback') || '',
+    aspectRatio: options.aspectRatio || element.getAttribute('aspect-ratio') || '',
     ...options
   };
 
@@ -37,7 +45,7 @@ export function img(element, options = {}) {
   return () => element.classList.remove('wb-img', 'wb-img--zoomable');
 }
 
-function openLightbox(src, alt = '') {
+export function openLightbox(src, alt = '') {
   const overlay = document.createElement('div');
   overlay.className = 'wb-lightbox';
   Object.assign(overlay.style, {
@@ -51,7 +59,7 @@ function openLightbox(src, alt = '') {
     cursor: 'zoom-out',
     padding: '2rem'
   });
-  
+
   const img = document.createElement('img');
   img.src = src;
   img.alt = alt;
@@ -63,11 +71,10 @@ function openLightbox(src, alt = '') {
     borderRadius: '8px',
     boxShadow: '0 25px 50px rgba(0,0,0,0.5)'
   });
-  
+
   overlay.appendChild(img);
   overlay.onclick = () => overlay.remove();
-  
-  // Close on Escape
+
   const handleKey = (e) => {
     if (e.key === 'Escape') {
       overlay.remove();
@@ -75,7 +82,7 @@ function openLightbox(src, alt = '') {
     }
   };
   document.addEventListener('keydown', handleKey);
-  
+
   document.body.appendChild(overlay);
 }
 

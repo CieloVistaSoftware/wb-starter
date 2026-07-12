@@ -63,9 +63,11 @@ export const elementMap = {
   'wb-drawer': 'drawer',
   'wb-drawerLayout': 'drawerLayout',
   'wb-dropdown': 'dropdown',
+  'wb-figure': 'figure',
   'wb-fireworks': 'fireworks',
   'wb-footer': 'footer',
   'wb-form': 'form',
+  'wb-gallery': 'gallery',
   'wb-globe': 'globe',
   'wb-header': 'header',
   'wb-hero': 'hero',
@@ -76,6 +78,7 @@ export const elementMap = {
   'wb-notes': 'notes',
   'wb-progress': 'progress',
   'wb-rating': 'rating',
+  'wb-ratio': 'ratio',
   'wb-resizable': 'resizable',
   'wb-ripple': 'ripple',
   'wb-scrollalong': 'scrollalong',
@@ -96,7 +99,10 @@ export const elementMap = {
   'wb-toast': 'toast',
   'wb-toggle': 'toggle',
   'wb-tooltip': 'tooltip',
-  'wb-timeline': 'timeline'
+  'wb-timeline': 'timeline',
+  'wb-video': 'video',
+  'wb-vimeo': 'vimeo',
+  'wb-youtube': 'youtube'
 };
 
 // ============================================================================
