@@ -75,13 +75,13 @@ test.describe('Components Page', () => {
   test.describe('Cards Section', () => {
     
     test('basic cards render correctly', async ({ page }) => {
-      const basicCard = page.locator('wb-card[title="Basic Card"]');
+      const basicCard = page.locator('wb-card[title="Title + Body"]');
       await safeScrollIntoView(basicCard);
       await expect(basicCard).toBeVisible();
     });
 
     test('card with header and footer renders', async ({ page }) => {
-      const card = page.locator('wb-card[title="With Footer"][footer="Card Footer"]');
+      const card = page.locator('wb-card[title="This is the title"][footer="This is the footer"]');
       await safeScrollIntoView(card);
       await expect(card).toBeVisible();
     });
@@ -99,17 +99,17 @@ test.describe('Components Page', () => {
     });
 
     test('stats-card (stock indicators) render', async ({ page }) => {
-      const statsCards = page.locator('wb-cardstats');
+      // Stats Cards is now built from <wb-cardlink icon="..."> (S&P 500, Dow
+      // Jones, NASDAQ, Gold) -- there's no <wb-cardstats> tag on this page at
+      // all. `icon` is only set on the stats-card usage of wb-cardlink (the
+      // Link/Horizontal Cards section's wb-cardlink has no icon), so it's a
+      // safe, precise selector for this specific section.
+      const statsCards = page.locator('wb-cardlink[icon]');
       await safeScrollIntoView(statsCards.first());
-      // Wait briefly for runtime hydration marker or class to appear (best-effort).
-      await page.waitForFunction((sel) => {
-        const el = document.querySelector(sel);
-        return !!el && (el.dataset.wbHydrated === '1' || el.classList.contains('wb-stats'));
-      }, 'wb-cardstats', { timeout: 2000 }).catch(() => null);
+      await expect(statsCards.first()).toHaveClass(/wb-card/);
 
       const statsCount = await statsCards.count();
-      test.skip(statsCount === 0, 'stats-card example not present in this build');
-      expect(statsCount).toBeGreaterThanOrEqual(4); 
+      expect(statsCount).toBeGreaterThanOrEqual(4);
     });
 
     test('price-card renders with features', async ({ page }) => {
@@ -240,7 +240,10 @@ test.describe('Components Page', () => {
     });
 
     test('drawer trigger buttons exist', async ({ page }) => {
-      const drawerBtns = page.locator('wb-drawer');
+      // wb-drawer is a page-shell layout primitive, not what this section
+      // demonstrates -- the Drawer example here is two plain
+      // <button x-drawer position="left|right"> triggers.
+      const drawerBtns = page.locator('button[x-drawer]');
       await safeScrollIntoView(drawerBtns.first());
       await expect(drawerBtns.count()).resolves.toBeGreaterThanOrEqual(2);
     });
@@ -295,17 +298,18 @@ test.describe('Components Page', () => {
       const pagination = page.locator('nav[x-pagination]');
       await safeScrollIntoView(pagination);
       // Pagination may be visually collapsed in CI; assert semantic data instead.
-      await expect(pagination).toHaveAttribute('data-total', /\d+/);
-      await expect(pagination).toHaveAttribute('data-current', /\d+/);
-      await expect(pagination).toHaveAttribute('data-per-page', /\d+/);
+      // v3 uses plain config attributes, not data-* (#224).
+      await expect(pagination).toHaveAttribute('total', /\d+/);
+      await expect(pagination).toHaveAttribute('current', /\d+/);
+      await expect(pagination).toHaveAttribute('per-page', /\d+/);
     });
 
     test('steps component renders', async ({ page }) => {
       const steps = page.locator('div[x-steps]');
       await safeScrollIntoView(steps);
       // Steps can be collapsed in narrow viewports — verify semantic attributes.
-      await expect(steps).toHaveAttribute('data-items');
-      await expect(steps).toHaveAttribute('data-current');
+      await expect(steps).toHaveAttribute('items');
+      await expect(steps).toHaveAttribute('current');
     });
   });
 
@@ -343,9 +347,9 @@ test.describe('Components Page', () => {
     test('stepper component exists', async ({ page }) => {
       const stepper = page.locator('div[x-stepper]');
       await safeScrollIntoView(stepper);
-      await expect(stepper).toHaveAttribute('data-value');
-      await expect(stepper).toHaveAttribute('data-min');
-      await expect(stepper).toHaveAttribute('data-max');
+      await expect(stepper).toHaveAttribute('value');
+      await expect(stepper).toHaveAttribute('min');
+      await expect(stepper).toHaveAttribute('max');
     });
   });
 
@@ -355,7 +359,9 @@ test.describe('Components Page', () => {
   test.describe('Data Display Section', () => {
     
     test('timeline renders', async ({ page }) => {
-      const timeline = page.locator('div[x-timeline]');
+      // <wb-timeline items="..."> is a real custom element (elementMap),
+      // not a native div enhanced via x-timeline.
+      const timeline = page.locator('wb-timeline');
       await safeScrollIntoView(timeline);
       await expect(timeline).toBeVisible();
     });
@@ -404,15 +410,15 @@ test.describe('Components Page', () => {
     test('youtube embed exists', async ({ page }) => {
       const youtube = page.locator('div[x-youtube]');
       await safeScrollIntoView(youtube);
-      // Ensure the embed is configured (data-id present) rather than asserting visual iframe presence.
-      await expect(youtube).toHaveAttribute('data-id');
+      // Ensure the embed is configured (video-id present) rather than asserting visual iframe presence.
+      await expect(youtube).toHaveAttribute('video-id');
     });
     
     test('audio player exists', async ({ page }) => {
         const audio = page.locator('wb-audio');
         await safeScrollIntoView(audio);
         // Assert the source/config is present rather than visual layout (CI viewports vary).
-        await expect(audio).toHaveAttribute('data-src');
+        await expect(audio).toHaveAttribute('src');
     });
 
   });
