@@ -266,6 +266,7 @@ const autoInjectMappings = [
   { selector: 'img', behavior: 'image' },
   { selector: 'video', behavior: 'video' },
   { selector: 'audio', behavior: 'audio' },
+  { selector: 'figure', behavior: 'figure' },
   
   // Semantic Text
   { selector: 'code', behavior: 'code' },

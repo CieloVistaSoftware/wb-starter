@@ -123,6 +123,7 @@ export const nativeMap = {
   'img': 'image',
   'video': 'video',
   'audio': 'audio',
+  'figure': 'figure',
 
   // Semantic Text
   'code': 'code',

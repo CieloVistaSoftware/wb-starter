@@ -18,8 +18,8 @@
  */
 export function image(element, options = {}) {
   const config = {
-    lazy: options.lazy ?? element.hasAttribute('data-lazy'),
-    zoomable: options.zoomable ?? element.hasAttribute('data-zoomable'),
+    lazy: options.lazy ?? (element.hasAttribute('lazy') || element.hasAttribute('data-lazy')),
+    zoomable: options.zoomable ?? (element.hasAttribute('zoomable') || element.hasAttribute('data-zoomable')),
     placeholder: options.placeholder || element.getAttribute('placeholder') || '',
     fallback: options.fallback || element.getAttribute('fallback') || '',
     aspectRatio: options.aspectRatio || element.getAttribute('aspect-ratio') || '',

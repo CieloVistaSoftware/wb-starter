@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html id="semanticsmedia-html-1" lang="en" data-theme="dark">
-<head id="semanticsmedia-head-2">
-  <meta id="semanticsmedia-meta-3" charset="UTF-8">
-  <meta id="semanticsmedia-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="semanticsmedia-title-5">Semantic Media Demo</title>
-  <link id="semanticsmedia-link-6" rel="stylesheet" href="../src/styles/themes.css">
-  <link id="semanticsmedia-link-7" rel="stylesheet" href="../src/styles/site.css">
-  <style id="semanticsmedia-style-8">
-    body { 
-      padding: 2rem; 
-      background: var(--bg-color); 
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semantics Media — WB Demo</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <style>
+    body {
+      padding: 2rem;
+      background: var(--bg-color);
       color: var(--text-primary);
       font-family: system-ui, sans-serif;
       max-width: 1200px;
@@ -24,8 +24,8 @@
       padding-bottom: 0.5rem;
     }
     h1 { margin: 0; border: none; padding: 0; }
-    h2 { 
-      margin: 3rem 0 1.5rem; 
+    h2 {
+      margin: 3rem 0 1.5rem;
       padding-bottom: 0.5rem;
       border-bottom: 1px solid var(--border-color);
       color: var(--text-secondary);
@@ -40,116 +40,85 @@
       border: 1px solid var(--border-color);
       margin-bottom: 2rem;
     }
-    .demo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2rem;
-      align-items: start;
-    }
   </style>
-  <title>Semantics Media — WB Demo</title>
 </head>
-<body id="semanticsmedia-body-9">
-  <header id="semanticsmedia-header-10">
-    <h1 id="semanticsmedia-h1-11">🎬 Semantic Media Demo</h1>
-    <wb-themecontrol id="semanticsmedia-div-12"></div>
+<body>
+  <header>
+    <h1>🎬 Semantic Media Demo</h1>
+    <wb-themecontrol></wb-themecontrol>
   </header>
-  <p id="semanticsmedia-p-13">Enhanced media elements using standard HTML tags.</p>
+  <p>Enhanced media elements using standard HTML tags.</p>
 
   <!-- AUDIO -->
-  <h2 id="semanticsmedia-h2-14">Audio <code id="semanticsmedia-code-15">&lt;audio&gt;</code></h2>
-  <div id="semanticsmedia-div-16" class="demo-section">
-    <div id="semanticsmedia-div-17" class="demo-grid">
-      <div id="semanticsmedia-div-18">
-        <h3 id="semanticsmedia-h3-19">Standard Player</h3>
-        <audio id="semanticsmedia-audio-20" controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-      </div>
-      <div id="semanticsmedia-div-21">
-        <h3 id="semanticsmedia-h3-22">Studio EQ Player</h3>
-        <p id="semanticsmedia-p-23">With 15-band graphic equalizer</p>
-        <wb-audio
-          id="semanticsmedia-div-24"
-          src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3"
-          show-eq="true"
-          volume="0.7"
-          playlist="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3|Tours - Enthusiast,https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3|Ghosts I - Track 1,https://archive.org/download/nineinchnails_ghosts_I_IV/02_Ghosts_I.mp3|Ghosts I - Track 2,https://archive.org/download/nineinchnails_ghosts_I_IV/03_Ghosts_I.mp3|Ghosts I - Track 3,https://archive.org/download/nineinchnails_ghosts_I_IV/04_Ghosts_I.mp3|Ghosts I - Track 4,https://archive.org/download/nineinchnails_ghosts_I_IV/05_Ghosts_I.mp3|Ghosts I - Track 5,https://archive.org/download/nineinchnails_ghosts_I_IV/06_Ghosts_I.mp3|Ghosts I - Track 6,https://archive.org/download/nineinchnails_ghosts_I_IV/07_Ghosts_I.mp3|Ghosts I - Track 7,https://archive.org/download/nineinchnails_ghosts_I_IV/08_Ghosts_I.mp3|Ghosts I - Track 8,https://archive.org/download/nineinchnails_ghosts_I_IV/09_Ghosts_I.mp3|Ghosts I - Track 9,https://archive.org/download/nineinchnails_ghosts_I_IV/10_Ghosts_II.mp3|Ghosts II - Track 1,https://archive.org/download/nineinchnails_ghosts_I_IV/11_Ghosts_II.mp3|Ghosts II - Track 2,https://archive.org/download/nineinchnails_ghosts_I_IV/12_Ghosts_II.mp3|Ghosts II - Track 3,https://archive.org/download/nineinchnails_ghosts_I_IV/13_Ghosts_II.mp3|Ghosts II - Track 4,https://archive.org/download/nineinchnails_ghosts_I_IV/14_Ghosts_II.mp3|Ghosts II - Track 5,https://archive.org/download/nineinchnails_ghosts_I_IV/15_Ghosts_II.mp3|Ghosts II - Track 6,https://archive.org/download/nineinchnails_ghosts_I_IV/16_Ghosts_II.mp3|Ghosts II - Track 7,https://archive.org/download/nineinchnails_ghosts_I_IV/17_Ghosts_II.mp3|Ghosts II - Track 8">
-        </wb-audio>
-      </div>
-      </div>
-    </div>
+  <h2>Audio <code>&lt;audio&gt;</code></h2>
+  <div class="demo-section">
+    <p>Standard Player</p>
+    <wb-demo>
+      <audio controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    </wb-demo>
+
+    <p>Studio EQ Player — with 15-band graphic equalizer</p>
+    <wb-demo>
+      <wb-audio
+        src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3"
+        show-eq
+        volume="0.7">
+      </wb-audio>
+    </wb-demo>
   </div>
 
   <!-- VIDEO -->
-  <h2 id="semanticsmedia-h2-25">Video <code id="semanticsmedia-code-26">&lt;video&gt;</code></h2>
-  <div id="semanticsmedia-div-27" class="demo-section">
-    <div id="semanticsmedia-div-28" class="demo-grid">
-      <div id="semanticsmedia-div-29">
-        <h3 id="semanticsmedia-h3-30">Standard Video</h3>
-        <video id="semanticsmedia-video-31"
-          controls
-          src="https://www.w3schools.com/html/mov_bbb.mp4"
-          style="width: 100%; border-radius: 8px;">
-        </video>
-      </div>
-      <div id="semanticsmedia-div-32">
-        <h3 id="semanticsmedia-h3-33">Background Video (Muted Loop)</h3>
-        <video id="semanticsmedia-video-34"
-          src="https://www.w3schools.com/html/movie.mp4"
-          autoplay="true"
-          muted="true"
-          loop="true"
-          controls="false"
-          style="width: 100%; border-radius: 8px; opacity: 0.6;">
-        </video>
-      </div>
-    </div>
+  <h2>Video <code>&lt;video&gt;</code></h2>
+  <div class="demo-section">
+    <p>Standard Video</p>
+    <wb-demo>
+      <video controls src="https://www.w3schools.com/html/mov_bbb.mp4" style="width: 100%; border-radius: 8px;"></video>
+    </wb-demo>
+
+    <p>Background Video (Muted Loop)</p>
+    <wb-demo>
+      <video
+        src="https://www.w3schools.com/html/movie.mp4"
+        autoplay
+        muted
+        loop
+        style="width: 100%; border-radius: 8px; opacity: 0.6;">
+      </video>
+    </wb-demo>
   </div>
 
   <!-- IMAGE -->
-  <h2 id="semanticsmedia-h2-35">Image <code id="semanticsmedia-code-36">&lt;img&gt;</code></h2>
-  <div id="semanticsmedia-div-37" class="demo-section">
-    <div id="semanticsmedia-div-38" class="demo-grid">
-      <div id="semanticsmedia-div-39">
-        <h3 id="semanticsmedia-h3-40">Zoomable Image (Lightbox)</h3>
-        <img id="semanticsmedia-img-41" 
-          x-image 
-          src="https://picsum.photos/id/1018/800/600" 
-          zoomable="true" 
-          alt="Nature Scene"
-          style="width: 100%; border-radius: 8px;">
-      </div>
-      <div id="semanticsmedia-div-42">
-        <h3 id="semanticsmedia-h3-43">Lazy Loaded with Aspect Ratio</h3>
-        <img id="semanticsmedia-img-44" 
-          x-image 
-          src="https://picsum.photos/id/1015/800/600" 
-          lazy="true" 
-          aspect-ratio="4/3"
-          alt="River"
-          style="width: 100%; border-radius: 8px;">
-      </div>
-    </div>
+  <h2>Image <code>&lt;img&gt;</code></h2>
+  <div class="demo-section">
+    <p>Zoomable Image (Lightbox)</p>
+    <wb-demo>
+      <img x-image src="https://picsum.photos/id/1018/800/600" zoomable alt="Nature Scene" style="width: 100%; border-radius: 8px;">
+    </wb-demo>
+
+    <p>Lazy Loaded with Aspect Ratio</p>
+    <wb-demo>
+      <img x-image src="https://picsum.photos/id/1015/800/600" lazy aspect-ratio="4/3" alt="River" style="width: 100%; border-radius: 8px;">
+    </wb-demo>
   </div>
 
   <!-- FIGURE -->
-  <h2 id="semanticsmedia-h2-45">Figure <code id="semanticsmedia-code-46">&lt;figure&gt;</code></h2>
-  <div id="semanticsmedia-div-47" class="demo-section">
-    <div id="semanticsmedia-div-48" class="demo-grid">
-      <div id="semanticsmedia-div-49">
-        <h3 id="semanticsmedia-h3-50">Standard Figure</h3>
-        <figure id="semanticsmedia-figure-51" zoom="true">
-          <img id="semanticsmedia-img-52" src="https://picsum.photos/id/1016/800/600" alt="Canyon" style="width: 100%;">
-          <figcaption id="semanticsmedia-figcaption-53">A beautiful canyon view</figcaption>
-        </figure>
-      </div>
-      <div id="semanticsmedia-div-54">
-        <h3 id="semanticsmedia-h3-55">Overlay Caption</h3>
-        <figure id="semanticsmedia-figure-56" caption-position="overlay" lightbox="true">
-          <img id="semanticsmedia-img-57" src="https://picsum.photos/id/1019/800/600" alt="Technology" style="width: 100%;">
-          <figcaption id="semanticsmedia-figcaption-58">Technology and Nature</figcaption>
-        </figure>
-      </div>
-    </div>
+  <h2>Figure <code>&lt;figure&gt;</code></h2>
+  <div class="demo-section">
+    <p>Standard Figure</p>
+    <wb-demo>
+      <figure zoom>
+        <img src="https://picsum.photos/id/1016/800/600" alt="Canyon" style="width: 100%;">
+        <figcaption>A beautiful canyon view</figcaption>
+      </figure>
+    </wb-demo>
+
+    <p>Overlay Caption</p>
+    <wb-demo>
+      <figure caption-position="overlay" lightbox>
+        <img src="https://picsum.photos/id/1019/800/600" alt="Technology" style="width: 100%;">
+        <figcaption>Technology and Nature</figcaption>
+      </figure>
+    </wb-demo>
   </div>
 
   <!-- Load WB -->
