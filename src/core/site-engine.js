@@ -4,6 +4,23 @@ import WB from './wb.js';  // v3.0: Use main wb.js with schema support
 import { initViews } from './wb-views.js';
 import { VERSION } from './version.js';
 
+// VERSION.builtAt is stamped in UTC (scripts/stamp-version.js: `new
+// Date().toISOString()`) — displayed here in Central time (John's local
+// zone) instead of raw Zulu time. Intl handles the CST/CDT seasonal switch
+// automatically.
+function formatBuiltAtCentral(isoString) {
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Chicago',
+      year: 'numeric', month: 'short', day: 'numeric',
+      hour: 'numeric', minute: '2-digit',
+      timeZoneName: 'short',
+    }).format(new Date(isoString));
+  } catch (e) {
+    return isoString; // never break the header over a formatting failure
+  }
+}
+
 export default class WBSite {
   constructor() {
     this.config = null;
@@ -201,7 +218,7 @@ export default class WBSite {
             ${branding.headerLogoImage ? `<span class="header__logo-icon" id="headerLogoIcon">${branding.headerLogoImage}</span>` : ''}
             <span class="header__logo-text" id="headerLogoText">${branding.companyName}</span>
           </a>
-          <a href="#" class="header__version" id="headerVersion" x-ripple title="Build ${VERSION.commit} · ${VERSION.builtAt} — tap to clear cache and reload">v${VERSION.version}</a>
+          <a href="#" class="header__version" id="headerVersion" x-ripple title="Build ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)} — tap to clear cache and reload">v${VERSION.version}</a>
         </div>
         <div class="header__right" id="headerRight" style="gap: 1rem;">
           ${headerSettings.displaySearchBar ? `
