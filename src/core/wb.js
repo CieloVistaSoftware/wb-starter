@@ -441,6 +441,30 @@ const WB = {
       }
     });
 
+      // Generic [x-behavior="name1 name2"] dispatch — the convention demo.js
+      // uses for its dynamically-created <pre x-behavior="pre">/<code
+      // x-behavior="code">, and the one wb-lazy.js has always understood.
+      // scan() itself never handled it (only observe()'s MutationObserver
+      // did, and only for attribute VALUE CHANGES on already-tracked nodes,
+      // never for a brand-new node arriving with the attribute already set —
+      // exactly demo.js's pattern). This was invisible for a long time
+      // because `pre`/`code` are ALSO in nativeMap, and autoInject used to
+      // leak `true` everywhere (#328) regardless of a page's real config —
+      // so the auto-inject path independently caught every <pre>/<code> tag
+      // and papered over this gap. Fixing #328 exposed it: every wb-demo
+      // code panel on the main SPA (autoInject correctly off there) lost its
+      // syntax highlighting entirely, since nothing else was left to invoke
+      // pre()/code() for elements tagged only via x-behavior.
+      root.querySelectorAll('[x-behavior]').forEach(element => {
+        const htmlEl = /** @type {HTMLElement} */ (element);
+        const behaviorList = (htmlEl.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean);
+        behaviorList.forEach(name => {
+          if (knownBehaviors.has(name)) {
+            promises.push(WB.inject(htmlEl, name));
+          }
+        });
+      });
+
       // 1. Detect Legacy Usage (Strict Mode: Error)
       root.querySelectorAll('[data-wb]').forEach(element => {
         if (!(element instanceof HTMLElement)) return; // Ensure element is an HTMLElement
@@ -592,7 +616,24 @@ const WB = {
             console.error(`[WB] Legacy syntax data-wb="${val}" detected. Use <wb-${name}> or x-${name}.`);
             el.setAttribute('x-error', 'legacy');
           }
-            
+
+          // Generic [x-behavior] dispatch (see scan()'s own handling for
+          // why this exists) — covers a node that arrives with the
+          // attribute already set, on itself and on any descendant, since
+          // the "attributes"-mutation branch below only fires for VALUE
+          // CHANGES on nodes already in the tree.
+          if (el.hasAttribute('x-behavior')) {
+            (el.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean).forEach(name => {
+              if (knownBehaviors.has(name)) WB.inject(el, name);
+            });
+          }
+          el.querySelectorAll?.('[x-behavior]').forEach(descendant => {
+            const descEl = /** @type {HTMLElement} */ (descendant);
+            (descEl.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean).forEach(name => {
+              if (knownBehaviors.has(name)) WB.inject(descEl, name);
+            });
+          });
+
           // Shorthand ({prefix}-* and {prefix}-as-*)
           Array.from(el.attributes).forEach(attr => {
             if (attr.name.startsWith(`${prefix}-`)) {
