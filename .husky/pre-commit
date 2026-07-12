@@ -4,7 +4,13 @@
 
 echo "🏷  Stamping version..."
 node scripts/stamp-version.js
-git add src/core/version.js
+# stamp-version.js also bumps every ?v= cache-busting query string in
+# index.html/project-index.html to match — only version.js was ever
+# re-staged, leaving those two perpetually one commit stale (each commit's
+# stamp reflected the PARENT commit's hash, since HEAD hasn't moved yet
+# when this hook runs, and the cache-bust for THIS commit's own changes
+# never got included in it).
+git add src/core/version.js index.html project-index.html
 
 echo "🔍 Running pre-commit checks..."
 
