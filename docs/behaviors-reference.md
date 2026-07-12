@@ -84,21 +84,6 @@ To enable, set `"autoInject": true` in your `config/site.json` or pass it to `WB
 <img src="...">
 ```
 
-### Custom Tags (Declarative)
-For layouts and specific components, you can use custom `<wb-*>` tags. This provides a clean, semantic way to define structure.
-
-```html
-<!-- Declarative Layout -->
-<wb-grid columns="3">
-  <article>...</article>
-</wb-grid>
-<!-- Semantic Aliases -->
-<wb-row>...</wb-row> <!-- Horizontal Flex -->
-<wb-column>...</wb-column> <!-- Vertical Stack -->
-```
-
-**Note:** `<wb-row>` is an alias for `flex` behavior and can be used anywhere to create horizontal layouts.
-
 ---
 
 ## Categories
