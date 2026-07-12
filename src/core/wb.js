@@ -803,10 +803,14 @@ const WB = {
       setConfig('logLevel', 'debug');
     }
 
-    // Set autoInject
-    if (autoInject) {
-      setConfig('autoInject', true);
-    }
+    // Set autoInject — unconditional: config.js's module-level default was
+    // `true`, and this previously only ever set it to `true` (never `false`),
+    // so any caller passing `autoInject: false` (or omitting it, relying on
+    // the documented "false by default") silently stayed enhanced. Confirmed
+    // live: the main SPA's own config/site.json sets autoInjectComponents to
+    // false, and site-engine.js passes it straight through, yet every page
+    // had native elements auto-enhanced regardless.
+    setConfig('autoInject', autoInject);
 
     // Set prefix
     setConfig('prefix', prefix);

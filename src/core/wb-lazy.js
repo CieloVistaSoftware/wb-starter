@@ -758,10 +758,10 @@ const WB = {
       setConfig('logLevel', 'debug');
     }
 
-    // Set autoInject
-    if (autoInject) {
-      setConfig('autoInject', true);
-    }
+    // Set autoInject — unconditional (see wb.js's init() for why: only ever
+    // setting it to `true` left config.js's `true` module default in effect
+    // for any caller passing `autoInject: false` or omitting it).
+    setConfig('autoInject', autoInject);
 
     // Set theme
     if (theme) {

@@ -4,7 +4,12 @@
 const config = {
   debug: false,
   logLevel: 'info',
-  autoInject: true // Enable implicit behavior injection based on element type
+  // Off by default — semantic HTML stays semantic until a page opts in via
+  // WB.init({ autoInject: true }). init() in wb.js/wb-lazy.js now always
+  // writes its resolved value here (previously only ever wrote `true`,
+  // never `false`, so this module default silently won regardless of what
+  // callers passed or omitted).
+  autoInject: false
 };
 
 export function getConfig(key) {
