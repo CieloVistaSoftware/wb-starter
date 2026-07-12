@@ -146,23 +146,31 @@ export function pre(element, options = {}) {
   // controls are absolutely positioned and contribute nothing to wrapper's
   // own height — without it, hiding <pre> would collapse wrapper to 0px and
   // clip the very controls needed to re-expand it.
+  //
+  // Only worth offering when there's actually something to collapse away —
+  // gated on maxHeight (the same signal the wrapper itself uses to decide
+  // whether the code needs clipping). Previously unconditional: every
+  // <wb-demo> code sample (typically 3-10 lines, never maxHeight) got a
+  // "hide code" toggle with nothing meaningful to hide.
   let collapsed = false;
 
-  const toggleButton = document.createElement('button');
-  toggleButton.className = 'x-pre__toggle';
-  toggleButton.textContent = '⏷';
-  toggleButton.title = 'Hide code';
-  // right offset is genuinely per-instance (see copy button comment above).
-  // min-height for the collapsed state lives on .x-pre-wrapper in pre.css.
-  toggleButton.style.right = `${nextControlRightPx}px`;
-  toggleButton.addEventListener('click', () => {
-    collapsed = !collapsed;
-    element.style.display = collapsed ? 'none' : '';
-    if (lineNumbersEl) lineNumbersEl.style.display = collapsed ? 'none' : '';
-    toggleButton.textContent = collapsed ? '⏵' : '⏷';
-    toggleButton.title = collapsed ? 'Show code' : 'Hide code';
-  });
-  wrapper.appendChild(toggleButton);
+  if (config.maxHeight) {
+    const toggleButton = document.createElement('button');
+    toggleButton.className = 'x-pre__toggle';
+    toggleButton.textContent = '⏷';
+    toggleButton.title = 'Hide code';
+    // right offset is genuinely per-instance (see copy button comment above).
+    // min-height for the collapsed state lives on .x-pre-wrapper in pre.css.
+    toggleButton.style.right = `${nextControlRightPx}px`;
+    toggleButton.addEventListener('click', () => {
+      collapsed = !collapsed;
+      element.style.display = collapsed ? 'none' : '';
+      if (lineNumbersEl) lineNumbersEl.style.display = collapsed ? 'none' : '';
+      toggleButton.textContent = collapsed ? '⏵' : '⏷';
+      toggleButton.title = collapsed ? 'Show code' : 'Hide code';
+    });
+    wrapper.appendChild(toggleButton);
+  }
 
   // Add line numbers
   if (config.showLineNumbers) {

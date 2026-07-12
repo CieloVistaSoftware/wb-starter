@@ -139,7 +139,15 @@ export async function demo(element, options = {}) {
         }
     }
 
-    const cols = options.columns || element.getAttribute('columns') || '3';
+    const configuredCols = parseInt(options.columns || element.getAttribute('columns') || '3', 10);
+    // Standard §7: a demo is only as wide as what it renders — a single
+    // narrow card wrapped in the default 3-column grid still stretched the
+    // whole wb-demo (and the code panel below it) to fill 3 columns' worth
+    // of width even though only 1 was ever occupied. Clamp to however many
+    // children actually exist; demo.css's cols-1 rule then sizes the whole
+    // demo to fit that content instead of the full container width.
+    const childCount = element.children.length;
+    const cols = childCount > 0 ? Math.min(configuredCols, childCount) : configuredCols;
 
     // Wrap children in a grid FIRST, so the doc links added below stay outside
     // the grid instead of being swept in as a grid item and floating inline (#211).
