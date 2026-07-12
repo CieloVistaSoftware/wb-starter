@@ -8,8 +8,7 @@
     "description": "One canonical demo per topic — the file a coverage gate should point users to.",
     "entries": {
       "card-examples.html": { "covers": ["wb-card", "wb-cardbutton", "wb-cardexpandable", "wb-cardfile", "wb-cardhero", "wb-cardhorizontal", "wb-cardimage", "wb-cardlink", "wb-cardminimizable", "wb-cardnotification", "wb-cardoverlay", "wb-cardportfolio", "wb-cardpricing", "wb-cardproduct", "wb-cardprofile", "wb-cardstats", "wb-cardtestimonial", "wb-cardvideo"] },
-      "button-variants-tags-demo.html": { "covers": ["wb-button variants"] },
-      "button-composition-demo.html": { "covers": ["wb-button + x-* behavior composition"] },
+      "buttons.html": { "covers": ["wb-button variants", "wb-button + x-* behavior composition"] },
       "badge-showcase.html": { "covers": ["wb-badge"] },
       "progress-showcase.html": { "covers": ["wb-progress"] },
       "tabs-demo.html": { "covers": ["wb-tabs"] },
@@ -43,9 +42,7 @@
   "duplicates_to_retire": {
     "description": "Confirmed overlapping with a canonical entry above — retire once the migration PR lands. NOT deleted yet (plan phase only).",
     "entries": {
-      "pce-test.html": { "duplicateOf": "card-examples.html" },
-      "button-variants-demo.html": { "duplicateOf": "button-variants-tags-demo.html" },
-      "button-variants-simple.html": { "duplicateOf": "button-variants-tags-demo.html" }
+      "pce-test.html": { "duplicateOf": "card-examples.html" }
     }
   },
   "needs_diff_before_deciding": {

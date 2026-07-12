@@ -47,6 +47,15 @@ in 1 spot — needs full conversion, not zero), retire `pce-test.html`.**
 coverage, retire `button-variants-demo.html` + `button-variants-simple.html`. Keep
 `button-composition-demo.html` (different subject).**
 
+**Superseded (2026-07-11):** John asked to merge all 4 into one page instead of
+keeping variants/composition separate. Done — all 4 retired, replaced by
+`demos/buttons.html` (variants + sizes + disabled states + single/composed
+`x-*` behaviors, all in one). The hand-rolled `.wb-compare` before/after code
+panels in the old composition/tags-demo pages (bypassing `<wb-demo>` for
+content it already renders+formats live) were dropped, not carried over —
+a real §1 violation on their own. `data/demos-registry.json` updated to
+match: `buttons.html` is now the sole canonical entry.
+
 ### The two "everything on one page" pages
 `kitchen-sink.html` (434 lines, ~18 tags) and `autoinject.html` (1523 lines — by far the
 largest file in `demos/`) both function as broad smoke-test pages. Per the issue's own
