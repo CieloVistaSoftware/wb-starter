@@ -171,7 +171,7 @@
   
   <!-- Badges -->
   <h3>Badges</h3>
-  <div class="demo-inline">
+  <wb-demo columns="5">
     <wb-badge variant="gray">Pending</wb-badge>
     <wb-badge variant="primary">New</wb-badge>
     <wb-badge variant="success">Approved</wb-badge>
@@ -182,86 +182,40 @@
     <wb-badge variant="pink">Featured</wb-badge>
     <wb-badge variant="orange">Hot</wb-badge>
     <wb-badge variant="teal" pill>Live</wb-badge>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-badge variant="gray"&gt;Pending&lt;/wb-badge&gt;
-&lt;wb-badge variant="primary"&gt;New&lt;/wb-badge&gt;
-&lt;wb-badge variant="success"&gt;Approved&lt;/wb-badge&gt;
-&lt;wb-badge variant="warning"&gt;Review&lt;/wb-badge&gt;
-&lt;wb-badge variant="error"&gt;Rejected&lt;/wb-badge&gt;
-&lt;wb-badge variant="info"&gt;Updated&lt;/wb-badge&gt;
-&lt;wb-badge variant="purple"&gt;Premium&lt;/wb-badge&gt;
-&lt;wb-badge variant="pink"&gt;Featured&lt;/wb-badge&gt;
-&lt;wb-badge variant="orange"&gt;Hot&lt;/wb-badge&gt;
-&lt;wb-badge variant="teal" pill&gt;Live&lt;/wb-badge&gt;</code></pre>
-  </div>
+  </wb-demo>
 
   <!-- Alerts (as Toasts) -->
   <h3>Alerts</h3>
-  <div style="color: var(--text-secondary); margin-bottom: 1rem;">Click to trigger alert toasts:</div>
-  <div class="demo-inline">
+  <p>Click to trigger alert toasts:</p>
+  <wb-demo columns="4">
     <button class="wb-btn" style="background: var(--info);" x-toast message="This is an informational message." variant="info">ℹ️ Info Alert</button>
     <button class="wb-btn" style="background: var(--success);" x-toast message="Operation completed successfully!" variant="success">✅ Success Alert</button>
     <button class="wb-btn" style="background: var(--warning);" x-toast message="Please review before continuing." variant="warning">⚠️ Warning Alert</button>
     <button class="wb-btn" style="background: var(--error);" x-toast message="Something went wrong. Please try again." variant="error">❌ Error Alert</button>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;button x-toast message="Info message" variant="info"&gt;Info Alert&lt;/button&gt;
-&lt;button x-toast message="Success!" variant="success"&gt;Success Alert&lt;/button&gt;
-&lt;button x-toast message="Warning!" variant="warning"&gt;Warning Alert&lt;/button&gt;
-&lt;button x-toast message="Error!" variant="error"&gt;Error Alert&lt;/button&gt;</code></pre>
-  </div>
+  </wb-demo>
 
   <!-- Progress Bars -->
   <h3>Progress Bars</h3>
-  <div class="demo-stack" style="max-width: 400px;">
+  <wb-demo columns="1">
     <wb-progress value="25"></wb-progress>
     <wb-progress value="50"></wb-progress>
     <wb-progress value="75" striped></wb-progress>
     <wb-progress value="100"></wb-progress>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-progress value="25"&gt;&lt;/wb-progress&gt;
-&lt;wb-progress value="50"&gt;&lt;/wb-progress&gt;
-&lt;wb-progress value="75" striped&gt;&lt;/wb-progress&gt;
-&lt;wb-progress value="100"&gt;&lt;/wb-progress&gt;</code></pre>
-  </div>
+  </wb-demo>
 
   <!-- Spinners -->
   <h3>Spinners</h3>
-  <div class="demo-inline" style="align-items: flex-end;">
-    <div style="text-align: center;">
-      <wb-spinner size="xs" color="primary"></wb-spinner>
-      <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">xs</div>
-    </div>
-    <div style="text-align: center;">
-      <wb-spinner size="sm" color="success"></wb-spinner>
-      <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">sm</div>
-    </div>
-    <div style="text-align: center;">
-      <wb-spinner size="md" color="warning"></wb-spinner>
-      <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">md</div>
-    </div>
-    <div style="text-align: center;">
-      <wb-spinner size="lg" color="error"></wb-spinner>
-      <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">lg</div>
-    </div>
-    <div style="text-align: center;">
-      <wb-spinner size="xl" color="info"></wb-spinner>
-      <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">xl</div>
-    </div>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-spinner size="xs" color="primary"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner size="sm" color="success"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner size="md" color="warning"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner size="lg" color="error"&gt;&lt;/wb-spinner&gt;
-&lt;wb-spinner size="xl" color="info"&gt;&lt;/wb-spinner&gt;</code></pre>
-  </div>
+  <wb-demo columns="5">
+    <wb-spinner size="xs" color="primary"></wb-spinner>
+    <wb-spinner size="sm" color="success"></wb-spinner>
+    <wb-spinner size="md" color="warning"></wb-spinner>
+    <wb-spinner size="lg" color="error"></wb-spinner>
+    <wb-spinner size="xl" color="info"></wb-spinner>
+  </wb-demo>
 
   <!-- Avatars -->
   <h3>Avatars</h3>
-  <div class="demo-inline">
+  <wb-demo columns="7">
     <wb-avatar initials="JS" size="sm"></wb-avatar>
     <wb-avatar initials="MC" size="md" style="--wb-avatar-bg: var(--success);"></wb-avatar>
     <wb-avatar initials="KL" size="lg" style="--wb-avatar-bg: var(--warning);"></wb-avatar>
@@ -269,27 +223,15 @@
     <wb-avatar initials="TB" size="md" status="away"></wb-avatar>
     <wb-avatar initials="ZP" size="md" status="busy"></wb-avatar>
     <wb-avatar src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" size="lg"></wb-avatar>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-avatar initials="JS" size="sm"&gt;&lt;/wb-avatar&gt;
-&lt;wb-avatar initials="MC" size="md" style="--wb-avatar-bg: var(--success);"&gt;&lt;/wb-avatar&gt;
-&lt;wb-avatar initials="KL" size="lg"&gt;&lt;/wb-avatar&gt;
-&lt;wb-avatar initials="AR" size="md" status="online"&gt;&lt;/wb-avatar&gt;
-&lt;wb-avatar src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" size="lg"&gt;&lt;/wb-avatar&gt;</code></pre>
-  </div>
+  </wb-demo>
 
   <!-- Skeleton Loaders -->
   <h3>Skeleton Loaders</h3>
-  <div class="demo-inline">
+  <wb-demo columns="3">
     <wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton>
     <wb-skeleton variant="circle" width="60px"></wb-skeleton>
     <wb-skeleton variant="rect" width="150px" height="100px"></wb-skeleton>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-skeleton variant="text" lines="3" style="width: 200px;"&gt;&lt;/wb-skeleton&gt;
-&lt;wb-skeleton variant="circle" width="60px"&gt;&lt;/wb-skeleton&gt;
-&lt;wb-skeleton variant="rect" width="150px" height="100px"&gt;&lt;/wb-skeleton&gt;</code></pre>
-  </div>
+  </wb-demo>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -298,66 +240,42 @@
 <section class="component-section" id="autogen-components-html-2">
   <h2>🪟 Overlays &amp; Dialogs</h2>
   
-  <div class="demo-row" id="autogen-components-html-16">
-    <div class="component-box">
-      <h4>Modal</h4>
-      <div>Centered dialog with backdrop</div>
-      <wb-modal class="wb-btn" modal-title="Modal Dialog" modal-content="This is modal content. Press ESC or click outside to close.">Open Modal</wb-modal>
-    </div>
-    
-    <div class="component-box">
-      <h4>Drawer</h4>
-      <div>Slide-out panel</div>
-      <div style="display: flex; gap: 0.5rem;">
-        <button class="wb-btn" x-drawer drawer-title="Left Drawer" drawer-content="This panel slides in from the left side." position="left">← Left</button>
-        <button class="wb-btn" x-drawer drawer-title="Right Drawer" drawer-content="This panel slides in from the right side." position="right">Right →</button>
-      </div>
-    </div>
-    
-    <div class="component-box">
-      <h4>Confirm</h4>
-      <div>Yes/No confirmation</div>
-      <button class="wb-btn" x-confirm confirm-title="Delete Item?" confirm-message="This cannot be undone.">Confirm</button>
-    </div>
-    
-    <div class="component-box">
-      <h4>Prompt</h4>
-      <div>Input dialog</div>
-      <button class="wb-btn" x-prompt prompt-title="Your Name" prompt-message="Please enter your name:">Prompt</button>
-    </div>
+  <h3>Modal</h3>
+  <p>Centered dialog with backdrop</p>
+  <wb-demo>
+    <wb-modal class="wb-btn" modal-title="Modal Dialog" modal-content="This is modal content. Press ESC or click outside to close.">Open Modal</wb-modal>
+  </wb-demo>
 
-    <div class="component-box">
-      <h4>Lightbox</h4>
-      <div>Full-screen image viewer</div>
-      <button class="wb-btn" x-lightbox src="https://picsum.photos/1200/800">View Image</button>
-    </div>
+  <h3>Drawer</h3>
+  <p>Slide-out panel</p>
+  <wb-demo columns="2">
+    <button class="wb-btn" x-drawer drawer-title="Left Drawer" drawer-content="This panel slides in from the left side." position="left">← Left</button>
+    <button class="wb-btn" x-drawer drawer-title="Right Drawer" drawer-content="This panel slides in from the right side." position="right">Right →</button>
+  </wb-demo>
 
-    <div class="component-box">
-      <h4>Popover</h4>
-      <div>Small popup</div>
-      <button class="wb-btn" x-popover popover-title="Info" popover-content="Additional information here.">Show Popover</button>
-    </div>
-  </div>
+  <h3>Confirm</h3>
+  <p>Yes/No confirmation</p>
+  <wb-demo>
+    <button class="wb-btn" x-confirm confirm-title="Delete Item?" confirm-message="This cannot be undone.">Confirm</button>
+  </wb-demo>
 
-  <div class="code-example">
-    <pre><code class="language-html">&lt;!-- Modal --&gt;
-&lt;wb-modal class="wb-btn" modal-title="Modal Dialog" modal-content="Content here."&gt;Open Modal&lt;/wb-modal&gt;
+  <h3>Prompt</h3>
+  <p>Input dialog</p>
+  <wb-demo>
+    <button class="wb-btn" x-prompt prompt-title="Your Name" prompt-message="Please enter your name:">Prompt</button>
+  </wb-demo>
 
-&lt;!-- Drawer --&gt;
-&lt;button x-drawer drawer-title="Left Drawer" drawer-content="Panel content." position="left"&gt;Left&lt;/button&gt;
+  <h3>Lightbox</h3>
+  <p>Full-screen image viewer</p>
+  <wb-demo>
+    <button class="wb-btn" x-lightbox src="https://picsum.photos/1200/800">View Image</button>
+  </wb-demo>
 
-&lt;!-- Confirm --&gt;
-&lt;button x-confirm confirm-title="Delete Item?" confirm-message="This cannot be undone."&gt;Confirm&lt;/button&gt;
-
-&lt;!-- Prompt --&gt;
-&lt;button x-prompt prompt-title="Your Name" prompt-message="Please enter your name:"&gt;Prompt&lt;/button&gt;
-
-&lt;!-- Lightbox --&gt;
-&lt;button x-lightbox src="https://picsum.photos/1200/800"&gt;View Image&lt;/button&gt;
-
-&lt;!-- Popover --&gt;
-&lt;button x-popover popover-title="Info" popover-content="Additional information here."&gt;Show Popover&lt;/button&gt;</code></pre>
-  </div>
+  <h3>Popover</h3>
+  <p>Small popup</p>
+  <wb-demo>
+    <button class="wb-btn" x-popover popover-title="Info" popover-content="Additional information here.">Show Popover</button>
+  </wb-demo>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -368,37 +286,26 @@
 
   <!-- Tabs -->
   <h3>Tabs</h3>
-  <wb-tabs>
-    <div tab-title="Overview">
-      <h4>Project Overview</h4>
-      <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-    </div>
-    <div tab-title="Features">
-      <h4>Key Features</h4>
-      <ul style="margin: 1rem 0; padding-left: 1.5rem;">
-        <li>Zero-build architecture</li>
-        <li>Light DOM components</li>
-        <li>Accessible by default</li>
-      </ul>
-    </div>
-    <div tab-title="Installation">
-      <h4>Getting Started</h4>
-      <div>Aenean lacinia bibendum nulla sed consectetur. Just include the script and start building.</div>
-    </div>
-  </wb-tabs>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-tabs&gt;
-  &lt;div tab-title="Overview"&gt;
-    &lt;p&gt;Overview content...&lt;/p&gt;
-  &lt;/div&gt;
-  &lt;div tab-title="Features"&gt;
-    &lt;p&gt;Features content...&lt;/p&gt;
-  &lt;/div&gt;
-  &lt;div tab-title="Installation"&gt;
-    &lt;p&gt;Installation content...&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/wb-tabs&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <wb-tabs>
+      <div tab-title="Overview">
+        <h4>Project Overview</h4>
+        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+      </div>
+      <div tab-title="Features">
+        <h4>Key Features</h4>
+        <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+          <li>Zero-build architecture</li>
+          <li>Light DOM components</li>
+          <li>Accessible by default</li>
+        </ul>
+      </div>
+      <div tab-title="Installation">
+        <h4>Getting Started</h4>
+        <div>Aenean lacinia bibendum nulla sed consectetur. Just include the script and start building.</div>
+      </div>
+    </wb-tabs>
+  </wb-demo>
 
   <!-- Details/Accordion — one <wb-demo> per element -->
   <h3>Details / Accordion</h3>
@@ -420,24 +327,21 @@
 
   <!-- Breadcrumb -->
   <h3>Breadcrumb</h3>
-  <nav x-breadcrumb items="Home,Products,Electronics,Smartphones"></nav>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;nav x-breadcrumb items="Home,Products,Electronics,Smartphones"&gt;&lt;/nav&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <nav x-breadcrumb items="Home,Products,Electronics,Smartphones"></nav>
+  </wb-demo>
 
   <!-- Pagination -->
   <h3>Pagination</h3>
-  <nav x-pagination total="100" per-page="10" current="5"></nav>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;nav x-pagination total="100" per-page="10" current="5"&gt;&lt;/nav&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <nav x-pagination total="100" per-page="10" current="5"></nav>
+  </wb-demo>
 
   <!-- Steps Wizard -->
   <h3>Steps Wizard</h3>
-  <div x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;div x-steps items="Cart,Shipping,Payment,Confirm" current="2"&gt;&lt;/div&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <div x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div>
+  </wb-demo>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -448,24 +352,17 @@
   
   <!-- Text Inputs -->
   <h3>Text Inputs</h3>
-  <div class="demo-stack" style="max-width: 400px;">
+  <wb-demo columns="1">
     <input type="text" placeholder="Basic input">
     <input type="text" placeholder="Success" variant="success">
     <input type="text" placeholder="Error" variant="error">
     <input type="password" x-password placeholder="Password with toggle">
     <textarea placeholder="Textarea" rows="3"></textarea>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;input type="text" placeholder="Basic input"&gt;
-&lt;input type="text" placeholder="Success" variant="success"&gt;
-&lt;input type="text" placeholder="Error" variant="error"&gt;
-&lt;input type="password" x-password placeholder="Password with toggle"&gt;
-&lt;textarea placeholder="Textarea" rows="3"&gt;&lt;/textarea&gt;</code></pre>
-  </div>
+  </wb-demo>
 
   <!-- Selection Inputs -->
   <h3>Selection Inputs</h3>
-  <div class="demo-stack" style="max-width: 300px;">
+  <wb-demo columns="1">
     <select>
       <option>Select an option</option>
       <option>Option 1</option>
@@ -475,31 +372,16 @@
     <label class="selection-label"><input type="radio" name="radio-demo" checked> Radio A</label>
     <label class="selection-label"><input type="radio" name="radio-demo"> Radio B</label>
     <wb-switch label="Toggle switch"></wb-switch>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;select&gt;
-  &lt;option&gt;Select an option&lt;/option&gt;
-  &lt;option&gt;Option 1&lt;/option&gt;
-&lt;/select&gt;
-&lt;label&gt;&lt;input type="checkbox"&gt; Checkbox&lt;/label&gt;
-&lt;label&gt;&lt;input type="radio" name="group" checked&gt; Radio A&lt;/label&gt;
-&lt;wb-switch label="Toggle switch"&gt;&lt;/wb-switch&gt;</code></pre>
-  </div>
+  </wb-demo>
 
   <!-- Range & Rating -->
   <h3>Range &amp; Rating Inputs</h3>
-  <div class="demo-stack" style="max-width: 300px;">
+  <wb-demo columns="1">
     <input type="range" min="0" max="100" value="50">
     <wb-rating value="3" max="5"></wb-rating>
     <wb-rating value="4" max="5" icon="❤️"></wb-rating>
     <div x-stepper value="5" min="0" max="10"></div>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;input type="range" min="0" max="100" value="50"&gt;
-&lt;wb-rating value="3" max="5"&gt;&lt;/wb-rating&gt;
-&lt;wb-rating value="4" max="5" icon="❤️"&gt;&lt;/wb-rating&gt;
-&lt;div x-stepper value="5" min="0" max="10"&gt;&lt;/div&gt;</code></pre>
-  </div>
+  </wb-demo>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -510,28 +392,21 @@
 
   <!-- Timeline -->
   <h3>Timeline</h3>
-  <div class="demo-row">
-    <div class="demo-item" style="grid-column: span 2;">
-      <wb-timeline items="🚀 Jan 2024 - Project Kickoff,🎨 Mar 2024 - Design Phase Complete,💻 Jun 2024 - Development Sprint,🧪 Sep 2024 - Beta Release,🎉 Dec 2024 - Production Launch"></wb-timeline>
-    </div>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-timeline items="🚀 Kickoff,🎨 Design,💻 Development,🧪 Testing,🎉 Launch"&gt;&lt;/wb-timeline&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <wb-timeline items="🚀 Jan 2024 - Project Kickoff,🎨 Mar 2024 - Design Phase Complete,💻 Jun 2024 - Development Sprint,🧪 Sep 2024 - Beta Release,🎉 Dec 2024 - Production Launch"></wb-timeline>
+  </wb-demo>
 
   <!-- Keyboard Keys -->
   <h3>Keyboard Keys</h3>
-  <div>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;p&gt;Press &lt;span x-kbd&gt;Ctrl&lt;/span&gt; + &lt;span x-kbd&gt;S&lt;/span&gt; to save.&lt;/p&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>
+  </wb-demo>
 
   <!-- JSON Viewer -->
   <h3>JSON Viewer</h3>
-  <div x-json>{"name": "John", "age": 30, "active": true, "roles": ["admin", "user"]}</div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;div x-json&gt;{"name": "John", "age": 30, "active": true}&lt;/div&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <div x-json>{"name": "John", "age": 30, "active": true, "roles": ["admin", "user"]}</div>
+  </wb-demo>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -542,40 +417,26 @@
 
   <!-- Gallery -->
   <h3>Gallery</h3>
-  <div x-gallery columns="4">
-    <img src="https://picsum.photos/200/200?r=g1" alt="Gallery 1">
-    <img src="https://picsum.photos/200/200?r=g2" alt="Gallery 2">
-    <img src="https://picsum.photos/200/200?r=g3" alt="Gallery 3">
-    <img src="https://picsum.photos/200/200?r=g4" alt="Gallery 4">
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;div x-gallery columns="4"&gt;
-  &lt;img src="image1.jpg" alt="Gallery 1"&gt;
-  &lt;img src="image2.jpg" alt="Gallery 2"&gt;
-  &lt;img src="image3.jpg" alt="Gallery 3"&gt;
-  &lt;img src="image4.jpg" alt="Gallery 4"&gt;
-&lt;/div&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <div x-gallery columns="4">
+      <img src="https://picsum.photos/200/200?r=g1" alt="Gallery 1">
+      <img src="https://picsum.photos/200/200?r=g2" alt="Gallery 2">
+      <img src="https://picsum.photos/200/200?r=g3" alt="Gallery 3">
+      <img src="https://picsum.photos/200/200?r=g4" alt="Gallery 4">
+    </div>
+  </wb-demo>
 
   <!-- YouTube Embed -->
   <h3>YouTube Embed</h3>
-  <div style="max-width: 600px;">
-    <div x-youtube video-id="dQw4w9WgXcQ" aspect-ratio="16:9"></div>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;div x-youtube video-id="dQw4w9WgXcQ" aspect-ratio="16:9"&gt;&lt;/div&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <div x-youtube video-id="dQw4w9WgXcQ" aspect-ratio="16:9" style="max-width: 600px;"></div>
+  </wb-demo>
 
   <!-- Audio Player -->
   <h3>Audio Player</h3>
-  <wb-audio src="demos/sample.wav" show-eq="true" volume="0.7"></wb-audio>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-audio 
-  src="audio.mp3" 
-  show-eq="true" 
-  volume="0.7"&gt;
-&lt;/wb-audio&gt;</code></pre>
-  </div>
+  <wb-demo>
+    <wb-audio src="demos/sample.wav" show-eq="true" volume="0.7"></wb-audio>
+  </wb-demo>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -586,55 +447,35 @@
 
   <!-- Tooltips -->
   <h3>Tooltips</h3>
-  <div class="demo-inline">
+  <wb-demo columns="4">
     <wb-tooltip position="top" content="Top tooltip"><button variant="secondary">Top</button></wb-tooltip>
     <wb-tooltip position="bottom" content="Bottom tooltip"><button variant="secondary">Bottom</button></wb-tooltip>
     <wb-tooltip position="left" content="Left tooltip"><button variant="secondary">Left</button></wb-tooltip>
     <wb-tooltip position="right" content="Right tooltip"><button variant="secondary">Right</button></wb-tooltip>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;wb-tooltip position="top" content="Top tooltip"&gt;&lt;button&gt;Hover me&lt;/button&gt;&lt;/wb-tooltip&gt;
-&lt;wb-tooltip position="bottom" content="Bottom tooltip"&gt;&lt;button&gt;Hover me&lt;/button&gt;&lt;/wb-tooltip&gt;
-&lt;wb-tooltip position="left" content="Left tooltip"&gt;&lt;button&gt;Hover me&lt;/button&gt;&lt;/wb-tooltip&gt;
-&lt;wb-tooltip position="right" content="Right tooltip"&gt;&lt;button&gt;Hover me&lt;/button&gt;&lt;/wb-tooltip&gt;</code></pre>
-  </div>
+  </wb-demo>
 
   <!-- Copy, Share, Print -->
   <h3>Copy, Share, Print</h3>
-  <div class="demo-inline">
+  <wb-demo columns="4">
     <button class="wb-btn" x-copy copy-text="Text copied!">📋 Copy Text</button>
     <button class="wb-btn" x-share share-title="wb-starter" share-url="https://example.com">📤 Share</button>
     <button class="wb-btn" x-print>🖨️ Print</button>
     <button class="wb-btn" x-fullscreen>⛶ Fullscreen</button>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;button x-copy copy-text="Text to copy"&gt;📋 Copy&lt;/button&gt;
-&lt;button x-share share-title="Title" share-url="https://..."&gt;📤 Share&lt;/button&gt;
-&lt;button x-print&gt;🖨️ Print&lt;/button&gt;
-&lt;button x-fullscreen&gt;⛶ Fullscreen&lt;/button&gt;</code></pre>
-  </div>
+  </wb-demo>
 
   <!-- Clock & Countdown -->
   <h3>Clock &amp; Countdown</h3>
-  <div class="demo-inline">
+  <wb-demo columns="2">
     <div x-clock class="time-display"></div>
     <div x-countdown date="2026-12-31" class="time-display"></div>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;div x-clock&gt;&lt;/div&gt;
-&lt;div x-countdown date="2026-12-31"&gt;&lt;/div&gt;</code></pre>
-  </div>
+  </wb-demo>
 
   <!-- Theme Controls -->
   <h3>Theme Controls</h3>
-  <div class="demo-inline">
+  <wb-demo columns="2">
     <button class="wb-btn" x-darkmode>🌙 Toggle Dark Mode</button>
     <wb-themecontrol></wb-themecontrol>
-  </div>
-  <div class="code-example">
-    <pre><code class="language-html">&lt;button x-darkmode&gt;🌙 Toggle Dark Mode&lt;/button&gt;
-&lt;wb-themecontrol&gt;&lt;/wb-themecontrol&gt;</code></pre>
-  </div>
+  </wb-demo>
 </section>
 
 <!-- FOOTER -->
