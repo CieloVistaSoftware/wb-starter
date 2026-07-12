@@ -20,196 +20,115 @@ Progress bar with determinate and indeterminate states.
 | `value` | number | `0` | Current progress value (0-100) |
 | `max` | number | `100` | Maximum value |
 | `label` | string | `""` | Progress label text |
-| `showValue` | boolean | `false` | Show percentage value |
+| `show-value` | boolean | `false` | Append the percentage alongside a custom `label` (dropped otherwise — a custom label alone hides the percent) |
 | `variant` | string | `"primary"` | Color: `default`, `primary`, `success`, `warning`, `error`, `info` |
 | `size` | string | `"md"` | Size: `xs`, `sm`, `md`, `lg`, `xl` |
-| `animated` | boolean | `true` | Animate on load |
-| `striped` | boolean | `false` | Show striped pattern |
-| `indeterminate` | boolean | `false` | Indeterminate loading state |
+| `animated` | boolean | `true` | Diagonal stripe animation on the fill |
+| `striped` | boolean | `false` | Static (non-animated) striped pattern |
+| `indeterminate` | boolean | `false` | Indeterminate loading state (sweeping bar, no percent) |
 
 ## Usage
 
 ### Custom Element
 
-```html
-<wb-progress value="50"></wb-progress>
-```
+<wb-demo>
+  <wb-progress value="50"></wb-progress>
+</wb-demo>
 
 ### Native Progress (Enhanced)
 
-```html
-<progress
-  x-progress
-  value="50"
-  max="100">
-</progress>
-```
+<wb-demo>
+  <progress x-progress value="50" max="100"></progress>
+</wb-demo>
 
 ### With Label and Value
 
-```html
-<wb-progress
-  value="75"
-  label="Downloading..."
-  showValue>
-</wb-progress>
-```
+`show-value` appends the percentage after a custom `label` — without it, a custom label replaces the percent entirely.
+
+<wb-demo>
+  <wb-progress value="75" label="Downloading..." show-value></wb-progress>
+</wb-demo>
 
 ### Variants
 
-```html
-<wb-progress
-  value="50"
-  variant="primary">
-</wb-progress>
-<wb-progress
-  value="50"
-  variant="success">
-</wb-progress>
-<wb-progress
-  value="50"
-  variant="warning">
-</wb-progress>
-<wb-progress
-  value="50"
-  variant="error">
-</wb-progress>
-<wb-progress
-  value="50"
-  variant="info">
-</wb-progress>
-```
+<wb-demo columns="3">
+  <wb-progress value="50" variant="primary"></wb-progress>
+  <wb-progress value="50" variant="success"></wb-progress>
+  <wb-progress value="50" variant="warning"></wb-progress>
+  <wb-progress value="50" variant="error"></wb-progress>
+  <wb-progress value="50" variant="info"></wb-progress>
+</wb-demo>
 
 ### Sizes
 
-```html
-<wb-progress
-  value="50"
-  size="xs">
-</wb-progress>
-<wb-progress
-  value="50"
-  size="sm">
-</wb-progress>
-<wb-progress
-  value="50"
-  size="md">
-</wb-progress>
-<wb-progress
-  value="50"
-  size="lg">
-</wb-progress>
-<wb-progress
-  value="50"
-  size="xl">
-</wb-progress>
-```
+<wb-demo columns="3">
+  <wb-progress value="50" size="xs"></wb-progress>
+  <wb-progress value="50" size="sm"></wb-progress>
+  <wb-progress value="50" size="md"></wb-progress>
+  <wb-progress value="50" size="lg"></wb-progress>
+  <wb-progress value="50" size="xl"></wb-progress>
+</wb-demo>
+
+### Animated (default)
+
+`animated` defaults to `true` — the fill has a moving diagonal stripe. Set `animated="false"` for a plain static fill.
+
+<wb-demo columns="2">
+  <wb-progress value="50" label="animated (default)"></wb-progress>
+  <wb-progress value="50" animated="false" label="animated=&quot;false&quot;"></wb-progress>
+</wb-demo>
 
 ### Striped
 
-```html
-<wb-progress
-  value="60"
-  striped>
-</wb-progress>
-```
+<wb-demo>
+  <wb-progress value="60" striped></wb-progress>
+</wb-demo>
 
 ### Indeterminate
 
-```html
-<wb-progress
-  indeterminate
-  label="Loading...">
-</wb-progress>
-```
-
-## Generated Structure
-
-```html
-<div class="wb-progress wb-progress--primary wb-progress--md">
-  <div class="wb-progress__header">
-    <span class="wb-progress__label">Loading...</span>
-    <span class="wb-progress__value">75%</span>
-  </div>
-  <div class="wb-progress__track">
-    <div
-      class="wb-progress__bar"
-      style="width: 75%">
-    </div>
-  </div>
-</div>
-```
+<wb-demo>
+  <wb-progress indeterminate label="Loading..."></wb-progress>
+</wb-demo>
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-progress` | Always | Base styling |
-| `.wb-progress--primary` | `variant="primary"` | Primary color |
-| `.wb-progress--success` | `variant="success"` | Success color |
-| `.wb-progress--warning` | `variant="warning"` | Warning color |
-| `.wb-progress--error` | `variant="error"` | Error color |
-| `.wb-progress--info` | `variant="info"` | Info color |
-| `.wb-progress--xs` | `size="xs"` | Extra small |
-| `.wb-progress--sm` | `size="sm"` | Small |
-| `.wb-progress--md` | `size="md"` | Medium |
-| `.wb-progress--lg` | `size="lg"` | Large |
-| `.wb-progress--xl` | `size="xl"` | Extra large |
-| `.wb-progress--striped` | `striped` | Striped pattern |
-| `.wb-progress--indeterminate` | `indeterminate` | Indeterminate state |
+| `.wb-progress` | Always | Base styling, on the `<wb-progress>` host |
+| `.wb-progress--primary` / `--success` / `--warning` / `--error` / `--info` / `--default` | matching `variant` | Fill color (via `.wb-progress__bar`'s `background`) |
+| `.wb-progress--xs` / `--sm` / `--md` / `--lg` / `--xl` | matching `size` | Bar height |
+| `.wb-progress--labeled` | `show-label` not `"false"` (default on) | Adds height for the overlaid `.wb-progress__label` |
+| `.wb-progress--animated` | `animated` not `"false"` and not `indeterminate` | Moving diagonal stripe on the fill |
+| `.wb-progress--indeterminate` | `indeterminate` | Sweeping-bar animation, no label |
+| `.wb-progress__bar--striped` | `striped` | Static (non-animated) stripe pattern, on the fill div itself |
 
-## Methods
+## Generated Structure
 
-| Method | Description | Returns |
-|--------|-------------|---------|
-| `getValue()` | Gets current value | `number` |
-| `setValue(value)` | Sets progress value | - |
-| `increment(amount)` | Increments value | - |
-| `decrement(amount)` | Decrements value | - |
-| `reset()` | Resets to 0 | - |
-| `complete()` | Sets to 100% | - |
-| `setIndeterminate(bool)` | Sets indeterminate state | - |
-
-```javascript
-const progress = document.querySelector('wb-progress');
-
-// Get/set value
-const value = progress.getValue();
-progress.setValue(75);
-
-// Increment/decrement
-progress.increment(10);
-progress.decrement(5);
-
-// Reset/complete
-progress.reset();
-progress.complete();
-
-// Indeterminate
-progress.setIndeterminate(true);
+```html
+<wb-progress
+  class="wb-progress wb-progress--md wb-progress--primary wb-progress--labeled"
+  role="progressbar"
+  aria-valuenow="75"
+  aria-valuemin="0"
+  aria-valuemax="100">
+  <div class="wb-progress__bar" style="width: 75%;"></div>
+  <span class="wb-progress__label">75%</span>
+</wb-progress>
 ```
+
+## Known gap — no JS API on `<wb-progress>`
+
+`progress.js` exposes a `wbProgress` object (`setValue`/`getValue`/`setMax`/`getPercent`/`setIndeterminate`) — but only for the **native `<progress x-progress>`** enhancement path. The `<wb-progress>` custom tag (every example on this page) re-renders from its attributes on each scan and does not currently expose any JS API — there is no `increment()`/`decrement()`/`reset()`/`complete()` method, on either path. To change a `<wb-progress>`'s value programmatically today, set the `value` attribute and re-scan the element.
 
 ## CSS API
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-progress-height` | `8px` | Progress bar height |
-| `--wb-progress-radius` | `9999px` | Border radius |
-| `--wb-progress-track-bg` | `var(--bg-secondary, #e5e7eb)` | Track background |
-| `--wb-progress-bar-bg` | `var(--primary, #6366f1)` | Bar background |
-| `--wb-progress-transition` | `width 0.3s ease` | Value transition |
-| `--wb-progress-primary-bg` | `var(--primary, #6366f1)` | Primary bar color |
-| `--wb-progress-success-bg` | `var(--success, #22c55e)` | Success bar color |
-| `--wb-progress-warning-bg` | `var(--warning, #f59e0b)` | Warning bar color |
-| `--wb-progress-error-bg` | `var(--error, #ef4444)` | Error bar color |
-| `--wb-progress-info-bg` | `var(--info, #3b82f6)` | Info bar color |
-| `--wb-progress-stripe-color` | `rgba(255,255,255,0.2)` | Stripe color |
-| `--wb-progress-stripe-width` | `1rem` | Stripe width |
-| `--wb-progress-label-size` | `0.875rem` | Label font size |
-| `--wb-progress-label-color` | `var(--text-primary)` | Label color |
-| `--wb-progress-value-size` | `0.875rem` | Value font size |
-| `--wb-progress-value-color` | `var(--text-secondary)` | Value color |
-| `--wb-progress-gap` | `0.5rem` | Gap between label and bar |
+| `--wb-progress-primary-bg` | `var(--primary)` | Primary fill color |
+| `--wb-progress-success-bg` | `var(--success-color)` | Success fill color |
+| `--wb-progress-warning-bg` | `var(--warning-color)` | Warning fill color |
+| `--wb-progress-error-bg` | `var(--danger-color)` | Error fill color |
+| `--wb-progress-info-bg` | `var(--info-color)` | Info fill color |
 
 ## Accessibility
 
@@ -218,8 +137,7 @@ progress.setIndeterminate(true);
 | `role` | `progressbar` | Always |
 | `aria-valuemin` | `0` | Always |
 | `aria-valuemax` | Dynamic from `max` | Always |
-| `aria-valuenow` | Dynamic from `value` | When not indeterminate |
-| `aria-label` | Dynamic from `label` | When label exists |
+| `aria-valuenow` | Dynamic from `value` | Always (including indeterminate — reflects the last known value) |
 
 ## Schema
 

@@ -12,14 +12,36 @@ export function progress(element, options = {}) {
     const variant = options.variant || element.getAttribute('variant') || 'primary';
     const size = options.size || element.getAttribute('size') || 'md';
     const striped = options.striped ?? element.hasAttribute('striped');
+    // Schema declares animated/indeterminate (progress.schema.json) but this
+    // branch never read either — only the native <progress>+x-progress path
+    // below did, via .wb-progress::-webkit-progress-value pseudo-elements
+    // that don't exist on this custom tag at all. Result: <wb-progress> —
+    // the tag every demo/showcase actually uses — had zero animation
+    // capability. CSS for both already existed on .wb-progress__bar
+    // (progress.css) and was simply unreachable.
+    const animated = options.animated ?? (element.getAttribute('animated') !== 'false');
+    const indeterminate = options.indeterminate ?? element.hasAttribute('indeterminate');
     const pct = Math.max(0, Math.min(100, (value / max) * 100));
     // The % label is built in by default (#280) — no external .progress-label
     // span needed. `label="…"` overrides the text; `show-label="false"` hides it.
     const showLabel = options.showLabel ?? (element.getAttribute('show-label') !== 'false');
-    const labelText = options.label ?? element.getAttribute('label') ?? `${Math.round(pct)}%`;
+    // showValue (schema default false) — declared but never read here either.
+    // Distinct from the default percent fallback below: it appends the
+    // percentage alongside a CUSTOM label instead of being silently dropped
+    // in favor of the label text.
+    const showValue = options.showValue ?? element.hasAttribute('show-value');
+    const customLabel = options.label ?? element.getAttribute('label');
+    const labelText = customLabel
+      ? (showValue ? `${customLabel} ${Math.round(pct)}%` : customLabel)
+      : `${Math.round(pct)}%`;
 
     element.classList.add('wb-progress', `wb-progress--${size}`, `wb-progress--${variant}`);
     if (showLabel) element.classList.add('wb-progress--labeled');
+    if (indeterminate) element.classList.add('wb-progress--indeterminate');
+    // .wb-progress--animated is a DESCENDANT selector in progress.css
+    // (`.wb-progress--animated .wb-progress__bar { ... }`) — it must live on
+    // the host, same as the size/variant classes above, not on the bar div.
+    if (animated && !indeterminate) element.classList.add('wb-progress--animated');
     element.setAttribute('role', 'progressbar');
     element.setAttribute('aria-valuenow', String(value));
     element.setAttribute('aria-valuemin', '0');
@@ -28,10 +50,10 @@ export function progress(element, options = {}) {
     element.innerHTML = '';
     const bar = document.createElement('div');
     bar.className = 'wb-progress__bar' + (striped ? ' wb-progress__bar--striped' : '');
-    bar.style.width = `${pct}%`;
+    bar.style.width = indeterminate ? '' : `${pct}%`;
     element.appendChild(bar);
 
-    if (showLabel) {
+    if (showLabel && !indeterminate) {
       const label = document.createElement('span');
       label.className = 'wb-progress__label';
       label.textContent = labelText;
@@ -40,7 +62,7 @@ export function progress(element, options = {}) {
 
     return () => {
       element.innerHTML = '';
-      element.classList.remove('wb-progress', `wb-progress--${size}`, `wb-progress--${variant}`, 'wb-progress--labeled');
+      element.classList.remove('wb-progress', `wb-progress--${size}`, `wb-progress--${variant}`, 'wb-progress--labeled', 'wb-progress--indeterminate', 'wb-progress--animated');
     };
   }
 

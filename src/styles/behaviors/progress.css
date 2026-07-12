@@ -83,6 +83,26 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   INDETERMINATE VARIANT — for the <wb-progress> custom tag's div-based
+   .wb-progress__bar. progress.js's native-<progress> path already had an
+   indeterminate animation, but targeting ::-webkit-progress-value — a
+   pseudo-element that only exists on a real native <progress>, never on
+   this div. <wb-progress indeterminate> (every demo/showcase's usage) had
+   no visual effect at all until this rule existed.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-progress--indeterminate .wb-progress__bar {
+  width: 40%;
+  animation: wb-progress-indeterminate-sweep 1.5s ease-in-out infinite;
+}
+
+@keyframes wb-progress-indeterminate-sweep {
+  0% { margin-left: -40%; }
+  50% { margin-left: 60%; }
+  100% { margin-left: 100%; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    GRADIENT VARIANT (from site.css)
    ═══════════════════════════════════════════════════════════════════════════ */
 
