@@ -8,8 +8,13 @@ git add src/core/version.js
 
 echo "🔍 Running pre-commit checks..."
 
-# Run project integrity tests
-npm test -- --grep "project-integrity" --reporter=line
+# Run project integrity tests only — NOT `npm test` (the full multi-tier
+# matrix: compliance/regression/integration/base/behaviors, ~1hr). `npm test
+# -- --grep ...` only appends those flags to the LAST command in that
+# &&-chained script, so every commit was silently running the ENTIRE suite
+# unfiltered before this fix (never caught: core.hooksPath wasn't set for
+# this worktree until now, so the hook itself had never actually run).
+npx playwright test tests/compliance/project-integrity.spec.ts --reporter=line
 
 if [ $? -ne 0 ]; then
   echo ""
