@@ -60,8 +60,18 @@
    overflow-x:auto (scroll) here — only doc-viewer.html's own inline
    duplicate had ever been fixed to wrap; every other page using
    <wb-mdhtml> (e.g. autoinject.html) kept code blocks scrolling/overflowing
-   their container. */
-.wb-mdhtml pre {
+   their container.
+
+   :not(.x-pre) — once pre.js (x-behavior="pre") has enhanced a block, it
+   manages its own complete padding/background/wrap via .x-pre (pre.css),
+   including reserving extra padding-left for a line-number gutter
+   (.x-pre--has-line-numbers). This rule's flat padding:1rem has higher
+   specificity (.wb-mdhtml pre vs a single .x-pre--has-line-numbers class)
+   and was winning regardless of load order, clobbering the gutter's
+   reserved space — the code text's first 1-2 characters rendered hidden
+   behind the line-number column on every <wb-demo>/```code block viewed
+   through the doc-viewer (any markdown page). */
+.wb-mdhtml pre:not(.x-pre) {
   background: var(--bg-tertiary);
   padding: 1rem;
   border-radius: 8px;
@@ -73,7 +83,7 @@
   word-break: normal;
 }
 
-.wb-mdhtml pre code {
+.wb-mdhtml pre:not(.x-pre) code {
   background: none;
   padding: 0;
   font-weight: normal;
