@@ -318,11 +318,15 @@ function getAutoInjectBehaviors(element) {
     }
   }
 
-  if (!getConfig('autoInject')) return behaviors;
-  
+  // `variant` is a strong, unambiguous signal of intent on its own -- a
+  // plain <button variant="primary"> is never accidental -- so it triggers
+  // its mapped native behavior regardless of the global autoInject setting
+  // (see wb.js's getAutoInjectBehavior() for the full rationale/incident).
+  if (!getConfig('autoInject') && !element.hasAttribute('variant')) return behaviors;
+
   // Skip if x-behavior is already present (explicit overrides implicit)
   if (element.hasAttribute('x-behavior')) return behaviors;
-  
+
   for (const { selector, behavior } of autoInjectMappings) {
     if (element.matches(selector)) {
       behaviors.push(behavior);
@@ -578,11 +582,14 @@ const WB = {
       });
     });
 
-    // Auto-inject scan
-    if (getConfig('autoInject')) {
+    // Auto-inject scan. Unconditional per-element check -- `variant` triggers
+    // the mapped behavior regardless of the global autoInject setting (see
+    // getAutoInjectBehaviors() above for the full rationale/incident).
+    {
       autoInjectMappings.forEach(({ selector, behavior }) => {
         const autoElements = root.querySelectorAll(selector);
         autoElements.forEach(element => {
+          if (!getConfig('autoInject') && !element.hasAttribute('variant')) return;
           // Skip if x-behavior is present (already handled)
           if (!element.hasAttribute('x-behavior')) {
             if (eager) {
@@ -654,10 +661,13 @@ const WB = {
               });
             }
 
-            // Check descendants for auto-inject
-            if (getConfig('autoInject') && node.hasChildNodes?.()) {
+            // Check descendants for auto-inject. Unconditional per-element
+            // check -- `variant` triggers the mapped behavior regardless of
+            // the global autoInject setting.
+            if (node.hasChildNodes?.()) {
               autoInjectMappings.forEach(({ selector, behavior }) => {
                 node.querySelectorAll?.(selector).forEach(el => {
+                  if (!getConfig('autoInject') && !el.hasAttribute('variant')) return;
                   if (!el.hasAttribute('x-behavior')) {
                     WB.lazyInject(el, behavior);
                   }

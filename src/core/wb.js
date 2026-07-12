@@ -4,11 +4,31 @@ if (typeof window !== 'undefined' && typeof window.WB === 'undefined') {
   /** @type {any} */ (window).WB = undefined;
 }
 
-// Debug logging — silent unless localStorage['wb-debug'] === '1'.
-// Keeps the console clean in normal use; warnings/errors are never gated.
-const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+// Debug logging — TEMPORARILY forced ON project-wide per explicit request
+// ("turn the tracing on until I tell you to turn it off") while diagnosing
+// several live rendering issues. Normally gated behind
+// localStorage['wb-debug'] === '1' (still respects an explicit '0' to opt
+// out); revert the `true ||` once tracing is no longer needed.
+const WB_DEBUG = true || (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
 const _wbClog = console.log.bind(console);
 const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
+
+// Trace lines that only print a tag name (e.g. "wb-card") are useless for
+// telling apart multiple instances of the same tag on one page. elLabel()
+// always includes an identifier: the element's real id if it has one,
+// otherwise a stable auto-assigned trace id (assigned once per element on
+// first reference, so repeated log lines about the SAME element show the
+// SAME auto-id and can be correlated).
+const _traceIds = new WeakMap();
+let _traceIdSeq = 0;
+function elLabel(el) {
+  if (!el || !el.tagName) return String(el);
+  const tag = el.tagName.toLowerCase();
+  if (el.id) return `<${tag} id="${el.id}">`;
+  if (!_traceIds.has(el)) _traceIds.set(el, ++_traceIdSeq);
+  return `<${tag} id="(auto-${_traceIds.get(el)})">`;
+}
+
 // The tracing-state announcement itself lives in main.js (2nd console line,
 // right after the version banner) so it appears in one predictable place
 // regardless of which core module a page happens to load.
@@ -143,18 +163,27 @@ const RESERVED_ATTRIBUTES = new Set([
  * @returns {string|null} Behavior name or null
  */
 function getAutoInjectBehavior(element) {
-  if (!getConfig('autoInject')) return null;
   // Skip if explicitly ignored
   if (element.hasAttribute('x-ignore')) return null;
-  
+
   // Note: We do NOT skip if other behaviors are present.
   // Auto-injection is additive unless explicitly ignored.
   // The inject() function handles duplicate prevention.
 
   // Use tag-map.js getNativeBehavior for efficient matching
   const candidate = getNativeBehavior(element);
-  
+
   if (!candidate) return null;
+
+  // `variant` is a strong, unambiguous signal of intent on its own: a plain
+  // <button variant="primary"> is never accidental, so it triggers its
+  // mapped native behavior regardless of the global autoInject setting.
+  // Without this, a page whose whole point is demonstrating bare
+  // variant-styled native elements (pages/behaviors.html) renders every one
+  // of them with zero classes/behavior whenever autoInject is off (its
+  // documented, correct default per #328) -- confirmed live: every button
+  // variant showed the identical unstyled background.
+  if (!getConfig('autoInject') && !element.hasAttribute('variant')) return null;
 
   // Check if candidate is already explicitly applied
   // We don't need to check here because inject() handles duplicates.
@@ -345,7 +374,7 @@ const WB = {
 
     // Get schema name from tag or x-* attributes
     const name = schemaName || WB._detectSchemaName(element);
-    dlog(`[WB.processSchema] Processing element ${element.tagName}, detected schema: ${name}`);
+    dlog(`[WB.processSchema] Processing element ${elLabel(element)}, detected schema: ${name}`);
     if (!name) return;
 
     // Claim this element before the first await — a concurrent caller
@@ -374,11 +403,11 @@ const WB = {
 
       // Process through schema builder (builds DOM from $view)
       try {
-        dlog(`[WB.processSchema] Calling SchemaBuilder.processElement for ${element.tagName}`);
+        dlog(`[WB.processSchema] Calling SchemaBuilder.processElement for ${elLabel(element)}`);
         SchemaBuilder.processElement(element, name);
         schemaProcessed.add(element);
         element.setAttribute('x-schema', name);
-        dlog(`[WB.processSchema] Schema processing complete for ${element.tagName}`);
+        dlog(`[WB.processSchema] Schema processing complete for ${elLabel(element)}`);
       } catch (err) {
         console.error('[WB] processSchema failed for', name, err && err.message);
       }
@@ -433,7 +462,7 @@ const WB = {
         const htmlEl = /** @type {HTMLElement} */ (el);
         const tag = htmlEl.tagName.toLowerCase();
         if (tag.startsWith('wb-') && tag !== 'wb-view') {
-          dlog(`[WB.scan] Found wb-* element: ${tag} (${htmlEl.id || 'no-id'})`);
+          dlog(`[WB.scan] Found wb-* element: ${elLabel(htmlEl)}`);
           // WB.processSchema is async-capable; collect the promise and allow it to load schemas on-demand
           try {
             const p = WB.processSchema(htmlEl, null, /*blocking*/ true);
@@ -567,7 +596,7 @@ const WB = {
 
           if (behaviorName) {
             // Debug log for behavior injection
-            dlog('[WB.scan] Injecting behavior:', behaviorName, 'on', htmlEl, 'with options:', attr.value ? { config: attr.value } : {});
+            dlog('[WB.scan] Injecting behavior:', behaviorName, 'on', elLabel(htmlEl), htmlEl, 'with options:', attr.value ? { config: attr.value } : {});
             // Pass the attribute value as config if present
             const options = attr.value ? { config: attr.value } : {};
             promises.push(WB.inject(htmlEl, behaviorName, options));
@@ -576,12 +605,18 @@ const WB = {
       });
     }
 
-    // Auto-inject scan
-    if (getConfig('autoInject')) {
+    // Auto-inject scan. Runs unconditionally now, not just when autoInject
+    // is on: `variant` is a strong, unambiguous signal of intent on its own
+    // (a plain <button variant="primary"> is never accidental), so it
+    // triggers the mapped native behavior per-element regardless of the
+    // global autoInject setting -- see getAutoInjectBehavior() above for
+    // the full rationale/incident.
+    {
       autoInjectMappings.forEach(({ selector, behavior }) => {
         const autoElements = root.querySelectorAll(selector);
         autoElements.forEach(element => {
           const htmlEl = /** @type {HTMLElement} */ (element);
+          if (!getConfig('autoInject') && !htmlEl.hasAttribute('variant')) return;
           // Only skip if explicitly ignored
           if (!htmlEl.hasAttribute('x-ignore')) {
             // A semantic <article> auto-injects as a card and claims its own
@@ -647,11 +682,11 @@ const WB = {
           // Cast to HTMLElement after type check
           const el = /** @type {HTMLElement} */ (node);
           const tag = el.tagName.toLowerCase();
-          dlog(`[WB.observe] Processing added node: ${tag}`);
-            
+          dlog(`[WB.observe] Processing added node: ${elLabel(el)}`);
+
           // v3.0: Process wb-* tags through schema builder
           if (useSchemas && tag.startsWith('wb-') && tag !== 'wb-view') {
-            dlog(`[WB.observe] Found wb-* element in mutation: ${tag}`);
+            dlog(`[WB.observe] Found wb-* element in mutation: ${elLabel(el)}`);
             WB.processSchema(el);
           }
             
@@ -757,11 +792,14 @@ const WB = {
             });
           }
 
-          // Auto-inject descendants
-          if (getConfig('autoInject')) {
+          // Auto-inject descendants. Unconditional per-element check (see
+          // scan()'s matching comment above) -- `variant` triggers the
+          // mapped behavior regardless of the global autoInject setting.
+          {
             autoInjectMappings.forEach(({ selector, behavior }) => {
               el.querySelectorAll(selector).forEach(descendant => {
                 const descEl = /** @type {HTMLElement} */ (descendant);
+                if (!getConfig('autoInject') && !descEl.hasAttribute('variant')) return;
                 // Only skip if explicitly ignored
                 if (!descEl.hasAttribute('x-ignore')) {
                   // We don't check for other attributes here anymore.
