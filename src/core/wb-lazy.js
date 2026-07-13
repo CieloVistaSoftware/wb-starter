@@ -12,6 +12,7 @@ import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStat
 import { Events } from './events.js';
 import { Theme } from './theme.js';
 import { getConfig, setConfig } from './config.js';
+import { elementMap, nativeMap, extensionMap } from './tag-map.js';
 
 // Debug logging — silent unless localStorage['wb-debug'] === '1'. Same
 // mechanism as wb.js, added here for parity (this runtime previously had no
@@ -23,284 +24,196 @@ const dlog = (...args) => { if (WB_DEBUG) console.log(...args); };
 // load, regardless of whether it's on or off.
 console.log(`[WB-lazy] debug tracing: ${WB_DEBUG ? 'ON' : 'OFF'} (localStorage['wb-debug'] === '1' to enable)`);
 
-// Auto-injection mappings
-const customElementMappings = [
-  // Card custom tags - BOTH wb-* AND card-* namespaces for flexibility
-  { selector: 'wb-card', behavior: 'card' },
-  { selector: 'card-basic', behavior: 'card' },
-  
-  // wb-* prefix (primary)
-  { selector: 'wb-cardimage', behavior: 'cardimage' },
-  { selector: 'wb-cardvideo', behavior: 'cardvideo' },
-  { selector: 'wb-cardprofile', behavior: 'cardprofile' },
-  { selector: 'wb-cardpricing', behavior: 'cardpricing' },
-  { selector: 'wb-cardproduct', behavior: 'cardproduct' },
-  { selector: 'wb-cardstats', behavior: 'cardstats' },
-  { selector: 'wb-cardtestimonial', behavior: 'cardtestimonial' },
-  { selector: 'wb-cardhero', behavior: 'cardhero' },
-  { selector: 'wb-cardfile', behavior: 'cardfile' },
-  { selector: 'wb-cardnotification', behavior: 'cardnotification' },
-  { selector: 'wb-cardportfolio', behavior: 'cardportfolio' },
-  { selector: 'wb-cardlink', behavior: 'cardlink' },
-  { selector: 'wb-card-link', behavior: 'cardlink' },
-  { selector: 'wb-cardhorizontal', behavior: 'cardhorizontal' },
-  { selector: 'wb-cardoverlay', behavior: 'cardoverlay' },
-  { selector: 'wb-cardbutton', behavior: 'cardbutton' },
-  { selector: 'wb-cardexpandable', behavior: 'cardexpandable' },
-  { selector: 'wb-cardminimizable', behavior: 'cardminimizable' },
-  { selector: 'wb-carddraggable', behavior: 'carddraggable' },
-  { selector: 'wb-themecontrol', behavior: 'themecontrol' },
-  { selector: 'wb-chip', behavior: 'chip' },
-  { selector: 'wb-inputgroup', behavior: 'inputgroup' },
-  { selector: 'wb-formrow', behavior: 'formrow' },
+// #333: this table used to hand-duplicate tag-map.js's elementMap/nativeMap/
+// extensionMap (wb.js's own single source of truth) and had drifted --
+// e.g. this file was missing header/footer (present in nativeMap) while
+// tag-map.js was missing every legacy card-*/noun-first alias this file
+// still needs to serve older standalone demo pages. Now built by spreading
+// the shared tag-map.js tables first, with only the genuinely
+// runtime-specific entries layered on top explicitly -- so anything added to
+// tag-map.js going forward is picked up here automatically instead of
+// silently working on only one runtime.
 
-  // Feedback Components
-  { selector: 'wb-spinner', behavior: 'spinner' },
-  { selector: 'wb-avatar', behavior: 'avatar' },
-  { selector: 'wb-badge', behavior: 'badge' },
-  { selector: 'wb-alert', behavior: 'alert' },
-  { selector: 'wb-progress', behavior: 'progress' },
-  { selector: 'wb-rating', behavior: 'rating' },
-  { selector: 'wb-tabs', behavior: 'tabs' },
-  { selector: 'wb-switch', behavior: 'switch' },
-  
-  // Attributes
-  { selector: '[x-breadcrumb]', behavior: 'breadcrumb' },
-  { selector: '[x-toast]', behavior: 'toast' },
-  { selector: '[x-notify]', behavior: 'notify' },
-  { selector: '[x-typewriter]', behavior: 'typewriter' },
-  { selector: '[x-bounce]', behavior: 'bounce' },
-  { selector: '[x-pulse]', behavior: 'pulse' },
-  { selector: '[x-rainbow]', behavior: 'rainbow' },
-  
-  // card-* prefix (alternative/legacy)
-  { selector: 'card-image', behavior: 'cardimage' },
-  { selector: 'card-video', behavior: 'cardvideo' },
-  { selector: 'card-profile', behavior: 'cardprofile' },
-  { selector: 'card-pricing', behavior: 'cardpricing' },
-  { selector: 'card-product', behavior: 'cardproduct' },
-  { selector: 'card-stats', behavior: 'cardstats' },
-  { selector: 'card-testimonial', behavior: 'cardtestimonial' },
-  { selector: 'card-hero', behavior: 'cardhero' },
-  { selector: 'card-file', behavior: 'cardfile' },
-  { selector: 'card-notification', behavior: 'cardnotification' },
-  { selector: 'card-portfolio', behavior: 'cardportfolio' },
-  { selector: 'card-link', behavior: 'cardlink' },
-  { selector: 'card-horizontal', behavior: 'cardhorizontal' },
-  { selector: 'card-overlay', behavior: 'cardoverlay' },
-  { selector: 'card-button', behavior: 'cardbutton' },
-  { selector: 'card-expandable', behavior: 'cardexpandable' },
-  { selector: 'card-minimizable', behavior: 'cardminimizable' },
-  { selector: 'card-draggable', behavior: 'carddraggable' },
-  
-  // Custom Card Names (noun-first)
-  { selector: 'profile-card', behavior: 'cardprofile' },
-  { selector: 'hero-card', behavior: 'cardhero' },
-  { selector: 'stats-card', behavior: 'cardstats' },
-  { selector: 'testimonial-card', behavior: 'cardtestimonial' },
-  { selector: 'video-card', behavior: 'cardvideo' },
-  { selector: 'file-card', behavior: 'cardfile' },
-  { selector: 'notification-card', behavior: 'cardnotification' },
-  { selector: 'basic-card', behavior: 'card' },
-  { selector: 'image-card', behavior: 'cardimage' },
-  { selector: 'overlay-card', behavior: 'cardoverlay' },
-  { selector: 'portfolio-card', behavior: 'cardportfolio' },
-  { selector: 'link-card', behavior: 'cardlink' },
-  { selector: 'horizontal-card', behavior: 'cardhorizontal' },
-  
-  { selector: 'wb-demo', behavior: 'demo' },
-  { selector: 'wb-code-card', behavior: 'demo' },
-  { selector: 'wb-mdhtml', behavior: 'mdhtml' },
-  
-  // === NEW LAYOUT MAPPINGS ===
-  
-  // Structural
-  { selector: 'wb-grid', behavior: 'grid' },
-  { selector: 'wb-flex', behavior: 'flex' },
-  { selector: 'wb-stack', behavior: 'stack' },
-  { selector: 'wb-cluster', behavior: 'cluster' },
-  { selector: 'wb-container', behavior: 'container' },
-  
-  // Aliases (Common Terminology)
-  { selector: 'wb-row', behavior: 'flex' },     // Alias for horizontal flex
-  { selector: 'wb-column', behavior: 'stack' }, // Alias for vertical stack
+// Two wb-* tags where tag-map.js's elementMap disagrees with what this
+// runtime has always shipped live (wb-drawer -> drawer there vs
+// -> drawerLayout here; wb-modal -> dialog there vs -> modal here). Kept as
+// this runtime's existing values rather than silently adopting tag-map.js's
+// -- changing live dispatch for either tag needs its own investigation into
+// which value is actually correct (tracked in #333).
+const ELEMENT_MAP_OVERRIDES = new Set(['wb-drawer', 'wb-modal']);
 
-  // Page Layouts
-  { selector: 'wb-sidebar', behavior: 'sidebarlayout' },
-  { selector: 'wb-center', behavior: 'center' },
-  { selector: 'wb-cover', behavior: 'cover' },
-  { selector: 'wb-masonry', behavior: 'masonry' },
-  { selector: 'wb-switcher', behavior: 'switcher' },
+// wb.js resolves these same tags without ever consulting elementMap: each is
+// registered as a REAL custom element (wb-grid.js/wb-cluster.js/wb-stack.js/
+// wb-row.js/wb-accordion.js, all eagerly imported by wb.js) whose own
+// connectedCallback calls the layout/behavior function directly. wb-lazy.js
+// has no such registrations (only wb-card.js, separately, for <wb-card>), so
+// these tags need dispatching as ordinary injected behaviors here. Also
+// covers the legacy card-*/noun-first tag aliases and a few tags tag-map.js
+// genuinely doesn't know about at all (wb-inputgroup, wb-formrow, wb-stat,
+// wb-code-card) -- none of these are duplicated anywhere else.
+const WB_LAZY_ONLY_ELEMENTS = {
+  'card-basic': 'card',
+  'wb-inputgroup': 'inputgroup',
+  'wb-formrow': 'formrow',
+  'card-image': 'cardimage',
+  'card-video': 'cardvideo',
+  'card-profile': 'cardprofile',
+  'card-pricing': 'cardpricing',
+  'card-product': 'cardproduct',
+  'card-stats': 'cardstats',
+  'card-testimonial': 'cardtestimonial',
+  'card-hero': 'cardhero',
+  'card-file': 'cardfile',
+  'card-notification': 'cardnotification',
+  'card-portfolio': 'cardportfolio',
+  'card-link': 'cardlink',
+  'card-horizontal': 'cardhorizontal',
+  'card-overlay': 'cardoverlay',
+  'card-button': 'cardbutton',
+  'card-expandable': 'cardexpandable',
+  'card-minimizable': 'cardminimizable',
+  'card-draggable': 'carddraggable',
+  'profile-card': 'cardprofile',
+  'hero-card': 'cardhero',
+  'stats-card': 'cardstats',
+  'testimonial-card': 'cardtestimonial',
+  'video-card': 'cardvideo',
+  'file-card': 'cardfile',
+  'notification-card': 'cardnotification',
+  'basic-card': 'card',
+  'image-card': 'cardimage',
+  'overlay-card': 'cardoverlay',
+  'portfolio-card': 'cardportfolio',
+  'link-card': 'cardlink',
+  'horizontal-card': 'cardhorizontal',
+  'wb-code-card': 'demo',
+  'wb-grid': 'grid',
+  'wb-flex': 'flex',
+  'wb-stack': 'stack',
+  'wb-cluster': 'cluster',
+  'wb-container': 'container',
+  'wb-row': 'flex', // alias for horizontal flex
+  'wb-sidebar': 'sidebarlayout',
+  'wb-center': 'center',
+  'wb-cover': 'cover',
+  'wb-masonry': 'masonry',
+  'wb-switcher': 'switcher',
+  'wb-reel': 'reel',
+  'wb-frame': 'frame',
+  'wb-drawer': 'drawerLayout', // conflicts with elementMap's 'drawer' -- see ELEMENT_MAP_OVERRIDES above
+  'wb-icon': 'icon',
+  'wb-control': 'control',
+  'wb-repeater': 'repeater',
+  'wb-accordion': 'accordion',
+  'wb-modal': 'modal', // conflicts with elementMap's 'dialog' -- see ELEMENT_MAP_OVERRIDES above
+  'wb-stat': 'stat',
+};
 
-  // Specialty
-  { selector: 'wb-reel', behavior: 'reel' },
-  { selector: 'wb-frame', behavior: 'frame' },
-  { selector: 'wb-sticky', behavior: 'sticky' },
-  { selector: 'wb-drawer', behavior: 'drawerLayout' },
-  { selector: 'wb-icon', behavior: 'icon' },
-  { selector: 'wb-span', behavior: 'span' },
-  { selector: 'wb-control', behavior: 'control' },
-  { selector: 'wb-repeater', behavior: 'repeater' },
-
-  // Interactive Elements
-  { selector: 'button-tooltip', behavior: 'tooltip' },
-  { selector: 'button-tooltip', behavior: 'toast' },
-
-  // Generic Attributes (Always Active)
-  { selector: '[tooltip]', behavior: 'tooltip' },
-  { selector: '[x-tooltip]', behavior: 'tooltip' },
-  { selector: '[toast-message]', behavior: 'toast' },
-  { selector: '[ripple]', behavior: 'ripple' },
-  { selector: '[x-ripple]', behavior: 'ripple' },
-  { selector: '[badge]', behavior: 'badge' },
-  
-  // Behavior Attributes
-  { selector: '[x-copy]', behavior: 'copy' },
-  { selector: '[x-draggable]', behavior: 'draggable' },
-  { selector: '[x-collapse]', behavior: 'collapse' },
-  { selector: '[x-fadein]', behavior: 'fadein' },
-  { selector: '[x-shake]', behavior: 'shake' },
-  { selector: '[x-confetti]', behavior: 'confetti' },
+// Extension attributes tag-map.js's extensionMap doesn't cover. wb.js doesn't
+// need an equivalent list at all for these -- it resolves x-{name} shorthand
+// attributes dynamically from the behaviors registry itself
+// (Object.keys(behaviors) in scan()/observe()), not from a hardcoded
+// selector table. This runtime's dispatch (getAutoInjectBehaviors(), below)
+// is selector-table-driven, so it still needs these listed explicitly.
+// Porting wb.js's dynamic approach here would remove the need for this list
+// entirely -- a larger follow-up, not done as part of this consolidation.
+const WB_LAZY_ONLY_ATTRIBUTES = {
+  'x-breadcrumb': 'breadcrumb',
+  'x-toast': 'toast',
+  'x-notify': 'notify',
+  'x-typewriter': 'typewriter',
+  'x-bounce': 'bounce',
+  'x-pulse': 'pulse',
+  'x-rainbow': 'rainbow',
+  'x-copy': 'copy',
+  'x-collapse': 'collapse',
+  'x-fadein': 'fadein',
+  'x-shake': 'shake',
   // Entrance / attention-seeker animations + relative time — behaviors exist in
   // effects.js/helpers and are registered in index.js, but were unmapped (issue #138)
-  { selector: '[x-slidein]', behavior: 'slidein' },
-  { selector: '[x-zoomin]', behavior: 'zoomin' },
-  { selector: '[x-wobble]', behavior: 'wobble' },
-  { selector: '[x-tada]', behavior: 'tada' },
-  { selector: '[x-jello]', behavior: 'jello' },
-  { selector: '[x-heartbeat]', behavior: 'heartbeat' },
-  { selector: '[x-glow]', behavior: 'glow' },
-  { selector: '[x-sparkle]', behavior: 'sparkle' },
-  { selector: '[x-snow]', behavior: 'snow' },
-  { selector: '[x-flip]', behavior: 'flip' },
-  { selector: '[x-flash]', behavior: 'flash' },
-  { selector: '[x-fireworks]', behavior: 'fireworks' },
-  { selector: '[x-relativetime]', behavior: 'relativetime' },
-  { selector: '[x-form]', behavior: 'form' },
-  { selector: '[x-password]', behavior: 'password' },
-  { selector: '[x-tags]', behavior: 'tags' },
-  { selector: '[x-file]', behavior: 'file' },
-  { selector: '[x-masked]', behavior: 'masked' },
-  { selector: '[x-stepper]', behavior: 'stepper' },
-  { selector: '[x-counter]', behavior: 'counter' },
-  { selector: '[x-autocomplete]', behavior: 'autocomplete' },
-  { selector: '[x-otp]', behavior: 'otp' },
-  { selector: '[x-colorpicker]', behavior: 'colorpicker' },
-  { selector: '[x-search]', behavior: 'search' },
-  { selector: '[x-floatinglabel]', behavior: 'floatinglabel' },
-  { selector: '[x-label]', behavior: 'label' }, // x-label="text" on any form control (input, select, ...) — see src/wb-viewmodels/label.js
-  { selector: '[x-clock]', behavior: 'clock' },
-  { selector: '[x-countdown]', behavior: 'countdown' },
-  { selector: '[x-youtube]', behavior: 'youtube' },
-  { selector: '[x-pagination]', behavior: 'pagination' },
-  { selector: '[x-steps]', behavior: 'steps' },
-  { selector: '[x-timeline]', behavior: 'timeline' },
-  { selector: '[x-kbd]', behavior: 'kbd' },
-  { selector: '[x-gallery]', behavior: 'gallery' },
-  { selector: '[x-image]', behavior: 'image' },
-  { selector: '[x-popover]', behavior: 'popover' },
-  { selector: '[x-confirm]', behavior: 'confirm' },
-  { selector: '[x-prompt]', behavior: 'prompt' },
+  'x-slidein': 'slidein',
+  'x-zoomin': 'zoomin',
+  'x-wobble': 'wobble',
+  'x-tada': 'tada',
+  'x-jello': 'jello',
+  'x-heartbeat': 'heartbeat',
+  'x-glow': 'glow',
+  'x-sparkle': 'sparkle',
+  'x-flip': 'flip',
+  'x-flash': 'flash',
+  'x-relativetime': 'relativetime',
+  'x-form': 'form',
+  'x-password': 'password',
+  'x-tags': 'tags',
+  'x-file': 'file',
+  'x-masked': 'masked',
+  'x-stepper': 'stepper',
+  'x-counter': 'counter',
+  'x-autocomplete': 'autocomplete',
+  'x-otp': 'otp',
+  'x-colorpicker': 'colorpicker',
+  'x-search': 'search',
+  'x-floatinglabel': 'floatinglabel',
+  'x-label': 'label', // x-label="text" on any form control (input, select, ...) — see src/wb-viewmodels/label.js
+  'x-clock': 'clock',
+  'x-countdown': 'countdown',
+  'x-youtube': 'youtube',
+  'x-pagination': 'pagination',
+  'x-steps': 'steps',
+  'x-timeline': 'timeline',
+  'x-kbd': 'kbd',
+  'x-gallery': 'gallery',
+  'x-image': 'image',
+  'x-popover': 'popover',
+  'x-confirm': 'confirm',
+  'x-prompt': 'prompt',
   // drawer() (overlay.js) — a slide-out panel + backdrop triggered by a plain
-  // click — had NO auto-inject selector at all. [x-drawer-layout] (below,
-  // pre-existing) maps to a DIFFERENT behavior (drawerLayout, a page-shell
-  // layout primitive) — easy to conflate, but not the same thing. Without
-  // this line, every `<button x-drawer drawer-title="…">` in the project
-  // (demos/autoinject.html's "Left/Right Drawer" buttons included) rendered
-  // as an inert, unenhanced button — confirmed via direct WB.inject() call
-  // that the behavior itself works fine once actually invoked.
-  { selector: '[x-drawer]', behavior: 'drawer' },
-  { selector: '[x-lightbox]', behavior: 'lightbox' },
-  { selector: '[x-share]', behavior: 'share' },
-  { selector: '[x-print]', behavior: 'print' },
-  { selector: '[x-fullscreen]', behavior: 'fullscreen' },
-  { selector: '[x-darkmode]', behavior: 'darkmode' },
-  { selector: '[x-truncate]', behavior: 'truncate' },
-  { selector: '[x-sticky]', behavior: 'sticky' },
-  { selector: '[x-scrollalong]', behavior: 'scrollalong' },
-  { selector: '[x-masonry]', behavior: 'masonry' },
-  { selector: '[x-dropdown]', behavior: 'dropdown' },
-  { selector: '[x-toggle]', behavior: 'toggle' },
-  { selector: '[x-drawer-layout]', behavior: 'drawerLayout' },
-  { selector: '[x-autosize]', behavior: 'autosize' },
-  { selector: 'wb-accordion', behavior: 'accordion' },
-  { selector: 'wb-modal', behavior: 'modal' },
+  // click. x-drawer-layout (below) maps to a DIFFERENT behavior
+  // (drawerLayout, a page-shell layout primitive) — easy to conflate, but
+  // not the same thing.
+  'x-drawer': 'drawer',
+  'x-lightbox': 'lightbox',
+  'x-share': 'share',
+  'x-print': 'print',
+  'x-fullscreen': 'fullscreen',
+  'x-truncate': 'truncate',
+  'x-masonry': 'masonry',
+  'x-dropdown': 'dropdown',
+  'x-toggle': 'toggle',
+  'x-drawer-layout': 'drawerLayout',
+  'x-autosize': 'autosize',
+};
 
-  // New Components
-  { selector: 'wb-codecontrol', behavior: 'codecontrol' },
-  { selector: 'wb-collapse', behavior: 'collapse' },
-  { selector: 'wb-darkmode', behavior: 'darkmode' },
-  { selector: 'wb-dropdown', behavior: 'dropdown' },
-  { selector: 'wb-footer', behavior: 'footer' },
-  { selector: 'wb-form', behavior: 'form' },
-  { selector: 'wb-header', behavior: 'header' },
-  { selector: 'wb-globe', behavior: 'globe' },
-  { selector: 'wb-stagelight', behavior: 'stagelight' },
-  { selector: 'wb-audio', behavior: 'audio' },
-  { selector: 'wb-video', behavior: 'video' },
-  { selector: 'wb-vimeo', behavior: 'vimeo' },
-  { selector: 'wb-youtube', behavior: 'youtube' },
-  { selector: 'wb-gallery', behavior: 'gallery' },
-  { selector: 'wb-ratio', behavior: 'ratio' },
-  { selector: 'wb-figure', behavior: 'figure' },
-  { selector: 'wb-stat', behavior: 'stat' },
-  { selector: 'wb-button', behavior: 'button' },
-  { selector: 'wb-dialog', behavior: 'dialog' },
-  { selector: 'wb-details', behavior: 'details' },
-  { selector: 'wb-hero', behavior: 'hero' },
-  { selector: 'wb-input', behavior: 'input' },
-  { selector: 'wb-notes', behavior: 'notes' },
-  { selector: 'wb-select', behavior: 'select' },
-  { selector: 'wb-skeleton', behavior: 'skeleton' },
-  { selector: 'wb-slider', behavior: 'slider' },
-  { selector: 'wb-table', behavior: 'table' },
-  { selector: 'wb-textarea', behavior: 'textarea' },
-  { selector: 'wb-timeline', behavior: 'timeline' },
-  { selector: 'wb-toast', behavior: 'toast' },
-  { selector: 'wb-toggle', behavior: 'toggle' },
-  { selector: 'wb-tooltip', behavior: 'tooltip' },
-  { selector: 'wb-resizable', behavior: 'resizable' },
-  { selector: 'wb-navbar', behavior: 'navbar' },
-  { selector: 'wb-checkbox', behavior: 'checkbox' },
-  { selector: 'wb-search', behavior: 'search' },
-  { selector: 'wb-rating', behavior: 'rating' }
+// Bare (non-x-prefixed) legacy attribute fallbacks -- pre-date the x- prefix
+// convention; kept for old standalone demo pages that still use them.
+const WB_LAZY_LEGACY_BARE_ATTRIBUTES = {
+  tooltip: 'tooltip',
+  'toast-message': 'toast',
+  ripple: 'ripple',
+  badge: 'badge',
+};
+
+// Auto-injection mappings
+const customElementMappings = [
+  ...Object.entries(elementMap)
+    .filter(([selector]) => !ELEMENT_MAP_OVERRIDES.has(selector))
+    .map(([selector, behavior]) => ({ selector, behavior })),
+  ...Object.entries(extensionMap)
+    .filter(([attr]) => !attr.startsWith('x-as-')) // morphing -- not supported by this runtime's dispatch
+    .map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
+  ...Object.entries(WB_LAZY_ONLY_ELEMENTS).map(([selector, behavior]) => ({ selector, behavior })),
+  ...Object.entries(WB_LAZY_ONLY_ATTRIBUTES).map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
+  ...Object.entries(WB_LAZY_LEGACY_BARE_ATTRIBUTES).map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
+  // button-tooltip gets BOTH behaviors -- intentional dual-behavior element,
+  // not a duplicate-entry bug.
+  { selector: 'button-tooltip', behavior: 'tooltip' },
+  { selector: 'button-tooltip', behavior: 'toast' },
 ];
 
 const autoInjectMappings = [
-  // Form Elements
-  { selector: 'input[type="checkbox"]', behavior: 'checkbox' },
-  { selector: 'input[type="radio"]', behavior: 'radio' },
-  { selector: 'input[type="range"]', behavior: 'range' },
-  { selector: 'select', behavior: 'select' },
-  { selector: 'textarea', behavior: 'textarea' },
-  { selector: 'button', behavior: 'button' },
-  { selector: 'form', behavior: 'form' },
-  { selector: 'fieldset', behavior: 'fieldset' },
-  { selector: 'label', behavior: 'label' },
-  
-  // Media
-  { selector: 'img', behavior: 'image' },
-  { selector: 'video', behavior: 'video' },
-  { selector: 'audio', behavior: 'audio' },
-  { selector: 'figure', behavior: 'figure' },
-  
-  // Semantic Text
-  { selector: 'code', behavior: 'code' },
-  { selector: 'pre', behavior: 'pre' },
-  { selector: 'kbd', behavior: 'kbd' },
-  { selector: 'mark', behavior: 'mark' },
-  
-  // Structure
-  { selector: 'table', behavior: 'table' },
-  { selector: 'details', behavior: 'details' },
-  { selector: 'dialog', behavior: 'dialog' },
-  { selector: 'progress', behavior: 'progress' },
-  
-  // Cards
-  { selector: 'article', behavior: 'card' },
-  
-  // Tooltips
-  { selector: '[data-tooltip]', behavior: 'tooltip' }
+  ...Object.entries(nativeMap).map(([selector, behavior]) => ({ selector, behavior })),
+  // Legacy bare data-attribute fallback -- pre-dates x-tooltip.
+  { selector: '[data-tooltip]', behavior: 'tooltip' },
 ];
 
 /**
