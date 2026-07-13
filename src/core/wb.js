@@ -988,10 +988,16 @@ const WB = {
       }
     }
     
-    // v3.0: Start schema observer if using schemas
-    if (useSchemas) {
-      SchemaBuilder.startObserver();
-    }
+    // #334: SchemaBuilder.startObserver() used to run here unconditionally
+    // alongside WB.observe() -- a second, independent MutationObserver
+    // watching the same document.body/documentElement subtree. Its callback
+    // did nothing WB.observe()'s own callback doesn't already do more
+    // completely (wb-* schema processing, both for the added node itself
+    // AND recursively for every descendant -- see WB.observe()'s "Check
+    // descendants" section). Confirmed no other call site anywhere in the
+    // codebase depends on SchemaBuilder.startObserver() running
+    // independently. Removed: every DOM mutation site-wide was being
+    // processed by 2-3 full-subtree observers instead of 1.
 
     dlog(`✅ WB (Web Behavior) v${WB.version} initialized`);
     
