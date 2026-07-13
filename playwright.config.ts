@@ -296,7 +296,12 @@ export default defineConfig({
     {
       name: 'performance',
       testDir: './tests',
-      testMatch: 'performance.spec.ts',
+      // Was 'performance.spec.ts' -- a file that has never existed. The real
+      // suite lives in tests/performance/*.spec.ts (load-time.spec.ts,
+      // interaction.spec.ts, resources.spec.ts); this project silently
+      // matched zero tests, so the "sub 2s" load-time gate has never
+      // actually run under any npm script or CI job.
+      testMatch: 'performance/**/*.spec.ts',
     },
   ],
 });
