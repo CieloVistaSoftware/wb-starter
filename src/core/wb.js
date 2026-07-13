@@ -372,6 +372,22 @@ const WB = {
       return;
     }
 
+    // <wb-details> is owned by its native behavior (details(), semantics/
+    // details.js -- real <details>/<summary> semantics, animation, wbDetails
+    // API). details.schema.json exists (for the doc catalog) and IS
+    // registered, so it was ALSO getting schema-built here -- its $view's
+    // "content" node type creates an EMPTY div, discarding the element's
+    // real original children entirely, and details()'s own "wrap content"
+    // logic then wrapped that already-content-less schema output as if it
+    // were the real content. Confirmed live: <wb-details summary="What is
+    // wb-starter?"><div>real answer</div></wb-details> rendered with the
+    // summary duplicated and the real answer text silently gone -- same
+    // fix pattern as wb-demo/wb-modal above, just for a tag whose schema
+    // exists for docs only, never for runtime DOM construction.
+    if (element.tagName === 'WB-DETAILS') {
+      return;
+    }
+
     // Get schema name from tag or x-* attributes
     const name = schemaName || WB._detectSchemaName(element);
     dlog(`[WB.processSchema] Processing element ${elLabel(element)}, detected schema: ${name}`);

@@ -795,7 +795,24 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // Confirmed live: wb-demo's "view source" toggle silently stopped
 // responding to clicks whenever WB.scan()'s schema loop raced
 // WBDemo.connectedCallback() (root-caused via the #312 investigation).
-const SCHEMA_EXCLUDED_TAGS = new Set(['wb-demo']);
+//
+// wb-details: unlike wb-modal/wb-stack/wb-grid/wb-accordion (excluded above
+// via detectSchema()'s registry-miss fallback, since no schema.json exists
+// for them), details.schema.json DOES exist and IS registered -- so
+// <wb-details> was getting schema-built (its $view's "content" node type
+// creates an EMPTY div, discarding the element's real original children)
+// AND separately native-behavior-injected via details() (semantics/
+// details.js, tag-map.js's elementMap), which then wrapped that already-
+// content-less schema output as if it were the real content. Confirmed
+// live: <wb-details summary="What is wb-starter?"><div>real answer</div>
+// </wb-details> rendered with the summary text duplicated and the real
+// answer text silently gone entirely -- classList even showed "wb-details
+// wb-details" (both paths add the class). details() already handles
+// <wb-details> completely and correctly on its own (native <details>/
+// <summary> semantics, animation, wbDetails API) -- same fix pattern as
+// #305, just extended to a tag that has a schema file but no business
+// driving DOM construction from it at runtime.
+const SCHEMA_EXCLUDED_TAGS = new Set(['wb-demo', 'wb-details']);
 
 function detectSchema(element) {
   const tagName = element.tagName.toLowerCase();
