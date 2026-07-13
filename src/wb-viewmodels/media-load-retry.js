@@ -20,12 +20,23 @@
  * behaviors (semantics/video.js, semantics/img.js) -- all four create/own a
  * real media element and had this exact gap independently.
  */
+// Always-on (not gated behind WB_DEBUG) -- media load failures are exactly
+// the "well-known thing that should always be traceable" class of event
+// John asked for: no ack in the console previously meant no way to tell
+// "still retrying" from "silently broken" without instrumenting by hand
+// each time. [WB:media-retry] is a fixed, greppable prefix.
+function traceLabel(el) {
+  const tag = el.tagName.toLowerCase();
+  return el.id ? `<${tag} id="${el.id}">` : `<${tag}>`;
+}
+
 function attachLoadRetry(el, config) {
   const { maxAttempts = 5, baseDelayMs = 500, checkTimeoutMs = 4000 } = config.options || {};
 
   let attempt = 1;
   let settled = false;
   let checkTimer = null;
+  const startedAt = Date.now();
 
   function clearCheckTimer() {
     if (checkTimer) { clearTimeout(checkTimer); checkTimer = null; }
@@ -40,12 +51,16 @@ function attachLoadRetry(el, config) {
   function onSuccess() {
     if (settled) return;
     settled = true;
+    if (attempt > 1) {
+      console.warn(`[WB:media-retry] ${config.label} RECOVERED after ${attempt} attempt(s), ${Date.now() - startedAt}ms -- ${traceLabel(el)} src=${config.currentSrc(el)}`);
+    }
     el.classList.remove(config.failedClass);
     cleanup();
   }
 
   function giveUp() {
     settled = true;
+    console.warn(`[WB:media-retry] ${config.label} GAVE UP after ${attempt} attempts, ${Date.now() - startedAt}ms -- ${traceLabel(el)} src=${config.currentSrc(el)} -- showing "unavailable" fallback`);
     cleanup();
     el.classList.add(config.failedClass);
     // CSS ::after generated content does not reliably paint on replaced
@@ -72,6 +87,7 @@ function attachLoadRetry(el, config) {
     if (settled) return;
     if (attempt >= maxAttempts) { giveUp(); return; }
     const delay = baseDelayMs * Math.pow(2, attempt - 1);
+    console.warn(`[WB:media-retry] ${config.label} attempt ${attempt}/${maxAttempts} not ready -- retrying in ${delay}ms -- ${traceLabel(el)} src=${config.currentSrc(el)}`);
     attempt++;
     setTimeout(() => {
       if (settled) return;
@@ -80,8 +96,9 @@ function attachLoadRetry(el, config) {
     }, delay);
   }
 
-  function onError() {
+  function onError(ev) {
     clearCheckTimer();
+    console.warn(`[WB:media-retry] ${config.label} 'error' event -- ${traceLabel(el)} src=${config.currentSrc(el)}`, el.error || ev);
     retry();
   }
 
