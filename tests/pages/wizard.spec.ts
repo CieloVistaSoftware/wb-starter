@@ -1,5 +1,11 @@
 import { test, expect, Page, FrameLocator } from '@playwright/test';
 
+// wizard.html is marked obsolete (#337) -- every test.describe below is
+// .skip()'d rather than deleted, since the wizard page/feature itself is
+// untouched, just no longer part of the test matrix. If wizard.html is
+// later removed from navigation, delete this file instead of leaving it
+// permanently skipped.
+
 const WIZARD_URL = 'http://localhost:3000/demos/wizard.html';
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -78,7 +84,7 @@ async function waitForWBReady(page: Page, timeout = 15000) {
 // 1. PAGE LOAD & SCHEMA LOADING
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Page Load', () => {
+test.describe.skip('Wizard - Page Load', () => {
   test('loads without critical errors', async ({ page }) => {
     const errors: string[] = [];
     page.on('console', msg => {
@@ -131,7 +137,7 @@ test.describe('Wizard - Page Load', () => {
 // 2. TAB SWITCHING
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Tab Switching', () => {
+test.describe.skip('Wizard - Tab Switching', () => {
   test.beforeEach(async ({ page }) => {
     await waitForWizardReady(page);
   });
@@ -158,7 +164,7 @@ test.describe('Wizard - Tab Switching', () => {
 // 3. BUILD TAB - COMPONENT PICKER & EDITORS
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Build Tab', () => {
+test.describe.skip('Wizard - Build Tab', () => {
   test.beforeEach(async ({ page }) => {
     await waitForWizardReady(page);
   });
@@ -210,7 +216,7 @@ test.describe('Wizard - Build Tab', () => {
 // 4. BUILD TAB - CONTAINER NESTING
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Container Nesting', () => {
+test.describe.skip('Wizard - Container Nesting', () => {
   test.beforeEach(async ({ page }) => {
     await waitForWizardReady(page);
   });
@@ -290,7 +296,7 @@ test.describe('Wizard - Container Nesting', () => {
 // 4b. BUILD TAB - SIBLING INSERTION (BUG FIX: stack nesting)
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Sibling Insertion After Exiting Container', () => {
+test.describe.skip('Wizard - Sibling Insertion After Exiting Container', () => {
   test.beforeEach(async ({ page }) => {
     await waitForWizardReady(page);
     // Reset wizard state to ensure clean slate
@@ -349,7 +355,7 @@ test.describe('Wizard - Sibling Insertion After Exiting Container', () => {
 // 5. PREVIEW TAB - IFRAME RENDERING
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Preview Iframe', () => {
+test.describe.skip('Wizard - Preview Iframe', () => {
   test.beforeEach(async ({ page }) => {
     await waitForWizardReady(page);
   });
@@ -419,7 +425,7 @@ test.describe('Wizard - Preview Iframe', () => {
 // 6. PREVIEW TAB - WB-DEMO RENDERING
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Preview wb-demo Rendering', () => {
+test.describe.skip('Wizard - Preview wb-demo Rendering', () => {
   test.beforeEach(async ({ page }) => {
     await waitForWizardReady(page);
   });
@@ -476,7 +482,7 @@ test.describe('Wizard - Preview wb-demo Rendering', () => {
 // 7. PREVIEW TAB - WB-AUDIO RENDERING
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Preview wb-audio Rendering', () => {
+test.describe.skip('Wizard - Preview wb-audio Rendering', () => {
   test.beforeEach(async ({ page }) => {
     await waitForWizardReady(page);
   });
@@ -605,7 +611,7 @@ test.describe('Wizard - Preview wb-audio Rendering', () => {
 // 8. PREVIEW - WB-DEMO + WB-AUDIO TOGETHER
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Preview wb-demo + wb-audio', () => {
+test.describe.skip('Wizard - Preview wb-demo + wb-audio', () => {
   test.beforeEach(async ({ page }) => {
     await waitForWizardReady(page);
   });
@@ -721,7 +727,7 @@ test.describe('Wizard - Preview wb-demo + wb-audio', () => {
 // 9. WB-BUTTON ICON DROPDOWN
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - wb-button Icon Dropdown', () => {
+test.describe.skip('Wizard - wb-button Icon Dropdown', () => {
   test.beforeEach(async ({ page }) => {
     await waitForWizardReady(page);
     await selectComponent(page, 'Button');
@@ -800,7 +806,7 @@ test.describe('Wizard - wb-button Icon Dropdown', () => {
 // 10. COPY & CLEAR
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Copy & Clear', () => {
+test.describe.skip('Wizard - Copy & Clear', () => {
   test.beforeEach(async ({ page }) => {
     await waitForWizardReady(page);
   });
@@ -835,7 +841,7 @@ test.describe('Wizard - Copy & Clear', () => {
 // 11. RESIZE HANDLE
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Resize Panel', () => {
+test.describe.skip('Wizard - Resize Panel', () => {
   test('resize handle exists', async ({ page }) => {
     await waitForWizardReady(page);
     await expect(page.locator('#resizeHandle')).toBeAttached();
@@ -858,7 +864,7 @@ test.describe('Wizard - Resize Panel', () => {
 // 12. EDGE CASES
 // ═══════════════════════════════════════════════════════════════════════════
 
-test.describe('Wizard - Edge Cases', () => {
+test.describe.skip('Wizard - Edge Cases', () => {
   test.beforeEach(async ({ page }) => {
     await waitForWizardReady(page);
   });
