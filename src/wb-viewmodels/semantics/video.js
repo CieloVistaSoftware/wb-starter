@@ -11,6 +11,8 @@
  * (a <wb-video> isn't a real <video>, so controls/autoplay/etc. must be
  * set on a real <video> child, not the host), this file's fuller API.
  */
+import { attachVideoLoadRetry } from '../media-load-retry.js';
+
 export function video(element, options = {}) {
   const config = {
     src: options.src || element.getAttribute('src') || '',
@@ -43,6 +45,8 @@ export function video(element, options = {}) {
   if (config.poster) videoEl.poster = config.poster;
   if (config.playsinline) videoEl.playsInline = true;
 
+  const retryCleanup = config.src ? attachVideoLoadRetry(videoEl) : null;
+
   element.wbVideo = {
     play: () => videoEl.play(),
     pause: () => videoEl.pause(),
@@ -57,7 +61,7 @@ export function video(element, options = {}) {
     toggleMute: () => { videoEl.muted = !videoEl.muted; }
   };
 
-  return () => element.classList.remove('wb-video');
+  return () => { element.classList.remove('wb-video'); if (retryCleanup) retryCleanup(); };
 }
 
 export default { video };

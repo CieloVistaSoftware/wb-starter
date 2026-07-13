@@ -485,3 +485,21 @@ wb-cardnotification,
 wb-cardfile {
   padding: 1rem;
 }
+
+/* #335: a <video>/<img> that exhausted attachVideoLoadRetry/
+ * attachImageLoadRetry's 5 attempts gets a visible "unavailable" message
+ * instead of silently staying an empty box (or the browser's own broken-
+ * image/empty-video-controls chrome). ::after generated content does not
+ * reliably paint on replaced elements in any browser -- confirmed live, the
+ * class applied but nothing rendered -- so media-load-retry.js hides the
+ * failed element itself (inline style, guaranteed) and inserts this as a
+ * real sibling element instead. */
+.wb-media-load-failed {
+  min-height: 8rem;
+  background: var(--bg-secondary, #1f2937);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary, #9ca3af);
+  font-size: 0.875rem;
+}

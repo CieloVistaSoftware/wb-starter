@@ -11,6 +11,8 @@
  * had before this session's fix — merged the two: media.js's correct
  * config reads + aspect-ratio support, this file's better lightbox.
  */
+import { attachImageLoadRetry } from '../media-load-retry.js';
+
 export function img(element, options = {}) {
   const config = {
     lazy: options.lazy ?? (element.hasAttribute('lazy') || element.hasAttribute('data-lazy')),
@@ -32,8 +34,14 @@ export function img(element, options = {}) {
     element.style.objectFit = 'cover';
   }
 
+  let retryCleanup = null;
   if (config.fallback) {
+    // An explicit fallback image is a deliberate, more specific choice than
+    // a blind retry -- swap immediately rather than racing retry attempts
+    // against it.
     element.onerror = () => { element.src = config.fallback; };
+  } else {
+    retryCleanup = attachImageLoadRetry(element);
   }
 
   if (config.zoomable) {
@@ -42,7 +50,7 @@ export function img(element, options = {}) {
     element.onclick = () => openLightbox(element.src, element.alt);
   }
 
-  return () => element.classList.remove('wb-img', 'wb-img--zoomable');
+  return () => { element.classList.remove('wb-img', 'wb-img--zoomable'); if (retryCleanup) retryCleanup(); };
 }
 
 export function openLightbox(src, alt = '') {

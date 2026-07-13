@@ -26,6 +26,8 @@
  * ALL text elements are EDITABLE via double-click in the builder
  */
 
+import { attachVideoLoadRetry, attachImageLoadRetry } from './media-load-retry.js';
+
 // Common card padding
 const CARD_PADDING = '1rem';
 
@@ -614,6 +616,8 @@ export function cardimage(element, options = {}) {
   // Build header/main/footer structure
   base.buildStructure();
 
+  const retryCleanups = [];
+
   // Image at top
   if (config.src && config.position === 'top') {
     const figure = base.createFigure();
@@ -623,6 +627,7 @@ export function cardimage(element, options = {}) {
     img.alt = config.alt;
     img.loading = 'lazy';
     img.style.cssText = `width:100%;height:100%;object-fit:${config.fit};display:block;`;
+    retryCleanups.push(attachImageLoadRetry(img));
     figure.appendChild(img);
     element.insertBefore(figure, element.firstChild);
   }
@@ -636,11 +641,12 @@ export function cardimage(element, options = {}) {
     imgBottom.alt = config.alt;
     imgBottom.loading = 'lazy';
     imgBottom.style.cssText = `width:100%;height:100%;object-fit:${config.fit};display:block;`;
+    retryCleanups.push(attachImageLoadRetry(imgBottom));
     figureBottom.appendChild(imgBottom);
     element.appendChild(figureBottom);
   }
 
-  return base.cleanup;
+  return () => { base.cleanup(); retryCleanups.forEach(fn => fn()); };
 }
 
 /**
@@ -668,6 +674,7 @@ export function cardvideo(element, options = {}) {
   base.buildStructure();
 
   // Video figure
+  let retryCleanup = null;
   if (config.src) {
     const coverFigure = base.createFigure();
     const video = document.createElement('video');
@@ -679,7 +686,8 @@ export function cardvideo(element, options = {}) {
     if (config.loop) video.loop = true;
     if (config.controls) video.controls = true;
     video.playsInline = true;
-    
+    retryCleanup = attachVideoLoadRetry(video);
+
     // Check for tracks/captions
     const hasTracks = element.querySelector('track') || config.tracks;
     if (!hasTracks) {
@@ -697,7 +705,7 @@ export function cardvideo(element, options = {}) {
     element.insertBefore(coverFigure, element.firstChild);
   }
 
-  return base.cleanup;
+  return () => { base.cleanup(); if (retryCleanup) retryCleanup(); };
 }
 
 /**
