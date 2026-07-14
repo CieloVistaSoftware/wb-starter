@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "toast.schema.json",
   "title": "Toast",
-  "description": "Toast notification system for temporary messages",
+  "description": "Toast notification system for temporary messages. Container (.wb-toast-container, feedback.js's createToast()) is fixed-positioned below the site header rather than the viewport top -- top: calc(var(--site-header-height) + 1rem), so toasts never cover the nav/logo. --site-header-height (site.css) defaults to 0 and is only set to 64px when the page actually has a .site__header, so standalone pages without one are unaffected.",
   "schemaFor": "toast",
   "baseClass": "wb-toast-trigger",
   "semanticElement": {

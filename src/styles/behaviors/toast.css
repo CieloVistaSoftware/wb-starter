@@ -6,7 +6,10 @@
 
 .wb-toast-container {
   position: fixed;
-  top: 1rem;
+  /* Anchored below the site header (--site-header-height, site.css) rather
+   * than the viewport top, so toasts don't cover the nav/logo. Falls back
+   * to 0 on standalone pages with no .site__header, same as before. */
+  top: calc(var(--site-header-height, 0px) + 1rem);
   right: 1rem;
   z-index: 10000;
   display: flex;

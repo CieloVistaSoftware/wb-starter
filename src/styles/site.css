@@ -130,6 +130,17 @@ wb-drawer.wb-drawer-layout {
 /* =============================================================================
    HEADER
    ============================================================================= */
+/* Exposed so other fixed-position UI (toast.css's .wb-toast-container) can
+ * anchor itself below the header instead of duplicating the 64px value.
+ * Defaults to 0 so standalone pages with no .site__header aren't pushed
+ * down for a header that doesn't exist. */
+:root {
+  --site-header-height: 0px;
+}
+body:has(.site__header) {
+  --site-header-height: 64px;
+}
+
 .site__header {
   display: flex;
   align-items: center;
