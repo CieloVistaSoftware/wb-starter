@@ -18,8 +18,17 @@ import * as path from 'path';
  */
 const ROOT = process.cwd();
 const ALLOWED = new Set<string>(['data-theme']);
-// Demos that intentionally contain legacy syntax to verify it still works.
-const EXCLUDE = new Set<string>(['legacy-syntax-check.html']);
+// Demos that intentionally contain legacy syntax to verify it still works,
+// or whose data-* usage isn't WB behavior config at all (#321 follow-up):
+//   - wizard.html: marked obsolete (#337, wizard.spec.ts fully skipped) --
+//     its data-tab is the wizard's own vanilla-JS tab switcher, not a WB
+//     behavior attribute, and the page isn't taught as a live syntax
+//     example anymore.
+//   - registry-browser.html: data-label is a plain CSS attr() responsive-
+//     table label (`content: attr(data-label)`), never read by any WB
+//     behavior -- unrelated to the deprecated-config-syntax this gate
+//     exists to catch.
+const EXCLUDE = new Set<string>(['legacy-syntax-check.html', 'wizard.html', 'registry-browser.html']);
 const SKIP_DIRS = new Set(['node_modules', '.git', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out']);
 
 function walk(dir: string, out: string[]): void {
