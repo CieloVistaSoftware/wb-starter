@@ -12,6 +12,13 @@ wb-code-card {
   margin-left: 0;
   margin-right: 0;
   overflow: hidden;
+  /* Standard §13: >= 1rem padding inside example/demo containers. Was
+     missing entirely (0 -- rendered content sat flush against the demo
+     box edge, relying only on whatever padding the rendered component
+     itself happened to have). demo-container-spacing.spec.ts's CSS-source
+     check didn't catch this: it only flags padding that's PRESENT but
+     under 1rem, not padding that's missing/0 -- fixed alongside this. */
+  padding: 1rem;
 }
 
 .wb-demo__grid {
