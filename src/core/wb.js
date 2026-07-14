@@ -4,17 +4,17 @@ if (typeof window !== 'undefined' && typeof window.WB === 'undefined') {
   /** @type {any} */ (window).WB = undefined;
 }
 
-// Debug logging — silent unless localStorage['wb-debug'] === '1'. Was
-// forced true|| project-wide for a while ("turn the tracing on until I
-// tell you to turn it off") but that flooded the console with
-// [WB.scan]/[WB.observe] noise unrelated to whatever was actually being
-// debugged. Reverted per "filter out all tracing except the blank video
-// get and subsequent paint" — traceMediaLoads() below (always-on,
-// independent of this flag) is now the narrow, permanent trace for that
-// specific class of problem instead.
-const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+// Debug logging — silent unless localStorage['wb-debug'] names a category
+// (or is '1' for everything). Was forced true|| project-wide for a while
+// ("turn the tracing on until I tell you to turn it off") but that flooded
+// the console with [WB.scan]/[WB.observe] noise unrelated to whatever was
+// actually being debugged. Reverted per "filter out all tracing except the
+// blank video get and subsequent paint" — traceMediaLoads() below (always-on,
+// independent of this flag) was carved out as a one-off fix for that; #338
+// generalizes it into the selectable dlog(category, ...) filter below so the
+// next category doesn't need its own bespoke carve-out. See debug-trace.js.
 const _wbClog = console.log.bind(console);
-const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
+const dlog = makeDlog(_wbClog);
 
 // Trace lines that only print a tag name (e.g. "wb-card") are useless for
 // telling apart multiple instances of the same tag on one page. elLabel()
@@ -139,6 +139,7 @@ import { behaviors } from '../wb-viewmodels/index.js';
 import { Events } from './events.js';
 import { Theme } from './theme.js';
 import { getNativeBehavior, nativeMap, getElementBehavior } from './tag-map.js';
+import { makeDlog, traceStatusLabel } from './debug-trace.js';
 
 // Register Layout Custom Elements
 import '../wb-viewmodels/wb-grid.js';
@@ -460,7 +461,7 @@ const WB = {
 
     // Get schema name from tag or x-* attributes
     const name = schemaName || WB._detectSchemaName(element);
-    dlog(`[WB.processSchema] Processing element ${elLabel(element)}, detected schema: ${name}`);
+    dlog('processSchema', `[WB.processSchema] Processing element ${elLabel(element)}, detected schema: ${name}`);
     if (!name) return;
 
     // Claim this element before the first await — a concurrent caller
@@ -474,7 +475,7 @@ const WB = {
       // Check if schema exists
       let schema = SchemaBuilder.getSchema(name);
       if (!schema) {
-        dlog(`[WB] Schema for "${name}" not registered yet — fetching on demand`);
+        dlog('processSchema', `[WB] Schema for "${name}" not registered yet — fetching on demand`);
         try {
           // If caller requested blocking behavior (initial scan), await the fetch so processing is deterministic
           const loaded = await SchemaBuilder.loadSchemaFile(`${name}.schema.json`);
@@ -489,11 +490,11 @@ const WB = {
 
       // Process through schema builder (builds DOM from $view)
       try {
-        dlog(`[WB.processSchema] Calling SchemaBuilder.processElement for ${elLabel(element)}`);
+        dlog('processSchema', `[WB.processSchema] Calling SchemaBuilder.processElement for ${elLabel(element)}`);
         SchemaBuilder.processElement(element, name);
         schemaProcessed.add(element);
         element.setAttribute('x-schema', name);
-        dlog(`[WB.processSchema] Schema processing complete for ${elLabel(element)}`);
+        dlog('processSchema', `[WB.processSchema] Schema processing complete for ${elLabel(element)}`);
       } catch (err) {
         console.error('[WB] processSchema failed for', name, err && err.message);
       }
@@ -531,24 +532,24 @@ const WB = {
    * @returns {Promise<void>}
    */
   async scan(root = document.body) {
-    dlog(`[WB.scan] Starting scan on root:`, root.tagName || 'document.body');
+    dlog('scan', `[WB.scan] Starting scan on root:`, root.tagName || 'document.body');
     const promises = [];
     const behaviorNames = Object.keys(behaviors);
     const knownBehaviors = new Set(behaviorNames);
     const prefix = getConfig('prefix') || 'x'; // Default to x-
     const useSchemas = getConfig('useSchemas');
-    dlog(`[WB.scan] useSchemas =`, useSchemas);
+    dlog('scan', `[WB.scan] useSchemas =`, useSchemas);
 
     // v3.0: Process wb-* custom element tags through schema builder first
     if (useSchemas) {
-      dlog(`[WB.scan] useSchemas is true, scanning for wb-* elements in root:`, root.tagName || 'document.body');
+      dlog('scan', `[WB.scan] useSchemas is true, scanning for wb-* elements in root:`, root.tagName || 'document.body');
       // Collect promises so we can await schema-built elements before continuing
       const schemaPromises = [];
       root.querySelectorAll('*').forEach(el => {
         const htmlEl = /** @type {HTMLElement} */ (el);
         const tag = htmlEl.tagName.toLowerCase();
         if (tag.startsWith('wb-') && tag !== 'wb-view') {
-          dlog(`[WB.scan] Found wb-* element: ${elLabel(htmlEl)}`);
+          dlog('scan', `[WB.scan] Found wb-* element: ${elLabel(htmlEl)}`);
           // WB.processSchema is async-capable; collect the promise and allow it to load schemas on-demand
           try {
             const p = WB.processSchema(htmlEl, null, /*blocking*/ true);
@@ -561,14 +562,14 @@ const WB = {
 
       // Await processing of schema-built elements to make injection deterministic
       if (schemaPromises.length) {
-        dlog(`[WB.scan] Awaiting ${schemaPromises.length} schema processing promises`);
+        dlog('scan', `[WB.scan] Awaiting ${schemaPromises.length} schema processing promises`);
         await Promise.all(schemaPromises);
-        dlog(`[WB.scan] Schema processing complete`);
+        dlog('scan', `[WB.scan] Schema processing complete`);
       } else {
-        dlog(`[WB.scan] No wb-* elements found to process`);
+        dlog('scan', `[WB.scan] No wb-* elements found to process`);
       }
     } else {
-      dlog(`[WB.scan] useSchemas is false, skipping schema processing`);
+      dlog('scan', `[WB.scan] useSchemas is false, skipping schema processing`);
     }
 
     // #305: wb-* custom tags that have a REAL behavior but deliberately NO
@@ -682,7 +683,7 @@ const WB = {
 
           if (behaviorName) {
             // Debug log for behavior injection
-            dlog('[WB.scan] Injecting behavior:', behaviorName, 'on', elLabel(htmlEl), htmlEl, 'with options:', attr.value ? { config: attr.value } : {});
+            dlog('scan', '[WB.scan] Injecting behavior:', behaviorName, 'on', elLabel(htmlEl), htmlEl, 'with options:', attr.value ? { config: attr.value } : {});
             // Pass the attribute value as config if present
             const options = attr.value ? { config: attr.value } : {};
             promises.push(WB.inject(htmlEl, behaviorName, options));
@@ -738,7 +739,7 @@ const WB = {
    * @returns {MutationObserver} The observer instance
    */
   observe(root = document.body) {
-    dlog(`[WB.observe] Starting observer on root:`, root.tagName || 'document.body');
+    dlog('observe', `[WB.observe] Starting observer on root:`, root.tagName || 'document.body');
     // Disconnect existing observer if present to prevent duplicates
     if (WB._observer) {
       WB._observer.disconnect();
@@ -748,7 +749,7 @@ const WB = {
     const knownBehaviors = new Set(behaviorNames);
     const prefix = getConfig('prefix') || 'x'; // Default to x-
     const useSchemas = getConfig('useSchemas');
-    dlog(`[WB.observe] useSchemas =`, useSchemas);
+    dlog('observe', `[WB.observe] useSchemas =`, useSchemas);
     
     // Build attribute filter list
     const attributeFilter = ['x-behavior'];
@@ -758,7 +759,7 @@ const WB = {
     });
 
     const observer = new MutationObserver(mutations => {
-      dlog(`[WB.observe] MutationObserver triggered with ${mutations.length} mutations`);
+      dlog('observe', `[WB.observe] MutationObserver triggered with ${mutations.length} mutations`);
       for (const mutation of mutations) {
         // Handle added nodes
         for (const node of mutation.addedNodes) {
@@ -768,11 +769,11 @@ const WB = {
           // Cast to HTMLElement after type check
           const el = /** @type {HTMLElement} */ (node);
           const tag = el.tagName.toLowerCase();
-          dlog(`[WB.observe] Processing added node: ${elLabel(el)}`);
+          dlog('observe', `[WB.observe] Processing added node: ${elLabel(el)}`);
 
           // v3.0: Process wb-* tags through schema builder
           if (useSchemas && tag.startsWith('wb-') && tag !== 'wb-view') {
-            dlog(`[WB.observe] Found wb-* element in mutation: ${elLabel(el)}`);
+            dlog('observe', `[WB.observe] Found wb-* element in mutation: ${elLabel(el)}`);
             WB.processSchema(el);
           }
             
@@ -1049,12 +1050,12 @@ const WB = {
     // every schema in index.json here (as this used to do) duplicated that
     // work and cost 81 network requests on a page that uses ~9 tags.
     if (useSchemas) {
-      dlog('═══════════════════════════════════════════════════════');
-      dlog('  WB Behaviors v3.0 - MVVM Architecture');
-      dlog('═══════════════════════════════════════════════════════');
-      dlog('[WB.init] useSchemas is true — schemas load on-demand via WB.scan()');
+      dlog('init', '═══════════════════════════════════════════════════════');
+      dlog('init', '  WB Behaviors v3.0 - MVVM Architecture');
+      dlog('init', '═══════════════════════════════════════════════════════');
+      dlog('init', '[WB.init] useSchemas is true — schemas load on-demand via WB.scan()');
     } else {
-      dlog('[WB.init] useSchemas is false, skipping schema initialization');
+      dlog('init', '[WB.init] useSchemas is false, skipping schema initialization');
     }
 
     // Scan existing elements
@@ -1087,7 +1088,7 @@ const WB = {
     // independently. Removed: every DOM mutation site-wide was being
     // processed by 2-3 full-subtree observers instead of 1.
 
-    dlog(`✅ WB (Web Behavior) v${WB.version} initialized`);
+    dlog('init', `✅ WB (Web Behavior) v${WB.version} initialized`);
     
     pubsub.publish('wb:init', options);
 

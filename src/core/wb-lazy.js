@@ -13,15 +13,19 @@ import { Events } from './events.js';
 import { Theme } from './theme.js';
 import { getConfig, setConfig } from './config.js';
 import { elementMap, nativeMap, extensionMap } from './tag-map.js';
+import { makeDlog, traceStatusLabel } from './debug-trace.js';
 
-// Debug logging — silent unless localStorage['wb-debug'] === '1'. Was
-// forced true|| for a while; reverted per "filter out all tracing except
-// the blank video get and subsequent paint" (see wb.js's matching comment).
-const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
-const dlog = (...args) => { if (WB_DEBUG) console.log(...args); };
+// Debug logging — silent unless localStorage['wb-debug'] names a category
+// (or is '1' for everything). Was forced true|| for a while; reverted per
+// "filter out all tracing except the blank video get and subsequent paint"
+// (see wb.js's matching comment). #338 generalized the flag into a
+// selectable category filter (see debug-trace.js) — this runtime has no
+// dlog(category, ...) call sites of its own today, but shares the same
+// mechanism so one added here later doesn't need its own bespoke parsing.
+const dlog = makeDlog();
 // Always announce the tracing state — first thing in the console, every
 // load, regardless of whether it's on or off.
-console.log(`[WB-lazy] debug tracing: ${WB_DEBUG ? 'ON' : 'OFF'} (localStorage['wb-debug'] === '1' to enable)`);
+console.log(`[WB-lazy] debug tracing: ${traceStatusLabel()} (localStorage.setItem('wb-debug', '1') for everything, or a comma-separated category list, then reload)`);
 
 // #333: this table used to hand-duplicate tag-map.js's elementMap/nativeMap/
 // extensionMap (wb.js's own single source of truth) and had drifted --

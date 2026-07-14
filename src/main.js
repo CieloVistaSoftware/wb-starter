@@ -19,6 +19,7 @@ const _window = window;
 import WB from './core/wb.js';
 import WBSiteClass from './core/site-engine.js';
 import { VERSION } from './core/version.js';
+import { traceStatusLabel } from './core/debug-trace.js';
 
 /**
  * Initialize the wb-starter application
@@ -32,9 +33,10 @@ async function init() {
   // Debug it via tracing, not guessing: always show whether [WB.scan]/
   // [WB.observe] trace output is active, right on the 2nd console line, so
   // it's never a guessing game whether logging is on before you go looking
-  // for trace output that isn't there.
-  const wbDebugOn = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
-  console.log(`[WB] debug tracing: ${wbDebugOn ? 'ON' : 'OFF'} — localStorage.setItem('wb-debug','1') + reload to enable`);
+  // for trace output that isn't there. #338: 'wb-debug' can now name a
+  // comma-separated set of categories (e.g. 'media,scan') instead of just
+  // '1' for everything — see debug-trace.js.
+  console.log(`[WB] debug tracing: ${traceStatusLabel()} — localStorage.setItem('wb-debug','1') for everything, or e.g. 'scan,observe' for just those categories, then reload. Or live: wbDebugTrace.set('scan,observe')`);
 
   try {
     // Expose WB globally
