@@ -37,8 +37,11 @@ Progress bar with determinate and indeterminate states.
 
 ### Native Progress (Enhanced)
 
+`autoInjectComponents` is on by default — a plain `<progress>` is enhanced
+automatically, no `x-progress` attribute needed.
+
 <wb-demo>
-  <progress x-progress value="50" max="100"></progress>
+  <progress value="50" max="100"></progress>
 </wb-demo>
 
 ### With Label and Value

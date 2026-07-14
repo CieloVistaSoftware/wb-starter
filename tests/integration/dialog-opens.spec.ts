@@ -41,11 +41,16 @@ test.describe('dialog triggers open a dialog on click (§19)', () => {
   //     tag-map.js's getElementBehavior() and invokes it directly —
   //     WB.inject()'s own idempotency guards make this a safe no-op for
   //     tags a schema already enhanced.
-  test('behaviors page <wb-modal> "Open Modal" trigger opens a dialog', async ({ page }) => {
+  //
+  // #279: the docs page markup switched from <wb-modal> to <button x-modal>
+  // (behaviors, not custom-element tags) — dialog.js's TRIGGER-mode gate was
+  // widened from tagName==='WB-MODAL' to also match modal-title/modal-content
+  // attribute presence, so x-modal on any element still opens correctly.
+  test('behaviors page x-modal "Open Modal" trigger opens a dialog', async ({ page }) => {
     // domcontentloaded fires before the SPA's own client-side page fetch (which
     // loads pages/behaviors.html and its <wb-demo> blocks) has even started.
     await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
-    const trigger = page.locator('wb-modal', { hasText: 'Open Modal' }).first();
+    const trigger = page.locator('[x-modal]', { hasText: 'Open Modal' }).first();
     await expect(trigger).toHaveClass(/wb-dialog-trigger/, { timeout: 15000 });
     await trigger.click();
     await expect(page.locator('dialog[open]')).toHaveCount(1);

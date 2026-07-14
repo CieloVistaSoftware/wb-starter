@@ -197,4 +197,62 @@ export function search(element, options = {}) {
   };
 }
 
-export default { search };
+/**
+ * Search Field (container form)
+ * -----------------------------------------------------------------------------
+ * Custom Tag: <wb-search> — a CONTAINER, not an input itself. Finds (or
+ * creates) a child <input>, applies search() to that input, and exposes the
+ * imperative API on the container as `element.wbSearch` (mirrors the pattern
+ * collapse() uses for `element.wbCollapse`) so external code can still call
+ * `document.querySelector('wb-search').wbSearch.clear()` etc. — replaces the
+ * `extends HTMLElement` class removed in #279, which did the same thing via
+ * connectedCallback/instance methods.
+ * -----------------------------------------------------------------------------
+ */
+export function searchField(element, options = {}) {
+  // Defensive: if search() is ever pointed at a literal <input> directly,
+  // just delegate — no container to build.
+  if (element.tagName === 'INPUT') {
+    return search(element, options);
+  }
+
+  let input = element.querySelector('input');
+  if (!input) {
+    input = document.createElement('input');
+    input.type = 'search';
+    element.appendChild(input);
+  }
+
+  const api = search(input, {
+    placeholder: element.getAttribute('placeholder') || 'Search...',
+    value: element.getAttribute('value') || '',
+    name: element.getAttribute('name') || '',
+    debounce: parseInt(element.getAttribute('debounce') || '300'),
+    instant: element.hasAttribute('instant'),
+    disabled: element.hasAttribute('disabled'),
+    size: element.getAttribute('size') || 'md',
+    variant: element.getAttribute('variant') || 'default',
+    icon: element.getAttribute('icon') || '🔍',
+    clearable: element.getAttribute('clearable') !== 'false',
+    loading: element.hasAttribute('loading'),
+    ...element.dataset,
+    ...options
+  });
+
+  element.wbSearch = {
+    get value() { return api.getValue(); },
+    set value(val) { api.setValue(val); },
+    focus: api.focus,
+    blur: api.blur,
+    clear: api.clear,
+    search: api.search,
+    setLoading: api.setLoading
+  };
+
+  return () => {
+    api.destroy();
+    delete element.wbSearch;
+  };
+}
+
+export default { search, searchField };

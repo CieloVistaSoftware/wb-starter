@@ -107,7 +107,12 @@ export function dialog(element, options = {}) {
     });
   };
 
-  if (element.tagName === 'WB-MODAL') {
+  // Gate widened from tagName==='WB-MODAL' to also cover x-modal on any
+  // element (e.g. <button x-modal modal-title="…">) -- attribute presence,
+  // not tag identity, is what actually distinguishes trigger vs definition
+  // mode below, and x-modal on a non-wb-modal element used to silently fall
+  // through both branches with no click handler attached at all. (#279)
+  if (element.tagName === 'WB-MODAL' || element.hasAttribute('modal-content') || element.hasAttribute('modal-title')) {
     // TRIGGER mode: <wb-modal modal-title="…" modal-content="…">Open Modal</wb-modal>
     // is a visible button — its text is the label and clicking it opens a dialog
     // built from the attributes. (Previously wb-modal was always hidden with only a

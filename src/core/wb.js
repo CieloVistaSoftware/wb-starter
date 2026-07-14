@@ -142,13 +142,10 @@ import { getNativeBehavior, nativeMap, getElementBehavior } from './tag-map.js';
 
 // Register Layout Custom Elements
 import '../wb-viewmodels/wb-grid.js';
-import '../wb-viewmodels/wb-cluster.js';
-import '../wb-viewmodels/wb-stack.js';
-import '../wb-viewmodels/wb-row.js';
-// wb-column is a BEHAVIOR (stack), not a class that `extends HTMLElement` (v3).
-// Mapped wb-column → stack in tag-map.js / wb-lazy.js.
-import '../wb-viewmodels/wb-search.js';
-import '../wb-viewmodels/wb-accordion.js';
+// wb-column/wb-cluster/wb-stack/wb-row/wb-search/wb-accordion are BEHAVIORS
+// (cluster/stack/flex/searchfield/accordion), not classes that
+// `extends HTMLElement` (v3) — the extends-HTMLElement wrappers were removed
+// (#279). Mapped to their behaviors in tag-map.js / wb-lazy.js.
 import '../wb-viewmodels/wb-demo.js';
 
 import { getConfig, setConfig } from './config.js';
@@ -378,47 +375,86 @@ const WB = {
   async processSchema(element, schemaName = null, blocking = false) {
     if (schemaProcessed.has(element)) return;
 
-    // <wb-modal modal-title="…" modal-content="…">Open Modal</wb-modal> is
-    // TRIGGER mode (dialog.js) — a plain clickable element whose own text IS
-    // the label; dialog.js deliberately leaves it untouched (just adds a
-    // class + click listener). The dialog schema's $view unconditionally
-    // rebuilds children into backdrop/container/header — meant for the
-    // actual dialog box, not this trigger — which silently wiped the
-    // trigger's own label text before dialog.js ever got a chance to run.
-    // Confirmed live: exactly this pattern on pages/behaviors.html's
-    // "Open Modal" trigger (#305 investigation).
+    // A tag either HAS a def or it doesn't -- schema and behavior must never
+    // both try to own the same element's DOM (#279). BUT: not every
+    // behavior is self-sufficient -- some (card.js's whole family, demo.js,
+    // details.js, stack/searchfield/cluster/flex/accordion) build their
+    // ENTIRE DOM unconditionally and never need schema's pre-built $view;
+    // others (header.js confirmed live, likely many more of the 74 tags
+    // with both a behavior AND a schema.json) are the OPPOSITE -- they
+    // never build their own structure at all and EXPECT schema to have
+    // already built it. A blanket "exclude every tag with a behavior" rule
+    // was tried and reverted: it broke header.spec.ts (and presumably many
+    // others) site-wide, ~170 test failures in one run, because it deletes
+    // schema-dependent tags' DOM outright instead of fixing a race. So this
+    // stays a per-tag list of tags CONFIRMED (by reading the actual
+    // behavior source) to build their own complete DOM unconditionally --
+    // matching schema-builder.js's own SCHEMA_EXCLUDED_TAGS exactly. Do not
+    // widen this to "every tag with a behavior" again without reading each
+    // new tag's behavior source first.
+    //
+    // wb-modal's "Open Modal" trigger (#305 -- the dialog schema's $view
+    // unconditionally rebuilt the trigger's children before dialog.js's
+    // TRIGGER mode ever got a chance to attach its click handler; gated on
+    // the modal-title/modal-content attributes, not just the tag, since
+    // #279 widened dialog.js's own trigger-mode detection the same way so
+    // x-modal on any element still works).
     if (element.tagName === 'WB-MODAL' && (element.hasAttribute('modal-title') || element.hasAttribute('modal-content'))) {
       return;
     }
 
-    // <wb-demo> owns its content via WBDemo.connectedCallback() (demo.js),
-    // which builds behavior-enhanced DOM directly (pre.js wraps its "view
-    // source" panel with a real click listener). demo.schema.json exists
-    // (for the doc catalog / test fixtures) but its empty $view makes
-    // buildStructure() fall back to capturing element.innerHTML as a string
-    // and re-parsing it back in — that reparse produces a listener-less
-    // look-alike, and pre.js's own idempotency guard (classList-based) then
-    // skips ever wrapping the real, visible node. Whichever of
-    // connectedCallback() / this schema pass ran second silently won,
-    // orphaning the other's work. Confirmed live: the code-block collapse
-    // toggle silently stopped responding to clicks (#312 investigation).
+    // wb-demo (#312 -- pre.js's "view source" toggle silently stopped
+    // responding whenever WB.scan()'s schema loop raced WBDemo.
+    // connectedCallback(), because buildStructure()'s empty-$view fallback
+    // re-parses element.innerHTML as a string, producing a listener-less
+    // look-alike).
     if (element.tagName === 'WB-DEMO') {
       return;
     }
 
-    // <wb-details> is owned by its native behavior (details(), semantics/
-    // details.js -- real <details>/<summary> semantics, animation, wbDetails
-    // API). details.schema.json exists (for the doc catalog) and IS
-    // registered, so it was ALSO getting schema-built here -- its $view's
-    // "content" node type creates an EMPTY div, discarding the element's
-    // real original children entirely, and details()'s own "wrap content"
-    // logic then wrapped that already-content-less schema output as if it
-    // were the real content. Confirmed live: <wb-details summary="What is
-    // wb-starter?"><div>real answer</div></wb-details> rendered with the
-    // summary duplicated and the real answer text silently gone -- same
-    // fix pattern as wb-demo/wb-modal above, just for a tag whose schema
-    // exists for docs only, never for runtime DOM construction.
+    // wb-details (#305/#336 -- schema's "content" node type discarded the
+    // element's real children into an empty div, which details() then
+    // wrapped as if it were the real content -- summary duplicated, real
+    // answer text gone).
     if (element.tagName === 'WB-DETAILS') {
+      return;
+    }
+
+    // wb-cluster/wb-stack/wb-row/wb-search/wb-accordion are owned entirely
+    // by their behaviors (cluster/stack/flex/searchfield/accordion --
+    // tag-map.js) since their `extends HTMLElement` wrapper classes were
+    // removed (#279). _detectSchemaName() below derives a schema name from
+    // tag-map.js's BEHAVIOR name regardless of whether a schema.json
+    // actually exists for it -- for these 5 tags that's either a dead fetch
+    // that just 404s (confirmed live: "flex.schema.json 404" from <wb-row>)
+    // or a REAL schema.json that silently double-processes the element
+    // (stack.schema.json).
+    if (element.tagName === 'WB-CLUSTER' || element.tagName === 'WB-STACK' ||
+        element.tagName === 'WB-ROW' || element.tagName === 'WB-SEARCH' ||
+        element.tagName === 'WB-ACCORDION') {
+      return;
+    }
+
+    // wb-card*: every card-family function (card.js) owns its DOM
+    // completely (unconditional element.innerHTML='' + full rebuild, none
+    // schema-dependent -- confirmed by reading every one of the 19 card
+    // functions). loadSchemaFile()'s async fetch resolving AFTER the real
+    // behavior already built (and, for cardimage/cardvideo, already
+    // LOADED) the real content wipes it via that same innerHTML=''. This
+    // was the "cardimage/cardvideo not showing, esp. first nav to
+    // Components from Home/Behaviors" bug -- confirmed live via
+    // [WB:card-media] tracing (card.js): PAINTED succeeds, then a stale
+    // check ~2s later shows the element removed from the DOM entirely.
+    if (element.tagName.startsWith('WB-CARD')) {
+      return;
+    }
+
+    // wb-skeleton: skeleton.schema.json has a real, non-empty $view; skeleton()
+    // (feedback.js) unconditionally rebuilds via element.innerHTML='' with no
+    // schemaProcessed-aware cooperation — same latent race as the card family,
+    // found auditing schemas during this same investigation (not a live
+    // complaint). Matches schema-builder.js's own SCHEMA_EXCLUDED_TAGS.
+    if (element.tagName === 'WB-SKELETON') {
       return;
     }
 

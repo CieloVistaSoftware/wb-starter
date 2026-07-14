@@ -32,8 +32,11 @@ Enhanced accordion/disclosure component with smooth animations.
 
 ### Native Details (Enhanced)
 
+`autoInjectComponents` is on by default — a plain `<details>` is enhanced
+automatically, no `x-details` attribute needed.
+
 ```html
-<details x-details>
+<details>
   <summary>Click to expand</summary>
   <p>Content here...</p>
 </details>
@@ -68,6 +71,9 @@ Enhanced accordion/disclosure component with smooth animations.
 ```
 
 ## Generated Structure
+
+The behavior adds these classes automatically — don't hand-author them,
+they're not part of the input markup shown above.
 
 ```html
 <details class="wb-details">

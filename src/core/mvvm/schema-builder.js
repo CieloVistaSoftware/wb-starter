@@ -781,38 +781,55 @@ function bindSchemaMethodsToElement(element, schema, data) {
  * 
  * Note: Class detection was removed - classes are for CSS only
  */
-// wb-* tags whose content is built and owned by their own custom-element
-// class (connectedCallback), never by schema $view — even though some of
-// these DO have a real, registered schema.json (e.g. demo.schema.json,
-// kept for the doc catalog / test fixtures, not for driving buildStructure()).
-// buildStructure()'s empty-$view fallback re-parses a captured HTML-string
-// snapshot of the element's current children to "restore" them — safe for
-// pure markup, but destructive for anything with JS-attached behavior state
-// (e.g. wb-demo's pre.js toggle listener): the re-parsed copy LOOKS
-// identical (classes/styles are textual) but was never actually processed,
-// and pre.js's own idempotency guard (checking classList) then skips it,
-// leaving a listener-less look-alike in place of the real, working element.
-// Confirmed live: wb-demo's "view source" toggle silently stopped
-// responding to clicks whenever WB.scan()'s schema loop raced
-// WBDemo.connectedCallback() (root-caused via the #312 investigation).
+// A tag either HAS a def or it doesn't -- schema and behavior must never
+// both try to own the same element's DOM (#279). BUT: not every behavior is
+// self-sufficient. Some (card.js's whole family, demo.js, details.js,
+// stack/searchfield via layouts.js/search.js) build their ENTIRE DOM
+// unconditionally from scratch and never need schema's pre-built $view --
+// for those, letting schema ALSO run is a pure race (loadSchemaFile()'s
+// fetch is async on a cold cache; whichever of schema/behavior finishes
+// last wins via its own `element.innerHTML = ''`, silently wiping the
+// other's work). Others (header.js confirmed live, and likely many more of
+// the 74 tags with both a behavior AND a schema.json) are the OPPOSITE:
+// they never build `.wb-header__right`/etc. themselves at all -- they
+// EXPECT schema to have already built that structure and only enhance it.
+// Excluding those from schema entirely doesn't fix a race, it just deletes
+// their DOM outright (confirmed live: excluding all 74 broke header.spec.ts
+// site-wide, ~170 test failures on a single run -- reverted).
 //
-// wb-details: unlike wb-modal/wb-stack/wb-grid/wb-accordion (excluded above
-// via detectSchema()'s registry-miss fallback, since no schema.json exists
-// for them), details.schema.json DOES exist and IS registered -- so
-// <wb-details> was getting schema-built (its $view's "content" node type
-// creates an EMPTY div, discarding the element's real original children)
-// AND separately native-behavior-injected via details() (semantics/
-// details.js, tag-map.js's elementMap), which then wrapped that already-
-// content-less schema output as if it were the real content. Confirmed
-// live: <wb-details summary="What is wb-starter?"><div>real answer</div>
-// </wb-details> rendered with the summary text duplicated and the real
-// answer text silently gone entirely -- classList even showed "wb-details
-// wb-details" (both paths add the class). details() already handles
-// <wb-details> completely and correctly on its own (native <details>/
-// <summary> semantics, animation, wbDetails API) -- same fix pattern as
-// #305, just extended to a tag that has a schema file but no business
-// driving DOM construction from it at runtime.
-const SCHEMA_EXCLUDED_TAGS = new Set(['wb-demo', 'wb-details']);
+// So this is a per-tag fact, not a blanket rule keyed off "has a behavior."
+// SCHEMA_EXCLUDED_TAGS lists tags CONFIRMED (by reading the actual behavior
+// source, not assumed) to build their own complete DOM unconditionally:
+// wb-demo (#312 -- pre.js's "view source" toggle silently stopped
+// responding whenever WB.scan()'s schema loop raced WBDemo.
+// connectedCallback(), because buildStructure()'s empty-$view fallback
+// re-parses element.innerHTML as a string, producing a listener-less
+// look-alike); wb-details (#305/#336 -- schema's "content" node type
+// discarded the element's real children into an empty div, which
+// details() then wrapped as if it were the real content); wb-stack/
+// wb-search (found live via #279's audit); the entire wb-card* family,
+// most visibly cardimage/cardvideo -- confirmed live via [WB:card-media]
+// tracing (card.js): PAINTED succeeds, then a stale check ~2s later shows
+// the element wiped from the DOM entirely by a schema fetch that resolved
+// late. Adding a new tag here requires reading its actual behavior source
+// first to confirm it doesn't rely on schema-built children -- do not
+// widen this to "every tag with a behavior" again.
+// wb-skeleton: skeleton.schema.json has a real, non-empty $view (builds
+// line/circle/rect/card placeholder divs conditionally). skeleton()
+// (feedback.js) unconditionally does `element.innerHTML = ''` and rebuilds
+// when lines > 1, with no schemaProcessed-aware cooperation -- the exact
+// same "always self-rebuild" pattern as the card family, so it's exposed to
+// the same async-schema-race. This was a LATENT, previously-unreported bug
+// (found auditing schemas while investigating #279, not from a live
+// complaint) -- <wb-skeleton> was never in this list before tonight.
+const SCHEMA_EXCLUDED_TAGS = new Set([
+  'wb-demo', 'wb-details', 'wb-stack', 'wb-search', 'wb-skeleton',
+  'wb-card', 'wb-cardimage', 'wb-cardvideo', 'wb-cardbutton', 'wb-carddraggable',
+  'wb-cardexpandable', 'wb-cardfile', 'wb-cardhero', 'wb-cardhorizontal',
+  'wb-cardlink', 'wb-card-link', 'wb-cardminimizable', 'wb-cardnotification',
+  'wb-cardoverlay', 'wb-cardportfolio', 'wb-cardpricing', 'wb-cardproduct',
+  'wb-cardprofile', 'wb-cardstats', 'wb-cardtestimonial'
+]);
 
 function detectSchema(element) {
   const tagName = element.tagName.toLowerCase();
@@ -823,14 +840,14 @@ function detectSchema(element) {
     const mapped = tagToSchema.get(tagName);
     if (mapped) return mapped;
     // Only claim a derived name if a schema is actually registered for it.
-    // Many wb-* tags (wb-stack, wb-grid, wb-modal, wb-accordion, …) are owned by
-    // custom elements / behaviors / CSS and have no schema — guessing a name and
-    // then warning "Schema not found" was pure console spam (#174). Return null so
+    // wb-* tags with no behavior AND no registered schema are owned by
+    // custom elements or CSS alone -- guessing a name and then warning
+    // "Schema not found" was pure console spam (#174). Return null so
     // processElement skips silently and leaves the tag to its real owner.
     const derived = tagName.replace('wb-', '').replace(/-/g, '');
     return schemaRegistry.has(derived) ? derived : null;
   }
-  
+
   // 2. Data attribute:
   const dataWb = element.tagName.toLowerCase().startsWith('wb-');
   if (dataWb) {
@@ -839,7 +856,7 @@ function detectSchema(element) {
       if (schemaRegistry.has(b)) return b;
     }
   }
-  
+
   // NO class detection - classes are for CSS only
   return null;
 }

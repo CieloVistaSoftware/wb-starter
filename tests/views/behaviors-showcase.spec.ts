@@ -183,7 +183,7 @@ test.describe('Selection Section', () => {
   });
 
   test('switches render', async ({ page }) => {
-    const switches = page.locator('#selection wb-switch');
+    const switches = page.locator('#selection [x-switch]');
     expect(await switches.count()).toBeGreaterThanOrEqual(3);
   });
 
@@ -193,7 +193,7 @@ test.describe('Selection Section', () => {
   });
 
   test('rating components render', async ({ page }) => {
-    const ratings = page.locator('#selection wb-rating');
+    const ratings = page.locator('#selection [x-rating]');
     expect(await ratings.count()).toBeGreaterThanOrEqual(3);
   });
 
@@ -228,7 +228,7 @@ test.describe('Feedback Section', () => {
     const alertTypes = ['info', 'success', 'warning', 'error'];
     
     for (const type of alertTypes) {
-      const alert = page.locator(`#feedback wb-alert[type="${type}"]`);
+      const alert = page.locator(`#feedback [x-alert][type="${type}"]`);
       await expect(alert, `Alert type="${type}" should exist`).toBeVisible();
       
       // Check alert has rendered content (not empty)
@@ -238,7 +238,7 @@ test.describe('Feedback Section', () => {
   });
 
   test('alerts have title and message content', async ({ page }) => {
-    const alerts = page.locator('#feedback wb-alert');
+    const alerts = page.locator('#feedback [x-alert]');
     const count = await alerts.count();
     expect(count).toBeGreaterThanOrEqual(4);
     
@@ -258,7 +258,7 @@ test.describe('Feedback Section', () => {
 
   test('ALL badge variants render', async ({ page }) => {
     const section = page.locator('#feedback');
-    const badges = section.locator('wb-badge');
+    const badges = section.locator('[x-badge]');
     expect(await badges.count()).toBeGreaterThanOrEqual(6);
     
     // Check badges have text content
@@ -270,7 +270,7 @@ test.describe('Feedback Section', () => {
   });
 
   test('progress bars render with visible fill', async ({ page }) => {
-    const progressBars = page.locator('#feedback wb-progress');
+    const progressBars = page.locator('#feedback [x-progress]');
     const count = await progressBars.count();
     expect(count).toBeGreaterThanOrEqual(4);
     
@@ -293,7 +293,7 @@ test.describe('Feedback Section', () => {
   });
 
   test('spinners render and are animating', async ({ page }) => {
-    const spinners = page.locator('#feedback wb-spinner');
+    const spinners = page.locator('#feedback [x-spinner]');
     expect(await spinners.count()).toBeGreaterThanOrEqual(4);
     
     // Check first spinner has animation
@@ -340,12 +340,12 @@ test.describe('Overlays Section', () => {
   });
 
   test('modal trigger exists', async ({ page }) => {
-    const modal = page.locator('#overlays wb-modal').first();
+    const modal = page.locator('#overlays [x-modal]').first();
     await expect(modal).toBeVisible();
   });
 
   test('drawer triggers exist (left and right)', async ({ page }) => {
-    const drawers = page.locator('#overlays wb-drawer');
+    const drawers = page.locator('#overlays [x-drawer]');
     expect(await drawers.count()).toBeGreaterThanOrEqual(2);
   });
 
@@ -392,7 +392,7 @@ test.describe('Navigation Section', () => {
   });
 
   test('tabs component renders with content', async ({ page }) => {
-    const tabs = page.locator('#navigation wb-tabs').first();
+    const tabs = page.locator('#navigation [x-tabs]').first();
     await expect(tabs).toBeVisible();
     
     // Should have tab panels
@@ -492,7 +492,7 @@ test.describe('Media Section', () => {
   });
 
   test('audio player renders', async ({ page }) => {
-    const audio = page.locator('#media wb-audio').first();
+    const audio = page.locator('#media [x-audio]').first();
     await expect(audio).toBeVisible();
   });
 

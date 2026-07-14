@@ -42,7 +42,7 @@ test.describe('Behaviors page — full coverage', () => {
 
   test('switches: render as toggles and flip on click', async ({ page }) => {
     const r = await page.evaluate(async () => {
-      const sw = document.querySelector('wb-switch');
+      const sw = document.querySelector('[x-switch]');
       if (!sw) return 'NO_SWITCH';
       const before = sw.getAttribute('checked') ?? sw.querySelector('input')?.checked ?? null;
       const clickable = sw.querySelector('input, [role="switch"], .wb-switch__track, button') as HTMLElement || (sw as HTMLElement);
@@ -57,7 +57,7 @@ test.describe('Behaviors page — full coverage', () => {
 
   test('alerts: 4 variants render distinct backgrounds', async ({ page }) => {
     const colors = await page.evaluate(() =>
-      [...document.querySelectorAll('wb-alert')].map((el) => getComputedStyle(el as HTMLElement).backgroundColor)
+      [...document.querySelectorAll('[x-alert]')].map((el) => getComputedStyle(el as HTMLElement).backgroundColor)
     );
     expect(colors.length, 'no alerts').toBeGreaterThanOrEqual(4);
     expect(new Set(colors).size, `alert variants not distinct: ${colors.join(', ')}`).toBeGreaterThanOrEqual(4);
@@ -65,7 +65,7 @@ test.describe('Behaviors page — full coverage', () => {
 
   test('badges: variants render distinct backgrounds', async ({ page }) => {
     const colors = await page.evaluate(() =>
-      [...document.querySelectorAll('wb-badge')].map((el) => getComputedStyle(el as HTMLElement).backgroundColor)
+      [...document.querySelectorAll('[x-badge]')].map((el) => getComputedStyle(el as HTMLElement).backgroundColor)
     );
     expect(colors.length, 'no badges').toBeGreaterThanOrEqual(3);
     expect(new Set(colors).size, `badge variants not distinct: ${colors.join(', ')}`).toBeGreaterThanOrEqual(3);
@@ -73,7 +73,7 @@ test.describe('Behaviors page — full coverage', () => {
 
   test('progress: bar fill width reflects value', async ({ page }) => {
     const widths = await page.evaluate(() =>
-      [...document.querySelectorAll('wb-progress')].map((p) => {
+      [...document.querySelectorAll('[x-progress]')].map((p) => {
         const fill = p.querySelector('[class*="fill"], [class*="bar"], [style*="width"]') as HTMLElement;
         return fill ? Math.round(fill.getBoundingClientRect().width) : -1;
       })
@@ -84,7 +84,7 @@ test.describe('Behaviors page — full coverage', () => {
 
   test('notifications: render with content', async ({ page }) => {
     const r = await page.evaluate(() =>
-      [...document.querySelectorAll('wb-cardnotification')].map((n) => ({
+      [...document.querySelectorAll('[x-cardnotification]')].map((n) => ({
         h: Math.round((n as HTMLElement).getBoundingClientRect().height),
         text: (n.textContent || '').trim().length,
       }))
@@ -95,7 +95,7 @@ test.describe('Behaviors page — full coverage', () => {
 
   test('spinners: visible and animated', async ({ page }) => {
     const r = await page.evaluate(() =>
-      [...document.querySelectorAll('wb-spinner')].map((sp) => {
+      [...document.querySelectorAll('[x-spinner]')].map((sp) => {
         const inner = sp.querySelector('div') as HTMLElement;
         const ics = inner ? getComputedStyle(inner) : null;
         return { bw: ics ? parseFloat(ics.borderTopWidth) : 0, anim: ics ? ics.animationName : 'none' };
@@ -107,9 +107,9 @@ test.describe('Behaviors page — full coverage', () => {
 
   test('rating: custom icon honored + value painted', async ({ page }) => {
     const r = await page.evaluate(() => {
-      const heart = [...document.querySelectorAll('wb-rating')].find((el) => el.getAttribute('icon') === '❤️');
+      const heart = [...document.querySelectorAll('[x-rating]')].find((el) => el.getAttribute('icon') === '❤️');
       const glyph = heart?.querySelector('.wb-rating__star')?.textContent || '';
-      const anyFilled = [...document.querySelectorAll('wb-rating')].some((el) => el.querySelectorAll('.wb-rating__star--full').length > 0);
+      const anyFilled = [...document.querySelectorAll('[x-rating]')].some((el) => el.querySelectorAll('.wb-rating__star--full').length > 0);
       return { glyph, anyFilled };
     });
     expect(r.glyph, 'rating icon=❤️ not honored').toContain('❤️');
@@ -118,7 +118,7 @@ test.describe('Behaviors page — full coverage', () => {
 
   test('modal: a trigger opens it and it can close', async ({ page }) => {
     const r = await page.evaluate(async () => {
-      const modal = document.querySelector('wb-modal');
+      const modal = document.querySelector('[x-modal]');
       if (!modal) return 'NO_MODAL';
       const trigger = document.querySelector('[data-modal-open], [x-modal-open], button[onclick*="modal" i], [aria-controls]') as HTMLElement;
       const visibleBefore = getComputedStyle(modal as HTMLElement).display !== 'none' && (modal as HTMLElement).offsetParent !== null;
@@ -133,7 +133,7 @@ test.describe('Behaviors page — full coverage', () => {
 
   test('tabs: clicking a tab switches the active panel', async ({ page }) => {
     const r = await page.evaluate(async () => {
-      const tabs = document.querySelector('wb-tabs');
+      const tabs = document.querySelector('[x-tabs]');
       if (!tabs) return 'NO_TABS';
       const buttons = [...tabs.querySelectorAll('[role="tab"], .wb-tabs__tab, button')];
       if (buttons.length < 2) return { tabCount: buttons.length, switched: false };

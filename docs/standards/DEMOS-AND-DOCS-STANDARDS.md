@@ -176,6 +176,17 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   (see `src/wb-viewmodels/semantics/switch.js`); `theme-control` is the existing precedent
   for the same idea applied to the "Dark Mode" switch.
 
+## 23. Tables break correctly or reduce font size — never mid-word
+
+- A table cell must never split a word/identifier mid-character (e.g. `wb:details:tog` /
+  `gle` across two lines). Prose wraps at word boundaries; unbroken tokens (event names,
+  `code` identifiers, class names) must either fit on one line or the table scrolls
+  horizontally (`overflow-x: auto`, already standard — see `.wb-mdhtml table`) — they must
+  never be force-broken via `overflow-wrap: anywhere`. If a table is cramped, the fix is a
+  smaller font-size or a horizontal scroll, not a broken word. `.wb-mdhtml td code` /
+  `.wb-mdhtml th code` are `white-space: nowrap` for exactly this reason
+  (`src/styles/behaviors/mdhtml.css`).
+
 ---
 
 ## Enforcement & references

@@ -14,7 +14,34 @@ export function switchInput(element, options = {}) {
   const host = element;
   const isBareCheckbox = host.tagName === 'INPUT' && host.type === 'checkbox';
   let input = isBareCheckbox ? host : host.querySelector('input');
+
+  // Neither a bare checkbox nor a schema-built <wb-switch> host (which
+  // pre-builds input/track/thumb via switch.schema.json's $view) — e.g.
+  // x-switch on a plain <div>. Self-build the same input+track+thumb
+  // structure switch.schema.json builds, as direct siblings (switch.css's
+  // `.wb-switch__input:checked ~ .wb-switch__track` needs them adjacent),
+  // so x-switch renders identically to <wb-switch> regardless of dispatch
+  // path. Mirrors tabs.js's "build from children if no pre-rendered
+  // structure exists" pattern. (#279)
+  if (!isBareCheckbox && !input) {
+    input = document.createElement('input');
+    input.type = 'checkbox';
+    host.appendChild(input);
+
+    const track = document.createElement('span');
+    track.className = 'wb-switch__track';
+    const thumb = document.createElement('span');
+    thumb.className = 'wb-switch__thumb';
+    track.appendChild(thumb);
+    host.appendChild(track);
+  }
+
   if (!input) return () => {};
+
+  // Schema-built <wb-switch> gets this from its baseClass; the self-built
+  // path above bypasses schema entirely, so add it explicitly here too —
+  // makes `.wb-switch` a reliable selector regardless of dispatch path.
+  host.classList.add('wb-switch');
 
   // The schema builds a typeless <input> (renders as text) — make it a checkbox.
   if (input.type !== 'checkbox') input.type = 'checkbox';

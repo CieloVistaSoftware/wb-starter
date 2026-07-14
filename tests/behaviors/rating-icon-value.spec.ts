@@ -18,7 +18,7 @@ test.describe('#177 — rating icon + value + color', () => {
   test('custom icon= is honored (hearts / thumbs, not stars)', async ({ page }) => {
     const glyphs = await page.evaluate(() =>
       ['❤️', '👍'].map((ic) => {
-        const r = document.querySelector(`wb-rating[icon="${ic}"]`);
+        const r = document.querySelector(`[x-rating][icon="${ic}"]`);
         const first = r?.querySelector('.wb-rating__star');
         return { icon: ic, glyph: first?.textContent || '' };
       })
@@ -30,7 +30,7 @@ test.describe('#177 — rating icon + value + color', () => {
 
   test('value is painted on first render (filled count == value)', async ({ page }) => {
     const r = await page.evaluate(() => {
-      return [...document.querySelectorAll('wb-rating')].map((el) => {
+      return [...document.querySelectorAll('[x-rating]')].map((el) => {
         const value = parseInt(el.getAttribute('value') || '0', 10);
         const filled = el.querySelectorAll('.wb-rating__star--full').length;
         return { value, filled };
@@ -44,7 +44,7 @@ test.describe('#177 — rating icon + value + color', () => {
 
   test('filled stars use the theme rating color, not a hardcoded gray', async ({ page }) => {
     const color = await page.evaluate(() => {
-      const star = document.querySelector('wb-rating .wb-rating__star--full') as HTMLElement;
+      const star = document.querySelector('[x-rating] .wb-rating__star--full') as HTMLElement;
       return star ? getComputedStyle(star).color : 'NONE';
     });
     // --rating-active-color resolves to gold rgb(251, 197, 35)

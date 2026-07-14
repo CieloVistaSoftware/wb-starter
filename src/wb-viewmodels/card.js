@@ -28,6 +28,47 @@
 
 import { attachVideoLoadRetry, attachImageLoadRetry } from './media-load-retry.js';
 
+// Always-on, dedicated cardimage/cardvideo load tracing -- this exact failure
+// ("video/image cards not rendering") keeps recurring, especially on the
+// FIRST navigation to Components coming from Home/Behaviors, and needs to
+// stay traceable rather than re-diagnosed from scratch each time. Separate
+// from media-load-retry.js's own tracing (which only fires on a genuine
+// 'error'/timeout) -- this ALSO catches the "built fine, then silently
+// disappeared from the DOM" class of bug (a later re-scan/re-render wiping
+// the card), which a load-retry listener alone can't see since it only
+// watches the element it was attached to, not whether that element is still
+// attached at all. [WB:card-media] is a fixed, greppable prefix.
+function traceCardMedia(kind, cardEl, mediaEl, src) {
+  const startedAt = Date.now();
+  const id = cardEl.id ? `#${cardEl.id}` : '';
+  const where = `${location.pathname}${location.search}`;
+  console.log(`[WB:card-media] ${kind}${id} BUILD src=${src} page=${where}`);
+
+  const isImg = mediaEl.tagName === 'IMG';
+  const onLoad = () => {
+    console.log(`[WB:card-media] ${kind}${id} PAINTED get=${Date.now() - startedAt}ms ${isImg ? `${mediaEl.naturalWidth}x${mediaEl.naturalHeight}` : `readyState=${mediaEl.readyState}`}`);
+  };
+  const onError = () => {
+    console.warn(`[WB:card-media] ${kind}${id} ERROR src=${src} get=${Date.now() - startedAt}ms`);
+  };
+  mediaEl.addEventListener(isImg ? 'load' : 'loadeddata', onLoad, { once: true });
+  mediaEl.addEventListener('error', onError, { once: true });
+
+  // Post-hoc presence check: did this exact element survive, and did it
+  // actually paint anything? Catches "silently wiped by a later re-render"
+  // even when no error/timeout ever fired on the element itself.
+  setTimeout(() => {
+    const stillAttached = mediaEl.isConnected;
+    const stillInCard = cardEl.contains(mediaEl);
+    const painted = isImg
+      ? (mediaEl.complete && mediaEl.naturalWidth > 0)
+      : mediaEl.readyState >= 2;
+    if (!stillAttached || !stillInCard || !painted) {
+      console.warn(`[WB:card-media] ${kind}${id} STALE CHECK FAILED at +2000ms -- attached=${stillAttached} inCard=${stillInCard} painted=${painted} src=${src} page=${where}`);
+    }
+  }, 2000);
+}
+
 // Common card padding
 const CARD_PADDING = '1rem';
 
@@ -628,6 +669,7 @@ export function cardimage(element, options = {}) {
     img.loading = 'lazy';
     img.style.cssText = `width:100%;height:100%;object-fit:${config.fit};display:block;`;
     retryCleanups.push(attachImageLoadRetry(img));
+    traceCardMedia('cardimage', element, img, config.src);
     figure.appendChild(img);
     element.insertBefore(figure, element.firstChild);
   }
@@ -642,6 +684,7 @@ export function cardimage(element, options = {}) {
     imgBottom.loading = 'lazy';
     imgBottom.style.cssText = `width:100%;height:100%;object-fit:${config.fit};display:block;`;
     retryCleanups.push(attachImageLoadRetry(imgBottom));
+    traceCardMedia('cardimage', element, imgBottom, config.src);
     figureBottom.appendChild(imgBottom);
     element.appendChild(figureBottom);
   }
@@ -687,6 +730,7 @@ export function cardvideo(element, options = {}) {
     if (config.controls) video.controls = true;
     video.playsInline = true;
     retryCleanup = attachVideoLoadRetry(video);
+    traceCardMedia('cardvideo', element, video, config.src);
 
     // Check for tracks/captions
     const hasTracks = element.querySelector('track') || config.tracks;

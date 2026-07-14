@@ -94,106 +94,141 @@ export function collapse(element, options = {}) {
 /**
  * Accordion Behavior
  * -----------------------------------------------------------------------------
- * Multi-item collapsible sections. When children carry [accordion-title]
- * (v3 canonical; [data-accordion-title]/[data-title] accepted for back-compat)
- * each child becomes an independently expandable item.
- * Falls back to the single-item collapse behavior otherwise.
+ * Custom Tag:
+ *   Single:  <wb-accordion title="Question">answer content…</wb-accordion>
+ *   Multi:   <wb-accordion>
+ *              <div accordion-title="Q1">answer 1…</div>
+ *              <div accordion-title="Q2">answer 2…</div>
+ *            </wb-accordion>
+ * When children carry [accordion-title] (v3 canonical; [data-accordion-title]/
+ * [data-title] accepted for back-compat) each child becomes an independently
+ * expandable item. A <wb-accordion> with no titled children builds a single
+ * item from its own title attribute. Any OTHER element with neither falls
+ * back to the single-item collapse() behavior.
+ *
+ * ⚠️ <wb-accordion> is DEPRECATED — prefer the native semantic <details>/
+ * <summary> element (see src/wb-viewmodels/semantics/details.js). Retained
+ * for back-compat; emits a one-time console warning. Ported from the
+ * `extends HTMLElement` class removed in #279 — same DOM/class output
+ * (.wb-accordion-item/-head/-title/-icon/-body), so existing CSS and tests
+ * keep working unchanged.
+ *
  * CSS: src/styles/behaviors/accordion.css + collapse.css
  * Emits: wb:accordion:ready, wb:accordion:toggle
  * -----------------------------------------------------------------------------
  */
+let _accordionDeprecationWarned = false;
+
+function buildAccordionItem(element, title, contentHtml, open) {
+  const item = document.createElement('div');
+  item.className = 'wb-accordion-item' + (open ? ' open' : '');
+
+  const head = document.createElement('div');
+  head.className = 'wb-accordion-head';
+  head.setAttribute('role', 'button');
+  head.setAttribute('tabindex', '0');
+  head.setAttribute('aria-expanded', String(open));
+
+  const label = document.createElement('span');
+  label.className = 'wb-accordion-title';
+  label.textContent = title;
+
+  const icon = document.createElement('span');
+  icon.className = 'wb-accordion-icon';
+  icon.setAttribute('aria-hidden', 'true');
+  icon.textContent = open ? '▾' : '▸';
+
+  head.appendChild(label);
+  head.appendChild(icon);
+
+  const body = document.createElement('div');
+  body.className = 'wb-accordion-body';
+  body.innerHTML = contentHtml;
+
+  item.appendChild(head);
+  item.appendChild(body);
+
+  const toggle = () => {
+    try {
+      const isOpen = item.classList.toggle('open');
+      head.setAttribute('aria-expanded', String(isOpen));
+      icon.textContent = isOpen ? '▾' : '▸';
+      element.dispatchEvent(new CustomEvent('wb:accordion:toggle', {
+        bubbles: true,
+        detail: { open: isOpen, title }
+      }));
+    } catch (err) {
+      console.error('[wb-accordion] click error', err);
+      element.dataset.wbError = err.message;
+    }
+  };
+
+  head.addEventListener('click', toggle);
+  head.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggle();
+    }
+  });
+
+  return item;
+}
+
 export function accordion(element, options = {}) {
   try {
-    // <wb-accordion> is built by its custom element (wb-accordion.js). Never
-    // hydrate it a second time here — the double pass found no titled children
-    // (already rebuilt) and fell back to collapse(), adding empty extra heads
-    // and racing the custom element's toggle wiring.
-    if (element.tagName === 'WB-ACCORDION') {
-      return () => {};
-    }
-
     // Idempotent: if already hydrated, don't rebuild — a second pass would
     // wipe item innerHTML and reset any open state / rebind handlers.
     if (element.dataset.wbHydrated === '1') {
       return () => element.classList.remove('wb-accordion');
     }
 
+    if (element.tagName === 'WB-ACCORDION' && !_accordionDeprecationWarned) {
+      _accordionDeprecationWarned = true;
+      console.warn('[wb-accordion] is deprecated — use the semantic <details>/<summary> element instead.');
+    }
+
     // v3: plain `accordion-title` is canonical; data-* accepted for back-compat.
-    const items = Array.from(element.children).filter(
+    const sections = Array.from(element.children).filter(
       child => child.hasAttribute('accordion-title') ||
         child.hasAttribute('data-accordion-title') || child.hasAttribute('data-title')
     );
 
-    // No labelled children — fall back to single-item collapse
-    if (items.length === 0) {
-      return collapse(element, options);
+    if (sections.length > 0) {
+      element.classList.add('wb-accordion');
+      const items = sections.map((sec, i) =>
+        buildAccordionItem(
+          element,
+          sec.getAttribute('accordion-title') || sec.getAttribute('data-accordion-title') || sec.getAttribute('data-title') || 'Accordion Item',
+          sec.innerHTML,
+          sec.hasAttribute('open') || (i === 0 && element.hasAttribute('open'))
+        )
+      );
+      element.innerHTML = '';
+      for (const item of items) { element.appendChild(item); }
+
+      element.dataset.wbHydrated = '1';
+      element.dispatchEvent(new CustomEvent('wb:accordion:ready', {
+        bubbles: true,
+        detail: { items: items.length }
+      }));
+      return () => element.classList.remove('wb-accordion');
     }
 
-    element.classList.add('wb-accordion');
+    // <wb-accordion> with no titled children — single form:
+    // <wb-accordion title="Q">answer</wb-accordion>
+    if (element.tagName === 'WB-ACCORDION') {
+      const title = element.getAttribute('title') || '';
+      const content = element.innerHTML;
+      element.innerHTML = '';
+      element.classList.add('wb-accordion');
+      element.appendChild(buildAccordionItem(element, title, content, element.hasAttribute('open')));
+      element.dataset.wbHydrated = '1';
+      return () => element.classList.remove('wb-accordion');
+    }
 
-    items.forEach(item => {
-      const title =
-        item.getAttribute('accordion-title') ||
-        item.getAttribute('data-accordion-title') ||
-        item.getAttribute('data-title') ||
-        'Accordion Item';
-      const originalContent = item.innerHTML;
-
-      item.innerHTML = '';
-      item.classList.add('wb-accordion-item');
-
-      const head = document.createElement('div');
-      head.className = 'wb-accordion-head';
-      head.setAttribute('role', 'button');
-      head.setAttribute('tabindex', '0');
-      head.setAttribute('aria-expanded', 'false');
-
-      const headText = document.createElement('span');
-      headText.textContent = title;
-      head.appendChild(headText);
-
-      const icon = document.createElement('span');
-      icon.className = 'wb-collapse__icon';
-      icon.textContent = '▼';
-      head.appendChild(icon);
-
-      const body = document.createElement('div');
-      body.className = 'wb-accordion-body';
-      body.innerHTML = originalContent;
-
-      item.appendChild(head);
-      item.appendChild(body);
-
-      const toggle = () => {
-        try {
-          const isOpen = item.classList.toggle('open');
-          head.setAttribute('aria-expanded', String(isOpen));
-          element.dispatchEvent(new CustomEvent('wb:accordion:toggle', {
-            bubbles: true,
-            detail: { open: isOpen, title }
-          }));
-        } catch (err) {
-          console.error('[wb-accordion] click error', err);
-          element.dataset.wbError = err.message;
-        }
-      };
-
-      head.addEventListener('click', toggle);
-      head.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          toggle();
-        }
-      });
-    });
-
-    element.dataset.wbHydrated = '1';
-    element.dispatchEvent(new CustomEvent('wb:accordion:ready', {
-      bubbles: true,
-      detail: { items: items.length }
-    }));
-
-    return () => element.classList.remove('wb-accordion');
+    // Any other element with neither titled children nor being a
+    // <wb-accordion> — fall back to single-item collapse.
+    return collapse(element, options);
   } catch (err) {
     console.error('[wb-accordion] init error', err);
     element.dataset.wbError = err.message;

@@ -9,7 +9,7 @@ import { test, expect, Page, Locator } from '@playwright/test';
 async function loadPage(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
-  await page.waitForSelector('wb-badge, .behavior-card, .demo-area', { timeout: 20000 });
+  await page.waitForSelector('[x-badge], .behavior-card, .demo-area', { timeout: 20000 });
   // scroll through the whole page so every lazy (IntersectionObserver) behavior injects
   await page.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 50)); }
@@ -49,7 +49,7 @@ test.describe('Behaviors page — health', () => {
 test.describe('Behaviors page — Feedback', () => {
   test('badges upgrade', async ({ page }) => {
     await loadPage(page);
-    const b = page.locator('wb-badge');
+    const b = page.locator('[x-badge]');
     await reveal(b);
     expect(await b.count()).toBeGreaterThan(0);
     await expect(b.first()).toHaveClass(/wb-badge/);
@@ -57,7 +57,7 @@ test.describe('Behaviors page — Feedback', () => {
 
   test('alerts upgrade with role=alert', async ({ page }) => {
     await loadPage(page);
-    const a = page.locator('wb-alert');
+    const a = page.locator('[x-alert]');
     await reveal(a);
     expect(await a.count()).toBeGreaterThan(0);
     await expect(a.first()).toHaveAttribute('role', 'alert');
@@ -65,7 +65,7 @@ test.describe('Behaviors page — Feedback', () => {
 
   test('progress bars render a fill child', async ({ page }) => {
     await loadPage(page);
-    const p = page.locator('wb-progress');
+    const p = page.locator('[x-progress]');
     await reveal(p);
     expect(await p.count()).toBeGreaterThan(0);
     await expect(p.first().locator('.wb-progress__bar')).toHaveCount(1);
@@ -73,7 +73,7 @@ test.describe('Behaviors page — Feedback', () => {
 
   test('spinners animate', async ({ page }) => {
     await loadPage(page);
-    const s = page.locator('wb-spinner');
+    const s = page.locator('[x-spinner]');
     await reveal(s);
     expect(await s.count()).toBeGreaterThan(0);
     const anim = await s.first().evaluate((el) => { const d = el.querySelector('div'); return d ? getComputedStyle(d).animationName : 'none'; });
@@ -100,8 +100,8 @@ test.describe('Behaviors page — Feedback', () => {
 test.describe('Behaviors page — Navigation', () => {
   test('tabs show real labels (not "Tab 1")', async ({ page }) => {
     await loadPage(page);
-    const tabs = page.locator('wb-tabs .wb-tabs__tab');
-    await reveal(page.locator('wb-tabs'));
+    const tabs = page.locator('[x-tabs] .wb-tabs__tab');
+    await reveal(page.locator('[x-tabs]'));
     expect(await tabs.count()).toBeGreaterThanOrEqual(2);
     await expect(tabs.first()).not.toHaveText(/^Tab \d+$/);
   });
@@ -143,7 +143,7 @@ test.describe('Behaviors page — Data & Selection', () => {
 
   test('switch toggles upgrade', async ({ page }) => {
     await loadPage(page);
-    const sw = page.locator('wb-switch');
+    const sw = page.locator('[x-switch]');
     await reveal(sw);
     expect(await sw.count()).toBeGreaterThan(0);
     await expect(sw.first()).not.toHaveAttribute('x-error', 'true');
@@ -151,7 +151,7 @@ test.describe('Behaviors page — Data & Selection', () => {
 
   test('rating upgrades', async ({ page }) => {
     await loadPage(page);
-    const r = page.locator('wb-rating');
+    const r = page.locator('[x-rating]');
     await reveal(r);
     expect(await r.count()).toBeGreaterThan(0);
     await expect(r.first()).not.toHaveAttribute('x-error', 'true');

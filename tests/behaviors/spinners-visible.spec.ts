@@ -25,7 +25,7 @@ test.describe('#182 — spinners visible + animated', () => {
 
   test('every spinner ring has a visible border and is animated', async ({ page }) => {
     const rings = await page.evaluate(() =>
-      [...document.querySelectorAll('wb-spinner')].map((sp) => {
+      [...document.querySelectorAll('[x-spinner]')].map((sp) => {
         const inner = sp.querySelector('div') as HTMLElement;
         const ics = inner ? getComputedStyle(inner) : null;
         return {
@@ -47,7 +47,7 @@ test.describe('#182 — spinners visible + animated', () => {
   test('spinner color= variants render distinct colors', async ({ page }) => {
     const colors = await page.evaluate(() =>
       ['success', 'warning', 'error'].map((c) => {
-        const sp = document.querySelector(`wb-spinner[color="${c}"]`);
+        const sp = document.querySelector(`[x-spinner][color="${c}"]`);
         const inner = sp?.querySelector('div') as HTMLElement;
         return inner ? getComputedStyle(inner).borderTopColor : 'MISSING';
       })

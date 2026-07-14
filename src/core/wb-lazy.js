@@ -41,15 +41,18 @@ console.log(`[WB-lazy] debug tracing: ${WB_DEBUG ? 'ON' : 'OFF'} (localStorage['
 // which value is actually correct (tracked in #333).
 const ELEMENT_MAP_OVERRIDES = new Set(['wb-drawer', 'wb-modal']);
 
-// wb.js resolves these same tags without ever consulting elementMap: each is
-// registered as a REAL custom element (wb-grid.js/wb-cluster.js/wb-stack.js/
-// wb-row.js/wb-accordion.js, all eagerly imported by wb.js) whose own
-// connectedCallback calls the layout/behavior function directly. wb-lazy.js
-// has no such registrations (only wb-card.js, separately, for <wb-card>), so
-// these tags need dispatching as ordinary injected behaviors here. Also
-// covers the legacy card-*/noun-first tag aliases and a few tags tag-map.js
-// genuinely doesn't know about at all (wb-inputgroup, wb-formrow, wb-stat,
-// wb-code-card) -- none of these are duplicated anywhere else.
+// wb-grid is still a REAL custom element (wb-grid.js, eagerly imported by
+// wb.js) whose own connectedCallback calls the layout function directly.
+// wb-lazy.js has no such registration (only wb-card.js, separately, for
+// <wb-card>), so it needs dispatching as an ordinary injected behavior here.
+// wb-cluster/wb-stack/wb-row/wb-accordion USED to be real custom elements
+// too, but those `extends HTMLElement` wrappers were removed (#279) in favor
+// of tag-map.js's elementMap (cluster/stack/flex/accordion) -- now picked up
+// automatically via the elementMap spread above, no longer needed here.
+// The rest of this table covers the legacy card-*/noun-first tag aliases and
+// a few tags tag-map.js genuinely doesn't know about at all (wb-inputgroup,
+// wb-formrow, wb-stat, wb-code-card) -- none of these are duplicated anywhere
+// else.
 const WB_LAZY_ONLY_ELEMENTS = {
   'card-basic': 'card',
   'wb-inputgroup': 'inputgroup',
@@ -88,10 +91,7 @@ const WB_LAZY_ONLY_ELEMENTS = {
   'wb-code-card': 'demo',
   'wb-grid': 'grid',
   'wb-flex': 'flex',
-  'wb-stack': 'stack',
-  'wb-cluster': 'cluster',
   'wb-container': 'container',
-  'wb-row': 'flex', // alias for horizontal flex
   'wb-sidebar': 'sidebarlayout',
   'wb-center': 'center',
   'wb-cover': 'cover',
@@ -103,7 +103,6 @@ const WB_LAZY_ONLY_ELEMENTS = {
   'wb-icon': 'icon',
   'wb-control': 'control',
   'wb-repeater': 'repeater',
-  'wb-accordion': 'accordion',
   'wb-modal': 'modal', // conflicts with elementMap's 'dialog' -- see ELEMENT_MAP_OVERRIDES above
   'wb-stat': 'stat',
 };

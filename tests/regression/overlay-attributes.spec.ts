@@ -15,7 +15,7 @@ import * as path from 'path';
  * which is exactly why this slipped through.
  *
  * Canonical attributes, verified from source:
- *   wb-modal   : title | modal-title,    content via modal-content (src/wb-viewmodels/semantics/dialog.js:15-17)
+ *   x-modal    : title | modal-title,    content via modal-content (src/wb-viewmodels/semantics/dialog.js:15-17)
  *   x-drawer   : drawer-title | heading,  drawer-content | description,  position   (src/wb-viewmodels/overlay.js:143-145)
  *   x-confirm  : confirm-title | heading, confirm-message | message                  (overlay.js:460-461)
  *   x-prompt   : prompt-title | heading,  prompt-message | message                   (overlay.js:508-509)
@@ -38,16 +38,18 @@ const FORBIDDEN_OVERLAY_ATTRS = [
 const ROOT  = process.cwd();
 const PAGES = ['pages/components.html', 'pages/behaviors.html', 'pages/newbehaviors.html'];
 
-// Extract opening tags of overlay triggers (wb-modal, or any element carrying an
-// x-drawer/x-confirm/x-prompt/x-popover behavior attribute). Code samples in the
-// page are HTML-escaped (&lt;…&gt;), so unescape first to check those too.
+// Extract opening tags of overlay triggers (wb-modal — legacy custom-element
+// tag form, still checked for any remaining archived pages — or any element
+// carrying an x-modal/x-drawer/x-confirm/x-prompt/x-popover behavior
+// attribute). Code samples in the page are HTML-escaped (&lt;…&gt;), so
+// unescape first to check those too.
 function overlayTriggerTags(html: string): string[] {
   const unescaped = html
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
     .replace(/&amp;/g, '&');
-  const re = /<(?:wb-modal\b[^>]*|[a-zA-Z][\w-]*\b[^>]*?\b(?:x-drawer|x-confirm|x-prompt|x-popover)\b[^>]*)>/g;
+  const re = /<(?:wb-modal\b[^>]*|[a-zA-Z][\w-]*\b[^>]*?\b(?:x-modal|x-drawer|x-confirm|x-prompt|x-popover)\b[^>]*)>/g;
   return unescaped.match(re) ?? [];
 }
 

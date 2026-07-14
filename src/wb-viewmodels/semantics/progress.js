@@ -4,9 +4,13 @@
  * Helper Attribute: [x-behavior="progress"]
  */
 export function progress(element, options = {}) {
-  // Custom <wb-progress> tag is not a native <progress>, so ::-webkit-progress-value
-  // never paints a fill. Render an explicit fill child instead. (issue #127)
-  if (element.tagName === 'WB-PROGRESS') {
+  // Anything that ISN'T a literal native <progress> tag (custom <wb-progress>,
+  // or a plain <div x-progress>) can't paint a fill via
+  // ::-webkit-progress-value -- there's no such pseudo-element on a
+  // non-native element. Render an explicit fill child instead. (issue #127;
+  // gate widened from tagName==='WB-PROGRESS' so x-progress on any element
+  // gets the same rich rendering, not just the <wb-progress> tag form — #279.)
+  if (element.tagName !== 'PROGRESS') {
     const value = parseFloat(options.value ?? element.getAttribute('value') ?? 0);
     const max = parseFloat(options.max ?? element.getAttribute('max') ?? 100);
     const variant = options.variant || element.getAttribute('variant') || 'primary';

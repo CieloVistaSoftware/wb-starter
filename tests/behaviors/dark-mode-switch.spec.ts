@@ -9,13 +9,13 @@ const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
 
 test('Dark Mode switch toggles data-theme between dark and light', async ({ page }) => {
   await page.goto(URL, { waitUntil: 'domcontentloaded' });
-  await page.waitForSelector('wb-switch[theme-control]', { timeout: 25000 });
+  await page.waitForSelector('[x-switch][theme-control]', { timeout: 25000 });
   await page.waitForTimeout(2000);
 
   const r = await page.evaluate(async () => {
     const root = document.documentElement;
     root.setAttribute('data-theme', 'dark');
-    const sw = document.querySelector('wb-switch[theme-control]') as HTMLElement;
+    const sw = document.querySelector('[x-switch][theme-control]') as HTMLElement;
     const inp = sw.querySelector('input') as HTMLInputElement;
     // re-sync initial state to current theme
     inp.checked = true;

@@ -108,9 +108,9 @@
     </wb-demo>
 
     <h3>Switch Toggle</h3>
-    <wb-demo><wb-switch label="Dark Mode" theme-control></wb-switch></wb-demo>
-    <wb-demo><wb-switch label="Notifications" checked notify-control></wb-switch></wb-demo>
-    <wb-demo><wb-switch label="Disabled" disabled></wb-switch></wb-demo>
+    <wb-demo><div x-switch label="Dark Mode" theme-control></div></wb-demo>
+    <wb-demo><div x-switch label="Notifications" checked notify-control></div></wb-demo>
+    <wb-demo><div x-switch label="Disabled" disabled></div></wb-demo>
 
     <h3>Select Dropdown</h3>
     <wb-demo>
@@ -130,9 +130,9 @@
     </wb-demo>
 
     <h3>Rating</h3>
-    <wb-demo><wb-rating value="3" max="5"></wb-rating></wb-demo>
-    <wb-demo><wb-rating value="4" max="5" icon="❤️"></wb-rating></wb-demo>
-    <wb-demo><wb-rating value="2" max="5" icon="👍"></wb-rating></wb-demo>
+    <wb-demo><div x-rating value="3" max="5"></div></wb-demo>
+    <wb-demo><div x-rating value="4" max="5" icon="❤️"></div></wb-demo>
+    <wb-demo><div x-rating value="2" max="5" icon="👍"></div></wb-demo>
 
     <h3>Stepper</h3>
     <wb-demo><div x-stepper value="5" min="0" max="10"></div></wb-demo>
@@ -152,43 +152,43 @@
     </div>
 
     <h3>Alerts</h3>
-    <wb-demo><wb-alert variant="info" title="Information" message="This is an informational message." dismissible></wb-alert></wb-demo>
-    <wb-demo><wb-alert variant="success" title="Success" message="Operation completed successfully." dismissible></wb-alert></wb-demo>
-    <wb-demo><wb-alert variant="warning" title="Warning" message="Please review before continuing." dismissible></wb-alert></wb-demo>
-    <wb-demo><wb-alert variant="error" title="Error" message="Something went wrong." dismissible></wb-alert></wb-demo>
+    <wb-demo><div x-alert variant="info" title="Information" message="This is an informational message." dismissible></div></wb-demo>
+    <wb-demo><div x-alert variant="success" title="Success" message="Operation completed successfully." dismissible></div></wb-demo>
+    <wb-demo><div x-alert variant="warning" title="Warning" message="Please review before continuing." dismissible></div></wb-demo>
+    <wb-demo><div x-alert variant="error" title="Error" message="Something went wrong." dismissible></div></wb-demo>
 
     <h3>Badges</h3>
-    <wb-demo><wb-badge>Default Badge</wb-badge></wb-demo>
-    <wb-demo><wb-badge variant="primary">Primary Badge</wb-badge></wb-demo>
-    <wb-demo><wb-badge variant="success">Success Badge</wb-badge></wb-demo>
-    <wb-demo><wb-badge variant="warning">Warning Badge</wb-badge></wb-demo>
-    <wb-demo><wb-badge variant="error">Error Badge</wb-badge></wb-demo>
-    <wb-demo><wb-badge variant="info">Info Badge</wb-badge></wb-demo>
-    <wb-demo><wb-badge pill>Pill Badge</wb-badge></wb-demo>
+    <wb-demo><span x-badge>Default Badge</span></wb-demo>
+    <wb-demo><span x-badge variant="primary">Primary Badge</span></wb-demo>
+    <wb-demo><span x-badge variant="success">Success Badge</span></wb-demo>
+    <wb-demo><span x-badge variant="warning">Warning Badge</span></wb-demo>
+    <wb-demo><span x-badge variant="error">Error Badge</span></wb-demo>
+    <wb-demo><span x-badge variant="info">Info Badge</span></wb-demo>
+    <wb-demo><span x-badge pill>Pill Badge</span></wb-demo>
 
     <h3>Progress Bars</h3>
-    <wb-demo><wb-progress value="25"></wb-progress></wb-demo>
-    <wb-demo><wb-progress value="50"></wb-progress></wb-demo>
-    <wb-demo><wb-progress value="75" striped></wb-progress></wb-demo>
-    <wb-demo><wb-progress value="100"></wb-progress></wb-demo>
+    <wb-demo><div x-progress value="25"></div></wb-demo>
+    <wb-demo><div x-progress value="50"></div></wb-demo>
+    <wb-demo><div x-progress value="75" striped></div></wb-demo>
+    <wb-demo><div x-progress value="100"></div></wb-demo>
 
     <h3>Card Notifications</h3>
-    <wb-demo><wb-cardnotification variant="info" title="Information" message="This is an informational message."></wb-cardnotification></wb-demo>
-    <wb-demo><wb-cardnotification variant="success" title="Success!" message="Your changes have been saved."></wb-cardnotification></wb-demo>
-    <wb-demo><wb-cardnotification variant="warning" title="Warning" message="Please review your input."></wb-cardnotification></wb-demo>
-    <wb-demo><wb-cardnotification variant="error" title="Error" message="Something went wrong. Please try again."></wb-cardnotification></wb-demo>
+    <wb-demo><div x-cardnotification variant="info" title="Information" message="This is an informational message."></div></wb-demo>
+    <wb-demo><div x-cardnotification variant="success" title="Success!" message="Your changes have been saved."></div></wb-demo>
+    <wb-demo><div x-cardnotification variant="warning" title="Warning" message="Please review your input."></div></wb-demo>
+    <wb-demo><div x-cardnotification variant="error" title="Error" message="Something went wrong. Please try again."></div></wb-demo>
 
     <h3>Non-Dismissible Notification</h3>
     <wb-demo>
-      <wb-cardnotification variant="info" message="This notification cannot be dismissed." dismissible="false"></wb-cardnotification>
+      <div x-cardnotification variant="info" message="This notification cannot be dismissed." dismissible="false"></div>
     </wb-demo>
 
     <h3>Spinners</h3>
-    <wb-demo><wb-spinner></wb-spinner></wb-demo>
-    <wb-demo><wb-spinner color="success"></wb-spinner></wb-demo>
-    <wb-demo><wb-spinner color="warning"></wb-spinner></wb-demo>
-    <wb-demo><wb-spinner color="error"></wb-spinner></wb-demo>
-    <wb-demo><wb-spinner size="lg"></wb-spinner></wb-demo>
+    <wb-demo><div x-spinner></div></wb-demo>
+    <wb-demo><div x-spinner color="success"></div></wb-demo>
+    <wb-demo><div x-spinner color="warning"></div></wb-demo>
+    <wb-demo><div x-spinner color="error"></div></wb-demo>
+    <wb-demo><div x-spinner size="lg"></div></wb-demo>
 
     <h3>Toast Notifications</h3>
     <wb-demo><button variant="primary" x-toast message="Info message" type="info">Info Toast</button></wb-demo>
@@ -209,18 +209,18 @@
 
     <h3>Modal Dialog</h3>
     <wb-demo>
-      <wb-modal variant="primary" modal-title="Modal Dialog"
-        modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
+      <button x-modal variant="primary" modal-title="Modal Dialog"
+        modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</button>
     </wb-demo>
 
     <h3>Drawer</h3>
     <wb-demo>
-      <wb-drawer variant="primary" title="Left Drawer" content="Slide-out panel from the left."
-        position="left">Left Drawer</wb-drawer>
+      <button x-drawer variant="primary" title="Left Drawer" content="Slide-out panel from the left."
+        position="left">Left Drawer</button>
     </wb-demo>
     <wb-demo>
-      <wb-drawer variant="primary" title="Right Drawer" content="Slide-out panel from the right."
-        position="right">Right Drawer</wb-drawer>
+      <button x-drawer variant="primary" title="Right Drawer" content="Slide-out panel from the right."
+        position="right">Right Drawer</button>
     </wb-demo>
 
     <h3>Tooltips</h3>
@@ -262,10 +262,10 @@
       wizards.
     </div>
 
-    <!-- One <wb-tabs> instance with its panels -- the component itself IS the unit. -->
+    <!-- One x-tabs instance with its panels -- the component itself IS the unit. -->
     <h3>Tabs</h3>
     <wb-demo>
-      <wb-tabs>
+      <div x-tabs>
         <div tab-title="Overview">
           <p>This is the overview tab content. Tabs organize content into separate views with keyboard navigation.</p>
         </div>
@@ -273,9 +273,9 @@
           <p>Features include smooth transitions, responsive design, and full accessibility compliance.</p>
         </div>
         <div tab-title="Usage">
-          <p>Simply wrap your content in a wb-tabs element with tab-title on each panel.</p>
+          <p>Simply add x-tabs to a container with tab-title on each panel.</p>
         </div>
-      </wb-tabs>
+      </div>
     </wb-demo>
 
     <!-- An accordion FAQ block: the panels form one cohesive widget, same
@@ -321,6 +321,13 @@
       <strong>Data behaviors:</strong> Avatars, skeletons, timelines, and keyboard keys.
     </div>
 
+    <!-- <wb-avatar> stays a custom-element TAG, not x-avatar -- avatar.css's
+         entire styling scheme is tag-name-coupled by design ("CSS targets
+         the tag and attributes directly — JS adds no classes"), used the
+         same way across pages/components.html, pages/newbehaviors.html,
+         demos/site/feedback.html. A <div x-avatar> matched none of it —
+         confirmed live: fully unstyled (no circle, no size, no background)
+         until reverted back to the tag form (#279 follow-up). -->
     <h3>Avatars</h3>
     <wb-demo><wb-avatar src="https://i.pravatar.cc/150?img=1"></wb-avatar></wb-demo>
     <wb-demo><wb-avatar src="https://i.pravatar.cc/150?img=2" size="lg"></wb-avatar></wb-demo>
@@ -328,6 +335,11 @@
     <wb-demo><wb-avatar src="https://i.pravatar.cc/150?img=3" status="online"></wb-avatar></wb-demo>
     <wb-demo><wb-avatar src="https://i.pravatar.cc/150?img=4" status="away"></wb-avatar></wb-demo>
 
+    <!-- <wb-skeleton> stays a custom-element TAG, not x-skeleton --
+         skeleton.css is 100% tag/attribute-selector based ("CSS targets tag
+         and attributes directly — JS adds no classes"). Same issue as
+         wb-avatar above: a <div x-skeleton> matched none of it (#279
+         follow-up). -->
     <h3>Skeleton Loaders</h3>
     <wb-demo><wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton></wb-demo>
     <wb-demo><wb-skeleton variant="circle" width="60px"></wb-skeleton></wb-demo>
@@ -375,9 +387,9 @@
 
     <h3>Audio Player</h3>
     <wb-demo>
-      <wb-audio
+      <div x-audio
         src="demos/sample.wav"
-        show-eq="true" volume="0.7"></wb-audio>
+        show-eq="true" volume="0.7"></div>
     </wb-demo>
 
     <h3>YouTube Embed</h3>
@@ -461,7 +473,7 @@
     <wb-demo><button variant="primary" x-darkmode>🌙 Toggle Dark Mode</button></wb-demo>
 
     <h3>Theme Control</h3>
-    <wb-demo><wb-themecontrol></wb-themecontrol></wb-demo>
+    <wb-demo><div x-themecontrol></div></wb-demo>
 
     <h3>Text Truncate</h3>
     <wb-demo>

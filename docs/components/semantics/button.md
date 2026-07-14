@@ -38,8 +38,11 @@ Button text is set via the element's content (children), not an attribute.
 
 ### Native Button (Enhanced)
 
+`autoInjectComponents` is on by default — a plain `<button>` is enhanced
+automatically, no `x-button` attribute needed.
+
 ```html
-<button x-button>Click Me</button>
+<button>Click Me</button>
 ```
 
 ### With Icon

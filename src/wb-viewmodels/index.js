@@ -28,7 +28,10 @@ const exportAliases = {
   figure: 'figure',
   ratio: 'ratio',
   'drawer-layout': 'drawerLayout',
-  'sidebar-layout': 'sidebarlayout'
+  'sidebar-layout': 'sidebarlayout',
+  // <wb-search> is a container tag, not an input — searchField() (search.js)
+  // wraps/creates the child <input> and delegates to search(). See #279.
+  searchfield: 'searchField'
 };
 
 /**
@@ -126,6 +129,7 @@ const behaviorModules = {
   formrow: 'formrow',
   stepper: 'stepper',
   search: 'search',
+  searchfield: 'search',
   password: 'password',
   masked: 'masked',
   counter: 'counter',

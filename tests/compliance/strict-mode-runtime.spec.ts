@@ -23,18 +23,25 @@ test.describe('Strict Mode Runtime Compliance', () => {
       { message: 'Should log error for legacy syntax', timeout: 5000 }
     ).toBeTruthy();
 
-    // 2. Check that Modern component processed
+    // 2. Check that Modern component processed. card() (card.js) — the real
+    // behavior that owns <wb-card>'s DOM — always adds the 'wb-card' class;
+    // 'x-schema' was only ever set by schema-driven buildStructure(), which
+    // <wb-card> (and the rest of the card family) no longer goes through at
+    // all now that a tag with a real behavior never gets schema-processed
+    // (#279 — the schema/behavior double-build race that broke cardimage/
+    // cardvideo). 'wb-card' is the reliable "was this actually processed"
+    // signal regardless of which mechanism built it.
     const modernCard = page.locator('#modern-card');
-    await expect(modernCard).toHaveAttribute('x-schema', 'card');
+    await expect(modernCard).toHaveClass(/wb-card/);
 
     // 3. Check that Legacy component is NOT processed/upgraded
     const legacyCard = page.locator('#legacy-card');
-    
+
     // Should verify it has the error marker
     await expect(legacyCard).toHaveAttribute('x-error', 'legacy');
-    
-    // Should NOT have the success marker
-    const isLegacyProcessed = await legacyCard.getAttribute('x-schema');
-    expect(isLegacyProcessed).toBeNull();
+
+    // Should NOT have been upgraded by card() — no 'wb-card' class.
+    const legacyClass = await legacyCard.getAttribute('class');
+    expect(legacyClass || '').not.toMatch(/\bwb-card\b/);
   });
 });

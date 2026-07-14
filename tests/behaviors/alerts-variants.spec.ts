@@ -12,14 +12,14 @@ test('#176 — alert type= maps to variant: four distinct colors', async ({ page
   await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
   await page.waitForTimeout(2500); // lazy injection + schema build
 
-  const info = await page.locator('wb-alert[type="info"], wb-alert.wb-alert--info').first();
+  const info = await page.locator('[x-alert][type="info"], [x-alert].wb-alert--info').first();
   await expect(info, 'no alerts found on showcase').toBeVisible();
 
   // Each type= alert should carry the matching wb-alert--<type> class…
   const classMatch = await page.evaluate(() => {
     const types = ['info', 'success', 'warning', 'error'];
     return types.map((t) => {
-      const el = document.querySelector(`wb-alert[type="${t}"]`);
+      const el = document.querySelector(`[x-alert][type="${t}"]`);
       return { t, hasClass: !!el && el.classList.contains(`wb-alert--${t}`) };
     });
   });
@@ -30,7 +30,7 @@ test('#176 — alert type= maps to variant: four distinct colors', async ({ page
   // …and the four variants must be visually distinct (not all "info" blue).
   const colors = await page.evaluate(() =>
     ['info', 'success', 'warning', 'error'].map((t) => {
-      const el = document.querySelector(`wb-alert[type="${t}"]`) as HTMLElement;
+      const el = document.querySelector(`[x-alert][type="${t}"]`) as HTMLElement;
       return el ? getComputedStyle(el).backgroundColor : 'MISSING';
     })
   );

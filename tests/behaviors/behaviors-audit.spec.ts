@@ -55,7 +55,7 @@ test.describe('Behaviors page — STRICT audit (dark theme)', () => {
 
   test('AUDIT: no wb-* component is zero-size or left as raw inline text', async ({ page }) => {
     const offenders = await page.evaluate(() => {
-      const tags = ['wb-switch', 'wb-rating', 'wb-alert', 'wb-badge', 'wb-progress', 'wb-spinner', 'wb-avatar', 'wb-skeleton', 'wb-tabs', 'wb-cardnotification'];
+      const tags = ['[x-switch]', '[x-rating]', '[x-alert]', '[x-badge]', '[x-progress]', '[x-spinner]', 'wb-avatar', 'wb-skeleton', '[x-tabs]', '[x-cardnotification]'];
       const bad: any[] = [];
       for (const t of tags) {
         document.querySelectorAll('#mainPage-behaviors ' + t).forEach((el) => {
@@ -73,7 +73,7 @@ test.describe('Behaviors page — STRICT audit (dark theme)', () => {
 
   test('AUDIT: switches actually toggle state on click', async ({ page }) => {
     const result = await page.evaluate(async () => {
-      const sw = document.querySelector('#mainPage-behaviors wb-switch');
+      const sw = document.querySelector('#mainPage-behaviors [x-switch]');
       if (!sw) return 'NO_SWITCH';
       const read = () => {
         const inp = sw.querySelector('input') as HTMLInputElement | null;

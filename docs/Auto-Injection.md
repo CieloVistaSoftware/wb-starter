@@ -121,7 +121,7 @@ The following HTML elements are automatically mapped to WB behaviors:
 ### 3. Modal Dialog
 **Explicit (Shorthand):**
 ```html
-<dialog x-dialog>...</div>
+<dialog x-dialog>...</dialog>
 ```
 
 **Implicit (Auto Injection):**

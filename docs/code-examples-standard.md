@@ -168,9 +168,9 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 | `video` | `<video>` | `<div x-video>` |
 | `figure` | `<figure>` | `<div x-figure>` |
 | `table` | `<table>` | `<div x-table>` |
-| `input` | `<input>` | `<input x-input>` |
-| `textarea` | `<textarea>` | `<textarea x-textarea>` |
-| `select` | `<select>` | `<select x-select>` |
+| `input` | — (not auto-injected; bare `<input>` needs `x-input`) | `<input x-input>` |
+| `textarea` | `<textarea>` | — (auto-injects, `x-textarea` is redundant) |
+| `select` | `<select>` | — (auto-injects, `x-select` is redundant) |
 | `progress` | `<progress>` | `<div x-progressbar>` |
 
 ---

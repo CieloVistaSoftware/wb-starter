@@ -121,6 +121,16 @@
   background: var(--bg-secondary);
 }
 
+/* Inline `code` (event names, identifiers) inherits td/th's
+   overflow-wrap:anywhere -- fine for prose (has natural word breaks), but
+   an unbroken identifier like "wb:details:toggle" gets split mid-word
+   ("togg" / "le") since there's nowhere sensible to break. Keep code
+   tokens intact; the table's own overflow-x:auto (above) scrolls instead. */
+.wb-mdhtml td code,
+.wb-mdhtml th code {
+  white-space: nowrap;
+}
+
 .wb-mdhtml ul,
 .wb-mdhtml ol {
   margin: 0.75rem 0;

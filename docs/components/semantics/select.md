@@ -43,8 +43,11 @@ Enhanced select dropdown with search, clear, and multi-select.
 
 ### Native Select (Enhanced)
 
+`autoInjectComponents` is on by default — a plain `<select>` is enhanced
+automatically, no `x-select` attribute needed.
+
 ```html
-<select x-select>
+<select>
   <option value="1">Option 1</option>
   <option value="2">Option 2</option>
   <option value="3">Option 3</option>

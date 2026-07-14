@@ -9,7 +9,7 @@ import { test, expect, Page, Locator } from '@playwright/test';
 async function loadPage(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
-  await page.waitForSelector('wb-badge, [x-bounce], wb-modal, input', { timeout: 20000 });
+  await page.waitForSelector('[x-badge], [x-bounce], [x-modal], input', { timeout: 20000 });
   await page.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 50)); }
     window.scrollTo(0, 0);
@@ -23,7 +23,7 @@ async function reveal(loc: Locator) {
 
 // breadth sweep: each must be present and upgrade without throwing (no x-error)
 const SWEEP = [
-  'wb-modal', 'wb-drawer', 'wb-audio',
+  '[x-modal]', '[x-drawer]', '[x-audio]',
   '[x-tooltip]', '[x-popover]', '[x-confirm]', '[x-prompt]', '[x-lightbox]',
   '[x-stepper]', '[x-masked]', '[x-password]',
   '[x-gallery]', '[x-image]', '[x-youtube]',

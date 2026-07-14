@@ -13,10 +13,11 @@ The `pre` component upgrades the `<pre>` element to be a full-featured code bloc
 ## 2. User Guide
 
 ### Basic Usage
-Add `x-pre` to a `<pre>` element.
+`autoInjectComponents` is on by default — a plain `<pre>` is enhanced
+automatically, no `x-pre` attribute needed.
 
 ```html
-<pre x-pre>
+<pre>
 Line 1
 Line 2
 </pre>
@@ -38,7 +39,6 @@ A complete code block with all features enabled.
 
 ```html
 <pre
-  x-pre
   language="JS"
   show-line-numbers="true"
   show-copy="true">
@@ -53,7 +53,6 @@ A scrollable container for long text output.
 
 ```html
 <pre
-  x-pre
   max-height="200px"
   wrap="true">
 [INFO] Starting server...

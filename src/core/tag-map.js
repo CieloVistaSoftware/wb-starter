@@ -13,9 +13,16 @@
 // Source: Each filename in src/wb-models/ without extension and .schema
 
 export const elementMap = {
-  // Layout — wb-column is a vertical stack (behavior, not a class that extends
-  // HTMLElement; v3). The <wb-column> custom element was removed.
+  // Layout — behaviors, not classes that extend HTMLElement (v3). The
+  // <wb-column>/<wb-cluster>/<wb-stack>/<wb-row> custom elements were removed
+  // (#279) — each was a thin connectedCallback wrapper that just called the
+  // already-existing pure behavior function from layouts.js directly.
   'wb-column': 'stack',
+  'wb-cluster': 'cluster',
+  'wb-stack': 'stack',
+  // flex()'s own default direction is 'row' (layouts.js), so no special
+  // options are needed to reproduce wb-row.js's hardcoded direction:'row'.
+  'wb-row': 'flex',
   // Components
   'wb-alert': 'alert',
   'wb-article': 'article',
@@ -82,7 +89,11 @@ export const elementMap = {
   'wb-resizable': 'resizable',
   'wb-ripple': 'ripple',
   'wb-scrollalong': 'scrollalong',
-  'wb-search': 'search',
+  // 'searchfield' (not the bare 'search' behavior) — search() operates
+  // directly on whatever element it's given (used as-is via x-search on a
+  // literal <input>). <wb-search> is a CONTAINER tag, not an input itself;
+  // it needs the child-input-aware wrapper. See search.js's searchField().
+  'wb-search': 'searchfield',
   'wb-select': 'select',
   'wb-skeleton': 'skeleton',
   'wb-slider': 'slider',
@@ -100,6 +111,10 @@ export const elementMap = {
   'wb-toggle': 'toggle',
   'wb-tooltip': 'tooltip',
   'wb-timeline': 'timeline',
+  // wb-accordion is DEPRECATED (prefer <details>/<summary> — see
+  // semantics/details.js) but still rendered/toggled via accordion()
+  // (collapse.js), retained for back-compat (#279).
+  'wb-accordion': 'accordion',
   'wb-video': 'video',
   'wb-vimeo': 'vimeo',
   'wb-youtube': 'youtube'

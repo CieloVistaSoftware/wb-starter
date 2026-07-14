@@ -9,10 +9,10 @@ const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
 
 test('Notifications switch fires a real toast when turned ON, not when turned OFF', async ({ page }) => {
   await page.goto(URL, { waitUntil: 'domcontentloaded' });
-  await page.waitForSelector('wb-switch[notify-control]', { timeout: 25000 });
+  await page.waitForSelector('[x-switch][notify-control]', { timeout: 25000 });
   await page.waitForTimeout(2000);
 
-  const sw = page.locator('wb-switch[notify-control]');
+  const sw = page.locator('[x-switch][notify-control]');
 
   // Starts checked (per pages/behaviors.html) — turning it OFF must NOT toast.
   await sw.click();

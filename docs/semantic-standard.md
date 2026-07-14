@@ -228,9 +228,12 @@
 
 ### Forms
 
+`autoInjectComponents` is on by default — a plain `<form>` is enhanced
+automatically, no `x-form` attribute needed.
+
 ```html
 <!-- CORRECT -->
-<form x-form>
+<form>
   <fieldset>
     <legend>Personal Info</legend>
     <label> Name

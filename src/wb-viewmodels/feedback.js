@@ -172,7 +172,15 @@ export function spinner(element, options = {}) {
   element.setAttribute('aria-label', 'Loading');
   element.innerHTML = '';
 
-  const size = options.size || element.getAttribute('data-size') || element.getAttribute('size');
+  // spinner.schema.json declares size default:"md" -- that default used to
+  // apply via schema property processing for the <wb-spinner> tag form, but
+  // x-spinner (or any non-schema dispatch path) never went through schema
+  // at all, so the class never got added. .wb-spinner div (no size
+  // modifier) has no width/height of its own -- the ring collapsed to
+  // basically nothing. Confirmed live: <div x-spinner> rendered ~4x too
+  // small vs <wb-spinner>. Default here so the behavior itself, not schema,
+  // is the single source of truth for this default (#279).
+  const size = options.size || element.getAttribute('data-size') || element.getAttribute('size') || 'md';
   const color = options.color || element.getAttribute('data-color') || element.getAttribute('color');
   const speed = options.speed || element.getAttribute('data-speed') || element.getAttribute('speed');
   element.classList.add('wb-spinner');
