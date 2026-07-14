@@ -20,11 +20,18 @@
  * every element that has no `variant` attribute -- confirmed no leak of
  * #328's bug: a plain <article> (no variant) still does NOT get
  * auto-carded when autoInject is off.
+ *
+ * Navigates to tests/fixtures/blank.html (not '/') before setContent() --
+ * the real site root runs its own site-engine.js WB.init() call
+ * (config/site.json's autoInjectComponents, true as of #279), which raced
+ * this test's own later WB.init() call and leaked its config into this
+ * test's supposedly-isolated page. blank.html has no scripts, so nothing
+ * calls WB.init() before this test's own explicit call does.
  */
 import { test, expect } from '@playwright/test';
 
 async function renderWithWB(page, coreModule: string) {
-  await page.goto('/');
+  await page.goto('/tests/fixtures/blank.html');
   await page.setContent(`
     <article id="probe-article"><header><h1>Title</h1></header><p>Content</p></article>
     <button id="probe-button" variant="primary">Click</button>

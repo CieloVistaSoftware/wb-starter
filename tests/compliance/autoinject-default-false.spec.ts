@@ -12,11 +12,18 @@
  * Fixed in src/core/wb.js, src/core/wb-lazy.js (init() now unconditionally
  * writes its resolved value) and src/core/config.js (module default
  * corrected to false, matching the documented contract).
+ *
+ * Navigates to tests/fixtures/blank.html (not '/') before setContent() --
+ * the real site root runs its own site-engine.js WB.init() call
+ * (config/site.json's autoInjectComponents, true as of #279), which raced
+ * this test's own later WB.init() call and leaked its config into this
+ * test's supposedly-isolated page. blank.html has no scripts, so nothing
+ * calls WB.init() before this test's own explicit call does.
  */
 import { test, expect } from '@playwright/test';
 
 async function renderWithWB(page, coreModule: string, initOptions: string) {
-  await page.goto('/');
+  await page.goto('/tests/fixtures/blank.html');
   await page.setContent(`
     <article id="probe-card"><header><h1>Title</h1></header><p>Content</p></article>
     <script type="module">
