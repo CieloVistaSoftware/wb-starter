@@ -33,7 +33,7 @@ async function init() {
   // [WB.observe] trace output is active, right on the 2nd console line, so
   // it's never a guessing game whether logging is on before you go looking
   // for trace output that isn't there.
-  const wbDebugOn = true || (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+  const wbDebugOn = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
   console.log(`[WB] debug tracing: ${wbDebugOn ? 'ON' : 'OFF'} — localStorage.setItem('wb-debug','1') + reload to enable`);
 
   try {

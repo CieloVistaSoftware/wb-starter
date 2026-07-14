@@ -4,12 +4,15 @@ if (typeof window !== 'undefined' && typeof window.WB === 'undefined') {
   /** @type {any} */ (window).WB = undefined;
 }
 
-// Debug logging — TEMPORARILY forced ON project-wide per explicit request
-// ("turn the tracing on until I tell you to turn it off") while diagnosing
-// several live rendering issues. Normally gated behind
-// localStorage['wb-debug'] === '1' (still respects an explicit '0' to opt
-// out); revert the `true ||` once tracing is no longer needed.
-const WB_DEBUG = true || (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+// Debug logging — silent unless localStorage['wb-debug'] === '1'. Was
+// forced true|| project-wide for a while ("turn the tracing on until I
+// tell you to turn it off") but that flooded the console with
+// [WB.scan]/[WB.observe] noise unrelated to whatever was actually being
+// debugged. Reverted per "filter out all tracing except the blank video
+// get and subsequent paint" — traceMediaLoads() below (always-on,
+// independent of this flag) is now the narrow, permanent trace for that
+// specific class of problem instead.
+const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
 const _wbClog = console.log.bind(console);
 const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
 
@@ -33,27 +36,58 @@ function elLabel(el) {
 // right after the version banner) so it appears in one predictable place
 // regardless of which core module a page happens to load.
 
-// Fetch/load tracing for <img>/<video>/<audio> — to find WHY a specific
-// image or video never rendered rather than guessing. 'load'/'error' don't
-// bubble, so a single capture-phase listener on document is the only way to
-// catch every media element's outcome without instrumenting each one
-// individually. Also directly surfaces the browser's own silent
-// interventions (e.g. "Images loaded lazily and replaced with
-// placeholders" — a real Chrome/Edge behavior, not a WB bug) by logging
-// naturalWidth/naturalHeight at load time: 0x0 on a 'load' event (not an
-// 'error' event) means the browser itself served a placeholder.
+// Narrow, always-on (independent of WB_DEBUG) trace for exactly one thing:
+// "did this <img>/<video> actually GET data, and did a frame actually
+// PAINT" -- per "filter out all tracing except the blank video get and
+// subsequent paint." Everything else (WB.scan/WB.observe chatter) stays
+// behind the normal WB_DEBUG gate above.
+//
+// <video> does NOT fire a generic 'load' event for its media resource --
+// that's an <img>-only event (HTMLMediaElement uses loadstart/loadeddata/
+// canplay/etc instead). The previous version of this tracer only listened
+// for 'load', so video "loaded ok" never actually logged, silently -- real
+// bug in the tracer itself, found while narrowing this down. 'loadeddata'
+// is the correct video-equivalent: a decodable frame is available.
+//
+// A GET resolving is not the same as a frame actually PAINTING to screen
+// (readyState can reach HAVE_CURRENT_DATA without a single frame ever
+// having been composited, e.g. if the element is display:none or 0-size).
+// requestVideoFrameCallback (Chromium/Edge) confirms the real thing: the
+// browser about to paint a decoded frame. Falls back to just logging
+// 'loadeddata' where that API isn't available (older/other browsers).
 function traceMediaLoads() {
   if (typeof document === 'undefined') return;
   const start = new WeakMap();
-  document.addEventListener('load', (ev) => {
+
+  function confirmPaint(video, src, getMs) {
+    if (typeof video.requestVideoFrameCallback === 'function') {
+      video.requestVideoFrameCallback((now, metadata) => {
+        _wbClog(`[WB:trace] VIDEO PAINTED first frame src=${src} get=${getMs}ms mediaTime=${metadata.mediaTime.toFixed(2)}s ${metadata.width}x${metadata.height}`);
+      });
+    } else {
+      _wbClog(`[WB:trace] VIDEO has data (no requestVideoFrameCallback support to confirm actual paint) src=${src} get=${getMs}ms ${video.videoWidth}x${video.videoHeight}`);
+    }
+  }
+
+  document.addEventListener('loadeddata', (ev) => {
     const el = ev.target;
-    if (!(el instanceof HTMLImageElement) && !(el instanceof HTMLVideoElement) && !(el instanceof HTMLAudioElement)) return;
+    if (!(el instanceof HTMLVideoElement)) return;
     const t0 = start.get(el);
     const ms = t0 ? Math.round(performance.now() - t0) : null;
-    if (el instanceof HTMLImageElement && el.naturalWidth === 0) {
-      _wbClog(`[WB:trace] IMG loaded with 0x0 natural size (likely browser intervention, not a real error) src=${el.src} ${ms != null ? ms + 'ms' : ''}`, el);
-    } else {
-      dlog(`[WB:trace] ${el.tagName} loaded ok src=${el.currentSrc || el.src} ${ms != null ? ms + 'ms' : ''}`);
+    const src = el.currentSrc || el.src;
+    if (el.videoWidth === 0 || el.videoHeight === 0) {
+      _wbClog(`[WB:trace] VIDEO GET completed but 0x0 -- blank frame, nothing to paint. src=${src} get=${ms}ms`);
+      return;
+    }
+    confirmPaint(el, src, ms);
+  }, true);
+  document.addEventListener('load', (ev) => {
+    const el = ev.target;
+    if (!(el instanceof HTMLImageElement)) return;
+    const t0 = start.get(el);
+    const ms = t0 ? Math.round(performance.now() - t0) : null;
+    if (el.naturalWidth === 0) {
+      _wbClog(`[WB:trace] IMG GET completed but 0x0 natural size (likely browser intervention, not a real error) src=${el.src} get=${ms != null ? ms + 'ms' : ''}`, el);
     }
   }, true);
   document.addEventListener('error', (ev) => {
@@ -61,9 +95,9 @@ function traceMediaLoads() {
     if (!(el instanceof HTMLImageElement) && !(el instanceof HTMLVideoElement) && !(el instanceof HTMLAudioElement)) return;
     const t0 = start.get(el);
     const ms = t0 ? Math.round(performance.now() - t0) : null;
-    _wbClog(`[WB:trace] ${el.tagName} FAILED to load src=${el.src} ${ms != null ? ms + 'ms' : ''}`, el);
+    _wbClog(`[WB:trace] ${el.tagName} GET FAILED src=${el.src} ${ms != null ? ms + 'ms' : ''}`, el.error || ev);
   }, true);
-  // Record start time as soon as each media element gets a src, so load/error above can report elapsed time.
+  // Record start time as soon as each media element gets a src, so the GET/paint logs above can report elapsed time.
   new MutationObserver((mutations) => {
     for (const m of mutations) {
       for (const node of m.addedNodes) {
@@ -945,10 +979,12 @@ const WB = {
       setConfig('logLevel', 'debug');
     }
 
-    // Media load/error tracing — gated on the same localStorage['wb-debug']
-    // flag as dlog(), not the `debug` init option, so it's on whenever
-    // someone has already turned on tracing to investigate something.
-    if (WB_DEBUG) traceMediaLoads();
+    // Media GET/paint tracing — always on, independent of WB_DEBUG. Per
+    // "filter out all tracing except the blank video get and subsequent
+    // paint": this is the one class of event worth surfacing unconditionally
+    // in every environment, not just when someone has already turned on the
+    // full (much noisier) [WB.scan]/[WB.observe] trace.
+    traceMediaLoads();
 
     // Set autoInject — unconditional: config.js's module-level default was
     // `true`, and this previously only ever set it to `true` (never `false`),
