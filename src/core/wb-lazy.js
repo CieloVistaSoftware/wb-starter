@@ -243,10 +243,23 @@ function getAutoInjectBehaviors(element) {
   // Skip if x-behavior is already present (explicit overrides implicit)
   if (element.hasAttribute('x-behavior')) return behaviors;
 
+  const prefix = getConfig('prefix') || 'x';
+  const prefixAttr = `${prefix}-`;
   for (const { selector, behavior } of autoInjectMappings) {
-    if (element.matches(selector)) {
-      behaviors.push(behavior);
+    if (!element.matches(selector)) continue;
+    // A DIFFERENT explicit x-{behavior} attribute already opts this
+    // element into a richer, deliberate behavior -- e.g. <input type="text"
+    // x-password> should only get password()'s show/hide-toggle wrapper,
+    // never ALSO the generic native-auto-inject input() wrapper racing to
+    // wrap the same element a second time (see wb.js's
+    // getAutoInjectBehavior() for the full rationale/incident).
+    let overridden = false;
+    for (const attr of element.attributes) {
+      if (!attr.name.startsWith(prefixAttr)) continue;
+      const other = attr.name.slice(prefixAttr.length);
+      if (other !== behavior && hasBehavior(other)) { overridden = true; break; }
     }
+    if (!overridden) behaviors.push(behavior);
   }
   return behaviors;
 }

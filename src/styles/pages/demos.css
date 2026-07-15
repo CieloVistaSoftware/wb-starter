@@ -37,6 +37,33 @@
   color: var(--text-muted);
 }
 
+/* Category sections (scripts/generate-demos-list.mjs) */
+.demos-category {
+  margin-top: 2.5rem;
+}
+
+.demos-category:first-of-type {
+  margin-top: 1.5rem;
+}
+
+.demos-category__title {
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary);
+  color: var(--text-primary);
+  font-size: 1.4rem;
+}
+
+/* Curated live <wb-demo> examples sit above a category's link-cards, giving
+   an immediate taste of what's in the category before clicking through. */
+.demos-inline-examples {
+  margin-bottom: 1.5rem;
+}
+
+.demos-card-grid {
+  margin-top: 0;
+}
+
 /* MOBILE-FIRST: Responsive overrides for demos page */
 @media (max-width: 600px) {
   .grid-search-wrapper {
@@ -49,5 +76,8 @@
     font-size: 1rem;
     padding: 0.5rem 0.75rem;
     border-radius: 1rem;
+  }
+  .demos-category__title {
+    font-size: 1.1rem;
   }
 }

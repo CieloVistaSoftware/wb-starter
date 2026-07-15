@@ -16,43 +16,115 @@
 
 <!-- Cards below are generated from the demos/ folder by
      scripts/generate-demos-list.mjs — edit that script, not this list. -->
-<div id="demos-grid" class="page__grid">
+<div id="demos-grid">
   <!-- demos:auto:start -->
-  <wb-card-link title="Autoinject" href="demos/autoinject.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Autosize Demo" href="demos/autosize-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="🏷️ Badge Showcase" href="demos/badge-showcase.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Buttons" href="demos/buttons.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="🃏 Card Examples" href="demos/card-examples.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Uganda Community Food Bank" href="demos/charity-food.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Code" href="demos/code.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Collapse Demo" href="demos/collapse-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Copy Demo" href="demos/copy-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Draggable Demo" href="demos/draggable-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Feedback Demo" href="demos/feedback-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Fieldset Demo" href="demos/fieldset-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Form Demo" href="demos/form-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Framework Integration Demo" href="demos/frameworks.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="x-help Demo" href="demos/help-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Label Demo" href="demos/label-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="🧩 Multi-Component Demo" href="demos/multi-component-demo-generated.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Playground" href="demos/playground.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="📊 Progress Showcase" href="demos/progress-showcase.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Progressbar Demo" href="demos/progressbar-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="WB Views Registry Browser" href="demos/registry-browser.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Resizable Demo" href="demos/resizable-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Ripple Demo" href="demos/ripple-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development" href="demos/schema-first-architecture.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Semantics Forms" href="demos/semantics-forms.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Semantics Media" href="demos/semantics-media.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Semantics Structure" href="demos/semantics-structure.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Semantics Theme" href="demos/semantics-theme.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="WB Stage Light Demo" href="demos/stage-light.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Sticky Demo" href="demos/sticky-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Tabs Demo" href="demos/tabs-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Toggle Demo" href="demos/toggle-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="Tooltip Button Showcase" href="demos/tooltip-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="WB Views Demo - Complete Examples" href="demos/wb-views-demo.html" target="_blank" icon="🎮"></wb-card-link>
-  <wb-card-link title="WB Component Wizard" href="demos/wizard.html" target="_blank" icon="🎮"></wb-card-link>
+  <section class="demos-category" data-category="Forms & Inputs">
+    <h2 class="demos-category__title">📝 Forms & Inputs</h2>
+    <div class="demos-inline-examples">
+      <wb-demo><input x-label="Full name:" type="text"></wb-demo>
+      <wb-demo><textarea x-autosize placeholder="Type here and watch me grow...">Type here and watch me grow...</textarea></wb-demo>
+      <wb-demo><fieldset x-fieldset><legend>Personal Info</legend><label>Name: <input type="text"></label></fieldset></wb-demo>
+    </div>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Autosize Demo" href="demos/autosize-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Buttons" href="demos/buttons.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Fieldset Demo" href="demos/fieldset-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Form Demo" href="demos/form-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="x-help Demo" href="demos/help-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Label Demo" href="demos/label-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Semantics Forms" href="demos/semantics-forms.html" target="_blank" icon="🎮"></wb-card-link>
+    </div>
+  </section>
+  <section class="demos-category" data-category="Cards & Layout">
+    <h2 class="demos-category__title">🃏 Cards & Layout</h2>
+    <div class="demos-inline-examples">
+      <wb-demo><wb-card title="Welcome" subtitle="Standard card" hoverable>This is a basic card with default styling.</wb-card></wb-demo>
+      <wb-demo><wb-card title="Glass Card" subtitle="With badge" badge="NEW" variant="glass" clickable hoverable elevated>All features enabled.</wb-card></wb-demo>
+    </div>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="🃏 Card Examples" href="demos/card-examples.html" target="_blank" icon="🎮"></wb-card-link>
+    </div>
+  </section>
+  <section class="demos-category" data-category="Feedback & Overlays">
+    <h2 class="demos-category__title">💬 Feedback & Overlays</h2>
+    <div class="demos-inline-examples">
+      <wb-demo><button x-toast message="Action saved successfully!" toast-variant="success">Show Toast</button></wb-demo>
+      <wb-demo><wb-button x-tooltip="Tooltip text" position="top">Hover me</wb-button></wb-demo>
+    </div>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Feedback Demo" href="demos/feedback-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Tooltip Button Showcase" href="demos/tooltip-demo.html" target="_blank" icon="🎮"></wb-card-link>
+    </div>
+  </section>
+  <section class="demos-category" data-category="Effects & Animation">
+    <h2 class="demos-category__title">✨ Effects & Animation</h2>
+    <div class="demos-inline-examples">
+      <wb-demo><button x-ripple style="padding:0.75rem 1.5rem;">Click for Ripple</button></wb-demo>
+      <wb-demo><div x-draggable style="width:60px;height:60px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;cursor:move;">Drag</div></wb-demo>
+    </div>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Collapse Demo" href="demos/collapse-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Copy Demo" href="demos/copy-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Draggable Demo" href="demos/draggable-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Resizable Demo" href="demos/resizable-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Ripple Demo" href="demos/ripple-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="WB Stage Light Demo" href="demos/stage-light.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Sticky Demo" href="demos/sticky-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Toggle Demo" href="demos/toggle-demo.html" target="_blank" icon="🎮"></wb-card-link>
+    </div>
+  </section>
+  <section class="demos-category" data-category="Media">
+    <h2 class="demos-category__title">🎬 Media</h2>
+    <div class="demos-inline-examples">
+      <wb-demo><img src="https://picsum.photos/id/1015/400/240" zoomable alt="River" style="width:100%;border-radius:8px;"></wb-demo>
+      <wb-demo><audio controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio></wb-demo>
+    </div>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Semantics Media" href="demos/semantics-media.html" target="_blank" icon="🎮"></wb-card-link>
+    </div>
+  </section>
+  <section class="demos-category" data-category="Navigation & Structure">
+    <h2 class="demos-category__title">🧭 Navigation & Structure</h2>
+    <div class="demos-inline-examples">
+      <wb-demo><wb-tabs><div tab="Tab 1">Content for Tab 1</div><div tab="Tab 2">Content for Tab 2</div></wb-tabs></wb-demo>
+    </div>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Tabs Demo" href="demos/tabs-demo.html" target="_blank" icon="🎮"></wb-card-link>
+    </div>
+  </section>
+  <section class="demos-category" data-category="Data Display">
+    <h2 class="demos-category__title">📊 Data Display</h2>
+    <div class="demos-inline-examples">
+      <wb-demo><wb-badge label="Done" variant="success"></wb-badge></wb-demo>
+      <wb-demo><wb-progress value="70" label="Loading..."></wb-progress></wb-demo>
+    </div>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="🏷️ Badge Showcase" href="demos/badge-showcase.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Code" href="demos/code.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="📊 Progress Showcase" href="demos/progress-showcase.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Progressbar Demo" href="demos/progressbar-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Semantics Structure" href="demos/semantics-structure.html" target="_blank" icon="🎮"></wb-card-link>
+    </div>
+  </section>
+  <section class="demos-category" data-category="Architecture & Meta">
+    <h2 class="demos-category__title">🏗️ Architecture & Meta</h2>
+    <div class="demos-inline-examples">
+      <wb-demo><wb-themecontrol></wb-themecontrol></wb-demo>
+      <wb-demo><div x-darkmode target="self" theme="dark" style="padding:1rem;border-radius:8px;"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></wb-demo>
+    </div>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Autoinject" href="demos/autoinject.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Uganda Community Food Bank" href="demos/charity-food.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Framework Integration Demo" href="demos/frameworks.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="🧩 Multi-Component Demo" href="demos/multi-component-demo-generated.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Playground" href="demos/playground.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="WB Views Registry Browser" href="demos/registry-browser.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development" href="demos/schema-first-architecture.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Semantics Theme" href="demos/semantics-theme.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="WB Views Demo - Complete Examples" href="demos/wb-views-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="WB Component Wizard" href="demos/wizard.html" target="_blank" icon="🎮"></wb-card-link>
+    </div>
+  </section>
   <!-- demos:auto:end -->
 </div>
 
@@ -65,17 +137,41 @@
     const empty = document.getElementById('demos-empty');
     if (!input || !grid) return;
 
+    // Cards live nested inside per-category <section class="demos-category">
+    // blocks now (scripts/generate-demos-list.mjs) — query descends into them
+    // the same way regardless of nesting.
+    const sections = Array.from(grid.querySelectorAll('.demos-category'));
     const cards = Array.from(grid.querySelectorAll('wb-card-link'));
 
     input.addEventListener('input', () => {
       const query = input.value.trim().toLowerCase();
       let visibleCount = 0;
+
       cards.forEach((card) => {
         const title = (card.getAttribute('title') || '').toLowerCase();
         const matches = !query || title.includes(query);
         card.hidden = !matches;
         if (matches) visibleCount++;
       });
+
+      // A category also matches (and stays fully visible) when the query hits
+      // the category name itself, e.g. typing "forms" keeps every Forms &
+      // Inputs card showing even though none of their titles contain "forms".
+      sections.forEach((section) => {
+        const categoryName = (section.getAttribute('data-category') || '').toLowerCase();
+        const categoryMatches = !!query && categoryName.includes(query);
+        if (categoryMatches) {
+          section.querySelectorAll('wb-card-link').forEach((card) => {
+            if (card.hidden) { card.hidden = false; visibleCount++; }
+          });
+        }
+        // Hide the whole section (heading + inline wb-demo examples included)
+        // once none of its cards are showing, so search doesn't leave behind
+        // an empty heading with nothing under it.
+        const sectionHasVisibleCard = Array.from(section.querySelectorAll('wb-card-link')).some((c) => !c.hidden);
+        section.hidden = !sectionHasVisibleCard;
+      });
+
       empty.hidden = visibleCount > 0;
     });
   })();

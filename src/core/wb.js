@@ -226,6 +226,21 @@ function getAutoInjectBehavior(element) {
   if (element.hasAttribute(candidate) && !RESERVED_ATTRIBUTES.has(candidate)) return null;
   if (element.hasAttribute(`x-${candidate}-init`)) return null;
 
+  // A DIFFERENT explicit x-{behavior} attribute already opts this element
+  // into a richer, deliberate behavior -- e.g. <input type="text"
+  // x-password"> should only get password()'s show/hide-toggle wrapper,
+  // never ALSO the generic native-auto-inject input() wrapper racing to
+  // wrap the same element a second time. Generic native auto-inject is
+  // additive with genuinely independent modifiers (x-ripple on an
+  // <article>, say) but not with another IS-A-ish behavior for the same
+  // element.
+  const prefixAttr = `${prefix}-`;
+  for (const attr of element.attributes) {
+    if (!attr.name.startsWith(prefixAttr)) continue;
+    const other = attr.name.slice(prefixAttr.length);
+    if (other !== candidate && behaviors[other]) return null;
+  }
+
   return candidate;
 }
 

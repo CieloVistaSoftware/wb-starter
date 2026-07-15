@@ -132,6 +132,16 @@ export const nativeMap = {
   'input[type="checkbox"]': 'checkbox',
   'input[type="radio"]': 'radio',
   'input[type="range"]': 'range',
+  // <input> is native semantic HTML -- autoInject decorates it like any
+  // other native element (button/select/textarea below), not a special
+  // case requiring x-input. Order matters: getNativeBehavior() returns on
+  // first selector match, so the specific checkbox/radio/range entries
+  // above still win for those types. wb.js's getAutoInjectBehavior() (and
+  // wb-lazy.js's equivalent) separately skips this generic fallback when a
+  // DIFFERENT explicit x-{behavior} attribute is already present (e.g.
+  // x-password, x-search) -- so a deliberately-opted-into richer behavior
+  // is never double-applied alongside the generic input() wrapper.
+  'input': 'input',
   'select': 'select',
   'textarea': 'textarea',
   'button': 'button',

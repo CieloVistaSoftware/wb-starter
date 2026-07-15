@@ -3,6 +3,7 @@
 import WB from './wb.js';  // v3.0: Use main wb.js with schema support
 import { initViews } from './wb-views.js';
 import { VERSION } from './version.js';
+import { preloadCssForHtml } from './style-loader.js';
 
 // VERSION.builtAt is stamped in UTC (scripts/stamp-version.js: `new
 // Date().toISOString()`) — displayed here in Central time (John's local
@@ -415,6 +416,12 @@ export default class WBSite {
       }
       if (res.ok) {
         const html = await res.text();
+        // Preload this page's behavior CSS BEFORE the content becomes
+        // visible — otherwise it paints unstyled for a moment and then
+        // reflows as each behavior's CSS trickles in async, a real CLS
+        // regression the old render-blocking @import chain never had
+        // (#342 follow-up; see style-loader.js's preloadCssForHtml doc).
+        await preloadCssForHtml(html);
         main.innerHTML = `<div class="page page--${pageId}" data-page="${pageId}" id="mainPage-${pageId}">${html}</div>`;
         
         // Execute any scripts in the loaded page

@@ -70,7 +70,7 @@
     <h3>Button with Behaviors</h3>
     <wb-demo title="Interactive Buttons" tag="Behavior">
       <button variant="primary" x-ripple>With Ripple</button>
-      <button variant="primary" x-toast message="Action completed!" type="success">With Toast</button>
+      <button variant="primary" x-toast message="Action completed!" toast-variant="success">With Toast</button>
       <button variant="primary" x-tooltip content="Helpful hint!" position="top">With Tooltip</button>
     </wb-demo>
   </section>
@@ -268,10 +268,10 @@
     <h3>Toast Notifications</h3>
     <wb-demo title="Toast Messages" tag="UI">
       <div class="demo-row">
-        <button variant="primary" x-toast message="Info message" type="info">Info Toast</button>
-        <button variant="primary" x-toast message="Success!" type="success">Success Toast</button>
-        <button variant="primary" x-toast message="Warning!" type="warning">Warning Toast</button>
-        <button variant="primary" x-toast message="Error!" type="error">Error Toast</button>
+        <button x-toast message="Info message" toast-variant="info">Info Toast</button>
+        <button x-toast message="Success!" toast-variant="success">Success Toast</button>
+        <button x-toast message="Warning!" toast-variant="warning">Warning Toast</button>
+        <button x-toast message="Error!" toast-variant="error">Error Toast</button>
       </div>
     </wb-demo>
   </section>

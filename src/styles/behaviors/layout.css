@@ -1,9 +1,30 @@
 /* Layout custom elements extracted from site.css */
-wb-grid, wb-flex, wb-stack, wb-cluster, wb-container,
+wb-flex, wb-stack, wb-cluster, wb-container,
 wb-row, wb-column,
 wb-sidebar, wb-center, wb-cover, wb-masonry, wb-switcher,
 wb-reel, wb-frame, wb-sticky, wb-drawer, wb-icon {
   display: block;
+}
+
+/* wb-grid gets its own grid-shaped default here (not lumped in with the
+   block-display group above) matching layouts.js's grid() 3-column
+   default (defaultMins['3'] = '250px'). grid() itself only runs once
+   wb-grid.js's module has loaded/executed and the custom element upgrades
+   -- setting display:grid/grid-template-columns purely via JS inline
+   styles left a real gap: this tag painted as block (single column) on
+   first paint, then reflowed into a multi-column grid once JS caught up.
+   That gap used to be hidden by how slow the old 46-file @import CSS
+   chain made first paint (JS had time to finish first); JIT CSS loading
+   made first paint fast enough to expose it (confirmed live via Chrome
+   DevTools Performance: wb-grid.wb-grid alone scored 0.1327 of a 0.14
+   total CLS). Inline styles set by grid() always win over this stylesheet
+   rule, so custom columns/gap/minWidth configs still apply correctly --
+   for the common default case they now just match what's already
+   painted, so there's nothing left to shift. */
+wb-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
 }
 
 wb-drawer {

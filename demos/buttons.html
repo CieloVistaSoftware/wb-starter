@@ -67,7 +67,7 @@
   <wb-demo columns="3">
     <wb-button variant="primary" x-ripple>Ripple</wb-button>
     <wb-button variant="secondary" x-tooltip="Helpful hint" position="top">Tooltip</wb-button>
-    <wb-button variant="success" x-toast message="Saved!" type="success">Toast on click</wb-button>
+    <wb-button variant="success" x-toast message="Saved!" toast-variant="success">Toast on click</wb-button>
     <wb-button variant="info" x-copy copy-text="Copied from a wb-button!">Copy to clipboard</wb-button>
     <wb-button variant="warning" x-wobble>Wobble</wb-button>
     <wb-button variant="ghost" x-tada>Tada</wb-button>
@@ -84,8 +84,8 @@
   <h2>Behaviors — composed</h2>
   <p class="wb-note">Stack multiple <code>x-</code> attributes on one button — they layer, they don't conflict.</p>
   <wb-demo columns="1">
-    <wb-button variant="primary" x-ripple x-tooltip="Ripple + tooltip + toast" position="top" x-toast message="Saved!" type="success">Save (ripple + tooltip + toast)</wb-button>
-    <wb-button variant="error" x-ripple x-wobble x-toast message="Deleted" type="error">Delete (ripple + wobble + toast)</wb-button>
+    <wb-button variant="primary" x-ripple x-tooltip="Ripple + tooltip + toast" position="top" x-toast message="Saved!" toast-variant="success">Save (ripple + tooltip + toast)</wb-button>
+    <wb-button variant="error" x-ripple x-wobble x-toast message="Deleted" toast-variant="error">Delete (ripple + wobble + toast)</wb-button>
     <wb-button variant="info" x-copy copy-text="npm i wb-starter" x-tooltip="Click to copy the install command" position="bottom" x-ripple>Copy install cmd</wb-button>
   </wb-demo>
 

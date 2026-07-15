@@ -1,19 +1,31 @@
 /**
- * generate-demos-list.mjs  (#229, #237)
+ * generate-demos-list.mjs  (#229, #237, demos-by-category cleanup)
  *
  * Fills the demos grid in pages/demos.html from the actual demos/ folder, so the
  * "Demos" page lists EVERY demo instead of a hand-maintained subset (was 7 of 45).
- * Scans demos/*.html, reads each <title>, and writes a <wb-card-link> per demo
- * between the <!-- demos:auto:start --> / <!-- demos:auto:end --> markers.
+ * Scans demos/*.html, reads each <title>, and writes categorized sections — one
+ * <section class="demos-category"> per CATEGORIES entry, each with a couple of
+ * curated live <wb-demo> examples followed by the full set of <wb-card-link>
+ * cards for that category — between the <!-- demos:auto:start --> /
+ * <!-- demos:auto:end --> markers.
  *
  * Links in pages/demos.html are root-relative (demos/x.html) so they resolve
  * under the /wb-starter/ Pages base — that page is an injected SPA fragment.
+ *
+ * CATEGORIZING A NEW DEMO: when you add a new demos/*.html file, add a
+ * `'your-file.html': 'categoryKey'` line to DEMO_CATEGORY below. Uncategorized
+ * files still get listed (in a fallback "More Demos" section) so nothing is
+ * ever dropped, but the generator prints a warning so the gap doesn't go
+ * unnoticed. Add a new category by adding an entry to CATEGORIES (and
+ * optionally a couple of curated snippets to CATEGORY_EXAMPLES).
  *
  * #237: ALSO writes demos/index.html — a plain, standalone page (no SPA, no
  * WB runtime dependency) so the bare /demos/ directory URL serves a real
  * index instead of a directory listing / 404. Static file servers (this
  * project's express server, GitHub Pages) serve index.html for a directory
- * request by default — dropping this file in demos/ is enough.
+ * request by default — dropping this file in demos/ is enough. It's also
+ * grouped by category (plain headings, no wb-demo — this page never loads
+ * the WB runtime on purpose).
  *
  * Usage: node scripts/generate-demos-list.mjs   (also runnable in --check mode)
  */
@@ -28,6 +40,120 @@ const CHECK = process.argv.includes('--check');
 
 // Internal harnesses, not showcase demos — kept out of the public list.
 const SKIP = /(^|[-.])(debug|test|test-harness|harness|check|scratch)([-.]|$)/i;
+
+// Display order — high-traffic categories first (Forms & Inputs / Cards &
+// Layout are the most-visited component families), architecture/meta last
+// (fewest visitors, deepest content).
+const CATEGORIES = [
+  { key: 'forms', title: 'Forms & Inputs', icon: '📝' },
+  { key: 'cards', title: 'Cards & Layout', icon: '🃏' },
+  { key: 'feedback', title: 'Feedback & Overlays', icon: '💬' },
+  { key: 'effects', title: 'Effects & Animation', icon: '✨' },
+  { key: 'media', title: 'Media', icon: '🎬' },
+  { key: 'navigation', title: 'Navigation & Structure', icon: '🧭' },
+  { key: 'data', title: 'Data Display', icon: '📊' },
+  { key: 'architecture', title: 'Architecture & Meta', icon: '🏗️' },
+  // Fallback bucket for anything not yet added to DEMO_CATEGORY below —
+  // always last, never removed even if empty.
+  { key: 'more', title: 'More Demos', icon: '🎮' },
+];
+
+// filename -> category key. Keep this alphabetized within each category so
+// diffs stay small. Every demos/*.html that isn't SKIPped must map to one of
+// these (a missing entry falls into 'more' with a console warning, not a
+// hard failure — a new demo never silently disappears from the page).
+const DEMO_CATEGORY = {
+  // Forms & Inputs
+  'autosize-demo.html': 'forms',
+  'buttons.html': 'forms',
+  'fieldset-demo.html': 'forms',
+  'form-demo.html': 'forms',
+  'help-demo.html': 'forms',
+  'label-demo.html': 'forms',
+  'semantics-forms.html': 'forms',
+
+  // Cards & Layout
+  'card-examples.html': 'cards',
+
+  // Feedback & Overlays
+  'feedback-demo.html': 'feedback',
+  'tooltip-demo.html': 'feedback',
+
+  // Effects & Animation
+  'collapse-demo.html': 'effects',
+  'copy-demo.html': 'effects',
+  'draggable-demo.html': 'effects',
+  'resizable-demo.html': 'effects',
+  'ripple-demo.html': 'effects',
+  'stage-light.html': 'effects',
+  'sticky-demo.html': 'effects',
+  'toggle-demo.html': 'effects',
+
+  // Media
+  'semantics-media.html': 'media',
+
+  // Navigation & Structure
+  'tabs-demo.html': 'navigation',
+
+  // Data Display
+  'badge-showcase.html': 'data',
+  'code.html': 'data',
+  'progress-showcase.html': 'data',
+  'progressbar-demo.html': 'data',
+  'semantics-structure.html': 'data',
+
+  // Architecture & Meta (playground/wizard/schema/registry/frameworks —
+  // demos ABOUT the framework's own machinery, not a single component)
+  'autoinject.html': 'architecture',
+  'charity-food.html': 'architecture', // full composed reference site, not a single-feature demo
+  'frameworks.html': 'architecture',
+  'multi-component-demo-generated.html': 'architecture', // showcases $extends/$generate/$ref/$include composition, not any one component
+  'playground.html': 'architecture',
+  'registry-browser.html': 'architecture',
+  'schema-first-architecture.html': 'architecture',
+  'semantics-theme.html': 'architecture', // theme system (wb-themecontrol, x-darkmode, nested data-theme) is core architecture, not a component
+  'wb-views-demo.html': 'architecture',
+  'wizard.html': 'architecture',
+};
+
+// A few real, small <wb-demo>-wrapped examples per category, shown ABOVE that
+// category's link-cards so a visitor gets a live taste before clicking
+// through. Snippets are lifted straight from the linked demo files (kept
+// small/representative — not full copies). Keep to 2-4 per category.
+const CATEGORY_EXAMPLES = {
+  forms: [
+    `<wb-demo><input x-label="Full name:" type="text"></wb-demo>`,
+    `<wb-demo><textarea x-autosize placeholder="Type here and watch me grow...">Type here and watch me grow...</textarea></wb-demo>`,
+    `<wb-demo><fieldset x-fieldset><legend>Personal Info</legend><label>Name: <input type="text"></label></fieldset></wb-demo>`,
+  ],
+  cards: [
+    `<wb-demo><wb-card title="Welcome" subtitle="Standard card" hoverable>This is a basic card with default styling.</wb-card></wb-demo>`,
+    `<wb-demo><wb-card title="Glass Card" subtitle="With badge" badge="NEW" variant="glass" clickable hoverable elevated>All features enabled.</wb-card></wb-demo>`,
+  ],
+  feedback: [
+    `<wb-demo><button x-toast message="Action saved successfully!" toast-variant="success">Show Toast</button></wb-demo>`,
+    `<wb-demo><wb-button x-tooltip="Tooltip text" position="top">Hover me</wb-button></wb-demo>`,
+  ],
+  effects: [
+    `<wb-demo><button x-ripple style="padding:0.75rem 1.5rem;">Click for Ripple</button></wb-demo>`,
+    `<wb-demo><div x-draggable style="width:60px;height:60px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;cursor:move;">Drag</div></wb-demo>`,
+  ],
+  media: [
+    `<wb-demo><img src="https://picsum.photos/id/1015/400/240" zoomable alt="River" style="width:100%;border-radius:8px;"></wb-demo>`,
+    `<wb-demo><audio controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio></wb-demo>`,
+  ],
+  navigation: [
+    `<wb-demo><wb-tabs><div tab="Tab 1">Content for Tab 1</div><div tab="Tab 2">Content for Tab 2</div></wb-tabs></wb-demo>`,
+  ],
+  data: [
+    `<wb-demo><wb-badge label="Done" variant="success"></wb-badge></wb-demo>`,
+    `<wb-demo><wb-progress value="70" label="Loading..."></wb-progress></wb-demo>`,
+  ],
+  architecture: [
+    `<wb-demo><wb-themecontrol></wb-themecontrol></wb-demo>`,
+    `<wb-demo><div x-darkmode target="self" theme="dark" style="padding:1rem;border-radius:8px;"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></wb-demo>`,
+  ],
+};
 
 function titleOf(file, fallback) {
   const html = fs.readFileSync(file, 'utf8');
@@ -45,13 +171,52 @@ const files = fs.readdirSync(DEMOS_DIR)
   .filter((n) => n.endsWith('.html') && n !== 'index.html' && !SKIP.test(n.replace(/\.html$/i, '')))
   .sort();
 
-const cards = files.map((name) => {
+// Group files by category, preserving CATEGORIES display order.
+const byCategory = new Map(CATEGORIES.map((c) => [c.key, []]));
+const uncategorized = [];
+for (const name of files) {
+  const key = DEMO_CATEGORY[name];
+  if (key && byCategory.has(key)) {
+    byCategory.get(key).push(name);
+  } else {
+    byCategory.get('more').push(name);
+    uncategorized.push(name);
+  }
+}
+if (uncategorized.length && !CHECK) {
+  console.warn(
+    `[generate-demos-list] ${uncategorized.length} demo(s) missing from DEMO_CATEGORY in scripts/generate-demos-list.mjs — filed under "More Demos": ${uncategorized.join(', ')}`
+  );
+}
+
+function cardFor(name) {
   const title = titleOf(path.join(DEMOS_DIR, name), niceFallback(name));
   const t = title.replace(/"/g, '&quot;');
-  return `  <wb-card-link title="${t}" href="demos/${name}" target="_blank" icon="🎮"></wb-card-link>`;
-});
+  return `      <wb-card-link title="${t}" href="demos/${name}" target="_blank" icon="🎮"></wb-card-link>`;
+}
 
-const block = '<!-- demos:auto:start -->\n' + cards.join('\n') + '\n  <!-- demos:auto:end -->';
+const sections = CATEGORIES
+  .map(({ key, title, icon }) => {
+    const names = byCategory.get(key);
+    if (!names.length) return '';
+    const cards = names.map(cardFor).join('\n');
+    const examples = CATEGORY_EXAMPLES[key];
+    const examplesBlock = examples && examples.length
+      ? `    <div class="demos-inline-examples">\n${examples.map((e) => `      ${e}`).join('\n')}\n    </div>\n`
+      : '';
+    return (
+`  <section class="demos-category" data-category="${title}">
+    <h2 class="demos-category__title">${icon} ${title}</h2>
+${examplesBlock}    <div class="page__grid demos-card-grid">
+${cards}
+    </div>
+  </section>`
+    );
+  })
+  .filter(Boolean)
+  .join('\n');
+
+const block = '<!-- demos:auto:start -->\n' + sections + '\n  <!-- demos:auto:end -->';
 
 let page = fs.readFileSync(PAGE, 'utf8');
 const re = /<!-- demos:auto:start -->[\s\S]*?<!-- demos:auto:end -->/;
@@ -63,11 +228,21 @@ const next = page.replace(re, block);
 
 // #237: plain standalone index — links are same-directory relative (./x.html),
 // no SPA, no WB runtime import, so it works even if the framework fails to load.
-const links = files.map((name) => {
-  const title = titleOf(path.join(DEMOS_DIR, name), niceFallback(name));
-  const t = title.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  return `      <li><a href="./${name}">${t}</a></li>`;
-}).join('\n');
+// Grouped by the same categories (plain headings — no wb-demo on this page).
+const indexSections = CATEGORIES
+  .map(({ key, title, icon }) => {
+    const names = byCategory.get(key);
+    if (!names.length) return '';
+    const links = names.map((name) => {
+      const linkTitle = titleOf(path.join(DEMOS_DIR, name), niceFallback(name));
+      const t = linkTitle.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return `        <li><a href="./${name}">${t}</a></li>`;
+    }).join('\n');
+    return `      <h2>${icon} ${title}</h2>\n      <ul>\n${links}\n      </ul>`;
+  })
+  .filter(Boolean)
+  .join('\n');
+
 const indexHtml = `<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -78,8 +253,9 @@ const indexHtml = `<!DOCTYPE html>
   <style>
     body { max-width: 700px; margin: 0 auto; padding: 2rem; background: var(--bg-color); color: var(--text-primary); font-family: system-ui, -apple-system, sans-serif; }
     h1 { color: var(--primary); }
+    h2 { margin-top: 2rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-size: 1.1rem; }
     p { color: var(--text-secondary); }
-    ul { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0.5rem; }
+    ul { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.5rem; }
     li { border: 1px solid var(--border-color); border-radius: 6px; }
     a { display: block; padding: 0.75rem 1rem; color: var(--text-primary); text-decoration: none; }
     a:hover { background: var(--bg-secondary); }
@@ -87,10 +263,8 @@ const indexHtml = `<!DOCTYPE html>
 </head>
 <body>
   <h1>🎮 Demos</h1>
-  <p>Every demo in demos/, listed directly — no SPA, no framework dependency. Generated by scripts/generate-demos-list.mjs; edit that script, not this file.</p>
-  <ul>
-${links}
-  </ul>
+  <p>Every demo in demos/, grouped by category — no SPA, no framework dependency. Generated by scripts/generate-demos-list.mjs; edit that script, not this file.</p>
+${indexSections}
 </body>
 </html>
 `;
@@ -103,5 +277,5 @@ if (CHECK) {
 } else {
   fs.writeFileSync(PAGE, next);
   fs.writeFileSync(INDEX, indexHtml);
-  console.log(`Wrote ${files.length} demo links into pages/demos.html and demos/index.html.`);
+  console.log(`Wrote ${files.length} demo links (in ${CATEGORIES.filter((c) => byCategory.get(c.key).length).length} categories) into pages/demos.html and demos/index.html.`);
 }

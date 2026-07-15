@@ -7,7 +7,7 @@
 
 ---
 
-## Golden Rule: Attributes Over Slots
+## Golden Rule: Attributes Over Nested Markup
 
 > **Attribute name = what it is for**  
 > **Schema = where it goes**
@@ -23,11 +23,11 @@ Users provide simple attribute values. The schema defines how those values becom
   subtitle="Your journey begins"
   cta="Launch Mission">
 </wb-hero>
-<!-- ❌ UGLY: User must know internal structure -->
+<!-- ❌ UGLY: User must hand-author internal structure and classes -->
 <wb-hero variant="cosmic">
-  <h1 slot="title">Explore the Universe</h1>
-  <p slot="subtitle">Your journey begins</p>
-  <button slot="cta">Launch Mission</button>
+  <h1 class="wb-hero__title">Explore the Universe</h1>
+  <p class="wb-hero__subtitle">Your journey begins</p>
+  <button class="wb-hero__cta">Launch Mission</button>
 </wb-hero>
 ```
 
@@ -38,7 +38,7 @@ Users provide simple attribute values. The schema defines how those values becom
 | Simple text values | **Attributes** | `title="Hello"` |
 | Enum choices | **Attributes** | `variant="cosmic"` |
 | Boolean flags | **Attributes** | `elevated`, `dismissible` |
-| Arbitrary/rich content | **Body (slot)** | `<wb-card>Any HTML here</wb-card>` |
+| Arbitrary/rich content | **Body (children)** | `<wb-card>Any HTML here</wb-card>` |
 
 ### The Contract
 
@@ -79,13 +79,12 @@ cta="Click"     →   "tag": "button"    →   <button>Click</button>
 7. [Naming Conventions](#naming-conventions)
 8. [Accessibility Attributes](#accessibility-attributes)
 9. [Units and Values](#units-and-values)
-10. [Slots and Content](#slots-and-content)
-11. [CSS Custom Properties](#css-custom-properties)
-12. [Migration from Legacy Syntax](#migration-from-legacy-syntax)
-13. [Error Handling](#error-handling)
-14. [IDE Support](#ide-support)
-15. [Quick Reference](#quick-reference)
-16. [Examples by Component](#examples-by-component)
+10. [CSS Custom Properties](#css-custom-properties)
+11. [Migration from Legacy Syntax](#migration-from-legacy-syntax)
+12. [Error Handling](#error-handling)
+13. [IDE Support](#ide-support)
+14. [Quick Reference](#quick-reference)
+15. [Examples by Component](#examples-by-component)
 
 ---
 
@@ -201,7 +200,7 @@ These native attributes have meanings that **conflict** with typical component u
 ```html
 <!-- BAD: Conflicts with meta content, CSS content -->
 <wb-card content="Body text">
-  <!-- GOOD: Use slot or specific name -->
+  <!-- GOOD: Use children or a specific attribute -->
   <wb-card>Body text</wb-card>
   <wb-card description="Body text">
 ```
@@ -585,47 +584,20 @@ Display values can include formatting - they're strings, not numbers:
 
 ---
 
-## Slots and Content
+## Content (Children)
 
-### Default Slot (Children)
-
-Element children become the default slot:
+wb-starter is light DOM only — composition over inheritance, no Shadow DOM, no `<slot>` mechanism. Element children ARE the component's body content, exactly as authored:
 
 ```html
 <wb-card heading="Title">
-  <p>This paragraph goes in the default slot (main content)</p>
+  <p>This paragraph is the card's body content.</p>
 </wb-card>
 <wb-alert variant="warning">
   <strong>Warning:</strong> This is the alert content.
 </wb-alert>
 ```
 
-### Named Slots
-
-Use `slot` attribute for named slots:
-
-```html
-<wb-card>
-  <img
-    slot="image"
-    src="photo.jpg">
-  <h3 slot="header">Card Title</h3>
-  <p>Default slot content</p>
-  <button slot="footer">Action</button>
-</wb-card>
-```
-
-### Slot Naming Convention
-
-| Slot Name | Purpose |
-|-----------|---------|
-| `header` | Header area content |
-| `footer` | Footer area content |
-| `image` | Image/media area |
-| `icon` | Icon area |
-| `actions` | Action buttons area |
-| `prefix` | Before main content |
-| `suffix` | After main content |
+There's no named-slot equivalent for routing children into specific internal regions (a header area, a footer area, etc.) — that's what dedicated attributes are for (`heading`, `subheading`, `footer`, ...; see [Standard Custom Attributes](#standard-custom-attributes)). If a component needs to place content in more than one internal region, give it more than one attribute — never a `slot="…"` attribute.
 
 ---
 
@@ -974,7 +946,7 @@ When adding new components or attributes:
 <!-- ❌ NEVER DO THIS -->
 <wb-card title="Heading"> <!-- Use heading -->
   <wb-alert type="warning"> <!-- Use variant -->
-    <wb-card content="..."> <!-- Use slot or specific attr -->
+    <wb-card content="..."> <!-- Use children or a specific attr -->
       <wb-card style="minimal"> <!-- Use variant -->
         <wb-card class="special"> <!-- Use variant or boolean -->
           <wb-card data="[...]"> <!-- Use data-* pattern -->
