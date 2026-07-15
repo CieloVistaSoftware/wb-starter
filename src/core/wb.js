@@ -152,6 +152,7 @@ import '../wb-viewmodels/wb-demo.js';
 import { getConfig, setConfig } from './config.js';
 import { pubsub } from './pubsub.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
+import { ensureBehaviorCss } from './style-loader.js';
 
 // Global dev/test diagnostics: surface uncaught errors/rejections to console so Playwright traces capture them.
 try {
@@ -302,6 +303,11 @@ const WB = {
     elementPending.add(behaviorName);
 
     try {
+      // Just-in-time CSS: load this behavior's stylesheet(s) before it
+      // touches the DOM, so there's no flash of unstyled content on a
+      // behavior's first use in a session (#342).
+      await ensureBehaviorCss(behaviorName);
+
       // Apply behavior
       // Pass schemaProcessed flag so behavior knows DOM is already built
       const result = behaviors[behaviorName](element, options);

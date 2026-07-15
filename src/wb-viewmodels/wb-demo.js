@@ -7,6 +7,17 @@
  * -----------------------------------------------------------------------------
  */
 import { demo } from './demo.js';
+import { ensureBehaviorCss } from '../core/style-loader.js';
+
+// wb-demo is a real custom element, not a WB.inject()-dispatched behavior
+// (see wb.js's own comment on why <wb-grid>/<wb-demo> stayed custom
+// elements) — it never passes through the choke point that loads every
+// other behavior's CSS just-in-time (#342), so it has to ask for its own.
+// Fire-and-forget, not awaited: connectedCallback's synchronous timing is
+// load-bearing (see the ordering comment on connectedSoFar/myIndex below) —
+// making this async would break that guarantee for a same-session cache hit
+// that's usually instant anyway.
+ensureBehaviorCss('demo');
 
 // A page like pages/behaviors.html can have 40+ <wb-demo> blocks; building
 // every single one (syntax-highlighted source panel, line numbers, control

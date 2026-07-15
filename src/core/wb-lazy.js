@@ -13,6 +13,7 @@ import { Events } from './events.js';
 import { Theme } from './theme.js';
 import { getConfig, setConfig } from './config.js';
 import { elementMap, nativeMap, extensionMap } from './tag-map.js';
+import { ensureBehaviorCss } from './style-loader.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
 
 // Debug logging — silent unless localStorage['wb-debug'] names a category
@@ -360,8 +361,13 @@ const WB = {
     pending.add(behaviorName);
 
     try {
-      // Load behavior on demand
-      const behaviorFn = await getBehavior(behaviorName);
+      // Load behavior JS and its CSS in parallel — same JIT loading wb.js
+      // does (#342), so standalone demo pages get the same request-count
+      // win the main SPA does.
+      const [behaviorFn] = await Promise.all([
+        getBehavior(behaviorName),
+        ensureBehaviorCss(behaviorName)
+      ]);
 
       // The element can be removed from the DOM (page nav swaps innerHTML,
       // a demo re-renders, etc.) while this import was in flight — most

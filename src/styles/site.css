@@ -1,51 +1,22 @@
+/*
+ * #342: this used to @import all 50 files in ./behaviors/*.css
+ * unconditionally — every page paid for every behavior's CSS whether it
+ * used that behavior or not (confirmed: home.html uses 9 wb-* tags + 6 x-*
+ * behaviors out of ~75 available). Everything except the two files below
+ * now loads just-in-time via src/core/style-loader.js's ensureBehaviorCss(),
+ * called from WB.inject()'s single dispatch point right before a behavior
+ * first runs — see src/styles/behavior-css-manifest.js for the full
+ * behaviorName -> file mapping and the reasoning behind what's excluded
+ * (modal.css: dead/legacy, not exercised by current dialog.js; stock.css:
+ * confirmed orphaned, zero references anywhere in the repo).
+ *
+ * layout.css and ui-utils.css stay here as unconditional imports: both are
+ * under 1.5KB, and layout.css's real content (.wb-grid--alt-rows) backs
+ * <wb-grid>, a genuine custom element that never calls WB.inject() and so
+ * never passes through the JIT hook.
+ */
 @import url('./behaviors/layout.css');
-@import url('./behaviors/pre.css');
-@import url('./behaviors/effects.css');
-@import url('./behaviors/stock.css');
-@import url('./behaviors/hero.css');
-@import url('./behaviors/navbar.css');
-@import url('./behaviors/data.css');
-@import url('./behaviors/card.css');
-@import url('./behaviors/dialog.css');
-@import url('./behaviors/switch.css');
-@import url('./behaviors/progress.css');
-@import url('./behaviors/badge.css');
-@import url('./behaviors/alert.css');
-@import url('./behaviors/avatar.css');
-@import url('./behaviors/chip.css');
-@import url('./behaviors/skeleton.css');
-@import url('./behaviors/rating.css');
-@import url('./behaviors/stat.css');
-@import url('./behaviors/timeline.css');
-@import url('./behaviors/steps.css');
-@import url('./behaviors/stepper.css');
-@import url('./behaviors/label.css');
-@import url('./behaviors/counter.css');
-@import url('./behaviors/pagination.css');
-@import url('./behaviors/otp.css');
-@import url('./behaviors/tags.css');
-@import url('./behaviors/autocomplete.css');
-@import url('./behaviors/gallery.css');
-@import url('./behaviors/dropdown.css');
-@import url('./behaviors/accordion.css');
-@import url('./behaviors/popover.css');
-@import url('./behaviors/modal.css');
-@import url('./behaviors/toast.css');
-@import url('./behaviors/mdhtml.css');
-@import url('./behaviors/breadcrumb.css');
-@import url('./behaviors/code.css');
 @import url('./behaviors/ui-utils.css');
-@import url('./behaviors/details.css');
-@import url('./behaviors/footer.css');
-@import url('./behaviors/header.css');
-@import url('./behaviors/notes.css');
-@import url('./behaviors/audio.css');
-@import url('./behaviors/demo.css');
-@import url('./behaviors/notification.css');
-@import url('./behaviors/inline.css');
-@import url('./behaviors/button.css');
-@import url('./behaviors/input.css');
-@import url('./behaviors/themecontrol.css');
 
 /**
  * WB Starter - Site Layout Styles

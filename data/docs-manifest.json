@@ -1,6 +1,6 @@
 {
-  "generated": "2026-07-08T20:11:36.563Z",
-  "totalFiles": 185,
+  "generated": "2026-07-14T20:42:14.373Z",
+  "totalFiles": 186,
   "categories": [
     "_today",
     "architecture",
@@ -857,7 +857,7 @@
       },
       {
         "path": "docs/components/semantic/details.md",
-        "title": "Details",
+        "title": "`<details>` and `<summary>` Elements",
         "name": "details",
         "category": "components"
       },
@@ -1085,8 +1085,14 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "🅿️ PARKING LOT (2026-07-07)",
+        "title": "🅿️ PARKING LOT (2026-07-12, session 2 — stopped for the night, NOT pushed)",
         "name": "CURRENT-STATUS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/demos-redo-plan-268.md",
+        "title": "#268 — demos/ consolidation plan",
+        "name": "demos-redo-plan-268",
         "category": "_today"
       },
       {
@@ -1172,8 +1178,14 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "🅿️ PARKING LOT (2026-07-07)",
+      "title": "🅿️ PARKING LOT (2026-07-12, session 2 — stopped for the night, NOT pushed)",
       "name": "CURRENT-STATUS",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/demos-redo-plan-268.md",
+      "title": "#268 — demos/ consolidation plan",
+      "name": "demos-redo-plan-268",
       "category": "_today"
     },
     {
@@ -1838,7 +1850,7 @@
     },
     {
       "path": "docs/components/semantic/details.md",
-      "title": "Details",
+      "title": "`<details>` and `<summary>` Elements",
       "name": "details",
       "category": "components"
     },
