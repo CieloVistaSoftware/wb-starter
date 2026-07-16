@@ -18,8 +18,12 @@
      scripts/generate-demos-list.mjs — edit that script, not this list. -->
 <div id="demos-grid">
   <!-- demos:auto:start -->
-  <section class="demos-category" data-category="Architecture & Meta">
-    <h2 class="demos-category__title">🏗️ Architecture & Meta</h2>
+  <a href="demos/site/index.html" target="_blank" rel="noopener" style="display: block; margin-bottom: 1.5rem; padding: 1rem 1.25rem; border: 1px solid var(--primary); border-radius: 8px; text-decoration: none; color: inherit;">
+    <strong style="display: block; font-size: 1.05rem;">🧩 Component &amp; Behavior Library — every wb-* / x-* demo, one page per category</strong>
+    <span style="color: var(--text-secondary); font-size: 0.9em;">The single canonical catalog (#268) — no more one-off single-component demo pages.</span>
+  </a>
+  <details class="demos-category" data-category="Architecture & Meta">
+    <summary class="demos-category__title">🏗️ Architecture & Meta</summary>
     <div class="demos-inline-examples">
       <wb-demo><wb-themecontrol></wb-themecontrol></wb-demo>
       <wb-demo><div x-darkmode target="self" theme="dark" style="padding:1rem;border-radius:8px;"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></wb-demo>
@@ -35,7 +39,7 @@
       <wb-card-link title="WB Views Demo - Complete Examples" href="demos/wb-views-demo.html" target="_blank" icon="🎮"></wb-card-link>
       <wb-card-link title="WB Component Wizard" href="demos/wizard.html" target="_blank" icon="🎮"></wb-card-link>
     </div>
-  </section>
+  </details>
   <!-- demos:auto:end -->
 </div>
 

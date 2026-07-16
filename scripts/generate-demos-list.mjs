@@ -165,18 +165,24 @@ const sections = CATEGORIES
       ? `    <div class="demos-inline-examples">\n${examples.map((e) => `      ${e}`).join('\n')}\n    </div>\n`
       : '';
     return (
-`  <section class="demos-category" data-category="${title}">
-    <h2 class="demos-category__title">${icon} ${title}</h2>
+`  <details class="demos-category" data-category="${title}">
+    <summary class="demos-category__title">${icon} ${title}</summary>
 ${examplesBlock}    <div class="page__grid demos-card-grid">
 ${cards}
     </div>
-  </section>`
+  </details>`
     );
   })
   .filter(Boolean)
   .join('\n');
 
-const block = '<!-- demos:auto:start -->\n' + sections + '\n  <!-- demos:auto:end -->';
+const featuredCatalog =
+`  <a href="demos/site/index.html" target="_blank" rel="noopener" style="display: block; margin-bottom: 1.5rem; padding: 1rem 1.25rem; border: 1px solid var(--primary); border-radius: 8px; text-decoration: none; color: inherit;">
+    <strong style="display: block; font-size: 1.05rem;">🧩 Component &amp; Behavior Library — every wb-* / x-* demo, one page per category</strong>
+    <span style="color: var(--text-secondary); font-size: 0.9em;">The single canonical catalog (#268) — no more one-off single-component demo pages.</span>
+  </a>`;
+
+const block = '<!-- demos:auto:start -->\n' + featuredCatalog + '\n' + sections + '\n  <!-- demos:auto:end -->';
 
 let page = fs.readFileSync(PAGE, 'utf8');
 const re = /<!-- demos:auto:start -->[\s\S]*?<!-- demos:auto:end -->/;
@@ -198,7 +204,7 @@ const indexSections = CATEGORIES
       const t = linkTitle.replace(/</g, '&lt;').replace(/>/g, '&gt;');
       return `        <li><a href="./${name}">${t}</a></li>`;
     }).join('\n');
-    return `      <h2>${icon} ${title}</h2>\n      <ul>\n${links}\n      </ul>`;
+    return `      <details>\n        <summary>${icon} ${title}</summary>\n        <ul>\n${links}\n        </ul>\n      </details>`;
   })
   .filter(Boolean)
   .join('\n');
@@ -213,7 +219,8 @@ const indexHtml = `<!DOCTYPE html>
   <style>
     body { max-width: 700px; margin: 0 auto; padding: 2rem; background: var(--bg-color); color: var(--text-primary); font-family: system-ui, -apple-system, sans-serif; }
     h1 { color: var(--primary); }
-    h2 { margin-top: 2rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-size: 1.1rem; }
+    details { margin-top: 1rem; }
+    summary { padding-bottom: 0.35rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-size: 1.1rem; cursor: pointer; }
     p { color: var(--text-secondary); }
     ul { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.5rem; }
     li { border: 1px solid var(--border-color); border-radius: 6px; }

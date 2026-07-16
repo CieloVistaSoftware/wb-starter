@@ -8,7 +8,8 @@
   <style>
     body { max-width: 700px; margin: 0 auto; padding: 2rem; background: var(--bg-color); color: var(--text-primary); font-family: system-ui, -apple-system, sans-serif; }
     h1 { color: var(--primary); }
-    h2 { margin-top: 2rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-size: 1.1rem; }
+    details { margin-top: 1rem; }
+    summary { padding-bottom: 0.35rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-size: 1.1rem; cursor: pointer; }
     p { color: var(--text-secondary); }
     ul { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.5rem; }
     li { border: 1px solid var(--border-color); border-radius: 6px; }
@@ -23,8 +24,9 @@
     <a href="./site/index.html" style="display: block; padding: 0; font-weight: 600;">🧩 Component &amp; Behavior Library — every wb-* / x-* demo, one page per category</a>
     <span style="color: var(--text-secondary); font-size: 0.9em;">The single canonical catalog (#268) — no more one-off single-component demo pages.</span>
   </p>
-      <h2>🏗️ Architecture & Meta</h2>
-      <ul>
+      <details>
+        <summary>🏗️ Architecture & Meta</summary>
+        <ul>
         <li><a href="./autoinject.html">Autoinject</a></li>
         <li><a href="./charity-food.html">Uganda Community Food Bank</a></li>
         <li><a href="./frameworks.html">Framework Integration Demo</a></li>
@@ -34,6 +36,7 @@
         <li><a href="./schema-first-architecture.html">Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development</a></li>
         <li><a href="./wb-views-demo.html">WB Views Demo - Complete Examples</a></li>
         <li><a href="./wizard.html">WB Component Wizard</a></li>
-      </ul>
+        </ul>
+      </details>
 </body>
 </html>
