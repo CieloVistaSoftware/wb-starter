@@ -37,9 +37,22 @@ export const DATA_FILES = {
   behaviorInventory: path.join(PATHS.data, 'behavior-inventory.json'),
 } as const;
 
+// .claude/worktrees holds full checkouts for OTHER agent sessions -- stale
+// copies of this same repo. Without excluding it, every getFiles()/
+// getHtmlFiles()/getCssFiles() caller here (21 compliance spec files) walked
+// into each one and re-scanned/re-rendered its entire surface a second
+// (third, fourth...) time -- confirmed live: dark-mode.spec.ts alone took
+// 21+ minutes re-loading hundreds of pages from one stale worktree.
+//
+// wb-overlay-ext is a wholly separate, untracked Chrome extension (its own
+// manifest.json, .crx/.pem signing files) that happens to live under src/ --
+// not part of the wb-starter component library, so its CSS/HTML isn't
+// subject to this project's theming/OOP conventions. Confirmed live:
+// css-oop-compliance flagged its popup CSS for hardcoded colors that are
+// legitimate there (a browser-extension UI, not a themed component).
 export const EXCLUDE_DIRS = [
-  'node_modules', '.git', 'dist', 'build', 'coverage', 
-  'test-results', '.playwright-artifacts'
+  'node_modules', '.git', '.claude', 'dist', 'build', 'coverage',
+  'test-results', '.playwright-artifacts', 'wb-overlay-ext'
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════

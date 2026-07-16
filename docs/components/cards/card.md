@@ -86,7 +86,7 @@ every element labeled:
 | **Title** | `<h3 class="wb-card__title">` | The card heading — from the `title` attribute |
 | **Subtitle** | `.wb-card__subtitle` | Secondary heading — from `subtitle` (optional) |
 | **Badge** | `.wb-card__badge` | Small status pill (optional) |
-| **Main / Body** | `<main class="wb-card__main">` | **Your content** — everything you put between the tags |
+| **Main** | `<main class="wb-card__main">` | **Your content** — everything you put between the tags |
 | **Footer** | `<footer class="wb-card__footer">` | Footer text / actions — from `footer` (optional) |
 
 ## Properties

@@ -1,5 +1,5 @@
 /**
- * wb-tabs — headers from data-tab-title, panel switching (issue #130)
+ * wb-tabs — headers from tab-title, panel switching (issue #130)
  */
 import { test, expect, Page } from '@playwright/test';
 
@@ -19,13 +19,13 @@ async function setup(page: Page, html: string): Promise<void> {
 
 const MARKUP = `
   <wb-tabs id="tabs">
-    <div data-tab-title="Overview"><p>Overview content</p></div>
-    <div data-tab-title="Features"><p>Features content</p></div>
-    <div data-tab-title="Installation"><p>Installation content</p></div>
+    <div tab-title="Overview"><p>Overview content</p></div>
+    <div tab-title="Features"><p>Features content</p></div>
+    <div tab-title="Installation"><p>Installation content</p></div>
   </wb-tabs>`;
 
 test.describe('wb-tabs', () => {
-  test('renders the data-tab-title labels (not generic "Tab 1")', async ({ page }) => {
+  test('renders the tab-title labels (not generic "Tab 1")', async ({ page }) => {
     await setup(page, MARKUP);
     const tabs = page.locator('#tabs .wb-tabs__tab');
     await expect(tabs).toHaveCount(3);

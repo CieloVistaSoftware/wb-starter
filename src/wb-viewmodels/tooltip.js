@@ -86,7 +86,6 @@ export async function tooltip(element, options = {}) {
   const content = String(
     options.content ??
     element.getAttribute('x-tooltip') ??
-    element.getAttribute('data-tooltip') ??
     element.getAttribute('content') ??
     element.getAttribute('x-content') ??
     element.getAttribute('tooltip') ??
@@ -102,12 +101,8 @@ export async function tooltip(element, options = {}) {
   const config = {
     content,
     position: (() => {
-      // `data-position` is what the showcase markup uses — it was missing here,
-      // so every tooltip fell back to 'top'.
       const p = options.position
         ?? element.getAttribute('x-position')
-        ?? element.getAttribute('data-position')
-        ?? element.getAttribute('data-tooltip-position')
         ?? element.getAttribute('position')
         ?? element.getAttribute('tooltip-position');
       return ['top', 'bottom', 'left', 'right'].includes(p) ? p : 'top';

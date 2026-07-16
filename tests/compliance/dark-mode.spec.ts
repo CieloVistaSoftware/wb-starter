@@ -17,9 +17,13 @@ function findHtmlFiles(dir: string, files: string[] = []): string[] {
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     
-    // Skip node_modules, .git, data, etc.
+    // Skip node_modules, .git, data, etc. -- .claude/worktrees holds full
+    // checkouts for OTHER agent sessions; without excluding it this walked
+    // into every one of them and re-rendered their entire HTML surface a
+    // second (third, fourth...) time -- hundreds of duplicate page loads,
+    // 21+ minutes for a "fast subset" compliance run (confirmed live).
     if (entry.isDirectory()) {
-      if (!['node_modules', '.git', 'data', 'test-results', 'tmp'].includes(entry.name)) {
+      if (!['node_modules', '.git', '.claude', 'wb-overlay-ext', 'data', 'test-results', 'tmp'].includes(entry.name)) {
         findHtmlFiles(fullPath, files);
       }
     } else if (entry.name.endsWith('.html')) {

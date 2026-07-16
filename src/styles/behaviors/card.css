@@ -176,6 +176,26 @@
 /* Keep header/main/footer above the shimmer overlay. */
 .wb-card--glass > * { position: relative; z-index: 1; }
 
+/* Bordered — card.schema.json's variant enum (default/glass/bordered/flat)
+   declared this since #232, but it had no CSS rule at all, so it silently
+   fell back to the identical default surface (confirmed live: "Bordered
+   Card" and "Default Card" rendered pixel-identical). Emphasized border,
+   transparent surface -- the border IS the whole point of the variant. */
+.wb-card--bordered {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  box-shadow: none;
+}
+
+/* Flat — same gap as bordered: declared in the schema enum, zero CSS. No
+   border, no shadow, no elevation -- reads as inline content, not a
+   floating surface. */
+.wb-card--flat {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    MODIFIERS
    ═══════════════════════════════════════════════════════════════════════════ */

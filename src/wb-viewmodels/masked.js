@@ -1,8 +1,8 @@
 // Standalone masked behavior extracted from enhancements.js
 export function masked(element, options = {}) {
   const config = {
-    mask: options.mask || element.getAttribute('mask') || element.getAttribute('data-mask') || '',
-    placeholder: options.placeholder || element.getAttribute('mask-placeholder') || element.getAttribute('data-mask-placeholder') || '_',
+    mask: options.mask || element.getAttribute('mask') || '',
+    placeholder: options.placeholder || element.getAttribute('mask-placeholder') || '_',
     ...options
   };
   element.classList.add('wb-masked');

@@ -330,6 +330,7 @@ function generateIndexHtml(siteSchema, pageResults) {
   lines.push("    import WB from '../../src/core/wb-lazy.js';");
   lines.push('    window.WB = WB;');
   lines.push('    await WB.init({ autoInject: true });');
+  lines.push('    await WB.scan(document.body, { eager: true });');
   lines.push(`    console.log('${siteSchema.title} index initialized');`);
   lines.push('  </script>');
 
@@ -427,6 +428,12 @@ function generatePageHtml(pageSchema) {
       lines.push(`    import WB from '${script.src}';`);
       lines.push('    window.WB = WB;');
       lines.push(`    await ${script.init};`);
+      // init()'s own scan() defers everything to an IntersectionObserver
+      // (perf win for long content pages) -- wrong tradeoff here: every
+      // element on this page IS a worked example, expected to render
+      // correctly the instant the page loads, not once scrolled near.
+      // Same fix demos/playground.html already applies for the same reason.
+      lines.push('    await WB.scan(document.body, { eager: true });');
       lines.push(`    console.log('${pageSchema.title} initialized');`);
       lines.push('  </script>');
     }

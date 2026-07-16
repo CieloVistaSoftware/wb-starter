@@ -249,7 +249,7 @@ export function drawer(element, options = {}) {
  */
 export function lightbox(element, options = {}) {
   const config = {
-    src: options.src || element.getAttribute('src') || element.getAttribute('data-src') || element.src || element.href || '',
+    src: options.src || element.getAttribute('src') || element.src || element.href || '',
     ...options
   };
 

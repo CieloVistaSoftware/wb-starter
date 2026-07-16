@@ -198,7 +198,7 @@ export function accordion(element, options = {}) {
       const items = sections.map((sec, i) =>
         buildAccordionItem(
           element,
-          sec.getAttribute('accordion-title') || sec.getAttribute('data-accordion-title') || sec.getAttribute('data-title') || 'Accordion Item',
+          sec.getAttribute('accordion-title') || 'Accordion Item',
           sec.innerHTML,
           sec.hasAttribute('open') || (i === 0 && element.hasAttribute('open'))
         )

@@ -21,11 +21,18 @@ wb-avatar {
   font-size: 0.85rem;
 }
 
-/* Sizes — attribute selectors */
+/* Sizes — attribute selectors (schema: xs, sm, md, lg, xl, 2xl) */
+wb-avatar[size="xs"]  { width: 24px; height: 24px; font-size: 0.6rem; }
 wb-avatar[size="sm"]  { width: 32px; height: 32px; font-size: 0.7rem; }
 wb-avatar[size="md"]  { width: 40px; height: 40px; font-size: 0.85rem; }
 wb-avatar[size="lg"]  { width: 56px; height: 56px; font-size: 1.1rem; }
 wb-avatar[size="xl"]  { width: 80px; height: 80px; font-size: 1.6rem; }
+wb-avatar[size="2xl"] { width: 112px; height: 112px; font-size: 2.2rem; }
+
+/* Shapes — attribute selectors (schema: circle [default], square, rounded) */
+wb-avatar[shape="circle"] { border-radius: 50%; }
+wb-avatar[shape="square"] { border-radius: 0; }
+wb-avatar[shape="rounded"] { border-radius: 20%; }
 
 /* Image child */
 wb-avatar img {

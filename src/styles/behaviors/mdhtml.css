@@ -129,12 +129,29 @@
   padding: 0.5rem;
   text-align: left;
   border: 1px solid var(--border-color);
-  overflow-wrap: anywhere;
+  /* overflow-wrap:anywhere permits breaking ANYWHERE, including mid-word/
+     mid-character, whenever a column is narrower than its content --
+     exactly what broke "Part"/"Type"/"Category" headers into one letter
+     per line on narrow columns (#278, recurring). word-break:normal alone
+     was never enough -- overflow-wrap takes precedence over it. */
+  white-space: nowrap;
+  overflow-wrap: normal;
   word-break: normal;
 }
 
 .wb-mdhtml th {
   background: var(--bg-secondary);
+}
+
+/* The last column is conventionally the long-prose one (Description,
+   "What it is", etc.) -- only it wraps. Every other column holds short
+   identifiers/labels that must never break mid-word; the table's own
+   overflow-x:auto (above) provides horizontal scroll if a narrow viewport
+   still can't fit them (#278's own acceptance criteria). */
+.wb-mdhtml th:last-child,
+.wb-mdhtml td:last-child {
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 /* Inline `code` (event names, identifiers) inherits td/th's

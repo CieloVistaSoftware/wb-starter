@@ -4,6 +4,24 @@
  * Helper Attribute: [x-behavior="input"]
  */
 export function input(element, options = {}) {
+  // A DIFFERENT explicit x-{behavior} attribute (x-search, x-password,
+  // x-autocomplete, ...) opts this element into its own richer, complete
+  // wrapper -- input()'s generic wrap should never ALSO apply on top of it.
+  // wb.js's getAutoInjectBehavior() already tries to skip this case, but
+  // that check races against lazy behavior-module loading (the skip only
+  // fires if the OTHER behavior happens to already be registered at scan
+  // time) -- confirmed live: <input type="search" x-search> got wrapped by
+  // BOTH search() (search.js) and input(), nesting wb-search__wrapper
+  // around wb-input around another wb-search__wrapper ("concentric
+  // rings"). Guard here too so it can't happen regardless of load order.
+  const RICHER_INPUT_BEHAVIORS = ['search', 'password', 'autocomplete', 'datepicker', 'autosize', 'colorpicker'];
+  if (RICHER_INPUT_BEHAVIORS.some(name => element.hasAttribute(`x-${name}`))) {
+    return () => {};
+  }
+  if (element.closest('.wb-search__wrapper, .wb-password')) {
+    return () => {};
+  }
+
   const config = {
     type: options.type || element.dataset.type || element.type || 'text',
     variant: options.variant || element.getAttribute('variant') || element.dataset.variant || '',

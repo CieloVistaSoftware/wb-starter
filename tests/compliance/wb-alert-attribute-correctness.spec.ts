@@ -23,7 +23,11 @@ import { fileURLToPath } from 'url';
  * not a violation.
  */
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const SKIP_DIRS = new Set(['node_modules', '.git', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out']);
+// .claude/worktrees holds full checkouts for OTHER agent sessions -- stale
+// copies of this same repo, including old (already-fixed) revisions of
+// files like ATTRIBUTE-NAMING-STANDARD.md. Scanning them re-flags content
+// that was already fixed here, just not yet in those other worktrees.
+const SKIP_DIRS = new Set(['node_modules', '.git', '.claude', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out']);
 
 // Files where `type=` on <wb-alert> is intentional (a documented BAD example).
 const ALLOWLIST = new Set([

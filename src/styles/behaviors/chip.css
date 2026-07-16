@@ -25,6 +25,28 @@
 .wb-chip--error   { background: var(--danger-color, #ef4444); color: white; }
 .wb-chip--info    { background: var(--info-color, #3b82f6); color: white; }
 
+/* Sizes */
+.wb-chip--sm { padding: 0.125rem 0.5rem; font-size: 0.75rem; }
+.wb-chip--lg { padding: 0.375rem 1rem; font-size: 1rem; }
+
+/* Outlined — border instead of filled background */
+.wb-chip--outlined {
+  background: transparent;
+  border: 1px solid var(--border-color, #4b5563);
+  color: var(--text-primary, #f9fafb);
+}
+.wb-chip--outlined.wb-chip--primary { border-color: var(--primary, #6366f1); color: var(--primary, #6366f1); }
+.wb-chip--outlined.wb-chip--success { border-color: var(--success-color, #22c55e); color: var(--success-color, #22c55e); }
+.wb-chip--outlined.wb-chip--warning { border-color: var(--warning-color, #f59e0b); color: var(--warning-color, #f59e0b); }
+.wb-chip--outlined.wb-chip--error   { border-color: var(--danger-color, #ef4444); color: var(--danger-color, #ef4444); }
+.wb-chip--outlined.wb-chip--info    { border-color: var(--info-color, #3b82f6); color: var(--info-color, #3b82f6); }
+
+.wb-chip--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* Remove button */
 .wb-chip__remove {
   background: none;

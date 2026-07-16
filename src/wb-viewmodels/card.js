@@ -173,8 +173,6 @@ export function cardBase(element, options = {}) {
   const baseStyles = {
     transition: 'all 0.2s ease',
     borderRadius: 'var(--radius-lg, 8px)',
-    background: config.background || element.style.background || 'var(--bg-secondary, #1f2937)',
-    border: '1px solid var(--border-color, #374151)',
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
@@ -187,10 +185,21 @@ export function cardBase(element, options = {}) {
     overflowWrap: 'break-word'
   };
 
-  // Glass variant (#232): styling lives in card.css .wb-card--glass
-  // (theme-driven overlay tokens + shimmer) — the `wb-card--glass` class
-  // gets added below alongside every other variant class, no inline override
-  // needed here.
+  // Every non-`default` variant class (glass/bordered/flat/rack, card.css)
+  // owns its own background/border -- but Object.assign below applies these
+  // as INLINE styles, which always beat a class selector regardless of CSS
+  // specificity. Setting the default surface unconditionally silently
+  // overrode every one of those classes (confirmed live: bordered/flat
+  // rendered pixel-identical to default despite having real CSS rules).
+  // Only apply the generic inline surface for the actual default variant.
+  const ownsOwnSurface = ['glass', 'bordered', 'flat', 'rack'].includes(config.variant);
+  if (!ownsOwnSurface) {
+    baseStyles.background = config.background || element.style.background || 'var(--bg-secondary, #1f2937)';
+    baseStyles.border = '1px solid var(--border-color, #374151)';
+  } else if (config.background) {
+    // An explicit background always wins regardless of variant.
+    baseStyles.background = config.background;
+  }
 
   // Rack variant overrides
   if (config.variant === 'rack') {
@@ -232,7 +241,15 @@ export function cardBase(element, options = {}) {
   const hoverLeave = () => {
     element.style.transform = '';
     element.style.boxShadow = config.elevated ? 'var(--shadow-elevated, 0 4px 12px rgba(0,0,0,0.15))' : '';
-    element.style.borderColor = 'var(--border-color, #374151)';
+    // Same inline-beats-class issue as the base surface above: forcing the
+    // generic border color back on every mouseleave overrode `flat`'s
+    // border:none and `glass`'s theme-driven border on the very first
+    // hover. Let the owning variant's CSS class control its own color.
+    if (!ownsOwnSurface) {
+      element.style.borderColor = 'var(--border-color, #374151)';
+    } else {
+      element.style.removeProperty('border-color');
+    }
   };
   
   if (config.hoverable) {
@@ -778,12 +795,24 @@ export function cardbutton(element, options = {}) {
     const btnFooter = document.createElement('footer');
     btnFooter.className = 'wb-card__btn-footer';
     btnFooter.style.cssText = 'padding:1rem;display:flex;gap:0.5rem;border-top:1px solid var(--border-color,#374151);';
+    // Buttons with no *Href just sat inert -- no click handler at all, so
+    // clicking e.g. "Confirm Delete" did visibly nothing. A component
+    // library button can't know the app's confirm/save logic, but it must
+    // signal the click happened -- same bubbling wb:{behavior}:{action}
+    // convention as cardnotification/cardproduct/etc (card.js) -- so a real
+    // consumer (or this project's own demo pages) has something to listen for.
     if (config.secondary) {
       const secBtn = document.createElement(config.secondaryHref ? 'a' : 'button');
       secBtn.className = 'wb-card__btn wb-card__btn--secondary';
       secBtn.textContent = config.secondary;
       secBtn.style.cssText = 'flex:1;padding:0.625rem 1rem;border:1px solid var(--border-color,#4b5563);border-radius:6px;cursor:pointer;background:transparent;color:var(--text-primary,#f9fafb);text-align:center;text-decoration:none;font-size:0.875rem;';
-      if (config.secondaryHref) secBtn.href = config.secondaryHref;
+      if (config.secondaryHref) {
+        secBtn.href = config.secondaryHref;
+      } else {
+        secBtn.addEventListener('click', () => {
+          element.dispatchEvent(new CustomEvent('wb:cardbutton:secondary', { bubbles: true, detail: { label: config.secondary } }));
+        });
+      }
       btnFooter.appendChild(secBtn);
     }
     if (config.primary) {
@@ -791,7 +820,13 @@ export function cardbutton(element, options = {}) {
       priBtn.className = 'wb-card__btn wb-card__btn--primary';
       priBtn.textContent = config.primary;
       priBtn.style.cssText = 'flex:1;padding:0.625rem 1rem;border:none;border-radius:6px;cursor:pointer;background:var(--primary,#6366f1);color:white;text-align:center;text-decoration:none;font-size:0.875rem;font-weight:500;';
-      if (config.primaryHref) priBtn.href = config.primaryHref;
+      if (config.primaryHref) {
+        priBtn.href = config.primaryHref;
+      } else {
+        priBtn.addEventListener('click', () => {
+          element.dispatchEvent(new CustomEvent('wb:cardbutton:primary', { bubbles: true, detail: { label: config.primary } }));
+        });
+      }
       btnFooter.appendChild(priBtn);
     }
     element.appendChild(btnFooter);

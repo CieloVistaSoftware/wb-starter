@@ -19,7 +19,7 @@ async function setup(page: Page, html: string): Promise<void> {
 
 test.describe('wb-spinner', () => {
   test('gets base + size + color classes', async ({ page }) => {
-    await setup(page, '<wb-spinner id="sp" data-size="lg" data-color="success"></wb-spinner>');
+    await setup(page, '<wb-spinner id="sp" size="lg" color="success"></wb-spinner>');
     const sp = page.locator('#sp');
     await expect(sp).toHaveClass(/wb-spinner/);
     await expect(sp).toHaveClass(/wb-spinner--lg/);
@@ -27,7 +27,7 @@ test.describe('wb-spinner', () => {
   });
 
   test('inner ring has a running animation', async ({ page }) => {
-    await setup(page, '<wb-spinner id="sp2" data-size="md" data-color="primary"></wb-spinner>');
+    await setup(page, '<wb-spinner id="sp2" size="md" color="primary"></wb-spinner>');
     const anim = await page.locator('#sp2').evaluate((el) => {
       const ring = el.querySelector('div') as HTMLElement;
       return ring ? getComputedStyle(ring).animationName : 'none';

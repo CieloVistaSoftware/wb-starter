@@ -235,6 +235,7 @@
     import WB from '../../src/core/wb-lazy.js';
     window.WB = WB;
     await WB.init({ autoInject: true });
+    await WB.scan(document.body, { eager: true });
     console.log('Layout & Navigation initialized');
   </script>
 </body>

@@ -49,9 +49,9 @@ export function createToast(message, variant = 'info', duration = 3000) {
 export function toast(element, options = {}) {
   if (element._wbToastInit) return () => {};
   element._wbToastInit = true;
-  const message = options.message || element.getAttribute('data-message') || element.getAttribute('message') || 'Notification';
-  const variant = options.variant || element.getAttribute('data-type') || element.getAttribute('toast-variant') || element.getAttribute('variant') || 'info';
-  const duration = parseInt(options.duration || element.getAttribute('data-duration') || element.getAttribute('duration') || '3000');
+  const message = options.message || element.getAttribute('message') || 'Notification';
+  const variant = options.variant || element.getAttribute('toast-variant') || element.getAttribute('variant') || 'info';
+  const duration = parseInt(options.duration || element.getAttribute('duration') || '3000');
 
   const showToast = () => {
     createToast(message, variant, duration);
@@ -180,9 +180,9 @@ export function spinner(element, options = {}) {
   // basically nothing. Confirmed live: <div x-spinner> rendered ~4x too
   // small vs <wb-spinner>. Default here so the behavior itself, not schema,
   // is the single source of truth for this default (#279).
-  const size = options.size || element.getAttribute('data-size') || element.getAttribute('size') || 'md';
-  const color = options.color || element.getAttribute('data-color') || element.getAttribute('color');
-  const speed = options.speed || element.getAttribute('data-speed') || element.getAttribute('speed');
+  const size = options.size || element.getAttribute('size') || 'md';
+  const color = options.color || element.getAttribute('color');
+  const speed = options.speed || element.getAttribute('speed');
   element.classList.add('wb-spinner');
   if (size) element.classList.add(`wb-spinner--${size}`);
   if (color) element.classList.add(`wb-spinner--${color}`);
@@ -236,18 +236,44 @@ export function avatar(element, options = {}) {
  * CSS: src/styles/behaviors/chip.css
  */
 export function chip(element, options = {}) {
-  const dismissible = options.dismissible ?? element.hasAttribute('dismissible');
+  const label = options.label ?? element.getAttribute('label') ?? '';
+  const icon = options.icon || element.getAttribute('icon') || '';
+  // Bare (dismissible) and data-prefixed (data-dismissible) attributes both
+  // opt in -- consistent with cardBase()'s clickable/elevated dual-check
+  // (card.js) elsewhere in this project; a caller shouldn't need to know
+  // which convention a given behavior happens to check.
+  const dismissible = options.dismissible ?? (element.hasAttribute('dismissible') || element.hasAttribute('data-dismissible'));
+  const disabled = options.disabled ?? (element.hasAttribute('disabled') || element.hasAttribute('data-disabled'));
+  const outlined = options.outlined ?? (element.hasAttribute('outlined') || element.hasAttribute('data-outlined'));
   const variant = options.variant || element.getAttribute('variant') || 'default';
+  const size = options.size || element.getAttribute('size') || 'md';
 
   element.classList.add('wb-chip');
-  if (variant !== 'default') {
-    element.classList.add(`wb-chip--${variant}`);
+  element.classList.toggle(`wb-chip--${variant}`, variant !== 'default');
+  element.classList.toggle(`wb-chip--${size}`, size !== 'md');
+  element.classList.toggle('wb-chip--outlined', outlined);
+  element.classList.toggle('wb-chip--disabled', disabled);
+  if (disabled) element.setAttribute('aria-disabled', 'true');
+
+  element.innerHTML = '';
+
+  if (icon) {
+    const iconEl = document.createElement('span');
+    iconEl.className = 'wb-chip__icon';
+    iconEl.textContent = icon;
+    element.appendChild(iconEl);
   }
 
-  if (dismissible && !element.querySelector('.wb-chip__remove')) {
+  const labelEl = document.createElement('span');
+  labelEl.className = 'wb-chip__label';
+  labelEl.textContent = label;
+  element.appendChild(labelEl);
+
+  if (dismissible && !disabled) {
     const btn = document.createElement('wb-button');
     btn.className = 'wb-chip__remove';
     btn.textContent = '\u00d7';
+    btn.setAttribute('aria-label', 'Remove');
     btn.addEventListener('click', () => {
       element.dispatchEvent(new CustomEvent('wb:chip:remove', { bubbles: true }));
       element.remove();
@@ -255,7 +281,10 @@ export function chip(element, options = {}) {
     element.appendChild(btn);
   }
 
-  return () => element.classList.remove('wb-chip', `wb-chip--${variant}`);
+  return () => {
+    element.classList.remove('wb-chip', `wb-chip--${variant}`, `wb-chip--${size}`, 'wb-chip--outlined', 'wb-chip--disabled');
+    element.innerHTML = '';
+  };
 }
 
 /**
@@ -365,8 +394,8 @@ export function divider(element, options = {}) {
  * CSS: src/styles/behaviors/breadcrumb.css
  */
 export function breadcrumb(element, options = {}) {
-  const items = (options.items || element.getAttribute('data-items') || element.getAttribute('items') || '').split(',').filter(Boolean);
-  const separator = options.separator || element.getAttribute('data-separator') || element.getAttribute('separator') || '/';
+  const items = (options.items || element.getAttribute('items') || '').split(',').filter(Boolean);
+  const separator = options.separator || element.getAttribute('separator') || '/';
 
   element.classList.add('wb-breadcrumb');
   element.setAttribute('aria-label', 'Breadcrumb');

@@ -38,7 +38,7 @@ export function tabs(element, options = {}) {
 
     // Process Panels
     originalPanels.forEach((panel, i) => {
-      const title = panel.dataset.tabTitle || panel.getAttribute('data-tab-title') || panel.getAttribute('tab-title') || panel.getAttribute('tab') || `Tab ${i + 1}`;
+      const title = panel.getAttribute('tab-title') || panel.getAttribute('tab') || `Tab ${i + 1}`;
       const isActive = i === 0;
 
       // Create Tab Button

@@ -69,16 +69,6 @@
       "icon": "🧩",
       "docs": [
         {
-          "file": "behaviors-reference.md",
-          "title": "Behaviors Reference",
-          "description": "Complete list of all behaviors"
-        },
-        {
-          "file": "behavior-cross-reference.md",
-          "title": "Behavior Cross-Reference",
-          "description": "Relationships between all 168 behaviors"
-        },
-        {
           "file": "components/cards/card.md",
           "title": "Card Component",
           "description": "Base card component"
@@ -172,6 +162,97 @@
           "file": "components/cards/cardvideo.md",
           "title": "Card Video",
           "description": "Video player card"
+        },
+        {
+          "file": "properties.md",
+          "title": "Properties",
+          "description": "Component property reference"
+        },
+        {
+          "file": "card.md",
+          "title": "Card Overview",
+          "description": "Documentation for Card Overview"
+        },
+        {
+          "file": "components/cards/README.md",
+          "title": "cards Readme",
+          "description": "Documentation for cards Readme"
+        },
+        {
+          "file": "components/cards/cards.index.md",
+          "title": "Cards Index",
+          "description": "Index of all card components"
+        },
+        {
+          "file": "components/cards/cards.readme.md",
+          "title": "Cards README",
+          "description": "Card components overview"
+        },
+        {
+          "file": "components/drawer.md",
+          "title": "Drawer",
+          "description": "Documentation for Drawer"
+        },
+        {
+          "file": "components/feedback/feedback.readme.md",
+          "title": "Feedback Components README",
+          "description": "Feedback component overview"
+        },
+        {
+          "file": "components/forms/forms.readme.md",
+          "title": "Forms Components README",
+          "description": "Form component overview"
+        },
+        {
+          "file": "components/layout/layout.readme.md",
+          "title": "Layout Components README",
+          "description": "Layout component overview"
+        },
+        {
+          "file": "components/navigation/navigation.readme.md",
+          "title": "Navigation Components README",
+          "description": "Navigation component overview"
+        },
+        {
+          "file": "components/README.md",
+          "title": "components Readme",
+          "description": "Documentation for components Readme"
+        },
+        {
+          "file": "components/demo/demo.md",
+          "title": "Demo Components",
+          "description": "Demo component documentation"
+        },
+        {
+          "file": "components/semantic/semantic.index.md",
+          "title": "Semantic Components Index",
+          "description": "Index of semantic components"
+        },
+        {
+          "file": "components/semantic/semantic.readme.md",
+          "title": "Semantic Components README",
+          "description": "Semantic component overview"
+        },
+        {
+          "file": "components/tabs.md",
+          "title": "Tabs",
+          "description": "Documentation for Tabs"
+        }
+      ]
+    },
+    {
+      "name": "Behaviors",
+      "icon": "⚙️",
+      "docs": [
+        {
+          "file": "behaviors-reference.md",
+          "title": "Behaviors Reference",
+          "description": "Complete list of all behaviors"
+        },
+        {
+          "file": "behavior-cross-reference.md",
+          "title": "Behavior Cross-Reference",
+          "description": "Relationships between all 168 behaviors"
         },
         {
           "file": "audio.md",
@@ -287,81 +368,6 @@
           "file": "behaviors/x-enhancements.md",
           "title": "X-Enhancements",
           "description": "Form enhancement behaviors"
-        },
-        {
-          "file": "properties.md",
-          "title": "Properties",
-          "description": "Component property reference"
-        },
-        {
-          "file": "card.md",
-          "title": "Card Overview",
-          "description": "Documentation for Card Overview"
-        },
-        {
-          "file": "components/cards/README.md",
-          "title": "cards Readme",
-          "description": "Documentation for cards Readme"
-        },
-        {
-          "file": "components/cards/cards.index.md",
-          "title": "Cards Index",
-          "description": "Index of all card components"
-        },
-        {
-          "file": "components/cards/cards.readme.md",
-          "title": "Cards README",
-          "description": "Card components overview"
-        },
-        {
-          "file": "components/drawer.md",
-          "title": "Drawer",
-          "description": "Documentation for Drawer"
-        },
-        {
-          "file": "components/feedback/feedback.readme.md",
-          "title": "Feedback Components README",
-          "description": "Feedback component overview"
-        },
-        {
-          "file": "components/forms/forms.readme.md",
-          "title": "Forms Components README",
-          "description": "Form component overview"
-        },
-        {
-          "file": "components/layout/layout.readme.md",
-          "title": "Layout Components README",
-          "description": "Layout component overview"
-        },
-        {
-          "file": "components/navigation/navigation.readme.md",
-          "title": "Navigation Components README",
-          "description": "Navigation component overview"
-        },
-        {
-          "file": "components/README.md",
-          "title": "components Readme",
-          "description": "Documentation for components Readme"
-        },
-        {
-          "file": "components/demo/demo.md",
-          "title": "Demo Components",
-          "description": "Demo component documentation"
-        },
-        {
-          "file": "components/semantic/semantic.index.md",
-          "title": "Semantic Components Index",
-          "description": "Index of semantic components"
-        },
-        {
-          "file": "components/semantic/semantic.readme.md",
-          "title": "Semantic Components README",
-          "description": "Semantic component overview"
-        },
-        {
-          "file": "components/tabs.md",
-          "title": "Tabs",
-          "description": "Documentation for Tabs"
         }
       ]
     },

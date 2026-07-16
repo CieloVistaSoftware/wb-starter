@@ -19,8 +19,8 @@ async function setup(page: Page, html: string): Promise<void> {
 
 test.describe('x-toast', () => {
   for (const type of ['success', 'warning', 'error']) {
-    test(`data-type="${type}" produces a wb-toast--${type}`, async ({ page }) => {
-      await setup(page, `<button id="bt-${type}" x-toast data-message="${type} msg" data-type="${type}">Go</button>`);
+    test(`toast-variant="${type}" produces a wb-toast--${type}`, async ({ page }) => {
+      await setup(page, `<button id="bt-${type}" x-toast message="${type} msg" toast-variant="${type}">Go</button>`);
       await page.locator(`#bt-${type}`).click();
       const toast = page.locator(`.wb-toast--${type}`);
       await expect(toast).toHaveCount(1);
@@ -30,8 +30,8 @@ test.describe('x-toast', () => {
 
   test('different types yield different background colors', async ({ page }) => {
     await setup(page, `
-      <button id="b-succ" x-toast data-message="s" data-type="success">S</button>
-      <button id="b-err" x-toast data-message="e" data-type="error">E</button>`);
+      <button id="b-succ" x-toast message="s" toast-variant="success">S</button>
+      <button id="b-err" x-toast message="e" toast-variant="error">E</button>`);
     await page.locator('#b-succ').click();
     await page.locator('#b-err').click();
     await page.waitForTimeout(200);

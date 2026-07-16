@@ -3,6 +3,16 @@
  * Complete search input with icon, clear button, and debounced events
  */
 export function search(element, options = {}) {
+  // Guard against re-wrapping an element that's already wrapped -- confirmed
+  // live this ran twice on the same <input x-search>, nesting a second
+  // wb-search__wrapper around the first (with input()'s wrapper sandwiched
+  // between them, "concentric rings"). Whatever re-triggers it (a
+  // MutationObserver seeing the wrapper insertion as a fresh node, most
+  // likely), re-wrapping an already-wrapped element is never correct.
+  if (element.closest('.wb-search__wrapper')) {
+    return () => {};
+  }
+
   const config = {
     placeholder: options.placeholder || element.getAttribute('placeholder') || 'Search...',
     value: options.value || element.getAttribute('value') || '',
@@ -91,16 +101,26 @@ export function search(element, options = {}) {
 
   // Debounced search handler
   let timeout;
-  const triggerSearch = (instant = false) => {
+  // dispatchInputEvent exists so PROGRAMMATIC callers (setValue()/search(),
+  // below) can notify listeners of a value change that didn't come from a
+  // real keystroke -- element.value = x doesn't fire native 'input' on its
+  // own. But element.oninput (real typing, below) already got a real
+  // 'input' event to reach here; re-dispatching a SECOND 'input' from
+  // inside its own oninput handler re-triggers that same handler forever
+  // (confirmed live: crashed the tab with a stack overflow on the very
+  // first keystroke in any x-search input).
+  const triggerSearch = (instant = false, dispatchInputEvent = true) => {
     const query = element.value;
     if (clearBtn) {
       clearBtn.style.display = query ? 'block' : 'none';
     }
 
-    element.dispatchEvent(new CustomEvent('input', {
-      bubbles: true,
-      detail: { value: query }
-    }));
+    if (dispatchInputEvent) {
+      element.dispatchEvent(new CustomEvent('input', {
+        bubbles: true,
+        detail: { value: query }
+      }));
+    }
 
     if (config.instant || instant) {
       element.dispatchEvent(new CustomEvent('wb:search', {
@@ -119,9 +139,17 @@ export function search(element, options = {}) {
   };
 
   // Event listeners
-  element.oninput = () => triggerSearch();
-  element.onfocus = () => element.dispatchEvent(new CustomEvent('focus', { bubbles: true }));
-  element.onblur = () => element.dispatchEvent(new CustomEvent('blur', { bubbles: true }));
+  element.oninput = () => triggerSearch(false, false);
+  // Native 'focus'/'blur' don't bubble, so this dispatched a bubbling
+  // stand-in for listeners elsewhere in the app -- but dispatching that
+  // SAME event type ('focus') on the element from inside its own onfocus
+  // handler re-triggers onfocus again, which dispatches another 'focus',
+  // forever: infinite recursion, crashed the tab with a stack overflow the
+  // instant a real user clicked into any x-search input (confirmed live).
+  // Namespaced custom events (wb:{behavior}:{action}, used throughout
+  // card.js) can't collide with the native focus/blur dispatch path.
+  element.onfocus = () => element.dispatchEvent(new CustomEvent('wb:search:focus', { bubbles: true }));
+  element.onblur = () => element.dispatchEvent(new CustomEvent('wb:search:blur', { bubbles: true }));
   
   // Keyboard navigation
   element.onkeydown = (e) => {
