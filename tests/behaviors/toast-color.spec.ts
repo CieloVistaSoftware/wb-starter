@@ -13,7 +13,7 @@ async function setup(page: Page, html: string): Promise<void> {
     c.innerHTML = h;
     document.body.appendChild(c);
   }, html);
-  await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(); });
+  await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true }); });
   await page.waitForTimeout(300);
 }
 

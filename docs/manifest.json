@@ -368,6 +368,21 @@
           "file": "behaviors/x-enhancements.md",
           "title": "X-Enhancements",
           "description": "Form enhancement behaviors"
+        },
+        {
+          "file": "behaviors/x-resizable.md",
+          "title": "Resizable Behavior",
+          "description": "Drag-to-resize behavior"
+        },
+        {
+          "file": "behaviors/x-darkmode.md",
+          "title": "Dark Mode Behavior",
+          "description": "Forces a theme on an element, independent of the global setting"
+        },
+        {
+          "file": "behaviors/x-toggle.md",
+          "title": "Toggle Behavior",
+          "description": "Toggles a CSS class on a target element"
         }
       ]
     },

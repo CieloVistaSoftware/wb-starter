@@ -1,5 +1,5 @@
 /**
- * wb-progress — data-value renders a proportional fill (issue #127)
+ * wb-progress — value renders a proportional fill (issue #127)
  */
 import { test, expect, Page } from '@playwright/test';
 
@@ -13,14 +13,14 @@ async function setup(page: Page, html: string): Promise<void> {
     c.innerHTML = h;
     document.body.appendChild(c);
   }, html);
-  await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(); });
+  await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true }); });
   await page.waitForTimeout(400);
 }
 
-test.describe('wb-progress — fill from data-value', () => {
+test.describe('wb-progress — fill from value', () => {
   for (const v of [25, 50, 100]) {
-    test(`data-value="${v}" fills ~${v}%`, async ({ page }) => {
-      await setup(page, `<wb-progress id="p${v}" data-value="${v}"></wb-progress>`);
+    test(`value="${v}" fills ~${v}%`, async ({ page }) => {
+      await setup(page, `<wb-progress id="p${v}" value="${v}"></wb-progress>`);
       const host = page.locator(`#p${v}`);
       await expect(host).toBeVisible();
       const bar = host.locator('.wb-progress__bar');
@@ -34,8 +34,8 @@ test.describe('wb-progress — fill from data-value', () => {
     });
   }
 
-  test('data-striped adds striped modifier', async ({ page }) => {
-    await setup(page, '<wb-progress id="ps" data-value="75" data-striped></wb-progress>');
+  test('striped adds striped modifier', async ({ page }) => {
+    await setup(page, '<wb-progress id="ps" value="75" striped></wb-progress>');
     await expect(page.locator('#ps .wb-progress__bar')).toHaveClass(/wb-progress__bar--striped/);
   });
 });

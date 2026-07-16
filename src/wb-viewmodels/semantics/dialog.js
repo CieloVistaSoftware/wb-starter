@@ -15,14 +15,23 @@ export function dialog(element, options = {}) {
     title: options.title || element.getAttribute('title') || element.getAttribute('modal-title') || element.dataset.dialogTitle || element.dataset.modalTitle || 'Dialog',
     content: options.content || element.getAttribute('content') || element.getAttribute('modal-content') || element.dataset.dialogContent || element.dataset.modalContent || '',
     size: options.size || element.getAttribute('size') || element.getAttribute('modal-size') || element.dataset.dialogSize || element.dataset.modalSize || 'md',
+    // Schema declares variant: default/centered/fullscreen (appliesClass:
+    // wb-dialog--{{value}}), but this was never read anywhere -- every
+    // variant produced an identical dialog (confirmed live: "Centered" and
+    // "Fullscreen" demo triggers opened the exact same default-positioned,
+    // default-sized dialog).
+    variant: options.variant || element.getAttribute('variant') || 'default',
     ...options
   };
 
   // Internal function to create and show the dialog
-  const createAndShowDialog = (titleText, contentHtml, sizeVal) => {
+  const createAndShowDialog = (titleText, contentHtml, sizeVal, variantVal = 'default') => {
     // Create semantic <dialog> element
     const dialogEl = document.createElement('dialog');
     dialogEl.className = 'wb-dialog';
+    if (variantVal && variantVal !== 'default') {
+      dialogEl.classList.add(`wb-dialog--${variantVal}`);
+    }
     // Unique per instance — a hardcoded id here would collide the moment two
     // dialogs exist in the DOM at once, leaving aria-labelledby pointing at
     // whichever dialog's title happens to come first for every OTHER instance.
@@ -120,7 +129,7 @@ export function dialog(element, options = {}) {
     if (element.hasAttribute('modal-content') || element.hasAttribute('modal-title')) {
       element.classList.add('wb-modal-trigger', 'wb-dialog-trigger');
       element.style.cursor = 'pointer';
-      const open = () => createAndShowDialog(config.title, config.content, config.size);
+      const open = () => createAndShowDialog(config.title, config.content, config.size, config.variant);
       element.showModal = open;
       element.addEventListener('click', open);
       return () => element.removeEventListener('click', open);
@@ -138,7 +147,7 @@ export function dialog(element, options = {}) {
       contentContainer.appendChild(node.cloneNode(true));
     });
     const slotsContent = contentContainer.innerHTML;
-    element.showModal = () => createAndShowDialog(slots.title, slotsContent, config.size);
+    element.showModal = () => createAndShowDialog(slots.title, slotsContent, config.size, config.variant);
     return;
   }
 
@@ -162,7 +171,7 @@ export function dialog(element, options = {}) {
   element.style.cursor = 'pointer';
 
   const showDialog = () => {
-    createAndShowDialog(config.title, config.content, config.size);
+    createAndShowDialog(config.title, config.content, config.size, config.variant);
   };
 
   element.addEventListener('click', showDialog);

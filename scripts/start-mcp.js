@@ -33,19 +33,31 @@ function waitForHealth(port, timeoutSec) {
   const start = Date.now();
   const timeout = timeoutSec * 1000;
   return new Promise((resolve, reject) => {
+    // The timeout check used to live ONLY inside req.on('error') -- a
+    // non-200 response (health port occupied by something else, or the
+    // server briefly answering before it's fully ready) is not a network
+    // error at all, so neither the success branch nor the error branch ever
+    // fired: clearInterval() was never called and the 500ms poll ran
+    // forever with no upper bound ("unlimited gets", user-reported).
+    // Checking the deadline unconditionally on every tick, before each
+    // attempt, bounds the loop regardless of which response path fires.
     const interval = setInterval(() => {
+      if (Date.now() - start > timeout) {
+        clearInterval(interval);
+        reject(new Error('health probe timed out'));
+        return;
+      }
       const req = http.get({ host: '127.0.0.1', port, path: '/health', timeout: 2000 }, (res) => {
+        res.resume(); // drain so the socket can be reused/closed promptly
         if (res.statusCode === 200) {
           clearInterval(interval);
           resolve(true);
         }
+        // non-200: fall through, retry on the next tick (still bounded by
+        // the deadline check above)
       });
       req.on('error', () => {
-        if (Date.now() - start > timeout) {
-          clearInterval(interval);
-          reject(new Error('health probe timed out'));
-        }
-        // otherwise ignore and retry
+        // ignore and retry -- bounded by the deadline check above, not here
       });
       req.on('timeout', () => req.destroy());
     }, 500);

@@ -80,6 +80,18 @@ const broadcastReload = () => {
 // extension, causing an endless "Reloading clients..." loop (#221).
 const RELOAD_IGNORE_DIRS = new Set([
   '.git', 'node_modules', '.vscode',
+  // 'tests' itself (not just its output dirs below) -- a spec file changing
+  // has no bearing on what's rendered in the browser, and Windows'
+  // recursive fs.watch is well-documented to fire spurious 'change' events
+  // for files that were merely READ/stat'd, not modified. Running
+  // `npx playwright test` does a full discovery pass that reads every
+  // .spec.ts file under tests/ -- each run was spuriously triggering a
+  // full-page reload (and full module re-fetch) per file, even though none
+  // of their mtimes had actually changed. Confirmed live: a burst of
+  // "[File Changed] tests\components\*.spec.ts" messages during test runs,
+  // none of which had been edited (user-reported, read as "bogged down
+  // network").
+  'tests',
   'data', 'test-results', 'playwright-report', '.playwright-artifacts',
   'coverage', 'dist', 'out',
 ]);
@@ -93,10 +105,15 @@ const triggerReload = (eventType, filename) => {
   if (normalized.split('/').some(seg => RELOAD_IGNORE_DIRS.has(seg))) return;
 
   clearTimeout(reloadTimeout);
+  // 100ms wasn't enough to coalesce a burst of several real changes (e.g. a
+  // bulk edit/generation script touching a dozen files a few hundred ms
+  // apart) into one reload -- each spilled out as its own separate full
+  // page reload. 400ms absorbs realistic burst gaps while still feeling
+  // instant for a single edit.
   reloadTimeout = setTimeout(() => {
     console.log(`[File Changed] ${filename} -> Reloading clients...`);
     broadcastReload();
-  }, 100);
+  }, 400);
 };
 
 // Watch specific directories safely (CI/runners may not support recursive fs.watch)

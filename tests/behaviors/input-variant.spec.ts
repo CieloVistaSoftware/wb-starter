@@ -1,5 +1,5 @@
 /**
- * input[data-variant] — success/error get a colored border (issue #133)
+ * input[variant] — success/error get a colored border (issue #133)
  */
 import { test, expect, Page } from '@playwright/test';
 
@@ -13,15 +13,15 @@ async function setup(page: Page, html: string): Promise<void> {
     c.innerHTML = h;
     document.body.appendChild(c);
   }, html);
-  await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(); });
+  await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true }); });
   await page.waitForTimeout(300);
 }
 
 test('success and error variants have distinct, colored borders', async ({ page }) => {
   await setup(page, `
     <input id="basic" type="text" placeholder="Basic">
-    <input id="succ" type="text" placeholder="Success" data-variant="success">
-    <input id="err" type="text" placeholder="Error" data-variant="error">`);
+    <input id="succ" type="text" placeholder="Success" variant="success">
+    <input id="err" type="text" placeholder="Error" variant="error">`);
 
   const succBorder = await page.locator('#succ').evaluate((el) => getComputedStyle(el).borderColor);
   const errBorder = await page.locator('#err').evaluate((el) => getComputedStyle(el).borderColor);

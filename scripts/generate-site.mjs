@@ -72,6 +72,27 @@ function findSchema(name) {
 
 // ─── Generate sections for a single component (same logic as auto-showcase) ───
 
+// Every generated instance needs SOME children, regardless of whether its
+// behavior self-generates content (avatar/badge/chip clear+rebuild
+// textContent anyway, so a placeholder there is harmlessly overwritten) --
+// without it, a custom element with no CSS default size (most of them; only
+// a handful of behaviors have a dedicated .css file) collapses to
+// offsetHeight:0 and is completely invisible despite being correctly
+// "enhanced" (confirmed live: <wb-draggable axis="both"></wb-draggable>,
+// zero height, on the deployed interactive.html page).
+//
+// The whole POINT of these demos is showing what each attribute combo does
+// (#268/#279 and onward) -- a single static placeholder shared by every
+// instance defeats that just as badly as being invisible: four <wb-dialog>
+// triggers with title="Basic Dialog"/"Large"/"No Close"/"Centered" all just
+// said "Dialog", indistinguishable at a glance (confirmed live). Build the
+// placeholder FROM that instance's own attrs so each one is self-labeling.
+function placeholderChildren(schema, attrs = {}) {
+  const parts = Object.entries(attrs).map(([k, v]) => (v === true ? k : `${k}=${v}`));
+  if (parts.length > 0) return parts.join(', ');
+  return schema.title || schema.schemaFor || 'Demo content';
+}
+
 function generateComponentSections(schema) {
   const sections = [];
   const tag = `wb-${schema.schemaFor}`;
@@ -84,7 +105,7 @@ function generateComponentSections(schema) {
       for (const [key, val] of Object.entries(combo)) {
         attrs[camelToKebab(key)] = val;
       }
-      return { tag, attrs };
+      return { tag, attrs, children: placeholderChildren(schema, attrs) };
     });
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
     sections.push({
@@ -109,7 +130,7 @@ function generateComponentSections(schema) {
           attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
         }
       }
-      return { tag, attrs };
+      return { tag, attrs, children: placeholderChildren(schema, attrs) };
     });
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
     sections.push({
@@ -133,7 +154,7 @@ function generateComponentSections(schema) {
           attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
         }
       }
-      return { tag, attrs };
+      return { tag, attrs, children: placeholderChildren(schema, attrs) };
     });
     const columns = demos.length <= 2 ? demos.length : 3;
     sections.push({
@@ -161,7 +182,7 @@ function generateComponentSections(schema) {
         component: schema.schemaFor,
         tag,
         columns: 1,
-        demos: [{ tag, attrs: defaultAttrs }]
+        demos: [{ tag, attrs: defaultAttrs, children: placeholderChildren(schema, defaultAttrs) }]
       });
     }
   }

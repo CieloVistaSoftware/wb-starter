@@ -420,7 +420,7 @@ test.describe('Badge — Edge Cases', () => {
       container.innerHTML = '<span>Label:</span><wb-badge id="in-flex" variant="primary">Flex child</wb-badge>';
       document.body.appendChild(container);
     });
-    await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(); });
+    await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true }); });
     await page.waitForTimeout(300);
 
     await expect(page.locator('#in-flex')).toBeVisible();
