@@ -1,22 +1,5 @@
 {
-  "lastUpdated": "2026-07-15T18:47:09.704Z",
-  "count": 1,
-  "errors": [
-    {
-      "id": 1784141229681,
-      "timestamp": "2026-07-15T18:47:09.681Z",
-      "message": "Unable to Load Documentation",
-      "details": {
-        "file": "src/wb-viewmodels/mdhtml.js",
-        "to": "wb-mdhtml",
-        "reason": "HTTP 404 Not Found when fetching http://localhost:3000/docs/__does_not_exist__.md",
-        "response": "HTTP 404 Not Found when fetching http://localhost:3000/docs/__does_not_exist__.md",
-        "src": "http://localhost:3000/docs/__does_not_exist__.md",
-        "stack": "Error: HTTP 404 Not Found when fetching http://localhost:3000/docs/__does_not_exist__.md\n    at mdhtml (http://localhost:3000/src/wb-viewmodels/mdhtml.js:138:17)"
-      },
-      "to": "wb-mdhtml",
-      "url": "http://localhost:3000/public/doc-viewer.html?file=%2Fdocs%2F__does_not_exist__.md",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36"
-    }
-  ]
+  "lastUpdated": "2026-07-16T02:00:00.000Z",
+  "count": 0,
+  "errors": []
 }
