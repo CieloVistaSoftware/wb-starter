@@ -4,10 +4,110 @@
 
 WB v3.0 uses **custom elements** (`<wb-*>`) instead of the legacy `x-behavior` attribute pattern.
 
-> **See also:** [Demos & Documentation Standards](./DEMOS-AND-DOCS-STANDARDS.md) — the rules
-> for how EVERY demo and `.md` doc shows components and code (`<wb-demo>`, one code sample
-> per rendered element, vertical + highlighted code, no horizontal scrollbars, themed
-> Markdown, composition over inheritance, mobile-first).
+### Behaviors vs. Components
+
+A **behavior** is just a plain JavaScript function — `(element, options) => cleanup` — that
+attaches capability to an element already on the page. A **component** is the same kind of
+function, except it also owns the element's DOM structure (it builds header/body/footer,
+not just decorates what's there). Both are exported from `src/wb-viewmodels/*.js` and run
+through the exact same dispatch path (`WB.inject()`); "component" and "behavior" describe
+what the function *does* to the element, not two different mechanisms.
+
+That function can attach to an element three different ways:
+
+1. **`<wb-*>` custom element** — `<wb-card>`, `<wb-modal>`, `<wb-cardhero>`. The tag itself
+   names the component; the element owns its DOM structure.
+2. **`x-*` attribute** — `<button x-ripple>`, `<span x-tooltip="Hint">`. An explicit opt-in
+   that enhances an element you didn't have to create specially — any existing tag can carry
+   one.
+3. **Plain semantic HTML, no attribute at all** — `<input>`, `<table sortable>`,
+   `<details>`. WB.scan() recognizes the *tag itself* and attaches the matching behavior
+   automatically. See **Autoinject**, below.
+
+### Properties without an `x-` prefix
+
+Once a behavior is attached (by any of the three paths above), the *configuration*
+attributes it reads are plain, clean names — never `x-`-prefixed, never `data-`-prefixed
+(`data-*` is accepted as a fallback for back-compat, but the bare name is canonical). This
+trips people up on the semantic/autoinject elements especially, since there's no `x-`
+anywhere on the tag to signal "this attribute is special." The confirmed set, by element:
+
+| Element | Bare attributes |
+|---|---|
+| `<input>` | `variant`, `prefix`, `suffix`, `clearable` |
+| `<select>` | `clearable` |
+| `<textarea>` | `autosize`, `show-count`, `max-length`, `max-rows`, `min-rows`, `size` |
+| `<button>` | `variant`, `size`, `icon`, `icon-position`, `loading` |
+| `<table>` | `sortable`, `searchable`, `selectable`, `striped`, `hover`, `bordered`, `compact`, `copyable` |
+| `<details>` | `summary`, `open` |
+| `<dialog>` | `title`, `content`, `size`, `modal-title`, `modal-content`, `modal-size`, `slot` |
+| `<progress>` | `value`, `max`, `label`, `variant`, `size`, `indeterminate`, `show-value`, `show-label`, `striped`, `animated` |
+| `<img>` | `zoomable`, `lazy`, `aspect-ratio`, `fallback`, `placeholder` |
+| `<figure>` | `zoom`, `lightbox`, `caption`, `caption-position` |
+| `<video>` | `src`, `controls`, `poster`, `playsinline`, `autoplay`, `loop`, `muted` |
+| `<form>` | `ajax`, `validate` |
+| `<label>` (used as `x-label` on another element) | `label-position`, `required`, `optional` |
+| `<wb-*>` components generally | `title`, `subtitle`, `variant`, `xalign`, `yalign`, `hoverable`, `clickable`, `icon` (see Property Reference below) |
+
+### Autoinject
+
+Autoinject is what lets `<input>`, `<table sortable>`, and friends work with **zero** special
+attributes. `src/core/tag-map.js` exports a `nativeMap` — a lookup from plain tag name (or a
+more specific selector like `input[type="checkbox"]`) straight to a behavior name:
+
+```javascript
+export const nativeMap = {
+  'input[type="checkbox"]': 'checkbox',
+  'input[type="radio"]': 'radio',
+  'input[type="range"]': 'range',
+  'input': 'input',
+  'select': 'select',
+  'textarea': 'textarea',
+  'button': 'button',
+  'form': 'form',
+  'fieldset': 'fieldset',
+  'label': 'label',
+  'article': 'card',
+  'img': 'image',
+  'video': 'video',
+  'audio': 'audio',
+  'figure': 'figure',
+  'code': 'code',
+  'pre': 'pre',
+  'kbd': 'kbd',
+  'mark': 'mark',
+  'table': 'table',
+  'details': 'details',
+  'dialog': 'dialog',
+  'progress': 'progress',
+  'header': 'header',
+  'footer': 'footer'
+};
+```
+
+When `WB.scan()` walks the DOM (both `wb.js` and `wb-lazy.js` implement this), every element
+it finds is checked against `nativeMap` by tag name first. A match runs that behavior with no
+attribute required at all — `<input>` alone gets the `input()` behavior; `<table sortable>`
+gets `table()`. Two rules keep this from misfiring:
+
+- **Order matters.** `getNativeBehavior()` returns on the first selector match, so the
+  specific `input[type="checkbox"]`/`[type="radio"]`/`[type="range"]` entries are checked
+  *before* the generic `'input': 'input'` fallback — a checkbox still gets `checkbox()`, not
+  the generic input wrapper.
+- **Opt-in behaviors always win.** If an element already carries a *different*, more specific
+  `x-{behavior}` attribute (`x-password`, `x-search`, `x-autocomplete`, …), autoinject skips
+  its generic fallback entirely — you never get both the generic `input()` wrapper and the
+  explicit one double-applied to the same element.
+
+Autoinject only fires when `WB.init({ autoInject: true })` — the default — is used; passing
+`autoInject: false` disables it and every element needs an explicit `x-*` attribute or
+`wb-*` tag instead.
+
+Every demo and `.md` doc in this project follows
+[Demos & Documentation Standards](./DEMOS-AND-DOCS-STANDARDS.md) when showing any of the
+above in action — live `<wb-demo>` blocks (not static code fences), one code sample per
+rendered element, vertical/highlighted code with no horizontal scrollbars, themed Markdown,
+composition over inheritance, mobile-first.
 
 ---
 
@@ -169,11 +269,20 @@ Each variant is a separate exported function:
 ```javascript
 // src/wb-viewmodels/card.js
 
-export function card(element, options) { /* base card */ }
-export function cardhero(element, options) { /* hero variant */ }
-export function cardimage(element, options) { /* image variant */ }
-export function cardglass(element, options) { /* glass variant */ }
-export function cardprofile(element, options) { /* profile variant */ }
+// base card
+export function card(element, options) {}
+
+// hero variant
+export function cardhero(element, options) {}
+
+// image variant
+export function cardimage(element, options) {}
+
+// glass variant
+export function cardglass(element, options) {}
+
+// profile variant
+export function cardprofile(element, options) {}
 ```
 
 ### Creating Components Programmatically
