@@ -1,47 +1,22 @@
 {
-  "lastUpdated": "2026-07-08T22:23:07.285Z",
+  "lastUpdated": "2026-07-15T18:47:09.704Z",
   "count": 1,
   "errors": [
     {
-      "id": 1783549387110,
-      "timestamp": "2026-07-08T22:23:07.110Z",
-      "level": "error",
-      "source": "WB:LegacySyntax",
-      "module": "wb.js",
-      "line": 372,
-      "column": 41,
-      "function": "(anonymous)",
-      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
-      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:372:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:364:42)\n    at async Object.init (http://localhost:3000/src/core/wb.js:767:9)",
-      "frames": [
-        {
-          "function": "(anonymous)",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 372,
-          "column": 41
-        },
-        {
-          "function": "Object.scan",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 364,
-          "column": 42
-        },
-        {
-          "function": "Object.init",
-          "file": "wb.js",
-          "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 767,
-          "column": 9
-        }
-      ],
-      "url": "http://localhost:3000/tests/compliance/legacy-syntax-check.html",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
-      "interaction": {
-        "from": "System",
-        "to": "Background Process"
-      }
+      "id": 1784141229681,
+      "timestamp": "2026-07-15T18:47:09.681Z",
+      "message": "Unable to Load Documentation",
+      "details": {
+        "file": "src/wb-viewmodels/mdhtml.js",
+        "to": "wb-mdhtml",
+        "reason": "HTTP 404 Not Found when fetching http://localhost:3000/docs/__does_not_exist__.md",
+        "response": "HTTP 404 Not Found when fetching http://localhost:3000/docs/__does_not_exist__.md",
+        "src": "http://localhost:3000/docs/__does_not_exist__.md",
+        "stack": "Error: HTTP 404 Not Found when fetching http://localhost:3000/docs/__does_not_exist__.md\n    at mdhtml (http://localhost:3000/src/wb-viewmodels/mdhtml.js:138:17)"
+      },
+      "to": "wb-mdhtml",
+      "url": "http://localhost:3000/public/doc-viewer.html?file=%2Fdocs%2F__does_not_exist__.md",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36"
     }
   ]
 }

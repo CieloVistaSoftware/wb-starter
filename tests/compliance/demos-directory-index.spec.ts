@@ -26,8 +26,15 @@ test.describe('demos/index.html (#237)', () => {
   test('the bare /demos/ URL serves a real index with working links, no SPA/WB dependency', async ({ page }) => {
     await page.goto('/demos/', { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveTitle(/Demos Index/);
+    // #268 consolidated the ~35 single-demo links this used to check for
+    // down to a featured link into demos/site/index.html (the real catalog)
+    // plus the handful of genuinely standalone narrative/semantic pages —
+    // "more links" was the exact anti-pattern #268 exists to undo. Check
+    // for the featured catalog link instead of a link-count floor.
+    const catalogLink = page.locator('a[href="./site/index.html"]');
+    await expect(catalogLink).toHaveCount(1);
     const linkCount = await page.locator('ul a').count();
-    expect(linkCount).toBeGreaterThan(30);
+    expect(linkCount).toBeGreaterThan(0);
     // No framework script — this page must render before/without WB loading.
     const hasWbImport = await page.evaluate(() => !!document.querySelector('script[src*="wb-lazy"], script[src*="core/wb.js"], script[type="module"]'));
     expect(hasWbImport).toBe(false);

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-12T03:38:24.949Z",
+  "generatedAt": "2026-07-16T01:14:09.340Z",
   "siteSchema": "src/wb-models/pages/wb-component-library.site.json",
   "outputDir": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\site",
   "elapsed": "0.1s",
@@ -9,8 +9,8 @@
     "errors": 0,
     "skipped": 0,
     "totalComponents": 70,
-    "totalSections": 190,
-    "totalDemos": 709
+    "totalSections": 207,
+    "totalDemos": 761
   },
   "pages": [
     {
@@ -21,8 +21,8 @@
       "status": "ok",
       "filename": "cards.html",
       "componentCount": 19,
-      "sectionCount": 65,
-      "totalDemos": 258,
+      "sectionCount": 66,
+      "totalDemos": 259,
       "components": [
         {
           "name": "card",
@@ -124,7 +124,7 @@
           "name": "cardstats",
           "status": "ok",
           "sections": 3,
-          "demos": 13
+          "demos": 14
         },
         {
           "name": "cardtestimonial",
@@ -148,8 +148,8 @@
       "status": "ok",
       "filename": "feedback.html",
       "componentCount": 10,
-      "sectionCount": 37,
-      "totalDemos": 174,
+      "sectionCount": 40,
+      "totalDemos": 203,
       "components": [
         {
           "name": "alert",
@@ -161,13 +161,13 @@
           "name": "avatar",
           "status": "ok",
           "sections": 5,
-          "demos": 19
+          "demos": 20
         },
         {
           "name": "badge",
           "status": "ok",
           "sections": 4,
-          "demos": 23
+          "demos": 51
         },
         {
           "name": "chip",
@@ -221,14 +221,14 @@
       "status": "ok",
       "filename": "forms.html",
       "componentCount": 9,
-      "sectionCount": 34,
-      "totalDemos": 137,
+      "sectionCount": 42,
+      "totalDemos": 158,
       "components": [
         {
           "name": "button",
           "status": "ok",
-          "sections": 5,
-          "demos": 30
+          "sections": 6,
+          "demos": 51
         },
         {
           "name": "checkbox",
@@ -386,7 +386,7 @@
       "status": "ok",
       "filename": "content.html",
       "componentCount": 7,
-      "sectionCount": 12,
+      "sectionCount": 14,
       "totalDemos": 35,
       "components": [
         {
@@ -484,8 +484,8 @@
       "status": "ok",
       "filename": "interactive.html",
       "componentCount": 8,
-      "sectionCount": 8,
-      "totalDemos": 13,
+      "sectionCount": 11,
+      "totalDemos": 14,
       "components": [
         {
           "name": "draggable",
@@ -527,7 +527,7 @@
           "name": "hero",
           "status": "ok",
           "sections": 2,
-          "demos": 4
+          "demos": 5
         },
         {
           "name": "views",

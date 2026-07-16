@@ -4,7 +4,7 @@ import { getHtmlFiles, ROOT, relativePath, readFile } from '../base';
 // Files that are allowed to have missing IDs (test files, demos, etc.)
 const SKIP_FILES = [
   'demos/behaviors-showcase.html',           // Large demo file with dynamic content
-  'demos/semantics-structure.html', // Demo file
+  'demos/site/',                    // Auto-generated component showcase pages (#268)
   'tests/',                         // All test HTML files
   'public/papers/',                 // Paper documents
   'pages/themes.html',             // Generated color harmony demo with many swatches

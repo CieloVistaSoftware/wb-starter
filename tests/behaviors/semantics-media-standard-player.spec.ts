@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
  * usable <audio controls> — not an empty demo slot. (#267, Standard §16)
  */
 test('Standard Player renders a working audio control', async ({ page }) => {
-  await page.goto('/demos/semantics-media.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/demos/site/content.html', { waitUntil: 'domcontentloaded' });
 
   const audio = page.locator('#semanticsmedia-audio-20');
   await expect(audio).toBeVisible({ timeout: 10000 });

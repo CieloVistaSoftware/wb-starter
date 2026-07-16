@@ -18,61 +18,151 @@
   <p>Buttons, inputs, selects, checkboxes, switches, textareas</p>
 
   <!-- 1. 🔘 Button -->
+  <section id="button-button">
   <h2>🔘 Button</h2>
   <wb-demo columns="3">
-    <wb-button variant="primary">Primary</wb-button>
-    <wb-button variant="secondary">Secondary</wb-button>
-    <wb-button variant="success">Success</wb-button>
-    <wb-button variant="warning">Warning</wb-button>
-    <wb-button variant="error">Error</wb-button>
-    <wb-button variant="ghost">Ghost</wb-button>
-    <wb-button variant="outline">Outline</wb-button>
-    <wb-button variant="primary" size="sm">Small</wb-button>
-    <wb-button variant="primary" size="lg">Large</wb-button>
-    <wb-button variant="primary" loading>Loading...</wb-button>
-    <wb-button variant="primary" icon="🚀">🚀 With Icon</wb-button>
+    <wb-button label="Primary" variant="primary">
+    </wb-button>
+    <wb-button label="Secondary" variant="secondary">
+    </wb-button>
+    <wb-button label="Success" variant="success">
+    </wb-button>
+    <wb-button label="Warning" variant="warning">
+    </wb-button>
+    <wb-button label="Error" variant="error">
+    </wb-button>
+    <wb-button label="Ghost" variant="ghost">
+    </wb-button>
+    <wb-button label="Outline" variant="outline">
+    </wb-button>
+    <wb-button label="Small" variant="primary" size="sm">
+    </wb-button>
+    <wb-button label="Large" variant="primary" size="lg">
+    </wb-button>
+    <wb-button label="Loading..." variant="primary" loading>
+    </wb-button>
+    <wb-button label="🚀 With Icon" variant="primary" icon="🚀">
+    </wb-button>
   </wb-demo>
+  </section>
 
-  <!-- 2. iconPosition variants -->
+  <!-- 2. icon variants -->
+  <section id="button-icon-variants">
+  <h2>icon variants</h2>
+  <wb-demo columns="3">
+    <wb-button icon="">
+    </wb-button>
+    <wb-button icon="star">
+    </wb-button>
+    <wb-button icon="check">
+    </wb-button>
+    <wb-button icon="close">
+    </wb-button>
+    <wb-button icon="warning">
+    </wb-button>
+    <wb-button icon="info">
+    </wb-button>
+    <wb-button icon="error">
+    </wb-button>
+    <wb-button icon="heart">
+    </wb-button>
+    <wb-button icon="search">
+    </wb-button>
+    <wb-button icon="edit">
+    </wb-button>
+    <wb-button icon="trash">
+    </wb-button>
+    <wb-button icon="plus">
+    </wb-button>
+    <wb-button icon="minus">
+    </wb-button>
+    <wb-button icon="home">
+    </wb-button>
+    <wb-button icon="settings">
+    </wb-button>
+    <wb-button icon="download">
+    </wb-button>
+    <wb-button icon="upload">
+    </wb-button>
+    <wb-button icon="arrow_right">
+    </wb-button>
+    <wb-button icon="arrow_left">
+    </wb-button>
+    <wb-button icon="copy">
+    </wb-button>
+    <wb-button icon="save">
+    </wb-button>
+  </wb-demo>
+  </section>
+
+  <!-- 3. iconPosition variants -->
+  <section id="button-iconposition-variants">
   <h2>iconPosition variants</h2>
   <wb-demo columns="2">
-    <wb-button icon="⭐" icon-position="start">iconPosition=start</wb-button>
-    <wb-button icon="⭐" icon-position="end">iconPosition=end</wb-button>
+    <wb-button icon-position="start">
+    </wb-button>
+    <wb-button icon-position="end">
+    </wb-button>
   </wb-demo>
+  </section>
 
-  <!-- 3. variant variants -->
+  <!-- 4. variant variants -->
+  <section id="button-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="3">
-    <wb-button variant="primary">variant=primary</wb-button>
-    <wb-button variant="secondary">variant=secondary</wb-button>
-    <wb-button variant="success">variant=success</wb-button>
-    <wb-button variant="warning">variant=warning</wb-button>
-    <wb-button variant="error">variant=error</wb-button>
-    <wb-button variant="ghost">variant=ghost</wb-button>
-    <wb-button variant="outline">variant=outline</wb-button>
-    <wb-button variant="link">variant=link</wb-button>
+    <wb-button variant="primary">
+    </wb-button>
+    <wb-button variant="secondary">
+    </wb-button>
+    <wb-button variant="success">
+    </wb-button>
+    <wb-button variant="warning">
+    </wb-button>
+    <wb-button variant="error">
+    </wb-button>
+    <wb-button variant="ghost">
+    </wb-button>
+    <wb-button variant="outline">
+    </wb-button>
+    <wb-button variant="link">
+    </wb-button>
   </wb-demo>
+  </section>
 
-  <!-- 4. size variants -->
+  <!-- 5. size variants -->
+  <section id="button-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="3">
-    <wb-button size="xs">size=xs</wb-button>
-    <wb-button size="sm">size=sm</wb-button>
-    <wb-button size="md">size=md</wb-button>
-    <wb-button size="lg">size=lg</wb-button>
-    <wb-button size="xl">size=xl</wb-button>
+    <wb-button size="xs">
+    </wb-button>
+    <wb-button size="sm">
+    </wb-button>
+    <wb-button size="md">
+    </wb-button>
+    <wb-button size="lg">
+    </wb-button>
+    <wb-button size="xl">
+    </wb-button>
   </wb-demo>
+  </section>
 
-  <!-- 5. Boolean toggles -->
+  <!-- 6. Boolean toggles -->
+  <section id="button-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
-    <wb-button disabled>disabled</wb-button>
-    <wb-button loading>loading</wb-button>
-    <wb-button full-width>full-width</wb-button>
-    <wb-button icon-only icon="⭐"></wb-button>
+    <wb-button disabled>
+    </wb-button>
+    <wb-button loading>
+    </wb-button>
+    <wb-button full-width>
+    </wb-button>
+    <wb-button icon-only>
+    </wb-button>
   </wb-demo>
+  </section>
 
-  <!-- 6. ☑️ Checkbox -->
+  <!-- 7. ☑️ Checkbox -->
+  <section id="checkbox-checkbox">
   <h2>☑️ Checkbox</h2>
   <wb-demo columns="3">
     <wb-checkbox label="Default checkbox">
@@ -90,8 +180,10 @@
     <wb-checkbox label="Large checkbox" size="lg">
     </wb-checkbox>
   </wb-demo>
+  </section>
 
-  <!-- 7. size variants -->
+  <!-- 8. size variants -->
+  <section id="checkbox-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="2">
     <wb-checkbox size="sm">
@@ -101,8 +193,10 @@
     <wb-checkbox size="lg">
     </wb-checkbox>
   </wb-demo>
+  </section>
 
-  <!-- 8. variant variants -->
+  <!-- 9. variant variants -->
+  <section id="checkbox-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-checkbox variant="default">
@@ -112,8 +206,10 @@
     <wb-checkbox variant="success">
     </wb-checkbox>
   </wb-demo>
+  </section>
 
-  <!-- 9. Boolean toggles -->
+  <!-- 10. Boolean toggles -->
+  <section id="checkbox-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
     <wb-checkbox checked>
@@ -125,8 +221,10 @@
     <wb-checkbox required>
     </wb-checkbox>
   </wb-demo>
+  </section>
 
-  <!-- 10. 📝 Input -->
+  <!-- 11. 📝 Input -->
+  <section id="input-input">
   <h2>📝 Input</h2>
   <wb-demo columns="3">
     <wb-input label="Text Input" placeholder="Enter text...">
@@ -150,8 +248,10 @@
     <wb-input label="Large Input" size="lg" placeholder="Large">
     </wb-input>
   </wb-demo>
+  </section>
 
-  <!-- 11. inputType variants -->
+  <!-- 12. inputType variants -->
+  <section id="input-inputtype-variants">
   <h2>inputType variants</h2>
   <wb-demo columns="3">
     <wb-input input-type="text">
@@ -175,8 +275,10 @@
     <wb-input input-type="datetime-local">
     </wb-input>
   </wb-demo>
+  </section>
 
-  <!-- 12. variant variants -->
+  <!-- 13. variant variants -->
+  <section id="input-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-input variant="default">
@@ -186,8 +288,10 @@
     <wb-input variant="error">
     </wb-input>
   </wb-demo>
+  </section>
 
-  <!-- 13. size variants -->
+  <!-- 14. size variants -->
+  <section id="input-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="2">
     <wb-input size="sm">
@@ -197,8 +301,10 @@
     <wb-input size="lg">
     </wb-input>
   </wb-demo>
+  </section>
 
-  <!-- 14. iconPosition variants -->
+  <!-- 15. iconPosition variants -->
+  <section id="input-iconposition-variants">
   <h2>iconPosition variants</h2>
   <wb-demo columns="2">
     <wb-input icon-position="start">
@@ -206,8 +312,10 @@
     <wb-input icon-position="end">
     </wb-input>
   </wb-demo>
+  </section>
 
-  <!-- 15. Boolean toggles -->
+  <!-- 16. Boolean toggles -->
+  <section id="input-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
     <wb-input disabled>
@@ -219,8 +327,10 @@
     <wb-input clearable>
     </wb-input>
   </wb-demo>
+  </section>
 
-  <!-- 16. 🔍 Search -->
+  <!-- 17. 🔍 Search -->
+  <section id="search-search">
   <h2>🔍 Search</h2>
   <wb-demo columns="3">
     <wb-search placeholder="Search...">
@@ -236,8 +346,10 @@
     <wb-search placeholder="Loading..." loading>
     </wb-search>
   </wb-demo>
+  </section>
 
-  <!-- 17. size variants -->
+  <!-- 18. size variants -->
+  <section id="search-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="2">
     <wb-search size="sm">
@@ -247,8 +359,10 @@
     <wb-search size="lg">
     </wb-search>
   </wb-demo>
+  </section>
 
-  <!-- 18. variant variants -->
+  <!-- 19. variant variants -->
+  <section id="search-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-search variant="default">
@@ -258,8 +372,10 @@
     <wb-search variant="minimal">
     </wb-search>
   </wb-demo>
+  </section>
 
-  <!-- 19. Boolean toggles -->
+  <!-- 20. Boolean toggles -->
+  <section id="search-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
     <wb-search instant>
@@ -269,8 +385,10 @@
     <wb-search loading>
     </wb-search>
   </wb-demo>
+  </section>
 
-  <!-- 20. 📋 Select -->
+  <!-- 21. 📋 Select -->
+  <section id="select-select">
   <h2>📋 Select</h2>
   <wb-demo columns="3">
     <wb-select>
@@ -284,8 +402,10 @@
     <wb-select disabled>
     </wb-select>
   </wb-demo>
+  </section>
 
-  <!-- 21. size variants -->
+  <!-- 22. size variants -->
+  <section id="select-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="2">
     <wb-select size="sm">
@@ -295,8 +415,10 @@
     <wb-select size="lg">
     </wb-select>
   </wb-demo>
+  </section>
 
-  <!-- 22. variant variants -->
+  <!-- 23. variant variants -->
+  <section id="select-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-select variant="default">
@@ -306,15 +428,19 @@
     <wb-select variant="error">
     </wb-select>
   </wb-demo>
+  </section>
 
-  <!-- 23. Boolean toggles -->
+  <!-- 24. Boolean toggles -->
+  <section id="select-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
     <wb-select required>
     </wb-select>
   </wb-demo>
+  </section>
 
-  <!-- 24. 🔘 Switch -->
+  <!-- 25. 🔘 Switch -->
+  <section id="switch-switch">
   <h2>🔘 Switch</h2>
   <wb-demo columns="2">
     <wb-switch label="Test">
@@ -326,8 +452,10 @@
     <wb-switch label="Test" size="lg">
     </wb-switch>
   </wb-demo>
+  </section>
 
-  <!-- 25. labelPosition variants -->
+  <!-- 26. labelPosition variants -->
+  <section id="switch-labelposition-variants">
   <h2>labelPosition variants</h2>
   <wb-demo columns="2">
     <wb-switch label-position="start">
@@ -335,8 +463,10 @@
     <wb-switch label-position="end">
     </wb-switch>
   </wb-demo>
+  </section>
 
-  <!-- 26. size variants -->
+  <!-- 27. size variants -->
+  <section id="switch-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="2">
     <wb-switch size="sm">
@@ -346,8 +476,10 @@
     <wb-switch size="lg">
     </wb-switch>
   </wb-demo>
+  </section>
 
-  <!-- 27. variant variants -->
+  <!-- 28. variant variants -->
+  <section id="switch-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-switch variant="default">
@@ -357,8 +489,10 @@
     <wb-switch variant="success">
     </wb-switch>
   </wb-demo>
+  </section>
 
-  <!-- 28. Boolean toggles -->
+  <!-- 29. Boolean toggles -->
+  <section id="switch-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="2">
     <wb-switch checked>
@@ -366,8 +500,10 @@
     <wb-switch disabled>
     </wb-switch>
   </wb-demo>
+  </section>
 
-  <!-- 29. 📝 Textarea -->
+  <!-- 30. 📝 Textarea -->
+  <section id="textarea-textarea">
   <h2>📝 Textarea</h2>
   <wb-demo columns="3">
     <wb-textarea placeholder="Enter text...">
@@ -381,8 +517,10 @@
     <wb-textarea disabled>
     </wb-textarea>
   </wb-demo>
+  </section>
 
-  <!-- 30. resize variants -->
+  <!-- 31. resize variants -->
+  <section id="textarea-resize-variants">
   <h2>resize variants</h2>
   <wb-demo columns="2">
     <wb-textarea resize="none">
@@ -394,8 +532,10 @@
     <wb-textarea resize="both">
     </wb-textarea>
   </wb-demo>
+  </section>
 
-  <!-- 31. variant variants -->
+  <!-- 32. variant variants -->
+  <section id="textarea-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-textarea variant="default">
@@ -405,8 +545,10 @@
     <wb-textarea variant="error">
     </wb-textarea>
   </wb-demo>
+  </section>
 
-  <!-- 32. Boolean toggles -->
+  <!-- 33. Boolean toggles -->
+  <section id="textarea-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
     <wb-textarea show-count>
@@ -416,20 +558,371 @@
     <wb-textarea required>
     </wb-textarea>
   </wb-demo>
+  </section>
 
-  <!-- 33. 📦 Slider -->
+  <!-- 34. 📦 Slider -->
+  <section id="slider-slider">
   <h2>📦 Slider</h2>
   <wb-demo columns="1">
     <wb-slider>
     </wb-slider>
   </wb-demo>
+  </section>
 
-  <!-- 34. 📦 Toggle -->
+  <!-- 35. 📦 Toggle -->
+  <section id="toggle-toggle">
   <h2>📦 Toggle</h2>
   <wb-demo columns="1">
     <wb-toggle target="#content">
     </wb-toggle>
   </wb-demo>
+  </section>
+
+  <!-- 36. 🧩 wb-button + x-* behavior composition -->
+  <section id="wb-button-x-behavior-composition">
+  <h2>🧩 wb-button + x-* behavior composition</h2>
+  <p class="wb-note">Any <code>x-*</code> behavior (ripple, tooltip, toast, etc.) composes onto a button the same way it does onto any other element — stack as many as you want, in any order, with no wrapper components.</p>
+  <style>
+    .wb-behaviors { list-style: none; margin: 1rem 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+    .wb-behaviors li { display: flex; align-items: baseline; gap: 0.75rem; }
+    .wb-behavior-tag { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; background: var(--bg-secondary); color: var(--info-color); border: 1px solid var(--border-color); white-space: nowrap; }
+    .wb-behavior-desc { color: var(--text-secondary); font-size: 0.9rem; }
+  </style>
+  <p class="wb-note">Each <code>x-</code> attribute adds one capability to the button — no JavaScript.</p>
+  <wb-demo columns="3">
+    <wb-button variant="primary" x-ripple>Ripple</wb-button>
+    <wb-button variant="secondary" x-tooltip="Helpful hint" position="top">Tooltip</wb-button>
+    <wb-button variant="success" x-toast message="Saved!" toast-variant="success">Toast on click</wb-button>
+    <wb-button variant="info" x-copy copy-text="Copied from a wb-button!">Copy to clipboard</wb-button>
+    <wb-button variant="warning" x-wobble>Wobble</wb-button>
+    <wb-button variant="ghost" x-tada>Tada</wb-button>
+  </wb-demo>
+  <ul class="wb-behaviors">
+    <li><span class="wb-behavior-tag">x-ripple</span><span class="wb-behavior-desc">material-style ripple on click</span></li>
+    <li><span class="wb-behavior-tag">x-tooltip</span><span class="wb-behavior-desc">hover hint, positionable</span></li>
+    <li><span class="wb-behavior-tag">x-toast</span><span class="wb-behavior-desc">fires a toast notification</span></li>
+    <li><span class="wb-behavior-tag">x-copy</span><span class="wb-behavior-desc">copies text to the clipboard</span></li>
+    <li><span class="wb-behavior-tag">x-wobble</span><span class="wb-behavior-desc">wobble animation</span></li>
+    <li><span class="wb-behavior-tag">x-tada</span><span class="wb-behavior-desc">tada celebration animation</span></li>
+  </ul>
+  <p class="wb-note">Stack multiple <code>x-</code> attributes on one button — they layer, they don't conflict.</p>
+  <wb-demo columns="1">
+    <wb-button variant="primary" x-ripple x-tooltip="Ripple + tooltip + toast" position="top" x-toast message="Saved!" toast-variant="success">Save (ripple + tooltip + toast)</wb-button>
+    <wb-button variant="error" x-ripple x-wobble x-toast message="Deleted" toast-variant="error">Delete (ripple + wobble + toast)</wb-button>
+    <wb-button variant="info" x-copy copy-text="npm i wb-starter" x-tooltip="Click to copy the install command" position="bottom" x-ripple>Copy install cmd</wb-button>
+  </wb-demo>
+  </section>
+
+  <!-- 37. 🧩 x-fieldset — collapsible fieldset -->
+  <section id="x-fieldset-collapsible-fieldset">
+  <h2>🧩 x-fieldset — collapsible fieldset</h2>
+  <wb-demo>
+    <fieldset x-fieldset>
+      <legend>Personal Info</legend>
+      <label>Name: <input type="text"></label>
+      <label>Email: <input type="email"></label>
+    </fieldset>
+  </wb-demo>
+  <wb-demo>
+    <fieldset x-fieldset collapsible>
+      <legend>Advanced Settings (collapsible)</legend>
+      <label>API Key: <input type="text"></label>
+    </fieldset>
+  </wb-demo>
+  </section>
+
+  <!-- 38. 🧩 x-form — ajax/validate behavior -->
+  <section id="x-form-ajax-validate-behavior">
+  <h2>🧩 x-form — ajax/validate behavior</h2>
+  <wb-demo>
+    <form x-form>
+      <label>Username: <input type="text"></label><br>
+      <label>Password: <input type="password"></label><br>
+      <button type="submit">Submit</button>
+    </form>
+  </wb-demo>
+  </section>
+
+  <!-- 39. 🧩 x-help — permanent hint text -->
+  <section id="x-help-permanent-hint-text">
+  <h2>🧩 x-help — permanent hint text</h2>
+  <p><code>x-help</code> is for hint text a user should see <strong>without hovering or interacting</strong> — a short instruction that sits permanently under a field ("must be 8+ characters"). If the text should only appear on hover/focus, use <code>x-tooltip</code> instead — the two are deliberately kept separate.</p>
+  <wb-demo>
+    <label>API Key: <input type="text"></label>
+    <span x-help>Find this in your account settings under "Developer".</span>
+  </wb-demo>
+  </section>
+
+  <!-- 40. 🧩 x-label — including RTL layouts -->
+  <section id="x-label-including-rtl-layouts">
+  <h2>🧩 x-label — including RTL layouts</h2>
+  <wb-demo>
+    <input x-label="Label for input:" type="text">
+  </wb-demo>
+  <p>RTL layouts (Hebrew, Arabic) via <code>label-position="right"</code>:</p>
+  <wb-demo>
+    <input x-label="שם מלא" label-position="right" dir="rtl" type="text">
+  </wb-demo>
+  <div id="label-schema-validation"></div>
+  <script type="module">
+    import Ajv from 'https://cdn.jsdelivr.net/npm/ajv@8.12.0/+esm';
+    const schemaUrl = '../../src/wb-models/label.schema.json';
+    const ajv = new Ajv({ strict: false });
+    fetch(schemaUrl).then(r => r.json()).then(schema => {
+      const data = { required: false, optional: false };
+      let msg;
+      try {
+        const valid = ajv.validate(schema, data);
+        msg = valid ? 'Schema validation: PASS' : 'Schema validation: FAIL\n' + JSON.stringify(ajv.errors, null, 2);
+      } catch (e) {
+        msg = 'Schema validation skipped (unresolved $ref): ' + e.message;
+      }
+      const out = document.createElement('pre');
+      out.style.background = '#222';
+      out.style.color = '#fff';
+      out.style.padding = '0.5em';
+      out.textContent = msg;
+      document.getElementById('label-schema-validation').appendChild(out);
+    });
+  </script>
+  </section>
+
+  <!-- 41. 🧩 x-autosize — textarea that grows with content -->
+  <section id="x-autosize-textarea-that-grows-with-content">
+  <h2>🧩 x-autosize — textarea that grows with content</h2>
+  <wb-demo>
+    <textarea x-autosize style="width: 100%; min-height: 2rem;">Type here and watch me grow!</textarea>
+  </wb-demo>
+  </section>
+
+  <!-- 42. 🎨 Native Semantic Elements — x-* on plain HTML -->
+  <section id="native-semantic-forms">
+  <h2>🎨 Native Semantic Elements — x-* on plain HTML</h2>
+<p id="semanticsforms-p-13">Enhanced form controls using standard HTML elements with <code id="semanticsforms-code-14">x-*</code> behaviors.</p>
+
+  <!-- BUTTONS -->
+  <h2 id="semanticsforms-h2-15">Button <code id="semanticsforms-code-16">&lt;button&gt;</code></h2>
+  <div id="semanticsforms-div-17" class="demo-section">
+    <wb-demo>
+      <button variant="primary">Primary</button>
+      <button variant="secondary">Secondary</button>
+      <button variant="success">Success</button>
+      <button variant="danger">Danger</button>
+      <button variant="warning">Warning</button>
+      <button variant="ghost">Ghost</button>
+    </wb-demo>
+
+    <wb-demo>
+      <button variant="primary" size="sm">Small</button>
+      <button variant="primary" size="md">Medium</button>
+      <button variant="primary" size="lg">Large</button>
+    </wb-demo>
+
+    <p>The <code>loading</code>/<code>icon</code>/<code>icon-position</code> attributes only work on the <code>&lt;wb-button&gt;</code> custom tag — a native <code>&lt;button&gt;</code> only maps <code>size</code>/<code>variant</code> to styling classes.</p>
+    <wb-demo>
+      <wb-button variant="primary" loading>Loading</wb-button>
+      <wb-button variant="secondary" icon="💾">Save</wb-button>
+      <wb-button variant="danger" icon="🗑️" icon-position="right">Delete</wb-button>
+    </wb-demo>
+  </div>
+
+  <!-- INPUTS -->
+  <h2 id="semanticsforms-h2-33">Input <code id="semanticsforms-code-34">&lt;input&gt;</code></h2>
+  <div id="semanticsforms-div-35" class="demo-section">
+    <div id="semanticsforms-div-36" class="demo-grid">
+      <div id="semanticsforms-div-37">
+        <label id="semanticsforms-label-38">Standard Input</label>
+        <wb-demo>
+          <input type="text" placeholder="Type something...">
+        </wb-demo>
+      </div>
+      <div id="semanticsforms-div-40">
+        <label id="semanticsforms-label-41">With Prefix/Suffix — needs <code>x-behavior="input"</code>; there's no native auto-inject mapping for plain <code>&lt;input&gt;</code></label>
+        <wb-demo>
+          <input
+            type="text"
+            x-behavior="input"
+            prefix="👤"
+            suffix="@gmail.com"
+            placeholder="Username">
+        </wb-demo>
+      </div>
+      <div id="semanticsforms-div-43">
+        <label id="semanticsforms-label-44">Clearable</label>
+        <wb-demo>
+          <input
+            type="text"
+            x-behavior="input"
+            clearable
+            placeholder="Search...">
+        </wb-demo>
+      </div>
+      <div id="semanticsforms-div-46">
+        <label id="semanticsforms-label-47">Validation States</label>
+        <wb-demo>
+          <input
+            type="text"
+            x-behavior="input"
+            variant="success"
+            value="Valid Input">
+          <input
+            type="text"
+            x-behavior="input"
+            variant="error"
+            value="Invalid Input">
+        </wb-demo>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEXTAREA -->
+  <h2 id="semanticsforms-h2-51">Textarea <code id="semanticsforms-code-52">&lt;textarea&gt;</code></h2>
+  <div id="semanticsforms-div-53" class="demo-section">
+    <div id="semanticsforms-div-54" class="demo-grid">
+      <div id="semanticsforms-div-55">
+        <label id="semanticsforms-label-56">Auto-sizing</label>
+        <wb-demo>
+          <textarea autosize placeholder="Type to expand..."></textarea>
+        </wb-demo>
+      </div>
+      <div id="semanticsforms-div-58">
+        <label id="semanticsforms-label-59">Character Count (Max 100)</label>
+        <wb-demo>
+          <textarea
+            show-count
+            max-length="100"
+            placeholder="Limited bio..."></textarea>
+        </wb-demo>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKBOX & RADIO -->
+  <h2 id="semanticsforms-h2-61">Checkbox & Radio</h2>
+  <div id="semanticsforms-div-62" class="demo-section">
+    <p>checkbox has no <code>label</code> attribute of its own — wrap it in a real <code>&lt;label&gt;</code>.</p>
+    <wb-demo>
+      <label><input type="checkbox"> Accept Terms</label>
+      <label><input type="checkbox" checked> Subscribe</label>
+      <label><input type="checkbox" indeterminate> Indeterminate</label>
+    </wb-demo>
+
+    <wb-demo>
+      <input
+        type="radio"
+        name="plan"
+        value="free"
+        label="Free Plan">
+      <input
+        type="radio"
+        name="plan"
+        value="pro"
+        checked
+        label="Pro Plan">
+      <input
+        type="radio"
+        name="plan"
+        value="ent"
+        label="Enterprise">
+    </wb-demo>
+  </div>
+
+  <!-- SWITCH -->
+  <h2 id="semanticsforms-h2-71">Switch</h2>
+  <div id="semanticsforms-div-72" class="demo-section">
+    <p><strong>Known gap (#322):</strong> <code>&lt;wb-switch&gt;</code> needs its schema built before it can render — that never happens on this page's runtime (<code>wb-lazy.js</code>, used by every standalone demo page), so it won't render here yet. This markup is the correct API; it works today on the main site (<code>?page=behaviors</code>).</p>
+    <wb-demo>
+      <wb-switch label="Notifications"></wb-switch>
+      <wb-switch label="Dark Mode" checked></wb-switch>
+      <wb-switch label="Disabled" disabled></wb-switch>
+    </wb-demo>
+  </div>
+
+  <!-- RATING -->
+  <h2 id="semanticsforms-h2-77">Rating</h2>
+  <div id="semanticsforms-div-78" class="demo-section">
+    <p><code>icon</code> takes a literal emoji character, not a keyword — <code>icon="heart"</code> renders the literal text "heart", not ❤️. <code>precision</code> isn't a real attribute (not read anywhere in rating.js).</p>
+    <wb-demo>
+      <wb-rating value="3" max="5"></wb-rating>
+      <wb-rating value="4.5" max="5" color="gold"></wb-rating>
+      <wb-rating value="2" max="10" icon="❤️"></wb-rating>
+    </wb-demo>
+  </div>
+
+  <!-- SELECT -->
+  <h2 id="semanticsforms-h2-83">Select <code id="semanticsforms-code-84">&lt;select&gt;</code></h2>
+  <div id="semanticsforms-div-85" class="demo-section">
+    <div id="semanticsforms-div-86" class="demo-grid">
+      <div id="semanticsforms-div-87">
+        <label id="semanticsforms-label-88">Standard Select</label>
+        <wb-demo>
+          <select>
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+          </select>
+        </wb-demo>
+      </div>
+      <div id="semanticsforms-div-93">
+        <label id="semanticsforms-label-94">Searchable — <code>x-autocomplete</code>, not a <code>searchable</code> attribute on <code>&lt;select&gt;</code> (which doesn't exist)</label>
+        <wb-demo>
+          <input
+            type="text"
+            x-autocomplete
+            items="Apple,Banana,Cherry,Date,Elderberry"
+            placeholder="Search fruit...">
+        </wb-demo>
+      </div>
+    </div>
+  </div>
+
+  <!-- RANGE -->
+  <h2 id="semanticsforms-h2-101">Range <code id="semanticsforms-code-102">&lt;input type="range"&gt;</code></h2>
+  <div id="semanticsforms-div-103" class="demo-section">
+    <div id="semanticsforms-div-104" class="demo-grid">
+      <div id="semanticsforms-div-105">
+        <label id="semanticsforms-label-106">With Value Display</label>
+        <wb-demo>
+          <input
+            type="range"
+            show-value
+            min="0"
+            max="100"
+            value="50">
+        </wb-demo>
+      </div>
+      <div id="semanticsforms-div-108">
+        <label id="semanticsforms-label-109">With Labels & Suffix</label>
+        <wb-demo>
+          <input
+            type="range"
+            show-value
+            show-labels
+            value-suffix="%"
+            min="0"
+            max="100"
+            value="75">
+        </wb-demo>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <h2 id="semanticsforms-h2-111">Form <code id="semanticsforms-code-112">&lt;form&gt;</code></h2>
+  <div id="semanticsforms-div-113" class="demo-section">
+    <p><code>x-form</code> has no <code>loading-text</code> option (that only exists in an unregistered alternate implementation).</p>
+    <wb-demo>
+      <form x-form ajax action="#">
+        <div style="display: grid; gap: 1rem; max-width: 400px;">
+          <input name="name" placeholder="Name" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <textarea name="message" placeholder="Message" required></textarea>
+          <button type="submit" variant="primary">Send Message</button>
+        </div>
+      </form>
+    </wb-demo>
+  </div>
+  </section>
 
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';

@@ -55,6 +55,10 @@ function camelToKebab(str) {
   return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
+function slugify(str) {
+  return String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
 function findSchema(name) {
   const candidates = [
     join(MODELS_DIR, `${name}.schema.json`),
@@ -85,6 +89,7 @@ function generateComponentSections(schema) {
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
     sections.push({
       heading: `${schema.schemaFor} — Combinations`,
+      component: schema.schemaFor,
       tag,
       columns,
       demos
@@ -109,6 +114,7 @@ function generateComponentSections(schema) {
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
     sections.push({
       heading: `${propName} variants`,
+      component: schema.schemaFor,
       tag,
       columns,
       demos
@@ -132,6 +138,7 @@ function generateComponentSections(schema) {
     const columns = demos.length <= 2 ? demos.length : 3;
     sections.push({
       heading: `Boolean toggles`,
+      component: schema.schemaFor,
       tag,
       columns,
       demos
@@ -151,6 +158,7 @@ function generateComponentSections(schema) {
     if (Object.keys(defaultAttrs).length > 0) {
       sections.push({
         heading: `${schema.schemaFor} — Defaults`,
+        component: schema.schemaFor,
         tag,
         columns: 1,
         demos: [{ tag, attrs: defaultAttrs }]
@@ -210,6 +218,21 @@ function buildMultiComponentPage(pageDef, defaults) {
 
   const deduplicated = deduplicateSections(allSections);
 
+  // Hand-authored sections for schema-less x-* behaviors and narrative content
+  // the auto-generator can't produce (prose, RTL examples, multi-instance
+  // showcases). Passed through verbatim — heading + raw html, no attrs/demos
+  // shape, since these don't come from a schema. `position: 'start'` pins a
+  // section before the auto-generated ones (e.g. a curated gallery that
+  // page-level tests target via .first()/.nth(0)); default is append.
+  const manualStart = [];
+  const manualEnd = [];
+  for (const manual of (pageDef.manualSections || [])) {
+    const section = { heading: manual.heading, raw: manual.html, script: manual.script, id: manual.id };
+    (manual.position === 'start' ? manualStart : manualEnd).push(section);
+  }
+  deduplicated.unshift(...manualStart);
+  deduplicated.push(...manualEnd);
+
   const pageSchema = {
     title: pageDef.title,
     description: pageDef.description || `Showcase for: ${(pageDef.components || []).join(', ')}`,
@@ -220,8 +243,7 @@ function buildMultiComponentPage(pageDef, defaults) {
       title: pageDef.title,
       stylesheets: [
         '../../src/styles/themes.css',
-        '../../src/styles/site.css',
-        '../../src/styles/components.css'
+        '../../src/styles/site.css'
       ],
       scripts: [{
         type: 'module',
@@ -256,7 +278,6 @@ function generateIndexHtml(siteSchema, pageResults) {
   lines.push(`  <title>${siteSchema.title} — Index</title>`);
   lines.push('  <link rel="stylesheet" href="../../src/styles/themes.css">');
   lines.push('  <link rel="stylesheet" href="../../src/styles/site.css">');
-  lines.push('  <link rel="stylesheet" href="../../src/styles/components.css">');
   lines.push('  <style>');
   lines.push('    .site-index { max-width: 960px; margin: 2rem auto; }');
   lines.push('    .page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }');
@@ -356,10 +377,26 @@ function generatePageHtml(pageSchema) {
   }
 
   if (pageSchema.sections) {
+    const seenIds = new Set();
     for (let i = 0; i < pageSchema.sections.length; i++) {
       const section = pageSchema.sections[i];
+      let sectionId = section.id || slugify(section.component ? `${section.component}-${section.heading}` : section.heading);
+      if (seenIds.has(sectionId)) sectionId = `${sectionId}-${i}`;
+      seenIds.add(sectionId);
       lines.push(`  <!-- ${i + 1}. ${section.heading} -->`);
+      lines.push(`  <section id="${sectionId}">`);
       lines.push(`  <h2>${section.heading}</h2>`);
+      if (section.raw) {
+        lines.push(section.raw);
+        if (section.script) {
+          lines.push('  <script type="module">');
+          lines.push(section.script);
+          lines.push('  </script>');
+        }
+        lines.push('  </section>');
+        lines.push('');
+        continue;
+      }
       lines.push(`  <wb-demo columns="${section.columns || 3}">`);
       for (const demo of (section.demos || [])) {
         const attrs = Object.entries(demo.attrs || {})
@@ -379,6 +416,7 @@ function generatePageHtml(pageSchema) {
         }
       }
       lines.push('  </wb-demo>');
+      lines.push('  </section>');
       lines.push('');
     }
   }

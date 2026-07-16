@@ -1,9 +1,20 @@
-# #268 — demos/ consolidation plan
+# #268 — demos/ consolidation plan (closed 2026-07-15)
 
 Written plan per #268's acceptance criteria ("a written plan — which pages merge/die"),
 based on a real audit of all 48 top-level `demos/*.html` files (tag/behavior coverage,
-line count, purpose) run 2026-07-11. Not executed here — this is the plan; migration is
-explicitly incremental per the issue.
+line count, purpose) run 2026-07-11. Migration was incremental per the issue — see
+"Recommended next steps" below for the full execution history; all 5 steps are done.
+
+**Correction (same day):** the first pass of step 5 kept `semantics-forms.html`,
+`semantics-media.html`, `semantics-structure.html`, `semantics-theme.html`, and
+`sticky-demo.html` standing as separate top-level pages, reasoning from this plan's
+own earlier "organized by HTML semantic category, a different axis" carve-out. Direct
+instruction overrode that: "no more single links to a single demo" — no exceptions for
+semantic-category pages. All 5 merged into `demos/site/*.html` as `manualSections`
+(forms.html: native semantic form elements; content.html: semantic media + structure
+elements; interactive.html: theme & dark mode) and deleted. Zero standalone
+single-topic demo pages remain in `demos/` — every surviving top-level page is a
+distinct narrative/tool page or dev/debug fixture, not a demo of one component/behavior.
 
 ## What already exists
 
@@ -126,8 +137,55 @@ format-upgrade case.
    (repointed the former to `card-examples.html`, its replacement).
 4. ~~Diff `kitchen-sink.html` vs `autoinject.html` properly before deciding~~ — done
    (2026-07-12): kept `autoinject.html`, retired `kitchen-sink.html`.
-5. **Still open:** extend `auto-showcase.mjs` to cover schema-less `x-*` behaviors,
-   then generate showcases for the 12 tiny stub pages listed above, retiring the
-   hand-written versions once the generated ones pass the coverage gate.
+5. ~~Extend the generator to cover schema-less `x-*` behaviors, then consolidate the
+   tiny stub pages~~ — done (2026-07-15). `scripts/generate-site.mjs` gained
+   `manualSections` support (hand-authored `{heading, html, script?, position?, id?}`
+   entries appended — or, with `position: "start"`, pinned before — a category page's
+   auto-generated schema sections; each section gets a stable `id` for test targeting,
+   either explicit or slugified from `component + heading`). Used to fold in every
+   schema-less behavior (`x-autosize`, `x-fieldset`, `x-form`, `x-help`, `x-label`,
+   `x-progressbar`, `x-notify`, `x-toggle`) plus `x-tooltip`'s *real* trigger-element
+   usage (the schema-driven `<wb-tooltip content="...">` markup doesn't match the actual
+   behavior implementation — flagged separately, not fixed here) and the button
+   composition showcase, into their matching `demos/site/*.html` category page.
+   `card-examples.html`'s full curated gallery (18 hand-picked examples, exact IDs/text
+   that `tests/cards/card-examples-demo.spec.ts`'s ~40 assertions depend on) was
+   preserved wholesale as a pinned-to-top manual section (`#card-gallery`) in
+   `demos/site/cards.html`, since the schema-generated matrix uses generic sample
+   content and can't satisfy those assertions.
 
-Steps 1-4 are done. Step 5 is the only remaining piece of #268.
+   Retired (deleted, content merged into `demos/site/*.html`): `autosize-demo.html`,
+   `progressbar-demo.html`, `feedback-demo.html`, `toggle-demo.html`, `help-demo.html`,
+   `label-demo.html`, `fieldset-demo.html`, `form-demo.html`, `code.html`,
+   `stage-light.html`, `tabs-demo.html`, `tooltip-demo.html`, `buttons.html`,
+   `card-examples.html`, `badge-showcase.html`, `progress-showcase.html`,
+   `collapse-demo.html`, `copy-demo.html`, `draggable-demo.html`, `resizable-demo.html`,
+   `ripple-demo.html` — 20 files. All dependent tests (`tests/darkmode-standard.spec.ts`,
+   `tests/behaviors/tooltip-demo.spec.ts`, `tests/behaviors/button-variant-colors.spec.ts`,
+   `tests/integration/button-composition-demo.spec.ts`,
+   `tests/regression/wb-lazy-inject-detached-element.spec.ts`,
+   `tests/behaviors/wb-card-link-real-anchor.spec.ts`,
+   `tests/compliance/no-observer-referror.spec.ts`, `tests/demos/label-demo-schema.spec.ts`,
+   `tests/cards/card-examples-demo.spec.ts`, `tests/demos/card-examples-demo.spec.ts`)
+   retargeted to `demos/site/*.html`, scoped to stable section ids where the auto-generated
+   content around them would otherwise break count/uniqueness assumptions.
+
+   Also found and fixed in passing: two competing, orphaned site generators both writing
+   to `demos/site/` (`src/wb-models/pages/wb-component-library.site.json`, the real one, vs.
+   the abandoned `src/wb-models/sites/wb-library.site.json` — deleted, along with its 5
+   orphaned output files `badges.html`/`progress.html`/`notifications.html`/
+   `portfolio.html`/`all-components.html` that `demos/site/index.html` never linked to);
+   and a relative-path bug in `mdhtml.schema.json`'s matrix (`../demos/code.md` broke once
+   consumed from `demos/site/` instead of `demos/`, fixed to `../code.md`).
+
+   `demos/index.html` now leads with a featured link to `demos/site/index.html` as the
+   single canonical catalog; its remaining 14 links are all legitimately non-duplicate
+   (semantic-category pages, narrative/tool pages, dev/debug fixtures — see
+   `data/demos-registry.json`'s `canonical` bucket for what's still genuinely
+   unaudited: only `sticky-demo.html` remains — `tabs-demo.html` was deleted since
+   `demos/site/layout.html`'s schema-driven `tabs` section fully covers it).
+
+Steps 1-5 are done. #268 is closed — remaining work (auditing `sticky-demo.html`
+against `demos/site/layout.html`'s coverage, fixing the `x-tooltip` schema/markup
+mismatch, `tests/demos/card-examples-demo.spec.ts`'s stale `.wb-demo__grid` selector)
+is tracked as small independent follow-ups, not blocking.

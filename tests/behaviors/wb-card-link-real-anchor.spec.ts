@@ -26,16 +26,16 @@ async function setup(page: Page, html: string): Promise<void> {
 
 test.describe('<wb-card-link> renders a real stretched <a> (not JS window.open)', () => {
   test('a real anchor with the right href/target/rel exists inside the card', async ({ page }) => {
-    await setup(page, '<wb-card-link id="cl1" title="Example" href="/demos/buttons.html" target="_blank"></wb-card-link>');
+    await setup(page, '<wb-card-link id="cl1" title="Example" href="/demos/site/forms.html" target="_blank"></wb-card-link>');
     const link = page.locator('#cl1 a');
     await expect(link).toHaveCount(1);
-    await expect(link).toHaveAttribute('href', /\/demos\/buttons\.html$/);
+    await expect(link).toHaveAttribute('href', /\/demos\/site\/forms\.html$/);
     await expect(link).toHaveAttribute('target', '_blank');
     await expect(link).toHaveAttribute('rel', 'noopener');
   });
 
   test('the anchor is stretched to cover the whole card (position:absolute, inset:0)', async ({ page }) => {
-    await setup(page, '<wb-card-link id="cl2" title="Example" href="/demos/buttons.html" target="_blank"></wb-card-link>');
+    await setup(page, '<wb-card-link id="cl2" title="Example" href="/demos/site/forms.html" target="_blank"></wb-card-link>');
     const link = page.locator('#cl2 a');
     const styles = await link.evaluate((el) => {
       const cs = getComputedStyle(el);
@@ -47,13 +47,13 @@ test.describe('<wb-card-link> renders a real stretched <a> (not JS window.open)'
   });
 
   test('clicking the card triggers real navigation (a new tab opens, not window.open())', async ({ page, context }) => {
-    await setup(page, '<wb-card-link id="cl3" title="Example" href="/demos/buttons.html" target="_blank"></wb-card-link>');
+    await setup(page, '<wb-card-link id="cl3" title="Example" href="/demos/site/forms.html" target="_blank"></wb-card-link>');
     const [popup] = await Promise.all([
       context.waitForEvent('page'),
       page.locator('#cl3').click(),
     ]);
     await popup.waitForLoadState('domcontentloaded');
-    expect(popup.url()).toMatch(/\/demos\/buttons\.html$/);
+    expect(popup.url()).toMatch(/\/demos\/site\/forms\.html$/);
     await popup.close();
   });
 });

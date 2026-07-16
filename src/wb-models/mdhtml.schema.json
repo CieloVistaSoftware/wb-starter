@@ -52,7 +52,7 @@
     "matrix": {
       "combinations": [
         {
-          "src": "../demos/code.md"
+          "src": "../code.md"
         },
         {
           "gfm": true

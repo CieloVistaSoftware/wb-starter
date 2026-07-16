@@ -17,7 +17,7 @@
     "src": {
       "type": "string",
       "description": "Audio source URL",
-      "default": "/demos/audio.mp3",
+      "default": "../audio.mp3",
       "required": true
     },
     "volume": {
@@ -258,18 +258,18 @@
     "matrix": {
       "combinations": [
         {
-          "src": "/demos/audio.mp3"
+          "src": "../audio.mp3"
         },
         {
-          "src": "/demos/audio.mp3",
+          "src": "../audio.mp3",
           "showEq": true
         },
         {
-          "src": "/demos/audio.mp3",
+          "src": "../audio.mp3",
           "volume": 0.5
         },
         {
-          "src": "/demos/audio.mp3",
+          "src": "../audio.mp3",
           "loop": true
         }
       ]

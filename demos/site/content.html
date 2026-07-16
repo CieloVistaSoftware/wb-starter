@@ -18,6 +18,7 @@
   <p>Articles, markdown rendering, audio, tables</p>
 
   <!-- 1. 📄 Article Component -->
+  <section id="article-article-component">
   <h2>📄 Article Component</h2>
   <wb-demo columns="3">
     <wb-article title="Article">
@@ -31,15 +32,19 @@
     <wb-article title="Article" featured>
     </wb-article>
   </wb-demo>
+  </section>
 
   <!-- 2. Boolean toggles -->
+  <section id="article-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="1">
     <wb-article featured>
     </wb-article>
   </wb-demo>
+  </section>
 
   <!-- 3. 📰 Articles List Component -->
+  <section id="articles-articles-list-component">
   <h2>📰 Articles List Component</h2>
   <wb-demo columns="2">
     <wb-articles layout="grid">
@@ -49,33 +54,41 @@
     <wb-articles layout="grid" columns="2">
     </wb-articles>
   </wb-demo>
+  </section>
 
   <!-- 4. layout variants -->
+  <section id="articles-layout-variants">
   <h2>layout variants</h2>
   <wb-demo columns="2">
     <wb-articles layout="masonry">
     </wb-articles>
   </wb-demo>
+  </section>
 
   <!-- 5. Boolean toggles -->
+  <section id="articles-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="1">
     <wb-articles pagination>
     </wb-articles>
   </wb-demo>
+  </section>
 
   <!-- 6. 📝 Markdown to HTML -->
+  <section id="mdhtml-markdown-to-html">
   <h2>📝 Markdown to HTML</h2>
   <wb-demo columns="2">
-    <wb-mdhtml src="../demos/code.md">
+    <wb-mdhtml src="../code.md">
     </wb-mdhtml>
     <wb-mdhtml gfm>
     </wb-mdhtml>
     <wb-mdhtml sanitize gfm>
     </wb-mdhtml>
   </wb-demo>
+  </section>
 
   <!-- 7. 🎵 Audio -->
+  <section id="audio-audio">
   <h2>🎵 Audio</h2>
   <wb-demo columns="2">
     <wb-audio src="../audio.mp3">
@@ -87,8 +100,10 @@
     <wb-audio src="../audio.mp3" loop>
     </wb-audio>
   </wb-demo>
+  </section>
 
   <!-- 8. Boolean toggles -->
+  <section id="audio-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
     <wb-audio loop src="../audio.mp3">
@@ -100,8 +115,10 @@
     <wb-audio show-eq src="../audio.mp3">
     </wb-audio>
   </wb-demo>
+  </section>
 
   <!-- 9. 📊 Table -->
+  <section id="table-table">
   <h2>📊 Table</h2>
   <wb-demo columns="2">
     <wb-table>
@@ -113,8 +130,10 @@
     <wb-table paginated page-size="5">
     </wb-table>
   </wb-demo>
+  </section>
 
   <!-- 10. Boolean toggles -->
+  <section id="table-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
     <wb-table filterable>
@@ -126,8 +145,10 @@
     <wb-table bordered>
     </wb-table>
   </wb-demo>
+  </section>
 
   <!-- 11. 📝 Notes -->
+  <section id="notes-notes">
   <h2>📝 Notes</h2>
   <wb-demo columns="2">
     <wb-notes>
@@ -139,13 +160,255 @@
     <wb-notes position="modal">
     </wb-notes>
   </wb-demo>
+  </section>
 
   <!-- 12. 📦 Code Control -->
+  <section id="codecontrol-code-control">
   <h2>📦 Code Control</h2>
   <wb-demo columns="1">
     <wb-codecontrol>
     </wb-codecontrol>
   </wb-demo>
+  </section>
+
+  <!-- 13. 🎬 Semantic Media Elements -->
+  <section id="semantic-media-elements">
+  <h2>🎬 Semantic Media Elements</h2>
+<p>Enhanced media elements using standard HTML tags.</p>
+
+  <!-- AUDIO -->
+  <h2>Audio <code>&lt;audio&gt;</code></h2>
+  <div class="demo-section">
+    <p>Standard Player</p>
+    <wb-demo>
+      <audio id="semanticsmedia-audio-20" controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    </wb-demo>
+
+    <p>Studio EQ Player — with 15-band graphic equalizer</p>
+    <wb-demo>
+      <wb-audio
+        src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3"
+        show-eq
+        volume="0.7"
+        playlist="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3|Tours - Enthusiast,https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3|Ghosts I - Track 1,https://archive.org/download/nineinchnails_ghosts_I_IV/02_Ghosts_I.mp3|Ghosts I - Track 2,https://archive.org/download/nineinchnails_ghosts_I_IV/03_Ghosts_I.mp3|Ghosts I - Track 3,https://archive.org/download/nineinchnails_ghosts_I_IV/04_Ghosts_I.mp3|Ghosts I - Track 4,https://archive.org/download/nineinchnails_ghosts_I_IV/05_Ghosts_I.mp3|Ghosts I - Track 5,https://archive.org/download/nineinchnails_ghosts_I_IV/06_Ghosts_I.mp3|Ghosts I - Track 6,https://archive.org/download/nineinchnails_ghosts_I_IV/07_Ghosts_I.mp3|Ghosts I - Track 7,https://archive.org/download/nineinchnails_ghosts_I_IV/08_Ghosts_I.mp3|Ghosts I - Track 8,https://archive.org/download/nineinchnails_ghosts_I_IV/09_Ghosts_I.mp3|Ghosts I - Track 9,https://archive.org/download/nineinchnails_ghosts_I_IV/10_Ghosts_II.mp3|Ghosts II - Track 1,https://archive.org/download/nineinchnails_ghosts_I_IV/11_Ghosts_II.mp3|Ghosts II - Track 2,https://archive.org/download/nineinchnails_ghosts_I_IV/12_Ghosts_II.mp3|Ghosts II - Track 3,https://archive.org/download/nineinchnails_ghosts_I_IV/13_Ghosts_II.mp3|Ghosts II - Track 4,https://archive.org/download/nineinchnails_ghosts_I_IV/14_Ghosts_II.mp3|Ghosts II - Track 5,https://archive.org/download/nineinchnails_ghosts_I_IV/15_Ghosts_II.mp3|Ghosts II - Track 6,https://archive.org/download/nineinchnails_ghosts_I_IV/16_Ghosts_II.mp3|Ghosts II - Track 7,https://archive.org/download/nineinchnails_ghosts_I_IV/17_Ghosts_II.mp3|Ghosts II - Track 8">
+      </wb-audio>
+    </wb-demo>
+  </div>
+
+  <!-- VIDEO -->
+  <h2>Video <code>&lt;video&gt;</code></h2>
+  <div class="demo-section">
+    <p>Standard Video</p>
+    <wb-demo>
+      <video controls src="https://www.w3schools.com/html/mov_bbb.mp4" style="width: 100%; border-radius: 8px;"></video>
+    </wb-demo>
+
+    <p>Background Video (Muted Loop)</p>
+    <wb-demo>
+      <video
+        src="https://www.w3schools.com/html/movie.mp4"
+        autoplay
+        muted
+        loop
+        style="width: 100%; border-radius: 8px; opacity: 0.6;">
+      </video>
+    </wb-demo>
+  </div>
+
+  <!-- IMAGE -->
+  <h2>Image <code>&lt;img&gt;</code></h2>
+  <div class="demo-section">
+    <p>Zoomable Image (Lightbox)</p>
+    <wb-demo>
+      <img src="https://picsum.photos/id/1018/800/600" zoomable alt="Nature Scene" style="width: 100%; border-radius: 8px;">
+    </wb-demo>
+
+    <p>Lazy Loaded with Aspect Ratio</p>
+    <wb-demo>
+      <img src="https://picsum.photos/id/1015/800/600" lazy aspect-ratio="4/3" alt="River" style="width: 100%; border-radius: 8px;">
+    </wb-demo>
+  </div>
+
+  <!-- FIGURE -->
+  <h2>Figure <code>&lt;figure&gt;</code></h2>
+  <div class="demo-section">
+    <p>Standard Figure</p>
+    <wb-demo>
+      <figure zoom>
+        <img src="https://picsum.photos/id/1016/800/600" alt="Canyon" style="width: 100%;">
+        <figcaption>A beautiful canyon view</figcaption>
+      </figure>
+    </wb-demo>
+
+    <p>Overlay Caption</p>
+    <wb-demo>
+      <figure caption-position="overlay" lightbox>
+        <img src="https://picsum.photos/id/1019/800/600" alt="Technology" style="width: 100%;">
+        <figcaption>Technology and Nature</figcaption>
+      </figure>
+    </wb-demo>
+  </div>
+  </section>
+
+  <!-- 14. 🏗️ Semantic Structure Elements -->
+  <section id="semantic-structure-elements">
+  <h2>🏗️ Semantic Structure Elements</h2>
+<p>Enhanced structural and data elements using standard HTML tags.</p>
+
+  <!-- TABLE -->
+  <h2>Table <code>&lt;table&gt;</code></h2>
+  <p>Features: sortable columns (click header), copyable cells (click cell), searchable, striped rows.</p>
+  <div class="demo-section">
+    <wb-demo columns="1">
+      <table sortable searchable striped hover copyable>
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Role</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Alice Smith</td><td>Developer</td><td>Active</td></tr>
+          <tr><td>2</td><td>Bob Jones</td><td>Designer</td><td>Active</td></tr>
+          <tr><td>3</td><td>Charlie Brown</td><td>Manager</td><td>Away</td></tr>
+        </tbody>
+      </table>
+    </wb-demo>
+  </div>
+
+  <!-- DETAILS -->
+  <h2>Details <code>&lt;details&gt;</code></h2>
+  <div class="demo-section">
+    <wb-demo columns="3">
+      <details>
+        <summary>Detail Item 1</summary>
+        <p>This is the content for item 1.</p>
+      </details>
+      <details open>
+        <summary>Detail Item 2 (open by default)</summary>
+        <p>This is the content for item 2.</p>
+      </details>
+      <details animated="false">
+        <summary>Detail Item 3 (no animation)</summary>
+        <p>This is the content for item 3.</p>
+      </details>
+    </wb-demo>
+  </div>
+
+  <!-- DIALOG -->
+  <h2>Dialog <code>&lt;dialog&gt;</code></h2>
+  <div class="demo-section">
+    <p>Native <code>&lt;dialog&gt;</code> shown via <code>showModal()</code> — hidden by default, so it isn't itself a <code>&lt;wb-demo&gt;</code> candidate (nothing to render inline); the trigger button is.</p>
+    <wb-demo columns="1">
+      <button id="open-dialog-btn">Open Modal Dialog</button>
+    </wb-demo>
+    <div id="padding-warning" class="padding-warning">
+      ⚠️ Modal blocked: Body requires at least 1rem padding on left and right sides.
+    </div>
+    <dialog id="demo-dialog">
+      <form method="dialog">
+        <h3>Confirmation</h3>
+        <p>This is a native dialog.</p>
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+          <button value="cancel">Cancel</button>
+          <button value="confirm" autofocus>Confirm</button>
+        </div>
+      </form>
+    </dialog>
+  </div>
+
+  <!-- PROGRESS -->
+  <h2>Progress <code>&lt;wb-progress&gt;</code></h2>
+  <div class="demo-section">
+    <wb-demo columns="2">
+      <wb-progress value="70" label="Loading..."></wb-progress>
+      <wb-progress indeterminate label="Working..."></wb-progress>
+    </wb-demo>
+  </div>
+
+  <!-- CODE & PRE -->
+  <h2>Code <code>&lt;code&gt;</code> &amp; <code>&lt;pre&gt;</code></h2>
+  <div class="demo-section">
+    <p>Inline Code</p>
+    <wb-demo columns="1">
+      <p>Use <code>console.log()</code> to install.</p>
+    </wb-demo>
+
+    <p>Code Block</p>
+    <wb-demo columns="1">
+      <pre x-behavior="pre" show-copy show-line-numbers language="javascript"><code>function hello() {
+  console.log("Hello World");
+  return true;
+}</code></pre>
+    </wb-demo>
+  </div>
+
+  <!-- LISTS -->
+  <h2>Lists <code>&lt;ul&gt;, &lt;ol&gt;, &lt;dl&gt;</code></h2>
+  <div class="demo-section">
+    <wb-demo columns="3">
+      <ul>
+        <li>Feature One</li>
+        <li>Feature Two</li>
+        <li>Feature Three</li>
+      </ul>
+      <ol>
+        <li>Step One</li>
+        <li>Step Two</li>
+        <li>Step Three</li>
+      </ol>
+      <dl>
+        <dt>HTML</dt>
+        <dd>HyperText Markup Language</dd>
+        <dt>CSS</dt>
+        <dd>Cascading Style Sheets</dd>
+      </dl>
+    </wb-demo>
+  </div>
+
+  <!-- TEXT-LEVEL SEMANTICS -->
+  <h2>Text-Level Semantics</h2>
+  <div class="demo-section">
+    <wb-demo columns="4">
+      <blockquote>"Web functionality." <cite>— Author</cite></blockquote>
+      <address>123 Street, Anytown</address>
+      <p>Deprecated: <del>old price</del> New: <ins>new price</ins></p>
+      <abbr title="HyperText Markup Language">HTML</abbr>
+      <p>Meeting at <time datetime="2026-07-12T09:00">9am, July 12</time></p>
+      <p>x<sup>2</sup> + y<sup>2</sup> = z<sup>2</sup></p>
+      <p>H<sub>2</sub>O</p>
+      <hr>
+    </wb-demo>
+  </div>
+
+  <!-- LINK -->
+  <h2>Link <code>.wb-link</code></h2>
+  <div class="demo-section">
+    <wb-demo columns="1">
+      <a href="#" class="wb-link">Styled Link</a>
+    </wb-demo>
+  </div>
+  <script type="module">
+// Modal padding validation
+    const openDialogBtn = document.getElementById('open-dialog-btn');
+    const demoDialog = document.getElementById('demo-dialog');
+    const paddingWarning = document.getElementById('padding-warning');
+
+    function hasRequiredPadding() {
+      const bodyStyle = window.getComputedStyle(document.body);
+      const paddingLeft = parseFloat(bodyStyle.paddingLeft);
+      const paddingRight = parseFloat(bodyStyle.paddingRight);
+      return paddingLeft >= 16 && paddingRight >= 16;
+    }
+
+    openDialogBtn.addEventListener('click', () => {
+      if (hasRequiredPadding()) {
+        paddingWarning.classList.remove('show');
+        demoDialog.showModal();
+      } else {
+        paddingWarning.classList.add('show');
+        console.warn('Modal blocked: Body requires at least 1rem padding on left and right sides.');
+      }
+    });
+  </script>
+  </section>
 
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';

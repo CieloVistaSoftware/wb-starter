@@ -18,6 +18,7 @@
   <p>Alerts, badges, progress bars, ratings, spinners, toasts, tooltips</p>
 
   <!-- 1. 🔔 Alert -->
+  <section id="alert-alert">
   <h2>🔔 Alert</h2>
   <wb-demo columns="3">
     <wb-alert variant="info" message="Test">
@@ -37,8 +38,10 @@
     <wb-alert variant="warning" title="Warning" message="Be careful" icon="⚠️" dismissible>
     </wb-alert>
   </wb-demo>
+  </section>
 
   <!-- 2. variant variants -->
+  <section id="alert-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-alert variant="info" message="Sample message">
@@ -50,20 +53,24 @@
     <wb-alert variant="error" message="Sample message">
     </wb-alert>
   </wb-demo>
+  </section>
 
   <!-- 3. Boolean toggles -->
+  <section id="alert-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="1">
     <wb-alert dismissible message="Sample message">
     </wb-alert>
   </wb-demo>
+  </section>
 
   <!-- 4. 👤 Avatar -->
+  <section id="avatar-avatar">
   <h2>👤 Avatar</h2>
   <wb-demo columns="3">
     <wb-avatar initials="JD">
     </wb-avatar>
-    <wb-avatar initials="JD">
+    <wb-avatar src="https://i.pravatar.cc/150?u=avatar1">
     </wb-avatar>
     <wb-avatar initials="JD" size="lg">
     </wb-avatar>
@@ -72,8 +79,10 @@
     <wb-avatar initials="JD" shape="square">
     </wb-avatar>
   </wb-demo>
+  </section>
 
   <!-- 5. size variants -->
+  <section id="avatar-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="3">
     <wb-avatar size="xs">
@@ -89,8 +98,10 @@
     <wb-avatar size="2xl">
     </wb-avatar>
   </wb-demo>
+  </section>
 
   <!-- 6. shape variants -->
+  <section id="avatar-shape-variants">
   <h2>shape variants</h2>
   <wb-demo columns="2">
     <wb-avatar shape="circle">
@@ -100,10 +111,14 @@
     <wb-avatar shape="rounded">
     </wb-avatar>
   </wb-demo>
+  </section>
 
   <!-- 7. status variants -->
+  <section id="avatar-status-variants">
   <h2>status variants</h2>
-  <wb-demo columns="2">
+  <wb-demo columns="3">
+    <wb-avatar status="">
+    </wb-avatar>
     <wb-avatar status="online">
     </wb-avatar>
     <wb-avatar status="offline">
@@ -113,15 +128,19 @@
     <wb-avatar status="away">
     </wb-avatar>
   </wb-demo>
+  </section>
 
   <!-- 8. Boolean toggles -->
+  <section id="avatar-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="1">
     <wb-avatar bordered>
     </wb-avatar>
   </wb-demo>
+  </section>
 
   <!-- 9. 🏷️ Badge -->
+  <section id="badge-badge">
   <h2>🏷️ Badge</h2>
   <wb-demo columns="3">
     <wb-badge label="New">
@@ -140,9 +159,67 @@
     </wb-badge>
     <wb-badge label="Outline" variant="primary" outline>
     </wb-badge>
+    <wb-badge label="default-xs-pill-dot-outline-removable" variant="default" size="xs" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="default-sm-plain" variant="default" size="sm">
+    </wb-badge>
+    <wb-badge label="default-md-pill-outline" variant="default" size="md" pill outline>
+    </wb-badge>
+    <wb-badge label="default-lg-dot-removable" variant="default" size="lg" dot removable>
+    </wb-badge>
+    <wb-badge label="primary-xs-outline-removable" variant="primary" size="xs" outline removable>
+    </wb-badge>
+    <wb-badge label="primary-sm-pill-dot" variant="primary" size="sm" pill dot>
+    </wb-badge>
+    <wb-badge label="primary-md-dot-removable" variant="primary" size="md" dot removable>
+    </wb-badge>
+    <wb-badge label="primary-lg-pill-outline" variant="primary" size="lg" pill outline>
+    </wb-badge>
+    <wb-badge label="secondary-xs-pill-dot" variant="secondary" size="xs" pill dot>
+    </wb-badge>
+    <wb-badge label="secondary-sm-outline-removable" variant="secondary" size="sm" outline removable>
+    </wb-badge>
+    <wb-badge label="secondary-md-pill-dot-outline-removable" variant="secondary" size="md" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="secondary-lg-pill-dot-outline-removable" variant="secondary" size="lg" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="success-xs-pill-dot-outline-removable" variant="success" size="xs" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="success-sm-plain" variant="success" size="sm">
+    </wb-badge>
+    <wb-badge label="success-md-pill-dot-outline-removable" variant="success" size="md" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="success-lg-pill-dot-outline-removable" variant="success" size="lg" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="warning-xs-pill-dot-outline-removable" variant="warning" size="xs" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="warning-sm-plain" variant="warning" size="sm">
+    </wb-badge>
+    <wb-badge label="warning-md-pill-dot-outline-removable" variant="warning" size="md" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="warning-lg-pill-dot-outline-removable" variant="warning" size="lg" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="error-xs-pill-dot-outline-removable" variant="error" size="xs" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="error-sm-plain" variant="error" size="sm">
+    </wb-badge>
+    <wb-badge label="error-md-pill-dot-outline-removable" variant="error" size="md" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="error-lg-pill-dot-outline-removable" variant="error" size="lg" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="info-xs-pill-dot-outline-removable" variant="info" size="xs" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="info-sm-plain" variant="info" size="sm">
+    </wb-badge>
+    <wb-badge label="info-md-pill-dot-outline-removable" variant="info" size="md" pill dot outline removable>
+    </wb-badge>
+    <wb-badge label="info-lg-pill-dot-outline-removable" variant="info" size="lg" pill dot outline removable>
+    </wb-badge>
   </wb-demo>
+  </section>
 
   <!-- 10. variant variants -->
+  <section id="badge-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="3">
     <wb-badge variant="default">
@@ -160,8 +237,10 @@
     <wb-badge variant="info">
     </wb-badge>
   </wb-demo>
+  </section>
 
   <!-- 11. size variants -->
+  <section id="badge-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="2">
     <wb-badge size="xs">
@@ -173,8 +252,10 @@
     <wb-badge size="lg">
     </wb-badge>
   </wb-demo>
+  </section>
 
   <!-- 12. Boolean toggles -->
+  <section id="badge-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
     <wb-badge pill>
@@ -186,8 +267,10 @@
     <wb-badge removable>
     </wb-badge>
   </wb-demo>
+  </section>
 
   <!-- 13. 🏷️ Chip -->
+  <section id="chip-chip">
   <h2>🏷️ Chip</h2>
   <wb-demo columns="2">
     <wb-chip label="Tag">
@@ -199,8 +282,10 @@
     <wb-chip label="Tag" icon="🏷️">
     </wb-chip>
   </wb-demo>
+  </section>
 
   <!-- 14. variant variants -->
+  <section id="chip-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="3">
     <wb-chip variant="default">
@@ -216,8 +301,10 @@
     <wb-chip variant="info">
     </wb-chip>
   </wb-demo>
+  </section>
 
   <!-- 15. size variants -->
+  <section id="chip-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="2">
     <wb-chip size="sm">
@@ -227,8 +314,10 @@
     <wb-chip size="lg">
     </wb-chip>
   </wb-demo>
+  </section>
 
   <!-- 16. Boolean toggles -->
+  <section id="chip-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
     <wb-chip dismissible>
@@ -238,8 +327,10 @@
     <wb-chip outlined>
     </wb-chip>
   </wb-demo>
+  </section>
 
   <!-- 17. 📊 Progress -->
+  <section id="progress-progress">
   <h2>📊 Progress</h2>
   <wb-demo columns="3">
     <wb-progress value="0">
@@ -271,8 +362,10 @@
     <wb-progress indeterminate>
     </wb-progress>
   </wb-demo>
+  </section>
 
   <!-- 18. variant variants -->
+  <section id="progress-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="3">
     <wb-progress variant="default">
@@ -288,8 +381,10 @@
     <wb-progress variant="info">
     </wb-progress>
   </wb-demo>
+  </section>
 
   <!-- 19. size variants -->
+  <section id="progress-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="3">
     <wb-progress size="xs">
@@ -303,8 +398,10 @@
     <wb-progress size="xl">
     </wb-progress>
   </wb-demo>
+  </section>
 
   <!-- 20. Boolean toggles -->
+  <section id="progress-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
     <wb-progress show-value>
@@ -312,8 +409,10 @@
     <wb-progress striped>
     </wb-progress>
   </wb-demo>
+  </section>
 
   <!-- 21. ⭐ Rating -->
+  <section id="rating-rating">
   <h2>⭐ Rating</h2>
   <wb-demo columns="3">
     <wb-rating value="0">
@@ -327,8 +426,10 @@
     <wb-rating value="4" readonly>
     </wb-rating>
   </wb-demo>
+  </section>
 
   <!-- 22. size variants -->
+  <section id="rating-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="2">
     <wb-rating size="sm">
@@ -338,8 +439,10 @@
     <wb-rating size="lg">
     </wb-rating>
   </wb-demo>
+  </section>
 
   <!-- 23. Boolean toggles -->
+  <section id="rating-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="3">
     <wb-rating readonly>
@@ -349,8 +452,10 @@
     <wb-rating half>
     </wb-rating>
   </wb-demo>
+  </section>
 
   <!-- 24. ▓ Skeleton -->
+  <section id="skeleton-skeleton">
   <h2>▓ Skeleton</h2>
   <wb-demo columns="3">
     <wb-skeleton variant="text">
@@ -364,15 +469,19 @@
     <wb-skeleton variant="card">
     </wb-skeleton>
   </wb-demo>
+  </section>
 
   <!-- 25. variant variants -->
+  <section id="skeleton-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-skeleton variant="rect">
     </wb-skeleton>
   </wb-demo>
+  </section>
 
   <!-- 26. ⏳ Spinner -->
+  <section id="spinner-spinner">
   <h2>⏳ Spinner</h2>
   <wb-demo columns="3">
     <wb-spinner>
@@ -386,8 +495,10 @@
     <wb-spinner speed="fast">
     </wb-spinner>
   </wb-demo>
+  </section>
 
   <!-- 27. size variants -->
+  <section id="spinner-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="3">
     <wb-spinner size="xs">
@@ -397,8 +508,10 @@
     <wb-spinner size="xl">
     </wb-spinner>
   </wb-demo>
+  </section>
 
   <!-- 28. variant variants -->
+  <section id="spinner-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="3">
     <wb-spinner variant="default">
@@ -410,8 +523,10 @@
     <wb-spinner variant="error">
     </wb-spinner>
   </wb-demo>
+  </section>
 
   <!-- 29. speed variants -->
+  <section id="spinner-speed-variants">
   <h2>speed variants</h2>
   <wb-demo columns="2">
     <wb-spinner speed="slow">
@@ -419,8 +534,10 @@
     <wb-spinner speed="medium">
     </wb-spinner>
   </wb-demo>
+  </section>
 
   <!-- 30. 🔔 Toast -->
+  <section id="toast-toast">
   <h2>🔔 Toast</h2>
   <wb-demo columns="3">
     <wb-toast message="Test">
@@ -442,8 +559,10 @@
     <wb-toast message="Test" action="Undo">
     </wb-toast>
   </wb-demo>
+  </section>
 
   <!-- 31. variant variants -->
+  <section id="toast-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-toast variant="info" message="Sample message">
@@ -455,8 +574,10 @@
     <wb-toast variant="error" message="Sample message">
     </wb-toast>
   </wb-demo>
+  </section>
 
   <!-- 32. position variants -->
+  <section id="toast-position-variants">
   <h2>position variants</h2>
   <wb-demo columns="3">
     <wb-toast position="top-right" message="Sample message">
@@ -472,8 +593,10 @@
     <wb-toast position="bottom-center" message="Sample message">
     </wb-toast>
   </wb-demo>
+  </section>
 
   <!-- 33. 💬 Tooltip -->
+  <section id="tooltip-tooltip">
   <h2>💬 Tooltip</h2>
   <wb-demo columns="3">
     <wb-tooltip content="Tooltip text">
@@ -495,8 +618,10 @@
     <wb-tooltip content="Tooltip text" delay="500">
     </wb-tooltip>
   </wb-demo>
+  </section>
 
   <!-- 34. position variants -->
+  <section id="tooltip-position-variants">
   <h2>position variants</h2>
   <wb-demo columns="3">
     <wb-tooltip position="top" content="Sample content">
@@ -516,8 +641,10 @@
     <wb-tooltip position="bottom-end" content="Sample content">
     </wb-tooltip>
   </wb-demo>
+  </section>
 
   <!-- 35. variant variants -->
+  <section id="tooltip-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-tooltip variant="default" content="Sample content">
@@ -529,8 +656,10 @@
     <wb-tooltip variant="primary" content="Sample content">
     </wb-tooltip>
   </wb-demo>
+  </section>
 
   <!-- 36. trigger variants -->
+  <section id="tooltip-trigger-variants">
   <h2>trigger variants</h2>
   <wb-demo columns="2">
     <wb-tooltip trigger="hover" content="Sample content">
@@ -542,13 +671,48 @@
     <wb-tooltip trigger="hover-focus" content="Sample content">
     </wb-tooltip>
   </wb-demo>
+  </section>
 
   <!-- 37. Boolean toggles -->
+  <section id="tooltip-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="1">
     <wb-tooltip interactive content="Sample content">
     </wb-tooltip>
   </wb-demo>
+  </section>
+
+  <!-- 38. 🧩 x-tooltip — on a real trigger element -->
+  <section id="x-tooltip-on-a-real-trigger-element">
+  <h2>🧩 x-tooltip — on a real trigger element</h2>
+  <p>The tooltip <em>behavior</em> attaches via <code>x-tooltip</code> to a real trigger element (button, span, …) — not a standalone custom tag.</p>
+  <wb-demo columns="4">
+    <wb-button id="btn-top" x-tooltip="Tooltip text" position="top">Top</wb-button>
+    <wb-button id="btn-bottom" x-tooltip="Tooltip text" position="bottom">Bottom</wb-button>
+    <wb-button id="btn-left" x-tooltip="Tooltip text" position="left">Left</wb-button>
+    <wb-button id="btn-right" x-tooltip="Tooltip text" position="right">Right</wb-button>
+  </wb-demo>
+  </section>
+
+  <!-- 39. 🧩 x-progressbar — attribute-based progress bar -->
+  <section id="x-progressbar-attribute-based-progress-bar">
+  <h2>🧩 x-progressbar — attribute-based progress bar</h2>
+  <p>Apply directly to any element, no custom tag required — an alternative to <code>&lt;wb-progress&gt;</code> above.</p>
+  <wb-demo>
+    <div x-progressbar value="40" style="width: 300px; height: 24px;"></div>
+  </wb-demo>
+  <wb-demo>
+    <div x-progressbar value="80" variant="success" style="width: 300px; height: 24px;"></div>
+  </wb-demo>
+  </section>
+
+  <!-- 40. 🧩 x-notify — one-off notification -->
+  <section id="x-notify-one-off-notification">
+  <h2>🧩 x-notify — one-off notification</h2>
+  <wb-demo>
+    <button x-notify message="New notification received" class="wb-button">Show Notify</button>
+  </wb-demo>
+  </section>
 
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';

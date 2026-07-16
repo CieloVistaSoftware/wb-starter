@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { safeScrollIntoView } from '../base';
 
-const DEMO_URL = '/demos/card-examples.html';
+const DEMO_URL = '/demos/site/cards.html';
 
 // Helper: navigate, wait for WB init
 async function loadPage(page) {
@@ -33,7 +33,7 @@ test.describe('Page Fundamentals', () => {
   });
 
   test('wb-stack wrapper exists with gap', async ({ page }) => {
-    const stack = page.locator('wb-stack');
+    const stack = page.locator('#card-gallery wb-stack');
     await expect(stack).toBeAttached();
     const gap = await stack.evaluate(el => getComputedStyle(el).gap || getComputedStyle(el).rowGap);
     expect(gap).toContain('16px'); // 1rem = 16px
@@ -54,11 +54,11 @@ test.describe('Page Fundamentals', () => {
   });
 
   test('no draggable cards on page', async ({ page }) => {
-    await expect(page.locator('wb-carddraggable')).toHaveCount(0);
+    await expect(page.locator('#card-gallery wb-carddraggable')).toHaveCount(0);
   });
 
   test('text is light on dark theme', async ({ page }) => {
-    const title = page.locator('wb-card').first().locator('.wb-card__title');
+    const title = page.locator('#card-gallery wb-card').first().locator('.wb-card__title');
     await expect(title).toBeVisible({ timeout: 10000 });
     const maxChannel = await title.evaluate(el => {
       const rgb = getComputedStyle(el).color;
@@ -69,11 +69,11 @@ test.describe('Page Fundamentals', () => {
   });
 
   test('code blocks have copy buttons', async ({ page }) => {
-    await expect(page.locator('.x-pre__copy').first()).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('#card-gallery .x-pre__copy').first()).toBeVisible({ timeout: 10000 });
   });
 
   test('every wb-demo has an id', async ({ page }) => {
-    const demos = page.locator('wb-demo');
+    const demos = page.locator('#card-gallery wb-demo');
     const count = await demos.count();
     expect(count).toBeGreaterThan(0);
     for (let i = 0; i < count; i++) {
@@ -90,40 +90,40 @@ test.describe('Card Rendering', () => {
   test.beforeEach(async ({ page }) => { await loadPage(page); });
 
   test('base card renders title and content', async ({ page }) => {
-    const card = page.locator('wb-card').first();
+    const card = page.locator('#card-gallery wb-card').first();
     await expect(card.locator('.wb-card__title')).toHaveText('Welcome');
     await expect(card.locator('.wb-card__main')).toContainText('basic card');
   });
 
   test('glass card has badge and variant class', async ({ page }) => {
-    const glass = page.locator('wb-card[variant="glass"]');
+    const glass = page.locator('#card-gallery wb-card[variant="glass"]');
     await expect(glass).toHaveClass(/wb-card--glass/);
     await expect(glass.locator('.wb-card__badge')).toHaveText('NEW');
   });
 
   test('image cards render with images', async ({ page }) => {
-    const imgs = page.locator('wb-cardimage img');
+    const imgs = page.locator('#card-gallery wb-cardimage img');
     const count = await imgs.count();
     expect(count).toBeGreaterThanOrEqual(2);
     await expect(imgs.first()).toBeVisible({ timeout: 10000 });
   });
 
   test('hero card has background image and CTA buttons', async ({ page }) => {
-    const hero = page.locator('wb-cardhero').first();
+    const hero = page.locator('#card-gallery wb-cardhero').first();
     const bg = await hero.evaluate(el => getComputedStyle(el).backgroundImage);
     expect(bg).not.toBe('none');
     await expect(hero.locator('.wb-btn').first()).toBeVisible();
   });
 
   test('profile card renders name, role, avatar', async ({ page }) => {
-    const profile = page.locator('wb-cardprofile').first();
+    const profile = page.locator('#card-gallery wb-cardprofile').first();
     await expect(profile.locator('.wb-card__name')).toHaveText('Jane Doe');
     await expect(profile.locator('.wb-card__role')).toContainText('UI/UX');
     await expect(profile.locator('.wb-card__avatar')).toBeVisible();
   });
 
   test('pricing cards render 3 plans with features and CTA', async ({ page }) => {
-    const cards = page.locator('wb-cardpricing');
+    const cards = page.locator('#card-gallery wb-cardpricing');
     await expect(cards).toHaveCount(3);
     // Each has a CTA
     for (let i = 0; i < 3; i++) {
@@ -132,20 +132,20 @@ test.describe('Card Rendering', () => {
   });
 
   test('stats cards render all four with values', async ({ page }) => {
-    const cards = page.locator('wb-cardstats');
+    const cards = page.locator('#card-gallery wb-cardstats');
     await expect(cards).toHaveCount(4);
     await expect(cards.first().locator('.wb-card__stats-value')).toContainText('42K');
   });
 
   test('testimonial cards have quotes and ratings', async ({ page }) => {
-    const card = page.locator('wb-cardtestimonial').first();
+    const card = page.locator('#card-gallery wb-cardtestimonial').first();
     await expect(card.locator('.wb-card__quote')).toBeVisible();
     await expect(card.locator('.wb-card__rating')).toContainText('★');
     await expect(card.locator('.wb-card__author')).toHaveText('Alex Rivera');
   });
 
   test('product cards have image with 3/2 aspect ratio and price', async ({ page }) => {
-    const card = page.locator('wb-cardproduct').first();
+    const card = page.locator('#card-gallery wb-cardproduct').first();
     const img = card.locator('img');
     await expect(img).toBeVisible({ timeout: 10000 });
     const ratio = await img.evaluate(el => getComputedStyle(el).aspectRatio);
@@ -154,28 +154,28 @@ test.describe('Card Rendering', () => {
   });
 
   test('notification cards have variant classes', async ({ page }) => {
-    const success = page.locator('wb-cardnotification[variant="success"]');
+    const success = page.locator('#card-gallery wb-cardnotification[variant="success"]');
     await scrollTo(page, success);
     await expect(success).toHaveClass(/wb-notification--success/);
-    const error = page.locator('wb-cardnotification[variant="error"]');
+    const error = page.locator('#card-gallery wb-cardnotification[variant="error"]');
     await expect(error).toHaveClass(/wb-notification--error/);
   });
 
   test('file cards show filename and icon', async ({ page }) => {
-    const card = page.locator('wb-cardfile').first();
+    const card = page.locator('#card-gallery wb-cardfile').first();
     await scrollTo(page, card);
     await expect(card.locator('.wb-card__filename')).toContainText('quarterly-report.pdf');
   });
 
   test('link cards have icon, title, external arrow', async ({ page }) => {
-    const card = page.locator('wb-cardlink').first();
+    const card = page.locator('#card-gallery wb-cardlink').first();
     await scrollTo(page, card);
     await expect(card.locator('.wb-card__title')).toHaveText('Documentation');
     await expect(card.locator('.wb-card__icon')).toContainText('📚');
   });
 
   test('horizontal card renders image and text side by side', async ({ page }) => {
-    const card = page.locator('wb-cardhorizontal').first();
+    const card = page.locator('#card-gallery wb-cardhorizontal').first();
     await scrollTo(page, card);
     const img = card.locator('img');
     await expect(img).toBeVisible({ timeout: 10000 });
@@ -184,7 +184,7 @@ test.describe('Card Rendering', () => {
   });
 
   test('overlay card has background image and title overlay', async ({ page }) => {
-    const card = page.locator('wb-cardoverlay').first();
+    const card = page.locator('#card-gallery wb-cardoverlay').first();
     await scrollTo(page, card);
     await expect(card).toBeVisible({ timeout: 10000 });
     const bg = await card.evaluate(el => getComputedStyle(el).backgroundImage);
@@ -193,7 +193,7 @@ test.describe('Card Rendering', () => {
   });
 
   test('portfolio card renders name, skills, social links', async ({ page }) => {
-    const card = page.locator('wb-cardportfolio').first();
+    const card = page.locator('#card-gallery wb-cardportfolio').first();
     await scrollTo(page, card);
     await expect(card.locator('.wb-portfolio__name')).toHaveText('Jane Doe', { timeout: 10000 });
     // Skills pills
@@ -212,7 +212,7 @@ test.describe('Interactivity', () => {
   test.beforeEach(async ({ page }) => { await loadPage(page); });
 
   test('clickable glass card toggles active class on click', async ({ page }) => {
-    const glass = page.locator('wb-card[clickable]').first();
+    const glass = page.locator('#card-gallery wb-card[clickable]').first();
     await expect(glass).toHaveClass(/wb-card--clickable/);
     await glass.click();
     await expect(glass).toHaveClass(/wb-card--active/);
@@ -221,7 +221,7 @@ test.describe('Interactivity', () => {
   });
 
   test('button card primary/secondary buttons are clickable', async ({ page }) => {
-    const card = page.locator('wb-cardbutton').first();
+    const card = page.locator('#card-gallery wb-cardbutton').first();
     const primary = card.locator('.wb-card__btn--primary');
     const secondary = card.locator('.wb-card__btn--secondary');
     await expect(primary).toBeVisible({ timeout: 10000 });
@@ -231,7 +231,7 @@ test.describe('Interactivity', () => {
   });
 
   test('product card Add to Cart fires custom event', async ({ page }) => {
-    const card = page.locator('wb-cardproduct').first();
+    const card = page.locator('#card-gallery wb-cardproduct').first();
     const cta = card.locator('.wb-card__product-cta');
     await expect(cta).toBeVisible({ timeout: 10000 });
     // Listen for custom event
@@ -248,7 +248,7 @@ test.describe('Interactivity', () => {
   });
 
   test('expandable card toggles expand/collapse', async ({ page }) => {
-    const card = page.locator('wb-cardexpandable').first();
+    const card = page.locator('#card-gallery wb-cardexpandable').first();
     await scrollTo(page, card);
     const btn = card.locator('.wb-card__expand-btn');
     await expect(btn).toBeVisible({ timeout: 10000 });
@@ -263,7 +263,7 @@ test.describe('Interactivity', () => {
   });
 
   test('expandable card button has correct aria-expanded', async ({ page }) => {
-    const card = page.locator('wb-cardexpandable').first();
+    const card = page.locator('#card-gallery wb-cardexpandable').first();
     await scrollTo(page, card);
     const btn = card.locator('.wb-card__expand-btn');
     await expect(btn).toHaveAttribute('aria-expanded', 'false');
@@ -272,7 +272,7 @@ test.describe('Interactivity', () => {
   });
 
   test('minimizable card toggles content visibility', async ({ page }) => {
-    const card = page.locator('wb-cardminimizable').first();
+    const card = page.locator('#card-gallery wb-cardminimizable').first();
     await scrollTo(page, card);
     const btn = card.locator('.wb-card__minimize-btn');
     await expect(btn).toBeVisible({ timeout: 10000 });
@@ -285,7 +285,7 @@ test.describe('Interactivity', () => {
   });
 
   test('notification dismiss button removes element', async ({ page }) => {
-    const success = page.locator('wb-cardnotification[variant="success"]');
+    const success = page.locator('#card-gallery wb-cardnotification[variant="success"]');
     await scrollTo(page, success);
     const dismissBtn = success.locator('.wb-notification__dismiss');
     await expect(dismissBtn).toBeVisible({ timeout: 10000 });
@@ -294,7 +294,7 @@ test.describe('Interactivity', () => {
   });
 
   test('notification fires dismiss event', async ({ page }) => {
-    const card = page.locator('wb-cardnotification[variant="error"]');
+    const card = page.locator('#card-gallery wb-cardnotification[variant="error"]');
     await scrollTo(page, card);
     const eventFired = await page.evaluate(() => {
       return new Promise(resolve => {
@@ -309,14 +309,14 @@ test.describe('Interactivity', () => {
   });
 
   test('hero CTA links exist with text', async ({ page }) => {
-    const hero = page.locator('wb-cardhero').first();
+    const hero = page.locator('#card-gallery wb-cardhero').first();
     const ctas = hero.locator('.wb-btn');
     expect(await ctas.count()).toBeGreaterThanOrEqual(1);
     await expect(ctas.first()).toContainText('Shop Now');
   });
 
   test('pricing CTA links exist for all plans', async ({ page }) => {
-    const cards = page.locator('wb-cardpricing');
+    const cards = page.locator('#card-gallery wb-cardpricing');
     for (let i = 0; i < 3; i++) {
       const cta = cards.nth(i).locator('.wb-card__cta');
       await expect(cta).toBeVisible();
@@ -325,7 +325,7 @@ test.describe('Interactivity', () => {
   });
 
   test('portfolio social links open in new tab', async ({ page }) => {
-    const card = page.locator('wb-cardportfolio').first();
+    const card = page.locator('#card-gallery wb-cardportfolio').first();
     await scrollTo(page, card);
     const socialLinks = card.locator('.wb-portfolio__social a');
     const count = await socialLinks.count();
@@ -335,7 +335,7 @@ test.describe('Interactivity', () => {
   });
 
   test('portfolio contact links are valid', async ({ page }) => {
-    const card = page.locator('wb-cardportfolio').first();
+    const card = page.locator('#card-gallery wb-cardportfolio').first();
     await scrollTo(page, card);
     const emailLink = card.locator('.wb-portfolio__contact a[href^="mailto:"]');
     await expect(emailLink).toBeVisible();
@@ -372,7 +372,7 @@ test.describe('Mobile Responsive', () => {
   });
 
   test('pricing cards stack vertically on mobile', async ({ page }) => {
-    const cards = page.locator('wb-cardpricing');
+    const cards = page.locator('#card-gallery wb-cardpricing');
     const first = await cards.nth(0).boundingBox();
     const second = await cards.nth(1).boundingBox();
     // On mobile, second card should be below first (stacked)
@@ -380,7 +380,7 @@ test.describe('Mobile Responsive', () => {
   });
 
   test('stats cards stack or wrap on mobile', async ({ page }) => {
-    const cards = page.locator('wb-cardstats');
+    const cards = page.locator('#card-gallery wb-cardstats');
     const first = await cards.nth(0).boundingBox();
     const last = await cards.nth(3).boundingBox();
     // On 375px viewport, 4-col grid should wrap - last card below first
@@ -388,7 +388,7 @@ test.describe('Mobile Responsive', () => {
   });
 
   test('horizontal card stacks image above text on mobile', async ({ page }) => {
-    const card = page.locator('wb-cardhorizontal').first();
+    const card = page.locator('#card-gallery wb-cardhorizontal').first();
     await scrollTo(page, card);
     const flexDir = await card.evaluate(el => getComputedStyle(el).flexDirection);
     // On mobile should be column or wrap
@@ -401,14 +401,14 @@ test.describe('Mobile Responsive', () => {
   });
 
   test('hero card text is readable on mobile', async ({ page }) => {
-    const title = page.locator('wb-cardhero .wb-card__hero-title');
+    const title = page.locator('#card-gallery wb-cardhero .wb-card__hero-title');
     await expect(title).toBeVisible();
     const box = await title.boundingBox();
     expect(box.width).toBeLessThanOrEqual(375);
   });
 
   test('expandable card toggle works on mobile', async ({ page }) => {
-    const card = page.locator('wb-cardexpandable').first();
+    const card = page.locator('#card-gallery wb-cardexpandable').first();
     await scrollTo(page, card);
     const btn = card.locator('.wb-card__expand-btn');
     await btn.tap();
@@ -418,7 +418,7 @@ test.describe('Mobile Responsive', () => {
   });
 
   test('product card Add to Cart is tappable on mobile', async ({ page }) => {
-    const cta = page.locator('wb-cardproduct').first().locator('.wb-card__product-cta');
+    const cta = page.locator('#card-gallery wb-cardproduct').first().locator('.wb-card__product-cta');
     await expect(cta).toBeVisible({ timeout: 10000 });
     const box = await cta.boundingBox();
     // Tap target should be reasonably sized for touch
@@ -426,7 +426,7 @@ test.describe('Mobile Responsive', () => {
   });
 
   test('portfolio card fits mobile viewport', async ({ page }) => {
-    const card = page.locator('wb-cardportfolio').first();
+    const card = page.locator('#card-gallery wb-cardportfolio').first();
     await scrollTo(page, card);
     const box = await card.boundingBox();
     expect(box.width).toBeLessThanOrEqual(375);
@@ -440,26 +440,26 @@ test.describe('Accessibility', () => {
   test.beforeEach(async ({ page }) => { await loadPage(page); });
 
   test('clickable card has role=button and tabindex', async ({ page }) => {
-    const glass = page.locator('wb-card[clickable]').first();
+    const glass = page.locator('#card-gallery wb-card[clickable]').first();
     await expect(glass).toHaveAttribute('role', 'button');
     await expect(glass).toHaveAttribute('tabindex', '0');
   });
 
   test('notification cards have role=alert', async ({ page }) => {
-    const notif = page.locator('wb-cardnotification').first();
+    const notif = page.locator('#card-gallery wb-cardnotification').first();
     await scrollTo(page, notif);
     await expect(notif).toHaveAttribute('role', 'alert');
   });
 
   test('link card has role=link and tabindex', async ({ page }) => {
-    const card = page.locator('wb-cardlink').first();
+    const card = page.locator('#card-gallery wb-cardlink').first();
     await scrollTo(page, card);
     await expect(card).toHaveAttribute('role', 'link');
     await expect(card).toHaveAttribute('tabindex', '0');
   });
 
   test('all images have alt attributes', async ({ page }) => {
-    const images = page.locator('img');
+    const images = page.locator('#card-gallery img');
     const count = await images.count();
     for (let i = 0; i < count; i++) {
       const alt = await images.nth(i).getAttribute('alt');
@@ -468,7 +468,7 @@ test.describe('Accessibility', () => {
   });
 
   test('expandable card keyboard toggle with Enter', async ({ page }) => {
-    const card = page.locator('wb-cardexpandable').first();
+    const card = page.locator('#card-gallery wb-cardexpandable').first();
     await scrollTo(page, card);
     const btn = card.locator('.wb-card__expand-btn');
     await btn.focus();
@@ -479,7 +479,7 @@ test.describe('Accessibility', () => {
   });
 
   test('portfolio social links have aria-labels', async ({ page }) => {
-    const card = page.locator('wb-cardportfolio').first();
+    const card = page.locator('#card-gallery wb-cardportfolio').first();
     await scrollTo(page, card);
     const links = card.locator('.wb-portfolio__social a');
     const count = await links.count();

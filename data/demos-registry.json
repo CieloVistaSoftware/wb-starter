@@ -1,46 +1,15 @@
 {
   "_meta": {
-    "description": "Registry for #268 (demos/ consolidation). Categorizes every top-level demos/*.html file so the coverage gate (tests/compliance/demos-registry-coverage.spec.ts) can flag orphans/new duplicates. See docs/_today/demos-redo-plan-268.md for the reasoning behind each category.",
-    "scope": "demos/*.html (top-level only) — demos/site/**/*.html not yet audited, tracked as a follow-up in the plan doc",
-    "updated": "2026-07-11"
+    "description": "Registry for #268 (demos/ consolidation). Categorizes every top-level demos/*.html file so the coverage gate (tests/compliance/demos-registry-coverage.spec.ts) can flag orphans/new duplicates. Scope is demos/*.html top-level only — demos/site/*.html is the generated consolidated catalog (scripts/generate-site.mjs + src/wb-models/pages/wb-component-library.site.json) and isn't tracked here. See docs/_today/demos-redo-plan-268.md for the full history.",
+    "scope": "demos/*.html (top-level only)",
+    "updated": "2026-07-15"
   },
   "canonical": {
-    "description": "One canonical demo per topic — the file a coverage gate should point users to.",
-    "entries": {
-      "card-examples.html": { "covers": ["wb-card", "wb-cardbutton", "wb-cardexpandable", "wb-cardfile", "wb-cardhero", "wb-cardhorizontal", "wb-cardimage", "wb-cardlink", "wb-cardminimizable", "wb-cardnotification", "wb-cardoverlay", "wb-cardportfolio", "wb-cardpricing", "wb-cardproduct", "wb-cardprofile", "wb-cardstats", "wb-cardtestimonial", "wb-cardvideo"] },
-      "buttons.html": { "covers": ["wb-button variants", "wb-button + x-* behavior composition"] },
-      "badge-showcase.html": { "covers": ["wb-badge"] },
-      "progress-showcase.html": { "covers": ["wb-progress"] },
-      "tabs-demo.html": { "covers": ["wb-tabs"] },
-      "tooltip-demo.html": { "covers": ["x-tooltip"] },
-      "stage-light.html": { "covers": ["wb-stagelight"] },
-      "wb-views-demo.html": { "covers": ["wb-view", "wb-views system"] },
-      "registry-browser.html": { "covers": ["wb-views registry browser"] },
-      "help-demo.html": { "covers": ["help/tooltip pattern"] },
-      "label-demo.html": { "covers": ["label pattern"] },
-      "autosize-demo.html": { "covers": ["x-autosize"] },
-      "collapse-demo.html": { "covers": ["x-collapse"] },
-      "copy-demo.html": { "covers": ["x-copy"] },
-      "draggable-demo.html": { "covers": ["x-draggable"] },
-      "feedback-demo.html": { "covers": ["feedback pattern"] },
-      "fieldset-demo.html": { "covers": ["fieldset pattern"] },
-      "form-demo.html": { "covers": ["form pattern"] },
-      "progressbar-demo.html": { "covers": ["progressbar pattern"] },
-      "resizable-demo.html": { "covers": ["x-resizable"] },
-      "ripple-demo.html": { "covers": ["x-ripple"] },
-      "sticky-demo.html": { "covers": ["x-sticky"] },
-      "toggle-demo.html": { "covers": ["toggle pattern"] },
-      "layout-test.html": { "covers": ["wb-cluster", "wb-container", "wb-grid", "wb-sidebar", "wb-stack", "wb-switcher"] },
-      "intellisense-check.html": { "covers": ["wb-container", "wb-tab", "wb-tabs (intellisense)"] },
-      "semantics-forms.html": { "covers": ["semantic form elements"] },
-      "semantics-media.html": { "covers": ["semantic media elements", "wb-audio"] },
-      "semantics-structure.html": { "covers": ["semantic structure elements"] },
-      "semantics-theme.html": { "covers": ["wb-themecontrol"] },
-      "code.html": { "covers": ["wb-mdhtml basic usage"] }
-    }
+    "description": "One canonical demo per topic. Every wb-* component and x-* behavior — including the former semantic-category pages (semantics-forms/media/structure/theme.html) and sticky-demo.html, all merged into demos/site/*.html as manualSections per direct instruction ('no more single links to a single demo') — now lives in demos/site/*.html. No standalone single-topic demo pages remain; see plan doc for full history.",
+    "entries": {}
   },
   "duplicates_to_retire": {
-    "description": "Confirmed overlapping with a canonical entry above — retire once the migration PR lands. NOT deleted yet (plan phase only).",
+    "description": "Confirmed overlapping with a demos/site/*.html canonical page — retire once the migration PR lands. NOT deleted yet (plan phase only).",
     "entries": {}
   },
   "narrative_allowlist": {
@@ -53,7 +22,9 @@
       "charity-food.html": {},
       "multi-component-demo-generated.html": {},
       "autoinject.html": {},
-      "index.html": {}
+      "index.html": {},
+      "registry-browser.html": {},
+      "wb-views-demo.html": {}
     }
   },
   "debug_allowlist": {
@@ -63,7 +34,9 @@
       "pre-debug.html": {},
       "mdhtml-pre-debug.html": {},
       "legacy-syntax-check.html": {},
-      "scrollalong-test.html": {}
+      "scrollalong-test.html": {},
+      "layout-test.html": {},
+      "intellisense-check.html": {}
     }
   }
 }

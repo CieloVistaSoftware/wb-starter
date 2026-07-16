@@ -13,7 +13,7 @@ import { test, expect } from '@playwright/test';
  * This test asserts real playable media, not just that elements exist.
  */
 test('Standard Player <audio> is visible with native controls (not hidden)', async ({ page }) => {
-  await page.goto('/demos/semantics-media.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/demos/site/content.html', { waitUntil: 'domcontentloaded' });
   const audio = page.locator('#semanticsmedia-audio-20');
   await expect(audio).toBeVisible({ timeout: 15000 });
   const hasControls = await audio.evaluate((el: HTMLAudioElement) => el.controls);
@@ -21,7 +21,7 @@ test('Standard Player <audio> is visible with native controls (not hidden)', asy
 });
 
 test('both <video> demos load real playable media', async ({ page }) => {
-  await page.goto('/demos/semantics-media.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/demos/site/content.html', { waitUntil: 'domcontentloaded' });
   const results = await page.evaluate(async () => {
     const videos = [...document.querySelectorAll('video')] as HTMLVideoElement[];
     return Promise.all(videos.map((v) => new Promise((resolve) => {

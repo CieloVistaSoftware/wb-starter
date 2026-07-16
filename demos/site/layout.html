@@ -18,6 +18,7 @@
   <p>Headers, footers, navbars, tabs, drawers, sticky, scrollalong</p>
 
   <!-- 1. 📰 Header -->
+  <section id="header-header">
   <h2>📰 Header</h2>
   <wb-demo columns="2">
     <wb-header title="Title">
@@ -29,15 +30,19 @@
     <wb-header title="Site" sticky>
     </wb-header>
   </wb-demo>
+  </section>
 
   <!-- 2. Boolean toggles -->
+  <section id="header-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="1">
     <wb-header sticky>
     </wb-header>
   </wb-demo>
+  </section>
 
   <!-- 3. 📄 Footer -->
+  <section id="footer-footer">
   <h2>📄 Footer</h2>
   <wb-demo columns="2">
     <wb-footer copyright="© 2025">
@@ -47,15 +52,19 @@
     <wb-footer copyright="© 2025" sticky>
     </wb-footer>
   </wb-demo>
+  </section>
 
   <!-- 4. Boolean toggles -->
+  <section id="footer-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="1">
     <wb-footer sticky>
     </wb-footer>
   </wb-demo>
+  </section>
 
   <!-- 5. 🧭 Navbar -->
+  <section id="navbar-navbar">
   <h2>🧭 Navbar</h2>
   <wb-demo columns="2">
     <wb-navbar brand="MySite">
@@ -65,8 +74,10 @@
     <wb-navbar brand="MySite" variant="dark">
     </wb-navbar>
   </wb-demo>
+  </section>
 
   <!-- 6. variant variants -->
+  <section id="navbar-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-navbar variant="default">
@@ -76,15 +87,19 @@
     <wb-navbar variant="transparent">
     </wb-navbar>
   </wb-demo>
+  </section>
 
   <!-- 7. Boolean toggles -->
+  <section id="navbar-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="1">
     <wb-navbar sticky>
     </wb-navbar>
   </wb-demo>
+  </section>
 
   <!-- 8. 📑 Tabs -->
+  <section id="tabs-tabs">
   <h2>📑 Tabs</h2>
   <wb-demo columns="3">
     <wb-tabs active-tab="0">
@@ -98,8 +113,10 @@
     <wb-tabs full-width>
     </wb-tabs>
   </wb-demo>
+  </section>
 
   <!-- 9. variant variants -->
+  <section id="tabs-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-tabs variant="default">
@@ -107,8 +124,10 @@
     <wb-tabs variant="bordered">
     </wb-tabs>
   </wb-demo>
+  </section>
 
   <!-- 10. size variants -->
+  <section id="tabs-size-variants">
   <h2>size variants</h2>
   <wb-demo columns="2">
     <wb-tabs size="sm">
@@ -118,15 +137,19 @@
     <wb-tabs size="lg">
     </wb-tabs>
   </wb-demo>
+  </section>
 
   <!-- 11. Boolean toggles -->
+  <section id="tabs-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="2">
     <wb-tabs vertical>
     </wb-tabs>
   </wb-demo>
+  </section>
 
   <!-- 12. 📂 Details -->
+  <section id="details-details">
   <h2>📂 Details</h2>
   <wb-demo columns="2">
     <wb-details summary="Details">
@@ -136,8 +159,10 @@
     <wb-details summary="Details" animated>
     </wb-details>
   </wb-demo>
+  </section>
 
   <!-- 13. variant variants -->
+  <section id="details-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-details variant="default" summary="Sample summary">
@@ -147,33 +172,41 @@
     <wb-details variant="filled" summary="Sample summary">
     </wb-details>
   </wb-demo>
+  </section>
 
   <!-- 14. Boolean toggles -->
+  <section id="details-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="1">
     <wb-details open summary="Sample summary">
     </wb-details>
   </wb-demo>
+  </section>
 
   <!-- 15. 📐 Drawer Layout -->
+  <section id="drawer-layout-drawer-layout">
   <h2>📐 Drawer Layout</h2>
   <wb-demo columns="2">
-    <wb-drawerLayout position="left">
-    </wb-drawerLayout>
-    <wb-drawerLayout position="right">
-    </wb-drawerLayout>
-    <wb-drawerLayout collapsed>
-    </wb-drawerLayout>
+    <wb-drawer-layout position="left">
+    </wb-drawer-layout>
+    <wb-drawer-layout position="right">
+    </wb-drawer-layout>
+    <wb-drawer-layout collapsed>
+    </wb-drawer-layout>
   </wb-demo>
+  </section>
 
   <!-- 16. 📜 ScrollAlong -->
+  <section id="scrollalong-scrollalong">
   <h2>📜 ScrollAlong</h2>
   <wb-demo columns="1">
     <wb-scrollalong>
     </wb-scrollalong>
   </wb-demo>
+  </section>
 
   <!-- 17. 📌 Sticky -->
+  <section id="sticky-sticky">
   <h2>📌 Sticky</h2>
   <wb-demo columns="2">
     <wb-sticky>
@@ -183,9 +216,11 @@
     <wb-sticky animated>
     </wb-sticky>
   </wb-demo>
+  </section>
 
-  <!-- 18. 📦 WB Timeline Schema -->
-  <h2>📦 WB Timeline Schema</h2>
+  <!-- 18. 📅 Timeline -->
+  <section id="timeline-timeline">
+  <h2>📅 Timeline</h2>
   <wb-demo columns="2">
     <wb-timeline items="Project Kickoff,Design Phase,Development,Testing,Launch">
     </wb-timeline>
@@ -194,6 +229,7 @@
     <wb-timeline items="Research,Prototype,Build,Ship">
     </wb-timeline>
   </wb-demo>
+  </section>
 
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';

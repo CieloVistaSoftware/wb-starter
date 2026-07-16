@@ -70,13 +70,13 @@ The WB Card System includes a wide range of card types, each with its own tag an
 
 ## Card Examples Demo
 
-All live card examples are now available in a single demo file:
+All live card examples are now available in the consolidated Card Components category page:
 
 **View all card examples at:**
 
-http://localhost:3000/demos/card-examples.html
+http://localhost:3000/demos/site/cards.html
 
-This page shows every WB Card variant in action, including the full feature sample and all specialized card types.
+This page shows every WB Card variant in action — the curated gallery (one example per variant, at the top) plus the full auto-generated matrix of combinations, enum variants, and boolean toggles for all 19 card types.
 
 # WB Card System
 

@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-// This test checks that all <wb-demo> blocks in the card-examples.html demo render both the live card and the code sample
+// This test checks that all <wb-demo> blocks in the cards.html demo render both the live card and the code sample
 
 test.describe('Card Examples Demo', () => {
   test('All card demos render live and show code', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/card-examples.html');
+    await page.goto('http://localhost:3000/demos/site/cards.html');
 
     // Wait for WB to initialize and for at least one wb-demo to appear
     await page.waitForSelector('wb-demo');

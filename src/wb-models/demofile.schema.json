@@ -108,7 +108,7 @@
   },
 
   "selfContained": {
-    "description": "Demos MUST work when opened directly in a browser or served by the backend. They do NOT rely on the server's fragment-wrapping. If you open demos/badge-showcase.html in a browser, it must render correctly.",
+    "description": "Demos MUST work when opened directly in a browser or served by the backend. They do NOT rely on the server's fragment-wrapping. If you open demos/site/feedback.html in a browser, it must render correctly.",
     "value": true
   },
 

@@ -290,7 +290,7 @@
         {
           "quote": "Great!",
           "author": "John",
-          "avatar": "avatar.jpg"
+          "avatar": "https://i.pravatar.cc/150?u=john"
         },
         {
           "quote": "Great!",
@@ -306,7 +306,7 @@
           "quote": "Excellent service!",
           "author": "Jane",
           "role": "CTO at Acme",
-          "avatar": "jane.jpg",
+          "avatar": "https://i.pravatar.cc/150?u=jane",
           "rating": 5
         },
         {

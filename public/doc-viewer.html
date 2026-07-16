@@ -122,7 +122,13 @@
   <script type="module">
     import { mdhtml } from '../src/wb-viewmodels/mdhtml.js';
     import hljs from '../src/lib/highlight.js';
-    
+    // This page calls mdhtml() directly rather than going through a real
+    // <wb-mdhtml> tag + WB.inject() — the normal path that would trigger
+    // JIT behavior-CSS loading (src/core/style-loader.js). Load it
+    // explicitly since every doc rendered here needs it (§6 code-wrap etc).
+    import { ensureBehaviorCss } from '../src/core/style-loader.js';
+    ensureBehaviorCss('mdhtml');
+
     // Hide close button if not opened via script/link
     if (!window.opener) {
       const closeBtn = document.getElementById('close-button');

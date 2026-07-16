@@ -19,7 +19,7 @@
       "type": "string",
       "description": "Image source URL",
       "required": true,
-      "default": ""
+      "default": "https://picsum.photos/seed/cardimage/600/400"
     },
     "alt": {
       "type": "string",
@@ -277,36 +277,36 @@
     "matrix": {
       "combinations": [
         {
-          "src": "photo.jpg"
+          "src": "https://picsum.photos/seed/cardimage/600/400"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "alt": "Description"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "title": "Title"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "title": "Title",
           "subtitle": "Subtitle"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "caption": "Photo by John"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "aspect": "1/1"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "position": "bottom",
           "title": "Title"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "variant": "elevated"
         }
       ]

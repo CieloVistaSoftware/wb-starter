@@ -19,7 +19,7 @@
       "type": "string",
       "description": "Video source URL",
       "required": true,
-      "default": ""
+      "default": "https://www.w3schools.com/html/mov_bbb.mp4"
     },
     "poster": {
       "type": "string",
@@ -252,31 +252,31 @@
     "matrix": {
       "combinations": [
         {
-          "src": "video.mp4"
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4"
         },
         {
-          "src": "video.mp4",
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
           "title": "Video Title"
         },
         {
-          "src": "video.mp4",
-          "poster": "poster.jpg"
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
+          "poster": "https://picsum.photos/seed/videoposter/800/450"
         },
         {
-          "src": "video.mp4",
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
           "autoplay": true,
           "muted": true
         },
         {
-          "src": "video.mp4",
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
           "loop": true
         },
         {
-          "src": "video.mp4",
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
           "controls": false
         },
         {
-          "src": "video.mp4",
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
           "aspect": "4/3"
         }
       ]

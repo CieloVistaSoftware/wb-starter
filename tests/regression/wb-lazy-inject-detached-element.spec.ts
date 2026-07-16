@@ -44,7 +44,7 @@ test('WB.inject() does not crash when its element is removed mid-import', async 
     await route.continue();
   });
 
-  await page.goto(BASE + '/demos/buttons.html', { waitUntil: 'domcontentloaded' });
+  await page.goto(BASE + '/demos/site/forms.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !!(window as any).WB?.inject, { timeout: 20000 });
 
   const result = await page.evaluate(async () => {

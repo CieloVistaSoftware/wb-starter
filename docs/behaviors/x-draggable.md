@@ -9,7 +9,7 @@ This is a helper attribute for drag-and-drop functionality. See [src/wb-viewmode
 Enables drag-and-drop behavior for elements. Add `x-draggable` to make an element draggable within the UI.
 
 ## Demo
-See [draggable-demo.html](../../demos/draggable-demo.html).
+See [Interactive & Utility demos](../../demos/site/interactive.html#draggable-draggable).
 
 ## Schema/Test
 No dedicated schema or test file; see code for usage patterns.

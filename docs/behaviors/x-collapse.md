@@ -9,7 +9,7 @@ This is a helper attribute for collapsible UI sections. See [src/wb-viewmodels/c
 Enables collapsible/expandable sections in the UI. Add `x-collapse` to any element to make it collapsible.
 
 ## Demo
-See [collapse-demo.html](../../demos/collapse-demo.html).
+See [Interactive & Utility demos](../../demos/site/interactive.html#collapse-collapse).
 
 ## Schema/Test
 No dedicated schema or test file; see code for usage patterns.

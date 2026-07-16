@@ -11,7 +11,7 @@ import * as path from 'path';
  * sections don't render correctly. (The all-demos smoke test misses this: malformed
  * tags throw no JS error.)
  */
-const html = fs.readFileSync(path.join(process.cwd(), 'demos', 'semantics-forms.html'), 'utf8');
+const html = fs.readFileSync(path.join(process.cwd(), 'demos', 'site', 'forms.html'), 'utf8');
 
 function balance(tag: string) {
   const open = (html.match(new RegExp(`<${tag}[\\s>]`, 'g')) || []).length;

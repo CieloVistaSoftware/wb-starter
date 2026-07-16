@@ -9,6 +9,6 @@ Shows a tooltip on hover/focus for any element.
   ```
 - **Note:** Use for contextual, hover-based help.
 
-- [Demo](../../demos/tooltip-demo.html)
+- [Demo](../../demos/site/feedback.html#x-tooltip-on-a-real-trigger-element)
 - [Schema](../../src/wb-models/tooltip.schema.json)
 - [Test](../../tests/behaviors/tooltip-demo.spec.ts)

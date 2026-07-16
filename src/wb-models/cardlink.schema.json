@@ -19,7 +19,7 @@
       "type": "string",
       "description": "Link destination URL",
       "required": true,
-      "default": ""
+      "default": "https://example.com"
     },
     "title": {
       "type": "string",
@@ -232,27 +232,27 @@
     "matrix": {
       "combinations": [
         {
-          "href": "/page"
+          "href": "https://example.com"
         },
         {
-          "href": "/page",
+          "href": "https://example.com",
           "title": "Link Title"
         },
         {
-          "href": "/page",
+          "href": "https://example.com",
           "title": "Title",
           "description": "Description"
         },
         {
-          "href": "/page",
+          "href": "https://example.com",
           "icon": "🔗"
         },
         {
-          "href": "/page",
+          "href": "https://example.com",
           "badge": "NEW"
         },
         {
-          "href": "/page",
+          "href": "https://example.com",
           "target": "_blank"
         }
       ]

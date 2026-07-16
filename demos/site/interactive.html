@@ -18,6 +18,7 @@
   <p>Draggable, resizable, copy, dark mode, views</p>
 
   <!-- 1. 📦 Draggable -->
+  <section id="draggable-draggable">
   <h2>📦 Draggable</h2>
   <wb-demo columns="2">
     <wb-draggable axis="both">
@@ -27,15 +28,19 @@
     <wb-draggable axis="y">
     </wb-draggable>
   </wb-demo>
+  </section>
 
   <!-- 2. 📦 Resizable -->
+  <section id="resizable-resizable">
   <h2>📦 Resizable</h2>
   <wb-demo columns="1">
     <wb-resizable handles="se">
     </wb-resizable>
   </wb-demo>
+  </section>
 
   <!-- 3. 📦 Copy -->
+  <section id="copy-copy">
   <h2>📦 Copy</h2>
   <wb-demo columns="2">
     <wb-copy text="Hello World">
@@ -43,22 +48,28 @@
     <wb-copy text="npm install wb-starter">
     </wb-copy>
   </wb-demo>
+  </section>
 
   <!-- 4. 📦 Dark Mode Toggle -->
+  <section id="darkmode-dark-mode-toggle">
   <h2>📦 Dark Mode Toggle</h2>
   <wb-demo columns="1">
     <wb-darkmode>
     </wb-darkmode>
   </wb-demo>
+  </section>
 
   <!-- 5. 📦 Theme Control -->
+  <section id="themecontrol-theme-control">
   <h2>📦 Theme Control</h2>
   <wb-demo columns="1">
     <wb-themecontrol>
     </wb-themecontrol>
   </wb-demo>
+  </section>
 
   <!-- 6. 📦 Collapse -->
+  <section id="collapse-collapse">
   <h2>📦 Collapse</h2>
   <wb-demo columns="2">
     <wb-collapse>
@@ -66,8 +77,10 @@
     <wb-collapse expanded>
     </wb-collapse>
   </wb-demo>
+  </section>
 
   <!-- 7. 📦 Hero -->
+  <section id="hero-hero">
   <h2>📦 Hero</h2>
   <wb-demo columns="2">
     <wb-hero variant="default">
@@ -75,13 +88,116 @@
     <wb-hero variant="cosmic">
     </wb-hero>
   </wb-demo>
+  </section>
 
-  <!-- 8. 📦 WB Views Registry Schema -->
+  <!-- 8. variant variants -->
+  <section id="hero-variant-variants">
+  <h2>variant variants</h2>
+  <wb-demo columns="2">
+    <wb-hero variant="">
+    </wb-hero>
+  </wb-demo>
+  </section>
+
+  <!-- 9. 📦 WB Views Registry Schema -->
+  <section id="views-wb-views-registry-schema">
   <h2>📦 WB Views Registry Schema</h2>
   <wb-demo columns="1">
     <wb-views>
     </wb-views>
   </wb-demo>
+  </section>
+
+  <!-- 10. 🧩 x-toggle — toggle a class on a target element -->
+  <section id="x-toggle-toggle-a-class-on-a-target-element">
+  <h2>🧩 x-toggle — toggle a class on a target element</h2>
+  <p>Distinct from the <code>&lt;wb-toggle&gt;</code> switch component under Form Controls — this toggles an arbitrary CSS class on any target.</p>
+  <wb-demo>
+    <button x-toggle target="#toggle-box">Toggle Class</button>
+    <div id="toggle-box" style="width: 50px; height: 50px; background: red; margin-top: 1rem; transition: all 0.3s;"></div>
+  </wb-demo>
+  </section>
+
+  <!-- 11. 🎨 Theme & Dark Mode -->
+  <section id="theme-dark-mode">
+  <h2>🎨 Theme & Dark Mode</h2>
+<p id="semanticstheme-p-13">Behaviors for managing themes and dark mode.</p>
+
+  <!-- THEME CONTROL -->
+  <h2 id="semanticstheme-h2-14">Theme Control <code id="semanticstheme-code-15">wb-themecontrol</code></h2>
+  <div id="semanticstheme-div-16" class="demo-section">
+    <p id="semanticstheme-p-17">A dropdown to switch the global theme. Persists selection to localStorage.</p>
+    <wb-demo>
+      <wb-themecontrol></wb-themecontrol>
+    </wb-demo>
+  </div>
+
+  <!-- DARK MODE ENFORCER -->
+  <h2 id="semanticstheme-h2-19">Forced Theme <code id="semanticstheme-code-20">x-darkmode</code></h2>
+  <div id="semanticstheme-div-21" class="demo-section">
+    <p id="semanticstheme-p-22">These sections have forced themes regardless of the global setting. <code>target="self"</code> scopes the theme to the element itself; <code>theme="…"</code> sets which theme (not <code>data-theme</code>, which <code>x-darkmode</code> doesn't read).</p>
+
+    <wb-demo>
+      <div
+        class="card"
+        x-darkmode
+        target="self"
+        theme="dark">
+        <h3>Forced Dark Mode</h3>
+        <p>This card will always be dark.</p>
+        <button variant="primary">Primary Button</button>
+      </div>
+    </wb-demo>
+
+    <wb-demo>
+      <div
+        class="card"
+        x-darkmode
+        target="self"
+        theme="light">
+        <h3>Forced Light Mode</h3>
+        <p>This card will always be light.</p>
+        <button variant="primary">Primary Button</button>
+      </div>
+    </wb-demo>
+
+    <wb-demo>
+      <div
+        class="card"
+        x-darkmode
+        target="self"
+        theme="cyberpunk">
+        <h3>Forced Cyberpunk</h3>
+        <p>This card will always be cyberpunk.</p>
+        <button variant="primary">Primary Button</button>
+      </div>
+    </wb-demo>
+  </div>
+
+  <!-- NESTED THEMES -->
+  <h2 id="semanticstheme-h2-35">Nested Themes</h2>
+  <div id="semanticstheme-div-36" class="demo-section">
+    <p>Themes cascade through <code>data-theme</code> on any container — no behavior needed, just the plain HTML attribute the theme system itself keys off of. A nested container can override its ancestor's theme.</p>
+
+    <wb-demo>
+      <div data-theme="forest">
+        <h3>Forest Theme Container</h3>
+        <p>This container uses <code>data-theme="forest"</code> directly in HTML.</p>
+
+        <div class="card">
+          <h4>Inherited Forest Card</h4>
+          <button variant="primary">Forest Button</button>
+        </div>
+
+        <div class="card" data-theme="sunset">
+          <h4>Nested Sunset Card</h4>
+          <p>Overriding parent theme with <code>data-theme="sunset"</code>.</p>
+          <button variant="primary">Sunset Button</button>
+        </div>
+      </div>
+    </wb-demo>
+  </div>
+  </section>
 
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';

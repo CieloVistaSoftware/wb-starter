@@ -34,6 +34,6 @@ form control — no separate `<label for="...">` to write by hand.
   ```html
   <label x-label required for="input1">Label</label>
   ```
-- [Demo](../../demos/label-demo.html)
+- [Demo](../../demos/site/forms.html#x-label-including-rtl-layouts)
 - [Schema](../../src/wb-models/label.schema.json)
 - [Test](../../tests/behaviors/label.spec.ts)

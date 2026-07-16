@@ -15,11 +15,7 @@ const fixes = [];
 // Demos missing <title>
 const missingTitle = [
   'autoinject.html',
-  'behaviors-card.html', 
-  'code.html',
-  'semantics-forms.html',
-  'semantics-media.html',
-  'semantics-theme.html'
+  'behaviors-card.html'
 ];
 
 for (const file of missingTitle) {
@@ -42,8 +38,7 @@ for (const file of missingTitle) {
 // Demos missing data-theme
 const missingTheme = [
   'intellisense-check.html',
-  'legacy-syntax-check.html',
-  'stage-light.html'
+  'legacy-syntax-check.html'
 ];
 
 for (const file of missingTheme) {

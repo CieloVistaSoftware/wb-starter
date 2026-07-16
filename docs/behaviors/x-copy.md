@@ -9,7 +9,7 @@ This is a helper attribute for copy-to-clipboard functionality. See [src/wb-view
 Adds copy-to-clipboard behavior to elements. Add `x-copy` to enable copying content on click or interaction.
 
 ## Demo
-See [copy-demo.html](../../demos/copy-demo.html).
+See [Interactive & Utility demos](../../demos/site/interactive.html#copy-copy).
 
 ## Schema/Test
 No dedicated schema or test file; see code for usage patterns.

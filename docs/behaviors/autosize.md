@@ -7,4 +7,4 @@ Automatically resizes a textarea to fit its content as the user types.
   ```html
   <textarea x-autosize></textarea>
   ```
-- [Demo](../../demos/autosize-demo.html)
+- [Demo](../../demos/site/forms.html#x-autosize-textarea-that-grows-with-content)

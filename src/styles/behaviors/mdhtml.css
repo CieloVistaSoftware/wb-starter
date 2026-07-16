@@ -92,6 +92,22 @@
   word-break: normal;
 }
 
+/* §6: pre.js (x-behavior="pre") defaults to editor-style no-wrap
+   (src/wb-viewmodels/semantics/pre.js, defaultWrap=false, #199) — the right
+   call for wb-demo's live code samples elsewhere, but wrong for prose docs
+   viewed through doc-viewer.html, where the project standard is now "no
+   horizontal scrollbars on code" (supersedes #195). Once pre.js enhances a
+   block it owns padding/line-number-gutter layout via .x-pre (pre.css), so
+   this only overrides whitespace/overflow, not the rules above. Selector
+   specificity (.wb-mdhtml .x-pre = 0,2,0) beats plain .x-pre (0,1,0)
+   regardless of stylesheet load order. */
+.wb-mdhtml .x-pre {
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
 /* Wide tables scroll horizontally rather than spilling past the page edge —
    distinct from code blocks, which must WRAP instead (§6) since a table's
    column structure can't rewrap the way a line of text can. */
