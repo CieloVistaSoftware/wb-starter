@@ -27,12 +27,12 @@ test.describe('demos/index.html (#237)', () => {
     await page.goto('/demos/', { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveTitle(/Demos Index/);
     // #268 consolidated the ~35 single-demo links this used to check for
-    // down to a featured link into demos/site/index.html (the real catalog)
-    // plus the handful of genuinely standalone narrative/semantic pages —
-    // "more links" was the exact anti-pattern #268 exists to undo. Check
-    // for the featured catalog link instead of a link-count floor.
-    const catalogLink = page.locator('a[href="./site/index.html"]');
-    await expect(catalogLink).toHaveCount(1);
+    // into 8 real category pages (demos/site/*.html) plus the handful of
+    // genuinely standalone narrative/tool pages — "more links" was the
+    // exact anti-pattern #268 exists to undo. Check for links into every
+    // category page instead of a link-count floor.
+    const categoryLinks = page.locator('a[href^="./site/"]');
+    await expect.poll(() => categoryLinks.count()).toBeGreaterThanOrEqual(8);
     const linkCount = await page.locator('ul a').count();
     expect(linkCount).toBeGreaterThan(0);
     // No framework script — this page must render before/without WB loading.

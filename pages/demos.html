@@ -18,12 +18,64 @@
      scripts/generate-demos-list.mjs — edit that script, not this list. -->
 <div id="demos-grid">
   <!-- demos:auto:start -->
-  <a href="demos/site/index.html" target="_blank" rel="noopener" style="display: block; margin-bottom: 1.5rem; padding: 1rem 1.25rem; border: 1px solid var(--primary); border-radius: 8px; text-decoration: none; color: inherit;">
-    <strong style="display: block; font-size: 1.05rem;">🧩 Component &amp; Behavior Library — every wb-* / x-* demo, one page per category</strong>
-    <span style="color: var(--text-secondary); font-size: 0.9em;">The single canonical catalog (#268) — no more one-off single-component demo pages.</span>
-  </a>
-  <details class="demos-category" data-category="Architecture & Meta">
-    <summary class="demos-category__title">🏗️ Architecture & Meta</summary>
+  <details class="demos-category" data-category="Card Components">
+    <summary class="demos-category__title">🃏 Card Components</summary>
+    <p style="color: var(--text-secondary); margin: 0.5rem 0 1rem;">18 card variants — from simple to portfolio, pricing to testimonials — 19 components · 259 demos</p>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Card Components" href="demos/site/cards.html" target="_blank" icon="🃏"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Feedback & Status">
+    <summary class="demos-category__title">🔔 Feedback & Status</summary>
+    <p style="color: var(--text-secondary); margin: 0.5rem 0 1rem;">Alerts, badges, progress bars, ratings, spinners, toasts, tooltips — 10 components · 203 demos</p>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Feedback & Status" href="demos/site/feedback.html" target="_blank" icon="🔔"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Form Controls">
+    <summary class="demos-category__title">📝 Form Controls</summary>
+    <p style="color: var(--text-secondary); margin: 0.5rem 0 1rem;">Buttons, inputs, selects, checkboxes, switches, textareas — 9 components · 158 demos</p>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Form Controls" href="demos/site/forms.html" target="_blank" icon="📝"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Overlays & Popups">
+    <summary class="demos-category__title">🪟 Overlays & Popups</summary>
+    <p style="color: var(--text-secondary); margin: 0.5rem 0 1rem;">Dialogs, drawers, dropdowns for modal content — 3 components · 28 demos</p>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Overlays & Popups" href="demos/site/overlays.html" target="_blank" icon="🪟"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Layout & Navigation">
+    <summary class="demos-category__title">📐 Layout & Navigation</summary>
+    <p style="color: var(--text-secondary); margin: 0.5rem 0 1rem;">Headers, footers, navbars, tabs, drawers, sticky, scrollalong — 9 components · 44 demos</p>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Layout & Navigation" href="demos/site/layout.html" target="_blank" icon="📐"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Content & Media">
+    <summary class="demos-category__title">📄 Content & Media</summary>
+    <p style="color: var(--text-secondary); margin: 0.5rem 0 1rem;">Articles, markdown rendering, audio, tables — 7 components · 35 demos</p>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Content & Media" href="demos/site/content.html" target="_blank" icon="📄"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Visual Effects">
+    <summary class="demos-category__title">✨ Visual Effects</summary>
+    <p style="color: var(--text-secondary); margin: 0.5rem 0 1rem;">Confetti, fireworks, ripple, snow — fun stuff — 5 components · 20 demos</p>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Visual Effects" href="demos/site/effects.html" target="_blank" icon="✨"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Interactive & Utility">
+    <summary class="demos-category__title">🔧 Interactive & Utility</summary>
+    <p style="color: var(--text-secondary); margin: 0.5rem 0 1rem;">Draggable, resizable, copy, dark mode, views — 8 components · 14 demos</p>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Interactive & Utility" href="demos/site/interactive.html" target="_blank" icon="🔧"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Narrative & Tools">
+    <summary class="demos-category__title">🏗️ Narrative & Tools</summary>
     <div class="demos-inline-examples">
       <wb-demo><wb-themecontrol></wb-themecontrol></wb-demo>
       <wb-demo><div x-darkmode target="self" theme="dark" style="padding:1rem;border-radius:8px;"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></wb-demo>
