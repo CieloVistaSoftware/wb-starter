@@ -102,7 +102,7 @@ const STYLE_HEADER = `padding:1rem;border-bottom:1px solid ${VAR_BORDER_COLOR};b
 const STYLE_FOOTER = `padding:1rem;border-top:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
 const STYLE_MAIN = `padding:1rem;flex:1;color:${VAR_TEXT_PRIMARY};`;
 const STYLE_TITLE = `margin:0;font-size:1.1rem;font-weight:600;color:${VAR_TEXT_PRIMARY};`;
-const STYLE_SUBTITLE = `margin:0.25rem 0 0;font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
+const STYLE_SUBTITLE = `margin:0.25rem 0 0.5rem;font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
 const STYLE_BADGE = `display:inline-block;padding:0.25rem 0.75rem;border-radius:999px;font-size:0.75rem;font-weight:600;background:${VAR_PRIMARY};color:white;white-space:nowrap;`;
 
 
@@ -664,6 +664,7 @@ export function cardimage(element, options = {}) {
     fit: getAttr(element, options, 'fit') || 'cover',
     title: getAttr(element, options, 'title'),
     subtitle: getAttr(element, options, 'subtitle'),
+    content: options.content || element.dataset.content || element.innerHTML,
     ...options
   };
 
@@ -723,6 +724,7 @@ export function cardvideo(element, options = {}) {
     muted: parseBoolean(options.muted) ?? (element.dataset.muted === 'true' || element.getAttribute('muted') === 'true' || (element.hasAttribute('data-muted') && element.dataset.muted !== 'false')),
     loop: parseBoolean(options.loop) ?? (element.dataset.loop === 'true' || element.getAttribute('loop') === 'true' || (element.hasAttribute('data-loop') && element.dataset.loop !== 'false')),
     controls: parseBoolean(options.controls) ?? (element.dataset.controls !== 'false' && element.getAttribute('controls') !== 'false'),
+    content: options.content || element.dataset.content || element.innerHTML,
     ...options
   };
 

@@ -196,6 +196,25 @@ const WB_LAZY_LEGACY_BARE_ATTRIBUTES = {
   badge: 'badge',
 };
 
+// Every wb-card* family tag treats `badge` as its own component prop
+// (cardBase renders it as an internal .wb-card__badge span). The legacy
+// bare-attribute fallback below is meant only for old plain-element demo
+// pages, but its unqualified [badge] selector was also matching these
+// cards, double-applying feedback.js's badge() on the card ROOT element --
+// stomping its layout/border/background with badge styles (confirmed: a
+// <wb-card badge="NEW" variant="glass"> picked up wb-badge/wb-badge--glass
+// classes and collapsed to fit-content width instead of filling its grid
+// column). Excluded explicitly so card components keep sole ownership of
+// their own `badge` attribute.
+const CARD_TAGS = [
+  'wb-card', 'wb-cardbutton', 'wb-carddraggable', 'wb-cardexpandable', 'wb-cardfile',
+  'wb-cardhero', 'wb-cardhorizontal', 'wb-cardimage', 'wb-cardlink', 'wb-card-link',
+  'wb-cardminimizable', 'wb-cardnotification', 'wb-cardoverlay', 'wb-cardportfolio',
+  'wb-cardpricing', 'wb-cardproduct', 'wb-cardprofile', 'wb-cardstats',
+  'wb-cardtestimonial', 'wb-cardvideo',
+];
+const CARD_TAG_EXCLUSIONS = CARD_TAGS.map(tag => `:not(${tag})`).join('');
+
 // Auto-injection mappings
 const customElementMappings = [
   ...Object.entries(elementMap)
@@ -206,7 +225,10 @@ const customElementMappings = [
     .map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
   ...Object.entries(WB_LAZY_ONLY_ELEMENTS).map(([selector, behavior]) => ({ selector, behavior })),
   ...Object.entries(WB_LAZY_ONLY_ATTRIBUTES).map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
-  ...Object.entries(WB_LAZY_LEGACY_BARE_ATTRIBUTES).map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
+  ...Object.entries(WB_LAZY_LEGACY_BARE_ATTRIBUTES).map(([attr, behavior]) => ({
+    selector: attr === 'badge' ? `[${attr}]${CARD_TAG_EXCLUSIONS}` : `[${attr}]`,
+    behavior,
+  })),
   // button-tooltip gets BOTH behaviors -- intentional dual-behavior element,
   // not a duplicate-entry bug.
   { selector: 'button-tooltip', behavior: 'tooltip' },

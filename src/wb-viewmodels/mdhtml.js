@@ -53,7 +53,7 @@ async function loadMarked() {
 
 export async function mdhtml(element, options = {}) {
   const config = {
-    src: options.src || element.getAttribute('src'),
+    src: options.src || element.dataset.src || element.getAttribute('src'),
     sanitize: options.sanitize ?? (element.getAttribute('sanitize') !== 'false'),
     breaks: options.breaks ?? (element.getAttribute('breaks') !== 'false'),
     gfm: options.gfm ?? (element.getAttribute('gfm') !== 'false'),

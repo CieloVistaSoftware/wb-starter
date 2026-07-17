@@ -14,5 +14,5 @@ test('Basic Cards demo has descriptive, non-generic card titles', async ({ page 
   // the generic placeholder must be gone
   expect(titles, 'no card should be titled the generic "Basic Card"').not.toContain('Basic Card');
   // and the descriptive one is present
-  expect(titles.join('|')).toContain('Title + Body');
+  expect(titles.join('|')).toContain('This is the title');
 });
