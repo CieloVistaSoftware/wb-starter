@@ -22,6 +22,23 @@ export function input(element, options = {}) {
     return () => {};
   }
 
+  // Types with their own native rendering/behavior (checkbox/radio via
+  // tag-map.js's nativeMap, range/color/file/submit/button/reset/image via
+  // the browser itself) must never get this generic text-field wrap.
+  // wb.js's scan() applies every matching nativeMap entry additively rather
+  // than "most specific selector wins" -- a bare <input type="checkbox">
+  // matches BOTH 'input[type="checkbox"]' (checkbox()) AND the generic
+  // 'input' selector (this function), so without this guard input() runs
+  // second and clobbers the checkbox with .wb-input/.wb-input__field
+  // text-field styling (padding, flex:1, border-radius) -- confirmed live: a
+  // native checkbox rendered as a wide rounded pill, indistinguishable from
+  // a text input, on the Behaviors page checkbox demo.
+  const NON_TEXT_TYPES = ['checkbox', 'radio', 'range', 'color', 'file', 'submit', 'button', 'reset', 'image'];
+  const inputType = (options.type || element.getAttribute('type') || '').toLowerCase();
+  if (NON_TEXT_TYPES.includes(inputType)) {
+    return () => {};
+  }
+
   const config = {
     type: options.type || element.dataset.type || element.type || 'text',
     variant: options.variant || element.getAttribute('variant') || element.dataset.variant || '',

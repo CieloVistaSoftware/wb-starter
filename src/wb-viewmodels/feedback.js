@@ -49,7 +49,7 @@ export function createToast(message, variant = 'info', duration = 3000) {
 export function toast(element, options = {}) {
   if (element._wbToastInit) return () => {};
   element._wbToastInit = true;
-  const message = options.message || element.getAttribute('message') || 'Notification';
+  const message = options.message || element.getAttribute('message') || element.getAttribute('toast-message') || 'Notification';
   const variant = options.variant || element.getAttribute('toast-variant') || element.getAttribute('variant') || 'info';
   const duration = parseInt(options.duration || element.getAttribute('duration') || '3000');
 

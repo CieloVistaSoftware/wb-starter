@@ -73,14 +73,18 @@ export function ripple(element, options = {}) {
     document.head.appendChild(style);
   }
 
-  element.addEventListener('click', createRipple);
+  // mousedown, not click -- ripple should start the instant the button is
+  // pressed, not wait for the full click (press+release) to complete.
+  // Both listeners used to be attached here, firing createRipple TWICE per
+  // click and stacking two overlapping ripple spans (confirmed live and via
+  // Playwright strict-mode locator violation: ".wb-ripple__wave resolved to
+  // 2 elements" after a single click) (#354).
   element.addEventListener('mousedown', createRipple);
 
   // Mark as ready
   // Cleanup
   return () => {
     element.classList.remove('wb-ripple');
-    element.removeEventListener('click', createRipple);
     element.removeEventListener('mousedown', createRipple);
     // Remove any existing ripples
     element.querySelectorAll('.wb-ripple__wave').forEach(r => r.remove());

@@ -139,6 +139,7 @@ import { behaviors } from '../wb-viewmodels/index.js';
 import { Events } from './events.js';
 import { Theme } from './theme.js';
 import { getNativeBehavior, nativeMap, getElementBehavior } from './tag-map.js';
+import { semanticPropertyMappings } from './semantic-attributes.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
 
 // Register Layout Custom Elements
@@ -457,6 +458,13 @@ const WB = {
       return;
     }
 
+    // wb-article/wb-articles: article.js now builds their entire structure
+    // itself, unconditionally (same self-sufficient pattern as the card
+    // family below) -- matches schema-builder.js's own SCHEMA_EXCLUDED_TAGS.
+    if (element.tagName === 'WB-ARTICLE' || element.tagName === 'WB-ARTICLES') {
+      return;
+    }
+
     // wb-card*: every card-family function (card.js) owns its DOM
     // completely (unconditional element.innerHTML='' + full rebuild, none
     // schema-dependent -- confirmed by reading every one of the 19 card
@@ -623,6 +631,24 @@ const WB = {
           promises.push(WB.inject(htmlEl, behaviorName));
         }
       }
+    });
+
+    // Semantic property attributes (tooltip=, badge=, ripple, toast-message=)
+    // -- a real, intentional feature for attaching a behavior directly to a
+    // semantic element by plain property name, no x- prefix required. Shared
+    // with wb-lazy.js via semantic-attributes.js so both engines support the
+    // same vocabulary; this loop was entirely missing here before (#354) --
+    // wb-lazy.js's runtime supported these, this one silently didn't, with
+    // no error. Unconditional (like the wb-* tag loop above), independent of
+    // the autoInject setting: these are explicit per-element opt-ins, not a
+    // native-tag guess.
+    semanticPropertyMappings.forEach(({ selector, behavior }) => {
+      root.querySelectorAll(selector).forEach(el => {
+        const htmlEl = /** @type {HTMLElement} */ (el);
+        if (behaviors[behavior]) {
+          promises.push(WB.inject(htmlEl, behavior));
+        }
+      });
     });
 
       // Generic [x-behavior="name1 name2"] dispatch — the convention demo.js
@@ -797,7 +823,19 @@ const WB = {
             dlog('observe', `[WB.observe] Found wb-* element in mutation: ${elLabel(el)}`);
             WB.processSchema(el);
           }
-            
+
+          // Semantic property attributes (tooltip=, badge=, ripple,
+          // toast-message=) on the node itself and any descendant — see
+          // scan()'s matching block for the full rationale (#354).
+          semanticPropertyMappings.forEach(({ selector, behavior }) => {
+            if (behaviors[behavior]) {
+              if (el.matches?.(selector)) WB.inject(el, behavior);
+              el.querySelectorAll?.(selector).forEach(descendant => {
+                WB.inject(/** @type {HTMLElement} */ (descendant), behavior);
+              });
+            }
+          });
+
           // 1. Check node itself
           // Legacy data-wb detection (reject and log)
           if (el.hasAttribute('data-wb')) {
