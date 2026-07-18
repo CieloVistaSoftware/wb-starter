@@ -92,6 +92,8 @@
             <option value="xbehaviors">50 x-* behaviors</option>
             <option value="inputs">20 inputs with x-behaviors</option>
             <option value="badges">50 badges</option>
+            <option value="selects">25 selects</option>
+            <option value="switches">25 switches (all different)</option>
             <option value="youtube">20 YouTube URL formats</option>
           </select>
           <button id="pg-format" class="pg-btn" type="button"
@@ -362,6 +364,8 @@
       'signature-heroes': ['title', 'tag'],
       xbehaviors: ['tag'],
       badges: ['variant', 'size', 'title', 'tag', 'pill', 'outline', 'removable'],
+      selects: ['variant', 'size', 'title', 'tag'],
+      switches: ['variant', 'size', 'title', 'tag'],
     };
     const sortSelect = document.getElementById('pg-sort');
     function setSortModes(modes) {
@@ -720,6 +724,69 @@
       return out.join('\n');
     }
 
+    function twentyFiveSelects() {
+      const V = ['default', 'success', 'error'];
+      const S = ['sm', 'md', 'lg'];
+      const OPTION_SETS = [
+        [{ value: 'apple', label: 'Apple' }, { value: 'banana', label: 'Banana' }, { value: 'cherry', label: 'Cherry' }],
+        [{ value: 'us', label: 'United States' }, { value: 'ca', label: 'Canada' }, { value: 'mx', label: 'Mexico' }, { value: 'uk', label: 'United Kingdom' }],
+        [{ value: 'red', label: 'Red' }, { value: 'green', label: 'Green' }, { value: 'blue', label: 'Blue' }],
+        [{ value: 'eng', label: 'Engineering' }, { value: 'design', label: 'Design' }, { value: 'sales', label: 'Sales' }, { value: 'support', label: 'Support' }],
+      ];
+      const out = [];
+      for (let i = 0; i < 20; i++) {
+        const v = V[i % V.length], s = S[i % S.length];
+        const options = OPTION_SETS[i % OPTION_SETS.length];
+        out.push(`<wb-select label="#${i + 1} ${v}/${s}" placeholder="Choose one…" variant="${v}" size="${s}" options='${JSON.stringify(options)}'></wb-select>`);
+      }
+      // Explicit flag combinations, one per notable behavior
+      out.push(`<wb-select label="Searchable" searchable placeholder="Type to filter…" options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
+      out.push(`<wb-select label="Clearable" clearable value="banana" options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
+      out.push(`<wb-select label="Multiple" multiple options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
+      out.push(`<wb-select label="Disabled" disabled value="us" options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
+      out.push(`<wb-select label="Required" required placeholder="This one is required" options='${JSON.stringify(OPTION_SETS[2])}'></wb-select>`);
+      return out.join('\n');
+    }
+
+    // 25 GENUINELY DISTINCT combinations (no two identical) via mixed-radix
+    // decoding of the index across all 5 property dimensions -- 2×2×2×3×3 =
+    // 144 possible combos, so the first 25 indices each decode to a unique
+    // one, guaranteed by construction (not just "probably different" like a
+    // simple modulo-per-dimension loop can produce). VARIANT and SIZE go
+    // FIRST (fastest-changing) since they're the visually distinctive
+    // properties -- put last, they'd barely change across only 25 of 144
+    // combos and every visible switch would look identical (confirmed live).
+    function twentyFiveSwitches() {
+      const VARIANT = ['default', 'primary', 'success'];
+      const SIZE = ['sm', 'md', 'lg'];
+      const CHECKED = [false, true];
+      const DISABLED = [false, true];
+      const LABEL_POS = ['end', 'start'];
+      const DIMS = [VARIANT, SIZE, CHECKED, DISABLED, LABEL_POS];
+
+      const out = [];
+      for (let i = 0; i < 25; i++) {
+        let rem = i;
+        const picked = DIMS.map((dim) => {
+          const v = dim[rem % dim.length];
+          rem = Math.floor(rem / dim.length);
+          return v;
+        });
+        const [variant, size, checked, disabled, labelPosition] = picked;
+        const label = `#${i + 1} ${variant}/${size}${checked ? ' checked' : ''}${disabled ? ' disabled' : ''} (label-${labelPosition})`;
+        const attrs = [
+          `label="${label}"`,
+          `variant="${variant}"`,
+          `size="${size}"`,
+          `label-position="${labelPosition}"`,
+          checked ? 'checked' : '',
+          disabled ? 'disabled' : '',
+        ].filter(Boolean).join(' ');
+        out.push(`<wb-switch ${attrs}></wb-switch>`);
+      }
+      return out.join('\n');
+    }
+
     // Real-world YouTube URL shapes (from a public URL-format reference list)
     // stress-testing x-youtube's url= parser: www/no-www/mobile domains,
     // query params in either order, hash timestamps, /watch/ID (no query),
@@ -767,6 +834,8 @@
       else if (which === 'xbehaviors') input.value = fiftyXBehaviors();
       else if (which === 'inputs') input.value = twentyInputs();
       else if (which === 'badges') input.value = fiftyBadges();
+      else if (which === 'selects') input.value = twentyFiveSelects();
+      else if (which === 'switches') input.value = twentyFiveSwitches();
       else if (which === 'youtube') input.value = twentyYouTubeFormats();
       setSortModes(EXAMPLE_SORT_MODES[which] || []);
       e.target.value = ''; // reset to placeholder
@@ -817,6 +886,12 @@
     let debounce;
     input.addEventListener('input', () => {
       fitEditor();
+      // Any manual edit invalidates whatever the endpoint panel is showing --
+      // it reflects a PAST submit of DIFFERENT content, not the current
+      // preview. Without this, submit a form once, then paste unrelated HTML
+      // (e.g. the YouTube example, which has no form at all), and the panel
+      // stays visible showing stale data with nothing live driving it (#364).
+      endpointPanel.hidden = true;
       clearTimeout(debounce); debounce = setTimeout(render, 400);
     });
     window.addEventListener('resize', fitEditor);
