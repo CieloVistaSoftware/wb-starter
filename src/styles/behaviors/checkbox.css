@@ -1,0 +1,73 @@
+/**
+ * Checkbox (wb-checkbox) Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Works with src/wb-viewmodels/semantics/checkbox.js + checkbox.schema.json.
+ * The schema builds: <wb-checkbox class="wb-checkbox"> input.wb-checkbox__input +
+ * span.wb-checkbox__box > span.wb-checkbox__check [+ span.wb-checkbox__label].
+ * The native checkbox is visually hidden and drives the :checked state --
+ * same pattern as switch.css. (#366)
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--wb-checkbox-label-gap, 0.5rem);
+  cursor: pointer;
+  user-select: none;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+/* visually-hidden native checkbox (state driver) */
+.wb-checkbox__input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* visible box */
+.wb-checkbox__box {
+  position: relative;
+  flex: none;
+  width: var(--wb-checkbox-size, 18px);
+  height: var(--wb-checkbox-size, 18px);
+  border: var(--wb-checkbox-border, 2px solid var(--border-color, #d1d5db));
+  border-radius: var(--wb-checkbox-radius, 4px);
+  background: var(--wb-checkbox-bg, var(--bg-surface, #ffffff));
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* checkmark */
+.wb-checkbox__check {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background-color: var(--wb-checkbox-check-color, #ffffff);
+  -webkit-mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath d='M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 111.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z'/%3e%3c/svg%3e") center / 70% no-repeat;
+  mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath d='M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 111.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z'/%3e%3c/svg%3e") center / 70% no-repeat;
+  transition: opacity 0.1s ease;
+}
+
+/* ON state -- input is a previous sibling of the box */
+.wb-checkbox__input:checked ~ .wb-checkbox__box {
+  background: var(--wb-checkbox-checked-bg, var(--primary));
+  border-color: var(--wb-checkbox-checked-border, var(--primary));
+}
+.wb-checkbox__input:checked ~ .wb-checkbox__box .wb-checkbox__check {
+  opacity: 1;
+}
+.wb-checkbox__input:focus-visible ~ .wb-checkbox__box {
+  box-shadow: var(--wb-checkbox-focus-ring, 0 0 0 3px rgba(99, 102, 241, 0.2));
+}
+.wb-checkbox__input:disabled ~ .wb-checkbox__box {
+  opacity: var(--wb-checkbox-disabled-opacity, 0.5);
+  cursor: not-allowed;
+}
+
+.wb-checkbox__label {
+  font-size: var(--wb-checkbox-label-size, 0.875rem);
+}

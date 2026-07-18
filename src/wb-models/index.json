@@ -239,8 +239,8 @@
       "card.base.schema.json",
       "demo.schema.json",
       "views.schema.json",
-      "wb-control.schema.json",
-      "wb-repeater.schema.json"
+      "control.schema.json",
+      "repeater.schema.json"
     ]
   },
   

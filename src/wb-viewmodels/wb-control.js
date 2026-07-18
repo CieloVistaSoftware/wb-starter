@@ -69,6 +69,12 @@ if (!customElements.get('wb-control')) {
 }
 
 export default function control(element) {
-    // Determine active element logic if needed
+    // WBControl's own connectedCallback (registered separately via
+    // customElements.define(), not through this elementMap-dispatched
+    // function) already adds 'wb-control-btn' for its own styling. This
+    // function is what schema-driven compliance checks look up by
+    // behavior name, so add the schema's declared baseClass here too --
+    // additive, harmless alongside 'wb-control-btn'.
+    element.classList.add('wb-control');
     return () => {};
 }

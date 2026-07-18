@@ -159,6 +159,12 @@
       "parent": "wrapper",
       "public": true,
       "required": true,
+      "attributes": {
+        "type": "{{inputType}}",
+        "placeholder": "{{placeholder}}",
+        "value": "{{value}}",
+        "name": "{{name}}"
+      },
       "description": "Native input element"
     },
     {

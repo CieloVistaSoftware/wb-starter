@@ -9,6 +9,35 @@ export function textarea(element, options = {}) {
     return () => {};
   }
 
+  // <wb-textarea> is a schema-driven host whose $view builds a real
+  // <textarea> child (schemaFor: "textarea", baseClass: "wb-textarea").
+  // tag-map.js dispatches the 'textarea' behavior on BOTH the host (via
+  // elementMap['wb-textarea']) and that real child (via nativeMap['textarea']
+  // once it exists) -- but the host's own dispatch can race the schema
+  // build that creates the child: WB.observe()'s added-node handler calls
+  // WB.processSchema(el) WITHOUT awaiting it, then dispatches auto-inject
+  // behaviors on the same node a few lines later in the same synchronous
+  // pass, so a host-side "find my built child and reflect attributes onto
+  // it" branch here would sometimes run before the child exists at all
+  // (confirmed live: element.querySelector(':scope > textarea') was null).
+  // WB.scan()'s own main loop DOES await schema building first and would
+  // never hit this, but observe() is what actually fires for
+  // document.body.appendChild()-style insertion, which is the common case.
+  //
+  // Fixed at the source instead: placeholder/rows/name/variant are bound
+  // directly in textarea.schema.json's $view via {{...}} attribute
+  // interpolation, so they're already real attributes on the built
+  // <textarea> the instant schema-builder constructs it -- no dependency on
+  // a later, separately-timed behavior dispatch at all. This function no
+  // longer needs a host branch; it only ever meaningfully runs on the real
+  // <textarea> (whether that's wb-textarea's schema-built child, or a bare
+  // <textarea x-behavior="textarea">). If dispatched on the WB-TEXTAREA
+  // host itself, host.classList/host.style writes below are harmless no-ops
+  // visually (nothing targets them), consistent with how switch.js/select.js
+  // handle their own host-vs-child split. (#362)
+  const variant = options.variant || element.getAttribute('variant') || 'default';
+  if (variant !== 'default') element.classList.add(`wb-textarea--${variant}`);
+
   const config = {
     autosize: options.autosize ?? element.hasAttribute('autosize'),
     maxLength: parseInt(options.maxLength || element.getAttribute('max-length') || '0'),

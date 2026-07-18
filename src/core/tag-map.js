@@ -56,6 +56,7 @@ export const elementMap = {
   'wb-codecontrol': 'codecontrol',
   'wb-collapse': 'collapse',
   'wb-confetti': 'confetti',
+  'wb-control': 'control',
   'wb-copy': 'copy',
   'wb-darkmode': 'darkmode',
   'wb-demo': 'demo',
@@ -68,7 +69,12 @@ export const elementMap = {
   'wb-modal': 'dialog',
   'wb-draggable': 'draggable',
   'wb-drawer': 'drawer',
-  'wb-drawerLayout': 'drawerLayout',
+  // #363: was 'wb-drawerLayout' (mixed-case key) -- getElementBehavior()
+  // always looks up tagName.toLowerCase(), and the real tag is authored
+  // lowercase/hyphenated everywhere (confirmed live: demos/site/layout.html
+  // uses <wb-drawer-layout>), so the old mixed-case key could never match
+  // any real tag lookup. Renamed to the actual lowercase tag name.
+  'wb-drawer-layout': 'drawerLayout',
   'wb-dropdown': 'dropdown',
   'wb-figure': 'figure',
   'wb-fireworks': 'fireworks',
@@ -86,6 +92,7 @@ export const elementMap = {
   'wb-progress': 'progress',
   'wb-rating': 'rating',
   'wb-ratio': 'ratio',
+  'wb-repeater': 'repeater',
   'wb-resizable': 'resizable',
   'wb-ripple': 'ripple',
   'wb-scrollalong': 'scrollalong',

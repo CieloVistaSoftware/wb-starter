@@ -106,6 +106,12 @@
       "tag": "textarea",
       "public": true,
       "required": true,
+      "attributes": {
+        "placeholder": "{{placeholder}}",
+        "rows": "{{rows}}",
+        "name": "{{name}}",
+        "variant": "{{variant}}"
+      },
       "description": "Native textarea"
     },
     {

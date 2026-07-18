@@ -3,9 +3,9 @@
   "$id": "wb-control.schema.json",
   "title": "WB Control",
   "description": "Base control interaction behavior.",
-  "schemaFor": "wb-control",
+  "schemaFor": "control",
   "compliance": {
-    "baseClass": "wb-wb-control",
+    "baseClass": "wb-control",
     "supportLevel": "stable",
     "accessibility": "high"
   },

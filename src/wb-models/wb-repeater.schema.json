@@ -3,9 +3,9 @@
   "$id": "wb-repeater.schema.json",
   "title": "Repeater",
   "description": "Repeat content based on data.",
-  "schemaFor": "wb-repeater",
+  "schemaFor": "repeater",
   "compliance": {
-    "baseClass": "wb-wb-repeater",
+    "baseClass": "wb-repeater",
     "supportLevel": "stable",
     "accessibility": "high"
   },

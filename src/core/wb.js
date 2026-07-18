@@ -465,6 +465,15 @@ const WB = {
       return;
     }
 
+    // wb-select: semantics/select.js now builds a REAL <select>/<option>
+    // tree for this tag itself (self-sufficient) -- matches
+    // schema-builder.js's own SCHEMA_EXCLUDED_TAGS. Schema's old $view
+    // built a fake <button>/<div>/<ul> widget with no real <select>
+    // anywhere in it; must never race with or override the real one.
+    if (element.tagName === 'WB-SELECT') {
+      return;
+    }
+
     // wb-card*: every card-family function (card.js) owns its DOM
     // completely (unconditional element.innerHTML='' + full rebuild, none
     // schema-dependent -- confirmed by reading every one of the 19 card

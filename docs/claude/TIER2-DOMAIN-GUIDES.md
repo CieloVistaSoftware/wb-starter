@@ -149,19 +149,9 @@ Read when: starting a session (CURRENT-STATUS.md is Tier 1), or when John points
 ---
 
 
-## 🪄 WIZARD (Builder Replacement)
+## 🪄 WIZARD (removed)
 
-The legacy builder is deprecated. The new workflow for guided component/page creation is the **Component Wizard**:
-
-- **docs/wizard.md** — Full user guide for the wizard system
-- **demos/wizard.html** — Visual tool for assembling, configuring, and previewing WB custom elements (open in browser)
-
-Use the wizard for:
-- Visual, no-code assembly of components
-- Live property editing and preview
-- Exporting HTML for use in your project
-
-See docs/wizard.md for full instructions and workflow.
+The Component Wizard app (demos/wizard.html, docs/wizard.md) was deprecated (#337) and has been removed entirely — no replacement workflow currently exists for guided component/page creation.
 
 ---
 

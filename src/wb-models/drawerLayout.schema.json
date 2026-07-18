@@ -105,12 +105,12 @@
   },
   "test": {
     "setup": [
-      "<wb-drawerLayout>Basic drawerLayout content</wb-drawerLayout>",
-      "<wb-drawerLayout position=\"left\">position=left</wb-drawerLayout>",
-      "<wb-drawerLayout position=\"right\">position=right</wb-drawerLayout>",
-      "<wb-drawerLayout collapsed>with collapsed</wb-drawerLayout>",
-      "<wb-drawerLayout width=\"250px\">width=\"250px\"</wb-drawerLayout>",
-      "<wb-drawerLayout min-width=\"48px\">minWidth=\"48px\"</wb-drawerLayout>"
+      "<wb-drawer-layout>Basic drawer-layout content</wb-drawer-layout>",
+      "<wb-drawer-layout position=\"left\">position=left</wb-drawer-layout>",
+      "<wb-drawer-layout position=\"right\">position=right</wb-drawer-layout>",
+      "<wb-drawer-layout collapsed>with collapsed</wb-drawer-layout>",
+      "<wb-drawer-layout width=\"250px\">width=\"250px\"</wb-drawer-layout>",
+      "<wb-drawer-layout min-width=\"48px\">minWidth=\"48px\"</wb-drawer-layout>"
     ],
     "matrix": {
       "combinations": [

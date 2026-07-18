@@ -28,9 +28,25 @@ test.describe('Text input variant coloring (Components page)', () => {
     await expect(success).toHaveClass(/wb-input__field/);
     await expect(error).toHaveClass(/wb-input__field/);
 
-    const basicColor = await basic.evaluate(el => getComputedStyle(el).borderColor);
-    const successColor = await success.evaluate(el => getComputedStyle(el).borderColor);
-    const errorColor = await error.evaluate(el => getComputedStyle(el).borderColor);
+    // Border color comes from JIT-loaded behavior CSS (input.css), which can
+    // still be in flight even after the class assertions above pass --
+    // class-added and stylesheet-applied are two different moments (the
+    // same race class this session hit with wb-switch's CSS). A one-shot
+    // getComputedStyle() read here was confirmed flaky under full-suite
+    // parallel load; expect.poll() retries the whole read+compare until the
+    // three colors actually diverge (or times out), the same fix pattern
+    // used for that switch bug.
+    const readColors = async () => ({
+      basicColor: await basic.evaluate(el => getComputedStyle(el).borderColor),
+      successColor: await success.evaluate(el => getComputedStyle(el).borderColor),
+      errorColor: await error.evaluate(el => getComputedStyle(el).borderColor),
+    });
+    await expect.poll(async () => {
+      const { basicColor, successColor, errorColor } = await readColors();
+      return successColor !== basicColor && errorColor !== basicColor && successColor !== errorColor;
+    }, { timeout: 5000 }).toBe(true);
+
+    const { basicColor, successColor, errorColor } = await readColors();
 
     expect(successColor).not.toBe(basicColor);
     expect(errorColor).not.toBe(basicColor);

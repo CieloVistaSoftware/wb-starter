@@ -83,6 +83,7 @@
       "tag": "input",
       "public": false,
       "required": true,
+      "attributes": { "type": "checkbox" },
       "description": "Hidden native checkbox"
     },
     {

@@ -1,6 +1,6 @@
 {
-  "generated": "2026-07-16T15:37:17.695Z",
-  "totalFiles": 186,
+  "generated": "2026-07-18T01:43:45.246Z",
+  "totalFiles": 189,
   "categories": [
     "_today",
     "architecture",
@@ -460,6 +460,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/x-darkmode.md",
+        "title": "x-darkmode",
+        "name": "x-darkmode",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/x-draggable.md",
         "title": "x-draggable",
         "name": "x-draggable",
@@ -475,6 +481,18 @@
         "path": "docs/behaviors/x-enhancements.md",
         "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
         "name": "x-enhancements",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/x-resizable.md",
+        "title": "x-resizable",
+        "name": "x-resizable",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/x-toggle.md",
+        "title": "x-toggle",
+        "name": "x-toggle",
         "category": "behaviors"
       }
     ],
@@ -1435,6 +1453,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/x-darkmode.md",
+      "title": "x-darkmode",
+      "name": "x-darkmode",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/x-draggable.md",
       "title": "x-draggable",
       "name": "x-draggable",
@@ -1450,6 +1474,18 @@
       "path": "docs/behaviors/x-enhancements.md",
       "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
       "name": "x-enhancements",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/x-resizable.md",
+      "title": "x-resizable",
+      "name": "x-resizable",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/x-toggle.md",
+      "title": "x-toggle",
+      "name": "x-toggle",
       "category": "behaviors"
     },
     {

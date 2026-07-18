@@ -1,0 +1,156 @@
+/**
+ * Article / Articles List Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Works with src/wb-viewmodels/article.js article()/articles()
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-article {
+  display: block;
+  color: var(--text-primary, #f9fafb);
+}
+
+.wb-article__header {
+  margin-bottom: 1rem;
+}
+
+.wb-article__media {
+  margin: 0 0 1rem;
+}
+
+.wb-article__media img {
+  display: block;
+  width: 100%;
+  max-height: 20rem;
+  object-fit: cover;
+  border-radius: var(--radius-lg, 8px);
+}
+
+.wb-article__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary, #9ca3af);
+}
+
+.wb-article__category {
+  padding: 0.125rem 0.625rem;
+  border-radius: 999px;
+  background: var(--primary, #6366f1);
+  color: white;
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.wb-article__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.wb-article__subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 1.125rem;
+  color: var(--text-secondary, #9ca3af);
+}
+
+.wb-article__byline {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #9ca3af);
+}
+
+.wb-article__content {
+  line-height: 1.6;
+}
+
+.wb-article__footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color, #374151);
+  font-size: 0.875rem;
+  color: var(--text-secondary, #9ca3af);
+}
+
+.wb-article--featured {
+  padding: 1.5rem;
+  border: 1px solid var(--border-color, #374151);
+  border-radius: var(--radius-lg, 8px);
+  background: var(--bg-secondary, #1f2937);
+}
+
+.wb-article--featured .wb-article__title {
+  font-size: 2rem;
+}
+
+/* Articles list wrapper */
+.wb-articles__header {
+  margin-bottom: 1rem;
+}
+
+.wb-articles__header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--text-primary, #f9fafb);
+}
+
+.wb-articles__list {
+  --wb-articles-columns: 3;
+}
+
+.wb-articles--grid {
+  display: grid;
+  grid-template-columns: repeat(var(--wb-articles-columns), 1fr);
+  gap: 1.5rem;
+}
+
+.wb-articles--grid > .wb-article {
+  border: 1px solid var(--border-color, #374151);
+  border-radius: var(--radius-lg, 8px);
+  padding: 1rem;
+  background: var(--bg-secondary, #1f2937);
+}
+
+.wb-articles--list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.wb-articles--list > .wb-article {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color, #374151);
+}
+
+.wb-articles--masonry {
+  columns: var(--wb-articles-columns);
+  column-gap: 1.5rem;
+}
+
+.wb-articles--masonry > .wb-article {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+}
+
+.wb-articles__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.wb-articles__page-label {
+  color: var(--text-secondary, #9ca3af);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 640px) {
+  .wb-articles--grid {
+    grid-template-columns: 1fr;
+  }
+}

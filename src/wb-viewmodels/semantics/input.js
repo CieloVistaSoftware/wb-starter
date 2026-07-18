@@ -4,6 +4,20 @@
  * Helper Attribute: [x-behavior="input"]
  */
 export function input(element, options = {}) {
+  // <wb-input> is a schema-driven host whose $view already builds a full
+  // structure declaratively -- label, wrapper div, icon spans, clear
+  // button, and the real <input> (placeholder/value/name/type now bound
+  // directly in input.schema.json's $view, same fix shape as #362). Unlike
+  // switch.js/select.js/textarea.js, this function had no host-vs-child
+  // guard at all: dispatched on the WB-INPUT host itself (elementMap
+  // ['wb-input'] dispatches it there too, same as on the real child via
+  // nativeMap['input']), it wrapped the ENTIRE already-built component in a
+  // second bogus wrapper div, with wb-input__field class and raw-text-input
+  // inline styles (width/flex/padding) applied straight onto the host tag.
+  // The schema already does everything this function would otherwise do
+  // for the host, so just no-op there. (#367)
+  if (element.tagName === 'WB-INPUT') return () => {};
+
   // A DIFFERENT explicit x-{behavior} attribute (x-search, x-password,
   // x-autocomplete, ...) opts this element into its own richer, complete
   // wrapper -- input()'s generic wrap should never ALSO apply on top of it.

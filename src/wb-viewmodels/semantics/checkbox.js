@@ -105,6 +105,26 @@ function injectStyles() {
 export function checkbox(element, options = {}) {
   if (element.tagName !== 'INPUT' || element.type !== 'checkbox') return () => {};
 
+  // wb-switch's internal <input type="checkbox"> is a visually-hidden state
+  // driver styled by switch.css (position:absolute, width:1px, opacity:0) --
+  // it is not a rendered checkbox. The generic visual treatment here
+  // (width:1.125rem, display:inline-flex, appearance:none) matches it too
+  // via the same nativeMap dispatch (any input[type="checkbox"] gets both
+  // behaviors, additively -- see wb.js's scan()), and ties switch.css's
+  // `.wb-switch input` rule on specificity, winning on source order. (#361)
+  if (element.classList.contains('wb-switch__input')) return () => {};
+
+  // wb-checkbox's OWN internal <input type="checkbox"> is the same kind of
+  // visually-hidden state driver -- checkbox.schema.json's $view builds a
+  // separate .wb-checkbox__box/.wb-checkbox__check pair as the actual visual
+  // (matching the $cssAPI's --wb-checkbox-size/--wb-checkbox-radius/etc.
+  // variables, which target that visual, not a raw input). Giving the input
+  // its own type="checkbox" (fixing #366's text-field-wrap bug) means this
+  // function's normal injectStyles() path now also matches it -- would
+  // render a second, fully-visible native checkbox next to the box/check
+  // visual. Keep it hidden via CSS instead (checkbox.css).
+  if (element.classList.contains('wb-checkbox__input')) return () => {};
+
   injectStyles();
 
   // Only JS action: set indeterminate if requested

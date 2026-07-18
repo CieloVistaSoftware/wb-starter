@@ -39,6 +39,9 @@ const exportAliases = {
  * Maps behavior names to their module paths
  */
 const behaviorModules = {
+  // Article / Articles List → article.js
+  article: 'article', articles: 'article',
+
   // Hero → hero.js
   hero: 'hero',
   

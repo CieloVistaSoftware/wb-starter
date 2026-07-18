@@ -1,7 +1,11 @@
+import { elementMap } from './tag-map.js';
+
 // Debug logging — silent unless localStorage['wb-debug'] === '1'.
 const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
 const _wbClog = console.log.bind(console);
 const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
+
+const elementMapTags = new Set(Object.keys(elementMap));
 
 /**
  * WB Views - HTML Template System
@@ -98,12 +102,28 @@ export function loadViewsFromDOM(root = document) {
 function registerViewAsElement(name) {
   // Determine tag name
   const tagName = name.includes('-') ? name : `wb-${name}`;
-  
+
   // Skip if already defined
   if (customElements.get(tagName)) {
     return;
   }
-  
+
+  // Refuse to claim a tag name a REAL component already owns (tag-map.js's
+  // elementMap). Real components are never themselves registered via
+  // customElements.define() -- they're decorated imperatively by
+  // WB.scan() -- so the check above alone can't catch this: there is
+  // nothing yet defined for customElements.get() to find, and this generic
+  // WBViewElement class would silently win the tag instead, swapping out
+  // the real component's Custom Element identity with no error. Confirmed
+  // live this broke <wb-button>'s element.click() (#368) and also backed
+  // <wb-badge>/<wb-card> (#369) before their colliding view entries were
+  // removed from views-registry.json — this guard is the belt to that
+  // suspenders, for any future view name added without checking first.
+  if (elementMapTags.has(tagName)) {
+    console.warn(`[WB Views] Refusing to register <${tagName}> — that tag is already owned by a real component (see tag-map.js). Rename the "${name}" view.`);
+    return;
+  }
+
   // Create custom element class
   class WBViewElement extends HTMLElement {
     connectedCallback() {

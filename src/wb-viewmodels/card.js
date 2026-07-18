@@ -1027,7 +1027,7 @@ export function cardprofile(element, options = {}) {
   if (config.role) {
     const roleEl = document.createElement('div');
     roleEl.className = 'wb-card__subtitle wb-card__role';
-    roleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--primary,#6366f1);font-size:0.9rem;';
+    roleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--primary,#6366f1);font-size:0.9rem;';
     roleEl.textContent = config.role;
     content.appendChild(roleEl);
   }
@@ -1379,7 +1379,7 @@ export function cardproduct(element, options = {}) {
   if (base.config.subtitle) {
     const descEl = document.createElement('div');
     descEl.className = 'wb-card__subtitle wb-card__product-desc';
-    descEl.style.cssText = 'margin:0.25rem 0 0;font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
+    descEl.style.cssText = 'margin:0.25rem 0 0.5rem;font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
     descEl.textContent = base.config.subtitle;
     info.appendChild(descEl);
   }
@@ -1847,7 +1847,7 @@ export function cardhorizontal(element, options = {}) {
   if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
     subtitleEl.className = 'wb-card__subtitle';
-    subtitleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--text-secondary,#9ca3af);';
+    subtitleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--text-secondary,#9ca3af);';
     subtitleEl.textContent = base.config.subtitle;
     content.appendChild(subtitleEl);
   }
@@ -1923,7 +1923,7 @@ export function cardoverlay(element, options = {}) {
   if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
     subtitleEl.className = 'wb-card__subtitle wb-card__overlay-subtitle';
-    subtitleEl.style.cssText = 'margin:0.5rem 0 0;opacity:0.9;text-shadow:0 1px 2px rgba(0,0,0,0.5);';
+    subtitleEl.style.cssText = 'margin:0.5rem 0;opacity:0.9;text-shadow:0 1px 2px rgba(0,0,0,0.5);';
     subtitleEl.textContent = base.config.subtitle;
     content.appendChild(subtitleEl);
   }
@@ -2076,7 +2076,7 @@ export function cardminimizable(element, options = {}) {
   if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
     subtitleEl.className = 'wb-card__subtitle';
-    subtitleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.85rem;';
+    subtitleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--text-secondary,#9ca3af);font-size:0.85rem;';
     subtitleEl.textContent = base.config.subtitle;
     titleWrap.appendChild(subtitleEl);
   }

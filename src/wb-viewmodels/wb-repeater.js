@@ -18,8 +18,11 @@ export default function repeater(element, options = {}) {
   element._wbRepeaterDone = true;
 
   // The wrapper itself contributes no box — its repeated children lay out as if
-  // direct children of the parent.
+  // direct children of the parent. Adding the schema's declared baseClass is
+  // harmless here (display:contents means it carries no visual box regardless)
+  // and satisfies the schema/source baseClass compliance check.
   element.style.display = 'contents';
+  element.classList.add('wb-repeater');
 
   const count = parseInt(options.count || element.getAttribute('count') || '0', 10) || 0;
   const template = element.querySelector('template');

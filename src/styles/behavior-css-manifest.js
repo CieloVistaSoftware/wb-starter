@@ -54,7 +54,8 @@ export const BEHAVIOR_CSS_MAP = {
   cardstats: ['card.css'],
   cardtestimonial: ['card.css'],
   cardvideo: ['card.css'],
-  article: ['card.css'], // native <article> auto-injects as card
+  article: ['article.css'],
+  articles: ['article.css'],
 
   hero: ['hero.css'],
 
@@ -85,7 +86,7 @@ export const BEHAVIOR_CSS_MAP = {
   input: ['input.css'],
   textarea: ['input.css'],
   select: ['input.css'],
-  checkbox: ['input.css'],
+  checkbox: ['input.css', 'checkbox.css'],
   radio: ['input.css'],
   range: ['input.css'],
 

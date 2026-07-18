@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>wb-starter — Zero-build web components for developers</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    await WB.scan(document.body, { eager: true });
+  </script>
+  <style>
+    .lp-section { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; }
+    .lp-hero { text-align: center; padding: 6rem 1.5rem 4rem; }
+    .lp-hero h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); font-weight: 700; letter-spacing: -0.02em; margin: 1.5rem 0 1rem; }
+    .lp-hero p.lead { font-size: 1.15rem; color: var(--text-secondary); max-width: 640px; margin: 0 auto 2rem; }
+    .lp-prompt { font-family: ui-monospace, monospace; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem 1.25rem; max-width: 620px; margin: 0 auto 2rem; text-align: left; color: var(--primary); min-height: 1.5em; }
+    .lp-cta { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    .lp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+    .lp-section h2 { font-size: 1.75rem; text-align: center; margin-bottom: 0.5rem; }
+    .lp-section p.sub { text-align: center; color: var(--text-secondary); margin-bottom: 2.5rem; }
+    .lp-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; padding: 2rem 0; }
+    .lp-stat { text-align: center; }
+    .lp-stat strong { display: block; font-size: 2rem; color: var(--primary); }
+    .lp-footer { text-align: center; padding: 3rem 1.5rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="lp-hero">
+    <wb-badge label="v3.0 — zero build step" variant="primary" pill></wb-badge>
+    <h1>Ship real UI.<br>No bundler required.</h1>
+    <p class="lead">wb-starter is a composition-based web component library. Drop an attribute on a semantic element — <code>x-ripple</code>, <code>wb-card</code>, <code>x-typewriter</code> — and it just works. No React, no build step, no framework lock-in.</p>
+    <div id="lp-typewriter" class="lp-prompt" x-typewriter text="<button x-ripple x-tooltip=&quot;Click me&quot;>Ship it</button>" speed="35"></div>
+    <div class="lp-cta">
+      <wb-button variant="primary" x-ripple>Get Started</wb-button>
+      <wb-button variant="secondary" x-ripple x-tooltip="18 card variants, 23 themes, 100+ behaviors">See the Components</wb-button>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="lp-section" style="padding-top:0;">
+    <div class="lp-stats">
+      <div class="lp-stat"><strong>100+</strong>Behaviors</div>
+      <div class="lp-stat"><strong>23</strong>Themes</div>
+      <div class="lp-stat"><strong>0</strong>Build Step</div>
+      <div class="lp-stat"><strong>Light</strong>DOM Only</div>
+    </div>
+  </section>
+
+  <!-- FEATURE CARDS (bento-ish, glass variant) -->
+  <section class="lp-section">
+    <h2>Everything a landing page needs</h2>
+    <p class="sub">Every card below is a real &lt;wb-card&gt; — no React, no build.</p>
+    <div class="lp-grid">
+      <wb-card title="Composable" subtitle="Attributes, not inheritance" variant="glass" elevated>
+        Add <code>x-ripple</code>, <code>x-tooltip</code>, or <code>x-fadein</code> to any element. Behaviors compose — they don't require a base class.
+      </wb-card>
+      <wb-card title="Themeable" subtitle="23 themes, zero CSS-in-JS" variant="glass" elevated>
+        Every color is a CSS variable. Switch the whole page's look with one attribute — try the picker below.
+      </wb-card>
+      <wb-card title="Light DOM" subtitle="No Shadow DOM boundary" variant="glass" elevated>
+        Your own CSS, your own selectors, and devtools reach straight into every component — exactly like plain HTML.
+      </wb-card>
+    </div>
+  </section>
+
+  <!-- ANIMATED SHOWCASE ROW -->
+  <section class="lp-section">
+    <h2>Scroll-triggered, out of the box</h2>
+    <p class="sub">These three cards animate in as you scroll — no JS written for this page.</p>
+    <div class="lp-grid">
+      <wb-card title="Fade in" variant="bordered" x-fadein>Add <code>x-fadein</code> to any element.</wb-card>
+      <wb-card title="Slide in" variant="bordered" x-slidein direction="up">Add <code>x-slidein</code> with a direction.</wb-card>
+      <wb-card title="Zoom in" variant="bordered" x-zoomin>Add <code>x-zoomin</code> for a scale-in entrance.</wb-card>
+    </div>
+  </section>
+
+  <!-- PRICING-STYLE TOGGLE (repurposed as "deployment target" toggle) -->
+  <section class="lp-section">
+    <h2>Ship it anywhere</h2>
+    <p class="sub">Static hosting <wb-switch id="lp-target-switch" label="or" label-position="end" checked></wb-switch> a real server — same markup either way.</p>
+    <div class="lp-grid">
+      <wb-card title="Static hosting" subtitle="GitHub Pages, Netlify, S3" variant="flat" outlined>
+        No build step means "deploy" is just "copy the files."
+      </wb-card>
+      <wb-card title="Any server" subtitle="Express, nginx, anything" variant="flat" outlined>
+        ES modules load straight from the source tree — no bundler config to maintain.
+      </wb-card>
+    </div>
+  </section>
+
+  <!-- COMPONENT GALLERY -->
+  <section class="lp-section">
+    <h2>The component library</h2>
+    <p class="sub">A slice of what ships in the box — every piece below is live, not a screenshot.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;align-items:center;margin-bottom:2rem;">
+      <wb-badge label="Default" variant="default"></wb-badge>
+      <wb-badge label="Primary" variant="primary"></wb-badge>
+      <wb-badge label="Success" variant="success" pill></wb-badge>
+      <wb-badge label="Warning" variant="warning" pill></wb-badge>
+      <wb-badge label="Error" variant="error" outline></wb-badge>
+      <wb-badge variant="info" dot></wb-badge>
+      <wb-avatar src="https://i.pravatar.cc/80?img=12" alt="User avatar"></wb-avatar>
+      <button class="wb-btn" x-tooltip="Tooltips, for free" x-ripple>Hover + click me</button>
+    </div>
+    <div style="max-width:640px;margin:0 auto;">
+      <progress value="72" max="100" style="width:100%;margin-bottom:0.5rem;"></progress>
+      <p class="sub" style="margin:0;font-size:0.85rem;">A native <code>&lt;progress&gt;</code> element — auto-enhanced, no wrapper tag needed.</p>
+    </div>
+  </section>
+
+  <!-- CODE SAMPLE -->
+  <section class="lp-section">
+    <h2>What the markup actually looks like</h2>
+    <p class="sub">Every component on this page, in the same handful of lines.</p>
+    <pre style="max-width:700px;margin:0 auto;border-radius:8px;overflow:hidden;"><code class="language-html">&lt;wb-card title="Themeable" variant="glass" elevated&gt;
+  Every color is a CSS variable.
+&lt;/wb-card&gt;
+
+&lt;button x-ripple x-tooltip="Click me"&gt;Ship it&lt;/button&gt;
+
+&lt;wb-switch label="Dark mode" checked&gt;&lt;/wb-switch&gt;
+
+&lt;wb-themecontrol&gt;&lt;/wb-themecontrol&gt;</code></pre>
+  </section>
+
+  <!-- FAQ -->
+  <section class="lp-section">
+    <h2>Questions</h2>
+    <details>
+      <summary>Do I need a build step?</summary>
+      <p>No. Every file is a plain ES module served as-is. <code>npm start</code> just serves the directory.</p>
+    </details>
+    <details>
+      <summary>Does it work without JavaScript frameworks?</summary>
+      <p>Yes — that's the point. No React, Vue, or Svelte required. Attributes drive behavior.</p>
+    </details>
+    <details>
+      <summary>Can I theme it?</summary>
+      <p>23 built-in themes, all CSS variables. Pick one below and watch this whole page change.</p>
+    </details>
+  </section>
+
+  <!-- THEME PICKER — the actual differentiator vs. a single hardcoded dark palette -->
+  <section class="lp-section" style="text-align:center;">
+    <h2>Try a different theme</h2>
+    <p class="sub">This entire page — cards, badges, switches, code blocks — re-themes live.</p>
+    <wb-themecontrol></wb-themecontrol>
+  </section>
+
+  <footer class="lp-footer">
+    Built with wb-starter — no bundler, no framework, no build step.
+  </footer>
+
+</body>
+</html>

@@ -16,15 +16,6 @@
       }
     },
 
-    "badge": {
-      "description": "Small badge/tag label",
-      "template": "<span class=\"badge badge--{{variant || 'default'}}\"><slot>{{label}}</slot></span>",
-      "attributes": {
-        "label": { "type": "string", "required": true },
-        "variant": { "type": "string", "enum": ["default", "primary", "success", "warning", "error", "info"], "default": "default" }
-      }
-    },
-
     "badge-list": {
       "description": "Renders a list of badges from data",
       "template": "<div class=\"inline-row\">\n  <badge-tag wb-for=\"badge in badges\" variant=\"{{badge.variant}}\" icon=\"{{badge.icon}}\">{{badge.label}}</badge-tag>\n</div>",
@@ -43,32 +34,10 @@
       }
     },
 
-    "button": {
-      "description": "Primary action button. The button BEHAVIOR (src/wb-viewmodels/semantics/button.js) is the SOLE renderer of <wb-button> — it deliberately does no DOM restructuring (CSS targets the tag/attributes directly) and adds tabindex/role for accessibility. This legacy MVVM template rebuilt a competing native <button class=\"btn ...\"> on a SETTIMEOUT(0) DEFER, asynchronously replacing whatever the SYNCHRONOUS caller had already built and wired up (e.g. feedback.js's alert() dismiss button) — any click listener attached before that timeout fired was silently discarded. Neutralized to a passthrough so button.js owns the DOM, same fix already applied to 'card' (#202).",
-      "template": "<slot></slot>",
-      "attributes": {
-        "label": { "type": "string", "required": true },
-        "variant": { "type": "string", "enum": ["primary", "secondary", "success", "warning", "error", "ghost", "outline"], "default": "primary" },
-        "size": { "type": "string", "enum": ["xs", "sm", "md", "lg", "xl"], "default": "md" },
-        "icon": { "type": "string" },
-        "disabled": { "type": "boolean" }
-      }
-    },
-
     "button-group": {
       "description": "Container for buttons",
       "template": "<div class=\"button-group\"><slot></slot></div>",
       "attributes": {}
-    },
-
-    "card": {
-      "description": "Container with header and body. #202: the card BEHAVIOR (src/wb-viewmodels/card.js) is the SOLE renderer of the card DOM (.wb-card__*). This legacy MVVM template ALSO built a competing .card__* structure → duplicate title/footer. Neutralized to a passthrough so card.js owns the DOM.",
-      "template": "<slot></slot>",
-      "attributes": {
-        "title": { "type": "string" },
-        "subtitle": { "type": "string" },
-        "badge": { "type": "string" }
-      }
     },
 
     "card-tile": {

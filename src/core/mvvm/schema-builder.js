@@ -822,8 +822,22 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // the same async-schema-race. This was a LATENT, previously-unreported bug
 // (found auditing schemas while investigating #279, not from a live
 // complaint) -- <wb-skeleton> was never in this list before tonight.
+// wb-article/wb-articles: had a real $view but NO behavior implementation at
+// all (confirmed: no article.js existed anywhere) -- <wb-article> rendered
+// as bare unstyled text on any page not running the schema-builder engine
+// (e.g. wb-lazy.js-based demo pages, which have no MVVM layer whatsoever).
+// article.js now builds the full structure itself, unconditionally, the same
+// self-sufficient pattern as the card family -- so it's added here for the
+// same reason, not left to race with schema's $view build.
+// wb-select: select.schema.json's $view built a fake dropdown out of
+// <button>/<div>/<ul> -- no real <select> anywhere in it, so it had none of
+// a native <select>'s keyboard nav/mobile picker/form submission/screen
+// reader semantics. semantics/select.js now builds a REAL <select> for this
+// tag itself (self-sufficient, same pattern), so schema must never build
+// the old fake widget on top of/instead of it.
 const SCHEMA_EXCLUDED_TAGS = new Set([
-  'wb-demo', 'wb-details', 'wb-stack', 'wb-search', 'wb-skeleton',
+  'wb-demo', 'wb-details', 'wb-stack', 'wb-search', 'wb-skeleton', 'wb-select',
+  'wb-article', 'wb-articles',
   'wb-card', 'wb-cardimage', 'wb-cardvideo', 'wb-cardbutton', 'wb-carddraggable',
   'wb-cardexpandable', 'wb-cardfile', 'wb-cardhero', 'wb-cardhorizontal',
   'wb-cardlink', 'wb-card-link', 'wb-cardminimizable', 'wb-cardnotification',

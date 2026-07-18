@@ -154,7 +154,45 @@ export function button(element, options = {}) {
     if (!element.hasAttribute('tabindex')) element.setAttribute('tabindex', '0');
     element.setAttribute('role', 'button');
 
-    return () => {};
+    // A real <button> activates on Enter and Space for free; role="button"
+    // on a non-native element gets neither -- the WAI-ARIA button pattern
+    // requires wiring both explicitly. Space is also prevented on keydown
+    // (matching native <button>) so it doesn't scroll the page.
+    //
+    // Uses dispatchEvent(MouseEvent) rather than element.click(): confirmed
+    // live that <wb-button>'s customElements.define() is unexpectedly owned
+    // by the unrelated "WB Views" system (src/wb-views/views-registry.json
+    // has its own view literally named "button", and wb-views.js's
+    // registerViewAsElement() auto-claims the wb-button tag for it --
+    // see docs/audits/HOST-CHILD-DISPATCH-AUDIT.md). That class's own
+    // element.click() silently no-ops; dispatchEvent() does not go through
+    // whatever click() does internally, so it isn't affected.
+    const synthesizeClick = () => {
+      element.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    };
+    const onKeydown = (e) => {
+      if (element.hasAttribute('disabled') || element.getAttribute('aria-disabled') === 'true') return;
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        synthesizeClick();
+      } else if (e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+      }
+    };
+    const onKeyup = (e) => {
+      if (element.hasAttribute('disabled') || element.getAttribute('aria-disabled') === 'true') return;
+      if (e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        synthesizeClick();
+      }
+    };
+    element.addEventListener('keydown', onKeydown);
+    element.addEventListener('keyup', onKeyup);
+
+    return () => {
+      element.removeEventListener('keydown', onKeydown);
+      element.removeEventListener('keyup', onKeyup);
+    };
   }
 
   // Native <button> — add .wb-button class for styling

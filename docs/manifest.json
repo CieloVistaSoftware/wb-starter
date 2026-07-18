@@ -466,11 +466,6 @@
           "file": "search.md",
           "title": "Search",
           "description": "Search functionality documentation"
-        },
-        {
-          "file": "wizard.md",
-          "title": "Wizard",
-          "description": "Wizard component documentation"
         }
       ]
     },
@@ -492,6 +487,11 @@
           "file": "audits/X-USAGE-AUDIT.md",
           "title": "X USAGE AUDIT",
           "description": "Documentation for X USAGE AUDIT"
+        },
+        {
+          "file": "audits/HOST-CHILD-DISPATCH-AUDIT.md",
+          "title": "Host/Child Dispatch Audit",
+          "description": "Schema-built native elements vs. their behavior JS -- collision patterns and fixes (#360-#369)"
         },
         {
           "file": "MVVM-MIGRATION-PLAN.md",
