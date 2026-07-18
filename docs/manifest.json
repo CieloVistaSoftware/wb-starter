@@ -494,6 +494,11 @@
           "description": "Schema-built native elements vs. their behavior JS -- collision patterns and fixes (#360-#369)"
         },
         {
+          "file": "audits/INLINE-STYLES-AUDIT.md",
+          "title": "Inline Styles Audit",
+          "description": "Tier-1 Law 9 violation -- 250+ inline styles across 33 wb-viewmodels files, filed as #370"
+        },
+        {
           "file": "MVVM-MIGRATION-PLAN.md",
           "title": "MVVM MIGRATION PLAN",
           "description": "Documentation for MVVM MIGRATION PLAN"
