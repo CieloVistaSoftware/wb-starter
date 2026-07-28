@@ -294,7 +294,9 @@ function getLazyObserver() {
  * WB - Web Behavior Core
  */
 const WB = {
-  version: '2.1.0',
+  // Was hardcoded to '2.1.0', independently of wb.js's '3.0.0' -- drifted
+  // and never bumped alongside the v3.0.0 rename elsewhere (#371).
+  version: '3.0.0',
   
   // Expose behavior names for test compatibility (lazy-loaded, so this is just the registry)
   get behaviors() {
