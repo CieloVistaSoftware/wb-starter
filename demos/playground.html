@@ -18,6 +18,14 @@
 
     .pg-panel { border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden;
       background: var(--bg-secondary); display: flex; flex-direction: column; }
+    /* .pg-panel's own display:flex (author CSS) silently wins over the
+       browser's default [hidden]{display:none} (user-agent CSS) regardless
+       of selector specificity -- author origin always beats UA origin. This
+       page doesn't load normalize.css (which has a global [hidden]{display:
+       none!important} safety net for exactly this), so the hidden attribute
+       on #pg-endpoint did nothing at all: it showed on every page load,
+       and stayed showing across every example switch, unconditionally. */
+    .pg-panel[hidden] { display: none; }
     /* Mobile-first fluent toolbar: wraps instead of overflowing; the button row
        grows and wraps as space allows. */
     .pg-panel__head { display: flex; align-items: center; justify-content: space-between;
@@ -209,6 +217,10 @@
     async function render() {
       errorBox.hidden = true;
       errorBox.textContent = '';
+      // A previous example's <form> submission left this visible -- it must
+      // not persist into an unrelated (often non-form) example after a
+      // re-render or example switch.
+      endpointPanel.hidden = true;
       preview.innerHTML = input.value;
       try {
         await ensureWB();
