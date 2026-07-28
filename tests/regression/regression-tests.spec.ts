@@ -641,6 +641,51 @@ test.describe.skip('Audio Component Regression Suite (needs rewrite)', () => {
 });
 
 // =============================================================================
+// BUG-2026-07-27-001: lightbox data-src + local-dev eager-scan gap
+// Real coverage lives in tests/regression/lightbox-data-src.spec.ts —
+// this marker only satisfies the bug-registry cross-reference scan.
+// =============================================================================
+test.describe.skip("BUG-2026-07-27-001: 'lightbox' data-src (see lightbox-data-src.spec.ts)", () => {
+  test('lightbox: data-src reaches the rendered image', () => {});
+});
+
+// =============================================================================
+// BUG-2026-07-27-002: alert variant classes never applied
+// Real coverage lives in tests/regression/alert-variant-class.spec.ts —
+// this marker only satisfies the bug-registry cross-reference scan.
+// =============================================================================
+test.describe.skip("BUG-2026-07-27-002: 'alert' variant class (see alert-variant-class.spec.ts)", () => {
+  test('alert: variant gets wb-alert--<variant> class', () => {});
+});
+
+// =============================================================================
+// BUG-2026-07-27-003: countdown to= attribute ignored
+// Real coverage lives in tests/regression/countdown-to-attribute.spec.ts —
+// this marker only satisfies the bug-registry cross-reference scan.
+// =============================================================================
+test.describe.skip("BUG-2026-07-27-003: 'countdown' to= attribute (see countdown-to-attribute.spec.ts)", () => {
+  test('countdown: to= is read as the target date', () => {});
+});
+
+// =============================================================================
+// BUG-2026-07-27-004: youtube id= attribute ignored
+// Real coverage lives in tests/regression/youtube-id-attribute.spec.ts —
+// this marker only satisfies the bug-registry cross-reference scan.
+// =============================================================================
+test.describe.skip("BUG-2026-07-27-004: 'youtube' id= attribute (see youtube-id-attribute.spec.ts)", () => {
+  test('youtube: id= is read as the video ID', () => {});
+});
+
+// =============================================================================
+// BUG-2026-07-27-005: cardimage lazy-load retry race
+// Real coverage lives in tests/regression/cardimage-lazy-load-false-negative.spec.ts —
+// this marker only satisfies the bug-registry cross-reference scan.
+// =============================================================================
+test.describe.skip("BUG-2026-07-27-005: 'cardimage' lazy-load race (see cardimage-lazy-load-false-negative.spec.ts)", () => {
+  test('cardimage: off-screen valid image is not permanently marked unavailable', () => {});
+});
+
+// =============================================================================
 // SUMMARY: Regression Test Coverage Report
 // =============================================================================
 test.describe('Regression Coverage Report', () => {

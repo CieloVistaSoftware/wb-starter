@@ -498,7 +498,12 @@ export function external(element, options = {}) {
  */
 export function countdown(element, options = {}) {
   const config = {
-    date: options.date || element.getAttribute('date') || '',
+    // `to` checked alongside `date`: pages/behaviors.html's own demo markup
+    // uses to="...", scripts/generate-behaviors-page.js emits data-to="...",
+    // and neither ever matched this function's `date` -- a three-way name
+    // mismatch that always left config.date '' and silently fell through to
+    // the unconditional 60s default below (#376).
+    date: options.date || element.getAttribute('date') || element.getAttribute('to') || element.dataset.to || '',
     seconds: parseInt(options.seconds || element.getAttribute('seconds') || '0') || 0,
     format: options.format || element.getAttribute('format') || 'auto',
     ...options

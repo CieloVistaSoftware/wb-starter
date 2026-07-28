@@ -249,7 +249,13 @@ export function drawer(element, options = {}) {
  */
 export function lightbox(element, options = {}) {
   const config = {
-    src: options.src || element.getAttribute('src') || element.src || element.href || '',
+    // dataset.src checked before the native src/href fallbacks: elements
+    // with no native src (e.g. <button x-lightbox data-src="...">, the
+    // form scripts/generate-behaviors-page.js emits) have no getAttribute
+    // ('src')/element.src to fall back to, so config.src silently resolved
+    // to '' and the lightbox <img> rendered with an empty src (#374). Same
+    // class of bug as BUG-2024-12-19-001 in data/bug-registry.json.
+    src: options.src || element.dataset.src || element.getAttribute('src') || element.src || element.href || '',
     ...options
   };
 

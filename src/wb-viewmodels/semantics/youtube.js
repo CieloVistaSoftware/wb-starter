@@ -67,7 +67,12 @@ function ensureSingleYouTubePlayback() {
 export function youtube(element, options = {}) {
   const url = options.url || element.getAttribute('url');
   const config = {
-    id: options.id || element.getAttribute('video-id') || (url ? extractYouTubeId(url) : null),
+    // `id`/`data-id` checked alongside `video-id`: pages/behaviors.html and
+    // pages/newbehaviors.html both use plain id="...", the page generator
+    // (scripts/generate-behaviors-page.js) emits data-id="...", and only
+    // pages/components.html actually matches video-id -- three different
+    // names for the same thing, only one of which this ever read (#377).
+    id: options.id || element.getAttribute('video-id') || element.getAttribute('id') || element.dataset.id || (url ? extractYouTubeId(url) : null),
     autoplay: options.autoplay ?? element.hasAttribute('autoplay'),
     muted: options.muted ?? element.hasAttribute('muted'),
     loop: options.loop ?? element.hasAttribute('loop'),

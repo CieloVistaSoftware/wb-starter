@@ -32,3 +32,6 @@ archive/
 tmp/
 test-results/
 .playwright-artifacts/
+
+# Extension signing key — never commit private keys
+*.pem

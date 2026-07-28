@@ -116,9 +116,33 @@ function attachLoadRetry(el, config) {
 
   el.addEventListener('error', onError);
   config.successEvents.forEach(evt => el.addEventListener(evt, onSuccess));
-  scheduleCheck();
 
-  return cleanup;
+  // Native loading="lazy" defers the actual network fetch until the
+  // browser decides the element is near the viewport -- if the check/retry
+  // clock starts immediately regardless, an off-screen-but-perfectly-valid
+  // image races its own timeout: confirmed live (cardimage grid, John's
+  // "Image unavailable" report) that ZERO network requests were ever made
+  // for the src before this gave up, hid the element, and never tried
+  // again even once scrolled into view. Gate the clock on real
+  // intersection first when the element opted into lazy loading.
+  let lazyGate = null;
+  if (el.loading === 'lazy' && typeof IntersectionObserver !== 'undefined') {
+    lazyGate = new IntersectionObserver((entries) => {
+      if (entries.some(e => e.isIntersecting)) {
+        lazyGate.disconnect();
+        lazyGate = null;
+        scheduleCheck();
+      }
+    }, { rootMargin: '200px' });
+    lazyGate.observe(el);
+  } else {
+    scheduleCheck();
+  }
+
+  return () => {
+    if (lazyGate) { lazyGate.disconnect(); lazyGate = null; }
+    cleanup();
+  };
 }
 
 export function attachVideoLoadRetry(videoEl, options = {}) {

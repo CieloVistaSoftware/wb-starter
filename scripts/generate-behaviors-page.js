@@ -832,7 +832,7 @@ function generateUtilityDemos(behaviors) {
       if (behavior.name === 'x-clock') {
         html += '      <div x-clock class="time-display"></div>\n';
       } else if (behavior.name === 'x-countdown') {
-        html += '      <div x-countdown data-to="2027-12-31" class="time-display"></div>\n';
+        html += '      <div x-countdown to="2027-12-31" class="time-display"></div>\n';
       } else if (behavior.name === 'x-relativetime') {
         html += '      <span x-relativetime data-date="2025-01-01" class="time-display">Jan 1, 2025</span>\n';
       }

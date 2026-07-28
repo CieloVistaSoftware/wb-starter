@@ -288,7 +288,16 @@ app.get('/pages/:page', (req, res, next) => {
   <link rel="stylesheet" href="/src/styles/site.css">
   <script type="module">
     import WB from '/src/core/wb-lazy.js';
-    WB.init();
+    // Mirror scripts/generate-site.mjs's production init exactly (#374) --
+    // the dev server used to call bare WB.init(), which scans lazily
+    // (IntersectionObserver-gated). Production has always scanned eagerly,
+    // so any x-* behavior below the fold (e.g. Lightbox in
+    // pages/behaviors.html's Overlays section) silently never activated in
+    // local dev while working fine once deployed -- clicking did nothing,
+    // with no console error, because the click handler was simply never
+    // attached yet.
+    await WB.init({ autoInject: true });
+    await WB.scan(document.body, { eager: true });
   </script>
   <!-- Live Reload Client -->
   <script>

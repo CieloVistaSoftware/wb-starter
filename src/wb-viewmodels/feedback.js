@@ -302,6 +302,12 @@ export function alert(element, options = {}) {
 
   element.setAttribute('role', 'alert');
   element.setAttribute('variant', variant);
+  // alert.css styles entirely through classes (.wb-alert base +
+  // .wb-alert--<variant>) -- the variant attribute alone matches no
+  // selector, so every alert rendered with zero styling regardless of
+  // variant (#375).
+  element.classList.add('wb-alert');
+  element.classList.add(`wb-alert--${variant}`);
 
   const content = message || element.innerHTML || 'Alert message';
   const titleText = title || 'Alert';

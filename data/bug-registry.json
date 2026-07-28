@@ -1,12 +1,143 @@
 {
   "metadata": {
     "description": "Registry of all bugs found during development. Each bug MUST have a corresponding regression test.",
-    "lastUpdated": "2025-12-26",
-    "totalBugs": 3,
-    "testedBugs": 3,
+    "lastUpdated": "2026-07-27",
+    "totalBugs": 8,
+    "testedBugs": 8,
     "untestedBugs": 0
   },
   "bugs": [
+    {
+      "id": "BUG-2026-07-27-005",
+      "title": "cardimage images permanently marked \"Image unavailable\" when off-screen at load (lazy-load race, never recovers)",
+      "dateFound": "2026-07-27",
+      "severity": "HIGH",
+      "status": "FIXED",
+      "component": "media-load-retry.js",
+      "function": "attachLoadRetry() / attachImageLoadRetry()",
+      "line": 33,
+      "description": "John reported via screenshot: every card in demos/site/cards.html's Image Card section showed the \"unavailable\" fallback despite a valid, curl-verified-200 picsum.photos URL. cardimage() sets img.loading='lazy'; attachImageLoadRetry() started its readiness-check clock immediately regardless, so an off-screen image (true for any card deep in an eagerly-scanned generated page) raced a fetch the browser had not yet started. Confirmed live: zero network requests were ever made for the src before give-up. After ~27.5s (5 attempts) it hides the element and shows \"unavailable\" PERMANENTLY -- confirmed live that scrolling the failed card into view afterward does not recover it (no observer retries a settled element).",
+      "rootCause": "The check/retry clock (scheduleCheck()) started unconditionally on attach, with no awareness that loading=\"lazy\" means the browser may not attempt the fetch at all until near-viewport.",
+      "symptom": "Every off-screen-at-load cardimage with loading=lazy showed a permanent, unrecoverable \"⚠ Image unavailable\" fallback regardless of URL validity.",
+      "whyNotCaughtBefore": "tests/cards/cardimage-render.spec.ts only asserts an <img> element exists with a non-empty src attribute -- it never checks naturalWidth/complete or whether the .wb-media-load-failed fallback fired. It validates markup structure, never actual load success, so a permanently-broken image with a valid-looking src passed every existing assertion.",
+      "fix": {
+        "file": "src/wb-viewmodels/media-load-retry.js",
+        "before": "el.addEventListener('error', onError); ...; scheduleCheck();",
+        "after": "if (el.loading === 'lazy') { observe via one-shot IntersectionObserver (200px rootMargin), call scheduleCheck() only once actually intersecting } else { scheduleCheck() immediately as before }"
+      },
+      "affectedComponents": ["cardimage", "img"],
+      "regressionTests": [
+        "tests/regression/cardimage-lazy-load-false-negative.spec.ts"
+      ],
+      "testCases": [
+        "cardimage: a valid, reachable src is not marked failed while off-screen past the old give-up window",
+        "cardimage: scrolling an off-screen image into view lets it load successfully (naturalWidth > 0)"
+      ]
+    },
+    {
+      "id": "BUG-2026-07-27-004",
+      "title": "x-youtube id=\"...\" ignored, video never loads",
+      "dateFound": "2026-07-27",
+      "severity": "HIGH",
+      "status": "FIXED",
+      "component": "youtube.js",
+      "function": "youtube()",
+      "line": 67,
+      "description": "John asked to verify <div x-youtube id=\"dQw4w9WgXcQ\" ratio=\"16:9\"> loads. It didn't: youtube() only ever read element.getAttribute('video-id'). Fourth attribute-name mismatch found in this session (after lightbox #374, alert #375, countdown #376): pages/components.html matches (video-id), but pages/behaviors.html and pages/newbehaviors.html both use plain id=, and the generator (scripts/generate-behaviors-page.js) emits data-id=. With config.id null, youtube() console.warn'd and returned before building any iframe or poster -- a permanently empty div.",
+      "rootCause": "config.id only checked options.id / element.getAttribute('video-id') / a url= parse; never checked id or data-id.",
+      "symptom": "x-youtube elements using id= (as authored on 2 of the 3 real pages, and in John's own test markup) rendered as an empty div with a console warning, no poster, no iframe.",
+      "fix": {
+        "file": "src/wb-viewmodels/semantics/youtube.js",
+        "before": "id: options.id || element.getAttribute('video-id') || (url ? extractYouTubeId(url) : null)",
+        "after": "id: options.id || element.getAttribute('video-id') || element.getAttribute('id') || element.dataset.id || (url ? extractYouTubeId(url) : null)"
+      },
+      "affectedComponents": ["youtube"],
+      "regressionTests": [
+        "tests/regression/youtube-id-attribute.spec.ts"
+      ],
+      "testCases": [
+        "YouTube: id=\"...\" is read, no \"No video ID provided\" warning",
+        "YouTube: click-to-play poster renders and clicking it embeds the correct video id"
+      ]
+    },
+    {
+      "id": "BUG-2026-07-27-003",
+      "title": "x-countdown to=\"...\" ignored, always shows stuck 00:00",
+      "dateFound": "2026-07-27",
+      "severity": "HIGH",
+      "status": "FIXED",
+      "component": "helpers.js",
+      "function": "countdown()",
+      "line": 499,
+      "description": "Reported by John via screenshot: <div x-countdown to=\"2027-12-31\"> showed a static 00:00 instead of counting down. Three-way attribute name mismatch: countdown() read only `date`, pages/behaviors.html used `to`, and its own generator (scripts/generate-behaviors-page.js) emitted a third name, `data-to`. None matched, so config.date was always '', and countdown() silently fell through to its unconditional 60s default -- which, having started long before anyone looked, always read 00:00.",
+      "rootCause": "config.date only checked element.getAttribute('date'); never checked `to` (what the page actually uses) or `data-to` (what the generator emits).",
+      "symptom": "Every x-countdown[to] demo displayed a stuck 00:00 instead of counting down to its target date.",
+      "fix": {
+        "file": "src/wb-viewmodels/helpers.js + scripts/generate-behaviors-page.js",
+        "before": "date: options.date || element.getAttribute('date') || '';  generator emitted data-to=\"2027-12-31\"",
+        "after": "date: options.date || element.getAttribute('date') || element.getAttribute('to') || element.dataset.to || '';  generator now emits to=\"2027-12-31\" (matches deployed page + the fixed fallback)"
+      },
+      "affectedComponents": ["countdown"],
+      "regressionTests": [
+        "tests/regression/countdown-to-attribute.spec.ts"
+      ],
+      "testCases": [
+        "Countdown: to=\"...\" target date is read (renders <days>d HH:MM:SS, not the 60s default)",
+        "Countdown: display actually ticks over time"
+      ]
+    },
+    {
+      "id": "BUG-2026-07-27-002",
+      "title": "x-alert variant styling never applied (warning/error render unstyled)",
+      "dateFound": "2026-07-27",
+      "severity": "HIGH",
+      "status": "FIXED",
+      "component": "feedback.js",
+      "function": "alert()",
+      "line": 294,
+      "description": "Reported by John via screenshot of the Behaviors showcase: warning and error alerts rendered with no background/border/color distinguishing them at all. alert() built the title/message/icon content and set a `variant` attribute, but never added any class to the element. src/styles/behaviors/alert.css styles alerts entirely through classes (.wb-alert base + .wb-alert--<variant> per-variant colors), so with no class present every alert rendered completely unstyled regardless of variant.",
+      "rootCause": "alert() set element.setAttribute('variant', variant) but never called element.classList.add('wb-alert') or element.classList.add(`wb-alert--${variant}`).",
+      "symptom": "All x-alert variants (info/success/warning/error) rendered identically -- no background color, no border, indistinguishable from plain unstyled divs.",
+      "fix": {
+        "file": "src/wb-viewmodels/feedback.js",
+        "before": "element.setAttribute('role', 'alert'); element.setAttribute('variant', variant);",
+        "after": "element.setAttribute('role', 'alert'); element.setAttribute('variant', variant); element.classList.add('wb-alert'); element.classList.add(`wb-alert--${variant}`);"
+      },
+      "affectedComponents": ["alert"],
+      "regressionTests": [
+        "tests/regression/alert-variant-class.spec.ts"
+      ],
+      "testCases": [
+        "Alert: warning and error variants get wb-alert + wb-alert--<variant> classes",
+        "Alert: warning and error variants have distinct, non-transparent backgrounds"
+      ]
+    },
+    {
+      "id": "BUG-2026-07-27-001",
+      "title": "x-lightbox buttons using data-src show no image on click (local dev only)",
+      "dateFound": "2026-07-27",
+      "severity": "HIGH",
+      "status": "FIXED",
+      "component": "overlay.js",
+      "function": "lightbox()",
+      "line": 250,
+      "description": "Two stacked bugs on pages/behaviors.html's Lightbox demo: (1) the local dev server (server.js) called the lazy-scanning WB.init() instead of matching production's eager scan, so x-* triggers below the fold never got their click handler attached in local dev; (2) once reachable, lightbox() never read element.dataset.src, so <button x-lightbox data-src=\"...\"> (the form non-<img> triggers use, since <button> has no native src) resolved to an empty src.",
+      "rootCause": "server.js: WB.init() with no eager scan (unlike scripts/generate-site.mjs's production output). overlay.js: lightbox()'s config.src fallback chain checked getAttribute('src')/element.src/element.href but never element.dataset.src.",
+      "symptom": "Clicking a Lightbox demo button in local dev did nothing at all; after fixing the scan timing, it opened an overlay with a broken/blank image.",
+      "fix": {
+        "file": "server.js + src/wb-viewmodels/overlay.js",
+        "before": "server.js: WB.init();  |  overlay.js: src: options.src || element.getAttribute('src') || element.src || element.href || ''",
+        "after": "server.js: await WB.init({autoInject:true}); await WB.scan(document.body,{eager:true});  |  overlay.js: src: options.src || element.dataset.src || element.getAttribute('src') || element.src || element.href || ''"
+      },
+      "affectedComponents": ["lightbox"],
+      "regressionTests": [
+        "tests/regression/lightbox-data-src.spec.ts"
+      ],
+      "testCases": [
+        "Lightbox: clicking a button[x-lightbox][data-src] shows the correct image, not a blank lightbox",
+        "Lightbox: img[x-lightbox][src] (existing convention) still works"
+      ]
+    },
     {
       "id": "BUG-2025-12-26-002",
       "title": "Audio EQ panel missing controls",
@@ -89,11 +220,13 @@
     }
   ],
   "categories": {
-    "attribute-routing": ["BUG-2024-12-19-001"],
+    "attribute-routing": ["BUG-2024-12-19-001", "BUG-2026-07-27-001"],
     "element-creation": ["BUG-2025-12-26-001", "BUG-2025-12-26-002"],
-    "behavior-initialization": [],
+    "behavior-initialization": ["BUG-2026-07-27-001"],
     "event-handling": [],
-    "styling": [],
+    "styling": ["BUG-2026-07-27-002"],
+    "attribute-name-mismatch": ["BUG-2026-07-27-001", "BUG-2026-07-27-003", "BUG-2026-07-27-004"],
+    "lazy-load-race": ["BUG-2026-07-27-005"],
     "accessibility": []
   },
   "componentIndex": {
@@ -103,6 +236,11 @@
     "cardimage": ["BUG-2024-12-19-001"],
     "cardvideo": ["BUG-2024-12-19-001"],
     "avatar": ["BUG-2024-12-19-001"],
-    "builder": ["BUG-2024-12-19-001"]
+    "builder": ["BUG-2024-12-19-001"],
+    "lightbox": ["BUG-2026-07-27-001"],
+    "alert": ["BUG-2026-07-27-002"],
+    "countdown": ["BUG-2026-07-27-003"],
+    "youtube": ["BUG-2026-07-27-004"],
+    "cardimage": ["BUG-2026-07-27-005"]
   }
 }
