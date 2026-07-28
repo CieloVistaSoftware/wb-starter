@@ -1,5 +1,6 @@
 import hljs from '../../lib/highlight.js';
 import { pre } from './pre.js';
+import { CODE_THEMES } from '../codecontrol.js';
 
 // Inject CSS if not present (codecontrol behavior will override if used)
 if (!document.querySelector('link[data-highlight-theme]')) {
@@ -7,8 +8,14 @@ if (!document.querySelector('link[data-highlight-theme]')) {
   link.rel = 'stylesheet';
   // Check localStorage for saved preference from codecontrol
   const savedTheme = localStorage.getItem('x-code-theme') || 'atom-one-dark-reasonable';
+  // A handful of CODE_THEMES entries (e.g. wb-grayscale-dark) are WB's own
+  // local themes, not real highlight.js CDN theme names -- blindly building
+  // a cdnjs URL from ANY saved theme id 404'd for those (confirmed live:
+  // wb-grayscale-dark.min.css never existed on cdnjs). Use the local path
+  // when the saved theme is one of ours.
+  const localTheme = CODE_THEMES.find(t => t.id === savedTheme && t.path);
   // Use CDNJS for reliable loading
-  link.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${savedTheme}.min.css`;
+  link.href = localTheme ? localTheme.path : `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${savedTheme}.min.css`;
   link.setAttribute('data-highlight-theme', 'true');
   document.head.appendChild(link);
   
@@ -172,6 +179,23 @@ export function code(element, options = {}) {
   let copyButton = null;
   let languageBadge = null;
 
+  async function copyCode() {
+    const text = element.textContent || '';
+    try {
+      await navigator.clipboard.writeText(text);
+      element.dispatchEvent(new CustomEvent('wb:code:copy', {
+        bubbles: true,
+        detail: { text }
+      }));
+      return text;
+    } catch (err) {
+      console.error('[code] Failed to copy:', err);
+      throw err;
+    }
+  }
+
+  element.copy = copyCode;
+
   // Add copy functionality
   if (config.showCopy) {
     // Inline variant: Click to copy
@@ -235,7 +259,7 @@ export function code(element, options = {}) {
 
       copyButton.addEventListener('click', async () => {
         try {
-          await navigator.clipboard.writeText(element.textContent);
+          await copyCode();
           copyButton.textContent = '✓';
           setTimeout(() => {
             copyButton.textContent = '📋';
@@ -289,6 +313,9 @@ export function code(element, options = {}) {
     if (wrapper && wrapper.parentNode) {
       wrapper.parentNode.insertBefore(element, wrapper);
       wrapper.remove();
+    }
+    if (element.copy === copyCode) {
+      delete element.copy;
     }
   };
 }
