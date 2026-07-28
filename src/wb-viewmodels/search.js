@@ -251,6 +251,20 @@ export function searchField(element, options = {}) {
     element.appendChild(input);
   }
 
+  // search() only classes whatever element IT was given -- for a <wb-search>
+  // host with no pre-existing <input> child, that's this freshly-created
+  // inner input, not the host itself. CSS selectors targeting the variant
+  // directly on the host (.wb-search--<variant>, not the
+  // .wb-search--<variant> .wb-search__wrapper descendant form) never
+  // matched, so host-level styling silently never applied (#359).
+  const size = element.getAttribute('size') || 'md';
+  const variant = element.getAttribute('variant') || 'default';
+  element.classList.add('wb-search');
+  if (size !== 'md') element.classList.add(`wb-search--${size}`);
+  if (variant !== 'default') element.classList.add(`wb-search--${variant}`);
+  if (element.hasAttribute('disabled')) element.classList.add('wb-search--disabled');
+  if (element.hasAttribute('loading')) element.classList.add('wb-search--loading');
+
   const api = search(input, {
     placeholder: element.getAttribute('placeholder') || 'Search...',
     value: element.getAttribute('value') || '',
