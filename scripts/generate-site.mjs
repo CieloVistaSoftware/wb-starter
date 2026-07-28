@@ -156,7 +156,9 @@ function generateComponentSections(schema) {
       }
       return { tag, attrs, children: placeholderChildren(schema, attrs) };
     });
-    const columns = demos.length <= 2 ? demos.length : 3;
+    // Always one per row: a boolean toggle's whole point is showing its own
+    // effect (e.g. `full-width`), which a multi-column grid cell clips.
+    const columns = 1;
     sections.push({
       heading: `Boolean toggles`,
       component: schema.schemaFor,

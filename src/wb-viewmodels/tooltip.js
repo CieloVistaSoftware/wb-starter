@@ -64,6 +64,29 @@ function injectStyles() {
       top: 50%;
       margin-top: -4px;
     }
+    .wb-tooltip--dark {
+      background: var(--wb-tooltip-dark-bg, #1f2937);
+      color: var(--wb-tooltip-dark-color, #ffffff);
+    }
+    .wb-tooltip--dark .wb-tooltip__arrow {
+      background: var(--wb-tooltip-dark-bg, #1f2937);
+    }
+    .wb-tooltip--light {
+      background: var(--wb-tooltip-light-bg, #ffffff);
+      color: var(--wb-tooltip-light-color, #1f2937);
+      border: var(--wb-tooltip-light-border, 1px solid #e5e7eb);
+    }
+    .wb-tooltip--light .wb-tooltip__arrow {
+      background: var(--wb-tooltip-light-bg, #ffffff);
+      border: var(--wb-tooltip-light-border, 1px solid #e5e7eb);
+    }
+    .wb-tooltip--primary {
+      background: var(--wb-tooltip-primary-bg, var(--primary, #6366f1));
+      color: var(--wb-tooltip-primary-color, #ffffff);
+    }
+    .wb-tooltip--primary .wb-tooltip__arrow {
+      background: var(--wb-tooltip-primary-bg, var(--primary, #6366f1));
+    }
   `;
   document.head.appendChild(style);
   stylesInjected = true;
@@ -107,6 +130,10 @@ export async function tooltip(element, options = {}) {
         ?? element.getAttribute('tooltip-position');
       return ['top', 'bottom', 'left', 'right'].includes(p) ? p : 'top';
     })(),
+    variant: (() => {
+      const v = options.variant ?? element.getAttribute('variant');
+      return ['default', 'dark', 'light', 'primary'].includes(v) ? v : 'default';
+    })(),
     delay: Math.max(0, parseInt(options.delay ?? element.getAttribute('x-delay') ?? element.getAttribute('tooltip-delay') ?? '200', 10)),
     hideDelay: Math.max(0, parseInt(options.hideDelay ?? element.getAttribute('x-hide-delay') ?? element.getAttribute('tooltip-hide-delay') ?? '100', 10)),
     customClass: options.customClass ?? element.getAttribute('x-custom-class') ?? element.getAttribute('tooltip-class') ?? '',
@@ -126,7 +153,7 @@ export async function tooltip(element, options = {}) {
 
   // Create tooltip element
   const tip = document.createElement('div');
-  tip.className = `wb-tooltip wb-tooltip--${config.position}`;
+  tip.className = `wb-tooltip wb-tooltip--${config.position} wb-tooltip--${config.variant}`;
   if (config.customClass) {
     tip.classList.add(...config.customClass.split(' '));
   }

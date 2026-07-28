@@ -196,6 +196,26 @@
   box-shadow: none;
 }
 
+/* Testimonial "minimal"/"centered" — cardtestimonial.schema.json declares both
+   in its variant enum with zero CSS anywhere (neither the wb-card--{variant}
+   classes the JS actually applies, nor the wb-testimonial--{variant} classes
+   the schema's appliesClass names) -- confirmed live: both rendered
+   pixel-identical to "default". Scoped to .wb-testimonial so this can't
+   collide with an unrelated "minimal"/"centered" variant on another card
+   type reusing the same generic class name. */
+.wb-testimonial.wb-card--minimal {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.wb-testimonial.wb-card--centered {
+  text-align: center;
+}
+.wb-testimonial.wb-card--centered .wb-card__footer {
+  flex-direction: column;
+  align-items: center;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    MODIFIERS
    ═══════════════════════════════════════════════════════════════════════════ */

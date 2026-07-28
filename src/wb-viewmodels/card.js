@@ -192,7 +192,17 @@ export function cardBase(element, options = {}) {
   // overrode every one of those classes (confirmed live: bordered/flat
   // rendered pixel-identical to default despite having real CSS rules).
   // Only apply the generic inline surface for the actual default variant.
-  const ownsOwnSurface = ['glass', 'bordered', 'flat', 'rack'].includes(config.variant);
+  // 'minimal' added: cardtestimonial's minimal variant (background:transparent
+  // in card.css) hit this exact same inline-override bug -- it rendered
+  // pixel-identical to default until added here.
+  // 'elevated' added: variant="elevated" (a string variant value, distinct
+  // from the boolean `elevated` attribute handled separately below) got its
+  // .wb-card--elevated class added, so its box-shadow came through, but its
+  // CSS-declared background:var(--bg-elevated) and border-color:transparent
+  // were silently overridden by this same generic inline background/border
+  // -- confirmed live: elevated and default shared the identical background
+  // and border color, only the shadow differed.
+  const ownsOwnSurface = ['glass', 'bordered', 'flat', 'rack', 'minimal', 'elevated'].includes(config.variant);
   if (!ownsOwnSurface) {
     baseStyles.background = config.background || element.style.background || 'var(--bg-secondary, #1f2937)';
     baseStyles.border = '1px solid var(--border-color, #374151)';
@@ -720,9 +730,10 @@ export function cardvideo(element, options = {}) {
     poster: getAttr(element, options, 'poster'),
     title: getAttr(element, options, 'title'),
     subtitle: getAttr(element, options, 'subtitle'),
-    autoplay: parseBoolean(options.autoplay) ?? (element.dataset.autoplay === 'true' || element.getAttribute('autoplay') === 'true' || (element.hasAttribute('data-autoplay') && element.dataset.autoplay !== 'false')),
-    muted: parseBoolean(options.muted) ?? (element.dataset.muted === 'true' || element.getAttribute('muted') === 'true' || (element.hasAttribute('data-muted') && element.dataset.muted !== 'false')),
-    loop: parseBoolean(options.loop) ?? (element.dataset.loop === 'true' || element.getAttribute('loop') === 'true' || (element.hasAttribute('data-loop') && element.dataset.loop !== 'false')),
+    // Same bare-boolean-attribute gap as cardexpandable/cardminimizable above.
+    autoplay: parseBoolean(options.autoplay) ?? (element.dataset.autoplay === 'true' || element.getAttribute('autoplay') === 'true' || (element.hasAttribute('data-autoplay') && element.dataset.autoplay !== 'false') || element.hasAttribute('autoplay')),
+    muted: parseBoolean(options.muted) ?? (element.dataset.muted === 'true' || element.getAttribute('muted') === 'true' || (element.hasAttribute('data-muted') && element.dataset.muted !== 'false') || element.hasAttribute('muted')),
+    loop: parseBoolean(options.loop) ?? (element.dataset.loop === 'true' || element.getAttribute('loop') === 'true' || (element.hasAttribute('data-loop') && element.dataset.loop !== 'false') || element.hasAttribute('loop')),
     controls: parseBoolean(options.controls) ?? (element.dataset.controls !== 'false' && element.getAttribute('controls') !== 'false'),
     content: options.content || element.dataset.content || element.innerHTML,
     ...options
@@ -988,31 +999,63 @@ export function cardprofile(element, options = {}) {
     role: options.role || element.dataset.role || element.getAttribute('role'),
     bio: options.bio || element.dataset.bio || element.getAttribute('bio'),
     cover: options.cover || element.dataset.cover || element.getAttribute('cover'),
+    // schema-declared but previously never read -- size/align had zero
+    // effect (#19: every declared attribute must produce a real effect),
+    // and hoverText never became the title attribute it's documented to.
+    size: options.size || element.dataset.size || element.getAttribute('size') || 'md',
+    align: options.align || element.dataset.align || element.getAttribute('align') || 'center',
+    hoverText: options.hoverText || element.dataset.hoverText || element.getAttribute('hoverText') || element.getAttribute('hover-text'),
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardprofile' });
   element.innerHTML = '';
 
+  if (config.hoverText) element.setAttribute('title', config.hoverText);
+
   // Cover
   if (config.cover) {
     const coverFig = base.createFigure();
     coverFig.className = 'wb-card__figure wb-card__cover';
-    coverFig.style.cssText = `margin:0;height:100px;background-image:url(${config.cover});background-size:cover;background-position:center;`;
+    coverFig.style.cssText = `position:relative;margin:0;height:28px;background-image:url(${config.cover});background-size:cover;background-position:center;`;
+
+    // Role sits on the cover (the card's top half) instead of below the
+    // avatar/name, so it reads immediately alongside the cover photo.
+    // Vertically centered (not a fixed top offset) so it stays fully
+    // visible even with the cover strip this thin.
+    if (config.role) {
+      const roleBadge = document.createElement('div');
+      roleBadge.className = 'wb-card__subtitle wb-card__role';
+      roleBadge.style.cssText = 'position:absolute;top:50%;right:0.5rem;transform:translateY(-50%);padding:0.15rem 0.6rem;border-radius:999px;background:rgba(0,0,0,0.55);color:#fff;font-size:0.7rem;';
+      roleBadge.textContent = config.role;
+      coverFig.appendChild(roleBadge);
+    }
+
     element.appendChild(coverFig);
   }
 
   // Profile content
-  const content = document.createElement('header');
+  // A <div>, not <header> -- a literal <header> tag is auto-injected as the
+  // SITE header behavior (tag-map.js maps native 'header' -> 'header'),
+  // which forces display:flex/flex-direction:row via .wb-header (header.css)
+  // and made avatar/name/bio render side-by-side instead of stacked.
+  // No overlap with the cover -- a fixed -40px pull-up was calibrated for the
+  // old 100px cover; against the current thin cover strip it dragged the
+  // avatar up into the cover image instead of sitting cleanly below it.
+  const textAlign = config.align === 'left' ? 'left' : 'center';
+  const content = document.createElement('div');
   content.className = 'wb-card__profile-content';
-  content.style.cssText = `text-align:center;padding:1rem;${config.cover ? 'margin-top:-40px;' : ''}`;
+  content.style.cssText = `text-align:${textAlign};padding:1rem;`;
+
+  const avatarSizes = { sm: '56px', md: '80px', lg: '104px' };
+  const avatarSize = avatarSizes[config.size] || avatarSizes.md;
 
   if (config.avatar) {
     const avatarImg = document.createElement('img');
     avatarImg.className = 'wb-card__avatar';
     avatarImg.src = config.avatar;
     avatarImg.alt = config.name || 'Avatar';
-    avatarImg.style.cssText = 'width:80px;height:80px;border-radius:50%;border:4px solid var(--bg-secondary,#1f2937);object-fit:cover;';
+    avatarImg.style.cssText = `width:${avatarSize};height:${avatarSize};border-radius:50%;border:4px solid var(--bg-secondary,#1f2937);object-fit:cover;`;
     content.appendChild(avatarImg);
   }
 
@@ -1024,7 +1067,7 @@ export function cardprofile(element, options = {}) {
     content.appendChild(nameEl);
   }
 
-  if (config.role) {
+  if (config.role && !config.cover) {
     const roleEl = document.createElement('div');
     roleEl.className = 'wb-card__subtitle wb-card__role';
     roleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--primary,#6366f1);font-size:0.9rem;';
@@ -1062,7 +1105,8 @@ export function cardpricing(element, options = {}) {
     features: options.features || element.dataset.features?.split(',') || element.getAttribute('features')?.split(',') || ['Feature 1', 'Feature 2'],
     cta: options.cta || element.dataset.cta || element.getAttribute('cta') || 'Get Started',
     ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href') || '#',
-    featured: parseBoolean(options.featured) ?? (element.dataset.featured === 'true' || element.getAttribute('featured') === 'true' || (element.hasAttribute('data-featured') && element.dataset.featured !== 'false')),
+    // Same bare-boolean-attribute gap as cardexpandable/cardminimizable above.
+    featured: parseBoolean(options.featured) ?? (element.dataset.featured === 'true' || element.getAttribute('featured') === 'true' || (element.hasAttribute('data-featured') && element.dataset.featured !== 'false') || element.hasAttribute('featured')),
     background: options.background || element.dataset.background || element.getAttribute('background'),
     ...options
   };
@@ -1875,6 +1919,11 @@ export function cardoverlay(element, options = {}) {
     position: options.position || element.dataset.position || element.getAttribute('position') || 'bottom',
     gradient: parseBoolean(options.gradient) ?? (element.dataset.gradient !== 'false' && element.getAttribute('gradient') !== 'false'),
     height: options.height || element.dataset.height || element.getAttribute('height') || '300px',
+    // Neither was ever read here before -- xalign only existed on cardhero
+    // (a different function), and variant only got cardBase's generic
+    // wb-card--{variant} class with no matching CSS for dark/light/blur.
+    xalign: options.xalign || element.dataset.xalign || element.getAttribute('xalign') || 'left',
+    variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
     ...options
   };
 
@@ -1904,12 +1953,25 @@ export function cardoverlay(element, options = {}) {
   // Content
   const content = document.createElement('div');
   content.className = 'wb-card__overlay-content';
-  content.style.cssText = 'padding:1.5rem;color:white;width:100%;';
+  content.style.cssText = `padding:1.5rem;color:white;width:100%;text-align:${config.xalign};`;
 
   if (config.gradient) {
-    content.style.background = config.position === 'top' 
+    content.style.background = config.position === 'top'
       ? 'linear-gradient(to bottom, rgba(0,0,0,0.7), transparent)'
       : 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)';
+  }
+
+  // Variant tint -- applied after the gradient so a non-default variant's
+  // tint (or backdrop-filter, for blur) always wins over the plain gradient.
+  if (config.variant === 'dark') {
+    content.style.background = 'rgba(0,0,0,0.65)';
+  } else if (config.variant === 'light') {
+    content.style.background = 'rgba(255,255,255,0.85)';
+    content.style.color = '#111827';
+  } else if (config.variant === 'blur') {
+    content.style.background = 'rgba(0,0,0,0.35)';
+    content.style.backdropFilter = 'blur(8px)';
+    content.style.webkitBackdropFilter = 'blur(8px)';
   }
 
   if (base.config.title) {
@@ -1942,7 +2004,11 @@ export function cardexpandable(element, options = {}) {
   const rawContent = element.innerHTML.trim();
 
   const config = {
-    expanded: parseBoolean(options.expanded) ?? (element.dataset.expanded === 'true' || element.getAttribute('expanded') === 'true' || (element.hasAttribute('data-expanded') && element.dataset.expanded !== 'false')),
+    // Bare `expanded` (no value) is the codebase's boolean-attribute convention
+    // (see clickable/elevated above) -- this only checked expanded="true",
+    // so <wb-cardexpandable expanded> (what every demo actually writes) was
+    // silently ignored and always rendered collapsed.
+    expanded: parseBoolean(options.expanded) ?? (element.dataset.expanded === 'true' || element.getAttribute('expanded') === 'true' || (element.hasAttribute('data-expanded') && element.dataset.expanded !== 'false') || element.hasAttribute('expanded')),
     maxHeight: options.maxHeight || element.dataset.maxHeight || element.getAttribute('max-height') || '100px',
     ...options
   };
@@ -2048,7 +2114,10 @@ export function cardminimizable(element, options = {}) {
   const rawContent = element.innerHTML.trim();
 
   const config = {
-    minimized: parseBoolean(options.minimized) ?? (element.dataset.minimized === 'true' || element.getAttribute('minimized') === 'true' || (element.hasAttribute('data-minimized') && element.dataset.minimized !== 'false')),
+    // Same bare-boolean-attribute gap as cardexpandable's `expanded` had --
+    // <wb-cardminimizable minimized> (the only form any demo writes) was
+    // never detected without this hasAttribute check.
+    minimized: parseBoolean(options.minimized) ?? (element.dataset.minimized === 'true' || element.getAttribute('minimized') === 'true' || (element.hasAttribute('data-minimized') && element.dataset.minimized !== 'false') || element.hasAttribute('minimized')),
     ...options
   };
 

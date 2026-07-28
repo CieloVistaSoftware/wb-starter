@@ -181,11 +181,11 @@ export function spinner(element, options = {}) {
   // small vs <wb-spinner>. Default here so the behavior itself, not schema,
   // is the single source of truth for this default (#279).
   const size = options.size || element.getAttribute('size') || 'md';
-  const color = options.color || element.getAttribute('color');
+  const variant = options.variant || options.color || element.getAttribute('variant') || element.getAttribute('color');
   const speed = options.speed || element.getAttribute('speed');
   element.classList.add('wb-spinner');
   if (size) element.classList.add(`wb-spinner--${size}`);
-  if (color) element.classList.add(`wb-spinner--${color}`);
+  if (variant) element.classList.add(`wb-spinner--${variant}`);
   if (speed) element.classList.add(`wb-spinner--${speed}`);
 
   const ring = document.createElement('div');

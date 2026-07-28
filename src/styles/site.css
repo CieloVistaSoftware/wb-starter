@@ -28,6 +28,21 @@
 body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
 
 /* =============================================================================
+   STANDALONE DEMO PAGE CONTAINER
+   ============================================================================= */
+/* demos/site/*.html pages are standalone (not routed through .site/.site__body,
+   which is the app shell used by pages/*.html — see components.html). Without
+   this, their content sits flush against the viewport edge with zero page
+   margin, unlike every shell-routed page. index.html already worked around
+   this with its own one-off inline <style>; this class gives every other
+   standalone demo page the same breathing room via one shared rule. */
+.demo-page {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* =============================================================================
    SITE LAYOUT
    ============================================================================= */
 .wb-scroll-lock {
