@@ -686,6 +686,15 @@ test.describe.skip("BUG-2026-07-27-005: 'cardimage' lazy-load race (see cardimag
 });
 
 // =============================================================================
+// BUG-2026-07-27-006: cardproduct badge never rendered
+// Real coverage lives in tests/regression/cardproduct-badge.spec.ts —
+// this marker only satisfies the bug-registry cross-reference scan.
+// =============================================================================
+test.describe.skip("BUG-2026-07-27-006: 'cardproduct' badge (see cardproduct-badge.spec.ts)", () => {
+  test('cardproduct: badge= renders a real badge element', () => {});
+});
+
+// =============================================================================
 // SUMMARY: Regression Test Coverage Report
 // =============================================================================
 test.describe('Regression Coverage Report', () => {

@@ -406,28 +406,15 @@
   <section id="data">
     <h2>📊 Data Display</h2>
     <div class="section-note">
-      <strong>Data behaviors:</strong> Avatars, skeletons, timelines, and keyboard keys.
+      <strong>Data behaviors:</strong> Timelines and keyboard keys.
     </div>
 
-    <h3>Avatars</h3>
-    <wb-demo title="User Avatars" tag="Data">
-      <div class="demo-row">
-        <wb-avatar src="https://i.pravatar.cc/150?img=1"></wb-avatar>
-        <wb-avatar src="https://i.pravatar.cc/150?img=2" size="lg"></wb-avatar>
-        <wb-avatar initials="JD"></wb-avatar>
-        <wb-avatar src="https://i.pravatar.cc/150?img=3" status="online"></wb-avatar>
-        <wb-avatar src="https://i.pravatar.cc/150?img=4" status="away"></wb-avatar>
-      </div>
-    </wb-demo>
-
-    <h3>Skeleton Loaders</h3>
-    <wb-demo title="Loading Skeletons" tag="Data">
-      <div class="demo-row">
-        <wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton>
-        <wb-skeleton variant="circle" width="60px"></wb-skeleton>
-        <wb-skeleton variant="rect" width="150px" height="100px"></wb-skeleton>
-      </div>
-    </wb-demo>
+    <!-- Avatars and Skeleton Loaders intentionally removed from this page
+         (#381): both are pure wb-* CUSTOM ELEMENTS with no working x-*
+         attribute form at all (avatar.css/skeleton.css are 100% tag-name-
+         coupled, #279) -- this page exists to demo x-* behaviors, one per
+         behavior, and showing real wb-* component tags here contradicted
+         that. Both remain properly demoed on pages/components.html. -->
 
     <h3>Timeline</h3>
     <wb-demo title="Event Timeline" tag="Data">

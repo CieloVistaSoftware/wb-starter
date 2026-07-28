@@ -655,23 +655,13 @@ function generateNavigationDemos(behaviors) {
 function generateDataDemos(behaviors) {
   let html = '';
 
-  if (behaviors.some(b => b.name === 'wb-avatar')) {
-    html += '    <h3>Avatars</h3>\n    <div class="demo-row">\n';
-    html += '      <wb-avatar src="https://i.pravatar.cc/150?img=1"></wb-avatar>\n';
-    html += '      <wb-avatar src="https://i.pravatar.cc/150?img=2" size="lg"></wb-avatar>\n';
-    html += '      <wb-avatar initials="JD"></wb-avatar>\n';
-    html += '      <wb-avatar src="https://i.pravatar.cc/150?img=3" status="online"></wb-avatar>\n';
-    html += '      <wb-avatar src="https://i.pravatar.cc/150?img=4" status="away"></wb-avatar>\n';
-    html += '    </div>\n\n';
-  }
-
-  if (behaviors.some(b => b.name === 'wb-skeleton')) {
-    html += '    <h3>Skeleton Loaders</h3>\n    <div class="demo-row">\n';
-    html += '      <wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton>\n';
-    html += '      <wb-skeleton variant="circle" width="60px"></wb-skeleton>\n';
-    html += '      <wb-skeleton variant="rect" width="150px" height="100px"></wb-skeleton>\n';
-    html += '    </div>\n\n';
-  }
+  // wb-avatar and wb-skeleton are catalogued as type:"element" in
+  // behaviors.schema.json's "data" category -- real wb-* components with no
+  // x-* attribute form at all, not behaviors. This page exists to show one
+  // demo per x-* behavior; genuine components already have their own demos
+  // on pages/components.html (confirmed present there). Rendering them here
+  // too made the Behaviors page show wb-* custom elements mixed in with
+  // behaviors, contradicting its own purpose.
 
   if (behaviors.some(b => b.name === 'x-timeline')) {
     html += '    <h3>Timeline</h3>\n    <div class="demo-full">\n';

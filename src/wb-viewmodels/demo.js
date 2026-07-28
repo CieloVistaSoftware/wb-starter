@@ -158,6 +158,18 @@ export async function demo(element, options = {}) {
     }
     element.appendChild(grid);
 
+    // Lazily-built blocks (scrolled into view long after the page's one-time
+    // eager WB.scan(document.body) already ran) never had their moved-in
+    // children scanned by anything -- the global scan finished before this
+    // grid existed. Eager blocks (built synchronously during initial parse,
+    // before the deferred module script runs) are still covered by that
+    // global scan, so scanning `grid` here too would race it and reintroduce
+    // the double-injection listener loss described below on `pre`. Only scan
+    // for the lazy path, where the global scan is long finished -- no race.
+    if (options.isLazy && window.WB) {
+        window.WB.scan(grid);
+    }
+
     // Add doc links below the grid. (#262: the old '?page=docs#wb-…' hrefs were
     // dead on EVERY surface — page-relative, so inside the doc-viewer they hit
     // doc-viewer.html?page=docs, and pages/docs.html has no #wb-* anchors anyway.)

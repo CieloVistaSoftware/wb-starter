@@ -100,6 +100,10 @@ test('Studio EQ Player: playlist attribute renders a track picker with all track
  * assert every playlist entry actually reaches loadedmetadata.
  */
 test('Studio EQ Player: every playlist track actually loads (catches CORS-silent failures)', async ({ page }) => {
+  // 19 real external tracks, each up to 8s + a 20s retry headroom in the
+  // worst case -- default 30s test timeout isn't remotely enough even on
+  // the happy path.
+  test.setTimeout(180000);
   await page.goto('/demos/site/content.html', { waitUntil: 'domcontentloaded' });
   // wb-lazy.js only enhances an element once it intersects the viewport
   // (IntersectionObserver) — content.html is now a long consolidated
@@ -111,15 +115,20 @@ test('Studio EQ Player: every playlist track actually loads (catches CORS-silent
   const results = await page.evaluate(async () => {
     const picker = document.querySelector('.wb-audio__track-picker') as HTMLSelectElement;
     const audioEl = picker.closest('wb-audio')!.querySelector('audio') as HTMLAudioElement;
-    const out: { title: string; loaded: boolean; duration: number }[] = [];
 
-    for (let i = 0; i < picker.options.length; i++) {
-      picker.value = String(i);
-      picker.dispatchEvent(new Event('change', { bubbles: true }));
-      const loaded = await new Promise<boolean>((resolve) => {
-        const onLoaded = () => { cleanup(); resolve(true); };
-        const onError = () => { cleanup(); resolve(false); };
-        const timer = setTimeout(() => { cleanup(); resolve(false); }, 8000);
+    // Waits for one settle: 'error' is a real, immediate signal (CORS/404 —
+    // the actual regression class this test exists to catch) and resolves
+    // right away. A timeout with no event either way is AMBIGUOUS -- it
+    // could be a genuine silent failure, or it could just be 19 real
+    // multi-MB tracks from an external CDN sharing network/CPU with every
+    // other parallel test worker legitimately needing more time. Report
+    // which one happened so the caller can tell a real failure from mere
+    // slowness instead of collapsing both into the same "false".
+    function waitForSettle(timeoutMs: number): Promise<'loaded' | 'error' | 'timeout'> {
+      return new Promise((resolve) => {
+        const onLoaded = () => { cleanup(); resolve('loaded'); };
+        const onError = () => { cleanup(); resolve('error'); };
+        const timer = setTimeout(() => { cleanup(); resolve('timeout'); }, timeoutMs);
         const cleanup = () => {
           clearTimeout(timer);
           audioEl.removeEventListener('loadedmetadata', onLoaded);
@@ -128,11 +137,27 @@ test('Studio EQ Player: every playlist track actually loads (catches CORS-silent
         audioEl.addEventListener('loadedmetadata', onLoaded, { once: true });
         audioEl.addEventListener('error', onError, { once: true });
       });
-      out.push({ title: picker.options[i].textContent || '', loaded, duration: audioEl.duration || 0 });
+    }
+
+    const out: { title: string; loaded: boolean; duration: number; outcome: string }[] = [];
+
+    for (let i = 0; i < picker.options.length; i++) {
+      picker.value = String(i);
+      picker.dispatchEvent(new Event('change', { bubbles: true }));
+      let outcome = await waitForSettle(8000);
+      if (outcome === 'timeout') {
+        // Ambiguous -- re-trigger the load and give it real headroom before
+        // concluding it's a genuine failure, same principle as
+        // attachImageLoadRetry() for images (#378): a resource that's still
+        // legitimately in flight is not the same as one that's broken.
+        audioEl.load();
+        outcome = await waitForSettle(20000);
+      }
+      out.push({ title: picker.options[i].textContent || '', loaded: outcome === 'loaded', duration: audioEl.duration || 0, outcome });
     }
     return out;
   });
 
   const failed = results.filter((r) => !r.loaded || !(r.duration > 0));
-  expect(failed, `these playlist tracks never loaded (CORS or 404):\n${JSON.stringify(failed, null, 2)}`).toEqual([]);
+  expect(failed, `these playlist tracks never loaded (CORS or 404, or timed out even after a retry with extended headroom):\n${JSON.stringify(failed, null, 2)}`).toEqual([]);
 });

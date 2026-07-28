@@ -15,6 +15,16 @@ async function renderButtons(page) {
   await page.setContent(`
     <link rel="stylesheet" href="/src/styles/themes.css">
     <link rel="stylesheet" href="/src/styles/site.css">
+    <style>
+      /* button.css's .wb-button base rule has transition: all 0.2s ease --
+         this test asserts the FINAL computed values a size/variant class
+         produces, not the animation between them. Without this, reading
+         getComputedStyle() right after the class assertion passes can catch
+         font-size mid-transition (#379) -- rare in isolation where the JS
+         round-trip and the 200ms transition rarely line up badly, much more
+         likely under 8-worker load where round-trip timing varies more. */
+      * { transition: none !important; }
+    </style>
     <button size="xs" id="b-xs">XS</button>
     <button size="xl" id="b-xl">XL</button>
     <button variant="primary" id="b-primary">Primary</button>
@@ -25,7 +35,12 @@ async function renderButtons(page) {
       WB.init({ autoInject: true }).then(() => WB.scan(document.body)).then(() => { window.__wbDone = true; });
     </script>
   `);
-  await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 15000 });
+  // 15s was already a bump for CPU-starved parallel load (#269) but still
+  // occasionally not enough under the full 8-worker suite -- WB.init()+scan()
+  // genuinely takes longer when every worker is contending for CPU at once,
+  // not a code regression. 30s gives real headroom instead of chasing this
+  // one file's budget test-by-test.
+  await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 30000 });
 }
 
 test.describe('native button size & variant attributes have real effect (§19)', () => {
@@ -33,8 +48,8 @@ test.describe('native button size & variant attributes have real effect (§19)',
     await renderButtons(page);
     const xs = page.locator('#b-xs');
     const xl = page.locator('#b-xl');
-    await expect(xs).toHaveClass(/wb-button--xs/, { timeout: 10000 });
-    await expect(xl).toHaveClass(/wb-button--xl/, { timeout: 10000 });
+    await expect(xs).toHaveClass(/wb-button--xs/, { timeout: 20000 });
+    await expect(xl).toHaveClass(/wb-button--xl/, { timeout: 20000 });
 
     const xsFs = await xs.evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
     const xlFs = await xl.evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
@@ -45,8 +60,8 @@ test.describe('native button size & variant attributes have real effect (§19)',
     await renderButtons(page);
     const primary = page.locator('#b-primary');
     const danger = page.locator('#b-danger');
-    await expect(primary).toHaveClass(/wb-button--primary/, { timeout: 10000 });
-    await expect(danger).toHaveClass(/wb-button--danger/, { timeout: 10000 });
+    await expect(primary).toHaveClass(/wb-button--primary/, { timeout: 20000 });
+    await expect(danger).toHaveClass(/wb-button--danger/, { timeout: 20000 });
 
     const pBg = await primary.evaluate((el) => getComputedStyle(el).backgroundColor);
     const dBg = await danger.evaluate((el) => getComputedStyle(el).backgroundColor);

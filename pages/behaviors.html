@@ -318,32 +318,15 @@
   <section id="data">
     <h2>📊 Data</h2>
     <div class="section-note">
-      <strong>Data behaviors:</strong> Avatars, skeletons, timelines, and keyboard keys.
+      <strong>Data behaviors:</strong> Timelines and keyboard keys.
     </div>
 
-    <!-- <wb-avatar> stays a custom-element TAG, not x-avatar -- avatar.css's
-         entire styling scheme is tag-name-coupled by design ("CSS targets
-         the tag and attributes directly — JS adds no classes"), used the
-         same way across pages/components.html, pages/newbehaviors.html,
-         demos/site/feedback.html. A <div x-avatar> matched none of it —
-         confirmed live: fully unstyled (no circle, no size, no background)
-         until reverted back to the tag form (#279 follow-up). -->
-    <h3>Avatars</h3>
-    <wb-demo><wb-avatar src="https://i.pravatar.cc/150?img=1"></wb-avatar></wb-demo>
-    <wb-demo><wb-avatar src="https://i.pravatar.cc/150?img=2" size="lg"></wb-avatar></wb-demo>
-    <wb-demo><wb-avatar initials="JD"></wb-avatar></wb-demo>
-    <wb-demo><wb-avatar src="https://i.pravatar.cc/150?img=3" status="online"></wb-avatar></wb-demo>
-    <wb-demo><wb-avatar src="https://i.pravatar.cc/150?img=4" status="away"></wb-avatar></wb-demo>
-
-    <!-- <wb-skeleton> stays a custom-element TAG, not x-skeleton --
-         skeleton.css is 100% tag/attribute-selector based ("CSS targets tag
-         and attributes directly — JS adds no classes"). Same issue as
-         wb-avatar above: a <div x-skeleton> matched none of it (#279
-         follow-up). -->
-    <h3>Skeleton Loaders</h3>
-    <wb-demo><wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton></wb-demo>
-    <wb-demo><wb-skeleton variant="circle" width="60px"></wb-skeleton></wb-demo>
-    <wb-demo><wb-skeleton variant="rect" width="150px" height="100px"></wb-skeleton></wb-demo>
+    <!-- Avatars and Skeleton Loaders intentionally removed from this page
+         (#381): both are pure wb-* CUSTOM ELEMENTS with no working x-*
+         attribute form at all (avatar.css/skeleton.css are 100% tag-name-
+         coupled, #279) -- this page exists to demo x-* behaviors, one per
+         behavior, and showing real wb-* component tags here contradicted
+         that. Both remain properly demoed on pages/components.html. -->
 
     <h3>Timeline</h3>
     <wb-demo><div x-timeline items="Project kickoff,Design phase,Development,Testing,Launch"></div></wb-demo>

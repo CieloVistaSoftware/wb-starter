@@ -1,4 +1,20 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Locator } from '@playwright/test';
+
+// label() (src/wb-viewmodels/label.js) only assigns element.id lazily, the
+// first time IT runs -- an async, dynamic-imported behavior injection, not
+// synchronous with the input existing in the DOM. Reading .getAttribute('id')
+// immediately after locating the input raced that assignment under parallel
+// load: the beforeEach's readiness check only confirms the wb-counter
+// readout finished, which is no guarantee every OTHER input's independent
+// label() injection has also completed by then. Root cause of the
+// intermittent `label[for="null"]` failures (wb-starter#373) -- poll for a
+// real id instead of assuming it's already there.
+async function waitForAssignedId(locator: Locator): Promise<string> {
+  await expect.poll(() => locator.getAttribute('id'), {
+    message: 'input never got an id assigned by label() -- injection did not complete in time',
+  }).not.toBeNull();
+  return (await locator.getAttribute('id'))!;
+}
 
 /**
  * "20 inputs with x-behaviors" playground example set (twentyInputs() in
@@ -122,7 +138,7 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
 
   test('11. x-label="Full name" generates a <label> to the left', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-label="Full name"]');
-    const inputId = await input.getAttribute('id');
+    const inputId = await waitForAssignedId(input);
     const label = page.locator(`#pg-preview label[for="${inputId}"]`);
     await expect(label).toHaveText('Full name');
     const order = await page.evaluate((id) => {
@@ -155,14 +171,14 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
   test('15. combination: x-label="Search" + x-search both work on the same input', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-label="Search"]');
     await expect(input).toHaveClass(/wb-search__input/);
-    const inputId = await input.getAttribute('id');
+    const inputId = await waitForAssignedId(input);
     await expect(page.locator(`#pg-preview label[for="${inputId}"]`)).toHaveText('Search');
   });
 
   test('16. combination: x-label="Tags" + x-tags both work on the same input', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-label="Tags"]');
     await expect(input).toHaveClass(/wb-tags__input/);
-    const inputId = await input.getAttribute('id');
+    const inputId = await waitForAssignedId(input);
     await expect(page.locator(`#pg-preview label[for="${inputId}"]`)).toHaveText('Tags');
     await input.click();
     await input.pressSequentially('idea');
@@ -173,7 +189,7 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
   test('17. combination: x-label="Bio" + x-counter (max 100) both work', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-label="Bio"]');
     await expect(input).toHaveAttribute('maxlength', '100');
-    const inputId = await input.getAttribute('id');
+    const inputId = await waitForAssignedId(input);
     await expect(page.locator(`#pg-preview label[for="${inputId}"]`)).toHaveText('Bio');
     await input.click();
     await input.pressSequentially('hi');
@@ -183,7 +199,7 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
   test('18. combination: x-label="Password" + x-password both work', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-label="Password"]');
     await expect(input).toHaveClass(/wb-password__input/);
-    const inputId = await input.getAttribute('id');
+    const inputId = await waitForAssignedId(input);
     await expect(page.locator(`#pg-preview label[for="${inputId}"]`)).toHaveText('Password');
     const toggle = page.locator('#pg-preview .wb-password:has(input[x-label="Password"]) .wb-password__toggle');
     await toggle.click();
@@ -192,7 +208,7 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
 
   test('19. combination: x-label="Phone" + x-masked both work', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-label="Phone"]');
-    const inputId = await input.getAttribute('id');
+    const inputId = await waitForAssignedId(input);
     await expect(page.locator(`#pg-preview label[for="${inputId}"]`)).toHaveText('Phone');
     await input.click();
     await input.pressSequentially('5551234567');
@@ -201,7 +217,7 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
 
   test('20. combination: x-masked license plate + x-label label-position="right"', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-label="License plate"]');
-    const inputId = await input.getAttribute('id');
+    const inputId = await waitForAssignedId(input);
     const label = page.locator(`#pg-preview label[for="${inputId}"]`);
     await expect(label).toHaveText('License plate');
     await expect(label).toHaveClass(/wb-label--right/);

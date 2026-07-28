@@ -85,7 +85,7 @@ function initErrorDisplay() {
     errors = [];
     document.getElementById('wb-error-list').innerHTML = '';
     updateErrorCount();
-    saveErrorLog();
+    clearErrorLogFile();
   };
   
   // Close button
@@ -149,7 +149,7 @@ export async function logError(message, details = {}) {
   errorContainer.style.display = 'block';
   
   // Save to file
-  await saveErrorLog();
+  await appendErrorToLog(error);
   
   // Also log to console
   console.error('[ErrorLogger]', message, details);
@@ -158,28 +158,40 @@ export async function logError(message, details = {}) {
 }
 
 /**
- * Save errors to JSON file
+ * Append ONE error to the shared server-side log (#382: the old version
+ * POSTed this page's entire in-memory `errors` array to a blind-overwrite
+ * endpoint, which lost entries under concurrent pages/workers -- appending
+ * server-side, one error at a time, is race-free instead).
  */
-async function saveErrorLog() {
+async function appendErrorToLog(error) {
   try {
-    const response = await fetch('/api/save', {
+    const response = await fetch('/api/error-log/append', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        location: ERROR_LOG_PATH,
-        data: {
-          lastUpdated: new Date().toISOString(),
-          count: errors.length,
-          errors: errors.slice(-100) // Keep last 100 errors
-        }
-      })
+      body: JSON.stringify({ error })
     });
-    
+
     if (!response.ok) {
       console.warn('[ErrorLogger] Failed to save error log');
     }
   } catch (e) {
     console.warn('[ErrorLogger] Could not save to file:', e);
+  }
+}
+
+/**
+ * Reset the shared server-side log to empty (a deliberate, single user
+ * action -- unlike per-error appends, a full overwrite here is intentional
+ * and not subject to the same lost-update race).
+ */
+async function clearErrorLogFile() {
+  try {
+    const response = await fetch('/api/error-log/clear', { method: 'POST' });
+    if (!response.ok) {
+      console.warn('[ErrorLogger] Failed to clear error log');
+    }
+  } catch (e) {
+    console.warn('[ErrorLogger] Could not clear error log:', e);
   }
 }
 
@@ -216,7 +228,7 @@ export async function clearErrors() {
     document.getElementById('wb-error-list').innerHTML = '';
   }
   updateErrorCount();
-  await saveErrorLog();
+  await clearErrorLogFile();
 }
 
 /**

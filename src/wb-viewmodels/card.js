@@ -864,11 +864,19 @@ export function cardhero(element, options = {}) {
     ctaSecondaryHref: options.ctaSecondaryHref || element.dataset.ctaSecondaryHref || element.getAttribute('cta-secondary-href'),
     ctaSecondaryTooltip: options.ctaSecondaryTooltip || element.dataset.ctaSecondaryTooltip || element.getAttribute('cta-secondary-tooltip'),
     pretitle: options.pretitle || element.dataset.pretitle || element.getAttribute('pretitle'),
+    // Documented in cardhero.schema.json (enum: default/cosmic/split/
+    // minimal/gradient) but never actually read here -- CSS never got a
+    // corresponding .wb-cardhero--<variant> rule either, so every variant
+    // rendered pixel-identical (#383).
+    variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
     ...options
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardhero', hoverable: false });
   element.classList.add('wb-hero');
+  if (config.variant && config.variant !== 'default') {
+    element.classList.add(`wb-cardhero--${config.variant}`);
+  }
   // cardBase applies the default card surface (inline background:var(--bg-secondary)
   // + border). A hero owns its own full-bleed background, so clear those inline
   // props and let hero.css provide the rich default gradient (or the user's bg).
@@ -1400,9 +1408,17 @@ export function cardproduct(element, options = {}) {
     img.style.cssText = 'width:100%;aspect-ratio:3/2;object-fit:cover;display:block;';
     figure.appendChild(img);
 
-
-    // Removed duplicate badgeEl declaration
-
+    if (config.badge) {
+      // cardproduct builds its own layout independently of
+      // cardBase().buildStructure() (which owns the shared header-badge
+      // logic elsewhere in this file) -- it never calls that path, so the
+      // badge has to render here or not at all (#380).
+      const badgeEl = document.createElement('span');
+      badgeEl.className = 'wb-card__badge';
+      badgeEl.style.cssText = STYLE_BADGE + 'position:absolute;top:0.5rem;left:0.5rem;';
+      badgeEl.textContent = config.badge;
+      figure.appendChild(badgeEl);
+    }
 
     element.appendChild(figure);
   }

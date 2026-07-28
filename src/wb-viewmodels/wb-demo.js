@@ -52,7 +52,13 @@ function getLazyObserver() {
             title: el.getAttribute('title'),
             tag: el.getAttribute('tag'),
             columns: el.getAttribute('columns'),
-            contentClass: el.getAttribute('content-class')
+            contentClass: el.getAttribute('content-class'),
+            // Built well after the page's one-time eager WB.scan(document.body)
+            // already ran -- unlike the first EAGER_BUILD_COUNT blocks (built
+            // synchronously during initial parse, so the global scan still
+            // catches their moved-in children), this grid's real children need
+            // their own scan call. See demo.js's isLazy handling.
+            isLazy: true
           });
         }
       },

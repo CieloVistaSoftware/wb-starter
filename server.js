@@ -509,6 +509,64 @@ app.post("/clicked", (req, res) => {
 });
 
 // API Endpoint to save generic data
+// Dedicated error-log endpoints (#382): the old approach had error-logger.js
+// keep a per-page in-memory `errors` array and POST the WHOLE array to the
+// generic /api/save on every new error, which does a blind fs.writeFileSync
+// overwrite -- under N concurrent pages (e.g. an 8-worker Playwright run),
+// two pages' overwrites race and the second clobbers whatever the first just
+// logged (lost-update). Node's request handlers never interleave mid-execution
+// as long as a handler stays fully synchronous (no `await` between the read
+// and the write) -- so doing the read-modify-write HERE, server-side, in one
+// synchronous pass, is naturally atomic per request without needing an
+// explicit lock.
+const ERROR_LOG_REL_PATH = 'data/errors.json';
+
+function readErrorLog() {
+  const fullPath = path.join(rootDir, ERROR_LOG_REL_PATH);
+  if (!fs.existsSync(fullPath)) return { errors: [] };
+  try {
+    const parsed = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
+    return { errors: Array.isArray(parsed.errors) ? parsed.errors : [] };
+  } catch {
+    return { errors: [] };
+  }
+}
+
+function writeErrorLog(errors) {
+  const fullPath = path.join(rootDir, ERROR_LOG_REL_PATH);
+  const dir = path.dirname(fullPath);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(fullPath, JSON.stringify({
+    lastUpdated: new Date().toISOString(),
+    count: errors.length,
+    errors
+  }, null, 2), 'utf8');
+}
+
+app.post("/api/error-log/append", (req, res) => {
+  try {
+    const { error } = req.body;
+    if (!error) return res.status(400).json({ error: 'Missing error' });
+    const current = readErrorLog();
+    const errors = [...current.errors, error].slice(-100);
+    writeErrorLog(errors);
+    res.json({ success: true, count: errors.length });
+  } catch (e) {
+    console.error('[Error Log Append]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post("/api/error-log/clear", (req, res) => {
+  try {
+    writeErrorLog([]);
+    res.json({ success: true });
+  } catch (e) {
+    console.error('[Error Log Clear]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.post("/api/save", (req, res) => {
   try {
     const { location, data } = req.body;
