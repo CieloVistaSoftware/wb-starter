@@ -49,14 +49,19 @@ test.describe('wb-cardfile download', () => {
     expect(download.suggestedFilename()).toBe('archive.zip');
   });
 
-  test('falls back to filename as the download URL when no href is given', async ({ page }) => {
+  test('is not downloadable/clickable when no href is given', async ({ page }) => {
+    // filename is a DISPLAY label ("Sample filename"), not a URL -- using it
+    // as a fallback href made `a.href` resolve as a relative path against
+    // the current page, so every card with no real href downloaded the
+    // current page itself (named after `filename` but actually HTML
+    // content, so the browser appended .htm to it). Confirmed live via
+    // screenshot: a whole grid of demo file-type cards all downloading as
+    // "Sample filename (N).htm". With no href there's nothing real to
+    // download, so the card must not offer to.
     await inject(page, '<wb-cardfile filename="photo.jpg" size="856 KB" type="image"></wb-cardfile>');
     const card = page.locator('#test-container wb-cardfile');
-    await expect(card).toHaveAttribute('role', 'button');
-
-    const downloadPromise = page.waitForEvent('download');
-    await card.click();
-    const download = await downloadPromise;
-    expect(download.suggestedFilename()).toBe('photo.jpg');
+    await expect(card).not.toHaveAttribute('role', 'button');
+    await expect(card).not.toHaveAttribute('tabindex', '0');
+    await expect(card.locator('.wb-card__file-download')).toHaveCount(0);
   });
 });

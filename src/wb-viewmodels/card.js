@@ -1702,9 +1702,13 @@ export function cardfile(element, options = {}) {
 
   element.appendChild(info);
 
-  // Download: the whole card is the click target. Use an explicit href when
-  // provided, otherwise fall back to the filename (file served next to the page).
-  const downloadUrl = config.href || config.filename;
+  // Download: the whole card is the click target. Requires an explicit href
+  // -- filename is a DISPLAY label ("Sample filename"), not a URL; using it
+  // as one made `a.href` resolve as a relative path against the current
+  // page, so every card downloaded the current page itself (as .htm)
+  // regardless of the declared file-type. No href means nothing real to
+  // download, so the card isn't made clickable at all.
+  const downloadUrl = config.href;
   if (config.downloadable && downloadUrl) {
     const dlIcon = document.createElement('span');
     dlIcon.className = 'wb-card__file-download';

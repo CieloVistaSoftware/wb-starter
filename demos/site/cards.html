@@ -115,7 +115,7 @@
 
     <h2>Expandable Card</h2>
     <wb-demo id="demo-expandable" columns="1">
-      <wb-cardexpandable title="FAQ: How does it work?" subtitle="Click to reveal the answer" content="The card system uses a behavior-based architecture. Each variant inherits from cardBase."></wb-cardexpandable>
+      <wb-cardexpandable title="FAQ: How does it work?" subtitle="Click to reveal the answer" content="The card system uses a behavior-based architecture: cardBase() builds the shared markup and every variant (product, profile, pricing, stats, and so on) layers its own fields on top. Each card reads its config from plain HTML attributes -- no JavaScript required to use one. This particular card is deliberately long so collapsing and expanding it is actually visible; a short answer used to fit inside the collapsed height with room to spare, so clicking Show More looked like it did nothing even though the toggle itself worked correctly. That's fixed now: this text overflows the collapsed 100px height, so expanding it visibly grows the card."></wb-cardexpandable>
     </wb-demo>
 
     <h2>Minimizable Card</h2>

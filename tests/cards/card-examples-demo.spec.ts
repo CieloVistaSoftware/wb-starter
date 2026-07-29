@@ -254,9 +254,18 @@ test.describe('Interactivity', () => {
     await expect(btn).toBeVisible({ timeout: 10000 });
     // Initially collapsed
     await expect(card).not.toHaveClass(/wb-card--expanded/);
+    const collapsedHeight = (await card.boundingBox())!.height;
     // Click to expand
     await btn.click();
     await expect(card).toHaveClass(/wb-card--expanded/);
+    // #352: the class toggling correctly isn't enough on its own -- a demo
+    // whose collapsed content already fits within max-height produces zero
+    // visible change on expand, which reads as "does nothing" to a real
+    // user even though the handler fired. Wait for the CSS transition
+    // (max-height 0.3s) to actually finish, then assert real growth.
+    await page.waitForTimeout(350);
+    const expandedHeight = (await card.boundingBox())!.height;
+    expect(expandedHeight, 'expanding must visibly grow the card, not just toggle a class').toBeGreaterThan(collapsedHeight + 20);
     // Click to collapse
     await btn.click();
     await expect(card).not.toHaveClass(/wb-card--expanded/);
