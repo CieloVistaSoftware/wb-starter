@@ -337,28 +337,28 @@ function generateButtonDemos(behaviors) {
 
   // Button variants
   if (behaviors.some(b => b.name === 'wb-btn')) {
-    html += '      <button class="wb-btn wb-btn--primary">Primary</button>\n';
-    html += '      <button class="wb-btn wb-btn--secondary">Secondary</button>\n';
-    html += '      <button class="wb-btn wb-btn--ghost">Ghost</button>\n';
-    html += '      <button class="wb-btn wb-btn--primary" disabled>Disabled</button>\n';
+    html += '      <button variant="primary">Primary</button>\n';
+    html += '      <button variant="secondary">Secondary</button>\n';
+    html += '      <button variant="ghost">Ghost</button>\n';
+    html += '      <button variant="primary" disabled>Disabled</button>\n';
   }
 
   // Button sizes
   html += '    </wb-demo>\n\n    <h3>Button Sizes</h3>\n    <wb-demo>\n';
-  html += '      <button class="wb-btn wb-btn--primary wb-btn--sm">Small</button>\n';
-  html += '      <button class="wb-btn wb-btn--primary">Medium</button>\n';
-  html += '      <button class="wb-btn wb-btn--primary wb-btn--lg">Large</button>\n';
+  html += '      <button variant="primary" size="sm">Small</button>\n';
+  html += '      <button variant="primary">Medium</button>\n';
+  html += '      <button variant="primary" size="lg">Large</button>\n';
 
   // Button with behaviors
   html += '    </wb-demo>\n\n    <h3>Button with Behaviors</h3>\n    <wb-demo>\n';
   if (behaviors.some(b => b.name === 'x-ripple')) {
-    html += '      <button class="wb-btn wb-btn--primary" x-ripple>With Ripple</button>\n';
+    html += '      <button variant="primary" x-ripple>With Ripple</button>\n';
   }
   if (behaviors.some(b => b.name === 'x-toast')) {
-    html += '      <button class="wb-btn wb-btn--primary" x-toast data-message="Action completed!" data-type="success">With Toast</button>\n';
+    html += '      <button variant="primary" x-toast data-message="Action completed!" data-type="success">With Toast</button>\n';
   }
   if (behaviors.some(b => b.name === 'x-tooltip')) {
-    html += '      <button class="wb-btn wb-btn--primary" x-tooltip="Helpful hint!" data-position="top">With Tooltip</button>\n';
+    html += '      <button variant="primary" x-tooltip="Helpful hint!" data-position="top">With Tooltip</button>\n';
   }
 
   html += '    </wb-demo>\n';
@@ -479,10 +479,10 @@ function generateFeedbackDemos(behaviors) {
 
   if (behaviors.some(b => b.name === 'wb-alert')) {
     html += '    <h3>Alerts (All Variants)</h3>\n    <div class="alerts-stack">\n';
-    html += '      <wb-alert type="info" title="Information" message="This is an informational message." data-dismissible></wb-alert>\n';
-    html += '      <wb-alert type="success" title="Success" message="Operation completed successfully." data-dismissible></wb-alert>\n';
-    html += '      <wb-alert type="warning" title="Warning" message="Please review before continuing." data-dismissible></wb-alert>\n';
-    html += '      <wb-alert type="error" title="Error" message="Something went wrong." data-dismissible></wb-alert>\n';
+    html += '      <wb-alert variant="info" title="Information" message="This is an informational message." data-dismissible></wb-alert>\n';
+    html += '      <wb-alert variant="success" title="Success" message="Operation completed successfully." data-dismissible></wb-alert>\n';
+    html += '      <wb-alert variant="warning" title="Warning" message="Please review before continuing." data-dismissible></wb-alert>\n';
+    html += '      <wb-alert variant="error" title="Error" message="Something went wrong." data-dismissible></wb-alert>\n';
     html += '    </div>\n\n';
   }
 
@@ -531,10 +531,10 @@ function generateFeedbackDemos(behaviors) {
 
   if (behaviors.some(b => b.name === 'x-toast')) {
     html += '    <h3>Toast Notifications</h3>\n    <div class="demo-row">\n';
-    html += '      <button class="wb-btn wb-btn--primary" x-toast data-message="Info message" data-type="info">Info Toast</button>\n';
-    html += '      <button class="wb-btn wb-btn--primary" x-toast data-message="Success!" data-type="success">Success Toast</button>\n';
-    html += '      <button class="wb-btn wb-btn--primary" x-toast data-message="Warning!" data-type="warning">Warning Toast</button>\n';
-    html += '      <button class="wb-btn wb-btn--primary" x-toast data-message="Error!" data-type="error">Error Toast</button>\n';
+    html += '      <button variant="primary" x-toast data-message="Info message" data-type="info">Info Toast</button>\n';
+    html += '      <button variant="primary" x-toast data-message="Success!" data-type="success">Success Toast</button>\n';
+    html += '      <button variant="primary" x-toast data-message="Warning!" data-type="warning">Warning Toast</button>\n';
+    html += '      <button variant="primary" x-toast data-message="Error!" data-type="error">Error Toast</button>\n';
     html += '    </div>\n';
   }
 
@@ -547,47 +547,47 @@ function generateOverlayDemos(behaviors) {
 
   if (behaviors.some(b => b.name === 'wb-modal')) {
     html += '    <h3>Modal Dialog</h3>\n    <div class="demo-row">\n';
-    html += '      <wb-modal class="wb-btn wb-btn--primary" data-modal-title="Modal Dialog" data-modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>\n';
+    html += '      <wb-modal class="wb-btn" data-modal-title="Modal Dialog" data-modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>\n';
     html += '    </div>\n\n';
   }
 
   if (behaviors.some(b => b.name === 'wb-drawer')) {
     html += '    <h3>Drawer</h3>\n    <div class="demo-row">\n';
-    html += '      <wb-drawer class="wb-btn wb-btn--primary" title="Left Drawer" content="Slide-out panel from the left." position="left">Left Drawer</wb-drawer>\n';
-    html += '      <wb-drawer class="wb-btn wb-btn--primary" title="Right Drawer" content="Slide-out panel from the right." position="right">Right Drawer</wb-drawer>\n';
+    html += '      <wb-drawer class="wb-btn" title="Left Drawer" content="Slide-out panel from the left." position="left">Left Drawer</wb-drawer>\n';
+    html += '      <wb-drawer class="wb-btn" title="Right Drawer" content="Slide-out panel from the right." position="right">Right Drawer</wb-drawer>\n';
     html += '    </div>\n\n';
   }
 
   if (behaviors.some(b => b.name === 'x-tooltip')) {
     html += '    <h3>Tooltips</h3>\n    <div class="demo-row">\n';
-    html += '      <button class="wb-btn wb-btn--secondary" x-tooltip="Top tooltip" data-position="top">Top</button>\n';
-    html += '      <button class="wb-btn wb-btn--secondary" x-tooltip="Bottom tooltip" data-position="bottom">Bottom</button>\n';
-    html += '      <button class="wb-btn wb-btn--secondary" x-tooltip="Left tooltip" data-position="left">Left</button>\n';
-    html += '      <button class="wb-btn wb-btn--secondary" x-tooltip="Right tooltip" data-position="right">Right</button>\n';
+    html += '      <button variant="secondary" x-tooltip="Top tooltip" data-position="top">Top</button>\n';
+    html += '      <button variant="secondary" x-tooltip="Bottom tooltip" data-position="bottom">Bottom</button>\n';
+    html += '      <button variant="secondary" x-tooltip="Left tooltip" data-position="left">Left</button>\n';
+    html += '      <button variant="secondary" x-tooltip="Right tooltip" data-position="right">Right</button>\n';
     html += '    </div>\n\n';
   }
 
   if (behaviors.some(b => b.name === 'x-popover')) {
     html += '    <h3>Popover</h3>\n    <div class="demo-row">\n';
-    html += '      <button class="wb-btn wb-btn--primary" x-popover data-title="Popover Title" data-content="This is additional information displayed in a popover.">Show Popover</button>\n';
+    html += '      <button variant="primary" x-popover data-title="Popover Title" data-content="This is additional information displayed in a popover.">Show Popover</button>\n';
     html += '    </div>\n\n';
   }
 
   if (behaviors.some(b => b.name === 'x-confirm' || b.name === 'x-prompt')) {
     html += '    <h3>Confirm & Prompt</h3>\n    <div class="demo-row">\n';
     if (behaviors.some(b => b.name === 'x-confirm')) {
-      html += '      <button class="wb-btn wb-btn--primary" x-confirm data-title="Confirm Action" data-message="Are you sure you want to proceed?">Confirm Dialog</button>\n';
+      html += '      <button variant="primary" x-confirm data-title="Confirm Action" data-message="Are you sure you want to proceed?">Confirm Dialog</button>\n';
     }
     if (behaviors.some(b => b.name === 'x-prompt')) {
-      html += '      <button class="wb-btn wb-btn--primary" x-prompt data-title="Enter Value" data-message="Please enter your name:">Prompt Dialog</button>\n';
+      html += '      <button variant="primary" x-prompt data-title="Enter Value" data-message="Please enter your name:">Prompt Dialog</button>\n';
     }
     html += '    </div>\n\n';
   }
 
   if (behaviors.some(b => b.name === 'x-lightbox')) {
     html += '    <h3>Lightbox</h3>\n    <div class="demo-row">\n';
-    html += '      <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>\n';
-    html += '      <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb2">View Image 2</button>\n';
+    html += '      <button variant="primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>\n';
+    html += '      <button variant="primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb2">View Image 2</button>\n';
     html += '    </div>\n';
   }
 
@@ -774,10 +774,10 @@ function generateEffectDemos(behaviors) {
       }[behavior.name] || '';
 
       if (behavior.name === 'x-ripple') {
-        html += `      <button class="wb-btn wb-btn--primary" ${behavior.name}>Click for Ripple</button>\n`;
+        html += `      <button variant="primary" ${behavior.name}>Click for Ripple</button>\n`;
         html += `      <div ${behavior.name} class="ripple-box">Ripple on any element</div>\n`;
       } else {
-        html += `      <button class="wb-btn wb-btn--primary" ${behavior.name}>${emoji}${displayName}</button>\n`;
+        html += `      <button variant="primary" ${behavior.name}>${emoji}${displayName}</button>\n`;
       }
     });
     html += '    </wb-demo>\n';
@@ -793,8 +793,8 @@ function generateUtilityDemos(behaviors) {
   // Copy functionality
   if (behaviors.some(b => b.name === 'x-copy')) {
     html += '    <wb-demo title="Copy functionality">\n';
-    html += '      <button class="wb-btn wb-btn--primary" x-copy data-copy="Text copied to clipboard!">📋 Copy Text</button>\n';
-    html += '      <button class="wb-btn wb-btn--primary" x-copy data-copy="npm install wb-framework">📋 Copy Command</button>\n';
+    html += '      <button variant="primary" x-copy data-copy="Text copied to clipboard!">📋 Copy Text</button>\n';
+    html += '      <button variant="primary" x-copy data-copy="npm install wb-framework">📋 Copy Command</button>\n';
     html += '    </wb-demo>\n\n';
   }
 
@@ -809,7 +809,7 @@ function generateUtilityDemos(behaviors) {
         'x-print': '🖨️ ',
         'x-fullscreen': '⛶ '
       }[behavior.name] || '';
-      html += `      <button class="wb-btn wb-btn--secondary" ${behavior.name} data-share-title="wb-starter" data-share-url="https://example.com">${emoji}${displayName}</button>\n`;
+      html += `      <button variant="secondary" ${behavior.name} data-share-title="wb-starter" data-share-url="https://example.com">${emoji}${displayName}</button>\n`;
     });
     html += '    </wb-demo>\n\n';
   }
@@ -833,7 +833,7 @@ function generateUtilityDemos(behaviors) {
   // Dark Mode Toggle
   if (behaviors.some(b => b.name === 'x-darkmode')) {
     html += '    <h3>Dark Mode Toggle</h3>\n    <wb-demo>\n';
-    html += '      <button class="wb-btn wb-btn--primary" x-darkmode>🌙 Toggle Dark Mode</button>\n';
+    html += '      <button variant="primary" x-darkmode>🌙 Toggle Dark Mode</button>\n';
     html += '      <wb-themecontrol></wb-themecontrol>\n';
     html += '    </wb-demo>\n\n';
   }

@@ -36,24 +36,24 @@
     </div>
 
     <wb-demo>
-      <button class="wb-btn wb-btn--primary">Primary</button>
-      <button class="wb-btn wb-btn--secondary">Secondary</button>
-      <button class="wb-btn wb-btn--ghost">Ghost</button>
-      <button class="wb-btn wb-btn--primary" disabled>Disabled</button>
+      <button variant="primary">Primary</button>
+      <button variant="secondary">Secondary</button>
+      <button variant="ghost">Ghost</button>
+      <button variant="primary" disabled>Disabled</button>
     </wb-demo>
 
     <h3>Button Sizes</h3>
     <wb-demo>
-      <button class="wb-btn wb-btn--primary wb-btn--sm">Small</button>
-      <button class="wb-btn wb-btn--primary">Medium</button>
-      <button class="wb-btn wb-btn--primary wb-btn--lg">Large</button>
+      <button variant="primary" size="sm">Small</button>
+      <button variant="primary">Medium</button>
+      <button variant="primary" size="lg">Large</button>
     </wb-demo>
 
     <h3>Button with Behaviors</h3>
     <wb-demo>
-      <button class="wb-btn wb-btn--primary" x-ripple>With Ripple</button>
-      <button class="wb-btn wb-btn--primary" x-toast data-message="Action completed!" data-type="success">With Toast</button>
-      <button class="wb-btn wb-btn--primary" x-tooltip="Helpful hint!" data-position="top">With Tooltip</button>
+      <button variant="primary" x-ripple>With Ripple</button>
+      <button variant="primary" x-toast data-message="Action completed!" data-type="success">With Toast</button>
+      <button variant="primary" x-tooltip="Helpful hint!" data-position="top">With Tooltip</button>
     </wb-demo>
   </section>
 
@@ -164,10 +164,10 @@
 
     <h3>Alerts (All Variants)</h3>
     <div class="alerts-stack">
-      <wb-alert type="info" title="Information" message="This is an informational message." data-dismissible></wb-alert>
-      <wb-alert type="success" title="Success" message="Operation completed successfully." data-dismissible></wb-alert>
-      <wb-alert type="warning" title="Warning" message="Please review before continuing." data-dismissible></wb-alert>
-      <wb-alert type="error" title="Error" message="Something went wrong." data-dismissible></wb-alert>
+      <wb-alert variant="info" title="Information" message="This is an informational message." data-dismissible></wb-alert>
+      <wb-alert variant="success" title="Success" message="Operation completed successfully." data-dismissible></wb-alert>
+      <wb-alert variant="warning" title="Warning" message="Please review before continuing." data-dismissible></wb-alert>
+      <wb-alert variant="error" title="Error" message="Something went wrong." data-dismissible></wb-alert>
     </div>
 
     <h3>Badges (All Variants)</h3>
@@ -212,10 +212,10 @@
 
     <h3>Toast Notifications</h3>
     <div class="demo-row">
-      <button class="wb-btn wb-btn--primary" x-toast data-message="Info message" data-type="info">Info Toast</button>
-      <button class="wb-btn wb-btn--primary" x-toast data-message="Success!" data-type="success">Success Toast</button>
-      <button class="wb-btn wb-btn--primary" x-toast data-message="Warning!" data-type="warning">Warning Toast</button>
-      <button class="wb-btn wb-btn--primary" x-toast data-message="Error!" data-type="error">Error Toast</button>
+      <button variant="primary" x-toast data-message="Info message" data-type="info">Info Toast</button>
+      <button variant="primary" x-toast data-message="Success!" data-type="success">Success Toast</button>
+      <button variant="primary" x-toast data-message="Warning!" data-type="warning">Warning Toast</button>
+      <button variant="primary" x-toast data-message="Error!" data-type="error">Error Toast</button>
     </div>
   </section>
 
@@ -230,38 +230,38 @@
 
     <h3>Modal Dialog</h3>
     <div class="demo-row">
-      <wb-modal class="wb-btn wb-btn--primary" data-modal-title="Modal Dialog" data-modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
+      <wb-modal class="wb-btn" data-modal-title="Modal Dialog" data-modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
     </div>
 
     <h3>Drawer</h3>
     <div class="demo-row">
-      <wb-drawer class="wb-btn wb-btn--primary" title="Left Drawer" content="Slide-out panel from the left." position="left">Left Drawer</wb-drawer>
-      <wb-drawer class="wb-btn wb-btn--primary" title="Right Drawer" content="Slide-out panel from the right." position="right">Right Drawer</wb-drawer>
+      <wb-drawer class="wb-btn" title="Left Drawer" content="Slide-out panel from the left." position="left">Left Drawer</wb-drawer>
+      <wb-drawer class="wb-btn" title="Right Drawer" content="Slide-out panel from the right." position="right">Right Drawer</wb-drawer>
     </div>
 
     <h3>Tooltips</h3>
     <div class="demo-row">
-      <button class="wb-btn wb-btn--secondary" x-tooltip="Top tooltip" data-position="top">Top</button>
-      <button class="wb-btn wb-btn--secondary" x-tooltip="Bottom tooltip" data-position="bottom">Bottom</button>
-      <button class="wb-btn wb-btn--secondary" x-tooltip="Left tooltip" data-position="left">Left</button>
-      <button class="wb-btn wb-btn--secondary" x-tooltip="Right tooltip" data-position="right">Right</button>
+      <button variant="secondary" x-tooltip="Top tooltip" data-position="top">Top</button>
+      <button variant="secondary" x-tooltip="Bottom tooltip" data-position="bottom">Bottom</button>
+      <button variant="secondary" x-tooltip="Left tooltip" data-position="left">Left</button>
+      <button variant="secondary" x-tooltip="Right tooltip" data-position="right">Right</button>
     </div>
 
     <h3>Popover</h3>
     <div class="demo-row">
-      <button class="wb-btn wb-btn--primary" x-popover data-title="Popover Title" data-content="This is additional information displayed in a popover.">Show Popover</button>
+      <button variant="primary" x-popover data-title="Popover Title" data-content="This is additional information displayed in a popover.">Show Popover</button>
     </div>
 
     <h3>Confirm & Prompt</h3>
     <div class="demo-row">
-      <button class="wb-btn wb-btn--primary" x-confirm data-title="Confirm Action" data-message="Are you sure you want to proceed?">Confirm Dialog</button>
-      <button class="wb-btn wb-btn--primary" x-prompt data-title="Enter Value" data-message="Please enter your name:">Prompt Dialog</button>
+      <button variant="primary" x-confirm data-title="Confirm Action" data-message="Are you sure you want to proceed?">Confirm Dialog</button>
+      <button variant="primary" x-prompt data-title="Enter Value" data-message="Please enter your name:">Prompt Dialog</button>
     </div>
 
     <h3>Lightbox</h3>
     <div class="demo-row">
-      <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>
-      <button class="wb-btn wb-btn--primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb2">View Image 2</button>
+      <button variant="primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>
+      <button variant="primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb2">View Image 2</button>
     </div>
   </section>
 
@@ -409,13 +409,13 @@
 
     <h3>Special Effects</h3>
     <wb-demo>
-      <button class="wb-btn wb-btn--primary" x-confetti>🎊 Confetti</button>
-      <button class="wb-btn wb-btn--primary" x-fireworks>🎆 Fireworks</button>
-      <button class="wb-btn wb-btn--primary" x-snow>❄️ Snow</button>
-      <button class="wb-btn wb-btn--primary" x-sparkle>✨ Sparkle</button>
-      <button class="wb-btn wb-btn--primary" x-glow>💡 Glow</button>
-      <button class="wb-btn wb-btn--primary" x-rainbow>🌈 Rainbow</button>
-      <button class="wb-btn wb-btn--primary" x-ripple>Click for Ripple</button>
+      <button variant="primary" x-confetti>🎊 Confetti</button>
+      <button variant="primary" x-fireworks>🎆 Fireworks</button>
+      <button variant="primary" x-snow>❄️ Snow</button>
+      <button variant="primary" x-sparkle>✨ Sparkle</button>
+      <button variant="primary" x-glow>💡 Glow</button>
+      <button variant="primary" x-rainbow>🌈 Rainbow</button>
+      <button variant="primary" x-ripple>Click for Ripple</button>
       <div x-ripple class="ripple-box">Ripple on any element</div>
     </wb-demo>
   </section>
@@ -430,15 +430,15 @@
     </div>
 
     <wb-demo title="Copy functionality">
-      <button class="wb-btn wb-btn--primary" x-copy data-copy="Text copied to clipboard!">📋 Copy Text</button>
-      <button class="wb-btn wb-btn--primary" x-copy data-copy="npm install wb-framework">📋 Copy Command</button>
+      <button variant="primary" x-copy data-copy="Text copied to clipboard!">📋 Copy Text</button>
+      <button variant="primary" x-copy data-copy="npm install wb-framework">📋 Copy Command</button>
     </wb-demo>
 
     <h3>Share, Print & Fullscreen</h3>
     <wb-demo>
-      <button class="wb-btn wb-btn--secondary" x-share data-share-title="wb-starter" data-share-url="https://example.com">📤 Share</button>
-      <button class="wb-btn wb-btn--secondary" x-print data-share-title="wb-starter" data-share-url="https://example.com">🖨️ Print</button>
-      <button class="wb-btn wb-btn--secondary" x-fullscreen data-share-title="wb-starter" data-share-url="https://example.com">⛶ Fullscreen</button>
+      <button variant="secondary" x-share data-share-title="wb-starter" data-share-url="https://example.com">📤 Share</button>
+      <button variant="secondary" x-print data-share-title="wb-starter" data-share-url="https://example.com">🖨️ Print</button>
+      <button variant="secondary" x-fullscreen data-share-title="wb-starter" data-share-url="https://example.com">⛶ Fullscreen</button>
     </wb-demo>
 
     <h3>Clock & Countdown</h3>
@@ -450,7 +450,7 @@
 
     <h3>Dark Mode Toggle</h3>
     <wb-demo>
-      <button class="wb-btn wb-btn--primary" x-darkmode>🌙 Toggle Dark Mode</button>
+      <button variant="primary" x-darkmode>🌙 Toggle Dark Mode</button>
       <wb-themecontrol></wb-themecontrol>
     </wb-demo>
 
