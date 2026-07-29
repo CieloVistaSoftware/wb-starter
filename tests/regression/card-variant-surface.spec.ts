@@ -16,7 +16,12 @@ import { test, expect } from '@playwright/test';
  */
 test.describe('wb-card variant surface (cards demo page)', () => {
   test('bordered and flat variants render visually distinct from default', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/cards.html');
+    // bordered/flat variant examples live in the permutation-matrix test
+    // fixture, not the curated demos/site/cards.html showcase page (split
+    // apart because the matrix content -- 56+ cards sharing 4 duplicate
+    // placeholder images -- made the demo page slow and noisy; see the
+    // commit that added tests/fixtures/cards-permutation-matrix.html).
+    await page.goto('http://localhost:3000/tests/fixtures/cards-permutation-matrix.html');
     await page.waitForSelector('wb-card.wb-card--bordered');
     await page.waitForSelector('wb-card.wb-card--flat');
 
@@ -49,7 +54,12 @@ test.describe('wb-card variant surface (cards demo page)', () => {
   });
 
   test('bordered variant stays visually distinct after a hover interaction', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/cards.html');
+    // bordered/flat variant examples live in the permutation-matrix test
+    // fixture, not the curated demos/site/cards.html showcase page (split
+    // apart because the matrix content -- 56+ cards sharing 4 duplicate
+    // placeholder images -- made the demo page slow and noisy; see the
+    // commit that added tests/fixtures/cards-permutation-matrix.html).
+    await page.goto('http://localhost:3000/tests/fixtures/cards-permutation-matrix.html');
     const bordered = page.locator('wb-card.wb-card--bordered').first();
     await bordered.waitFor();
 

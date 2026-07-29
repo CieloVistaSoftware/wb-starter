@@ -14,11 +14,17 @@ test.describe('Card Examples Demo', () => {
     expect(demos.length).toBeGreaterThan(0);
 
     for (const demo of demos) {
+      // Blocks past wb-demo.js's EAGER_BUILD_COUNT (5) build lazily via
+      // IntersectionObserver, only once scrolled near the viewport -- must
+      // scroll to each one before checking, or its .wb-demo__grid/code
+      // panel simply doesn't exist yet (see #374).
+      await demo.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(200);
       // Each demo should contain a .wb-demo__grid with a card element
       const grid = await demo.$('.wb-demo__grid');
       expect(grid).not.toBeNull();
       // There should be at least one child card element in the grid
-      const card = await grid.$('wb-card, card-image, card-video, card-button, card-hero, card-profile, card-pricing, card-stats, card-testimonial, card-product, wb-cardnotification, card-file, card-link, card-horizontal, card-draggable, card-expandable, card-minimizable, card-overlay, card-portfolio');
+      const card = await grid.$('wb-card, wb-cardimage, wb-cardvideo, wb-cardbutton, wb-cardhero, wb-cardprofile, wb-cardpricing, wb-cardstats, wb-cardtestimonial, wb-cardproduct, wb-cardnotification, wb-cardfile, wb-cardlink, wb-cardhorizontal, wb-carddraggable, wb-cardexpandable, wb-cardminimizable, wb-cardoverlay, wb-cardportfolio');
       expect(card).not.toBeNull();
       // Each demo should also show a code sample
       const code = await demo.$('pre.wb-demo__code');

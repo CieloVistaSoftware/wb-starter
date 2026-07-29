@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * REGRESSION (BUG-2026-07-27-005): every <wb-cardimage> on
- * demos/site/cards.html's "Image Card" section rendered "⚠ Image
+ * REGRESSION (BUG-2026-07-27-005): every <wb-cardimage> on what was then
+ * demos/site/cards.html's "Image Card" section (now
+ * tests/fixtures/cards-permutation-matrix.html -- the permutation-matrix
+ * content was split out of the demo page separately) rendered "⚠ Image
  * unavailable" even though the picsum.photos URL is perfectly valid (curl
  * confirms 200). Root cause: cardimage() (src/wb-viewmodels/card.js) sets
  * img.loading = 'lazy' unconditionally, but attachImageLoadRetry()
@@ -32,10 +34,10 @@ test.describe('cardimage image actually loads, not just has a src attribute (#ca
     // (4s check + exponential 500/1000/2000/4000ms backoff ≈ 27.5s total)
     // and PERMANENTLY hides the element -- no observer ever retries it
     // later even once the user does scroll to it.
-    await page.goto('/demos/site/cards.html');
+    await page.goto('/tests/fixtures/cards-permutation-matrix.html');
 
     const section = page.locator('#cardimage-image-card');
-    await expect(section, 'cards.html should still have the Image Card demo section').toHaveCount(1);
+    await expect(section, 'the matrix fixture should still have the Image Card section').toHaveCount(1);
     const firstCard = section.locator('wb-cardimage').first();
     const img = firstCard.locator('img');
     await expect(img, 'cardimage must render a real <img>').toHaveCount(1);

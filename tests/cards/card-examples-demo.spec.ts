@@ -112,7 +112,7 @@ test.describe('Card Rendering', () => {
     const hero = page.locator('#card-gallery wb-cardhero').first();
     const bg = await hero.evaluate(el => getComputedStyle(el).backgroundImage);
     expect(bg).not.toBe('none');
-    await expect(hero.locator('.wb-btn').first()).toBeVisible();
+    await expect(hero.locator('.wb-hero-cta').first()).toBeVisible();
   });
 
   test('profile card renders name, role, avatar', async ({ page }) => {
@@ -310,7 +310,7 @@ test.describe('Interactivity', () => {
 
   test('hero CTA links exist with text', async ({ page }) => {
     const hero = page.locator('#card-gallery wb-cardhero').first();
-    const ctas = hero.locator('.wb-btn');
+    const ctas = hero.locator('.wb-hero-cta');
     expect(await ctas.count()).toBeGreaterThanOrEqual(1);
     await expect(ctas.first()).toContainText('Shop Now');
   });
@@ -451,11 +451,17 @@ test.describe('Accessibility', () => {
     await expect(notif).toHaveAttribute('role', 'alert');
   });
 
-  test('link card has role=link and tabindex', async ({ page }) => {
+  test('link card has a real stretched <a> anchor, not a role=link approximation', async ({ page }) => {
+    // cardlink() deliberately moved away from role="link"+tabindex on the
+    // host (a div + role="link" only approximates real link behavior --
+    // see card.js's own comment on the stretched-anchor pattern: native
+    // accessibility, right-click "open in new tab", middle-click all work
+    // for free with a real <a>, none of which role="link" alone provides).
     const card = page.locator('#card-gallery wb-cardlink').first();
     await scrollTo(page, card);
-    await expect(card).toHaveAttribute('role', 'link');
-    await expect(card).toHaveAttribute('tabindex', '0');
+    const anchor = card.locator('a[href]');
+    await expect(anchor).toHaveCount(1);
+    await expect(anchor).toHaveAttribute('href', /.+/);
   });
 
   test('all images have alt attributes', async ({ page }) => {
