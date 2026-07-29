@@ -65,6 +65,12 @@
       "menuItemText": "About",
       "menuItemEmoji": "ℹ️",
       "pageToLoad": "about"
+    },
+    {
+      "menuItemId": "whats-new",
+      "menuItemText": "What's New",
+      "menuItemEmoji": "🆕",
+      "pageToLoad": "whats-new"
     }
   ],
 

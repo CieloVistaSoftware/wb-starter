@@ -1,0 +1,41 @@
+<div class="page__hero">
+  <h1>🆕 What's New</h1>
+  <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
+</div>
+
+<section id="whats-new-2026-07-29">
+  <h2>2026-07-29</h2>
+  <ul>
+    <li>Fixed a Playwright-suite-wide "app ready" race: dozens of tests waited on the WB object existing, which is true before the app actually finishes initializing — now they wait for the real ready signal.</li>
+    <li>Restored the Behaviors page's missing content (spinner, and more) by regenerating it from its own schema, and fixed two stale button/alert markup patterns flagged by the compliance gate.</li>
+    <li>Rewrote a large batch of stale, pre-broken tests (dead entry points, renamed files, old CSS class names) so they test what the code actually does today.</li>
+    <li>Added margins/padding to the Card Components demo page and restored a missing closing <code>&lt;/html&gt;</code> tag.</li>
+    <li>Added this "What's New" page.</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-07-28">
+  <h2>2026-07-28</h2>
+  <ul>
+    <li>Split the Card Components demo page apart from its 56-card permutation test matrix — the demo page loads faster and the matrix now has its own dedicated test fixture.</li>
+    <li>Deprecated <code>&lt;wb-checkbox&gt;</code>/<code>&lt;wb-textarea&gt;</code> in favor of native <code>&lt;input type="checkbox"&gt;</code>/<code>&lt;textarea&gt;</code> with attributes — no more reinventing what the browser already does.</li>
+    <li>Fixed the Playground's "Endpoint sees" panel showing unconditionally instead of respecting its hidden state.</li>
+    <li>Fixed a 404 in the code-highlighting fallback loader.</li>
+    <li>Fixed <code>&lt;wb-search&gt;</code> never getting its variant/size CSS classes.</li>
+    <li>Fixed cardhero variants, cardproduct badges, a lazy-demo scanning bug, an error-log race condition, and button-transition test flakiness.</li>
+    <li>Fixed lightbox, alert variants, countdown, YouTube embeds, and a cardimage race condition that made valid images falsely show "unavailable."</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-07-1x">
+  <h2>Week of 2026-07-14 – 18</h2>
+  <ul>
+    <li>Consolidated demo pages into 8 clear categories, up from a sprawling flat index.</li>
+    <li>Fixed dispatch collisions where multiple behaviors fought over the same host element (switch, checkbox, select, textarea, input, button).</li>
+    <li>Added just-in-time CSS loading for behaviors — no more shipping every behavior's stylesheet on every page.</li>
+    <li>Fixed a CLS (layout shift) regression in the grid layout.</li>
+    <li>Added a selectable debug-trace category filter for easier troubleshooting.</li>
+  </ul>
+</section>
+
+<p><a href="https://github.com/CieloVistaSoftware/wb-starter/commits/main" target="_blank" rel="noopener">Full commit history on GitHub →</a></p>
