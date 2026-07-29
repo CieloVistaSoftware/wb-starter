@@ -7,10 +7,21 @@
   <title>Card Components</title>
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
-
+  <style>
+    /* .page normally sits inside <main class="site__main">, which provides
+       padding: 2rem (site.css) -- this is a standalone page with no
+       site__main wrapper, so .page alone only centers/caps width, giving
+       zero-margin edge-to-edge content. Scoped to body's direct child only,
+       so this never double-pads .page inside the real SPA. Matches
+       DEMOS-AND-DOCS-STANDARDS.md #13 ("proper margins & padding... from
+       theme/spacing variables, not ad-hoc values") -- var(--space-xl) is
+       the same 2rem site__main already uses, not a new literal. */
+    body > .page { padding: var(--space-xl); }
+  </style>
 </head>
 
 <body>
+  <div class="page">
   <nav style="margin-bottom: 1rem;">
     <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
   </nav>
@@ -139,6 +150,7 @@
     browse, and full of misleading load-warnings from 56+ cards sharing 4 duplicate
     placeholder images. It is a test fixture now, not a demo page.
   </p>
+  </div>
 
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';
