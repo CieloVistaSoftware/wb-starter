@@ -60,11 +60,6 @@ export function themecontrol(element, options = {}) {
   // Create the control UI
   const wrapper = document.createElement('div');
   wrapper.className = 'wb-themecontrol__wrapper';
-  wrapper.style.cssText = `
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  `;
 
   // Label
   let label = null;
@@ -72,30 +67,12 @@ export function themecontrol(element, options = {}) {
     label = document.createElement('label');
     label.className = 'wb-themecontrol__label';
     label.textContent = 'Theme:';
-    label.style.cssText = `
-      font-weight: 500;
-      font-size: 0.875rem;
-    `;
     wrapper.appendChild(label);
   }
 
   // Dropdown select
   const select = document.createElement('select');
   select.className = 'wb-themecontrol__select';
-  select.style.cssText = `
-    padding: 0.5rem 2rem 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    border: 1px solid var(--border-color, #ddd);
-    border-radius: var(--radius-md, 6px);
-    background: var(--bg-primary, #fff);
-    color: var(--text-primary, #333);
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.5rem center;
-    min-width: 150px;
-  `;
 
   // Add theme options
   THEMES.forEach(theme => {
