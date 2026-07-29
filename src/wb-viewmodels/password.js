@@ -9,6 +9,15 @@ export function password(element, options = {}) {
     console.warn('[x-password] Element not in DOM, skipping');
     return () => {};
   }
+  // Native attribute Chrome/password managers actually rely on -- without
+  // it, DevTools warns "Password field is not contained in a form" /
+  // recommends autocomplete. Respects an explicit author value; defaults to
+  // "new-password" for a signup-shaped name (name/id contains "new" or
+  // "confirm"), "current-password" otherwise (the more common login case).
+  if (!element.hasAttribute('autocomplete')) {
+    const hint = `${element.name || ''} ${element.id || ''}`.toLowerCase();
+    element.autocomplete = /new|confirm|signup|register/.test(hint) ? 'new-password' : 'current-password';
+  }
   const wrapper = document.createElement('div');
   wrapper.className = 'wb-password';
   wrapper.style.cssText = 'position:relative;display:flex;align-items:stretch;width:100%;';

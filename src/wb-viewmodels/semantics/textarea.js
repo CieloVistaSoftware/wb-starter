@@ -2,11 +2,57 @@
  * Textarea - Enhanced <textarea> element
  * Adds autosize, character count, max length indicator
  * Helper Attribute: [x-behavior="textarea"]
+ *
+ * ⚠️ <wb-textarea> is DEPRECATED — prefer a bare <textarea> directly (see
+ * Helper Attribute usage above); this behavior already enhances one fully,
+ * no wrapper element ever needed. Retained for back-compat (self-builds
+ * the real textarea now, see below); emits a one-time console warning.
  */
+let _textareaHostDeprecationWarned = false;
+
 export function textarea(element, options = {}) {
   if (!element || typeof element.classList === 'undefined') {
     console.warn('[textarea] Invalid element provided');
     return () => {};
+  }
+
+  if (element.tagName.toLowerCase() === 'wb-textarea' && !_textareaHostDeprecationWarned) {
+    _textareaHostDeprecationWarned = true;
+    console.warn('[wb-textarea] is deprecated — use a bare <textarea> instead, it already gets this same enhancement with no wrapper element needed.');
+  }
+
+  // <wb-textarea> host with no real <textarea> child yet -- schema $view
+  // never ran (e.g. wb-lazy.js pages, which have no schema-processing
+  // support at all). Self-build a real, semantic <textarea>, the same way
+  // switch.js/checkbox.js already do for their own hosts, instead of
+  // leaving host.classList/style writes below as harmless no-ops on an
+  // element with no actual form control inside it.
+  // WB.schema is only exposed on wb.js (window.WB.schema = SchemaBuilder) --
+  // absent entirely on wb-lazy.js. When it IS present, wb.js's own schema
+  // processing already builds this correctly; racing it with a synchronous
+  // self-build here clobbers whichever one finishes last (confirmed live:
+  // pre-filled text content lost when both paths ran). Only self-build when
+  // schema support genuinely doesn't exist at all.
+  if (element.tagName.toLowerCase() === 'wb-textarea' && !window.WB?.schema) {
+    const existing = element.querySelector(':scope > textarea');
+    if (existing) return textarea(existing, options);
+    const host = element;
+    const built = document.createElement('textarea');
+    const placeholder = host.getAttribute('placeholder');
+    if (placeholder) built.placeholder = placeholder;
+    const rows = host.getAttribute('rows');
+    if (rows) built.rows = parseInt(rows, 10);
+    const name = host.getAttribute('name');
+    if (name) built.name = name;
+    if (host.hasAttribute('disabled')) built.disabled = true;
+    if (host.hasAttribute('required')) built.required = true;
+    if (host.textContent && host.textContent.trim()) built.value = host.textContent.trim();
+    ['variant', 'size', 'autosize', 'max-length', 'show-count', 'min-rows', 'max-rows'].forEach((attr) => {
+      if (host.hasAttribute(attr)) built.setAttribute(attr, host.getAttribute(attr));
+    });
+    host.textContent = '';
+    host.appendChild(built);
+    return textarea(built, options);
   }
 
   // <wb-textarea> is a schema-driven host whose $view builds a real

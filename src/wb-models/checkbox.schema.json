@@ -11,9 +11,10 @@
   },
   "compliance": {
     "baseClass": "wb-checkbox",
-    "supportLevel": "stable",
+    "supportLevel": "deprecated",
     "accessibility": "high"
   },
+  "deprecated": "Use a bare <input type=\"checkbox\"> directly -- checkbox.js's behavior already enhances it fully (custom styling via appearance:none, no wrapper element needed). Retained for back-compat only.",
   "properties": {
     "label": {
       "type": "string",
@@ -308,6 +309,6 @@
     "category": "forms",
     "icon": "☑️",
     "since": "1.0.0",
-    "status": "stable"
+    "status": "deprecated"
   }
 }

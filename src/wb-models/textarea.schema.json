@@ -11,9 +11,10 @@
   },
   "compliance": {
     "baseClass": "wb-textarea",
-    "supportLevel": "stable",
+    "supportLevel": "deprecated",
     "accessibility": "high"
   },
+  "deprecated": "Use a bare <textarea> directly -- textarea.js's behavior already enhances it fully (autosize, character count, max-length indicator, no wrapper element needed). Retained for back-compat only.",
   "properties": {
     "label": {
       "type": "string",
@@ -272,6 +273,6 @@
     "category": "forms",
     "icon": "📝",
     "since": "1.0.0",
-    "status": "stable"
+    "status": "deprecated"
   }
 }

@@ -1,6 +1,6 @@
 /**
  * Checkbox - Enhanced <input type="checkbox">
- * 
+ *
  * CSS targets input[type="checkbox"] directly with appearance: none.
  * JS does NOTHING except set indeterminate state if requested.
  * No wrapper, no fake span, no classes.
@@ -10,7 +10,13 @@
  *   <label><input type="checkbox" checked> Checked</label>
  *   <label><input type="checkbox" disabled> Disabled</label>
  *   <label><input type="checkbox" variant="success"> Success</label>
+ *
+ * ⚠️ <wb-checkbox> is DEPRECATED — prefer a native <input type="checkbox">
+ * directly (see usage above); this behavior already enhances a bare input
+ * fully, no wrapper element ever needed. Retained for back-compat (self-
+ * builds the real input now, see below); emits a one-time console warning.
  */
+let _checkboxHostDeprecationWarned = false;
 
 let stylesInjected = false;
 function injectStyles() {
@@ -103,6 +109,55 @@ function injectStyles() {
 }
 
 export function checkbox(element, options = {}) {
+  // <wb-checkbox> host with no real <input> yet (schema $view never ran --
+  // e.g. on wb-lazy.js pages, which have no schema-processing support at
+  // all): self-build a real, semantic <label><input type="checkbox">text</label>
+  // and enhance THAT, the same way switch.js already does for <wb-switch>.
+  // Deliberately does NOT replicate checkbox.schema.json's separate
+  // .wb-checkbox__box/.wb-checkbox__check span visual -- this file's own
+  // injectStyles() below already gives a fully custom-styled checkbox on a
+  // bare input via appearance:none, with no extra DOM needed. Native
+  // .indeterminate is a DOM property, not an HTML attribute, so it's the
+  // only piece that genuinely can't be done without JS.
+  // WB.schema is only exposed on wb.js (window.WB.schema = SchemaBuilder) --
+  // absent entirely on wb-lazy.js. When it IS present, wb.js's own schema
+  // processing already builds this correctly (confirmed working); racing it
+  // with a synchronous self-build here clobbers whichever one finishes last
+  // (confirmed live: reading host.textContent/attributes AFTER the other
+  // path already cleared them). Only self-build when schema support
+  // genuinely doesn't exist at all.
+  if (element.tagName.toLowerCase() === 'wb-checkbox' && !_checkboxHostDeprecationWarned) {
+    _checkboxHostDeprecationWarned = true;
+    console.warn('[wb-checkbox] is deprecated — use a bare <input type="checkbox"> instead, it already gets this same custom styling with no wrapper element needed.');
+  }
+
+  if (element.tagName !== 'INPUT' && element.tagName.toLowerCase() === 'wb-checkbox' && !window.WB?.schema) {
+    if (element.querySelector('input[type="checkbox"]')) return () => {};
+    const host = element;
+    const label = host.getAttribute('label') || '';
+    host.textContent = '';
+    const labelEl = document.createElement('label');
+    labelEl.style.cssText = 'display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer;';
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    if (host.hasAttribute('checked')) input.checked = true;
+    if (host.hasAttribute('disabled')) input.disabled = true;
+    if (host.hasAttribute('required')) input.required = true;
+    const name = host.getAttribute('name');
+    if (name) input.name = name;
+    const value = host.getAttribute('value');
+    if (value) input.value = value;
+    const variant = host.getAttribute('variant');
+    if (variant && variant !== 'default') input.setAttribute('variant', variant);
+    const size = host.getAttribute('size');
+    if (size && size !== 'md') input.setAttribute('size', size);
+    labelEl.appendChild(input);
+    if (label) labelEl.appendChild(document.createTextNode(label));
+    host.appendChild(labelEl);
+    host.classList.add('wb-checkbox');
+    return checkbox(input, options);
+  }
+
   if (element.tagName !== 'INPUT' || element.type !== 'checkbox') return () => {};
 
   // wb-switch's internal <input type="checkbox"> is a visually-hidden state

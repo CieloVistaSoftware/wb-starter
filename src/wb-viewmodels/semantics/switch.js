@@ -46,6 +46,11 @@ export function switchInput(element, options = {}) {
   // The schema builds a typeless <input> (renders as text) — make it a checkbox.
   if (input.type !== 'checkbox') input.type = 'checkbox';
   input.classList.add('wb-switch__input');
+  // role="switch" on the real checkbox is a standard ARIA attribute browsers
+  // increasingly use to render native switch affordance directly (Safari
+  // does this today) -- unconditional (bare-checkbox path included) so it
+  // applies regardless of dispatch path, not just the schema/self-built host.
+  input.setAttribute('role', 'switch');
 
   if (!isBareCheckbox) {
     // Reflect host attributes onto the real checkbox.
