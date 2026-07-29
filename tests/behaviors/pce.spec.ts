@@ -163,6 +163,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     `);
 
     await page.waitForFunction(() => window.WB !== undefined);
+    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
     await page.waitForTimeout(1000);
 
     const stats = page.locator('wb-cardstats');
@@ -197,6 +198,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     `);
 
     await page.waitForFunction(() => window.WB !== undefined);
+    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
     
     const profile = page.locator('#lazy-profile');
     

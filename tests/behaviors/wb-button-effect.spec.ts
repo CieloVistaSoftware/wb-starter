@@ -20,6 +20,7 @@ import { test, expect, Page } from '@playwright/test';
 async function setup(page: Page, html: string, id = 'wb-button-effect-area'): Promise<void> {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
+  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
   await page.evaluate(({ h, containerId }) => {
     const c = document.createElement('div');
     c.id = containerId;

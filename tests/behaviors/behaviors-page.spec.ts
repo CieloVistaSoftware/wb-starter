@@ -9,6 +9,7 @@ import { test, expect, Page, Locator } from '@playwright/test';
 async function loadPage(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
+  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
   await page.waitForSelector('[x-badge], .behavior-card, .demo-area', { timeout: 20000 });
   // scroll through the whole page so every lazy (IntersectionObserver) behavior injects
   await page.evaluate(async () => {

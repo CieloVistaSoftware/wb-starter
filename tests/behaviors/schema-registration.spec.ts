@@ -12,6 +12,7 @@ for (const route of ['/?page=components', '/?page=behaviors', '/?page=home']) {
     page.on('console', (m) => { if (/Schema for .* not registered yet/.test(m.text())) warns.push(m.text()); });
     await page.goto(route);
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
+    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
     await page.waitForTimeout(2500);
     expect(warns, 'unexpected schema warnings:\n' + warns.join('\n')).toHaveLength(0);
   });

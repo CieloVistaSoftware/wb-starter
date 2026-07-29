@@ -236,6 +236,7 @@ async function setupTestPage(page: Page, setupHtml: string): Promise<void> {
   // Navigate to index.html which has WB loaded
   await page.goto('index.html');
   await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 5000 });
+  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
   
   // Remove any existing test container
   await page.evaluate(() => {

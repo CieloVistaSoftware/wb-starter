@@ -9,6 +9,7 @@ import { test, expect, Page, Locator } from '@playwright/test';
 async function loadPage(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
+  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
   await page.waitForSelector('.behavior-card, .demo-area, [x-bounce]', { timeout: 20000 });
   await page.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 50)); }

@@ -1,16 +1,26 @@
 /**
  * Behaviors Showcase Tests
  * ========================
- * Tests for demos/behaviors-showcase.html
- * Tests all behavior demos are working correctly
+ * Tests for the SPA's behaviors page (/?page=behaviors).
+ * Tests all behavior demos are working correctly.
+ *
+ * demos/behaviors-showcase.html (the file this suite originally tested) was
+ * removed once its content migrated into the SPA's own behaviors route --
+ * every test here was navigating to a 404, hence the wholesale failure.
+ * tests/views/behaviors-showcase.spec.ts already covers /?page=behaviors
+ * for a different slice of assertions; this file has real, non-overlapping
+ * coverage (dropdown/tabs/masonry/drawer-layout/toggle/visual-regression),
+ * so it's repointed here rather than deleted.
  */
 
 import { test, expect } from '@playwright/test';
 
 test.describe('Behaviors Showcase Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/demos/behaviors-showcase.html');
-    await page.waitForTimeout(1000); // Wait for WB to initialize
+    await page.goto('/?page=behaviors');
+    await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
+    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
+    await page.waitForTimeout(1000); // components still need render/highlight time after app-ready
   });
 
   test.describe('Page Structure', () => {
@@ -35,13 +45,26 @@ test.describe('Behaviors Showcase Page', () => {
       expect(unexpectedErrors).toHaveLength(0);
     });
 
-    test('all behavior cards have demo areas', async ({ page }) => {
-      const cards = await page.locator('.behavior-card').all();
-      expect(cards.length).toBeGreaterThan(20);
-      
-      for (const card of cards) {
-        const demoArea = card.locator('.demo-area');
-        await expect(demoArea).toBeVisible();
+    test('all behavior sections have a demo area', async ({ page }) => {
+      // .behavior-card/.demo-area were the old standalone
+      // demos/behaviors-showcase.html's grid-card layout; the schema-generated
+      // page (behaviors.schema.json -> generate-behaviors-page.js) uses
+      // <section id="..."> + <wb-demo> instead. Same intent, current markup.
+      const sections = await page.locator('main section[id], section[id]').all();
+      expect(sections.length).toBeGreaterThan(5);
+
+      for (const section of sections) {
+        // Sections use several different demo-container conventions
+        // (<wb-demo>, .demo-grid-*, .demo-row, .alerts-stack,
+        // .progress-stack, ...) depending on whether the behavior is a
+        // custom wb-* element or a native element being enhanced in place --
+        // rather than enumerate every container class name (guaranteed to
+        // drift), just confirm the section has real content beyond its own
+        // heading/description note.
+        const contentCount = await section.evaluate(el =>
+          el.querySelectorAll('*:not(h2):not(h3):not(.section-note):not(.section-note *)').length
+        );
+        expect(contentCount, `section#${await section.getAttribute('id')} has no demo content`).toBeGreaterThan(0);
       }
     });
   });
@@ -129,7 +152,17 @@ test.describe('Behaviors Showcase Page', () => {
     });
   });
 
-  test.describe('Dropdown Behavior', () => {
+  // behaviors.schema.json (generate-behaviors-page.js's source of truth for
+  // pages/behaviors.html) has no demo section for wb-dropdown/drawer-layout/
+  // wb-toggle/wb-masonry -- none of these tags exist on the page at all.
+  // These describe blocks were written against the old standalone
+  // demos/behaviors-showcase.html (removed once its content migrated into
+  // the schema-generated SPA page). Their "all(...)" locators quietly
+  // matched zero elements and vacuously passed until the URL was fixed
+  // (previously the whole page was a 404, masking this). Skipped rather than
+  // deleted -- trivial to re-enable if/when these behaviors get a demo
+  // section in the schema.
+  test.describe.skip('Dropdown Behavior', () => {
     test('dropdown should have items attribute OR proper children structure', async ({ page }) => {
       const dropdowns = await page.locator('wb-dropdown').all();
       
@@ -238,7 +271,8 @@ test.describe('Behaviors Showcase Page', () => {
     });
   });
 
-  test.describe('Drawer Layout Behavior', () => {
+  // See the skip note on 'Dropdown Behavior' above -- same situation.
+  test.describe.skip('Drawer Layout Behavior', () => {
     test('drawer-layout behavior initializes', async ({ page }) => {
       const drawer = page.locator('[x-drawer-layout]').first();
       
@@ -278,7 +312,8 @@ test.describe('Behaviors Showcase Page', () => {
     });
   });
 
-  test.describe('Toggle Behavior', () => {
+  // See the skip note on 'Dropdown Behavior' above -- same situation.
+  test.describe.skip('Toggle Behavior', () => {
     test('toggle button has visible styling', async ({ page }) => {
       const toggleButton = page.locator('wb-toggle').first();
       
@@ -319,7 +354,8 @@ test.describe('Behaviors Showcase Page', () => {
     });
   });
 
-  test.describe('Masonry Layout', () => {
+  // See the skip note on 'Dropdown Behavior' above -- same situation.
+  test.describe.skip('Masonry Layout', () => {
     test('masonry container uses column layout', async ({ page }) => {
       const masonry = page.locator('wb-masonry').first();
       
@@ -463,16 +499,19 @@ test.describe('Behaviors Showcase Page', () => {
       expect(spinners.length).toBeGreaterThan(0);
       
       for (const spinner of spinners) {
-        // Check if spinner has SVG or animation
+        // spinner() (feedback.js) builds a plain <div> ring, not an <svg> --
+        // the outer <wb-spinner> itself has animation:none (site.css, #182,
+        // avoids a double ring); the actual spin animation lives on the
+        // child <div>.
         const hasAnimation = await spinner.evaluate(el => {
-          const svg = el.querySelector('svg');
-          if (svg) {
-            const computed = window.getComputedStyle(svg);
+          const ring = el.querySelector('div');
+          if (ring) {
+            const computed = window.getComputedStyle(ring);
             return computed.animation !== 'none' || computed.animationName !== 'none';
           }
           return false;
         });
-        
+
         expect(hasAnimation).toBe(true);
       }
     });

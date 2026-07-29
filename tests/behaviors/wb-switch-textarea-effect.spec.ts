@@ -51,6 +51,7 @@ import { test, expect, Page } from '@playwright/test';
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
+  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
   await page.evaluate((h: string) => {
     const c = document.createElement('div');
     c.id = 'wb-switch-textarea-test-area';
@@ -73,6 +74,7 @@ async function setup(page: Page, html: string): Promise<void> {
 async function setupNative(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
+  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
   await page.evaluate((h: string) => {
     (window as any).WB.config.set('autoInject', true);
     const c = document.createElement('div');

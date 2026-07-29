@@ -382,6 +382,7 @@ test.describe('Component Compliance', () => {
     test(`${behaviorName}: comprehensive compliance`, async ({ page }) => {
       await page.goto('index.html');
       await page.waitForFunction(() => (window as any).WB?.behaviors);
+      await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
       
       const allErrors: string[] = [];
       
@@ -672,6 +673,7 @@ test.describe('Interactive Elements', () => {
     test(`${behaviorName}: all interactive elements work`, async ({ page }) => {
       await page.goto('index.html');
       await page.waitForFunction(() => (window as any).WB?.behaviors);
+      await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
       
       const allErrors: string[] = [];
       const baseHtml = schema.test?.setup?.[0] || generateHtml(behaviorName, {}, 'Test Content', schema.element);

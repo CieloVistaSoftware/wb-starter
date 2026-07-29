@@ -6,6 +6,7 @@ test.describe('Auto-Inject Demo', () => {
     await page.goto('/demos/autoinject.html');
     // Wait for WB to initialize (autoInject happens during init/scan)
     await page.waitForFunction(() => typeof window['WB'] !== 'undefined');
+    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
     await page.waitForTimeout(1000); 
   });
 

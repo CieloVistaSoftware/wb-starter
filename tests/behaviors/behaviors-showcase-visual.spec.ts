@@ -283,6 +283,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     test('all behavior elements should be initialized', async ({ page }) => {
       await page.goto(BEHAVIORS_URL);
       await page.waitForFunction(() => (window as any).WB, { timeout: 10000 });
+      await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
       await page.waitForTimeout(1000);
 
       const wbExists = await page.evaluate(() => !!(window as any).WB);

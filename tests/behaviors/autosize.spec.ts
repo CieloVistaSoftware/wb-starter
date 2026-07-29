@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 test('autosize modifier adjusts textarea and marks element', async ({ page }) => {
   await page.goto('/index.html');
   await page.waitForFunction(() => (window as any).WB?.behaviors, null, { timeout: 5000 });
+  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
 
   await page.evaluate(() => {
     const c = document.createElement('div');
