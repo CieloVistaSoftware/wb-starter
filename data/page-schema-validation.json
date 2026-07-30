@@ -1,16 +1,16 @@
 {
-  "validated": "2026-02-12T03:09:13.538Z",
-  "componentSchemasLoaded": 85,
+  "validated": "2026-07-30T22:39:51.210Z",
+  "componentSchemasLoaded": 96,
   "pagesValidated": 1,
   "totalErrors": 0,
   "totalWarnings": 0,
   "allValid": true,
   "results": [
     {
-      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\data\\.temp-validate-all-components.page.json",
-      "title": "All Components",
-      "sections": 3,
-      "totalDemos": 24,
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\pages\\multi-component-demo.page.json",
+      "title": "🧩 Multi-Component Demo",
+      "sections": 8,
+      "totalDemos": 41,
       "errors": [],
       "warnings": [],
       "valid": true

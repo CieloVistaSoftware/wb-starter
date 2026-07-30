@@ -135,6 +135,24 @@ function generateSections(schema) {
         if (rv.required && rk !== propName) {
           attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
         }
+        // A ranged number prop (e.g. wb-progress's `value`, min 0/max 100)
+        // is never `required` -- its schema default is a boundary value
+        // (0), so an enum sweep that only fills in required props left it
+        // unset everywhere. Confirmed live: every "Progress — variant
+        // variants" demo rendered at 0% width, making every variant color
+        // invisible (a 0-width fill paints nothing) -- all six looked
+        // identical. Fill ranged numbers to a representative mid-range
+        // value so whatever the enum is actually varying is visible.
+        else if (
+          rk !== propName &&
+          rv.type === 'number' &&
+          typeof rv.minimum === 'number' &&
+          typeof rv.maximum === 'number' &&
+          rv.maximum > rv.minimum &&
+          (rv.default === undefined || rv.default === rv.minimum)
+        ) {
+          attrs[camelToKebab(rk)] = Math.round(rv.minimum + (rv.maximum - rv.minimum) * 0.6);
+        }
       }
       return { tag, attrs };
     });

@@ -6,31 +6,62 @@ import { test, expect } from '@playwright/test';
  * source), never a static, non-live code fence.
  *
  * This file has MANY <wb-demo> blocks (intro syntax examples + a "Live Examples"
- * subsection per behavior category), unlike the one-file-one-case pattern in
- * doc-viewer-wb-demo.spec.ts. So this spec:
- *   1. Confirms every <wb-demo> on the page renders both the live grid AND the
- *      source code panel (the mechanical §1/§16 requirement), with no page errors.
- *   2. Spot-checks a representative subset of the added live examples to confirm
- *      they actually upgraded (real behavior ran), not just inert markup sitting
- *      inside a <wb-demo> wrapper.
+ * subsection per behavior category) on ONE doc page, unlike the one-file-one-case
+ * pattern in doc-viewer-wb-demo.spec.ts. Everything below runs against a SINGLE
+ * page load (not one goto() per behavior) for two reasons:
+ *   1. It mirrors what a real reader does — load the page once, scroll through it.
+ *   2. 20+ separate page loads of the same heavy page, running concurrently across
+ *      Playwright's parallel workers, was measurably flaky (occasional timeouts
+ *      under CPU contention, confirmed by re-running: same assertion passed in 2s
+ *      once contention eased). One shared load removes that contention instead of
+ *      papering over it with longer timeouts.
  *
- * Note: the two "Auto Injection" demos (bare <dialog>, bare <img>) intentionally
- * are NOT in the upgrade-check subset — that section documents a feature that is
- * "optional and disabled by default" (WB.init({ scan:false, observe:false }) on
- * the doc-viewer never passes autoInject:true), so those two elements are not
- * expected to upgrade on this page; they still satisfy §1 (live render + source).
+ * <wb-demo> (src/wb-viewmodels/wb-demo.js) only builds its first EAGER_BUILD_COUNT=5
+ * blocks synchronously on connect — every block after that is deferred behind an
+ * IntersectionObserver (rootMargin 400px) so a long, many-demo page doesn't build
+ * 30+ syntax-highlighted panels no one has scrolled to yet. This test scrolls the
+ * whole page in a few large steps up front so every block builds before assertions.
  *
- * Every check here scrolls its target into view first. <wb-demo> (src/wb-viewmodels/
- * wb-demo.js) only builds its first EAGER_BUILD_COUNT=5 blocks synchronously on
- * connect — every block after that is deferred behind an IntersectionObserver
- * (rootMargin 400px) so a long, many-demo page doesn't build 30+ syntax-highlighted
- * panels no one has scrolled to yet. With 32 blocks on this page, most of them are
- * only built once scrolled near — asserting visibility without scrolling first
- * would just time out waiting for a build that correctly never starts.
+ * Note: the two "Auto Injection" demos (bare <dialog>, bare <img>) are excluded from
+ * the upgrade-check CASES below — that section documents a feature that is "optional
+ * and disabled by default" (WB.init({ scan:false, observe:false }) on the doc-viewer
+ * never passes autoInject:true), so those two elements aren't expected to upgrade on
+ * this page; the "every <wb-demo> has a grid + source" check still covers them.
  */
 
+type Case = { selector: string; label: string; upgradeAttr?: string };
+const CASES: Case[] = [
+  { selector: 'wb-audio', label: 'audio' },
+  { selector: 'wb-video', label: 'video' },
+  { selector: 'img[x-image]', label: 'img/image', upgradeAttr: 'class' },
+  { selector: 'code[x-code]', label: 'code', upgradeAttr: 'class' },
+  { selector: 'wb-input', label: 'input' },
+  { selector: 'wb-textarea', label: 'textarea' },
+  { selector: 'wb-select', label: 'select' },
+  { selector: 'wb-checkbox', label: 'checkbox' },
+  { selector: 'wb-switch', label: 'switch' },
+  { selector: 'wb-rating', label: 'rating' },
+  // wb-details is replaced in the DOM with a real native <details class="wb-details">
+  // (element.replaceWith(), matching wb-form's own documented pattern) -- the
+  // wb-details TAG never exists post-upgrade, so select by the class it carries.
+  { selector: 'details.wb-details', label: 'details' },
+  { selector: 'wb-dialog', label: 'dialog' },
+  { selector: 'wb-button', label: 'button', upgradeAttr: 'role' },
+  { selector: 'wb-card', label: 'card' },
+  { selector: 'wb-cardlink', label: 'cardlink' },
+  { selector: 'wb-progress', label: 'progressbar' },
+  { selector: 'wb-tabs', label: 'tabs' },
+  { selector: 'wb-drawer-layout', label: 'drawerLayout' },
+  { selector: 'wb-carddraggable', label: 'draggable' },
+  { selector: 'wb-themecontrol', label: 'themecontrol' },
+  { selector: 'wb-mdhtml', label: 'mdhtml' },
+  { selector: 'wb-confetti', label: 'confetti' },
+];
+
 test.describe('docs/behaviors-reference.md: live <wb-demo> examples', () => {
-  test('every <wb-demo> renders both a live grid and a source panel, no page errors', async ({ page }) => {
+  test('every <wb-demo> renders live + source, and the added Live Examples upgrade', async ({ page }) => {
+    test.setTimeout(90000);
+
     const errs: string[] = [];
     page.on('pageerror', (e) => errs.push(String(e)));
 
@@ -49,11 +80,7 @@ test.describe('docs/behaviors-reference.md: live <wb-demo> examples', () => {
 
     // Scroll the whole page in a handful of large steps so every deferred
     // <wb-demo> passes through the IntersectionObserver's 400px rootMargin and
-    // starts building. Doing this once, in a few jumps, is what a real reader
-    // scrolling the page would trigger — 32 individual scrollIntoViewIfNeeded()
-    // + per-element waits was correct but slow enough (each build does real
-    // DOM writes + a highlight pass) to occasionally miss this test's overall
-    // timeout under parallel load; this reaches the same end state much faster.
+    // starts building — what a real reader scrolling the page would trigger.
     const scrollHeight = await page.evaluate(() => document.body.scrollHeight);
     const viewportHeight = page.viewportSize()?.height || 800;
     const stepSize = Math.max(1, Math.floor(viewportHeight * 0.85));
@@ -65,74 +92,36 @@ test.describe('docs/behaviors-reference.md: live <wb-demo> examples', () => {
     await page.waitForTimeout(150);
     await page.evaluate(() => window.scrollTo(0, 0));
 
+    // §1/§16: every <wb-demo> shows both a live grid and its source panel.
     for (let i = 0; i < count; i++) {
       const demo = demos.nth(i);
       await expect(demo.locator('.wb-demo__grid')).toBeVisible({ timeout: 10000 });
       await expect(demo.locator('.wb-demo__code, pre').first()).toBeVisible();
     }
 
-    expect(errs, 'no page errors while rendering docs/behaviors-reference.md').toEqual([]);
-  });
-
-  type Case = { selector: string; label: string; upgradeAttr?: string };
-  const CASES: Case[] = [
-    { selector: 'wb-audio', label: 'audio live example' },
-    { selector: 'wb-video', label: 'video live example' },
-    { selector: 'img[x-image]', label: 'img/image live example', upgradeAttr: 'class' },
-    { selector: 'code[x-code]', label: 'code live example', upgradeAttr: 'class' },
-    { selector: 'wb-input', label: 'input live example' },
-    { selector: 'wb-textarea', label: 'textarea live example' },
-    { selector: 'wb-select', label: 'select live example' },
-    { selector: 'wb-checkbox', label: 'checkbox live example' },
-    { selector: 'wb-switch', label: 'switch live example' },
-    { selector: 'wb-rating', label: 'rating live example' },
-    // wb-details is replaced in the DOM with a real native <details
-    // class="wb-details"> (element.replaceWith(), matching wb-form's own
-    // documented pattern) -- the wb-details TAG never exists post-upgrade,
-    // so select by the class the replacement carries instead.
-    { selector: 'details.wb-details', label: 'details live example' },
-    { selector: 'wb-dialog', label: 'dialog live example' },
-    { selector: 'wb-button', label: 'button live example', upgradeAttr: 'role' },
-    { selector: 'wb-card', label: 'card live example' },
-    { selector: 'wb-cardlink', label: 'cardlink live example' },
-    { selector: 'wb-progress', label: 'progressbar live example' },
-    { selector: 'wb-tabs', label: 'tabs live example' },
-    { selector: 'wb-drawer-layout', label: 'drawerLayout live example' },
-    { selector: 'wb-carddraggable', label: 'draggable live example' },
-    { selector: 'wb-themecontrol', label: 'themecontrol live example' },
-    { selector: 'wb-mdhtml', label: 'mdhtml live example' },
-    { selector: 'wb-confetti', label: 'confetti live example' },
-  ];
-
-  for (const c of CASES) {
-    test(`${c.label}: upgrades inside its <wb-demo>`, async ({ page }) => {
-      await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors-reference.md'), {
-        waitUntil: 'domcontentloaded',
-      });
-
-      // Scroll the *raw* <wb-demo> (has: selector still matches pre-build markup)
-      // into view first so its lazy build actually starts.
-      const container = page.locator('wb-demo', { has: page.locator(c.selector) }).first();
-      await container.scrollIntoViewIfNeeded();
-
-      const live = container.locator(`.wb-demo__grid ${c.selector}`).first();
-      await expect(live).toBeVisible({ timeout: 20000 });
+    // Spot-check that the added "Live Examples" actually upgraded (real behavior
+    // ran), not just inert markup sitting inside a <wb-demo> wrapper.
+    for (const c of CASES) {
+      const live = page.locator(`wb-demo .wb-demo__grid ${c.selector}`).first();
+      await expect(live, `${c.label} live example should be visible`).toBeVisible({ timeout: 5000 });
 
       if (c.upgradeAttr) {
         await expect
           .poll(() => live.getAttribute(c.upgradeAttr as string), {
-            message: `${c.selector} should have [${c.upgradeAttr}] set (upgraded)`,
-            timeout: 10000,
+            message: `${c.label}: [${c.upgradeAttr}] should be set (upgraded)`,
+            timeout: 5000,
           })
           .toBeTruthy();
       } else {
         await expect
           .poll(() => live.evaluate((el) => el.children.length), {
-            message: `${c.selector} should render internal DOM (upgraded)`,
-            timeout: 10000,
+            message: `${c.label}: should render internal DOM (upgraded)`,
+            timeout: 5000,
           })
           .toBeGreaterThan(0);
       }
-    });
-  }
+    }
+
+    expect(errs, 'no page errors while rendering docs/behaviors-reference.md').toEqual([]);
+  });
 });

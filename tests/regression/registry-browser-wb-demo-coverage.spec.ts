@@ -30,6 +30,12 @@ async function ready(page) {
 // Scrolls every matched row into view (the table's wb-demo blocks build
 // lazily via an IntersectionObserver, like every other wb-demo on the
 // site) and returns per-row facts once each has had a chance to render.
+// Each row is POLLED (not just given a fixed delay) until its grid + code
+// panel actually appear, or a generous per-row timeout elapses -- demo()'s
+// own behavior/CSS load is a dynamic import (async, JIT-loaded, see
+// wb-lazy.js's WB.inject) and can legitimately take longer than a short
+// fixed sleep on a cold first call, especially for the first few rows
+// scrolled to right after page load.
 async function collectRowReport(page) {
   return page.evaluate(async () => {
     function sleep(ms: number) { return new Promise((r) => setTimeout(r, ms)); }
@@ -38,11 +44,22 @@ async function collectRowReport(page) {
     for (const row of rows) {
       const name = row.querySelector('.view-name')?.textContent?.trim() || '';
       (row as HTMLElement).scrollIntoView({ block: 'center' });
-      await sleep(120);
+
+      const deadline = Date.now() + 4000;
+      let grid: Element | null = null;
+      let code: Element | null = null;
+      while (Date.now() < deadline) {
+        const demo = row.querySelector('wb-demo');
+        grid = demo ? demo.querySelector('.wb-demo__grid') : null;
+        code = demo ? demo.querySelector('.wb-demo__code, pre') : null;
+        if (grid && grid.innerHTML.trim().length > 0 && code && (code.textContent || '').trim().length > 0) {
+          break;
+        }
+        await sleep(100);
+      }
+
       const demo = row.querySelector('wb-demo');
-      const grid = demo ? demo.querySelector('.wb-demo__grid') : null;
       const gridHTML = grid ? grid.innerHTML.trim() : '';
-      const code = demo ? demo.querySelector('.wb-demo__code, pre') : null;
       const codeText = code ? (code.textContent || '').trim() : '';
       const hasOldMdhtml = !!row.querySelector('wb-mdhtml');
       const docLink = demo ? demo.querySelector('.wb-demo__links') : null;
@@ -69,6 +86,11 @@ test.describe('registry-browser.html: every row gets a live wb-demo, not just a 
   });
 
   test('a meaningful number of rows render a real wb-demo with a visible grid + source panel', async ({ page }) => {
+    // 21 rows, each polled up to 4s worst case (see collectRowReport) --
+    // generous headroom over the 30s default, matching the precedent set
+    // for other wb-demo-hydration-heavy pages (see playwright.config.ts's
+    // integration project comment on the same class of contention).
+    test.setTimeout(90000);
     const errors = await ready(page);
     const report = await collectRowReport(page);
 
@@ -94,10 +116,12 @@ test.describe('registry-browser.html: every row gets a live wb-demo, not just a 
   });
 
   test('the old <wb-mdhtml> code-only block is gone from every row', async ({ page }) => {
+    // No need to wait for lazy render here -- the markup is generated
+    // directly by loadRegistry() and never contains a wb-mdhtml tag
+    // regardless of whether each row's wb-demo has finished building yet.
     await ready(page);
-    const report = await collectRowReport(page);
-    const stillMdhtml = report.filter((r) => r.hasOldMdhtml);
-    expect(stillMdhtml, `rows still using the old mdhtml-only block: ${JSON.stringify(stillMdhtml.map((r) => r.name))}`).toEqual([]);
+    const count = await page.locator('#registry-container wb-mdhtml').count();
+    expect(count, 'no row should still use the old mdhtml-only code block').toBe(0);
   });
 
   test('the usage-example above the table still shows its own correct source (no cross-contamination)', async ({ page }) => {
@@ -115,6 +139,7 @@ test.describe('registry-browser.html: every row gets a live wb-demo, not just a 
   });
 
   test('rows whose view resolves to a real documented component get a corner-pinned doc link', async ({ page }) => {
+    test.setTimeout(90000);
     await ready(page);
     await collectRowReport(page); // forces every row's wb-demo to build
 

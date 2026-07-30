@@ -146,67 +146,78 @@
         {
           "tag": "wb-progress",
           "attrs": {
-            "variant": "default"
+            "variant": "default",
+            "value": 60
           }
         },
         {
           "tag": "wb-progress",
           "attrs": {
-            "variant": "primary"
+            "variant": "primary",
+            "value": 60
           }
         },
         {
           "tag": "wb-progress",
           "attrs": {
-            "variant": "success"
+            "variant": "success",
+            "value": 60
           }
         },
         {
           "tag": "wb-progress",
           "attrs": {
-            "variant": "warning"
+            "variant": "warning",
+            "value": 60
           }
         },
         {
           "tag": "wb-progress",
           "attrs": {
-            "variant": "error"
+            "variant": "error",
+            "value": 60
           }
         },
         {
           "tag": "wb-progress",
           "attrs": {
-            "variant": "info"
+            "variant": "info",
+            "value": 60
           }
         },
         {
           "tag": "wb-progress",
           "attrs": {
-            "size": "xs"
+            "size": "xs",
+            "value": 60
           }
         },
         {
           "tag": "wb-progress",
           "attrs": {
-            "size": "sm"
+            "size": "sm",
+            "value": 60
           }
         },
         {
           "tag": "wb-progress",
           "attrs": {
-            "size": "md"
+            "size": "md",
+            "value": 60
           }
         },
         {
           "tag": "wb-progress",
           "attrs": {
-            "size": "lg"
+            "size": "lg",
+            "value": 60
           }
         },
         {
           "tag": "wb-progress",
           "attrs": {
-            "size": "xl"
+            "size": "xl",
+            "value": 60
           }
         }
       ]
@@ -371,13 +382,13 @@
     }
   ],
   "_composed": {
-    "source": "src/wb-models/pages/multi-component-demo.composed.page.json",
-    "composedAt": "2026-07-11T03:38:30.474Z",
+    "source": "src/wb-models/pages/multi-component-demo.page.json",
+    "composedAt": "2026-07-30T22:39:51.036Z",
     "stats": {
-      "extendsResolved": true,
+      "extendsResolved": false,
       "refsResolved": 0,
-      "includesResolved": 1,
-      "generated": 3
+      "includesResolved": 0,
+      "generated": 0
     }
   }
 }

@@ -43,100 +43,100 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ### Custom Element
 
-```html
+<wb-demo>
 <wb-select
   label="Country"
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
 </wb-select>
-```
+</wb-demo>
 
 ### Native Select (Enhanced)
 
 `autoInjectComponents` is on by default — a plain `<select>` is enhanced
 automatically, no `x-select` attribute needed.
 
-```html
+<wb-demo>
 <select>
   <option value="1">Option 1</option>
   <option value="2">Option 2</option>
   <option value="3">Option 3</option>
 </select>
-```
+</wb-demo>
 
 ### With Label
 
-```html
+<wb-demo>
 <wb-select
   label="Choose a language"
   placeholder="Select language..."
   options='[{"value":"en","label":"English"},{"value":"es","label":"Spanish"},{"value":"fr","label":"French"}]'>
 </wb-select>
-```
+</wb-demo>
 
 ### Searchable
 
-```html
+<wb-demo>
 <wb-select
   label="Country"
   searchable
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"},{"value":"ca","label":"Canada"}]'>
 </wb-select>
-```
+</wb-demo>
 
 ### Clearable
 
-```html
+<wb-demo>
 <wb-select
   label="Priority"
   clearable
   options='[{"value":"low","label":"Low"},{"value":"medium","label":"Medium"},{"value":"high","label":"High"}]'>
 </wb-select>
-```
+</wb-demo>
 
 ### Multi-Select
 
-```html
+<wb-demo>
 <wb-select
   label="Tags"
   multiple
   options='[{"value":"bug","label":"Bug"},{"value":"feature","label":"Feature"},{"value":"docs","label":"Documentation"}]'>
 </wb-select>
-```
+</wb-demo>
 
 ### Sizes
 
-```html
+<wb-demo>
 <wb-select
   label="Small"
   size="sm"
-  options='[...]'>
+  options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
 </wb-select>
 <wb-select
   label="Medium"
   size="md"
-  options='[...]'>
+  options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
 </wb-select>
 <wb-select
   label="Large"
   size="lg"
-  options='[...]'>
+  options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
 </wb-select>
-```
+</wb-demo>
 
 ### Validation States
 
-```html
+<wb-demo>
 <wb-select
   label="Valid"
   variant="success"
-  options='[...]'>
+  options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
 </wb-select>
 <wb-select
   label="Error"
   variant="error"
-  options='[...]'>
+  options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
 </wb-select>
-```
+</wb-demo>
 
 ## Generated Structure
 

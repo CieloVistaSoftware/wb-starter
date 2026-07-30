@@ -1,13 +1,13 @@
 {
-  "composedAt": "2026-02-12T02:54:05.548Z",
-  "source": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\pages\\badge-showcase.page.json",
-  "output": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\pages\\badge-showcase.page.json",
+  "composedAt": "2026-07-30T22:39:51.038Z",
+  "source": "src/wb-models/pages/multi-component-demo.page.json",
+  "output": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\pages\\multi-component-demo.page.json",
   "stats": {
-    "extendsResolved": true,
+    "extendsResolved": false,
     "refsResolved": 0,
     "includesResolved": 0,
     "generated": 0
   },
-  "sectionCount": 4,
-  "totalDemos": 23
+  "sectionCount": 8,
+  "totalDemos": 41
 }

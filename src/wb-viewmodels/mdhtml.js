@@ -206,10 +206,18 @@ export async function mdhtml(element, options = {}) {
     // Basic XSS protection if sanitize is enabled
     let safeHtml = html;
     if (config.sanitize) {
-      // Remove script tags and on* attributes
+      // Remove script tags and on* event-handler attributes. The `on\w+=`
+      // match MUST require a real leading whitespace boundary (`\s+`, not
+      // `\s*`) -- `\s*` let it match mid-word too, so any attribute NAME
+      // that merely contains "on" followed by more word chars before its
+      // own `=` (e.g. `options='[{"..."}]'` -- "opti|ons=") got treated as
+      // a fake event handler and the whole `ons='[{"` through the next
+      // quote was silently eaten. Confirmed live: every JSON-in-attribute
+      // demo using `options=`/`data-options=` on doc-viewer.html rendered
+      // its source panel (and, worse, its actual DOM attribute) corrupted.
       safeHtml = html
         .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-        .replace(/\s*on\w+\s*=\s*["'][^"']*["']/gi, '');
+        .replace(/\s+on\w+\s*=\s*["'][^"']*["']/gi, '');
     }
 
     // Render HTML

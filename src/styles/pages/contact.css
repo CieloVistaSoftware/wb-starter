@@ -32,7 +32,8 @@
 
 .contact-form button[type="submit"] {
   align-self: flex-start;
-  padding: 0.75rem 2rem;
+  /* >=1rem on every side (was 0.75rem vertical, under the minimum). */
+  padding: 1rem 2rem;
   background: var(--primary);
   color: white;
   border: none;
