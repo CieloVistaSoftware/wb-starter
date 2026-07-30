@@ -10,8 +10,9 @@
 </head>
 
 <body>
-  <nav style="margin-bottom: 1rem;">
+  <nav style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
     <a href="../../demos/site/cards.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">&larr; Back to Card Components demo</a>
+    <wb-themecontrol></wb-themecontrol>
   </nav>
   <h1>Card Components -- Permutation Matrix</h1>
   <p>Every variant/size/boolean-toggle combination for every card type, for test coverage --
@@ -308,25 +309,25 @@
   <section id="cardhero-hero-card">
   <h2>🦸 Hero Card</h2>
   <wb-demo columns="3">
-    <wb-cardhero background="hero.jpg" title="Welcome">
+    <wb-cardhero background="https://picsum.photos/seed/heroalt1/1200/600" title="Welcome">
       background=hero.jpg, title=Welcome
     </wb-cardhero>
-    <wb-cardhero background="hero.jpg" title="Welcome" subtitle="Subtitle">
+    <wb-cardhero background="https://picsum.photos/seed/heroalt2/1200/600" title="Welcome" subtitle="Subtitle">
       background=hero.jpg, title=Welcome, subtitle=Subtitle
     </wb-cardhero>
-    <wb-cardhero background="hero.jpg" title="Welcome" cta="Click Me">
+    <wb-cardhero background="https://picsum.photos/seed/heroalt3/1200/600" title="Welcome" cta="Click Me">
       background=hero.jpg, title=Welcome, cta=Click Me
     </wb-cardhero>
-    <wb-cardhero background="hero.jpg" title="Welcome" subtitle="Sub" cta="Go" variant="cosmic">
+    <wb-cardhero background="https://picsum.photos/seed/heroalt4/1200/600" title="Welcome" subtitle="Sub" cta="Go" variant="cosmic">
       background=hero.jpg, title=Welcome, subtitle=Sub, cta=Go, variant=cosmic
     </wb-cardhero>
-    <wb-cardhero background="hero.jpg" title="Welcome" xalign="left">
+    <wb-cardhero background="https://picsum.photos/seed/heroalt5/1200/600" title="Welcome" xalign="left">
       background=hero.jpg, title=Welcome, xalign=left
     </wb-cardhero>
-    <wb-cardhero background="hero.jpg" title="Welcome">
+    <wb-cardhero background="https://picsum.photos/seed/heroalt6/1200/600" title="Welcome">
       background=hero.jpg, title=Welcome, overlay=false
     </wb-cardhero>
-    <wb-cardhero background="hero.jpg" title="Welcome" full-height>
+    <wb-cardhero background="https://picsum.photos/seed/heroalt7/1200/600" title="Welcome" full-height>
       background=hero.jpg, title=Welcome, full-height
     </wb-cardhero>
   </wb-demo>
@@ -336,19 +337,19 @@
   <section id="cardhero-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="3">
-    <wb-cardhero variant="default" background="Sample background" title="Sample title">
+    <wb-cardhero variant="default" background="https://picsum.photos/seed/hero1/1200/600" title="Sample title">
       variant=default, background=Sample background, title=Sample title
     </wb-cardhero>
-    <wb-cardhero variant="cosmic" background="Sample background" title="Sample title">
+    <wb-cardhero variant="cosmic" background="https://picsum.photos/seed/hero2/1200/600" title="Sample title">
       variant=cosmic, background=Sample background, title=Sample title
     </wb-cardhero>
-    <wb-cardhero variant="split" background="Sample background" title="Sample title">
+    <wb-cardhero variant="split" background="https://picsum.photos/seed/hero3/1200/600" title="Sample title">
       variant=split, background=Sample background, title=Sample title
     </wb-cardhero>
-    <wb-cardhero variant="minimal" background="Sample background" title="Sample title">
+    <wb-cardhero variant="minimal" background="https://picsum.photos/seed/hero4/1200/600" title="Sample title">
       variant=minimal, background=Sample background, title=Sample title
     </wb-cardhero>
-    <wb-cardhero variant="gradient" background="Sample background" title="Sample title">
+    <wb-cardhero variant="gradient" background="https://picsum.photos/seed/hero5/1200/600" title="Sample title">
       variant=gradient, background=Sample background, title=Sample title
     </wb-cardhero>
   </wb-demo>
@@ -358,13 +359,13 @@
   <section id="cardhero-xalign-variants">
   <h2>xalign variants</h2>
   <wb-demo columns="2">
-    <wb-cardhero xalign="left" background="Sample background" title="Sample title">
+    <wb-cardhero xalign="left" background="https://picsum.photos/seed/hero6/1200/600" title="Sample title">
       xalign=left, background=Sample background, title=Sample title
     </wb-cardhero>
-    <wb-cardhero xalign="center" background="Sample background" title="Sample title">
+    <wb-cardhero xalign="center" background="https://picsum.photos/seed/hero7/1200/600" title="Sample title">
       xalign=center, background=Sample background, title=Sample title
     </wb-cardhero>
-    <wb-cardhero xalign="right" background="Sample background" title="Sample title">
+    <wb-cardhero xalign="right" background="https://picsum.photos/seed/hero8/1200/600" title="Sample title">
       xalign=right, background=Sample background, title=Sample title
     </wb-cardhero>
   </wb-demo>
@@ -374,7 +375,7 @@
   <section id="cardhero-boolean-toggles">
   <h2>Boolean toggles</h2>
   <wb-demo columns="1">
-    <wb-cardhero full-height background="Sample background" title="Sample title">
+    <wb-cardhero full-height background="https://picsum.photos/seed/hero9/1200/600" title="Sample title">
       full-height, background=Sample background, title=Sample title
     </wb-cardhero>
   </wb-demo>
@@ -710,24 +711,30 @@
   <!-- 40. 🖼️ Overlay Card -->
   <section id="cardoverlay-overlay-card">
   <h2>🖼️ Overlay Card</h2>
+  <!-- cardoverlay() (card.js) never reads element.innerHTML/dataset.content
+       -- it's purely attribute-driven (image/title/subtitle/position/
+       gradient/height/xalign/variant), unlike most other card types. The
+       description text these entries used to carry in their inner text
+       node was always wiped by `element.innerHTML = ''` and never shown.
+       Moved into `title` instead, so the matrix documents itself here too. -->
   <wb-demo columns="3">
-    <wb-cardoverlay image="bg.jpg" title="Title">
-      image=bg.jpg, title=Title
+    <wb-cardoverlay image="https://picsum.photos/seed/overlay1/800/500" title="image, title">
+      image=..., title=Title
     </wb-cardoverlay>
-    <wb-cardoverlay image="bg.jpg" title="Title" subtitle="Subtitle">
-      image=bg.jpg, title=Title, subtitle=Subtitle
+    <wb-cardoverlay image="https://picsum.photos/seed/overlay2/800/500" title="image, title, subtitle" subtitle="Subtitle">
+      image=..., title=Title, subtitle=Subtitle
     </wb-cardoverlay>
-    <wb-cardoverlay image="bg.jpg" title="Title" position="top">
-      image=bg.jpg, title=Title, position=top
+    <wb-cardoverlay image="https://picsum.photos/seed/overlay3/800/500" title="position=top" position="top">
+      image=..., title=Title, position=top
     </wb-cardoverlay>
-    <wb-cardoverlay image="bg.jpg" title="Title" position="center">
-      image=bg.jpg, title=Title, position=center
+    <wb-cardoverlay image="https://picsum.photos/seed/overlay4/800/500" title="position=center" position="center">
+      image=..., title=Title, position=center
     </wb-cardoverlay>
-    <wb-cardoverlay image="bg.jpg" title="Title">
-      image=bg.jpg, title=Title, gradient=false
+    <wb-cardoverlay image="https://picsum.photos/seed/overlay5/800/500" title="gradient=false" gradient="false">
+      image=..., title=Title, gradient=false
     </wb-cardoverlay>
-    <wb-cardoverlay image="bg.jpg" title="Title" xalign="center">
-      image=bg.jpg, title=Title, xalign=center
+    <wb-cardoverlay image="https://picsum.photos/seed/overlay6/800/500" title="xalign=center" xalign="center">
+      image=..., title=Title, xalign=center
     </wb-cardoverlay>
   </wb-demo>
   </section>
@@ -929,7 +936,7 @@
     <wb-cardproduct title="Product" price="$29" original-price="$49">
       title=Product, price=$29, original-price=$49
     </wb-cardproduct>
-    <wb-cardproduct image="product.jpg" title="Product" price="$29">
+    <wb-cardproduct image="https://picsum.photos/seed/productalt1/600/400" title="Product" price="$29">
       image=product.jpg, title=Product, price=$29
     </wb-cardproduct>
     <wb-cardproduct title="Product" price="$29" rating="4.5" reviews="128">

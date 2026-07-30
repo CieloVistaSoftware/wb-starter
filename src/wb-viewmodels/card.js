@@ -98,7 +98,14 @@ const VAR_BG_SECONDARY = 'var(--bg-secondary,#1f2937)';
 const VAR_PRIMARY = 'var(--primary,#6366f1)';
 
 // Common Component Styles
-const STYLE_HEADER = `padding:1rem;border-bottom:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;`;
+// flex-shrink:0 -- without it, the CSS flexbox spec's automatic minimum
+// size (min-height:auto) is ignored on a flex item whose ancestor sets
+// overflow:hidden (the card does), letting this header shrink below its
+// own content's natural height when a sibling (e.g. an aspect-ratio image
+// figure) claims most of the flex column's space. That silently clipped
+// the header's own bottom padding -- title/subtitle text sat flush against
+// the card's border with no visible gap. Confirmed live via screenshot.
+const STYLE_HEADER = `padding:1rem;border-bottom:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-shrink:0;`;
 const STYLE_FOOTER = `padding:1rem;border-top:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
 const STYLE_MAIN = `padding:1rem;flex:1;color:${VAR_TEXT_PRIMARY};`;
 const STYLE_TITLE = `margin:0;font-size:1.1rem;font-weight:600;color:${VAR_TEXT_PRIMARY};`;
@@ -1743,6 +1750,15 @@ export function cardfile(element, options = {}) {
       element.removeEventListener('keydown', onKey);
       if (typeof baseCleanup === 'function') { baseCleanup(); }
     };
+  } else if (config.downloadable) {
+    // downloadable but no href: silently doing nothing on click is
+    // confusing for anyone authoring/testing this component -- surface it
+    // visibly instead of leaving it a silent dead end.
+    const warning = document.createElement('div');
+    warning.className = 'wb-card__file-warning';
+    warning.style.cssText = 'margin-top:0.25rem;font-size:0.8rem;color:var(--danger-color,#ef4444);';
+    warning.textContent = 'No href given — nothing to download.';
+    element.appendChild(warning);
   }
 
   return base.cleanup;

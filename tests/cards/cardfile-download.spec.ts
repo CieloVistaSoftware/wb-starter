@@ -63,5 +63,9 @@ test.describe('wb-cardfile download', () => {
     await expect(card).not.toHaveAttribute('role', 'button');
     await expect(card).not.toHaveAttribute('tabindex', '0');
     await expect(card.locator('.wb-card__file-download')).toHaveCount(0);
+    // Silently doing nothing is confusing to whoever's authoring/testing
+    // the card -- surface it visibly instead.
+    await expect(card.locator('.wb-card__file-warning')).toBeVisible();
+    await expect(card.locator('.wb-card__file-warning')).toHaveText(/no href/i);
   });
 });
