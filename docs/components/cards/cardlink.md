@@ -25,6 +25,16 @@ Inherits all [card properties](./card.md) plus:
 | `badge` | string | `""` | Badge text |
 | `badgeVariant` | string | `"glass"` | Badge style: `glass`, `gradient` |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardlink
+  title="Documentation"
+  href="/docs"
+  icon="📚">
+</wb-cardlink>
+</wb-demo>
+
 ## Usage
 
 ### Basic Link Card

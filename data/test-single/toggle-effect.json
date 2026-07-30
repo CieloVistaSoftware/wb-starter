@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/behaviors/toggle-effect.spec.ts",
+  "startedAt": "2026-07-27T20:48:26.893Z",
+  "updatedAt": "2026-07-27T20:48:36.042Z",
+  "command": "npx playwright test --workers=8 tests/behaviors/toggle-effect.spec.ts",
+  "pid": 21756,
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "total": 5,
+  "currentFile": "tests\\behaviors\\toggle-effect.spec.ts",
+  "output": "\nRunning 5 tests using 5 workers\n\n  ok 4 [behaviors] › tests\\behaviors\\toggle-effect.spec.ts:79:3 › wb-toggle behavior effects › Enter key triggers the same toggle effect as a click (960ms)\n  ok 5 [behaviors] › tests\\behaviors\\toggle-effect.spec.ts:64:3 › wb-toggle behavior effects › toggle-class attribute toggles that class instead of the default \"active\" (1.9s)\n  ok 3 [behaviors] › tests\\behaviors\\toggle-effect.spec.ts:89:3 › wb-toggle behavior effects › fires a wb:toggle custom event carrying the new active state (2.0s)\n  ok 1 [behaviors] › tests\\behaviors\\toggle-effect.spec.ts:51:3 › wb-toggle behavior effects › target attribute toggles the class on the referenced element, not just itself (2.0s)\n  ok 2 [behaviors] › tests\\behaviors\\toggle-effect.spec.ts:37:3 › wb-toggle behavior effects › clicking toggles the default \"active\" class on itself and updates aria-pressed (2.1s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 5 tests in 5.6s\n  ✓ Passed:  5\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 5/5 passed\n════════════════════════════════════════════════════════════\n\n\n  5 passed (5.8s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-27T20:48:36.042Z",
+  "duration": "9.15s",
+  "exitCode": 0
+}

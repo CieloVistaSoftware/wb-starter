@@ -1,4 +1,68 @@
-# 🅿️ PARKING LOT (2026-07-28, session — PUSHED, parked mid-audit by direct instruction)
+# 🅿️ PARKING LOT (2026-07-29, session — mostly PUSHED, parked mid-audit by direct instruction)
+
+**Task:** Continued from the prior session. Fixed the CI — Tests failure backlog (232 failures down to a small remainder — 3 systemic root causes found and fixed: a test-suite-wide "app ready" race, pages/behaviors.html being stale relative to its own schema, and a dead test-bootstrap entry point). Then pivoted to live bug-fixing from a rapid stream of John's screenshots of `demos/site/cards.html` and `tests/fixtures/cards-permutation-matrix.html`, plus dispatched 6 background agents across 8 GitHub issues (#379, #382, #277, #224, #322, #365, #344, #370). **Parked here by direct instruction ("park") mid-investigation of a real but not-yet-understood CSS bug** — see "OPEN THREAD" below, do not assume it's fixed.
+
+**Landed & pushed (origin/main, through commit `1a68e7f`):**
+- CI — Tests: fixed the `window.WB?.behaviors` readiness-check race across ~37 spec files (real ready signal is `window.WBSite && window.WBSite.currentPage`, set only after the full init+navigate chain — `WB?.behaviors` is true before that even starts). permutation-compliance.spec.ts went from 134 failures to 0/4-flaky.
+- Repointed tests/behaviors/behaviors-showcase.spec.ts from a deleted file (`demos/behaviors-showcase.html`) to the real `/?page=behaviors` route; regenerated `pages/behaviors.html` from its own schema (was stale, missing whole sections); fixed 3 more stale/wrong assertions in that spec.
+- Rewrote tests/behaviors/fixes-verification.spec.ts wholesale — it bootstrapped via a dead entry point (`src/index.js`, wb-lazy.js) that raced an orphaned WBSite chain; now uses the same `goto('/') + WB.scan()` pattern as permutation-compliance.spec.ts. Fixed ~8 drifted assertions along the way (dead `data-behavior="X"` syntax, `media.js` split into per-tag files, colorpicker rewritten as a native `type=color` behavior not a custom element, wrong CSS class names).
+- `pages/behaviors.html` + `scripts/generate-behaviors-page.js`: fixed 2 compliance violations (`class="wb-btn wb-btn--X"` → `variant="X"`; `<wb-alert type="X">` → `variant="X"`).
+- `pages/home.html`: fixed a domain-absolute import path in the "one script does it all" code sample (#384, closed).
+- Added a "What's New" page (`pages/whats-new.html`) + nav entry — lists what's live on `.io` by date, in plain language.
+- `src/wb-viewmodels/card.js` — **cardfile**: `downloadUrl` was falling back to `filename` (a display label, not a URL) when no `href` was given, so every file-type-variant card downloaded the *current page itself* named after the label (confirmed live: a grid of cards all downloading as "Sample filename (N).htm"). Now requires `href`; if missing, shows a visible red warning instead of doing nothing silently (John's suggestion).
+- `demos/site/cards.html` — **Expandable Card** (#352, closed): the demo answer text was short enough to already fit the collapsed height, so the (actually-working) toggle produced zero visible change. Lengthened the content; strengthened the regression test to assert real height growth, not just a class toggle.
+- `tests/fixtures/cards-permutation-matrix.html`: added a `<wb-themecontrol>`; replaced non-functional placeholder values that don't render (`background="Sample background"`, `image="bg.jpg"/"hero.jpg"/"product.jpg"`) with real picsum.photos URLs on cardhero/cardoverlay entries; moved cardoverlay's description text into `title` (cardoverlay never reads inner text content, so it was invisibly discarded).
+- Closed #371 (cards.html image retries + version drift — already fixed earlier in the session, verified and closed) and #384 (home page pitch).
+- Background agents: #370 (Law 9 inline styles) landed a pilot commit (`75d9b9b`, themecontrol). #277 investigated and correctly declined to close (real fix already landed earlier; remaining scope is a genuine product decision re: native `<nav>` auto-injection, cross-referenced with #276). Results from #379, #382, #224, #322, #365, #344 **not yet reviewed** — check for their commits/comments next session (`git log --oneline` since `1a68e7f`, and `gh issue list` for new comments).
+
+**Version:** bumped to 3.0.2 and pushed (per John's new standing instruction: bump the package version on every push to `.io`, since GitHub Pages deploys directly from `main`).
+
+**🔴 OPEN THREAD — do not assume fixed, needs fresh investigation:**
+
+A large, real pattern was found late in the session: `cardBase()` (card.js) reads `variant` directly off the element and adds a generic `wb-card--{variant}` class for **every** card type, not just the base `<wb-card>`. But `cardstats`/`cardproduct`/`cardpricing`/`cardvideo`/`cardportfolio` each declare their own `variant` enum in their schema.json (e.g. cardstats: default/compact/large/minimal) with **zero CSS anywhere** backing the type-specific words — confirmed live via John's screenshots for cardstats, cardproduct, cardpricing, cardvideo, cardportfolio, cardhorizontal, cardtestimonial: every variant renders pixel-identical to default. Same root-cause family as the already-fixed `.wb-testimonial.wb-card--minimal` precedent (line ~206 of card.css) and the base card's bordered/flat fix.
+
+**What's uncommitted locally** (`git stash` was used mid-session to protect it while pushing verified work — currently restored as working-tree changes, NOT committed):
+- `src/styles/behaviors/card.css` — added scoped rules for `.wb-stats`/`.wb-product`/`.wb-pricing`/`.wb-card-video` `.wb-card--compact/large/horizontal/minimal`.
+- `src/wb-viewmodels/card.js` — made cardstats's unconditional inline `element.style.padding` conditional on `variant === 'default'` (same "inline always beats CSS class" bug pattern fixed elsewhere this session for the base card).
+- `tests/regression/card-typed-variants-no-op.spec.ts` (new file) — **currently FAILING, 4 of 4 tests.**
+
+**Why it's not done:** the regression test's live check showed `#pr-default` (a fresh `<wb-cardpricing variant="default">`) has `background-color: rgba(0,0,0,0)` and `border: 0px none` — i.e. **no visible surface at all** — despite `cardBase()` unconditionally adding both the `wb-card` class (line 169) *and* a real `.wb-card { background: var(--bg-secondary); border: 1px solid var(--border-color); }` CSS rule (card.css line 21). This contradicts the whole theory: if the base surface itself isn't rendering for cardpricing, my `.wb-pricing.wb-card--minimal { background: transparent }` addition can never produce a *detectable* difference, because there's nothing to remove in the first place. Ruled out so far: not a test-timing race (fixed the missing `await` on `WB.scan()`, no change). Root cause genuinely unknown — needs `wb-debug` tracing (per project standard: trace, don't guess) on why cardpricing's own `wb-card` class isn't picking up the base CSS live, before touching card.css/card.js further. Do NOT trust the current uncommitted card.css/card.js changes as correct until this is resolved and the test goes green.
+
+**John's backlog from this session, not yet triaged/fixed** (all live screenshots from `tests/fixtures/cards-permutation-matrix.html` unless noted):
+- cardhorizontal: `variant` (default/elevated/bordered/minimal) — "these have no value at all other than a bordered container."
+- cardoverlay: `position` (top/center/bottom) — "None of these are right."
+- cardoverlay: `xalign` (left/center/right) — "none of these are right either."
+- cardportfolio: `variant` (default/compact/horizontal/full) — "the 1st, 2nd and 3rd look exactly the same" (4th, "full", may differ).
+- cardtestimonial: wants real color differentiation added across default/elevated/bordered/minimal/centered.
+- cardvideo: `aspect` (16/9, 4/3, 1/1, 21/9, 9/16) — "do nothing."
+- No duplicate cardhero demo sections in the permutation-matrix page (dedupe needed).
+- cardbutton demo (`demos/site/cards.html`, "Save Document"/"Delete Account"): wants toast-message confirmation on click, one variant color per button, to visibly prove the click worked.
+- Home page code sample: still references `import WB from 'src/core/wb-lazy.js'` — John flagged this again after my fix; re-check it's actually correct/consistent with what he wants (may want it framed as "the full minimum HTML page needed inside a `<wb-demo>`" per his last message on the topic, not just a `<pre><code>` snippet).
+- cardproduct: what does the `featured` attribute mean/do — unclear, needs investigation (separate from the variant-no-op pattern).
+- cardproduct "Image unavailable" on one instance in `demos/site/cards.html`'s Product Card section — check if this is the SAME already-fixed cardimage-lazy-load-false-negative bug recurring, or a new instance (e.g. a genuinely unreachable picsum seed).
+- cardproduct: John wants a "reduced price" badge shown when `original-price` differs from `price` (currently just shows strikethrough original price inline, no badge).
+
+**Files touched this session (uncommitted, see stash note above):**
+- `src/styles/behaviors/card.css`
+- `src/wb-viewmodels/card.js`
+- `tests/regression/card-typed-variants-no-op.spec.ts` (new)
+
+**Also present, untracked, not yet reviewed — likely from the #365 background agent:**
+- `tests/fixtures/audit-365.html`
+- `tests/regression/audit-365-check.spec.ts`
+- `tests/regression/debug-checkbox.spec.ts`
+- `tests/regression/home-minimal-example.spec.ts`
+(Check these before deleting — they may be real, intentional agent output not yet committed by that agent, or leftover debug scaffolding. Read them first.)
+
+**Next step, in order:**
+1. Check the 6 background agents' outcomes: `git log --oneline 1a68e7f..HEAD` won't show anything (they'd have pushed to origin independently, or be sitting uncommitted) — check `gh issue list --state all` for new comments on #379/#382/#224/#322/#365/#344, and `git log origin/main` for any commits beyond `1a68e7f`.
+2. Trace (don't guess) why `<wb-cardpricing variant="default">` shows no background/border live despite the CSS existing — this blocks the whole typed-variant-CSS fix from being verified.
+3. Once traced and fixed, get `tests/regression/card-typed-variants-no-op.spec.ts` green, then decide whether the same fix pattern needs extending to cardhorizontal/cardoverlay/cardportfolio/cardtestimonial/cardvideo per John's list above.
+4. Work through John's backlog list above in order.
+
+---
+
+
 
 **Task:** Started from a Claude Code session working the *other* project (cielovista-tools) that pivoted here to help triage the 44-open-issue backlog. First found and fixed a foundational problem: local `main` was 2 commits (`845434a`, `1b6d1aa`) ahead of `origin/main` — the actual fix commits for #372/#374-378 existed only locally and had never been pushed, which is also why `CI — Tests` hadn't run in 10 days. Pushed them, then worked through issues in batches, root-causing several for real rather than treating symptoms. Late in the session, John reviewed the results and reframed the whole direction: the actual principle is **never rebuild the rendering of anything that's already a native/semantic HTML element — behaviors only add to what's already there, never reinvent it**. `wb-checkbox`/`wb-textarea` were the confirmed violations (custom-element wrappers around a native form control whose own behavior function already fully enhanced the bare element). Deprecated both; audit of the rest of the schema-driven component set tracked in #387. **Parked here by direct instruction ("park") before finishing that audit.**
 

@@ -34,6 +34,16 @@ The behavior does **not** rebuild the DOM when the schema has already processed 
 | `icon` | string | auto | Custom icon (overrides variant-based letter) |
 | `elevated` | boolean | `false` | Add shadow elevation |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardnotification
+  variant="info"
+  title="Information"
+  message="This is an informational message.">
+</wb-cardnotification>
+</wb-demo>
+
 ## Usage
 
 ### Info Notification

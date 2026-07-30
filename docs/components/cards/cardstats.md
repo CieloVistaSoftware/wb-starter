@@ -24,6 +24,16 @@ Inherits all [card properties](./card.md) plus:
 | `trend` | string | `""` | Trend: `up`, `down`, `neutral` |
 | `trendValue` | string | `""` | Trend percentage/value |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardstats
+  value="1,234"
+  label="Total Users"
+  icon="👥">
+</wb-cardstats>
+</wb-demo>
+
 ## Usage
 
 ### Basic Stats Card

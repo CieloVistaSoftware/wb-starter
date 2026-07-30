@@ -3,22 +3,44 @@ import { test, expect } from '@playwright/test';
 /**
  * Auto-injection compliance. (#277)
  *
- * These tests use page.setContent(), so the page MUST first navigate to the
- * server — otherwise the base URL is about:blank and the `<script type="module">
- * import WB from '/src/core/wb.js'</script>` never resolves (WB never loads, and
- * "should NOT have class" assertions pass vacuously). We goto a served page first,
- * then setContent, then wait for hydration.
+ * Two defects fixed here:
+ *
+ * 1. WB never loaded. The old version called page.setContent() with a
+ *    <script type="module">import WB from '/src/core/wb.js'</script> WITHOUT
+ *    first navigating the page to the server, so the base URL was
+ *    about:blank and the absolute import never resolved. Every "should have
+ *    class" assertion failed with class "", and every "should NOT have
+ *    class" assertion passed vacuously (WB never ran at all).
+ *
+ *    Fix: navigate to tests/fixtures/blank.html FIRST (not '/' — the real
+ *    site root runs its own site-engine.js WB.init() call, which races/leaks
+ *    into this test's own later, isolated WB.init() call; see
+ *    tests/compliance/autoinject-default-false.spec.ts for the same fix).
+ *    blank.html is script-free and served from the same origin as the app,
+ *    so the absolute '/src/core/wb.js' import resolves correctly.
+ *
+ * 2. Assertions contradicted the implementation/contract. See tag-map.js's
+ *    nativeMap for the ground truth of what native tags auto-inject as.
+ *    nativeMap maps 'article' -> 'card' and 'dialog' -> 'dialog'; 'nav' is
+ *    deliberately NOT in nativeMap (see the "Native <nav>" test below for
+ *    why), so a <nav> must NOT become a navbar under autoInject.
  */
-async function renderWithWB(page, bodyHtml: string) {
-  await page.goto('/'); // establishes http://localhost origin so absolute imports resolve
+async function renderWithWB(page, bodyHtml: string, initOptions = '{ autoInject: true }') {
+  await page.goto('/tests/fixtures/blank.html');
   await page.setContent(`
     ${bodyHtml}
     <script type="module">
       import WB from '/src/core/wb.js';
-      window.__wbReady = WB.init({ autoInject: true }).then(() => WB.scan(document.body)).then(() => { window.__wbDone = true; });
+      window.__wbDone = false;
+      WB.init(${initOptions}).then(() => WB.scan(document.body)).then(() => { window.__wbDone = true; });
     </script>
   `);
-  await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 15000 }).catch(() => {});
+  await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 15000 });
+  // Settle time so async behavior-processing that completes after scan()'s
+  // own promise resolves (e.g. schema/behavior module loading) has landed
+  // before assertions run — matches the wait used in
+  // tests/compliance/autoinject-default-false.spec.ts for the same reason.
+  await page.waitForTimeout(800);
 }
 
 test.describe('Auto-Injection Compliance', () => {
@@ -27,16 +49,31 @@ test.describe('Auto-Injection Compliance', () => {
     await expect(page.locator('#explicit-card')).toHaveClass(/wb-card/, { timeout: 10000 });
   });
 
-  test('Native <dialog> is enhanced with wb-dialog', async ({ page }) => {
+  test('Native <dialog> is auto-injected with wb-dialog (nativeMap: dialog -> dialog)', async ({ page }) => {
     await renderWithWB(page, `<dialog id="auto-dialog">Content</dialog>`);
     await expect(page.locator('#auto-dialog')).toHaveClass(/wb-dialog/, { timeout: 10000 });
   });
 
-  // Native <nav> → navbar auto-injection is NOT yet a decided contract: `nav` is
-  // not in nativeMap, and turning every <nav> (incl. the site's own
-  // <nav class="site__nav">) into a navbar needs the design decision in #277/#276.
-  test.fixme('Native <nav> should be auto-injected as Navbar (#277)', async ({ page }) => {
+  test('Native <article> IS auto-injected as Card (nativeMap: article -> card)', async ({ page }) => {
+    await renderWithWB(page, `<article id="auto-article"><header><h1>Title</h1></header><p>Content</p></article>`);
+    await expect(page.locator('#auto-article')).toHaveClass(/wb-card/, { timeout: 10000 });
+  });
+
+  // Contract decision (#277): <nav> does NOT auto-inject as navbar, even with
+  // autoInject:true. 'nav' is intentionally absent from tag-map.js's
+  // nativeMap. site-engine.js renders the real site's own navigation as
+  // <nav class="site__nav" id="siteNav"> and drives it with hand-rolled
+  // toggle/resize/mobile logic in site-engine.js itself, NOT via WB's navbar
+  // behavior. If 'nav' were added to nativeMap, every autoInject:true page
+  // (including the real site, now that config/site.json's
+  // autoInjectComponents defaults to true — #279) would have its own
+  // site__nav silently reclassified/re-enhanced as a wb-navbar underneath
+  // site-engine.js's unrelated logic. Native <nav> auto-inject is therefore
+  // out of scope for #277; a page that wants navbar behavior on a <nav> must
+  // opt in explicitly (e.g. <wb-navbar> or an x-as-navbar style extension),
+  // not receive it implicitly.
+  test('Native <nav> is NOT auto-injected as Navbar (nav intentionally absent from nativeMap)', async ({ page }) => {
     await renderWithWB(page, `<nav id="auto-nav"><ul><li><a href="#">Link</a></li></ul></nav>`);
-    await expect(page.locator('#auto-nav')).toHaveClass(/wb-navbar/, { timeout: 10000 });
+    await expect(page.locator('#auto-nav')).not.toHaveClass(/wb-navbar/);
   });
 });

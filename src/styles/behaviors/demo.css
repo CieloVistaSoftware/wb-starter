@@ -98,3 +98,43 @@ wb-demo > .x-pre-wrapper {
 .wb-demo__links a:hover {
   text-decoration: underline;
 }
+
+/* #388: per-card doc-link "badge" -- attached directly onto an individual
+   wb-card* element (see demo.js's attachCardDocLink) instead of the shared
+   .wb-demo__links line above. Sits at the card's own top-right corner,
+   slightly overlapping the border, so it's clearly a separate "meta/docs"
+   affordance -- never inside the header content flow, never the same shape
+   or position as a card's own .wb-card__badge (card.js STYLE_BADGE), which
+   sits inset within the header instead. position:absolute is !important
+   because `.wb-card--glass > *` (card.css) sets position:relative on every
+   direct child of a glass-variant card, which would otherwise outrank this
+   single-class rule and break the corner placement. Every wb-card* element
+   is `position: relative` (card.css `.wb-card`), so this anchors correctly
+   regardless of card type. */
+.wb-demo__card-doc-link {
+  position: absolute !important;
+  top: -0.5rem;
+  right: -0.5rem;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  line-height: 1;
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.wb-demo__card-doc-link:hover,
+.wb-demo__card-doc-link:focus-visible {
+  opacity: 1;
+  color: var(--primary);
+  border-color: var(--primary);
+}

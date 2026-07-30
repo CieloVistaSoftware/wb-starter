@@ -25,6 +25,16 @@ Inherits all [card properties](./card.md) plus:
 | `downloadable` | boolean | `true` | Show download button |
 | `href` | string | `""` | Download URL |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardfile
+  filename="Annual Report.pdf"
+  type="pdf"
+  size="2.5 MB">
+</wb-cardfile>
+</wb-demo>
+
 ## Usage
 
 ### Basic File Card

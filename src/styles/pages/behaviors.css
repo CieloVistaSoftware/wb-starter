@@ -100,6 +100,13 @@ header h1 {
   align-items: center;
   }
 
+.copy-target-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
   /* MOBILE-FIRST: Responsive overrides for behaviors page */
   @media (max-width: 600px) {
     .stats-grid,

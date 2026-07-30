@@ -27,6 +27,16 @@ Inherits all [card properties](./card.md) plus:
 | `cta` | string | `"Add to Cart"` | CTA button text |
 | `description` | string | `""` | Product description |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardproduct
+  title="Wireless Headphones"
+  image="/images/headphones.jpg"
+  price="$99.99">
+</wb-cardproduct>
+</wb-demo>
+
 ## Usage
 
 ### Basic Product

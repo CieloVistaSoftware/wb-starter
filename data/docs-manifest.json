@@ -1,6 +1,6 @@
 {
-  "generated": "2026-07-18T01:43:45.246Z",
-  "totalFiles": 189,
+  "generated": "2026-07-30T17:31:39.197Z",
+  "totalFiles": 190,
   "categories": [
     "_today",
     "architecture",
@@ -290,12 +290,6 @@
         "title": "WB-Starter Behavior System - Technical Workflow",
         "name": "WB_BEHAVIOR_SYSTEM",
         "category": "root"
-      },
-      {
-        "path": "docs/wizard.md",
-        "title": "wizard",
-        "name": "wizard",
-        "category": "root"
       }
     ],
     "architecture": [
@@ -337,6 +331,18 @@
       }
     ],
     "audits": [
+      {
+        "path": "docs/audits/HOST-CHILD-DISPATCH-AUDIT.md",
+        "title": "Host/Child Dispatch Audit — schema-built native elements vs. their behavior JS",
+        "name": "HOST-CHILD-DISPATCH-AUDIT",
+        "category": "audits"
+      },
+      {
+        "path": "docs/audits/INLINE-STYLES-AUDIT.md",
+        "title": "Inline Styles Audit — Tier-1 Law 9 violation",
+        "name": "INLINE-STYLES-AUDIT",
+        "category": "audits"
+      },
       {
         "path": "docs/audits/X-USAGE-AUDIT.md",
         "title": "X-Attribute Usage Audit",
@@ -1103,7 +1109,7 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "🅿️ PARKING LOT (2026-07-14/15, session — PUSHED, 2 background agents still running)",
+        "title": "🅿️ PARKING LOT (2026-07-29, session — mostly PUSHED, parked mid-audit by direct instruction)",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -1196,7 +1202,7 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "🅿️ PARKING LOT (2026-07-14/15, session — PUSHED, 2 background agents still running)",
+      "title": "🅿️ PARKING LOT (2026-07-29, session — mostly PUSHED, parked mid-audit by direct instruction)",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -1313,6 +1319,18 @@
       "title": "Audio Component",
       "name": "audio",
       "category": "root"
+    },
+    {
+      "path": "docs/audits/HOST-CHILD-DISPATCH-AUDIT.md",
+      "title": "Host/Child Dispatch Audit — schema-built native elements vs. their behavior JS",
+      "name": "HOST-CHILD-DISPATCH-AUDIT",
+      "category": "audits"
+    },
+    {
+      "path": "docs/audits/INLINE-STYLES-AUDIT.md",
+      "title": "Inline Styles Audit — Tier-1 Law 9 violation",
+      "name": "INLINE-STYLES-AUDIT",
+      "category": "audits"
     },
     {
       "path": "docs/audits/X-USAGE-AUDIT.md",
@@ -2296,12 +2314,6 @@
       "path": "docs/wbservices.md",
       "title": "wbservices",
       "name": "wbservices",
-      "category": "root"
-    },
-    {
-      "path": "docs/wizard.md",
-      "title": "wizard",
-      "name": "wizard",
       "category": "root"
     }
   ]

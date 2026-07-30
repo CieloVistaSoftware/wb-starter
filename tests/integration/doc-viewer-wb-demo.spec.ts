@@ -24,7 +24,22 @@ const CASES: Case[] = [
   { file: 'docs/components/cards/card.md', liveSelector: 'wb-card', label: 'card component doc' },
   { file: 'docs/behaviors/wb-column.md', liveSelector: 'wb-column', label: 'wb-column behavior doc' },
   { file: 'docs/components/cards/carddraggable.md', liveSelector: 'wb-carddraggable', label: 'carddraggable component doc' },
+  { file: 'docs/components/cards/cardlink.md', liveSelector: 'wb-cardlink', label: 'cardlink component doc' },
   { file: 'docs/components/components.md', liveSelector: 'wb-button', label: 'components composition doc', upgradeAttr: 'role' },
+  { file: 'docs/components/cards/cardbutton.md', liveSelector: 'wb-cardbutton', label: 'cardbutton component doc' },
+  { file: 'docs/components/cards/cardexpandable.md', liveSelector: 'wb-cardexpandable', label: 'cardexpandable component doc' },
+  { file: 'docs/components/cards/cardfile.md', liveSelector: 'wb-cardfile', label: 'cardfile component doc' },
+  { file: 'docs/components/cards/cardhorizontal.md', liveSelector: 'wb-cardhorizontal', label: 'cardhorizontal component doc' },
+  { file: 'docs/components/cards/cardminimizable.md', liveSelector: 'wb-cardminimizable', label: 'cardminimizable component doc' },
+  { file: 'docs/components/cards/cardnotification.md', liveSelector: 'wb-cardnotification', label: 'cardnotification component doc' },
+  { file: 'docs/components/cards/cardoverlay.md', liveSelector: 'wb-cardoverlay', label: 'cardoverlay component doc' },
+  { file: 'docs/components/cards/cardportfolio.md', liveSelector: 'wb-cardportfolio', label: 'cardportfolio component doc' },
+  { file: 'docs/components/cards/cardpricing.md', liveSelector: 'wb-cardpricing', label: 'cardpricing component doc' },
+  { file: 'docs/components/cards/cardproduct.md', liveSelector: 'wb-cardproduct', label: 'cardproduct component doc' },
+  { file: 'docs/components/cards/cardprofile.md', liveSelector: 'wb-cardprofile', label: 'cardprofile component doc' },
+  { file: 'docs/components/cards/cardstats.md', liveSelector: 'wb-cardstats', label: 'cardstats component doc' },
+  { file: 'docs/components/cards/cardtestimonial.md', liveSelector: 'wb-cardtestimonial', label: 'cardtestimonial component doc' },
+  { file: 'docs/components/cards/cardvideo.md', liveSelector: 'wb-cardvideo', label: 'cardvideo component doc' },
 ];
 
 test.describe('raw <wb-demo> in Markdown renders live control + source', () => {

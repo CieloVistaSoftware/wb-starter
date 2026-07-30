@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/behaviors/accordion.spec.ts",
+  "startedAt": "2026-06-29T20:29:41.589Z",
+  "updatedAt": "2026-06-29T20:29:54.497Z",
+  "command": "npx playwright test tests/behaviors/accordion.spec.ts --project=behaviors --workers=2",
+  "pid": 26844,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\behaviors\\accordion.spec.ts",
+  "output": "\nRunning 3 tests using 2 workers\n\n  ok 2 [behaviors] › tests\\behaviors\\accordion.spec.ts:44:3 › Accordion — disclosure behavior › clicking the head expands, clicking again collapses (3.5s)\n  ok 1 [behaviors] › tests\\behaviors\\accordion.spec.ts:35:3 › Accordion — disclosure behavior › renders the title as a clickable head and a hidden body (4.2s)\n  ok 3 [behaviors] › tests\\behaviors\\accordion.spec.ts:58:3 › Accordion — disclosure behavior › keyboard: Enter on a focused head toggles it (2.7s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 8.7s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 3/3 passed\n════════════════════════════════════════════════════════════\n\n\n  3 passed (8.8s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-06-29T20:29:54.497Z",
+  "duration": "12.91s",
+  "exitCode": 0
+}

@@ -1,0 +1,20 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/compliance/demos-list-complete.spec.ts",
+  "startedAt": "2026-07-15T02:36:52.959Z",
+  "updatedAt": "2026-07-15T02:37:07.358Z",
+  "command": "npx playwright test tests/compliance/demos-list-complete.spec.ts --workers=1",
+  "pid": 45864,
+  "passed": 0,
+  "failed": 0,
+  "skipped": 0,
+  "total": 0,
+  "currentFile": null,
+  "output": "\nRunning 10 tests using 1 worker\n\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-15T02:37:07.358Z",
+  "duration": "14.40s",
+  "exitCode": 3221225786
+}

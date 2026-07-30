@@ -27,6 +27,18 @@ Inherits all [card properties](./card.md) plus:
 | `featured` | boolean | `false` | Highlight as featured |
 | `background` | string | `""` | Background image URL |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardpricing
+  plan="Starter"
+  price="$9"
+  period="/month"
+  features="5 projects, Email support, 1GB storage"
+  cta="Start Free Trial">
+</wb-cardpricing>
+</wb-demo>
+
 ## Usage
 
 ### Basic Pricing Card

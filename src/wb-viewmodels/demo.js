@@ -109,6 +109,53 @@ function findWbComponents(html) {
     return [...new Set(matches)]; // unique
 }
 
+// #388: attach a small top-right doc-link "badge" directly onto ONE card,
+// instead of relying on the single shared '.wb-demo__links' line below the
+// whole grid (which reads as detached from any individual card once a demo
+// holds more than one).
+//
+// Why a self-healing MutationObserver instead of a single appendChild: a
+// card's own behavior (cardimage/cardhero/cardlink/etc, card.js) is applied
+// lazily via WB's IntersectionObserver-driven injection (wb-lazy.js) on its
+// own schedule, independent of this demo's build order -- and nearly every
+// card behavior rebuilds via `element.innerHTML = ''` before laying out its
+// header/main/footer. If that rebuild lands AFTER we've attached this link,
+// it silently wipes it out. Every card is only ever rebuilt once by its own
+// behavior, so watch for exactly that: if the link goes missing, put it
+// back. Idempotent (checks for an existing link first), so it settles after
+// at most one heal and stops mutating on its own re-insert.
+function attachCardDocLink(cardEl, file, comp, root) {
+    const href = root + 'public/doc-viewer.html?file=' + encodeURIComponent('docs/' + file);
+    const label = `wb-${comp} docs`;
+
+    const build = () => {
+        if (cardEl.querySelector(':scope > .wb-demo__card-doc-link')) return;
+        const link = document.createElement('a');
+        link.className = 'wb-demo__card-doc-link';
+        link.href = href;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.setAttribute('aria-label', label);
+        link.title = label;
+        link.textContent = '📖';
+        cardEl.appendChild(link);
+    };
+
+    build();
+
+    const observer = new MutationObserver(() => {
+        if (!cardEl.isConnected) {
+            observer.disconnect();
+            return;
+        }
+        build();
+    });
+    observer.observe(cardEl, { childList: true });
+    // Belt-and-suspenders: every lazy injection settles well within this —
+    // never leave the observer running indefinitely.
+    setTimeout(() => observer.disconnect(), 8000);
+}
+
 export async function demo(element, options = {}) {
     // Guard against double initialization
     if (element._demoInitialized) return () => {};
@@ -170,18 +217,38 @@ export async function demo(element, options = {}) {
         window.WB.scan(grid);
     }
 
-    // Add doc links below the grid. (#262: the old '?page=docs#wb-…' hrefs were
+    // Add doc links. (#262: the old '?page=docs#wb-…' hrefs were
     // dead on EVERY surface — page-relative, so inside the doc-viewer they hit
     // doc-viewer.html?page=docs, and pages/docs.html has no #wb-* anchors anyway.)
     // Link each component to its REAL doc opened in the doc-viewer, resolved from
     // docs/manifest.json. Components with no doc get NO link — never a dead link.
-    const wbComponents = findWbComponents(rawBlock);
-    if (wbComponents.length > 0) {
+    //
+    // #388: CARD children of the grid get their OWN top-right link (attached
+    // directly to that specific card, see attachCardDocLink above) instead of
+    // being folded into the generic shared line — a multi-card demo used to
+    // read as one detached caption under the whole group, not tied to any
+    // individual card. Everything else (badges/alerts/buttons/etc, or
+    // whatever isn't a card in a rare mixed block) keeps the original
+    // shared-line behavior below, unchanged.
+    const allComponents = findWbComponents(rawBlock);
+    const cardChildren = Array.from(grid.children).filter(
+        (child) => child.tagName && child.tagName.startsWith('WB-CARD')
+    );
+    const sharedComponents = allComponents.filter((comp) => !comp.startsWith('card'));
+    if (cardChildren.length > 0 || sharedComponents.length > 0) {
         // Deterministic: await the (cached) manifest and build the links inline —
         // a floating .then() left empty divs when init raced page load.
         const manifest = await loadDocsManifest().catch(() => null);
         const root = siteRoot();
-        const linked = wbComponents
+
+        cardChildren.forEach((cardEl) => {
+            const comp = cardEl.tagName.slice(3).toLowerCase(); // WB-CARDHERO -> cardhero
+            const file = findDocFile(manifest, comp);
+            if (!file) return; // never a dead link
+            attachCardDocLink(cardEl, file, comp, root);
+        });
+
+        const linked = sharedComponents
             .map((comp) => ({ comp, file: findDocFile(manifest, comp) }))
             .filter((x) => x.file);
         if (linked.length) {

@@ -58,6 +58,34 @@
   text-align: left; /* match the header + body — never centered */
 }
 
+/* #350: a card's own <footer> is semantic markup (card.js's documented
+   standard: "Footer content: <footer>") -- but WB's generic native-tag
+   scanner (tag-map.js: 'footer' -> 'footer' behavior) auto-injects the
+   SITE-CHROME footer behavior into EVERY bare <footer> tag it scans,
+   including ones a card already built and classed itself. That behavior
+   (footer.js) unconditionally adds .wb-footer, so every card footer ends
+   up with BOTH `wb-card__footer wb-footer` classes. .wb-footer (footer.css)
+   sets display:flex/align-items:center, and at <=768px switches to
+   flex-direction:column -- which turns the footer's own text into a single
+   anonymous flex item and CENTERS it via align-items, NOT text-align. That
+   is why the reported bug was invisible to a `getComputedStyle().textAlign`
+   check (it correctly read "left" the whole time, confirmed live via
+   bounding-box measurement at 500px viewport: leftGap and rightGap both
+   ~124.6px, i.e. genuinely centered) -- the mechanism was flexbox item
+   alignment, a completely different property, not text-align at all.
+   Reassert with higher specificity (.wb-card__footer.wb-footer, 0,2,0 beats
+   .wb-footer's 0,1,0) so a card's own footer layout always wins over the
+   generic site-footer behavior, at every viewport width. */
+.wb-card__footer.wb-footer {
+  display: block;
+  flex-direction: unset;
+  align-items: unset;
+  justify-content: unset;
+  gap: 0;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
 /* Semantic variants — a left accent bar in the variant's theme color so the card
    visibly reads as success/danger/etc. (variant="success" added .wb-card--success
    but nothing styled it). Colors come from the theme — no literals.
@@ -175,6 +203,31 @@
 
 /* Keep header/main/footer above the shimmer overlay. */
 .wb-card--glass > * { position: relative; z-index: 1; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GLASS VARIANT FALLBACK — browsers without backdrop-filter support (#351)
+   Same pattern as navbar.css's `@supports not (backdrop-filter: blur(1px))`
+   block. Some older/budget Android WebViews (seen on certain Samsung phones)
+   don't support backdrop-filter at all and silently drop it, leaving only
+   `background: var(--card-glass-bg)` — a faint translucent tint with no blur,
+   which reads as "the glass effect is broken" rather than a graceful,
+   intentional degradation. Swap in the more-opaque --card-glass-*-fallback
+   tokens (themes.css) so the card still reads as a distinct glass-styled
+   surface without relying on blur to sell it.
+   The shimmer sheen (::before) is disabled here too — an animated diagonal
+   streak sliding across a flat, non-blurred background reads as a visual
+   glitch rather than a glass highlight, so it's not worth keeping. */
+@supports not (backdrop-filter: blur(1px)) {
+  .wb-card--glass,
+  .wb-card--glass:hover {
+    background: var(--card-glass-bg-fallback);
+    border-color: var(--card-glass-border-fallback);
+  }
+
+  .wb-card--glass::before {
+    display: none;
+  }
+}
 
 /* Bordered — card.schema.json's variant enum (default/glass/bordered/flat)
    declared this since #232, but it had no CSS rule at all, so it silently

@@ -23,6 +23,16 @@ Inherits all [card properties](./card.md) plus:
 | `gradient` | boolean | `true` | Show gradient overlay for readability |
 | `height` | string | `"300px"` | Card height |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardoverlay
+  title="Featured Story"
+  subtitle="Read more about this"
+  image="/images/background.jpg">
+</wb-cardoverlay>
+</wb-demo>
+
 ## Usage
 
 ### Basic Overlay

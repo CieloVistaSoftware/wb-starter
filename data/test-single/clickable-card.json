@@ -1,0 +1,29 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/cards/clickable-card.spec.ts",
+  "startedAt": "2026-07-30T16:10:53.663Z",
+  "updatedAt": "2026-07-30T16:11:17.438Z",
+  "command": "npx playwright test --workers=8 tests/cards/clickable-card.spec.ts",
+  "pid": 3300,
+  "passed": 2,
+  "failed": 1,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\cards\\clickable-card.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  x  1 [behaviors] › tests\\cards\\clickable-card.spec.ts:4:3 › Clickable Card Fix › Clickable card in components page should trigger toast (7.7s)\n  x  2 [behaviors] › tests\\cards\\clickable-card.spec.ts:4:3 › Clickable Card Fix › Clickable card in components page should trigger toast (retry #1) (8.0s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 19.8s\n  ✓ Passed:  0\n  ✗ Failed:  2\n\n  By Project:\n    ✗ behaviors: 0/2 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [behaviors] › tests\\cards\\clickable-card.spec.ts:4:3 › Clickable Card Fix › Clickable card in components page should trigger toast \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#components-div-12')\n    Expected: visible\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#components-div-12')\u001b[22m\n\n\n       8 |     // Find the clickable card\n       9 |     const card = page.locator('#components-div-12');\n    > 10 |     await expect(card).toBeVisible();\n         |                        ^\n      11 |     \n      12 |     // Verify it has the correct data attributes\n      13 |     await expect(card).toHaveAttribute('x-toast', '');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\cards\\clickable-card.spec.ts:10:24\n\n    Error Context: data\\test-results\\cards-clickable-card-Click-b66cc-s-page-should-trigger-toast-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#components-div-12')\n    Expected: visible\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#components-div-12')\u001b[22m\n\n\n       8 |     // Find the clickable card\n       9 |     const card = page.locator('#components-div-12');\n    > 10 |     await expect(card).toBeVisible();\n         |                        ^\n      11 |     \n      12 |     // Verify it has the correct data attributes\n      13 |     await expect(card).toHaveAttribute('x-toast', '');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\cards\\clickable-card.spec.ts:10:24\n\n    Error Context: data\\test-results\\cards-clickable-card-Click-b66cc-s-page-should-trigger-toast-behaviors-retry1\\error-context.md\n\n  1 failed\n    [behaviors] › tests\\cards\\clickable-card.spec.ts:4:3 › Clickable Card Fix › Clickable card in components page should trigger toast \n",
+  "errors": "\n❌ FAILED: Clickable card in components page should trigger toast\n   Error: expect(locator).toBeVisible() failed\n\n❌ FAILED: Clickable card in components page should trigger toast\n   Error: expect(locator).toBeVisible() failed\n",
+  "failures": [
+    {
+      "file": "tests\\cards\\clickable-card.spec.ts",
+      "name": "Clickable Card Fix › Clickable card in components page should trigger toast"
+    },
+    {
+      "file": "tests\\cards\\clickable-card.spec.ts",
+      "name": "Clickable Card Fix › Clickable card in components page should trigger toast (retry #1)"
+    }
+  ],
+  "completedAt": "2026-07-30T16:11:17.438Z",
+  "duration": "23.77s",
+  "exitCode": 1
+}

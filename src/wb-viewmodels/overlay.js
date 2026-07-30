@@ -177,11 +177,49 @@ function positionPopover(trigger, popover, position) {
 /**
  * Drawer - Slide-out panel (works on button click)
  * Custom Tag: <wb-drawer>
+ *
+ * Two competing DOM owners used to fight over the same <wb-drawer> element
+ * (root-caused live): drawer.schema.json's $view builds a real
+ * backdrop/panel/header/title/close/body structure INSIDE the host the
+ * moment WB.scan() processes it (schema-builder.js), wiping out whatever
+ * text the host had (its trigger label, e.g. "Left Drawer") in the process.
+ * Separately, tag-map.js maps <wb-drawer> to this behavior, and wb.js's
+ * scan() unconditionally calls WB.inject(el, 'drawer') for every wb-drawer
+ * tag regardless of whether schema already ran -- so this function ALSO
+ * used to build its own second, independent backdrop+panel pair on click,
+ * appended to document.body, while the schema's copy sat inertly (and
+ * invisibly -- see layout.css's `wb-drawer { visibility: hidden }` default)
+ * inside the host. Result: an empty/malformed trigger box, and (had it ever
+ * become visible) two overlays opening per click.
+ *
+ * Fix: when schema already processed this element (x-schema="drawer"), do
+ * NOT build a second structure. Relocate the schema-built
+ * .wb-drawer__backdrop/.wb-drawer__panel out to document.body (so the host
+ * keeps its own visible label instead of showing the panel's internal
+ * markup) and wire click-to-open/close to that existing DOM instead. Legacy
+ * [x-drawer] usage (plain buttons, no wb-drawer tag, no schema involved --
+ * see tests/integration/drawer-behavior.spec.ts) is untouched: schemaProcessed
+ * is never true for those, so they keep building their own DOM exactly as
+ * before.
  */
 export function drawer(element, options = {}) {
+  // v3.0: matches the schemaProcessed-aware pattern used by cardBase()/
+  // cardnotification() (card.js) -- options.schemaProcessed is set when
+  // WB.inject() is called directly from schema-builder.js's own post-build
+  // hook; the x-schema attribute fallback covers the (more common, for this
+  // tag) case where scan()'s separate unconditional tag-map injection loop
+  // calls WB.inject() without that option, after schema already ran and
+  // stamped x-schema="drawer" on the element.
+  const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
+
   const config = {
-    title: options.title || element.getAttribute('drawer-title') || element.getAttribute('heading') || 'Drawer',
-    content: options.content || element.getAttribute('drawer-content') || element.getAttribute('description') || 'Drawer content',
+    // Plain title/content match drawer.schema.json's actual property names.
+    // drawer-title/drawer-content stay as a fallback for the legacy
+    // [x-drawer] attribute usage (plain <button x-drawer drawer-title="…">,
+    // e.g. pages/components.html) which predates the schema and never used
+    // the schema's naming.
+    title: options.title || element.getAttribute('title') || element.getAttribute('drawer-title') || element.getAttribute('heading') || 'Drawer',
+    content: options.content || element.getAttribute('content') || element.getAttribute('drawer-content') || element.getAttribute('description') || 'Drawer content',
     position: options.position || element.getAttribute('position') || 'right',
     width: options.width || element.getAttribute('width') || '320px',
     ...options
@@ -189,6 +227,81 @@ export function drawer(element, options = {}) {
 
   element.classList.add('wb-drawer-trigger');
   element.classList.add('wb-drawer'); // Marker for test compliance
+
+  // ═══════════════════════════════════════════════════════
+  // PATH A: Schema already built the panel/backdrop — enhance, don't rebuild
+  // ═══════════════════════════════════════════════════════
+  if (schemaProcessed) {
+    const builtPanel = element.querySelector(':scope > .wb-drawer__panel');
+    const builtBackdrop = element.querySelector(':scope > .wb-drawer__backdrop');
+
+    if (builtPanel) {
+      // Move the schema-built structure out of the host and into
+      // document.body: it must render as a fixed overlay, not as inline
+      // content replacing the host's own trigger label.
+      builtPanel.remove();
+      if (builtBackdrop) builtBackdrop.remove();
+      document.body.appendChild(builtPanel);
+      if (builtBackdrop) document.body.appendChild(builtBackdrop);
+
+      builtPanel.classList.add(`wb-drawer--${config.position}`);
+
+      // $view's "close" part has no default content (drawer.schema.json
+      // never gives it a label) -- give it one only if still empty, so an
+      // author-supplied close label (via a future schema change) isn't
+      // clobbered.
+      const closeBtn = builtPanel.querySelector('.wb-drawer__close');
+      if (closeBtn && !closeBtn.textContent.trim()) closeBtn.innerHTML = '&times;';
+
+      const isOpen = () => builtPanel.classList.contains('wb-drawer__panel--open');
+      const show = () => {
+        builtPanel.classList.add('wb-drawer__panel--open');
+        if (builtBackdrop) builtBackdrop.classList.add('wb-drawer__backdrop--open');
+        document.body.classList.add('wb-scroll-lock');
+      };
+      const hide = () => {
+        builtPanel.classList.remove('wb-drawer__panel--open');
+        if (builtBackdrop) builtBackdrop.classList.remove('wb-drawer__backdrop--open');
+        document.body.classList.remove('wb-scroll-lock');
+      };
+      const toggle = () => (isOpen() ? hide() : show());
+
+      const onEscape = (e) => { if (e.key === 'Escape' && isOpen()) hide(); };
+
+      element.addEventListener('click', toggle);
+      if (closeBtn) closeBtn.addEventListener('click', hide);
+      if (builtBackdrop) builtBackdrop.addEventListener('click', hide);
+      document.addEventListener('keydown', onEscape);
+
+      // Matches the wbPopover/wbOffcanvas/wbSheet naming convention already
+      // used by this file's sibling overlay functions -- not element.open/
+      // element.close/element.toggle, which schema-builder.js's generic
+      // $methods binder already stubbed onto the element (unimplemented
+      // warns for open/close; toggle is bound to a viewModel.toggle() that
+      // toggles `element.hidden` on the HOST, which is not what a visible
+      // trigger button wants). Leaving those alone; this is a parallel API.
+      element.wbDrawer = { show, hide, toggle, isOpen };
+
+      return () => {
+        hide();
+        element.removeEventListener('click', toggle);
+        if (closeBtn) closeBtn.removeEventListener('click', hide);
+        if (builtBackdrop) builtBackdrop.removeEventListener('click', hide);
+        document.removeEventListener('keydown', onEscape);
+        builtPanel.remove();
+        if (builtBackdrop) builtBackdrop.remove();
+        element.classList.remove('wb-drawer-trigger');
+      };
+    }
+    // No .wb-drawer__panel found despite schemaProcessed being true --
+    // shouldn't happen (drawer.schema.json's "panel" $view part is
+    // required: true), but fall through to the self-building path below
+    // rather than leaving the trigger with no click behavior at all.
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // PATH B: No schema involved (legacy [x-drawer] usage) — build our own DOM
+  // ═══════════════════════════════════════════════════════
   let drawerEl = null;
   let backdropEl = null;
 

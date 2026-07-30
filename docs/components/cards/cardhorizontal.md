@@ -22,6 +22,17 @@ Inherits all [card properties](./card.md) plus:
 | `imagePosition` | string | `"left"` | Position: `left`, `right` |
 | `imageWidth` | string | `"40%"` | Image width |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardhorizontal
+  title="Feature Title"
+  subtitle="Feature description"
+  image="/images/feature.jpg">
+  Detailed content here.
+</wb-cardhorizontal>
+</wb-demo>
+
 ## Usage
 
 ### Basic Horizontal Card

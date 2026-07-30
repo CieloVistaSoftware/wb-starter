@@ -23,6 +23,18 @@ Inherits all [card properties](./card.md) plus:
 | `primaryHref` | string | `""` | Primary button URL |
 | `secondaryHref` | string | `""` | Secondary button URL |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardbutton
+  title="Action Card"
+  subtitle="Choose an action"
+  primary="Submit"
+  secondary="Cancel">
+  Card content here.
+</wb-cardbutton>
+</wb-demo>
+
 ## Usage
 
 ### Basic Button Card

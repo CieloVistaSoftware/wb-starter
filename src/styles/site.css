@@ -109,7 +109,12 @@ wb-audio, wb-cardhero, wb-cardstats, notification-card {
 wb-drawer {
   visibility: hidden;
 }
-wb-drawer.wb-drawer-layout {
+/* Duplicate of the same-named rule in behaviors/layout.css (both loaded --
+   see the @import note at the top of this file). Kept in sync rather than
+   deduplicated here to avoid an unrelated refactor. See layout.css for the
+   full rationale on why .wb-drawer-trigger is included. */
+wb-drawer.wb-drawer-layout,
+wb-drawer.wb-drawer-trigger {
   visibility: visible;
 }
 

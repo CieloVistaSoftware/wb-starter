@@ -1,6 +1,6 @@
 {
-  "lastRun": "2026-07-18T22:12:51.933Z",
-  "totalChecks": 21180,
+  "lastRun": "2026-07-30T17:46:36.952Z",
+  "totalChecks": 30276,
   "bugs": [
     {
       "id": "bug-regression-tests",
@@ -50,7 +50,7 @@
       "fixCommandId": "cvs.audit.codeHighlight",
       "fixLabel": "Open Code Highlight Audit",
       "detectedAt": "2026-06-23T02:50:15.456Z",
-      "fixed": false
+      "fixed": true
     }
   ],
   "checkIndex": 4

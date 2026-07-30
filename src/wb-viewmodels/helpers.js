@@ -410,7 +410,10 @@ export function scroll(element, options = {}) {
 export function truncate(element, options = {}) {
   const config = {
     lines: parseInt(options.lines || element.getAttribute('lines') || '1'),
-    expandable: options.expandable ?? element.hasAttribute('data-expandable'),
+    // Was hardcoded to hasAttribute('data-expandable') only -- the one Law 11
+    // violation that lived in the behavior code itself rather than the
+    // markup (docs/claude/TIER1-LAWS.md); plain `expandable` never worked.
+    expandable: options.expandable ?? element.hasAttribute('expandable'),
     ...options
   };
 

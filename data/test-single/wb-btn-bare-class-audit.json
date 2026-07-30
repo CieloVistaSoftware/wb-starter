@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/wb-btn-bare-class-audit.spec.ts",
+  "startedAt": "2026-07-30T17:41:29.311Z",
+  "updatedAt": "2026-07-30T17:42:25.174Z",
+  "command": "npx playwright test --workers=8 tests/regression/wb-btn-bare-class-audit.spec.ts",
+  "pid": 27716,
+  "passed": 6,
+  "failed": 0,
+  "skipped": 0,
+  "total": 6,
+  "currentFile": "tests\\regression\\wb-btn-bare-class-audit.spec.ts",
+  "output": "\nRunning 6 tests using 6 workers\n\n  ok 1 [regression] › tests\\regression\\wb-btn-bare-class-audit.spec.ts:128:5 › Bare .wb-btn (no modifier) renders with real visible styling › pages/behaviors.html › Modal trigger (wb-modal.wb-btn) is visibly styled (3.6s)\n  ok 4 [regression] › tests\\regression\\wb-btn-bare-class-audit.spec.ts:158:5 › Bare .wb-btn (no modifier) renders with real visible styling › pages/components.html › every bare .wb-btn trigger on the page is visibly styled (5.1s)\n  ok 2 [regression] › tests\\regression\\wb-btn-bare-class-audit.spec.ts:112:3 › Bare .wb-btn (no modifier) renders with real visible styling › existing .wb-btn.wb-btn--primary keeps its variant background (no regression) (6.5s)\n  ok 3 [regression] › tests\\regression\\wb-btn-bare-class-audit.spec.ts:133:5 › Bare .wb-btn (no modifier) renders with real visible styling › pages/behaviors.html › Drawer triggers (wb-drawer.wb-btn) are visibly styled (8.8s)\n  ok 5 [regression] › tests\\regression\\wb-btn-bare-class-audit.spec.ts:187:3 › Bare .wb-btn (no modifier) renders with real visible styling › demos/landing-page-showcase.html: bare wb-btn demo button is visibly styled (4.4s)\n  ok 6 [regression] › tests\\regression\\wb-btn-bare-class-audit.spec.ts:87:3 › Bare .wb-btn (no modifier) renders with real visible styling › via test-harness injection: bare wb-btn on a plain element and a native button (2.0s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 6 tests in 39.1s\n  ✓ Passed:  6\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 6/6 passed\n════════════════════════════════════════════════════════════\n\n\n  6 passed (41.1s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T17:42:25.174Z",
+  "duration": "55.86s",
+  "exitCode": 0
+}

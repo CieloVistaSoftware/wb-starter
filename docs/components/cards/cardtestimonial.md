@@ -24,6 +24,16 @@ Inherits all [card properties](./card.md) plus:
 | `avatar` | string | `""` | Author avatar URL |
 | `rating` | number | `""` | Star rating (1-5) |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardtestimonial
+  quote="This product changed my life!"
+  author="Jane Doe"
+  role="CEO, TechCorp">
+</wb-cardtestimonial>
+</wb-demo>
+
 ## Usage
 
 ### Basic Testimonial

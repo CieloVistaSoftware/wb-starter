@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/views/nav-sticky.spec.ts",
+  "startedAt": "2026-06-29T22:15:57.996Z",
+  "updatedAt": "2026-06-29T22:16:08.813Z",
+  "command": "npx playwright test tests/views/nav-sticky.spec.ts --project=views --workers=2",
+  "pid": 36236,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\views\\nav-sticky.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [views] › tests\\views\\nav-sticky.spec.ts:11:3 › Side nav stays at the current scroll location › nav is sticky and pinned while .site__body scrolls (5.0s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 6.8s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ views: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (7.0s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-06-29T22:16:08.813Z",
+  "duration": "10.82s",
+  "exitCode": 0
+}

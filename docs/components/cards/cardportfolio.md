@@ -32,6 +32,17 @@ Inherits all [card properties](./card.md) plus:
 | `twitter` | string | `""` | Twitter URL |
 | `github` | string | `""` | GitHub URL |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardportfolio
+  name="John Doe"
+  title="Senior Developer"
+  company="TechCorp"
+  avatar="/images/john.jpg">
+</wb-cardportfolio>
+</wb-demo>
+
 ## Usage
 
 ### Basic Portfolio

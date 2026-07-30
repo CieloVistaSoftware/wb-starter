@@ -74,17 +74,22 @@ export function badge(element, options = {}) {
   const variant = (options.variant || element.getAttribute('variant') || element.getAttribute('badge') || 'default')
     .replace(/\s+/g, '-').toLowerCase();
   const label = options.label ?? element.getAttribute('label');
+  const icon = options.icon || element.getAttribute('icon') || '';
   const size = options.size || element.getAttribute('size');
   const pill = options.pill ?? element.hasAttribute('pill');
   const dot = options.dot ?? element.hasAttribute('dot');
   const outline = options.outline ?? element.hasAttribute('outline');
   const removable = options.removable ?? element.hasAttribute('removable');
+  // glow → soft pulsing halo in the badge's own variant color, for drawing
+  // attention to a "NEW"/"LIVE" badge. Composes with any variant/pill/outline.
+  const glow = options.glow ?? element.hasAttribute('glow');
 
   element.classList.add('wb-badge', `wb-badge--${variant}`);
   if (size && ['xs', 'sm', 'md', 'lg'].includes(size)) element.classList.add(`wb-badge--${size}`);
   if (pill) element.classList.add('wb-badge--pill');
   if (dot) element.classList.add('wb-badge--dot');
   if (outline) element.classList.add('wb-badge--outline');
+  if (glow) element.classList.add('wb-badge--glow');
 
   if (dot) {
     element.textContent = ''; // a dot badge has no text
@@ -93,6 +98,15 @@ export function badge(element, options = {}) {
     // didn't already put content inside the tag (children win over label).
     if (label != null && label !== '' && !element.textContent.trim()) {
       element.textContent = label;
+    }
+    // icon → a small leading glyph/emoji before the label (e.g. "🟢 Live").
+    // Inserted as a real element (not baked into the text node) so it can be
+    // targeted independently by CSS.
+    if (icon && !element.querySelector('.wb-badge__icon')) {
+      const iconEl = document.createElement('span');
+      iconEl.className = 'wb-badge__icon';
+      iconEl.textContent = icon;
+      element.insertBefore(iconEl, element.firstChild);
     }
     // removable → append a × button that removes the badge.
     if (removable && !element.querySelector('.wb-badge__remove')) {
@@ -108,7 +122,7 @@ export function badge(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('wb-badge', `wb-badge--${variant}`, 'wb-badge--pill', 'wb-badge--dot', 'wb-badge--outline', 'wb-badge--removable');
+    element.classList.remove('wb-badge', `wb-badge--${variant}`, 'wb-badge--pill', 'wb-badge--dot', 'wb-badge--outline', 'wb-badge--glow', 'wb-badge--removable');
   };
 }
 

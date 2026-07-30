@@ -21,6 +21,17 @@ Inherits all [card properties](./card.md) plus:
 | `expanded` | boolean | `false` | Initial expanded state |
 | `maxHeight` | string | `"100px"` | Collapsed height |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardexpandable
+  title="Read More"
+  max-height="80px">
+  <p>This is a long content that will be truncated when collapsed...</p>
+  <p>More content here...</p>
+</wb-cardexpandable>
+</wb-demo>
+
 ## Usage
 
 ### Basic Expandable
@@ -28,7 +39,7 @@ Inherits all [card properties](./card.md) plus:
 ```html
 <wb-cardexpandable
   title="Read More"
-  maxHeight="80px">
+  max-height="80px">
   <p>This is a long content that will be truncated when collapsed...</p>
   <p>More content here...</p>
 </wb-cardexpandable>

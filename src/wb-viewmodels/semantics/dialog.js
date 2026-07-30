@@ -121,12 +121,25 @@ export function dialog(element, options = {}) {
   // not tag identity, is what actually distinguishes trigger vs definition
   // mode below, and x-modal on a non-wb-modal element used to silently fall
   // through both branches with no click handler attached at all. (#279)
-  if (element.tagName === 'WB-MODAL' || element.hasAttribute('modal-content') || element.hasAttribute('modal-title')) {
+  //
+  // hasTriggerAttrs also checks the data-modal-* spelling: this used to be
+  // JUST the plain names, so a <wb-modal data-modal-title="…"> matched the
+  // OUTER gate via tagName (entering this if) but failed THIS check, silently
+  // falling into DEFINITION mode -- element.style.display='none', hiding the
+  // visible trigger button entirely with no error. config.title/content
+  // above already tolerated the data- spelling via dataset fallback; the
+  // gate itself did not, which is the actual bug (Law 11 violation in the
+  // MARKUP is the root cause, but the gate should degrade gracefully too,
+  // matching audio.js/lightbox.js's established plain-first/data-fallback
+  // pattern rather than silently hiding the element).
+  const hasTriggerAttrs = element.hasAttribute('modal-content') || element.hasAttribute('modal-title') ||
+    element.hasAttribute('data-modal-content') || element.hasAttribute('data-modal-title');
+  if (element.tagName === 'WB-MODAL' || hasTriggerAttrs) {
     // TRIGGER mode: <wb-modal modal-title="…" modal-content="…">Open Modal</wb-modal>
     // is a visible button — its text is the label and clicking it opens a dialog
     // built from the attributes. (Previously wb-modal was always hidden with only a
     // showModal() method and no click handler, so "Open Modal" did nothing. #251)
-    if (element.hasAttribute('modal-content') || element.hasAttribute('modal-title')) {
+    if (hasTriggerAttrs) {
       element.classList.add('wb-modal-trigger', 'wb-dialog-trigger');
       element.style.cursor = 'pointer';
       const open = () => createAndShowDialog(config.title, config.content, config.size, config.variant);

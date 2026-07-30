@@ -1,0 +1,29 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/behaviors/wb-search-select-effect.spec.ts",
+  "startedAt": "2026-07-27T21:02:39.748Z",
+  "updatedAt": "2026-07-27T21:02:52.723Z",
+  "command": "npx playwright test --workers=8 tests/behaviors/wb-search-select-effect.spec.ts",
+  "pid": 1704,
+  "passed": 12,
+  "failed": 2,
+  "skipped": 0,
+  "total": 14,
+  "currentFile": "tests\\behaviors\\wb-search-select-effect.spec.ts",
+  "output": "\nRunning 12 tests using 8 workers\n\n  ok  5 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:138:3 › <wb-search> effect-based attribute coverage › disabled blocks real typing -- the underlying input value never changes (1.6s)\n  ok  1 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:35:3 › <wb-search> effect-based attribute coverage › instant fires wb:search immediately on input; non-instant is debounced (1.7s)\n  ok  6 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:160:3 › <wb-select> effect-based attribute coverage › searchable is currently inert -- no filter UI, identical to a plain <wb-select> (see file header) (1.9s)\n  x   3 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:117:3 › <wb-search> effect-based attribute coverage › size sm vs lg produce a real computed height difference (1.9s)\n  ok  8 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:68:3 › <wb-search> effect-based attribute coverage › loading renders a real spinner element distinct from the non-loading state (1.7s)\n  ok  4 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:175:3 › <wb-select> effect-based attribute coverage › clearable actually empties the current selection (2.0s)\n  x   2 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:82:3 › <wb-search> effect-based attribute coverage › variant produces real computed style differences (glass backdrop-filter, minimal border) (2.1s)\n  ok  7 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:186:3 › <wb-select> effect-based attribute coverage › multiple allows two options to remain selected simultaneously; default does not (2.0s)\n  ok 12 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:251:3 › Native <select> and <input x-autocomplete> (forms.html \"Select\" fallback section) › x-autocomplete surfaces a real filtered suggestion for a partial match (806ms)\n  ok 11 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:237:3 › Native <select> and <input x-autocomplete> (forms.html \"Select\" fallback section) › a plain native <select> changes .value on selection (934ms)\n  ok 10 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:221:3 › <wb-select> effect-based attribute coverage › required makes the underlying <select> fail native validation when empty, pass once a value is set (1.4s)\n  ok  9 [behaviors] › tests\\behaviors\\wb-search-select-effect.spec.ts:204:3 › <wb-select> effect-based attribute coverage › disabled cannot be changed by interaction (3.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 12 tests in 9.5s\n  ✓ Passed:  10\n  ✗ Failed:  2\n\n  By Project:\n    ✗ behaviors: 10/12 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n  12 passed (9.8s)\n",
+  "errors": "\n❌ FAILED: size sm vs lg produce a real computed height difference\n   Error: expect(received).toBeLessThan(expected)\n\n❌ FAILED: variant produces real computed style differences (glass backdrop-filter, minimal border)\n   Error: expect(received).not.toBe(expected) // Object.is equality\n",
+  "failures": [
+    {
+      "file": "tests\\behaviors\\wb-search-select-effect.spec.ts",
+      "name": "<wb-search> effect-based attribute coverage › size sm vs lg produce a real computed height difference"
+    },
+    {
+      "file": "tests\\behaviors\\wb-search-select-effect.spec.ts",
+      "name": "<wb-search> effect-based attribute coverage › variant produces real computed style differences (glass backdrop-filter, minimal border)"
+    }
+  ],
+  "completedAt": "2026-07-27T21:02:52.723Z",
+  "duration": "12.97s",
+  "exitCode": 0
+}

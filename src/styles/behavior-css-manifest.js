@@ -75,6 +75,7 @@ export const BEHAVIOR_CSS_MAP = {
   demo: ['demo.css'],
   details: ['details.css'],
   dialog: ['dialog.css'], // also covers wb-modal (tag-map.js maps it to 'dialog')
+  drawer: ['drawer.css'],
   dropdown: ['dropdown.css'],
   footer: ['footer.css'],
   gallery: ['gallery.css'],

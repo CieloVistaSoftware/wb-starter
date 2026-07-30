@@ -1,0 +1,116 @@
+/**
+ * Drawer Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Backs the DOM that drawer.schema.json's $view builds inside a <wb-drawer>
+ * host (backdrop/panel/header/title/close/body/footer, BEM-named
+ * wb-drawer__*) and the CSS custom properties its $cssAPI declares.
+ *
+ * Works with src/wb-viewmodels/overlay.js's drawer(): when the schema has
+ * already built this structure (element carries x-schema="drawer"), drawer()
+ * relocates the backdrop/panel pair out of the host and into document.body
+ * (so the host stays free to show its own trigger label) and toggles the
+ * `--open` modifier classes below on click. Position is driven by the
+ * wb-drawer--{left|right|top|bottom} class the schema (or drawer()) applies
+ * directly to `.wb-drawer__panel`.
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-drawer__backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--wb-drawer-backdrop-bg, rgba(0, 0, 0, 0.5));
+  z-index: var(--wb-drawer-z-index, 1000);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.wb-drawer__backdrop--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.wb-drawer__panel {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  background: var(--wb-drawer-bg, var(--bg-surface, #ffffff));
+  box-shadow: var(--wb-drawer-shadow, -4px 0 20px rgba(0, 0, 0, 0.15));
+  z-index: calc(var(--wb-drawer-z-index, 1000) + 1);
+  max-width: var(--wb-drawer-max-width, 100vw);
+  transition: var(--wb-drawer-transition, transform 0.3s ease);
+}
+
+.wb-drawer__panel.wb-drawer--left,
+.wb-drawer__panel.wb-drawer--right {
+  top: 0;
+  bottom: 0;
+  width: var(--wb-drawer-width, 320px);
+}
+
+.wb-drawer__panel.wb-drawer--left {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.wb-drawer__panel.wb-drawer--right {
+  right: 0;
+  transform: translateX(100%);
+}
+
+.wb-drawer__panel.wb-drawer--top,
+.wb-drawer__panel.wb-drawer--bottom {
+  left: 0;
+  right: 0;
+  height: var(--wb-drawer-height, auto);
+}
+
+.wb-drawer__panel.wb-drawer--top {
+  top: 0;
+  transform: translateY(-100%);
+}
+
+.wb-drawer__panel.wb-drawer--bottom {
+  bottom: 0;
+  transform: translateY(100%);
+}
+
+.wb-drawer__panel--open {
+  transform: translate(0, 0);
+}
+
+.wb-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--wb-drawer-header-gap, 1rem);
+  padding: var(--wb-drawer-padding, 1.5rem);
+  border-bottom: 1px solid var(--border-color, #374151);
+}
+
+.wb-drawer__title {
+  margin: 0;
+  font-size: var(--wb-drawer-title-size, 1.125rem);
+  color: var(--text-primary, inherit);
+}
+
+.wb-drawer__close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-secondary, inherit);
+}
+
+.wb-drawer__body {
+  flex: 1;
+  overflow: auto;
+  padding: var(--wb-drawer-padding, 1.5rem);
+  color: var(--text-primary, inherit);
+}
+
+.wb-drawer__footer {
+  padding: var(--wb-drawer-padding, 1.5rem);
+  border-top: 1px solid var(--border-color, #374151);
+}

@@ -30,7 +30,16 @@ wb-grid {
 wb-drawer {
   visibility: hidden;
 }
-wb-drawer.wb-drawer-layout {
+/* .wb-drawer-layout: enhanced by drawerLayout() (layouts.js) as a page-shell
+   panel. .wb-drawer-trigger: enhanced by drawer() (overlay.js) as a
+   self-triggering button (drawer-behavior root cause -- without this, every
+   <wb-drawer title="…" content="…">Label</wb-drawer> trigger stayed
+   invisible even after drawer()'s click handler was correctly attached,
+   because this base rule hides every <wb-drawer> that isn't a
+   .wb-drawer-layout). Same specificity as the rule above by design -- this
+   just extends its selector list, not a new override. */
+wb-drawer.wb-drawer-layout,
+wb-drawer.wb-drawer-trigger {
   visibility: visible;
 }
 

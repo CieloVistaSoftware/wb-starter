@@ -6,20 +6,28 @@ import { test, expect, request as pwRequest } from '@playwright/test';
  * anchors). Now each link opens the component's REAL doc in the doc-viewer,
  * resolved from docs/manifest.json; components with no doc get NO link.
  *
- * Effect-based (§19/§14): every rendered Docs: link's ?file target must GET 200,
- * and no '?page=docs#' href may remain — checked on BOTH surfaces (SPA page and
- * a doc rendered in the doc-viewer).
+ * #388: cards no longer use the shared '.wb-demo__links' line at all — each
+ * card grid child gets its OWN link attached directly to it
+ * ('.wb-demo__card-doc-link', demo.js's attachCardDocLink). Non-card content
+ * (badges, alerts, buttons, ...) is unchanged and still uses the shared
+ * line. Collect BOTH kinds here so this test keeps covering its real intent
+ * (no dead doc-reference link of either kind), not just the pre-#388 shape.
+ *
+ * Effect-based (§19/§14): every rendered doc-reference link's ?file target must
+ * GET 200, and no '?page=docs#' href may remain — checked on BOTH surfaces
+ * (SPA page and a doc rendered in the doc-viewer).
  */
 async function collectDocsLinks(page: import('@playwright/test').Page) {
+  const SELECTOR = '.wb-demo__links a, .wb-demo__card-doc-link';
   // Cold-start under a parallel run: wb.js + the docs manifest fetch can take a
   // while before the async links fill in — wait for demo upgrade first, then links.
   await expect
     .poll(() => page.locator('wb-demo .wb-demo__grid').count(), { timeout: 30000 })
     .toBeGreaterThan(0);
   await expect
-    .poll(() => page.locator('.wb-demo__links a').count(), { timeout: 30000 })
+    .poll(() => page.locator(SELECTOR).count(), { timeout: 30000 })
     .toBeGreaterThan(0);
-  return page.$$eval('.wb-demo__links a', (as) => as.map((a) => a.getAttribute('href') || ''));
+  return page.$$eval(SELECTOR, (as) => as.map((a) => a.getAttribute('href') || ''));
 }
 
 async function assertAllResolve(hrefs: string[], baseURL: string | undefined) {

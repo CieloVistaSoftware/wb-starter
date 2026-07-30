@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/behaviors/input-theming.spec.ts",
+  "startedAt": "2026-06-29T20:26:50.009Z",
+  "updatedAt": "2026-06-29T20:27:07.106Z",
+  "command": "npx playwright test tests/behaviors/input-theming.spec.ts --project=behaviors --workers=4",
+  "pid": 18020,
+  "passed": 8,
+  "failed": 0,
+  "skipped": 0,
+  "total": 8,
+  "currentFile": "tests\\behaviors\\input-theming.spec.ts",
+  "output": "\nRunning 8 tests using 4 workers\n\n  ok 1 [behaviors] › tests\\behaviors\\input-theming.spec.ts:51:5 › Input theming follows the active theme › inputs are DARK in the \"ocean\" theme (not native white) (3.4s)\n  ok 3 [behaviors] › tests\\behaviors\\input-theming.spec.ts:51:5 › Input theming follows the active theme › inputs are DARK in the \"midnight\" theme (not native white) (4.2s)\n  ok 2 [behaviors] › tests\\behaviors\\input-theming.spec.ts:51:5 › Input theming follows the active theme › inputs are DARK in the \"dark\" theme (not native white) (4.3s)\n  ok 4 [behaviors] › tests\\behaviors\\input-theming.spec.ts:51:5 › Input theming follows the active theme › inputs are DARK in the \"cyberpunk\" theme (not native white) (4.9s)\n  ok 5 [behaviors] › tests\\behaviors\\input-theming.spec.ts:66:5 › Input theming follows the active theme › inputs are LIGHT in the \"light\" theme (3.1s)\n  ok 6 [behaviors] › tests\\behaviors\\input-theming.spec.ts:66:5 › Input theming follows the active theme › inputs are LIGHT in the \"arctic\" theme (4.4s)\n  ok 7 [behaviors] › tests\\behaviors\\input-theming.spec.ts:66:5 › Input theming follows the active theme › inputs are LIGHT in the \"sakura\" theme (4.4s)\n  ok 8 [behaviors] › tests\\behaviors\\input-theming.spec.ts:76:3 › Input theming follows the active theme › input background actually changes between dark and light themes (5.1s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 8 tests in 13.7s\n  ✓ Passed:  8\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 8/8 passed\n════════════════════════════════════════════════════════════\n\n\n  8 passed (13.7s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-06-29T20:27:07.106Z",
+  "duration": "17.10s",
+  "exitCode": 0
+}

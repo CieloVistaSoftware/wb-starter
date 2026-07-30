@@ -76,6 +76,13 @@
   --card-glass-border: hsl(0 0% 100% / 0.16);
   --card-glass-border-hover: hsl(0 0% 100% / 0.24);
   --card-glass-sheen: hsl(0 0% 100% / 0.14);
+  /* Fallback tokens for browsers with no backdrop-filter support (#351,
+     card.css's `@supports not (backdrop-filter: blur(1px))` block). Higher
+     alpha than the tokens above so the surface still reads as intentionally
+     "glass-styled" (a distinct, more-opaque panel) instead of a flat,
+     barely-tinted box once blur isn't there to sell the effect. */
+  --card-glass-bg-fallback: hsl(0 0% 100% / 0.18);
+  --card-glass-border-fallback: hsl(0 0% 100% / 0.32);
 
   /* Semantic state colors — used by alert, notification, rating */
   --info-color: hsl(217, 91%, 60%);
@@ -115,6 +122,15 @@
   --badge-pink:     hsl(330, 60%, 40%);
   --badge-teal:     hsl(174, 72%, 23%);
   --badge-orange:   hsl(28, 88%, 34%);
+
+  /* Badge glass tokens — same pre-composed-alpha pattern as --card-glass-*
+     above (css-oop-compliance only exempts hsl()/rgba() composition in
+     shadow contexts or exception-listed files, so alpha is baked in here).
+     Higher alpha than the card tokens (badges are much smaller than cards,
+     so the translucency needs to read clearly at badge scale). */
+  --badge-glass-bg: hsl(0 0% 100% / 0.14);
+  --badge-glass-border: hsl(0 0% 100% / 0.28);
+  --badge-glass-sheen: hsl(0 0% 100% / 0.22);
 
   /* Rating star color */
   --rating-active-color: hsl(45, 96%, 56%);

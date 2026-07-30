@@ -30,7 +30,9 @@
         "success",
         "warning",
         "error",
-        "info"
+        "info",
+        "glass",
+        "gradient"
       ],
       "default": "default",
       "appliesClass": "wb-badge--{{value}}"
@@ -69,6 +71,17 @@
       "type": "boolean",
       "description": "Show remove/close button",
       "default": false
+    },
+    "glow": {
+      "type": "boolean",
+      "description": "Soft pulsing glow halo in the badge's own variant color, for drawing attention (e.g. NEW/LIVE badges)",
+      "default": false,
+      "appliesClass": "wb-badge--glow"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Leading icon/emoji shown before the label",
+      "default": ""
     }
   },
   "$view": [],
@@ -212,7 +225,11 @@
       "<wb-badge variant=\"info\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
       "<wb-badge variant=\"info\" size=\"sm\">Test</wb-badge>",
       "<wb-badge variant=\"info\" size=\"md\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"info\" size=\"lg\" pill dot outline removable>Test</wb-badge>"
+      "<wb-badge variant=\"info\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
+      "<wb-badge variant=\"glass\">variant=glass</wb-badge>",
+      "<wb-badge variant=\"gradient\">variant=gradient</wb-badge>",
+      "<wb-badge variant=\"primary\" glow>with glow</wb-badge>",
+      "<wb-badge variant=\"glass\" pill glow icon=\"✨\">glass+pill+glow+icon</wb-badge>"
     ],
     "matrix": {
       "combinations": [
@@ -249,6 +266,29 @@
           "label": "Outline",
           "variant": "primary",
           "outline": true
+        },
+        {
+          "label": "Glass",
+          "variant": "glass"
+        },
+        {
+          "label": "Premium",
+          "variant": "gradient",
+          "pill": true,
+          "icon": "⭐"
+        },
+        {
+          "label": "Live",
+          "variant": "success",
+          "pill": true,
+          "glow": true,
+          "icon": "🟢"
+        },
+        {
+          "label": "Glass Glow",
+          "variant": "glass",
+          "pill": true,
+          "glow": true
         },
         {
           "label": "default-xs-pill-dot-outline-removable",

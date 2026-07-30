@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/behaviors-page-progress-bars.spec.ts",
+  "startedAt": "2026-07-30T16:22:15.670Z",
+  "updatedAt": "2026-07-30T16:22:24.748Z",
+  "command": "npx playwright test --workers=8 tests/regression/behaviors-page-progress-bars.spec.ts",
+  "pid": 9332,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\regression\\behaviors-page-progress-bars.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [regression] › tests\\regression\\behaviors-page-progress-bars.spec.ts:22:3 › Behaviors page: Progress Bars demo actually reflects its labeled value › 25/50/75/100 bars each render their own distinct, non-zero fill percentage (2.6s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 5.5s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (5.7s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T16:22:24.748Z",
+  "duration": "9.08s",
+  "exitCode": 0
+}

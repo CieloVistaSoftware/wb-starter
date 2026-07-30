@@ -159,6 +159,42 @@ button-tooltip[disabled] {
   pointer-events: none;
 }
 
+/* Defensive base rule (audit, #button-audit-bare-wb-btn) — an element with ONLY
+   `class="wb-btn"` and no `.wb-btn--*` modifier previously got ZERO styling from
+   this file: every rule below is a compound `.wb-btn.wb-btn--*` selector, so a
+   bare `.wb-btn` rendered invisible (confirmed live on <wb-modal class="wb-btn">
+   and <wb-drawer class="wb-btn"> trigger elements in pages/behaviors.html and
+   pages/components.html — neither is a <button> or <wb-button>, so button.js's
+   variant/size attribute wiring never touches them; and every `.wb-btn` on a
+   native <button> paired with an x-* behavior (x-toast, x-drawer, x-confirm,
+   x-prompt, x-lightbox, x-popover, x-copy, x-share, x-print, x-fullscreen,
+   x-darkmode, x-tooltip) is skipped by button.js's native-button branch on
+   purpose, so `variant="…"` does nothing there either — CSS class matching is
+   the only mechanism left). This bare rule is SAFE to add: it has specificity
+   0,1,0, strictly lower than every `.wb-btn.wb-btn--*` compound rule below
+   (0,2,0), so on every property they share (background-color, color,
+   border-color) the compound rule still wins regardless of source order —
+   verified against the actual cascade, not assumed. It only adds properties
+   the compound/size rules don't set (display, gap, cursor, transition, and a
+   neutral fallback background/border), so already-correct `.wb-btn.wb-btn--*`
+   usages keep their variant colors and gain a consistent box shape instead of
+   silently inheriting bare-element/browser defaults. No hardcoded colors —
+   every value is a theme token (Law 10). */
+.wb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 6px);
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
 /* #173 — the showcase + ~60 usages use the .wb-btn / .wb-btn--* prefix while the
    rules above use .wb-button. Compound .wb-btn.wb-btn--* selectors (specificity
    0,2,0) so they beat any plain base .wb-btn rule regardless of load order. */

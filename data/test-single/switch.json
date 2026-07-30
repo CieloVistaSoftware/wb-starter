@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/behaviors/switch.spec.ts",
+  "startedAt": "2026-06-30T01:01:11.108Z",
+  "updatedAt": "2026-06-30T01:01:32.693Z",
+  "command": "npx playwright test tests/behaviors/switch.spec.ts --project=behaviors --workers=2",
+  "pid": 6776,
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "total": 5,
+  "currentFile": "tests\\behaviors\\switch.spec.ts",
+  "output": "\nRunning 5 tests using 2 workers\n\n  ok 2 [behaviors] › tests\\behaviors\\switch.spec.ts:24:3 › Switch — real toggle › checked attribute is reflected on first paint (6.8s)\n  ok 1 [behaviors] › tests\\behaviors\\switch.spec.ts:19:3 › Switch — real toggle › inner input is a checkbox (not text) (6.8s)\n  ok 4 [behaviors] › tests\\behaviors\\switch.spec.ts:48:3 › Switch — real toggle › label text renders (3.3s)\n  ok 3 [behaviors] › tests\\behaviors\\switch.spec.ts:34:3 › Switch — real toggle › clicking toggles the state (3.5s)\n  ok 5 [behaviors] › tests\\behaviors\\switch.spec.ts:56:3 › Switch — real toggle › ON state is visually distinct (track color changes) (3.0s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 5 tests in 16.2s\n  ✓ Passed:  5\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 5/5 passed\n════════════════════════════════════════════════════════════\n\n\n  5 passed (16.3s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-06-30T01:01:32.693Z",
+  "duration": "21.59s",
+  "exitCode": 0
+}

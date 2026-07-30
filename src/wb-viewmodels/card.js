@@ -108,7 +108,11 @@ const VAR_PRIMARY = 'var(--primary,#6366f1)';
 const STYLE_HEADER = `padding:1rem;border-bottom:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-shrink:0;`;
 const STYLE_FOOTER = `padding:1rem;border-top:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
 const STYLE_MAIN = `padding:1rem;flex:1;color:${VAR_TEXT_PRIMARY};`;
-const STYLE_TITLE = `margin:0;font-size:1.1rem;font-weight:600;color:${VAR_TEXT_PRIMARY};`;
+// margin-bottom:0.5rem (not 0) -- title and subtitle sat almost touching
+// (title had zero bottom margin, subtitle only 0.25rem top margin, and
+// block-level siblings collapse to the larger of the two, not the sum).
+// John: "there must be .5rem bottom gaps here" (screenshot, base card gallery).
+const STYLE_TITLE = `margin:0 0 0.5rem;font-size:1.1rem;font-weight:600;color:${VAR_TEXT_PRIMARY};`;
 const STYLE_SUBTITLE = `margin:0.25rem 0 0.5rem;font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
 const STYLE_BADGE = `display:inline-block;padding:0.25rem 0.75rem;border-radius:999px;font-size:0.75rem;font-weight:600;background:${VAR_PRIMARY};color:white;white-space:nowrap;`;
 
@@ -182,7 +186,13 @@ export function cardBase(element, options = {}) {
     borderRadius: 'var(--radius-lg, 8px)',
     overflow: 'hidden',
     display: 'flex',
-    flexDirection: 'column',
+    // flexDirection intentionally NOT set here -- `.wb-card { flex-direction:
+    // column }` (card.css) already provides the default, and setting it
+    // inline would (same "inline always beats class" bug fixed elsewhere in
+    // this file for background/border/padding) permanently block any typed
+    // variant's own CSS from switching direction, e.g.
+    // `.wb-product.wb-card--horizontal { flex-direction: row }` (#cardproduct
+    // horizontal variant test).
     contain: 'layout paint', // Performance optimization
     // break-word (not anywhere/break-word together) only breaks a word as a
     // last resort when it can't fit a line alone — `word-break: break-word`
@@ -1234,29 +1244,36 @@ export function cardstats(element, options = {}) {
     const base = cardBase(element, { ...config, behavior: 'cardstats', hoverable: false });
     element.classList.add('wb-stats');
     element.innerHTML = '';
-    element.style.containerType = 'inline-size';
-    element.style.padding = 'var(--space-md, 1rem)';
-    element.style.flexDirection = 'row';
-    element.style.alignItems = 'center';
-    element.style.gap = 'var(--space-md, 1rem)';
+    // Layout, container-query sizing, and default padding all live in
+    // card.css's `.wb-stats` rule now (Law 9, #370 -- was unconditional
+    // inline styles here, which also silently beat wb-card--compact/large's
+    // own CSS regardless of specificity; wb-card__header/__main below get
+    // real classes so those variant rules can actually win).
 
   // Semantic: Icon belongs in header
   if (config.icon) {
     const header = document.createElement('header');
-    header.style.cssText = 'padding:0;border:none;background:transparent;margin:0;';
-    
+    // wb-card__header is required even though .wb-stats .wb-card__header
+    // (card.css) overrides its padding/border/background back to zero:
+    // card.css's fallback rule `.wb-card:not(:has(.wb-card__header)):not(
+    // :has(.wb-card__main)) { padding: 1rem }` outranks (0,3,0 vs 0,2,0
+    // specificity) `.wb-stats.wb-card--compact/--large`'s own padding when
+    // neither class is present, silently forcing 1rem on every variant
+    // (confirmed live).
+    header.className = 'wb-card__header';
+
     const iconEl = document.createElement('span');
     iconEl.className = 'wb-card__icon';
     iconEl.style.cssText = 'font-size:2rem;line-height:1;display:block;';
     iconEl.textContent = config.icon;
-    
+
     header.appendChild(iconEl);
     element.appendChild(header);
   }
 
   // Semantic: Main content
   const content = document.createElement('main');
-  content.style.cssText = 'flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:0;';
+  content.className = 'wb-card__main';
 
   if (config.value) {
     const valueEl = document.createElement('data');

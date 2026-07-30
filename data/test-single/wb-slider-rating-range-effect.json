@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/behaviors/wb-slider-rating-range-effect.spec.ts",
+  "startedAt": "2026-07-27T21:01:47.648Z",
+  "updatedAt": "2026-07-27T21:01:58.092Z",
+  "command": "npx playwright test --workers=8 tests/behaviors/wb-slider-rating-range-effect.spec.ts",
+  "pid": 32612,
+  "passed": 10,
+  "failed": 0,
+  "skipped": 0,
+  "total": 10,
+  "currentFile": "tests\\behaviors\\wb-slider-rating-range-effect.spec.ts",
+  "output": "\nRunning 10 tests using 8 workers\n\n  ok  1 [behaviors] › tests\\behaviors\\wb-slider-rating-range-effect.spec.ts:84:3 › <wb-rating> icon= — documented quirk: a literal glyph renders, a keyword does not › icon=\"❤️\" renders the emoji glyph itself as the star content (1.1s)\n  ok  2 [behaviors] › tests\\behaviors\\wb-slider-rating-range-effect.spec.ts:37:3 › <wb-slider> is currently a minimal stub (src/wb-viewmodels/slider.js) › adds the wb-slider class but does not build a range control or alter content (1.2s)\n  ok  3 [behaviors] › tests\\behaviors\\wb-slider-rating-range-effect.spec.ts:49:3 › <wb-rating> value= renders the real filled-star count › value=\"3\" max=\"5\" fills exactly 3 of 5 stars, 2 remain empty (1.4s)\n  ok  4 [behaviors] › tests\\behaviors\\wb-slider-rating-range-effect.spec.ts:58:3 › <wb-rating> fractional value — rating.js parseInt() truncates, it does not round › value=\"4.5\" max=\"5\" fills 4 stars, not 5 (parseInt(\"4.5\", 10) === 4) (1.8s)\n  ok  5 [behaviors] › tests\\behaviors\\wb-slider-rating-range-effect.spec.ts:90:3 › <wb-rating> icon= — documented quirk: a literal glyph renders, a keyword does not › icon=\"heart\" renders the literal text \"heart\", NOT a heart icon (rating.js has no keyword-to-glyph mapping) (1.8s)\n  ok  6 [behaviors] › tests\\behaviors\\wb-slider-rating-range-effect.spec.ts:65:3 › <wb-rating> color= overrides the filled-star color › color=\"gold\" computes to rgb(255, 215, 0), different from the default theme color (1.5s)\n  ok  7 [behaviors] › tests\\behaviors\\wb-slider-rating-range-effect.spec.ts:98:3 › <wb-rating> precision= is a confirmed no-op (never read by rating.js) › precision=\"1\" and precision=\"0.1\" render byte-for-byte identical fill state, color, and glyph (1.6s)\n  ok  8 [behaviors] › tests\\behaviors\\wb-slider-rating-range-effect.spec.ts:118:3 › native <input type=\"range\" show-value> — range.js value display (src/wb-viewmodels/semantics/range.js) › displayed value matches the initial value and updates live as the input value changes (1.6s)\n  ok 10 [behaviors] › tests\\behaviors\\wb-slider-rating-range-effect.spec.ts:159:3 › native <input type=\"range\" value-suffix=\"%\"> › displayed value includes the suffix — \"75%\", not just \"75\" (1.6s)\n  ok  9 [behaviors] › tests\\behaviors\\wb-slider-rating-range-effect.spec.ts:146:3 › native <input type=\"range\" show-labels> — min/max labels › rendered min/max labels match the min/max attributes (1.8s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 10 tests in 6.6s\n  ✓ Passed:  10\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 10/10 passed\n════════════════════════════════════════════════════════════\n\n\n  10 passed (6.8s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-27T21:01:58.092Z",
+  "duration": "10.44s",
+  "exitCode": 0
+}

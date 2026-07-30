@@ -20,6 +20,12 @@ Inherits all [card properties](./card.md) plus:
 |----------|------|---------|-------------|
 | `minimized` | boolean | `false` | Initial minimized state |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardminimizable title="Dashboard Widget"> Widget content here. </wb-cardminimizable>
+</wb-demo>
+
 ## Usage
 
 ### Basic Minimizable

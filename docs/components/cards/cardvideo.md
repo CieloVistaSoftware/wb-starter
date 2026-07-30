@@ -25,6 +25,17 @@ Inherits all [card properties](./card.md) plus:
 | `loop` | boolean | `false` | Loop playback |
 | `controls` | boolean | `true` | Show controls |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardvideo
+  src="/videos/demo.mp4"
+  poster="/images/poster.jpg"
+  title="Demo Video"
+  controls>
+</wb-cardvideo>
+</wb-demo>
+
 ## Usage
 
 ### Basic Video Card

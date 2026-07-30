@@ -24,6 +24,16 @@ Inherits all [card properties](./card.md) plus:
 | `bio` | string | `""` | Biography text |
 | `cover` | string | `""` | Cover/banner image URL |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardprofile
+  name="John Doe"
+  role="Software Engineer"
+  avatar="/images/avatar.jpg">
+</wb-cardprofile>
+</wb-demo>
+
 ## Usage
 
 ### Basic Profile
