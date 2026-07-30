@@ -2622,18 +2622,42 @@ export function cardportfolio(element, options = {}) {
   // Neutralize the whole navbar rule inline → an auto-height centered stack.
   header.style.cssText = `display:block;height:auto;min-height:0;background:transparent;border-bottom:none;font-size:1rem;text-align:center;padding:1.5rem;${config.cover ? 'margin-top:-60px;' : ''}`;
 
-  // Avatar
-  if (config.avatar) {
+  // Avatar (real image, OR a fallback initials placeholder). This block used
+  // to be gated on `config.avatar` alone, which meant the availability dot
+  // -- built inside it -- silently never rendered for the (very common) case
+  // of a portfolio card with no avatar image, even though `availability`
+  // defaults to 'available' (cardportfolio.schema.json) and is meant to
+  // always be visible. Build the wrap whenever there's an avatar image OR an
+  // availability status to show, and fall back to an initials circle so the
+  // dot always has something to attach to.
+  if (config.avatar || (config.availability && availabilityConfig[config.availability])) {
     const avatarWrap = document.createElement('figure');
     avatarWrap.className = 'wb-portfolio__avatar-wrap';
     avatarWrap.style.cssText = 'margin:0 auto;position:relative;display:inline-block;';
-    
-    const avatarImg = document.createElement('img');
-    avatarImg.className = 'wb-portfolio__avatar';
-    avatarImg.src = config.avatar;
-    avatarImg.alt = config.name || 'Avatar';
-    avatarImg.style.cssText = 'width:120px;height:120px;border-radius:50%;border:4px solid var(--bg-secondary,#1f2937);object-fit:cover;display:block;';
-    avatarWrap.appendChild(avatarImg);
+
+    if (config.avatar) {
+      const avatarImg = document.createElement('img');
+      avatarImg.className = 'wb-portfolio__avatar';
+      avatarImg.src = config.avatar;
+      avatarImg.alt = config.name || 'Avatar';
+      avatarImg.style.cssText = 'width:120px;height:120px;border-radius:50%;border:4px solid var(--bg-secondary,#1f2937);object-fit:cover;display:block;';
+      avatarWrap.appendChild(avatarImg);
+    } else {
+      // No avatar image supplied — render initials (or a generic mark) in a
+      // themed circle (styling in card.css: .wb-portfolio__avatar-placeholder,
+      // Law 9) so the availability dot below still has a visible anchor.
+      const placeholder = document.createElement('span');
+      placeholder.className = 'wb-portfolio__avatar wb-portfolio__avatar-placeholder';
+      const initials = (config.name || '')
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(word => word[0].toUpperCase())
+        .join('') || '?';
+      placeholder.textContent = initials;
+      placeholder.setAttribute('aria-hidden', 'true');
+      avatarWrap.appendChild(placeholder);
+    }
 
     // Availability indicator
     if (config.availability && availabilityConfig[config.availability]) {
@@ -2643,7 +2667,7 @@ export function cardportfolio(element, options = {}) {
       availDot.style.cssText = `position:absolute;bottom:8px;right:8px;width:24px;height:24px;border-radius:50%;background:${availabilityConfig[config.availability].color};border:3px solid var(--bg-secondary,#1f2937);cursor:help;`;
       avatarWrap.appendChild(availDot);
     }
-    
+
     header.appendChild(avatarWrap);
   }
 

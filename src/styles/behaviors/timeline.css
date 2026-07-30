@@ -7,6 +7,13 @@
  */
 
 .wb-timeline {
+  /* <wb-timeline> is a custom element with no built-in display -- the
+     browser default for an unknown tag is `inline`, which breaks the
+     ::before connecting line's geometry below (an inline containing
+     block doesn't give `top:0;bottom:0` a sane block height) and mixes
+     badly with this element's `display:block` .wb-timeline-item
+     children. */
+  display: block;
   position: relative;
   padding-left: 1.5rem;
 }
