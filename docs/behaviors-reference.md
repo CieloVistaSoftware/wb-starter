@@ -79,7 +79,8 @@ To enable, set `"autoInject": true` in your `config/site.json` or pass it to `WB
 When enabled, plain semantic elements like `<dialog>` and `<img>` below get the
 `dialog`/`image` behaviors attached automatically, with no `x-` attribute needed:
 
-<wb-demo>
+<wb-demo columns="1">
+<p>Auto-decorated dialog (zero <code>x-</code> attributes):</p>
 <dialog open>Auto-decorated dialog content.</dialog>
 </wb-demo>
 

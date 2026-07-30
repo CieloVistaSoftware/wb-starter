@@ -24,6 +24,15 @@ wb-code-card {
 .wb-demo__grid {
   display: grid;
   gap: 1rem;
+  /* A native <dialog>, even with `open` set directly (not via showModal()),
+     keeps `position: absolute` from the UA stylesheet -- it paints wherever
+     its positioned ancestor puts it, out of normal flow, contributing zero
+     height to this grid (confirmed live: docs/behaviors-reference.md's
+     "Auto Injection" demo -- grid collapsed to 0x0 even though the dialog
+     itself rendered elsewhere on the page). A collapsed grid reads as "not
+     rendered" (Standard §1 requires every example to visibly render), so
+     floor the height regardless of what a lone out-of-flow child does. */
+  min-height: 2.5rem;
 }
 
 /* Source code is ALWAYS left-aligned — never inherit text-align:center from a
