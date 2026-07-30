@@ -24,6 +24,15 @@ Falling snow animation effect.
 | `delay` | string | `"0s"` | Start delay |
 | `duration` | string | `"8s"` | Fall duration |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-snow
+  count="100"
+  label="Snow!">
+</wb-snow>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

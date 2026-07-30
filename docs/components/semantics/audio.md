@@ -26,6 +26,12 @@ Audio player with optional 15-band graphic equalizer.
 | `bass` | number | `0` | Bass boost (-12 to 12 dB) |
 | `treble` | number | `0` | Treble boost (-12 to 12 dB) |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-audio src="music.mp3"></wb-audio>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

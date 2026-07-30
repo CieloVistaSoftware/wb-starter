@@ -336,4 +336,20 @@ export class WBFixCard extends WBCard {
   }
 }
 
-customElements.define('wb-fix-card', WBFixCard);
+if (!customElements.get('wb-fix-card')) {
+  customElements.define('wb-fix-card', WBFixCard);
+}
+
+// #365: exported so wb-viewmodels/index.js's lazy-loader can resolve a
+// 'fix-card' behavior for this module (getBehavior() falls back to
+// module.default when no named export matches). The real work happens in
+// WBFixCard's own connectedCallback/`data` setter above via the native
+// custom-element upgrade that importing this module triggers -- this
+// function is only the compliance-signaling touch other self-registering
+// custom elements use (see wb-control.js's `control()`), so schema/tag-map
+// dispatch has something to call without fighting the class for DOM
+// ownership.
+export default function fixCard(element) {
+  element.classList.add('wb-fix-card');
+  return () => {};
+}

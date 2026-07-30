@@ -31,6 +31,15 @@ Multi-line text input with autosize and character count.
 | `resize` | string | `"vertical"` | Resize: `none`, `vertical`, `horizontal`, `both` |
 | `variant` | string | `"default"` | Variant: `default`, `success`, `error` |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-textarea
+  label="Message"
+  placeholder="Enter your message...">
+</wb-textarea>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

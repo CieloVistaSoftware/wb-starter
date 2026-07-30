@@ -51,7 +51,17 @@ const behaviorModules = {
   cardtestimonial: 'card', cardproduct: 'card', cardnotification: 'card',
   cardfile: 'card', cardlink: 'card', cardhorizontal: 'card', carddraggable: 'card',
   cardexpandable: 'card', cardminimizable: 'card', cardoverlay: 'card', cardportfolio: 'card',
-  
+
+  // Fix Card (#365) → fix-card.js. Own file, not part of card.js's
+  // family -- a hand-rolled WBCard subclass that self-registers via
+  // customElements.define(). Was never wired into this lazy-load registry
+  // (nor tag-map.js's elementMap), so <wb-fix-card> never upgraded to the
+  // real class and .data= silently did nothing. This entry + the matching
+  // 'wb-fix-card' elementMap entry (tag-map.js) makes WB.scan() actually
+  // import fix-card.js on first encounter, which is what runs the
+  // customElements.define() side effect.
+  'fix-card': 'fix-card',
+
   // UI Core
   demo: 'demo',
   progressbar: 'progressbar',

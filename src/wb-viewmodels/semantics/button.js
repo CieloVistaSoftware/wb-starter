@@ -95,6 +95,35 @@ wb-button .wb-button__spinner { display: inline-block; animation: wb-btn-spin 1s
 }
 .wb-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
 .wb-button:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+
+/* Native <button size="…" variant="…">: button() (below) maps these
+   attributes to .wb-button--{value} modifier CLASSES -- attribute-selector
+   CSS like wb-button[size="sm"] above only ever matches the <wb-button>
+   TAG, never a native <button size="sm">, so those classes had zero
+   matching CSS and every size/variant rendered identically (confirmed
+   live: "Small"/"Medium"/"Large" demo buttons were all the same size). */
+.wb-button--xs { padding: 0.125rem 0.5rem; font-size: 0.75rem; }
+.wb-button--sm { padding: 0.25rem 0.75rem; font-size: 0.875rem; }
+.wb-button--md { padding: 0.5rem 1rem; font-size: 1rem; }
+.wb-button--lg { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
+.wb-button--xl { padding: 1rem 2rem; font-size: 1.25rem; }
+
+.wb-button--primary { background: var(--primary, #6366f1); color: #fff; }
+.wb-button--primary:hover { filter: brightness(0.85); }
+.wb-button--secondary { background: var(--secondary, #64748b); color: #fff; }
+.wb-button--secondary:hover { filter: brightness(0.85); }
+.wb-button--success { background: var(--success-color, #22c55e); color: #fff; }
+.wb-button--success:hover { filter: brightness(0.85); }
+.wb-button--danger, .wb-button--error { background: var(--danger-color, #ef4444); color: #fff; }
+.wb-button--danger:hover, .wb-button--error:hover { filter: brightness(0.85); }
+.wb-button--warning { background: var(--warning-color, #f59e0b); color: #fff; }
+.wb-button--warning:hover { filter: brightness(0.85); }
+.wb-button--info { background: var(--info-color, #3b82f6); color: #fff; }
+.wb-button--info:hover { filter: brightness(0.85); }
+.wb-button--ghost { background: transparent; color: var(--text-primary, #e5e5e5); border-color: var(--border-color, #404040); }
+.wb-button--ghost:hover { background: var(--bg-tertiary, #333); border-color: var(--text-secondary, #aaa); }
+.wb-button--link { background: transparent; color: var(--primary, #6366f1); padding: 0; border: none; }
+.wb-button--link:hover { text-decoration: underline; }
 `;
 
 function ensureStyles(doc) {

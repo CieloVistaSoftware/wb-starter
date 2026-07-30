@@ -497,6 +497,41 @@ const WB = {
       return;
     }
 
+    // wb-dialog (#387 audit, docs/audits/HOST-CHILD-DISPATCH-AUDIT.md): the
+    // real interactive modal dialog.js (semantics/dialog.js) builds is
+    // ALREADY a genuine native <dialog>+showModal() — created fresh via
+    // document.createElement('dialog') and appended to document.body on
+    // trigger, never written into the <wb-dialog> host's own innerHTML. So
+    // dialog.schema.json's $view (div/header/h2/button/main/footer built
+    // straight into the host) can never race a host-owned rebuild the way
+    // card/skeleton do — but it also never gets USED: it's dead, stale
+    // markup that mismatches what dialog.js actually delivers, currently
+    // latent only because no schema-builder-driven page (pages/*.html) uses
+    // <wb-dialog> yet (only wb-lazy.js demo pages do, which have zero schema
+    // support). Excluding here is independent of, and does not resolve, the
+    // separate "does wb-dialog eagerly deliver a real <dialog> tag"
+    // semanticElement.tagName question tracked as a known violation in
+    // tests/regression/semantic-element-fidelity.spec.ts (dialog.js creates
+    // the real <dialog> lazily on click by design, not eagerly on connect —
+    // that's a deliberate maintainer-decision-pending question, not this
+    // fix). This fix only stops schema from ever writing its stale div-based
+    // chrome into a live <wb-dialog> host. Matches schema-builder.js's own
+    // SCHEMA_EXCLUDED_TAGS.
+    if (element.tagName === 'WB-DIALOG') {
+      return;
+    }
+
+    // wb-fix-card (#365 audit): WBFixCard (fix-card.js) is a WBCard
+    // subclass, self-sufficient in exactly the same way as the rest of
+    // wb-card* -- unconditionally rebuilds via render() whenever `.data` is
+    // set, never expects schema's $view to have pre-built anything (which
+    // is empty anyway). tagName.startsWith('WB-CARD') below does NOT catch
+    // this tag (it's "WB-FIX-CARD", not "WB-CARD..."), so it needs its own
+    // check. Matches schema-builder.js's own SCHEMA_EXCLUDED_TAGS.
+    if (element.tagName === 'WB-FIX-CARD') {
+      return;
+    }
+
     // Get schema name from tag or x-* attributes
     const name = schemaName || WB._detectSchemaName(element);
     dlog('processSchema', `[WB.processSchema] Processing element ${elLabel(element)}, detected schema: ${name}`);

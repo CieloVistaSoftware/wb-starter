@@ -20,6 +20,14 @@ Enhanced accordion/disclosure component with smooth animations.
 | `open` | boolean | `false` | Open by default |
 | `animated` | boolean | `true` | Enable smooth transitions |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-details summary="More Information">
+  <p>Hidden content revealed when expanded.</p>
+</wb-details>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

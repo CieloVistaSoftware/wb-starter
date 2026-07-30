@@ -30,6 +30,15 @@ Enhanced select dropdown with search, clear, and multi-select.
 | `size` | string | `"md"` | Size: `sm`, `md`, `lg` |
 | `variant` | string | `"default"` | Variant: `default`, `success`, `error` |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-select
+  label="Country"
+  options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
+</wb-select>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

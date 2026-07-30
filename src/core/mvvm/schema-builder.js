@@ -340,6 +340,17 @@ function buildStructure(element, schema, data) {
     return;
   }
 
+  // Stash the pre-wipe original content as a plain JS property (not an
+  // attribute -- Law 11) before clearing it below. A schema-built element
+  // that's ALSO used as a self-triggering control (e.g. <wb-drawer
+  // title="…">Left Drawer</wb-drawer> in overlay.js's drawer()) needs its
+  // own original label back after its behavior relocates the schema-built
+  // structure elsewhere (document.body) -- without this, that text is gone
+  // for good the moment $view replaces it, and the trigger renders empty
+  // (#drawer root cause). Purely additive: nothing reads this unless a
+  // behavior explicitly opts in.
+  element._wbOriginalSlot = data.slot || '';
+
   // Clear existing content (we saved it as slot)
   element.innerHTML = '';
 
@@ -683,12 +694,12 @@ export function processElement(element, schemaName = null) {
   // Mark as processed
   processedElements.add(element);
   element.setAttribute('x-schema', name);
-  
+
   // Bind $methods to element
   if (schema.$methods) {
     bindSchemaMethodsToElement(element, schema, data);
   }
-  
+
   // Trigger behavior injection if WB is available
   // The behavior adds interactivity (click handlers, animations, etc.)
   if (window.WB?.inject && schema.behavior) {
@@ -835,14 +846,31 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // reader semantics. semantics/select.js now builds a REAL <select> for this
 // tag itself (self-sufficient, same pattern), so schema must never build
 // the old fake widget on top of/instead of it.
+// wb-dialog (#387 audit, docs/audits/HOST-CHILD-DISPATCH-AUDIT.md):
+// dialog.js already builds a real native <dialog> + showModal() on
+// trigger, appended fresh to document.body -- it never uses the
+// <wb-dialog> host's own children/innerHTML at all in the common path.
+// dialog.schema.json's $view (div/header/h2/button/main/footer) is stale
+// and would only ever sit as dead, mismatched chrome inside the host if
+// schema ever processed it -- currently latent since only wb-lazy.js demo
+// pages (no schema support) use <wb-dialog> today. Excluding here is
+// independent of the separate "should dialog.js eagerly deliver a real
+// <dialog> tag on connect instead of lazily on click" question, which
+// stays a tracked, maintainer-decision-pending known violation in
+// tests/regression/semantic-element-fidelity.spec.ts.
+// wb-fix-card (#365): a WBCard subclass (fix-card.js) -- same
+// self-sufficient, unconditional-DOM-rebuild pattern as the rest of the
+// card family below (its schema's $view is empty anyway, but excluding it
+// here documents the same "never race the class" intent explicitly rather
+// than relying on the empty $view being a no-op forever).
 const SCHEMA_EXCLUDED_TAGS = new Set([
   'wb-demo', 'wb-details', 'wb-stack', 'wb-search', 'wb-skeleton', 'wb-select',
-  'wb-article', 'wb-articles',
+  'wb-article', 'wb-articles', 'wb-dialog',
   'wb-card', 'wb-cardimage', 'wb-cardvideo', 'wb-cardbutton', 'wb-carddraggable',
   'wb-cardexpandable', 'wb-cardfile', 'wb-cardhero', 'wb-cardhorizontal',
   'wb-cardlink', 'wb-card-link', 'wb-cardminimizable', 'wb-cardnotification',
   'wb-cardoverlay', 'wb-cardportfolio', 'wb-cardpricing', 'wb-cardproduct',
-  'wb-cardprofile', 'wb-cardstats', 'wb-cardtestimonial'
+  'wb-cardprofile', 'wb-cardstats', 'wb-cardtestimonial', 'wb-fix-card'
 ]);
 
 function detectSchema(element) {

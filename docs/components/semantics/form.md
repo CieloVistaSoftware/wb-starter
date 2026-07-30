@@ -24,6 +24,19 @@ Enhanced form with AJAX submission, validation, and auto-save.
 | `loadingText` | string | `"Submitting..."` | Button text during submit |
 | `successMessage` | string | `"Success!"` | Message on success |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-form action="/api/submit">
+  <wb-input
+    name="email"
+    label="Email"
+    required>
+  </wb-input>
+  <wb-button type="submit">Submit</wb-button>
+</wb-form>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element
@@ -35,10 +48,7 @@ Enhanced form with AJAX submission, validation, and auto-save.
     label="Email"
     required>
   </wb-input>
-  <wb-button
-    label="Submit"
-    type="submit">
-  </wb-button>
+  <wb-button type="submit">Submit</wb-button>
 </wb-form>
 ```
 

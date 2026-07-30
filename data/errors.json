@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-07-18T21:39:58.970Z",
-  "count": 1,
+  "lastUpdated": "2026-07-30T17:58:20.696Z",
+  "count": 2,
   "errors": [
     {
       "id": 1784410798969,
@@ -42,6 +42,22 @@
         "from": "System",
         "to": "Background Process"
       }
+    },
+    {
+      "id": 1785434300196,
+      "timestamp": "2026-07-30T17:58:20.196Z",
+      "message": "Unable to Load Documentation",
+      "details": {
+        "file": "src/wb-viewmodels/mdhtml.js",
+        "to": "wb-mdhtml",
+        "reason": "Failed to fetch",
+        "response": "Failed to fetch",
+        "src": "http://localhost:3000/docs/themes.md",
+        "stack": "TypeError: Failed to fetch\n    at mdhtml (http://localhost:3000/src/wb-viewmodels/mdhtml.js:136:32)"
+      },
+      "to": "wb-mdhtml",
+      "url": "http://localhost:3000/public/doc-viewer.html?file=docs/themes.md",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36"
     }
   ]
 }

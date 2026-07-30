@@ -4,6 +4,16 @@
 ## Overview
 The Tabs component provides a flexible tabbed interface for organizing content into switchable panels. It uses semantic HTML with proper accessibility features and keyboard navigation.
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-tabs>
+  <div tab="Tab 1">Content 1</div>
+  <div tab="Tab 2">Content 2</div>
+  <div tab="Tab 3">Content 3</div>
+</wb-tabs>
+</wb-demo>
+
 ---
 
 ## Usage

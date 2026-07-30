@@ -25,6 +25,17 @@ Modal dialog using native HTML5 dialog element.
 | `showClose` | boolean | `true` | Show close button |
 | `variant` | string | `"default"` | Variant: `default`, `centered`, `fullscreen` |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-dialog
+  title="Welcome"
+  id="my-dialog">
+  <p>Dialog content goes here.</p>
+</wb-dialog>
+<button onclick="document.getElementById('my-dialog').open()"> Open Dialog </button>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

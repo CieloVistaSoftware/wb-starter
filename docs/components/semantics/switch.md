@@ -26,6 +26,12 @@ Toggle switch for boolean settings.
 | `size` | string | `"md"` | Size: `sm`, `md`, `lg` |
 | `variant` | string | `"default"` | Variant: `default`, `primary`, `success` |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-switch label="Dark mode"></wb-switch>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

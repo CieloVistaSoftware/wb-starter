@@ -21,6 +21,16 @@ Enhanced code display with copy button and language badge.
 | `variant` | string | `"inline"` | Display style: `inline`, `block` |
 | `scrollable` | boolean | `false` | Enable horizontal scrolling |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<code
+  x-code
+  language="Python">
+  print("Hello")
+</code>
+</wb-demo>
+
 ## Usage
 
 ### Inline Code

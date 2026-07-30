@@ -244,6 +244,15 @@ export function drawer(element, options = {}) {
       document.body.appendChild(builtPanel);
       if (builtBackdrop) document.body.appendChild(builtBackdrop);
 
+      // The host is now empty (schema's $view build replaced its original
+      // text with the backdrop/panel we just moved out). Restore its own
+      // visible label: the pre-wipe slot content schema-builder.js stashed
+      // on _wbOriginalSlot, falling back to the configured title for
+      // markup that predates that stash (defensive, shouldn't normally hit).
+      if (!element.textContent.trim()) {
+        element.innerHTML = element._wbOriginalSlot || config.title;
+      }
+
       builtPanel.classList.add(`wb-drawer--${config.position}`);
 
       // $view's "close" part has no default content (drawer.schema.json

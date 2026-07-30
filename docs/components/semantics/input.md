@@ -33,6 +33,16 @@ Text input field with label, helper text, and validation states.
 | `iconPosition` | string | `"start"` | Icon position: `start`, `end` |
 | `clearable` | boolean | `false` | Show clear button |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-input
+  label="Email"
+  input-type="email"
+  placeholder="Enter your email">
+</wb-input>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element
@@ -40,7 +50,7 @@ Text input field with label, helper text, and validation states.
 ```html
 <wb-input
   label="Email"
-  inputType="email"
+  input-type="email"
   placeholder="Enter your email">
 </wb-input>
 ```

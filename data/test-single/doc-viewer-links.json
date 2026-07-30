@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/integration/doc-viewer-links.spec.ts",
+  "startedAt": "2026-07-30T17:47:02.950Z",
+  "updatedAt": "2026-07-30T17:48:06.643Z",
+  "command": "npx playwright test --workers=8 tests/integration/doc-viewer-links.spec.ts --grep behaviors-reference",
+  "pid": 37608,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\integration\\doc-viewer-links.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [integration] › tests\\integration\\doc-viewer-links.spec.ts:54:5 › doc-viewer renders no dead links (#226) › behaviors-reference.md: loads and every internal link resolves (4.1s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 19.5s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ integration: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (21.4s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T17:48:06.643Z",
+  "duration": "63.69s",
+  "exitCode": 0
+}

@@ -27,6 +27,12 @@ Checkbox input with label and custom styling.
 | `size` | string | `"md"` | Size: `sm`, `md`, `lg` |
 | `variant` | string | `"default"` | Variant: `default`, `primary`, `success` |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-checkbox label="I agree to the terms"></wb-checkbox>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

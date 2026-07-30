@@ -51,6 +51,10 @@ export const elementMap = {
   'wb-cardstats': 'cardstats',
   'wb-cardtestimonial': 'cardtestimonial',
   'wb-cardvideo': 'cardvideo',
+  // wb-fix-card (#365): own file (fix-card.js), not part of the wb-card*
+  // family generated above -- was missing here entirely, so WB.scan() never
+  // dispatched the tag and fix-card.js's customElements.define() never ran.
+  'wb-fix-card': 'fix-card',
   'wb-checkbox': 'checkbox',
   'wb-chip': 'chip',
   'wb-codecontrol': 'codecontrol',

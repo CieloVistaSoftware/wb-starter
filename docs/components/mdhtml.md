@@ -5,6 +5,12 @@
 ## Overview
 `mdhtml` is a WB-Starter component that converts Markdown to HTML in the browser. It is used via the `<wb-mdhtml>` custom element and supports both inline markdown and external markdown files.
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-mdhtml> # Hello World This is **bold** and *italic*. </wb-mdhtml>
+</wb-demo>
+
 ---
 
 ## Basic Usage

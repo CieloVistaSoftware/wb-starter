@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/button-size-variant-classes.spec.ts",
+  "startedAt": "2026-07-30T17:58:16.098Z",
+  "updatedAt": "2026-07-30T17:58:52.926Z",
+  "command": "npx playwright test --workers=8 tests/regression/button-size-variant-classes.spec.ts",
+  "pid": 23340,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\regression\\button-size-variant-classes.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 2 [regression] › tests\\regression\\button-size-variant-classes.spec.ts:26:3 › Native <button> size/variant attributes actually apply › Small/Medium/Large buttons render three distinct font-sizes (3.9s)\n  ok 1 [regression] › tests\\regression\\button-size-variant-classes.spec.ts:42:3 › Native <button> size/variant attributes actually apply › Primary/Secondary/Ghost buttons render three distinct backgrounds (4.1s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 22.1s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (24.0s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T17:58:52.926Z",
+  "duration": "36.83s",
+  "exitCode": 0
+}

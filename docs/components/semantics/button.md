@@ -28,6 +28,12 @@ Interactive button with variants, sizes, and optional icon.
 
 Button text is set via the element's content (children), not an attribute.
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-button>Click Me</wb-button>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

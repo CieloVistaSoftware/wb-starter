@@ -25,6 +25,15 @@ Fireworks burst explosion effect.
 | `duration` | string | `"1.5s"` | Animation duration |
 | `colors` | string | `'["#ff0","#f00","#0ff","#f0f"]'` | Particle colors as JSON array |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-fireworks
+  count="50"
+  label="Celebrate!">
+</wb-fireworks>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

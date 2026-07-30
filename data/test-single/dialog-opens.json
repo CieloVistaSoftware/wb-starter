@@ -1,0 +1,29 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/integration/dialog-opens.spec.ts",
+  "startedAt": "2026-07-30T17:56:46.679Z",
+  "updatedAt": "2026-07-30T17:57:41.293Z",
+  "command": "npx playwright test --workers=8 tests/integration/dialog-opens.spec.ts",
+  "pid": 40856,
+  "passed": 3,
+  "failed": 1,
+  "skipped": 0,
+  "total": 4,
+  "currentFile": "tests\\integration\\dialog-opens.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 2 [integration] › tests\\integration\\dialog-opens.spec.ts:10:3 › dialog triggers open a dialog on click (§19) › autoinject \"Open Dialog\" opens the dialog (4.7s)\n  x  1 [integration] › tests\\integration\\dialog-opens.spec.ts:49:3 › dialog triggers open a dialog on click (§19) › behaviors page x-modal \"Open Modal\" trigger opens a dialog (21.0s)\n  x  3 [integration] › tests\\integration\\dialog-opens.spec.ts:49:3 › dialog triggers open a dialog on click (§19) › behaviors page x-modal \"Open Modal\" trigger opens a dialog (retry #1) (3.8s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 43.3s\n  ✓ Passed:  1\n  ✗ Failed:  2\n\n  By Project:\n    ✗ integration: 1/3 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [integration] › tests\\integration\\dialog-opens.spec.ts:49:3 › dialog triggers open a dialog on click (§19) › behaviors page x-modal \"Open Modal\" trigger opens a dialog \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('[x-modal]').filter({ hasText: 'Open Modal' }).first()\n    Expected pattern: \u001b[32m/wb-dialog-trigger/\u001b[39m\n    Timeout: 15000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 15000ms\u001b[22m\n    \u001b[2m  - waiting for locator('[x-modal]').filter({ hasText: 'Open Modal' }).first()\u001b[22m\n\n\n      52 |     await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });\n      53 |     const trigger = page.locator('[x-modal]', { hasText: 'Open Modal' }).first();\n    > 54 |     await expect(trigger).toHaveClass(/wb-dialog-trigger/, { timeout: 15000 });\n         |                           ^\n      55 |     await trigger.click();\n      56 |     await expect(page.locator('dialog[open]')).toHaveCount(1);\n      57 |   });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\integration\\dialog-opens.spec.ts:54:27\n\n    Error Context: data\\test-results\\dialog-opens-dialog-trigge-57e98-odal-trigger-opens-a-dialog-integration\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/?page=behaviors\n    Call log:\n    \u001b[2m  - navigating to \"http://localhost:3000/?page=behaviors\", waiting until \"networkidle\"\u001b[22m\n\n\n      50 |     // domcontentloaded fires before the SPA's own client-side page fetch (which\n      51 |     // loads pages/behaviors.html and its <wb-demo> blocks) has even started.\n    > 52 |     await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });\n         |                ^\n      53 |     const trigger = page.locator('[x-modal]', { hasText: 'Open Modal' }).first();\n      54 |     await expect(trigger).toHaveClass(/wb-dialog-trigger/, { timeout: 15000 });\n      55 |     await trigger.click();\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\integration\\dialog-opens.spec.ts:52:16\n\n  1 failed\n    [integration] › tests\\integration\\dialog-opens.spec.ts:49:3 › dialog triggers open a dialog on click (§19) › behaviors page x-modal \"Open Modal\" trigger opens a dialog \n  1 passed (47.2s)\n",
+  "errors": "\n❌ FAILED: behaviors page x-modal \"Open Modal\" trigger opens a dialog\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: behaviors page x-modal \"Open Modal\" trigger opens a dialog\n   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/?page=behaviors\n",
+  "failures": [
+    {
+      "file": "tests\\integration\\dialog-opens.spec.ts",
+      "name": "dialog triggers open a dialog on click (§19) › behaviors page x-modal \"Open Modal\" trigger opens a dialog"
+    },
+    {
+      "file": "tests\\integration\\dialog-opens.spec.ts",
+      "name": "dialog triggers open a dialog on click (§19) › behaviors page x-modal \"Open Modal\" trigger opens a dialog (retry #1)"
+    }
+  ],
+  "completedAt": "2026-07-30T17:57:41.293Z",
+  "duration": "54.61s",
+  "exitCode": 1
+}

@@ -25,6 +25,12 @@ Star rating component for displaying or collecting ratings.
 | `size` | string | `"md"` | Size: `sm`, `md`, `lg` |
 | `icon` | string | `"★"` | Custom icon (emoji or symbol) |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-rating value="3"></wb-rating>
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

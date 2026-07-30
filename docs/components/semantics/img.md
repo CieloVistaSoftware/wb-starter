@@ -24,6 +24,15 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 | `fallback` | string | `""` | URL of fallback image on error |
 | `fit` | string | `"cover"` | Object-fit: `cover`, `contain`, `fill` |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<img
+  x-img
+  src="photo.jpg"
+  alt="Photo">
+</wb-demo>
+
 ## Usage
 
 ### Custom Element

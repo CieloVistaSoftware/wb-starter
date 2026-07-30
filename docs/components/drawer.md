@@ -27,6 +27,17 @@ A structural sidebar container that pushes content or sits alongside it.
 | `maxWidth` | string | `"50vw"` | Maximum width |
 | `maxHeight` | string | `"50vh"` | Maximum height |
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-drawer-layout
+  position="left"
+  width="300px">
+  <h3>Sidebar</h3>
+  <nav>Navigation content...</nav>
+</wb-drawer-layout>
+</wb-demo>
+
 ### Usage
 
 ```html
