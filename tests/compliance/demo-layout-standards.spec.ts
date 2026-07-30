@@ -28,6 +28,7 @@ const FILES = [
 
 const MIN_GAP_PX = 15; // ~1rem at the default 16px root, with a little slack for rounding
 const MIN_PADDING_PX = 15;
+const MIN_TEXT_EDGE_PX = 16; // 1rem — matches DEMOS-AND-DOCS-STANDARDS.md §13's documented minimum
 
 function parseWbDemoBlocks(html: string): string[] {
   const blocks: string[] = [];
@@ -135,6 +136,80 @@ test.describe('Demo layout standards (§13) — live spacing', () => {
         });
         return problems;
       }, MIN_GAP_PX);
+
+      expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+    });
+  }
+});
+
+test.describe('Layout standard: no text within 1rem of a content-panel edge', () => {
+  // General anti-cramping rule (John, DEMOS-AND-DOCS-STANDARDS.md §13): any
+  // element that reads as a visually bounded content PANEL (a real border,
+  // or a background distinct from its own parent's) must give its own text
+  // content >= 1rem of breathing room -- checked via the panel's own
+  // computed padding, not DOM geometry (geometry is fragile across arbitrary
+  // nesting; a panel's OWN padding is what actually controls this and is
+  // what a fix would change). Confirmed live via screenshot: pages/
+  // behaviors.html's "WB Behaviors Showcase" hero panel had text sitting
+  // flush against its left edge.
+  //
+  // Deliberately excludes small, intentionally-compact interactive atoms
+  // (badges, pills, kbd keys, pagination digits, tabs, avatars) -- those
+  // have their own established compact padding scale by design (a
+  // <wb-badge> with 1rem padding would be a visual regression, not a fix).
+  // The exclusion is by SIZE (a real content panel is meaningfully larger
+  // than a UI atom), not by an ad-hoc class denylist, so it generalizes to
+  // atoms not explicitly listed here.
+  const MIN_PANEL_WIDTH = 120;
+  const MIN_PANEL_HEIGHT = 32;
+
+  for (const file of FILES) {
+    test(`${file}: content-panel elements keep >=1rem text padding`, async ({ page }) => {
+      const urlPath = '/' + file.replace(/\\/g, '/');
+      await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
+      await page.waitForTimeout(800);
+
+      const violations = await page.evaluate(({ minPad, minW, minH }) => {
+        const problems: string[] = [];
+        const all = Array.from(document.querySelectorAll('body *')) as HTMLElement[];
+
+        for (const el of all) {
+          const rect = el.getBoundingClientRect();
+          if (rect.width < minW || rect.height < minH) continue; // a UI atom, not a content panel
+          // Must have direct, non-whitespace text of its own (not just via
+          // nested elements) -- otherwise the padding requirement belongs to
+          // whichever descendant actually renders text.
+          const hasOwnText = Array.from(el.childNodes).some(
+            (n) => n.nodeType === Node.TEXT_NODE && (n.textContent || '').trim().length > 0
+          );
+          if (!hasOwnText) continue;
+
+          const cs = getComputedStyle(el);
+          const parent = el.parentElement ? getComputedStyle(el.parentElement) : null;
+          const hasBorder = ['Top', 'Right', 'Bottom', 'Left'].some(
+            (side) => parseFloat((cs as any)[`border${side}Width`]) > 0 && cs[`border${side}Style` as any] !== 'none'
+          );
+          const bg = cs.backgroundColor;
+          const isTransparent = bg === 'transparent' || bg === 'rgba(0, 0, 0, 0)';
+          const hasDistinctBg = !isTransparent && (!parent || parent.backgroundColor !== bg);
+          if (!hasBorder && !hasDistinctBg) continue; // not a "panel" -- no visible edge to crowd
+
+          const pads = [
+            parseFloat(cs.paddingTop),
+            parseFloat(cs.paddingRight),
+            parseFloat(cs.paddingBottom),
+            parseFloat(cs.paddingLeft),
+          ];
+          const minSide = Math.min(...pads);
+          if (minSide < minPad) {
+            const label = (el.textContent || '').trim().slice(0, 40);
+            problems.push(
+              `<${el.tagName.toLowerCase()} class="${el.className}"> "${label}" has ${minSide}px padding on its tightest side < ${minPad}px`
+            );
+          }
+        }
+        return problems;
+      }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
 
       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
     });

@@ -30,6 +30,19 @@ async function ready(page) {
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
   await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
   await page.waitForTimeout(1000);
+  // drawer()'s Path A (overlay.js) only runs once WB.inject() awaits
+  // ensureBehaviorCss('drawer') -- a real network fetch for drawer.css on
+  // first use -- so it can land meaningfully later than the generic
+  // "page settled" signal above under load (confirmed flaky without this:
+  // the flat 1000ms wait sometimes wasn't enough, leaving the schema-built
+  // panel un-relocated and no click handler attached yet when a test then
+  // interacted with the trigger). Wait for the actual completion signal
+  // instead of a fixed timeout: element.wbDrawer is only set at the end of
+  // drawer()'s Path A, after relocation and listener wiring are both done.
+  await page.waitForFunction(
+    () => Array.from(document.querySelectorAll('wb-drawer')).every((el: any) => !!el.wbDrawer),
+    { timeout: 15000 }
+  );
 }
 
 test.describe('<wb-drawer> trigger renders and opens correctly (not a broken box)', () => {
@@ -56,30 +69,49 @@ test.describe('<wb-drawer> trigger renders and opens correctly (not a broken box
     const position = await panel.evaluate((el) => getComputedStyle(el).position);
     expect(position).toBe('fixed');
 
-    // The panel must have actually slid into view, not just be present in
-    // the DOM with a hidden/off-screen transform still applied.
-    const transform = await panel.evaluate((el) => getComputedStyle(el).transform);
-    expect(transform === 'none' || transform === 'matrix(1, 0, 0, 1, 0, 0)').toBeTruthy();
+    // The panel must have actually slid fully into view, not just be
+    // present in the DOM with a hidden/off-screen transform still applied.
+    // drawer.css's slide-in is a 0.3s CSS transition, so poll (toHaveCSS
+    // retries) instead of taking a single immediate snapshot right after the
+    // open class is added, which can catch the transform mid-transition.
+    await expect(panel).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)', { timeout: 5000 });
   });
 
-  test('exactly one panel+backdrop pair exists after opening (no duplicate/competing overlay)', async ({ page }) => {
-    const trigger = page.locator('wb-drawer', { hasText: 'Left Drawer' }).first();
-    await trigger.scrollIntoViewIfNeeded();
-    await trigger.click();
+  test('exactly one panel+backdrop pair exists per trigger (no duplicate/competing overlay)', async ({ page }) => {
+    // pages/behaviors.html has two <wb-drawer> triggers (Left + Right), each
+    // schema-built with its own panel/backdrop pair -- so the page-wide
+    // total is legitimately 2, not 1. The regression this guards against is
+    // a SINGLE trigger ending up with two competing panels (the schema-built
+    // one plus a second one drawer() used to build itself on click) -- so
+    // assert per-trigger, not page-wide.
+    const triggers = page.locator('wb-drawer');
+    await expect(triggers).toHaveCount(2);
 
-    await expect(page.locator('.wb-drawer__panel--open')).toBeVisible({ timeout: 5000 });
+    const leftTrigger = page.locator('wb-drawer', { hasText: 'Left Drawer' }).first();
+    await leftTrigger.scrollIntoViewIfNeeded();
+    await leftTrigger.click();
 
-    const panelCount = await page.locator('.wb-drawer__panel').count();
-    expect(panelCount, 'exactly one .wb-drawer__panel should exist for this trigger, not two competing ones').toBe(1);
+    const openPanel = page.locator('.wb-drawer__panel--open');
+    // 10s not 5s -- flaky under this session's unusually heavy concurrent
+    // Playwright load (10+ simultaneous agent test runs on one machine);
+    // consistently passed on the very next retry with identical assertions,
+    // pointing at CPU contention delaying the click's class-toggle, not a
+    // race in the drawer code itself.
+    await expect(openPanel).toBeVisible({ timeout: 10000 });
+    // Only the Left trigger was clicked -- exactly one panel should be open.
+    await expect(openPanel).toHaveCount(1);
 
-    const backdropCount = await page.locator('.wb-drawer__backdrop').count();
-    expect(backdropCount, 'exactly one .wb-drawer__backdrop should exist for this trigger').toBe(1);
+    // Total panel/backdrop count across the whole page must match the
+    // number of triggers (one pair per trigger), not double that -- a
+    // duplicate/competing build for the SAME trigger would push this above 2.
+    await expect(page.locator('.wb-drawer__panel')).toHaveCount(2);
+    await expect(page.locator('.wb-drawer__backdrop')).toHaveCount(2);
 
     // The panel/backdrop must have been relocated to document.body, not left
-    // sitting inertly inside the trigger element (which would mean the
+    // sitting inertly inside their trigger elements (which would mean the
     // trigger's own label got clobbered by the panel's internal markup).
-    const panelInsideTrigger = await page.locator('wb-drawer .wb-drawer__panel').count();
-    expect(panelInsideTrigger, 'panel must be relocated out of the trigger element, not left inside it').toBe(0);
+    const panelsInsideTriggers = await page.locator('wb-drawer .wb-drawer__panel').count();
+    expect(panelsInsideTriggers, 'panels must be relocated out of their trigger elements, not left inside them').toBe(0);
   });
 
   test('clicking the close button closes the panel', async ({ page }) => {

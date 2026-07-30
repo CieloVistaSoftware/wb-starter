@@ -39,13 +39,24 @@ console.log(`[WB-lazy] debug tracing: ${traceStatusLabel()} (localStorage.setIte
 // tag-map.js going forward is picked up here automatically instead of
 // silently working on only one runtime.
 
-// Two wb-* tags where tag-map.js's elementMap disagrees with what this
-// runtime has always shipped live (wb-drawer -> drawer there vs
-// -> drawerLayout here; wb-modal -> dialog there vs -> modal here). Kept as
-// this runtime's existing values rather than silently adopting tag-map.js's
-// -- changing live dispatch for either tag needs its own investigation into
-// which value is actually correct (tracked in #333).
-const ELEMENT_MAP_OVERRIDES = new Set(['wb-drawer', 'wb-modal']);
+// wb-modal: tag-map.js's elementMap says 'dialog', this runtime's own table
+// (below) says 'modal' -- both names resolve to the exact same function
+// (dialog.js does `export { dialog as modal }`), so this is a benign naming
+// difference, not a behavior difference. Kept as an explicit override so
+// it's not silently swept up if tag-map.js's mapping ever changes.
+//
+// wb-drawer used to be a SECOND, genuinely broken override here (mapped to
+// 'drawerLayout' -- an unrelated collapsible-sidebar behavior -- instead of
+// 'drawer', the actual trigger+overlay behavior every <wb-drawer> demo
+// markup expects). Confirmed live: every <wb-drawer> on a wb-lazy.js-only
+// page (e.g. demos/site/overlays.html) rendered as an inert, wrongly-styled
+// sidebar fragment with its own attribute text as visible content, never as
+// a working "click to open a drawer" trigger. #333 already unified the rest
+// of this table against tag-map.js's elementMap; this specific entry was
+// carved out "pending investigation" and never revisited. Now that
+// overlay.js's drawer() is schema-aware (this session), removed the
+// override so wb-drawer agrees with tag-map.js's 'drawer' on both runtimes.
+const ELEMENT_MAP_OVERRIDES = new Set(['wb-modal']);
 
 // wb-grid is still a REAL custom element (wb-grid.js, eagerly imported by
 // wb.js) whose own connectedCallback calls the layout function directly.
@@ -105,7 +116,14 @@ const WB_LAZY_ONLY_ELEMENTS = {
   'wb-switcher': 'switcher',
   'wb-reel': 'reel',
   'wb-frame': 'frame',
-  'wb-drawer': 'drawerLayout', // conflicts with elementMap's 'drawer' -- see ELEMENT_MAP_OVERRIDES above
+  // 'wb-drawer' removed -- this ALSO independently mapped to 'drawerLayout'
+  // here (customElementMappings concatenates this table's entries with
+  // elementMap's rather than overriding it, so both matched and BOTH
+  // behaviors ran on the same element, confirmed live via duplicate
+  // wb-drawer-trigger + wb-drawer-layout classes). Removing the override Set
+  // entry above was necessary but not sufficient -- this table needed the
+  // actual wrong mapping deleted too. 'wb-drawer' now resolves only via
+  // elementMap's correct 'wb-drawer': 'drawer' entry (tag-map.js).
   'wb-icon': 'icon',
   'wb-control': 'control',
   'wb-repeater': 'repeater',

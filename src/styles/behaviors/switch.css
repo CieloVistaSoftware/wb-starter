@@ -75,6 +75,62 @@
   font-size: 0.9rem;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   SIZE / VARIANT — switch.schema.json declares both `size` (sm/md/lg) and
+   `variant` (default/primary/success) with appliesClass:
+   "wb-switch--{{value}}" (schema-builder applies these classes at build
+   time; switch.js/switchInput() never needs to read the attributes itself),
+   but this file had ZERO matching .wb-switch--* rules -- every size/variant
+   combination rendered pixel-identical (confirmed: John reported a grid of
+   9 switches spanning all 3 sizes x 3 variants "not working", i.e. no
+   visible difference between any of them). Same root-cause pattern already
+   fixed this session for card.js/badge.css/button.js typed variants.
+   Doubled selector (.wb-switch.wb-switch--X) to outrank the unscoped base
+   rules above regardless of source order.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-switch.wb-switch--sm .wb-switch__track {
+  width: 2.25rem;
+  height: 1.125rem;
+}
+.wb-switch.wb-switch--sm .wb-switch__thumb {
+  width: 0.775rem;
+  height: 0.775rem;
+  left: 0.175rem;
+}
+.wb-switch.wb-switch--sm .wb-switch__input:checked ~ .wb-switch__track .wb-switch__thumb {
+  transform: translate(1.1rem, -50%);
+}
+
+.wb-switch.wb-switch--lg .wb-switch__track {
+  width: 3.75rem;
+  height: 1.875rem;
+}
+.wb-switch.wb-switch--lg .wb-switch__thumb {
+  width: 1.375rem;
+  height: 1.375rem;
+  left: 0.25rem;
+}
+.wb-switch.wb-switch--lg .wb-switch__input:checked ~ .wb-switch__track .wb-switch__thumb {
+  transform: translate(1.8rem, -50%);
+}
+
+/* variant colors the ON (checked) state only -- OFF is always the same
+   neutral track regardless of variant, matching most switch design systems
+   (color communicates "what will turn on", not a permanent brand). */
+.wb-switch.wb-switch--default .wb-switch__input:checked ~ .wb-switch__track {
+  background: var(--text-secondary);
+  border-color: var(--text-secondary);
+}
+.wb-switch.wb-switch--primary .wb-switch__input:checked ~ .wb-switch__track {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.wb-switch.wb-switch--success .wb-switch__input:checked ~ .wb-switch__track {
+  background: var(--success-color);
+  border-color: var(--success-color);
+}
+
 /* ── Legacy bare <input type=checkbox> + .wb-switch__slider (back-compat) ───── */
 .wb-switch__slider {
   position: absolute;

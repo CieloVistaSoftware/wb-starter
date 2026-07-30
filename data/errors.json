@@ -1,63 +1,54 @@
 {
-  "lastUpdated": "2026-07-30T17:58:20.696Z",
-  "count": 2,
+  "lastUpdated": "2026-07-30T18:09:17.979Z",
+  "count": 1,
   "errors": [
     {
-      "id": 1784410798969,
-      "timestamp": "2026-07-18T21:39:58.969Z",
+      "id": 1785434957978,
+      "timestamp": "2026-07-30T18:09:17.978Z",
       "level": "error",
       "source": "WB:LegacySyntax",
       "module": "wb.js",
-      "line": 696,
+      "line": 731,
       "column": 41,
       "function": "(anonymous)",
       "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
-      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:696:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:688:42)\n    at async Object.init (http://localhost:3000/src/core/wb.js:1135:9)",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:731:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:723:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1170:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
       "frames": [
         {
           "function": "(anonymous)",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 696,
+          "line": 731,
           "column": 41
         },
         {
           "function": "Object.scan",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 688,
+          "line": 723,
           "column": 42
         },
         {
           "function": "Object.init",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 1135,
-          "column": 9
+          "line": 1170,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
         }
       ],
-      "url": "http://localhost:3000/tests/compliance/legacy-syntax-check.html",
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
       "interaction": {
         "from": "System",
         "to": "Background Process"
       }
-    },
-    {
-      "id": 1785434300196,
-      "timestamp": "2026-07-30T17:58:20.196Z",
-      "message": "Unable to Load Documentation",
-      "details": {
-        "file": "src/wb-viewmodels/mdhtml.js",
-        "to": "wb-mdhtml",
-        "reason": "Failed to fetch",
-        "response": "Failed to fetch",
-        "src": "http://localhost:3000/docs/themes.md",
-        "stack": "TypeError: Failed to fetch\n    at mdhtml (http://localhost:3000/src/wb-viewmodels/mdhtml.js:136:32)"
-      },
-      "to": "wb-mdhtml",
-      "url": "http://localhost:3000/public/doc-viewer.html?file=docs/themes.md",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36"
     }
   ]
 }

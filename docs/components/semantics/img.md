@@ -28,7 +28,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 <wb-demo>
 <img
-  x-img
+  x-image
   src="photo.jpg"
   alt="Photo">
 </wb-demo>
@@ -48,7 +48,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <img
-  x-img
+  x-image
   src="photo.jpg"
   alt="Photo">
 ```

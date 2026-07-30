@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/integration/drawer-behavior.spec.ts",
+  "startedAt": "2026-07-30T18:09:17.671Z",
+  "updatedAt": "2026-07-30T18:10:41.043Z",
+  "command": "npx playwright test --workers=8 tests/integration/drawer-behavior.spec.ts",
+  "pid": 44600,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\integration\\drawer-behavior.spec.ts",
+  "output": "\nRunning 3 tests using 3 workers\n\n  ok 2 [integration] › tests\\integration\\drawer-behavior.spec.ts:16:3 › x-drawer auto-injection (drawer behavior) › components page: \"← Left\" drawer button actually opens a drawer on click (8.5s)\n  ok 1 [integration] › tests\\integration\\drawer-behavior.spec.ts:36:3 › x-drawer auto-injection (drawer behavior) › playground.html: x-drawer example enhances eagerly and opens on click (12.6s)\n  ok 3 [integration] › tests\\integration\\drawer-behavior.spec.ts:27:3 › x-drawer auto-injection (drawer behavior) › components page: \"Right →\" drawer button opens from the right (11.8s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 72.3s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ integration: 3/3 passed\n════════════════════════════════════════════════════════════\n\n\n  3 passed (1.2m)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T18:10:41.043Z",
+  "duration": "83.37s",
+  "exitCode": 0
+}

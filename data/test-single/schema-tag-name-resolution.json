@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/schema-tag-name-resolution.spec.ts",
+  "startedAt": "2026-07-30T18:10:57.583Z",
+  "updatedAt": "2026-07-30T18:11:31.796Z",
+  "command": "npx playwright test --workers=8 tests/regression/schema-tag-name-resolution.spec.ts",
+  "pid": 17168,
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "total": 5,
+  "currentFile": "tests\\regression\\schema-tag-name-resolution.spec.ts",
+  "output": "\nRunning 5 tests using 5 workers\n\n  ok 3 [regression] › tests\\regression\\schema-tag-name-resolution.spec.ts:22:3 › Schema-driven tags resolve to a real, class-bearing element › wb-control gets a real class, not empty (6.1s)\n  ok 1 [regression] › tests\\regression\\schema-tag-name-resolution.spec.ts:27:3 › Schema-driven tags resolve to a real, class-bearing element › wb-repeater behavior runs (display:contents wrapper, by design no class) (6.5s)\n  ok 2 [regression] › tests\\regression\\schema-tag-name-resolution.spec.ts:41:3 › Schema-driven tags resolve to a real, class-bearing element › wb-drawer-layout resolves via the lowercase-hyphenated tag (7.0s)\n  ok 5 [regression] › tests\\regression\\schema-tag-name-resolution.spec.ts:46:3 › Schema-driven tags resolve to a real, class-bearing element › wb-article builds a real structure from a bare tag (6.1s)\n  ok 4 [regression] › tests\\regression\\schema-tag-name-resolution.spec.ts:52:3 › Schema-driven tags resolve to a real, class-bearing element › wb-articles builds a list wrapper around wb-article children (9.1s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 5 tests in 20.0s\n  ✓ Passed:  5\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 5/5 passed\n════════════════════════════════════════════════════════════\n\n\n  5 passed (22.1s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T18:11:31.796Z",
+  "duration": "34.21s",
+  "exitCode": 0
+}

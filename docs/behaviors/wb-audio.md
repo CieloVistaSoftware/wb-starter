@@ -2,6 +2,12 @@
 
 A premium custom audio player with a 15-band graphic equalizer, Web Audio API support, and advanced controls. Provides a pleasant royalty-free demo track by default.
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-audio src="audio.mp3"></wb-audio>
+</wb-demo>
+
 ---
 
 ## Usage

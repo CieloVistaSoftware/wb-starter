@@ -75,7 +75,10 @@
   transform: translateY(100%);
 }
 
-.wb-drawer__panel--open {
+/* Specificity must match/beat .wb-drawer__panel.wb-drawer--{position} (two
+   classes) above, or the position variant's translateX/Y always wins
+   regardless of source order and the panel never visibly slides in. */
+.wb-drawer__panel.wb-drawer__panel--open {
   transform: translate(0, 0);
 }
 

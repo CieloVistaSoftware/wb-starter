@@ -48,7 +48,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ### With Trend
 
-```html
+<wb-demo>
 <wb-cardstats
   value="$45,678"
   label="Revenue"
@@ -56,11 +56,11 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   trend="up"
   trendValue="+12.5%">
 </wb-cardstats>
-```
+</wb-demo>
 
 ### Negative Trend
 
-```html
+<wb-demo>
 <wb-cardstats
   value="23"
   label="Open Issues"
@@ -68,7 +68,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   trend="down"
   trendValue="-5">
 </wb-cardstats>
-```
+</wb-demo>
 
 ## Generated Structure
 

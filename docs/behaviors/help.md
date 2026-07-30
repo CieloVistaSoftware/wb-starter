@@ -2,6 +2,12 @@
 
 Displays always-visible help text for form fields or UI elements.
 
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<span x-help>Enter your email address here.</span>
+</wb-demo>
+
 - **Type:** Modifier
 - **Usage:**
   ```html

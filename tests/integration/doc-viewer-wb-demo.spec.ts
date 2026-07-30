@@ -42,9 +42,9 @@ const CASES: Case[] = [
   { file: 'docs/components/cards/cardvideo.md', liveSelector: 'wb-cardvideo', label: 'cardvideo component doc' },
   { file: 'docs/components/semantics/audio.md', liveSelector: 'wb-audio', label: 'audio semantics doc' },
   { file: 'docs/components/semantics/code.md', liveSelector: 'code', label: 'code semantics doc', upgradeAttr: 'class' },
-  { file: 'docs/components/semantics/details.md', liveSelector: 'wb-details', label: 'details semantics doc' },
+  { file: 'docs/components/semantics/details.md', liveSelector: 'details', label: 'details semantics doc' },
   { file: 'docs/components/semantics/dialog.md', liveSelector: 'wb-dialog', label: 'dialog semantics doc' },
-  { file: 'docs/components/semantics/form.md', liveSelector: 'wb-form', label: 'form semantics doc' },
+  { file: 'docs/components/semantics/form.md', liveSelector: 'form', label: 'form semantics doc' },
   { file: 'docs/components/semantics/img.md', liveSelector: 'img', label: 'img semantics doc', upgradeAttr: 'class' },
   { file: 'docs/components/semantics/input.md', liveSelector: 'wb-input', label: 'input semantics doc' },
   { file: 'docs/components/semantics/checkbox.md', liveSelector: 'wb-checkbox', label: 'checkbox semantics doc' },
@@ -60,6 +60,12 @@ const CASES: Case[] = [
   { file: 'docs/components/mdhtml.md', liveSelector: 'wb-mdhtml', label: 'mdhtml component doc' },
   { file: 'docs/components/drawer.md', liveSelector: 'wb-drawer-layout', label: 'drawer component doc' },
   { file: 'docs/components/tabs.md', liveSelector: 'wb-tabs', label: 'tabs component doc' },
+  { file: 'docs/behaviors/wb-cluster.md', liveSelector: '.wb-cluster', label: 'wb-cluster behavior doc' },
+  { file: 'docs/behaviors/wb-row.md', liveSelector: '.wb-row', label: 'wb-row behavior doc' },
+  { file: 'docs/behaviors/wb-stack.md', liveSelector: '.wb-stack', label: 'wb-stack behavior doc' },
+  { file: 'docs/behaviors/wb-audio.md', liveSelector: 'wb-audio', label: 'wb-audio behavior doc' },
+  { file: 'docs/behaviors/help.md', liveSelector: 'span', label: 'help behavior doc', upgradeAttr: 'class' },
+  { file: 'docs/behaviors/tooltip.md', liveSelector: 'button', label: 'tooltip behavior doc', upgradeAttr: 'aria-describedby' },
 ];
 
 test.describe('raw <wb-demo> in Markdown renders live control + source', () => {
