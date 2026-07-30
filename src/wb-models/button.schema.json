@@ -255,6 +255,14 @@
       }
     }
   },
+  "events": {
+    "wb:button:click": {
+      "description": "Fired when the button is activated (mouse click, Enter, or Space)",
+      "detail": {
+        "originalEvent": "Event"
+      }
+    }
+  },
   "test": {
     "setup": [
       "<wb-button>Basic button content</wb-button>",

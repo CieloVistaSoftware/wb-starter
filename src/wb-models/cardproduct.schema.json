@@ -315,8 +315,8 @@
       "<wb-cardproduct image=\"Sample image\">image=\"Sample image\"</wb-cardproduct>",
       "<wb-cardproduct title=\"Sample title\">title=\"Sample title\"</wb-cardproduct>",
       "<wb-cardproduct description=\"Sample description\">description=\"Sample description\"</wb-cardproduct>",
-      "<wb-product title=\"Widget\" price=\"$29\"></wb-product>",
-      "<wb-product image=\"product.jpg\" title=\"Widget\" price=\"$19\" badge=\"Sale\"></wb-product>"
+      "<wb-cardproduct title=\"Widget\" price=\"$29\"></wb-cardproduct>",
+      "<wb-cardproduct image=\"product.jpg\" title=\"Widget\" price=\"$19\" badge=\"Sale\"></wb-cardproduct>"
     ],
     "matrix": {
       "combinations": [

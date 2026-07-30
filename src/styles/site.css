@@ -1133,12 +1133,19 @@ h5, h6 {
 /* =============================================================================
    GRADIENT BUTTONS
    ============================================================================= */
-.wb-btn-gradient {
+/* Element-qualified (button.wb-btn-gradient, a.wb-btn-gradient) so this beats
+   themes.css's `[data-theme] button` native-button reset (0-1-1 specificity)
+   on <button> usage -- the bare class alone (0-1-0) lost that fight and this
+   component's real padding never applied, leaving the reset's 0.5rem 1rem in
+   effect (8px, under the >=1rem minimum) instead of the 0.875rem/2rem below. */
+button.wb-btn-gradient,
+a.wb-btn-gradient {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 2rem;
+  /* >=1rem on every side (was 0.875rem/14px vertical, under the minimum). */
+  padding: 1rem 2rem;
   font-size: 1rem;
   font-weight: 600;
   color: white;
@@ -1170,11 +1177,15 @@ h5, h6 {
 /* =============================================================================
    GLASS BUTTONS & ELEMENTS
    ============================================================================= */
-.wb-btn-glass {
+/* Element-qualified for the same reason as .wb-btn-gradient above -- beats
+   themes.css's `[data-theme] button` reset (0-1-1) on <button> usage. */
+button.wb-btn-glass,
+a.wb-btn-glass {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 2rem;
+  /* >=1rem on every side (was 0.875rem/14px vertical, under the minimum). */
+  padding: 1rem 2rem;
   font-size: 1rem;
   font-weight: 500;
   color: var(--text-primary);

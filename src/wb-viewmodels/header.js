@@ -5,9 +5,9 @@
  * 
  * Custom Tag: <wb-header>
  * 
- * Usage:
- * <wb-header  data-icon="📂" data-title="Project Index" data-badge="v1.0"></header>
- * <wb-header  data-icon="🚀" data-title="My App" data-subtitle="Dashboard" data-sticky></header>
+ * Usage (plain attributes -- see src/wb-models/header.schema.json):
+ * <wb-header icon="📂" title="Project Index" badge="v1.0"></header>
+ * <wb-header icon="🚀" title="My App" subtitle="Dashboard" sticky></header>
  * -----------------------------------------------------------------------------
  */
 
@@ -21,8 +21,9 @@ export function header(element) {
   // Add base class
   element.classList.add('wb-header');
   
-  // Get attributes
-  const sticky = element.hasAttribute('data-sticky');
+  // Get attributes. Plain `sticky` is canonical (schema property, Law 11);
+  // `data-sticky` accepted for back-compat only.
+  const sticky = element.hasAttribute('sticky') || element.hasAttribute('data-sticky');
   
   // Apply sticky if requested
   if (sticky) {

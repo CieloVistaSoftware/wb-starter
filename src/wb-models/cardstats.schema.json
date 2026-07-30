@@ -241,8 +241,8 @@
       "<wb-cardstats variant=\"compact\">variant=compact</wb-cardstats>",
       "<wb-cardstats variant=\"large\">variant=large</wb-cardstats>",
       "<wb-cardstats value=\"Sample value\">value=\"Sample value\"</wb-cardstats>",
-      "<wb-stats value=\"1,234\" label=\"Users\"></wb-stats>",
-      "<wb-stats value=\"$50K\" label=\"Revenue\" icon=\"💰\" trend=\"up\" trend-value=\"+12%\"></wb-stats>"
+      "<wb-cardstats value=\"1,234\" label=\"Users\"></wb-cardstats>",
+      "<wb-cardstats value=\"$50K\" label=\"Revenue\" icon=\"💰\" trend=\"up\" trend-value=\"+12%\"></wb-cardstats>"
     ],
     "matrix": {
       "combinations": [

@@ -198,7 +198,12 @@ const behaviorModules = {
   // x-copybutton (#291) — overlays a positioned copy button on ANY element;
   // reuses copy.js's core clipboard-write logic (writeToClipboard()).
   copybutton: 'copy',
-  moveup: 'move', movedown: 'move', moveleft: 'move', moveright: 'move', moveall: 'move',
+  // #344: 'move' itself (the <wb-move>/[x-move] container entry point) was
+  // missing here entirely -- tag-map.js's elementMap/extensionMap already
+  // mapped 'wb-move'/'x-move' to behavior name 'move', but with no key in
+  // this table, getBehavior('move') threw "Unknown behavior: move" the
+  // moment anything actually used the tag/attribute.
+  move: 'move', moveup: 'move', movedown: 'move', moveleft: 'move', moveright: 'move', moveall: 'move',
   toggle: 'toggle',
   ripple: 'ripple',
   darkmode: 'darkmode',

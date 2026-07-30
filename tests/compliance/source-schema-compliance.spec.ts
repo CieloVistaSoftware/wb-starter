@@ -12,12 +12,30 @@ import {
   extractFunction, createsElement, addsClass, setsStyle
 } from '../base';
 
-// Schemas that don't have JS functions
-const NON_FUNCTIONAL_SCHEMAS = ['button', 'css-oop'];
+// Schemas that don't have JS functions -- these document/describe the
+// SYSTEM rather than a single behavioral component, so they can never have
+// a matching `export function <behavior>()` (#344 triage):
+//   - button: no dedicated JS function (native <button> + attribute
+//     behaviors handle it)
+//   - css-oop: documents CSS architecture rules, not a component
+//   - behaviors: "Master schema defining all behavior metadata" -- meta,
+//     documents the behavior SYSTEM itself, same as css-oop
+//   - home-page: schemaType "page" -- composes other components (cardhero,
+//     cardstats, etc.) via $layout; the page has no behavior of its own
+const NON_FUNCTIONAL_SCHEMAS = ['button', 'css-oop', 'behaviors', 'home-page'];
 
-// Function name mappings
+// Function name mappings -- kept in sync with the REAL runtime alias table,
+// wb-viewmodels/index.js's `exportAliases` (#344: this map had silently
+// drifted out of sync with that table, causing source-schema-compliance to
+// report "fix-card"/"drawer-layout" as missing functions even though both
+// already have real, working, runtime-registered implementations --
+// fixCard() in fix-card.js and drawerLayout() in layouts.js -- just under a
+// camelCase export name the hyphenated schema.behavior string can never
+// literally match without this map).
 const FUNCTION_NAME_MAP: Record<string, string> = {
   'switch': 'switchInput',
+  'fix-card': 'fixCard',
+  'drawer-layout': 'drawerLayout',
 };
 
 function getAllJsSource(): string {

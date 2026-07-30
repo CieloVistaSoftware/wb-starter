@@ -4,10 +4,11 @@
  * Helper Attribute: [x-behavior="empty"]
  */
 export function empty(element, options = {}) {
+  // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.
   const config = {
-    icon: options.icon || element.dataset.icon || '∅',
-    message: options.message || element.dataset.message || 'No data',
-    description: options.description || element.dataset.description || '',
+    icon: options.icon || element.getAttribute('icon') || element.dataset.icon || '∅',
+    message: options.message || element.getAttribute('message') || element.dataset.message || 'No data',
+    description: options.description || element.getAttribute('description') || element.dataset.description || '',
     ...options
   };
 

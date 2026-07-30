@@ -8,28 +8,29 @@
  * 
  * Usage:
  *   <nav x-sticky>...</nav>
- *   <header x-sticky data-offset="60" data-z-index="1000">...</header>
- * 
- * Options:
- *   data-offset    - Pixels from top when stuck (default: 0)
- *   data-z-index   - Z-index when stuck (default: 100)
- *   data-threshold - Scroll position to trigger (default: element's top)
- *   data-class     - Class to add when stuck (default: "is-stuck")
- *   data-animate   - Add smooth transition (default: true)
+ *   <header x-sticky offset="60" z-index="1000">...</header>
+ *
+ * Options (plain attributes are canonical per Law 11; data-* accepted for
+ * back-compat only):
+ *   offset    - Pixels from top when stuck (default: 0)
+ *   z-index   - Z-index when stuck (default: 100)
+ *   threshold - Scroll position to trigger (default: element's top)
+ *   class     - Class to add when stuck (default: "is-stuck")
+ *   animate   - Add smooth transition (default: true)
  */
 
 export function sticky(element, options = {}) {
-  console.log('[WB:sticky] Invoked on', element, 'with options:', options, 'dataset:', element.dataset);
   // Add base class for compliance
   element.classList.add('wb-sticky');
 
-  // Config from options and data attributes (prefer data-*)
+  // Config: plain attributes are canonical (Law 11); data-* kept as a
+  // back-compat fallback only.
   const config = {
-    offset: parseInt(options.offset || element.dataset.offset || '0', 10),
-    zIndex: parseInt(options.zIndex || element.dataset.zIndex || '100', 10),
-    threshold: options.threshold || element.dataset.threshold || null,
-    stuckClass: options.class || element.dataset.class || 'is-stuck',
-    animate: options.animate !== false && (element.dataset.animate !== 'false')
+    offset: parseInt(options.offset ?? element.getAttribute('offset') ?? element.dataset.offset ?? '0', 10),
+    zIndex: parseInt(options.zIndex ?? element.getAttribute('z-index') ?? element.dataset.zIndex ?? '100', 10),
+    threshold: options.threshold ?? element.getAttribute('threshold') ?? element.dataset.threshold ?? null,
+    stuckClass: options.class ?? element.getAttribute('class-name') ?? element.dataset.class ?? 'is-stuck',
+    animate: options.animate !== false && (element.getAttribute('animate') !== 'false') && (element.dataset.animate !== 'false')
   };
 
   // Store original styles

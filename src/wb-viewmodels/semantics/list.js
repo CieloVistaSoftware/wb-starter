@@ -4,9 +4,11 @@
  * Helper Attribute: [x-behavior="list"]
  */
 export function list(element, options = {}) {
+  // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.
   const config = {
-    items: options.items || element.dataset.items || '',
-    dividers: options.dividers !== undefined ? options.dividers : element.hasAttribute('data-dividers'),
+    items: options.items || element.getAttribute('items') || element.dataset.items || '',
+    dividers: options.dividers !== undefined ? options.dividers :
+      (element.hasAttribute('dividers') || element.hasAttribute('data-dividers')),
     ...options
   };
 

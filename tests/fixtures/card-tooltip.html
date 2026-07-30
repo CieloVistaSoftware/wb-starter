@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Tooltip -- Themed Hover Text (test fixture, not a demo page)</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+</head>
+
+<body>
+  <h1>Card Tooltip -- Themed Hover Text</h1>
+  <p>Test fixture for #283: `tooltip`/`hoverText` on `&lt;wb-card&gt;` should show a
+     themed WB tooltip (`.wb-tooltip`), not the native browser `title` tooltip.</p>
+
+  <wb-card id="card-tooltip" title="Card Heading" tooltip="Themed tooltip text">
+    Card with a title (heading) AND a tooltip attribute -- the themed tooltip
+    must win; the literal `title` DOM attribute must not remain (no
+    double native+themed tooltip on hover).
+  </wb-card>
+
+  <wb-card id="card-hovertext" hover-text="Themed hover-text alias">
+    Card with the hover-text alias attribute.
+  </wb-card>
+
+  <wb-card id="card-plain-title" title="Just a heading, also a native title attribute">
+    Card with only a plain title attribute (no tooltip/hoverText) -- must NOT get a
+    themed tooltip; the literal title attribute keeps working as a normal native tooltip.
+  </wb-card>
+
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    await WB.scan(document.body, { eager: true });
+    console.log('Card tooltip fixture initialized');
+  </script>
+</body>
+</html>

@@ -286,7 +286,7 @@ test.describe('Stock Indicator Spacing - Live Component Check', () => {
       </head>
       <body>
         <div class="test-container">
-          <wb-stock id="stock-test-1" data-symbol="AAPL" data-price="150.00" data-change="+2.5%">
+          <wb-stock id="stock-test-1" symbol="AAPL" price="150.00" change="+2.5%">
             <span class="stock-symbol">AAPL</span>
             <span class="stock-price">$150.00</span>
             <span class="stock-change">+2.5%</span>

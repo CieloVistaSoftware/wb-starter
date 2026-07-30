@@ -51,7 +51,10 @@ body {
 
 .example-label {
   background: var(--bg-tertiary);
-  padding: 0.5rem 1rem;
+  /* Standard: >=1rem padding on every side (was 0.5rem top/bottom) so this
+     label bar's text never sits within 1rem of its own edge -- matches the
+     sibling .section-header bar's padding convention in this same file. */
+  padding: 1rem;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;

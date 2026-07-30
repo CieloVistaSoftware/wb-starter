@@ -1029,12 +1029,12 @@ export function cardhero(element, options = {}) {
     }
 
     if (base.config.ctaSecondary) {
-      const btn = document.createElement('a');
-      btn.className = 'wb-hero-cta wb-hero-cta--secondary';
-      btn.href = base.config.ctaSecondaryHref || '#';
-      btn.textContent = base.config.ctaSecondary;
-      if (base.config.ctaSecondaryTooltip) btn.setAttribute('x-tooltip', base.config.ctaSecondaryTooltip);
-      ctaGroup.appendChild(btn);
+      const secondaryBtn = document.createElement('a');
+      secondaryBtn.className = 'wb-hero-cta wb-hero-cta--secondary';
+      secondaryBtn.href = base.config.ctaSecondaryHref || '#';
+      secondaryBtn.textContent = base.config.ctaSecondary;
+      if (base.config.ctaSecondaryTooltip) secondaryBtn.setAttribute('x-tooltip', base.config.ctaSecondaryTooltip);
+      ctaGroup.appendChild(secondaryBtn);
     }
     content.appendChild(ctaGroup);
   }
@@ -1659,10 +1659,10 @@ export function cardnotification(element, options = {}) {
   element.innerHTML = '';
 
   // Icon
-  const iconEl = document.createElement('span');
-  iconEl.className = 'wb-notification__icon';
-  iconEl.textContent = customIcon || defaultIcons[variant] || 'i';
-  element.appendChild(iconEl);
+  const standaloneIconEl = document.createElement('span');
+  standaloneIconEl.className = 'wb-notification__icon';
+  standaloneIconEl.textContent = customIcon || defaultIcons[variant] || 'i';
+  element.appendChild(standaloneIconEl);
 
   // Content
   const content = document.createElement('main');
@@ -2294,9 +2294,9 @@ export function cardminimizable(element, options = {}) {
 
   // Footer
   if (base.config.footer) {
-    const footerEl = base.createFooter();
-    footer.style.display = isMinimized ? 'none' : '';
-    element.appendChild(footer);
+    const minimizableFooterEl = base.createFooter();
+    minimizableFooterEl.style.display = isMinimized ? 'none' : '';
+    element.appendChild(minimizableFooterEl);
   }
 
   // API
@@ -2441,16 +2441,16 @@ export function carddraggable(element, options = {}) {
     
     // Viewport constraint
     if (config.constrain === 'viewport') {
-      const elemRect = element.getBoundingClientRect();
-      const currentLeft = getCurrentLeft();
-      const currentTop = getCurrentTop();
-      const minX = currentLeft - elemRect.left;
-      const minY = currentTop - elemRect.top;
-      const maxX = currentLeft + (window.innerWidth - elemRect.right);
-      const maxY = currentTop + (window.innerHeight - elemRect.bottom);
-      
-      newX = Math.max(minX, Math.min(maxX, newX));
-      newY = Math.max(minY, Math.min(maxY, newY));
+      const vpElemRect = element.getBoundingClientRect();
+      const vpCurrentLeft = getCurrentLeft();
+      const vpCurrentTop = getCurrentTop();
+      const vpMinX = vpCurrentLeft - vpElemRect.left;
+      const vpMinY = vpCurrentTop - vpElemRect.top;
+      const vpMaxX = vpCurrentLeft + (window.innerWidth - vpElemRect.right);
+      const vpMaxY = vpCurrentTop + (window.innerHeight - vpElemRect.bottom);
+
+      newX = Math.max(vpMinX, Math.min(vpMaxX, newX));
+      newY = Math.max(vpMinY, Math.min(vpMaxY, newY));
     }
     
     element.style.left = newX + 'px';
@@ -2470,8 +2470,8 @@ export function carddraggable(element, options = {}) {
   const onTouchMove = (e) => {
     if (!isDragging) return;
     e.preventDefault();
-    const touch = e.touches[0];
-    onMouseMove({ clientX: touch.clientX, clientY: touch.clientY });
+    const moveTouch = e.touches[0];
+    onMouseMove({ clientX: moveTouch.clientX, clientY: moveTouch.clientY });
   };
 
   const onMouseUp = () => {
@@ -2961,10 +2961,10 @@ export function cardportfolio(element, options = {}) {
     langPills.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;';
     
     config.languages.split(',').forEach(lang => {
-      const pill = document.createElement('span');
-      pill.style.cssText = 'padding:0.35rem 0.75rem;background:var(--bg-tertiary,#374151);color:var(--text-primary,#f9fafb);border-radius:999px;font-size:0.85rem;';
-      pill.textContent = lang.trim();
-      langPills.appendChild(pill);
+      const langPill = document.createElement('span');
+      langPill.style.cssText = 'padding:0.35rem 0.75rem;background:var(--bg-tertiary,#374151);color:var(--text-primary,#f9fafb);border-radius:999px;font-size:0.85rem;';
+      langPill.textContent = lang.trim();
+      langPills.appendChild(langPill);
     });
     langSection.appendChild(langPills);
     main.appendChild(langSection);
@@ -2986,12 +2986,12 @@ export function cardportfolio(element, options = {}) {
 
     contactItems.forEach(item => {
       if (item.value) {
-        const link = document.createElement('a');
-        link.href = item.href;
-        if (item.external) link.target = '_blank';
-        link.style.cssText = 'color:var(--text-primary,#f9fafb);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:0.25rem;';
-        link.innerHTML = `${item.icon} <span>${item.value}</span>`;
-        contact.appendChild(link);
+        const contactLink = document.createElement('a');
+        contactLink.href = item.href;
+        if (item.external) contactLink.target = '_blank';
+        contactLink.style.cssText = 'color:var(--text-primary,#f9fafb);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:0.25rem;';
+        contactLink.innerHTML = `${item.icon} <span>${item.value}</span>`;
+        contact.appendChild(contactLink);
       }
     });
 
@@ -3013,16 +3013,16 @@ export function cardportfolio(element, options = {}) {
     social.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);display:flex;justify-content:center;gap:0.75rem;';
 
     socialLinks.forEach(({ url, icon, label }) => {
-      const link = document.createElement('a');
-      link.href = url;
-      link.target = '_blank';
-      link.title = label;
-      link.setAttribute('aria-label', label);
-      link.style.cssText = 'width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--bg-tertiary,#374151);border-radius:50%;text-decoration:none;font-size:1.25rem;transition:transform 0.2s,background 0.2s;';
-      link.onmouseenter = () => { link.style.transform = 'scale(1.1)'; link.style.background = 'var(--primary,#6366f1)'; };
-      link.onmouseleave = () => { link.style.transform = ''; link.style.background = 'var(--bg-tertiary,#374151)'; };
-      link.textContent = icon;
-      social.appendChild(link);
+      const socialLink = document.createElement('a');
+      socialLink.href = url;
+      socialLink.target = '_blank';
+      socialLink.title = label;
+      socialLink.setAttribute('aria-label', label);
+      socialLink.style.cssText = 'width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--bg-tertiary,#374151);border-radius:50%;text-decoration:none;font-size:1.25rem;transition:transform 0.2s,background 0.2s;';
+      socialLink.onmouseenter = () => { socialLink.style.transform = 'scale(1.1)'; socialLink.style.background = 'var(--primary,#6366f1)'; };
+      socialLink.onmouseleave = () => { socialLink.style.transform = ''; socialLink.style.background = 'var(--bg-tertiary,#374151)'; };
+      socialLink.textContent = icon;
+      social.appendChild(socialLink);
     });
 
     element.appendChild(social);

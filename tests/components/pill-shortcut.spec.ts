@@ -20,7 +20,7 @@ test.describe('Pill Behavior Shortcut', () => {
         <body>
           <div class="demo-area">
             <!-- Pill Shortcut -->
-            <wb-pill id="test-pill" data-variant="success">Pill Shortcut</wb-pill>
+            <wb-pill id="test-pill" variant="success">Pill Shortcut</wb-pill>
           </div>
 
           <script type="module">

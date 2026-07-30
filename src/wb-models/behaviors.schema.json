@@ -3,6 +3,7 @@
   "title": "WB Behaviors Schema",
   "description": "Master schema defining all behavior metadata, properties, interactions, accessibility, and test requirements",
   "schemaFor": "behaviors",
+  "schemaType": "definition",
   "type": "object",
   "version": "3.0.0",
   "definitions": {

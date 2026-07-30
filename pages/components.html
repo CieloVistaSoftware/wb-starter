@@ -169,65 +169,119 @@
   
   <!-- Badges -->
   <h3>Badges</h3>
-  <wb-demo columns="5">
+    <wb-demo>
     <wb-badge variant="gray">Pending</wb-badge>
+  </wb-demo>
+  <wb-demo>
     <wb-badge variant="primary">New</wb-badge>
+  </wb-demo>
+  <wb-demo>
     <wb-badge variant="success">Approved</wb-badge>
+  </wb-demo>
+  <wb-demo>
     <wb-badge variant="warning">Review</wb-badge>
+  </wb-demo>
+  <wb-demo>
     <wb-badge variant="error">Rejected</wb-badge>
+  </wb-demo>
+  <wb-demo>
     <wb-badge variant="info">Updated</wb-badge>
+  </wb-demo>
+  <wb-demo>
     <wb-badge variant="purple">Premium</wb-badge>
+  </wb-demo>
+  <wb-demo>
     <wb-badge variant="pink">Featured</wb-badge>
+  </wb-demo>
+  <wb-demo>
     <wb-badge variant="orange">Hot</wb-badge>
+  </wb-demo>
+  <wb-demo>
     <wb-badge variant="teal" pill>Live</wb-badge>
   </wb-demo>
 
   <!-- Alerts (as Toasts) -->
   <h3>Alerts</h3>
   <p>Click to trigger alert toasts:</p>
-  <wb-demo columns="4">
+    <wb-demo>
     <button class="wb-btn" style="background: var(--info);" x-toast message="This is an informational message." toast-variant="info">ℹ️ Info Alert</button>
+  </wb-demo>
+  <wb-demo>
     <button class="wb-btn" style="background: var(--success);" x-toast message="Operation completed successfully!" toast-variant="success">✅ Success Alert</button>
+  </wb-demo>
+  <wb-demo>
     <button class="wb-btn" style="background: var(--warning);" x-toast message="Please review before continuing." toast-variant="warning">⚠️ Warning Alert</button>
+  </wb-demo>
+  <wb-demo>
     <button class="wb-btn" style="background: var(--error);" x-toast message="Something went wrong. Please try again." toast-variant="error">❌ Error Alert</button>
   </wb-demo>
 
   <!-- Progress Bars -->
   <h3>Progress Bars</h3>
-  <wb-demo columns="1">
+    <wb-demo>
     <wb-progress value="25"></wb-progress>
+  </wb-demo>
+  <wb-demo>
     <wb-progress value="50"></wb-progress>
+  </wb-demo>
+  <wb-demo>
     <wb-progress value="75" striped></wb-progress>
+  </wb-demo>
+  <wb-demo>
     <wb-progress value="100"></wb-progress>
   </wb-demo>
 
   <!-- Spinners -->
   <h3>Spinners</h3>
-  <wb-demo columns="5">
+    <wb-demo>
     <wb-spinner size="xs" color="primary"></wb-spinner>
+  </wb-demo>
+  <wb-demo>
     <wb-spinner size="sm" color="success"></wb-spinner>
+  </wb-demo>
+  <wb-demo>
     <wb-spinner size="md" color="warning"></wb-spinner>
+  </wb-demo>
+  <wb-demo>
     <wb-spinner size="lg" color="error"></wb-spinner>
+  </wb-demo>
+  <wb-demo>
     <wb-spinner size="xl" color="info"></wb-spinner>
   </wb-demo>
 
   <!-- Avatars -->
   <h3>Avatars</h3>
-  <wb-demo columns="7">
+    <wb-demo>
     <wb-avatar initials="JS" size="sm"></wb-avatar>
+  </wb-demo>
+  <wb-demo>
     <wb-avatar initials="MC" size="md" style="--wb-avatar-bg: var(--success);"></wb-avatar>
+  </wb-demo>
+  <wb-demo>
     <wb-avatar initials="KL" size="lg" style="--wb-avatar-bg: var(--warning);"></wb-avatar>
+  </wb-demo>
+  <wb-demo>
     <wb-avatar initials="AR" size="md" status="online"></wb-avatar>
+  </wb-demo>
+  <wb-demo>
     <wb-avatar initials="TB" size="md" status="away"></wb-avatar>
+  </wb-demo>
+  <wb-demo>
     <wb-avatar initials="ZP" size="md" status="busy"></wb-avatar>
+  </wb-demo>
+  <wb-demo>
     <wb-avatar src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" size="lg"></wb-avatar>
   </wb-demo>
 
   <!-- Skeleton Loaders -->
   <h3>Skeleton Loaders</h3>
-  <wb-demo columns="3">
+    <wb-demo>
     <wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton>
+  </wb-demo>
+  <wb-demo>
     <wb-skeleton variant="circle" width="60px"></wb-skeleton>
+  </wb-demo>
+  <wb-demo>
     <wb-skeleton variant="rect" width="150px" height="100px"></wb-skeleton>
   </wb-demo>
 </section>
@@ -246,8 +300,10 @@
 
   <h3>Drawer</h3>
   <p>Slide-out panel</p>
-  <wb-demo columns="2">
+    <wb-demo>
     <button class="wb-btn" x-drawer drawer-title="Left Drawer" drawer-content="This panel slides in from the left side." position="left">← Left</button>
+  </wb-demo>
+  <wb-demo>
     <button class="wb-btn" x-drawer drawer-title="Right Drawer" drawer-content="This panel slides in from the right side." position="right">Right →</button>
   </wb-demo>
 
@@ -445,26 +501,40 @@
 
   <!-- Tooltips -->
   <h3>Tooltips</h3>
-  <wb-demo columns="4">
+    <wb-demo>
     <wb-tooltip position="top" content="Top tooltip"><button variant="secondary">Top</button></wb-tooltip>
+  </wb-demo>
+  <wb-demo>
     <wb-tooltip position="bottom" content="Bottom tooltip"><button variant="secondary">Bottom</button></wb-tooltip>
+  </wb-demo>
+  <wb-demo>
     <wb-tooltip position="left" content="Left tooltip"><button variant="secondary">Left</button></wb-tooltip>
+  </wb-demo>
+  <wb-demo>
     <wb-tooltip position="right" content="Right tooltip"><button variant="secondary">Right</button></wb-tooltip>
   </wb-demo>
 
   <!-- Copy, Share, Print -->
   <h3>Copy, Share, Print</h3>
-  <wb-demo columns="4">
+    <wb-demo>
     <button class="wb-btn" x-copy copy-text="Text copied!">📋 Copy Text</button>
+  </wb-demo>
+  <wb-demo>
     <button class="wb-btn" x-share share-title="wb-starter" share-url="https://example.com">📤 Share</button>
+  </wb-demo>
+  <wb-demo>
     <button class="wb-btn" x-print>🖨️ Print</button>
+  </wb-demo>
+  <wb-demo>
     <button class="wb-btn" x-fullscreen>⛶ Fullscreen</button>
   </wb-demo>
 
   <!-- Clock & Countdown -->
   <h3>Clock &amp; Countdown</h3>
-  <wb-demo columns="2">
+    <wb-demo>
     <div x-clock class="time-display"></div>
+  </wb-demo>
+  <wb-demo>
     <div x-countdown date="2026-12-31" class="time-display"></div>
   </wb-demo>
 

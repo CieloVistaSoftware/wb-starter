@@ -18,11 +18,11 @@ test.describe('Progress Bars', () => {
       const el = document.createElement('div');
       el.id = 'test-progress-height';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '75');
+      el.setAttribute('value', '75');
       document.body.appendChild(el);
       (window as any).WB.scan();
     });
-    
+
     const progress = page.locator('#test-progress-height');
     const height = await progress.evaluate(el => parseFloat(getComputedStyle(el).height));
     
@@ -41,16 +41,16 @@ test.describe('Progress Bars', () => {
       const el = document.createElement('div');
       el.id = 'test-progress-anim';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '75');
-      el.setAttribute('data-animated', 'true');
+      el.setAttribute('value', '75');
+      el.setAttribute('animated', 'true');
       document.body.appendChild(el);
       (window as any).WB.scan();
     });
-    
+
     // Wait for animation to complete
     await page.waitForTimeout(1200);
-    
-    // Check final width matches data-value
+
+    // Check final width matches value
     const progressBar = page.locator('#test-progress-anim .wb-progress__bar');
     const barWidth = await progressBar.evaluate(el => el.style.width);
     
@@ -82,7 +82,7 @@ test.describe('Spinners', () => {
     expect(style).toContain('wb-spin');
   });
   
-  test('should have different colors based on data-color', async ({ page }) => {
+  test('should have different colors based on color', async ({ page }) => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
@@ -92,13 +92,13 @@ test.describe('Spinners', () => {
       const primary = document.createElement('div');
       primary.id = 'spinner-primary';
       primary.setAttribute('x-spinner', '');
-      primary.setAttribute('data-color', 'primary');
+      primary.setAttribute('color', 'primary');
       document.body.appendChild(primary);
       
       const success = document.createElement('div');
       success.id = 'spinner-success';
       success.setAttribute('x-spinner', '');
-      success.setAttribute('data-color', 'success');
+      success.setAttribute('color', 'success');
       document.body.appendChild(success);
       
       (window as any).WB.scan();
@@ -125,11 +125,11 @@ test.describe('Skeleton Loaders', () => {
       const el = document.createElement('div');
       el.id = 'test-skeleton';
       el.setAttribute('x-skeleton', '');
-      el.setAttribute('data-variant', 'text');
+      el.setAttribute('variant', 'text');
       document.body.appendChild(el);
       (window as any).WB.scan();
     });
-    
+
     const skeleton = page.locator('#test-skeleton');
     await expect(skeleton).toBeVisible();
     
@@ -150,8 +150,8 @@ test.describe('Skeleton Loaders', () => {
       const el = document.createElement('div');
       el.id = 'test-skeleton-lines';
       el.setAttribute('x-skeleton', '');
-      el.setAttribute('data-variant', 'text');
-      el.setAttribute('data-lines', '3');
+      el.setAttribute('variant', 'text');
+      el.setAttribute('lines', '3');
       document.body.appendChild(el);
       (window as any).WB.scan();
     });

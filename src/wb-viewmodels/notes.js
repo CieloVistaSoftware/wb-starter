@@ -19,14 +19,15 @@ const NOTES_STORAGE_KEY = 'wb-notes';
 const NOTES_FILE_PATH = '/data/notes.json';
 
 export function notes(element, options = {}) {
+  // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.
   const config = {
-    position: options.position || element.dataset.position || 'left',
-    maxWidth: options.maxWidth || element.dataset.maxWidth || '50vw',
-    minWidth: options.minWidth || element.dataset.minWidth || '200px',
-    defaultWidth: options.defaultWidth || element.dataset.defaultWidth || '320px',
-    autoSave: options.autoSave ?? (element.dataset.autoSave !== 'false'),
-    savePath: options.savePath || element.dataset.savePath || NOTES_FILE_PATH,
-    placeholder: options.placeholder || element.dataset.placeholder || 'Add your notes here...',
+    position: options.position || element.getAttribute('position') || element.dataset.position || 'left',
+    maxWidth: options.maxWidth || element.getAttribute('max-width') || element.dataset.maxWidth || '50vw',
+    minWidth: options.minWidth || element.getAttribute('min-width') || element.dataset.minWidth || '200px',
+    defaultWidth: options.defaultWidth || element.getAttribute('default-width') || element.dataset.defaultWidth || '320px',
+    autoSave: options.autoSave ?? (element.getAttribute('auto-save') !== 'false' && element.dataset.autoSave !== 'false'),
+    savePath: options.savePath || element.getAttribute('save-path') || element.dataset.savePath || NOTES_FILE_PATH,
+    placeholder: options.placeholder || element.getAttribute('placeholder') || element.dataset.placeholder || 'Add your notes here...',
     restoreState: false, // options.restoreState ?? (element.dataset.restoreState !== 'false'),
     ...options
   };

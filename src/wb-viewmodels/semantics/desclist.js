@@ -4,9 +4,11 @@
  * Helper Attribute: [x-behavior="desclist"]
  */
 export function desclist(element, options = {}) {
+  // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.
   const config = {
-    items: options.items || element.dataset.items || '[]',
-    horizontal: options.horizontal !== undefined ? options.horizontal : element.hasAttribute('data-horizontal'),
+    items: options.items || element.getAttribute('items') || element.dataset.items || '[]',
+    horizontal: options.horizontal !== undefined ? options.horizontal :
+      (element.hasAttribute('horizontal') || element.hasAttribute('data-horizontal')),
     ...options
   };
 

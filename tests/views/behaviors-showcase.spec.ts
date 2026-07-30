@@ -96,10 +96,10 @@ test.describe('Buttons Section', () => {
     await expect(rippleBtn).toBeVisible();
   });
 
-  test('toast button has x-toast attribute with data-message', async ({ page }) => {
+  test('toast button has x-toast attribute with message', async ({ page }) => {
     const toastBtn = page.locator('#buttons button[x-toast]').first();
     await expect(toastBtn).toBeVisible();
-    const message = await toastBtn.getAttribute('data-message');
+    const message = await toastBtn.getAttribute('message');
     expect(message).toBeTruthy();
   });
 
@@ -312,13 +312,13 @@ test.describe('Feedback Section', () => {
     const toastBtns = section.locator('[x-toast]');
     expect(await toastBtns.count()).toBeGreaterThanOrEqual(4);
     
-    // Check each has data-message and data-type
+    // Check each has message and toast-variant (v3 plain attrs; see feedback.js)
     for (let i = 0; i < await toastBtns.count(); i++) {
       const btn = toastBtns.nth(i);
-      const message = await btn.getAttribute('data-message');
-      const type = await btn.getAttribute('data-type');
-      expect(message, `Toast button ${i} should have data-message`).toBeTruthy();
-      expect(type, `Toast button ${i} should have data-type`).toBeTruthy();
+      const message = await btn.getAttribute('message');
+      const type = await btn.getAttribute('toast-variant');
+      expect(message, `Toast button ${i} should have message`).toBeTruthy();
+      expect(type, `Toast button ${i} should have toast-variant`).toBeTruthy();
     }
   });
 

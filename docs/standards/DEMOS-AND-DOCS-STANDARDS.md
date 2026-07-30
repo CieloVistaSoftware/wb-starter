@@ -205,6 +205,29 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   the footer) is not a real collision — scoping to leaf content elements avoids that class
   of false positive without pixel-diffing. See `tests/integration/overlap.spec.ts` (#274).
 
+## 25. `<wb-demo>` exception: source that can't run without a build step
+
+- §1/§16 require `<wb-demo>` because it renders the **exact same markup** it shows as
+  "source" — the live control and the code below it are structurally guaranteed to
+  match. That guarantee breaks for **framework-integration snippets** (React JSX, Vue
+  SFC/template syntax, Svelte, Angular, SolidJS, …): the *instructive* source is
+  framework code that only produces DOM after a compiler/bundler step this static site
+  doesn't run. Wrapping the post-mount HTML (or the mounting `<script>`) in `<wb-demo>`
+  would show something other than what a developer using that framework would actually
+  write — losing the pedagogical content `<wb-demo>` exists to preserve.
+- For this narrow case ONLY: keep the code sample as a syntax-highlighted, copyable
+  `<pre>` block (§4 still applies in full) and label it explicitly as non-live — e.g.
+  "This example requires a `<Framework>` build step." A code sample with no live render
+  is a defect (§16) **unless** it carries this explicit label; a silently-missing live
+  render is still a defect.
+- This is NOT a blanket exception for anything merely inconvenient to wrap. If the
+  snippet is plain, framework-agnostic HTML/attributes that already runs with no build
+  step (e.g. an HTMX example — real HTML, `hx-*`/`x-*` attributes, no compiler), it
+  MUST use `<wb-demo>` like any other component example — only genuinely non-executable
+  source is exempt. See `demos/frameworks.html` for both cases side by side: the HTMX
+  section uses `<wb-demo>`; the React/Vue/Svelte/Angular/SolidJS sections are the
+  labeled exception. Tracked: #324.
+
 ---
 
 ## Enforcement & references
@@ -219,6 +242,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 | 11 (colors) | `tests/compliance/css-oop-compliance.spec.ts` |
 | 22 (switch invokes effect) | `tests/behaviors/notify-control-switch.spec.ts` |
 | 24 (no unintended overlap) | `tests/integration/overlap.spec.ts` (#274) |
+| 1, 16, 25 (wb-demo / build-step exception) | `tests/integration/frameworks-demo.spec.ts` (#324) |
 
 Open work to bring existing surfaces to this standard: #246 (behaviors-showcase selects),
 #247 (behaviors-showcase mobile nav), #248 (no horizontal scrollbars), and the remaining

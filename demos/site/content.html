@@ -20,19 +20,27 @@
   <!-- 1. 📄 Article Component -->
   <section id="article-article-component">
   <h2>📄 Article Component</h2>
-  <wb-demo columns="3">
+    <wb-demo>
     <wb-article title="Article">
       title=Article
     </wb-article>
+  </wb-demo>
+  <wb-demo>
     <wb-article title="Article" subtitle="Deck">
       title=Article, subtitle=Deck
     </wb-article>
+  </wb-demo>
+  <wb-demo>
     <wb-article title="Article" image="cover.jpg">
       title=Article, image=cover.jpg
     </wb-article>
+  </wb-demo>
+  <wb-demo>
     <wb-article title="Article" author="John Doe" date="2026-01-01">
       title=Article, author=John Doe, date=2026-01-01
     </wb-article>
+  </wb-demo>
+  <wb-demo>
     <wb-article title="Article" featured>
       title=Article, featured
     </wb-article>
@@ -52,13 +60,17 @@
   <!-- 3. 📰 Articles List Component -->
   <section id="articles-articles-list-component">
   <h2>📰 Articles List Component</h2>
-  <wb-demo columns="2">
+    <wb-demo>
     <wb-articles layout="grid">
       layout=grid
     </wb-articles>
+  </wb-demo>
+  <wb-demo>
     <wb-articles layout="list">
       layout=list
     </wb-articles>
+  </wb-demo>
+  <wb-demo>
     <wb-articles layout="grid" columns="2">
       layout=grid, columns=2
     </wb-articles>
@@ -88,13 +100,17 @@
   <!-- 6. 📝 Markdown to HTML -->
   <section id="mdhtml-markdown-to-html">
   <h2>📝 Markdown to HTML</h2>
-  <wb-demo columns="2">
+    <wb-demo>
     <wb-mdhtml src="../code.md">
       src=../code.md
     </wb-mdhtml>
+  </wb-demo>
+  <wb-demo>
     <wb-mdhtml gfm>
       gfm
     </wb-mdhtml>
+  </wb-demo>
+  <wb-demo>
     <wb-mdhtml sanitize gfm>
       sanitize, gfm
     </wb-mdhtml>
@@ -104,16 +120,22 @@
   <!-- 7. 🎵 Audio -->
   <section id="audio-audio">
   <h2>🎵 Audio</h2>
-  <wb-demo columns="2">
+    <wb-demo>
     <wb-audio src="../audio.mp3">
       src=../audio.mp3
     </wb-audio>
+  </wb-demo>
+  <wb-demo>
     <wb-audio src="../audio.mp3" show-eq>
       src=../audio.mp3, show-eq
     </wb-audio>
+  </wb-demo>
+  <wb-demo>
     <wb-audio src="../audio.mp3" volume="0.5">
       src=../audio.mp3, volume=0.5
     </wb-audio>
+  </wb-demo>
+  <wb-demo>
     <wb-audio src="../audio.mp3" loop>
       src=../audio.mp3, loop
     </wb-audio>
@@ -123,16 +145,22 @@
   <!-- 8. Boolean toggles -->
   <section id="audio-boolean-toggles">
   <h2>Boolean toggles</h2>
-  <wb-demo columns="1">
+    <wb-demo>
     <wb-audio loop src="../audio.mp3">
       loop, src=../audio.mp3
     </wb-audio>
+  </wb-demo>
+  <wb-demo>
     <wb-audio autoplay src="../audio.mp3">
       autoplay, src=../audio.mp3
     </wb-audio>
+  </wb-demo>
+  <wb-demo>
     <wb-audio muted src="../audio.mp3">
       muted, src=../audio.mp3
     </wb-audio>
+  </wb-demo>
+  <wb-demo>
     <wb-audio show-eq src="../audio.mp3">
       show-eq, src=../audio.mp3
     </wb-audio>
@@ -142,16 +170,22 @@
   <!-- 9. 📊 Table -->
   <section id="table-table">
   <h2>📊 Table</h2>
-  <wb-demo columns="2">
+    <wb-demo>
     <wb-table>
       Table
     </wb-table>
+  </wb-demo>
+  <wb-demo>
     <wb-table sortable>
       sortable
     </wb-table>
+  </wb-demo>
+  <wb-demo>
     <wb-table striped>
       striped
     </wb-table>
+  </wb-demo>
+  <wb-demo>
     <wb-table paginated page-size="5">
       paginated, page-size=5
     </wb-table>
@@ -161,16 +195,22 @@
   <!-- 10. Boolean toggles -->
   <section id="table-boolean-toggles">
   <h2>Boolean toggles</h2>
-  <wb-demo columns="1">
+    <wb-demo>
     <wb-table filterable>
       filterable
     </wb-table>
+  </wb-demo>
+  <wb-demo>
     <wb-table paginated>
       paginated
     </wb-table>
+  </wb-demo>
+  <wb-demo>
     <wb-table compact>
       compact
     </wb-table>
+  </wb-demo>
+  <wb-demo>
     <wb-table bordered>
       bordered
     </wb-table>
@@ -180,16 +220,22 @@
   <!-- 11. 📝 Notes -->
   <section id="notes-notes">
   <h2>📝 Notes</h2>
-  <wb-demo columns="2">
+    <wb-demo>
     <wb-notes>
       Notes
     </wb-notes>
+  </wb-demo>
+  <wb-demo>
     <wb-notes position="left">
       position=left
     </wb-notes>
+  </wb-demo>
+  <wb-demo>
     <wb-notes position="right">
       position=right
     </wb-notes>
+  </wb-demo>
+  <wb-demo>
     <wb-notes position="modal">
       position=modal
     </wb-notes>
@@ -311,15 +357,19 @@
   <!-- DETAILS -->
   <h2>Details <code>&lt;details&gt;</code></h2>
   <div class="demo-section">
-    <wb-demo columns="3">
+        <wb-demo>
       <details>
         <summary>Detail Item 1</summary>
         <p>This is the content for item 1.</p>
       </details>
+    </wb-demo>
+    <wb-demo>
       <details open>
         <summary>Detail Item 2 (open by default)</summary>
         <p>This is the content for item 2.</p>
       </details>
+    </wb-demo>
+    <wb-demo>
       <details animated="false">
         <summary>Detail Item 3 (no animation)</summary>
         <p>This is the content for item 3.</p>
@@ -352,8 +402,10 @@
   <!-- PROGRESS -->
   <h2>Progress <code>&lt;wb-progress&gt;</code></h2>
   <div class="demo-section">
-    <wb-demo columns="2">
+        <wb-demo>
       <wb-progress value="70" label="Loading..."></wb-progress>
+    </wb-demo>
+    <wb-demo>
       <wb-progress indeterminate label="Working..."></wb-progress>
     </wb-demo>
   </div>

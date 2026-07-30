@@ -63,7 +63,7 @@ export function code(element, options = {}) {
     if (codeElement) {
        // Pass language if set on pre — fall back to a language-xxx class on
        // the pre or the inner code element (standard markdown/hljs convention).
-       const lang = options.language || element.dataset.language || langFromClass(element) || langFromClass(codeElement);
+       const lang = options.language || element.getAttribute('language') || element.dataset.language || langFromClass(element) || langFromClass(codeElement);
        // We don't pass other options because pre handles the chrome
        cleanupCode = code(codeElement, { language: lang });
     }
@@ -80,10 +80,10 @@ export function code(element, options = {}) {
   }
 
   const config = {
-    language: options.language || element.dataset.language || langFromClass(element) || '',
-    showCopy: options.showCopy ?? (element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
-    variant: options.variant || element.dataset.variant || 'inline',
-    scrollable: options.scrollable ?? (element.dataset.scrollable === 'true'),
+    language: options.language || element.getAttribute('language') || element.dataset.language || langFromClass(element) || '',
+    showCopy: options.showCopy ?? (element.hasAttribute('show-copy') || element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
+    variant: options.variant || element.getAttribute('variant') || element.dataset.variant || 'inline',
+    scrollable: options.scrollable ?? (element.getAttribute('scrollable') === 'true' || element.dataset.scrollable === 'true'),
     // No `size` given -> normal (matches surrounding text, 1em) — every plain
     // <code> project-wide (table cells, inline mentions in prose, etc.) was
     // defaulting to 'xs' (0.55em, an INLINE style that beats any CSS fix),
@@ -300,6 +300,16 @@ export function code(element, options = {}) {
     `;
 
     wrapper.appendChild(languageBadge);
+
+    // The badge is absolutely positioned above the code box via paddingTop
+    // reserving room for it -- but a plain `display: inline` element (the
+    // default 'inline' variant, set above) never grows its line box for
+    // vertical padding, so the reserved space was painted but never laid
+    // out and the badge sat directly on top of the code text. Promote to
+    // inline-block so paddingTop actually reserves the space.
+    if (element.style.display === 'inline') {
+      element.style.display = 'inline-block';
+    }
 
     if (copyButton) {
       element.style.paddingTop = '2.5rem';

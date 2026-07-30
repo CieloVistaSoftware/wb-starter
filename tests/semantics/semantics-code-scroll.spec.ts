@@ -18,7 +18,7 @@ test.describe('Code Behavior Scroll Options', () => {
 
   test('Scrollable behavior (scrollable=true) does not wrap and scrolls', async ({ page }) => {
     await page.setContent(`
-      <wb-code id="test-pre-scroll" data-scrollable="true"><code>const veryLongLine = "This is a very long line of code that should NOT wrap to the next line because scrollable is set to true.";</code></pre>
+      <wb-code id="test-pre-scroll" scrollable="true"><code>const veryLongLine = "This is a very long line of code that should NOT wrap to the next line because scrollable is set to true.";</code></pre>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -32,7 +32,7 @@ test.describe('Code Behavior Scroll Options', () => {
 
   test('Standalone code block default behavior', async ({ page }) => {
     await page.setContent(`
-      <wb-code id="test-code-default" data-variant="block">const x = 1;</code>
+      <wb-code id="test-code-default" variant="block">const x = 1;</code>
       <script src="/src/index.js" type="module"></script>
     `);
 
@@ -46,7 +46,7 @@ test.describe('Code Behavior Scroll Options', () => {
 
   test('Standalone code block scrollable behavior', async ({ page }) => {
     await page.setContent(`
-      <wb-code id="test-code-scroll" data-variant="block" data-scrollable="true">const x = 1;</code>
+      <wb-code id="test-code-scroll" variant="block" scrollable="true">const x = 1;</code>
       <script src="/src/index.js" type="module"></script>
     `);
 

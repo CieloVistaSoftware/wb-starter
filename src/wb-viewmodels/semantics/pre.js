@@ -28,16 +28,18 @@ export function pre(element, options = {}) {
 
   // Try to infer language from child code element if not set on pre
   const codeChild = element.querySelector('code');
-  const childLanguage = codeChild ? (codeChild.dataset.language || '') : '';
+  const childLanguage = codeChild ? (codeChild.getAttribute('language') || codeChild.dataset.language || '') : '';
 
-  const scrollable = options.scrollable ?? (element.dataset.scrollable === 'true');
+  // v3: plain `scrollable` attribute is canonical; data-scrollable accepted for back-compat.
+  const scrollable = options.scrollable ?? (element.getAttribute('scrollable') === 'true' || element.dataset.scrollable === 'true');
   // Code blocks should read like a code editor: DO NOT wrap by default (wrapping
   // breaks tokens mid-word, e.g. "wb-btn--" / "sm"). Long lines scroll
-  // horizontally instead. Opt into wrapping explicitly with data-wrap="true". (#199)
+  // horizontally instead. Opt into wrapping explicitly with wrap="true". (#199)
   const defaultWrap = false;
 
   const config = {
-    language: options.language || element.dataset.language || childLanguage || '',
+    // v3: plain `language` attribute is canonical; data-language accepted for back-compat.
+    language: options.language || element.getAttribute('language') || element.dataset.language || childLanguage || '',
     // v3 default: ON, matching an actual code editor (VS Code shows line
     // numbers by default) — explicit show-line-numbers="false" opts out.
     showLineNumbers: options.showLineNumbers ?? (element.getAttribute('show-line-numbers') !== 'false'),
@@ -48,7 +50,8 @@ export function pre(element, options = {}) {
       ? element.getAttribute('wrap') !== 'false'
       : (element.hasAttribute('data-wrap') ? element.dataset.wrap !== 'false' : defaultWrap)),
     scrollable: scrollable,
-    size: options.size || element.dataset.size || 'md',
+    // v3: plain `size` attribute is canonical; data-size accepted for back-compat.
+    size: options.size || element.getAttribute('size') || element.dataset.size || 'md',
     ...options
   };
 

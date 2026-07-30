@@ -2,12 +2,23 @@
  * Move Behaviors
  * -----------------------------------------------------------------------------
  * Swap elements in grid/list containers.
- * Exports: moveup, movedown, moveleft, moveright
- * 
- * These behaviors attach click handlers to buttons that swap
- * their parent container with adjacent siblings.
- * 
- * Helper Attributes: [x-move-up], [x-move-down], [x-move-left], [x-move-right]
+ * Exports: move, moveup, movedown, moveleft, moveright, moveall
+ *
+ * moveup/movedown/moveleft/moveright attach click handlers to buttons that
+ * swap their parent container with adjacent siblings. Helper attributes:
+ * [x-moveup], [x-movedown], [x-moveleft], [x-moveright] (matches the
+ * hyphen-free keys registered in wb-viewmodels/index.js's behaviorModules --
+ * NOT the hyphenated [x-move-up] etc this comment used to (incorrectly)
+ * document).
+ *
+ * move() is the container-level entry point for <wb-move>/[x-move]
+ * (tag-map.js). Issue #344: schema/behavior completeness audit found
+ * `move.schema.json` had no matching exported `move` function at all, AND
+ * `behaviorModules` (index.js) had no `move` key -- so <wb-move>/[x-move]
+ * threw "Unknown behavior: move" the moment anything tried to use it. This
+ * adds the missing entry point: it marks the container with the schema's
+ * baseClass and wires any descendant buttons carrying the per-direction
+ * attributes above, the same self-sufficient pattern as control()/fixCard().
  * -----------------------------------------------------------------------------
  */
 
@@ -84,7 +95,7 @@ function swapElements(el1, el2, animate = true) {
 
 /**
  * Move Up - Swap with element above (in grid) or previous sibling (in list)
- * Helper Attribute: [x-move-up]
+ * Helper Attribute: [x-moveup]
  */
 export function moveup(button) {
   if (!button) return;
@@ -115,83 +126,83 @@ export function moveup(button) {
 
 /**
  * Move Down - Swap with element below (in grid) or next sibling (in list)
- * Helper Attribute: [x-move-down]
+ * Helper Attribute: [x-movedown]
  */
 export function movedown(button) {
   if (!button) return;
-  
-  const eventHandler = (e) => {
+
+  const handler = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    const dataItem = findMoveableParent(button);
+
+    const item = findMoveableParent(button);
     if (!item) return;
-    
-    const moveContainer = item.parentElement;
+
+    const container = item.parentElement;
     const { columns, items } = getGridInfo(container);
-    const focusIndex = items.indexOf(item);
-    
-    const destinationIndex = columns > 1 ? currentIndex + columns : currentIndex + 1;
-    
+    const currentIndex = items.indexOf(item);
+
+    const targetIndex = columns > 1 ? currentIndex + columns : currentIndex + 1;
+
     if (targetIndex >= 0 && targetIndex < items.length) {
       swapElements(item, items[targetIndex]);
     }
   };
-  
+
   button.addEventListener('click', handler);
   return () => button.removeEventListener('click', handler);
 }
 
 /**
  * Move Left - Swap with previous sibling
- * Helper Attribute: [x-move-left]
+ * Helper Attribute: [x-moveleft]
  */
 export function moveleft(button) {
   if (!button) return;
-  
-  const keyHandler = (e) => {
+
+  const handler = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    const dataItem = findMoveableParent(button);
+
+    const item = findMoveableParent(button);
     if (!item) return;
-    
-    const animContainer = item.parentElement;
+
+    const container = item.parentElement;
     const { items } = getGridInfo(container);
-    const selectedIndex = items.indexOf(item);
-    
+    const currentIndex = items.indexOf(item);
+
     if (currentIndex > 0) {
       swapElements(item, items[currentIndex - 1]);
     }
   };
-  
+
   button.addEventListener('click', handler);
   return () => button.removeEventListener('click', handler);
 }
 
 /**
- * Helper Attribute: [x-move-right]
+ * Helper Attribute: [x-moveright]
  * Move Right - Swap with next sibling
  */
 export function moveright(button) {
   if (!button) return;
-  
-  const moveHandler = (e) => {
+
+  const handler = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    const listItem = findMoveableParent(button);
+
+    const item = findMoveableParent(button);
     if (!item) return;
-    
-    const effectContainer = item.parentElement;
+
+    const container = item.parentElement;
     const { items } = getGridInfo(container);
-    const activeIndex = items.indexOf(item);
-    
+    const currentIndex = items.indexOf(item);
+
     if (currentIndex < items.length - 1) {
       swapElements(item, items[currentIndex + 1]);
     }
   };
-  
+
   button.addEventListener('click', handler);
   return () => button.removeEventListener('click', handler);
 }
@@ -208,4 +219,28 @@ export function moveall(element, x = 0, y = 0) {
   element.style.top = (top + y) + 'px';
 }
 
-export default { moveup, movedown, moveleft, moveright, moveall };
+/**
+ * Move - Container entry point for <wb-move> / [x-move]
+ * Marks the element with the schema baseClass and wires up any descendant
+ * buttons carrying [x-moveup]/[x-movedown]/[x-moveleft]/[x-moveright].
+ */
+export function move(element) {
+  if (!element) return;
+  element.classList.add('wb-move');
+
+  const cleanups = [];
+  const wire = (attr, fn) => {
+    element.querySelectorAll(`[${attr}]`).forEach(btn => {
+      const cleanup = fn(btn);
+      if (cleanup) cleanups.push(cleanup);
+    });
+  };
+  wire('x-moveup', moveup);
+  wire('x-movedown', movedown);
+  wire('x-moveleft', moveleft);
+  wire('x-moveright', moveright);
+
+  return () => cleanups.forEach(fn => fn());
+}
+
+export default { move, moveup, movedown, moveleft, moveright, moveall };

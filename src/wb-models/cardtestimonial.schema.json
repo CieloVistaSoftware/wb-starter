@@ -273,8 +273,8 @@
       "<wb-cardtestimonial size=\"md\">size=md</wb-cardtestimonial>",
       "<wb-cardtestimonial size=\"lg\">size=lg</wb-cardtestimonial>",
       "<wb-cardtestimonial quote=\"Sample quote\">quote=\"Sample quote\"</wb-cardtestimonial>",
-      "<wb-testimonial quote=\"Great product!\" author=\"John Doe\"></wb-testimonial>",
-      "<wb-testimonial quote=\"Amazing!\" author=\"Jane\" role=\"CEO\" avatar=\"avatar.jpg\" rating=\"5\"></wb-testimonial>"
+      "<wb-cardtestimonial quote=\"Great product!\" author=\"John Doe\"></wb-cardtestimonial>",
+      "<wb-cardtestimonial quote=\"Amazing!\" author=\"Jane\" role=\"CEO\" avatar=\"avatar.jpg\" rating=\"5\"></wb-cardtestimonial>"
     ],
     "matrix": {
       "combinations": [

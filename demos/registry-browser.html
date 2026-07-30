@@ -114,6 +114,47 @@
       white-space: pre-wrap;
       max-height: 150px;
     }
+
+    /* Each registry row's "Live Example" wb-demo block renders a REGISTERED
+       VIEW tag (alert-box, badge-tag, ...), not a wb-card* element, so
+       demo.js's per-card corner badge (attachCardDocLink -> the
+       wb-demo__card-doc-link class, see src/styles/behaviors/demo.css)
+       never fires here -- that path only watches grid children whose tag
+       starts with "wb-card". Whenever a row's view DOES resolve to a real
+       documented wb-* component, demo.js still falls back to appending the
+       shared wb-demo__links "Docs: ..." line below the grid. John asked for
+       the docs link in the upper-right corner on this page specifically --
+       reposition that shared line the same way demo.css positions its
+       per-card badge, scoped to this page only so other pages using a
+       wb-demo block keep the original below-the-grid line.
+       (docs/standards/DEMOS-AND-DOCS-STANDARDS.md §24 allows this: a corner
+       badge is an intentionally out-of-flow, opted-in overlap.)
+       CAUTION: never spell the demo custom element's tag name here with
+       angle brackets. demo.js's own page-source extraction (see
+       page-source-cache.js's extractTagBlock) raw-regex-scans this whole
+       file's fetched HTML for that literal opening/closing tag pair to show
+       as a "source" sample, with no awareness of HTML/CSS/JS comment
+       syntax -- a stray mention in this comment previously matched as a
+       bogus opening tag and swallowed everything up to the real element's
+       closing tag as the usage-example's shown source (confirmed live). */
+    #registry-container wb-demo {
+      position: relative;
+    }
+    #registry-container wb-demo > .wb-demo__links {
+      position: absolute;
+      top: -0.5rem;
+      right: -0.5rem;
+      left: auto;
+      max-width: calc(100% - 1rem);
+      margin: 0;
+      padding: 2px 8px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      line-height: 1.4;
+      z-index: 5;
+    }
   </style>
 </head>
 <body>
@@ -158,7 +199,164 @@
     // etc.) from the registry was never initialized, so the "how to use"
     // live example below couldn't have worked even with correct markup.
     await initViews({ registry: '../src/wb-views/views-registry.json' });
-    await WB.scan(document.getElementById('usage-example'));
+    // WB.scan() uses querySelectorAll, which only matches DESCENDANTS of the
+    // given root -- never the root itself. Scanning #usage-example (the
+    // demo wrapper element) directly skipped that tag entirely (it never
+    // upgraded/injected, so its grid + code-panel + CSS never built,
+    // leaving it at 0 padding). Scan the parent so the wrapper itself is
+    // found. (Deliberately not spelled with angle brackets here -- see the
+    // CAUTION note on the CSS rule below: this whole file's raw text gets
+    // regex-scanned by demo.js's source extraction for the demo wrapper's
+    // literal opening/closing tag pair, and a stray mention in a comment
+    // gets matched as if it were real markup.)
+    // { eager: true } -- this is the page's single above-the-fold "how to
+    // use" example (same rationale as wb-demo.js's own EAGER_BUILD_COUNT):
+    // default lazy injection defers building until an IntersectionObserver
+    // reports the element near-viewport, which never fired in time here.
+    await WB.scan(document.getElementById('usage-example').parentElement, { eager: true });
+
+    // -------------------------------------------------------------------
+    // Live-example generation for the registry table (§16 fix).
+    // -------------------------------------------------------------------
+    // Every row used to show its view's raw {{placeholder}} template as a
+    // syntax-highlighted mdhtml code sample with NO live render next to it
+    // -- exactly the "code with no live example" defect docs/standards/
+    // DEMOS-AND-DOCS-STANDARDS.md §16 calls out. Instead, build a real
+    // instance of the view's own tag, filled with placeholder values for
+    // its REQUIRED attributes, and wrap it in a demo block -- the live
+    // render AND its auto-generated source panel (replacing the old mdhtml
+    // block entirely; §2 -- never two code samples for one element).
+
+    // A handful of views take an array attribute whose items are read as
+    // OBJECTS with nested properties (badge.label, item.icon, ...) -- a
+    // generic ['Example','Sample'] string array still renders (missing
+    // nested props just interpolate to '', see wb-views.js's interpolate())
+    // but reads as empty/blank. These overrides give those specific views a
+    // realistic-looking array instead. tag-list's own {{tag}} is used
+    // directly (no nested prop), so it doesn't strictly need one, but a
+    // themed example reads better than the generic placeholder.
+    // NOTE: every badge-list item explicitly sets 'icon' (even though
+    // badge-tag's own 'icon' attribute is optional) to route around a
+    // real quirk in wb-views.js's getViewData(): when a loop item has no
+    // icon, "{{badge.icon}}" interpolates to an EMPTY STRING attribute
+    // (icon=""), and getViewData's own bare-boolean-attribute convention
+    // (`value === '' -> value = true`) can't tell that apart from a
+    // genuinely bare boolean attribute -- it reads icon="" as icon=true,
+    // so badge-tag's `wb-if="icon"` shows and `{{icon}}` interpolates the
+    // literal word "true" (confirmed live). Out of scope for this page to
+    // fix in wb-views.js itself; sidestepped here by always supplying a
+    // real icon value.
+    const ARRAY_ATTR_OVERRIDES = {
+      'badge-list': {
+        badges: [
+          { label: 'New', variant: 'primary', icon: '✨' },
+          { label: 'Beta', variant: 'warning', icon: '🧪' }
+        ]
+      },
+      'file-toolbar': { items: [{ icon: '📄', label: 'New' }, { icon: '💾', label: 'Save' }] },
+      'tag-list': { tags: ['design', 'dev', 'ai'] }
+    };
+
+    // Views whose template is JUST a <slot> wrapper (no required attributes
+    // of their own) render as an empty, content-less box unless given some
+    // body content to slot in -- fill those with a small realistic example.
+    const BODY_OVERRIDES = {
+      'button-group': '<wb-button variant="primary">OK</wb-button><wb-button variant="ghost">Cancel</wb-button>',
+      'toolbar': '<wb-button variant="ghost">Action</wb-button>',
+      'stat-row': '<stat-tile value="42" label="Users"></stat-tile><stat-tile value="87%" label="Uptime"></stat-tile>',
+      'demo-section': '<p>Section content goes here.</p>'
+    };
+
+    // Some views have NO required attributes at all (alert-box) or leave
+    // their main visible/slotted content on an OPTIONAL attribute
+    // (badge-tag's text, component-tile's text, user-avatar/user-card's
+    // initials, nav-link's icon) -- filling only REQUIRED attributes would
+    // render those as a technically-live but visually blank/empty example.
+    // These are genuinely optional per the schema (not required), so they
+    // stay out of the generic required-attribute loop below; this is a
+    // small, explicit "make the example not look broken" pass, same spirit
+    // as BODY_OVERRIDES above.
+    const EXTRA_ATTR_OVERRIDES = {
+      'alert-box': { heading: 'Heads up', message: 'This is an example alert message.' },
+      'badge-tag': { text: 'Badge' },
+      'component-tile': { text: 'Label' },
+      'empty-state': { message: 'Try adjusting your filters.' },
+      'nav-link': { icon: '🏠' },
+      'user-avatar': { initials: 'JD' },
+      'user-card': { initials: 'JD' }
+    };
+
+    function escapeAttr(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    // Title-cases an attribute name into readable placeholder text, e.g.
+    // "action-label" -> "Action Label" -- used only when the schema gives no
+    // better hint (no enum, no default).
+    function humanize(name) {
+      return name
+        .replace(/-/g, ' ')
+        .replace(/^./, (c) => c.toUpperCase());
+    }
+
+    function placeholderText(attrName) {
+      const lower = attrName.toLowerCase();
+      if (lower.includes('icon')) return '🔹';
+      if (lower === 'href') return '#';
+      if (lower === 'price') return '$9.99';
+      if (lower === 'value') return '42';
+      return humanize(attrName);
+    }
+
+    // Builds one live, standalone instance of a registered view: its own
+    // real tag, its REQUIRED attributes filled with a sensible placeholder
+    // (schema enum/default first, then a small set of name-based heuristics,
+    // last resort the attribute's own name), and -- for container-only
+    // views -- a little slotted body content so the example isn't an empty
+    // box. Optional attributes are left unset; most templates already
+    // define their own {{attr || 'default'}} fallback for those.
+    function buildLiveViewMarkup(key, view) {
+      const tag = key.includes('-') ? key : 'wb-' + key;
+      const attrs = [];
+      const attributes = view.attributes || {};
+
+      for (const [attrName, details] of Object.entries(attributes)) {
+        if (!details || !details.required) continue;
+
+        if (details.type === 'boolean') {
+          attrs.push(attrName); // bare boolean attribute (Standard §20)
+          continue;
+        }
+
+        let value;
+        if (details.type === 'array') {
+          const override = ARRAY_ATTR_OVERRIDES[key] && ARRAY_ATTR_OVERRIDES[key][attrName];
+          value = JSON.stringify(override || ['Example', 'Sample']);
+        } else if (Array.isArray(details.enum) && details.enum.length) {
+          value = details.enum[0];
+        } else if (details.default !== undefined) {
+          value = String(details.default);
+        } else {
+          value = placeholderText(attrName);
+        }
+        attrs.push(`${attrName}="${escapeAttr(value)}"`);
+      }
+
+      const extras = EXTRA_ATTR_OVERRIDES[key];
+      if (extras) {
+        for (const [attrName, value] of Object.entries(extras)) {
+          attrs.push(`${attrName}="${escapeAttr(value)}"`);
+        }
+      }
+
+      const body = BODY_OVERRIDES[key] || '';
+      const attrStr = attrs.length ? ' ' + attrs.join(' ') : '';
+      return `<${tag}${attrStr}>${body}</${tag}>`;
+    }
 
     async function loadRegistry() {
       const container = document.getElementById('registry-container');
@@ -172,7 +370,21 @@
         
         // Sort views by name
         const sortedKeys = Object.keys(views).sort();
-        
+
+        // Parallel to sortedKeys -- the exact live markup generated for each
+        // row's demo block, in document order. Handed to each row's demo
+        // element as its own "_rawSource" below (the same short-circuit
+        // wb-demo.js's real custom element uses, see demo.js) so the source
+        // panel shows this EXACT authored markup instead of falling back to
+        // demo.js's page-source network-fetch-and-regex-scan path -- that
+        // path only finds a genuinely reliable match for the page's single
+        // static usage-example block; it has no way to see markup that was
+        // only ever built here at runtime, in memory, and is one of the
+        // reasons a stray literal mention of the tag name anywhere else in
+        // this file's source text can misfire (see the CAUTION comment on
+        // the CSS rule above).
+        const rowLiveMarkup = [];
+
         let html = `
           <div class="section-header">
             <h2>Registered Views</h2>
@@ -184,7 +396,7 @@
               <tr>
                 <th style="width: 200px;">View Name</th>
                 <th>Description & Attributes</th>
-                <th>Template Source</th>
+                <th>Live Example</th>
               </tr>
             </thead>
             <tbody>
@@ -204,6 +416,9 @@
             attributesHtml += '</div>';
           }
 
+          const liveMarkup = buildLiveViewMarkup(key, view);
+          rowLiveMarkup.push(liveMarkup);
+
           html += `
             <tr>
               <td data-label="View Name">
@@ -216,12 +431,8 @@
                 <div class="view-desc">${view.description || 'No description provided.'}</div>
                 ${attributesHtml}
               </td>
-              <td data-label="Template Source">
-                <wb-mdhtml>
-\`\`\`html
-${view.template.replace(/`/g, '\\`')}
-\`\`\`
-                </wb-mdhtml>
+              <td data-label="Live Example">
+                <wb-demo columns="1">${liveMarkup}</wb-demo>
               </td>
             </tr>
           `;
@@ -229,7 +440,16 @@ ${view.template.replace(/`/g, '\\`')}
 
         html += `</tbody></table></div>`;
         container.innerHTML = html;
-        
+
+        // Hand each row's demo block its own exact authored markup up
+        // front -- see the rowLiveMarkup comment above for why this is
+        // more reliable than demo.js's page-source fallback for
+        // runtime-built rows. Document order here matches rowLiveMarkup's
+        // push order (both driven by the same sortedKeys.forEach above).
+        container.querySelectorAll('wb-demo').forEach((el, i) => {
+          el._rawSource = rowLiveMarkup[i];
+        });
+
         // Scan for new behaviors
         await WB.scan(container);
         

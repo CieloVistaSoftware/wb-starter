@@ -145,6 +145,19 @@ export function button(element, options = {}) {
 
   const isCustom = element.tagName === 'WB-BUTTON';
 
+  // #344: button.schema.json's interactions section always documented
+  // "wb:button:click" as the event this behavior fires, but nothing in this
+  // file ever dispatched it (only the native "click" event existed) and the
+  // schema had no top-level `events` section declaring it either -- a
+  // documented-but-never-implemented event, flagged by the schema/behavior
+  // completeness audit. Wire the real dispatch here so schema and
+  // implementation agree; native "click" still fires as normal (this is an
+  // additional semantic event, not a replacement).
+  const onActivate = (e) => {
+    if (element.hasAttribute('disabled') || element.getAttribute('aria-disabled') === 'true') return;
+    element.dispatchEvent(new CustomEvent('wb:button:click', { bubbles: true, detail: { originalEvent: e } }));
+  };
+
   if (isCustom) {
     // <wb-button> — CSS targets the tag directly. No inner button, no classes.
     // JS only handles icon injection and loading state.
@@ -217,10 +230,12 @@ export function button(element, options = {}) {
     };
     element.addEventListener('keydown', onKeydown);
     element.addEventListener('keyup', onKeyup);
+    element.addEventListener('click', onActivate);
 
     return () => {
       element.removeEventListener('keydown', onKeydown);
       element.removeEventListener('keyup', onKeyup);
+      element.removeEventListener('click', onActivate);
     };
   }
 
@@ -247,8 +262,11 @@ export function button(element, options = {}) {
   const variant = element.getAttribute('variant');
   if (variant) { const c = `wb-button--${variant}`; element.classList.add(c); applied.push(c); }
 
+  element.addEventListener('click', onActivate);
+
   return () => {
     element.classList.remove('wb-button', ...applied);
+    element.removeEventListener('click', onActivate);
   };
 }
 

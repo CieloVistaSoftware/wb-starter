@@ -193,4 +193,40 @@ test.describe('Behaviors page: data-* attribute sweep stays fixed', () => {
     await toggle.click();
     await expect(toggle).toHaveText('Show more');
   });
+
+  // #224 follow-up sweep: these four were missed by the original sweep above
+  // (tabs/accordion child markers, wb-audio, and the autosize textarea) --
+  // found and fixed in the same data-* audit. Each was silently ignored:
+  // tabs.js/collapse.js only read the plain `tab-title`/`accordion-title`
+  // attribute, wb-audio.js only reads plain `src`/`show-eq`/`volume`, and
+  // textarea.js only reads plain `autosize`.
+
+  test('tabs show their configured titles, not "Tab 1"/"Tab 2"/"Tab 3"', async ({ page }) => {
+    const tabs = page.locator('.wb-tabs__tab');
+    await expect(tabs).toHaveCount(3);
+    await expect(tabs.nth(0)).toHaveText('Overview');
+    await expect(tabs.nth(1)).toHaveText('Features');
+    await expect(tabs.nth(2)).toHaveText('Usage');
+  });
+
+  test('accordion items show their configured titles, not "Accordion Item"', async ({ page }) => {
+    const titles = page.locator('.wb-accordion-title');
+    await expect(titles).toHaveCount(3);
+    await expect(titles.nth(0)).toHaveText('What is wb-starter?');
+    await expect(titles.nth(1)).toHaveText('How do I install it?');
+    await expect(titles.nth(2)).toHaveText('Is it production ready?');
+  });
+
+  test('wb-audio uses its configured src and shows the EQ, not the default demo track', async ({ page }) => {
+    const audioEl = page.locator('wb-audio audio');
+    const src = await audioEl.getAttribute('src');
+    expect(src, 'wb-audio should not have fallen back to the built-in default demo track').toContain('freemusicarchive.org');
+    // show-eq requested -> the EQ panel must actually be built.
+    await expect(page.locator('wb-audio .wb-audio__eq-container')).toBeVisible();
+  });
+
+  test('autosize textarea gets the autosize class, not the plain default', async ({ page }) => {
+    const textareas = page.locator('#inputs textarea');
+    await expect(textareas.nth(1)).toHaveClass(/wb-textarea--autosize/);
+  });
 });

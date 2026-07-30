@@ -91,7 +91,7 @@ test.describe('Behaviors page — Feedback', () => {
 
   test('toast fires with the correct type', async ({ page }) => {
     await loadPage(page);
-    const btn = page.locator('[x-toast][data-type="success"]').first();
+    const btn = page.locator('[x-toast][toast-variant="success"]').first();
     await reveal(btn);
     await btn.click();
     await expect(page.locator('.wb-toast--success').first()).toBeVisible();

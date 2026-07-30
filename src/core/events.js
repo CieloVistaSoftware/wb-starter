@@ -130,6 +130,10 @@ function getErrorContainer() {
         font-size: 0.6875rem;
         line-height: 1.6;
         color: #a5f3fc;
+        /* Standard: >=1rem padding so stack-trace text never sits flush
+           against this panel's edge (was 0.5rem inline, below the 1rem
+           minimum). */
+        padding: 1rem;
       }
       .wb-error-toast details summary {
         cursor: pointer;
@@ -270,7 +274,6 @@ function showToast(level, message, data = {}) {
         </summary>
         <div class="wb-stack-frame" style="
           margin-top:0.5rem;
-          padding:0.5rem;
           background:rgba(0,0,0,0.2);
           border-radius:4px;
           overflow-x:auto;
@@ -290,7 +293,6 @@ function showToast(level, message, data = {}) {
         </summary>
         <div class="wb-stack-frame" style="
           margin-top:0.5rem;
-          padding:0.5rem;
           background:rgba(0,0,0,0.2);
           border-radius:4px;
           overflow-x:auto;

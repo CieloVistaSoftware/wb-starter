@@ -80,7 +80,7 @@ When enabled, plain semantic elements like `<dialog>` and `<img>` below get the
 `dialog`/`image` behaviors attached automatically, with no `x-` attribute needed:
 
 <wb-demo>
-<dialog>Auto-decorated dialog content.</dialog>
+<dialog open>Auto-decorated dialog content.</dialog>
 </wb-demo>
 
 <wb-demo>
@@ -116,6 +116,126 @@ Enhances standard HTML elements with better styling and functionality.
 | [`details`](components/semantics/details.md) | `<details>` | Decorate | Smooth expand/collapse animation |
 | [`dialog`](components/semantics/dialog.md) | `<dialog>` | Decorate | Backdrop, close button, animations |
 
+#### Live Examples
+
+**`audio`**
+
+<wb-demo>
+<wb-audio src="music.mp3"></wb-audio>
+</wb-demo>
+
+**`video`**
+
+<wb-demo>
+<wb-video src="movie.mp4"></wb-video>
+</wb-demo>
+
+**`img` → `image`**
+
+<wb-demo>
+<img
+  x-image
+  src="photo.jpg"
+  alt="Photo">
+</wb-demo>
+
+**`code`**
+
+<wb-demo>
+<code
+  x-code
+  language="Python">
+  print("Hello")
+</code>
+</wb-demo>
+
+**`input`**
+
+<wb-demo>
+<wb-input
+  label="Email"
+  input-type="email"
+  placeholder="Enter your email">
+</wb-input>
+</wb-demo>
+
+**`textarea`**
+
+<wb-demo>
+<wb-textarea
+  label="Message"
+  placeholder="Enter your message...">
+</wb-textarea>
+</wb-demo>
+
+**`select`**
+
+<wb-demo>
+<wb-select
+  label="Country"
+  options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
+</wb-select>
+</wb-demo>
+
+**`checkbox`**
+
+<wb-demo>
+<wb-checkbox label="I agree to the terms"></wb-checkbox>
+</wb-demo>
+
+**`switch`**
+
+<wb-demo>
+<wb-switch label="Dark mode"></wb-switch>
+</wb-demo>
+
+**`rating`**
+
+<wb-demo>
+<wb-rating value="3"></wb-rating>
+</wb-demo>
+
+**`form`**
+
+<wb-demo>
+<wb-form action="/api/submit">
+  <wb-input
+    name="email"
+    label="Email"
+    required>
+  </wb-input>
+  <wb-button type="submit">Submit</wb-button>
+</wb-form>
+</wb-demo>
+
+**`details`**
+
+<wb-demo>
+<wb-details summary="More Information">
+  <p>Hidden content revealed when expanded.</p>
+</wb-details>
+</wb-demo>
+
+**`dialog`**
+
+<wb-demo>
+<wb-dialog
+  title="Welcome"
+  id="behaviors-ref-dialog">
+  <p>Dialog content goes here.</p>
+</wb-dialog>
+<button onclick="document.getElementById('behaviors-ref-dialog').open()">Open Dialog</button>
+</wb-demo>
+
+**`button`**
+
+<wb-demo>
+<wb-button>Click Me</wb-button>
+</wb-demo>
+
+`figure`, `table`, `pre`, `radio`, and `range` don't yet have a dedicated component doc
+with a live example to pull from — tracked as remaining work, not guessed here.
+
 ### 2. UI Components
 Rich interactive components.
 
@@ -136,7 +256,7 @@ Rich interactive components.
 | `divider` | `<hr>` | Decorate | Styled divider |
 | `breadcrumb` | `<nav>` | - | Breadcrumb navigation |
 | `avatar` | `<div>` | - | User avatar |
-| `tooltip` | any | - | Tooltip on hover |
+| [`tooltip`](behaviors/tooltip.md) | any | - | Tooltip on hover |
 | `dropdown` | `<div>` | - | Dropdown menu |
 | `accordion` | `<div>` | - | Accordion list |
 | [`tabs`](components/tabs.md) | `<div>` | - | Tabbed interface |
@@ -146,6 +266,53 @@ Rich interactive components.
 | `pagination` | `<nav>` | - | Pagination controls |
 | `steps` | `<div>` | - | Step wizard |
 
+#### Live Examples
+
+**`card`**
+
+<wb-demo>
+<wb-card title="Hello" variant="elevated">
+  <p>It just works.</p>
+</wb-card>
+</wb-demo>
+
+**`cardlink`**
+
+<wb-demo>
+<wb-cardlink
+  title="Documentation"
+  href="/docs"
+  icon="📚">
+</wb-cardlink>
+</wb-demo>
+
+**`progressbar`**
+
+<wb-demo>
+<wb-progress value="50"></wb-progress>
+</wb-demo>
+
+**`tooltip`**
+
+<wb-demo>
+<button x-tooltip="Tooltip text">Hover me</button>
+</wb-demo>
+
+**`tabs`**
+
+<wb-demo>
+<wb-tabs>
+  <div tab="Tab 1">Content 1</div>
+  <div tab="Tab 2">Content 2</div>
+  <div tab="Tab 3">Content 3</div>
+</wb-tabs>
+</wb-demo>
+
+`hero`, `card*` variants, `spinner`, `toast`, `notify`, `badge`, `chip`, `alert`,
+`skeleton`, `divider`, `breadcrumb`, `avatar`, `dropdown`, `accordion`, `navbar`,
+`sidebar`, `menu`, `pagination`, and `steps` don't yet have a dedicated component doc
+with a live example to pull from — tracked as remaining work, not guessed here.
+
 ### 3. Layout & Structure
 Tools for arranging content.
 
@@ -154,8 +321,8 @@ Tools for arranging content.
 | `grid` | `<wb-grid>` | - | CSS Grid layout |
 | `flex` | `<wb-flex>`, `<wb-row>` | - | Flexbox layout |
 | `container` | `<wb-container>` | - | Responsive container |
-| `stack` | `<wb-stack>`, `<wb-column>` | - | Vertical stack |
-| `cluster` | `<wb-cluster>` | - | Horizontal cluster |
+| [`stack`](behaviors/wb-stack.md) | `<wb-stack>`, `<wb-column>` | - | Vertical stack |
+| [`cluster`](behaviors/wb-cluster.md) | `<wb-cluster>` | - | Horizontal cluster |
 | `center` | `<wb-center>` | - | Centered content |
 | `masonry` | `<wb-masonry>` | - | Masonry grid layout |
 | `sticky` | `<wb-sticky>` | - | Sticky positioning |
@@ -169,6 +336,48 @@ Tools for arranging content.
 | `icon` | `<wb-icon>` | - | Icon wrapper |
 | [`draggable`](components/cards/carddraggable.md) | any | - | Draggable element |
 | `resizable` | any | - | Resizable element |
+
+#### Live Examples
+
+**`drawerLayout`**
+
+<wb-demo>
+<wb-drawer-layout
+  position="left"
+  width="300px">
+  <h3>Sidebar</h3>
+  <nav>Navigation content...</nav>
+</wb-drawer-layout>
+</wb-demo>
+
+**`draggable`**
+
+<wb-demo>
+<wb-carddraggable title="Drag Me">Drag this card around.</wb-carddraggable>
+</wb-demo>
+
+**`stack`**
+
+<wb-demo>
+<div class="wb-stack">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</div>
+</wb-demo>
+
+**`cluster`**
+
+<wb-demo>
+<div class="wb-cluster">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</div>
+</wb-demo>
+
+`grid`, `flex`, `container`, `center`, `masonry`, `sticky`, `scrollable`,
+`sidebarlayout`, `switcher`, `cover`, `frame`, `reel`, `icon`, and `resizable` don't yet
+have a dedicated component doc with a live example to pull from — tracked as remaining
+work, not guessed here.
 
 ### 4. Media & Overlays
 Handling media content and overlaying views.
@@ -185,6 +394,23 @@ Handling media content and overlaying views.
 | `offcanvas` | `<div>` | - | Off-canvas sidebar |
 | `sheet` | `<div>` | - | Bottom sheet |
 
+#### Live Examples
+
+**`drawer`**
+
+<wb-demo>
+<button
+  x-drawer
+  title="Settings"
+  content="Settings content...">
+  Open Settings
+</button>
+</wb-demo>
+
+`gallery`, `youtube`, `vimeo`, `carousel`, `popover`, `lightbox`, `offcanvas`, and
+`sheet` don't yet have a dedicated component doc with a live example to pull from —
+tracked as remaining work, not guessed here.
+
 ### 5. Utilities & Helpers
 Functional utilities.
 
@@ -194,7 +420,7 @@ Functional utilities.
 | `toggle` | any | - | Toggle visibility/state |
 | `ripple` | any | - | Material ripple effect |
 | `darkmode` | `<button>` | - | Dark mode toggle |
-| `themecontrol` | `<div>` | - | Theme switcher |
+| [`themecontrol`](behaviors/wb-themecontrol.md) | `<div>` | - | Theme switcher |
 | `lazy` | any | - | Lazy loading content |
 | `print` | `<button>` | - | Print button |
 | `share` | `<button>` | - | Share button |
@@ -208,8 +434,27 @@ Functional utilities.
 | `visible` | any | - | Visibility observer |
 | `validator` | `<input>` | - | Input validator |
 | `notes` | `<div>` | - | Notes system |
-| `mdhtml` | `<div>` | - | Markdown renderer |
+| [`mdhtml`](components/mdhtml.md) | `<div>` | - | Markdown renderer |
 | `builder` | `<div>` | - | Page builder container |
+
+#### Live Examples
+
+**`themecontrol`**
+
+<wb-demo>
+<wb-themecontrol></wb-themecontrol>
+</wb-demo>
+
+**`mdhtml`**
+
+<wb-demo>
+<wb-mdhtml> # Hello World This is **bold** and *italic*. </wb-mdhtml>
+</wb-demo>
+
+`copy`, `toggle`, `ripple`, `darkmode`, `lazy`, `print`, `share`, `fullscreen`,
+`scroll`, `truncate`, `highlight`, `countdown`, `clock`, `relativetime`, `visible`,
+`validator`, `notes`, and `builder` don't yet have a dedicated component doc with a
+live example to pull from — tracked as remaining work, not guessed here.
 
 ### 6. Animations (Effects)
 Apply animations to elements.
@@ -231,6 +476,22 @@ Apply animations to elements.
 | `typewriter` | any | - | Typewriter text effect |
 | `parallax` | any | - | Parallax scroll effect |
 | `reveal` | any | - | Scroll reveal effect |
+
+#### Live Examples
+
+**`confetti`**
+
+<wb-demo>
+<wb-confetti
+  count="100"
+  label="Celebrate!">
+</wb-confetti>
+</wb-demo>
+
+`animate`, `fadein`, `slidein`, `zoomin`, `bounce`, `shake`, `pulse`, `flip`,
+`sparkle`, `glow`, `rainbow`, `typewriter`, `parallax`, and `reveal` don't yet have a
+dedicated component doc with a live example to pull from — tracked as remaining work,
+not guessed here.
 
 ## Events
 
@@ -475,4 +736,4 @@ so you don't have to open a dozen files to see what's available across the whole
 
 ---
 
-*Document Version: 3.1.0*
+*Document Version: 3.2.0*

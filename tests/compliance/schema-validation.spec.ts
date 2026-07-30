@@ -412,20 +412,28 @@ test.describe('Schema Validation: Test Section Completeness', () => {
     
     for (const [file, schema] of schemas) {
       if (!schema.test?.setup) continue;
-      
+
       const possibleTags = getPossibleTags(schema.schemaFor);
       const dataWbPattern = `data-wb="${schema.schemaFor}"`;
-      
+      // #344: some behaviors (form, fieldset, label, ...) are attribute-based
+      // enhancements of NATIVE elements per TIER1 law #11 -- <form x-form>,
+      // <fieldset x-fieldset>, <input x-label='...'> -- never a <wb-*> tag or
+      // the deprecated data-wb= fallback at all. Word-boundary regex (not a
+      // plain .includes()) so schema.schemaFor "form" doesn't false-match
+      // setup html containing the unrelated x-formrow attribute.
+      const xAttrPattern = new RegExp(`x-${schema.schemaFor}(?![a-zA-Z0-9-])`);
+
       for (let i = 0; i < schema.test.setup.length; i++) {
         const html = schema.test.setup[i];
         const hasWbTag = possibleTags.some(tag => html.includes(tag));
         const hasDataWb = html.includes(dataWbPattern);
-        
-        const usesCardBase = schema.schemaFor.startsWith('card') && 
+        const hasXAttr = xAttrPattern.test(html);
+
+        const usesCardBase = schema.schemaFor.startsWith('card') &&
           (html.includes('data-wb="card"') || html.includes('<wb-card'));
-        
-        if (!hasWbTag && !hasDataWb && !usesCardBase) {
-          issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.schemaFor}> or data-wb="${schema.schemaFor}"`);
+
+        if (!hasWbTag && !hasDataWb && !hasXAttr && !usesCardBase) {
+          issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.schemaFor}>, x-${schema.schemaFor}, or data-wb="${schema.schemaFor}"`);
         }
       }
     }

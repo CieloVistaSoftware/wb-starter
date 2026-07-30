@@ -153,32 +153,32 @@ test.describe('Notes Behavior', () => {
       await expect(notes).toHaveClass(/wb-notes--left/);
     });
 
-    test('should respect data-position="right"', async ({ page }) => {
-      await injectNotes(page, '<wb-notes data-position="right"></wb-notes>');
+    test('should respect position="right"', async ({ page }) => {
+      await injectNotes(page, '<wb-notes position="right"></wb-notes>');
       const notes = page.locator('#test-container wb-notes');
       await expect(notes).toHaveClass(/wb-notes--right/);
     });
 
-    test('should respect data-position="modal"', async ({ page }) => {
-      await injectNotes(page, '<wb-notes data-position="modal"></wb-notes>');
+    test('should respect position="modal"', async ({ page }) => {
+      await injectNotes(page, '<wb-notes position="modal"></wb-notes>');
       const notes = page.locator('#test-container wb-notes');
       await expect(notes).toHaveClass(/wb-notes--modal/);
     });
 
     test('should mark left button active when position is left', async ({ page }) => {
-      await injectNotes(page, '<wb-notes data-position="left"></wb-notes>');
+      await injectNotes(page, '<wb-notes position="left"></wb-notes>');
       const btn = page.locator('#test-container .wb-notes__wide-btn[data-pos="left"]');
       await expect(btn).toHaveClass(/active/);
     });
 
     test('should mark right button active when position is right', async ({ page }) => {
-      await injectNotes(page, '<wb-notes data-position="right"></wb-notes>');
+      await injectNotes(page, '<wb-notes position="right"></wb-notes>');
       const btn = page.locator('#test-container .wb-notes__wide-btn[data-pos="right"]');
       await expect(btn).toHaveClass(/active/);
     });
 
     test('should mark modal button active when position is modal', async ({ page }) => {
-      await injectNotes(page, '<wb-notes data-position="modal"></wb-notes>');
+      await injectNotes(page, '<wb-notes position="modal"></wb-notes>');
       const btn = page.locator('#test-container .wb-notes__wide-btn[data-pos="modal"]');
       await expect(btn).toHaveClass(/active/);
     });
@@ -236,7 +236,7 @@ test.describe('Notes Behavior', () => {
   // ==========================================
   test.describe('Collapse Arrows', () => {
     test('collapse left button should set position to left and close', async ({ page }) => {
-      await injectNotes(page, '<wb-notes data-position="right"></wb-notes>');
+      await injectNotes(page, '<wb-notes position="right"></wb-notes>');
       await page.evaluate(() => {
         const el = document.querySelector('wb-notes') as any;
         el.wbNotes.open();
@@ -248,7 +248,7 @@ test.describe('Notes Behavior', () => {
     });
 
     test('collapse right button should set position to right and close', async ({ page }) => {
-      await injectNotes(page, '<wb-notes data-position="left"></wb-notes>');
+      await injectNotes(page, '<wb-notes position="left"></wb-notes>');
       await page.evaluate(() => {
         const el = document.querySelector('wb-notes') as any;
         el.wbNotes.open();
@@ -406,7 +406,7 @@ test.describe('Notes Behavior', () => {
     });
 
     test('position property should reflect current position', async ({ page }) => {
-      await injectNotes(page, '<wb-notes data-position="right"></wb-notes>');
+      await injectNotes(page, '<wb-notes position="right"></wb-notes>');
       const position = await page.evaluate(() => {
         const el = document.querySelector('wb-notes') as any;
         return el.wbNotes.position;

@@ -18,7 +18,7 @@ async function loadPage(page: Page) {
 
 test('clicking an x-toast button shows exactly one toast', async ({ page }) => {
   await loadPage(page);
-  const btn = page.locator('[x-toast][data-type="success"]').first();
+  const btn = page.locator('[x-toast][toast-variant="success"]').first();
   await btn.scrollIntoViewIfNeeded();
   await btn.click();
   await page.waitForTimeout(250);

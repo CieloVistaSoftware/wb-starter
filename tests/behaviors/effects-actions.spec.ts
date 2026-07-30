@@ -24,9 +24,9 @@ async function reveal(loc: Locator) {
 
 // clickAnim-based effects: inject a wb-<name> class + el.wbAnim, set style.animation on click
 const ANIM = [
-  { sel: '[x-slidein][data-direction="left"]', label: 'slidein-left' },
-  { sel: '[x-slidein][data-direction="right"]', label: 'slidein-right' },
-  { sel: '[x-slidein][data-direction="up"]', label: 'slidein-up' },
+  { sel: '[x-slidein][direction="left"]', label: 'slidein-left' },
+  { sel: '[x-slidein][direction="right"]', label: 'slidein-right' },
+  { sel: '[x-slidein][direction="up"]', label: 'slidein-up' },
   { sel: '[x-zoomin]', label: 'zoomin' },
   { sel: '[x-wobble]', label: 'wobble' },
   { sel: '[x-tada]', label: 'tada' },

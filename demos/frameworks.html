@@ -75,7 +75,16 @@
     <span class="framework-badge badge-react">React</span>
     <h2>React Integration</h2>
     <p>This button is rendered by React. The <code>x-*</code> behavior attributes are passed as standard props.</p>
-    
+
+    <!-- #324 / DEMOS-AND-DOCS-STANDARDS.md §25: intentionally NOT wrapped in
+         <wb-demo>. The live control below is React's *rendered output* -- the
+         instructive source is the JSX-style React.createElement code in the
+         <pre> block underneath, which <wb-demo>'s HTML-source extraction has
+         no way to represent (it would show this mount div/script, not the
+         React component code a React developer would actually write). Both a
+         live render AND its real source are still present, per §16 -- just
+         not paired by <wb-demo> specifically, which requires the two to be
+         the same markup. -->
     <div id="react-root"></div>
 
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -148,6 +157,10 @@ root.render(e(ReactApp));</code></pre>
     <h2>Vue Integration</h2>
     <p>This section is a Vue app. WB attributes are bound just like any other attribute.</p>
 
+    <!-- #324 / DEMOS-AND-DOCS-STANDARDS.md §25: same reasoning as the React
+         section above -- the live control is Vue's rendered template output;
+         the instructive source (Vue SFC-style template + setup()) is shown in
+         the <pre> block below, which <wb-demo> cannot represent 1:1. -->
     <div id="vue-app">
       <div style="padding: 1rem; border: 1px dashed #42b883; border-radius: 8px;">
         <h3>Vue Message: {{ message }}</h3>
@@ -238,7 +251,7 @@ root.render(e(ReactApp));</code></pre>
     <span class="framework-badge badge-svelte">Svelte</span>
     <h2>Svelte Integration</h2>
     <p>In Svelte, you just add the attributes to your markup. No special bindings needed.</p>
-    <p class="wb-text-secondary" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>Note: This example requires a Svelte build step.</em></p>
+    <p class="wb-text-secondary wb-demo-buildstep-note" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>No live render: this example requires a Svelte build step (DEMOS-AND-DOCS-STANDARDS.md §25).</em></p>
     
     <pre language="html" copy="true"><code>&lt;script&gt;
   import WB from 'wb-behaviors';
@@ -269,7 +282,7 @@ root.render(e(ReactApp));</code></pre>
     <span class="framework-badge badge-angular" style="background: #dd0031; color: #fff;">Angular</span>
     <h2>Angular Integration</h2>
     <p>In Angular, use standard attribute binding. WB behaviors initialize automatically.</p>
-    <p class="wb-text-secondary" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>Note: This example requires an Angular build step.</em></p>
+    <p class="wb-text-secondary wb-demo-buildstep-note" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>No live render: this example requires an Angular build step (DEMOS-AND-DOCS-STANDARDS.md §25).</em></p>
     
     <pre language="typescript" copy="true"><code>import { Component, OnInit } from '@angular/core';
 import WB from 'wb-behaviors';
@@ -304,7 +317,7 @@ export class DemoComponent implements OnInit {
     <span class="framework-badge badge-solid" style="background: #2c4f7c; color: #fff;">SolidJS</span>
     <h2>SolidJS Integration</h2>
     <p>SolidJS uses fine-grained reactivity. Initialize WB in <code>onMount</code>.</p>
-    <p class="wb-text-secondary" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>Note: This example requires a SolidJS build step.</em></p>
+    <p class="wb-text-secondary wb-demo-buildstep-note" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>No live render: this example requires a SolidJS build step (DEMOS-AND-DOCS-STANDARDS.md §25).</em></p>
     
     <pre language="javascript" copy="true"><code>import { createSignal, onMount } from 'solid-js';
 import WB from 'wb-behaviors';
@@ -334,19 +347,24 @@ function Counter() {
     <span class="framework-badge badge-htmx" style="background: #3d72d7; color: #fff;">HTMX</span>
     <h2>HTMX Integration</h2>
     <p>HTMX swaps HTML from the server. Use <code>htmx:afterSwap</code> to re-scan new content.</p>
-    
-    <div id="htmx-demo" style="padding: 1rem; border: 1px dashed #3d72d7; border-radius: 8px; margin-bottom: 1rem;">
-      <!-- HTMX loads content, WB enhances it -->
-      <button 
-        hx-post="/clicked"
-        hx-swap="outerHTML"
-        class="wb-btn-gradient"
-        x-ripple x-tooltip 
-        tooltip="I ripple locally, but fetch remotely!"
-      >
-        Click Me (HTMX)
-      </button>
-    </div>
+
+    <!-- #324: HTMX needs no build step -- the button below IS the real, executable
+         markup a developer would author (plain HTML + hx-*/x-* attributes), so
+         <wb-demo> can render it live AND show its exact source, same as any other
+         component example (§1/§16) -- unlike the React/Vue/Svelte/Angular/SolidJS
+         sections further down, which mount via framework-specific script/build
+         output that <wb-demo> cannot represent as one-to-one "source" (see the
+         explanatory notes on those sections and DEMOS-AND-DOCS-STANDARDS.md §16). -->
+    <wb-demo>
+    <button
+      hx-post="/clicked"
+      hx-swap="outerHTML"
+      class="wb-btn-gradient"
+      x-ripple
+      x-tooltip="I ripple locally, but fetch remotely!">
+      Click Me (HTMX)
+    </button>
+    </wb-demo>
 
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script>
@@ -358,28 +376,6 @@ function Counter() {
         }
       });
     </script>
-    
-    <div style="margin-top: 1.5rem;">
-      <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
-      <pre language="html" copy="true"><code>&lt;!-- HTMX loads content, WB enhances it --&gt;
-&lt;button 
-  hx-post="/clicked"
-  hx-swap="outerHTML"
-  class="wb-btn-gradient"
-  x-ripple x-tooltip 
-  tooltip="I ripple locally, but fetch remotely!"
-&gt;
-  Click Me
-&lt;/button&gt;
-
-&lt;script&gt;
-  // Re-initialize WB after HTMX swaps content
-  document.body.addEventListener('htmx:afterSwap', (evt) => {
-    // Only scan the new content for better performance
-    WB.scan(evt.detail.target);
-  });
-&lt;/script&gt;</code></pre>
-    </div>
   </section>
 
   <script type="module">
@@ -387,7 +383,18 @@ function Counter() {
     import hljs from '../src/lib/highlight.js';
 
     // Initialize WB (autoInject/MutationObserver handles the React/Vue mounts).
-    WB.init({ autoInject: true });
+    await WB.init({ autoInject: true });
+
+    // This page's single <wb-demo> (the HTMX section) sits far below the
+    // fold, so WB.init()'s default scan only lazily registers it with an
+    // IntersectionObserver -- it never builds its grid/code-panel/CSS
+    // without a real scroll into view. There's only one on the whole page,
+    // so eager-building it costs nothing (same "laziness buys nothing here"
+    // reasoning as wb-demo.js's own EAGER_BUILD_COUNT for small pages).
+    // Awaited AFTER WB.init()'s own scan settles, so this doesn't race the
+    // same element's lazy registration.
+    const soleDemo = document.querySelector('wb-demo');
+    if (soleDemo) await WB.scan(soleDemo.parentElement, { eager: true });
 
     // Honor the `language="…"` / `copy="true"` shorthand on <pre> directly: WB's
     // code behavior doesn't activate on these hand-written blocks, so highlight
