@@ -231,8 +231,16 @@ export async function demo(element, options = {}) {
     // whatever isn't a card in a rare mixed block) keeps the original
     // shared-line behavior below, unchanged.
     const allComponents = findWbComponents(rawBlock);
+    // wb-cardlink is excluded: its own behavior (card.js cardlink()) already
+    // stretches a real <a href> over the ENTIRE card (deliberately, for
+    // native right-click/middle-click support -- see that function's own
+    // comment). A second doc-link <a> badge on top of that visually
+    // overlaps the full-card anchor and fights it for clicks/z-index --
+    // confirmed live: card.querySelectorAll('a[href]') returned 2 anchors,
+    // one of them effectively unreachable. A card that's already entirely
+    // a link doesn't need a second "read the docs" affordance layered on it.
     const cardChildren = Array.from(grid.children).filter(
-        (child) => child.tagName && child.tagName.startsWith('WB-CARD')
+        (child) => child.tagName && child.tagName.startsWith('WB-CARD') && child.tagName !== 'WB-CARDLINK'
     );
     const sharedComponents = allComponents.filter((comp) => !comp.startsWith('card'));
     if (cardChildren.length > 0 || sharedComponents.length > 0) {

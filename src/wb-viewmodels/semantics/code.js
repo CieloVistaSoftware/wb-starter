@@ -139,7 +139,16 @@ export function code(element, options = {}) {
       color: 'var(--text-primary, inherit)',
       border: '1px solid var(--border-color, rgba(255,255,255,0.1))',
       display: !isBlock ? 'inline' : 'block',
-      whiteSpace: !isBlock ? 'normal' : (config.scrollable ? 'pre' : 'pre-wrap'),
+      // Inline code (e.g. a short `<wb-card>` tag-name reference) must stay
+      // on one line -- `white-space: normal` lets the browser wrap at the
+      // hyphen inside "wb-card" like it would for a hyphenated English word,
+      // splitting "<wb-" onto one line and "card>" onto the next (confirmed
+      // live on pages/components.html). `overflow:hidden` is a no-op on a
+      // plain `display:inline` box (only applies to block/inline-block/flex/
+      // grid containers per spec), so `nowrap` here can't cause clipping --
+      // it just lets the token run as one atomic unit on its line, same as
+      // block/pre code already does via `pre`/`pre-wrap`.
+      whiteSpace: !isBlock ? 'nowrap' : (config.scrollable ? 'pre' : 'pre-wrap'),
       wordBreak: 'break-word', // Always break to prevent overflow
       overflowWrap: 'break-word',
       overflow: (isBlock && config.scrollable) ? 'auto' : 'hidden',
