@@ -49,6 +49,23 @@
    overlays the bar, centered, with a shadow so it stays legible over either
    the filled or unfilled portion. */
 .wb-progress--labeled { height: 1.25rem; }
+
+/* Size — progress.js applies wb-progress--{size} for every value in
+   progress.schema.json's enum (xs/sm/md/lg/xl), but no rule ever mapped
+   that class to a height -- every size rendered identical (confirmed live:
+   size="xs" and size="xl" both computed to 20px). `.wb-progress--labeled`
+   alone was also always forcing 1.25rem regardless of size since showLabel
+   defaults true; the doubled selectors below (0,2,0) outrank it. */
+.wb-progress--xs { height: 4px; }
+.wb-progress--xs.wb-progress--labeled { height: 0.75rem; }
+.wb-progress--sm { height: 6px; }
+.wb-progress--sm.wb-progress--labeled { height: 1rem; }
+.wb-progress--md { height: 8px; }
+.wb-progress--md.wb-progress--labeled { height: 1.25rem; }
+.wb-progress--lg { height: 12px; }
+.wb-progress--lg.wb-progress--labeled { height: 1.5rem; }
+.wb-progress--xl { height: 16px; }
+.wb-progress--xl.wb-progress--labeled { height: 2rem; }
 .wb-progress__label {
   position: absolute;
   inset: 0;

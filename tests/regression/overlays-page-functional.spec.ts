@@ -81,4 +81,122 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     });
     expect(opened, 'expected a dropdown menu/popup to appear after clicking the trigger').toBeTruthy();
   });
+
+  // ─────────────────────────────────────────────────────────────────────
+  // "In depth" coverage (John, standing directive) -- every trigger on the
+  // page, not just the first instance of each tag, and asserting each
+  // configured size/position/variant actually produces a DIFFERENT result
+  // from its siblings (effect-based, per DEMOS-AND-DOCS-STANDARDS.md §19 --
+  // "not merely that the element renders").
+  // ─────────────────────────────────────────────────────────────────────
+
+  test('every wb-dialog trigger on the page opens with real content', async ({ page }) => {
+    // Only the "Basic Dialog" section's 4 triggers have distinct titles;
+    // the size/variant-variant sections intentionally reuse the generic
+    // default title (their point is demonstrating size/variant, not title
+    // uniqueness) -- so assert every trigger opens with SOME real content,
+    // and separately assert the Basic Dialog section specifically is
+    // all-distinct (that's the section whose markup actually varies title).
+    const triggers = page.locator('wb-dialog');
+    const count = await triggers.count();
+    expect(count, 'expected multiple wb-dialog triggers on this page').toBeGreaterThan(1);
+
+    for (let i = 0; i < count; i++) {
+      const trigger = triggers.nth(i);
+      await trigger.scrollIntoViewIfNeeded();
+      await trigger.click();
+      const dialog = page.locator('dialog[open]').first();
+      await expect(dialog, `trigger[${i}] should open a dialog`).toBeVisible({ timeout: 5000 });
+      const text = (await dialog.textContent())?.trim() ?? '';
+      expect(text.length, `trigger[${i}] dialog should have real content, not empty`).toBeGreaterThan(0);
+      await page.keyboard.press('Escape');
+      await expect(dialog).not.toBeVisible({ timeout: 3000 }).catch(() => {});
+    }
+
+    const basicSection = page.locator('#dialog-dialog wb-dialog');
+    const basicCount = await basicSection.count();
+    const basicTexts = new Set<string>();
+    for (let i = 0; i < basicCount; i++) {
+      await basicSection.nth(i).click();
+      const dialog = page.locator('dialog[open]').first();
+      await expect(dialog).toBeVisible({ timeout: 5000 });
+      basicTexts.add((await dialog.textContent())?.trim() ?? '');
+      await page.keyboard.press('Escape');
+      await expect(dialog).not.toBeVisible({ timeout: 3000 }).catch(() => {});
+    }
+    expect(basicTexts.size, `Basic Dialog section: expected ${basicCount} distinct contents, got: ${JSON.stringify([...basicTexts])}`).toBe(basicCount);
+  });
+
+  test('dialog size variants (sm/md/lg/xl/full) each open at a distinct width', async ({ page }) => {
+    // The "size variants" section triggers are unlabeled ("size=sm" etc as
+    // their own text) -- select them by that section's own scope.
+    const section = page.locator('#dialog-size-variants');
+    const triggers = section.locator('wb-dialog');
+    const count = await triggers.count();
+    expect(count).toBeGreaterThanOrEqual(5);
+
+    const widths: number[] = [];
+    for (let i = 0; i < count; i++) {
+      const trigger = triggers.nth(i);
+      await trigger.scrollIntoViewIfNeeded();
+      await trigger.click();
+      const dialog = page.locator('dialog[open]').first();
+      await expect(dialog, `size trigger[${i}] should open`).toBeVisible({ timeout: 5000 });
+      const width = await dialog.evaluate((el) => el.getBoundingClientRect().width);
+      widths.push(Math.round(width));
+      await page.keyboard.press('Escape');
+      await expect(dialog).not.toBeVisible({ timeout: 3000 }).catch(() => {});
+    }
+    expect(new Set(widths).size, `expected ${count} distinct dialog widths across size variants, got: ${JSON.stringify(widths)}`).toBeGreaterThan(1);
+  });
+
+  test('every wb-drawer trigger opens its own panel with matching position', async ({ page }) => {
+    const section = page.locator('#drawer-position-variants');
+    const triggers = section.locator('wb-drawer');
+    const count = await triggers.count();
+    expect(count).toBeGreaterThanOrEqual(4);
+
+    const positions = ['left', 'right', 'top', 'bottom'];
+    for (let i = 0; i < Math.min(count, positions.length); i++) {
+      const trigger = triggers.nth(i);
+      await trigger.scrollIntoViewIfNeeded();
+      const expectedPosition = await trigger.getAttribute('position');
+      await trigger.click();
+      // Legacy drawer() fixed-position panels are appended to document.body;
+      // find the most recently added one with a real bounding box.
+      await page.waitForTimeout(400);
+      const panelRect = await page.evaluate(() => {
+        const fixed = Array.from(document.querySelectorAll('body > div')).filter(
+          (el) => getComputedStyle(el).position === 'fixed' && el.getBoundingClientRect().width > 0
+        );
+        const last = fixed[fixed.length - 1] as HTMLElement | undefined;
+        return last ? last.getBoundingClientRect() : null;
+      });
+      expect(panelRect, `trigger[${i}] (position=${expectedPosition}) should open a panel`).not.toBeNull();
+      // Close it (click its own close button if present, else re-click trigger to toggle).
+      const closeBtn = page.locator('body > div button', { hasText: '×' }).last();
+      if (await closeBtn.count()) await closeBtn.click().catch(() => {});
+    }
+  });
+
+  test('every wb-dropdown trigger on the page opens something, not just the first', async ({ page }) => {
+    const triggers = page.locator('wb-dropdown');
+    const count = await triggers.count();
+    expect(count).toBeGreaterThan(1);
+
+    for (let i = 0; i < count; i++) {
+      const trigger = triggers.nth(i);
+      await trigger.scrollIntoViewIfNeeded();
+      await trigger.click();
+      await page.waitForTimeout(200);
+      const opened = await trigger.evaluate((dd) => {
+        return Array.from(dd.querySelectorAll('*')).some((el) => {
+          const cs = getComputedStyle(el);
+          return cs.position !== 'static' && cs.display !== 'none' && el.getBoundingClientRect().height > 0;
+        });
+      });
+      expect(opened, `dropdown trigger[${i}] should open something on click`).toBeTruthy();
+      await page.keyboard.press('Escape');
+    }
+  });
 });

@@ -43,6 +43,26 @@ export function switchInput(element, options = {}) {
   // makes `.wb-switch` a reliable selector regardless of dispatch path.
   host.classList.add('wb-switch');
 
+  // switch.schema.json declares size/variant with appliesClass:
+  // "wb-switch--{{value}}" -- but that's SCHEMA-BUILDER's mechanism, and
+  // schema-builder.js never runs at all on a wb-lazy.js-only page (test
+  // harness, standalone demos/*.html -- no schema pass, ever, regardless of
+  // eager/lazy scan timing). The self-built fallback above only replicates
+  // the DOM structure schema would have built, not the classes schema would
+  // have applied -- so every switch silently lost its size/variant styling
+  // on those pages (confirmed live: <wb-switch size="lg" variant="success">
+  // built correctly as input+track+thumb but with class="wb-switch" only,
+  // no wb-switch--lg/--success). Reading and applying them here directly
+  // matches the pattern every other component in this file (card.js,
+  // badge(), progress()) already uses, and is idempotent alongside
+  // schema-builder's own class application on pages where it DOES run.
+  if (!isBareCheckbox) {
+    const size = host.getAttribute('size');
+    if (size) host.classList.add(`wb-switch--${size}`);
+    const variant = host.getAttribute('variant');
+    if (variant) host.classList.add(`wb-switch--${variant}`);
+  }
+
   // The schema builds a typeless <input> (renders as text) — make it a checkbox.
   if (input.type !== 'checkbox') input.type = 'checkbox';
   input.classList.add('wb-switch__input');

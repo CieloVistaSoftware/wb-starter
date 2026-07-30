@@ -30,6 +30,13 @@ export function rating(element, options = {}) {
     // (e.g. color="var(--primary)" for blue). Empty colour from the theme too.
     color: options.color || attr('color') || element.dataset.color || 'var(--rating-active-color, #fbbf24)',
     emptyColor: options.emptyColor || attr('empty-color') || 'var(--border-color, #e5e7eb)',
+    // rating.schema.json declares size (sm/md/lg, appliesClass:
+    // "wb-rating--{{value}}"), but that's schema-builder's mechanism (never
+    // runs on a wb-lazy.js-only page) AND this function never read the
+    // attribute at all -- star font-size was unconditionally hardcoded
+    // inline below regardless of size (confirmed live: size="sm"/"lg" both
+    // rendered identical 1.5rem stars).
+    size: options.size || attr('size') || element.dataset.size || 'md',
     ...options
   };
 
@@ -39,7 +46,7 @@ export function rating(element, options = {}) {
 
   // Clear element
   element.innerHTML = '';
-  element.classList.add('wb-rating');
+  element.classList.add('wb-rating', `wb-rating--${config.size}`);
   element.style.display = 'inline-flex';
   element.style.gap = '0.25rem';
   element.style.cursor = config.readonly ? 'default' : 'pointer';
@@ -51,7 +58,8 @@ export function rating(element, options = {}) {
     star.className = 'wb-rating__star';
     star.dataset.value = i;
     star.innerHTML = config.icon; // honour custom icon (★ default, ❤️/👍/…)
-    star.style.fontSize = '1.5rem';
+    // font-size now comes from CSS (.wb-rating__star / .wb-rating--{size} .wb-rating__star,
+    // rating.css) so the size attribute actually has an effect -- not hardcoded here.
     star.style.lineHeight = '1';
     star.style.transition = 'color 0.2s ease, transform 0.1s ease';
     star.style.color = config.emptyColor; // empty

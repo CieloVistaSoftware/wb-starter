@@ -148,6 +148,10 @@ const WB_LAZY_ONLY_ATTRIBUTES = {
   'x-pulse': 'pulse',
   'x-rainbow': 'rainbow',
   'x-copy': 'copy',
+  // x-copybutton (#291) — overlays a separate positioned copy button on ANY
+  // element (distinct from x-copy, which makes the element itself the
+  // trigger). See src/wb-viewmodels/copy.js's copyButton().
+  'x-copybutton': 'copybutton',
   'x-collapse': 'collapse',
   'x-fadein': 'fadein',
   'x-shake': 'shake',

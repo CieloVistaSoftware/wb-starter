@@ -1,0 +1,59 @@
+/* x-copybutton (#291) — overlays a small positioned copy button on ANY
+ * element. Distinct from x-copy (.wb-copy, no dedicated CSS -- it restyles
+ * the host element's own content via JS): x-copybutton wraps the host in
+ * .x-copybutton-wrapper and appends a separate .x-copybutton__btn sibling,
+ * absolutely positioned in one of the four corners. Modeled on
+ * .x-pre-wrapper / .x-pre__copy (pre.css) -- same corner-button pattern,
+ * generalized to any host element instead of only <pre>. */
+
+.x-copybutton-wrapper {
+  position: relative;
+  display: block;
+}
+
+.x-copybutton__btn {
+  position: absolute;
+  z-index: 5;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  background: var(--bg-secondary, #1f2937);
+  border: 1px solid var(--border-color, #374151);
+  color: var(--text-secondary, #9ca3af);
+  border-radius: var(--radius-sm, 3px);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.x-copybutton__btn:hover,
+.x-copybutton__btn:focus-visible {
+  opacity: 1;
+  background-color: var(--bg-tertiary, #374151);
+}
+
+.x-copybutton__btn--copied {
+  opacity: 1;
+  color: var(--success-color, #22c55e);
+  border-color: var(--success-color, #22c55e);
+}
+
+.x-copybutton__btn--top-right {
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.x-copybutton__btn--top-left {
+  top: 0.5rem;
+  left: 0.5rem;
+}
+
+.x-copybutton__btn--bottom-right {
+  bottom: 0.5rem;
+  right: 0.5rem;
+}
+
+.x-copybutton__btn--bottom-left {
+  bottom: 0.5rem;
+  left: 0.5rem;
+}

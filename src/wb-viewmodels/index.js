@@ -31,7 +31,10 @@ const exportAliases = {
   'sidebar-layout': 'sidebarlayout',
   // <wb-search> is a container tag, not an input — searchField() (search.js)
   // wraps/creates the child <input> and delegates to search(). See #279.
-  searchfield: 'searchField'
+  searchfield: 'searchField',
+  // x-copybutton (#291) — copy.js exports the function as `copyButton`
+  // (camelCase), but the behavior/attribute name is lowercase `copybutton`.
+  copybutton: 'copyButton'
 };
 
 /**
@@ -192,6 +195,9 @@ const behaviorModules = {
   control: 'wb-control',
   repeater: 'wb-repeater',
   copy: 'copy',
+  // x-copybutton (#291) — overlays a positioned copy button on ANY element;
+  // reuses copy.js's core clipboard-write logic (writeToClipboard()).
+  copybutton: 'copy',
   moveup: 'move', movedown: 'move', moveleft: 'move', moveright: 'move', moveall: 'move',
   toggle: 'toggle',
   ripple: 'ripple',
